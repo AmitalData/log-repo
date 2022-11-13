@@ -49,6 +49,7 @@ using Logitude.BL.ShipmentsModel.EntityQueries;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using WebFreight.Web.Helpers.SignUp;
 using Logitude.BL.DataContracts;
+using Logitude.Server.Tools.QueueService;
 
 namespace WebFreight.Web.InfrastructureModel
 {
@@ -446,7 +447,6 @@ namespace WebFreight.Web.InfrastructureModel
 
                 tenant = CreateTenant(signUpInfo);
                 InitializeRepositories(tenant);
-                CreateNewCustomer(signUpInfo, tenant);
                 AddDefaultSATInterfaceSettings(tenant, sATInterfaceSettingRepository, tenantZeroSATInterfaceSetting);// Temporerly Commented By Rabaia So Create Tenant Continue until Islam Check it            
                 if (setting.WorkEnvironment != "customs") AddDefaultTariffSettings(tenant, tariffSettingRepository, zeroTariffSetting);
                 if (setting.WorkEnvironment != "customs") AddDefaultTariffProducts(tenant);
@@ -552,6 +552,8 @@ namespace WebFreight.Web.InfrastructureModel
                 AddAutomationFromTenantZero(tenant , tenantZeroDocumentTypes);
 
                 new TruckerSignUpService(signUpInfo, tenant).CopyFromTenantZero();
+
+                CreateNewCustomer(signUpInfo, tenant);
                 #endregion
                 scop.Complete();
             }
@@ -754,8 +756,26 @@ namespace WebFreight.Web.InfrastructureModel
                     }
                 }
             }
+
+            SendCustomerTenantAccessSignUpRequest(signUpInfo, tenant);
+            
             signUpInfo.Tenant = tenant;
             return password;
+        }
+
+        private static void SendCustomerTenantAccessSignUpRequest(SignUpInfoClass signUpInfo, int tenant)
+        {
+            if (!signUpInfo.IsCreateLogboxTenantFromCloud) return;
+
+            HybridPartnerQuery hybridPartnerQuery = new HybridPartnerQuery(signUpInfo.Tenant);
+            var hybridPartners = hybridPartnerQuery.GetHybridPartnerLists(signUpInfo.Tenant);
+            if (hybridPartners == null) return;
+            var selectedHybridPartner = hybridPartners.Where(hybridPartner => hybridPartner.PartnerTenant == signUpInfo.Tenant).FirstOrDefault();
+            if (selectedHybridPartner == null) return;
+
+            IQueueService queue = new DbQueueService();
+            queue.InitializeQueue("CustomerTenantAccessRequestQueue", 0);
+            queue.Send(new Dictionary<string, string>() { { "RequestId", selectedHybridPartner.Id }, { "Tenant", tenant.ToString() } }, tenant);
         }
 
         private static void CreateNewCustomer(SignUpInfoClass signUpInfoClass, int tenant)
@@ -766,7 +786,10 @@ namespace WebFreight.Web.InfrastructureModel
             {
                 EnglishName = signUpInfoClass.Company,
                 CustomerStatusCode = "ACT",
-                Code = "new"
+                Code = "new",
+                VatNumber = signUpInfoClass.VatNumber,
+                CountryCode = signUpInfoClass.CountryCode,
+                CityName = signUpInfoClass.City
             };
 
             customerPM.Addresses.Add(GetNewAddressPM(signUpInfoClass, tenant));
@@ -780,6 +803,9 @@ namespace WebFreight.Web.InfrastructureModel
 
         private static AddressPM GetNewAddressPM(SignUpInfoClass signUpInfoClass, int tenant)
         {
+            CountryRepository countryRepository = new CountryRepository(tenant);
+            string countryId = countryRepository.GetCountryIdByCode(signUpInfoClass.CountryCode, tenant);
+            
             return new AddressPM
             {
                 CardCode = "new",
@@ -791,7 +817,7 @@ namespace WebFreight.Web.InfrastructureModel
                 CountryCode = signUpInfoClass.CountryCode,
                 CountryEnglishName = signUpInfoClass.CountryName,
                 CountryName = signUpInfoClass.CountryName,
-                //CountryId = "",//
+                CountryId = countryId,
                 Description = "Main Address",
                 Name = signUpInfoClass.Name,
                 PhoneNumber = signUpInfoClass.Phone,
@@ -1338,13 +1364,15 @@ namespace WebFreight.Web.InfrastructureModel
 
                 if (tenantZero != null)
                 {
-                    newTenant = MapTenantZeroDetailsToNewTenant(newTenant, tenantZero);
+                    newTenant = MapTenantZeroDetailsToNewTenant(newTenant, tenantZero, signUpInfoClass);
                 }
                 scope.Complete();
             }
 
             newTenant.PasswordPolicyCode = GetPasswordPolicyCode(newTenant);
-
+            const int numberOfDefaultLogboxTenantUsers = 3;
+            newTenant.TotalDefaultNumberOfUsers = signUpInfoClass.IsCreateLogboxTenantFromCloud ? numberOfDefaultLogboxTenantUsers : newTenant.TotalDefaultNumberOfUsers;
+            
             ICommonDataContext commonContext = CommonDataContext.GetContext(newTenant.Id);
             TenantService service = new TenantService(commonContext, newTenant.Id);
             service.Create(newTenant);
@@ -1375,12 +1403,13 @@ namespace WebFreight.Web.InfrastructureModel
                 TimeZoneOffset = null,
                 CheckDigitControlAlgorithmCode = "NONE",
                 TransferQuotationsToUnifreightTrigger = "OnSend",
+                VatNumber = signUpInfoClass.VatNumber
             };
 
             return newTenant;
         }
 
-        private static TenantPM MapTenantZeroDetailsToNewTenant(TenantPM newTenant, Tenant tenantZero)
+        private static TenantPM MapTenantZeroDetailsToNewTenant(TenantPM newTenant, Tenant tenantZero, SignUpInfoClass signUpInfo)
         {
             newTenant.MasterExportFreightPrepaidCollectId = tenantZero.MasterExportFreightPrepaidCollectId;
             newTenant.MasterExportOtherPrepaidCollectId = tenantZero.MasterExportOtherPrepaidCollectId;
@@ -1393,14 +1422,20 @@ namespace WebFreight.Web.InfrastructureModel
             newTenant.FTLRatio = tenantZero.FTLRatio;
             newTenant.LTLRatio = tenantZero.LTLRatio;
 
-            if (CheckIsDayLightSettingsRequiredForEnvironment())
+            if (CheckIsDayLightSettingsRequiredForEnvironment() || signUpInfo.IsCreateLogboxTenantFromCloud)
             {
-                newTenant.DayLightStartDate = tenantZero.DayLightStartDate;
-                newTenant.DayLightEndDate = tenantZero.DayLightEndDate;
-                newTenant.DayLightOffset = tenantZero.DayLightOffset;
+                FillDayLightDetails(newTenant, tenantZero, signUpInfo);
             }
 
             return newTenant;
+        }
+
+        private static void FillDayLightDetails(TenantPM newTenant, Tenant tenantZero, SignUpInfoClass signUpInfo)
+        {
+            newTenant.DayLightStartDate = tenantZero.DayLightStartDate;
+            newTenant.DayLightEndDate = tenantZero.DayLightEndDate;
+            newTenant.DayLightOffset = tenantZero.DayLightOffset;
+            newTenant.TimeZoneOffset = signUpInfo.TimeZoneOffset;
         }
 
         private static string GetPasswordPolicyCode(TenantPM newTenant)
