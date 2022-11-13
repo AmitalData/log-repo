@@ -120,6 +120,7 @@
     <None Include="DBScripts\GlobalModel\202209271124_AddQboBaseUrl.sxml" />
     <None Include="DBScripts\InfrastructureModel\202205100957_UpdateDoubleFieldDataTypeDisplayName.sxml" />
     <None Include="DBScripts\InfrastructureModel\202209101038_UpdateFieldDataTypesDefaults.sxml" />
+    <None Include="DBScripts\InfrastructureModel\202211101058_AddConsolidationCreditNoteInvoiceCounterToTenants.sxml" />
     <None Include="DBScripts\InfrastructureModel\202227091630_UpdateFieldDataTypesDisplayNames.sxml" />
     <None Include="DBScripts\InfrastructureModel\202211010130_UpdateEntityStatusNames.sxml" />
     <None Include="DBScripts\InfrastructureModel\202221080915_UpdateDigitalPortalEntityStatuses.sxml" />
