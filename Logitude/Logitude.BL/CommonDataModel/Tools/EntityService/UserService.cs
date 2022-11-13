@@ -323,6 +323,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         }
 
                         roleRepository.Update(currentRole);
+                        roleRepository.context.SaveChanges();
+                        contactTenantRoleRepository.context.SaveChanges();
 
                         if (!entityPM.IsHybrid)
                         {
