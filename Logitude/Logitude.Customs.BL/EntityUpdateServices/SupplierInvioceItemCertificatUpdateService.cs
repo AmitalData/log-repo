@@ -906,6 +906,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
 
                     con.Open();
+
                     count = sqlCommand.ExecuteNonQuery();
                     sqlCommand1.ExecuteNonQuery();
                     con.Close();

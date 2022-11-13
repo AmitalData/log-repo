@@ -1580,6 +1580,11 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
             tab.Parent = this.EntityPM;
             tab.Code = item.SequenceNumeric.toString();
             tab.Header = (item.ManifestNumber ? (item.ManifestNumber + '-') : '') + item.SequenceNumeric;
+            if(this.EntityPM.Direction=='E'&&this.EntityPM.TransportModeId=='O'&& !AppTool.IsNullOrEmpty(item.ConsignmentPackages[0]?.MarksNumbers)) {
+               
+                tab.Title =(item.ConsignmentPackages[0].MarksNumbers + '-')  + item.SequenceNumeric;
+            }
+          
             tab.ComponentPath = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/ConsigmentTabContent/ConsigmentTabContentComponent";
             this.ConsigmentTabs.push(tab);
         }
