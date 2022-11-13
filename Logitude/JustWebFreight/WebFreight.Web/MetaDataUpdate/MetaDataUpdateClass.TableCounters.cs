@@ -507,6 +507,7 @@ namespace WebFreight.Web.MetaDataUpdate
                     Tenant = 0,
                     StartNumber = 1000,
                     Parameter1 = "COD",
+                    Prefix = "COD",
                 };
 
                 CounterRepository.Add(myCounter);
