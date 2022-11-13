@@ -24,7 +24,7 @@ export class CreateTenantComponent extends BaseComponent implements OnInit {
     CompanyName: string;
     City: string;
     VatNumber: string;
-    TimeZone: string;
+    TimeZoneOffset: number;
     IsCreateLogboxTenantFromCloud: boolean;
     public ValidationErrorsList: string[];
     private _entityResourceService: EntityResourceService = new EntityResourceService();
@@ -61,7 +61,7 @@ export class CreateTenantComponent extends BaseComponent implements OnInit {
         this.PackageCode = logboxPackageCode;
         let telivivCity = "Tel Aviv";
         this.City = telivivCity;
-        this.TimeZone = "";//
+        this.TimeZoneOffset = SessionLocator.TenantPM?.TimeZoneOffset;
     }
 
     private SetLogboxCountryDetails(result: any) {
@@ -191,7 +191,7 @@ export class CreateTenantComponent extends BaseComponent implements OnInit {
         SignUpInfo.CountryCode = this.CountryCode;
         SignUpInfo.Tenant = SessionLocator.Tenant;
         SignUpInfo.VatNumber = this.VatNumber;
-        SignUpInfo.TimeZone = this.TimeZone;
+        SignUpInfo.TimeZoneOffset = this.TimeZoneOffset;
         SignUpInfo.City = this.City;
       
         this.signUpService.CreateTenant(SignUpInfo).subscribe((myResponse: ServiceResponse) => {

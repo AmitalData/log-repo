@@ -407,6 +407,7 @@
     <Compile Include="Services\Logbox\CustomerTenantAccessUpdaterService.cs" />
     <Compile Include="Services\Logbox\CustomerTenantAccessCreatorService.cs" />
     <Compile Include="Services\Scheduler\ConnectionStringConfiguration.cs" />
+    <Compile Include="Services\SignUp\QueueMessageCloudToLogboxSender.cs" />
     <Compile Include="Tasks\DeleteOldAnalyzeQueuesTask.cs" />
     <Compile Include="Tasks\DeleteOldPerformanceLogsTask.cs" />
     <Compile Include="Tasks\DeleteOldMobileNotificationLogsTask.cs" />
