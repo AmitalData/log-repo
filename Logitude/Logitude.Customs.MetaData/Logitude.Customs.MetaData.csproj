@@ -103,6 +103,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ContextGenerator.tt</DependentUpon>
     </Compile>
+    <None Include="DBOthers\Procedures\Q_DeleteQueMessMoreDet.dxml" />
     <None Include="DBOthers\Procedures\q_Deletecommlogs.dxml" />
     <None Include="DBOthers\Procedures\ReconnectObjectMetaDataProcedure.dxml" />
     <None Include="DBScripts\Post\202005210123_DeleteMetadataBadRecords.sxml" />

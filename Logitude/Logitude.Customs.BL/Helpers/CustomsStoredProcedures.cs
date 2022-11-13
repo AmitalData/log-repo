@@ -528,6 +528,64 @@ AS */
                 }
             }
         }
+        public static void DeleteQueueMessageMoreDetails(int tenant, int days)
+        {
+            string strConnString = GetConnection(tenant);
+            if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+            {
+                using (OracleConnection cn = new OracleConnection(strConnString))
+                {
+                    OracleCommand cmd = new OracleCommand();
+                    cmd.Connection = cn;
+                    cmd.CommandTimeout = 1000000;
+                    cmd.CommandText =
+                        DbContextBaseUtil.GetStoredProcedureName("q_DeleteQueMessMoreDet", LogitudeDBSchema.LOGITUDE_MAIN,
+                    cmd.Connection.ConnectionString);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+
+                    OracleParameter parameter1 = new OracleParameter("days", OracleDbType.Integer);
+
+
+                    parameter1.Direction = ParameterDirection.Input;
+
+
+
+                    parameter1.Value = days;
+                   
+
+
+
+                    cmd.Parameters.Add(parameter1);
+
+
+
+
+                    try
+                    {
+                        cn.Open();
+                        cmd.ExecuteNonQuery();
+
+
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Console.WriteLine("Exception: {0}", ex.ToString());
+                        throw;
+                    }
+
+                    cn.Close();
+                }
+            }
+            else
+            {
+                using (SqlConnection cn = new SqlConnection(strConnString))
+                {
+                    // must do
+                }
+            }
+        }
+
 
 
         public static void CopySupplierInvoiceItemsCer(string sourceDeclarationId, string targetDeclarationId, int tenant)
