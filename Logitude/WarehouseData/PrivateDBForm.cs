@@ -128,10 +128,14 @@ namespace WarehouseData
 
                                 if (type == "Build")
                                 {
-                                    privateMainDataWarehouseService.BuildDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
-                                    privateDataWarehouseViewService.GeneratePrivateViews(new PrivateViewArgs() { ConnectionString = destinationConnectionString, UserName = privateUserName, Tenant = tenant, Catalog = catalog, ApplyGrantOnViews = !string.IsNullOrEmpty(privateUserName) ? true : false, IsParentTenant = isParentTenant });
-
-
+                                    Thread thread = new Thread(() =>
+                                    {
+                                        privateMainDataWarehouseService.BuildDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
+                                        privateDataWarehouseViewService.GeneratePrivateViews(new PrivateViewArgs() { ConnectionString = destinationConnectionString, UserName = privateUserName, Tenant = tenant, Catalog = catalog, ApplyGrantOnViews = !string.IsNullOrEmpty(privateUserName) ? true : false, IsParentTenant = isParentTenant });
+                                    });
+                                    thread.Start();
+                                    thread.Join();
+                        
                                 }
                                 else privateMainDataWarehouseService.UpdateDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
 

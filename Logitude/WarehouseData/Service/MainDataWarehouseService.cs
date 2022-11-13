@@ -298,8 +298,9 @@ namespace WarehouseData.Helper
                 }
                 FeatureDataWarehouseService featureDataWarehouseService = new FeatureDataWarehouseService(sourceConnectionString.Replace("Main" ,"Global"), sourceConnectionString);
 
-                foreach (DataRow row in dWHSettingsTable.Rows.Cast<DataRow>().ToList())
-                {
+                Parallel.ForEach(dWHSettingsTable.Rows.Cast<DataRow>().ToList(), (row) =>
+                { 
+
                     int tenant = Int32.Parse(row["Tenant"].ToString());
                     string catalog = row["Catalog"].ToString();
                     string userName = row["UserName"].ToString();
@@ -317,13 +318,19 @@ namespace WarehouseData.Helper
                         string tenants = privateMainDataWarehouseService.privateTenantDataWarehouse.ConvertIntgerListToString(relatedTenants);
                         if (type == "Build")
                         {
-                            privateMainDataWarehouseService.BuildDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
-                            privateDataWarehouseViewService.GeneratePrivateViews(new PrivateViewArgs() { ConnectionString = destinationConnectionString, UserName = privateUserName, Tenant = tenant, Catalog = catalog, ApplyGrantOnViews = !string.IsNullOrEmpty(privateUserName) ? true : false, IsParentTenant = isParentTenant });
+                            Thread thread = new Thread(() =>
+                            {
+
+                                privateMainDataWarehouseService.BuildDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
+                                privateDataWarehouseViewService.GeneratePrivateViews(new PrivateViewArgs() { ConnectionString = destinationConnectionString, UserName = privateUserName, Tenant = tenant, Catalog = catalog, ApplyGrantOnViews = !string.IsNullOrEmpty(privateUserName) ? true : false, IsParentTenant = isParentTenant });
+                            });
+                            thread.Start();
+                            thread.Join();
 
                         }
                         else privateMainDataWarehouseService.UpdateDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
                     }
-                }
+                });
             }
             else if (ApplicationName != "Service") MessageBox.Show("Connection Problem");
    
