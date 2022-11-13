@@ -491,7 +491,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
         this.UIProperties.SetEnabled("RecipientAddress", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("RecipientIssueCountryCode", this.ObjectTableName, !this.IsDisplayOnly);
 
-        this.RecipientList.forEach(element => {
+        this.RecipientList?.forEach(element => {
             element.SetScreenFieldsEditability();
         });
         
