@@ -25,6 +25,8 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.CustomsMessaging.MessagingServices;
 using Unifreight.Data.AmitalModel.Repsitories;
+using Logitude.Customs.BL.EntityUpdateServices;
+using Logitude.Customs.BL.BL;
 
 namespace Logitude.CustomsMessaging.RequestServices
 {
@@ -72,6 +74,8 @@ namespace Logitude.CustomsMessaging.RequestServices
             if (!string.IsNullOrWhiteSpace(requestParams.DocumentsTicketId))
             {
                 _CustomsDocumentsTicketPM = customsDocumentsTicketQueryService.GetSingle(requestParams.DocumentsTicketId, true, false);
+               
+
                 CustomsDocumentPointerPM customsDocumentPointerPM = _CustomsDocumentsTicketPM.CustomsDocumentPointers.FirstOrDefault();
                 if (!String.IsNullOrWhiteSpace(_CustomsDocumentPM.CustomsDocId))
                 {
@@ -298,7 +302,8 @@ namespace Logitude.CustomsMessaging.RequestServices
             }
             if (!CustomsRequestsSheetDomainModelService<D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityRequestParam>.GetBlob(document.Tenant, document, out byteArray))
             {
-                throw new BusinessErrorException("Unable to get Bolb Of " + _CustomsDocumentPM.DocumentsFilingId);
+               
+                throw new BusinessErrorException("Unable to get Bolb Of" + _CustomsDocumentPM.DocumentsFilingId);
             }
 
             if (!String.IsNullOrWhiteSpace(_CustomsDocumentPM.CustomsDocId))
@@ -374,6 +379,17 @@ namespace Logitude.CustomsMessaging.RequestServices
         public override Action<D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntity> GetActionShrinkCustomRequest()
         {
             return ShrinkCustomRequest;
+        }
+
+
+        public override void OnRequestFail(D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityRequestParam requestParams)
+        {
+            var myQueryService = new CustomsDocumentQueryService(_Context);
+            var myCustomsDocumentUpdateService = new CustomsDocumentUpdateService(_Context, new Dictionary<string, IContext>(), requestParams.Tenant);
+            var myCustomsDocumentPM = myQueryService.GetSingle(requestParams.DocumentsFilingId, true, false);
+            myCustomsDocumentPM.DocumentStatusCode = "2";
+            myCustomsDocumentPM.ChangeSetOp = ChangeSetOperation.Update;
+            base.OnRequestFail(requestParams);
         }
     }
 
