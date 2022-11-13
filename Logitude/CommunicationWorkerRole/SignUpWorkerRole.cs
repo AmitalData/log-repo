@@ -169,7 +169,7 @@ namespace CommunicationWorkerRole
                 {
                     From = "admin@fnarsoft.com",
                     To = "Perla@logitudeworld.com",
-                    CC = "fajr@logitudeworld.com;eman@logitudeworld.com;maryam@logitudeworld.com;azhar@logitudeworld.com;mujahed@logitudeworld.com;balqees@logitudeworld.com;a.khanfar@logitudeworld.com;a.hamamreh@logitudeworld.com;dana@logitudeworld.com;mohammadj@logitudeworld.com;ahmedm@logitudeworld.com",
+                    CC = "fajr@logitudeworld.com;eman@logitudeworld.com;maryam@logitudeworld.com;mujahed@logitudeworld.com;balqees@logitudeworld.com;a.khanfar@logitudeworld.com;a.hamamreh@logitudeworld.com;dana@logitudeworld.com;mohammadj@logitudeworld.com;ahmedm@logitudeworld.com;dalia@logitudeworld.com;Mohammada@logitudeworld.com",
                     BCC = "",
                     Subject = "SignUp complete successfully for " + signUpInfo.Company,
                     EmailBody = emailbody,
