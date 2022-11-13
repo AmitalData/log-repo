@@ -1467,7 +1467,7 @@ class JournalLineModel extends BaseComponent {
     }
     isRateMoreThanFivePerc() {
         this.parent.EntityWarningsList = [];
-        if (this.parent.Approved && this.LocalAmount && this.ForeignAmount) {
+        if (!this.parent.Approved && this.LocalAmount && this.ForeignAmount) {
 
             var userExchageRate = (this.LocalAmount / this.ForeignAmount);
             this.parent.JournalLines.Collection.map((line)=> {
