@@ -42,6 +42,13 @@ namespace Logitude.Customs.Def.ClosedTable
                 SearchFields = "CustomsDeleteNotToCustomCommunication,CustomsDeleteNotToCustomCommunication",
                 Description = "Delete Not To Custom Communication",
             });
+            all.Add(new CustomsSchedulerProcedureDetails()
+            {
+                Code = "CustomsDeleteQueMessMoreDetails",
+                Name = "CustomsDeleteQueMessMoreDetails",
+                SearchFields = "CustomsDeleteQueMessMoreDetails,CustomsDeleteQueMessMoreDetails",
+                Description = "CustomsDeleteQueMessMoreDetails",
+            });
             return all;
         }
             public void MapPoco(SchedulerProcedure newPoco)
