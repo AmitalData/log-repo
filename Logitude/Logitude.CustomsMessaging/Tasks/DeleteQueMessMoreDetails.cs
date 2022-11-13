@@ -26,6 +26,7 @@ namespace Logitude.CustomsMessaging.Tasks
 
         private void RunPerTenant(CustomsSettingPM t, string taskId)
         {
+            LogMessagingUtil.Instance.AppendLine(value: $"taskId({taskId})");
             LogMessagingUtil.Instance.AppendLine(value: $"RunPerTenant({t.Tenant})");
             SchedulerParamQueryService schedulerParamQueryService = new SchedulerParamQueryService(t.Tenant);
             var SchedularParams = schedulerParamQueryService.GetAllByProcedureCode(t.Tenant, taskId);
