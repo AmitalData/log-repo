@@ -24,7 +24,8 @@ import { OnDestroy } from '@angular/core';
         }`],
     selector: 'custom-layout',
     styleUrls: ['CustomDashboardComponent.css'],
-    inputs: ['IsEditLayout', 'SelectedDashboard']
+    inputs: ['IsEditLayout', 'SelectedDashboard'],
+    encapsulation : ViewEncapsulation.Emulated
 })
 
 export class CustomDashboardLayoutComponent implements AfterViewInit, OnDestroy {
