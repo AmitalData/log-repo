@@ -1,0 +1,33 @@
+﻿<Procedure DBType="Main" Name="q_Deletecommlogs" Schema="dbo" Module="Customs">
+  <SqlScript>
+  </SqlScript>
+
+  <OracleScript>
+    <![CDATA[
+CREATE OR REPLACE PROCEDURE Q_DeleteQueMessMoreDet (
+    days                   IN INTEGER
+) AS
+BEGIN
+    LOOP
+        DELETE FROM (
+            SELECT
+                ROWID AS row_id
+            FROM
+                QUEUEMESSAGEMOREDETAILS
+            WHERE
+             CREATEDATETIME <sysdate-days
+        )
+        WHERE
+            ROWNUM < 1001;
+
+        EXIT WHEN SQL%rowcount = 0;
+        COMMIT;
+    END LOOP;
+
+    COMMIT;
+END;
+/
+	
+    ]]>
+  </OracleScript>
+</Procedure>
