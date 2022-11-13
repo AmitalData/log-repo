@@ -58,7 +58,9 @@ namespace Logitude.DashboardModule.Data.EntityListQueryServices
 		{
 			string email = HttpContext.Current.User.Identity.Name;
 			ContactRepository contactRepository = new ContactRepository(tenant);
-			return contactRepository.GetConactIdByemail(email, tenant);
+			var loggedContactId = contactRepository.GetConactIdByemail(email, tenant);
+			if (string.IsNullOrEmpty(loggedContactId))loggedContactId = contactRepository.GetConactIdByemail(email, 0);
+			return loggedContactId;
 		}
 
 		private IQueryable<Dashboard> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<Dashboard> iQueryable, int tenant)
