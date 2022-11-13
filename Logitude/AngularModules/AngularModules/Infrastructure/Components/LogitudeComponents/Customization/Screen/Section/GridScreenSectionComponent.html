@@ -4,7 +4,7 @@
 		color: #1B90CB;
 	}
 </style>
-<table style="width:100%;">
+<table *ngIf="IsReady" style="width:100%;">
 	<tr>
 		<td>
 			<table>
@@ -21,7 +21,7 @@
 	<tr style="height:100%">
 		<td>
 			<div class="MediaFill" style="width:99.3%">
-				<logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="DataSource">
+				<logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="DataSource" [ShowNoDataFoundText]="true">
 					<log-column [width]="'150'" *ngFor="let ScreenColumn of ScreenSection.ScreenColumns" [header]="ScreenColumn.ObjectFields[0].FullNameTextCodeCode | TextCodeTranslationPipe" title="ScreenColumn.ObjectFields[0].FullNameTextCodeCode | TextCodeTranslationPipe">
 						<ng-template let-item>
 							<log-cell-template #logcelltemplate [IsEnabled]="false">
