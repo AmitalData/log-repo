@@ -407,6 +407,7 @@
     <Content Include="Infrastructure\Components\MultiUpdateComponent\MultiUpdateCheckTemplate.html" />
     <Content Include="Infrastructure\Components\MultiUpdateComponent\MultiUpdateComponent.html" />
     <Content Include="InvoiceModules\APInvoice\Components\EditTabs\APInvoiceGeneralTabComponent.html" />
+    <Content Include="InvoiceModules\APPayment\Components\NewEntity\NewAPPaymentComponent.html" />
     <Content Include="InvoiceModules\ARPayment\Components\Other\ARPaymentMultiBankTransfersComponent.html" />
     <Content Include="InvoiceModules\ARPayment\Components\Other\ARPaymentMultiChequesComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Accounting\PerVendorReportFilterComponent.html" />
@@ -2250,6 +2251,7 @@
     <TypeScriptCompile Include="InvoiceModules\APPayment\Components\EditTabs\APPaymentCancelationDetailsComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\Components\EditTabs\APPaymentGeneralTabComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\Components\EditTabs\EditPaymentChequeComponent.ts" />
+    <TypeScriptCompile Include="InvoiceModules\APPayment\Components\NewEntity\NewAPPaymentComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\Components\Other\ExternalPaymentComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\ModuleAPPayment.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\ModuleDeclarations.ts" />
