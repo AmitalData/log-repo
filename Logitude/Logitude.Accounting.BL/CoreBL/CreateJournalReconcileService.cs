@@ -1,6 +1,7 @@
 ﻿using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -278,6 +279,13 @@ namespace Logitude.Accounting.BL.CoreBL
 
                                                  }
                                );
+                    var journalReconcileRepository = new JournalReconcileRepository(accountingContext);
+                    var existingJournalsReconcilies = journalReconcileRepository.GetJournalReconcilesByLedgerTransactionsIds(listJournalReconciles.Select(x => x.LedgerTransactionId).ToList());
+                    foreach (var item in existingJournalsReconcilies) {
+                        if (listJournalReconciles.Any(x => x.LedgerTransactionId == item.LedgerTransactionId && x.ReconciliationAmount == item.ReconciliationAmount)) {
+                            throw new ApplicationException("There is already journal reconciliation has been created");
+                        }
+                    }
                     journal.JournalReconciles.AddRange(listJournalReconciles);
 
                     //var listTransactionId = ReconciliationLines.Select(r => r.TransactionId).ToList();
