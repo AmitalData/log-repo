@@ -182,14 +182,13 @@ export class GridScreenComponent extends BaseComponent implements OnInit, AfterV
     public get SearchText() { return this.searchText; }
     public set SearchText(newValue: string) {
         this.searchText = newValue;
-        let searchedUnSelectedFields;
         if (newValue != null && newValue != "") {
-            searchedUnSelectedFields = this.GetSearchedUnSelectedFields(newValue);
+            this.UnSelectedFields = this.GetSearchedUnSelectedFields(newValue);
         }
         else {
-            searchedUnSelectedFields = this.FixedUnSelectedFields;
+            this.UnSelectedFields = this.FixedUnSelectedFields;
         }
-        this.onUnselectedDataSourceChangedEvent.emit(searchedUnSelectedFields);
+        this.onUnselectedDataSourceChangedEvent.emit(this.UnSelectedFields);
     }
 
     ClearPlaceHolder() {
@@ -218,7 +217,6 @@ export class GridScreenComponent extends BaseComponent implements OnInit, AfterV
         this.needToSelectedItem = newValue;
     }
 
-    IsAddBtnClicked: boolean;
     btnAdd_Click() {
         if (!this.NeedToSelectedItem) return;
         this.NeedToSelectedItem.IndexOrder = this.ScreenLayoutComponent.GridScreenSelectedFields.length;
@@ -238,7 +236,6 @@ export class GridScreenComponent extends BaseComponent implements OnInit, AfterV
         this.DisableAllButtons();
         this.ScreenLayoutComponent.ReloadGridSections = true;
         this.ScreenLayoutComponent.Modified = true;
-        this.IsAddBtnClicked = true;
     }
 
     private GetSearchedUnSelectedFields(searchValue): ObjectFieldPM[] {
@@ -251,7 +248,6 @@ export class GridScreenComponent extends BaseComponent implements OnInit, AfterV
         this.ScreenLayoutComponent.GridScreenSelectedFields.splice(selectedFieldIndex, 0);
         this.ScreenLayoutComponent.GridScreenSelectedFields = this.ScreenLayoutComponent.GridScreenSelectedFields.filter(d => d.FieldCode != this.SelectedItem.FieldCode);
         this.UnSelectedFields.push(this.SelectedItem);
-        if (this.IsAddBtnClicked) this.FixedUnSelectedFields.push(this.SelectedItem);
         this.ReorderAllSelectedFields();
         if (this.SelectedFields.length != 0)
             this.onSelectedDataLoadedEvent.emit(this.NeedToSelectedItem);
