@@ -60,8 +60,10 @@ export class ExpressionComponent extends BaseComponent implements OnInit {
     }
 
     handlePropertiesWindowClosed(data) {
-        this.ExpressionValue = data
-        this.ValueChanged.emit(data);
+        if (data) {
+            this.ExpressionValue = data
+            this.ValueChanged.emit(data);
+        }
     }
 
     buildPropertiesWindow() {
