@@ -40,7 +40,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;9554&quot;"
+  Code="&quot;a79a&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -853,6 +853,11 @@
       Name="&quot;Connect Tranzilla on Test Links&quot;"
       SearchFields="&quot;Connect Tranzilla on Test Links&quot;"
       Description="&quot;Connect Tranzilla on Test Links&quot;" />
+    <Record
+      Code="&quot;UNV&quot;"
+      Name="&quot;Unicargo Server Validations&quot;"
+      SearchFields="&quot;Unicargo Server Validations&quot;"
+      Description="&quot;Unicargo Server Validations&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

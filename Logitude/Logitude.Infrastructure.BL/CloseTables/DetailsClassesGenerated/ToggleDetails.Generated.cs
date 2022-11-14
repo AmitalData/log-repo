@@ -747,6 +747,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "Connect Tranzilla on Test Links", 
                 Description = "Connect Tranzilla on Test Links", 
 			});
+
+            all.Add(new ToggleDetails()
+            {    
+                Code = "UNV", 
+                Name = "Unicargo Server Validations", 
+                SearchFields = "Unicargo Server Validations", 
+                Description = "Unicargo Server Validations", 
+			});
 			
             return all;
        }
