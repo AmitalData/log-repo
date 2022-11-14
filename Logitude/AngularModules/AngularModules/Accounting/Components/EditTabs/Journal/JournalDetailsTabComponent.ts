@@ -65,7 +65,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     AccountingPeriods: AccountingPeriodList[] = [];
     _AccountingPeriodListService: AccountingPeriodListService = new AccountingPeriodListService();
     ratesTableExtendedListService: RatesTableExtendedListService = new RatesTableExtendedListService();
-
+    public EntityWarningsList: string[] = [];
     OnRowEnded($event) {
         console.log("this.JournalLines.Length : " + this.JournalLines.Length);
         if (($event) == this.JournalLines.Length) {
@@ -315,8 +315,6 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
             }
         });
         this.GetDefaultValues();
-
-
         //set focus on accounting date
         var t = setTimeout(() => { this.forceFocus = true; }, 1);
     }
@@ -1186,7 +1184,7 @@ class JournalLineModel extends BaseComponent {
         if (this.CurrencyId == SessionLocator.TenantPM.CurrencyId) return true;
     }
     SetExchangeRateMnualy() {
-        this.currencyRate = this.LocalAmount / this.ForeignAmount;
+        //this.currencyRate = this.LocalAmount / this.ForeignAmount;
         this.isRateManualy = true;
     }
     // [!]
@@ -1462,6 +1460,22 @@ class JournalLineModel extends BaseComponent {
             var myResult = (this.LocalAmount / this.ForeignAmount).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
             return myResult;
+        }
+        else {
+            return null;
+        }
+    }
+    isRateMoreThanFivePerc() {
+        this.parent.EntityWarningsList = [];
+        if (!this.parent.Approved && this.LocalAmount && this.ForeignAmount) {
+
+            var userExchageRate = (this.LocalAmount / this.ForeignAmount);
+            this.parent.JournalLines.Collection.map((line)=> {
+                if((line.currencyRate - (line.LocalAmount / line.ForeignAmount)) > 0.05) {
+                    this.parent.EntityWarningsList.push(TextCodeTranslator.Translate("Journal.O.DifferenceExchangeRate"));
+                }
+            })
+            return userExchageRate && Math.abs(this.currencyRate - userExchageRate) > 0.05;
         }
         else {
             return null;
