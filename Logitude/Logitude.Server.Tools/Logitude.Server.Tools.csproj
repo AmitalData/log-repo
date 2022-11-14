@@ -242,6 +242,7 @@
     <Compile Include="CloseTablesClasses\FillCloseTable.cs" />
     <Compile Include="CloseTablesClasses\ICloseTable.cs" />
     <Compile Include="Communications.cs" />
+    <Compile Include="Contracts\ICustomsDeleteCustomRequestSheet.cs" />
     <Compile Include="Contracts\ICustomsDeleteQueMessMoreDetails.cs" />
     <Compile Include="Contracts\ICustomsDeleteNotToCustomCommunication.cs" />
     <Compile Include="Contracts\IUpdateOpenDeclarationInCourierMasterService.cs" />

@@ -39,6 +39,7 @@ namespace WebFreight.Web.CustomModel
             ContainerAccessor.Container.RegisterType<ICustomsSendManifestService, SendManifestService>("SendManifestService", new InjectionFactory(c => new SendManifestService()));
             ContainerAccessor.Container.RegisterType<ICustomsSendDeclarationStatus, SendDeclarationStatus>("SendDeclarationStatus", new InjectionFactory(c => new SendDeclarationStatus()));
             ContainerAccessor.Container.RegisterType<ICustomsDeleteNotToCustomCommunication, DeleteNotToCustomCommunication>("DeleteNotToCustomCommunication", new InjectionFactory(c => new DeleteNotToCustomCommunication()));
+            ContainerAccessor.Container.RegisterType<ICustomsDeleteCustomRequestSheet, DeleteCustomRequestSheet>("DeleteCustomRequestSheet", new InjectionFactory(c => new DeleteCustomRequestSheet()));
             ContainerAccessor.Container.RegisterType<ICustomsDeleteQueMessMoreDetails, DeleteQueMessMoreDetails>("DeleteQueMessMoreDetails", new InjectionFactory(c => new DeleteQueMessMoreDetails()));
 
 
