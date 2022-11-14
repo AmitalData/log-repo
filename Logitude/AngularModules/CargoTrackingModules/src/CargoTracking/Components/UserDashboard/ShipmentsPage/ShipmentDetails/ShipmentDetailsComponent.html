@@ -707,7 +707,7 @@
             </panel>
 
             <!-- Customs Data -->
-            <panel style="order: 5;" [Title]="'Customs Data'" [Name]="'CustomsDataPanel'"
+            <panel *ngIf="!IsOrderShipment" style="order: 5;" [Title]="'Customs Data'" [Name]="'CustomsDataPanel'"
                 [HaveDetailsSection]="true" [AlwaysExpanded]="true" [ShowWhitePanelOnMobile]="true"
                 [DetailsTitle]="'Tax Details'">
 
@@ -1014,7 +1014,7 @@
             </panel>
 
             <!-- Documents -->
-            <panel *ngIf="!IsOrderShipment" style="order: 5;" [Title]="'Documents'" [Name]="'DocumentsPanel'"
+            <panel style="order: 5;" [Title]="'Documents'" [Name]="'DocumentsPanel'"
                 [ShowWhitePanelOnMobile]="cargoTrackingShipmentPM.DocumentsFilings?.length === 0">
 
                 <div body>
