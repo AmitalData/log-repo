@@ -3,6 +3,8 @@ using Logitude.Customs.BL.Helpers;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools.Contracts;
 using Logitude.Server.Tools.Helpers;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +31,12 @@ namespace Logitude.CustomsMessaging.Tasks
             LogMessagingUtil.Instance.AppendLine(value: $"taskId({taskId})");
             LogMessagingUtil.Instance.AppendLine(value: $"RunPerTenant({t.Tenant})");
             SchedulerParamQueryService schedulerParamQueryService = new SchedulerParamQueryService(t.Tenant);
-            var SchedularParams = schedulerParamQueryService.GetAllByProcedureCode(t.Tenant, taskId);
+
+            TasksSchedulerRepository tasksSchedulerRepository = new TasksSchedulerRepository(t.Tenant);
+            TasksScheduler task = tasksSchedulerRepository.GetSingleTasksScheduler(taskId, t.Tenant);
+
+
+            var SchedularParams = schedulerParamQueryService.GetAllByProcedureCode(t.Tenant, task.ProcedureCode);
             int days = 90;
             foreach (var schedularParam in SchedularParams)
             {
