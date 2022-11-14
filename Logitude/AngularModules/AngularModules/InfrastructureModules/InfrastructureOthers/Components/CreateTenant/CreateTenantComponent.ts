@@ -193,6 +193,7 @@ export class CreateTenantComponent extends BaseComponent implements OnInit {
         SignUpInfo.VatNumber = this.VatNumber;
         SignUpInfo.TimeZoneOffset = this.TimeZoneOffset;
         SignUpInfo.City = this.City;
+        SignUpInfo.IsCreateLogboxTenantFromCloud = this.IsCreateLogboxTenantFromCloud;
       
         this.signUpService.CreateTenant(SignUpInfo).subscribe((myResponse: ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();
