@@ -176,7 +176,7 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="rows && rows.length == 0" style="width:100%;top:10px;position: relative;">
+                <div *ngIf="ShowNoDataFoundText && rows && rows.length == 0" style="width:100%;top:10px;position: relative;">
                     <label style="text-align:center;font-size:18px;color:gray" class="CenterCenter">
                         {{'General.O.NoDataFound' | TextCodeTranslationPipe}}
                     </label>

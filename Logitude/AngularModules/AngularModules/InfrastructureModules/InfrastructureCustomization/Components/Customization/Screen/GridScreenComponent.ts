@@ -78,6 +78,7 @@ export class GridScreenComponent extends BaseComponent implements OnInit, AfterV
     }
 
     UnSelectedFields: ObjectFieldPM[];
+    FixedUnSelectedFields: ObjectFieldPM[];
 
     SortedTypeChanged(selectedSortType) {
         this.SelectedScreen.SortedType = selectedSortType;
@@ -95,6 +96,7 @@ export class GridScreenComponent extends BaseComponent implements OnInit, AfterV
         this.CurrentSession.StartBusyIndicator("Loading...");
         this.ScreenLayoutComponent = screenLayoutComponent;
         this.UnSelectedFields = this.ScreenLayoutComponent.banckStackFields;
+        this.FixedUnSelectedFields = this.UnSelectedFields;
         this.FillSelectedFields();
         this.SetSelectedSortedByField();
         this.CurrentSession.StopBusyIndicator();
@@ -185,7 +187,7 @@ export class GridScreenComponent extends BaseComponent implements OnInit, AfterV
             searchedUnSelectedFields = this.GetSearchedUnSelectedFields(newValue);
         }
         else {
-            searchedUnSelectedFields = this.UnSelectedFields;
+            searchedUnSelectedFields = this.FixedUnSelectedFields;
         }
         this.onUnselectedDataSourceChangedEvent.emit(searchedUnSelectedFields);
     }
@@ -222,6 +224,7 @@ export class GridScreenComponent extends BaseComponent implements OnInit, AfterV
         let selectedFieldIndex = this.UnSelectedFields.indexOf(this.NeedToSelectedItem);
         this.UnSelectedFields.splice(selectedFieldIndex, 0);
         this.UnSelectedFields = this.UnSelectedFields.filter(d => d.FieldCode != this.NeedToSelectedItem.FieldCode);
+        this.FixedUnSelectedFields = this.FixedUnSelectedFields.filter(d => d.FieldCode != this.NeedToSelectedItem.FieldCode);
         this.ScreenLayoutComponent.GridScreenSelectedFields.push(this.NeedToSelectedItem);
         if (this.SearchText != null && this.SearchText != "") {
             this.UnSelectedFields = this.GetSearchedUnSelectedFields(this.SearchText);
@@ -237,7 +240,7 @@ export class GridScreenComponent extends BaseComponent implements OnInit, AfterV
     }
 
     private GetSearchedUnSelectedFields(searchValue): ObjectFieldPM[] {
-        return this.UnSelectedFields.filter(f => TextCodeTranslator.Translate(f.FullNameTextCodeCode).toLowerCase().indexOf(searchValue.toLowerCase()) > -1);
+        return this.FixedUnSelectedFields.filter(f => TextCodeTranslator.Translate(f.FullNameTextCodeCode).toLowerCase().indexOf(searchValue.toLowerCase()) > -1);
     }
 
     btnRemove_Click() {
