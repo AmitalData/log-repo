@@ -230,7 +230,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.initializer.HandleValidators();
 
                     ShipmentValidating.Validate(entityPM, entityPoco, isNewEntity, myCommonContext, loggedTenant);
-                    ShipmentValidating.ValidateRoutingDates(entityPM, entityPM.ShipmentPickUps, entityPM.ShipmentDeliveries);
+                    ShipmentValidating.ValidateFutureRoutingDates(entityPM, entityPM.ShipmentPickUps, entityPM.ShipmentDeliveries);
                 }
 
 
@@ -446,7 +446,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         this.initializer.HandleValidators();
 
                         ShipmentValidating.Validate(entityPM, entityPoco, isNewEntity, myCommonContext, loggedTenant);
-                        ShipmentValidating.ValidateRoutingDates(entityPM, initializer.ShipmentPickUpsChangeSet, initializer.ShipmentDeliveriesChangeSet);
+                        ShipmentValidating.ValidateFutureRoutingDates(entityPM, initializer.ShipmentPickUpsChangeSet, initializer.ShipmentDeliveriesChangeSet);
                     }
 
                     if (entityPM.ShipmentDirectionConverted && entityPM.ShipmentConvertedNewNumber)
@@ -5297,6 +5297,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 shipmentTracing.TracePickUp(itemPM, itemPoco, entityPM);
             }
 
+            ShipmentPickUpDeliveryValidator.ValidatePickup(itemPM, entityPM);
             ShipmentMapping.MapPickUp(itemPM, itemPoco, myCommonContext, true);
             shipmentPickUpDeliveryRepository.Add(itemPoco);
 
@@ -5324,6 +5325,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 itemPM.IsConnectedToStandalone = true;
             }
 
+            ShipmentPickUpDeliveryValidator.ValidatePickup(itemPM, entityPM);
             ShipmentMapping.MapPickUp(itemPM, itemPoco, myCommonContext, true);
             shipmentPickUpDeliveryRepository.Update(itemPoco);
 
@@ -5433,6 +5435,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 shipmentTracing.TraceDelivery(itemPM, itemPoco, entityPM);
             }
 
+            ShipmentPickUpDeliveryValidator.ValidateDelivery(itemPM, entityPM);
             ShipmentMapping.MapDelivery(itemPM, itemPoco, myCommonContext, true);
             shipmentPickUpDeliveryRepository.Add(itemPoco);
 
@@ -5462,6 +5465,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             this.UpdateShipmentPackageFromDelivery(itemPM);
 
+            ShipmentPickUpDeliveryValidator.ValidateDelivery(itemPM, entityPM);
             ShipmentMapping.MapDelivery(itemPM, itemPoco, myCommonContext, false);
             shipmentPickUpDeliveryRepository.Update(itemPoco);
 

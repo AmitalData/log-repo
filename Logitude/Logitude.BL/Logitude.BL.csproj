@@ -3125,7 +3125,9 @@
     <Compile Include="ShipmentsModel\Tools\TraceEvents\SpecialServicesTypeTracing.cs" />
     <Compile Include="ShipmentsModel\Tools\Validating\ContainerValidating.cs" />
     <Compile Include="ShipmentsModel\Tools\Validating\IEntityValidator.cs" />
+    <Compile Include="ShipmentsModel\Tools\Validating\RoutingDatesValidator.cs" />
     <Compile Include="ShipmentsModel\Tools\Validating\ShipmentAccountingValidator.cs" />
+    <Compile Include="ShipmentsModel\Tools\Validating\ShipmentPickUpDeliveryValidator.cs" />
     <Compile Include="ShipmentsModel\Tools\Validating\ShipmentWarehouseLegsValidator.cs" />
     <Compile Include="ShipmentsModel\Tools\Validating\ShipmentMasterValidator.cs" />
     <Compile Include="ShipmentsModel\Tools\Validating\ShipmentCustomsValidator.cs" />
