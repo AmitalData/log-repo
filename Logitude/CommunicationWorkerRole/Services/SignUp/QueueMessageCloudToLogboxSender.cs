@@ -62,11 +62,12 @@ namespace CommunicationWorkerRole.Services.SignUp
 
         private static void BuildFailedAPILog(Task<HttpResponseMessage> result, SignUpInfoClass signUpInfo)
         {
-            APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Result.Content.ReadAsStringAsync().Result);
+            APIException aPIException = JsonConvert.DeserializeObject<APIException>(result.Result.Content.ReadAsStringAsync().Result);
             APILogsPM aPILogsPM = GetNewLogPM(signUpInfo);
             const string failedStatusCode = "F";
             aPILogsPM.Status = failedStatusCode;
-            CreateAPILog(aPILogsPM, signUpInfo, EXC?.ToString());
+            string aPIExceptionErrorMessage = aPIException != null ? aPIException.ErrorMessage : ""; 
+            CreateAPILog(aPILogsPM, signUpInfo, aPIExceptionErrorMessage);
         }
 
         private static APILogsPM GetNewLogPM(SignUpInfoClass signUpInfo)
@@ -101,7 +102,7 @@ namespace CommunicationWorkerRole.Services.SignUp
                 LogPM.ObjectTableId = customerTenantAccessObjectTableId;
                 LogPM.Subject = "Create New Tenant From Cloud";
                 apiLogsService.Create(LogPM);
-                APILogsUtility.UpdateAPILogStatus(LogPM.Id, signUpInfo.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, message, message, responseData, null, "");
+                APILogsUtility.UpdateAPILogStatus(LogPM.Id, signUpInfo.Tenant, LogPM.Status, 1, DateTime.Now, DateTime.UtcNow, message, message, responseData, null, "");
                 scope.Complete();
             };
         }

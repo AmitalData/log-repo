@@ -37,7 +37,10 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature(signupInfo.ObjecttableName, "CREATETENANT", authToken.Tenant);
+                        if (!signupInfo.IsCreateLogboxTenantFromCloud)
+                        {
+                            SecurityUtility.CheckContactFeature(signupInfo.ObjecttableName, "CREATETENANT", authToken.Tenant);
+                        }
                         CreateNewTenant(signupInfo);
 
                         scope.Complete();
