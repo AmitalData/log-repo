@@ -52,7 +52,7 @@ export class AddSubEntityComponent extends BaseComponent {
     set DisplayLabelSingular(newValue: string) {
         if (this.displayLabelSingular != newValue) {
             this.displayLabelSingular = newValue;
-            this.objectTableName = this.parentObjectTable.Name + "." + SessionLocator.Tenant + "." + newValue.replace(/\s/g, "");
+            this.objectTableName = AppTool.IsNullOrEmpty(newValue) ? "" : this.parentObjectTable.Name + "." + SessionLocator.Tenant + "." + newValue.replace(/\s/g, "");
         }
     }
 
