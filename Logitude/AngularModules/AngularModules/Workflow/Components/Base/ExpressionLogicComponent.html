@@ -127,7 +127,7 @@
                     <div class="functions-container">
                         <div class="expression-category-dropdown">
                             <ComboBox [ItemsSource]="ExpressionCategoryList" [Binding]="'Name'"
-                                [SelectedItem]="SelectedCategory | ListItemPipe : ExpressionCategoryList"
+                                [SelectedItem]="SelectedCategory"
                                 (SelectedItemChanged)="updateExpressionCategory($event)" [ListType]="''"
                                 [CyData]="'expression'">
                             </ComboBox>
@@ -137,13 +137,13 @@
                                 [Width]="'360px'" [SetSelectedValue]="false" [IsReturnedTreeSelectItem]="true"
                                 [AllowClear]="false" [DisplayTitle]="false" [ShowExpand]="false"
                                 [Template]="expressionTemplate" (ValueChanged)="updateExpression($event)"
-                                [ShowItem]="SelectedCategory | ShowExpressionTreeItemPipe">
+                                [ShowItem]="SelectedCategoryCode | ShowExpressionTreeItemPipe">
                             </TreeSelect>
                             <TreeSelect *ngIf="!SelectedCategoryChanged" [Items]="ExpressionFunctionTreeItems"
                                 [Width]="'360px'" [SetSelectedValue]="false" [IsReturnedTreeSelectItem]="true"
                                 [AllowClear]="false" [DisplayTitle]="false" [ShowExpand]="false"
                                 [Template]="expressionTemplate" (ValueChanged)="updateExpression($event)"
-                                [ShowItem]="SelectedCategory | ShowExpressionTreeItemPipe">
+                                [ShowItem]="SelectedCategoryCode | ShowExpressionTreeItemPipe">
                             </TreeSelect>
                             <ng-template #expressionTemplate let-item>
                                 <div class="item-container">
