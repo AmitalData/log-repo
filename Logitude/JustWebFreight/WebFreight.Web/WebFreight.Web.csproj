@@ -2963,6 +2963,11 @@
     <Compile Include="Helpers\SharedLogisticReportService.cs" />
     <Compile Include="Helpers\ShipmentDigitalArchivedArgs.cs" />
     <Compile Include="Helpers\ShipmentOrderModule\ShipmentOrderService.cs" />
+    <Compile Include="Helpers\SignUp\Logbox\CustomerTenantAccessSignUpRequest.cs" />
+    <Compile Include="Helpers\SignUp\Logbox\LogboxSignUpCurrencyService.cs" />
+    <Compile Include="Helpers\SignUp\Logbox\LogboxSignUpAddressService.cs" />
+    <Compile Include="Helpers\SignUp\Logbox\LogboxSignUpCustomerService.cs" />
+    <Compile Include="Helpers\SignUp\Logbox\LogboxSignUpService.cs" />
     <Compile Include="Helpers\SignUp\TruckerSignUpService.cs" />
     <Compile Include="Helpers\StimulsoftReportFontSizeService.cs" />
     <Compile Include="Helpers\UpdateShipmetsBatchArgs.cs" />

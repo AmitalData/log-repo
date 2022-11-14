@@ -50,6 +50,7 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using WebFreight.Web.Helpers.SignUp;
 using Logitude.BL.DataContracts;
 using Logitude.Server.Tools.QueueService;
+using WebFreight.Web.Helpers.SignUp.Logbox;
 
 namespace WebFreight.Web.InfrastructureModel
 {
@@ -463,7 +464,8 @@ namespace WebFreight.Web.InfrastructureModel
                     PhoneNumber = signUpInfo.Phone
                 };
                 password = AddUser(userShortDetails, userRepository, branchRepository, departmentRepository, roleRepository);
-                UpdateLogBoxTenant(tenant, signUpInfo);
+                LogboxSignUpService logboxSignUpService = new LogboxSignUpService(signUpInfo, tenant);
+                logboxSignUpService.Update();
                 AddCounters(tenant, counterRepository, tenantZeroObjectTables, tenantZeroCounters);
                 List<Counter> currentTenantCounters = counterRepository.GetCounters(tenant).ToList();
 
@@ -552,8 +554,6 @@ namespace WebFreight.Web.InfrastructureModel
                 AddAutomationFromTenantZero(tenant , tenantZeroDocumentTypes);
 
                 new TruckerSignUpService(signUpInfo, tenant).CopyFromTenantZero();
-
-                CreateNewCustomer(signUpInfo, tenant);
                 #endregion
                 scop.Complete();
             }
@@ -757,89 +757,10 @@ namespace WebFreight.Web.InfrastructureModel
                 }
             }
 
-            SendCustomerTenantAccessSignUpRequest(signUpInfo, tenant);
+            CustomerTenantAccessSignUpRequest.Send(signUpInfo, tenant);
             
             signUpInfo.Tenant = tenant;
             return password;
-        }
-
-        private static void SendCustomerTenantAccessSignUpRequest(SignUpInfoClass signUpInfo, int tenant)
-        {
-            if (!signUpInfo.IsCreateLogboxTenantFromCloud) return;
-
-            HybridPartnerQuery hybridPartnerQuery = new HybridPartnerQuery(signUpInfo.Tenant);
-            var hybridPartners = hybridPartnerQuery.GetHybridPartnerLists(signUpInfo.Tenant);
-            if (hybridPartners == null) return;
-            var selectedHybridPartner = hybridPartners.Where(hybridPartner => hybridPartner.PartnerTenant == signUpInfo.Tenant).FirstOrDefault();
-            if (selectedHybridPartner == null) return;
-
-            IQueueService queue = new DbQueueService();
-            queue.InitializeQueue("CustomerTenantAccessRequestQueue", 0);
-            queue.Send(new Dictionary<string, string>() { { "RequestId", selectedHybridPartner.Id }, { "Tenant", tenant.ToString() } }, tenant);
-        }
-
-        private static void CreateNewCustomer(SignUpInfoClass signUpInfoClass, int tenant)
-        {
-            if (!signUpInfoClass.IsCreateLogboxTenantFromCloud) return;
-
-            CustomerPM customerPM = new CustomerPM
-            {
-                EnglishName = signUpInfoClass.Company,
-                CustomerStatusCode = "ACT",
-                Code = "new",
-                VatNumber = signUpInfoClass.VatNumber,
-                CountryCode = signUpInfoClass.CountryCode,
-                CityName = signUpInfoClass.City
-            };
-
-            customerPM.Addresses.Add(GetNewAddressPM(signUpInfoClass, tenant));
-            customerPM.Contacts.Add(GetNewContactPM(signUpInfoClass, tenant));
-
-            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
-            CustomerService customerService = new CustomerService(commonContext, customerPM);
-            customerService.Create();
-            signUpInfoClass.CustomerId = customerPM.Id;
-        }
-
-        private static AddressPM GetNewAddressPM(SignUpInfoClass signUpInfoClass, int tenant)
-        {
-            CountryRepository countryRepository = new CountryRepository(tenant);
-            string countryId = countryRepository.GetCountryIdByCode(signUpInfoClass.CountryCode, tenant);
-            
-            return new AddressPM
-            {
-                CardCode = "new",
-                AddressTypeId = "M",
-                City = signUpInfoClass.City,
-                ContactBusinessPhone = signUpInfoClass.Phone,
-                ContactEmail = signUpInfoClass.Email,
-                ContactName = signUpInfoClass.Name,
-                CountryCode = signUpInfoClass.CountryCode,
-                CountryEnglishName = signUpInfoClass.CountryName,
-                CountryName = signUpInfoClass.CountryName,
-                CountryId = countryId,
-                Description = "Main Address",
-                Name = signUpInfoClass.Name,
-                PhoneNumber = signUpInfoClass.Phone,
-                Tenant = tenant,
-                VatNumber = signUpInfoClass.VatNumber,
-                IsCreatedWithPartner = true,
-            };
-        }
-
-        private static ContactPM GetNewContactPM(SignUpInfoClass signUpInfoClass, int tenant)
-        {
-            return new ContactPM
-            {
-                BusinessPhone = signUpInfoClass.Phone,
-                CardId = "newCard",
-                Email = signUpInfoClass.Email,
-                EnglishName = signUpInfoClass.Name,
-                IsCreatedWithPartner = true,
-                LocalName = signUpInfoClass.Name,
-                SetAsPrimaryForCard = true,
-                Tenant = tenant,
-            };
         }
 
         private static void AddShipmentSubTypes(int tenant, ShipmentSubTypeRepository shipmentSubTypeRepository, List<ShipmentSubType> tenantZeroShipmentSubTypes)
@@ -1460,142 +1381,7 @@ namespace WebFreight.Web.InfrastructureModel
         
         public static void UpdateLogBoxTenant(int tenant, SignUpInfoClass signUpInfoClass)
         {
-            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
-            TenantService service = new TenantService(commonContext, tenant);
-            TenantQuery query = new TenantQuery(tenant);
-            var newTenant = query.GetSinglePM(tenant);
-            if (signUpInfoClass.PackageCode == "IMPO")
-            {
-                AddressRepository addressRepository = new AddressRepository(signUpInfoClass.Tenant);
-                var CustomerAddress = addressRepository.GetMainAddressByCardId(signUpInfoClass.CustomerId, signUpInfoClass.Tenant);
-                AddressService addressService = new AddressService(commonContext, tenant);
-                CountryRepository CountryRepository = new CountryRepository(tenant);
-                ContactRepository ContactRepository = new ContactRepository(signUpInfoClass.Tenant);
-                ContactService ContactService = new ContactService(commonContext, tenant);
-                CardQuery cardQuery = new CardQuery(signUpInfoClass.Tenant);
-                CustomerQuery CustomerQuery = new CustomerQuery(signUpInfoClass.Tenant);
-                var currentCard = cardQuery.GetSinglePM(signUpInfoClass.CustomerId, signUpInfoClass.Tenant);
-                var currentCustomer = CustomerQuery.GetSinglePMForLogBox(signUpInfoClass.CustomerId, signUpInfoClass.Tenant);
-                ContactQuery contactQuery = new ContactQuery(ContactRepository);
-                var CurrentContact = contactQuery.GetSinglePM(currentCard.PrimaryContactId, signUpInfoClass.Tenant);
-                CustomerQuery = new CustomerQuery(tenant);
-                ContactPM contactPM = contactQuery.GetContactByEmailOnly(signUpInfoClass.Email, tenant);//commonContext.Contacts.Where(d => d.Tenant == tenant && d.Email == signUpInfoClass.Email).FirstOrDefault();
-                                                                                                        //{
-                                                                                                        //    Tenant = tenant,
-                                                                                                        //    EnglishName = CurrentContact.EnglishName,
-                                                                                                        //    InActive = false,
-                                                                                                        //    DisplayGettingStarted = false,
-                                                                                                        //    IsUser = true,
-                                                                                                        //    Email = CurrentContact.Email,
-                                                                                                        //    LocalName = CurrentContact.LocalName,
-                                                                                                        //    BusinessPhone = CurrentContact.BusinessPhone,
-                                                                                                        //    Mobile = CurrentContact.Mobile
-              
-
-                //};
-                contactPM.SetAsPrimaryForCard = true;
-                contactPM.IsCreatedWithPartner = true;
-                //ContactService.Update(contactPM);
-                CustomerPM customerPM = new CustomerPM()
-                {
-                    Tenant = tenant,
-                    PrimaryContactId = contactPM.Id,
-                    IsFirstContactToAdd = true,
-                    EnglishName = currentCard.EnglishName,
-                    LocalName = currentCard.LocalName,
-                    PartnerTypeId = "CS",
-                    Code = CodeCounter.GetNumber("Card", tenant).ToString(),
-                    IsHybrid = true,
-                    IsCustomer = true,
-                    ExistedContactId = contactPM.Id,
-                    Contacts = new List<ContactPM>(),
-                };
-                customerPM.Contacts.Add(contactPM);
-                //var Contact = ContactRepository.GetSingleContactByEmailAndTenant("system@tenant" + tenant + ".com", tenant);
-                CustomerService CustomerService = new CustomerService(commonContext, customerPM, contactPM.Id);
-                CustomerService.Create();
-
-
-                var NewCountry = CountryRepository.GetSingleCountryByCode(CustomerAddress.Country.Code, tenant);
-                AddressPM TenantAddress = new AddressPM()
-                {
-                    Address1 = CustomerAddress.Address1,
-                    Address2 = CustomerAddress.Address2,
-                    AddressTypeId = CustomerAddress.AddressTypeId,
-                    Name = CustomerAddress.Name,
-                    City = CustomerAddress.City,
-                    CountryId = NewCountry.Id,
-                    IsLocalLanguage = true,
-                    InActive = false,
-                    Description = CustomerAddress.Description,
-                    Tenant = tenant,
-                    IsHybrid = true,
-                };
-                addressService.Create(TenantAddress);
-                CurrencyRepository CurrencyRepository = new CurrencyRepository(0);
-                CurrencyQuery currencyQuery = new CurrencyQuery(CurrencyRepository);
-                var currencies = currencyQuery.GetCurrenciesByTenantPM(0).Where(d => d.Code == "USD" || d.Code == "NIS").ToList();
-                CurrencyRepository = new CurrencyRepository(tenant);
-                //foreach (CurrencyPM currency in currencies)
-                //{
-                //    Currency newCurrency = new Currency()
-                //    {
-                //        Code = currency.Code,
-                //        EnglishName = currency.EnglishName,
-                //        Id = IdCounter.GetNumber("Currency", tenant).ToString(),
-                //        InActive = currency.InActive,
-                //        LocalName = currency.LocalName,
-                //        Notes = currency.Notes,
-                //        Tenant = tenant,
-                //        SearchFields = currency.SearchFields,
-                //    };
-                //    CurrencyRepository.Add(newCurrency);
-                //}
-                //CurrencyRepository.SubmitChanges();
-                var Cur = CurrencyRepository.GetSingleCurrencyByCode("NIS", 0);
-                var ProfCur = CurrencyRepository.GetSingleCurrencyByCode("USD", 0);
-                Currency newCurrency = new Currency()
-                {
-                    Code = Cur.Code,
-                    EnglishName = Cur.EnglishName,
-                    Id = IdCounter.GetNumber("Currency", tenant).ToString(),
-                    InActive = Cur.InActive,
-                    LocalName = Cur.LocalName,
-                    Notes = Cur.Notes,
-                    Tenant = tenant,
-                    SearchFields = Cur.SearchFields,
-                };
-                CurrencyRepository.Add(newCurrency);
-                newCurrency = new Currency()
-                {
-                    Code = ProfCur.Code,
-                    EnglishName = ProfCur.EnglishName,
-                    Id = IdCounter.GetNumber("Currency", tenant).ToString(),
-                    InActive = ProfCur.InActive,
-                    LocalName = ProfCur.LocalName,
-                    Notes = ProfCur.Notes,
-                    Tenant = tenant,
-                    SearchFields = ProfCur.SearchFields,
-                };
-                CurrencyRepository.Add(newCurrency);
-                CurrencyRepository.SubmitChanges();
-                CardRepository CardRepository = new CardRepository(signUpInfoClass.Tenant);
-                var CrmCustomer = CardRepository.GetSingleCard(signUpInfoClass.CustomerId, signUpInfoClass.Tenant, false);
-                newTenant.CurrencyId = Cur.Id;
-                newTenant.ProfitCurrencyId = ProfCur.Id;
-                newTenant.ProfitCurrencyRate = 4;
-                newTenant.VatNumber = CrmCustomer.VatNumber;
-                newTenant.AddressId = TenantAddress.Id;
-                newTenant.IsDocumentsArchive = true;
-                newTenant.CustomerId = customerPM.Id;
-                newTenant.CustomerTenantShareImportFile = true;
-                if (!string.IsNullOrEmpty(newTenant.PrivateLabelId))
-                {
-                    newTenant.AutoArchiveOnInvoice = true;
-                    newTenant.DocumentShareAsDefault = true;
-                }
-                service.Update(newTenant);
-            }
+            
         }
          
 
