@@ -201,10 +201,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             LogMessagingUtil.Instance.AppendLine("Time before update declaration: " + DateTime.Now.ToString("hh:mm:ss.fff tt"));
                             declarationUpdateService.Update(decPM, true);
                             LogMessagingUtil.Instance.AppendLine("Time after update declaration: " + DateTime.Now.ToString("hh:mm:ss.fff tt"));
-                    
-                            DeclarationPM myDeclarationPM = new DeclarationPM();
-                            myDeclarationPM = declarationUpdateService.GetSertByConvertedDeclarationNumber(phsicalCheckPM.DeclarationId.ToString(), requestParams.Tenant);
-                            if(myDeclarationPM.Direction =="E")
+
+                           
+                            DeclarationPM myDeclarationPM = declarationQueryService.GetSingle(phsicalCheckPM.DeclarationId, false, true);
+
+                            if(myDeclarationPM?.Direction =="E")
                             {
                                 ICommonDataContext commonDbContext = CommonDataContext.GetContext(myDeclarationPM.Tenant);
                                 UserRepository userRepository = new UserRepository(commonDbContext);
