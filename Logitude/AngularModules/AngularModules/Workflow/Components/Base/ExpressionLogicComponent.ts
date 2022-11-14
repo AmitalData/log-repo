@@ -29,7 +29,8 @@ export class ExpressionLogicComponent extends BaseComponent {
 
     public Resources: any
     public ExpressionTextArea: string
-    public SelectedCategory: string = "ALL";
+    public SelectedCategory: ExpressionCategoryList
+    public SelectedCategoryCode: string = "ALL";
 
     public startPoint: number = 0
     public endPoint: number = 0
@@ -68,8 +69,10 @@ export class ExpressionLogicComponent extends BaseComponent {
         this.expressionCategoryListService.getAll().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 const result = myResponse.Result;
-                this.ExpressionCategoryList = [{ Code: "ALL", Name: "All Functions", SearchFields: "All,All Functions" }];
+                let allCategoryType = { Code: "ALL", Name: "All Functions", SearchFields: "All,All Functions" };
+                this.ExpressionCategoryList.push(allCategoryType);
                 this.ExpressionCategoryList = this.ExpressionCategoryList.concat(result);
+                this.SelectedCategory = allCategoryType;
             }
         });
     }
@@ -86,7 +89,8 @@ export class ExpressionLogicComponent extends BaseComponent {
 
     updateExpressionCategory(value: any) {
         if (value != null) {
-            this.SelectedCategory = value.Code;
+            this.SelectedCategory = value;
+            this.SelectedCategoryCode = value.Code
             this.SelectedCategoryChanged = !this.SelectedCategoryChanged;
         }
     }
