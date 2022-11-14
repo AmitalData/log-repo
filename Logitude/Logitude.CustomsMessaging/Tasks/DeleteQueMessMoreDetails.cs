@@ -34,24 +34,26 @@ namespace Logitude.CustomsMessaging.Tasks
 
             TasksSchedulerRepository tasksSchedulerRepository = new TasksSchedulerRepository(t.Tenant);
             TasksScheduler task = tasksSchedulerRepository.GetSingleTasksScheduler(taskId, t.Tenant);
-
-
-            var SchedularParams = schedulerParamQueryService.GetAllByProcedureCode(t.Tenant, task.ProcedureCode);
-            int days = 90;
-            foreach (var schedularParam in SchedularParams)
+            if (task != null)
             {
-                switch (schedularParam.Parameter)
+
+                var SchedularParams = schedulerParamQueryService.GetAllByProcedureCode(t.Tenant, task.ProcedureCode);
+                int days = 90;
+                foreach (var schedularParam in SchedularParams)
                 {
-                    case "Days":
-                        int.TryParse(schedularParam.ParameterValue, out days);
-                        break;
-                    default:
-                        break;
+                    switch (schedularParam.Parameter)
+                    {
+                        case "Days":
+                            int.TryParse(schedularParam.ParameterValue, out days);
+                            break;
+                        default:
+                            break;
+                    }
                 }
+                LogMessagingUtil.Instance.AppendLine(value: $"Days({days.ToString()})");
+
+                CustomsStoredProcedures.DeleteQueueMessageMoreDetails(t.Tenant, days);
             }
-            LogMessagingUtil.Instance.AppendLine(value: $"Days({days.ToString()})");
-           
-            CustomsStoredProcedures.DeleteQueueMessageMoreDetails(t.Tenant, days);
         }
     }
 }

@@ -43,41 +43,43 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
             SchedulerParamQueryService schedulerParamQueryService = new SchedulerParamQueryService(t.Tenant);
             TasksSchedulerRepository tasksSchedulerRepository = new TasksSchedulerRepository(t.Tenant);
             TasksScheduler task = tasksSchedulerRepository.GetSingleTasksScheduler(taskId, t.Tenant);
-
-
-            var SchedularParams = schedulerParamQueryService.GetAllByProcedureCode(t.Tenant, task.ProcedureCode);
-            string From=null, To=null, Subject=null, CommunicationTypeStatus = null;
-            int days = 90;
-            foreach(var schedularParam in SchedularParams)
+            if (task != null)
             {
-                switch (schedularParam.Parameter)
-                {
-                    case "Days":
-                        int.TryParse(schedularParam.ParameterValue, out days);
-                        break;
-                    case "From":
-                        From = schedularParam.ParameterValue;
-                        break;
-                    case "To":
-                        To = schedularParam.ParameterValue;
-                        break;
-                    case "Subject":
-                        Subject = schedularParam.ParameterValue;
-                        break;
-                    case "CommunicationTypeStatus":
-                        CommunicationTypeStatus = schedularParam.ParameterValue;
-                        break;
-                    default:
-                        break;
-                }
-            }
-            LogMessagingUtil.Instance.AppendLine(value: $"Days({days.ToString()})");
-            LogMessagingUtil.Instance.AppendLine(value: $"From({From?.ToString()})");
-            LogMessagingUtil.Instance.AppendLine(value: $"To({To?.ToString()})");
-            LogMessagingUtil.Instance.AppendLine(value: $"Subject({Subject?.ToString()})");
-            LogMessagingUtil.Instance.AppendLine(value: $"CommunicationTypeStatus({CommunicationTypeStatus?.ToString()})");
 
-            CustomsStoredProcedures.DeleteCommunicationLogs(t.Tenant, days, From, To, Subject, CommunicationTypeStatus);
+                var SchedularParams = schedulerParamQueryService.GetAllByProcedureCode(t.Tenant, task.ProcedureCode);
+                string From = null, To = null, Subject = null, CommunicationTypeStatus = null;
+                int days = 90;
+                foreach (var schedularParam in SchedularParams)
+                {
+                    switch (schedularParam.Parameter)
+                    {
+                        case "Days":
+                            int.TryParse(schedularParam.ParameterValue, out days);
+                            break;
+                        case "From":
+                            From = schedularParam.ParameterValue;
+                            break;
+                        case "To":
+                            To = schedularParam.ParameterValue;
+                            break;
+                        case "Subject":
+                            Subject = schedularParam.ParameterValue;
+                            break;
+                        case "CommunicationTypeStatus":
+                            CommunicationTypeStatus = schedularParam.ParameterValue;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                LogMessagingUtil.Instance.AppendLine(value: $"Days({days.ToString()})");
+                LogMessagingUtil.Instance.AppendLine(value: $"From({From?.ToString()})");
+                LogMessagingUtil.Instance.AppendLine(value: $"To({To?.ToString()})");
+                LogMessagingUtil.Instance.AppendLine(value: $"Subject({Subject?.ToString()})");
+                LogMessagingUtil.Instance.AppendLine(value: $"CommunicationTypeStatus({CommunicationTypeStatus?.ToString()})");
+
+                CustomsStoredProcedures.DeleteCommunicationLogs(t.Tenant, days, From, To, Subject, CommunicationTypeStatus);
+            }
         }
     }
 }
