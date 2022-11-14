@@ -51,9 +51,28 @@ namespace WebFreight.Web.CustomWebServices.Testers
                 //string documentName = Guid.NewGuid().ToString() + ".xls";
                 //HttpContext.Current.Response.AppendHeader("Content-Disposition", ShowType + "; filename=\"" + HttpUtility.UrlPathEncode(documentName) + "\"");
                 //HttpContext.Current.Response.BinaryWrite(result);
+
+
+                //AccountingIntegrityService accountingIntegrityService = new AccountingIntegrityService();
+                //var res = new AccountingIntegrityResult();
+                //accountingIntegrityService.GLAccountBalanceCheck(new AccountingIntegrityInParam() { Tenant = 29, FromMonthInclusive = new DateTime(2022, 09, 01), ToMonthInclusive = new DateTime(2022, 11, 9) }, res);
+
+                var _params = new AccountingIntegrityInParam() { Tenant = 29, FromMonthInclusive = new DateTime(2022, 09, 01), ToMonthInclusive = new DateTime(2022, 11, 9) };
+                // 3- check parameters
                 AccountingIntegrityService accountingIntegrityService = new AccountingIntegrityService();
-                var res = new AccountingIntegrityResult();
-                accountingIntegrityService.GLAccountBalanceCheck(new AccountingIntegrityInParam() { Tenant = 29, FromMonthInclusive = new DateTime(2022, 09, 01), ToMonthInclusive = new DateTime(2022, 11, 9) }, res);
+                string errorMessage = accountingIntegrityService.CheckParams(_params);
+
+                // 4- run service
+                AccountingIntegrityResult res;
+                try
+                {
+                    res = accountingIntegrityService.CheckIntegrity(_params);
+                }
+                catch (Exception ex)
+                {
+
+                    throw new ApplicationException(ex.Message);
+                }
 
 
             }
