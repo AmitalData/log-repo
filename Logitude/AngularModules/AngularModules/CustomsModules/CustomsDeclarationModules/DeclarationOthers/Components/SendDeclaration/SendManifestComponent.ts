@@ -271,7 +271,7 @@ export class SendManifestService {
         this.DeclarationService.GetMAWBCourierMasterByDeclaration(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
             var result = myResponse.Result;
 
-            if (AppTool.IsNullOrEmpty(result)) {
+            if (AppTool.IsNullOrEmpty(result) && this.EntityPM.IsAmendment!=true) {
                 this.ValidationErrors.push("ההצהרה אינה מקושרת לבלדר ראשי");
                 this.FillValidationErrors(this.presendValidationsTitle);
             }
