@@ -269,6 +269,8 @@ namespace Logitude.Infrastructure.BL
                 Description = "Ocean Insights Containers", 
 			});
 			 
+          
+
             all.Add(new ToggleDetails()
             {    
                 Name = "Reports in Shared Logistics", 
@@ -279,19 +281,12 @@ namespace Logitude.Infrastructure.BL
 			 
             all.Add(new ToggleDetails()
             {    
-                Code = "BIF", 
-                Name = "Invoices DWH", 
-                SearchFields = "BIF,Invoices DWH,Allow Tenants to Show Invoice Fact on the BI Report Screen", 
-                Description = "Allow Tenants to Show Invoice Fact on the BI Report Screen", 
-			});
-			 
-            all.Add(new ToggleDetails()
-            {    
                 Code = "CTL", 
                 Name = "CollaborationTool", 
                 SearchFields = "CTL,CollaborationTool", 
                 Description = "Collaboration Tool", 
 			});
+			 
 			 
             all.Add(new ToggleDetails()
             {    

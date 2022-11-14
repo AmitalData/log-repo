@@ -45,7 +45,9 @@ namespace Logitude.BookingLib.Data
             GlobalDB currentDb;
 			currentDb = GlobalDbHelper.GetGlobalDB(tenant);
             string dbConnectionInfo = currentDb.DBConnection;
-            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo);
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+
+            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
             BookingContext context = new BookingContext(connection);
             return context;
         }
@@ -114,18 +116,6 @@ namespace Logitude.BookingLib.Data
 			modelBuilder.Entity<BookingPackage>().Property(x => x.Weight).HasPrecision(18, 3);
 				
 			modelBuilder.Entity<BookingPackage>().Property(x => x.Volume).HasPrecision(18, 3);
-				
-			modelBuilder.Entity<BookingPackage>().Property(x => x.Tare).HasPrecision(18, 2);
-				
-			modelBuilder.Entity<BookingPackage>().Property(x => x.Height).HasPrecision(18, 2);
-				
-			modelBuilder.Entity<BookingPackage>().Property(x => x.Width).HasPrecision(18, 2);
-				
-			modelBuilder.Entity<BookingPackage>().Property(x => x.Length).HasPrecision(18, 2);
-				
-			modelBuilder.Entity<BookingPackage>().Property(x => x.Temperature).HasPrecision(18, 2);
-				
-			modelBuilder.Entity<BookingPackage>().Property(x => x.Ventilation).HasPrecision(18, 2);
 				
 			modelBuilder.Entity<BookingPackage>().Property(x => x.VolumetricWeight).HasPrecision(18, 3);
 				
@@ -346,6 +336,8 @@ namespace Logitude.BookingLib.Data
             modelBuilder.Configurations.Add(new ChargeTypeAccountingMap());
             modelBuilder.Configurations.Add(new ReportMap());
             modelBuilder.Configurations.Add(new ContactLastLoginMap());
+            modelBuilder.Configurations.Add(new SharedLogisticsContactLastLoginMap());
+
             modelBuilder.Configurations.Add(new ContactLoginLogMap());
             modelBuilder.Configurations.Add(new SmallDocumentMap());
             modelBuilder.Configurations.Add(new CommunicationLogStepMap());
