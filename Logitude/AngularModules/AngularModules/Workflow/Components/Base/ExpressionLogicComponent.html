@@ -47,8 +47,8 @@
         width: 100px;
     }
 
-    .expression-dropdown {
-        width: 220px;
+    .expression-tree {
+        width: 360px;
     }
 
     .resources-tree {
@@ -68,6 +68,29 @@
         background: white;
         font-size: 14px;
         border: 2px solid black;
+    }
+
+    .item-container {
+        display: flex;
+        flex-direction: column;
+        padding: 2px;
+    }
+
+    .item-title {
+        font-size: 11px;
+        font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        color: black;
+        height: 16px;
+    }
+
+    .item-description {
+        font-size: 11px;
+        font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        color: dimgrey;
     }
 </style>
 
@@ -104,16 +127,30 @@
                     <div class="functions-container">
                         <div class="expression-category-dropdown">
                             <ComboBox [ItemsSource]="ExpressionCategoryList" [Binding]="'Name'"
-                                [SelectedItem]="SelectedExpressionCategory"
-                                (SelectedItemChanged)="SelectedExpressionCategory = $event" [ListType]="''"
+                                [SelectedItem]="SelectedCategory | ListItemPipe : ExpressionCategoryList"
+                                (SelectedItemChanged)="updateExpressionCategory($event)" [ListType]="''"
                                 [CyData]="'expression'">
                             </ComboBox>
                         </div>
-                        <div class="expression-dropdown">
-                            <ComboBox [ItemsSource]="ExpressionListByCategory" [Binding]="'Name'"
-                                (SelectedItemChanged)="SelectedExpression = $event"
-                                [ListType]="''" [CyData]="'expression'">
-                            </ComboBox>
+                        <div class="expression-tree">
+                            <TreeSelect *ngIf="SelectedCategoryChanged" [Items]="ExpressionFunctionTreeItems"
+                                [Width]="'360px'" [SetSelectedValue]="false" [IsReturnedTreeSelectItem]="true"
+                                [AllowClear]="false" [DisplayTitle]="false" [ShowExpand]="false"
+                                [Template]="expressionTemplate" (ValueChanged)="updateExpression($event)"
+                                [ShowItem]="SelectedCategory | ShowExpressionTreeItemPipe">
+                            </TreeSelect>
+                            <TreeSelect *ngIf="!SelectedCategoryChanged" [Items]="ExpressionFunctionTreeItems"
+                                [Width]="'360px'" [SetSelectedValue]="false" [IsReturnedTreeSelectItem]="true"
+                                [AllowClear]="false" [DisplayTitle]="false" [ShowExpand]="false"
+                                [Template]="expressionTemplate" (ValueChanged)="updateExpression($event)"
+                                [ShowItem]="SelectedCategory | ShowExpressionTreeItemPipe">
+                            </TreeSelect>
+                            <ng-template #expressionTemplate let-item>
+                                <div class="item-container">
+                                    <div class="item-title">{{ item.title }}</div>
+                                    <div class="item-description">{{ item.origin.data.Description }}</div>
+                                </div>
+                            </ng-template>
                         </div>
                         <div class="resources-tree">
                             <TreeSelect [Items]="FlowVariablesTreeItems" [Width]="'220px'" [SetSelectedValue]="false"

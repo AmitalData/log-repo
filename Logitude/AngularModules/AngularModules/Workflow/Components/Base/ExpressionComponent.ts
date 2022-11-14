@@ -1,12 +1,15 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { LogitudeWindow } from "Controls/Windows/LogitudeWindow";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
+import { ServiceResponse } from "Infrastructure/DataContracts/ServiceResponse";
 import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { ObjectTablePM } from "Infrastructure/EntityPMs/ObjectTablePM";
 import { FieldTypes } from "Workflow/Constants/FieldTypes";
+import { ExpressionList } from "Workflow/EntityLists/ExpressionList";
 import { BooleanValuesList } from "Workflow/Models/BooleanValuesList";
 import { ListItem } from "Workflow/Models/ListItem";
 import { ObjectTables } from "Workflow/Models/ObjectTables";
+import { ExpressionListService } from "Workflow/Services/StandardLists/ExpressionListService";
 
 @Component({
     selector: "Expression",
@@ -23,6 +26,8 @@ export class ExpressionComponent extends BaseComponent implements OnInit {
     @Output() ValueChanged = new EventEmitter<string>();
 
     public DataContext: any = this;
+    public ExpressionList: ExpressionList[] = [];
+    public expressionListService: ExpressionListService = new ExpressionListService();
 
 
     public ExpressionValue: string;
@@ -33,11 +38,20 @@ export class ExpressionComponent extends BaseComponent implements OnInit {
 
     ngOnInit() {
         this.ExpressionValue = this.CurrentValue
+        this.initializeExpressionData();
+
     }
 
+    initializeExpressionData() {
+        this.expressionListService.getAll().subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.ExpressionList = this.ExpressionList.concat(myResponse.Result);
+            }
+        });
+    }
 
     expressionHandle() {
-        if(!this.IsDisabled){
+        if (!this.IsDisabled) {
             let propertiesComponentPath = "./Workflow/Components/Base/ExpressionLogicComponent";
             let propertiesWindow = this.buildPropertiesWindow();
             propertiesWindow.Show(propertiesComponentPath);
@@ -56,7 +70,8 @@ export class ExpressionComponent extends BaseComponent implements OnInit {
             FlowObject: this.FlowObject,
             CurrentNodeId: this.CurrentNodeId,
             FlowObjectFields: this.FlowObjectFields,
-            ExpressionValue : this.ExpressionValue
+            ExpressionValue: this.ExpressionValue,
+            ExpressionList: this.ExpressionList
         };
         propertiesWindow.Height = 440;
         propertiesWindow.Width = 985;
