@@ -1467,11 +1467,11 @@ class JournalLineModel extends BaseComponent {
     }
     isRateMoreThanFivePerc() {
         this.parent.EntityWarningsList = [];
-        if (!this.parent.Approved && this.LocalAmount && this.ForeignAmount) {
+        if (this.LocalAmount && this.ForeignAmount) {
 
             var userExchageRate = (this.LocalAmount / this.ForeignAmount);
             this.parent.JournalLines.Collection.map((line)=> {
-                if((line.currencyRate - (line.LocalAmount / line.ForeignAmount)) > 0.05) {
+                if(!this.parent.Approved && (line.currencyRate - (line.LocalAmount / line.ForeignAmount)) > 0.05) {
                     this.parent.EntityWarningsList.push(TextCodeTranslator.Translate("Journal.O.DifferenceExchangeRate"));
                 }
             })
