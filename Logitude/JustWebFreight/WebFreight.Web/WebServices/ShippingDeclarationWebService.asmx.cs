@@ -3564,6 +3564,8 @@ namespace WebFreight.Web.WebServices
                         newItem.TransportMode = pickup.TransportModeName;
                         newItem.Weight = pickup.ShipmentPickUpDeliveryPackages.Sum(s => s.Weight);
                         myServicHelper.GetPickUpAddresses(pickup, newItem, addressRepository, tenant);
+                        newItem.FromAddress = myServicHelper.GetDeliveryPickUpAddress(myServicHelper.BuildPickupArguments(pickup, true));
+                        newItem.ToAddress = myServicHelper.GetDeliveryPickUpAddress(myServicHelper.BuildPickupArguments(pickup, false));
 
                         foreach (ShipmentPickUpDeliveryPackagePM package in pickup.ShipmentPickUpDeliveryPackages)
                         {
@@ -3647,6 +3649,8 @@ namespace WebFreight.Web.WebServices
                         newItem.TransportMode = deliv.TransportModeName;
                         newItem.Weight = deliv.ShipmentPickUpDeliveryPackages.Sum(s => s.Weight);
                         myServicHelper.GetDeliveryToAddress(deliv, newItem, addressRepository, tenant);
+                        newItem.FromAddress = myServicHelper.GetDeliveryPickUpAddress(myServicHelper.BuildDeliveryArguments(deliv, true));
+                        newItem.ToAddress = myServicHelper.GetDeliveryPickUpAddress(myServicHelper.BuildDeliveryArguments(deliv, false));
 
                         #region Empty Container
                         newItem.EmptyContainerReturnRef = deliv.EmptyDeliveryDepotReference;
