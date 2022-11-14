@@ -1841,6 +1841,65 @@ namespace WebFreight.Web.WebServices
             }
             return toLocation;
         }
+
+        public PickUpAndDeliveriesArguments BuildPickupArguments(ShipmentPickUpPM pickup, bool isFromAddress)
+        {
+            if (isFromAddress)
+            {
+                return new PickUpAndDeliveriesArguments()
+                {
+                    TypeCode = pickup.PickUpDeliveryFromTypeCode,
+                    PartnerCardId = pickup.FromPartnerCardId,
+                    AddressId = pickup.FromAddressId,
+                    PortId = pickup.FromPortId,
+                    AddressCountryId = pickup.FromAddressCountryId,
+                    AddressCity = pickup.FromAddressCity,
+                    AddressZipCode = pickup.FromAddressZipCode
+                };
+            }
+            else
+            {
+                return new PickUpAndDeliveriesArguments()
+                {
+                    TypeCode = pickup.PickUpDeliveryToTypeCode,
+                    PartnerCardId = pickup.ToPartnerCardId,
+                    AddressId = pickup.ToAddressId,
+                    PortId = pickup.ToPortId,
+                    AddressCountryId = pickup.ToAddressCountryId,
+                    AddressCity = pickup.ToAddressCity,
+                    AddressZipCode = pickup.ToAddressZipCode
+                };
+            }
+        }
+        public PickUpAndDeliveriesArguments BuildDeliveryArguments(ShipmentDeliveryPM delivery, bool isFromAddress)
+        {
+            if (isFromAddress)
+            {
+                return new PickUpAndDeliveriesArguments()
+                {
+                    TypeCode = delivery.PickUpDeliveryFromTypeCode,
+                    PartnerCardId = delivery.FromPartnerCardId,
+                    AddressId = delivery.FromAddressId,
+                    PortId = delivery.FromPortId,
+                    AddressCountryId = delivery.FromAddressCountryId,
+                    AddressCity = delivery.FromAddressCity,
+                    AddressZipCode = delivery.FromAddressZipCode
+                };
+            }
+            else
+            {
+                return new PickUpAndDeliveriesArguments()
+                {
+                    TypeCode = delivery.PickUpDeliveryToTypeCode,
+                    PartnerCardId = delivery.ToPartnerCardId,
+                    AddressId = delivery.ToAddressId,
+                    PortId = delivery.ToPortId,
+                    AddressCountryId = delivery.ToAddressCountryId,
+                    AddressCity = delivery.ToAddressCity,
+                    AddressZipCode = delivery.ToAddressZipCode
+                };
+            }
+        }
     }
 
     public  class InlandDomesticArgs
