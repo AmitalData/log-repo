@@ -3045,7 +3045,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             shipmentPM.LastSharedEventId = houseShipment.LastSharedEventId;
             shipmentPM.IsAccrualsApproved = houseShipment.IsAccrualsApproved;
             shipmentPM.IncludesCustoms = houseShipment.IncludesCustoms;
-            shipmentPM.CustomsClearanceDate = shipment.CustomsClearanceDate;
+            shipmentPM.CustomsClearanceDate = houseShipment.CustomsClearanceDate;
 
 
             if (EntityChangeHelper.IsShowLogBoxAutomationFields())
