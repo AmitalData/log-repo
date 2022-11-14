@@ -451,6 +451,7 @@ namespace Logitude.Customs.Data.Repsitories
                   (
                   from rec in context.Declarations
                   where rec.CourierHAWB == CourierHAWB && rec.Tenant == tenant && rec.AmendmentDontDisplayInList == false
+
                   select rec.Id
                   );
             return q.ToList(); ;
