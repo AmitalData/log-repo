@@ -19,12 +19,7 @@ BEGIN
             FROM
                 communicationlogs
             WHERE
-                id NOT IN (
-                    SELECT
-                        requestcomminicationid
-                    FROM
-                        customsrequestssheets
-                )
+                To_ != 'Customs'
                 AND createdate_ < sysdate - days
                 AND ( from__ IS NULL
                       OR from_ = from__ )
