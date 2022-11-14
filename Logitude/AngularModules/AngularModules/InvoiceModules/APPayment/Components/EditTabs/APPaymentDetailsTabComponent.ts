@@ -167,8 +167,10 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 var res = myResponse.Result;
                 this.FullAccountingSetting = res;
 
-                if (this.FullAccountingSetting != null)
+                if (this.FullAccountingSetting != null) {
                     this.PaymentChequeActivated = this.FullAccountingSetting.IsPaymentChequesActivated && this.IsFullAccounting;
+                    this.SetUIProperties_Cheque();
+                }
             }
         });
     }
