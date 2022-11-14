@@ -37,6 +37,7 @@ using System.Threading.Tasks;
 using System.Transactions;
 using WebFreight.Web.DataProviders;
 using WebFreight.Web.Helpers;
+using Logitude.Accounting.Data.Repositories;
 
 namespace CommunicationWorkerRole.Services
 {
@@ -195,7 +196,7 @@ namespace CommunicationWorkerRole.Services
             }
             this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Validate Selected Partners"));
             ValidateResult result = ValidateSelectedPartners(schedulerDetails.ReportDetails.ReportFilterItems, reportTask.Tenant, additionalValidate);
-            ValidateResult gLAccountBalanceInLocalValidateResult = ValidateGLAccountBalanceInLocalCurrency(schedulerDetails.ReportDetails.ReportFilterItems, stiReport);
+            ValidateResult gLAccountBalanceInLocalValidateResult = ValidateGLAccountBalanceInLocalCurrency(schedulerDetails.ReportDetails.ReportFilterItems, stiReport, reportTask.Tenant);
             if (result.IsValid && gLAccountBalanceInLocalValidateResult.IsValid)
             {
                 this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents"));
@@ -511,22 +512,89 @@ namespace CommunicationWorkerRole.Services
             return result;
         }
 
-        private ValidateResult ValidateGLAccountBalanceInLocalCurrency(List<QueryFilterItem> reportFilterItems, StiReport stiReport)
+        private ValidateResult ValidateGLAccountBalanceInLocalCurrency(List<QueryFilterItem> reportFilterItems, StiReport stiReport, int tenant)
         {
             ValidateResult result = new ValidateResult() { IsValid = true, ErrorMessage = ""};
             string balanceInLocalCurrency = GetFilterFieldValueByName(reportFilterItems, "BalanceInLocalCurrency");
-            if (stiReport.BusinessObjectsStore.Where(x => x.Category == "LTRP").Any() && !string.IsNullOrWhiteSpace(balanceInLocalCurrency))
+            string balanceInLocalCurrencyOperator = GetFilterFieldOperatorByName(reportFilterItems, "BalanceInLocalCurrency");
+            if (stiReport.BusinessObjectsStore.Where(x => x.Category == "LTRP").Any() && !string.IsNullOrWhiteSpace(balanceInLocalCurrency)
+                && !string.IsNullOrWhiteSpace(balanceInLocalCurrencyOperator))
             {
                 var stiBusinessObjectData = stiReport.BusinessObjectsStore.Where(x => x.Category == "LTRP").FirstOrDefault();
                 var ledgerTransactionsDataProvider = stiBusinessObjectData != null ? (LedgerTransactionsDataProvider)stiBusinessObjectData.BusinessObjectValue : null;
-
-                result.IsValid = ledgerTransactionsDataProvider.LocalOpenBalance != Convert.ToDecimal(balanceInLocalCurrency);
+                result.IsValid = CompareBalanceInLocalCurrencyWithLocalClosedBalance(Convert.ToDecimal(balanceInLocalCurrency), ledgerTransactionsDataProvider.LocalClosedBalance, balanceInLocalCurrencyOperator);
                 if (!result.IsValid)
-                    result.ErrorMessage = "The E-mail was not sent, the Balance in local currency equals the GLaccount balance in local currency";
+                    result.ErrorMessage = "The E-mail was not sent, the GLaccount local closed balance " + getOperatorName(balanceInLocalCurrencyOperator) + " the closed balance in local currency";
             }
             return result;
         }
-        
+
+        private bool CompareBalanceInLocalCurrencyWithLocalClosedBalance(decimal balanceInLocalCurrency, decimal localclosedBalance, string balanceInLocalCurrencyOperator)
+        {
+            bool isValid = false;
+            switch (balanceInLocalCurrencyOperator) {
+                case "Equals":
+                    isValid = (localclosedBalance == balanceInLocalCurrency);
+                    break;
+                case "NotEqual":
+                    isValid = (localclosedBalance != balanceInLocalCurrency);
+                    break;
+                case "LargerThan":
+                    isValid = (localclosedBalance > balanceInLocalCurrency);
+                    break;
+                case "LessThan":
+                    isValid = (localclosedBalance < balanceInLocalCurrency);
+                    break;
+                case "LessThanOrEqual":
+                    isValid = (localclosedBalance <= balanceInLocalCurrency);
+                    break;
+                case "GreaterThanOrEqual":
+                    isValid = (localclosedBalance >= balanceInLocalCurrency);
+                    break;
+            }
+            return isValid;
+        }
+
+        private string getOperatorName(string operatorCode)
+        {
+            string operatorName = "";
+            switch (operatorCode)
+            {
+                case "Equals":
+                    operatorName = "is not equal";
+                    break;
+                case "NotEqual":
+                    operatorName = "is equal";
+                    break;
+                case "LargerThan":
+                    operatorName = "is not larger than";
+                    break;
+                case "LessThan":
+                    operatorName = "is not less than";
+                    break;
+                case "LessThanOrEqual":
+                    operatorName = "is not less than or equal";
+                    break;
+                case "GreaterThanOrEqual":
+                    operatorName = "is not greater than or equal";
+                    break;
+            }
+            return operatorName;
+        }
+
+        private string GetFilterFieldOperatorByName(List<QueryFilterItem> reportFilterItems, string fieldName)
+        {
+            string fieldOperator = null;
+            reportFilterItems.ForEach(item => {
+                if (item.FieldName == fieldName)
+                {
+                    if (item.FieldValue != null)
+                        fieldOperator = item.Operator.ToString();
+                }
+            });
+            return fieldOperator;
+        }
+
         private ReportSchedulerRecepients RemoveInActiveCustomerRecepients(ReportSchedulerRecepients recepients, List<ShortPartnersDetails> connectedPartners, int tenant)
         {
             ReportSchedulerRecepients myRecepients = recepients;
