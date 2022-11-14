@@ -618,7 +618,7 @@
           </div>
       
           <div class="btn-payment">
-            <button (click)="OnPayClick()" >לתשלום מאובטח</button>
+            <button [class.Disable]="IsAgreed == false" (click)="OnPayClick()" >לתשלום מאובטח</button>
           </div>
       
           <div class="footer">
