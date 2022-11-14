@@ -82,7 +82,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
             if (this.DecPM.Direction === 'E'){
                 this.setIdentifiersPlaceHolders();
-            }
+            }           
         });
     }
 
@@ -144,6 +144,28 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                     this.EntityPM.FinalCargoTypeCode = "1";
                 }
 
+                if(AppTool.IsNullOrEmpty(this.EntityPM.FinalCargoTypeCode) && this.DecPM.TransportModeId == 'L' && !AppTool.IsNullOrEmpty(this.DecPM.Consignments[0].CargoTypeCodeForExport))
+                {
+                    this.EntityPM.IsDirty = true;
+                    this.EntityPM.FinalCargoTypeCode = this.DecPM.Consignments[0].CargoTypeCodeForExport;
+                    
+                }
+
+                if(AppTool.IsNullOrEmpty(this.EntityPM.FinalManifestNumber) && this.DecPM.TransportModeId == 'L' && !AppTool.IsNullOrEmpty(this.DecPM.Consignments[0].ManifestNumber))
+                {
+                    this.EntityPM.IsDirty = true;
+                    this.EntityPM.FinalManifestNumber = this.DecPM.Consignments[0].ManifestNumber;
+                    
+                }
+
+                if(AppTool.IsNullOrEmpty(this.EntityPM.FinalLoadingSite) && this.DecPM.TransportModeId == 'L' && !AppTool.IsNullOrEmpty(this.DecPM.Consignments[0].ExportLoadingPortCode))
+                {
+                    this.EntityPM.IsDirty = true;
+                    this.EntityPM.FinalLoadingSite = this.DecPM.Consignments[0].ExportLoadingPortCode;
+                    
+                }
+
+               
                 /*this.EntityPM = new ExportDeclarationClosingDataPM();
                 this.EntityPM.DeclarationId = id;
                 this.EntityPM.Tenant = this.DecPM.Tenant;
@@ -241,7 +263,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     }
 
     get FinalCargoTypeCode() { return this.EntityPM ? this.EntityPM.FinalCargoTypeCode : null; }
-    set FinalCargoTypeCode(value: string) {
+    set FinalCargoTypeCode(value: string) {        
         if (this.EntityPM.FinalCargoTypeCode != value) {
             this.EntityPM.FinalCargoTypeCode = value;
             this.EntityPM.IsDirty = true;
@@ -254,7 +276,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     }
 
     get FinalManifestNumber() { return this.EntityPM ? this.EntityPM.FinalManifestNumber : null; }
-    set FinalManifestNumber(value: string) {
+    set FinalManifestNumber(value: string) {        
         if (this.EntityPM.FinalManifestNumber != value) {
             this.EntityPM.FinalManifestNumber = value;
             this.EntityPM.IsDirty = true;
