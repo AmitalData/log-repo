@@ -616,10 +616,10 @@
                       </log-column>
 
                     <!-- Exchange rate -->
-                    <log-column  *ngIf="!Approved" [header]="'LedgerTransaction.F.ExchangeRate' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="isRTL ? 'right' : 'left'">
+                    <log-column [header]="'LedgerTransaction.F.ExchangeRate' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="isRTL ? 'right' : 'left'">
                       <ng-template let-item>
                           <log-cell-template #logcelltemplate [IsEnabled]="false">
-                            <div style="text-align: center;display: inline-block;width: 30px;"  *ngIf="item.isRateMoreThanFivePerc()" title="{{'Journal.O.DifferenceExchangeRate' | TextCodeTranslationPipe}}">
+                            <div style="text-align: center;display: inline-block;width: 30px;"  *ngIf="!Approved && item.isRateMoreThanFivePerc()" title="{{'Journal.O.DifferenceExchangeRate' | TextCodeTranslationPipe}}">
                                 <img src="./Images/favicon.png" />
                             </div>
                             <span *ngIf="!item.isRateManualy" >{{item.currencyRate}}</span>
