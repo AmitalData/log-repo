@@ -34,6 +34,11 @@ namespace WebFreight.Web.Helpers.SignUp.Logbox
 
             var CrmCustomer = CardRepository.GetSingleCard(signUpInfoClass.CustomerId, signUpInfoClass.Tenant, false);
 
+            if (CrmCustomer == null)
+            {
+                throw new ApplicationException("Customer with Id: " + signUpInfoClass.CustomerId + " is not exist!");
+            }
+
             var newTenant = query.GetSinglePM(tenant);
             newTenant.CurrencyId = Cur.Id;
             newTenant.ProfitCurrencyId = ProfCur.Id;
@@ -44,6 +49,7 @@ namespace WebFreight.Web.Helpers.SignUp.Logbox
             newTenant.CustomerId = signUpInfoClass.CustomerId;
             newTenant.CustomerTenantShareImportFile = true;
             newTenant.AutoArchiveOnInvoice = !string.IsNullOrEmpty(newTenant.PrivateLabelId) ? true : newTenant.AutoArchiveOnInvoice;
+            newTenant.AutoArchiveOnPODExport = !string.IsNullOrEmpty(newTenant.PrivateLabelId) ? true : newTenant.AutoArchiveOnPODExport;
             newTenant.DocumentShareAsDefault = !string.IsNullOrEmpty(newTenant.PrivateLabelId) ? true : newTenant.DocumentShareAsDefault;
             service.Update(newTenant);
         }

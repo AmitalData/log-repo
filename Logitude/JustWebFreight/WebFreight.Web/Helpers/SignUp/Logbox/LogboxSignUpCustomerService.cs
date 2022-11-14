@@ -91,6 +91,10 @@ namespace WebFreight.Web.Helpers.SignUp.Logbox
             ContactPM contactPM = contactQuery.GetContactByEmailOnly(signUpInfoClass.Email, tenant);
             CustomerQuery CustomerQuery = new CustomerQuery(signUpInfoClass.Tenant);
             var currentCustomer = CustomerQuery.GetSinglePMForLogBox(signUpInfoClass.CustomerId, signUpInfoClass.Tenant);
+            if (currentCustomer == null)
+            {
+                throw new ApplicationException("Customer with Id: " + signUpInfoClass.CustomerId + " is not exist!");
+            }
             currentCustomer.PrimaryContactId = contactPM.Id;
             currentCustomer.EnglishName = contactPM.EnglishName;
             currentCustomer.LocalName = contactPM.LocalName;
@@ -105,6 +109,10 @@ namespace WebFreight.Web.Helpers.SignUp.Logbox
             ContactRepository contactRepository = new ContactRepository(signUpInfoClass.Tenant);
             ContactQuery contactQuery = new ContactQuery(contactRepository);
             ContactPM contactPM = contactQuery.GetContactByEmailOnly(signUpInfoClass.Email, tenant);
+            if(contactPM == null)
+            {
+                throw new ApplicationException("Contact with Email: " + signUpInfoClass.Email + " is not exist!");
+            }
             contactPM.SetAsPrimaryForCard = true;
             contactPM.IsCreatedWithPartner = true;
             CustomerPM customerPM = new CustomerPM()

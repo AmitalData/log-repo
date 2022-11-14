@@ -19,8 +19,15 @@ namespace WebFreight.Web.Helpers.SignUp.Logbox
             CountryRepository CountryRepository = new CountryRepository(tenant);
             AddressRepository addressRepository = new AddressRepository(signUpInfoClass.Tenant);
             var CustomerAddress = addressRepository.GetMainAddressByCardId(signUpInfoClass.CustomerId, signUpInfoClass.Tenant);
+            if (CustomerAddress == null)
+            {
+                throw new ApplicationException("Address with Card Id: " + signUpInfoClass.CustomerId + " is not exist!");
+            }
             var NewCountry = CountryRepository.GetSingleCountryByCode(CustomerAddress?.Country?.Code, tenant);
-
+            if (NewCountry == null)
+            {
+                throw new ApplicationException("New Country with Code: " + CustomerAddress?.Country?.Code + " is not exist!");
+            }
             AddressService addressService = new AddressService(commonContext, tenant);
             AddressPM TenantAddress = new AddressPM()
             {

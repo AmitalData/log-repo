@@ -1377,13 +1377,7 @@ namespace WebFreight.Web.InfrastructureModel
             {
                 return false;
             }
-        }
-        
-        public static void UpdateLogBoxTenant(int tenant, SignUpInfoClass signUpInfoClass)
-        {
-            
-        }
-         
+        }         
 
         public static void AddBranchesAndDepartments(int theTenant, BranchRepository theBranchRepository, DepartmentRepository theDepartmentRepository)
         {
