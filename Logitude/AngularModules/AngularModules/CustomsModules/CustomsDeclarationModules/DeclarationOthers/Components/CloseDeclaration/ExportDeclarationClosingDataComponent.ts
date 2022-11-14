@@ -542,7 +542,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                     if (IsMatchUnifreightCallbackCommand) {
                         sub.unsubscribe();
                         SessionLocator.SelectedSession.StopBusyIndicator();
-                        let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
+                        let sBool = UnifreightMessageM.GetStringValue(mess,"UnifreightEntity");
                         alert("sBool");
                         alert(sBool);
                         SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
