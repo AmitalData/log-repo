@@ -8,6 +8,15 @@
     src: url(/_Resources/Fonts/Montserrat-Black.ttf) format('truetype');    
 }
 
+:host ::ng-deep {
+    .checkbox logcheckbox {
+        #IsAggree,
+        label {
+            user-select: unset;
+        }
+    }
+}
+
 .root {
     direction: rtl;
     position: absolute;

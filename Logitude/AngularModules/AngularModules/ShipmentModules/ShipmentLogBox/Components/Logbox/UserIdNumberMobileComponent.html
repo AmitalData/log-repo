@@ -381,12 +381,12 @@
       </div>
   
       <div class="section-3">        
-          <h4 class="idnumber-label">נא להזין תעודת זהות</h4>
+          <h4 class="idnumber-label">נא להזין תעודת זהות (מעל גיל 18)</h4>
           <input class="idnumber" type="number" [(ngModel)]="UserIdNumber">        
       </div>
   
       <div class="btn-payment">
-        <button (click)="SendButtonClicked()">לתשלום מאובטח</button>
+        <button (click)="SendButtonClicked()">עדכן נתונים</button>
       </div>
       <p class="vlidation-msg" *ngIf="ValidationList != null && ValidationList.length != 0">{{ValidationList}}</p>
   
