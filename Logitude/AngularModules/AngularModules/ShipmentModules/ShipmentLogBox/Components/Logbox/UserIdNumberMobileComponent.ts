@@ -186,7 +186,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
     public get Hawb() { return this.AdditionalData.Hawb }
     public set Hawb(newValue: string) { this.AdditionalData.Hawb = newValue; }
 
-    public get ShipmentValueInNIS() { return new CustomNumbersPipe().transform(this.AdditionalData.ShipmentValueInNIS, 0) }
+    public get ShipmentValueInNIS() { return this.orianStyle ? this.AdditionalData.ShipmentValueInNIS : new CustomNumbersPipe().transform(this.AdditionalData.ShipmentValueInNIS, 0) }
     public set ShipmentValueInNIS(newValue: string) { this.AdditionalData.ShipmentValueInNIS = newValue; }
 
     public get SenderDetails() { return this.AdditionalData.SenderDetails }
