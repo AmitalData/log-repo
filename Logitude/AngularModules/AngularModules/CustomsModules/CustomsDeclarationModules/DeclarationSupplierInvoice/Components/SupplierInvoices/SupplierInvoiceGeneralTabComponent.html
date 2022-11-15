@@ -482,7 +482,7 @@
                                         <LogTextBoxV2 [ObjectFieldName]="'InvoiceAmount'" [ObjectTableName]="ObjectTableName"
                                                       [HideColumns]="true" [DataContext]="DataContext" [AddCommasToNumbers]="true"
                                                       [Text]="InvoiceAmount" [IsAccumulative]="true"
-                                                      (LostFocus)="InvoiceAmountBlur($event);InspectionRequest($event);"></LogTextBoxV2>
+                                                      (LostFocus)="InvoiceAmountBlur($event);InspectionRequest();"></LogTextBoxV2>
 
                                     </td>
 
@@ -500,7 +500,7 @@
                                                 [DataContext]="DataContext"
                                                 [LookUpTableName]="'Customs.CurrencyType'"
                                                 [HideColumns]="true"
-                                                (SelectedItemChanged)="InvoiceCurrencyChanged($event);InspectionRequest($event)"
+                                                (SelectedItemChanged)="InvoiceCurrencyChanged($event);InspectionRequest()"
                                                 (LostFocus)="InvoiceAmountBlur($event)"
                                                 [SelectedValue]="InvoiceCurrencyTypeCode">
                                         </LogLov>
@@ -535,7 +535,7 @@
                                                 [LookUpTableName]="'Customs.TermsOfSaleType'"
                                                 [HideColumns]="true"
                                                 [SelectedValue]="IncotermCode"                                           
-                                                (SelectedItemChanged)="InspectionRequest($event)">
+                                                (SelectedItemChanged)="InspectionRequest()">
                                             
                                          
 
