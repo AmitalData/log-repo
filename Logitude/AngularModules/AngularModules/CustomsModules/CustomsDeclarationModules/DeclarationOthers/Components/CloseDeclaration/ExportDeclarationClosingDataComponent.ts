@@ -501,12 +501,13 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                     if (IsMatchUnifreightCallbackCommand) {
                         sub.unsubscribe();
                         SessionLocator.SelectedSession.StopBusyIndicator();
-                        let sBool = UnifreightMessageM.GetStringValue(mess,"UnifreightEntity");
-                        this.MainAWB =mess.Response['Mawb'].value;
-                        this.Smp = mess.Response['Hawb'].value ;
-                        this.ChargingSite = mess.Response['LoadPort'].value ; 
-                        this.FlightDate =mess.Response['FlightDate'].value ;
+                        let sBool = UnifreightMessageM.GetStringValue(mess,"Response.Mawb");
+                        // this.MainAWB =mess.Response['Mawb'].value;
+                        // this.Smp = mess.Response['Hawb'].value ;
+                        // this.ChargingSite = mess.Response['LoadPort'].value ; 
+                        // this.FlightDate =mess.Response['FlightDate'].value ;
                         alert("sBool");
+                        alert(sBool);
                         alert(mess.Response['FlightDate'].value);
                         SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
                     }
