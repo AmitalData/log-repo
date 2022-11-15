@@ -70,6 +70,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         public InterfaceManagementPM GetSingleInterfaceManagementwithDefinition(string code, int tenant)
         {
+            string key = $"GetSingleInterfaceManagementwithDefinition({code}, {tenant})";
+            return Simplog.Server.Infrastructure.Helpers.CacheManager.GetOrInsertNewObject<InterfaceManagementPM>(key, () =>
+            {
+                return GetSingleInterfaceManagementwithDefinitionReal(code, tenant);
+            });
+        }
+        public InterfaceManagementPM GetSingleInterfaceManagementwithDefinitionReal(string code, int tenant)
+        {
             InterfaceManagementPM interfaceManagement = null;
             if (!string.IsNullOrWhiteSpace(code))
             {

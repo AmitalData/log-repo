@@ -61,7 +61,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
 
                 var qs = new InterfaceManagementQueryService(customContext);
-                var pm = qs.GetSingleInterfaceManagementwithDefinition(code, tenant);
+                var pm = qs.GetSingleInterfaceManagementwithDefinitionReal(code, tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, pm);
             }
