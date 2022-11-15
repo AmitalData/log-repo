@@ -3032,10 +3032,14 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                                     if (IsMatchUnifreightCallbackCommand) {
                                         sub.unsubscribe();
                                         SessionLocator.SelectedSession.StopBusyIndicator();
-                                        let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
+                                        let sDefineToInsure = "aaa"; sDefineToInsure = UnifreightMessageM.GetStringValue(unifreightMessageM, "Response.DefineToInsure");
+                                        let sCurrency = "bbb"; sCurrency = UnifreightMessageM.GetStringValue(unifreightMessageM, "Response.Currency");
+
+                                        //let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
                                         alert("ApprovalToInsurance");
-                                        alert(sBool);
-                                        this.ActivateInsurance(mess)
+                                        alert(sDefineToInsure);
+                                        alert(sCurrency);
+                                        this.ActivateInsurance(mess,sDefineToInsure)
                                        // SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
                                     }
                                 }
@@ -3068,9 +3072,9 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             }
     }
 
-    ActivateInsurance(messRes) {
+    ActivateInsurance(messRes,sDefineToInsure) {
         alert("enter ActivateInsurance");
-        alert(messRes.Response["DefineToInsure"].value);
+        alert(sDefineToInsure);
        if(messRes.Response["DefineToInsure"].value=="Yes") {
          var confirm = new ConfirmWindow();
       
