@@ -130,7 +130,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     TooltipCertificate: string;
     TooltipCar: string;
     TooltipEdit: string;
-
+    CardCode:string;
 
     old_currency;
     old_amount;
@@ -181,7 +181,6 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         console.log("IFritz feature: ", this.IFritz_feature);
 
         this.initTradeAgreementFilter();
-
 
  
     }
@@ -648,6 +647,14 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         //}
 
         //this.GetCountryPURForItems();
+
+        this.supplierInvoiceExtendedPMService.GetCardByVatNumber(this.declarationPM.ImporterCode).subscribe((response: any) => {
+            var result = response.Result;
+            if (result) {
+                this.CardCode=result.Code;
+            }
+        });
+
     }
 
     //GetExchagneRates() {
@@ -2933,8 +2940,143 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         }
 
     }
+   
 
 
+    InspectionRequest() { 
+
+        if(this.declarationPM.IsConnectedToUnifreight&&AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
+            if(this.EntityPM.InvoiceCurrencyTypeCode&&this.EntityPM.InvoiceAmount&&this.EntityPM.IncotermCode&&AppTool.IsNullOrEmpty(this.CardCode)) {                 
+              alert("enter InspectionRequest");
+                        SessionLocator.SelectedSession.StartBusyIndicatorLoading();                                 
+                
+                        let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
+                            .subscribe(
+                                (mess: UnifreightMessageM) => {                                 
+                                    var IsMatchUnifreightCallbackCommand = (
+                                         mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
+                                        mess.LogitudeEntityNumber == this.EntityPM.DeclarationId &&
+                                        mess.LogitudeViewModel == "SupplierInvoiceGeneralTabComponent.ts-ApprovalToInsurance");
+                                    if (IsMatchUnifreightCallbackCommand) {
+                                        sub.unsubscribe();
+                                        SessionLocator.SelectedSession.StopBusyIndicator();
+                                        let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
+                                        alert("ApprovalToInsurance");
+                                        alert(sBool);
+                                        this.ActivateInsurance(mess)
+                                       // SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+                                    }
+                                }
+                            );
+                       
+
+                        var unifreightMessageM =
+                        AmitalGatewayUtil.Instance.
+                            DeclarationMessaging.GetMessage(this.declarationPM.CustomFileNo, this.EntityPM.DeclarationId, "SupplierInvoiceGeneralTabComponent.ts-ApprovalToInsurance", "BFIFILE"); 
+                            unifreightMessageM.Requset.push(["AmountToInsure",this.EntityPM.InvoiceAmount.toString()]);
+                            unifreightMessageM.Requset.push(["Currency",this.EntityPM.InvoiceCurrencyTypeCode]);
+                            unifreightMessageM.Requset.push(["Incoterms",this.EntityPM.IncotermCode]);
+                            unifreightMessageM.Requset.push(["CustomerUNF",this.CardCode]);
+                            unifreightMessageM.Requset.push(["DefineToInsure",""]);
+                            unifreightMessageM.Requset.push(["ApprovalToInsure",""]);
+                            unifreightMessageM.Requset.push(["InsuranceAmount",""]);
+                            unifreightMessageM.Requset.push(["InsuranceCurrency",""]);
+   
+   
+   
+            
+                    AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+                        "AmitalGatewayUtil.CustomExportApprovalToInsurance",
+                        "BFIHMAIN.LogitudeTask",
+                        "CustomExportApprovalToInsurance",
+                        unifreightMessageM,
+                        "האם אפשרי לפתוח תיק ביטוח");
+                   
+                    }  
+            }
+    }
+
+    ActivateInsurance(messRes) {
+        alert("enter ActivateInsurance");
+        alert(messRes.Response["DefineToInsure"].value);
+       if(messRes.Response["DefineToInsure"].value=="Yes") {
+         var confirm = new ConfirmWindow();
+      
+            confirm.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.CANCLE");
+            confirm.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+            confirm.ShowNoButton=false;
+            confirm.Width = 400;
+            confirm.Show(`הלקוח מוגדר לביצוע ביטוח אוטומטי, האם לבטח ?`);
+            confirm.IsYesEnabled=false;
+            confirm.WindowClosed.subscribe((event: any) => {
+
+              if(confirm.Yes == true){
+                 SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+
+                 let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
+                   .subscribe(
+                    (mess: UnifreightMessageM) => {
+                   
+                        var IsMatchUnifreightCallbackCommand = (
+                            mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
+                            mess.LogitudeEntityNumber == this.EntityPM.DeclarationId &&
+                            mess.LogitudeViewModel == "SupplierInvoiceGeneralTabComponent.ts-ActivateInsurance");
+                             if (IsMatchUnifreightCallbackCommand) {
+                                sub.unsubscribe();
+                                SessionLocator.SelectedSession.StopBusyIndicator();
+                                let sBool = UnifreightMessageM.GetStringValue(mess, AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightResponseStatus);
+                                alert("sBool2");
+                                alert(sBool);
+       
+
+                             if(!AppTool.IsNullOrEmpty(mess.Response["InsuranceAmount"].value) && !AppTool.IsNullOrEmpty(mess.Response["InsuranceCurrency"].value)) {
+                                alert(mess.Response["InsuranceAmount"]);
+                                alert(mess.Response["InsuranceAmount"].value)
+                             }
+                             else if(!AppTool.IsNullOrEmpty(mess.Response["InvoiceNumber"].value)) {
+                                 confirm.Show(`נפתחה תוספת ביטוח מס' `+ mess.Response["InvoiceNumber"].value +` , יש להשלימה בתהליך ידני ביוניפרייט`);
+              
+                             }
+                             else {
+                                 confirm.Show(`תהליך פתיחת תוספת ביטוח אוטומטי נכשל`);
+              
+                             }
+                        // SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+                     }
+                 }
+             );
+        
+
+         var unifreightMessageM =
+         AmitalGatewayUtil.Instance.
+             DeclarationMessaging.GetMessage(this.declarationPM.CustomFileNo, this.EntityPM.DeclarationId, "SupplierInvoiceGeneralTabComponent.ts-ActivateInsurance", "BFIFILE"); 
+             unifreightMessageM.Requset.push(["AmountToInsure",this.EntityPM.InvoiceAmount.toString()]);
+             unifreightMessageM.Requset.push(["Currency",this.EntityPM.InvoiceCurrencyTypeCode]);
+             unifreightMessageM.Requset.push(["Incoterms",this.EntityPM.IncotermCode]);
+             unifreightMessageM.Requset.push(["CustomerUNF",this.CardCode]);
+             unifreightMessageM.Requset.push(["DefineToInsure","Yes"]);
+             unifreightMessageM.Requset.push(["ApprovalToInsure","Yes"]);
+             unifreightMessageM.Requset.push(["InsuranceAmount",""]);
+             unifreightMessageM.Requset.push(["InsuranceCurrency",""]);
+
+
+              AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+                  "AmitalGatewayUtil.CustomExportActivateInsurance",
+                  "BFIHMAIN.LogitudeTask",
+                  "CustomExportActivateInsurance",
+                  unifreightMessageM,
+                  "מבצע פתיחת תיק ביטוח");
+
+                }
+
+            });
+
+
+        }  
+        else{
+            alert("לא עמד בתנאי")
+        }      
+    }
 
     //#endregion
 }

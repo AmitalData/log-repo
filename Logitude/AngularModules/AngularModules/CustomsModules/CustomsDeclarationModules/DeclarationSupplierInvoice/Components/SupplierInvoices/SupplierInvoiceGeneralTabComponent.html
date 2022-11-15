@@ -298,7 +298,7 @@
                                                   [DataContext]="DataContext"></LogLabel>
                                     </td>
 
-                                    <td style="width: 160px;">
+                                     <td style="width: 160px;">
                                         <LogLov [ObjectFieldName]="'InvoiceCurrencyTypeCode'"
                                                 [ObjectTableName]="ObjectTableName"
                                                 [DataContext]="DataContext"
@@ -308,7 +308,7 @@
                                                 (LostFocus)="InvoiceAmountBlur($event)"
                                                 [SelectedValue]="InvoiceCurrencyTypeCode">
                                         </LogLov>
-                                    </td>
+                                    </td> 
                                     <td>
                                         <div style="width:20px"></div>
                                     </td>
@@ -482,7 +482,7 @@
                                         <LogTextBoxV2 [ObjectFieldName]="'InvoiceAmount'" [ObjectTableName]="ObjectTableName"
                                                       [HideColumns]="true" [DataContext]="DataContext" [AddCommasToNumbers]="true"
                                                       [Text]="InvoiceAmount" [IsAccumulative]="true"
-                                                      (LostFocus)="InvoiceAmountBlur($event)"></LogTextBoxV2>
+                                                      (LostFocus)="InvoiceAmountBlur($event);InspectionRequest($event);"></LogTextBoxV2>
 
                                     </td>
 
@@ -500,7 +500,7 @@
                                                 [DataContext]="DataContext"
                                                 [LookUpTableName]="'Customs.CurrencyType'"
                                                 [HideColumns]="true"
-                                                (SelectedItemChanged)="InvoiceCurrencyChanged($event)"
+                                                (SelectedItemChanged)="InvoiceCurrencyChanged($event);InspectionRequest($event)"
                                                 (LostFocus)="InvoiceAmountBlur($event)"
                                                 [SelectedValue]="InvoiceCurrencyTypeCode">
                                         </LogLov>
@@ -534,7 +534,10 @@
                                                 [DataContext]="DataContext"
                                                 [LookUpTableName]="'Customs.TermsOfSaleType'"
                                                 [HideColumns]="true"
-                                                [SelectedValue]="IncotermCode">
+                                                [SelectedValue]="IncotermCode"                                           
+                                                (SelectedItemChanged)="InspectionRequest($event)">
+                                            
+                                         
 
                                         </LogLov>
                                     </td>
