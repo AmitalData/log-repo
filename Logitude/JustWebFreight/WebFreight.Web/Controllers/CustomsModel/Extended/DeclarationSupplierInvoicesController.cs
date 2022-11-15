@@ -43,6 +43,7 @@ using Logitude.CustomsMessaging.MessagingServices;
 using System.Text.RegularExpressions;
 using Unifreight.Data.AmitalModel;
 using Unifreight.Data.AmitalModel.Repsitories;
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -1010,6 +1011,28 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
         //    }
         //}
 
+        public HttpResponseMessage GetCardByVatNumber(string importerCode)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
+                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+
+                CardQueryService queryService = new CardQueryService(tenant);
+                var item = queryService.GetCardByImporterCode(importerCode, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, item);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }

@@ -662,6 +662,14 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
             return cards;
         }
+        public Card GetCardByImporterCode(string importerCode, int tenant)
+        {
+            var card = (from a in context.Cards
+                            where a.Tenant == tenant
+                            && a.VatNumber == importerCode
+                            select a).FirstOrDefault();
+            return card;
+        }
 
     }
 }
