@@ -285,7 +285,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     Role freelancerRole = allRoles.FirstOrDefault(r => r.Code.StartsWith("FRL"));
                     if (freelancerRole != null && entityPM.IsFreelancer && !entityPM.Roles.Any(r => r.Id == freelancerRole.Id))
                     {
-                        throw new Exception("המשתמש הינו פרילנסר, יש לבחור רק תקפיד המוגדר כפרילנסר"); // ("Must choose a freelancer role!");
+                        throw new Exception("המשתמש הינו פרילנסר, יש לבחור רק תפקיד המוגדר כפרילנסר"); // ("Must choose a freelancer role!");
                     }
 
                     foreach (UserRolesPM role in entityPM.Roles)
@@ -295,6 +295,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         #region update role
                         if (role.Added)
                         {
+                            /*
                             ContactTenantRole contactTenantRole=null;
                             var contactTenantRoles = contactTenantRoleRepository.GetContactTenantRolesListByContactAndTenant(contactTenant.Id, entityPM.Tenant);
                             if(contactTenantRoles != null)contactTenantRole = contactTenantRoles.FirstOrDefault();
@@ -308,9 +309,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                             }
                             else
                             {
-                                contactTenantRole = new ContactTenantRole() { ContactTenantId = contactTenant.Id, RoleId = currentRole.Id, Id = IdCounter.GetNumber("ContactTenantRole", entityPM.Tenant).ToString(), Tenant = entityPM.Tenant };
-                                contactTenantRoleRepository.Add(contactTenantRole);
-                            }
+                            */
+                            ContactTenantRole contactTenantRole = new ContactTenantRole() { ContactTenantId = contactTenant.Id, RoleId = currentRole.Id, Id = IdCounter.GetNumber("ContactTenantRole", entityPM.Tenant).ToString(), Tenant = entityPM.Tenant };
+                            contactTenantRoleRepository.Add(contactTenantRole);
+                            //}
                         }
 
                         if (role.Removed)
