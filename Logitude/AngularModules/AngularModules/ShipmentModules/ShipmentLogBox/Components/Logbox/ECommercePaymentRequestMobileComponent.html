@@ -620,6 +620,8 @@
           <div class="btn-payment">
             <button [class.Disable]="IsAgreed == false" (click)="OnPayClick()" >לתשלום מאובטח</button>
           </div>
+
+          <p class="vlidation-msg" *ngIf="ShowFinalMessage">{{FinalMessage}}</p>
       
           <div class="footer">
             <div class="footer-right">
