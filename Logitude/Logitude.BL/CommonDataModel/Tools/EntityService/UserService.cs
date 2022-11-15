@@ -295,6 +295,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         #region update role
                         if (role.Added)
                         {
+                            /*
                             ContactTenantRole contactTenantRole=null;
                             var contactTenantRoles = contactTenantRoleRepository.GetContactTenantRolesListByContactAndTenant(contactTenant.Id, entityPM.Tenant);
                             if(contactTenantRoles != null)contactTenantRole = contactTenantRoles.FirstOrDefault();
@@ -308,9 +309,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                             }
                             else
                             {
-                                contactTenantRole = new ContactTenantRole() { ContactTenantId = contactTenant.Id, RoleId = currentRole.Id, Id = IdCounter.GetNumber("ContactTenantRole", entityPM.Tenant).ToString(), Tenant = entityPM.Tenant };
-                                contactTenantRoleRepository.Add(contactTenantRole);
-                            }
+                            */
+                            ContactTenantRole contactTenantRole = new ContactTenantRole() { ContactTenantId = contactTenant.Id, RoleId = currentRole.Id, Id = IdCounter.GetNumber("ContactTenantRole", entityPM.Tenant).ToString(), Tenant = entityPM.Tenant };
+                            contactTenantRoleRepository.Add(contactTenantRole);
+                            //}
                         }
 
                         if (role.Removed)
