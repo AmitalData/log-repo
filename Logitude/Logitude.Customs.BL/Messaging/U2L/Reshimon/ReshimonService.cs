@@ -91,7 +91,6 @@ namespace Logitude.Customs.BL.Messaging.U2L.Reshimon
                 AppendLogLine("MoreParams after Deserialize: " + unifreightListsParams);
                 partner = UnifreightListsUtil.GetValue(ref unifreightListsParams, "PARTNER");
                 AppendLogLine("partner: " + partner);
-                _MyDeclarationPM.SupplierInvoices.FirstOrDefault().InvoiceCurrencyTypeCodePartnerId = partner;
             }
 
             if (!String.IsNullOrWhiteSpace(partner))
@@ -100,7 +99,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Reshimon
                 {
                     if (!String.IsNullOrWhiteSpace(supplierInvoice.InvoiceCurrencyTypeCode))
                     {
-                        supplierInvoice.InvoiceCurrencyTypeCodePartnerId = GetComputingPartnerCodeTranslation(supplierInvoice.InvoiceCurrencyTypeCode, partner, "CurrencyTypes", _MyDeclarationPM.Tenant);
+                        supplierInvoice.InvoiceCurrencyTypeCodePartnerId = GetComputingPartnerCodeTranslation(supplierInvoice.InvoiceCurrencyTypeCode, partner, "Customs.CurrencyType", _MyDeclarationPM.Tenant);
                         if (!String.IsNullOrWhiteSpace(supplierInvoice.InvoiceCurrencyTypeCodePartnerId))
                         {
                             LogMessagingUtil.Instance.AppendLine("Invoice Currency Type Code = " + supplierInvoice.InvoiceCurrencyTypeCode + " Translated to (Computing Partner Translate) " + supplierInvoice.InvoiceCurrencyTypeCodePartnerId);
