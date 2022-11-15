@@ -3014,9 +3014,12 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
     InspectionRequest() { 
 
-        if(this.declarationPM.IsConnectedToUnifreight&&AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
+        alert("enter InspectionRequest");
+        //!this.declarationPM.IsConnectedToUnifreight&&
+        if(AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
+            alert("enter AmitalBrowserInUse");
             if(this.EntityPM.InvoiceCurrencyTypeCode&&this.EntityPM.InvoiceAmount&&this.EntityPM.IncotermCode&&!AppTool.IsNullOrEmpty(this.CardCode)) {                 
-              alert("enter InspectionRequest");
+              alert("enter InspectionRequest2");
                         SessionLocator.SelectedSession.StartBusyIndicatorLoading();                                 
                 
                         let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
