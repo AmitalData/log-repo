@@ -130,25 +130,28 @@ namespace Logitude.CustomsMessaging.UnifreightGateway
             MyGenericResponseObj.Stage = "Just Do IT";
 
 
-            
-            
-                
-            string token = AuthenticationUtil.GenerateToken();
-            AuthenticationTokenRepository authenticationTokenRepository = new AuthenticationTokenRepository(itenant);
-            AuthenticationToken authentication = new AuthenticationToken()
-            {
-                Tenant = itenant,
-                CreateDate = DateTime.Now,
-                ExpirationDate = DateTime.Now.AddDays(1),
-                Email = contact.Email,
-                Password = contact.Email,
-                Token = token
-            };
-            authenticationTokenRepository.Add(authentication);
-                
-            authenticationTokenRepository.SubmitChanges();
-            MyGenericResponseObj.ApplicationId = token;
 
+            using (var trans = TransactionFactory.GetNewReadCommittedTransaction())
+            {
+
+                string token = AuthenticationUtil.GenerateToken();
+                AuthenticationTokenRepository authenticationTokenRepository = new AuthenticationTokenRepository(itenant);
+                AuthenticationToken authentication = new AuthenticationToken()
+                {
+                    Tenant = itenant,
+                    CreateDate = DateTime.Now,
+                    ExpirationDate = DateTime.Now.AddDays(1),
+                    Email = contact.Email,
+                    Password = contact.Email,
+                    Token = token
+                };
+                authenticationTokenRepository.Add(authentication);
+
+                authenticationTokenRepository.SubmitChanges();
+                MyGenericResponseObj.ApplicationId = token;
+
+                trans.Complete();
+            }
                 
                 
             
