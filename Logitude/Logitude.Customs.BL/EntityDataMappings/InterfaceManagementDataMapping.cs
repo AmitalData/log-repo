@@ -25,6 +25,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             entityPOCO.Code = entityPM.Code;
             BuildSearchFields(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
+            entityPM.SendTime = null;
             
 
             
