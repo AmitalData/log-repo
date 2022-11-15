@@ -115,6 +115,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                 this.EntityPM = response.Result;
 
                 if (this.EntityPM)
+                {
                     if (response.Result.ChangeSetOp == "1") {
                         this.EntityPM.IsDirty = true;
                         this.IsNew = true;
@@ -152,7 +153,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                     this.EntityPM.IsDirty = true;
                     this.EntityPM.FinalCargoTypeCode = "1";
                 }
-
+                
                 if(AppTool.IsNullOrEmpty(this.EntityPM.FinalCargoTypeCode) && this.DecPM.TransportModeId == 'L' && !AppTool.IsNullOrEmpty(this.DecPM.Consignments[0].CargoTypeCodeForExport))
                 {
                     this.EntityPM.IsDirty = true;
@@ -172,6 +173,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                     this.EntityPM.IsDirty = true;
                     this.EntityPM.FinalLoadingSite = this.DecPM.Consignments[0].ExportLoadingPortCode;
                     
+                }
                 }
 
                
