@@ -501,14 +501,13 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                     if (IsMatchUnifreightCallbackCommand) {
                         sub.unsubscribe();
                         SessionLocator.SelectedSession.StopBusyIndicator();
-                        let sBool = UnifreightMessageM.GetStringValue(mess,"Response.Mawb");
+                        let LoadPort = UnifreightMessageM.GetStringValue(mess,"LoadPort");
                         // this.MainAWB =mess.Response['Mawb'].value;
                         // this.Smp = mess.Response['Hawb'].value ;
-                        // this.ChargingSite = mess.Response['LoadPort'].value ; 
+                        this.ChargingSite = LoadPort ; 
                         // this.FlightDate =mess.Response['FlightDate'].value ;
                         alert("sBool");
-                        alert(sBool);
-                        alert(mess.Response['FlightDate'].value);
+                        alert(LoadPort);
                         SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
                     }
                 }
