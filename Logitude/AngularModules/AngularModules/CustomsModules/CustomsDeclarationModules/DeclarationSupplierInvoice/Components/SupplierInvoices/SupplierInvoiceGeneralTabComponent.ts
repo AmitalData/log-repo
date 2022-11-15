@@ -2946,7 +2946,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     InspectionRequest() { 
 
         if(this.declarationPM.IsConnectedToUnifreight&&AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
-            if(this.EntityPM.InvoiceCurrencyTypeCode&&this.EntityPM.InvoiceAmount&&this.EntityPM.IncotermCode&&AppTool.IsNullOrEmpty(this.CardCode)) {                 
+            if(this.EntityPM.InvoiceCurrencyTypeCode&&this.EntityPM.InvoiceAmount&&this.EntityPM.IncotermCode&&!AppTool.IsNullOrEmpty(this.CardCode)) {                 
               alert("enter InspectionRequest");
                         SessionLocator.SelectedSession.StartBusyIndicatorLoading();                                 
                 
