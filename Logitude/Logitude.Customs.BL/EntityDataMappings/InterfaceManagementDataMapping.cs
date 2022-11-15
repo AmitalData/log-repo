@@ -25,6 +25,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             entityPOCO.Code = entityPM.Code;
             BuildSearchFields(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
+            entityPM.SendTime = null;
             
 
             
@@ -56,6 +57,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 entityPM.Tenant = definition.Tenant;
                 entityPM.TenantPriority = definition.TenantPriority;
                 entityPM.TenantSendOptionsCode = definition.TenantSendOptionsCode;
+                entityPM.SendTime = definition.SendTime;
 
                 entityPM.DcaRenameFileEnable = definition.DcaRenameFileEnable;
                 entityPM.DcaRenameFilePrefix = definition.DcaRenameFilePrefix;

@@ -31,7 +31,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                             Tenant = a.Tenant,
                                                             TenantPriority = a.TenantPriority,
                                                             TenantSendOptionsCode = a.TenantSendOptionsCode,
-
+                                                            SendTime = a.SendTime,
 
                                                          });
             return query;

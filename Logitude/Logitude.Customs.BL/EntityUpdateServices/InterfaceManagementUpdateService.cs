@@ -51,6 +51,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             definition.TenantSendOptionsCode = entityPM.TenantSendOptionsCode;
             definition.TenantPriority = entityPM.TenantPriority;
+            definition.SendTime = entityPM.SendTime;
             definition.DcaRenameFileEnable = entityPM.DcaRenameFileEnable;
             definition.DcaRenameFilePrefix = entityPM.DcaRenameFilePrefix;
             definition.Active = entityPM.Active;//on the way fix bug ???(or make one ??)

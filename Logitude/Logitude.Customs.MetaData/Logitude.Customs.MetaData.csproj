@@ -106,6 +106,7 @@
     <None Include="DBScripts\Post\202005210125_BeforeUpdateDeleteAllMetadata.sxml" />
     <None Include="DBScripts\Post\202005270157_SetNullableForCDROPColumns_Global.sxml" />
     <None Include="DBScripts\Post\202005270158_SetNullableForCDROPColumns_Main.sxml" />
+    <None Include="DBScripts\Post\202211101140_UpdateInterfaceTenantDefSendTime.sxml" />
     <None Include="DBScripts\Post\202208151232_AddCOURIERPENDINGREASONS904 .sxml" />
     <None Include="DBScripts\Post\202108011330_AddPhysicalCheckSearchResultTypes.sxml" />
     <None Include="DBScripts\Post\202111101021_SetCargoDescription.sxml" />

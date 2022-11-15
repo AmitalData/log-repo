@@ -61,6 +61,28 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         }
 
+        public InterfaceTenantDefinitionPM GetByTenatCode(int tenant, string code)
+        {
+
+            
+
+                    var poco = this.repository.GetSingleDefinitionByCode(code, tenant);
+                    if (poco == null)
+                    {
+                        return new InterfaceTenantDefinitionPM();
+                    }
+                    var pm = this.GetEntityPM(poco);
+                    if (pm.TenantPriority != null)
+                    {
+
+                        var interfaceManagement = this.context.InterfaceManagements.FirstOrDefault(r => r.Code == code);
+                        pm.TenantPriority = interfaceManagement?.DefaultPriority;
+                    }
+                    return pm;
+                
+
+        }
+
 
         //public InterfaceTenantDefinitionPM GetFromCacheByTenatCode(int tenant, string code)
         //{

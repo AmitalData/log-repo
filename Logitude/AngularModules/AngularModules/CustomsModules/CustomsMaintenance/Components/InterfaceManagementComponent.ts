@@ -260,7 +260,7 @@ export class InterfaceManagementComponent implements OnInit {
         let logWindow = new LogitudeWindow();
         logWindow.WindowArgs = { SelectedItem: item };
         logWindow.Width = 750;
-        logWindow.Height = 500;
+        logWindow.Height = 550;
         logWindow.Title = windowTitle;
         logWindow.IsShowCloseButton = true;
         //logWindow.Show('./Customs/Components/Maintenance/AddEditInterfaceManagementComponent');

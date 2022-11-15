@@ -49,6 +49,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                                              HasDefinition = s.Id != null ? true : false,
                                                              SignatureTypeCode = a.SignatureTypeCode,
                                                              SignatureTypeName = a.SignatureType != null? a.SignatureType.LocalName : null,
+                                                             SendTime = s.SendTime, 
 
                                                          }).ToList();
 
@@ -68,13 +69,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         public InterfaceManagementPM GetSingleInterfaceManagementwithDefinition(string code, int tenant)
         {
+
             string key = $"GetSingleInterfaceManagementwithDefinition({code}, {tenant})";
             return Simplog.Server.Infrastructure.Helpers.CacheManager.GetOrInsertNewObject<InterfaceManagementPM>(key, () =>
             {
                 return GetSingleInterfaceManagementwithDefinitionReal(code, tenant);
             });
         }
-        InterfaceManagementPM GetSingleInterfaceManagementwithDefinitionReal(string code, int tenant)
+        public InterfaceManagementPM GetSingleInterfaceManagementwithDefinitionReal(string code, int tenant)
         {
             InterfaceManagementPM interfaceManagement = null;
             if (!string.IsNullOrWhiteSpace(code))
@@ -110,7 +112,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         interfaceManagement.TenantPriority = definition.TenantPriority;
                         interfaceManagement.TenantSendOptionsCode = definition.TenantSendOptionsCode;
                         interfaceManagement.TenantSendOptionName = definition.InterfaceSendOption != null ? definition.InterfaceSendOption.LocalName : null;
-
+                        interfaceManagement.SendTime = definition.SendTime;
                         interfaceManagement.DcaRenameFileEnable = definition.DcaRenameFileEnable;
                         interfaceManagement.DcaRenameFilePrefix = definition.DcaRenameFilePrefix;
 

@@ -36,6 +36,7 @@ import { PendingRequestParams } from 'Customs/DataContract/RequestParams/Pending
 import { CourierMasterService } from 'Customs/Services/Others/CourierMasterService';
 
 import { SendALLDelayFormParams } from '../../../../Customs/DataContract/RequestParams/SendALLDelayFormParams';
+import { InterfaceTenantDefinitionsWebService } from 'Customs/Services/WebServices/InterfaceTenantDefinitionsWebService';
 
 
 @Component({
@@ -2232,12 +2233,13 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     }
 
     private GetIsSendDocumentsFromQueueButton() {
-        var myInterfaceManagementPMService = new InterfaceManagementPMService();
-        myInterfaceManagementPMService.get("2715")
+
+        var myInterfaceTenantDefinitionPMService = new InterfaceTenantDefinitionsWebService();
+        myInterfaceTenantDefinitionPMService.get(SessionLocator.Tenant,"2715")
             .subscribe((response: any) => {
                 this.IsSendDocumentsFromQueueButton = false;
                 if (!response.HasError) {
-                    if (response.Result != null && !AppTool.IsNullOrEmpty(response.Result.SendTime)) {
+                    if (response.Result != null && !AppTool.IsNullOrEmpty(response.Result.body.SendTime)) {
                         this.IsSendDocumentsFromQueueButton = true;
                     }
                 }
