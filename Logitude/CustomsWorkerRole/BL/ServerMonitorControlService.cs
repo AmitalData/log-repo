@@ -2,6 +2,7 @@
 using Logitude.Server.Tools.Utils;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Management;
 using System.Text;
@@ -34,8 +35,7 @@ namespace CustomsWorkerRole.BL
                 else
                 {
                     Logger.LogMe($"Please insert ServersNames!! -Grace Period exceeded !! {THEGracePeriod} ", true, "ServerMonitorControl");
-                    Task.Delay(TimeSpan.FromSeconds(2));
-                    Environment.Exit(0);
+                    ExitEnsureLogWrite();
 
                 }
                 return;
@@ -46,8 +46,7 @@ namespace CustomsWorkerRole.BL
             if (serviceNameList.Count == 0)
             {
                 Logger.LogMe($"ServersName defined But {Environment.MachineName} not exist ", true, "ServerMonitorControl");
-                Task.Delay(TimeSpan.FromSeconds(2));
-                Environment.Exit(0);
+                ExitEnsureLogWrite();
                 return;
             }
             Logger.LogMe($"{Environment.MachineName} exist in ServersName ", false, "ServerMonitorControl");
@@ -71,6 +70,17 @@ namespace CustomsWorkerRole.BL
             }
         }
 
+        private static void ExitEnsureLogWrite()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                //Task.Delay(TimeSpan.FromSeconds(1));
+                System.Threading.Thread.Sleep(200);
+                Debug.WriteLine("Before Exit - try to Write logs");
+            }
+
+            Environment.Exit(0);
+        }
 
 
 
