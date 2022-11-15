@@ -316,6 +316,8 @@ namespace AmitalCustomsWindowsService.Tester
         bool _MultiThreard = false;
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            clsTester.Check_UserWcfService(GetTenant());
+            return;
 
             clsTester.Check_CourierSchedulerServiceIsTimeRange();
             return;

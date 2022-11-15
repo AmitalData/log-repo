@@ -285,7 +285,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     Role freelancerRole = allRoles.FirstOrDefault(r => r.Code.StartsWith("FRL"));
                     if (freelancerRole != null && entityPM.IsFreelancer && !entityPM.Roles.Any(r => r.Id == freelancerRole.Id))
                     {
-                        throw new Exception("המשתמש הינו פרילנסר, יש לבחור רק תקפיד המוגדר כפרילנסר"); // ("Must choose a freelancer role!");
+                        throw new Exception("המשתמש הינו פרילנסר, יש לבחור רק תפקיד המוגדר כפרילנסר"); // ("Must choose a freelancer role!");
                     }
 
                     foreach (UserRolesPM role in entityPM.Roles)
