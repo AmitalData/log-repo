@@ -468,16 +468,16 @@ AS */
                     cmd.Connection = cn;
                     cmd.CommandTimeout = 1000000;
                     cmd.CommandText =
-                        DbContextBaseUtil.GetStoredProcedureName("q_Deletecommlogs", LogitudeDBSchema.LOGITUDE_MAIN,
+                        DbContextBaseUtil.GetStoredProcedureName("usp_deletecommlogs", LogitudeDBSchema.LOGITUDE_MAIN,
                     cmd.Connection.ConnectionString);
                     cmd.CommandType = CommandType.StoredProcedure;
 
 
-                    OracleParameter parameter1 = new OracleParameter("days", OracleDbType.Integer);
-                    OracleParameter parameter2 = new OracleParameter("from__", OracleDbType.VarChar);
-                    OracleParameter parameter3 = new OracleParameter("to__", OracleDbType.VarChar);
-                    OracleParameter parameter4 = new OracleParameter("subject__", OracleDbType.VarChar);
-                    OracleParameter parameter5 = new OracleParameter("commstatustypecodelist", OracleDbType.VarChar);
+                    OracleParameter parameter1 = new OracleParameter("p_days", OracleDbType.Integer);
+                    OracleParameter parameter2 = new OracleParameter("p_from", OracleDbType.VarChar);
+                    OracleParameter parameter3 = new OracleParameter("p_to", OracleDbType.VarChar);
+                    OracleParameter parameter4 = new OracleParameter("p_subject", OracleDbType.VarChar);
+                    OracleParameter parameter5 = new OracleParameter("p_commstatustypecodelist", OracleDbType.VarChar);
 
 
                     parameter1.Direction = ParameterDirection.Input;
@@ -539,7 +539,7 @@ AS */
                     cmd.Connection = cn;
                     cmd.CommandTimeout = 1000000;
                     cmd.CommandText =
-                        DbContextBaseUtil.GetStoredProcedureName("q_DeleteQueMessMoreDet", LogitudeDBSchema.LOGITUDE_MAIN,
+                        DbContextBaseUtil.GetStoredProcedureName("usp_DeleteQueMessMoreDet", LogitudeDBSchema.LOGITUDE_MAIN,
                     cmd.Connection.ConnectionString);
                     cmd.CommandType = CommandType.StoredProcedure;
 

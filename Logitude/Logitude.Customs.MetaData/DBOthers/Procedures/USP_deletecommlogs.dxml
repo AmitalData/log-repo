@@ -4,30 +4,32 @@
 
   <OracleScript>
     <![CDATA[
- CREATE OR REPLACE PROCEDURE q_deletecommlogs (
-    days                   IN INTEGER,
-    from__                 IN STRING,
-    to__                   IN STRING,
-    subject__              IN STRING,
-    commstatustypecodelist IN STRING
+ create or replace PROCEDURE USP_deletecommlogs (
+    p_days                   IN INTEGER,
+    p_from                 IN STRING,
+    p_to                   IN STRING,
+    p_subject              IN STRING,
+    p_commstatustypecodelist IN STRING
 ) AS
+v_number number;
+v_days INTEGER;
 BEGIN
+v_days :=p_days;
+if (p_days<60) then
+    v_days :=60;
+end if;
+
+
     LOOP
-        DELETE FROM (
-            SELECT
-                ROWID AS row_id
-            FROM
+        DELETE FROM
                 communicationlogs
             WHERE
-                To_ != 'Customs'
-                AND createdate_ < sysdate - days
-                AND ( from__ IS NULL
-                      OR from_ = from__ )
-                AND ( to__ IS NULL
-                      OR to_ = to__ )
-                AND ( subject__ IS NULL
-                      OR subject_ = subject__ )
-                AND ( commstatustypecodelist IS NULL
+                to_ != 'Customs'
+                AND createdate_ < sysdate - v_days 
+                AND ( p_from IS NULL   OR from_ = p_from )
+                AND ( p_subject IS NULL
+                      OR subject_ = p_subject )
+                AND ( p_commstatustypecodelist IS NULL
                       OR communicationstatustypecode IN (
                     SELECT
                         regexp_substr(
@@ -36,7 +38,7 @@ BEGIN
                     FROM
                         (
                             SELECT
-                                commstatustypecodelist str
+                                p_commstatustypecodelist str
                             FROM
                                 dual
                         )
@@ -47,15 +49,22 @@ BEGIN
                             )
                         ) + 1
                 ) )
-        )
-        WHERE
-            ROWNUM < 1001;
+            and  ROWNUM < 1001;
 
-        EXIT WHEN SQL%rowcount = 0;
+
+
+       EXIT WHEN SQL%rowcount = 0;
+
+        
+        
+          v_number:=SQL%rowcount ;
+        insert into  ZDELETE_LOG  values   ( sysdate ,  v_number , 'abc');
         COMMIT;
     END LOOP;
 
-    COMMIT;
+
+
+   COMMIT;
 END;
 	
     ]]>
