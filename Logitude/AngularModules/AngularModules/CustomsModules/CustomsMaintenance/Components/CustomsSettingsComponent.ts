@@ -277,6 +277,10 @@ export class CustomsSettingsComponent
     
     //#endregion
 
+    GenrateRestartServiceScript(){
+
+        //const declarationPM = await this.logtuideTableDataService.getDataFromService(this.declarationPMService.get(this.Entity.DeclarationId));
+    }
 
     CancelButtonClicked() {
         SessionLocator.SelectedSession.CloseCurrentWindow();

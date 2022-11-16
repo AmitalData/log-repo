@@ -13,7 +13,7 @@ namespace CustomsWorkerRole.BL
     public class ServerMonitorControlService
     {
         /*const */
-        DateTime THEGracePeriod = new DateTime(2023, 2, 1);
+        DateTime THEGracePeriod = new DateTime(2023, 3, 1);
 
 
         public void StopProccessIfNotExist()
@@ -34,7 +34,7 @@ namespace CustomsWorkerRole.BL
                 }
                 else
                 {
-                    Logger.LogMe($"Please insert ServersNames!! -Grace Period exceeded !! {THEGracePeriod} ", true, "ServerMonitorControl");
+                    Logger.LogMe($"SHUTDOWN!!! Please insert ServersNames!! -Grace Period exceeded !! {THEGracePeriod} ", true, "ServerMonitorControl");
                     ExitEnsureLogWrite();
 
                 }
@@ -45,7 +45,7 @@ namespace CustomsWorkerRole.BL
             serviceNameList = serviceNameList.Select(r => r.ToLower()).ToList();
             if (serviceNameList.Count == 0)
             {
-                Logger.LogMe($"ServersName defined But {Environment.MachineName} not exist ", true, "ServerMonitorControl");
+                Logger.LogMe($"SHUTDOWN!!! ServersName defined But {Environment.MachineName} not exist ", true, "ServerMonitorControl");
                 ExitEnsureLogWrite();
                 return;
             }
@@ -76,7 +76,7 @@ namespace CustomsWorkerRole.BL
             {
                 //Task.Delay(TimeSpan.FromSeconds(1));
                 System.Threading.Thread.Sleep(200);
-                Debug.WriteLine("Before Exit - try to Write logs");
+                Debug.WriteLine("SHUTDOWN!!! Before Exit - try to Write logs");
             }
 
             Environment.Exit(0);
