@@ -1404,7 +1404,6 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         var res = this.declarationWebService.GetWaitingDeclarationAmendment(this.EntityPM.CustomFileNo)
             .subscribe((response: ServiceResponse) => {
                 if (!response.HasError) {
-                    debugger
                     
                     if (response.Result == null) {
                         //no waiting amendnent
