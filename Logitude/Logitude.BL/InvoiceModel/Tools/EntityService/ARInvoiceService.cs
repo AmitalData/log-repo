@@ -1443,24 +1443,46 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                         if (string.IsNullOrEmpty(entityPM.InvoiceNumber) || entityPM.InvoiceNumber == entityPM.Id)
                         {
+                            Dictionary<string, string> counterAdditionalParameters = null;
+                            if (FeatureToggleHelper.HasFeatureToggle("BCC", tenant))
+                            {
+                                counterAdditionalParameters = GetCounterAdditionalParameter();
+                            }
                             if (entityPM.IsConstituentInvoice)
                             {
-                                entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "CNST", "CNS", null);
+                                entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "CNST", "CNS", null, counterAdditionalParameters);
                             }
 
                             else if (entityPM.IsConsolidationInvoice)
                             {
-                                entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "INVC", "CON", null);
+                                entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "INVC", "CON", null, counterAdditionalParameters);
                             }
 
                             else
                             {
-                                entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "INVC", entityPM.ARInvoiceTypeCode, null);
+                                entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "INVC", entityPM.ARInvoiceTypeCode, null, counterAdditionalParameters);
                             }
                         }
                     }
                 }
             }
+        }
+
+        private Dictionary<string, string> GetCounterAdditionalParameter()
+        {
+            Dictionary<string, string> counterAdditionalParameters = new Dictionary<string, string>() { { "[B]", "" } };
+            if (!string.IsNullOrEmpty(entityPM.BranchId))
+            {
+                BranchRepository branchRepository = new BranchRepository(myCommonContext);
+                Branch myBranch = branchRepository.GetSingleBranch(entityPM.BranchId, entityPM.Tenant);
+
+                if (myBranch != null && !string.IsNullOrEmpty(myBranch.CounterCode))
+                {
+                    counterAdditionalParameters["[B]"] = myBranch.CounterCode;
+                }
+            }
+
+            return counterAdditionalParameters;
         }
 
         private void InitializeAmountDueFields()
