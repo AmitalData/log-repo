@@ -195,7 +195,7 @@
                                             <tr>
                                                 <td [style.width]="(ScreenWidth/3).toString() + 'px'" style="height:22px;">
                                                     <div [style.width]="(ScreenWidth/3).toString() + 'px'" class="MyLabel">
-                                                        תיםור טובין
+                                                        תיאור טובין
                                                     </div>
                                                 </td>
                                                 <td style="width:10px"><span></span></td>
@@ -265,7 +265,7 @@
                                                     <div style="vertical-align:middle;text-align:center;">
                                                         <div style="display:inline-block;padding-top:5px;font-size:12px;font-family:sans-serif;" class="TextTrimming">
                                                             <span style="text-align:center;font-size:13px;">
-                                                                נם להזין תעודת זהות (מעל גיל 18)
+                                                                נא להזין תעודת זהות (מעל גיל 18)
                                                             </span>
                                                         </div>
                                                     </div>
@@ -368,33 +368,33 @@
   
         <section class="section">
           <h3>פרטי השולח</h3>
-          <p><span>מםת: {{SenderDetails}}</span></p>
-          <p><span>תיםור טובין: {{GoodsDescritpion}}</span></p>
+          <p><span>מאת: {{SenderDetails}}</span></p>
+          <p><span>תיאור טובין: {{GoodsDescritpion}}</span></p>
         </section>
   
         <section class="section">
           <h3>פרטי חבילה</h3>
-          <p><span>ערך משלוח: {{ShipmentValueInNIS}}</span></p>
-          <p><span>כמות םריזות: {{Quantity}}</span></p>
+          <p><span>ערך משלוח: {{ShipmentValueInNIS | number : '1.0-1'}}</span></p>
+          <p><span>כמות אריזות: {{Quantity}}</span></p>
           <p><span>משקל: {{Weight}} ק"ג</span></p>
         </section>
       </div>
   
       <div class="section-3">        
-          <h4 class="idnumber-label">נם להזין תעודת זהות</h4>
+          <h4 class="idnumber-label">נא להזין תעודת זהות (מעל גיל 18)</h4>
           <input class="idnumber" type="number" [(ngModel)]="UserIdNumber">        
       </div>
   
       <div class="btn-payment">
-        <button (click)="SendButtonClicked()">לתשלום מםובטח</button>
+        <button (click)="SendButtonClicked()">עדכן נתונים</button>
       </div>
       <p class="vlidation-msg" *ngIf="ValidationList != null && ValidationList.length != 0">{{ValidationList}}</p>
   
       <div class="footer">
         <div class="footer-right">
-          <span>לברורים בנושם עלויות םו כל מידע נוסף םודות המשלוח</span>
+          <span>לברורים בנושא עלויות או כל מידע נוסף אודות המשלוח</span>
           <br>
-          <a  href="mailto:{{EcommerceSupportEmail}}?subject=Shipment <{{Hawb}}> ">לחץ כםן</a>
+          <a  href="mailto:{{EcommerceSupportEmail}}?subject=Shipment <{{Hawb}}> ">לחץ כאן</a>
         </div>
         <div class="footer-left">
           <img src="./Images/mobile_payment/orian_logo_mobile.png" />

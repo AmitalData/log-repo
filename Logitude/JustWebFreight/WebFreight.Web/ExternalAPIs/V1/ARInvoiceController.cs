@@ -167,23 +167,29 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         if (entityPM.InvoiceNumber == null)
                         {
                             if (!entityPM.IsInvoiceNumberManuallySet)
-                            {                               
+                            {
+                                Dictionary<string, string> counterAdditionalParameters = null;
+                                if (FeatureToggleHelper.HasFeatureToggle("BCC", tenant))
+                                {
+                                    counterAdditionalParameters = GetCounterAdditionalParameters(entityPM, CommonContext);
+                                }
+
                                 if (entityPM.IsConstituentInvoice)
                                 {
-                                    entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "CNST", "CNS", null);
+                                    entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "CNST", "CNS", null, counterAdditionalParameters);
                                 }
 
                                 else if (entityPM.IsConsolidationInvoice)
                                 {
-                                    entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "INVC", "CON", null);
+                                    entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "INVC", "CON", null, counterAdditionalParameters);
                                 }
 
                                 else
                                 {
-                                    entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "INVC", entityPM.ARInvoiceTypeCode, null);
+                                    entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "INVC", entityPM.ARInvoiceTypeCode, null, counterAdditionalParameters);
                                 }
                             }
-                        }
+                        }                   
                         #endregion
 
                         ARInvoiceService service = new ARInvoiceService(MyContext, entity.Tenant);
@@ -228,6 +234,22 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
         }
 
+        private static Dictionary<string, string> GetCounterAdditionalParameters(ARInvoicePM entityPM, ICommonDataContext CommonContext)
+        {
+            Dictionary<string, string> counterAdditionalParameters = new Dictionary<string, string>() { { "[B]", "" } };
+            if (!string.IsNullOrEmpty(entityPM.BranchId))
+            {
+                BranchRepository branchRepository = new BranchRepository(CommonContext);
+                Branch myBranch = branchRepository.GetSingleBranch(entityPM.BranchId, entityPM.Tenant);
+
+                if (myBranch != null && !string.IsNullOrEmpty(myBranch.CounterCode))
+                {
+                    counterAdditionalParameters["[B]"] = myBranch.CounterCode;
+                }
+            }
+
+            return counterAdditionalParameters;
+        }
         private ARInvoicePM SetARInvoiceStatusBooleans(ARInvoice invoice,ARInvoicePM invoicePM)
         {
             if (invoice.IsDraft)
