@@ -113,6 +113,7 @@
     <None Include="DBOthers\InfrastructureModel\Procedures\DeleteOldAnalyzeQueues.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\DeleteOldContactActivityLogs.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\ResetFullTextSearchIndexChangeTracking.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdatePayablesData.dxml" />
     <None Include="DBOthers\ShipmentsModel\Views\DigitalShipmentDataView.dxml" />
     <None Include="DBScripts\CommonModel\202208160224_AddBinaryTypeToFieldDataTypes.sxml" />
     <None Include="DBScripts\GlobalModel\2022090261326_AddDigitalPortalExportWR.sxml" />
@@ -563,7 +564,6 @@
     <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdateCustomConnectToShipment.dxml" />
     <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdateInsidePackagesVolumetric.dxml" />
     <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdatePackagesVolumetric.dxml" />
-    <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdatePayablesData.doxml" />
     <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdateReceivablesData.dxml" />
     <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdateShipmentARInvoices.dxml" />
     <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdateShipmentFinalArrivalDate.dxml" />
