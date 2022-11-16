@@ -164,6 +164,11 @@ export class CustomsSettingPM {
     public set LastNumOfMessagesDCAWS(newValue: number) { if (this.lastNumOfMessagesDCAWS != newValue) { this.lastNumOfMessagesDCAWS = newValue; this.MarkAsDirty("LastNumOfMessagesDCAWS"); } }
        
 	 
+    private serviceScript: string;
+    public get ServiceScript() { return this.serviceScript; }
+    public set ServiceScript(newValue: string) { if (this.serviceScript != newValue) { this.serviceScript = newValue; this.MarkAsDirty("ServiceScript"); } }
+       
+	 
 
     public OldEntityPM: CustomsSettingPM;
 		

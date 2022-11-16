@@ -31,7 +31,7 @@ pause
             try
             {
                 var serversNameRepository = new ServersNameRepository(0);
-                var list = serversNameRepository.All().ToList();
+                var list = serversNameRepository.All().ToList();//NOCACHE!!fast!!  
                 if (!list.Any())
                 {
                     return "REM serversName  not defined ";

@@ -22,6 +22,7 @@ export class LogFieldComponent
 
     _CommunicationLogStepDataViewModel: any; //CommunicationLogStepDataViewModel
     _Log: string;
+    public UseTextarea: boolean=false;
     
 
 
@@ -43,6 +44,7 @@ export class LogFieldComponent
         this.Tab = args.Tab;
         this.IsDisplayOnly = args.Disabled;
         this._inputLogId = "_inputLogId";
+        
 
         
     }
@@ -67,8 +69,14 @@ export class LogFieldComponent
 
     //}
 
-    SetWindowArgs(ShowLog: string) {
-        this._Log = ShowLog;
+    SetWindowArgs(args: string | any) {
+        if (typeof args === 'string' || args instanceof String){
+                this._Log = args.toString();
+        }else{
+            this._Log =args["Log"];
+            this.UseTextarea =args["UseTextarea"];
+        }
+
 
         //this.Tab = args.Tab;
         //this.IsDisplayOnly = args.Disabled;
