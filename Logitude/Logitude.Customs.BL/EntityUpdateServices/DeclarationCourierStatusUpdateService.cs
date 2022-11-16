@@ -42,9 +42,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void OnUpdating(DeclarationCourierStatusPM entityPM, DeclarationCourierStatus entityPOCO)
         {
+            var setting = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
+            if (setting != null & setting.IsConnectedToUniFreight)
+            { 
             var declarationCourierStatusRepository = new DeclarationCourierStatusRepository(entityPM.Tenant);
             declarationCourierStatusRepository.Lock_forUpdateNOWAIT(entityPM.DeclarationId);
-
+            }
             ICustomContext context = MainContext as CustomContext;
             if (entityPM != null)
             {
@@ -134,123 +137,128 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             if (entityPM.IsClosedForFollowUp != entityPOCO.IsClosedForFollowUp)
             {
-                CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(entityPM.Tenant);
+
+             
+
+                    CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(entityPM.Tenant);
                 var courierMasterPM = courierMasterQueryService.GetByDeclarationId(entityPM.DeclarationId, entityPM.Tenant);
                 var repository = new CardRepository(entityPM.Tenant);
-                if (courierMasterPM != null)
+                if (setting != null & setting.IsConnectedToUniFreight)
                 {
-                    var myCard = repository.GetSingleCard(courierMasterPM.IntegratorCode, entityPM.Tenant);
-                    if (myCard != null && !String.IsNullOrWhiteSpace(myCard.Code))
+                    if (courierMasterPM != null  )
                     {
-                        string defValue = GetDefault("ISRAEL", "CGO_GDPR_PRIVAC", "NON", myCard.Code, entityPM.Tenant);
-                        if (defValue == "Y")
+                        var myCard = repository.GetSingleCard(courierMasterPM.IntegratorCode, entityPM.Tenant);
+                        if (myCard != null && !String.IsNullOrWhiteSpace(myCard.Code))
                         {
-                            if (entityPM.IsClosedForFollowUp)
+                            string defValue = GetDefault("ISRAEL", "CGO_GDPR_PRIVAC", "NON", myCard.Code, entityPM.Tenant);
+                            if (defValue == "Y")
                             {
-                                DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
-                                var dec = declarationQueryService.GetSingleDeclarationById(entityPM.DeclarationId, entityPM.Tenant);
-                                var casual = new DeclarationCasualDetailsPM
+                                if (entityPM.IsClosedForFollowUp)
                                 {
-                                    ImporterCode = dec.ImporterCode,
-                                    TransferImporterCode = dec.TransferImporterCode,
-                                    EntitleImporterCode = dec.EntitleImporterCode,
-                                    ImporterName = dec.ImporterName,
-                                    ImporterAddress = dec.ImporterAddress,
-                                    TransferImporterName = dec.TransferImporterName,
-                                    TransferImporterAddress = dec.TransferImporterAddress,
-                                    EntitleImporterName = dec.EntitleImporterName,
-                                    EntitleImporterAddress = dec.EntitleImporterAddress,
-                                    ImporterPassportNumber = dec.ImporterPassportNumber,
-                                    EntitlePassportNumber = dec.EntitlePassportNumber,
-                                    TransferPassportNumber = dec.TransferPassportNumber,
-                                    CasualImporterAddress1 = dec.CasualImporterAddress1,
-                                    CasualImporterAddress2 = dec.CasualImporterAddress2,
-                                    CasualImporterCity = dec.CasualImporterCity,
-                                    CasualImporterZipCode = dec.CasualImporterZipCode,
-                                    CasualImporterFax = dec.CasualImporterFax,
-                                    CasualImporterEmail = dec.CasualImporterEmail,
-                                    CasualImporterTel = dec.CasualImporterTel,
-                                    CasualImporterContact = dec.CasualImporterContact,
-                                    DeclarationId = dec.Id,
-                                    Tenant = dec.Tenant,
-                                    //CasualSupplierName = dec.CasualSupplierName,
-                                    //CasualSupplierAddress = dec.CasualSupplierAddress,
-                                };
-                                casual.ChangeSetOp = ChangeSetOperation.Insert;
-                                DeclarationCasualDetailsUpdateService declarationCasualDetailsUpdateService = new DeclarationCasualDetailsUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
-                                declarationCasualDetailsUpdateService.Update(casual, true);
+                                    DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
+                                    var dec = declarationQueryService.GetSingleDeclarationById(entityPM.DeclarationId, entityPM.Tenant);
+                                    var casual = new DeclarationCasualDetailsPM
+                                    {
+                                        ImporterCode = dec.ImporterCode,
+                                        TransferImporterCode = dec.TransferImporterCode,
+                                        EntitleImporterCode = dec.EntitleImporterCode,
+                                        ImporterName = dec.ImporterName,
+                                        ImporterAddress = dec.ImporterAddress,
+                                        TransferImporterName = dec.TransferImporterName,
+                                        TransferImporterAddress = dec.TransferImporterAddress,
+                                        EntitleImporterName = dec.EntitleImporterName,
+                                        EntitleImporterAddress = dec.EntitleImporterAddress,
+                                        ImporterPassportNumber = dec.ImporterPassportNumber,
+                                        EntitlePassportNumber = dec.EntitlePassportNumber,
+                                        TransferPassportNumber = dec.TransferPassportNumber,
+                                        CasualImporterAddress1 = dec.CasualImporterAddress1,
+                                        CasualImporterAddress2 = dec.CasualImporterAddress2,
+                                        CasualImporterCity = dec.CasualImporterCity,
+                                        CasualImporterZipCode = dec.CasualImporterZipCode,
+                                        CasualImporterFax = dec.CasualImporterFax,
+                                        CasualImporterEmail = dec.CasualImporterEmail,
+                                        CasualImporterTel = dec.CasualImporterTel,
+                                        CasualImporterContact = dec.CasualImporterContact,
+                                        DeclarationId = dec.Id,
+                                        Tenant = dec.Tenant,
+                                        //CasualSupplierName = dec.CasualSupplierName,
+                                        //CasualSupplierAddress = dec.CasualSupplierAddress,
+                                    };
+                                    casual.ChangeSetOp = ChangeSetOperation.Insert;
+                                    DeclarationCasualDetailsUpdateService declarationCasualDetailsUpdateService = new DeclarationCasualDetailsUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
+                                    declarationCasualDetailsUpdateService.Update(casual, true);
 
-                                //dec.CasualSupplierName = null;
-                                // dec.CasualSupplierAddress = null;
-                                dec.ImporterCode = null;
-                                dec.TransferImporterCode = null;
-                                dec.EntitleImporterCode = null;
-                                dec.ImporterName = null;
-                                dec.ImporterAddress = null;
-                                dec.TransferImporterName = null;
-                                dec.TransferImporterAddress = null;
-                                dec.EntitleImporterName = null;
-                                dec.EntitleImporterAddress = null;
-                                dec.ImporterPassportNumber = null;
-                                dec.EntitlePassportNumber = null;
-                                dec.TransferPassportNumber = null;
-                                dec.CasualImporterAddress1 = null;
-                                dec.CasualImporterAddress2 = null;
-                                dec.CasualImporterCity = null;
-                                dec.CasualImporterZipCode = null;
-                                dec.CasualImporterFax = null;
-                                dec.CasualImporterEmail = null;
-                                dec.CasualImporterTel = null;
-                                dec.CasualImporterContact = null;
-                                dec.ChangeSetOp = ChangeSetOperation.Update;
-                                //DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
-                                //declarationUpdateService.Update(dec, true);
-                                DeclarationUpdateService.DeclarationRepositoryUpdatePOCO(dec,true);
-                            }
-                            else
-                            {
-                                DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
-                                var dec = declarationQueryService.GetSingleDeclarationById(entityPM.DeclarationId, entityPM.Tenant);
-                                DeclarationCasualDetailsQueryService declarationCasualDetailsQueryService = new DeclarationCasualDetailsQueryService(entityPM.Tenant);
-                                var casual = declarationCasualDetailsQueryService.GetSingle(entityPM.DeclarationId, false, false);
-                                if (casual != null)
-                                {
-                                    //dec.CasualSupplierName = casual.CasualSupplierName;
-                                    //dec.CasualSupplierAddress = casual.CasualSupplierAddress;
-                                    dec.ImporterCode = casual.ImporterCode;
-                                    dec.TransferImporterCode = casual.TransferImporterCode;
-                                    dec.EntitleImporterCode = casual.EntitleImporterCode;
-                                    dec.ImporterName = casual.ImporterName;
-                                    dec.ImporterAddress = casual.ImporterAddress;
-                                    dec.TransferImporterName = casual.TransferImporterName;
-                                    dec.TransferImporterAddress = casual.TransferImporterAddress;
-                                    dec.EntitleImporterName = casual.EntitleImporterName;
-                                    dec.EntitleImporterAddress = casual.EntitleImporterAddress;
-                                    dec.ImporterPassportNumber = casual.ImporterPassportNumber;
-                                    dec.EntitlePassportNumber = casual.EntitlePassportNumber;
-                                    dec.TransferPassportNumber = casual.TransferPassportNumber;
-                                    dec.CasualImporterAddress1 = casual.CasualImporterAddress1;
-                                    dec.CasualImporterAddress2 = casual.CasualImporterAddress2;
-                                    dec.CasualImporterCity = casual.CasualImporterCity;
-                                    dec.CasualImporterZipCode = casual.CasualImporterZipCode;
-                                    dec.CasualImporterFax = casual.CasualImporterFax;
-                                    dec.CasualImporterEmail = casual.CasualImporterEmail;
-                                    dec.CasualImporterTel = casual.CasualImporterTel;
-                                    dec.CasualImporterContact = casual.CasualImporterContact;
+                                    //dec.CasualSupplierName = null;
+                                    // dec.CasualSupplierAddress = null;
+                                    dec.ImporterCode = null;
+                                    dec.TransferImporterCode = null;
+                                    dec.EntitleImporterCode = null;
+                                    dec.ImporterName = null;
+                                    dec.ImporterAddress = null;
+                                    dec.TransferImporterName = null;
+                                    dec.TransferImporterAddress = null;
+                                    dec.EntitleImporterName = null;
+                                    dec.EntitleImporterAddress = null;
+                                    dec.ImporterPassportNumber = null;
+                                    dec.EntitlePassportNumber = null;
+                                    dec.TransferPassportNumber = null;
+                                    dec.CasualImporterAddress1 = null;
+                                    dec.CasualImporterAddress2 = null;
+                                    dec.CasualImporterCity = null;
+                                    dec.CasualImporterZipCode = null;
+                                    dec.CasualImporterFax = null;
+                                    dec.CasualImporterEmail = null;
+                                    dec.CasualImporterTel = null;
+                                    dec.CasualImporterContact = null;
                                     dec.ChangeSetOp = ChangeSetOperation.Update;
                                     //DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
                                     //declarationUpdateService.Update(dec, true);
-                                    
-                                    casual.ChangeSetOp = ChangeSetOperation.Delete;
-                                    DeclarationCasualDetailsUpdateService declarationCasualDetailsUpdateService = new DeclarationCasualDetailsUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
-                                    declarationCasualDetailsUpdateService.Update(casual, true);
                                     DeclarationUpdateService.DeclarationRepositoryUpdatePOCO(dec, true);
+                                }
+                                else
+                                {
+                                    DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
+                                    var dec = declarationQueryService.GetSingleDeclarationById(entityPM.DeclarationId, entityPM.Tenant);
+                                    DeclarationCasualDetailsQueryService declarationCasualDetailsQueryService = new DeclarationCasualDetailsQueryService(entityPM.Tenant);
+                                    var casual = declarationCasualDetailsQueryService.GetSingle(entityPM.DeclarationId, false, false);
+                                    if (casual != null)
+                                    {
+                                        //dec.CasualSupplierName = casual.CasualSupplierName;
+                                        //dec.CasualSupplierAddress = casual.CasualSupplierAddress;
+                                        dec.ImporterCode = casual.ImporterCode;
+                                        dec.TransferImporterCode = casual.TransferImporterCode;
+                                        dec.EntitleImporterCode = casual.EntitleImporterCode;
+                                        dec.ImporterName = casual.ImporterName;
+                                        dec.ImporterAddress = casual.ImporterAddress;
+                                        dec.TransferImporterName = casual.TransferImporterName;
+                                        dec.TransferImporterAddress = casual.TransferImporterAddress;
+                                        dec.EntitleImporterName = casual.EntitleImporterName;
+                                        dec.EntitleImporterAddress = casual.EntitleImporterAddress;
+                                        dec.ImporterPassportNumber = casual.ImporterPassportNumber;
+                                        dec.EntitlePassportNumber = casual.EntitlePassportNumber;
+                                        dec.TransferPassportNumber = casual.TransferPassportNumber;
+                                        dec.CasualImporterAddress1 = casual.CasualImporterAddress1;
+                                        dec.CasualImporterAddress2 = casual.CasualImporterAddress2;
+                                        dec.CasualImporterCity = casual.CasualImporterCity;
+                                        dec.CasualImporterZipCode = casual.CasualImporterZipCode;
+                                        dec.CasualImporterFax = casual.CasualImporterFax;
+                                        dec.CasualImporterEmail = casual.CasualImporterEmail;
+                                        dec.CasualImporterTel = casual.CasualImporterTel;
+                                        dec.CasualImporterContact = casual.CasualImporterContact;
+                                        dec.ChangeSetOp = ChangeSetOperation.Update;
+                                        //DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
+                                        //declarationUpdateService.Update(dec, true);
 
+                                        casual.ChangeSetOp = ChangeSetOperation.Delete;
+                                        DeclarationCasualDetailsUpdateService declarationCasualDetailsUpdateService = new DeclarationCasualDetailsUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
+                                        declarationCasualDetailsUpdateService.Update(casual, true);
+                                        DeclarationUpdateService.DeclarationRepositoryUpdatePOCO(dec, true);
+
+                                    }
                                 }
                             }
                         }
-                    }
-                }
+                    } }
                 DeclarationCourierStatusRepository rep = new DeclarationCourierStatusRepository(context);
                 CourierMasterUpdateService CourierMasterUpdateService = new CourierMasterUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
                 bool useCRS = true;
@@ -522,6 +530,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     myDeclarationCourierStatusPM.IsCourierMissingClassification = true;
                 }
 
+                var setting = CustomsSettingQueryService.GetSettingByTenant(myDeclarationCourierStatusPM.Tenant);
+
+                if(setting!= null & setting.IsConnectedToUniFreight)
+                {
+
+              
                 //Set HighLowValue
                 string defValue = GetDefault("ISRAEL", "CGO_HIGH_VALUE", "NON", "NON");
                 decimal defaultAmount = 0;
@@ -535,9 +549,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     myDeclarationCourierStatusPM.HighLowValue = "L";
                 }
+                }
 
                 if (string.IsNullOrWhiteSpace(myDeclarationCourierStatusPM.DocumentStatusCode)) myDeclarationCourierStatusPM.DocumentStatusCode = "M";
-
+             
                 return myDeclarationCourierStatusPM;
 
             }
