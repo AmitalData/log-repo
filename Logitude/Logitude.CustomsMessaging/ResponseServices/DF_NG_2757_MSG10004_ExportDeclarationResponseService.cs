@@ -33,103 +33,6 @@ using Simplog.Data.CommonDataModel;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
-    //public class DF_NG_2757_MSG10004_ExportDeclarationResponseService :
-    //    ResponseServiceBase<INF_MSG_GenericResponseData, DF_NG_2757_MSG10004_ExportDeclarationResponse, GenericRequestParams>
-    //{
-    //    DeclarationPM _MyDeclarationPM;
-    //    private bool _FastDelete;
-    //    //private List<SupplierInvoiceItemsTaxesModPM> _SupplierInvoiceItemsTaxesModificationPMList;
-    //    //public UnifreightIIG.Common.CommonIIGInterface.IResponseHeaderOrFault _ResponseHeaderExeption;
-    //    public bool _IsSubmitDeclarationResponse { get; set; }
-    //    public bool _IsRetrieveDeclarationResponse { get; set; }
-    //    decimal? totGeneralTaxCalc = 0;
-    //    decimal? totPurchaseCalc = 0;
-    //    decimal? totVatCalc = 0;
-    //    decimal? generalTax = 0;
-    //    decimal? purchase = 0;
-    //    decimal? vat = 0;
-
-    //    DeclarationError _MyDeclarationError;
-    //    decimal? _TotalBtlCoverageNISSum = 0;
-
-    //    public override void OnRequestFail(DF_NG_2757_MSG10004_ExportDeclarationResponse customResponse, GenericRequestParams requestParams)
-    //    {
-    //        //if (!String.IsNullOrWhiteSpace(requestParams.AppicationId))
-    //        //{
-    //        //    CalculateDeclarationCourierStatus.UpdateCourierDeclarationStatusCode(requestParams.Tenant, requestParams.AppicationId);
-    //        //}
-    //        base.OnRequestFail(customResponse, requestParams);
-    //    }
-
-    //    public override INF_MSG_GenericResponseData GetResponse(
-    //        DF_NG_2757_MSG10004_ExportDeclarationResponse customResponse, GenericRequestParams requestParams)
-    //    {
-
-    //        /// itzik test     TestTrans(requestParams);
-    //        return this.MyResponseData;
-    //    }
-
-    //    private void TestTrans(GenericRequestParams requestParams) /// itzik test 
-    //    {
-    //        DeclarationStatusRequestParams searchParams = new DeclarationStatusRequestParams()
-    //        {
-    //            LoggingEnabled = true,
-
-    //            CustomFileNo = _MyDeclarationPM.CustomFileNo,
-    //            DeclarationNumber = _MyDeclarationPM.DeclarationNumber,
-    //            Tenant = requestParams.Tenant,
-    //            RequestName = "Declaration Status Search",
-    //            ResponseName = "Declaration Status Search",
-    //            SuppressSplitWR = true
-    //        };
-
-    //        searchParams.RequestVIA = SendRequestVIA.WebServiceInteractive;
-    //        var resData = Logitude.CustomsMessaging.MessagingServices.DF_NG_8250_Web01_DeclarationStatus_RequestMessagingService.SendInteractive(searchParams);
-    //        if (!resData.Succeeded)
-    //        {
-    //            LogMessagingUtil.Instance.AppendLine("Sending Declaration Status Request Failed " + resData.CustomsRequestsSheetId + ", Message: " + resData.UserMessage);
-    //            ///return;
-    //        }
-    //        else
-    //        {
-    //            LogMessagingUtil.Instance.AppendLine("Request Succeeded " + resData.CustomsRequestsSheetId);
-    //        }
-
-    //    }
-
-    //    public override void Update(DF_NG_2757_MSG10004_ExportDeclarationResponse customResponse, GenericRequestParams requestParams)
-    //    {
-    //        if(customResponse.ResponseContentHeader.Exception!= null && customResponse.ResponseContentHeader.Exception.Count()>0)
-
-    //        {
-
-
-    //            this.MyResponseData = new INF_MSG_GenericResponseData();
-    //            this.MyResponseData.ApplicationID = requestParams.AppicationId;
-    //            this.MyResponseData.Succeeded = true;
-    //            this.MyResponseData.UserMessage = customResponse.ResponseContentHeader.Exception[0].ExeptionDescription;
-    //            this.MyResponseData.HasException = true;
-    //        }
-    //        else
-    //        {
-    //            this.MyResponseData = new INF_MSG_GenericResponseData();
-    //            this.MyResponseData.ApplicationID = requestParams.AppicationId;
-    //            this.MyResponseData.Succeeded = true;
-    //            this.MyResponseData.UserMessage = "בקשה נשלחה בהצלחה";
-    //            this.MyResponseData.HasException = false;
-
-    //        }
-
-
-
-
-
-    //    }
-
-
-
-
-    //}
 
     public class DF_NG_2757_MSG10004_ExportDeclarationResponseService :
         ResponseServiceBase<INF_MSG_GenericResponseData, DF_NG_2757_MSG10004_ExportDeclarationResponse, GenericRequestParams>
@@ -139,8 +42,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private bool _FastDelete;
         DateTime _DateTime;
 
-        //private List<SupplierInvoiceItemsTaxesModPM> _SupplierInvoiceItemsTaxesModificationPMList;
-        //public UnifreightIIG.Common.CommonIIGInterface.IResponseHeaderOrFault _ResponseHeaderExeption;
         public bool _IsSubmitDeclarationResponse { get; set; }
         public bool _IsRetrieveDeclarationResponse { get; set; }
         decimal? totGeneralTaxCalc = 0;
@@ -166,8 +67,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             DF_NG_2757_MSG10004_ExportDeclarationResponse customResponse, GenericRequestParams requestParams)
         {
 
-            /// itzik test     TestTrans(requestParams);
-            return this.MyResponseData;
+             return this.MyResponseData;
         }
 
         private void TestTrans(GenericRequestParams requestParams) /// itzik test 
@@ -207,14 +107,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var mySupplierInvoiceItemsTaxUpdateService = new SupplierInvoiceItemsTaxUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
             var mySupplierInvoiceItemVehicleModUpdateService = new SupplierInvoiceItemVehicleModUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant); // moran 20.10.15 - Task 17209 
             var mySupplierInvoiceItemModVehicleUpdateService = new SupplierInvoiceItemModVehicleUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant); // moran 24.11.15 - Task 17424 
-            //var mySupplierInvoiceItemsTaxesModificationUpdateService = new SupplierInvoiceItemsTaxesModUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
             var myDeclarationTaxUpdateService = new DeclarationTaxUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
             var myDeclarationConstraintUpdateService = new DeclarationConstraintUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
             var myDeclarationPaymentQueryService = new DeclarationPaymentQueryService(context);
 
             DeclarationErrorPointerService mydDclarationErrorPointerService = new DeclarationErrorPointerService();
 
-            //var mySupplierInvioceItemCertificatUpdateService = new SupplierInvioceItemCertificatUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant); 
 
             this.MyResponseData = new INF_MSG_GenericResponseData();
 
@@ -311,19 +209,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (requestParams.GetType() == typeof(DeclarationRestoreRequestParams))// moran 10.1.16 Task 19724 // Mirit 24/01/16 19845 
             {
-                //if (this._MyDeclarationPM.CorrectionsXml != null)
-                //{
-                //    string mess = null;
-
-                //    mess = "בוצעו תיקונים בהצהרה (תיקון הצהרה) נתוני ההצהרה לא עודכנו " + " (" + _MyDeclarationPM.DeclarationNumber + ")";
-                //    LogMessagingUtil.Instance.AppendLine(mess);
-                //    this.MyResponseData.ApplicationID = requestParams.AppicationId;
-                //    this.MyResponseData.Succeeded = true;
-                //    this.MyResponseData.UserMessage = mess;
-                //    this.MyResponseData.HasException = false;
-
-                //    return;
-                //}
+                
 
                 if (this._MyDeclarationPM.PaymentDate.HasValue && !_MyDeclarationPM.IsCourierDeclaration) //If declaration was already paid 
                 {
@@ -331,7 +217,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     if (!(requestParams.GetType() == typeof(DeclarationRestoreRequestParams) && System.Convert.ToDouble(_MyDeclarationPM.VersionId) < 1.0 && System.Convert.ToDouble(customResponse.Response.Declaration.DMExtensions.VersionID.Value) == 1.0) //restored version 1.0 and current 0.x
                         && (_MyDeclarationPM.VersionId != customResponse.Response.Declaration.DMExtensions.VersionID.Value)) //Compare Declaration Version
 
-                    //if (_MyDeclarationPM.VersionId != customResponse.Response.Declaration.DMExtensions.VersionID.Value) //Compare Declaration Version
                     {
                         string mess = "נתוני ההצהרה לא עודכנו " + " (" + _MyDeclarationPM.DeclarationNumber + ")" + " הצהרה כבר שולמה ויש שוני בין הגרסאות";
                         LogMessagingUtil.Instance.AppendLine(mess);
@@ -447,41 +332,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                 }
             }
-
-            //if (customResponse.ResponseContentHeader.Exception != null)
-            // {
-            //     string userMessage = customResponse.ResponseContentHeader.Exception.FirstOrDefault().ExeptionDescription;
-            //     this._MyDeclarationPM.MarkAsChanged = false;
-            //     var swErrosXml = Stopwatch.StartNew();
-            //     this._MyDeclarationPM.ErrosXml = mydDclarationErrorPointerService.AddDeclarationException(this._MyDeclarationPM.ErrosXml, "Buisness", customResponse.ResponseContentHeader.Exception[0]);
-            //     LogMessagingUtil.Instance.AppendLine("ErrosXml:Took:" + swErrosXml.ElapsedMilliseconds);
-
-            //     if (_IsSubmitDeclarationResponse != true) // only for sending declaration (2750)
-            //     {
-            //         _MyDeclarationPM.IsChanged = true;
-            //     }
-            //     //this._MyDeclarationPM.DeclarationStatusTypeCode = null; moran 14.6.16 - Task 21617 - commented
-            //     if (customResponse.ResponseContentHeader.Exception.FirstOrDefault().ExeptionType == 2794)
-            //     {
-            //         this._MyDeclarationPM.DeclarationNumber = customResponse.ResponseContentHeader.Exception.FirstOrDefault().ExceptionParms.FirstOrDefault();
-            //         userMessage = "עודכן מספר ההצהרה לפי רשומת הסוכן - יש לשדר את ההצהרה מחדש";
-            //     }
-            //     if (_MyDeclarationPM.UserNotes == "LoadTestOnProgress")
-            //     {
-            //         _MyDeclarationPM.UserNotes = "LoadTest";
-            //     }
-
-            //     this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
-            //     this._MyDeclarationPM.CurrentContextTag = Logitude.Customs.BL.EntityUpdateServices.DeclarationUpdateService.UpdateIIGExcptionConst;
-            //     myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
-
-            //     this.MyResponseData.ApplicationID = requestParams.AppicationId;
-            //     this.MyResponseData.Succeeded = true;
-            //     this.MyResponseData.UserMessage = userMessage;
-            //     this.MyResponseData.HasException = true;
-
-            //     return;
-            // }
+ 
             if (_MyDeclarationPM.DepositionStatusCode == "R") _MyDeclarationPM.DepositionStatusCode = null;
             if (requestParams.ResponseName != "5117" && requestParams.ResponseName != "8237" && customResponse.ResponseContentHeader.Exception != null)
             {
@@ -549,10 +400,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 if (this._MyDeclarationPM.IsCourierDeclaration)// due (customResponse.ResponseContentHeader.Exception != null)>> X
                 {
-                    //override DeclarationUpdateService.AfterUpdating/CalculateDeclarationCourierStatus
-                    /// 	Logitude.Customs.BL.dll!Logitude.Customs.BL.EntityUpdateServices.DeclarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(Logitude.Customs.Def.EntityPMs.DeclarationPM declarationPM) Line 67	C#
-                    ///> Logitude.Customs.BL.dll!Logitude.Customs.BL.EntityUpdateServices.DeclarationUpdateService.AfterUpdating(Logitude.Customs.Def.EntityPMs.DeclarationPM entityPM, Logitude.Server.Tools.EntityPM entityParentPM) Line 859  C#
-
+ 
                     var calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(this._MyDeclarationPM);
                     calculateDeclarationCourierStatus.Update(
                         (currentDeclarationCourierStatusPM) =>
@@ -612,8 +460,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 mySupplierInvoiceItemVehicleModUpdateService.FastDeleteComposition(myDeclarationKeys);
                 mySupplierInvoiceItemsTaxUpdateService.FastDeleteComposition(myDeclarationKeys);
                 mySupplierInvoiceItemModVehicleUpdateService.FastDeleteComposition(myDeclarationKeys);
-                //mySupplierInvioceItemCertificatUpdateService.FastDeleteComposition(myDeclarationKeys);
-                (context as DbContextBase).SaveChanges();
+                 (context as DbContextBase).SaveChanges();
                 context = CustomContext.GetContext(requestParams.Tenant);
                 myDeclarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
 
@@ -639,8 +486,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     var customDeclarationNumber = customResponse.Response.Declaration.ID.Value;
                     if (customDeclarationNumber != _MyDeclarationPM.DeclarationNumber)
                     {
-                        //throw new System.Exception("BL Error customDeclarationNumber != declarationPM.DeclarationNumber ");
-                        _MyDeclarationPM.DeclarationNumber = customDeclarationNumber; //yaron !!
+                         _MyDeclarationPM.DeclarationNumber = customDeclarationNumber; //yaron !!
                     }
                 }
             }
@@ -802,52 +648,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 }
             }
-            //Yuval Chalup 06.08.2015 TASK-15422 --->
-
-            //if(!(!string.IsNullOrWhiteSpace(paymentOrderNumber) && paymentStatusCode != "5"))
-            //{
-            //    _MyDeclarationPM.CurrentContextTag = Logitude.Customs.BL.EntityUpdateServices.DeclarationUpdateService.UpdateUnifreightBillingConst;
-            //}
-            //else
-            //{
-            //    //Payment date update
-            //    if (declarationPaymentsPM.PaymentDate.HasValue)
-            //    {
-            //        if (customResponse != null)
-            //        {
-            //            bool setPaymentDateNull = false;
-            //            if (customResponse.Response != null)
-            //            {
-            //                if (customResponse.Response.Status != null)
-            //                {
-            //                    if (customResponse.Response.Status.NameCode != null)
-            //                    {
-            //                        if (customResponse.Response.Status.NameCode.Value == "14")
-            //                        {
-            //                            setPaymentDateNull = true;
-            //                            _MyDeclarationPM.PaymentDate = null;
-            //                            LogMessagingUtil.Instance.AppendLine("Change Declaration Version From " + oldVersionId + "To " + _MyDeclarationPM.VersionId);
-            //                            _MyDeclarationPM.CurrentContextTag = Logitude.Customs.BL.EntityUpdateServices.DeclarationUpdateService.UpdateUnifreightBillingConst; // moran 20.7.15 - Task 14521
-            //                        }
-            //                    }
-            //                }
-            //            }
-            //            if (!setPaymentDateNull)
-            //            {
-            //                _MyDeclarationPM.PaymentDate = declarationPaymentsPM.PaymentDate;
-            //            }
-            //        }
-            //        else
-            //        {
-            //            _MyDeclarationPM.PaymentDate = declarationPaymentsPM.PaymentDate;
-            //        }
-            //    }
-            //    if (_MyDeclarationPM.CurrentContextTag != Logitude.Customs.BL.EntityUpdateServices.DeclarationUpdateService.UpdateUnifreightBillingConst) // moran 20.7.15 - Task 14521 - enter into 'if'
-            //    {
-            //        _MyDeclarationPM.CurrentContextTag = Logitude.Customs.BL.EntityUpdateServices.DeclarationUpdateService.CreateUnifreightPaymentConst;
-            //    }
-            //}
-            if (!(!string.IsNullOrWhiteSpace(paymentOrderNumber) && paymentStatusCode != "5") && !(_IsSubmitDeclarationResponse == true && string.IsNullOrWhiteSpace(paymentOrderNumber) && _MyDeclarationPM.DeclarationStatusTypeCode == "5" && _MyDeclarationPM.TotalTax <= 5))
+             if (!(!string.IsNullOrWhiteSpace(paymentOrderNumber) && paymentStatusCode != "5") && !(_IsSubmitDeclarationResponse == true && string.IsNullOrWhiteSpace(paymentOrderNumber) && _MyDeclarationPM.DeclarationStatusTypeCode == "5" && _MyDeclarationPM.TotalTax <= 5))
             {
                 _MyDeclarationPM.CurrentContextTag = Logitude.Customs.BL.EntityUpdateServices.DeclarationUpdateService.UpdateUnifreightBillingConst;
                 if (_MyDeclarationPM.IsCourierDeclaration && declarationPaymentsPM != null && declarationPaymentsPM.PaymentDate.HasValue && _IsSubmitDeclarationResponse == true && _MyDeclarationPM.DeclarationStatusTypeCode == "5")
@@ -863,11 +664,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     _MyDeclarationPM.PaymentDate = declarationPaymentsPM.PaymentDate;
                 }
-                //if (!string.IsNullOrWhiteSpace(customResponse.Response.Status.EffectiveDateTime))
-                //{
-                //    _MyDeclarationPM.PaymentDate = DateTime.Parse(customResponse.Response.Status.EffectiveDateTime);
-                //}
-                if (_MyDeclarationPM.CurrentContextTag != Logitude.Customs.BL.EntityUpdateServices.DeclarationUpdateService.UpdateUnifreightBillingConst)
+                 if (_MyDeclarationPM.CurrentContextTag != Logitude.Customs.BL.EntityUpdateServices.DeclarationUpdateService.UpdateUnifreightBillingConst)
                 {
                     _MyDeclarationPM.CurrentContextTag = Logitude.Customs.BL.EntityUpdateServices.DeclarationUpdateService.CreateUnifreightPaymentConst;
                 }
@@ -904,8 +701,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     foreach (UnifreightIIG.Common.ExportDeclarationServiceReference.CollateralRequestDetails collateralRequestItem in customResponse.CollateralRequestDetails)
                     {
                         this._MyDeclarationPM.ErrosXml = mydDclarationErrorPointerService.AddErrorPionter(_MyDeclarationError, "", "", "", "", "", "", "", "A", "המשוב להצהרה כולל דרישה לבטוחה " + " - מספר בטוחה " + collateralRequestItem.collateralRequestNumber, "", "", "", "");
-                        //this._MyDeclarationPM.ErrosXml = mydDclarationErrorPointerService.AddErrorPionter(_MyDeclarationError, "", "", "", "", "", "", "", "A", @"המשוב להצהרה כולל דרישה לבטוחה ע""ס " + customResponse.CollateralRequestDetails[0].collateralRequestNumber + @" ש""ח - מספר בטוחה " + customResponse.CollateralRequestDetails[0].collateralRequestNumber, "", "", "", "");
-                    }
+                     }
                 }
             }
 
@@ -1091,112 +887,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
                     declarationCourierStatusUpdateService.Update(_MyDeclarationCourierStatusPM, true);
                 }
-                /*
-                DeclarationPendingQueryService myCourierPendingReasonQueryService = new DeclarationPendingQueryService(context);
-                DeclarationPendingPM declarationPendingPM_900 = myCourierPendingReasonQueryService.GetSingle(_MyDeclarationPM.Id, "900", false, false);
-                DeclarationPendingPM declarationPendingPM_901 = myCourierPendingReasonQueryService.GetSingle(_MyDeclarationPM.Id, "901", false, false);
+             }
 
-                //DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
-                //DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, false, false);
-                //if (currentDeclarationCourierStatusPM != null && 
-                //    (string.IsNullOrEmpty(currentDeclarationCourierStatusPM.CourierPendingReasonCode) || currentDeclarationCourierStatusPM.CourierPendingReasonCode == "900" || currentDeclarationCourierStatusPM.CourierPendingReasonCode == "901"))
-
-                {
-                    // Pending 901
-                    Boolean isSetPendingTo901 = false;
-                    if (customResponse.Response.Error != null)
-                    {
-                        foreach (var errorItem in customResponse.Response.Error)
-                        {
-                            if (errorItem.ValidationCode != null && errorItem.ValidationCode.Value == "2382")
-                            {
-                                LogMessagingUtil.Instance.AppendLine("Pending - הצהרה פלסטינאית = 901");
-                                isSetPendingTo901 = true;
-                                //currentDeclarationCourierStatusPM.CourierPendingReasonCode = "901";
-                                //currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                                if (declarationPendingPM_901 == null)
-                                {
-                                    declarationPendingPM_901 = new DeclarationPendingPM();
-                                    declarationPendingPM_901.CourierPendingReasonCode = "901";
-                                }
-                                declarationPendingPM_901.ChangeSetOp = ChangeSetOperation.Update;
-                                declarationPendingPM_901.Status = "A";
-                                LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code To 901");
-                            }
-                        }
-                    }
-                    if (!isSetPendingTo901)
-                    {
-
-                        //if (currentDeclarationCourierStatusPM.CourierPendingReasonCode == "901")
-                        if (declarationPendingPM_901 != null)
-                        {
-                            //currentDeclarationCourierStatusPM.CourierPendingReasonCode = null;
-                            //currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                            declarationPendingPM_901.ChangeSetOp = ChangeSetOperation.Update;
-                            declarationPendingPM_901.Status = "S";
-                            LogMessagingUtil.Instance.AppendLine("Courier Pending Reason Code 901 Set as Solved");
-                        }
-
-                        // Pending 900
-                        CourierMasterQueryService courierMasterService = new CourierMasterQueryService(requestParams.Tenant);
-                        CourierMasterPM courierMaster = courierMasterService.GetSingle(_MyDeclarationPM.CourierMasterId, false, false);
-                        if (courierMaster != null)
-                        {
-                            var myGDFDATAQueryService = new GDFDATAQueryService(AmitalContext.GetContext(requestParams.Tenant));
-                            var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_ACT_COLLECT", "NON", courierMaster.IntegratorNumber, false, true);
-                            bool isCollectActive = def.DEFDATA == "Y";
-                            if (isCollectActive)
-                            {
-                                LogMessagingUtil.Instance.AppendLine("תהליך גביה- במידה ומופעל בדיקה האם להגדיר גבייה = 900");
-                                if (_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP" && _MyDeclarationPM.TotalTax > 0)
-                                {
-                                    //currentDeclarationCourierStatusPM.CourierPendingReasonCode = "900";
-                                    //currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                                    if (declarationPendingPM_900 == null)
-                                    {
-                                        declarationPendingPM_900 = new DeclarationPendingPM();
-                                        declarationPendingPM_900.CourierPendingReasonCode = "900";
-                                    }
-                                    declarationPendingPM_900.ChangeSetOp = ChangeSetOperation.Update;
-                                    declarationPendingPM_900.Status = "A";
-                                    LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code 900");
-                                }
-                                //else if (currentDeclarationCourierStatusPM.CourierPendingReasonCode == "900")
-                                else if (declarationPendingPM_900 != null)
-                                {
-                                    //currentDeclarationCourierStatusPM.CourierPendingReasonCode = null;
-                                    //currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                                    declarationPendingPM_900.ChangeSetOp = ChangeSetOperation.Update;
-                                    declarationPendingPM_900.Status = "S";
-                                    LogMessagingUtil.Instance.AppendLine("Courier Pending Reason Code 900 Set as Solved");
-                                }
-                            }
-                        }
-                    }
-
-                    //if (currentDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
-                    //{
-                    //  DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
-                    //declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
-                    //}
-
-                    DeclarationPendingUpdateService declarationPendingUpdateService = new DeclarationPendingUpdateService(context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
-                    if (declarationPendingPM_900 != null && declarationPendingPM_900.ChangeSetOp == ChangeSetOperation.Update)
-                    {
-                        declarationPendingUpdateService.Update(declarationPendingPM_900, true);
-                    }
-                    if (declarationPendingPM_901 != null && declarationPendingPM_901.ChangeSetOp == ChangeSetOperation.Update)
-                    {
-                        declarationPendingUpdateService.Update(declarationPendingPM_901, true);
-                    }
-                }
-                */
-            }
-
-            //var setting = CustomsSettingQueryService.GetSettingByTenant(_MyDeclarationPM.Tenant);
-            //if (setting.IsConnectedToUniFreight)
-            if (_MyDeclarationPM.IsConnectedToUnifreight)
+             if (_MyDeclarationPM.IsConnectedToUnifreight)
             {
                 //<--- Yuval Chalup 09.11.2015 TASK-16498 - Update PaymentOrderNumber in Payment
                 if (customResponse.DeclarationPaymentDetails != null)
@@ -1213,10 +906,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (customResponse.CollateralRequestDetails != null) // Create Collateral
             {
                 LogMessagingUtil.Instance.AppendLine("CollateralRequestDetails: Create Collateral");
-                //var headerXml = XmlGenericUtil<UnifreightIIG.Common.ImportDeclarationServiceReference.RequestContentHeader>
-                //    .SerializeObject(customResponse.);
-                //var header = XmlGenericUtil<UnifreightIIG.Common.MessageLib.Collateral.RequestContentHeader>.DeSerializeObject(headerXml);
-                var requestXml = XmlGenericUtil<UnifreightIIG.Common.ExportDeclarationServiceReference.CollateralRequestDetails[]>
+                 var requestXml = XmlGenericUtil<UnifreightIIG.Common.ExportDeclarationServiceReference.CollateralRequestDetails[]>
                     .SerializeObject(customResponse.CollateralRequestDetails);
                 var collateralArry = XmlGenericUtil<UnifreightIIG.Common.MessageLib.Collateral.CollateralRequestDetails[]>.DeSerializeObject(requestXml);
 
@@ -1348,18 +1038,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 return null;
             }
-            //This section that stops analyzing when ConstraintID appears more than once in the response is CANCELLED - 
-            //The new logic (below) analyze ONLY the first constraint of that ConstraintID
-            //try
-            //{
-            //    responseError.Where(errorItem => errorItem.DMExtensions != null).ToList().ToDictionary(r => r.DMExtensions.ConstraintID.ToString());
-            //}
-            //catch (System.Exception)
-            //{
-
-            //    throw new System.Exception("הגיעה מספר אילוץ כפול, נא לפנות למלמ");
-            //}
-
+ 
             var declarationConstraintPMList = new List<DeclarationConstraintPM>();
             foreach (var errorItem in responseError)
             {
@@ -1424,8 +1103,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 ResponseError errorItem = null;
                 errorItem = responseError.LastOrDefault(r => r.DMExtensions != null && r.DMExtensions.ConstraintID.ToString() == hshSetKey);
 
-                //if (errorItem.DMExtensions != null)
-                {
+                 {
                     DeclarationConstraintPM declarationConstraint = null;
                     declarationConstraint = FindConstraintInList(errorItem.DMExtensions.ConstraintID.ToString(), _MyDeclarationPM.Tenant, _MyDeclarationPM.Id);
 
@@ -1548,9 +1226,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             foreach (var goodsShipment in customResponse.Response.Declaration.GoodsShipment)
             {
-                //var supplierInvoiceItemsTaxPM = new SupplierInvoiceItemsTaxPM();
-                //var supplierInvoicePM = this._MyDeclarationPM.SupplierInvoices.FirstOrDefault(si => si.InvoiceNumber == goodsShipment.Invoice.ID.Value);
-                var supplierInvoicePM = this._MyDeclarationPM.SupplierInvoices.FirstOrDefault(si => si.SequenceNumeric == goodsShipment.SequenceNumeric);
+                 var supplierInvoicePM = this._MyDeclarationPM.SupplierInvoices.FirstOrDefault(si => si.SequenceNumeric == goodsShipment.SequenceNumeric);
 
                 if (supplierInvoicePM == null)
                 {

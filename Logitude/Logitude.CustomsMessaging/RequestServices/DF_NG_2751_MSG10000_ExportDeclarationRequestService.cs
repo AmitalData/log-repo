@@ -852,19 +852,9 @@ namespace Logitude.CustomsMessaging.RequestServices
             {
                 DMExtensions.DestinationCountry = SetCodeTypeValue<DeclarationDMExtensionsDestinationCountry>(declarationPM.DestinationCountryCode);
             }
-
-            //if (declarationPM.LoadingFactor.HasValue)
-            //{
-            //    DMExtensions.ExpenseLoadingFactor = new DeclarationDMExtensionsExpenseLoadingFactor()
-            //    {
-            //        Value = declarationPM.LoadingFactor.Value
-            //    };
-            //}
-
-
-            if (declarationPM.IsExporterConfirmation) DMExtensions.TransferDeclarationToDestinationCountry = new TransferDeclarationToDestinationCountryIndType() { Value = declarationPM.IsExporterConfirmation };
-
-
+ 
+                 DMExtensions.TransferDeclarationToDestinationCountry = new TransferDeclarationToDestinationCountryIndType() { Value = declarationPM.IsExporterConfirmation };
+         
             if (declarationPM.DeclarationExportRecipients != null && declarationPM.DeclarationExportRecipients.Count() > 0)
             {
                 List<DeclarationDMExtensionsRecipientDetails> declarationDMExtensionsRecipientDetails = new List<DeclarationDMExtensionsRecipientDetails>();
