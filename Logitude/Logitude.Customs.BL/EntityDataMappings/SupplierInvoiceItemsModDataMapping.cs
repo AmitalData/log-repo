@@ -57,6 +57,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 ModificationAndDiscountTypeQueryService modificationAndDiscountTypeQueryService = new ModificationAndDiscountTypeQueryService(entityPOCO.Tenant);
                 ModificationAndDiscountTypePM modificationAndDiscountType = modificationAndDiscountTypeQueryService.GetSingle(entityPOCO.TypeCode, false, true);
                 entityPM.TypeName = modificationAndDiscountType.LocalName;
+                entityPM.ModificationAffectTypeID = modificationAndDiscountType.NetoValuesModificationAffectID;
+
             }
         }
    }
