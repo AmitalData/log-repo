@@ -11,6 +11,7 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs; 
 using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
+using Logitude.Customs.BL.BL;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -34,6 +35,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
         public void CustomPOCOToPM(CustomsSettingPM entityPM, CustomsSetting entityPOCO)
         {
             //throw new NotImplementedException();
+            var serverNamesRestartServiceScriptService = new ServerNamesRestartServiceScriptService();
+
+            string script = serverNamesRestartServiceScriptService.GetScript();
+            entityPM.ServiceScript = script;
         }
 
         private static void BuildSearchFields(CustomsSettingPM entityPM, CustomsSetting poco, bool isNewEntity)

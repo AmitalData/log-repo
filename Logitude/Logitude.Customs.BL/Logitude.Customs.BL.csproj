@@ -147,6 +147,7 @@
     <Compile Include="BL\PrivacyProtection.cs" />
     <Compile Include="BL\ReferantUnifreightStatuses.cs" />
     <Compile Include="BL\CourierSchedulerService.cs" />
+    <Compile Include="BL\ServerNamesRestartServiceScriptService.cs" />
     <Compile Include="BL\SIModificationByCustomerCommissionService.cs" />
     <Compile Include="CloseTables\CustomsCargoSealStatus.cs" />
     <Compile Include="CloseTables\CustomsAutonomyKeywordDetails.cs" />
@@ -1193,6 +1194,7 @@
     <Compile Include="EntityQueryServices\LogisticActionRequestQueryService.cs" />
     <Compile Include="EntityQueryServices\NDMessageActionCodeQueryService.cs" />
     <Compile Include="EntityQueryServices\ModificationAndDiscountTypeQueryService.cs" />
+    <Compile Include="EntityQueryServices\ServersNameQueryService.cs" />
     <Compile Include="EntityQueryServices\SuppInvoiceItemsAbachStatementQueryService.cs" />
     <Compile Include="EntityQueryServices\SupplierInvoiceItemsPriceQueryService.cs" />
     <Compile Include="EntityQueryServices\CargoSealIdentifierQueryService.cs" />
