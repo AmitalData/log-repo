@@ -321,8 +321,8 @@ namespace AmitalCustomsWindowsService.Tester
             //return;
 
 
-            //Logitude.CustomsMessaging.Dca.WaitingTester.SendWaiting();
-            //return;
+            Logitude.CustomsMessaging.Dca.WaitingTester.SendWaiting();
+            return;
 
             clsTester.TestSP();
             return;
