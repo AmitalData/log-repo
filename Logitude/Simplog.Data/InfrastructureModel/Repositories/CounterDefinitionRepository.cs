@@ -111,9 +111,9 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             throw new System.NotImplementedException();
         }
 
-        public bool IsCounterDefinitionActive(string code)
+        public bool IsCounterDefinitionActive(string code, int tenant)
         {
-            return context.CounterDefinitions.Where(c => c.Parameter1 == code && !c.InActive).Any();
+            return context.CounterDefinitions.Where(c => c.Parameter1 == code && !c.InActive && c.Tenant == tenant).Any();
         }
     }
 }
