@@ -119,6 +119,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
         public static void ValidateDelivery(ShipmentDeliveryPM deliveryPM, ShipmentPM shipmentPM)
         {
+            if (!FeatureToggleHelper.HasFeatureToggle("UNV", shipmentPM.Tenant)) return;
+
             ValidateDeliveryFromFields(deliveryPM);
             ValidateFutureActualDates(deliveryPM.ATD, deliveryPM.ATA, deliveryPM.Tenant);
             ValidateEstimatedLegDates(deliveryPM.ETD, deliveryPM.ETA);
