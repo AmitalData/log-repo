@@ -32,6 +32,7 @@ using Logitude.BL.DataContracts;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Security;
 
 namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 {
@@ -359,11 +360,12 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                             }
                             string clientId = TranslateClient(importerId);
 
-                            FeatureQuery featureQuery = new FeatureQuery();
+                            //FeatureQuery featureQuery = new FeatureQuery();
                             int.TryParse(_AmitalCustomsFile.Tenant, out int tenant);
-                            var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(tenant), tenant);
-                            var feature = features.Features.FirstOrDefault(x => x.Code == "AddNewClientFromManifest");
-                            if (clientId == null && mode == "UpdateNotEmpty" && feature != null)
+                            //var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(tenant), tenant);
+                            //var feature = features.Features.FirstOrDefault(x => x.Code == "AddNewClientFromManifest");
+                            bool featureAddNewClientFromManifest =  SecurityUtility.CheckFeature("Customs.Declaration", "AddNewClientFromManifest", tenant);
+                            if (clientId == null && mode == "UpdateNotEmpty" && featureAddNewClientFromManifest /*feature != null*/)
                             {
                                 SendClientSearch();
                             }
@@ -1166,7 +1168,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             this._DeclarationReferantDataPM.Team = TranslateTeam(_AmitalCustomsFile.Team);
 
             this._DeclarationReferantDataPM.FileOpenDate = AmitalConvertUtil.GetUnifreightFormatedDate(_AmitalCustomsFile.FileOpenDate, "AmitalCustomsFile.FileOpenDate");
-            this._DeclarationReferantDataPM.FclLcl = _AmitalCustomsFile.FclLcl;
+            if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.FclLcl))
+            {
+                this._DeclarationReferantDataPM.FclLcl = _AmitalCustomsFile.FclLcl;
+            }
             this._DeclarationReferantDataPM.ForwarderId = TranslateForwarder(_AmitalCustomsFile.ForwarderId);
             
             int packageQuantity = 0;

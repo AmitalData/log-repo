@@ -730,11 +730,14 @@ export class CustomsDocumentTicketViewModel {
                 }
             }
             if (this.EntityPM.SupplierInvoices[0] != null) {
-                if (GenerateMetaData39 && !AppTool.IsNullOrEmpty(this.EntityPM.SupplierInvoices[0].InvoiceNumber)) {
+                //if (GenerateMetaData39 && !AppTool.IsNullOrEmpty(this.EntityPM.SupplierInvoices[0].InvoiceNumber)) {
+                if (GenerateMetaData39 && !AppTool.IsNullOrEmpty(this._SInvoiceNumber)) {
+                
                     var item = new CustomsDocumentMetaDataValuePM(this.customsDocumentsTicketPM);
                     item.MetaDataTypeCode = "39";
                     item.Tenant = this.EntityPM.Tenant;
-                    item.MetaDataValue = this.EntityPM.SupplierInvoices[0].InvoiceNumber;
+                    //item.MetaDataValue = this.EntityPM.SupplierInvoices[0].InvoiceNumber;
+                    item.MetaDataValue = this._SInvoiceNumber;
                     this.customsDocumentMetaDataValuePMs.push(item);
                 }
             }

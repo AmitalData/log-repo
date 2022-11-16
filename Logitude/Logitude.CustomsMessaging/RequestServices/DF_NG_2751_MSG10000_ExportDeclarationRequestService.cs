@@ -862,7 +862,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             //}
 
 
-            DMExtensions.TransferDeclarationToDestinationCountry = new TransferDeclarationToDestinationCountryIndType() { Value = declarationPM.IsExporterConfirmation };
+            if (declarationPM.IsExporterConfirmation) DMExtensions.TransferDeclarationToDestinationCountry = new TransferDeclarationToDestinationCountryIndType() { Value = declarationPM.IsExporterConfirmation };
 
 
             if (declarationPM.DeclarationExportRecipients != null && declarationPM.DeclarationExportRecipients.Count() > 0)
@@ -2019,15 +2019,16 @@ namespace Logitude.CustomsMessaging.RequestServices
                     Value = consignmentPM.OriginCountryCode
                 },
             };
-            dmExtensions.LastReleaseFromWarehousInd = new LastReleaseFromWarehousIndType();
             if (consignmentPM.IsLastReleaseFromWarehous == "T")
             {
+                dmExtensions.LastReleaseFromWarehousInd = new LastReleaseFromWarehousIndType();
+           
                 dmExtensions.LastReleaseFromWarehousInd.Value = true;
             }
-            else
-            {
-                dmExtensions.LastReleaseFromWarehousInd.Value = false;
-            }
+            //else
+            //{
+            //    dmExtensions.LastReleaseFromWarehousInd.Value = false;
+            //}
             var registeredFacilitylist = new List<DeclarationGoodsShipmentImportConsignmentDMExtensionsRegisteredFacility>();
             int seqnum = 0;
             if (!String.IsNullOrWhiteSpace(consignmentPM.StorageSiteCode))
