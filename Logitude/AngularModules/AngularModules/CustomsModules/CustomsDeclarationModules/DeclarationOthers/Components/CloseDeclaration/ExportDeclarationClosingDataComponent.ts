@@ -492,22 +492,22 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
             .subscribe(
                 (mess: UnifreightMessageM) => {
-                    alert("subscribe " + mess.LogitudeEntityNumber + ' ' + this.DecPM.Id + ' ' + mess.LogitudeViewModel);
-                    alert("response "+ mess.Response)
                     var IsMatchUnifreightCallbackCommand = (
-                        // mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
                         mess.LogitudeEntityNumber == this.DecPM.Id &&
                         mess.LogitudeViewModel == "ExportDeclarationClosingDataComponent.ts");
                     if (IsMatchUnifreightCallbackCommand) {
                         sub.unsubscribe();
                         SessionLocator.SelectedSession.StopBusyIndicator();
                         let LoadPort = UnifreightMessageM.GetStringValue(mess,"LoadPort");
-                        // this.MainAWB =mess.Response['Mawb'].value;
-                        // this.Smp = mess.Response['Hawb'].value ;
-                        this.ChargingSite = LoadPort ; 
-                        // this.FlightDate =mess.Response['FlightDate'].value ;
-                        alert("sBool");
-                        alert(LoadPort);
+                        let Mawb = UnifreightMessageM.GetStringValue(mess,"Mawb");
+                        let Hawb = UnifreightMessageM.GetStringValue(mess,"Hawb");
+                        let FlightDate = UnifreightMessageM.GetStringValue(mess,"FlightDate");
+
+                        Mawb? this.MainAWB = Mawb : '';
+                        Hawb? this.Smp = Hawb : '';
+                        LoadPort? this.ChargingSite = LoadPort : ''; 
+                        FlightDate? this.FlightDate = new Date(FlightDate) : '';
+
                         SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
                     }
                 }
