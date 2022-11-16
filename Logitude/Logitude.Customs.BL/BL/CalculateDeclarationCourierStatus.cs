@@ -137,7 +137,7 @@ namespace Logitude.Customs.BL.BL
                 CalcCourierDeclarationStatusCode(myDeclarationCourierStatusPM);
                 CalcCourierPaymentStatusCode(myDeclarationCourierStatusPM);
                 CalcIsCourierMissingClassification(myDeclarationCourierStatusPM);
-                CalcHighLowValue(myDeclarationCourierStatusPM);
+               CalcHighLowValue(myDeclarationCourierStatusPM);
                 CalcSpecialActionStatus(myDeclarationCourierStatusPM);
                 CalcFastIndividualProcess(myDeclarationCourierStatusPM);
                 CalcDeclarationPendings902(myDeclarationCourierStatusPM);
@@ -231,20 +231,26 @@ namespace Logitude.Customs.BL.BL
 
         public void CalcHighLowValue(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
         {
-            if (myDeclarationCourierStatusPM == null) return;
-            //Set HighLowValue
-            string defValue = GetDefault("ISRAEL", "CGO_HIGH_VALUE", "NON", "NON");
-            decimal defaultAmount = 0;
-            var boolvar = (decimal.TryParse(defValue, out defaultAmount));
+            var setting = CustomsSettingQueryService.GetSettingByTenant(myDeclarationCourierStatusPM.Tenant);
 
-            if (myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD > defaultAmount)
+            if (setting != null & setting.IsConnectedToUniFreight)
             {
-                myDeclarationCourierStatusPM.HighLowValue = "H";
-            }
-            else
-            {
-                myDeclarationCourierStatusPM.HighLowValue = "L";
-            }
+
+                    if (myDeclarationCourierStatusPM == null) return;
+                    //Set HighLowValue
+                    string defValue = GetDefault("ISRAEL", "CGO_HIGH_VALUE", "NON", "NON");
+                    decimal defaultAmount = 0;
+                    var boolvar = (decimal.TryParse(defValue, out defaultAmount));
+
+                    if (myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD > defaultAmount)
+                    {
+                        myDeclarationCourierStatusPM.HighLowValue = "H";
+                    }
+                    else
+                    {
+                        myDeclarationCourierStatusPM.HighLowValue = "L";
+                    }
+                }
         }
 
         private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID)
