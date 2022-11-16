@@ -168,33 +168,28 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
                 this.initOceanExportData();
             });
-
+            if(this.DecPM.TransportModeId == 'L'){
             
             this.exportDeclarationClosingDataPMService.get(id).subscribe((response: any) => {
                 if(response.Result == null)
                 {
                 
-                    if(this.DecPM.TransportModeId == 'L' && !AppTool.IsNullOrEmpty(this.DecPM.Consignments[0].CargoTypeCodeForExport))
-                    {
-                        this.FinalCargoTypeCode = this.DecPM.Consignments[0].CargoTypeCodeForExport;
+                    if(!AppTool.IsNullOrEmpty(this.DecPM.Consignments[0].CargoTypeCodeForExport)) this.FinalCargoTypeCode = this.DecPM.Consignments[0].CargoTypeCodeForExport;
                         
-                    }
+                    
 
-                    if(this.DecPM.TransportModeId == 'L' && !AppTool.IsNullOrEmpty(this.DecPM.Consignments[0].ManifestNumber))
-                    {
-                        this.FinalManifestNumber = this.DecPM.Consignments[0].ManifestNumber;
+                    if(!AppTool.IsNullOrEmpty(this.DecPM.Consignments[0].ManifestNumber)) this.FinalManifestNumber = this.DecPM.Consignments[0].ManifestNumber;
                         
-                    }
+                    
 
-                    if(this.DecPM.TransportModeId == 'L' && !AppTool.IsNullOrEmpty(this.DecPM.Consignments[0].ExportLoadingPortCode))
-                    {
-                        this.FinalLoadingSite = this.DecPM.Consignments[0].ExportLoadingPortCode;
+                    if(!AppTool.IsNullOrEmpty(this.DecPM.Consignments[0].ExportLoadingPortCode)) this.FinalLoadingSite = this.DecPM.Consignments[0].ExportLoadingPortCode;
                         
-                    }
+                    
 
                 
                 }
             });
+        }
         }
     }
 
