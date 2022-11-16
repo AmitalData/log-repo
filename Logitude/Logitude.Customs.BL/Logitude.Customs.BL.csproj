@@ -145,6 +145,7 @@
     <Compile Include="BL\PrivacyProtection.cs" />
     <Compile Include="BL\ReferantUnifreightStatuses.cs" />
     <Compile Include="BL\CourierSchedulerService.cs" />
+    <Compile Include="BL\ServerNamesRestartServiceScriptService.cs" />
     <Compile Include="BL\SIModificationByCustomerCommissionService.cs" />
     <Compile Include="CloseTables\CustomsCargoSealStatus.cs" />
     <Compile Include="CloseTables\CustomsAutonomyKeywordDetails.cs" />

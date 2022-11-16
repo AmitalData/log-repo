@@ -277,6 +277,19 @@ export class CustomsSettingsComponent
     
     //#endregion
 
+    ShowRestartServiceScript(){
+
+
+        const script= //this.entityPM.ServiceScript.replace(/(?:\r\n|\r|\n)/g, '<br>');
+                        this.entityPM.ServiceScript;
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 1000;
+        logitudeWindow.Height = 500;
+        logitudeWindow.IsShowCloseButton = true;
+        logitudeWindow.Title = "אתחול סרוויסים";//TextCodeTranslator.Translate("CommunicationLogSteps.O.Log");
+        logitudeWindow.WindowArgs = { Log: script , UseTextarea:true };
+        logitudeWindow.Show('./InfrastructureModules/InfrastructureCommunications/Components/Communications/LogFieldComponent');
+    }
 
     CancelButtonClicked() {
         SessionLocator.SelectedSession.CloseCurrentWindow();

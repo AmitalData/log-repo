@@ -1,4 +1,5 @@
 ﻿
+using Logitude.Customs.BL.BL;
 using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.Customs.BL.Messaging.U2L.ImportDeclaration;
 using Logitude.CustomsMessaging.MessagingServices;
@@ -29,29 +30,11 @@ namespace WebFreight.Web.CustomWebServices.Testers
             try
             {
                 Response.Clear();
+                var serverNamesRestartServiceScriptService = new ServerNamesRestartServiceScriptService();
 
-                //    var myCCUFILEMRepository = new CCUFILEMRepository(1);
-                //var ccufilem= myCCUFILEMRepository.GetFILENOByCUSTOMFILENO(51340152);
-                //var myCCUQUELOCKRepository = new CCUQUELOCKRepository(1);
-                //var res =
-                //    //myCCUQUELOCKRepository.GetSingleGeneralLockNOWAIT("CFIFILEM", "51340152");
-                //    myCCUQUELOCKRepository.GetSingleGeneralLockNOWAIT("CCUFILEM", ccufilem.ToString());
-
-                //var s = new
-                //    //DCAInUCB2750_MsgMessagingService();
-                //    DCAInUCB2755_MsgMessagingService();
-                //s.CreateCRS(1, "1-7", "1-69", "bbb" , "1-3");
-                //ExportExcel();
-                //ExportExcel8330();
-                ExportExcel8326();
-                //ExportExcel8326();
-
-                //var o = new CourierMasterWSheetExport();
-                //var result = o.ExportReport("1-686", 1);
-                //string ShowType = "attachment";
-                //string documentName = Guid.NewGuid().ToString() + ".xls";
-                //HttpContext.Current.Response.AppendHeader("Content-Disposition", ShowType + "; filename=\"" + HttpUtility.UrlPathEncode(documentName) + "\"");
-                //HttpContext.Current.Response.BinaryWrite(result);
+                string script = serverNamesRestartServiceScriptService.GetScript();
+                //Response.Write(script);
+                //Old();
 
             }
             catch (Exception eee)
@@ -62,6 +45,33 @@ namespace WebFreight.Web.CustomWebServices.Testers
             }
             
         }
+
+        private static void Old()
+        {
+            //    var myCCUFILEMRepository = new CCUFILEMRepository(1);
+            //var ccufilem= myCCUFILEMRepository.GetFILENOByCUSTOMFILENO(51340152);
+            //var myCCUQUELOCKRepository = new CCUQUELOCKRepository(1);
+            //var res =
+            //    //myCCUQUELOCKRepository.GetSingleGeneralLockNOWAIT("CFIFILEM", "51340152");
+            //    myCCUQUELOCKRepository.GetSingleGeneralLockNOWAIT("CCUFILEM", ccufilem.ToString());
+
+            //var s = new
+            //    //DCAInUCB2750_MsgMessagingService();
+            //    DCAInUCB2755_MsgMessagingService();
+            //s.CreateCRS(1, "1-7", "1-69", "bbb" , "1-3");
+            //ExportExcel();
+            //ExportExcel8330();
+            ExportExcel8326();
+            //ExportExcel8326();
+
+            //var o = new CourierMasterWSheetExport();
+            //var result = o.ExportReport("1-686", 1);
+            //string ShowType = "attachment";
+            //string documentName = Guid.NewGuid().ToString() + ".xls";
+            //HttpContext.Current.Response.AppendHeader("Content-Disposition", ShowType + "; filename=\"" + HttpUtility.UrlPathEncode(documentName) + "\"");
+            //HttpContext.Current.Response.BinaryWrite(result);
+        }
+
         private static void ExportExcel8326()
         {
             var result = new XLSExportService().Start("8286", null, 1, new PaymentQueryProvider());
