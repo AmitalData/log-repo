@@ -10,6 +10,8 @@
  
 
 
+
+
 Create PROCEDURE [dbo].[usp_UpdatePayablesData]
 (
 	@ShipmentId_PARAM varchar(15),
@@ -390,7 +392,12 @@ BEGIN
 								begin
 								if (@HousePayableLineStatusCode in ('ACCT' , 'PACC') AND @MasterPayableLineStatusCode in ('ACCT' , 'PACC'))
 								begin
-									set @IsUpdatingPayable = 0
+									
+									if (@MasterPayableCorrectionAmount <> 0)
+										set @IsUpdatingPayable = 1									
+
+									else
+										set @IsUpdatingPayable = 0
 								end
 
 								else
@@ -1083,7 +1090,11 @@ BEGIN
 								begin
 								if (@HousePayableLineStatusCode in ('ACCT' , 'PACC') AND @MasterPayableLineStatusCode in ('ACCT' , 'PACC'))
 								begin
-									set @IsUpdatingPayable = 0
+									if (@MasterPayableCorrectionAmount <> 0)
+										set @IsUpdatingPayable = 1									
+
+									else
+										set @IsUpdatingPayable = 0
 								end
 
 								else
@@ -1436,7 +1447,11 @@ BEGIN
 							begin
 							if (@HousePayableLineStatusCode in ('ACCT' , 'PACC') AND @MasterPayableLineStatusCode in ('ACCT' , 'PACC'))
 							begin
-								set @IsUpdatingPayable = 0
+								if (@MasterPayableCorrectionAmount <> 0)
+										set @IsUpdatingPayable = 1									
+
+									else
+										set @IsUpdatingPayable = 0
 							end
 
 							else
@@ -1642,6 +1657,7 @@ BEGIN
 
 	END
 END
+
 
 
 
