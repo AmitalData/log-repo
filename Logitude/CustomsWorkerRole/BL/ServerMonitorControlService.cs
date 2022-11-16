@@ -14,7 +14,7 @@ namespace CustomsWorkerRole.BL
     {
         /*const */
         DateTime THEGracePeriod = new DateTime(2023, 3, 1);
-
+        const string ServerMonitorControl = "ServerMonitorControl";
 
         public void StopProccessIfNotExist()
         {
@@ -29,12 +29,12 @@ namespace CustomsWorkerRole.BL
             {
                 if (DateTime.Now < THEGracePeriod)
                 {
-                    Logger.LogMe($"Please insert {Environment.MachineName} in ServersNames!! -> Grace Period  TILL  {THEGracePeriod} ", false, "ServerMonitorControl");
+                    Logger.LogMe($"Please insert {Environment.MachineName} in ServersNames!! -> Grace Period  TILL  {THEGracePeriod} ", false, ServerMonitorControl);
 
                 }
                 else
                 {
-                    Logger.LogMe($"SHUTDOWN!!! Please insert ServersNames!! -Grace Period exceeded !! {THEGracePeriod} ", true, "ServerMonitorControl");
+                    Logger.LogMe($"SHUTDOWN!!! Please insert ServersNames!! -Grace Period exceeded !! {THEGracePeriod} ", true, ServerMonitorControl);
                     ExitEnsureLogWrite();
 
                 }
@@ -45,28 +45,32 @@ namespace CustomsWorkerRole.BL
             serviceNameList = serviceNameList.Select(r => r.ToLower()).ToList();
             if (serviceNameList.Count == 0)
             {
-                Logger.LogMe($"SHUTDOWN!!! ServersName defined But {Environment.MachineName} not exist ", true, "ServerMonitorControl");
+                Logger.LogMe($"SHUTDOWN!!! ServersName defined But {Environment.MachineName} not exist ", true, ServerMonitorControl);
                 ExitEnsureLogWrite();
                 return;
             }
-            Logger.LogMe($"{Environment.MachineName} exist in ServersName ", false, "ServerMonitorControl");
+            Logger.LogMe($"{Environment.MachineName} exist in ServersName ", false, ServerMonitorControl);
             var curServiceName = GetServiceName();
             if (!String.IsNullOrWhiteSpace(  curServiceName ))
             {
                 curServiceName = curServiceName.ToLower();
                 if (serviceNameList.Contains(curServiceName))
                 {
-                    Logger.LogMe($"{curServiceName} found in  ServersName", false, "ServerMonitorControl");
+                    Logger.LogMe($"{curServiceName} found in  ServersName", false, ServerMonitorControl);
 
                 }
                 else
                 {
-                    Logger.LogMe($"{curServiceName} not found ServersName ", false, "ServerMonitorControl");
+                    Logger.LogMe($"{curServiceName} not found ServersName ", false, ServerMonitorControl);
+
+                    Logger.LogMe($"SHUTDOWN!!!restrict!! {curServiceName} not found ServersName ", true, ServerMonitorControl);
+                    ExitEnsureLogWrite();
+                    return;
                 }
             }
             else
             {
-                Logger.LogMe($"GetServiceName() == null", false, "ServerMonitorControl");
+                Logger.LogMe($"GetServiceName() == null", false, ServerMonitorControl);
             }
         }
 
