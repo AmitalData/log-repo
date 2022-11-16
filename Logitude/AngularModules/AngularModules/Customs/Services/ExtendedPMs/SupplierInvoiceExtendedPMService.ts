@@ -265,25 +265,6 @@ export class SupplierInvoiceExtendedPMService {
     }
 
 
-    GetCardByVatNumber(importerCode: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetCardByVatNumber/?' + 'importerCode=' + importerCode ,  ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-
-                var resultJson = response;
-
-                    var serviceResponse: ServiceResponse;
-                    serviceResponse = new ServiceResponse();
-                    serviceResponse.Result = resultJson;
-                    return serviceResponse;
-
-            }),catchError(ServiceHelper.HandleServiceError));
-        });
-
-    }
 
     // --------------------------------- Mapping --------------------------------------------------------------------------------
 

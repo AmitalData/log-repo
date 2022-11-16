@@ -82,20 +82,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
             return shortConnectedPartnersDetails;
         }
 
-        public Simplog.Data.CommonDataModel.EntityPOCOs.Card GetCardByImporterCode(string importerCode, int tenant)
-        {
-            try
-            {
-
-                CardRepository cardRepository = new CardRepository(tenant);
-                var card = cardRepository.GetCardByImporterCode(importerCode, tenant);
-                return card;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+     
 
 
 
