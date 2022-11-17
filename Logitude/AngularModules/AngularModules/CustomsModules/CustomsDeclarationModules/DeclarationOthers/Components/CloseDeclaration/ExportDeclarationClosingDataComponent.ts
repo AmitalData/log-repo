@@ -168,7 +168,8 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
                 this.initOceanExportData();
             });
-            if(this.DecPM.TransportModeId == 'L'){
+            if(this.DecPM.TransportModeId == 'L') //TransportMod- land
+            {
             
                 
             this.exportDeclarationClosingDataPMService.get(id).subscribe((response: any) => {
