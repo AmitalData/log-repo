@@ -1424,13 +1424,13 @@ namespace Logitude.DBMigrations.Models
                     string dbEnvConfig = DBConfigurationsManager.GetDBConfigurationValue("Env")?.ToLower();
                     if (dbEnvConfig == "local" || dbEnvConfig == "test")
                     {
-                        ExitTool("Error: There Is Some Not Executed Scripts That Defined As AOT. You Need To Run The Tool With -Dev Argument.\n\nThe Scripts Are:\n" + scriptsSxmlNames);
+                        ExitTool("Error: There Is Some Not Executed Scripts That Defined As AOT. You Need To Run The Tool With -Dev Argument.\n\nThe AOT Scripts Are:\n" + scriptsSxmlNames);
                     }
                     else
                     {
                         string runCommand = ToolArguments.GetRunCommand();
                         string exitMessage = "You should execute the following commands in order:\n" +
-                            runCommand.Replace(Arguments.EXE, Arguments.ZERODOWNTIME + " " + Arguments.EXE) + "\n" + runCommand + "\n\nThe Scripts Are:\n" + scriptsSxmlNames;
+                            runCommand.Replace(Arguments.EXE, Arguments.ZERODOWNTIME + " " + Arguments.EXE) + "\n" + runCommand + "\n\nThe AOT Scripts Are:\n" + scriptsSxmlNames;
 
                         ExitTool(exitMessage);
                     }
