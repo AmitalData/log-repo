@@ -837,7 +837,7 @@ export class EditComponent implements OnDestroy {
                 
                 if (
                     AmitalGatewayUtil.Instance.AmitalBrowserInUse && 
-                    this.QuerySection === "Customs.ExportDeclaration" && 
+                    (this.QuerySection === "Customs.ExportDeclaration" || this.BackButtonLabel.includes(TextCodeTranslator.Translate("Customs.Containerization.O.ExportFile"))) && 
                     tab.ControlPath.includes(".DeclarationDocsInControl"))
                     continue;                    
             }
