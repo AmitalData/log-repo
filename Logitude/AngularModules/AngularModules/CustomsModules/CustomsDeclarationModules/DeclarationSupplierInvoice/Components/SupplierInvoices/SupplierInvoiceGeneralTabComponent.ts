@@ -3088,7 +3088,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                     if (IsMatchUnifreightCallbackCommand) {
                         sub.unsubscribe();
                         SessionLocator.SelectedSession.StopBusyIndicator();
-                        let ApprovalToInsure = ""; ApprovalToInsure = UnifreightMessageM.GetStringValue(unifreightMessageM, "ApprovalToInsure");                      
+                        let ApprovalToInsure = ""; ApprovalToInsure = UnifreightMessageM.GetStringValue(mess, "ApprovalToInsure");                      
                         this.ActivateInsurance(ApprovalToInsure)
                     }
                 }
@@ -3145,9 +3145,9 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                                     sub.unsubscribe();
                                     SessionLocator.SelectedSession.StopBusyIndicator();
 
-                                    let InsuranceAmount = ""; InsuranceAmount = UnifreightMessageM.GetStringValue(unifreightMessageM, "InsuranceAmount");
-                                    let InsuranceCurrency = ""; InsuranceCurrency = UnifreightMessageM.GetStringValue(unifreightMessageM, "InsuranceCurrency");
-                                    let InvoiceNumber = ""; InvoiceNumber = UnifreightMessageM.GetStringValue(unifreightMessageM, "InvoiceNumber");
+                                    let InsuranceAmount = ""; InsuranceAmount = UnifreightMessageM.GetStringValue(mess, "InsuranceAmount");
+                                    let InsuranceCurrency = ""; InsuranceCurrency = UnifreightMessageM.GetStringValue(mess, "InsuranceCurrency");
+                                    let InvoiceNumber = ""; InvoiceNumber = UnifreightMessageM.GetStringValue(mess, "InvoiceNumber");
 
                                     if (!AppTool.IsNullOrEmpty(InsuranceAmount) && !AppTool.IsNullOrEmpty(InsuranceCurrency)) {
                                       
