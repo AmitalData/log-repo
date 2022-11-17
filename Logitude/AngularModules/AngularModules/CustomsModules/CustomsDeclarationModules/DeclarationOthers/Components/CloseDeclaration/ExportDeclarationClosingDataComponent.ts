@@ -506,7 +506,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                         Mawb? this.MainAWB = Mawb : '';
                         Hawb? this.Smp = Hawb : '';
                         LoadPort? this.ChargingSite = LoadPort : ''; 
-                        FlightDate? this.FlightDate = new Date(FlightDate) : '';
+                        FlightDate? this.FlightDate = new Date(Number(FlightDate.substring(4)),Number(FlightDate.substring(4,2)),Number(FlightDate.substring(6,2))) : '';
 
                         SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
                     }
