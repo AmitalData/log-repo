@@ -305,9 +305,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             if (initializer.EntityPM.TransportModeId != "O")
                 return false;
 
-            if (initializer.EntityPM.ShipmentLevelCode == "H")
-                return false;
-
             if (initializer.EntityPM.ShipmentLevelCode == "C" && initializer.EntityPM.ShipmentTypeId.ToLower() != "mygo")
                 return false;
 
