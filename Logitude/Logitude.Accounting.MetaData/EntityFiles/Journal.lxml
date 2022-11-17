@@ -5073,7 +5073,7 @@
     <TextCode
       Code="&quot;Journal.O.DifferenceExchangeRate&quot;"
       DefaultText="&quot;Difference between new and old value is more than 5 Percent Exchange rate&quot;"
-      LocalDefaultText="&quot;השער החדש גדול ביותר מחמישה אחוזים מהשער הקודם&quot;"
+      LocalDefaultText="&quot;השער החדש קטן\גדול ביותר מחמישה אחוזים מהשער הקודם&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
