@@ -7324,92 +7324,92 @@
         QueryCode="&quot;CourierWorkScreen&quot;"
         IndexOrder="0"
         ObjectFieldName="&quot;CourierHawb&quot;"
-        ColumnWidth="108" />
+        ColumnWidth="90" />
       <QueryColumn
         QueryCode="&quot;CourierWorkScreen&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;ProcedureCurrentName&quot;"
-        ColumnWidth="117" />
+        ColumnWidth="90" />
       <QueryColumn
         QueryCode="&quot;CourierWorkScreen&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;HighLowValue&quot;"
-        ColumnWidth="67" />
+        ObjectFieldName="&quot;FastIndividualProcessCode&quot;"
+        ColumnWidth="90" />
       <QueryColumn
         QueryCode="&quot;CourierWorkScreen&quot;"
         IndexOrder="3"
-        ObjectFieldName="&quot;ImporterName&quot;"
-        ColumnWidth="173" />
+        ObjectFieldName="&quot;CustomerName&quot;"
+        ColumnWidth="90" />
       <QueryColumn
         QueryCode="&quot;CourierWorkScreen&quot;"
         IndexOrder="4"
-        ObjectFieldName="&quot;ImporterCode&quot;"
+        ObjectFieldName="&quot;SortedImporterCode&quot;"
         ColumnWidth="90" />
       <QueryColumn
         QueryCode="&quot;CourierWorkScreen&quot;"
         IndexOrder="5"
-        ObjectFieldName="&quot;DocumentStatusCode&quot;"
-        ColumnWidth="55" />
+        ObjectFieldName="&quot;SortedDocumentStatusCode&quot;"
+        ColumnWidth="90" />
       <QueryColumn
         QueryCode="&quot;CourierWorkScreen&quot;"
         IndexOrder="6"
         ObjectFieldName="&quot;IsCourierMissingClassification&quot;"
-        ColumnWidth="47" />
+        ColumnWidth="90" />
       <QueryColumn
         QueryCode="&quot;CourierWorkScreen&quot;"
         IndexOrder="7"
-        ObjectFieldName="&quot;CourierManifestStatusCode&quot;"
-        ColumnWidth="50" />
+        ObjectFieldName="&quot;SortedCourierManifestStatus&quot;"
+        ColumnWidth="90" />
       <QueryColumn
         QueryCode="&quot;CourierWorkScreen&quot;"
         IndexOrder="8"
-        ObjectFieldName="&quot;CourierDeclarationStatusCode&quot;"
-        ColumnWidth="50" />
+        ObjectFieldName="&quot;SortedCourierDeclarationStatus&quot;"
+        ColumnWidth="90" />
       <QueryColumn
         QueryCode="&quot;CourierWorkScreen&quot;"
         IndexOrder="9"
-        ObjectFieldName="&quot;CourierPaymentStatusCode&quot;"
-        ColumnWidth="53" />
+        ObjectFieldName="&quot;CourierPaymentStatusName&quot;"
+        ColumnWidth="90" />
       <QueryColumn
         QueryCode="&quot;CourierWorkScreen&quot;"
         IndexOrder="10"
         ObjectFieldName="&quot;CourierCustomStatusName&quot;"
-        ColumnWidth="100" />
+        ColumnWidth="90" />
       <QueryColumn
         QueryCode="&quot;CourierWorkScreen&quot;"
         IndexOrder="11"
-        ObjectFieldName="&quot;StorageSiteStatusCode&quot;"
-        ColumnWidth="98" />
+        ObjectFieldName="&quot;StorageSiteStatusName&quot;"
+        ColumnWidth="90" />
       <QueryColumn
         QueryCode="&quot;CourierWorkScreen&quot;"
         IndexOrder="12"
         ObjectFieldName="&quot;SpecialActionStatus&quot;"
-        ColumnWidth="54" />
+        ColumnWidth="90" />
       <QueryColumn
         QueryCode="&quot;CourierWorkScreen&quot;"
         IndexOrder="13"
-        ObjectFieldName="&quot;CargoDescription&quot;"
-        ColumnWidth="188" />
+        ObjectFieldName="&quot;CourierDeclarationStatusName&quot;"
+        ColumnWidth="90" />
       <QueryColumn
         QueryCode="&quot;CourierWorkScreen&quot;"
         IndexOrder="14"
         ObjectFieldName="&quot;CourierPendingReasonName&quot;"
-        ColumnWidth="105" />
+        ColumnWidth="90" />
       <QueryColumn
         QueryCode="&quot;CourierWorkScreen&quot;"
         IndexOrder="15"
         ObjectFieldName="&quot;TruckerName&quot;"
-        ColumnWidth="115" />
+        ColumnWidth="90" />
       <QueryColumn
         QueryCode="&quot;CourierWorkScreen&quot;"
         IndexOrder="16"
         ObjectFieldName="&quot;LastMileStatusCode&quot;"
-        ColumnWidth="73" />
+        ColumnWidth="90" />
       <QueryColumn
         QueryCode="&quot;CourierWorkScreen&quot;"
         IndexOrder="17"
         ObjectFieldName="&quot;IsClosedForFollowUp&quot;"
-        ColumnWidth="42" />
+        ColumnWidth="90" />
     </QueryColumns>
     <QueryFilters />
   </Query>

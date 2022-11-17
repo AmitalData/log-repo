@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationCourierStatusUpdateClass
    {  		
-		public const string HashString = "763ec8fdd73e757a90b1d6a94840a7aa";
+		public const string HashString = "bd4ef14e7489c5794fe6c38431683c86";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -6061,41 +6061,41 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query CourierWorkScreenQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationCourierStatusTextCode_1.Id, NameTextCodeCode = DeclarationCourierStatusTextCode_1.Code, ObjectTableName = "Customs.DeclarationCourierStatus", Code = "CourierWorkScreen",  QueryGroupCode = "9f91", IndexOrder = 1, Tenant = 0, ObjectTableId = DeclarationCourierStatusObjectTable.Id, QuerySection = "Customs.DeclarationCourierStatus", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DeclarationCourierStatusFeature_1.Id,FeatureUniqeCode= DeclarationCourierStatusFeature_1.FeatureUniqeCode, DefaultSortName = "CourierHawb", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn CourierWorkScreenQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierWorkScreenQuery.Id,QueryCode = CourierWorkScreenQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.DeclarationCourierStatus.CourierHawb" , ColumnWidth = 108 }, addedQueryColumns);
+			 QueryColumn CourierWorkScreenQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierWorkScreenQuery.Id,QueryCode = CourierWorkScreenQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.DeclarationCourierStatus.CourierHawb" , ColumnWidth = 90 }, addedQueryColumns);
 
-			 QueryColumn CourierWorkScreenQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierWorkScreenQuery.Id,QueryCode = CourierWorkScreenQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.DeclarationCourierStatus.ProcedureCurrentName" , ColumnWidth = 117 }, addedQueryColumns);
+			 QueryColumn CourierWorkScreenQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierWorkScreenQuery.Id,QueryCode = CourierWorkScreenQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.DeclarationCourierStatus.ProcedureCurrentName" , ColumnWidth = 90 }, addedQueryColumns);
 
-			 QueryColumn CourierWorkScreenQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierWorkScreenQuery.Id,QueryCode = CourierWorkScreenQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.DeclarationCourierStatus.HighLowValue" , ColumnWidth = 67 }, addedQueryColumns);
+			 QueryColumn CourierWorkScreenQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierWorkScreenQuery.Id,QueryCode = CourierWorkScreenQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.DeclarationCourierStatus.FastIndividualProcessCode" , ColumnWidth = 90 }, addedQueryColumns);
 
-			 QueryColumn CourierWorkScreenQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierWorkScreenQuery.Id,QueryCode = CourierWorkScreenQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.DeclarationCourierStatus.ImporterName" , ColumnWidth = 173 }, addedQueryColumns);
+			 QueryColumn CourierWorkScreenQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierWorkScreenQuery.Id,QueryCode = CourierWorkScreenQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.DeclarationCourierStatus.CustomerName" , ColumnWidth = 90 }, addedQueryColumns);
 
-			 QueryColumn CourierWorkScreenQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierWorkScreenQuery.Id,QueryCode = CourierWorkScreenQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.DeclarationCourierStatus.ImporterCode" , ColumnWidth = 90 }, addedQueryColumns);
+			 QueryColumn CourierWorkScreenQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierWorkScreenQuery.Id,QueryCode = CourierWorkScreenQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.DeclarationCourierStatus.SortedImporterCode" , ColumnWidth = 90 }, addedQueryColumns);
 
-			 QueryColumn CourierWorkScreenQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierWorkScreenQuery.Id,QueryCode = CourierWorkScreenQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.DeclarationCourierStatus.DocumentStatusCode" , ColumnWidth = 55 }, addedQueryColumns);
+			 QueryColumn CourierWorkScreenQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierWorkScreenQuery.Id,QueryCode = CourierWorkScreenQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.DeclarationCourierStatus.SortedDocumentStatusCode" , ColumnWidth = 90 }, addedQueryColumns);
 
-			 QueryColumn CourierWorkScreenQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierWorkScreenQuery.Id,QueryCode = CourierWorkScreenQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.DeclarationCourierStatus.IsCourierMissingClassification" , ColumnWidth = 47 }, addedQueryColumns);
+			 QueryColumn CourierWorkScreenQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierWorkScreenQuery.Id,QueryCode = CourierWorkScreenQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.DeclarationCourierStatus.IsCourierMissingClassification" , ColumnWidth = 90 }, addedQueryColumns);
 
-			 QueryColumn CourierWorkScreenQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierWorkScreenQuery.Id,QueryCode = CourierWorkScreenQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.DeclarationCourierStatus.CourierManifestStatusCode" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn CourierWorkScreenQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierWorkScreenQuery.Id,QueryCode = CourierWorkScreenQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.DeclarationCourierStatus.SortedCourierManifestStatus" , ColumnWidth = 90 }, addedQueryColumns);
 
-			 QueryColumn CourierWorkScreenQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierWorkScreenQuery.Id,QueryCode = CourierWorkScreenQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.DeclarationCourierStatus.CourierDeclarationStatusCode" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn CourierWorkScreenQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierWorkScreenQuery.Id,QueryCode = CourierWorkScreenQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.DeclarationCourierStatus.SortedCourierDeclarationStatus" , ColumnWidth = 90 }, addedQueryColumns);
 
-			 QueryColumn CourierWorkScreenQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierWorkScreenQuery.Id,QueryCode = CourierWorkScreenQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.DeclarationCourierStatus.CourierPaymentStatusCode" , ColumnWidth = 53 }, addedQueryColumns);
+			 QueryColumn CourierWorkScreenQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierWorkScreenQuery.Id,QueryCode = CourierWorkScreenQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.DeclarationCourierStatus.CourierPaymentStatusName" , ColumnWidth = 90 }, addedQueryColumns);
 
-			 QueryColumn CourierWorkScreenQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierWorkScreenQuery.Id,QueryCode = CourierWorkScreenQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.DeclarationCourierStatus.CourierCustomStatusName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn CourierWorkScreenQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierWorkScreenQuery.Id,QueryCode = CourierWorkScreenQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Customs.DeclarationCourierStatus.CourierCustomStatusName" , ColumnWidth = 90 }, addedQueryColumns);
 
-			 QueryColumn CourierWorkScreenQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierWorkScreenQuery.Id,QueryCode = CourierWorkScreenQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Customs.DeclarationCourierStatus.StorageSiteStatusCode" , ColumnWidth = 98 }, addedQueryColumns);
+			 QueryColumn CourierWorkScreenQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierWorkScreenQuery.Id,QueryCode = CourierWorkScreenQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Customs.DeclarationCourierStatus.StorageSiteStatusName" , ColumnWidth = 90 }, addedQueryColumns);
 
-			 QueryColumn CourierWorkScreenQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierWorkScreenQuery.Id,QueryCode = CourierWorkScreenQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Customs.DeclarationCourierStatus.SpecialActionStatus" , ColumnWidth = 54 }, addedQueryColumns);
+			 QueryColumn CourierWorkScreenQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierWorkScreenQuery.Id,QueryCode = CourierWorkScreenQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Customs.DeclarationCourierStatus.SpecialActionStatus" , ColumnWidth = 90 }, addedQueryColumns);
 
-			 QueryColumn CourierWorkScreenQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierWorkScreenQuery.Id,QueryCode = CourierWorkScreenQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "Customs.DeclarationCourierStatus.CargoDescription" , ColumnWidth = 188 }, addedQueryColumns);
+			 QueryColumn CourierWorkScreenQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierWorkScreenQuery.Id,QueryCode = CourierWorkScreenQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "Customs.DeclarationCourierStatus.CourierDeclarationStatusName" , ColumnWidth = 90 }, addedQueryColumns);
 
-			 QueryColumn CourierWorkScreenQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierWorkScreenQuery.Id,QueryCode = CourierWorkScreenQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "Customs.DeclarationCourierStatus.CourierPendingReasonName" , ColumnWidth = 105 }, addedQueryColumns);
+			 QueryColumn CourierWorkScreenQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierWorkScreenQuery.Id,QueryCode = CourierWorkScreenQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "Customs.DeclarationCourierStatus.CourierPendingReasonName" , ColumnWidth = 90 }, addedQueryColumns);
 
-			 QueryColumn CourierWorkScreenQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierWorkScreenQuery.Id,QueryCode = CourierWorkScreenQuery.UniqueCode, IndexOrder = 15, ObjectFieldCode = "Customs.DeclarationCourierStatus.TruckerName" , ColumnWidth = 115 }, addedQueryColumns);
+			 QueryColumn CourierWorkScreenQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierWorkScreenQuery.Id,QueryCode = CourierWorkScreenQuery.UniqueCode, IndexOrder = 15, ObjectFieldCode = "Customs.DeclarationCourierStatus.TruckerName" , ColumnWidth = 90 }, addedQueryColumns);
 
-			 QueryColumn CourierWorkScreenQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierWorkScreenQuery.Id,QueryCode = CourierWorkScreenQuery.UniqueCode, IndexOrder = 16, ObjectFieldCode = "Customs.DeclarationCourierStatus.LastMileStatusCode" , ColumnWidth = 73 }, addedQueryColumns);
+			 QueryColumn CourierWorkScreenQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierWorkScreenQuery.Id,QueryCode = CourierWorkScreenQuery.UniqueCode, IndexOrder = 16, ObjectFieldCode = "Customs.DeclarationCourierStatus.LastMileStatusCode" , ColumnWidth = 90 }, addedQueryColumns);
 
-			 QueryColumn CourierWorkScreenQueryColumn_17 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierWorkScreenQuery.Id,QueryCode = CourierWorkScreenQuery.UniqueCode, IndexOrder = 17, ObjectFieldCode = "Customs.DeclarationCourierStatus.IsClosedForFollowUp" , ColumnWidth = 42 }, addedQueryColumns);
+			 QueryColumn CourierWorkScreenQueryColumn_17 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierWorkScreenQuery.Id,QueryCode = CourierWorkScreenQuery.UniqueCode, IndexOrder = 17, ObjectFieldCode = "Customs.DeclarationCourierStatus.IsClosedForFollowUp" , ColumnWidth = 90 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
