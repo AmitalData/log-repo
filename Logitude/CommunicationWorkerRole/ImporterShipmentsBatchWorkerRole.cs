@@ -400,6 +400,7 @@ namespace CommunicationWorkerRole
                                                         IsDangerouseOfGoods = Shipment.OrderIsDangerouseGoods,
                                                         AgentName = Shipment.PrivateLabelAgentName,
                                                         IsShipmentOrder = Shipment.IsShipmentOrder,
+                                                        ConsigneeName = Shipment.ConsigneeName,
                                                         Customer = new CodeProperties()
                                                         {
                                                             Code = CustomerCode
@@ -642,6 +643,12 @@ namespace CommunicationWorkerRole
                                                         IsDangerouseOfGoods = Shipment.OrderIsDangerouseGoods,
                                                         AgentName = Shipment.PrivateLabelAgentName,
                                                         IsShipmentOrder = Shipment.IsShipmentOrder,
+                                                        Notes = Shipment.Notes,
+                                                        DeclarationXMLData = Shipment.DeclarationXMLData,
+                                                        IsImporterApprovalRequired = Shipment.IsImporterApprovalRequired,
+                                                        VersionApproved = Shipment.VersionApproved,
+                                                        ApproveDateTime = Shipment.ApproveDateTime,
+                                                        CustomerShipmentNumber = Shipment.CustomerShipmentNumber,
                                                         Customer = new CodeProperties()
                                                         {
                                                             Code = CustomerCode
