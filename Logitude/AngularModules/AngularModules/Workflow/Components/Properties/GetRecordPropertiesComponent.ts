@@ -4,7 +4,8 @@ import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
 import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { ConditionOperations } from "Workflow/Constants/ConditionOperations";
-import { GetRecordsLimit } from "Workflow/Constants/GetRecordsLimit";
+import { GetRecordLimits } from "Workflow/Constants/GetRecordLimits";
+import { GetRecordTypes } from "Workflow/Constants/GetRecordTypes";
 import { SortDirections } from "Workflow/Constants/SortDirections";
 import { Condition } from "Workflow/Models/Condition";
 import { SortDirectionList } from "Workflow/Models/SortDirectionList";
@@ -13,7 +14,6 @@ import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 import { EntitiesTreeList } from "Workflow/Models/EntitiesTreeList";
 import { ObjectTables } from "Workflow/Models/ObjectTables";
 import { ConditionOperators } from "Workflow/Constants/ConditionOperators";
-import { FieldTypes } from "Workflow/Constants/FieldTypes";
 import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 
 @Component({
@@ -28,6 +28,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     public Entity: string = null;
     public EntityId: string = null;
     public RecordsLimit: string = null;
+    public RecordsType: string = null;
     public ReturnedFields: ReturnedField[];
     public Conditions: Condition[];
     public ConditionsOperation: string;
@@ -48,10 +49,14 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     public EntitiesTreeList: EntitiesTreeList;
     public EntitiesTreeItems: TreeSelectItem[];
 
-    public GetRecordsLimit = GetRecordsLimit;
-    public SortDirections = SortDirections;
+    public ExcludedEntities: string[];
+    public EnableAddConditions: boolean;
+    public ShowConditionsOperation: boolean;
+    public RecordsTypeChanged: boolean = false;
 
-    public ExcludedEntities: string[] = ["Opportunity"];
+    public GetRecordLimits = GetRecordLimits;
+    public GetRecordTypes = GetRecordTypes;
+    public SortDirections = SortDirections;
 
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
@@ -67,14 +72,15 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     }
 
     initializeEntitiesTreeItems() {
-        this.EntitiesTreeList = new EntitiesTreeList();
+        this.EntitiesTreeList = new EntitiesTreeList(true);
         this.EntitiesTreeItems = this.EntitiesTreeList.Items;
     }
 
     initialize() {
         this.Name = this.Data["name"] || null;
         this.Entity = this.Data["entity"] || null;
-        this.RecordsLimit = this.Data["recordsLimit"] ? this.Data["recordsLimit"] : GetRecordsLimit.FirstRecord
+        this.RecordsLimit = this.Data["recordsLimit"] ? this.Data["recordsLimit"] : GetRecordLimits.FirstRecord;
+        this.RecordsType = this.Data["recordsType"] ? this.Data["recordsType"] : null;
         this.OrderBy = this.Data["orderBy"] ? this.Data["orderBy"] : null;
         this.SortBy = this.Data["sortBy"] ? this.Data["sortBy"] : null;
 
@@ -83,65 +89,99 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         this.ReturnedFields = this.Data["returnedFields"] || [];
 
         this.Data["recordsLimit"] = this.RecordsLimit;
+        this.Data["recordsType"] = this.RecordsType;
         this.Data["orderBy"] = this.OrderBy;
         this.Data["sortBy"] = this.SortBy;
 
         this.EntityId = ObjectTables.getIdByName(this.Entity);
 
-        this.initializeConditions();
-        this.initializeReturnedFields();
+        this.initializeConditions(this.RecordsType);
+        this.initializeReturnedFields(this.RecordsType);
+        this.handleRecordsType(this.RecordsType);
 
         this.setUIProperties();
     }
 
-    initializeConditions(reset: boolean = false) {
+    // initializeConditions(reset: boolean = false) {
+    //     if (reset) {
+    //         this.Conditions = [];
+    //         this.ConditionsOperation = ConditionOperations.And;
+    //     }
+    //     if (this.Conditions.length === 0) {
+    //         let condition = new Condition();
+
+    //         let isChildEntity = this.Entity ? (this.Entity.indexOf(".") !== -1) : false;
+    //         if (isChildEntity) {
+    //             let entities = this.Entity.split(".");
+    //             let parentEntity = entities[0];
+    //             let childEntity = entities[1];
+    //             let childField = this.EntitiesTreeList.getChildField(parentEntity, childEntity);
+    //             let fieldCode = childEntity + "." + childField;
+    //             let objectField = this.FlowObjectFields.find(o => o.FieldCode === fieldCode);
+    //             let parentEntityObjectTable = ObjectTables.getByName(parentEntity);
+
+    //             condition.field = childField;
+    //             condition.fieldCode = fieldCode;
+    //             condition.type = objectField ? objectField.DataTypeCode : null;
+    //             condition.lookupType = objectField && objectField.DataTypeCode === FieldTypes.LookUp ? ObjectTables.getNameById(objectField.LookUpTableId) : null;
+    //             condition.picklistType = objectField && objectField.DataTypeCode === FieldTypes.PickList ? objectField.CustomPickListCode : null;
+    //             condition.value = "triggeringrecord_" + parentEntity + "." + (parentEntityObjectTable ? parentEntityObjectTable.KeyPropertyPath : "Id");
+    //             condition.operator = ConditionOperators.EqualsField;
+    //             condition.isDisabled = true;
+    //         }
+
+    //         this.Conditions.push(condition);
+    //         this.IsValidConditions = false;
+    //     }
+    // }
+
+    initializeConditions(recordsType: string, reset: boolean = false) {
         if (reset) {
             this.Conditions = [];
             this.ConditionsOperation = ConditionOperations.And;
         }
-        if (this.Conditions.length === 0) {
-            let condition = new Condition();
-
-            let isChildEntity = this.Entity ? (this.Entity.indexOf(".") !== -1) : false;
-            if (isChildEntity) {
-                let entities = this.Entity.split(".");
-                let parentEntity = entities[0];
-                let childEntity = entities[1];
-                let childField = this.EntitiesTreeList.getChildField(parentEntity, childEntity);
-                let fieldCode = childEntity + "." + childField;
-                let objectField = this.FlowObjectFields.find(o => o.FieldCode === fieldCode);
-                let parentEntityObjectTable = ObjectTables.getByName(parentEntity);
-
-                condition.field = childField;
-                condition.fieldCode = fieldCode;
-                condition.type = objectField ? objectField.DataTypeCode : null;
-                condition.lookupType = objectField && objectField.DataTypeCode === FieldTypes.LookUp ? ObjectTables.getNameById(objectField.LookUpTableId) : null;
-                condition.picklistType = objectField && objectField.DataTypeCode === FieldTypes.PickList ? objectField.CustomPickListCode : null;
-                condition.value = "triggeringrecord_" + parentEntity + "." + (parentEntityObjectTable ? parentEntityObjectTable.KeyPropertyPath : "Id");
-                condition.operator = ConditionOperators.EqualsField;
-                condition.isDisabled = true;
+        if (recordsType === GetRecordTypes.ReadOnly) {
+            if (this.Conditions.length === 0) {
+                let condition = new Condition();
+                this.Conditions.push(condition);
+                this.IsValidConditions = false;
             }
-
-            this.Conditions.push(condition);
-            this.IsValidConditions = false;
+        } else {
+            if (this.EntityId && this.Conditions.length === 0) {
+                let condition = new Condition();
+                let entityKeyPropertyPath = ObjectTables.getKeyPropertyPathByName(this.Entity);
+                let primaryObjectField = this.FlowObjectFields.find(o => o.ObjectTableId === this.EntityId && o.FieldName === entityKeyPropertyPath);
+                condition.field = primaryObjectField ? primaryObjectField.FieldName : null;
+                condition.fieldCode = primaryObjectField ? primaryObjectField.FieldCode : null;
+                condition.type = primaryObjectField ? primaryObjectField.DataTypeCode : null;
+                condition.operator = ConditionOperators.EqualsField;
+                condition.disabled = "d,f,o";
+                this.Conditions.push(condition);
+                this.IsValidConditions = false;
+            }
         }
     }
 
-    initializeReturnedFields(reset: boolean = false) {
-        if (reset) {
-            this.ReturnedFields = [];
-        }
-        if (this.EntityId && this.ReturnedFields.length === 0) {
-            let entityKeyPropertyPath = ObjectTables.getKeyPropertyPathByName(this.Entity);
-            let primaryObjectField = this.FlowObjectFields.find(o => o.ObjectTableId === this.EntityId && o.FieldName === entityKeyPropertyPath);
-            if (primaryObjectField) {
-                let field = new ReturnedField();
-                field.fieldCode = primaryObjectField.FieldCode;
-                field.type = primaryObjectField.DataTypeCode;
-                this.ReturnedFields.push(field);
+    initializeReturnedFields(recordsType: string, reset: boolean = false) {
+        if (recordsType === GetRecordTypes.ReadOnly) {
+            if (reset) {
+                this.ReturnedFields = [];
             }
-            this.ReturnedFields.push(new ReturnedField());
-            this.IsValidReturnedFields = false;
+            if (this.EntityId && this.ReturnedFields.length === 0) {
+                let entityKeyPropertyPath = ObjectTables.getKeyPropertyPathByName(this.Entity);
+                let primaryObjectField = this.FlowObjectFields.find(o => o.ObjectTableId === this.EntityId && o.FieldName === entityKeyPropertyPath);
+                if (primaryObjectField) {
+                    let field = new ReturnedField();
+                    field.fieldCode = primaryObjectField.FieldCode;
+                    field.type = primaryObjectField.DataTypeCode;
+                    this.ReturnedFields.push(field);
+                }
+                this.ReturnedFields.push(new ReturnedField());
+                this.IsValidReturnedFields = false;
+            }
+        } else {
+            this.ReturnedFields = null;
+            this.IsValidReturnedFields = true;
         }
     }
 
@@ -159,8 +199,9 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         this.EntityId = ObjectTables.getIdByName(entity);
 
         if (isEntityChanged) {
-            this.initializeConditions(true);
-            this.initializeReturnedFields(true);
+            this.updateRecordsLimit(GetRecordLimits.FirstRecord);
+            this.initializeConditions(this.RecordsType, true);
+            this.initializeReturnedFields(this.RecordsType, true);
         }
 
         this.setUIProperties();
@@ -169,11 +210,32 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     updateRecordsLimit(recordsLimit: string) {
         this.Data["recordsLimit"] = recordsLimit;
         this.RecordsLimit = recordsLimit;
-        if (recordsLimit == GetRecordsLimit.FirstRecord) {
+        if (recordsLimit == GetRecordLimits.FirstRecord) {
             this.updateOrderBy(null);
             this.updateSortBy(null);
         } else {
             this.updateOrderBy(SortDirections.NotSorted);
+        }
+    }
+
+    updateRecordsType(recordsType: string) {
+        this.Data["recordsType"] = recordsType;
+        this.RecordsType = recordsType;
+        this.handleRecordsType(recordsType);
+        this.updateEntity(null);
+        this.RecordsTypeChanged = !this.RecordsTypeChanged;
+    }
+
+    handleRecordsType(recordsType: string){
+        if(recordsType == GetRecordTypes.ReadOnly){
+            this.EnableAddConditions = true;
+            this.ShowConditionsOperation = true;
+            this.ExcludedEntities = ["Opportunity"];
+        }
+        else if (recordsType == GetRecordTypes.Editable) {
+            this.EnableAddConditions = false;
+            this.ShowConditionsOperation = false;
+            this.ExcludedEntities = ["Customer", "User", "Opportunity"];
         }
     }
 
@@ -225,11 +287,11 @@ export class GetRecordPropertiesComponent extends BaseComponent {
             let validationErrors = notValidUIProperties.map(t => { return t.ValidationError; });
             this.ValidationErrorsList = validationErrors;
 
-            if (!this.IsValidConditions){
+            if (!this.IsValidConditions) {
                 this.ValidationErrorsList.push("Invalid Conditions");
             }
 
-            if (!this.IsValidReturnedFields){
+            if (!this.IsValidReturnedFields) {
                 this.ValidationErrorsList.push("Invalid Selected Fields");
             }
         }

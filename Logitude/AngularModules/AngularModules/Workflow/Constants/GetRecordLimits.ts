@@ -1,4 +1,4 @@
-export enum GetRecordsLimit {
+export enum GetRecordLimits {
     AllRecords = "AllRecords",
     FirstRecord = "FirstRecord",
 }

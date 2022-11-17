@@ -125,7 +125,8 @@
                 <ComboBox [ItemsSource]="ConditionOperationsItems" [Binding]="'Name'"
                     [SelectedItem]="Condition.groupOperation | ListItemPipe"
                     (SelectedItemChanged)="updateConditionGroupOperation($event.Code, conditionIndex)" [ListType]="''"
-                    [IsDisabled]="Condition.isDisabled" [CyData]="'ConditionOperation_' + Condition.id">
+                    [IsDisabled]="Condition.disabled | ConditionDisabledPipe : 'go'"
+                    [CyData]="'ConditionOperation_' + Condition.id">
                 </ComboBox>
 
             </div>
@@ -136,8 +137,8 @@
                 <div class="condition-row">
 
                     <div *ngIf="!(AtLeastOneCondition && Conditions.length === 1)" class="delete-condition-container">
-                        <img *ngIf="!Condition.isDisabled" class="delete-condition-button" src="./Images/Trash-can.png"
-                            (click)="deleteCondition(conditionIndex, Condition.isGroup)"
+                        <img *ngIf="!(Condition.disabled | ConditionDisabledPipe : 'd')" class="delete-condition-button"
+                            src="./Images/Trash-can.png" (click)="deleteCondition(conditionIndex, Condition.isGroup)"
                             [attr.data-cy]="'DeleteConditionButton_' + Condition.id" />
                     </div>
 
@@ -150,12 +151,13 @@
                             [SelectedValue]="Condition.fieldCode" [HideColumns]="true"
                             [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
                             (SelectedItemChanged)="updateConditionEntityField($event, conditionIndex)"
-                            [ForceDisabled]="Condition.isDisabled" [DataCy]="'ConditionField_' + Condition.id">
+                            [ForceDisabled]="Condition.disabled | ConditionDisabledPipe : 'f'"
+                            [DataCy]="'ConditionField_' + Condition.id">
                         </LogLov>
 
                         <TreeSelect *ngIf="!IsEntityField" [Items]="FlowVariablesTreeItems" [Width]="'220px'"
-                            [IsDisabled]="Condition.isDisabled" [Value]="Condition.fieldCode"
-                            (ValueChanged)="updateConditionField($event, conditionIndex)">
+                            [IsDisabled]="Condition.disabled | ConditionDisabledPipe : 'f'"
+                            [Value]="Condition.fieldCode" (ValueChanged)="updateConditionField($event, conditionIndex)">
                         </TreeSelect>
 
                     </div>
@@ -166,7 +168,8 @@
                             [ItemsSource]="ConditionOperatorsItemsDictionary[Condition.type] || ConditionOperatorsItemsDictionary['default']"
                             [Binding]="'Name'" [SelectedItem]="Condition.operator | ListItemPipe"
                             (SelectedItemChanged)="updateConditionOperator($event.Code, conditionIndex)" [ListType]="''"
-                            [IsDisabled]="Condition.isDisabled" [CyData]="'ConditionOperator_' + Condition.id">
+                            [IsDisabled]="Condition.disabled | ConditionDisabledPipe : 'o'"
+                            [CyData]="'ConditionOperator_' + Condition.id">
                         </ComboBox>
 
                     </div>
@@ -178,7 +181,7 @@
                         <ComboBox [ItemsSource]="DateTimeValueExpressionsItems" [Binding]="'Name'"
                             [SelectedItem]="Condition.valueExpression | ListItemPipe"
                             (SelectedItemChanged)="updateConditionValueExpression($event.Code, conditionIndex)"
-                            [ListType]="''" [IsDisabled]="Condition.isDisabled"
+                            [ListType]="''" [IsDisabled]="Condition.disabled | ConditionDisabledPipe : 've'"
                             [CyData]="'ConditionValueExpression_' + Condition.id">
                         </ComboBox>
 
@@ -194,7 +197,8 @@
                             [DataType]="(Condition.fieldCode | IsDeclaredVariablePipe) ? Condition.type : null"
                             [Name]="'ConditionValue_' + Condition.id"
                             [IsIntegerNumberInput]="(Condition.type | IsDateTimeTypePipe) && Condition.valueExpression === DateTimeValueExpressions.PlusMinusToday"
-                            [CurrentValue]="Condition.value" [IsDisabled]="Condition.isDisabled"
+                            [CurrentValue]="Condition.value"
+                            [IsDisabled]="Condition.disabled | ConditionDisabledPipe : 'v'"
                             (ValueChanged)="updateConditionValue($event, conditionIndex)">
                         </FieldValue>
 
@@ -203,7 +207,8 @@
                             [DataType]="(Condition.fieldCode | IsDeclaredVariablePipe) ? Condition.type : null"
                             [Name]="'ConditionValue_' + Condition.id"
                             [IsIntegerNumberInput]="(Condition.type | IsDateTimeTypePipe) && Condition.valueExpression === DateTimeValueExpressions.PlusMinusToday"
-                            [CurrentValue]="Condition.value" [IsDisabled]="Condition.isDisabled"
+                            [CurrentValue]="Condition.value"
+                            [IsDisabled]="Condition.disabled | ConditionDisabledPipe : 'v'"
                             (ValueChanged)="updateConditionValue($event, conditionIndex)">
                         </FieldValue>
 
@@ -219,7 +224,8 @@
                             [SelectedValue]="Condition.valueCode" [HideColumns]="true"
                             [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
                             (SelectedItemChanged)="updateConditionFieldValue($event, conditionIndex)"
-                            [ForceDisabled]="Condition.isDisabled" [DataCy]="'ConditionFieldValue_' + Condition.id">
+                            [ForceDisabled]="Condition.disabled | ConditionDisabledPipe : 'v'"
+                            [DataCy]="'ConditionFieldValue_' + Condition.id">
                         </LogLov>
 
                         <LogLov *ngIf="!Condition.fieldChangedToggle" [NoObjectField]="true"
@@ -229,7 +235,8 @@
                             [SelectedValue]="Condition.valueCode" [HideColumns]="true"
                             [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
                             (SelectedItemChanged)="updateConditionFieldValue($event, conditionIndex)"
-                            [ForceDisabled]="Condition.isDisabled" [DataCy]="'ConditionFieldValue_' + Condition.id">
+                            [ForceDisabled]="Condition.disabled | ConditionDisabledPipe : 'v'"
+                            [DataCy]="'ConditionFieldValue_' + Condition.id">
                         </LogLov>
                     </div>
 
@@ -237,7 +244,7 @@
                         class="condition-value-container">
                         <div [attr.data-cy]="'ConditionFieldValue_' + Condition.id">
                             <TreeSelect [Items]="FlowVariablesTreeItems" [Width]="'220px'" [Value]="Condition.value"
-                                [IsDisabled]="Condition.isDisabled"
+                                [IsDisabled]="Condition.disabled | ConditionDisabledPipe : 'v'"
                                 [ShowItem]="Condition | ShowFlowVariablesTreeItemPipe : FlowVariablesTreeList"
                                 (ValueChanged)="updateConditionValue($event, conditionIndex)">
                             </TreeSelect>
@@ -248,7 +255,8 @@
                         <ComboBox [ItemsSource]="BooleanValuesItems" [Binding]="'Name'"
                             [SelectedItem]="Condition.value | ListItemPipe"
                             (SelectedItemChanged)="updateConditionValue($event.Code, conditionIndex)" [ListType]="''"
-                            [IsDisabled]="Condition.isDisabled" [CyData]="'ConditionValue_' + Condition.id">
+                            [IsDisabled]="Condition.disabled | ConditionDisabledPipe : 'v'"
+                            [CyData]="'ConditionValue_' + Condition.id">
                         </ComboBox>
                     </div>
 
@@ -260,10 +268,10 @@
                     [IsRootConditions]="false" (ConditionsChangedEvent)="emitConditionsChanged($event)"
                     [ConditionsCounter]="ConditionsCounter" [FlowObject]="FlowObject"
                     [FlowObjectFields]="FlowObjectFields" [CurrentNodeId]="CurrentNodeId"
-                    [IsEntityField]="IsEntityField" [IsEntityFieldValue]="IsEntityFieldValue">
+                    [IsEntityField]="IsEntityField" [IsEntityFieldValue]="IsEntityFieldValue" [EnableAdd]="EnableAdd">
                 </ConditionGroups>
 
-                <div *ngIf="Condition.isGroup" class="add-buttons-container">
+                <div *ngIf="Condition.isGroup && EnableAdd" class="add-buttons-container">
                     <span class="link-button add-condition-button" [ngClass]="{'disabled': !IsValidConditions}"
                         (click)="addCondition(conditionIndex, false)"
                         [attr.data-cy]="'AddConditionButton_' + Condition.id">
@@ -280,7 +288,7 @@
 
         </div>
 
-        <div *ngIf="IsRootConditions && isLastCondition" class="add-buttons-container margin-left-0">
+        <div *ngIf="IsRootConditions && isLastCondition && EnableAdd" class="add-buttons-container margin-left-0">
             <span class="link-button add-condition-button" [ngClass]="{'disabled': !IsValidConditions}"
                 (click)="addCondition(null, false)" [attr.data-cy]="'AddRootConditionButton'">
                 <span class="plus-sign">+</span><span>Add Condition</span>

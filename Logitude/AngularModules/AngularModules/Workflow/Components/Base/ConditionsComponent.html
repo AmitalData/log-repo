@@ -14,6 +14,9 @@
 
     .entity-condition-groups-container {
         display: table-cell;
+    }
+
+    .padding-left-10 {
         padding-left: 10px;
     }
 </style>
@@ -21,7 +24,7 @@
 
 <div *ngIf="Conditions && Conditions.length > 0" class="entity-conditions-container">
 
-    <div class="entity-conditions-operation-container">
+    <div *ngIf="ShowConditionsOperation" class="entity-conditions-operation-container">
 
         <ComboBox [ItemsSource]="ConditionOperationsItems" [Binding]="'Name'"
             [SelectedItem]="ConditionsOperation | ListItemPipe" (SelectedItemChanged)="updateConditionsOperation($event)"
@@ -30,13 +33,13 @@
 
     </div>
 
-    <div class="entity-condition-groups-container">
+    <div class="entity-condition-groups-container" [ngClass]="{'padding-left-10': ShowConditionsOperation}">
 
         <ConditionGroups [EntityId]="EntityId" [ShowChangedOperator]="ShowChangedOperator" [(Conditions)]="Conditions"
             [IsValidConditions]="IsValidConditions" (ConditionsChangedEvent)="conditionsChanged($event)"
             [ConditionsCounter]="ConditionsCounter" [AtLeastOneCondition]="AtLeastOneCondition"
             [FlowObject]="FlowObject" [FlowObjectFields]="FlowObjectFields" [CurrentNodeId]="CurrentNodeId"
-            [IsEntityField]="IsEntityField" [IsEntityFieldValue]="IsEntityFieldValue">
+            [IsEntityField]="IsEntityField" [IsEntityFieldValue]="IsEntityFieldValue" [EnableAdd]="EnableAdd">
         </ConditionGroups>
 
     </div>

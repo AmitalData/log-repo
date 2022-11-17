@@ -169,30 +169,79 @@
                         </td>
                     </tr>
 
-                    <!-- Object -->
                     <tr class="table-row">
                         <td class="table-row-cell">
                             <div class="table-row-cell-block">
-                                <div class="select-get-record-label">Get Records Of This Oject</div>
+                                <div class="select-get-record-label">Select Records Type</div>
                             </div>
                         </td>
                     </tr>
 
                     <tr class="table-row">
+                        <td class="table-row-cell">
+                            <div class="table-row-cell-block records-type-container">
+                                <table>
+                                    <tr>
+                                        <td class="records-type-cell">
+                                            <RadioButton [Name]="'RecordsTypeRadio'"
+                                                [IsChecked]="RecordsType === GetRecordTypes.ReadOnly"
+                                                (Checked)="updateRecordsType(GetRecordTypes.ReadOnly)"
+                                                [Text]="'Read only records'" [Top]="5"
+                                                [DataCy]="'record-type-read-only'">
+                                            </RadioButton>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="records-type-cell">
+                                            <RadioButton [Name]="'RecordsTypeRadio'"
+                                                [IsChecked]="RecordsType === GetRecordTypes.Editable"
+                                                (Checked)="updateRecordsType(GetRecordTypes.Editable)"
+                                                [Text]="'Editable records'" [Top]="5" [DataCy]="'record-type-editable'">
+                                            </RadioButton>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr class="table-row">
+                        <td class="table-row-cell">
+                            <div class="split-block"></div>
+                        </td>
+                    </tr>
+
+                    <!-- Object -->
+                    <tr *ngIf="RecordsType" class="table-row">
+                        <td class="table-row-cell">
+                            <div class="table-row-cell-block">
+                                <div class="select-get-record-label">Get Records Of This Object</div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="RecordsType" class="table-row">
                         <td class="table-row-cell">
                             <div>
                                 <LogLabel [NoObjectField]="true" [Text]="'Object'" [ObjectFieldName]="'Object'"
                                     [DataContext]="DataContext"></LogLabel>
                             </div>
                             <div class="table-row-cell-block">
-                                <TreeSelect [Items]="EntitiesTreeItems" [Width]="'300px'" [Value]="Entity"
-                                    [ShowItem]="ExcludedEntities | ShowEntitiesTreeItemPipe" (ValueChanged)="updateEntity($event)">
+                                <TreeSelect *ngIf="RecordsTypeChanged" [Items]="EntitiesTreeItems" [Width]="'300px'"
+                                    [Value]="Entity" [ShowExpand]="false"
+                                    [ShowItem]="ExcludedEntities | ShowEntitiesTreeItemPipe"
+                                    (ValueChanged)="updateEntity($event)">
+                                </TreeSelect>
+                                <TreeSelect *ngIf="!RecordsTypeChanged" [Items]="EntitiesTreeItems" [Width]="'300px'"
+                                    [Value]="Entity" [ShowExpand]="false"
+                                    [ShowItem]="ExcludedEntities | ShowEntitiesTreeItemPipe"
+                                    (ValueChanged)="updateEntity($event)">
                                 </TreeSelect>
                             </div>
                         </td>
                     </tr>
 
-                    <tr class="table-row">
+                    <tr *ngIf="RecordsType" class="table-row">
                         <td class="table-row-cell">
                             <div class="split-block"></div>
                         </td>
@@ -217,7 +266,8 @@
                                     (IsValidConditionsChange)="updateIsValidConditions($event)"
                                     [(ConditionsOperation)]="ConditionsOperation" [(Conditions)]="Conditions"
                                     [FlowObject]="FlowObject" [FlowObjectFields]="FlowObjectFields"
-                                    [CurrentNodeId]="CurrentNodeId" [IsEntityField]="true">
+                                    [CurrentNodeId]="CurrentNodeId" [IsEntityField]="true"
+                                    [EnableAdd]="EnableAddConditions" [ShowConditionsOperation]="ShowConditionsOperation">
                                 </Conditions>
 
                             </div>
@@ -230,7 +280,7 @@
                         </td>
                     </tr>
 
-                    <tr *ngIf="EntityId" class="table-row">
+                    <tr *ngIf="EntityId && RecordsType === GetRecordTypes.ReadOnly" class="table-row">
                         <td class="table-row-cell">
                             <div class="table-row-cell-block">
                                 <div class="select-get-record-label">How Many Records To Store</div>
@@ -238,15 +288,15 @@
                         </td>
                     </tr>
 
-                    <tr *ngIf="EntityId" class="table-row">
+                    <tr *ngIf="EntityId && RecordsType === GetRecordTypes.ReadOnly" class="table-row">
                         <td class="table-row-cell">
                             <div class="table-row-cell-block records-limit-container">
                                 <table>
                                     <tr>
                                         <td class="records-limit-cell">
                                             <RadioButton [Name]="'RecordsLimitRadio'"
-                                                [IsChecked]="RecordsLimit === 'FirstRecord'"
-                                                (Checked)="updateRecordsLimit('FirstRecord')"
+                                                [IsChecked]="RecordsLimit === GetRecordLimits.FirstRecord"
+                                                (Checked)="updateRecordsLimit(GetRecordLimits.FirstRecord)"
                                                 [Text]="'Only the first record'" [Top]="5"
                                                 [DataCy]="'record-limit-first'">
                                             </RadioButton>
@@ -255,9 +305,9 @@
                                     <tr>
                                         <td class="records-limit-cell">
                                             <RadioButton [Name]="'RecordsLimitRadio'"
-                                                [IsChecked]="RecordsLimit === 'AllRecords'"
-                                                (Checked)="updateRecordsLimit('AllRecords')" [Text]="'All records'"
-                                                [Top]="5" [DataCy]="'record-limit-all'">
+                                                [IsChecked]="RecordsLimit === GetRecordLimits.AllRecords"
+                                                (Checked)="updateRecordsLimit(GetRecordLimits.AllRecords)"
+                                                [Text]="'All records'" [Top]="5" [DataCy]="'record-limit-all'">
                                             </RadioButton>
                                         </td>
                                     </tr>
@@ -266,13 +316,14 @@
                         </td>
                     </tr>
 
-                    <tr *ngIf="EntityId" class="table-row">
+                    <tr *ngIf="EntityId && RecordsType === GetRecordTypes.ReadOnly" class="table-row">
                         <td class="table-row-cell">
                             <div class="split-block"></div>
                         </td>
                     </tr>
 
-                    <tr *ngIf="RecordsLimit === GetRecordsLimit.AllRecords && EntityId" class="table-row">
+                    <tr *ngIf="EntityId && RecordsLimit === GetRecordLimits.AllRecords && RecordsType === GetRecordTypes.ReadOnly"
+                        class="table-row">
                         <td class="table-row-cell">
                             <div class="table-row-cell-block">
                                 <div class="select-get-record-label">Sort {{Entity | EntityLabelPipe}} Records</div>
@@ -280,7 +331,8 @@
                         </td>
                     </tr>
 
-                    <tr *ngIf="RecordsLimit === GetRecordsLimit.AllRecords && EntityId" class="table-row">
+                    <tr *ngIf="EntityId && RecordsLimit === GetRecordLimits.AllRecords && RecordsType === GetRecordTypes.ReadOnly"
+                        class="table-row">
                         <td class="table-row-cell sort_container">
                             <div class="orderBy_container">
                                 <div class="orderBy_label">
@@ -303,7 +355,8 @@
                                 </div>
                                 <div class="table-row-cell-block">
                                     <LogLov [NoObjectField]="true" [ObjectFieldName]="'SortBy'"
-                                        [DataContext]="DataContext" [QueryFilterItems]="(null | GetObjectFieldsQueryFiltersPipe : FlowObjectFields : EntityId)"
+                                        [DataContext]="DataContext"
+                                        [QueryFilterItems]="(null | GetObjectFieldsQueryFiltersPipe : FlowObjectFields : EntityId)"
                                         [IsFreeText]="true" [LookUpTableName]="'ObjectField'" [NoValidation]="true"
                                         [HideColumns]="true" [SelectedValue]="SortBy"
                                         [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
@@ -314,14 +367,15 @@
                         </td>
                     </tr>
 
-                    <tr *ngIf="RecordsLimit === GetRecordsLimit.AllRecords && EntityId" class="table-row">
+                    <tr *ngIf="EntityId && RecordsLimit === GetRecordLimits.AllRecords && RecordsType === GetRecordTypes.ReadOnly"
+                        class="table-row">
                         <td class="table-row-cell">
                             <div class="split-block"></div>
                         </td>
                     </tr>
 
 
-                    <tr *ngIf="EntityId" class="table-row">
+                    <tr *ngIf="EntityId && RecordsType === GetRecordTypes.ReadOnly" class="table-row">
                         <td class="table-row-cell">
                             <div class="table-row-cell-block">
                                 <div class="select-get-record-label">Select Fields To Store</div>
@@ -329,7 +383,7 @@
                         </td>
                     </tr>
 
-                    <tr *ngIf="EntityId" class="table-row ">
+                    <tr *ngIf="EntityId && RecordsType === GetRecordTypes.ReadOnly" class="table-row ">
                         <td class="table-row-cell">
                             <ul class="selected-coulmn-container selected-coulmn-list table-row-cell-block">
                                 <li *ngFor="let returnedField of ReturnedFields; let fieldIndex = index"
@@ -339,10 +393,10 @@
                                             <LogLov [NoObjectField]="true"
                                                 [ObjectFieldName]="'SelectedCoulmn_' + fieldIndex"
                                                 [DataContext]="DataContext"
-                                                [QueryFilterItems]="(null | GetObjectFieldsQueryFiltersPipe : FlowObjectFields : EntityId)" [IsFreeText]="true"
-                                                [LookUpTableName]="'ObjectField'" [NoValidation]="true"
-                                                [SelectedValue]="returnedField.fieldCode" [HideColumns]="true"
-                                                [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
+                                                [QueryFilterItems]="(null | GetObjectFieldsQueryFiltersPipe : FlowObjectFields : EntityId)"
+                                                [IsFreeText]="true" [LookUpTableName]="'ObjectField'"
+                                                [NoValidation]="true" [SelectedValue]="returnedField.fieldCode"
+                                                [HideColumns]="true" [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
                                                 (SelectedItemChanged)="updateSelectedField($event, fieldIndex)"
                                                 [ForceDisabled]="fieldIndex === 0"
                                                 [DataCy]="'SelectedCoulmn_' + fieldIndex">
