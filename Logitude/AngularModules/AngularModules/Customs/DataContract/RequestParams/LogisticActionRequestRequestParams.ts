@@ -17,4 +17,6 @@ export class LogisticActionRequestRequestParams extends RequestParamsBase {
     public Quantity: number;
     public CustomsFile: string;
     public Tenant: number;
+    public ExportFile: string;
+
 }

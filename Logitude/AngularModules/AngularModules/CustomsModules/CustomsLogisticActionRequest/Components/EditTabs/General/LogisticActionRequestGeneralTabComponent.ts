@@ -234,7 +234,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         this.CargoIdentifierKey3 = consignmentDeclartion.Consignment.ThirdCargoID
         this.DeliverySiteID = consignmentDeclartion.Consignment.StorageSiteCode
 
-        this.declartionVal = declaration;
+         this.declartionVal = declaration;
         if (consignmentDeclartion.ConsignmentPackages.length === 1) {
             this.entityPM.PackagingTypeCode = consignmentDeclartion.ConsignmentPackages[0].PackageTypeCode
             this.entityPM.Quantity = consignmentDeclartion.ConsignmentPackages[0].Quantity;
@@ -472,8 +472,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
 
     async OnCustomSendOptionsButtonClick(customSendOptionsArgs) {
-        debugger
-        this.logger.sendError('OnCustomSendOptionsButtonClick')
+         this.logger.sendError('OnCustomSendOptionsButtonClick')
         this.submit = true;
         if (this.invalidate()) return;
 
@@ -482,7 +481,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
         SessionLocator.SelectedSession.StartBusyIndicatorSaving();
 
-        const param: LogisticActionRequestRequestParams = this.getCustomsParams();
+        const param: LogisticActionRequestRequestParams =await this.getCustomsParams();
         this.logger.sendError('param', 'param: ' + JSON.stringify(param));
         const res: ResponseDataBase = await this.logisticActionRequestWebService.SendCustomsMessage8410(param);
         this.logger.sendError('after SendCustomsMessage8410', 'res: ' + JSON.stringify(res));
@@ -496,7 +495,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     }
 
 
-    private getCustomsParams() {
+    private async getCustomsParams() {
         const param: LogisticActionRequestRequestParams = new LogisticActionRequestRequestParams();
         param.LogisticActionRequestId = this.entityPM.Id;
         param.ExporterIdentifierType = this.entityPM.ExporterIdentifierType;
@@ -512,8 +511,18 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         param.CargoIdentifierKey3 = this.entityPM.CargoIdentifierKey3;
         param.PackagingTypeCode = this.entityPM.PackagingTypeCode;
         param.Quantity = this.entityPM.Quantity;
-        param.CustomsFile = this.entityPM.DeclarationId == null ? this.entityPM.ExportFileNo : this.declartionVal?.CustomFileNo;
+        param.CustomsFile =  this.declartionVal?.CustomFileNo;
         param.Tenant = this.entityPM.Tenant;
+        param.ExportFile = this.entityPM.ExportFileNo;
+
+        if (!AppTool.IsNullOrEmpty(this.entityPM.DeclarationId) && AppTool.IsNullOrEmpty(param.CustomsFile)) {
+            var consignmentDeclartion: ConsignmentDeclartions = await this.getDeclarationsandConsignment();
+
+            const declaration: DeclarationPM = (consignmentDeclartion.Consignment as any).Declaration;
+            param.CustomsFile =  declaration?.CustomFileNo;
+
+        }
+
         return param;
     }
 
