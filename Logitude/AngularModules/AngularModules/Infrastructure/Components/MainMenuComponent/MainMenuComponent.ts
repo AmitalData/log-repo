@@ -331,9 +331,15 @@ export class MainMenuComponent {
 
                         break;
                     }
-                    case "General.MH.Dashboard": {
+                    case "General.MH.ClassicDashboard": {
                         ServiceLocator.SendTotangoUserActivity("Dashboard", "Main View");
                         myComponentPath = "./Dashboard/Components/Workspace/DashboardComponent";
+                        break;
+                    }
+
+                    case "General.MH.Dashboard": {
+                        MixPanelLocator.PostDashboardAction({ ActionName: "Custom Dashboard Tab Click" });
+                        myComponentPath = "./Dashboard/Components/Workspace/CustomDashboardComponent";
                         break;
                     }
 
