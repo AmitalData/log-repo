@@ -39,13 +39,11 @@ import { SendALLDelayFormParams } from '../../../../Customs/DataContract/Request
 import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
 import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 import { HttpClient } from '@angular/common/http';
-import { QueryColumnsPMService } from 'Infrastructure/Services/StandardPMs/QueryColumnsPMService';
-import { InterfaceTenantDefinitionsWebService } from 'Customs/Services/WebServices/InterfaceTenantDefinitionsWebService';
 
 @Component({
 
     templateUrl: './CourierWorksheetComponent.html',
-    providers: [CourierWorksheetSharedDataService, QueryColumnsPMService],
+    providers: [CourierWorksheetSharedDataService],
 })
 
 
@@ -122,7 +120,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     isAllowBulkPendind: boolean = false;
     IsILOVLEnabled: boolean = false;
     IsILSWSEnabled: boolean = false;
-    queryId: string = ""
+
 
     @Output() MenuHeaderchangeevent = new EventEmitter();
     @Output() onQueryChangeEvent = new EventEmitter();
@@ -136,7 +134,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     HasRequiresApprovalFeature: boolean = false;
 
     //constructor(public entityArgs: EntityArgs) {
-    constructor(public _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService, private _http: HttpClient, private cdr: ChangeDetectorRef, public queryColumnsPMService: QueryColumnsPMService) {
+    constructor(public _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService, private _http: HttpClient, private cdr: ChangeDetectorRef) {
         super();
         if (FeatureLocator.HasFeaturePermession("Customs.CourierPendingReason", "PendingRequiresApproval")) {
             this.HasRequiresApprovalFeature = true;
@@ -191,11 +189,6 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
 
         this.ChangedUnloadPortSite = false;
-
-        // this.queryColumnsPMService.GetQueryColumnByQueryCode(SessionLocator.Tenant, "Customs.DeclarationCourierStatus.CourierWorkScreen").subscribe(res => {
-        //     debugger;
-        //     this.queryId = res;
-        // })
         // this.cdr.detectChanges();
         //if (!AppTool.IsNullOrEmpty(this.PendingFilter)) {
         //    setTimeout(() => {
@@ -1248,7 +1241,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                     if (!isUserAdd)
                         this.columns = [];
 
-
+                   
                     this.columns.push({
                         FieldName: "MyDeclarationCheckBox",
                         DataTypeCode: 'String',
@@ -2793,11 +2786,9 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
 
     onColumnsClick() {
-       
-
 
         var windowArgs: any = {};
-        windowArgs.queryId = "1-16390"
+        windowArgs.queryId = "1-16090"
         windowArgs.queryCode = "Customs.DeclarationCourierStatus.CourierWorkScreen";
         windowArgs.isNewQueryMode = false;
         windowArgs.currentObjectTable = "Customs.DeclarationCourierStatus";
