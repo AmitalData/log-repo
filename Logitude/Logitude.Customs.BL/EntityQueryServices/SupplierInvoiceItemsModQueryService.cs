@@ -15,6 +15,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
         {
             List<SupplierInvoiceItemsMod> SupplierInvoiceItemsMods = repository.GetSupplierInvoiceItemsModsForSupplierInvoice(declarationId, invoiceCounterKey, tenant, FilterLine);
             List<SupplierInvoiceItemsModPM> SupplierInvoiceItemsModPms = (from a in SupplierInvoiceItemsMods
+                                                                          join d in context.ModificationAndDiscountTypes
+                                                                          on a.TypeCode equals d.Code
+
+
                                                                           select new SupplierInvoiceItemsModPM()
                                                                                       {
                                                                                           DeclarationId = a.DeclarationId,
@@ -27,8 +31,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                                                                           TypeName = a.ModificationAndDiscountType != null ? a.ModificationAndDiscountType.LocalName : null,
                                                                                           LineNumber = a.LineNumber,
                                                                                           Tenant = a.Tenant,
-                                                                                           
-                                                                                      }).ToList();
+                                                                                          ModificationAffectTypeID = d.NetoValuesModificationAffectID,
+
+                                                                          }).ToList();
             return SupplierInvoiceItemsModPms;
         }
 
@@ -36,6 +41,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
         {
             List<SupplierInvoiceItemsMod> SupplierInvoiceItemsMods = repository.GetMulti(new SupplierInvoiceItemKeys() { DeclarationId=declarationId,CounterKey=invoiceCounterKey,LineNumber=lineNumber});
             List<SupplierInvoiceItemsModPM> SupplierInvoiceItemsModPms = (from a in SupplierInvoiceItemsMods
+                                                                          join d in context.ModificationAndDiscountTypes
+                                                                          on a.TypeCode equals d.Code
                                                                           select new SupplierInvoiceItemsModPM()
                                                                           {
                                                                               DeclarationId = a.DeclarationId,
@@ -48,6 +55,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                                                               TypeName = a.ModificationAndDiscountType != null ? a.ModificationAndDiscountType.LocalName : null,
                                                                               LineNumber = a.LineNumber,
                                                                               Tenant = a.Tenant,
+                                                                              ModificationAffectTypeID = d.NetoValuesModificationAffectID,
 
                                                                           }).ToList();
             return SupplierInvoiceItemsModPms;
@@ -57,6 +65,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
         {
             List<SupplierInvoiceItemsMod> SupplierInvoiceItemsMods = repository.GetSupplierInvoiceItemsModsForSupplierInvoiceWithSpecificKeys(declarationId, invoiceCounterKey, itemsLineNumbers, tenant);
             List<SupplierInvoiceItemsModPM> SupplierInvoiceItemsModPms = (from a in SupplierInvoiceItemsMods
+                                                                          join d in context.ModificationAndDiscountTypes
+                                                                          on a.TypeCode equals d.Code
                                                                           select new SupplierInvoiceItemsModPM()
                                                                           {
                                                                               DeclarationId = a.DeclarationId,
@@ -69,6 +79,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                                                               TypeName = a.ModificationAndDiscountType != null ? a.ModificationAndDiscountType.LocalName : null,
                                                                               LineNumber = a.LineNumber,
                                                                               Tenant = a.Tenant,
+                                                                              ModificationAffectTypeID = d.NetoValuesModificationAffectID,
 
                                                                           }).ToList();
             return SupplierInvoiceItemsModPms;
