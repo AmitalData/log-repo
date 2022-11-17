@@ -3335,7 +3335,7 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnType("int");
             modelBuilder.Entity<CCUCARL>()
                 .Property(p => p.RIHBIT)
-                    .HasMaxLength(10)
+                    .HasMaxLength(12)
                     .HasColumnType("char");
             modelBuilder.Entity<CCUCARL>()
                 .Property(p => p.ENGINEVOL)

@@ -127,6 +127,7 @@
         <img *ngIf="IsDeclarationStatusRed" src="./Images/Icons/RedX.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
         <img *ngIf="IsDeclarationStatusBlue" src="./Images/Icons/InProgress.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
         <img *ngIf="IsDeclarationStatusOrange" src="./Images/Icons/OrangeV.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
+        <div *ngIf="IsDeclarationStatusNull" style="height:30px;width:15px;vertical-align:central;padding-bottom:5px ">NULL</div>
     </div>
 
     <div class="TextTrimming" *ngIf="fieldName == 'CourierPaymentStatusCode'">

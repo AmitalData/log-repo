@@ -134,6 +134,16 @@ namespace Logitude.Customs.Data.EntityLists
        public string NoOfCourierHawbwWithoutHatara  { get; set; }
        [DataMember]
        public string NoOfCourierHawbWithoutDelivery  { get; set; }
+       [DataMember]
+       public string HawbQuantityNoDocuments  { get; set; }
+       [DataMember]
+       public string HawbQuantityNoClassification  { get; set; }
+       [DataMember]
+       public string HawbQuantityNoTransManifest  { get; set; }
+       [DataMember]
+       public string HawbQuantityNoTransDeclaration  { get; set; }
+       [DataMember]
+       public string HawbQuantityNoTransPayment  { get; set; }
    }
 
 }
