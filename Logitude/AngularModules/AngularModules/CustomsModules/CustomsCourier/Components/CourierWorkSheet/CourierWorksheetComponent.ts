@@ -2768,9 +2768,9 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
 
     onColumnsClick() {
-       
+        debugger;
         var windowArgs: any = {};
-        windowArgs.queryId = "1-16090"
+        windowArgs.queryId = "1-15990"
         windowArgs.queryCode = "Customs.DeclarationCourierStatus.CourierWorkScreen";
         windowArgs.isNewQueryMode = false;
         windowArgs.currentObjectTable = "Customs.DeclarationCourierStatus";
