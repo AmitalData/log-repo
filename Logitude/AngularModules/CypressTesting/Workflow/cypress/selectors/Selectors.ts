@@ -40,10 +40,11 @@ export class WorkflowSelectors {
     public static readonly FirstConnectorButton = "[data-selector^='connector-node-1']";
     public static readonly DecisionElementName = "[data-cy^='condition-title']";
     public static readonly DecisionElementLabel = "[data-cy^='decision-label']";
-    public static readonly WorkflowDecisionOkButton = "button[data-cy^='condition-properties-save-button']";
+    public static readonly WorkflowDecisionOkButton = "[data-cy^='condition-properties-save-button']";
     public static readonly WorkflowDecisionElement = "[data-selector^='condition-node-1'";
     public static readonly NodeSettingFooter = ".node-settings-panel-footer";
     public static readonly AddDecisionNode = ".add-condition-node";
+    public static readonly WorkflowEditElementButton = ".edit-button";
 
     public static WorkflowConditionField(index: number): string {
         return "input[data-cy^='ConditionField_" + index.toString() + "']";
@@ -77,5 +78,9 @@ export class WorkflowSelectors {
 
     public static WorkflowGroupButton(index: number): string {
         return "[data-cy^='AddGroupButton_" + index.toString() + "']";
+    }
+
+    public static WorkflowConditionFieldFromList(index: number): string {
+        return "nz-tree-select[data-cy^='ConditionField_" + index.toString() + "']";
     }
 }

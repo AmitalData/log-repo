@@ -155,7 +155,8 @@
 
                         <TreeSelect *ngIf="!IsEntityField" [Items]="FlowVariablesTreeItems" [Width]="'220px'"
                             [IsDisabled]="Condition.isDisabled" [Value]="Condition.fieldCode"
-                            (ValueChanged)="updateConditionField($event, conditionIndex)">
+                            (ValueChanged)="updateConditionField($event, conditionIndex)"
+                            [DataCy]="'ConditionField_' + Condition.id">
                         </TreeSelect>
 
                     </div>
@@ -239,7 +240,8 @@
                             <TreeSelect [Items]="FlowVariablesTreeItems" [Width]="'220px'" [Value]="Condition.value"
                                 [IsDisabled]="Condition.isDisabled"
                                 [ShowItem]="Condition | ShowFlowVariablesTreeItemPipe : FlowVariablesTreeList"
-                                (ValueChanged)="updateConditionValue($event, conditionIndex)">
+                                (ValueChanged)="updateConditionValue($event, conditionIndex)"
+                                [DataCy]="'ConditionFieldValue_' + Condition.id">
                             </TreeSelect>
                         </div>
                     </div>

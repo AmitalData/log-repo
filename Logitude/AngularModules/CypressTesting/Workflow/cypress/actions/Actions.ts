@@ -151,12 +151,13 @@ export function FillRootConditionsDetails(groupCondition: string, conditionDetai
     cy.Click(WorkflowSelectors.WorkflowFirstAddCondition, null);
     cy.DefineRequestWait(RestAPI.GET, URLs.GetObjectFieldViews, RequestAliases.GetObjectFieldViews);
     cy.SelectDefinedComboDropDownListItem(WorkflowSelectors.WorkflowRootOperation, groupCondition, 0);
-    FillConditionsGroup(conditionDetailsList, true, (ConditionCounter + conditionDetailsList.length));
+    FillConditionsGroup(conditionDetailsList, true, (ConditionCounter + conditionDetailsList.length), false);
     ConditionGroupButton = ConditionCounter;
 }
 
-export function FillGroupConditionDetails(IsRootGroup: boolean, groupCondition: string, conditionDetailsList: ConditionDetails[]) {
+export function FillGroupConditionDetails(IsRootGroup: boolean, groupCondition: string, conditionDetailsList: ConditionDetails[], IsFromList: boolean) {
     OpenEditStartNode();
+    
     if (!IsRootGroup) {
         cy.Click(WorkflowSelectors.WorkflowRootGroupCondition, null);
     }
@@ -165,24 +166,23 @@ export function FillGroupConditionDetails(IsRootGroup: boolean, groupCondition: 
     }
     cy.DefineRequestWait(RestAPI.GET, URLs.GetObjectFieldViews, RequestAliases.GetObjectFieldViews);
     cy.SelectDefinedComboDropDownListItem(WorkflowSelectors.WorkflowGroupOperation(ConditionCounter), groupCondition, 0);
-    FillConditionsGroup(conditionDetailsList, false, ((ConditionCounter + conditionDetailsList.length)));
+    FillConditionsGroup(conditionDetailsList, false, ((ConditionCounter + conditionDetailsList.length)), IsFromList);
     ConditionGroupButton = ConditionCounter;
 }
 
-export function FillNestedGroupConditionDetails(secondGroupSelector: number, groupCondition: string, conditionDetailsList: ConditionDetails[]) {
+export function FillNestedGroupConditionDetails(secondGroupSelector: number, groupCondition: string, conditionDetailsList: ConditionDetails[], IsFromList: boolean) {
     OpenEditStartNode();
     cy.Click(WorkflowSelectors.WorkflowGroupButton(secondGroupSelector), null)
     cy.DefineRequestWait(RestAPI.GET, URLs.GetObjectFieldViews, RequestAliases.GetObjectFieldViews);
     cy.SelectDefinedComboDropDownListItem(WorkflowSelectors.WorkflowGroupOperation(ConditionCounter), groupCondition, 0);
-    FillConditionsGroup(conditionDetailsList, false, ((ConditionCounter + conditionDetailsList.length)));
+    FillConditionsGroup(conditionDetailsList, false, ((ConditionCounter + conditionDetailsList.length)), IsFromList);
     ConditionGroupButton = ConditionCounter;
 }
 
-export function FillConditionsGroup(conditionDetailsList: ConditionDetails[], IsRootConditions: boolean, LoopCounter: number) {
+export function FillConditionsGroup(conditionDetailsList: ConditionDetails[], IsRootConditions: boolean, LoopCounter: number, isFromList: boolean) {
     var ListCounter = 0
     for (let i = ConditionCounter; i < LoopCounter; i++, ListCounter++) {
-        cy.SelectDropDownListItem2(WorkflowSelectors.WorkflowConditionField(i), conditionDetailsList[ListCounter].Field);
-        BaseAssertion.AssertStatusCode(RequestAliases.GetObjectFieldViews, 200);
+        FillConditionFieldName(isFromList, i, conditionDetailsList[ListCounter].Field);
         cy.SelectDefinedComboDropDownListItem(WorkflowSelectors.WorkflowConditionOperation(i), conditionDetailsList[ListCounter].Operation, 0);
         FillConditionValue(WorkflowSelectors.WorkflowConditionValue(i), conditionDetailsList[ListCounter].Value, conditionDetailsList[ListCounter].Field);
         ConditionCounter++;
@@ -265,16 +265,14 @@ export function FillDecisionElementDetails(decisionElementDetails: DecisionEleme
 }
 
 function AddDecisionElement() {
-    cy.DefineRequestWait(RestAPI.GET, URLs.GetObjectFieldViews, RequestAliases.GetObjectFieldViews);
     cy.Click(WorkflowSelectors.FirstConnectorButton, null);
     cy.Click(WorkflowSelectors.AddDecisionNode, null);
-    BaseAssertion.AssertStatusCode(RequestAliases.GetObjectFieldViews, 200)
 }
 
 export function FillDecisionRootConditionsDetails(groupCondition: string, conditionDetailsList: ConditionDetails[]) {
     cy.DefineRequestWait(RestAPI.GET, URLs.GetObjectFieldViews, RequestAliases.GetObjectFieldViews);
     cy.SelectDefinedComboDropDownListItem(WorkflowSelectors.WorkflowRootOperation, groupCondition, 0);
-    FillConditionsGroup(conditionDetailsList, true, (ConditionCounter + conditionDetailsList.length));
+    FillConditionsGroup(conditionDetailsList, true, (ConditionCounter + conditionDetailsList.length), true);
     ConditionGroupButton = ConditionCounter;
 }
 
@@ -285,18 +283,16 @@ export function CloseEditDecisionNodeWindow() {
 export function SaveDecisionWorkflow() {
     CloseEditDecisionNodeWindow();
     cy.DefineRequestWait(RestAPI.PUT, URLs.WorkflowRequest, RequestAliases.PutWorkflowFlowBuilder);
-    cy.Click(WorkflowSelectors.WorkflowSaveButton, null, true);
+    cy.Click(WorkflowSelectors.WorkflowSaveButton, null);
 }
 
 function OpenEditDecisionElement() {
     cy.Click(WorkflowSelectors.WorkflowDecisionElement, null);
-    cy.DefineRequestWait(RestAPI.GET, URLs.GetObjectFieldViews, RequestAliases.GetObjectFieldViews);
     ClickEditElementButton(WorkflowSelectors.NodeSettingFooter);
-    BaseAssertion.AssertStatusCode(RequestAliases.GetObjectFieldViews, 200);
 }
 
 function ClickEditElementButton(Selector: string) {
-    cy.get(Selector).find('.edit-button').click();
+    cy.get(Selector).find(WorkflowSelectors.WorkflowEditElementButton).click();
 }
 
 export function FillDecisionGroupConditionDetails(IsRootGroup: boolean, groupCondition: string, conditionDetailsList: ConditionDetails[]) {
@@ -307,10 +303,20 @@ export function FillDecisionGroupConditionDetails(IsRootGroup: boolean, groupCon
     else {
         cy.Click(WorkflowSelectors.WorkflowGroupButton(ConditionGroupButton - conditionDetailsList.length), null)
     }
-    cy.DefineRequestWait(RestAPI.GET, URLs.GetObjectFieldViews, RequestAliases.GetObjectFieldViews);
     cy.SelectDefinedComboDropDownListItem(WorkflowSelectors.WorkflowGroupOperation(ConditionCounter), groupCondition, 0);
-    FillConditionsGroup(conditionDetailsList, false, ((ConditionCounter + conditionDetailsList.length)));
+    FillConditionsGroup(conditionDetailsList, false, ((ConditionCounter + conditionDetailsList.length)), true);
     ConditionGroupButton = ConditionCounter;
+}
+
+function FillConditionFieldName(IsList: boolean, index: number, FieldName: string) {
+    if (IsList) {
+        cy.get(WorkflowSelectors.WorkflowConditionFieldFromList(index)).find(BaseSelectors.input).click().type(FieldName).then(() => {
+            cy.get(BaseSelectors.SpanElement).contains(FieldName).eq(0).click()
+        });
+    } else {
+        cy.SelectDropDownListItem2(WorkflowSelectors.WorkflowConditionField(index), FieldName);
+        BaseAssertion.AssertStatusCode(RequestAliases.GetObjectFieldViews, 200);
+    }
 }
 
 function FillConditionValue(selector: string, value: string, condition: string) {

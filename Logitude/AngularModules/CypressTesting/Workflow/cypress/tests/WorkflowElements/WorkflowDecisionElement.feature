@@ -24,7 +24,6 @@ Feature: Workflow add decision element
             | Main Carriage Transport Mode | Equals    | Ocean               |
             | Profit Differences           | Not Equal | Profit Differences1 |
             | Containers Numbers           | Equal     | 5                   |
-            | Agent                        | Equal     | TestAgentExport     |
             | Description of Goods         | Ends With | xyz                 |
         When save flow
         Then the flow should save successfully
@@ -34,10 +33,8 @@ Feature: Workflow add decision element
             | Field             | Operation    | Value |
             | Create Date       | Greater Than | TODAY |
             | Chargeable Weight | Less Than    | 3.5   |
-            | Customer          | Is Empty     | True  |
         And add third level condition group met with 'Or' with the following details
             | Field              | Operation  | Value      |
-            | Customer           | Is Empty   | True       |
             | Department         | Not Equals | Accounting |
             | Order Gross Weight | Less Than  | 10000      |
         And add another second level condition group met with 'And' with the following details
