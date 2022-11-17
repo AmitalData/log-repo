@@ -75,7 +75,7 @@ namespace WebFreight.Web
             userdata.Token = logintokenparam.Token;
 
             bool onpremiseGetDocumentDownloadToken = LogitudeSettings.DatabaseManagementSystem == "oracle";
-            if (userdata.DocumentDownloadToken == null && onpremiseGetDocumentDownloadToken)
+            if (userdata.DocumentDownloadToken == null && LogitudeSettings.IsCostomsDeploy)
             {
                 userdata.DocumentDownloadToken = GetDocumentDownloadTokenReal("", userdata.Token);
             }
