@@ -36,6 +36,7 @@ import { PendingRequestParams } from 'Customs/DataContract/RequestParams/Pending
 import { CourierMasterService } from 'Customs/Services/Others/CourierMasterService';
 
 import { SendALLDelayFormParams } from '../../../../Customs/DataContract/RequestParams/SendALLDelayFormParams';
+import { InterfaceTenantDefinitionsWebService } from 'Customs/Services/WebServices/InterfaceTenantDefinitionsWebService';
 
 
 @Component({
