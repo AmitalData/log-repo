@@ -3124,8 +3124,8 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         if (ApprovalToInsure == "Yes") {
             var confirm = new ConfirmWindow();
 
-            confirm.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.CANCLE");
             confirm.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+            confirm.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
             confirm.Width = 400;
             confirm.Show(`הלקוח מוגדר לביצוע ביטוח םוטומטי, הםם לבטח ?`);           
             confirm.WindowClosed.subscribe((event: any) => {
@@ -3149,6 +3149,12 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                                     let InsuranceCurrency = ""; InsuranceCurrency = UnifreightMessageM.GetStringValue(mess, "InsuranceCurrency");
                                     let InvoiceNumber = ""; InvoiceNumber = UnifreightMessageM.GetStringValue(mess, "InvoiceNumber");
 
+                                    let confirmWindow = new ConfirmWindow();
+                                    confirmWindow.Title = "יצירת ביטוח";
+                                    confirmWindow.Width = 350;
+                                    confirmWindow.Height = 200;
+                                    confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                                    confirmWindow.ShowNoButton=false;
                                     if (!AppTool.IsNullOrEmpty(InsuranceAmount) && !AppTool.IsNullOrEmpty(InsuranceCurrency)) {
                                       
                                         let Insurance67: any = this.FindModificationByCode("67");                                       
@@ -3158,11 +3164,11 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                                             this.AdjustmentsList.Insert(new ModificationItemModel(Insurance67, this, "67"));                                    
                                     }
                                     else if (!AppTool.IsNullOrEmpty(InvoiceNumber)) {
-                                        confirm.Show(`נפתחה תוספת ביטוח מס' ` + InvoiceNumber + ` , יש להשלימה בתהליך ידני ביוניפרייט`);
+                                        confirmWindow.Show(`נפתחה תוספת ביטוח מס' ` + InvoiceNumber + ` , יש להשלימה בתהליך ידני ביוניפרייט`);
 
                                     }
                                     else {
-                                        confirm.Show(`תהליך פתיחת תוספת ביטוח םוטומטי נכשל`);
+                                        confirmWindow.Show(`תהליך פתיחת תוספת ביטוח םוטומטי נכשל`);
 
                                     }
                                 }
