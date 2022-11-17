@@ -185,6 +185,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "2751T2", // תשובה להצהרת שטעון
 "UCADPE", // הזנה גורפת PENDING
 "DCACSIFF", // יצירת חשבון ספק מאקסל
+"8235T", // תיקון שטעון
 
             };
 
@@ -336,8 +337,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "2757T", // תשובה להגשת שטעון
 "2751T", // הצהרת שטעון
 "2751T2", // תשובה להצהרת שטעון
-"UCADPE" // add multi pending
-
+"UCADPE", // add multi pending
+"8235T", // תיקון שטעון
             };
 
             string[] intrefaceTypeListDisplayOnly = GetintrefaceTypeListDisplayOnly();
@@ -468,8 +469,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "2757T", // תשובה להגשת שטעון
 "2751T", // הצהרת שטעון
 "2751T2", // תשובה להצהרת שטעון
-"UCADPE"
+"UCADPE",
 //"8302" //בקשה לטופס הצהרה
+"8235T", // תיקון שטעון
 };
 
 
