@@ -47,11 +47,55 @@ namespace WebFreight.Web.Helpers.SignUp.Logbox
             newTenant.AddressId = TenantAddress.Id;
             newTenant.IsDocumentsArchive = true;
             newTenant.CustomerId = signUpInfoClass.CustomerId;
+            //newTenant.AgentId = signUpInfoClass.IsCreateLogboxTenantFromCloud ? GetNewAgentId(signUpInfoClass) : newTenant.AgentId;
             newTenant.CustomerTenantShareImportFile = true;
             newTenant.AutoArchiveOnInvoice = !string.IsNullOrEmpty(newTenant.PrivateLabelId) ? true : newTenant.AutoArchiveOnInvoice;
             newTenant.AutoArchiveOnPODExport = !string.IsNullOrEmpty(newTenant.PrivateLabelId) ? true : newTenant.AutoArchiveOnPODExport;
             newTenant.DocumentShareAsDefault = !string.IsNullOrEmpty(newTenant.PrivateLabelId) ? true : newTenant.DocumentShareAsDefault;
             service.Update(newTenant);
+        }
+
+        private string GetNewAgentId(SignUpInfoClass signUpInfoClass)
+        {
+            CountryRepository countryRepository = new CountryRepository(tenant);
+            string countryId = countryRepository.GetCountryIdByCode(signUpInfoClass.CountryCode, tenant);
+            const string AgentPartnerTypeCode = "AG";
+            string contactPMId = GetContactPMId(signUpInfoClass);
+
+            AgentPM agentPM = new AgentPM
+            {
+                Id = IdCounter.GetNumber("Card", tenant).ToString(),
+                EnglishName = signUpInfoClass.Company,
+                LocalName = signUpInfoClass.Company,
+                VatNumber = signUpInfoClass.VatNumber,
+                Tenant = tenant,
+                CountryId = countryId,
+                CountryCode = signUpInfoClass.CountryCode,
+                CountryName = signUpInfoClass.CountryName,
+                CityName = signUpInfoClass.City,
+                PrimaryContactPhone = signUpInfoClass.Phone,
+                Code = CodeCounter.GetNumber("Agent", tenant).ToString(),
+                PartnerTypeId = AgentPartnerTypeCode,
+            };
+
+            AgentService agentService = new AgentService(commonContext, agentPM, contactPMId);
+            agentService.Create(agentPM);
+
+            return agentPM.Id;
+        }
+
+        private string GetContactPMId(SignUpInfoClass signUpInfoClass)
+        {
+            ContactRepository contactRepository = new ContactRepository(tenant);
+            ContactQuery contactQuery = new ContactQuery(contactRepository);
+            ContactPM contactPM = contactQuery.GetContactByEmailOnly(signUpInfoClass.Email, tenant);
+            if (contactPM == null)
+            {
+                throw new ApplicationException("Contact With Email: " + signUpInfoClass.Email + " is not exist!");
+            }
+
+            string contactPMId = contactPM.Id;
+            return contactPMId;
         }
 
         public void AddLocalAndProfitCurrency()
