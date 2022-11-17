@@ -107,15 +107,13 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     }
 
     GetExportDeclarationClosingData(id: string) {
-
         if (id != null) {
 
             this.exportDeclarationClosingDatasExtendPMService.GetSingleWithEFIFILEMData(id).subscribe((response: any) => {
-                
                 this.EntityPM = response.Result;
-
+                
                 if (this.EntityPM)
-                {
+                
                     if (response.Result.ChangeSetOp == "1") {
                         this.EntityPM.IsDirty = true;
                         this.IsNew = true;
@@ -124,7 +122,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                     }
 
                 if (this.DecPM.Direction === 'E' && this.DecPM.TransportModeId === 'O') {
-
+ 
                     if (this.FinalCargoTypeCode == null) {
 
                         this.FinalManifestNumber = this.FinalManifestNumber == null ? '' : this.FinalManifestNumber;
@@ -132,9 +130,9 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                         this.FinalThirdCargoId = this.FinalThirdCargoId == null ? '' : this.FinalThirdCargoId;
 
                         this.FinalCargoTypeCode = '37';
-
+                                                          
                     }
-                    else {
+                    else{
                         this.setIdentifiersPlaceHolders();
                     }
 
@@ -153,28 +151,10 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                     this.EntityPM.IsDirty = true;
                     this.EntityPM.FinalCargoTypeCode = "1";
                 }
+
+
                 
-                if(AppTool.IsNullOrEmpty(this.EntityPM.FinalCargoTypeCode) && this.DecPM.TransportModeId == 'L' && !AppTool.IsNullOrEmpty(this.DecPM.Consignments[0].CargoTypeCodeForExport))
-                {
-                    this.EntityPM.IsDirty = true;
-                    this.EntityPM.FinalCargoTypeCode = this.DecPM.Consignments[0].CargoTypeCodeForExport;
-                    
-                }
-
-                if(AppTool.IsNullOrEmpty(this.EntityPM.FinalManifestNumber) && this.DecPM.TransportModeId == 'L' && !AppTool.IsNullOrEmpty(this.DecPM.Consignments[0].ManifestNumber))
-                {
-                    this.EntityPM.IsDirty = true;
-                    this.EntityPM.FinalManifestNumber = this.DecPM.Consignments[0].ManifestNumber;
-                    
-                }
-
-                if(AppTool.IsNullOrEmpty(this.EntityPM.FinalLoadingSite) && this.DecPM.TransportModeId == 'L' && !AppTool.IsNullOrEmpty(this.DecPM.Consignments[0].ExportLoadingPortCode))
-                {
-                    this.EntityPM.IsDirty = true;
-                    this.EntityPM.FinalLoadingSite = this.DecPM.Consignments[0].ExportLoadingPortCode;
-                    
-                }
-                }
+               
 
                
                 /*this.EntityPM = new ExportDeclarationClosingDataPM();
@@ -194,15 +174,32 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                 this.IsReady = true;
 
                 this.initOceanExportData();
-                if (this.DecPM.Direction === 'E') {
-                    this.setIdentifiersPlaceHolders();
+            });
+            if(this.DecPM.TransportModeId == 'L'){
+            
+            this.exportDeclarationClosingDataPMService.get(id).subscribe((response: any) => {
+                if(response.Result == null)
+                {
+                
+                    if(!AppTool.IsNullOrEmpty(this.DecPM.Consignments[0].CargoTypeCodeForExport)) this.FinalCargoTypeCode = this.DecPM.Consignments[0].CargoTypeCodeForExport;
+                        
+                    
+
+                    if(!AppTool.IsNullOrEmpty(this.DecPM.Consignments[0].ManifestNumber)) this.FinalManifestNumber = this.DecPM.Consignments[0].ManifestNumber;
+                        
+                    
+
+                    if(!AppTool.IsNullOrEmpty(this.DecPM.Consignments[0].ExportLoadingPortCode)) this.FinalLoadingSite = this.DecPM.Consignments[0].ExportLoadingPortCode;
+                        
+                    
+
+                
                 }
             });
-
         }
-
-
+        }
     }
+
 
 
     setWarningValues() {
