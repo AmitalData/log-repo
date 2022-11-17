@@ -2,7 +2,7 @@ declare var window: any;
 import { Observable } from 'rxjs';
 import { Guid } from '../../../../Infrastructure/Utilities/Guid';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
-import { Component, Output, EventEmitter, OnInit, ComponentRef, ViewChild, OnDestroy, Injectable, ChangeDetectorRef } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit, ComponentRef, ViewChild, OnDestroy, Injectable } from '@angular/core';
 import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
@@ -38,7 +38,7 @@ import { CourierMasterService } from 'Customs/Services/Others/CourierMasterServi
 import { SendALLDelayFormParams } from '../../../../Customs/DataContract/RequestParams/SendALLDelayFormParams';
 import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
 import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
-import { HttpClient } from '@angular/common/http';
+
 
 @Component({
 
@@ -111,7 +111,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
     public columns: any[] = null;
     public columnsPending: any[] = null;
-    public queryColumns: any[] = null;
+
     IsActionButtonsEnabled: boolean = false;
     IsInit: boolean = false;
     IsFiltered: boolean = false;
@@ -134,14 +134,8 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     HasRequiresApprovalFeature:boolean=false;
 
     //constructor(public entityArgs: EntityArgs) {
-    constructor(public _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService, private _http: HttpClient, private cdr: ChangeDetectorRef) {
+    constructor(public _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
-        if (FeatureLocator.HasFeaturePermession("Customs.CourierPendingReason", "PendingRequiresApproval")) {
-            this.HasRequiresApprovalFeature = true;
-        }
-        this.EntityResourceService.getEntityResourceByTableName("Customs.CourierPendingReason").subscribe(response => {
-        });
-
         //this.entityPM = entityArgs.EntityPM;
         this._TabFilterList.push(new TabFilter("ALL", "כל הש.מ.ב ", null, null));
         this._TabFilterList.push(new TabFilter("DOC", "בעיות במסמכים ", null, null));
@@ -166,17 +160,16 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         this.isAllowAccounting = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowAccounting")
         this.isAllowBulkPendind = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowBulkPendind")
 
-            this.DelayFormVisibility = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowDelayForm");
+        this.DelayFormVisibility = FeatureLocator.HasFeaturePermession("Customs.CourierMaster", "AllowDelayForm");
 
     }
     //PseventRowSelectEventSubscribe: any;
     ngOnDestroy() {
         //  this.PseventRowSelectEventSubscribe.unSubscribe();
     }
-    async ngOnInit() {
-
+    ngOnInit() {
         this.IsInit = true;
-        await this.GetQueryColumns("Customs.DeclarationCourierStatus.CourierWorkScreen", SessionInfo.LoggedUserId)
+        this.BuildColumns();
         this.BuildColumnsPending();
 
         this._CourierWorksheetSharedDataService.CurrentMessage
@@ -189,7 +182,6 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
 
         this.ChangedUnloadPortSite = false;
-        // this.cdr.detectChanges();
         //if (!AppTool.IsNullOrEmpty(this.PendingFilter)) {
         //    setTimeout(() => {
         //        this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
@@ -198,8 +190,6 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     }
 
     TabFilterClick(item) {
-        if (!item)
-            return;
         this._CourierWorksheetSharedDataService._SelectedItems.Collection = [];
         this._SelectedTabFilter = item;
         this._SelectedMNFValue = 'A';
@@ -698,7 +688,6 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     _PAY_C_Total = 0;
     _PAY_R_Total = 0;
     _PAY_I_Total = 0;
-    _TotalNotAccepted =0;
    // _DecWithoutHaTra = 0;
 
     _PendingCodes: KeyValuePair[] = [];
@@ -1190,82 +1179,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             ServerSideSortable: false
         });
     }
-    public Tenant: number = SessionInfo.LoggedUserTenant;
-    public QueryColumns: any[];
 
-    async GetQueryColumns(queryCode, userId) {
-
-
-
-        //var queryId = window.Queries.filter(x => x.Code === queryCode)[0].Id;
-        await this.getColumns(queryCode, userId);
-    }
-
-    getColumns(queryCode, userId) {
-        return new Promise<void>((resolve) => {
-            this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + this.Tenant + "&queryCode=" + "Customs.DeclarationCourierStatus.CourierWorkScreen" + "&objecttableid=" + "1-695" + "&userid=" + userId)
-                .subscribe((response: any) => {
-                   
-                    this.columns = [];
-                    this.columns.push({
-                        FieldName: "MyDeclarationCheckBox",
-                        DataTypeCode: 'String',
-                        Display: '',
-                        IsCustomTemplate: true,
-                        Styles: { width: '27px' },
-                        //IsCheckBox: true
-                        HtmlListComponentName: 'CourierWorksheetListTemplate',
-                        HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
-                    });
-
-                    this.columns.push({
-                        FieldName: 'CourierHawb',
-                        DataTypeCode: 'String',
-                        Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierHawb"),
-                        Styles: { width: '108px' },
-                        IsCustomTemplate: true,
-                        HtmlListComponentName: 'CourierWorksheetListTemplate',
-                        HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
-                        ServerSideSortable: true,
-                        SortByName: 'CourierHawb'
-                    });
-
-                   this.QueryColumns = response;
-                    this.QueryColumns = this.QueryColumns.sort((a, b) => { return (a.IndexOrder > b.IndexOrder) ? 1 : (a.IndexOrder < b.IndexOrder) ? -1 : 0 });
-
-                    this.QueryColumns.forEach((value, key) => {
-                        var mutaztouch0 = value.ObjectFieldCode;
-                        var mutaztouch14 = window.ObjectFields.filter(x => x.FieldCode === value.ObjectFieldCode);
-                        var mutazTouch = window.ObjectFields.filter(x => x.FieldCode === value.ObjectFieldCode)[0];
-
-                        this.columnsObjectFields.push(window.ObjectFields.filter(x => x.FieldCode === value.ObjectFieldCode)[0]);
-                    }); 
-                    // for (var i = 0; i < this.QueryColumns.length; i++) {
-                    //  //   var CurColumn = this.columns.filter(a => a.FieldName == this.QueryColumns[i].ObjectFieldName);
-                    //   //  if ( (CurColumn == null || CurColumn.length == 0)) {
-
-                    //         this.columns.push({
-                    //             FieldName: this.columnsObjectFields[i].FieldName,//this.columnsObjectFields[i].ListPropertyPath ? this.columnsObjectFields[i].ListPropertyPath : this.columnsObjectFields[i].FieldName,
-                    //             DataTypeCode: this.columnsObjectFields[i].DataTypeCode,
-                    //             Display: TextCodeTranslator.Translate(this.columnsObjectFields[i].ListTextCodeCode),
-                    //             IsCustomTemplate: true,
-                    //             Styles: { width: this.QueryColumns[i].ColumnWidth + 'px' },
-                    //             HtmlListComponentName: this.columnsObjectFields[i].HtmlListComponentName, //'TransportModeCellDisplayListTemplate',
-                    //             HtmlListComponentUrl: this.columnsObjectFields[i].HtmlListComponentUrl, //'./Shipment/Components/ListTemplates/TransportModeCellDisplayListTemplate',
-                    //            ServerSideSortable: true, //this.columnsObjectFields[i].CanFilter
-                    //           //  ColumnHeaderTemplateName: this.columnsObjectFields[i].ColumnHeaderTemplateName, //'TransportModeCellDisplayListTemplate',
-                    //            // ObjectField: this.columnsObjectFields[i],
-                    //             //QueryCode: queryCode
-                    //             //ColumnHeaderTemplateName: this.columnsObjectFields[i].ColumnHeaderTemplateName, //'./Shipment/Components/ListTemplates/TransportModeCellDisplayListTemplate',
-                    //         });
-                    //   //  }
-                    // }
-                    // this.BuildColumns()
-                    resolve();
-                });
-        })
-
-    }
     BuildColumns() {
         this.columns = [];
 
@@ -1506,7 +1420,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
             ServerSideSortable: false
         });
-
+        
     }
 
     DataSource = {
@@ -2754,8 +2668,8 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     onColumnsClick() {
         debugger;
         var windowArgs: any = {};
-        windowArgs.queryId = "1-15990"
-        windowArgs.queryCode = "Customs.DeclarationCourierStatus.CourierWorkScreen";
+       windowArgs.queryId ="1-15890"
+      windowArgs.queryCode ="Customs.DeclarationCourierStatus.CourierWorkScreen";
         windowArgs.isNewQueryMode = false;
         windowArgs.currentObjectTable = "Customs.DeclarationCourierStatus";
         var logitudeWindow = new LogitudeWindow();
@@ -2772,8 +2686,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             //         myfilterAgrs.AdditionalFilters.push(filter);
             //     });
             // }
-            this.GetQueryColumns("Customs.DeclarationCourierStatus.CourierWorkScreen", SessionInfo.LoggedUserId)
-            // this.QueryValueChanged({ QueryCode: "Customs.DeclarationCourierStatus.BulkFeedPending", Title: TextCodeTranslator.Translate( "CourierMaster.Q.OPENCOURIERMASTERS"), Filters: this.CurrentQueryFilters, IgnoreSearchFields: true });
+      // this.QueryValueChanged({ QueryCode: "Customs.DeclarationCourierStatus.BulkFeedPending", Title: TextCodeTranslator.Translate( "CourierMaster.Q.OPENCOURIERMASTERS"), Filters: this.CurrentQueryFilters, IgnoreSearchFields: true });
             //this.onQueryChangeEvent.emit({ QueryId: this.SelectedQueryId, Filters: this.CurrentQueryFilters });
         });
     }
