@@ -33,7 +33,7 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
 
         private object FormatKpiValue(object value, string dataTypeCode)
         {
-            if (value == null) return value;
+            if (value == null || value == System.DBNull.Value) return null;
             if (dataTypeCode == "Date" || dataTypeCode == "DateTime") return ((DateTime)value).ToString("yyyy-MM-dd");
             if (dataTypeCode == null || dataTypeCode == "Integer") return String.Format("{0:n0}", value);
             return String.Format("{0:n}", value);

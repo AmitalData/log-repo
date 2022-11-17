@@ -276,7 +276,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
         {
             if(_Entity.ObjectTableName == "ARInvoice" && field.FieldCode == "InvoiceNumber")
             {
-                return $@"{query}, IIF(data.DraftNumber IS NULL, data.InvoiceNumber, data.DraftNumber) as InvoiceNumber";
+                return $@"{query}, IIF(StatusCode = 'DR' OR StatusCode = 'LL', data.DraftNumber, data.InvoiceNumber) as InvoiceNumber";
             }
             return $@"{query}, data.{field.FieldCode}";
         }
