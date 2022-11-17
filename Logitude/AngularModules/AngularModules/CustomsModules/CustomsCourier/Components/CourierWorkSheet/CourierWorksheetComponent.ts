@@ -2668,10 +2668,10 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     onColumnsClick() {
         debugger;
         var windowArgs: any = {};
-       windowArgs.queryId ="1-14789"
-      windowArgs.queryCode ="Customs.CourierMaster.OPENCOURIERMASTERS";
+       windowArgs.queryId = "1-15713"
+      windowArgs.queryCode ="Customs.DeclarationCourierStatus.BulkFeedPending";
         windowArgs.isNewQueryMode = false;
-        windowArgs.currentObjectTable = "Customs.CourierMaster";
+        windowArgs.currentObjectTable = this.ObjectTableName;
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 960;
         logitudeWindow.Height = 520;
