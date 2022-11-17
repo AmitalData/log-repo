@@ -103,8 +103,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ContextGenerator.tt</DependentUpon>
     </Compile>
+    <None Include="DBOthers\Procedures\Usp_DeleteCustomsRequestSheets.dxml" />
+    <None Include="DBOthers\Procedures\Usp_DeleteComLogSteps.dxml" />
     <None Include="DBOthers\Procedures\Usp_DeleteQueMessMoreDet.dxml" />
-    <None Include="DBOthers\Procedures\Usp_Deletecommlogs.dxml" />
+    <None Include="DBOthers\Procedures\Usp_DeleteCommLogs.dxml" />
     <None Include="DBOthers\Procedures\ReconnectObjectMetaDataProcedure.dxml" />
     <None Include="DBScripts\Post\202005210123_DeleteMetadataBadRecords.sxml" />
     <None Include="DBScripts\Post\202005210124_InsertFieldDataTypes.sxml" />

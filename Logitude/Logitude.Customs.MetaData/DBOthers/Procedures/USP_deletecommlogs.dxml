@@ -1,4 +1,4 @@
-﻿<Procedure DBType="Main" Name="q_Deletecommlogs" Schema="dbo" Module="Customs">
+﻿<Procedure DBType="Main" Name="usp_DeleteCommLogs" Schema="dbo" Module="Customs">
   <SqlScript>
   </SqlScript>
 
