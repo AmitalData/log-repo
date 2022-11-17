@@ -1701,6 +1701,68 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                 
 
             });
+            if (this.EntityPM.SupplierInvoiceItems.length > 0) 
+            {
+                this.EntityPM.SupplierInvoiceItems.forEach(item =>{
+
+                    if(item.SupplierInvoiceItemsMods.length > 0) {
+
+                    item.SupplierInvoiceItemsMods.forEach(Modifications =>{
+                        
+                        if(Modifications.Amount!=null && Modifications.ModificationAffectTypeID == '1' || Modifications.ModificationAffectTypeID == '2'){
+
+                            if(Modifications.CurrencyTypeCode != this.EntityPM.InvoiceCurrencyTypeCode )
+                            {
+                                this.TotalExportModificationInInvoiceCurrency = 0;
+                                var ratePM: any;
+                                var firstRatePM: any;
+                                var InvocieCurrencyRate: number = 0;
+                                var rate: number = 0;
+                                var total: number = 0;
+                                if (this.ExchangeRates) {// this is a bug in errorslog filter of undefined, solution: if no exchange rate try to load them if not it will not be calculated----mohammad.
+                                    ratePM = this.ExchangeRates.filter(d => d.CurrencyTypeCode == this.ExportModificationCurrency)[0];//.ExchangeRate;
+                                    //firstRatePM = this.ExchangeRates.filter(d => d.CurrencyTypeCode == firstInvoice.InvoiceCurrencyTypeCode)[0];//.FirstExchangeRate;
+                                }
+                                else {
+                                    this.LoadExchangeRatesForModification(Modifications);
+                                    return;
+                                }
+                                if (ratePM) {
+                                    InvocieCurrencyRate = ratePM.ExchangeRate;
+                                }
+                                total = (isNaN(Modifications.Amount)) ? 0 : Modifications.Amount;
+                                var ModificationCurrencyRate = this.ExchangeRates.filter(d => d.CurrencyTypeCode == Modifications.CurrencyTypeCode)[0];
+                                if (ModificationCurrencyRate) {
+                                    rate = ModificationCurrencyRate.ExchangeRate;
+                                    if (InvocieCurrencyRate > 0) {
+                                        total = total * (rate / InvocieCurrencyRate);
+                                    }
+                                    else {
+                                        total = total * rate;
+                                    }
+                                }
+                                this.TotalExportModificationInInvoiceCurrency = (this.TotalExportModificationInInvoiceCurrency + total);
+                            
+                                Modifications.ModificationAffectTypeID == '1' ? this.SumDifference += this.TotalExportModificationInInvoiceCurrency : this.SumDifference -= this.TotalExportModificationInInvoiceCurrency
+        
+                            }
+        
+                        else{
+        
+                            Modifications.ModificationAffectTypeID == '1' ? this.SumDifference += Modifications.Amount : this.SumDifference -= Modifications.Amount
+                        }
+                            
+                               
+                        }
+                        
+        
+                    });                    
+
+                }
+                });
+        
+        
+            }
          
             this.SumDifference += this.EntityPM.SupplierInvoiceItems.reduce((acc , cur) => acc + cur.ItemPrice, 0);
 
@@ -2637,7 +2699,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
     }
 
-    LoadExchangeRatesForModification(entityPM: SupplierInvoiceModificationPM) {
+    LoadExchangeRatesForModification(entityPM: any ) {
         var currencyRates: string = "";
         currencyRates = currencyRates + "," + entityPM.CurrencyTypeCode;
         this.customsExchangeRateExtendedPMService.GetCustomsExchangeRateForCurrencyAndDate(currencyRates, this.declarationPM.TaxationDateTime).subscribe((response: any) => {
