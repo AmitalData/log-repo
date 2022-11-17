@@ -9,7 +9,7 @@
         <td style="padding-right: 5px;" *ngIf="IsVisionRequestStatus" >
             <button class="Button" (click)="VizionStatusClicked()">Vizion Container Statuses</button>
         </td>
-        <td style="padding-right: 5px;">
+        <td style="padding-right: 5px;" *ngIf="IsContainersRequestStatusVisible">
             <button class="Button" (click)="ContainersRequestStatusClicked()">Container Request Status</button>
         </td>
 

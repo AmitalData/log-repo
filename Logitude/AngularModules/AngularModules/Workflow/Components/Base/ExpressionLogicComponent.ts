@@ -103,10 +103,6 @@ export class ExpressionLogicComponent extends BaseComponent {
         }
     }
 
-    updateExpressionTextArea(value: string) {
-        this.ExpressionTextArea = value;
-    }
-
     updateCurserPoint(value: string) {
         if (value) {
             this.startPoint = value.length
@@ -135,6 +131,27 @@ export class ExpressionLogicComponent extends BaseComponent {
     setCurserPoints(event: any) {
         this.startPoint = event.target.selectionStart;
         this.endPoint = event.target.selectionEnd;
+    }
+
+    updateExpressionTextArea(value: string) {
+        this.ExpressionTextArea = value;
+    }
+
+    curserPointReset(event) {
+        if (event.key === 'Delete' || event.key === 'Backspace') {
+            this.startPoint = event.target.selectionStart
+            this.endPoint = event.target.selectionEnd
+        } else if (this.curserPointChanged(event)) {
+            this.startPoint += 1
+            this.endPoint = this.startPoint
+        }
+    }
+
+    curserPointChanged(event) {
+        if (event.target.selectionStart != this.startPoint && event.target.selectionEnd != this.endPoint) {
+            return true
+        }
+        return false
     }
 
     checkSyntax() {

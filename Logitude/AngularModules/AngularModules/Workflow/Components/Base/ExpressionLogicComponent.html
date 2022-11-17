@@ -160,7 +160,8 @@
                     </div>
                 </div>
                 <textarea class="expression-textarea" id="ETextArea" (click)="setCurserPoints($event)"
-                    [(ngModel)]='ExpressionTextArea' (ngChange)='updateExpressionTextArea($event.Value)'></textarea>
+                    [(ngModel)]='ExpressionTextArea' (ngChange)='updateExpressionTextArea($event.Value)'
+                    (keyup)="curserPointReset($event)"></textarea>
             </div>
         </td>
     </tr>

@@ -524,7 +524,18 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                         var reverseEngineerTotalByMonthService = new ReverseEngineerTotalByMonthService(currentMonth, accountingIntegrityInParam.Tenant, null);
                         reverseEngineerTotalByMonthService.CheckDbIntegrity();
                         myAccountingIntegrityResult.LedgerToMounthTotalResult = myAccountingIntegrityResult.LedgerToMounthTotalResult ?? new List<GLAccountTotalByMonthsDTO>();
-                        myAccountingIntegrityResult.LedgerToMounthTotalResult.AddRange(reverseEngineerTotalByMonthService.CompareReport.GLAccountTotalByMonthsList);
+                        var res = reverseEngineerTotalByMonthService.CompareReport.GLAccountTotalByMonthsList;
+                        if (res.Any(r => r.ForeignAmountCredit != 0)
+                   || res.Any(r => r.ForeignAmountDebit != 0)
+                   || res.Any(r => r.LocalAmountCredit != 0)
+                   || res.Any(r => r.LocalAmountDebit != 0)
+                   )
+                        {
+                            myAccountingIntegrityResult.LedgerToMounthTotalResult.AddRange(reverseEngineerTotalByMonthService.CompareReport.GLAccountTotalByMonthsList);
+                        }
+                            
+                            
+                        
                         IAccountingContext context = AccountingContext.GetContext(accountingIntegrityInParam.Tenant);
                         GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(context);
                         if (myAccountingIntegrityResult.LedgerToMounthTotalResult.Count > 0)
@@ -542,7 +553,8 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                                 }
                             });
                         }
-                        badRows = reverseEngineerTotalByMonthService.CompareReport.GLAccountTotalByMonthsList.Count();
+                        badRows = //reverseEngineerTotalByMonthService.CompareReport.GLAccountTotalByMonthsList.Count();
+                            myAccountingIntegrityResult.LedgerToMounthTotalResult.Count();
                     }
                     catch (Exception ee)
                     {
