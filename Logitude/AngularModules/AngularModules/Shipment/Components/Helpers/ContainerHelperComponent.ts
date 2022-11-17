@@ -26,6 +26,7 @@ export class ContainerHelperComponent implements OnDestroy {
     public IsSimulatorVisible: boolean = false;
     public IsVisionRequestStatus: boolean = false;
     public IsGeneralSimulatorVisible: boolean = false;
+    public IsContainersRequestStatusVisible: boolean = false;
     ValidationErrorsList: any[];
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef) {
         this.EntityPM = this.entityArgs.EntityPM;
@@ -34,6 +35,7 @@ export class ContainerHelperComponent implements OnDestroy {
             this.IsSimulatorVisible = FeatureLocator.HasFeaturePermession("Shipment", "ContainerStatusSimulator");
             this.IsGeneralSimulatorVisible = FeatureLocator.HasFeaturePermession("Shipment", "VisionContainerStatusSimulator");
             this.IsVisionRequestStatus = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "VIP")[0] == null && FeatureLocator.HasFeaturePermession("Shipment", "VizionRequestStatus");
+            this.IsContainersRequestStatusVisible = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0] != null;
             this.Listen();
         }
     }
