@@ -36,9 +36,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
             if (string.IsNullOrEmpty(requestParams.DeclarationId)) { //declaration not exits in db
-                if(customResponse.Response!=null&& customResponse.Response.Declaration!=null)
-                   CreateDeclarationFromResponse(customResponse.Response.Declaration, requestParams.Tenant,  customResponse);
+                if (customResponse.Response != null && customResponse.Response.Declaration != null) 
+                   CreateDeclarationFromResponse(customResponse.Response.Declaration, requestParams.Tenant,  customResponse);                                  
             }
+            if (this.MyRequestSheetParam == null)
+                this.MyRequestSheetParam = new RequestSheetParam();
+
+            this.MyRequestSheetParam.CustomFileNo = GetValueIDType(customResponse.Response.Declaration.DMExtensions?.AgentFileReferenceID); ;
 
             if (customResponse.ResponseContentHeader != null &&
                 customResponse.Response == null &&
@@ -98,10 +102,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         }
                     }
                 }
-            }
+            }          
             //Yuval Chalup 13.05.2015 TASK-11915 --->
         }
-    
+
 
         public override DeclarationRestoreResponseData GetResponse(DF_NG_2757_MSG10004_ExportDeclarationResponse customResponse, DeclarationRestoreRequestParams requestParams)
         {
@@ -202,11 +206,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         DeclarationTypeCode = GetValueCodeType(declaration.TypeCode),
                         Consignments = GetConsignments(declaration, tenant, null, context),
                     };
-                declarationPM.DeclarationNumber = customResponse.Response.Declaration.ID.Value;
+                declarationPM.DeclarationNumber = customResponse.Response.Declaration.ID.Value;             
                 declarationPM.IsExportClosed = customResponse.Response.Status[0].NameCode.Value=="36"?true:false;             
                 declarationPM.AgentRoleCode = "A";     
-                declarationPM.TotalTax = Math.Round(declaration.DMExtensions.CustomsValueComponent.TaxAssessedAmount.Value, 2);               
-                declarationPM.TaxationDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                declarationPM.TotalTax = Math.Round(declaration.DMExtensions.CustomsValueComponent.TaxAssessedAmount.Value, 2);
+                // declarationPM.TaxationDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                declarationPM.IsConvertedDeclaration = true;
+                 declarationPM.TaxationDateTime = Convert.ToDateTime(declaration.IssueDateTime);
                 decimal DealValueWithoutFactor = 0;
                 if (declaration.GoodsShipment != null)
                 {
@@ -276,8 +282,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     declarationPM.ExportAutonomyRegionTypeCode = GetValueIDType(declaration.DMExtensions.AutonomyRegionType);
                     if (declaration.DMExtensions.TransferDeclarationToDestinationCountry != null)
                         declarationPM.IsExporterConfirmation = declaration.DMExtensions.TransferDeclarationToDestinationCountry.Value;
-                    if (declaration.DMExtensions.ReferenceDateTime != null)
-                        declarationPM.TaxationDateTime = Convert.ToDateTime(declaration.DMExtensions.ReferenceDateTime);
+                    //if (declaration.DMExtensions.ReferenceDateTime != null)
+                    //    declarationPM.TaxationDateTime = Convert.ToDateTime(declaration.DMExtensions.ReferenceDateTime);
 
                     if (declaration.PreviousDocument != null)
                     {
@@ -996,20 +1002,21 @@ namespace Logitude.CustomsMessaging.ResponseServices
            
             if (governmentAgencyGoodsItem != null && governmentAgencyGoodsItem.DMExtensions.GoodsItemAmount != null)
             {
+                var arrAmountType = new string[] { "1", "3" };
                 var cur = declaration.GoodsShipment[0].Invoice.DMExtensions.InvoiceAmount.currencyID.ToString();
                 foreach (var GoodsItemAmount in governmentAgencyGoodsItem.DMExtensions.GoodsItemAmount)
                 {
                     bool IsExist = SupplierInvoiceItemsPricePM.Any(x => x.AdditionalPriceTypeCode == GetValueCodeType(GoodsItemAmount.AmountType));
-                    if (!IsExist && GetValueCodeType(GoodsItemAmount.AmountType) != "1" && GoodsItemAmount.CustomsValueAmount.currencyID.ToString() == cur)
-                    {
-                        SupplierInvoiceItemsPricePM supplierInvoiceItemsPrice = new SupplierInvoiceItemsPricePM();
-                        supplierInvoiceItemsPrice.DeclarationId = declarationId;
-                        supplierInvoiceItemsPrice.ChangeSetOp = ChangeSetOperation.Insert;
-                        supplierInvoiceItemsPrice.AdditionalPrice = GetValueAmountType(GoodsItemAmount.CustomsValueAmount);
-
-                        supplierInvoiceItemsPrice.AdditionalPriceTypeCode = GetValueCodeType(GoodsItemAmount.AmountType);
-                        supplierInvoiceItemsPrice.Tenant = tenant;
-                        SupplierInvoiceItemsPricePM.Add(supplierInvoiceItemsPrice);
+                    if (!IsExist && !(arrAmountType.Contains(GetValueCodeType(GoodsItemAmount.AmountType))) && GoodsItemAmount.CustomsValueAmount.currencyID.ToString() == cur)
+                    {                                             
+                           SupplierInvoiceItemsPricePM supplierInvoiceItemsPrice = new SupplierInvoiceItemsPricePM();
+                           supplierInvoiceItemsPrice.DeclarationId = declarationId;
+                           supplierInvoiceItemsPrice.ChangeSetOp = ChangeSetOperation.Insert;
+                           supplierInvoiceItemsPrice.AdditionalPrice = GetValueAmountType(GoodsItemAmount.CustomsValueAmount);
+                           
+                           supplierInvoiceItemsPrice.AdditionalPriceTypeCode = GetValueCodeType(GoodsItemAmount.AmountType);
+                           supplierInvoiceItemsPrice.Tenant = tenant;
+                           SupplierInvoiceItemsPricePM.Add(supplierInvoiceItemsPrice);                       
                     }
                 }
             }
