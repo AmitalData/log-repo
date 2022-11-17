@@ -552,16 +552,15 @@ namespace WebFreight.Web.InfrastructureModel
                 AddAutomationFromTenantZero(tenant , tenantZeroDocumentTypes);
 
                 new TruckerSignUpService(signUpInfo, tenant).CopyFromTenantZero();
-
-                LogboxSignUpService logboxSignUpService = new LogboxSignUpService(signUpInfo, tenant);
-                logboxSignUpService.Update();
                 #endregion
                 scop.Complete();
             }
 
 
+            LogboxSignUpService logboxSignUpService = new LogboxSignUpService(signUpInfo, tenant);
+            logboxSignUpService.Update();
 
-            
+
             TenantManagement tenantManagement = null;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction(new TimeSpan(2, 0, 0)))
             {
