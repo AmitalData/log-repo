@@ -67,6 +67,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectTable.AvailableInCustomization = objectTablePM.AvailableInCustomization;
             objectTable.ParentObjectTableId = objectTablePM.ParentObjectTableId;
             objectTable.IsCustom = objectTablePM.IsCustom;
+            objectTable.SupportSubEntity = objectTablePM.SupportSubEntity;
 
         }
     }

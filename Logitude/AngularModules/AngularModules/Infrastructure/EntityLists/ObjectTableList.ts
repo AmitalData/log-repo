@@ -62,5 +62,6 @@ export class ObjectTableList {
         AvailableInCustomization: boolean;
         ParentObjectTableId: string;
         IsCustom: boolean;
+        SupportSubEntity: boolean;
 	
 }

@@ -92,5 +92,6 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public string HashString { get; set; }
         public string ParentObjectTableName { get; set; }
         public bool AvailableInCustomization { get; set; }
+        public bool SupportSubEntity { get; set; }
     }
 }
