@@ -35,13 +35,13 @@ export class AddEditWidgetComponent extends BaseComponent {
     public RootFilter: WidgetFilterItem = new WidgetFilterItem(null, false, this.DashboardPM?.Id);
     public IsAddNewMeasureVisible: boolean = true;
     public DateGroupCodes = ['Day', 'Month', 'Year', 'Quarter'];
-    public MaximumGroupings = [5, 10, 25, 30, 50];
     public SortByCodes = [];
     public SortByDirections = [{name:'Ascending',code:'asc'},{name:'Descending',code: 'desc'}];
     public GroupByQueryFilters: ApiQueryFilters;
     public isGroupByVisible: boolean = true;
     public isSortByVisible: boolean = true;
     public isMaximumGroupingVisible: boolean = true;
+    public showAdvancedSetting : boolean = false;
 
     constructor() {
         super();
@@ -523,4 +523,6 @@ export class WidgetMeasureItem extends BaseComponent {
         MixPanelLocator.PostDashboardAction({ ActionName: "Widget Measure Delete Click", DashboardId: this.DashboardPM?.Id });
         this.fatherComponent.CheckMeasureAddVisiblity();
     }
+
+    
 }
