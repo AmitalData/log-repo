@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationCourierStatusUpdateClass
    {  		
-		public const string HashString = "bd4ef14e7489c5794fe6c38431683c86";
+		public const string HashString = "8a4c2f3d682f0186800983006d2ebe15";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -6059,7 +6059,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query CourierWorkScreenQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationCourierStatusTextCode_1.Id, NameTextCodeCode = DeclarationCourierStatusTextCode_1.Code, ObjectTableName = "Customs.DeclarationCourierStatus", Code = "CourierWorkScreen",  QueryGroupCode = "9f91", IndexOrder = 1, Tenant = 0, ObjectTableId = DeclarationCourierStatusObjectTable.Id, QuerySection = "Customs.DeclarationCourierStatus", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DeclarationCourierStatusFeature_1.Id,FeatureUniqeCode= DeclarationCourierStatusFeature_1.FeatureUniqeCode, DefaultSortName = "CourierHawb", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query CourierWorkScreenQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationCourierStatusTextCode_1.Id, NameTextCodeCode = DeclarationCourierStatusTextCode_1.Code, ObjectTableName = "Customs.DeclarationCourierStatus", Code = "CourierWorkScreen",  QueryGroupCode = "9f91", IndexOrder = 1, Tenant = 0, ObjectTableId = DeclarationCourierStatusObjectTable.Id, QuerySection = "Customs.DeclarationCourierWorkScreen", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DeclarationCourierStatusFeature_1.Id,FeatureUniqeCode= DeclarationCourierStatusFeature_1.FeatureUniqeCode, DefaultSortName = "CourierHawb", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
 			 QueryColumn CourierWorkScreenQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CourierWorkScreenQuery.Id,QueryCode = CourierWorkScreenQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.DeclarationCourierStatus.CourierHawb" , ColumnWidth = 90 }, addedQueryColumns);
 
