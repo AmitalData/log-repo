@@ -25,6 +25,8 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
         public string CargoIdentifierKey3 { get; set; }
         public string PackagingTypeCode { get; set; }
         public string Quantity { get; set; }        
-        public string CustomsFile { get; set; }        
+        public string CustomsFile { get; set; }
+        public string ExportFile { get; set; }
+
     }
 }

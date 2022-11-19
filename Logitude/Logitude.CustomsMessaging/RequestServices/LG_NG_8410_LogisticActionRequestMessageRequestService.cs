@@ -50,7 +50,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.LogisticActionRequest");
             this.MyRequestSheetParam.EntityId1 = p.LogisticActionRequestId;
             this.MyRequestSheetParam.CustomFileNo = p.CustomsFile;
-            this.MyRequestSheetParam.RequestDescription = "בקשת ביטול יצוא";
+            this.MyRequestSheetParam.RequestDescription = "בקשת ביטול יצוא : " + p.ExportFile;
 
             return myMsg;
         }
