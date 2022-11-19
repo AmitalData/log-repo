@@ -16,7 +16,7 @@
 
                 <tr style="height: 10px;">
                     <td>
-                        <table>
+                        <table [style.height]="TableTab.Type == 'Custom'?'55%':'100%'" style=" margin-bottom:6px">
                             <tr>
                                 <td style="width:10px"></td>
                                 <td style="height: 22px; width: 50px;">
@@ -28,7 +28,7 @@
                                 <td style="height: 22px; width: 250px; ">
                                     <div style="width: 250px;">
                                         <LogTextBox [ObjectFieldName]="'Name'" [DataContext]="dataContext"
-                                            [Text]="Name"></LogTextBox>
+                                                    [Text]="Name"></LogTextBox>
                                     </div>
                                 </td>
                                 <td></td>
@@ -44,13 +44,23 @@
                                 <td style="height: 22px; width: 215px; ">
                                     <div style="width: 215px;">
                                         <ComboBox [ItemsSource]="screens" (SelectedItemChanged)="ScreenChanged($event)"
-                                            style="display: block;" [SelectedItem]="SelectedScreen" [Binding]="'Name'">
+                                                  style="display: block;" [SelectedItem]="SelectedScreen" [Binding]="'Name'">
                                         </ComboBox>
                                     </div>
                                 </td>
                                 <td></td>
                             </tr>
                         </table>
+                        <div *ngIf="TableTab.Type == 'Custom'" style="height:22px; width:320px; display:inline-flex">
+                            <div style="width:10px;"></div>
+                            <label style="padding-left:10px;color: rgb(110, 113, 114); width:200px">
+                                Display tab name in screen
+                            </label>
+                            <div style="width:33px;"></div>
+                            <CheckBox [IsChecked]="DisplayTabNameInScreen" (Checked)="DisplayTabNameInScreen = $event" style="margin-right:10px"></CheckBox>
+                            <HelpIcon [HideHeader]="true" [Text]="'Using this field, you can decide if the name of the tab will be shown in the screen when add this tab to the object.'" style="margin-top:2px"></HelpIcon>
+
+                        </div>
                     </td>
 
                 </tr>

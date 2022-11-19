@@ -99,13 +99,15 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
     public SelectedItem: ScreenItem;
     public OldItem: ScreenItem;
     public IsChange: boolean = false;
+    private newSelectedItem: ScreenItem;
     SelectionChanged(Item) {
         //this.OkClicked(false);
-        this.SelectedItem = Item;
+        this.newSelectedItem = Item;
         if (this.Modified) {
             this.OpenConfirmWindow();
             return;
         }
+        this.ChangeSelectedItem();
         this.GetFields();
     }
 
@@ -331,10 +333,7 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
 
         this.screenLayoutService.BuildScreenUpdateArgs();
 
-        if (!this.IsScreenSectionsLengthtValid()) {
-            this.ShowMessageWindow("Section name Field must be less than 100");
-            return;
-        }
+        if (!this.IsScreenSectionsValid()) return;
 
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
 
@@ -366,11 +365,45 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
                     window.Screens = myScreensResult;
                 });
             });
+            this.UpdateAfterSave();
         });
 
     }
 
+    UpdateAfterSave(){
+        this.customizationEditComponent.IsDirty = false;
+        this.ValidationErrorsList = [];
+        this.ChangeSelectedItem();
+        if (this.customizationEditComponent.IsSaveAndClose) {
+            this.customizationEditComponent.CurrentSession.CloseCurrentWindow();
+            this.customizationEditComponent.IsSaveAndClose = false;
+        }
+        if (this.customizationEditComponent.NewSelectedMenu) {
+            this.customizationEditComponent.SelectedMenu = this.customizationEditComponent.NewSelectedMenu;
+        }
+    }
+    IsScreenSectionsValid() {
+        let errors = [];
+        if (!this.IsScreenSectionsNamesValid()) errors.push("Section Name is Required");
+        if (!this.IsScreenSectionsLengthtValid()) errors.push("Section name Field must be less than 100");
+        if (errors.length == 0) return true;
+        this.ValidationErrorsList = errors;
+        return false;  
+    }
 
+    IsScreenSectionsNamesValid() {
+        let isValid = true;
+        this.MyArgs.ScreenSections.filter(d => !d.Inactive).forEach((section) => {
+            if (!section.Name) isValid = false;
+        });
+        return isValid;
+    }
+	
+    ChangeSelectedItem() {
+        if (this.newSelectedItem == this.SelectedItem) return;
+        this.SelectedItem = this.newSelectedItem;
+    }
+	
 
     IsScreenSectionsLengthtValid() {
         let isValid = true;
@@ -679,6 +712,8 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
                 return;
             }
             if (confirmWindow.No) {
+                this.ChangeSelectedItem();
+                this.ValidationErrorsList = [];
                 this.GetFields();
                 return;
             }
@@ -870,13 +905,13 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
         if (this.customizationEditComponent.IsDirty) {
             this.OkClicked(false);
         }
-
-        this.customizationEditComponent.IsDirty = false;
-        if (this.customizationEditComponent.NewSelectedMenu) {
-            this.customizationEditComponent.SelectedMenu = this.customizationEditComponent.NewSelectedMenu;
-        }
+        else if (this.customizationEditComponent.IsSaveAndClose) {
+                this.customizationEditComponent.CurrentSession.CloseCurrentWindow();
+                this.customizationEditComponent.IsSaveAndClose = false;
+            }
     }
     Cancel() {
+        this.ValidationErrorsList = [];
         this.GetFields();
         this.customizationEditComponent.IsDirty = false;
         if (this.customizationEditComponent.NewSelectedMenu) {

@@ -86,6 +86,15 @@ export class StandardFieldsComponent {
     CloseClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
+   Save() {
+        if (!this.customizationEditComponent.IsDirty && this.customizationEditComponent.IsSaveAndClose) {
+            this.customizationEditComponent.CurrentSession.CloseCurrentWindow();
+            this.customizationEditComponent.IsSaveAndClose = false;
+        }
+    }
+    Cancel() {
+
+    }
 }
 
 export class TabItem {
@@ -216,12 +225,6 @@ export class StandardFieldItem {
         return result;
     }
 
-    Save() {
-
-    }
-    Cancel() {
-
-    }
 
     //private LoadObjects() {
     //    var generalService: GeneralDomainService = new GeneralDomainService();

@@ -76,6 +76,10 @@
             <table>
 
                 <tr *ngIf="(!IsObjectTableFilterEnabled || IsTabsCustomizationEnabled)" style="height: 40px;">
+                    <td></td>
+                    <td *ngIf="ValidationErrorsList.length != 0">
+                        <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+                    </td>
                     <td colspan="5" style="text-align: right; height: 40px;">
                         <button class="Button" style="width: 100px;float:right;margin-right:5px" (click)="NewScreenButtonClicked()">New Screen</button>
                     </td>

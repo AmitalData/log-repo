@@ -39,11 +39,12 @@ export class AddTabComponent extends BaseComponent {
         this.TableTab.Type = tab?.Type || 'Custom';
         this.TableTab.Name = tab?.Name || tab?.TabNameTextCodeDefaultText;
         this.TableTab.Changeset = this.IsNew ? "insert" : tab?.Changeset;
+        this.TableTab.HideTabNameInScreen = tab ? tab.HideTabNameInScreen : true;
 
         this.Name = this.TableTab.Name;
         this.ScreenCode = this.TableTab.ScreenCode;
         this.ScreenName = this.TableTab.ScreenName;
-
+        this.DisplayTabNameInScreen = !this.TableTab.HideTabNameInScreen;
 
     }
 
@@ -100,7 +101,13 @@ export class AddTabComponent extends BaseComponent {
         this.ScreenName = screen?.Name;
     }
 
-
+    private displayTabNameInScreen: boolean = false;
+    get DisplayTabNameInScreen() { return this.displayTabNameInScreen; }
+    set DisplayTabNameInScreen(value: boolean) {
+        if (this.displayTabNameInScreen != value) {
+            this.displayTabNameInScreen = value;
+        }
+    }
 
     SaveButtonClicked() {
         let errors = [];
@@ -124,7 +131,7 @@ export class AddTabComponent extends BaseComponent {
       this.TableTab.Name = this.Name;
       this.TableTab.ScreenCode = this.ScreenCode;
       this.TableTab.ScreenName = this.ScreenName;
-
+      this.TableTab.HideTabNameInScreen = !this.DisplayTabNameInScreen;
     }
 
 

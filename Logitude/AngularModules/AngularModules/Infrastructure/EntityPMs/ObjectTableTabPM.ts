@@ -63,6 +63,10 @@ export class ObjectTableTabPM {
     public get Changeset() { return this.changeset; }
     public set Changeset(newValue: string) { this.changeset = newValue; this.MarkAsDirty(); }
 
+    private hideTabNameInScreen: boolean;
+    public get HideTabNameInScreen() { return this.hideTabNameInScreen; }
+    public set HideTabNameInScreen(newValue: boolean) { this.hideTabNameInScreen = newValue; this.MarkAsDirty(); }
+
 
     public IsDirty: boolean;
     MarkAsDirty() {

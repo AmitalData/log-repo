@@ -29,7 +29,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectTableTab.ScreenCode = objectTableTabPM.ScreenCode;
             objectTableTab.Type = objectTableTabPM.Type;
             objectTableTab.OriginalTabCode = objectTableTabPM.OriginalTabCode;
-
+            objectTableTab.HideTabNameInScreen = objectTableTabPM.HideTabNameInScreen;
             if (objectTableTabPM.HasTabModification) return;   
 
             objectTableTab.IndexOrder = objectTableTabPM.IndexOrder;
