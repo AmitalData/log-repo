@@ -131,6 +131,7 @@
     <Compile Include="EntityPMs\Generated\ReferenceInputTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ReferenceStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ReleaseMessageTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SchedulerParamPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SecurityClearenceTypeCodePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SignStationPM.Generated.cs" />
     

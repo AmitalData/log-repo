@@ -69,6 +69,7 @@ export class CourierWorksheetListTemplate {
     IsManifestStatusOrange: boolean = false;
     IsDeclarationStatusRed: boolean = false;
     IsDeclarationStatusGreen: boolean = false;
+    IsDeclarationStatusNull: boolean = false;
     IsDeclarationStatusBlue: boolean = false;
     IsDeclarationStatusOrange: boolean = false;
     IsPaymentStatusBlueChecked: boolean = false;
@@ -202,23 +203,28 @@ export class CourierWorksheetListTemplate {
         }
 
         if (this._CourierWorksheet.CourierDeclarationStatusCode != null) {
-            switch (this._CourierWorksheet.CourierDeclarationStatusCode) {
-                case "M":
-                case "X": {
-                    this.IsDeclarationStatusRed = true;
-                    break;
-                }
-                case "V": {
-                    this.IsDeclarationStatusGreen = true;
-                    break;
-                }
-                case "I": {
-                    this.IsDeclarationStatusBlue = true;
-                    break;
-                }
-                case "R": {
-                    this.IsDeclarationStatusOrange = true;
-                    break;
+            if (this._CourierWorksheet.DocumentStatusCode == 'M' || this._CourierWorksheet.DocumentStatusCode == 'X')
+                this.IsDeclarationStatusNull = true
+            else {
+                switch (this._CourierWorksheet.CourierDeclarationStatusCode) {
+
+                    case "M":
+                    case "X": {
+                        this.IsDeclarationStatusRed = true;
+                        break;
+                    }
+                    case "V": {
+                        this.IsDeclarationStatusGreen = true;
+                        break;
+                    }
+                    case "I": {
+                        this.IsDeclarationStatusBlue = true;
+                        break;
+                    }
+                    case "R": {
+                        this.IsDeclarationStatusOrange = true;
+                        break;
+                    }
                 }
             }
         }
@@ -274,7 +280,7 @@ export class CourierWorksheetListTemplate {
             }
             else {
                 this.IsDeclarationChecked = false;
-    
+
             }
         }
     }
@@ -334,7 +340,8 @@ export class CourierWorksheetListTemplate {
             "DeclarationId": this._CourierWorksheet.DeclarationId,
         };
         customsRequestMenuService.WindowClosed.subscribe(
-            (myarg) => { this.CD.detectChanges();
+            (myarg) => {
+                this.CD.detectChanges();
             }
         );
         customsRequestMenuService.ShowModalAsEditMenuAction("8250", my);
@@ -414,7 +421,7 @@ export class CourierWorksheetListTemplate {
 
     ButtonClick(event) {
         this._CourierWorksheetSharedDataService.SupperssOnRowSelectedAction = true;
-        
+
         //event.stopPropagation();
         //this.RowSelect()
         this.DropdownDisplayClose();//this.MySplitButtonComponent.DropdownDisplayClose();//SplitButtonComponent.EnsureLastSplitButtonIsClosed();
@@ -434,7 +441,7 @@ export class CourierWorksheetListTemplate {
 
         let myToolTip = "";
         var mycache: Array<CourierPendingReasonList> = CacheCourierPendingReasonService.Instance.GetCache();
-        let listString: string =this._CourierWorksheet.CourierPendingReasonList;
+        let listString: string = this._CourierWorksheet.CourierPendingReasonList;
         let arry = listString.split(',');
         arry.forEach(itemReason => {
             let rec = mycache.filter(r => r.Code == itemReason)[0];
@@ -451,8 +458,8 @@ export class CourierWorksheetListTemplate {
                 }
             }
         });
-        
-        return myToolTip; 
+
+        return myToolTip;
 
         ///return this.getCourierPendingReasonName(this._CourierWorksheet.CourierPendingReasonList);
     }
@@ -497,7 +504,7 @@ export class CourierWorksheetListTemplate {
         this.ButtonClick(event);
         SessionLocator.SelectedSession.StartBusyIndicatorCreating();
         this._CourierMasterService.GetSendECTHRDataMaman(this._CourierWorksheet['DeclarationId'])
-            .subscribe((res:any) => {
+            .subscribe((res: any) => {
                 this.currentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 let mess = "";
@@ -641,7 +648,7 @@ export class CourierWorksheetListTemplate {
         this.MamanStickerDetails = null;
         this.PrintDocumentsDetails = null;
         this.SbanDetails = null;
-        this.IsMamanEnabled = false;       
+        this.IsMamanEnabled = false;
 
         let myDeclarationPMService: DeclarationPMService = new DeclarationPMService()
         myDeclarationPMService.get(this._CourierWorksheet['DeclarationId']).subscribe(rsptPMget => {
@@ -727,10 +734,10 @@ export class CourierWorksheetListTemplate {
         var logitudeWindow = new LogitudeWindow();
         var windowArgs: any = {};
         var declarationIdList = [];
-        
+
         this._DeclarationCourierStatusPMService.get(declarationId).subscribe((response: ServiceResponse) => {
-        //this.declarationPendingPMService.get(declarationId, "").subscribe((response: ServiceResponse) => {
-        //this._DeclarationExtendedListService.GetDeclarationPendingListPMByDeclarationId(declarationId).subscribe((response: ServiceResponse) => {
+            //this.declarationPendingPMService.get(declarationId, "").subscribe((response: ServiceResponse) => {
+            //this._DeclarationExtendedListService.GetDeclarationPendingListPMByDeclarationId(declarationId).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
                 //declarationIdList.push(response.Result);
                 //windowArgs.DeclarationIdList = declarationIdList;
@@ -757,7 +764,7 @@ export class CourierWorksheetListTemplate {
                 else {
                     //if (mode == "Update") {
                     windowArgs.CourierPendingReasonList = this._CourierWorksheet.CourierPendingReasonList;
-                        //windowArgs.PendingRemarks = this._CourierWorksheet.PendingRemarks;
+                    //windowArgs.PendingRemarks = this._CourierWorksheet.PendingRemarks;
                     //}
 
                     logitudeWindow.Width = 500;
@@ -771,7 +778,7 @@ export class CourierWorksheetListTemplate {
                         this.RefreshData();
                     });
                 }
-                
+
             }
         });
 
@@ -791,9 +798,9 @@ export class CourierWorksheetListTemplate {
     OnCheckedWithSystemEvent(eventM) {
         eventM.stopPropagation();
 
-      //  this._CourierWorksheetSharedDataService.connectedSelectAll = false;
+        //  this._CourierWorksheetSharedDataService.connectedSelectAll = false;
 
-       
+
         this.IsDeclarationChecked = !this.IsDeclarationChecked;
         //if (event.IsChecked) {
         if (this.IsDeclarationChecked) {
@@ -979,8 +986,8 @@ export class CourierWorksheetListTemplate {
         confirm.YesButtonText = TextCodeTranslator.Translate("General.O.Confirm");
         confirm.NoButtonText = TextCodeTranslator.Translate("General.O.Void");
 
-        if (SetEvetActive==0) {
-                      
+        if (SetEvetActive == 0) {
+
             confirm.Show("אשר ביטול סגירת ש.מ.ב")
             confirm.WindowClosed.subscribe((event: any) => {
                 if (confirm.Yes) {
@@ -992,7 +999,7 @@ export class CourierWorksheetListTemplate {
                     }
                     );
                 }
-                        else {
+                else {
                     confirm.Close();
                 }
             });
@@ -1007,8 +1014,8 @@ export class CourierWorksheetListTemplate {
                             SessionLocator.SelectedSession.StopBusyIndicator();
                             this.RefreshData();
                         });
-                                 }
-                 else {
+                }
+                else {
                     confirm.Close();
                 }
             });

@@ -18,7 +18,7 @@ namespace Logitude.Customs.BL.Helpers
 {
     public class CustomsStoredProcedures
     {
-        public static void Declaration_SetIsPaymentProtested(string declarationId, int tenant,bool IsPaymentProtested)
+        public static void Declaration_SetIsPaymentProtested(string declarationId, int tenant, bool IsPaymentProtested)
         {
             string strConnString = GetConnection(tenant);
             if (LogitudeSettings.DatabaseManagementSystem == "oracle")
@@ -75,7 +75,7 @@ namespace Logitude.Customs.BL.Helpers
                 }
             }
         }
-        public static void UpdateSupplierInvoiceItemsSequence(string declarationId,int counterKey, int tenant)
+        public static void UpdateSupplierInvoiceItemsSequence(string declarationId, int counterKey, int tenant)
         {
             string strConnString = GetConnection(tenant);
             if (LogitudeSettings.DatabaseManagementSystem == "oracle")
@@ -86,7 +86,7 @@ namespace Logitude.Customs.BL.Helpers
                     OracleCommand cmd = new OracleCommand();
                     cmd.Connection = cn;
                     cmd.CommandText =
-                        //LogitudeDBSchema.LOGITUDE_MAIN.ToString() + "usp_GetNextTableIdValue";
+                    //LogitudeDBSchema.LOGITUDE_MAIN.ToString() + "usp_GetNextTableIdValue";
                     DbContextBaseUtil.GetStoredProcedureName("usp_UpdateInvoiceItemsSequence", LogitudeDBSchema.LOGITUDE_MAIN,
                     cmd.Connection.ConnectionString);
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -115,7 +115,7 @@ namespace Logitude.Customs.BL.Helpers
                     {
                         cn.Open();
                         cmd.ExecuteNonQuery();
-                        
+
 
                     }
                     catch (Exception ex)
@@ -127,11 +127,11 @@ namespace Logitude.Customs.BL.Helpers
                     cn.Close();
                 }
 
-                
+
             }
             else
             {
-                
+
                 using (SqlConnection cn = new SqlConnection(strConnString))
                 {
                     SqlCommand cmd = new SqlCommand("dbo.usp_UpdateInvoiceItemsSequence", cn);
@@ -165,65 +165,65 @@ namespace Logitude.Customs.BL.Helpers
         }
         public static void UpdateSupplierInvoiceItemsSequenceOracle(string declarationId, int counterKey, int tenant)
         {
-            
-            string strConnString=  GetConnection(tenant);
 
-                using (var cn = new OracleConnection(strConnString))
-                {
-                    OracleCommand cmd = new OracleCommand();
-                    cmd.Connection = cn;
-                    cmd.CommandText =
+            string strConnString = GetConnection(tenant);
 
-                        DbContextBaseUtil.GetStoredProcedureName("usp_UpdateInvoiceItemsSequence", LogitudeDBSchema.LOGITUDE_MAIN, //for test
-                        cmd.Connection.ConnectionString);
+            using (var cn = new OracleConnection(strConnString))
+            {
+                OracleCommand cmd = new OracleCommand();
+                cmd.Connection = cn;
+                cmd.CommandText =
+
+                    DbContextBaseUtil.GetStoredProcedureName("usp_UpdateInvoiceItemsSequence", LogitudeDBSchema.LOGITUDE_MAIN, //for test
+                    cmd.Connection.ConnectionString);
                 //DbContextBaseUtil.GetStoredProcedureName("usp_UpdateInvoiceItemsSequenc1", LogitudeDBSchema.LOGITUDE_MAIN,
                 //      cmd.Connection.ConnectionString);
                 cmd.CommandType = CommandType.StoredProcedure;
-                    /*
-                     create or replace PROCEDURE usp_UpdateInvoiceItemsSequence(
-    v_DeclarationId IN VARCHAR2 DEFAULT NULL ,
-    v_Tenant        IN NUMBER DEFAULT NULL ,
-    v_CounterKey    IN NUMBER DEFAULT NULL )
+                /*
+                 create or replace PROCEDURE usp_UpdateInvoiceItemsSequence(
+v_DeclarationId IN VARCHAR2 DEFAULT NULL ,
+v_Tenant        IN NUMBER DEFAULT NULL ,
+v_CounterKey    IN NUMBER DEFAULT NULL )
 AS */
-                    try
-                    {
-                        OracleParameter v_DeclarationId = new OracleParameter("v_DeclarationId", OracleDbType.VarChar);
-                        OracleParameter v_Tenant = new OracleParameter("v_Tenant", OracleDbType.Number);
-                        OracleParameter v_CounterKey = new OracleParameter("v_CounterKey", OracleDbType.Number);
+                try
+                {
+                    OracleParameter v_DeclarationId = new OracleParameter("v_DeclarationId", OracleDbType.VarChar);
+                    OracleParameter v_Tenant = new OracleParameter("v_Tenant", OracleDbType.Number);
+                    OracleParameter v_CounterKey = new OracleParameter("v_CounterKey", OracleDbType.Number);
 
 
-                        v_DeclarationId.Direction = ParameterDirection.Input;
-                        v_Tenant.Direction = ParameterDirection.Input;
-                        v_CounterKey.Direction = ParameterDirection.Input;
+                    v_DeclarationId.Direction = ParameterDirection.Input;
+                    v_Tenant.Direction = ParameterDirection.Input;
+                    v_CounterKey.Direction = ParameterDirection.Input;
 
 
-                        v_DeclarationId.Value = declarationId;
-                        v_Tenant.Value = tenant;
-                        v_CounterKey.Value = counterKey;
+                    v_DeclarationId.Value = declarationId;
+                    v_Tenant.Value = tenant;
+                    v_CounterKey.Value = counterKey;
 
 
-                        cmd.Parameters.Add(v_DeclarationId);
-                        cmd.Parameters.Add(v_Tenant);
-                        cmd.Parameters.Add(v_CounterKey);
-                        
+                    cmd.Parameters.Add(v_DeclarationId);
+                    cmd.Parameters.Add(v_Tenant);
+                    cmd.Parameters.Add(v_CounterKey);
 
 
-                        cn.Open();
-                        cmd.ExecuteNonQuery();
-                        cn.Close();
-                       
-                    }
-                    catch (Exception ex)
-                    {
-                        System.Console.WriteLine("Exception: {0}", ex.ToString());
-                        throw;
-                    }
 
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
                     cn.Close();
+
+                }
+                catch (Exception ex)
+                {
+                    System.Console.WriteLine("Exception: {0}", ex.ToString());
+                    throw;
                 }
 
-                
+                cn.Close();
             }
+
+
+        }
 
         public static void UpdateParentSupplierInvoiceItemsSequence(string declarationId, int counterKey, int tenant)
         {
@@ -385,11 +385,11 @@ AS */
                     OracleCommand cmd = new OracleCommand();
                     cmd.Connection = cn;
                     cmd.CommandText =
-                      
+
                     DbContextBaseUtil.GetStoredProcedureName("usp_CopySupplierInvoiceItems", LogitudeDBSchema.LOGITUDE_MAIN,
                     cmd.Connection.ConnectionString);
                     cmd.CommandType = CommandType.StoredProcedure;
-                   
+
 
                     OracleParameter parameter1 = new OracleParameter("v_SourceDeclarationId", OracleDbType.VarChar);
                     OracleParameter parameter2 = new OracleParameter("v_TargetDeclarationId", OracleDbType.VarChar);
@@ -400,7 +400,7 @@ AS */
                     parameter2.Direction = ParameterDirection.Input;
                     parameter3.Direction = ParameterDirection.Input;
                     parameter4.Direction = ParameterDirection.Output;
-                    
+
 
                     parameter1.Value = sourceDeclarationId;
                     parameter2.Value = targetDeclarationId;
@@ -410,7 +410,7 @@ AS */
                     cmd.Parameters.Add(parameter2);
                     cmd.Parameters.Add(parameter3);
                     cmd.Parameters.Add(parameter4);
-                    
+
 
                     try
                     {
@@ -456,6 +456,136 @@ AS */
                 }
             }
         }
+        public static void DeleteCommunicationLogs(int tenant, int days, string from__, string to__, string subject__, string CommunicationStatusTypeCodeListAsString)
+        {
+            string strConnString = GetConnection(tenant);
+            if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+            {
+                using (OracleConnection cn = new OracleConnection(strConnString))
+                {
+                    OracleCommand cmd = new OracleCommand();
+                    cmd.Connection = cn;
+                    cmd.CommandTimeout = 1000000;
+                    cmd.CommandText =
+                        DbContextBaseUtil.GetStoredProcedureName("usp_deletecommlogs", LogitudeDBSchema.LOGITUDE_MAIN,
+                    cmd.Connection.ConnectionString);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+
+                    OracleParameter parameter1 = new OracleParameter("p_days", OracleDbType.Integer);
+                    OracleParameter parameter2 = new OracleParameter("p_from", OracleDbType.VarChar);
+                    OracleParameter parameter3 = new OracleParameter("p_to", OracleDbType.VarChar);
+                    OracleParameter parameter4 = new OracleParameter("p_subject", OracleDbType.VarChar);
+                    OracleParameter parameter5 = new OracleParameter("p_commstatustypecodelist", OracleDbType.VarChar);
+
+
+                    parameter1.Direction = ParameterDirection.Input;
+                    parameter2.Direction = ParameterDirection.Input;
+                    parameter3.Direction = ParameterDirection.Input;
+                    parameter4.Direction = ParameterDirection.Input;
+                    parameter5.Direction = ParameterDirection.Input;
+
+
+
+                    parameter1.Value = days;
+                    parameter2.Value = from__;
+                    parameter3.Value = to__;
+                    parameter4.Value = subject__;
+                    parameter5.Value = CommunicationStatusTypeCodeListAsString;
+
+
+
+                    cmd.Parameters.Add(parameter1);
+                    cmd.Parameters.Add(parameter2);
+                    cmd.Parameters.Add(parameter3);
+                    cmd.Parameters.Add(parameter4);
+                    cmd.Parameters.Add(parameter5);
+
+
+
+                    try
+                    {
+                        cn.Open();
+                        cmd.ExecuteNonQuery();
+
+
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Console.WriteLine("Exception: {0}", ex.ToString());
+                        throw;
+                    }
+
+                    cn.Close();
+                }
+            }
+            else
+            {
+                using (SqlConnection cn = new SqlConnection(strConnString))
+                {
+                    // must do
+                }
+            }
+        }
+        public static void DeleteQueueMessageMoreDetails(int tenant, int days)
+        {
+            string strConnString = GetConnection(tenant);
+            if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+            {
+                using (OracleConnection cn = new OracleConnection(strConnString))
+                {
+                    OracleCommand cmd = new OracleCommand();
+                    cmd.Connection = cn;
+                    cmd.CommandTimeout = 1000000;
+                    cmd.CommandText =
+                        DbContextBaseUtil.GetStoredProcedureName("usp_DeleteQueMessMoreDet", LogitudeDBSchema.LOGITUDE_MAIN,
+                    cmd.Connection.ConnectionString);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+
+                    OracleParameter parameter1 = new OracleParameter("days", OracleDbType.Integer);
+
+
+                    parameter1.Direction = ParameterDirection.Input;
+
+
+
+                    parameter1.Value = days;
+                   
+
+
+
+                    cmd.Parameters.Add(parameter1);
+
+
+
+
+                    try
+                    {
+                        cn.Open();
+                        cmd.ExecuteNonQuery();
+
+
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Console.WriteLine("Exception: {0}", ex.ToString());
+                        throw;
+                    }
+
+                    cn.Close();
+                }
+            }
+            else
+            {
+                using (SqlConnection cn = new SqlConnection(strConnString))
+                {
+                    // must do
+                }
+            }
+        }
+
+
 
         public static void CopySupplierInvoiceItemsCer(string sourceDeclarationId, string targetDeclarationId, int tenant)
         {
@@ -467,11 +597,11 @@ AS */
                     OracleCommand cmd = new OracleCommand();
                     cmd.Connection = cn;
                     cmd.CommandText =
-                       
+
                     DbContextBaseUtil.GetStoredProcedureName("usp_CopySuppInvoiceItemCers", LogitudeDBSchema.LOGITUDE_MAIN,
                     cmd.Connection.ConnectionString);
                     cmd.CommandType = CommandType.StoredProcedure;
-                 
+
 
                     OracleParameter parameter1 = new OracleParameter("v_SourceDeclarationId", OracleDbType.VarChar);
                     OracleParameter parameter2 = new OracleParameter("v_TargetDeclarationId", OracleDbType.VarChar);
@@ -550,7 +680,7 @@ AS */
             string dbConnectionInfo = currentDb.DBConnection;
             string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
 
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
             CustomContext context = new CustomContext(connection);
 
             return context.Database.Connection.ConnectionString;// entityBuilder.ConnectionString;

@@ -225,6 +225,7 @@
     <Compile Include="EntityKeys\RefundCustomerActivityTypeKeys.cs" />
     <Compile Include="EntityKeys\ReleaseMessageTypeKeys.cs" />
     <Compile Include="EntityKeys\RequestTypeKeys.cs" />
+    <Compile Include="EntityKeys\SchedulerParamKeys.cs" />
     <Compile Include="EntityKeys\SealCompletenesKeys.cs" />
     <Compile Include="EntityKeys\SealTypeKeys.cs" />
     <Compile Include="EntityKeys\SealUpdateReasonTypeKeys.cs" />
@@ -462,6 +463,7 @@
     <Compile Include="EntityListQueryServices\Generated\RefundCustomerActivityTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ReleaseMessageTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RequestTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\SchedulerParamListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SealCompletenesListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SealTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SealUpdateReasonTypeListQueryService.Generated.cs" />
@@ -519,6 +521,7 @@
     <Compile Include="EntityListQueryServices\RefundCustomerActivityTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ReleaseMessageTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RequestTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\SchedulerParamListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SealCompletenesListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SealTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SealUpdateReasonTypeListQueryService.cs" />
@@ -668,6 +671,7 @@
     <Compile Include="EntityLists\Generated\RefundCustomerActivityTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ReleaseMessageTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RequestTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\SchedulerParamList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SealCompletenesList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SealTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SealUpdateReasonTypeList.Generated.cs" />
@@ -816,6 +820,7 @@
     <Compile Include="EntityMapping\RefundCustomerActivityTypeMap.cs" />
     <Compile Include="EntityMapping\ReleaseMessageTypeMap.cs" />
     <Compile Include="EntityMapping\RequestTypeMap.cs" />
+    <Compile Include="EntityMapping\SchedulerParamMap.cs" />
     <Compile Include="EntityMapping\SealCompletenesMap.cs" />
     <Compile Include="EntityMapping\SealTypeMap.cs" />
     <Compile Include="EntityMapping\SealUpdateReasonTypeMap.cs" />
@@ -965,6 +970,7 @@
     <Compile Include="EntityPOCOs\RefundCustomerActivityType.cs" />
     <Compile Include="EntityPOCOs\ReleaseMessageType.cs" />
     <Compile Include="EntityPOCOs\RequestType.cs" />
+    <Compile Include="EntityPOCOs\SchedulerParam.cs" />
     <Compile Include="EntityPOCOs\SealCompletenes.cs" />
     <Compile Include="EntityPOCOs\SealType.cs" />
     <Compile Include="EntityPOCOs\SealUpdateReasonType.cs" />
@@ -1202,6 +1208,7 @@
     <Compile Include="Repsitories\Generated\RefundCustomerActivityTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ReleaseMessageTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RequestTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\SchedulerParamRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SealCompletenesRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SealTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SealUpdateReasonTypeRepository.Generated.cs" />
@@ -1259,6 +1266,7 @@
     <Compile Include="Repsitories\RefundCustomerActivityTypeRepository.cs" />
     <Compile Include="Repsitories\ReleaseMessageTypeRepository.cs" />
     <Compile Include="Repsitories\RequestTypeRepository.cs" />
+    <Compile Include="Repsitories\SchedulerParamRepository.cs" />
     <Compile Include="Repsitories\SealCompletenesRepository.cs" />
     <Compile Include="Repsitories\SealTypeRepository.cs" />
     <Compile Include="Repsitories\SealUpdateReasonTypeRepository.cs" />

@@ -686,6 +686,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new SalesTaxExemptionTypeMap());
 	
+            modelBuilder.Configurations.Add(new SchedulerParamMap());
+	
             modelBuilder.Configurations.Add(new SealCompletenesMap());
 	
             modelBuilder.Configurations.Add(new SealTypeMap());
@@ -3198,6 +3200,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<SalesTaxExemptionType> SalesTaxExemptionTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<SchedulerParam> SchedulerParams 
 	 {
 	      get; set;
 	 

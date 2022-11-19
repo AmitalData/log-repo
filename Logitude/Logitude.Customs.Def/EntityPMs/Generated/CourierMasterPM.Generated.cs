@@ -1423,6 +1423,121 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string hawbQuantityNoDocuments ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string HawbQuantityNoDocuments  
+	   {
+	    
+	     get
+		{
+		   return hawbQuantityNoDocuments;
+		 }
+		 set
+		 {
+		   if(hawbQuantityNoDocuments != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HawbQuantityNoDocuments",OldValue=hawbQuantityNoDocuments,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   hawbQuantityNoDocuments=value;
+		   }
+			
+		 }
+	   }
+	  private string hawbQuantityNoClassification ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string HawbQuantityNoClassification  
+	   {
+	    
+	     get
+		{
+		   return hawbQuantityNoClassification;
+		 }
+		 set
+		 {
+		   if(hawbQuantityNoClassification != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HawbQuantityNoClassification",OldValue=hawbQuantityNoClassification,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   hawbQuantityNoClassification=value;
+		   }
+			
+		 }
+	   }
+	  private string hawbQuantityNoTransManifest ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string HawbQuantityNoTransManifest  
+	   {
+	    
+	     get
+		{
+		   return hawbQuantityNoTransManifest;
+		 }
+		 set
+		 {
+		   if(hawbQuantityNoTransManifest != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HawbQuantityNoTransManifest",OldValue=hawbQuantityNoTransManifest,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   hawbQuantityNoTransManifest=value;
+		   }
+			
+		 }
+	   }
+	  private string hawbQuantityNoTransDeclaration ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string HawbQuantityNoTransDeclaration  
+	   {
+	    
+	     get
+		{
+		   return hawbQuantityNoTransDeclaration;
+		 }
+		 set
+		 {
+		   if(hawbQuantityNoTransDeclaration != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HawbQuantityNoTransDeclaration",OldValue=hawbQuantityNoTransDeclaration,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   hawbQuantityNoTransDeclaration=value;
+		   }
+			
+		 }
+	   }
+	  private string hawbQuantityNoTransPayment ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string HawbQuantityNoTransPayment  
+	   {
+	    
+	     get
+		{
+		   return hawbQuantityNoTransPayment;
+		 }
+		 set
+		 {
+		   if(hawbQuantityNoTransPayment != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HawbQuantityNoTransPayment",OldValue=hawbQuantityNoTransPayment,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   hawbQuantityNoTransPayment=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

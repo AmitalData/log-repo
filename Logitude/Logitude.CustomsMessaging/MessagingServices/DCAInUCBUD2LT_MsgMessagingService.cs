@@ -329,11 +329,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
     public class CreateUD2LTService : ICreateUD2LTService
     {
         private DocumentsFilingPM _DocumentsFilingPM;
-        
+       
         public void //JustDoIt(string DocumentsFilingId, int tenant)
             JustDoIt(object documentsFilingPM)
         {
-            DateTime stopLogAt = DateTime.MinValue; //new DateTime(2022, 01, 01);
+           DateTime stopLogAt = DateTime.MinValue; //new DateTime(2022, 01, 01);
             //string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20220412HD367591.LogUntilDateyyyyMMdd"];
             string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20220227T155633.LogUntilDateyyyyMMdd"];
             if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
@@ -455,6 +455,17 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     {
                         if(!shouldCreateDCAComm) shouldCreateDCAComm = CheckIsTicketByDocType(logData);
                         LogitudeSettings.HandleLogMe("Not Diamond Declaration " + logData, false, "CreateUD2LTService", stopLogAt);
+
+                        if (CheckIsSendByDocType(logData))
+                        {
+                            LogitudeSettings.HandleLogMe("if (CheckIsSendByDocType(logData)) " + logData, false, "CreateUD2LTService", stopLogAt);
+                            shouldCreateDCAComm = true;
+                        }
+                        else
+                        {
+                            LogitudeSettings.HandleLogMe("Not Connect To Ticket " + logData, false, "CreateUD2LTService", stopLogAt);
+                        }
+
                     }
 
                 }
@@ -560,11 +571,84 @@ namespace Logitude.CustomsMessaging.MessagingServices
             }
             finally
             {
+
                 logData += $"CheckIsTicketByDocType:CustomsDocumentUpload:{CustomsDocumentUpload}";
+           
+
             }
+
+        }
+        private bool CheckIsSendByDocType(string logData)
+        {
+            DateTime stopLogAt = DateTime.MinValue; //new DateTime(2022, 01, 01);
+            string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20220412HD367591.LogUntilDateyyyyMMdd"];
+            if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+            {
+                stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
+                                                    "yyyyMMdd",
+                                                    CultureInfo.InvariantCulture,
+                                                    DateTimeStyles.None);
+            }
+            if (_DocumentsFilingPM != null)
+            {
+                LogitudeSettings.HandleLogMe("_DocumentsFilingPM != null " + _DocumentsFilingPM.DocumentTypeId + logData, false, "CreateUD2LTService", stopLogAt);
+            }
+            LogitudeSettings.HandleLogMe("arrived Function " + _DocumentsFilingPM?.DocumentTypeId + logData, false, "CreateUD2LTService", stopLogAt);
+         
+
+            bool IsSendByDocType = false;
+            string CustomsDocumentUpload = "";
+            try
+            {
+                DocumentTypeQueryService documentTypeQueryService = new DocumentTypeQueryService(_DocumentsFilingPM.Tenant);
+                DocumentTypePM documentTypePM = documentTypeQueryService.GetDocumentTypeCodeById(_DocumentsFilingPM.DocumentTypeId, _DocumentsFilingPM.Tenant);
+
+                if (documentTypePM != null && !String.IsNullOrWhiteSpace(documentTypePM.Code))
+                {
+                    LogitudeSettings.HandleLogMe("documentTypePM != null " + documentTypePM?.Code + logData, false, "CreateUD2LTService", stopLogAt);
+                    DocumentTypeCustomsDataQueryService documentTypeCustomsDataQueryService = new DocumentTypeCustomsDataQueryService(_DocumentsFilingPM.Tenant);
+                    DocumentTypeCustomsDataPM documentTypeCustomsDataPM = documentTypeCustomsDataQueryService.GetSingle(documentTypePM.Code, false, true);
+
+                    if (documentTypeCustomsDataPM != null && !String.IsNullOrWhiteSpace(documentTypeCustomsDataPM.CustomsDoucumentTypeCode))
+                    {
+                        LogitudeSettings.HandleLogMe("documentTypeCustomsDataPM != null " + documentTypeCustomsDataPM?.CustomsDoucumentTypeCode + logData, false, "CreateUD2LTService", stopLogAt);
+                        CustomDocumentTypeQueryService customDocumentTypeQueryService = new CustomDocumentTypeQueryService(_DocumentsFilingPM.Tenant);
+
+                        CustomDocumentTypePM customDocumentTypePM = customDocumentTypeQueryService.GetSingle(documentTypeCustomsDataPM.CustomsDoucumentTypeCode, false, false);
+
+                        if (customDocumentTypePM != null && !String.IsNullOrEmpty(customDocumentTypePM.CustomsDocumentUpload))
+                        {
+                            LogitudeSettings.HandleLogMe("customDocumentTypePM != null " + customDocumentTypePM?.CustomsDocumentUpload + logData, false, "CreateUD2LTService", stopLogAt);
+                            CustomsDocumentUpload = customDocumentTypePM.CustomsDocumentUpload;
+
+                            if (customDocumentTypePM.CustomsDocumentUpload == "C")
+                            {
+                                LogitudeSettings.HandleLogMe("customDocumentTypePM.CustomsDocumentUpload == C" + logData, false, "CreateUD2LTService", stopLogAt);
+                                IsSendByDocType = true;
+
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ee)
+            {
+                logData += $"CheckIsSendByDocType:error:{ee.Message}";
+                LogitudeSettings.HandleLogMe("Exception" +  logData, false, "CreateUD2LTService", stopLogAt);
+            }
+            finally
+            {
+                logData += $"CheckIsSendByDocType:CustomsDocumentUpload:{CustomsDocumentUpload}";
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>AUTO GENERATED BY CONFLICT EXTENSION>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 22R01P
+            }
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<AUTO GENERATED BY CONFLICT EXTENSION<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Customs
             return IsTicketByDocType;
         }
-
+====================================AUTO GENERATED BY CONFLICT EXTENSION====================================
+            LogitudeSettings.HandleLogMe("IsSendByDocType"+ IsSendByDocType + logData, false, "CreateUD2LTService", stopLogAt);
+            return IsSendByDocType;
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>AUTO GENERATED BY CONFLICT EXTENSION>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 22R01P
+        }
         private void FixDocumentTypeCodeEmpty(string logData)
         {
             var codeStart = _DocumentsFilingPM.DocumentTypeCode;

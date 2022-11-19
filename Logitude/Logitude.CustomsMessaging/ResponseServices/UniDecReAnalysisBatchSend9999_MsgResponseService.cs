@@ -20,8 +20,8 @@ using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+
 using System.Data.Common;
-//using System.Data.OracleClient;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
@@ -158,7 +158,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //        mess.AppendLine($"Exception!!!CreateSheetSBQMessage({itemPoco.CustomsCollateralId}) : {ee1.Message}");
             //    }
             //}
-
             //        realUpdatedList.ChunkBy(100)
             //.ForEach(list100 =>
             //{
@@ -192,10 +191,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                          string cmd = "Update DeclarationCourierStatuses set COURIERPAYMENTSTATUSCODE='I'";
                          cmd = cmd + "  where DECLARATIONID in (:p1) ";
 
-                         OracleCommand sqlCommand = new OracleCommand(cmd, con);
-                         sqlCommand.Parameters.Add(new OracleParameter("p1", inList));
+                         OracleCommand oracleCommand = new OracleCommand(cmd, con);
+                         oracleCommand.Parameters.Add(new OracleParameter("p1", inList));
                          con.Open();
-                         sqlCommand.ExecuteNonQuery();
+                         oracleCommand.ExecuteNonQuery();
                          con.Close();
 
 

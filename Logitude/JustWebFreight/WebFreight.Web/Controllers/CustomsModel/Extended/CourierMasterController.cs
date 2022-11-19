@@ -36,6 +36,7 @@ using Logitude.Customs.BL.Messaging.ILSWS;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.BL.BL;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -801,9 +802,22 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                     var amitalContext = AmitalContext.GetContext(tenant);
                     var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
                     var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", false, true);
+                    FeatureQuery featureQuery = new FeatureQuery();
+                    var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(tenant), tenant);
+                    var feature = features.Features.FirstOrDefault(x => x.Code == "CancelOldCommunication");
+                    if (feature != null)
+                    {
+                        try
+                        {
+                            var cancelOldCommunicationLogs = new CancelOldCommunicationLogs();
+                            cancelOldCommunicationLogs.CancelOldECTHRDataMaman(tenant, declarationId);
+                        }
+                        catch
+                        {
 
-                    var cancelOldCommunicationLogs = new CancelOldCommunicationLogs();
-                    cancelOldCommunicationLogs.CancelOldECTHRDataMaman(tenant, declarationId);
+                        }
+                       
+                    }
 
                     if (def.DEFDATA.Contains("ILMMN") && declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILMMN") // Maman
                     {
@@ -970,11 +984,11 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
         }
 
         [HttpPost]
-        public HttpResponseMessage SendConnectDeclaration([FromBody] CourierMasterPM courierMasterPM)
+        public HttpResponseMessage SendConnectDeclaration([FromBody] DCI_CourierMastersConnectedResponseContentHeader param)
         {
             try
             {
-                var res = new DCI_CourierMastersConnectedMessagingService().CreateCRS(courierMasterPM);
+                var res = new DCI_CourierMastersConnectedMessagingService().CreateCRS(param);
                 return Request.CreateResponse(HttpStatusCode.OK, res);
             }
 

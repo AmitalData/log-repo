@@ -21,8 +21,8 @@ using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+
 using System.Data.Common;
-//using System.Data.OracleClient;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
@@ -30,7 +30,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using UnifreightIIG.Common.SystemTableServiceReference;
-using Devart.Data.Oracle;
+ using Devart.Data.Oracle;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -223,6 +223,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
     //});
         }
 
+
         public static void RealSetDeclarationCourierPaymentStatusCode(int tenant, string declarationId)
         {
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
@@ -236,10 +237,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     string cmd = "Update DeclarationCourierStatuses set COURIERPAYMENTSTATUSCODE='I'";
                     cmd = cmd + "  where DECLARATIONID=:p1 ";
 
-                    OracleCommand sqlCommand = new OracleCommand(cmd, con);
-                    sqlCommand.Parameters.Add(new OracleParameter("p1", declarationId));
+                    OracleCommand oracleCommand = new OracleCommand(cmd, con);
+                    oracleCommand.Parameters.Add(new OracleParameter("p1", declarationId));
                     con.Open();
-                    sqlCommand.ExecuteNonQuery();
+                    oracleCommand.ExecuteNonQuery();
                     con.Close();
                 }
 
@@ -261,7 +262,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
         }
 
 
- 
         private static List<CourierPendingReason> GetAllCourierPendingReason(GenericRequestParams requestParams)
         {
             var repoCourierPendingReasonRepository = new CourierPendingReasonRepository(requestParams.Tenant);

@@ -244,6 +244,9 @@
     <Compile Include="Communications.cs" />
     <Compile Include="Contracts\ICustomsSendReportExel.cs" />
     <Compile Include="Contracts\ICustomsExchangeRatesQuery.cs" />
+    <Compile Include="Contracts\ICustomsDeleteCustomRequestSheet.cs" />
+    <Compile Include="Contracts\ICustomsDeleteQueMessMoreDetails.cs" />
+    <Compile Include="Contracts\ICustomsDeleteNotToCustomCommunication.cs" />
     <Compile Include="Contracts\IUpdateOpenDeclarationInCourierMasterService.cs" />
     <Compile Include="FTP\SFTPDeleteTempFilesService.cs" />
 

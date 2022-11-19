@@ -50,6 +50,27 @@ namespace Logitude.Customs.Def.ClosedTable
                 Description = "Exchange Rates Query",
             });
 
+            all.Add(new CustomsSchedulerProcedureDetails()
+            {
+                Code = "CustomsDeleteNotToCustomCommunication",
+                Name = "CustomsDeleteNotToCustomCommunication",
+                SearchFields = "CustomsDeleteNotToCustomCommunication,CustomsDeleteNotToCustomCommunication",
+                Description = "Delete Not To Custom Communication",
+            });
+            all.Add(new CustomsSchedulerProcedureDetails()
+            {
+                Code = "CustomsDeleteQueMessMoreDetails",
+                Name = "CustomsDeleteQueMessMoreDetails",
+                SearchFields = "CustomsDeleteQueMessMoreDetails,CustomsDeleteQueMessMoreDetails",
+                Description = "CustomsDeleteQueMessMoreDetails",
+            });
+            all.Add(new CustomsSchedulerProcedureDetails()
+            {
+                Code = "CustomsDeleteCustomRequestSheet",
+                Name = "CustomsDeleteCustomRequestSheet",
+                SearchFields = "CustomsDeleteCustomRequestSheet,CustomsDeleteCustomRequestSheet",
+                Description = "CustomsDeleteCustomRequestSheet",
+            });
             return all;
         }
             public void MapPoco(SchedulerProcedure newPoco)

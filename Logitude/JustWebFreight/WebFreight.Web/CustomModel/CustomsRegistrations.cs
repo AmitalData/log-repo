@@ -7,6 +7,7 @@ using Logitude.Customs.Def.EntityQueryServicesExt;
 using Logitude.CustomsMessaging.Helpers;
 using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.CustomsMessaging.ResponseServices;
+using Logitude.CustomsMessaging.Tasks;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Contracts;
 using Microsoft.Practices.Unity;
@@ -39,6 +40,9 @@ namespace WebFreight.Web.CustomModel
             ContainerAccessor.Container.RegisterType<ICustomsSendDeclarationStatus, SendDeclarationStatus>("SendDeclarationStatus", new InjectionFactory(c => new SendDeclarationStatus()));
             ContainerAccessor.Container.RegisterType<ICustomsSendReportExel, SendReportExel>("SendReportExel", new InjectionFactory(c => new SendReportExel()));
             ContainerAccessor.Container.RegisterType<ICustomsExchangeRatesQuery, ExchangeRatesQuery>("ExchangeRatesQuery", new InjectionFactory(c => new ExchangeRatesQuery()));
+            ContainerAccessor.Container.RegisterType<ICustomsDeleteNotToCustomCommunication, DeleteNotToCustomCommunication>("DeleteNotToCustomCommunication", new InjectionFactory(c => new DeleteNotToCustomCommunication()));
+            ContainerAccessor.Container.RegisterType<ICustomsDeleteCustomRequestSheet, DeleteCustomRequestSheet>("DeleteCustomRequestSheet", new InjectionFactory(c => new DeleteCustomRequestSheet()));
+            ContainerAccessor.Container.RegisterType<ICustomsDeleteQueMessMoreDetails, DeleteQueMessMoreDetails>("DeleteQueMessMoreDetails", new InjectionFactory(c => new DeleteQueMessMoreDetails()));
 
 
 

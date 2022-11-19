@@ -47,6 +47,19 @@ namespace Logitude.Customs.Data.Repsitories
                     select a).FirstOrDefault();
         }
 
+        public Declaration GetDeclarationByConsignment(string cargoTypeCode, string manifestNumber, string secondCargoID, string thirdCargoID)
+        { 
+             var  query= (
+                    from d in context.Declarations
+                    join a in context.Consignments
+                     on d.Id equals a.DeclarationId
+                    where a.CargoTypeCode.ToLower() == cargoTypeCode.ToLower() & a.ManifestNumber.ToLower() == manifestNumber.ToLower()
+                 & a.SecondCargoID.ToLower() == secondCargoID.ToLower() & a.ThirdCargoID.ToLower() == thirdCargoID.ToLower()
+                    select d
+                        ).ToList().FirstOrDefault();
+            return query;
+        }
+
         public string GetLastAmendmentIdByCustomFileNo(string customFileNo, int tenant)
         {
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
@@ -451,7 +464,8 @@ namespace Logitude.Customs.Data.Repsitories
             var q =
                   (
                   from rec in context.Declarations
-                  where rec.CourierHAWB == CourierHAWB && rec.Tenant == tenant
+                  where rec.CourierHAWB == CourierHAWB && rec.Tenant == tenant && rec.AmendmentDontDisplayInList == false
+
                   select rec.Id
                   );
             return q.ToList(); ;

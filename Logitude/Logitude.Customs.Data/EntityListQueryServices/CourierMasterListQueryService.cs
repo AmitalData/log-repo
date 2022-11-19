@@ -92,7 +92,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        NoOfCourierHawbWithoutDelivery = a.NoOfCourierHawbWithoutDelivery,
                                                        NoOfCourierHawbwWithoutHatara =a.NoOfCourierHawbwWithoutHatara,                                                     
                                                        LandingDateDateOnly = a.LandingDate,
-                                                       LandingDateTimeOnly = (DateTime)a.LandingDate
+                                                       LandingDateTimeOnly = (DateTime)a.LandingDate,
+                                                       
 
         });
 

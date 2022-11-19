@@ -11,7 +11,7 @@ using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.CustomsMessaging.Testers.Messages;
 using Logitude.CustomsMessaging.Utils;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.Helpers;
+ using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -20,8 +20,9 @@ using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+
 using System.Data.Common;
-//using System.Data.OracleClient;
+
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
@@ -29,6 +30,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using UnifreightIIG.Common.SystemTableServiceReference;
+ 
 using Devart.Data.Oracle;
 
 namespace Logitude.CustomsMessaging.ResponseServices
@@ -37,10 +39,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
         //<TResponseData, TCustomResponse, TRequestParams>
         <INF_MSG_GenericResponseData, DCAInUCB8212WithResponseContentHeader, GenericRequestParams>
     {
-        public override INF_MSG_GenericResponseData GetResponse(DCAInUCB8212WithResponseContentHeader customResponse, GenericRequestParams requestParams)
+         public override INF_MSG_GenericResponseData GetResponse(DCAInUCB8212WithResponseContentHeader customResponse, GenericRequestParams requestParams)
         {
-            return this.MyResponseData;
-
+                       return this.MyResponseData;
+ 
         }
 
         public override void Update(DCAInUCB8212WithResponseContentHeader customResponse, GenericRequestParams requestParams)
@@ -53,7 +55,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CustomsCollateralsAnswer");
             //var objectTableIdCourierMaster = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
-            var qs = new CustomsCollateralsAnswerQueryService(context);
+           var qs = new CustomsCollateralsAnswerQueryService(context);
 
             //List<DeclarationCourierStatusPM> listPM = new List<DeclarationCourierStatusPM>();
             var repo = new CustomsCollateralsAnswerRepository(context);
@@ -78,7 +80,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             LoggingUserId = requestParams.LoggingUserId,
                             RequestVIA = SendRequestVIA.WebServiceBatch,
                             CustomCollateralId = collateral.CustomsCollateralId,
-                            LoggingEntityId2 = "Test",
+                            LoggingEntityId2 ="Test",
                             CustomsCollateralsAnswers = new List<CustomsCollateralsAnswerParams>()
                             {
                                 new CustomsCollateralsAnswerParams()
@@ -92,8 +94,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                      CustomsTapgFile= collateral.CustomsTapgFile,
                                      CustomsNumeral = collateral.CustomsNumeral,
                                      AnswerForCollateralStatusCode = collateral.AnswerForCollateralStatusCode,
-                                     Errors = collateral.Errors,
-                                     AnswerEntityType = collateral.AnswerEntityTypeCode,
+                                     Errors = collateral.Errors, 
+                                     AnswerEntityType = collateral.AnswerEntityTypeCode, 
                                      AnswerForCollateralStatus = collateral.AnswerForCollateralStatusName
 
 
@@ -109,7 +111,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         scopeNewCRS.Complete();
                     }
 
-
+          
                 }
                 catch (System.Exception ee1)
                 {
@@ -119,7 +121,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     return;
                 }
 
-
+           
             }
 
             this.MyRequestSheetParam = this.MyRequestSheetParam ?? new RequestSheetParam();
@@ -136,7 +138,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private static void CreateCRS8212_Update2InProgress(DCAInUCB8212WithResponseContentHeader customResponse, GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, List<CustomsCollateralsAnswer> listPoco, List<MyDTO> listCustomsCollateralsAnswer)
         {
-
+ 
 
             var realUpdatedList = new List<string>();
             //foreach (var itemPoco in customResponse)
@@ -212,10 +214,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                          string cmd = "Update DeclarationCourierStatuses set COURIERPAYMENTSTATUSCODE='I'";
                          cmd = cmd + "  where DECLARATIONID in (:p1) ";
 
-                         OracleCommand sqlCommand = new OracleCommand(cmd, con);
-                         sqlCommand.Parameters.Add(new OracleParameter("p1", inList));
+                         OracleCommand oracleCommand = new OracleCommand(cmd, con);
+                         oracleCommand.Parameters.Add(new OracleParameter("p1", inList));
                          con.Open();
-                         sqlCommand.ExecuteNonQuery();
+                         oracleCommand.ExecuteNonQuery();
                          con.Close();
 
 
@@ -241,8 +243,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                      }
                  });
             }
+
         }
  
     }
-
 }

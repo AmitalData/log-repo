@@ -630,7 +630,6 @@
                                                                         </td>
                                                                         <td style="width:1px"></td>
                                                                          
-                                                                         
                                                                         <td></td>
                                                                     </tr>
                                                                 </table>
@@ -992,6 +991,7 @@
                                                                         <td style="width:50px;">
                                                                             <div></div>
                                                                         </td>
+
                                                                         <td
                                                                             [ngStyle]="{'width':!(this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) ? '150px' : '170px' }">
                                                                             <div *ngIf="this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0"
@@ -1027,8 +1027,10 @@
                                                                         </td>
                                                                         
 
-                                                                        <td style="width: 150px; ">
 
+                                                                        <td style="width: 130px;">
+
+                                                                            
                                                                             <split-button *ngIf="DelayFormVisibility"
                                                                                 (DefaultSplitButtonClicked)="SendDelayForm()"
                                                                                 [IsDisabled]="IsDisplayOnly || (_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null
@@ -1042,7 +1044,6 @@
                                                                                     <div></div>
                                                                                 </div>
                                                                             </split-button>    
-                                                                        </td>
                                                                         <td>
                                                                             <div *ngIf="HasRequiresApprovalFeature"
                                                                                 style="width: 130px;">
@@ -1058,7 +1059,7 @@
                                                                                         <div></div>
                                                                                     </div>
                                                                                 </split-button>
-                                                                            </div>
+                                                                            </div> 
                                                                         </td>
                                                                      
                                                                         <td>
@@ -1519,9 +1520,7 @@
                                             <tr style="height:100%;">
                                                 <td colspan="7" style="height: 100%;width:100%; padding: 5px;">
 
-                                                    <div class="GeneratedGridContainer"
-                                                        *ngIf="_SelectedTabFilter.Code=='HOLD'"
-                                                        style="padding:5px;vertical-align:top;top:0;position:absolute">
+                                                    <div class="GeneratedGridContainer" *ngIf="_SelectedTabFilter.Code=='HOLD'" style="padding:5px;vertical-align:top;top:0;position:absolute">
                                                         <logitude-grid GridWidth="100%" GridHeight="100%"
                                                             [ObjectTable]="ObjectTableName" [dataSource]="DataSource"
                                                             (AfterViewInitCompleted)="ViewInitCompleted($event)"
@@ -1556,9 +1555,7 @@
         -->
                                                     </div>
 
-                                                    <div class="GeneratedGridContainer"
-                                                        *ngIf="!(_SelectedTabFilter.Code=='HOLD')"
-                                                        style="padding:5px;vertical-align:top;top:0;position:absolute">
+                                                    <div class="GeneratedGridContainer" *ngIf="!(_SelectedTabFilter.Code=='HOLD')" style="padding:5px;vertical-align:top;top:0;position:absolute">
                                                         <logitude-grid GridWidth="100%" GridHeight="100%"
                                                             [ObjectTable]="ObjectTableName" [dataSource]="DataSource"
                                                             (AfterViewInitCompleted)="ViewInitCompleted($event)"

@@ -143,6 +143,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.OracleClient" />
     <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
     </Reference>
@@ -240,6 +241,7 @@
     <Compile Include="Helpers\ClosedTable\Update1998NDMessageActionCode.cs" />
     <Compile Include="Helpers\ClosedTable\Update1308CustomsShip.cs" />
     <Compile Include="Helpers\ClosedTable\Update1416ModificationAndDiscountType.cs" />
+    <Compile Include="MessagingServices\DCAInCC_MSG1_EntryExitToFromCustomsStorageSitesMessageMessagingService.cs" />
     <Compile Include="MessagingServices\DCI_CourierMastersConnectedMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInLG_NG_8410_LogisticActionRequestMessageMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInLG_NG_8411_SendLogisticActionRequestDecisionMessagingService.cs" />
@@ -440,6 +442,7 @@
     <Compile Include="RequestServices\VP_NG_2690_VehicleInRequestService.cs" />
     <Compile Include="ResponseServices\CBC_NG_8362_MSG01_CustomsBookOutResponseService.cs" />
     <Compile Include="ResponseServices\CB_NG_8316_CustomItemLegalDemandsResponseService.cs" />
+    <Compile Include="ResponseServices\CC_MSG1_EntryExitToFromCustomsStorageSitesMessageResponseService.cs" />
     <Compile Include="ResponseServices\CLAIM_2300_MissingDocumentRequestResponseService.cs" />
     <Compile Include="ResponseServices\CLAIM_2345_ClaimAnswerResponseService.cs" />
     <Compile Include="ResponseServices\CLAIM_5013_ContinuousResponseOnClaimFileResponseService.cs" />
@@ -625,6 +628,9 @@
     <Compile Include="ResponseServices\VP_NG_2691_MSG101_VehicleInResponseService.cs" />
     <Compile Include="Tasks\SendReportExel.cs" />
     <Compile Include="Tasks\ExchangeRatesQuery.cs" />
+    <Compile Include="Tasks\DeleteCustomRequestSheet.cs" />
+    <Compile Include="Tasks\DeleteNotToCustomCommunication.cs" />
+    <Compile Include="Tasks\DeleteQueMessMoreDetails.cs" />
  
     <Compile Include="Tasks\SendDeclarationStatus.cs" />
     <Compile Include="Tasks\SendManifestService.cs" />
@@ -712,6 +718,7 @@
       <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
       <Name>Simplog.Data</Name>
     </ProjectReference>
+
     <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
       <Project>{6D7FFAD2-35B6-4133-8700-CF73E58D0C85}</Project>
       <Name>Simplog.Global.Data</Name>

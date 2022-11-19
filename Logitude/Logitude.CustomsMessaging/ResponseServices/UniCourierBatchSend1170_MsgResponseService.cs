@@ -26,6 +26,8 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.CustomsMessaging.Utils;
 using Simplog.Server.Infrastructure.Helpers;
+
+ 
 using Devart.Data.Oracle;
 using Simplog.Data.InfrastructureModel;
 using System.Data.Common;
@@ -34,7 +36,7 @@ using System.Transactions;
 //using System.Data.OracleClient;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
-
+ 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
     public class UniCourierBatchSend1170_MsgResponseService : ResponseServiceBase
@@ -176,6 +178,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                         RealSetDeclarationCourierManifestStatusCode(requestParams.Tenant, itemPM.DeclarationId);
 
+
                         //string updateSql = $"Update DeclarationCourierStatuses set COURIERMANIFESTSTATUSCODE='I' where DECLARATIONID ='{itemPM.DeclarationId}' ";
                         //CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
 
@@ -203,6 +206,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         }
 
 
+
         public static void RealSetDeclarationCourierManifestStatusCode(int tenant, string declarationId)
         {
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
@@ -215,10 +219,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     string cmd = "Update DeclarationCourierStatuses set COURIERMANIFESTSTATUSCODE='I'";
                     cmd = cmd + "  where DECLARATIONID=:p1 ";
 
-                    OracleCommand sqlCommand = new OracleCommand(cmd, con);
-                    sqlCommand.Parameters.Add(new OracleParameter("p1", declarationId));
+                    OracleCommand oracleCommand = new OracleCommand(cmd, con);
+                    oracleCommand.Parameters.Add(new OracleParameter("p1", declarationId));
                     con.Open();
-                    sqlCommand.ExecuteNonQuery();
+                    oracleCommand.ExecuteNonQuery();
                     con.Close();
                 }
 
@@ -238,8 +242,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             }
         }
-
-
 
 
         private static void Create1170(GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, DeclarationCourierStatus itemPM)

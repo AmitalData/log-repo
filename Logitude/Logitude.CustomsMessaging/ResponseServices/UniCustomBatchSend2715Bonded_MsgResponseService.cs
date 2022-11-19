@@ -56,9 +56,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var customsDocumentPM = myCustomsDocumentQueryService.GetSingle(customResponse.DocumentsFilingId, true, false);
             (new Send2715Bonded()).Send(
                    requestParams.Tenant,
-                   customResponse.DocumentsFilingId, 
+                   customResponse.DocumentsFilingId,
                    customsDocumentPM,
-                   customResponse.CustomsDoucumentTypeCode);
+                   customResponse.DocumentTypeCode);
 
 
             this.MyRequestSheetParam = this.MyRequestSheetParam ?? new RequestSheetParam();

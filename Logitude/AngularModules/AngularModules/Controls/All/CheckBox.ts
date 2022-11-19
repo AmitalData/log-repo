@@ -100,6 +100,7 @@ export class CheckBox{
         var pipe: IdGeneratorPipe = new IdGeneratorPipe();
         this.ControlId = pipe.transform("CheckBox_" + this.CurrentSession.GetNewId("CheckBox"));
         this.ControlId2 = this.ControlId + "_LBL";
+        console.log('checkbox create')
     }
 
     private isChecked: boolean = false;

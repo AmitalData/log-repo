@@ -98,28 +98,22 @@
                                     <tr>
                                         <td>
                                             <div class="ActionButton" style="width: 35px;height:23px; ">
-                                                <CheckBox style="pointer-events:none;" [IsChecked]="CourierMasterService.connectedSelectAll" (Checked)="IsSelected = $event "></CheckBox>
-
+                                                <CheckBox [IsChecked]="CourierMasterService.connectedSelectAll" (Checked)="$event ? OnAllConnectedChecked(false) : OnAllConnectedUnchecked();"></CheckBox>
                                             </div>
                                         </td>
 
                                         <td>
                                             <div class="ToggleButton" tabindex="-1" style="width: 20px;height:23px;left:10px ">
-
-
                                                 <img src="./Images/ToggleIcon.png" style="float:left;" />
                                                 <div class="ToggleButtonMenu" style="width: 70px;top:26px;text-align:right">
-                                                    <button style="text-align:right" (click)="OnAllBtnClicked(false)">{{'Customs.CourierMaster.O.All' | TextCodeTranslationPipe}}</button>
-                                                    <button style="text-align:right" (click)="OnNoneBtnClicked()">{{'Customs.CourierMaster.O.None' | TextCodeTranslationPipe}}</button>
+                                                    <button style="text-align:right" (click)="OnAllConnectedChecked(false)">{{'Customs.CourierMaster.O.All' | TextCodeTranslationPipe}}</button>
+                                                    <button style="text-align:right" (click)="OnAllConnectedUnchecked()">{{'Customs.CourierMaster.O.None' | TextCodeTranslationPipe}}</button>
                                                 </div>
                                             </div>
                                         </td>
                                     </tr>
                                 </table>
                             </div>
-
-
-
                         </td>
 
                         <td class="TabTitleRow"  style="width:1250px" >
@@ -143,7 +137,6 @@
                                                [IsAllRecordsChecked]="true"
                                                [SelectedRow]="SelectedRow2"
                                                [IsCustomTemplate]="true"
-                                               (CheckBoxChecked)="onCheckBoxChecked($event)"
                                                [IsGradiantSelectedColor]="true">
                                 </logitude-grid>
                             </div>
@@ -160,28 +153,22 @@
                                     <tr>
                                         <td>
                                             <div class="ActionButton" style="width: 35px;height:23px; ">
-                                                <CheckBox style="pointer-events:none;" [IsChecked]="CourierMasterService.disconnectedSelectAll" (Checked)="IsSelectedNot = $event "></CheckBox>
-
+                                                <CheckBox [IsChecked]="CourierMasterService.disconnectedSelectAll" (Checked)="$event ? OnAllDiconnectedChecked() : OnAllDiconnectedUnchecked();"></CheckBox>
                                             </div>
                                         </td>
 
                                         <td>
                                             <div class="ToggleButton" tabindex="-1" style="width: 20px;height:23px;left:10px ">
-
-
                                                 <img src="./Images/ToggleIcon.png" style="float:left;" />
                                                 <div class="ToggleButtonMenu" style="width: 70px;top:26px;text-align:right">
-                                                    <button style="text-align:right" (click)="OnAllBtnClickedNot()">{{'Customs.CourierMaster.O.All' | TextCodeTranslationPipe}}</button>
-                                                    <button style="text-align:right" (click)="OnNoneBtnClickedNot()">{{'Customs.CourierMaster.O.None' | TextCodeTranslationPipe}}</button>
+                                                    <button style="text-align:right" (click)="OnAllDiconnectedChecked()">{{'Customs.CourierMaster.O.All' | TextCodeTranslationPipe}}</button>
+                                                    <button style="text-align:right" (click)="OnAllDiconnectedUnchecked()">{{'Customs.CourierMaster.O.None' | TextCodeTranslationPipe}}</button>
                                                 </div>
                                             </div>
                                         </td>
                                     </tr>
                                 </table>
                             </div>
-
-
-
                         </td>
                         <td class="TabTitleRow" style="width:250px">
                             {{'General.O.NotConnectedDeclarations' | TextCodeTranslationPipe}}
@@ -203,7 +190,6 @@
                                                [MenuHeaderchangeevent]="MenuHeaderchangeevent1"
                                                [columns]="columns1"
                                                [IsCustomTemplate]="true"
-                                               (CheckBoxChecked)="onCheckBoxChecked1($event)"
                                                [IsGradiantSelectedColor]="true">
                                 </logitude-grid>
                             </div>
