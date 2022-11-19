@@ -282,7 +282,9 @@
                                                     [HideColumns]="true"
                                                     [LookUpTableName]="'Customs.CurrencyType'"
                                                     (SelectedItemChanged)="item.SetLocalName($event, 'CurrencyTypeName')"
-                                                    [FocusOnMe]="true">
+                                                    [FocusOnMe]="true"
+                                                    (LostFocus)="item.OnCurrencyTypeLostFocus(item)" 
+                                                    >
                                             </LogLov>
 
                                         </div>
@@ -299,7 +301,7 @@
                                         </div>
                                         <div *ngIf="logcelltemplate.IsEditMode">
                                             <!--<input type="text"  style="width:120px"  [(ngModel)]="item.TextValue"     (blur)="item.onBlur()"  [id]="InputId"  (paste)="item.OnPaste($event)"  (keydown)="item.OnKeyDown($event)" />-->
-                                            <LogTextBox [ObjectFieldName]="'Amount'" [InputType]="'double'" [DataContext]="item" (LostFocus)="item.OnAmountLostFocus()"
+                                            <LogTextBox [ObjectFieldName]="'Amount'" [InputType]="'double'" [DataContext]="item" (LostFocus)="item.OnAmountLostFocus(item)"
                                                         [ObjectTableName]="'Customs.SupplierInvoiceModification'" [HideColumns]="true" [FocusOnMe]="true" [AllowPercentage]="true" (OriginalText)="item.AmountOriginalText($event)"></LogTextBox>
                                         </div>
                                     </log-cell-template>

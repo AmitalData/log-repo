@@ -31,6 +31,7 @@ import { SupplierInvoiceItemsPricePM } from '../../../../../../Customs/EntityPMs
 import { SuppInvoiceItemsAbachStatementPM } from '../../../../../../Customs/EntityPMs/SuppInvoiceItemsAbachStatementPM';
 import { CustomsRequiredFieldExtendedListService } from '../../../../../../Customs/Services/ExtendedLists/CustomsRequiredFieldExtendedListService';
 import { customsItemsService } from 'QuoteOPM/Utilities/customsItems.service';
+import { SupplierInvoiceSharedService } from '../Services/SupplierInvoiceSharedService';
 
 
 @Component({
@@ -59,7 +60,7 @@ export class EditSupplierInvoiceItem extends BaseComponent {
     taxExemptCodeTypesFilter: ApiQueryFilters;
 
     public InvoiceNumberText: string = "Customs.SupplierInvoiceItemsConDeclar.F.InvoiceNumber";
-    constructor(private cd: ChangeDetectorRef) {
+    constructor(private cd: ChangeDetectorRef, private supplierInvoiceSharedService:SupplierInvoiceSharedService) {
         super();
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
         this.CustomsBookTypeFilterItems = new ApiQueryFilters();
@@ -120,7 +121,7 @@ export class EditSupplierInvoiceItem extends BaseComponent {
         // Modification List
         this.ModificationsList = new ObservableCollection([]);
         for (let item of this.OriginalItemPM.SupplierInvoiceItemsMods) {
-            this.ModificationsList.Insert(new ModificationItemModel(item));
+            this.ModificationsList.Insert(new ModificationItemModel(item,this.supplierInvoiceSharedService));
         }
 
         this.PricesList = new ObservableCollection([]);
@@ -520,7 +521,7 @@ export class EditSupplierInvoiceItem extends BaseComponent {
                 item.ChangeSetOp = "Insert",
 
                 this.OriginalItemPM.AddSupplierInvoiceItemsMod(item);
-            this.ModificationsList.Insert(new ModificationItemModel(item));
+            this.ModificationsList.Insert(new ModificationItemModel(item,this.supplierInvoiceSharedService));
             //this.CurrentSession.ResetRowIndex();
         }
     }
@@ -1213,7 +1214,7 @@ export class ModificationItemModel extends BaseComponent {
     public ObjectTableName = "Customs.SupplierInvoiceItemsMod";
     public DataContext = this;
 
-    constructor(private modificationPM: SupplierInvoiceItemsModPM) {
+    constructor(private modificationPM: SupplierInvoiceItemsModPM ,private supplierInvoiceSharedService:SupplierInvoiceSharedService) {
         super();
         this.ModificationPM = modificationPM;
     }
@@ -1271,6 +1272,19 @@ export class ModificationItemModel extends BaseComponent {
         } else {
             this[fieldName] = null;
         }
+
+    }
+     
+    OnAmountOrCurrencyLostFocus(item:ModificationItemModel){
+
+        var CurrentSession = SessionLocator.SelectedSession;
+
+        if(CurrentSession.CurrentEditComponent.EntityPM.Direction == "E" &&(item.modificationPM.ModificationAffectTypeID == '1' || item.modificationPM.ModificationAffectTypeID == '2'))
+    {   
+
+                this.supplierInvoiceSharedService.Difference$.next();
+
+    }
 
     }
 }
