@@ -68,6 +68,7 @@ import { IncotemrsFileValidationListService } from 'Customs/Services/StandardLis
 import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
 import { IncotemrsFileValidationList } from 'Customs/EntityLists/IncotemrsFileValidationList';
 import { customsItemsService } from 'QuoteOPM/Utilities/customsItems.service';
+import { SupplierInvoiceSharedService } from './Services/SupplierInvoiceSharedService';
 
 
 @Component({
@@ -143,6 +144,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     public tradeAgreementFilter: ApiQueryFilters = null as any;
 
     constructor(
+        private supplierInvoiceSharedService:SupplierInvoiceSharedService, 
         private cd: ChangeDetectorRef,
         private logtuideTableDataService: LogtuideTableDataService,
     ) {
@@ -196,6 +198,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             this.TooltipEdit = "עריכת פריט";
             this.setAdjustmentsWarning(this.IncotermCode)
         }
+        this.supplierInvoiceSharedService.Difference$.subscribe(()=>this.GetDifference())
     }
   
 
@@ -984,14 +987,18 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
     InvoiceCurrencyChanged(currency) {
         this.InvoiceCurrency = currency;
-        if (this.InvoiceCurrency)
+        if (this.InvoiceCurrency){
             this.Parent.invoiceCurrencyName = this.InvoiceCurrency.LocalName;
+                if(this.declarationPM.Direction == 'E') this.GetDifference();
+                
+        }
+           
         //this.Parent.CalculateCommissionPercentage();
     }
 
     public get InvoiceCurrencyTypeCode() { return this.EntityPM.InvoiceCurrencyTypeCode; }
     public set InvoiceCurrencyTypeCode(newValue: string) {
-        if (this.EntityPM.InvoiceCurrencyTypeCode != newValue) {
+        if (this.EntityPM.InvoiceCurrencyTypeCode != newValue) {            
             //this.Parent.calculateCommission = true; //old code
 
         }
@@ -1266,11 +1273,13 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
         if (this.EntityPM.InvoiceAmount != newValue) {
             //this.Parent.calculateCommission = true; //old
-
         }
         this.EntityPM.InvoiceAmount = newValue;
         if (this.Parent.TotalForeignCurrency == null) this.Parent.TotalForeignCurrency = 0;
+        if(this.declarationPM.Direction != "E")
         this.Parent.Difference = this.Parent.TotalForeignCurrency - (newValue);
+        else
+        this.GetDifference()
         var percentage;
         //if (this.declarationPM.SupplierInvoices.length > 0) {
         //    percentage = this.declarationPM.SupplierInvoices[0].InsruancePercentage;
@@ -1710,7 +1719,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                     item.SupplierInvoiceItemsMods.forEach(Modifications =>{
                         
                         if(Modifications.Amount!=null && Modifications.ModificationAffectTypeID == '1' || Modifications.ModificationAffectTypeID == '2'){
-
+ 
                             if(Modifications.CurrencyTypeCode != this.EntityPM.InvoiceCurrencyTypeCode )
                             {
                                 this.TotalExportModificationInInvoiceCurrency = 0;
@@ -1770,7 +1779,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         
     }
 
-    GetFreightTotals() {        
+    GetFreightTotals() { 
         this.supplierInvoiceService.GetTotalForeignCurrencyForInvoice(this.EntityPM.DeclarationId, this.EntityPM.InvoiceCounterKey).subscribe((response: any) => {
             if (response != null) {
                 this.Parent.TotalForeignCurrency = response.Result;
@@ -3238,7 +3247,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     constructor(EntityPM: SupplierInvoiceItemPM, parent: SupplierInvoiceGeneralTabComponent, allowExport: boolean = false) {
         super();
         this.entityPM = EntityPM;
-        this.allowExport = allowExport;
+        this.allowExport = allowExport; 
         //calculate ids
         this.ClassefierRemarkToolTipWrapper += EntityPM.SequenceNumeric;
         this.ClassefierRemarkToolTip += EntityPM.SequenceNumeric;
@@ -4682,7 +4691,19 @@ export class ModificationItemModel extends BaseComponent {
     InvoiceCurrencyExchangeRtae: number = 0;
     DiscountInDsicCurrency: number = 0;
 
+    OnCurrentTypeLostFocus(){
+
+        if(this.parent.declarationPM.Direction == 'E' && (this.EntityPM.ModificationAffectTypeID == '1' || this.EntityPM.ModificationAffectTypeID == '2')){
+            this.parent.GetDifference()
+        }
+    }
+
+
     OnAmountLostFocus() {
+
+        if(this.parent.declarationPM.Direction == 'E' && (this.EntityPM.ModificationAffectTypeID == '1' || this.EntityPM.ModificationAffectTypeID == '2')){
+            this.parent.GetDifference()
+        }
         if (this.doCalculate) {
             var value = this.Amount;
 

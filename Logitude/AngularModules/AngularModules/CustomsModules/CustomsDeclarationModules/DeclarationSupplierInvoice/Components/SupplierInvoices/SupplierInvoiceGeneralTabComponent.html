@@ -931,7 +931,9 @@
                                                                                 [DisplayMemberPath]="'Code'"
                                                                                 [HideColumns]="true"
                                                                                 [FocusOnMe]="true"
-                                                                                [SelectedValue]="CurrencyTypeCode">
+                                                                                [SelectedValue]="CurrencyTypeCode"
+                                                                                (LostFocus)="item.OnCurrentTypeLostFocus()"
+                                                                                >
                                                                         </LogLov>
 
                                                                     </div>

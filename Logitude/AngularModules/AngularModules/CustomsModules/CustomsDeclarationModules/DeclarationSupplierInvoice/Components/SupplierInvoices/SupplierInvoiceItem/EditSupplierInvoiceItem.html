@@ -1424,7 +1424,9 @@
                                                                                         [HideColumns]="true"
                                                                                         [LookUpTableName]="'Customs.CurrencyType'"
                                                                                         (SelectedItemChanged)="item.SetLocalName($event, 'CurrencyTypeName')"
-                                                                                        [FocusOnMe]="true">
+                                                                                        [FocusOnMe]="true"
+                                                                                        (LostFocus)="item.OnAmountOrCurrencyLostFocus(item)"
+                                                                                        >
                                                                                 </LogLov>
 
                                                                             </div>
@@ -1441,7 +1443,7 @@
                                                                             </div>
                                                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                                                 <LogTextBox [ObjectFieldName]="'Amount'" [InputType]="'double'" [DataContext]="item"
-                                                                                            [ObjectTableName]="'Customs.SupplierInvoiceItemsMod'" [HideColumns]="true" [FocusOnMe]="true"></LogTextBox>
+                                                                                            [ObjectTableName]="'Customs.SupplierInvoiceItemsMod'" [HideColumns]="true" [FocusOnMe]="true" (LostFocus)="item.OnAmountOrCurrencyLostFocus(item)"></LogTextBox>
                                                                             </div>
                                                                         </log-cell-template>
                                                                     </ng-template>
