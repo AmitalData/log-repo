@@ -61,5 +61,6 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public bool AvailableInCustomization { get; set; }
         public string ParentObjectTableId { get; set; }
         public bool IsCustom { get; set; }
+        public bool SupportSubEntity { get; set; }
     }
 }

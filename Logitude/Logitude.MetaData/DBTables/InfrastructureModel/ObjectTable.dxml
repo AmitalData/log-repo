@@ -472,6 +472,12 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="SupportSubEntity"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="HeaderScreenId"
     ReferencedTable="Screens"
