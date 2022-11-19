@@ -12,7 +12,7 @@
     <![CDATA[
 update INTERFACETENANTDEFINITIONS set sendtime = (
 select sendtime from interfacemanagements where code = '2715' and sendtime is not null)
-where code = '2715' and sendtime is  null
+where code = '2715' and sendtime is  null;
     ]]>
   </Oracle>
 </Script>
