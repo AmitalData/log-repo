@@ -96,6 +96,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         this.UIProperties.SetEnabled("FinalManifestNumber", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("FinalShipCode", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("FinalLoadingSite", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("ChargingSite", this.ObjectTableName, false);
 
     }
 
