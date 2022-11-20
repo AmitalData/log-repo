@@ -552,11 +552,11 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                         let Mawb = UnifreightMessageM.GetStringValue(mess,"Mawb");
                         let Hawb = UnifreightMessageM.GetStringValue(mess,"Hawb");
                         let FlightDate = UnifreightMessageM.GetStringValue(mess,"FlightDate");
-
+                        var datetime=new Date(Number(FlightDate.substring(0,4)),Number(FlightDate.substring(4,6))-1,Number(FlightDate.substring(6,8)),2,2,2);
                         Mawb? this.MainAWB = Mawb : '';
                         Hawb? this.Smp = Hawb : '';
                         LoadPort? this.ChargingSite = LoadPort : ''; 
-                        FlightDate? this.FlightDate = new Date(Number(FlightDate.substring(0,4)),Number(FlightDate.substring(4,6)),Number(FlightDate.substring(6,8))) : '';
+                        FlightDate? this.FlightDate = datetime : '';
 
                         SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
                     }
