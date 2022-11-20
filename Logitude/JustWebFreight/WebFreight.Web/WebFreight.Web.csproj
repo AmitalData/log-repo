@@ -1080,7 +1080,6 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\TradeAgreementProtocolViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\StatusFieldTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\StorageStatusTableViewsController.Generated.cs" />
-    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\TradeAgreementProtocolViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CancelRequestRejectReasonTypeController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\LogisticsReferenceTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ReferenceInputTypeViewsController.Generated.cs" />
