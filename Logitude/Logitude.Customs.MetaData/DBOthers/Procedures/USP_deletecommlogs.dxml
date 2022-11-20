@@ -60,7 +60,7 @@ end if;
         
         
           v_number:=SQL%rowcount ;
-        insert into  ZDELETE_LOG  values   ( sysdate ,  v_number , 'abc');
+        insert into  ZDELETE_LOG  values   ( sysdate ,  v_number , 'communicationlogs');
         COMMIT;
     END LOOP;
 
