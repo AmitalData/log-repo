@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, AfterViewInit, OnInit, Input, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
@@ -27,8 +27,9 @@ import { DashboardAnalyticsService } from 'DashboardModule/Services/DashboardAna
 
 @Component({
     templateUrl: 'CustomDashboardComponent.html',
-    styleUrls: ['CustomDashboardComponent.css'],
+    styleUrls: ['CustomDashboardComponent.css', 'dashboard.scss'],
     selector: 'custom-dashboard',
+    encapsulation: ViewEncapsulation.None,
 })
 
 export class CustomDashboardComponent extends BaseComponent implements OnInit, AfterViewInit, OnDestroy {

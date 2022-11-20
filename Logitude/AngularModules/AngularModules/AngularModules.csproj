@@ -8851,6 +8851,7 @@
   <ItemGroup>
     <Content Include="web.config" />
     <Content Include="DashboardModule\Components\Workspace\DashboardLists\DashboardListComponent.scss" />
+    <Content Include="Dashboard\Components\Workspace\dashboard.scss" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
