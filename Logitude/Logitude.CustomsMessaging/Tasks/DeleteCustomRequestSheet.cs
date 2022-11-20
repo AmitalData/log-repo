@@ -49,6 +49,7 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
                 var SchedularParams = schedulerParamQueryService.GetAllByProcedureCode(t.Tenant, task.ProcedureCode);
                 string From = null, To = null, Subject = null, CommunicationTypeStatus = null;
                 int days = 90;
+                var StepNumberList = new List<int>() { 0,1,2,20,30};
                 foreach (var schedularParam in SchedularParams)
                 {
                     switch (schedularParam.Parameter)
@@ -77,8 +78,13 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
                 LogMessagingUtil.Instance.AppendLine(value: $"To({To?.ToString()})");
                 LogMessagingUtil.Instance.AppendLine(value: $"Subject({Subject?.ToString()})");
                 LogMessagingUtil.Instance.AppendLine(value: $"CommunicationTypeStatus({CommunicationTypeStatus?.ToString()})");
+                foreach(int StepNumber in StepNumberList)
+                {
+                    CustomsStoredProcedures.DeleteComLogSteps(t.Tenant, days, From, To, Subject, CommunicationTypeStatus,StepNumber);
+                }
+                CustomsStoredProcedures.DeleteCustomsRequestSheets(t.Tenant, days, From, To, Subject, CommunicationTypeStatus);
+                CustomsStoredProcedures.DeleteCommunicationLogs(t.Tenant, days, From, To, Subject, CommunicationTypeStatus,true);
 
-                CustomsStoredProcedures.DeleteCommunicationLogs(t.Tenant, days, From, To, Subject, CommunicationTypeStatus);
             }
         }
     }

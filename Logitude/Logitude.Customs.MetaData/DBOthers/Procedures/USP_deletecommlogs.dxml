@@ -1,15 +1,16 @@
-﻿<Procedure DBType="Main" Name="q_Deletecommlogs" Schema="dbo" Module="Customs">
+﻿<Procedure DBType="Main" Name="usp_DeleteCommLogs" Schema="dbo" Module="Customs">
   <SqlScript>
   </SqlScript>
 
   <OracleScript>
     <![CDATA[
- create or replace PROCEDURE USP_deletecommlogs (
+ create or replace PROCEDURE usp_deletecommlogs (
     p_days                   IN INTEGER,
     p_from                 IN STRING,
     p_to                   IN STRING,
     p_subject              IN STRING,
-    p_commstatustypecodelist IN STRING
+    p_commstatustypecodelist IN STRING,
+    isCustoms IN BOOLEAN
 ) AS
 v_number number;
 v_days INTEGER;
@@ -24,7 +25,8 @@ end if;
         DELETE FROM
                 communicationlogs
             WHERE
-                to_ != 'Customs'
+                ((isCustoms = 0 AND to_ != 'Customs') 
+                or (isCustoms = 1 AND to_ = 'Customs') )
                 AND createdate_ < sysdate - v_days 
                 AND ( p_from IS NULL   OR from_ = p_from )
                 AND ( p_subject IS NULL
@@ -58,7 +60,7 @@ end if;
         
         
           v_number:=SQL%rowcount ;
-        insert into  ZDELETE_LOG  values   ( sysdate ,  v_number , 'abc');
+        insert into  ZDELETE_LOG  values   ( sysdate ,  v_number , 'communicationlogs');
         COMMIT;
     END LOOP;
 
