@@ -34,6 +34,7 @@ import { EntityLabelPipe } from "./Pipes/EntityLabelPipe";
 import { GetObjectTablesQueryFiltersPipe } from "./Pipes/GetObjectTablesQueryFiltersPipe";
 import { ExpressionComponent } from "./Components/Base/ExpressionComponent";
 import { ExpressionLogicComponent } from "./Components/Base/ExpressionLogicComponent";
+import { CollectionFilterPropertiesComponent } from './Components/Properties/CollectionFilterPropertiesComponent';
 
 export const Components = [
     WorkflowBuilderComponent,
@@ -59,7 +60,8 @@ export const Components = [
     SetValuesComponent,
     DeleteNodeWarningComponent,
     ExpressionComponent,
-    ExpressionLogicComponent
+    ExpressionLogicComponent,
+    CollectionFilterPropertiesComponent
 ];
 
 export const Pipes = [
@@ -105,6 +107,7 @@ export class ModuleDeclarations {
             case "DeleteNodeWarningComponent": { result = DeleteNodeWarningComponent; break; }
             case "ExpressionComponent": { result = ExpressionComponent; break; }
             case "ExpressionLogicComponent": { result = ExpressionLogicComponent; break; }
+            case "CollectionFilterPropertiesComponent": { result = CollectionFilterPropertiesComponent; break; }
         }
         return result;
     }
