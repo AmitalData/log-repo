@@ -50,6 +50,10 @@ namespace Logitude.DashboardModule.Data.EntityMapping
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(1000).IsUnicode(true);
 
             this.Property(t => t.JoinedTableDBName).HasColumnName("JoinedTableDBName").HasMaxLength(100).IsUnicode(false);
+
+            this.Property(t => t.HasUnit).HasColumnName("HasUnit");
+
+            this.Property(t => t.Unit).HasColumnName("Unit").HasMaxLength(100).IsUnicode(false);
         }
     }
 }

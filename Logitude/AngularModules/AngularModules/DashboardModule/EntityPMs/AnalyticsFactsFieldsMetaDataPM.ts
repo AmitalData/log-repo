@@ -99,6 +99,16 @@ export class AnalyticsFactsFieldsMetaDataPM {
     public set ObjectTableName(newValue: string) { if (this.objectTableName != newValue) { this.objectTableName = newValue; this.MarkAsDirty("ObjectTableName"); } }
        
 	 
+    private hasUnit: boolean;
+    public get HasUnit() { return this.hasUnit; }
+    public set HasUnit(newValue: boolean) { if (this.hasUnit != newValue) { this.hasUnit = newValue; this.MarkAsDirty("HasUnit"); } }
+       
+	 
+    private unit: string;
+    public get Unit() { return this.unit; }
+    public set Unit(newValue: string) { if (this.unit != newValue) { this.unit = newValue; this.MarkAsDirty("Unit"); } }
+       
+	 
 
     public OldEntityPM: AnalyticsFactsFieldsMetaDataPM;
 		

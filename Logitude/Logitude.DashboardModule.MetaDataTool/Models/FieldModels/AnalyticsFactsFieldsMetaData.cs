@@ -120,5 +120,25 @@ namespace Logitude.DashboardModule.MetaDataTool.Models.FieldModels
             }
         }
 
+        private bool hasUnit;
+        public bool HasUnit
+        {
+            get { return hasUnit; }
+            set
+            {
+                hasUnit = value; FirePropertyChanged("HasUnit");
+            }
+        }
+
+        private string unit;
+        public string Unit
+        {
+            get { return unit; }
+            set
+            {
+                unit = value; FirePropertyChanged("Unit");
+            }
+        }
+
     }
 }

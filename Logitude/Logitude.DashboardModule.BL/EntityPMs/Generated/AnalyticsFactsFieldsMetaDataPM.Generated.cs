@@ -365,6 +365,52 @@ namespace Logitude.DashboardModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private bool hasUnit ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool HasUnit  
+	   {
+	    
+	     get
+		{
+		   return hasUnit;
+		 }
+		 set
+		 {
+		   if(hasUnit != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HasUnit",OldValue=hasUnit,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   hasUnit=value;
+		   }
+			
+		 }
+	   }
+	  private string unit ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Unit  
+	   {
+	    
+	     get
+		{
+		   return unit;
+		 }
+		 set
+		 {
+		   if(unit != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Unit",OldValue=unit,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   unit=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
