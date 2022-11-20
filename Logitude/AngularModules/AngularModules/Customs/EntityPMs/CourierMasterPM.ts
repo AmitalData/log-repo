@@ -329,29 +329,29 @@ export class CourierMasterPM {
     public set NoOfCourierHawbWithoutDelivery(newValue: string) { if (this.noOfCourierHawbWithoutDelivery != newValue) { this.noOfCourierHawbWithoutDelivery = newValue; this.MarkAsDirty("NoOfCourierHawbWithoutDelivery"); } }
        
 	 
-    private hawbQuantityNoDocuments: string;
+    private hawbQuantityNoDocuments: number;
     public get HawbQuantityNoDocuments() { return this.hawbQuantityNoDocuments; }
-    public set HawbQuantityNoDocuments(newValue: string) { if (this.hawbQuantityNoDocuments != newValue) { this.hawbQuantityNoDocuments = newValue; this.MarkAsDirty("HawbQuantityNoDocuments"); } }
+    public set HawbQuantityNoDocuments(newValue: number) { if (this.hawbQuantityNoDocuments != newValue) { this.hawbQuantityNoDocuments = newValue; this.MarkAsDirty("HawbQuantityNoDocuments"); } }
        
 	 
-    private hawbQuantityNoClassification: string;
+    private hawbQuantityNoClassification: number;
     public get HawbQuantityNoClassification() { return this.hawbQuantityNoClassification; }
-    public set HawbQuantityNoClassification(newValue: string) { if (this.hawbQuantityNoClassification != newValue) { this.hawbQuantityNoClassification = newValue; this.MarkAsDirty("HawbQuantityNoClassification"); } }
+    public set HawbQuantityNoClassification(newValue: number) { if (this.hawbQuantityNoClassification != newValue) { this.hawbQuantityNoClassification = newValue; this.MarkAsDirty("HawbQuantityNoClassification"); } }
        
 	 
-    private hawbQuantityNoTransManifest: string;
+    private hawbQuantityNoTransManifest: number;
     public get HawbQuantityNoTransManifest() { return this.hawbQuantityNoTransManifest; }
-    public set HawbQuantityNoTransManifest(newValue: string) { if (this.hawbQuantityNoTransManifest != newValue) { this.hawbQuantityNoTransManifest = newValue; this.MarkAsDirty("HawbQuantityNoTransManifest"); } }
+    public set HawbQuantityNoTransManifest(newValue: number) { if (this.hawbQuantityNoTransManifest != newValue) { this.hawbQuantityNoTransManifest = newValue; this.MarkAsDirty("HawbQuantityNoTransManifest"); } }
        
 	 
-    private hawbQuantityNoTransDeclaration: string;
+    private hawbQuantityNoTransDeclaration: number;
     public get HawbQuantityNoTransDeclaration() { return this.hawbQuantityNoTransDeclaration; }
-    public set HawbQuantityNoTransDeclaration(newValue: string) { if (this.hawbQuantityNoTransDeclaration != newValue) { this.hawbQuantityNoTransDeclaration = newValue; this.MarkAsDirty("HawbQuantityNoTransDeclaration"); } }
+    public set HawbQuantityNoTransDeclaration(newValue: number) { if (this.hawbQuantityNoTransDeclaration != newValue) { this.hawbQuantityNoTransDeclaration = newValue; this.MarkAsDirty("HawbQuantityNoTransDeclaration"); } }
        
 	 
-    private hawbQuantityNoTransPayment: string;
+    private hawbQuantityNoTransPayment: number;
     public get HawbQuantityNoTransPayment() { return this.hawbQuantityNoTransPayment; }
-    public set HawbQuantityNoTransPayment(newValue: string) { if (this.hawbQuantityNoTransPayment != newValue) { this.hawbQuantityNoTransPayment = newValue; this.MarkAsDirty("HawbQuantityNoTransPayment"); } }
+    public set HawbQuantityNoTransPayment(newValue: number) { if (this.hawbQuantityNoTransPayment != newValue) { this.hawbQuantityNoTransPayment = newValue; this.MarkAsDirty("HawbQuantityNoTransPayment"); } }
        
 	 
 
