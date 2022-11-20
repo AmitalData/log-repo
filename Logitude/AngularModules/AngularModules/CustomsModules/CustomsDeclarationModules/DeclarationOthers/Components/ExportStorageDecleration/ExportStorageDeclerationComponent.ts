@@ -331,7 +331,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
                                 var isConsignment = this.declarationPM.Consignments.find(x => x?.CargoTypeCode == this.exportStorage.Result?.cargoTypeCode
                                     && x.ManifestNumber == this.exportStorage.Result?.firstCargoID
                                     && x.SecondCargoID == this.exportStorage.Result?.secondCargoID);
-                                var emptyConsignment = this.declarationPM.Consignments.find(y => y.ManifestNumber == null && y.SecondCargoID == null);
+                                var emptyConsignment = this.declarationPM.Consignments.find(y => (y.ManifestNumber == null ||y.ManifestNumber.length === 0 ) && (y.SecondCargoID == null||y.SecondCargoID.length === 0));
                                 if (isConsignment != undefined) {
 
                                     this.exportStorage.Result.DeclarationId = AppTool.IsNullOrEmpty(this.exportStorage.Result.DeclarationId ) ?  this.declarationPM.Id:this.exportStorage.Result.DeclarationId ;
