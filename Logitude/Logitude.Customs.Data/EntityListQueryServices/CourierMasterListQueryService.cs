@@ -37,13 +37,23 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 
 );
+            var qJoinsta =
+                  (from p in context.CourierDeclarations
+                   join sts1 in context.DeclarationCourierStatuses
+                   on p.DeclarationId equals sts1.DeclarationId
+                   into DeclarationCourierStatusesJoin
+                   from myDeclarationCourierStatuses in DeclarationCourierStatusesJoin
+                   where myDeclarationCourierStatuses.IsClosedForFollowUp == false
+                   select new { p.CourierMasterId, myDeclarationCourierStatuses }
+                  );
+
 
 
 
             IQueryable<CourierMasterList> query = (from a in iQueryable.Include("CustomsAirline").Include("MAWBType").Include("OriginPort").Include("GatewayPort").Include("Card")
 
 
-                                                   join recJoin in qJoin
+                                                   join recJoin in qJoinsta
                                                              on a.Id equals recJoin.CourierMasterId
                                                              into qrecJoin
                                                    from myJoin in qrecJoin
@@ -102,11 +112,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        NoOfCourierHawbwWithoutHatara = a.NoOfCourierHawbwWithoutHatara,
                                                        LandingDateDateOnly = a.LandingDate,
                                                        LandingDateTimeOnly = (DateTime)a.LandingDate,
-                                                       HawbQuantityNoClassification = qrecJoin.Count(s=>s.myDeclarationCourierStatuses.IsCourierMissingClassification).ToString(),
-                                                       HawbQuantityNoDocuments=qrecJoin.Count(s=>s.myDeclarationCourierStatuses.DocumentStatusCode == "M").ToString(),
-                                                       HawbQuantityNoTransDeclaration=qrecJoin.Count(s=>s.myDeclarationCourierStatuses.CourierDeclarationStatusCode == "R" || s.myDeclarationCourierStatuses.CourierDeclarationStatusCode == "I").ToString(),
-                                                       HawbQuantityNoTransManifest=qrecJoin.Count(s=>s.myDeclarationCourierStatuses.CourierManifestStatusCode == "R" || s.myDeclarationCourierStatuses.CourierManifestStatusCode == "I").ToString(),
-                                                       HawbQuantityNoTransPayment=qrecJoin.Count(s=>s.myDeclarationCourierStatuses.CourierPaymentStatusCode=="R").ToString()
+                                                       HawbQuantityNoClassification = qrecJoin.Count(s=>s.myDeclarationCourierStatuses.IsCourierMissingClassification),
+                                                       HawbQuantityNoDocuments=qrecJoin.Count(s=>s.myDeclarationCourierStatuses.DocumentStatusCode == "M"),
+                                                       HawbQuantityNoTransDeclaration=qrecJoin.Count(s=>s.myDeclarationCourierStatuses.CourierDeclarationStatusCode == "R" || s.myDeclarationCourierStatuses.CourierDeclarationStatusCode == "I"),
+                                                       HawbQuantityNoTransManifest=qrecJoin.Count(s=>s.myDeclarationCourierStatuses.CourierManifestStatusCode == "R" || s.myDeclarationCourierStatuses.CourierManifestStatusCode == "I"),
+                                                       HawbQuantityNoTransPayment=qrecJoin.Count(s=>s.myDeclarationCourierStatuses.CourierPaymentStatusCode=="R")
                                                      
 
                                                    }); ;
