@@ -57,6 +57,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             { 
                 if (_ContainerizationPM.OperationMode == "3")
                 {
+                    _ContainerizationPM.IsMultiCustomers = null;
+                    _ContainerizationPM.ExportFile = null;
                     _ContainerizationPM.ContainerizationStatus = "3";
                     _ContainerizationPM.ConnectedDeclarations = null;
                     _ContainerizationPM.CargoTypeCode = null;
