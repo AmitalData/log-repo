@@ -538,8 +538,22 @@ export class CustomsDocumentTicketViewModel {
         }
 
     }
+   async StartCustomsDocumentMetaDataCheck(relatedDocumentViewModel: RelatedDocumentViewModel) {
+        const isConnectTicket: boolean = await this.GetDocConnectTicket(relatedDocumentViewModel.CustomDocument.DocumentsFilingId)
 
-    StartCustomsDocumentMetaDataCheck(relatedDocumentViewModel: RelatedDocumentViewModel) {
+        if (relatedDocumentViewModel.documentsFilingPM.DocumentTypeCode != this.customsDocumentsTicketPM.DocumentTypeCode&&isConnectTicket){
+            SessionLocator.SelectedSession.StopBusyIndicator();
+        var messageWindow = new MessageWindow();
+        messageWindow.RTL=true;
+        messageWindow.ShowWarningIcon=true;
+        messageWindow.Width = 400;
+        messageWindow.Height = 200;
+        messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+        messageWindow.Show(".מסמך זה מקושר לסוג מסמך אחר בהצהרה אחרת. לא ניתן לקשר");
+        messageWindow.WindowClosed.subscribe((event: any) => messageWindow.Close());
+           return;
+        }
+
         var isDifferentData = false;
         relatedDocumentViewModel.CustomDocument.CustomsDocumentMetaDataValues.forEach((metaDataValue) => {
             var metaDataViewModel = this.metaDataList.filter(d => d.MetaDataTypeCode == metaDataValue.MetaDataTypeCode)[0];
@@ -785,6 +799,26 @@ export class CustomsDocumentTicketViewModel {
                     }
                     else {
                       resolve(true);
+                    }
+                }
+                
+            });
+        })
+
+        return res;
+    }
+
+    private async GetDocConnectTicket(DocumentsFilingId): Promise<boolean>{
+        var customsDocumentsTicketPMService: CustomsDocumentsTicketsExtendedService = new CustomsDocumentsTicketsExtendedService();
+        const res = await new Promise<boolean>((resolve, reject) => {        
+              customsDocumentsTicketPMService.GetDocConnectTicket(DocumentsFilingId,this.EntityPM.id).subscribe((response: ServiceResponse) => {
+                if (!response.HasError) {
+                    if(response.Result.decConnect.length>0){
+
+                        resolve(true);
+                    }
+                    else {
+                      resolve(false);
                     }
                 }
                 
