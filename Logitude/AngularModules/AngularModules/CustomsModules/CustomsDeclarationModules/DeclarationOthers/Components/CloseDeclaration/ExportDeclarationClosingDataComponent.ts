@@ -89,7 +89,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
             }           
 
 
-        });
+        });        
 
     }
 
@@ -153,6 +153,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                 }
 
 
+
                 
                
 
@@ -175,8 +176,11 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
                 this.initOceanExportData();
             });
-            if(this.DecPM.TransportModeId == 'L'){
+
+            if(this.DecPM.TransportModeId == 'L') //TransportMod- land
+            {
             
+                
             this.exportDeclarationClosingDataPMService.get(id).subscribe((response: any) => {
                 if(response.Result == null)
                 {
@@ -196,7 +200,13 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                 
                 }
             });
-        }
+                    
+
+                
+                }
+
+ 
+        
         }
     }
 
@@ -213,7 +223,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     get LoadingDateTime() { return this.EntityPM ? this.EntityPM.LoadingDateTime : null; }
     set LoadingDateTime(value: Date) {
 
-        if (this.EntityPM.LoadingDateTime != value) {
+        if (this.EntityPM.LoadingDateTime != value) { 
             this.EntityPM.LoadingDateTime = value;
             this.EntityPM.IsDirty = true;
         }
