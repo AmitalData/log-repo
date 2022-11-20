@@ -1,0 +1,137 @@
+<style>
+    .table-row {
+        height: 1px;
+    }
+
+    .table-row-cell {
+        padding-bottom: 10px;
+    }
+
+    .first-split-table-row {
+        height: 20px;
+    }
+
+    .split-block {
+        border-bottom: 1px solid #6E6E6E;
+    }
+
+    .table-row-cell-block {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .name-container {
+        height: 30px;
+        width: 320px;
+    }
+
+    .collection-label,
+    .collection-filters-label {
+        font-weight: bold;
+    }
+
+    .start-collection-filter-container {
+        overflow: auto;
+        width: 936px;
+        height: 337px;
+    }
+
+    .min-start-collection-filter-container {
+        height: 285px;
+    }
+
+    .collection-tree {
+        width: 220px;
+    }
+</style>
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" class="table-row">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr class="first-split-table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div>
+                <LogLabel [NoObjectField]="true" [Text]="'Name'" [ObjectFieldName]="'Name'" [DataContext]="DataContext">
+                </LogLabel>
+            </div>
+            <div class="table-row-cell-block name-container">
+                <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [DataContext]="DataContext" [Text]="Name"
+                    [NoValidation]="true" [HideColumns]="true" [ObjectFieldName]="'Name'"
+                    (ValueChanged)="updateName($event)" [DataCy]="'collection-filter-name'">
+                </LogTextBox>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div>
+                <LogLabel [NoObjectField]="true" [Text]="'Collection'" [ObjectFieldName]="'Collection'"
+                    [DataContext]="DataContext"></LogLabel>
+            </div>
+            <div class="collection-tree">
+                <TreeSelect [Items]="CollectionFilterEntitiesTreeItems" [Width]="'220px'" [Value]="Collection"
+                    (ValueChanged)="updateCollection($event)" [IsReturnedTreeSelectItem]="true">
+                </TreeSelect>
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="Collection" class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+                <div class="collection-filters-label">Collection Filters</div>
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="Collection" class="table-row">
+        <td>
+            <div class="table-row-cell-block start-collection-filter-container"
+                [ngClass]="{'min-start-collection-filter-container': (ValidationErrorsList != null && ValidationErrorsList.length > 0)}">
+
+                <Conditions *ngIf="CollectionFilters && CollectionFilters.length > 0" [EntityId]="EntityId"
+                    [ShowChangedOperator]="false" [AtLeastOneCondition]="true"
+                    (IsValidConditionsChange)="UpdateIsValidCollectionFilters($event)"
+                    [(ConditionsOperation)]="CollectionFiltersOperation" [(Conditions)]="CollectionFilters" [FlowObject]="FlowObject"
+                    [FlowObjectFields]="FlowObjectFields" [CurrentNodeId]="CurrentNodeId" [IsEntityField]="true">
+                </Conditions>
+
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td>
+
+            <FooterButtons [SaveButtonLabel]="'Ok'" (SaveButtonClicked)="saveButtonClicked()"
+                (CancelButtonClicked)="cancelButtonClicked()" [SaveButtonDataCy]="'send-email-properties-save-button'"
+                [CancelButtonDataCy]="'send-email-properties-cancel-button'">
+            </FooterButtons>
+
+        </td>
+    </tr>
+
+</table>
