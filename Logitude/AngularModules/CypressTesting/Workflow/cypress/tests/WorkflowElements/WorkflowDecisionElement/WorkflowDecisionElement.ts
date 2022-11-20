@@ -63,14 +63,14 @@ Given("add second level condition group met with {string} with the following det
 
 Given("add third level condition group met with {string} with the following details", (GroupOperation, dataTable) => {
     let groupConditionDetailsList = Assists.CreateSet<ConditionDetails>(dataTable);
-    Actions.FillGroupConditionDetails(true, GroupOperation, groupConditionDetailsList);
+    Actions.FillGroupConditionDetails(true, GroupOperation, groupConditionDetailsList, true);
     Actions.CloseEditDecisionNodeWindow();
 
 });
 
 Given("add another second level condition group met with {string} with the following details", (GroupOperation, dataTable) => {
     let groupConditionDetailsList = Assists.CreateSet<ConditionDetails>(dataTable);
-    Actions.FillNestedGroupConditionDetails(secondGroupSelector + 1, GroupOperation, groupConditionDetailsList);
+    Actions.FillNestedGroupConditionDetails(secondGroupSelector + 1, GroupOperation, groupConditionDetailsList, true);
 
 });
 When("save flow", () => {
