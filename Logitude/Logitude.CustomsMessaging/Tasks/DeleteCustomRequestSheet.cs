@@ -83,7 +83,7 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
                     CustomsStoredProcedures.DeleteComLogSteps(t.Tenant, days, From, To, Subject, CommunicationTypeStatus,StepNumber);
                 }
                 CustomsStoredProcedures.DeleteCustomsRequestSheets(t.Tenant, days, From, To, Subject, CommunicationTypeStatus);
-                CustomsStoredProcedures.DeleteCommunicationLogs(t.Tenant, days, From, To, Subject, CommunicationTypeStatus);
+                CustomsStoredProcedures.DeleteCommunicationLogs(t.Tenant, days, From, To, Subject, CommunicationTypeStatus,true);
 
             }
         }

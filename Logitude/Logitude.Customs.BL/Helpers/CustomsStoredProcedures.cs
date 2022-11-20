@@ -457,7 +457,7 @@ AS */
                 }
             }
         }
-        public static void DeleteCommunicationLogs(int tenant, int days, string from__, string to__, string subject__, string CommunicationStatusTypeCodeListAsString)
+        public static void DeleteCommunicationLogs(int tenant, int days, string from__, string to__, string subject__, string CommunicationStatusTypeCodeListAsString,Boolean IsCustoms)
         {
             string strConnString = GetConnection(tenant);
             if (LogitudeSettings.DatabaseManagementSystem == "oracle")
@@ -478,6 +478,7 @@ AS */
                     OracleParameter parameter3 = new OracleParameter("p_to", OracleDbType.VarChar);
                     OracleParameter parameter4 = new OracleParameter("p_subject", OracleDbType.VarChar);
                     OracleParameter parameter5 = new OracleParameter("p_commstatustypecodelist", OracleDbType.VarChar);
+                    OracleParameter parameter6 = new OracleParameter("isCustoms", OracleDbType.Boolean);
 
 
                     parameter1.Direction = ParameterDirection.Input;
@@ -485,7 +486,7 @@ AS */
                     parameter3.Direction = ParameterDirection.Input;
                     parameter4.Direction = ParameterDirection.Input;
                     parameter5.Direction = ParameterDirection.Input;
-
+                    parameter6.Direction = ParameterDirection.Input;
 
 
                     parameter1.Value = days;
@@ -493,6 +494,7 @@ AS */
                     parameter3.Value = to__;
                     parameter4.Value = subject__;
                     parameter5.Value = CommunicationStatusTypeCodeListAsString;
+                    parameter6.Value = IsCustoms;
 
 
 
@@ -501,6 +503,7 @@ AS */
                     cmd.Parameters.Add(parameter3);
                     cmd.Parameters.Add(parameter4);
                     cmd.Parameters.Add(parameter5);
+                    cmd.Parameters.Add(parameter6);
 
 
 
