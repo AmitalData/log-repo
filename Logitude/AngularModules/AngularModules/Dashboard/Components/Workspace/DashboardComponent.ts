@@ -88,7 +88,6 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
 
             else {
                 this.isLoaderReady = true;
-                this.SelectedPageItem = this.IsCustomDashboardFeatureOn ? "CUSTOM" : "CLASIC";
             }
         }
 
@@ -124,45 +123,6 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
 
     ngAfterViewInit() {
         //this.IsMenuVisible = true;
-        //this.SelectionChanged();
-    }
-
-    private selectedPageItem: string;
-    get SelectedPageItem() { return this.selectedPageItem; }
-    set SelectedPageItem(newValue: string) {
-        if (this.selectedPageItem != newValue) {
-            this.selectedPageItem = newValue;
-            this.SelectionChanged();                
-        }
-    }
-
-    private Page_CUSTOM: any = null;
-    SelectionChanged() {
-        if (this.SelectedPageItem != null) {
-            let myLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == this.SelectedPageItem)[0];
-            if (myLocation != null) {
-
-                switch (this.SelectedPageItem) {
-                    case "CUSTOM": {
-                        MixPanelLocator.PostDashboardAction({ ActionName: "Custom Dashboard Tab Click" });
-
-                        if (this.Page_CUSTOM == null) {
-                            SessionLocator.DynamicLoader.Load('./Dashboard/Components/Workspace/CustomDashboardComponent', myLocation.viewContainerRef)
-                                .then(cmpRef => {
-                                    this.Page_CUSTOM = cmpRef.instance;
-                                    this.Page_CUSTOM.InitComponent();
-                                });
-                        }
-
-                        break;
-                    }
-
-                    case "CLASIC": {
-                        break;
-                    }
-                }
-            }
-        }
     }
 
     ngOnDestroy() {

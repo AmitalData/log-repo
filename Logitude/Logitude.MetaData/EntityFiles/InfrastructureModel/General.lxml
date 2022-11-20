@@ -36,7 +36,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;4ee1&quot;"
+  Code="&quot;7a81&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5481,6 +5481,12 @@
       DefaultText="&quot;Invoicing&quot;"
       TextCodeTypeCode="&quot;G&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MH.ClassicDashboard&quot;"
+      DefaultText="&quot;Classic Dashboard&quot;"
+      LocalDefaultText="&quot;Classic Dashboard&quot;"
+      TextCodeTypeCode="&quot;MH&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -7730,6 +7736,15 @@
       FeatureTypeCode="&quot;OTH&quot;"
       FeatureTextCodeCode="&quot;General.Features.AddCustomChildEntity&quot;"
       FeatureDefaultText="&quot;Add Custom Child Entity&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;CLASSICDASHBOARD&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.CLASSICDASHBOARD&quot;"
+      FeatureDefaultText="&quot;Classic Dashboard&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
