@@ -102,11 +102,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        NoOfCourierHawbwWithoutHatara = a.NoOfCourierHawbwWithoutHatara,
                                                        LandingDateDateOnly = a.LandingDate,
                                                        LandingDateTimeOnly = (DateTime)a.LandingDate,
-                                                       HawbQuantityNoClassification = qrecJoin.Count(s=>s.myDeclarationCourierStatuses.IsCourierMissingClassification).ToString(),
-                                                       HawbQuantityNoDocuments=qrecJoin.Count(s=>s.myDeclarationCourierStatuses.DocumentStatusCode == "M").ToString(),
-                                                       HawbQuantityNoTransDeclaration=qrecJoin.Count(s=>s.myDeclarationCourierStatuses.CourierDeclarationStatusCode == "R" || s.myDeclarationCourierStatuses.CourierDeclarationStatusCode == "I").ToString(),
-                                                       HawbQuantityNoTransManifest=qrecJoin.Count(s=>s.myDeclarationCourierStatuses.CourierManifestStatusCode == "R" || s.myDeclarationCourierStatuses.CourierManifestStatusCode == "I").ToString(),
-                                                       HawbQuantityNoTransPayment=qrecJoin.Count(s=>s.myDeclarationCourierStatuses.CourierPaymentStatusCode=="R").ToString()
+                                                       //HawbQuantityNoClassification = qrecJoin.Count(s=>s.myDeclarationCourierStatuses.IsCourierMissingClassification),
+                                                       //HawbQuantityNoDocuments=qrecJoin.Count(s=>s.myDeclarationCourierStatuses.DocumentStatusCode == "M"),
+                                                       //HawbQuantityNoTransDeclaration=qrecJoin.Count(s=>s.myDeclarationCourierStatuses.CourierDeclarationStatusCode == "R" || s.myDeclarationCourierStatuses.CourierDeclarationStatusCode == "I").ToString(),
+                                                       //HawbQuantityNoTransManifest=qrecJoin.Count(s=>s.myDeclarationCourierStatuses.CourierManifestStatusCode == "R" || s.myDeclarationCourierStatuses.CourierManifestStatusCode == "I").ToString(),
+                                                       //HawbQuantityNoTransPayment=qrecJoin.Count(s=>s.myDeclarationCourierStatuses.CourierPaymentStatusCode=="R").ToString()
                                                      
 
                                                    }); ;
