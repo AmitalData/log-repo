@@ -87,7 +87,7 @@
             </div>
             <div class="collection-tree">
                 <TreeSelect [Items]="CollectionFilterEntitiesTreeItems" [Width]="'220px'" [Value]="Collection"
-                    (ValueChanged)="updateCollection($event)">
+                    (ValueChanged)="updateCollection($event)" [IsReturnedTreeSelectItem]="true">
                 </TreeSelect>
             </div>
         </td>

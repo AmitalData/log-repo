@@ -6,6 +6,7 @@ import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { ConditionOperations } from "Workflow/Constants/ConditionOperations";
 import { CollectionFilterEntitiesTreeList } from "Workflow/Models/CollectionFilterEntitiesTreeList";
 import { Condition } from "Workflow/Models/Condition";
+import { ObjectTables } from "Workflow/Models/ObjectTables";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 
 @Component({
@@ -26,12 +27,14 @@ export class CollectionFilterPropertiesComponent extends BaseComponent {
 
     public Data: any;
     public Name: string = null;
+    public Entity: string = null;
+    public EntityId: string = null;
     public Collection: string;
     public CollectionFilters: Condition[];
     public CollectionFiltersOperation: string;
     public IsValidCollectionFilters: boolean = true;
     public ValidationErrorsList: string[];
-    public EntityId: string = null;
+
 
     public CurrentSession = SessionLocator.SelectedSession;
 
@@ -51,6 +54,7 @@ export class CollectionFilterPropertiesComponent extends BaseComponent {
     initialize() {
         this.Name = this.Data["name"] || null;
         this.Collection = this.Data["collection"] || null;
+        this.Entity = this.Data["entity"] || null;
 
         this.CollectionFilters = this.Data["collectionFilters"] || [];
         this.CollectionFiltersOperation = this.Data["collectionFiltersOperation"] || ConditionOperations.And;
@@ -60,6 +64,9 @@ export class CollectionFilterPropertiesComponent extends BaseComponent {
             let condition = new Condition();
             this.CollectionFilters.push(condition);
         }
+
+        this.EntityId = ObjectTables.getIdByName(this.Entity);
+
         this.setUIProperties();
     }
 
@@ -76,10 +83,17 @@ export class CollectionFilterPropertiesComponent extends BaseComponent {
         this.setUIProperties();
     }
 
-    updateCollection(value: string) {
+    updateCollection(event: any) {
+        let value = event.key
+        let entity = event.data["entity"]
         let isCollectionChanged = this.Data["collection"] !== value;
+
         this.Collection = value
+        this.Entity  = entity
+        this.EntityId = ObjectTables.getIdByName(entity);
+
         this.Data["collection"] = value
+        this.Data["entity"] = entity
 
         if (isCollectionChanged) {
             let condition = new Condition();
