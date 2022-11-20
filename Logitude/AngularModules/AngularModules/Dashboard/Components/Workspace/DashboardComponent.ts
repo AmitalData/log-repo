@@ -1,4 +1,4 @@
-import { Component, OnInit, ComponentFactoryResolver, ComponentRef, ViewEncapsulation, ViewChildren, QueryList, AfterViewInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ComponentFactoryResolver, ComponentRef, ViewChildren, QueryList, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
 import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
@@ -27,10 +27,8 @@ import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 declare var makeAMLineChart, makeAmBarChart, makePieChart;
 
 @Component({
-    selector: 'DashBoard',
-    styleUrls:['dashboard.scss'],
-    templateUrl: './DashBoardComponent.html',
-    encapsulation: ViewEncapsulation.None,
+    selector: 'DashBoard',    
+    templateUrl: './DashBoardComponent.html',    
 })
 
 export class DashboardComponent extends BaseComponent implements OnInit, AfterViewInit {
