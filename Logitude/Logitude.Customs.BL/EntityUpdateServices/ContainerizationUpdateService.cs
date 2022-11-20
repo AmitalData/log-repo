@@ -93,6 +93,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
            
             if (String.IsNullOrEmpty(entityPM.ConnectedDeclarations)&& entityPM.ContainerizationStatus != "3")
                 {
+                    entityPM.IsMultiCustomers = null;                   
+                    entityPM.ExportFile = null;
                     entityPM.CargoTypeCode = null;
                     entityPM.ManifestNumber = null;
                     entityPM.SecondCargoID = null;
@@ -130,8 +132,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 ContainerizationRepository containerizationRepository = new ContainerizationRepository(entityPM.Tenant);
                 var containerizationExportFiles = containerizationRepository.GetContainerizationExportFiles(entityPM.Tenant, entityPM.ConnectedDeclarations);
                 if (containerizationExportFiles.Count > 1)
-                {
-                    entityPOCO.IsMultiExportFiles = true;
+                { 
                     entityPM.ExportFile = "List";
                 }
                 else
