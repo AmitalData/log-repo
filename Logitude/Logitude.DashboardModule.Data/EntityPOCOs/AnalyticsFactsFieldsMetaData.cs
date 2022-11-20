@@ -53,6 +53,10 @@ namespace Logitude.DashboardModule.Data.EntityPOCOs
 	    public string SearchFields { get; set; }
         [Column("JoinedTableDBName")]
 	    public string JoinedTableDBName { get; set; }
+        [Column("HasUnit")]
+	    public bool HasUnit { get; set; }
+        [Column("Unit")]
+	    public string Unit { get; set; }
     }
 }
 	 

@@ -41,7 +41,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     public isGroupByVisible: boolean = true;
     public isSortByVisible: boolean = true;
     public isMaximumGroupingVisible: boolean = true;
-    public showAdvancedSetting : boolean = false;
+    public isAdvancedSettingVisible : boolean = false;
 
     constructor() {
         super();
@@ -54,6 +54,10 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.isNew = windowArgs['IsNew'];
         this.FirstTime = this.isNew != true;
         this.DataContext = this;
+
+        if(this.isNew){
+        this.EntityPM.MaximumGrouping = 10;
+        }
         this.ComputeChartImageSrc();
         this.BuildMeasures();
         this.CheckMeasureAddVisiblity();
@@ -61,6 +65,14 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.GetFilters();
         this.BuildQueryFilters();
         this.InitView();
+        this.SetUIProperties();
+    }
+    SetUIProperties(){
+        this.UIProperties.SetValidity("MaximumGrouping", this.ObjectTableName, true, "");
+
+        if(this.MaximumGrouping < 1 || this.MaximumGrouping > 50){
+           this.UIProperties.SetValidity("MaximumGrouping", this.ObjectTableName, false, "Maximum Grouping must be greater than 1 and less than 50");
+        }
     }
 
     BuildQueryFilters() {
@@ -239,13 +251,13 @@ export class AddEditWidgetComponent extends BaseComponent {
     }
 
     get MaximumGrouping() {
-        if (!this.EntityPM?.MaximumGrouping) this.EntityPM.MaximumGrouping = 10;
         return this.EntityPM.MaximumGrouping;
     }
     set MaximumGrouping(value: number) {
         if (this.EntityPM.MaximumGrouping != value) {
             this.EntityPM.MaximumGrouping = value;
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget Maximum Grouping Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
+            this.SetUIProperties();
         }
     }
 
@@ -523,6 +535,5 @@ export class WidgetMeasureItem extends BaseComponent {
         MixPanelLocator.PostDashboardAction({ ActionName: "Widget Measure Delete Click", DashboardId: this.DashboardPM?.Id });
         this.fatherComponent.CheckMeasureAddVisiblity();
     }
-
     
 }
