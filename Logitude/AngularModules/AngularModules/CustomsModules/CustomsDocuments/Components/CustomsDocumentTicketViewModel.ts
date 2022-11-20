@@ -26,6 +26,7 @@ import { EntityResourceService } from '../../../Infrastructure/Services/EntityRe
 import { DeclarationPM } from "../../../Customs/EntityPMs/DeclarationPM";
 import { DocumentTypeCustomsDataPMService } from '../../../Customs/Services/StandardPMs/DocumentTypeCustomsDataPMService';
 import { CustomDocumentNewVersionService } from "../services/CustomDocumentNewVersion.service";
+import { SessionComponent } from "Infrastructure/Components/Session/SessionComponent";
 
 export class CustomsDocumentTicketViewModel {
 
@@ -147,6 +148,7 @@ export class CustomsDocumentTicketViewModel {
         this.CustomsDocIdLabelText = this.GetCustomsDocIdLabelText();
         this.SetStatusImages();
         this.SetApprovedDeniedImages();
+
         if (!this.isNew) {
             this.SetCustomDocumentMetaData();
         }
@@ -225,6 +227,7 @@ export class CustomsDocumentTicketViewModel {
     }
 
     private SetCustomDocumentMetaDataFromDictionary(metaData: { [Code: string]: any; } = {}) {
+        
         this.metaDataList = [];
         var keys: string[] = Object.keys(metaData);
         keys.forEach((key) => {
@@ -247,7 +250,7 @@ export class CustomsDocumentTicketViewModel {
         else if (this.customDocumentTypeMetaDataLists != null) {
             {
                 var types: CustomDocumentTypeMetaDataList[] = this.customDocumentTypeMetaDataLists.filter(d => d.DocumentTypeCode == this.customsDocumentsTicketPM.DocumentTypeCode).sort((a, b) => { return (a.MetaDataTypeCode === b.MetaDataTypeCode) ? 0 : (a.MetaDataTypeCode < b.MetaDataTypeCode) ? -1 : 1 });;
-                if (this.EntityPM.Direction == "E" && this.customsDocumentsTicketPM.DocumentTypeCode == "707") {
+                if (this.EntityPM.Direction == "E" && this.customsDocumentsTicketPM.DocumentTypeCode == "707" && this.EntityPM.transportModeId=='A') {
                     var leadingType: CustomDocumentTypeMetaDataList = types.filter(d => d.MetaDataTypeCode == "101" && d.DocumentTypeCode == this.customsDocumentsTicketPM.DocumentTypeCode)[0];
                 } else {
                     var leadingType: CustomDocumentTypeMetaDataList = types.filter(d => d.Mandatory && d.DocumentTypeCode == this.customsDocumentsTicketPM.DocumentTypeCode)[0];
