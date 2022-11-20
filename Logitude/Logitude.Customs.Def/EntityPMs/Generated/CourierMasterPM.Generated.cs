@@ -1423,12 +1423,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string hawbQuantityNoDocuments ;
+	  private int? hawbQuantityNoDocuments ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string HawbQuantityNoDocuments  
+       public int? HawbQuantityNoDocuments  
 	   {
 	    
 	     get
@@ -1439,19 +1439,19 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(hawbQuantityNoDocuments != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HawbQuantityNoDocuments",OldValue=hawbQuantityNoDocuments,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HawbQuantityNoDocuments",OldValue=hawbQuantityNoDocuments,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
 		   hawbQuantityNoDocuments=value;
 		   }
 			
 		 }
 	   }
-	  private string hawbQuantityNoClassification ;
+	  private int? hawbQuantityNoClassification ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string HawbQuantityNoClassification  
+       public int? HawbQuantityNoClassification  
 	   {
 	    
 	     get
@@ -1462,19 +1462,19 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(hawbQuantityNoClassification != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HawbQuantityNoClassification",OldValue=hawbQuantityNoClassification,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HawbQuantityNoClassification",OldValue=hawbQuantityNoClassification,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
 		   hawbQuantityNoClassification=value;
 		   }
 			
 		 }
 	   }
-	  private string hawbQuantityNoTransManifest ;
+	  private int? hawbQuantityNoTransManifest ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string HawbQuantityNoTransManifest  
+       public int? HawbQuantityNoTransManifest  
 	   {
 	    
 	     get
@@ -1485,19 +1485,19 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(hawbQuantityNoTransManifest != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HawbQuantityNoTransManifest",OldValue=hawbQuantityNoTransManifest,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HawbQuantityNoTransManifest",OldValue=hawbQuantityNoTransManifest,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
 		   hawbQuantityNoTransManifest=value;
 		   }
 			
 		 }
 	   }
-	  private string hawbQuantityNoTransDeclaration ;
+	  private int? hawbQuantityNoTransDeclaration ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string HawbQuantityNoTransDeclaration  
+       public int? HawbQuantityNoTransDeclaration  
 	   {
 	    
 	     get
@@ -1508,19 +1508,19 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(hawbQuantityNoTransDeclaration != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HawbQuantityNoTransDeclaration",OldValue=hawbQuantityNoTransDeclaration,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HawbQuantityNoTransDeclaration",OldValue=hawbQuantityNoTransDeclaration,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
 		   hawbQuantityNoTransDeclaration=value;
 		   }
 			
 		 }
 	   }
-	  private string hawbQuantityNoTransPayment ;
+	  private int? hawbQuantityNoTransPayment ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string HawbQuantityNoTransPayment  
+       public int? HawbQuantityNoTransPayment  
 	   {
 	    
 	     get
@@ -1531,7 +1531,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(hawbQuantityNoTransPayment != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HawbQuantityNoTransPayment",OldValue=hawbQuantityNoTransPayment,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HawbQuantityNoTransPayment",OldValue=hawbQuantityNoTransPayment,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
 		   hawbQuantityNoTransPayment=value;
 		   }

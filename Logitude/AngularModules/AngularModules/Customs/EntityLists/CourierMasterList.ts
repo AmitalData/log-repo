@@ -68,11 +68,11 @@ export class CourierMasterList {
 	OpenDeclarations: number;
 	NoOfCourierHawbwWithoutHatara: string;
 	NoOfCourierHawbWithoutDelivery: string;
-	HawbQuantityNoDocuments: string;
-	HawbQuantityNoClassification: string;
-	HawbQuantityNoTransManifest: string;
-	HawbQuantityNoTransDeclaration: string;
-	HawbQuantityNoTransPayment: string;
+	HawbQuantityNoDocuments: number;
+	HawbQuantityNoClassification: number;
+	HawbQuantityNoTransManifest: number;
+	HawbQuantityNoTransDeclaration: number;
+	HawbQuantityNoTransPayment: number;
 	
 }
  
