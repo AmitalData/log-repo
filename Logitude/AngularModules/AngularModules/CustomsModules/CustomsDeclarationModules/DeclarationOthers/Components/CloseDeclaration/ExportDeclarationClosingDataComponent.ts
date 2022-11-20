@@ -176,9 +176,8 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                 this.IsReady = true;
 
                 this.initOceanExportData();
-            });
 
-            if(this.DecPM.TransportModeId == 'L') //TransportMod- land
+                if(this.DecPM.TransportModeId == 'L') //TransportMod- land
             {
 
 
@@ -186,7 +185,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                 if(AppTool.IsNullOrEmpty(response.Result))
                 {
                 
-                    if(!AppTool.IsNullOrEmpty(this.DecPM.Consignments[0].CargoTypeCodeForExport)) this.FinalCargoTypeCode = this.DecPM.Consignments[0].CargoTypeCodeForExport;
+                   if(!AppTool.IsNullOrEmpty(this.DecPM.Consignments[0].CargoTypeCodeForExport)) this.FinalCargoTypeCode = this.DecPM.Consignments[0].CargoTypeCodeForExport;
                         
                     
 
@@ -206,8 +205,9 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                 
                 }
 
- 
-        
+            });
+
+            
         }
     }
 
