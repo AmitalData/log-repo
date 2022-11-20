@@ -27,12 +27,12 @@ namespace WebFreight.Web.Helpers.SignUp.Logbox
             commonContext = CommonContext;
             tenant = Tenant;
         }
-        public void UpdateNewTenant(SignUpInfoClass signUpInfoClass, AddressPM TenantAddress)
+        public void UpdateNewTenant(SignUpInfoClass signUpInfoClass, AddressPM TenantAddress, int tenant)
         {
             TenantService service = new TenantService(commonContext, tenant);
             TenantQuery query = new TenantQuery(tenant);
 
-            var CrmCustomer = CardRepository.GetSingleCard(signUpInfoClass.CustomerId, signUpInfoClass.Tenant, false);
+            var CrmCustomer = CardRepository.GetSingleCard(signUpInfoClass.CustomerId, tenant, false);
 
             if (CrmCustomer == null)
             {
