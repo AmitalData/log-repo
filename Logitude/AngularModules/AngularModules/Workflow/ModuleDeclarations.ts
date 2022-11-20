@@ -32,6 +32,7 @@ import { ShowEntitiesTreeItemPipe } from "./Pipes/ShowEntitiesTreeItemPipe";
 import { ShowExpressionTreeItemPipe } from "./Pipes/ShowExpressionTreeItemPipe";
 import { EntityLabelPipe } from "./Pipes/EntityLabelPipe";
 import { GetObjectTablesQueryFiltersPipe } from "./Pipes/GetObjectTablesQueryFiltersPipe";
+import { ConditionDisabledPipe } from "./Pipes/ConditionDisabledPipe";
 import { ExpressionComponent } from "./Components/Base/ExpressionComponent";
 import { ExpressionLogicComponent } from "./Components/Base/ExpressionLogicComponent";
 import { CollectionFilterPropertiesComponent } from './Components/Properties/CollectionFilterPropertiesComponent';
@@ -77,6 +78,7 @@ export const Pipes = [
     ShowExpressionTreeItemPipe,
     ShowFlowVariablesTreeItemPipe,
     EntityLabelPipe,
+    ConditionDisabledPipe,
 ];
 
 export class ModuleDeclarations {
