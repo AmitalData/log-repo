@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, ViewEncapsulation, Input, Output,EventEmitter } from '@angular/core';
 import * as React from 'react';
 import Dashboard from 'logitude-dashboard-library';
 import * as ReactDOM from 'react-dom';
@@ -28,7 +28,7 @@ import { OnDestroy } from '@angular/core';
 })
 
 export class CustomDashboardLayoutComponent implements AfterViewInit, OnDestroy {
-    @ViewChild('reactDashboradContainer') reactDashboradContainer: ElementRef;
+    @ViewChild('reactDashboradContainer') reactDashboradContainer: ElementRef;    
     private CurrentSession = SessionLocator.SelectedSession;
     @Output() openEditWidget: EventEmitter<ReactWidgetPM> = new EventEmitter<ReactWidgetPM>();
     @Output() onReactChangeLayouts: EventEmitter<{ lg: ReactWidgetPM[]; }> = new EventEmitter<{ lg: ReactWidgetPM[]; }>();
@@ -36,9 +36,9 @@ export class CustomDashboardLayoutComponent implements AfterViewInit, OnDestroy 
     constructor() {
 
     }
-
+   
     private _show: boolean = false;
-    @Input('Show') set Show(value) {
+    @Input('Show') set Show(value) {       
         if (value && !this._show) {
             this.renderNewDashboard();
         }
@@ -47,7 +47,7 @@ export class CustomDashboardLayoutComponent implements AfterViewInit, OnDestroy 
     }
     get Show() {
         return this._show;
-    }
+    }    
 
     private isEditLayout: boolean;
     get IsEditLayout() { return this.isEditLayout; }
@@ -73,7 +73,7 @@ export class CustomDashboardLayoutComponent implements AfterViewInit, OnDestroy 
             this._DashboardDataBinding = value;
         }
     }
-    get DashboardDataBinding() { return this._DashboardDataBinding; }
+    get DashboardDataBinding() { return this._DashboardDataBinding; }    
 
     ngAfterViewInit(): void {
         if (this._show) {
@@ -88,18 +88,18 @@ export class CustomDashboardLayoutComponent implements AfterViewInit, OnDestroy 
     onChangeLayouts(layouts: { lg: ReactWidgetPM[]; }) {
         this.onReactChangeLayouts.emit(layouts);
     }
+    
 
-
-    private onSelectDataPoint(dataPointSelection: DataPointSelection) {
-        if (!dataPointSelection || this.IsEditLayout) return;
+    private onSelectDataPoint(dataPointSelection: DataPointSelection){
+        if(!dataPointSelection || this.IsEditLayout) return;
         SessionLocator.DynamicLoader.Load('./DashboardModule/Components/Workspace/DashboardLists/DashboardListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-            .then((cmpRef: any) => {
-                cmpRef.instance.ComponentRef = cmpRef;
-                cmpRef.instance.Dashboard = this.SelectedDashboard;
-                cmpRef.instance.Run(dataPointSelection);
-            });
+        .then((cmpRef : any) => {
+            cmpRef.instance.ComponentRef = cmpRef;
+            cmpRef.instance.Dashboard = this.SelectedDashboard;
+            cmpRef.instance.Run(dataPointSelection);
+        });
     }
-    private openReactEditWidget(Widget: ReactWidgetPM) {
+    private openReactEditWidget(Widget: ReactWidgetPM){
         this.openEditWidget.emit(Widget)
     }
 
@@ -114,6 +114,6 @@ export class CustomDashboardLayoutComponent implements AfterViewInit, OnDestroy 
             onSelectDataPoint: this.onSelectDataPoint.bind(this),
         };
 
-        ReactDOM.render(React.createElement(Dashboard, props), this.reactDashboradContainer.nativeElement);
+        ReactDOM.render(React.createElement(Dashboard, props),this.reactDashboradContainer.nativeElement);
     }
 }

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class JournalUpdateClass
    {  		
-		public const string HashString = "25cc00fbeff87381ff454184c5898228";
+		public const string HashString = "94d493c18ae4f1e2b4f5b2516c029809";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4069,7 +4069,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode JournalTextCode_JournalOConfirmVoidJournal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.ConfirmVoidJournal", DefaultText = "Are you sure you want to cancel this Journal?",LocalDefaultText = @"אנא אשר את ביטול פקודת היומן  ", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode JournalTextCode_JournalODifferenceExchangeRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.DifferenceExchangeRate", DefaultText = "Difference between new and old value is more than 5 Percent Exchange rate",LocalDefaultText = @"השער החדש גדול ביותר מחמישה אחוזים מהשער הקודם", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode JournalTextCode_JournalODifferenceExchangeRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.DifferenceExchangeRate", DefaultText = "Difference between new and old value is more than 5 Percent Exchange rate",LocalDefaultText = @"השער החדש קטן\גדול ביותר מחמישה אחוזים מהשער הקודם", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

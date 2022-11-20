@@ -366,6 +366,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string StockTypeCode { get; set; }
 
         public bool AutoArchiveOnInvoice { get; set; }
+        public bool AutoArchiveOnPODExport { get; set; }
         public string EcommerceSupportEmail { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -422,5 +423,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool IsDigitalPortalAccessActivated { get; set; }
         public bool UseNewTermsOfUse { get; set; }
         public string ShipmentATADateIndicator { get; set; }
+        public int? TotalDefaultNumberOfUsers { get; set; }
     }
 }

@@ -50,6 +50,12 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="AutoArchiveOnPODExport"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="ShowTaxAmountWarning"
     Type="bit">
     <Constraints

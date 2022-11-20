@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Logitude.DBMigrations.Models
 {
@@ -14,6 +10,17 @@ namespace Logitude.DBMigrations.Models
         {
             string[] arguments = Array.ConvertAll(Arguments, a => a.ToLower());
             return (Array.IndexOf(arguments, arg) != -1);
+        }
+
+        public static string GetRunCommand()
+        {
+            string toolName = "Logitude.DBMigrations.exe";
+            if (Arguments == null || (Arguments != null && Arguments.Length == 0))
+            {
+                return toolName;
+            }
+
+            return toolName + " " + string.Join(" ", Arguments);
         }
     }
 }

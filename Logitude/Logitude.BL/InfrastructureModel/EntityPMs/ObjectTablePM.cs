@@ -76,6 +76,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string Description { get; set; }
         public string DefaultText { get; set; }
         public string DefaultTextPlural { get; set; }
+        public bool SupportSubEntity { get; set; }
 
     }
 }

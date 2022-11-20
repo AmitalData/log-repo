@@ -39,8 +39,8 @@ export class CounterInvoiceComponent extends BaseComponent {
         this.HasInterestFeature = FeatureLocator.HasFeaturePermession("InterestReport", "Module");
 
         if (this.HasConsolidationFeature) {
-            this.SameRadioButtonLabel = "Same for Invoice, Credit, Manifest and Consolidation.";
-            this.DiffRadioButtonLabel = "Different for Invoice, Credit, Manifest and Consolidation.";
+            this.SameRadioButtonLabel = "Same for Invoice, Credit, Manifest, Customs, Customs Credit, Consolidation and Credit Consolidation.";
+            this.DiffRadioButtonLabel = "Different for Invoice, Credit, Manifest, Customs, Customs Credit, Consolidation and Credit Consolidation.";
         }
 
         else {
@@ -127,6 +127,16 @@ export class CounterInvoiceComponent extends BaseComponent {
 
         this.BuildItemsSource();
     }
+    private activateConsolidationCreditNoteCounter: boolean = false;
+    public get ActivateConsolidationCreditNoteCounter() {
+        this.activateConsolidationCreditNoteCounter = !this.ItemsSource.filter(i => i.EntityPM.Parameter1 == "COD")[0].EntityPM.InActive;
+        return this.activateConsolidationCreditNoteCounter;
+    }
+    public set ActivateConsolidationCreditNoteCounter(value: boolean) {
+        if (this.activateConsolidationCreditNoteCounter == value) return;
+        this.activateConsolidationCreditNoteCounter = value;
+        this.ItemsSource.filter(i => i.EntityPM.Parameter1 == "COD")[0].EntityPM.InActive = !value;
+    }
     BuildItemsSource() {
         this.ItemsSource = [];
 
@@ -138,6 +148,7 @@ export class CounterInvoiceComponent extends BaseComponent {
         itemsParams.push({ Code: 'CC', Name: "Customs Credit" });
         if (this.HasConsolidationFeature) {
             itemsParams.push({ Code: 'CON', Name: "Consolidation" });
+            itemsParams.push({ Code: 'COD', Name: "Consolidation Credit" });
         }
         if (SessionLocator.TenantPM.AccountingActivated) {
             itemsParams.push({ Code: 'IT', Name: "Interest Invoice" });
@@ -156,7 +167,7 @@ export class CounterInvoiceComponent extends BaseComponent {
                 itemPM.StartNumber_Old = this.EntityPM.StartNumber_Old;
                 itemPM.Parameter1 = item['Code'];
                 itemPM.Parameter1 = null;
-
+                itemPM.InActive = false;
                 this.APIHelper.CounterDefinitions.push(itemPM);
             }
 
@@ -200,8 +211,9 @@ export class CounterInvoiceComponent extends BaseComponent {
             });
         }
     }
-
-    public get Prefix() { return this.EntityPM.Prefix; }
+    public get Prefix() {
+        return this.EntityPM.Prefix;
+    }
     public set Prefix(value: string) {
         if (this.EntityPM.Prefix != value) {
             this.EntityPM.Prefix = value;
@@ -351,7 +363,7 @@ export class CounterInvoiceComponent extends BaseComponent {
     public SampleValue: string;
 
     private HasEmptyCounterSize() {
-        return this.ItemsSource.some(item => AppTool.IsNullOrEmpty(item.CounterSize));
+        return this.ItemsSource.some(item => AppTool.IsNullOrEmpty(item.CounterSize) && !item.EntityPM.InActive);
     }
 
     CalculateSampleValue() {

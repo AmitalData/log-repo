@@ -309,6 +309,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return allIdAccounts;
         }
 
+
+
         private int? GetSecurityLevel(bool useSecurityLevel, int tenant)
         {
             UserPM loggedUser = GetLoggedUser(tenant);

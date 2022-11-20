@@ -1035,6 +1035,7 @@ export class AppTool {
             case "General.MH.CRM":
             case "General.MH.Dashboard":
             case "General.MH.Importers":
+            case "General.MH.ClassicDashboard":
                 {
                     myResult = "Bars";
                     break;

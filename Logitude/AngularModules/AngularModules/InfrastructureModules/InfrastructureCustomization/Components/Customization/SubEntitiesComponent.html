@@ -7,7 +7,7 @@
 <table>
     <tr style="height:30px">
         <td>
-            <div style="width: 100%; margin-left: 670px ">
+            <div *ngIf="SupportSubEntity" style="width: 100%; margin-left: 670px ">
                 <button style="width:100px; position:absolute; bottom:7px; right:0px" class="Button" (click)="AddNewSubEntity()" [disabled]="!enableAddCustomChildEntity">New Sub Entity</button>
             </div>
         </td>

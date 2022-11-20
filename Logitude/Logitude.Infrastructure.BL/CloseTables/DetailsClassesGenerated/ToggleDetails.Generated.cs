@@ -699,7 +699,7 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "QMU,Quote Markup Currency", 
                 Name = "Quote Markup Currency", 
                 Description = "Quote Markup Currency", 
-			});		 
+			});
 			 
             all.Add(new ToggleDetails()
             {    
@@ -716,6 +716,7 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "ARS,ARInvoice Sent Icon", 
                 Description = "ARInvoice Sent Icon", 
 			});
+			 
             all.Add(new ToggleDetails()
             {    
                 Code = "BRS", 
@@ -746,6 +747,14 @@ namespace Logitude.Infrastructure.BL
                 Name = "Connect Tranzilla on Test Links", 
                 SearchFields = "Connect Tranzilla on Test Links", 
                 Description = "Connect Tranzilla on Test Links", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "ABD", 
+                Name = "Auto Build in Document Send", 
+                SearchFields = "ABD,Auto Build in Document Send", 
+                Description = "Auto Build in Document Send", 
 			});
 			
             return all;

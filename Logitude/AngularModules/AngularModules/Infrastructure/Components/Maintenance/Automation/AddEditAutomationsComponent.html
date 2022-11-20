@@ -228,7 +228,7 @@
                                                                                             </td>
                                                                                             <td>
                                                                                                 <div style="margin-left:5px">
-                                                                                                    <HelpIcon *ngIf="(IsSendDocument && ObjectTableName == 'Shipment')" [HideHeader]="true" [Text]="'Using this result, your document will be built automatically and sent to the Recipients Emails or to the FTP'"></HelpIcon>
+                                                                                                    <HelpIcon *ngIf="(IsSendDocument && ObjectTableName == 'Shipment')" [HideHeader]="true" [Text]="'Using this result, your document will be built automatically and sent to the Recipients Emails'"></HelpIcon>
                                                                                                 </div>
                                                                                             </td>
                                                                                         </tr>
@@ -437,7 +437,7 @@
                                                                                                     <p style="font-size:11px;margin-top:1px;color:Gray;margin-left:10px">Email Body</p>
 
                                                                                                 </div>
-                                                                                                <div [style.border]="ResultCodeSelected.Code !='EMAIL' && !(IsSendDocument && ObjectTableName == 'Shipment') ?'2px solid #E4E3E1':''" [style.padding-top]="ResultCodeSelected.Code !='EMAIL' && !(IsSendDocument && ObjectTableName == 'Shipment') ?'7px':''" [style.padding-bottom]="ResultCodeSelected.Code !='EMAIL' && !(IsSendDocument && ObjectTableName == 'Shipment') ?'7px':''" style="border-radius: 5px">
+                                                                                                <div [style.border]="ResultCodeSelected.Code !='EMAIL' && !(IsSendDocument && ObjectTableName == 'Shipment' && AutomationSendDocument.SendVia == 'EMAIL') ?'2px solid #E4E3E1':''" [style.padding-top]="ResultCodeSelected.Code !='EMAIL' && !(IsSendDocument && ObjectTableName == 'Shipment' && AutomationSendDocument.SendVia == 'EMAIL') ?'7px':''" [style.padding-bottom]="ResultCodeSelected.Code !='EMAIL' && !(IsSendDocument && ObjectTableName == 'Shipment' && AutomationSendDocument.SendVia == 'EMAIL') ?'7px':''" style="border-radius: 5px">
                                                                                                     <table>
                                                                                                         <tr>
                                                                                                             <td style="width:10px">
@@ -509,7 +509,7 @@
 
                                                                                         </tr>
 
-                                                                                        <tr *ngIf="(ResultCodeSelected.Code =='EMAIL' || (IsSendDocument && ObjectTableName == 'Shipment')) && DocumentTypeSelected && DocumentTypeSelected.TemplateFormatCode=='P'" style="height:25px">
+                                                                                        <tr *ngIf="(ResultCodeSelected.Code =='EMAIL' || (IsSendDocument && ObjectTableName == 'Shipment' && AutomationSendDocument.SendVia == 'EMAIL')) && DocumentTypeSelected && DocumentTypeSelected.TemplateFormatCode=='P'" style="height:25px">
                                                                                             <td colspan="4">
 
                                                                                                 <div>

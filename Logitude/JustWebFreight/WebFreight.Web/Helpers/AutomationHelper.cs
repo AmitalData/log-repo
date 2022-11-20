@@ -345,7 +345,7 @@ namespace WebFreight.Web.Helpers
             }
 
             context.SaveChanges();
-            if (IsAllowedToSendEmail(automationSendEmailArgs, context))
+            if (IsAllowedToSendEmail(automationSendEmailArgs, context) || automation.ResultCode == "SENDDOCUMENT")
             {
                 DbQueueService queueservice = new DbQueueService("EmailQueue", tenant);
                 Dictionary<string, string> emailQueueMessage = new Dictionary<string, string>() { { "CommunicationLogId", log.Id }, { "Tenant", tenant.ToString() } };
@@ -770,6 +770,7 @@ namespace WebFreight.Web.Helpers
 
         public string EntityId { get; set; }
         public string ObjectTableId { get; set; }
+        public string EntityChangeId { get; set; }
 
         public string CreateByUserId { get; set; }
         public int Tenant { get; set; }

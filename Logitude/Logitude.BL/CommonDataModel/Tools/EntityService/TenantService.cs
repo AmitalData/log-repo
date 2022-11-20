@@ -65,7 +65,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 SettingRepository settingRepository = new SettingRepository();
                 Setting setting = settingRepository.GetSingleSetting("1");
-                
+
                 if (setting.WorkEnvironment == "customs")
                 {
                     packageCode = "CUST";
@@ -76,7 +76,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
 
                 GlobalTenantRepository globalTenantRepository = new GlobalTenantRepository();
-                TenantManagementRepository tenantManagementRep = new TenantManagementRepository();                
+                TenantManagementRepository tenantManagementRep = new TenantManagementRepository();
 
                 GlobalDB database = GetActiveDatabaseNumber();
                 int version = globalTenantRepository.GetCurrentVersion();
@@ -102,10 +102,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     TrialStartDate = DateTime.Now,
                     TrialEndDate = DateTime.Now.AddDays(31),
                     PackageCode = packageCode,
-                    NumberOfUsers = 1,
-                    TotalNumberOfUsers = 1,
+                    NumberOfUsers = IsEmptyTotalDefaultNumberOfUsers(theEntityPm) ? 1 : theEntityPm.TotalDefaultNumberOfUsers,
+                    TotalNumberOfUsers = IsEmptyTotalDefaultNumberOfUsers(theEntityPm) ? 1 : theEntityPm.TotalDefaultNumberOfUsers,
                     SearchFields = globalTenant.Id + "," + globalTenant.CompanyName + ",1",
-                    AWBMessagesCCSTypeCode = "CHAMP",                        
+                    AWBMessagesCCSTypeCode = "CHAMP",
                 };
 
                 Package tenantPackage = packages.Where(d => d.Code == tenantManagement.PackageCode).FirstOrDefault();
@@ -127,11 +127,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     tenantManagement.Technology = "AG";
                     //theEntityPm.ExportQuotationsToIntegratedSystem = false;
                 }
-                
+
                 tenantManagementRep.Add(tenantManagement);
                 tenantManagementRep.SubmitChanges();
 
-                
+
                 scope.Complete();
             }
 
@@ -171,6 +171,12 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             CreateDWHSettings();
         }
+
+        private static bool IsEmptyTotalDefaultNumberOfUsers(TenantPM theEntityPm)
+        {
+            return theEntityPm.TotalDefaultNumberOfUsers == null || theEntityPm.TotalDefaultNumberOfUsers <= 0;
+        }
+
         public void Update(TenantPM theEntityPm)
         {
             string entityName = "TenantPM" + theEntityPm.Id;

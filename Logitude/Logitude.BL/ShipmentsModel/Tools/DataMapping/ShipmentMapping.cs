@@ -2875,6 +2875,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             AddFieldChangedProperties(changeTrackingPM, "IsAccrualsApproved", changeTrackingPM.IsAccrualsApproved, pm.IsAccrualsApproved, "bool", notifyPropertyChangeValuesList);                      
             AddFieldChangedProperties(changeTrackingPM, "FirstPickupATD", changeTrackingPM.FirstPickupATD, pm.FirstPickupATD, "FirstPickupATD", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "IncludesCustoms", changeTrackingPM.IncludesCustoms, pm.IncludesCustoms, "IncludesCustoms", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "CustomsClearanceDate", changeTrackingPM.CustomsClearanceDate, pm.CustomsClearanceDate, "CustomsClearanceDate", notifyPropertyChangeValuesList);
+
 
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field1, pm.Field1, "Field1", notifyPropertyChangeValuesList);
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field2, pm.Field2, "Field2", notifyPropertyChangeValuesList);
@@ -3043,8 +3045,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             shipmentPM.LastSharedEventId = houseShipment.LastSharedEventId;
             shipmentPM.IsAccrualsApproved = houseShipment.IsAccrualsApproved;
             shipmentPM.IncludesCustoms = houseShipment.IncludesCustoms;
+            shipmentPM.CustomsClearanceDate = houseShipment.CustomsClearanceDate;
 
-            
+
             if (EntityChangeHelper.IsShowLogBoxAutomationFields())
             {
                 shipmentPM.IsDepositionRequired = houseShipment.IsDepositionRequired;

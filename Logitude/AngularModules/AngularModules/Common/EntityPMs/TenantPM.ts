@@ -635,6 +635,11 @@ export class TenantPM {
     public set AutoArchiveOnInvoice(newValue: boolean) { if (this.autoArchiveOnInvoice != newValue) { this.autoArchiveOnInvoice = newValue; this.MarkAsDirty("AutoArchiveOnInvoice"); } }
        
 	 
+    private autoArchiveOnPODExport: boolean;
+    public get AutoArchiveOnPODExport() { return this.autoArchiveOnPODExport; }
+    public set AutoArchiveOnPODExport(newValue: boolean) { if (this.autoArchiveOnPODExport != newValue) { this.autoArchiveOnPODExport = newValue; this.MarkAsDirty("AutoArchiveOnPODExport"); } }
+       
+	 
     private ecommerceSupportEmail: string;
     public get EcommerceSupportEmail() { return this.ecommerceSupportEmail; }
     public set EcommerceSupportEmail(newValue: string) { if (this.ecommerceSupportEmail != newValue) { this.ecommerceSupportEmail = newValue; this.MarkAsDirty("EcommerceSupportEmail"); } }
@@ -758,11 +763,13 @@ export class TenantPM {
     private useNewTermsOfUse: boolean;
     public get UseNewTermsOfUse() { return this.useNewTermsOfUse; }
     public set UseNewTermsOfUse(newValue: boolean) { if (this.useNewTermsOfUse != newValue) { this.useNewTermsOfUse = newValue; this.MarkAsDirty("UseNewTermsOfUse"); } }
-
+       
+	 
     private shipmentATADateIndicator: string;
     public get ShipmentATADateIndicator() { return this.shipmentATADateIndicator; }
     public set ShipmentATADateIndicator(newValue: string) { if (this.shipmentATADateIndicator != newValue) { this.shipmentATADateIndicator = newValue; this.MarkAsDirty("ShipmentATADateIndicator"); } }
        
+	 
 
     public OldEntityPM: TenantPM;
 		
@@ -790,4 +797,4 @@ export class TenantPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

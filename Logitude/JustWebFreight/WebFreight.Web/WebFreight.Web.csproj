@@ -1102,6 +1102,7 @@
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\GLAccountFollowUpDataController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\UserDefinedReportController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\InterestTransactionsCheckAController.cs" />
+    <Compile Include="Controllers\AccountingModel\InterestTransactionsCheckBController.cs" />
     <Compile Include="Controllers\AccountingModel\LedgerTransactionBalanceFilterCreateLTBFilter.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoSessionController.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingIncrementalStatController.cs" />
@@ -2887,6 +2888,7 @@
     <Compile Include="Helpers\CallBack\Handler\AutomationDocumentHandlerService.cs" />
     <Compile Include="Helpers\CallBack\Handler\EmailDocumentHandlerService.cs" />
     <Compile Include="Helpers\CallBack\Handler\EmailDocument\ARInvoiceDocumentHandlerService.cs" />
+    <Compile Include="Helpers\CallBack\Handler\EmailDocument\AutomationDocumentOutHandlerService.cs" />
     <Compile Include="Helpers\CallBack\Handler\HandlerServiceFactory.cs" />
     <Compile Include="Helpers\CallBack\Handler\IHandlerService.cs" />
     <Compile Include="Helpers\ChangePasswordParameter.cs" />
@@ -2963,6 +2965,11 @@
     <Compile Include="Helpers\SharedLogisticReportService.cs" />
     <Compile Include="Helpers\ShipmentDigitalArchivedArgs.cs" />
     <Compile Include="Helpers\ShipmentOrderModule\ShipmentOrderService.cs" />
+    <Compile Include="Helpers\SignUp\Logbox\CustomerTenantAccessSignUpRequest.cs" />
+    <Compile Include="Helpers\SignUp\Logbox\LogboxSignUpCurrencyService.cs" />
+    <Compile Include="Helpers\SignUp\Logbox\LogboxSignUpAddressService.cs" />
+    <Compile Include="Helpers\SignUp\Logbox\LogboxSignUpCustomerService.cs" />
+    <Compile Include="Helpers\SignUp\Logbox\LogboxSignUpService.cs" />
     <Compile Include="Helpers\SignUp\TruckerSignUpService.cs" />
     <Compile Include="Helpers\StimulsoftReportFontSizeService.cs" />
     <Compile Include="Helpers\UpdateShipmetsBatchArgs.cs" />

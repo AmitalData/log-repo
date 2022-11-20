@@ -101,13 +101,25 @@ export class CustomerMenuButtonsHandler {
 
                         case "SetAsPotential":
                             {
-                                if (this.EntityPM.CustomerStatusCode == "POT") {
-                                    button.IsDisabled = true;
+                                if (this.TenantPM.IsHybrid) {
+                                    if (this.EntityPM.CustomerStatusCode == "POT") {
+                                        button.IsDisabled = true;
+                                    }
+
+                                    else {
+                                        button.IsDisabled = false;
+                                    }
                                 }
 
                                 else {
-                                    button.IsDisabled = false;
-                                }
+                                    if (this.EntityPM.CustomerStatusCode == "POT" || this.EntityPM.CustomerStatusCode == "INA") {
+                                        button.IsDisabled = true;
+                                    }
+
+                                    else {
+                                        button.IsDisabled = false;
+                                    }
+                                }                             
 
                                 break;
                             }

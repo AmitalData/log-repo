@@ -1,17 +1,15 @@
 import { Component } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
-import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
 import { ServiceResponse } from "Infrastructure/DataContracts/ServiceResponse";
 import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { ExpressionCategoryList } from "Workflow/EntityLists/ExpressionCategoryList";
 import { ExpressionList } from "Workflow/EntityLists/ExpressionList";
-import { ApiQueryFiltersBuilder } from "Workflow/Models/ApiQueryFiltersBuilder";
+import { ExpressionFunctionTreeList } from "Workflow/Models/ExpressionFunctionTreeList";
 import { FlowVariablesTreeList } from "Workflow/Models/FlowVariablesTreeList";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 import { ExpressionCategoryListService } from "Workflow/Services/StandardLists/ExpressionCategoryListService";
 import { ExpressionListService } from "Workflow/Services/StandardLists/ExpressionListService";
-import { WorkFlowInstanceListService } from "Workflow/Services/StandardLists/WorkFlowInstanceListService";
 
 @Component({
     templateUrl: "./ExpressionLogicComponent.html"
@@ -21,19 +19,18 @@ export class ExpressionLogicComponent extends BaseComponent {
 
     public DataContext: any = this;
     public ValidationErrorsList: string[];
-
     public CurrentSession = SessionLocator.SelectedSession;
+
     public ExpressionList: ExpressionList[] = [];
-    public ExpressionListByCategory: ExpressionList[] = [];
     public ExpressionCategoryList: ExpressionCategoryList[] = [];
 
     public expressionListService: ExpressionListService = new ExpressionListService();
     public expressionCategoryListService: ExpressionCategoryListService = new ExpressionCategoryListService();
 
-    public Expression: string
-    public ExpressionCategory: string
     public Resources: any
     public ExpressionTextArea: string
+    public SelectedCategory: ExpressionCategoryList
+    public SelectedCategoryCode: string = "ALL";
 
     public startPoint: number = 0
     public endPoint: number = 0
@@ -45,6 +42,11 @@ export class ExpressionLogicComponent extends BaseComponent {
     public FlowVariablesTreeList: FlowVariablesTreeList;
     public FlowVariablesTreeItems: TreeSelectItem[];
 
+    public ExpressionFunctionTreeList: ExpressionFunctionTreeList;
+    public ExpressionFunctionTreeItems: TreeSelectItem[];
+
+    public SelectedCategoryChanged: boolean = false;
+
     constructor() {
         super();
     }
@@ -53,33 +55,24 @@ export class ExpressionLogicComponent extends BaseComponent {
         this.FlowObject = args.FlowObject ? args.FlowObject : null;
         this.CurrentNodeId = args.CurrentNodeId ? args.CurrentNodeId : null;
         this.FlowObjectFields = args.FlowObjectFields ? args.FlowObjectFields : [];
-        this.ExpressionTextArea = args.ExpressionValue
+        this.ExpressionTextArea = args.ExpressionValue;
+        this.ExpressionList = args.ExpressionList ? args.ExpressionList : [];
     }
 
     ngOnInit() {
-        this.initializeExpressionData();
         this.initializeExpressionCategoryData();
         this.initializeFlowVariablesTree();
+        this.initializeExpressionFunctionTree();
     }
 
     initializeExpressionCategoryData() {
         this.expressionCategoryListService.getAll().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 const result = myResponse.Result;
-                this.ExpressionCategoryList = [{ Code: "ALL", Name: "All Functions", SearchFields: "All,All Functions" }];
+                let allCategoryType = { Code: "ALL", Name: "All Functions", SearchFields: "All,All Functions" };
+                this.ExpressionCategoryList.push(allCategoryType);
                 this.ExpressionCategoryList = this.ExpressionCategoryList.concat(result);
-
-                var allCategory = this.ExpressionCategoryList.find(e => e.Code = "ALL")
-                this.SelectedExpressionCategory = allCategory
-            }
-        });
-
-    }
-
-    initializeExpressionData() {
-        this.expressionListService.getAll().subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                this.ExpressionList = this.ExpressionList.concat(myResponse.Result);
+                this.SelectedCategory = allCategoryType;
             }
         });
     }
@@ -89,40 +82,31 @@ export class ExpressionLogicComponent extends BaseComponent {
         this.FlowVariablesTreeItems = this.FlowVariablesTreeList.Items;
     }
 
-    updateExpressionTextArea(value: string) {
-        this.ExpressionTextArea = value;
+    initializeExpressionFunctionTree() {
+        this.ExpressionFunctionTreeList = new ExpressionFunctionTreeList(this.ExpressionList);
+        this.ExpressionFunctionTreeItems = this.ExpressionFunctionTreeList.Items;
     }
 
-    private _SelectedExpression: ExpressionList;
-    public get SelectedExpression(): ExpressionList {
-        return this._SelectedExpression;
-    }
-    public set SelectedExpression(v: ExpressionList) {
-        this._SelectedExpression = v;
-        this.ExpressionTextArea = v.Name + v.Body;
-    }
-
-    private _SelectedExpressionCategory: ExpressionCategoryList;
-    public get SelectedExpressionCategory(): ExpressionCategoryList {
-        return this._SelectedExpressionCategory;
-    }
-    public set SelectedExpressionCategory(v: ExpressionCategoryList) {
-        this._SelectedExpressionCategory = v;
-        this._SelectedExpression = null;
-        // this.ExpressionTextArea = "";
-        this.ExpressionListByCategory = [];
-        this.LoadFilterdExpressionFunctions();
-    }
-
-    LoadFilterdExpressionFunctions() {
-        var selectedCategory = this.SelectedExpressionCategory.Code
-        if (!this.ExpressionList) {
-            this.initializeExpressionData();
+    updateExpressionCategory(value: any) {
+        if (value != null) {
+            this.SelectedCategory = value;
+            this.SelectedCategoryCode = value.Code
+            this.SelectedCategoryChanged = !this.SelectedCategoryChanged;
         }
-        if (selectedCategory == 'ALL') {
-            this.ExpressionListByCategory = this.ExpressionList
-        } else {
-            this.ExpressionListByCategory = this.ExpressionList.filter(e => e.CategoryCode == selectedCategory)
+    }
+
+    updateExpression(value: any) {
+        let v: ExpressionList = value.data;
+        if (v != null) {
+            this.ExpressionTextArea = v.Name + v.Body;
+            this.updateCurserPoint(this.ExpressionTextArea)
+        }
+    }
+
+    updateCurserPoint(value: string) {
+        if (value) {
+            this.startPoint = value.length
+            this.endPoint = value.length
         }
     }
 
@@ -136,13 +120,38 @@ export class ExpressionLogicComponent extends BaseComponent {
     setResourcesInFunction = (selectedResource: string) => {
         let resource = '{' + selectedResource + '}'
         let currentValue = this.ExpressionTextArea;
-        let patchedValue = currentValue.substr(0, this.startPoint) + resource + currentValue.substr(this.endPoint);
-        this.ExpressionTextArea = patchedValue;
+        if (currentValue) {
+            let patchedValue = currentValue.substr(0, this.startPoint) + resource + currentValue.substr(this.endPoint);
+            this.ExpressionTextArea = patchedValue;
+        } else {
+            this.ExpressionTextArea = resource;
+        }
     }
 
     setCurserPoints(event: any) {
         this.startPoint = event.target.selectionStart;
         this.endPoint = event.target.selectionEnd;
+    }
+
+    updateExpressionTextArea(value: string) {
+        this.ExpressionTextArea = value;
+    }
+
+    curserPointReset(event) {
+        if (event.key === 'Delete' || event.key === 'Backspace') {
+            this.startPoint = event.target.selectionStart
+            this.endPoint = event.target.selectionEnd
+        } else if (this.curserPointChanged(event)) {
+            this.startPoint += 1
+            this.endPoint = this.startPoint
+        }
+    }
+
+    curserPointChanged(event) {
+        if (event.target.selectionStart != this.startPoint && event.target.selectionEnd != this.endPoint) {
+            return true
+        }
+        return false
     }
 
     checkSyntax() {
@@ -155,12 +164,12 @@ export class ExpressionLogicComponent extends BaseComponent {
 
     saveButtonClicked() {
         this.ValidationErrorsList = [];
-        if(this.ExpressionTextArea){
+        if (this.ExpressionTextArea) {
             this.CurrentSession.CurrentWindow.Close(this.ExpressionTextArea);
         }
-        else{
+        else {
             this.ValidationErrorsList.push("Expression is required");
         }
-        
+
     }
 }

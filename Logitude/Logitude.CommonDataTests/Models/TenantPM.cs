@@ -124,6 +124,7 @@
         public string DefaultSLAId { get; set; }
         public object StockTypeCode { get; set; }
         public bool AutoArchiveOnInvoice { get; set; }
+        public bool AutoArchiveOnPODExport { get; set; }
         public object EcommerceSupportEmail { get; set; }
         public object CBSA { get; set; }
         public object CAAT { get; set; }

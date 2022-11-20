@@ -267,7 +267,6 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
     }
 
     private LoadAllChildEntityResourcesCompleted(childEntityResourcesArgs: ChildEntityResourcesArgs) {
-        this.CurrentSession.StopBusyIndicator();
         const screenFields = GetScreenFields(childEntityResourcesArgs.Screen, childEntityResourcesArgs.Sections);
         if (screenFields.length == 0)
             return this.ShowNoFieldsText = true;
@@ -277,7 +276,7 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
         if (childEntityResourcesArgs.FireEmit) {
             this.LoadCompleted.emit(true);
         }
-            
+        this.CurrentSession.StopBusyIndicator();
     }
 
     private BuildScreenSection(screen: ScreenPM, section: ScreenSectionPM, screenFields: any, objectFields: any)

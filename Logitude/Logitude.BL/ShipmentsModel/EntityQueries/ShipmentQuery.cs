@@ -4048,6 +4048,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.IsImporterApprovalRequired = GetIsImporterApprovalRequried(shipment.Id, shipment.Tenant);
                 #endregion
             }
+
+
+
+            shipmentPM.IncludesCustoms = shipment.IncludesCustoms;
+            shipmentPM.CustomsClearanceDate = shipment.CustomsClearanceDate;
             shipmentPM.PODReceivedDate = shipment.PODReceivedDate;
             shipmentPM.QuoteFreightExpirationDate = shipment.QuoteFreightExpirationDate;
             shipmentPM.IsPODReceived = shipment.IsPODReceived;
@@ -4587,7 +4592,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             Parallel.ForEach(shipments, (shipment) =>
             {
                 ShipmentPM shipmentPM = shipmentPMs.Where(shipPM => shipPM.Id == shipment.Id).FirstOrDefault();
-                ShipmentMasterData masterData = shipmentMasterDatas.Where(shipmentMasterData => shipmentMasterData.Id == shipment.Id).FirstOrDefault();
+                ShipmentMasterData masterData = shipmentMasterDatas.Where(shipmentMasterData => shipmentMasterData.Id == shipment.MasterShipmentDataId).FirstOrDefault();
                 shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, true);
                 ShipmentPM securedPM = new ShipmentPM();
                 securedPM = SecuredMapping.GetMappedPM(shipmentPM, securedPM, "Shipment", tenant);
@@ -5380,7 +5385,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.LastSharedEventDate = shipment.LastSharedEventDate;
                     shipmentPM.LastSharedEventId = shipment.LastSharedEventId;
                     shipmentPM.IsAccrualsApproved = shipment.IsAccrualsApproved;
-
+                    shipmentPM.IsAccrualsApproved = shipment.IsAccrualsApproved;
+                    shipmentPM.CustomsClearanceDate = shipment.CustomsClearanceDate;
+                    shipmentPM.IncludesCustoms = shipment.IncludesCustoms;
 
 
                     if (m != null)

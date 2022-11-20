@@ -4,8 +4,8 @@
   Name="DeleteOldMobileNotificationLogs"
   Schema="dbo"
   Module="Infrastructure">
-  <SqlScript>
-    <![CDATA[
+	<SqlScript>
+		<![CDATA[
 create procedure [dbo].[DeleteOldMobileNotificationLogs] as
 IF OBJECT_ID('tempdb..#tblOldMobileNotificationLogs') IS NOT NULL
 DROP TABLE #tblOldMobileNotificationLogs
@@ -43,7 +43,7 @@ end
 DROP TABLE #tblOldMobileNotificationLogs
 
 ]]>
-  </SqlScript>
-  <OracleScript>
-  </OracleScript>
+	</SqlScript>
+	<OracleScript>
+	</OracleScript>
 </Procedure>

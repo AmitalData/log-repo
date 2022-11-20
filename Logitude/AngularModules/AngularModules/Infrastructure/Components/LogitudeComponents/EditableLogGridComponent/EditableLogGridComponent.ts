@@ -21,7 +21,7 @@ declare var styleDisplay, EditgriditemStyling;
     selector: 'logitude-edit-grid',
     templateUrl: './EditableLogGridComponent.html',
     //directives: [CORE_DIRECTIVES, EditableListTemplateComponent],
-    inputs: ['columns:columns', 'GridWidth', 'GridHeight', 'groupby', 'ItemSource', 'EnableLines', 'DisableRowByFieldValue', 'DisableRowByFieldName', 'SelectedRow', 'Disabled', 'HeaderHeight', 'ShowCount', 'ReloadDetails', 'ReRenderGrid', 'IsReadOnly', 'IsDarkHeader', 'EnableMultiSelection', 'SelectedRows', 'FooterTop', 'UseVirtuallization', 'EnableGridViewRowBackground', 'ChangeScrollPosition', 'EnableExpandCollapseAll', 'LastDefaultSpace'],
+    inputs: ['columns:columns', 'GridWidth', 'GridHeight', 'groupby', 'ItemSource', 'EnableLines', 'DisableRowByFieldValue', 'DisableRowByFieldName', 'SelectedRow', 'Disabled', 'HeaderHeight', 'ShowCount', 'ReloadDetails', 'ReRenderGrid', 'IsReadOnly', 'IsDarkHeader', 'EnableMultiSelection', 'SelectedRows', 'FooterTop', 'UseVirtuallization', 'EnableGridViewRowBackground', 'ChangeScrollPosition', 'EnableExpandCollapseAll', 'LastDefaultSpace', 'ShowNoDataFoundText'],
 })
 
 export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterContentInit {
@@ -39,6 +39,7 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
     ItemSourceLoaded: EventEmitter<any>;
     MyTimer = null
     EnableExpandCollapseAll = false;
+    ShowNoDataFoundText = false;
     ShowCollapseAllIcon = false;
     public get ItemSource() { return this.itemSource; }
     public set ItemSource(newValue: ObservableCollection) {

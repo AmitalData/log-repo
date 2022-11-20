@@ -31,12 +31,12 @@ namespace Logitude.BL.Helpers
         private readonly bool IsAutomation;
         private int Tenant;
 
-        public DocumentHelper(bool isAutomation = false)
+        public DocumentHelper(bool isAutomation = false )
         {
             IsAutomation = isAutomation;
         }
 
-        public DocumentOutPM CreateDocumentOut(string documentTypeId, string entityId, string childEntityId, string childReference, string objectTableId, int tenant, string userId = null)
+        public DocumentOutPM CreateDocumentOut(string documentTypeId, string entityId, string childEntityId, string childReference, string objectTableId, int tenant, string userId = null , string documentTemplateId = null)
         {
             this.Tenant = tenant;
             try
@@ -47,10 +47,13 @@ namespace Logitude.BL.Helpers
                 DocumentOutQuery documentOutQuery = new DocumentOutQuery(documentOutRepository);
 
                 DocumentType documentType = documentTypeRepository.GetSingleDocumentTypes(documentTypeId, tenant);
-                string documentTemplateId = null;
                 string emailTemplateId = null;
 
-                documentTemplateId = documentType.DocumentTypeDefaultReportTemplateId;
+                if (string.IsNullOrEmpty(documentTemplateId))
+                {
+                    documentTemplateId = documentType.DocumentTypeDefaultReportTemplateId;
+                }
+
                 emailTemplateId = documentType.DocumentTypeDefaultHTMLTemplateId;
 
 

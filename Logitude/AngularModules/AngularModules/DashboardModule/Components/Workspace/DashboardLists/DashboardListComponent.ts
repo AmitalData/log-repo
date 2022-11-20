@@ -7,13 +7,11 @@ import { WidgetPartArguments } from 'DashboardModule/DataContracts/WidgetPartArg
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { AnalyticsFactsFieldsMetaDataPM } from 'DashboardModule/EntityPMs/AnalyticsFactsFieldsMetaDataPM';
-import { ShipmentPMService } from 'Shipment/Services/StandardPMs/ShipmentPMService';
 import { DashboardListLinkRendererComponent } from 'DashboardModule/Components/ListTemplates/DashboardListLinkRendererComponent';
 import * as moment from 'moment';
 import { DashboardMapping } from 'Dashboard/Services/DashboardMapping';
 import { DashboardPM } from 'DashboardModule/EntityPMs/DashboardPM';
 import { EntityPMService } from 'Infrastructure/Services/EntityPMService';
-import { AnalyticsFactsFieldsMetaDataPMService } from 'DashboardModule/Services/StandardPMs/AnalyticsFactsFieldsMetaDataPMService';
 import { AnalyticsFactsMetaDataPMService } from 'DashboardModule/Services/StandardPMs/AnalyticsFactsMetaDataPMService';
 
 @Component({
@@ -34,6 +32,8 @@ export class DashboardListComponent extends BaseComponent implements OnInit {
     private AnalyticsFactsMetaDataPMService = new AnalyticsFactsMetaDataPMService();
     private CurrentSession = SessionLocator.SelectedSession;
     public entityPMService: EntityPMService;
+    public Title: string;
+
     ObjectTableName: any;
 
     ngOnInit(): void {
@@ -46,7 +46,13 @@ export class DashboardListComponent extends BaseComponent implements OnInit {
     Run(dataPointSelection: DataPointSelection) {
         this.DataPointSelection = dataPointSelection;
         this.GetObjectTableName();
+        this.SetTitle();
+    }
 
+    SetTitle() {
+        if (!this.Dashboard?.Name) return;
+        if (this.Dashboard.Name.length <= 12) this.Title = this.Dashboard.Name;
+        else this.Title = this.Dashboard.Name.substring(0, 9) + "...";
     }
 
     GetObjectTableName() {
@@ -60,7 +66,7 @@ export class DashboardListComponent extends BaseComponent implements OnInit {
         });
     }
 
-    GetList(isRefresh : boolean = false) {
+    GetList(isRefresh: boolean = false) {
         this.DashboardAnalyticsService.GetDataAnalyticPart(this.MapDataPointSelectionToWidgetPartArguments(this.DataPointSelection))
             .subscribe((res: any) => {
                 this.StopBusyIndicator();
@@ -70,9 +76,9 @@ export class DashboardListComponent extends BaseComponent implements OnInit {
             });
     }
 
-    private BuildGrid(result: any, isRefresh : boolean) {
+    private BuildGrid(result: any, isRefresh: boolean) {
         this.rowData = result.DataResult;
-        if(isRefresh) return;
+        if (isRefresh) return;
         var fields = result.Fields as AnalyticsFactsFieldsMetaDataPM[];
         this.columns = [];
         fields.forEach(metaDataField => {

@@ -41,7 +41,7 @@ export class EntitiesTreeList {
         this.Entities.forEach(entity => {
             let childrenItems = this.getChildrenItems(entity.Code);
             let entityItem = new TreeSelectItem(entity.Code, entity.Name, this.OnlyParentEntities, true, !this.OnlyParentEntities, false, childrenItems);
-            this.Items.push(entityItem);
+            this.Items.push(entityItem);  
         });
     }
 

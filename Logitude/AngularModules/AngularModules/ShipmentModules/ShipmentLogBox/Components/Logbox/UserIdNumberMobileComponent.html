@@ -354,7 +354,7 @@
         </div>
         <div class="section-header-left">
           <img
-            src="/Images/mobile_payment/personal_info_mobile.png"
+            src="./Images/mobile_payment/personal_info_mobile.png"
             alt="">
         </div>
       </div>
@@ -374,19 +374,19 @@
   
         <section class="section">
           <h3>פרטי חבילה</h3>
-          <p><span>ערך משלוח: {{ShipmentValueInNIS}}</span></p>
+          <p><span>ערך משלוח: {{ShipmentValueInNIS | number : '1.0-1'}}</span></p>
           <p><span>כמות אריזות: {{Quantity}}</span></p>
           <p><span>משקל: {{Weight}} ק"ג</span></p>
         </section>
       </div>
   
       <div class="section-3">        
-          <h4 class="idnumber-label">נא להזין תעודת זהות</h4>
+          <h4 class="idnumber-label">נא להזין תעודת זהות (מעל גיל 18)</h4>
           <input class="idnumber" type="number" [(ngModel)]="UserIdNumber">        
       </div>
   
       <div class="btn-payment">
-        <button (click)="SendButtonClicked()">לתשלום מאובטח</button>
+        <button (click)="SendButtonClicked()">עדכן נתונים</button>
       </div>
       <p class="vlidation-msg" *ngIf="ValidationList != null && ValidationList.length != 0">{{ValidationList}}</p>
   
@@ -397,8 +397,9 @@
           <a  href="mailto:{{EcommerceSupportEmail}}?subject=Shipment <{{Hawb}}> ">לחץ כאן</a>
         </div>
         <div class="footer-left">
-          <img src="/Images/mobile_payment/orian_logo_mobile.png" />
+          <img src="./Images/mobile_payment/orian_logo_mobile.png" />
         </div>
       </div>
     </div>
   </div>
+  

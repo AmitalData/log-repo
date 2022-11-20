@@ -328,13 +328,12 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         return { StartPotistion: startPotistion, EndPosition: endPosition };
     }
     GetNumberOfGroup(result) {
-        if (!result || result.length == 0)
-            return 0;
+        if (!result || result.length == 0) return 0;
         return result[0].SeriesMeasureVulues.length;
     }
+
     onReactChangeLayouts(layouts: { lg: ReactWidgetPM[]; }) {
-
-
+        if (!this.SelectedDashboard) return;
         layouts.lg.forEach(item => {
             var myWidget: WidgetPM = this.SelectedDashboard.Widgets.find(d => d.Key == item.key);
             if (myWidget) {
@@ -347,6 +346,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         MixPanelLocator.PostDashboardAction({ ActionName: "Layout Changed", DashboardId: this.SelectedDashboard?.Id });
         this.HasChanges = true;
     }
+
     private CheckDeletedWidgets(teactWidgets: ReactWidgetPM[]) {
         var deletedWidgets: WidgetPM[] = [];
 

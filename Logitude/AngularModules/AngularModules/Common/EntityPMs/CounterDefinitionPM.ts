@@ -60,6 +60,9 @@ export class CounterDefinitionPM {
     public get Suffix() { return this.suffix; }
     public set Suffix(newValue: string) { if (this.suffix != newValue) { this.suffix = newValue; this.MarkAsDirty("Suffix"); } }
 
+    private inActive: boolean;
+    public get InActive() { return this.inActive; }
+    public set InActive(newValue: boolean) { if (this.inActive != newValue) { this.inActive = newValue; this.MarkAsDirty("InActive"); } }
 
     public OldEntityPM: CounterDefinitionPM;
 

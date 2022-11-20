@@ -203,5 +203,10 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         public string VendorCode { get; set; }
         public string ConnectedInvoicesNumbers { get; set; }
+        public bool IsCreatedFromInvoiceSide { get; set; }
+        public string CreatedFromInvoiceId { get; set; }
+        public double? InvoiceAmountDue { get; set; }
+        public double? InvoiceRate { get; set; }
+        public string InvoiceCurrencyId { get; set; }
     }
 }

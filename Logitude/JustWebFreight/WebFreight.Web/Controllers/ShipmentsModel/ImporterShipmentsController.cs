@@ -799,7 +799,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             }
 
             //entityPM.AgentId = GetCardId(entityAM, entityAM.Agent);
-            entityPM.ConsigneeId = GetCardId(entityAM, entityAM.Consignee); 
+            entityPM.ConsigneeId = GetCardId(entityAM, entityAM.Consignee);
 
 
             if (entityAM.Department != null)
@@ -838,7 +838,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                     entityPM.ShipperId = ShipperId;
                 }
             }
-          
+
 
             //    else
             //    {
@@ -921,11 +921,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             }
 
             entityPM.IsImporterApprovalRequired = entityAM.IsImporterApprovalRequired;
-
-            if (currentTenant.AutoArchiveOnInvoice == true && entityAM.OriginalStatusCode == "INPR" && entityAM.CustomsClearanceDate != null && entityPM.IsOperationalClosed == false)
-            {
-                entityPM.IsOperationalClosed = true;
-            }
+            entityPM.IsOperationalClosed = GetIsOperationalClosed(entityAM, entityPM, currentTenant);
             if (entityPM.CustomsClearanceDate == null)
             {
                 entityPM.ExceptionDate = entityAM.ExceptionDate;
@@ -1265,6 +1261,45 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
 
             }
             return null;
+        }
+
+        private static bool GetIsOperationalClosed(ShipmentAM entityAM, ShipmentPM entityPM, TenantPM currentTenant)
+        {
+            if (entityPM.IsOperationalClosed) return true;
+
+            if (IsAutoCustomArchiveShipment(entityAM, entityPM, currentTenant))
+            {
+                return true;
+            }
+            if (IsAutoExportArchiveShipment(entityAM, entityPM, currentTenant))
+            {
+                return true;
+            }
+
+            return entityPM.IsOperationalClosed;
+        }
+
+        private static bool IsAutoCustomArchiveShipment(ShipmentAM entityAM, ShipmentPM entityPM, TenantPM currentTenant)
+        {
+            if (currentTenant.AutoArchiveOnInvoice == false) return false;
+            if (entityAM.CustomsClearanceDate == null) return false;
+            const string inProgressStatusCode = "INPR";
+            if (entityAM.OriginalStatusCode != inProgressStatusCode) return false;
+            const string customsDirectionId = "C";
+            if (entityPM.DirectionId != customsDirectionId) return false;
+
+            return true;
+        }
+
+        private static bool IsAutoExportArchiveShipment(ShipmentAM entityAM, ShipmentPM entityPM, TenantPM currentTenant)
+        {
+            if (currentTenant.AutoArchiveOnPODExport == false) return false;
+            const string inProgressStatusCode = "PIOD";
+            if (entityAM.OriginalStatusCode != inProgressStatusCode) return false;
+            const string exportDirectionId = "E";
+            if (entityPM.DirectionId != exportDirectionId) return false;
+
+            return true;
         }
 
         private string GetCardId(ShipmentAM entityAM, CodeProperties card)

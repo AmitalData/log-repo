@@ -248,7 +248,7 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public bool IsINTTRAStockPrepaid { get; set; }
         public bool IsINTTRAOnlyDemo { get; set; }
         public bool AutoArchiveOnInvoice { get; set; }
-        
+        public bool AutoArchiveOnPODExport { get; set; }
         public string PackageCodeSearchField { get; set; }
         public string MainColor { get; set; }
         public string SecondaryColor { get; set; }

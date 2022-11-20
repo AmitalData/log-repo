@@ -187,6 +187,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
                     {
     LBtenantsetting.DocumentShareAsDefault = entityPM.DocumentShareAsDefault;
                     LBtenantsetting.AutoArchiveOnInvoice = entityPM.AutoArchiveOnInvoice;
+                    LBtenantsetting.AutoArchiveOnPODExport = entityPM.AutoArchiveOnPODExport;
                     }
                 
                     if (!entityPM.ManagesRegisteredAgent)

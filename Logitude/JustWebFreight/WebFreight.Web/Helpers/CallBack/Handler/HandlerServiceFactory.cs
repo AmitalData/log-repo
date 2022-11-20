@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using WebFreight.Web.Helpers.CallBack.Handler.EmailDocument;
 
 namespace WebFreight.Web.Helpers.CallBack.Handler
 {
@@ -21,6 +22,11 @@ namespace WebFreight.Web.Helpers.CallBack.Handler
                 case "EmailDocumentHandlerService":
                     {
                         handlerService = new EmailDocumentHandlerService();
+                        break;
+                    }
+                case "AutomationDocumentOutHandlerService":
+                    {
+                        handlerService = new AutomationDocumentOutHandlerService();
                         break;
                     }
                 default:

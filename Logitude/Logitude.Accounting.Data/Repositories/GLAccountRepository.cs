@@ -721,13 +721,44 @@ namespace Logitude.Accounting.Data.Repositories
         public List<string> GetNextGLAccountIdByTypeControl(int tenant, string accountTypeCode, bool? isControlAccount, string lastMadeGLAccountId, int maxGLAccountsPerQuery)
         {
             var q = context.GLAccounts.OrderBy(rec => rec.Id).Where(record => record.Tenant == tenant &&
-                (lastMadeGLAccountId == null || lastMadeGLAccountId == "" || String.Compare(record.Id, lastMadeGLAccountId) > 0) && 
+                (lastMadeGLAccountId == null || lastMadeGLAccountId == "" || String.Compare(record.Id, lastMadeGLAccountId) > 0) &&
                 (!isControlAccount.HasValue || (record.IsControlAccount.HasValue && record.IsControlAccount.Value == isControlAccount.Value)) &&
                 (accountTypeCode == null || accountTypeCode == "" || record.AccountTypeCode == accountTypeCode) &&
                 record.ActiveForInterest).Take(maxGLAccountsPerQuery);
-            
+
             return q.Select(record => record.Id).ToList();
         }
+
+
+
+        //public List<string> GetNextGLAccountIdByTypeControlInterest(int tenant, string accountTypeCode, bool? isControlAccount, string lastMadeGLAccountId, int maxGLAccountsPerQuery)
+        //{
+        //    var q = (from acc in context.GLAccounts.OrderBy(rec => rec.Id)
+        //             join interestReport in context.InterestReports on acc.Id equals interestReport.GLAccountId
+        //             where acc.Tenant == tenant &&
+        //             (lastMadeGLAccountId == null || lastMadeGLAccountId == "" || String.Compare(acc.Id, lastMadeGLAccountId) > 0) &&
+        //             (!isControlAccount.HasValue || (acc.IsControlAccount.HasValue && acc.IsControlAccount.Value == isControlAccount.Value)) &&
+        //             acc.ParentAccountId == null &&
+        //             (accountTypeCode == null || accountTypeCode == "" || acc.AccountTypeCode == accountTypeCode) &&
+        //              acc.ActiveForInterest
+        //             select acc).Take(maxGLAccountsPerQuery);
+
+        //    return q.Select(acc => acc.Id).ToList();
+        //}
+
+        //public List<string> GetNextGLAccountIdByIdControlInterest(int tenant, string id, bool? isControlAccount)
+        //{
+        //    var q = (from acc in context.GLAccounts.Where(rec => rec.Id == id)
+        //             join interestReport in context.InterestReports on acc.Id equals interestReport.GLAccountId
+        //             where acc.Tenant == tenant &&
+        //             (!isControlAccount.HasValue || (acc.IsControlAccount.HasValue && acc.IsControlAccount.Value == isControlAccount.Value)) &&
+        //             acc.ParentAccountId == null &&
+        //             acc.ActiveForInterest
+        //             select acc);
+
+        //    return q.Select(acc => acc.Id).ToList();
+        //}
+
 
 
         public List<GLAccount> GetByRevaluationEnabled_OtherParams(bool? revaluationEnabled, string chartOfAccountsTypeCode, string chartOfAccountsId, string accountTypeCode, string gLAccountId, string accountingCurrencyId, int tenant)

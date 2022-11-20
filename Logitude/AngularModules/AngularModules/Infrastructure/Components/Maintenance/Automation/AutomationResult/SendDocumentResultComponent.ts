@@ -64,6 +64,7 @@ export class SendDocumentResultComponent extends BaseComponent implements OnInit
                 this.SendViaSelected = this.SendViaClassLists.filter(d => d.Code == this.automationSendDocument.SendVia)[0];
             }
             else if (this.ObjectTableName == "Shipment") {
+                this.SendViaClassLists = this.SendViaClassLists.filter(d => d.Code !== "FTP");
                 this.SendViaSelected = this.SendViaClassLists.filter(d => d.Code == "EMAIL")[0];
             }
             else

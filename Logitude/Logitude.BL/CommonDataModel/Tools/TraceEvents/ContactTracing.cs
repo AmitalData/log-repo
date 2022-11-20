@@ -8,19 +8,40 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Security;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 
 namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
 {
     public class ContactTracing
     {
+
+        private static string GetSystemUserId(int tenant)
+        {
+            string loggedSystemEmail = "system@tenant" + tenant + ".com";
+            UserRepository userRep = new UserRepository(tenant);
+            User systemUser = userRep.GetSingleUserByEmail(loggedSystemEmail, tenant, true);            
+
+            return systemUser?.Id;
+        }
+
         public static void Trace(ContactPM entityPM, Contact poco, bool isNewEntity)
         {
             ContactQuery contactQuery = new ContactQuery(entityPM.Tenant);            
             ContactPM loggedContact = contactQuery.GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), 0);
-            
+            string userId = null;
+
             if(loggedContact==null)
             {
                 loggedContact = contactQuery.GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
+            }
+
+            userId = loggedContact?.Id;
+
+            if(string.IsNullOrWhiteSpace(userId))
+            {
+                userId = GetSystemUserId(entityPM.Tenant);
+
+                if (string.IsNullOrEmpty(userId)) return;
             }
 
             if (isNewEntity)
@@ -29,12 +50,11 @@ namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
                 {
                     Tenant = entityPM.Tenant,
                     EventTypeCode = "CRCO",
-                    UserId = loggedContact.Id,
+                    UserId = userId,
                     EntityId = entityPM.Id,
                     ObjectTableName = "Contact",
                 });
             }
-
             else
             {
                 string notes = "";
@@ -52,7 +72,7 @@ namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
                 {
                     Tenant = entityPM.Tenant,
                     EventTypeCode = "UPCO",
-                    UserId = loggedContact.Id,
+                    UserId = userId,
                     EntityId = entityPM.Id,
                     ObjectTableName = "Contact",
                     Notes = notes,

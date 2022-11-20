@@ -129,7 +129,7 @@ export class SignUpInfoClass {
     public CountryCode: string;
     public ObjecttableName: string;
     public VatNumber: string;
-    public TimeZone: string;
+    public TimeZoneOffset: number;
     public City: string;
     public IsCreateLogboxTenantFromCloud: boolean;
     
