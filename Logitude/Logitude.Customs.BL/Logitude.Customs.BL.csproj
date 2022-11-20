@@ -1128,8 +1128,7 @@
     <Compile Include="EntityQueryServices\Generated\StorageStatusTableQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ServersNameQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SchedulerParamQueryService.Generated.cs" />
-    <Compile Include="EntityQueryServices\CurrencyTypeQueryService.cs" />
-  
+   
     <Compile Include="EntityQueryServices\ItemGovernmentProcedureTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\LogisticPermitQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\ExportLogisticPermitActionQueryService.Generated.cs" />
