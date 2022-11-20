@@ -57,6 +57,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         private EventTracerArgs _LastTraceEventParams;
         private CourierMasterPM _CourierMasterPM;
 
+
         public bool IsProcedureCurrentCodeChanged { get; set; }
 
         public bool IsFromCustomsFeedback { get; set; }
@@ -569,6 +570,26 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                 }
 
+                string ImporterCode = entityPM.ImporterCode;
+
+               
+                if (entityPM.ImporterCode.Length > 9)
+                {
+                    ImporterCode = entityPM.ImporterCode.Substring(0, 9);
+                }
+                string clientId = TranslateClient(ImporterCode);
+                FeatureQuery featureQuery = new FeatureQuery();
+                var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(entityPM.Tenant), entityPM.Tenant);
+                var feature = features.Features.FirstOrDefault(x => x.Code == "AddNewClientFromManifest");
+
+
+                if(clientId == null && feature != null)
+                {
+                    SendClientSearch(entityPM);
+
+                }
+
+
                 if (entityPM.VatChanged)
                 {
                     ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
@@ -621,7 +642,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             }
         }
-
+        
         private void DeleteExportStorage(int tenant, string id)
         {
             ExportStoragePM exportStoragePM = new ExportStorageQueryService(tenant).GetSingle(id, true, false);
@@ -3184,6 +3205,62 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
 
             return false;
+        }
+
+        public void SendClientSearch(DeclarationPM entityPM)
+        {
+
+            if (entityPM.IsCourierDeclaration && this.EntityPOCO.ImporterCode != entityPM.ImporterCode) { 
+
+            var loggedUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
+            string importerId = entityPM.ImporterCode;
+            if (entityPM.ImporterCode.Length > 9)
+            {
+                importerId = entityPM.ImporterCode.Substring(0, 9);
+            }
+            var newClientSearchRequestParams = new ClientSearchRequestParams()
+            {
+                LoggingEnabled = true,
+                IsFakeResponse = true,
+                InterfaceTypeCode = "3610",
+                Tenant = Tenant,
+                RequestName = "Client Search",
+                ResponseName = "Client Search",
+                LoggingUserId = loggedUserId,
+                RequestVIA = SendRequestVIA.WebServiceBatch,
+                SuppressSplitWR = true,
+                ExternalId = importerId,
+            };
+
+            try
+            {
+                SBQMessageService.CreateSheetSBQMessage<Logitude.CustomsMessaging.Common.RequestParams.ClientSearchRequestParams>(newClientSearchRequestParams
+                    , false, DateTime.Now
+                    );
+            }
+            catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
+            {
+                if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
+                {
+                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("3610 RequestInProgress stop create a new one !! ");
+                }
+                throw;
+            }
+            }
+        }
+
+        private string TranslateClient(string Importercode)
+        {
+
+            ClientQueryService clientQueryService = new ClientQueryService(ResolvedTenant());
+
+            var clientId = clientQueryService.GetIdByCode(Importercode, ResolvedTenant());
+
+            if (clientId == null)
+            {
+                return null;
+            }
+            return clientId;
         }
     }
 }

@@ -358,15 +358,6 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                                 importerId = _AmitalCustomsFile.ImporterId.Substring(0, 9);
                             }
                             string clientId = TranslateClient(importerId);
-
-                            FeatureQuery featureQuery = new FeatureQuery();
-                            int.TryParse(_AmitalCustomsFile.Tenant, out int tenant);
-                            var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(tenant), tenant);
-                            var feature = features.Features.FirstOrDefault(x => x.Code == "AddNewClientFromManifest");
-                            if (clientId == null && mode == "UpdateNotEmpty" && feature != null)
-                            {
-                                SendClientSearch();
-                            }
                             this._MyDeclarationPM.ImporterId = clientId;
                             this._MyDeclarationPM.ImporterCode = importerId;
 
@@ -1022,44 +1013,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             }
         }
 
-        public void SendClientSearch()
-        {
-            int.TryParse(_AmitalCustomsFile.Tenant, out int Tenant);
-            var loggedUserId = AuthenticationUtil.ResolveUserId(Tenant);
-            string importerId = _AmitalCustomsFile.ImporterId;
-            if (_AmitalCustomsFile.ImporterId.Length > 9)
-            {
-                importerId = _AmitalCustomsFile.ImporterId.Substring(0, 9);
-            }
-            var newClientSearchRequestParams = new ClientSearchRequestParams()
-            {
-                LoggingEnabled = true,
-                IsFakeResponse = true,
-                InterfaceTypeCode = "3610",
-                Tenant = Tenant,
-                RequestName = "Client Search",
-                ResponseName = "Client Search",
-                LoggingUserId = loggedUserId,
-                RequestVIA = SendRequestVIA.WebServiceBatch,
-                SuppressSplitWR = true,
-                ExternalId = importerId,
-            };
-
-            try
-            {
-                SBQMessageService.CreateSheetSBQMessage<Logitude.CustomsMessaging.Common.RequestParams.ClientSearchRequestParams>(newClientSearchRequestParams
-                    , false, DateTime.Now
-                    );
-            }
-            catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
-            {
-                if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
-                {
-                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("3610 RequestInProgress stop create a new one !! ");
-                }
-                throw;
-            }
-        }
+        
 
         private void DeclarationReferantDataUpdate()
         {
