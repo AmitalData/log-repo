@@ -1,4 +1,4 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
@@ -70,6 +70,33 @@ export class CustomsDocumentsTicketsExtendedService {
             // mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
             return this._http.get(this._apiUrl + '/GetIsConnectDec/?' + 'documentsfilingid=' + documentsfilingid+'&entityId=' + entityId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse.Result = response;
+                return serviceResponse;
+               
+            }),catchError(ServiceHelper.HandleServiceError));
+        }
+
+        );
+
+    }
+    GetDocConnectTicket(documentsfilingid: string,entityId:string) {
+    
+        return defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            var mappedEntity: CustomsDocumentsTicketPM;
+            // mappedEntity = this.MapJsonToEntityPM(entityPM, false);
+            return this._http.get(this._apiUrl + '/GetIsConnectTicket/?' + 'documentsfilingid=' + documentsfilingid.replace(/\+/gi, '%2B')+'&entityId=' + entityId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse.Result = response;

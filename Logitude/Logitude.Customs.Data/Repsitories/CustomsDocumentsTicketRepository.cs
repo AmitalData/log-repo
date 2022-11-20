@@ -187,6 +187,17 @@ FROM ( SELECT DISTINCT
             //              select a.ParentEntityId).ToList();
             return query;
         }
+        public List<string> GetDocConnectTicket(string documentsfilingid, string entityId)
+        {
+            var query = (from a in context.CustomsDocumentsTickets
+                         where a.DocumentsFilingId == documentsfilingid
+                         select a.Id).ToList();
+
+            var query1 = (from a in context.CustomsDocumentPointers
+                          where query.Contains(a.CustomsDocumentsTicketId) && entityId != a.ParentEntityId
+                          select a.ParentEntityId).ToList();
+            return query1;
+        }
 
         public List<CustomsDocumentsTicket> GetCustomsDocumentsTicketsByDocumentsFilingId(string documentsFilingId, int tenant)
 {
