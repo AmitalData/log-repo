@@ -33,7 +33,7 @@ declare var window: any;
 
 export class CustomizationEditComponent {
 
-    private CurrentSession = SessionLocator.SelectedSession;
+    public CurrentSession = SessionLocator.SelectedSession;
     public Title: string = "";
     public ObjectTableId: string = null;
     public IsCustomFieldsMenue: boolean = false;
@@ -221,14 +221,17 @@ export class CustomizationEditComponent {
     CloseClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
+    public IsSaveAndClose: boolean = false;
+
     OkButtonClicked() {
         this.NewSelectedMenu = null;
+        this.IsSaveAndClose = false;
         this.SelectedMenu.Page.Save();
     }
     SaveChangesAndClose() {
         this.NewSelectedMenu = null;
+        this.IsSaveAndClose = true;
         this.SelectedMenu.Page.Save();
-        this.CurrentSession.CloseCurrentWindow();
     }
 
 }

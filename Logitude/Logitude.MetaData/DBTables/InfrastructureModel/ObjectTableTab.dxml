@@ -113,6 +113,12 @@
         <Constraints
           Nullable="true" />
     </Column>
+	<Column
+    Name="HideTabNameInScreen"
+    Type="bit">
+		<Constraints
+		  Nullable="false" />
+	</Column>
 
 
 
