@@ -179,10 +179,10 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
             if(this.DecPM.TransportModeId == 'L') //TransportMod- land
             {
-            
-                
+
+
             this.exportDeclarationClosingDataPMService.get(id).subscribe((response: any) => {
-                if(response.Result == null)
+                if(AppTool.IsNullOrEmpty(response.Result))
                 {
                 
                     if(!AppTool.IsNullOrEmpty(this.DecPM.Consignments[0].CargoTypeCodeForExport)) this.FinalCargoTypeCode = this.DecPM.Consignments[0].CargoTypeCodeForExport;
