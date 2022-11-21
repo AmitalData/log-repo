@@ -118,6 +118,8 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     supplierInvoiceExtendedPMService: SupplierInvoiceExtendedPMService = new SupplierInvoiceExtendedPMService();
     itemGovernmentProcedureTypeListService: ItemGovernmentProcedureTypeListService = new ItemGovernmentProcedureTypeListService();
     customsSettingListService: CustomsSettingListService = new CustomsSettingListService();
+    private modificationAndDiscountTypeListService: ModificationAndDiscountTypeListService = new ModificationAndDiscountTypeListService();
+
     IsActionButtonsEnabled: boolean = true;
 
     ikeaFeature: any;
@@ -142,7 +144,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
     private CurrentSession = SessionLocator.SelectedSession;
     public tradeAgreementFilter: ApiQueryFilters = null as any;
-
+    public ModificationAndDiscountTypeList = new Map<string,string>() ;
     constructor(
         private supplierInvoiceSharedService:SupplierInvoiceSharedService, 
         private cd: ChangeDetectorRef,
@@ -182,6 +184,17 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         //FRITZ
         this.IFritz_feature = FeatureLocator.Features.filter(d => d.Code == "IFRITZ")[0];
         console.log("IFritz feature: ", this.IFritz_feature);
+        
+        this.modificationAndDiscountTypeListService.getAllFromCache().subscribe((response: ServiceResponse) => {
+            if(response.Result){
+                
+                response.Result.forEach(item => {
+                
+                this.ModificationAndDiscountTypeList.set(item.Code,item.NetoValuesModificationAffectID)
+               
+            });
+            }
+        });
 
         this.initTradeAgreementFilter();
 
@@ -190,7 +203,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     }
     ngOnInit() {
         if (this.allowExport) {
-            this.TooltipCopy = "שכפל שורה";
+            this.TooltipCopy = "שכפל שורה"; 
             this.TooltipCertificate = "אישורים"
             this.TooltipCar = "נתוני רכב";
             this.TooltipEdit = "עריכת פריט";
@@ -1656,9 +1669,16 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     GetDifference(){
             
             this.SumDifference = 0;
+
+            if(this.ModificationAndDiscountTypeList){
             
             this.EntityPM.SupplierInvoiceModifications.forEach(item => {
-                if(item.Amount!=null && (item.ModificationAffectTypeID == '1' || item.ModificationAffectTypeID == '2')){
+                
+                var  ModificationAffectType = !AppTool.IsNullOrEmpty(this.ModificationAndDiscountTypeList.get(item.TypeCode)) ? this.ModificationAndDiscountTypeList.get(item.TypeCode) : ''
+                   
+               
+
+                if(item.Amount!=null && (ModificationAffectType == '1') || ModificationAffectType =='2' ){
 
                     if(item.CurrencyTypeCode != this.EntityPM.InvoiceCurrencyTypeCode )
                     {
@@ -1692,19 +1712,19 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                         }
                         this.TotalExportModificationInInvoiceCurrency = (this.TotalExportModificationInInvoiceCurrency + total);
                     
-                        item.ModificationAffectTypeID == '1' ? this.SumDifference += this.TotalExportModificationInInvoiceCurrency : this.SumDifference -= this.TotalExportModificationInInvoiceCurrency
+                        ModificationAffectType == '1' ? this.SumDifference += this.TotalExportModificationInInvoiceCurrency : this.SumDifference -= this.TotalExportModificationInInvoiceCurrency
 
                     }
 
                 else{
 
-                    item.ModificationAffectTypeID == '1' ? this.SumDifference += item.Amount : this.SumDifference -= item.Amount
+                    ModificationAffectType == '1' ? this.SumDifference += item.Amount : this.SumDifference -= item.Amount
                 }
                     
                        
                 }
                 
-
+            
             });
             if (this.EntityPM.SupplierInvoiceItems.length > 0) 
             {
@@ -1713,8 +1733,10 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                     if(item.SupplierInvoiceItemsMods.length > 0) {
 
                     item.SupplierInvoiceItemsMods.forEach(Modifications =>{
+                        var  ModificationAffectType = !AppTool.IsNullOrEmpty(this.ModificationAndDiscountTypeList.get(Modifications.TypeCode))?this.ModificationAndDiscountTypeList.get(Modifications.TypeCode):''
+
                         
-                        if(Modifications.Amount!=null && Modifications.ModificationAffectTypeID == '1' || Modifications.ModificationAffectTypeID == '2'){
+                        if(Modifications.Amount!=null && ModificationAffectType == '1' || ModificationAffectType == '2'){
  
                             if(Modifications.CurrencyTypeCode != this.EntityPM.InvoiceCurrencyTypeCode )
                             {
@@ -1748,13 +1770,13 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                                 }
                                 this.TotalExportModificationInInvoiceCurrency = (this.TotalExportModificationInInvoiceCurrency + total);
                             
-                                Modifications.ModificationAffectTypeID == '1' ? this.SumDifference += this.TotalExportModificationInInvoiceCurrency : this.SumDifference -= this.TotalExportModificationInInvoiceCurrency
+                                ModificationAffectType == '1' ? this.SumDifference += this.TotalExportModificationInInvoiceCurrency : this.SumDifference -= this.TotalExportModificationInInvoiceCurrency
         
                             }
         
                         else{
         
-                            Modifications.ModificationAffectTypeID == '1' ? this.SumDifference += Modifications.Amount : this.SumDifference -= Modifications.Amount
+                            ModificationAffectType == '1' ? this.SumDifference += Modifications.Amount : this.SumDifference -= Modifications.Amount
                         }
                             
                                
@@ -1772,7 +1794,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             this.SumDifference += this.EntityPM.SupplierInvoiceItems.reduce((acc , cur) => acc + cur.ItemPrice, 0);
 
             this.Parent.Difference = this.InvoiceAmount - this.SumDifference;
-        
+        }
     }
 
     GetFreightTotals() { 

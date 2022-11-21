@@ -569,18 +569,18 @@ export class ModificationItemModel extends BaseComponent {
     InvoiceCurrencyExchangeRtae: number = 0;
     DiscountInDsicCurrency: number = 0;
 
-    OnCurrencyTypeLostFocus(item:ModificationItemModel){
+    OnCurrencyTypeLostFocus(){
 
-        if(this.parent.declarationPM.Direction == 'E' && (item.modificationPM.ModificationAffectTypeID == '1' || item.modificationPM.ModificationAffectTypeID == '2'))
+        if(this.parent.declarationPM.Direction == 'E')
         {   
           this.supplierInvoiceSharedService.Difference$.next()
             
         }
     }
 
-    OnAmountLostFocus(item:ModificationItemModel = null) {
+    OnAmountLostFocus() {
 
-    if(this.parent.declarationPM.Direction == 'E' && (item.modificationPM.ModificationAffectTypeID == '1' || item.modificationPM.ModificationAffectTypeID == '2'))
+    if(this.parent.declarationPM.Direction == 'E')
     {   
       this.supplierInvoiceSharedService.Difference$.next();
         
