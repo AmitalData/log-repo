@@ -1756,8 +1756,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
     ForceSave: boolean = false;
     notToCheckFeature: boolean = true;
     InitiateNewInstance() {
-        debugger;
-        this.ForceSave = true;
+         this.ForceSave = true;
         var itemPM = new SupplierInvoicePM();
         this.TextValue = null;
         if (this.EntityPM) {
