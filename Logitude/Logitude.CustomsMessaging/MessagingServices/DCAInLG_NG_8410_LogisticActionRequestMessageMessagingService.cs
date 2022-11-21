@@ -30,6 +30,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var logisticActionRequestPM = new LogisticActionRequestQueryService(RequestParams.Tenant).GetSingle(RequestParams.LogisticActionRequestId, false, false);
 
             logisticActionRequestPM.OperationalStatus = "2";
+            logisticActionRequestPM.ResponseStatusCode = "2";
+
             logisticActionRequestPM.ChangeSetOp = ChangeSetOperation.Update;
             new LogisticActionRequestUpdateService(dbContext, new Dictionary<string, IContext>(), RequestParams.Tenant)
                 .Update(logisticActionRequestPM, true);
