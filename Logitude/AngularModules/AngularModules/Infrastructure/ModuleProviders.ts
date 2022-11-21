@@ -106,6 +106,8 @@ import { ImageLibraryListService } from './Services/StandardLists/ImageLibraryLi
 import { ImageLibraryPMService } from './Services/StandardPMs/ImageLibraryPMService';
 import { TableTabService } from './Services/ExtendedPMs/TableTabService';
 import { ScreenSectionListService } from './Services/StandardLists/ScreenSectionListService';
+import { ScreenListService } from './Services/StandardLists/ScreenListService';
+import { ScreenPMService } from './Services/StandardPMs/ScreenPMService';
 
 export class ModuleProviders {
 
@@ -217,7 +219,8 @@ export class ModuleProviders {
             case "ImageLibraryPMService": { myResult = new ImageLibraryPMService(); break; }
             case "TableTabService": { myResult = new TableTabService(); break; }
             case "ScreenSectionListService": { myResult = new ScreenSectionListService(); break; }
-
+            case "ScreenListService": { myResult = new ScreenListService(); break; }
+            case "ScreenPMService": { myResult = new ScreenPMService(); break; }
         }
 
         return myResult;

@@ -62,13 +62,14 @@ export class AddEditGridScreenSectionComponent extends BaseComponent {
         }
     }
 
-    private relatedScreenCode: string;
-    get RelatedScreenCode() { return this.relatedScreenCode; }
-    set RelatedScreenCode(newValue: string) {
-        if (this.relatedScreenCode != newValue) {
-            this.relatedScreenCode = newValue;
-        }
-    }
+    public RelatedScreenCode: string;
+    //private relatedScreenCode: string;
+    //get RelatedScreenCode() { return this.relatedScreenCode; }
+    //set RelatedScreenCode(newValue: string) {
+    //    if (this.relatedScreenCode != newValue) {
+    //        this.relatedScreenCode = newValue;
+    //    }
+    //}
 
     GridScreensSelectionChanged(selectedScreen: any) {
         this.SelectedScreen = selectedScreen ? selectedScreen : null;

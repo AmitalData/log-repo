@@ -10,6 +10,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
 using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.EntityLists;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
@@ -172,5 +173,23 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                     }).ToList();
         }
 
+        public IQueryable<ScreenList> GetIQueryableEntityList(IQueryable<Screen> iQueryable)
+        {
+            IQueryable<ScreenList> result = from a in iQueryable
+                                                 select new ScreenList()
+                                                 {
+                                                     Code = a.Code,
+                                                     Id = a.Id,
+                                                     IsReadOnly = a.IsReadOnly,
+                                                     NumberOfColumns = a.NumberOfColumns,
+                                                     NumberOfRows = a.NumberOfRows,
+                                                     ObjectTableId = a.ObjectTableId,
+                                                     Name = a.Name,
+                                                     ObjectTableName = a.ObjectTable.Name,
+                                                     Tenant = a.Tenant,
+                                                     Type = a.Type,
+                                                 };
+            return result;
+        }
     }
 }
