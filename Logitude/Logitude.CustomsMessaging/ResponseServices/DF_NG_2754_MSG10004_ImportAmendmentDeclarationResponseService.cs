@@ -226,6 +226,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     declarationPM.ExcludeConsignment = declarationOrg.ExcludeConsignment;
                     //declarationPM.IsClose = declarationOrg.IsClose;
                     declarationPM.IsDiamondDeclaration = declarationOrg.IsDiamondDeclaration;
+                    declarationPM.AmendmentRequestNumber = GetNextAmendmentRequestNumber(tenant);
+
                     if (declarationOrg.IsCourierDeclaration)
                     {
 
@@ -317,7 +319,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         else
 
                             declarationPM.AmendmentOriginalDeclartation = declarationOrg.Id;
-                        declarationPM.AmendmentRequestNumber = GetNextAmendmentRequestNumber(tenant);
+
                     }
                 }
 
