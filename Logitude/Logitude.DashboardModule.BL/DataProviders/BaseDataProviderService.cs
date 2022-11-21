@@ -36,7 +36,6 @@ namespace Logitude.DashboardModule.BL.DataProviders
             var entityFields = analyticsFactsFieldsMetaDataRepository.GetAll(0).Where(e => e.AnalyticsFactsMetaDataId == _Entity.Id).ToList();
             _EntityFields = entityFields.ToDictionary(e => e.Id, e => e);
         }
-
         protected void UpdateDateString(List<SeriesMeasureVulue> results)
         {
             foreach (var item in results)
@@ -58,7 +57,6 @@ namespace Logitude.DashboardModule.BL.DataProviders
 
             }
         }
-
         private string GetDayFormat(string label)
         {
             var dateparts = label.Split('/');
@@ -78,7 +76,6 @@ namespace Logitude.DashboardModule.BL.DataProviders
             var dateparts = label.Split('/');
             return $"{dateparts[0]}";
         }
-
         private string GetMonthName(string v)
         {
             var month = int.Parse(v);
@@ -96,6 +93,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
         {
             if (_Widget.SortBy == null)
             {
+                //group by field
                 return $" order by Label {_Widget.SortDirection}";
             }
             return $" order by Value {_Widget.SortDirection}";
@@ -117,8 +115,6 @@ namespace Logitude.DashboardModule.BL.DataProviders
                     return $"convert(varchar, data.{groupBy.FieldCode}, 111)";
             }
         }
-
-
 
         public AnalyticData GetDataPart<T>(IQueryable<T> query, List<string> analyticTableFields, WidgetArguments widgetPartArguments)
         {
@@ -274,7 +270,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
 
         private string BuildSelectFieldQuery(string query, AnalyticsFactsFieldsMetaData field)
         {
-            if(_Entity.ObjectTableName == "ARInvoice" && field.FieldCode == "InvoiceNumber")
+            if (_Entity.ObjectTableName == "ARInvoice" && field.FieldCode == "InvoiceNumber")
             {
                 return $@"{query}, IIF(StatusCode = 'DR' OR StatusCode = 'LL', data.DraftNumber, data.InvoiceNumber) as InvoiceNumber";
             }
@@ -285,6 +281,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
         {
             return $@"{field.JoinedTableName}{field.FieldCode}";
         }
+
     }
 
 }
