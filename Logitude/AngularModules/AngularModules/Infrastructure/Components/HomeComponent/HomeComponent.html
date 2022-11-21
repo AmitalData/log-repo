@@ -239,7 +239,7 @@
                                             <td style="width: 20px;" *ngIf="IfBlueSnapContracts">
                                                 <div tabindex="0" class="ToggleButton IconToggleButton" title="Settings" style="width:20px; height:20px; border:none; background:none;">
                                                     <IconButton [Name]="'payments'" [IsIconOnly]="true"></IconButton>
-                                                    <div class="ToggleButtonMenu" style="right:-50px">
+                                                    <div class="ToggleButtonMenu" style="right:-50px" *ngIf="PaymentChanelCode">
                                                         <button *ngIf="IsLogBox == false && IsChargifyAccount" [disabled]="IsTenant65" (click)="ManageChargifyAccountClicked()"> Manage your Chargify account</button>
                                                         <hr *ngIf="IsLogBox == false && IsChargifyAccount" />
                                                         <button *ngIf="IsLogBox == false && IsBluesnapAccount && !IsChargifyAccount" [disabled]="IsTenant65" (click)="ManageBluesnapAccountClicked()"> Manage your Bluesnap account</button>
@@ -255,6 +255,19 @@
                                                         <button *ngIf="IsLogBox == false && IsBlusnapOneTimeActivated && !IsChargifyAccount" [disabled]="IsTenant65" (click)="SubscribeClicked('OTP')">One Time Payment</button>
                                                         <hr *ngIf="IsLogBox == false && !IsChargifyAccount" />
                                                         <button *ngIf="IsLogBox == false && !IsCountryIsrael && !IsChargifyAccount" [disabled]="IsTenant65" (click)="SubscribeClicked('INT')">Buy INTTRA Stock</button>
+                                                    </div>
+
+                                                    <div class="ToggleButtonMenu" style="right:-50px" *ngIf="!PaymentChanelCode">
+                                                        <button *ngIf="IsLogBox == false" [disabled]="IsTenant65" (click)="SubscribeClicked('LOG_M')">Subscribe to Logitude (Monthly)</button>
+                                                        <hr *ngIf="IsLogBox == false" />
+
+                                                        <button *ngIf="IsLogBox == false" [disabled]="IsTenant65" (click)="SubscribeClicked('LOG_A')">Subscribe to Logitude (Annual)</button>
+                                                        <hr *ngIf="IsLogBox == false" />
+
+                                                        <button *ngIf="IsLogBox == false && !IsCountryIsrael" [disabled]="IsTenant65" (click)="SubscribeClicked('EAWB')">Subscribe to e-AWB</button>
+                                                        <hr *ngIf="IsLogBox == false && !IsCountryIsrael" />
+
+                                                        <button *ngIf="IsLogBox == false" [disabled]="IsTenant65" (click)="SubscribeClicked('ECRM')">Subscribe to CRM</button>
                                                     </div>
                                                 </div>
                                             </td>
