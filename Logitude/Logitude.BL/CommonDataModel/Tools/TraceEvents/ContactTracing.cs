@@ -26,18 +26,22 @@ namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
 
         public static void Trace(ContactPM entityPM, Contact poco, bool isNewEntity)
         {
-            ContactQuery contactQuery = new ContactQuery(entityPM.Tenant);            
+            ContactQuery contactQuery = new ContactQuery(entityPM.Tenant);
+            UserQuery userQuery = new UserQuery(entityPM.Tenant);
+
             ContactPM loggedContact = contactQuery.GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), 0);
+
             string userId = null;
 
-            if(loggedContact==null)
+            if (loggedContact == null)
             {
                 loggedContact = contactQuery.GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
             }
 
             userId = loggedContact?.Id;
+            var loggedUser = userQuery.GetSinglePMByEmail(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
 
-            if(string.IsNullOrWhiteSpace(userId))
+            if (string.IsNullOrWhiteSpace(userId) || loggedUser == null)
             {
                 userId = GetSystemUserId(entityPM.Tenant);
 
