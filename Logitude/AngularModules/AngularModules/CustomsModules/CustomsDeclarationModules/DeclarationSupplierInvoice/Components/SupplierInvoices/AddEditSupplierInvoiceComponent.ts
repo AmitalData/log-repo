@@ -567,37 +567,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
     }
 
     SaveAndNewButtonClicked() {
-        //if (this.EntityPM.InvoiceNumber) {
-        //    var supplierInvoiceService: SupplierInvoiceService = new SupplierInvoiceService();
-        //    supplierInvoiceService.GetCheckIfInvoiceNumberExists(this.EntityPM.DeclarationId, this.EntityPM.InvoiceNumber, this.EntityPM.InvoiceCounterKey).subscribe((resp: ServiceResponse) => {
-        //        if (!resp.HasError) {
-        //            if (resp.Result) {
-        //                var confirm = new ConfirmWindow();
-
-        //                confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
-
-        //                confirm.ShowNoButton = true;
-        //                confirm.Show(" קיים כבר חשבון ספק עם מספר חשבון זהה - שורה" + resp.Result.SequenceNumeric + "- האם להמשיך ?");
-        //                confirm.WindowClosed.subscribe((event: any) => {
-        //                    if (confirm.Yes) {
-        //                        confirm.Close();
-        //                        this.ApplySaveAndNew();
-        //                    }
-        //                    else {
-        //                        confirm.Close();
-        //                    }
-        //                });
-        //            }
-        //            else {
-        //                this.ApplySaveAndNew();
-        //            }
-        //        }
-        //    });
-        //}
-        //else {
-        //    this.ApplySaveAndNew();
-        //}
-
+  
         this.NewInvoices.push(this.EntityPM);;
 
         //remove LineDoesNotExist msg
@@ -1786,6 +1756,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
     ForceSave: boolean = false;
     notToCheckFeature: boolean = true;
     InitiateNewInstance() {
+        debugger;
         this.ForceSave = true;
         var itemPM = new SupplierInvoicePM();
         this.TextValue = null;
