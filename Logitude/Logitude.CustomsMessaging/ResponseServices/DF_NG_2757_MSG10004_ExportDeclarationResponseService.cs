@@ -561,7 +561,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             currentDeclarationCourierStatusPM.CourierDeclarationStatusCode = "X";
                         });
                 }
+               if(_MyDeclarationPM.Direction=="E" && requestParams.RequestVIA== SendRequestVIA.WebServiceBatch && !setting.IsConnectedToUniFreight && customResponse.ResponseContentHeader.Exception.Length>0 &&customResponse.Response.Declaration==null)
+                {
 
+
+
+
+
+                }
 
                 this.MyResponseData.ApplicationID = requestParams.AppicationId;
                 this.MyResponseData.Succeeded = true;
