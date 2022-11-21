@@ -1,5 +1,5 @@
 import { Component, ComponentRef, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from "@angular/core";
-import ReactFlowModeler from "logitude-workflow";
+//import ReactFlowModeler from "logitude-workflow";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
@@ -115,7 +115,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
                 }
             };
 
-            ReactDOM.render(React.createElement(ReactFlowModeler, props), this.containerRef.nativeElement);
+            //ReactDOM.render(React.createElement(ReactFlowModeler, props), this.containerRef.nativeElement);
         }
     }
 
