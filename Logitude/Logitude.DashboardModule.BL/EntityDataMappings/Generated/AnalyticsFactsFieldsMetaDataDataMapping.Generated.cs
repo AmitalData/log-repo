@@ -35,7 +35,9 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         JoinedTableKey, 
 	         JoinedTableDisplayField, 
 	         SearchFields, 
-	         JoinedTableDBName,
+	         JoinedTableDBName, 
+	         HasUnit, 
+	         Unit,
 	      }
 
 
@@ -56,7 +58,9 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         JoinedTableDisplayField, 
 	         SearchFields, 
 	         JoinedTableDBName, 
-	         ObjectTableName,
+	         ObjectTableName, 
+	         HasUnit, 
+	         Unit,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -128,6 +132,16 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.JoinedTableDBName))
             {
 				entityPOCO.JoinedTableDBName = entityPM.JoinedTableDBName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HasUnit))
+            {
+				entityPOCO.HasUnit = entityPM.HasUnit;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Unit))
+            {
+				entityPOCO.Unit = entityPM.Unit;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -206,6 +220,16 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 					entityPM.JoinedTableDBName = entityPOCO.JoinedTableDBName;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.HasUnit))
+            {
+					entityPM.HasUnit = entityPOCO.HasUnit;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Unit))
+            {
+					entityPM.Unit = entityPOCO.Unit;
+            }
+
 		}
 
 		public void PMToOldPM(AnalyticsFactsFieldsMetaDataPM entityPM, AnalyticsFactsFieldsMetaDataPM oldEntityPM)
@@ -275,6 +299,16 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.JoinedTableDBName))
             {
                 oldEntityPM.JoinedTableDBName = entityPM.JoinedTableDBName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HasUnit))
+            {
+                oldEntityPM.HasUnit = entityPM.HasUnit;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Unit))
+            {
+                oldEntityPM.Unit = entityPM.Unit;
             }
 			
 		}

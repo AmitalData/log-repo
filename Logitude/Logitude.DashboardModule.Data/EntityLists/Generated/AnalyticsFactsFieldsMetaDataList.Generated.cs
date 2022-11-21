@@ -42,6 +42,10 @@ namespace Logitude.DashboardModule.Data.EntityLists
        public string SearchFields  { get; set; }
        [DataMember]
        public string JoinedTableDBName  { get; set; }
+       [DataMember]
+       public bool HasUnit  { get; set; }
+       [DataMember]
+       public string Unit  { get; set; }
    }
 
 }

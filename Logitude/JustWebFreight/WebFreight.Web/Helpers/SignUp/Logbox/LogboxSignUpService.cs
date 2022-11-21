@@ -42,7 +42,7 @@ namespace WebFreight.Web.Helpers.SignUp
             AddressPM tenantAddress = LogboxSignUpAddressService.GetNewTenantAddress(signUpInfoClass, commonContext, tenant);
             LogboxSignUpCurrencyService logboxSignUpCurrencyService = new LogboxSignUpCurrencyService(commonContext, tenant);
             logboxSignUpCurrencyService.AddLocalAndProfitCurrency();
-            logboxSignUpCurrencyService.UpdateNewTenant(signUpInfoClass, tenantAddress);
+            logboxSignUpCurrencyService.UpdateNewTenant(signUpInfoClass, tenantAddress, tenant);
         }
     }
 }
