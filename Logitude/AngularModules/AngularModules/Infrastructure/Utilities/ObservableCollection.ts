@@ -97,5 +97,9 @@ export class ObservableCollection {
 
         this.Length = myResult;
     }
+    public FindIndex(code: string) {
+        var index =  this.Collection.findIndex(x => x.code === code) ;
+        return index
+    }
 
 }
