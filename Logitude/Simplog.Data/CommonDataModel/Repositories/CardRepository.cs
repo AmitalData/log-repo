@@ -694,7 +694,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return cards;
         }
 
-
         public string GetBillToCardById(string id, int tenant)
         {
             string billToId = (from a in context.Cards
