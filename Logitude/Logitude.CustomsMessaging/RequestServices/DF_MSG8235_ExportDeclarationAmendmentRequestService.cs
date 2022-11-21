@@ -326,8 +326,10 @@ namespace Logitude.CustomsMessaging.RequestServices
             
             req.Response.AdditionalInformation = AdditionalInformation();
 
+            if (_DeclarationPM.HatraDate.HasValue)
+                req.Response.Declaration.DMExtensions.ReleaseDateTime = new ReleaseDateType { Value = _DeclarationPM.HatraDate.Value };
 
-            if(isExportClose)
+            if (isExportClose)
             {
                 req.Response.FunctionCode = new ResponseFunctionCodeType { Value = "3" };
             }
