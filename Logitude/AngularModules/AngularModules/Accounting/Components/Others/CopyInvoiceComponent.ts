@@ -853,7 +853,7 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
         this.SetChargesTypeIdIfActive(originalAPInvoiceLine, apInvoiceLinePM);
         apInvoiceLinePM.InvoiceCurrencyAmount = this.IsCopyAmountsChecked ? originalAPInvoiceLine.InvoiceCurrencyAmount : 0;
         apInvoiceLinePM.ForiegnCurrencyAmount = this.IsCopyAmountsChecked ? originalAPInvoiceLine.ForiegnCurrencyAmount : 0;
-        apInvoiceLinePM.LocalCurrencyAmount = this.IsCopyAmountsChecked ? AppTool.Round(originalAPInvoiceLine.LocalCurrencyAmount * this.InvoiceCurrencyExchangeRate, 2) : 0;
+        apInvoiceLinePM.LocalCurrencyAmount = this.IsCopyAmountsChecked ? originalAPInvoiceLine.LocalCurrencyAmount : 0;
         apInvoiceLinePM.ForiegnCurrencyId = apInvoicePM.InvoiceCurrencyId;
         apInvoiceLinePM.ForiegnCurrencyCode = apInvoicePM.InvoiceCurrencyCode;
         apInvoiceLinePM.OpenAmount = this.IsCopyAmountsChecked ? originalAPInvoiceLine.OpenAmount : 0;

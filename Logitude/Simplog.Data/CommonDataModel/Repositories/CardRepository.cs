@@ -694,9 +694,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return cards;
         }
 
-
         public string GetBillToCardById(string ids, int tenant)
         {
+            if (string.IsNullOrWhiteSpace(ids))
+            {
+                return null;
+            }
+
             List<string> cards = ids?.Split(',').ToList<string>();
             string billToId = (from a in context.Cards
                                    where cards.Contains(a.Id) && a.Tenant == tenant

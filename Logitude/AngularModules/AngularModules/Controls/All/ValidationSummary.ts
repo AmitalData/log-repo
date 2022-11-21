@@ -5,12 +5,12 @@ import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTransla
 import {ObjectsLocator} from '../../Infrastructure/Locators/ObjectsLocator';
 @Component({
     selector: 'ValidationSummary',
-    inputs: ['ItemsSource', 'SingleLine'],
+    inputs: ['ItemsSource', 'SingleLine', 'SingleError'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 
     template:
     `
-    <table style="min-height: 25px;">
+    <table style="min-height: 25px;" [style.max-height]="SingleError? '25px' : '100%'">
         <tr>
             <td>
                 <div class="ValidationSummary">
@@ -116,6 +116,14 @@ export class ValidationSummary implements OnInit {
         if (this.singleLine != newValue) {
             this.singleLine = newValue;
             this.UpdateItemWidth();
+        }
+    }
+
+    private singleError: boolean = false;
+    get SingleError() { return this.singleError; }
+    set SingleError(newValue: boolean) {
+        if (this.singleError != newValue) {
+            this.singleError = newValue;
         }
     }
 

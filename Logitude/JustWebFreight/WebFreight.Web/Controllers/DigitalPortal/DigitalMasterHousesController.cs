@@ -20,13 +20,18 @@ namespace WebFreight.Web.Controllers.DigitalPortal
     {
         [HttpGet]
         [Route("DigitalMasterHouses/GetMasterWithConnectedHouses")]
-        public HttpResponseMessage GetMasterWithConnectedHouses(string cardId, string partnerType, int page = 1, int pageSize = 20, bool isExternal = false)
+        public HttpResponseMessage GetMasterWithConnectedHouses(string cardId, string partnerType = "CS", int page = 1, int pageSize = 20, bool isExternal = false)
         {
             int tenant = 0;
             string email = "";
 
             try
             {
+                if (partnerType == null)
+                {
+                    partnerType = "CS";
+                }
+
                 string shipmentId = null;
                 var digitalPortalAuthenticationHelper = new DigitalPortalAuthenticationHelper();
                 var shipmentIdAndTenant = digitalPortalAuthenticationHelper.AuthenticateResponse(cardId, shipmentId);

@@ -3143,7 +3143,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
     set SaleQuantity(value: number) {
         if (this.EntityPM.SaleQuantity != value) {
             this.EntityPM.SaleQuantity = AppTool.Round(value, 2);
-            this.ComputeSaleAmounts();
+            this.ComputeSaleAmounts(false);
             this.fatherComponent.CheckUpdateQuantities();
         }
     }
@@ -3316,7 +3316,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
         this.SaleQuantity = myResult;
         this.SetUIProperties();
     }
-    ComputeSaleAmounts() {
+    ComputeSaleAmounts(ApplyScreenChanges : boolean = true) {
         var myTotalAmount = null;
 
         if (this.SaleMeasurementCode == "BCNT") {
@@ -3384,18 +3384,20 @@ export class FCLQuoteChargeItem extends BaseComponent {
         this.EntityPM.SaleUnitPrice4InSaleCurrency = this.GetSalePriceInSaleCurrency(this.EntityPM.SaleContainerType4UnitPrice);
         this.EntityPM.SaleUnitPrice5InSaleCurrency = this.GetSalePriceInSaleCurrency(this.EntityPM.SaleContainerType5UnitPrice);
 
-        this.SetUIProperties_CellsColors();
-
-        if (this.ChargesGroupCode == "FRT") {
-            this.fatherComponent.OnFreightAmountChanged();
+        if(ApplyScreenChanges == true){
+            this.SetUIProperties_CellsColors();
+            if (this.ChargesGroupCode == "FRT") {
+                this.fatherComponent.OnFreightAmountChanged();
+            }
+            this.fatherComponent.OnPercentForeignAmountChanged();
+            this.SetUIProperties_SaleMinMax();
         }
-        this.fatherComponent.OnPercentForeignAmountChanged();
-
-        this.SetUIProperties_SaleMinMax();
+ 
         this.fatherComponent.ComputeTotals();
         this.fatherComponent.CheckUpdateQuantities();
 
     }
+
     ComputeSalePrice() {
         if (AppTool.IsNullOrEmpty(this.CostUnitPriceInSaleCurrency)) {
             this.SaleUnitPrice = null;
