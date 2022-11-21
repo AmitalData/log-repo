@@ -34,6 +34,12 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             string email = "";
             try
             {
+                List<string> cards = new List<string>();
+                if (!string.IsNullOrWhiteSpace(cardId))
+                {
+                    cards = cardId?.Split(',').ToList<string>();
+                }
+
                 string logKey = PerformanceLogger.LogCurrentTime();
                 var digitalPortalAuthenticationHelper = new DigitalPortalAuthenticationHelper();
                 var shipmentIdAndTenant = digitalPortalAuthenticationHelper.AuthenticateResponse(cardId, id);
@@ -44,7 +50,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var shipmentQuery = new ShipmentQuery(tenant);
                 var shipmentPM = shipmentQuery.GetSinglePM(id, tenant, cardId);
 
-                if (shipmentPM.CustomerId == cardId || shipmentPM.AgentId == cardId || string.IsNullOrWhiteSpace(cardId))
+                if (string.IsNullOrWhiteSpace(cardId) || cards.Contains(shipmentPM.CustomerId) || cards.Contains(shipmentPM.AgentId))
                 {
                     shipmentPM.TimeLineData = shipmentQuery.MapVerticalTimeLine(shipmentPM);
                     PerformanceLogger.AddServerExecutionTimeHeader(logKey);
