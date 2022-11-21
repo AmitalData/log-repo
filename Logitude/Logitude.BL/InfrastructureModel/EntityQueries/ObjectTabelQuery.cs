@@ -108,6 +108,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          AvailableInCustomization = a.AvailableInCustomization,
                                          ParentObjectTableId = a.ParentObjectTableId,
                                          IsCustom = a.IsCustom,
+                                         SupportSubEntity = a.SupportSubEntity
                                      }).ToList();
             }
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -182,7 +183,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                     ParentObjectTableName = a.ParentObjectTableName,
                                     AvailableInCustomization = a.AvailableInCustomization,
                                     ParentObjectTableId = a.ParentObjectTableId,
-                                    IsCustom = a.IsCustom
+                                    IsCustom = a.IsCustom,
+                                    SupportSubEntity = a.SupportSubEntity
                                 }).ToList();
             }
 
@@ -265,7 +267,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                            ParentObjectTableName = a.ParentObjectTableName,
                                            AvailableInCustomization = a.AvailableInCustomization,
                                            ParentObjectTableId = a.ParentObjectTableId,
-                                           IsCustom = a.IsCustom
+                                           IsCustom = a.IsCustom,
+                                           SupportSubEntity = a.SupportSubEntity
                                        }).ToList();
             }
             if (tenant != 0)
@@ -342,7 +345,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                             ParentObjectTableName = a.ParentObjectTableName,
                                             AvailableInCustomization = a.AvailableInCustomization,
                                             ParentObjectTableId = a.ParentObjectTableId,
-                                            IsCustom = a.IsCustom
+                                            IsCustom = a.IsCustom,
+                                            SupportSubEntity = a.SupportSubEntity
                                         }).ToList();
                 }
             }
@@ -435,6 +439,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        IsTabsHidden = a.IsTabsHidden,
                                                        ParentObjectTableName = a.ParentObjectTableName,
                                                        AvailableInCustomization = a.AvailableInCustomization,
+                                                       SupportSubEntity = a.SupportSubEntity
                                                    }).ToList();
                             scope.Complete();
                         }
@@ -518,6 +523,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    IsTabsHidden = a.IsTabsHidden,
                                                    ParentObjectTableName = a.ParentObjectTableName,
                                                    AvailableInCustomization = a.AvailableInCustomization,
+                                                   SupportSubEntity = a.SupportSubEntity
                                                }).ToList();
                         scope.Complete();
                     }
@@ -599,7 +605,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    ParentObjectTableName = a.ParentObjectTableName,
                                                    AvailableInCustomization = a.AvailableInCustomization,
                                                    ParentObjectTableId = a.ParentObjectTableId,
-                                                   IsCustom = a.IsCustom
+                                                   IsCustom = a.IsCustom,
+                                                   SupportSubEntity = a.SupportSubEntity
                                                }).ToList();
 
                         scope.Complete();
@@ -686,7 +693,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                             ParentObjectTableName = a.ParentObjectTableName,
                                             AvailableInCustomization = a.AvailableInCustomization,
                                             ParentObjectTableId = a.ParentObjectTableId,
-                                            IsCustom = a.IsCustom
+                                            IsCustom = a.IsCustom,
+                                            SupportSubEntity = a.SupportSubEntity
                                         }).ToList();
 
 
@@ -840,7 +848,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      ParentObjectTableName = a.ParentObjectTableName,
                                                      AvailableInCustomization = a.AvailableInCustomization,
                                                      ParentObjectTableId = a.ParentObjectTableId,
-                                                     IsCustom = a.IsCustom
+                                                     IsCustom = a.IsCustom,
+                                                     SupportSubEntity = a.SupportSubEntity
                                                  };
             return result;
         }  
@@ -903,7 +912,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    ParentObjectTableName = a.ParentObjectTableName,
                                                    AvailableInCustomization = a.AvailableInCustomization,
                                                    ParentObjectTableId = a.ParentObjectTableId,
-                                                   IsCustom = a.IsCustom
+                                                   IsCustom = a.IsCustom,
+                                                   SupportSubEntity = a.SupportSubEntity
                                                }).FirstOrDefault();
 
 

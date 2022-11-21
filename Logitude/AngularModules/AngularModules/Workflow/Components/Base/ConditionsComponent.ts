@@ -22,6 +22,8 @@ export class ConditionsComponent extends BaseComponent implements OnInit, OnChan
     @Input() FlowObject: any;
     @Input() FlowObjectFields: ObjectFieldList[];
     @Input() CurrentNodeId: string;
+    @Input() EnableAdd: boolean = true;
+    @Input() ShowConditionsOperation: boolean = true;
 
     @Output() ConditionsOperationChange = new EventEmitter<string>();
     @Output() IsValidConditionsChange = new EventEmitter<boolean>();

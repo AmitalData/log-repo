@@ -123,7 +123,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
             else
             {
-                string email = HttpContext.Current.User.Identity.Name;
+                string email = HttpContext.Current?.User?.Identity?.Name;
                 AuthenticationUtil.ResolveLoggingUserId(tenant);
                 this.loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
             }

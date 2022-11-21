@@ -157,11 +157,11 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
     }
 
     deleteSetValue(setValueIndex: number) {
-        let setvalue = this.SetValues[setValueIndex];
-        if (setvalue) {
+        let setValue = this.SetValues[setValueIndex];
+        if (setValue && !setValue.isDisabled) {
             this.SetValues.splice(setValueIndex, 1);
+            this.setValuesChanged();
         }
-        this.setValuesChanged();
     }
 
     getDeclaredVariableFieldType(field: string) {

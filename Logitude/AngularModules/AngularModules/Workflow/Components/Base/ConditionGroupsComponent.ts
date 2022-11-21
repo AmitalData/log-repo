@@ -17,6 +17,7 @@ import { Formatter } from "Workflow/Models/Formatter";
 import { ListItem } from "Workflow/Models/ListItem";
 import { ObjectTables } from "Workflow/Models/ObjectTables";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
+import { ConditionDisabledPipe } from "Workflow/Pipes/ConditionDisabledPipe";
 import { GetObjectFieldPipe } from "Workflow/Pipes/GetObjectFieldPipe";
 import { IsDateTimeTypePipe } from "Workflow/Pipes/IsDateTimeTypePipe";
 import { IsDeclaredVariablePipe } from "Workflow/Pipes/IsDeclaredVariablePipe";
@@ -42,6 +43,7 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
     @Input() FlowObject: any;
     @Input() FlowObjectFields: ObjectFieldList[];
     @Input() CurrentNodeId: string;
+    @Input() EnableAdd: boolean = true;
 
     @Output() ConditionsChangedEvent = new EventEmitter();
 
@@ -207,7 +209,7 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
     }
 
     addCondition(conditionIndex: number, isGroup: boolean) {
-        if (this.IsValidConditions) {
+        if (this.IsValidConditions && this.EnableAdd) {
             let condition = new Condition(isGroup);
             condition.id = this.ConditionsCounter;
             if (conditionIndex === null) {
@@ -221,7 +223,8 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
 
     deleteCondition(conditionIndex: number, isGroup: boolean) {
         let condition = this.Conditions[conditionIndex];
-        if (!condition.isDisabled) {
+        let isDeleteDisabled = condition ? (new ConditionDisabledPipe().transform(condition.disabled, "d")) : false;
+        if (condition && !isDeleteDisabled) {
             if (isGroup && condition.conditions.length > 0) {
                 let firstChildCondition = condition.conditions[0];
                 if (!firstChildCondition.isGroup) {

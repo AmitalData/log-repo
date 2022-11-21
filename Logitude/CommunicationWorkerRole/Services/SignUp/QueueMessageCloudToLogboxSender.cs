@@ -21,7 +21,7 @@ namespace CommunicationWorkerRole.Services.SignUp
 {
     public class QueueMessageCloudToLogboxSender
     {
-        private static string signUpControllerURL = "SignUpController";
+        private static string signUpControllerURL = "SignUp";
         public static void Send(SignUpInfoClass signUpInfo)
         {
             string URI = CustomerTenantsURLService.Get();

@@ -174,7 +174,10 @@ export class CustomFieldsComponent {
     }
 
     Save() {
-
+        if (this.customizationEditComponent.IsSaveAndClose) {
+            this.customizationEditComponent.CurrentSession.CloseCurrentWindow();
+            this.customizationEditComponent.IsSaveAndClose = false;
+        }
     }
     Cancel() {
 

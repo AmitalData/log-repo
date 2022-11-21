@@ -1,5 +1,6 @@
 import { ConditionOperations } from "Workflow/Constants/ConditionOperations";
 import { ConditionOperators } from "Workflow/Constants/ConditionOperators";
+import { ConditionDisabled } from "./Types";
 
 export class Condition {
     public id: number;
@@ -15,7 +16,7 @@ export class Condition {
     public valueExpression: string;
     public operator: string;
     public conditions: Condition[];
-    public isDisabled: boolean;
+    public disabled: ConditionDisabled;
     public fieldChangedToggle: boolean;
 
     constructor(isGroup: boolean = false) {
@@ -32,7 +33,7 @@ export class Condition {
         this.valueExpression = null;
         this.operator = ConditionOperators.Equals;
         this.conditions = isGroup ? [] : null;
-        this.isDisabled = false;
+        this.disabled = null;
         this.fieldChangedToggle = false;
     }
 }

@@ -464,8 +464,6 @@ namespace WebFreight.Web.InfrastructureModel
                     PhoneNumber = signUpInfo.Phone
                 };
                 password = AddUser(userShortDetails, userRepository, branchRepository, departmentRepository, roleRepository);
-                LogboxSignUpService logboxSignUpService = new LogboxSignUpService(signUpInfo, tenant);
-                logboxSignUpService.Update();
                 AddCounters(tenant, counterRepository, tenantZeroObjectTables, tenantZeroCounters);
                 List<Counter> currentTenantCounters = counterRepository.GetCounters(tenant).ToList();
 
@@ -559,8 +557,10 @@ namespace WebFreight.Web.InfrastructureModel
             }
 
 
+            LogboxSignUpService logboxSignUpService = new LogboxSignUpService(signUpInfo, tenant);
+            logboxSignUpService.Update();
 
-            
+
             TenantManagement tenantManagement = null;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction(new TimeSpan(2, 0, 0)))
             {

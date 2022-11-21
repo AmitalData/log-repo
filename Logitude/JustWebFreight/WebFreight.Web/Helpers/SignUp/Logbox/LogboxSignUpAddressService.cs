@@ -17,8 +17,8 @@ namespace WebFreight.Web.Helpers.SignUp.Logbox
         public static AddressPM GetNewTenantAddress(SignUpInfoClass signUpInfoClass, ICommonDataContext commonContext, int tenant)
         {
             CountryRepository CountryRepository = new CountryRepository(tenant);
-            AddressRepository addressRepository = new AddressRepository(signUpInfoClass.Tenant);
-            var CustomerAddress = addressRepository.GetMainAddressByCardId(signUpInfoClass.CustomerId, signUpInfoClass.Tenant);
+            AddressRepository addressRepository = new AddressRepository(tenant);
+            var CustomerAddress = addressRepository.GetMainAddressByCardId(signUpInfoClass.CustomerId, tenant);
             if (CustomerAddress == null)
             {
                 throw new ApplicationException("Address with Card Id: " + signUpInfoClass.CustomerId + " is not exist!");

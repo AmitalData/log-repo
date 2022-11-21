@@ -16,7 +16,7 @@ export class GeneralTabComponent implements AfterViewInit {
     private ObjectTableName: string = null;
   @ViewChild(ChildDirective) Child: ChildDirective;
     title: string;
-
+    public DisplayTabNameInScreen: boolean = true;
   constructor(private entityArgs: EntityArgs) {
     this.IsNewEntity = entityArgs.IsNewEntity;
     this.ObjectTableName = entityArgs.ObjectTableName;
@@ -48,6 +48,8 @@ export class GeneralTabComponent implements AfterViewInit {
     private SetTabTitle()
     {
         const tab: ObjectTableTabPM = window.ObjectTableTabs.find(d => d.Code == this.entityArgs.SelectedTabCode);
+        this.DisplayTabNameInScreen = !tab.HideTabNameInScreen;
+        if (!this.DisplayTabNameInScreen) return;
         if (tab?.TabNameTextCodeDefaultText)
             return this.title = tab.TabNameTextCodeDefaultText;
 

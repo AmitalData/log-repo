@@ -368,6 +368,10 @@ export class ObjectTablePM {
     public get IsNew() { return this.isNew; }
     public set IsNew(newValue: boolean) { if (this.isNew != newValue) { this.isNew = newValue; this.MarkAsDirty("IsNew"); } }
 
+    private supportSubEntity: boolean;
+    public get SupportSubEntity() { return this.supportSubEntity; }
+    public set SupportSubEntity(newValue: boolean) { if (this.supportSubEntity != newValue) { this.supportSubEntity = newValue; this.MarkAsDirty("SupportSubEntity"); } }
+
     public OldEntityPM: ObjectTablePM;
 		
     public IsDirty: boolean;

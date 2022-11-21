@@ -15,3 +15,4 @@ export type NodeType =
     "labelNode" |
     null;
 
+export type ConditionDisabled = null | "d,f,o";

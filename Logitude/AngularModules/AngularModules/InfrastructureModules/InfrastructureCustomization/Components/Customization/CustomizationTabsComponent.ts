@@ -22,7 +22,7 @@ type tab = {
 
 declare var window;
 const defaultWindowWidth = 450;
-const defaultWindowHeight = 200;
+const defaultWindowHeight = 230;
 const newTabWindowTitle = "New Tab";
 const editTabWindowTitle = "Edit Tab";
 @Component({
@@ -108,6 +108,10 @@ export class CustomizationTabsComponent extends BaseComponent
             window.ObjectTableTabs = tabs;
             this.LoadScreen();
             this.customizationEditComponent.IsDirty = false;
+            if (this.customizationEditComponent.IsSaveAndClose) {
+                this.customizationEditComponent.CurrentSession.CloseCurrentWindow();
+                this.customizationEditComponent.IsSaveAndClose = false;
+            }
             if (this.customizationEditComponent.NewSelectedMenu) {
                 this.customizationEditComponent.SelectedMenu = this.customizationEditComponent.NewSelectedMenu;
             }
@@ -223,6 +227,10 @@ export class CustomizationTabsComponent extends BaseComponent
         if (this.customizationEditComponent.IsDirty) {
             this.OkClicked();
         }
+        else if (this.customizationEditComponent.IsSaveAndClose) {
+                this.customizationEditComponent.CurrentSession.CloseCurrentWindow();
+                this.customizationEditComponent.IsSaveAndClose = false;
+            }
     }
     Cancel() {
         this.GetAllTabs(false);     

@@ -854,11 +854,6 @@
       SearchFields="&quot;Connect Tranzilla on Test Links&quot;"
       Description="&quot;Connect Tranzilla on Test Links&quot;" />
     <Record
-      Code="&quot;UNV&quot;"
-      Name="&quot;Unicargo Server Validations&quot;"
-      SearchFields="&quot;Unicargo Server Validations&quot;"
-      Description="&quot;Unicargo Server Validations&quot;" />
-    <Record
       Code="&quot;ABD&quot;"
       Name="&quot;Auto Build in Document Send&quot;"
       SearchFields="&quot;ABD,Auto Build in Document Send&quot;"

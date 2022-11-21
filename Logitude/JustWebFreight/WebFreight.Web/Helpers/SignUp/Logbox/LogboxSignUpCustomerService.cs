@@ -86,11 +86,11 @@ namespace WebFreight.Web.Helpers.SignUp.Logbox
 
         public static void UpdateFromCloud(SignUpInfoClass signUpInfoClass, ICommonDataContext commonContext, int tenant)
         {
-            ContactRepository contactRepository = new ContactRepository(signUpInfoClass.Tenant);
+            ContactRepository contactRepository = new ContactRepository(tenant);
             ContactQuery contactQuery = new ContactQuery(contactRepository);
             ContactPM contactPM = contactQuery.GetContactByEmailOnly(signUpInfoClass.Email, tenant);
-            CustomerQuery CustomerQuery = new CustomerQuery(signUpInfoClass.Tenant);
-            var currentCustomer = CustomerQuery.GetSinglePMForLogBox(signUpInfoClass.CustomerId, signUpInfoClass.Tenant);
+            CustomerQuery CustomerQuery = new CustomerQuery(tenant);
+            var currentCustomer = CustomerQuery.GetSinglePMForLogBox(signUpInfoClass.CustomerId, tenant);
             if (currentCustomer == null)
             {
                 throw new ApplicationException("Customer with Id: " + signUpInfoClass.CustomerId + " is not exist!");
@@ -106,7 +106,7 @@ namespace WebFreight.Web.Helpers.SignUp.Logbox
 
         public static void CreateStandardNew(SignUpInfoClass signUpInfoClass, ICommonDataContext commonContext, int tenant)
         {
-            ContactRepository contactRepository = new ContactRepository(signUpInfoClass.Tenant);
+            ContactRepository contactRepository = new ContactRepository(tenant);
             ContactQuery contactQuery = new ContactQuery(contactRepository);
             ContactPM contactPM = contactQuery.GetContactByEmailOnly(signUpInfoClass.Email, tenant);
             if(contactPM == null)
