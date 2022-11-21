@@ -1443,7 +1443,7 @@
                                                                             </div>
                                                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                                                 <LogTextBox [ObjectFieldName]="'Amount'" [InputType]="'double'" [DataContext]="item"
-                                                                                            [ObjectTableName]="'Customs.SupplierInvoiceItemsMod'" [HideColumns]="true" [FocusOnMe]="true" (LostFocus)="item.OnAmountOrCurrencyLostFocus(item)"></LogTextBox>
+                                                                                            [ObjectTableName]="'Customs.SupplierInvoiceItemsMod'" [HideColumns]="true" [FocusOnMe]="true" (LostFocus)="item.OnAmountOrCurrencyLostFocus()"></LogTextBox>
                                                                             </div>
                                                                         </log-cell-template>
                                                                     </ng-template>

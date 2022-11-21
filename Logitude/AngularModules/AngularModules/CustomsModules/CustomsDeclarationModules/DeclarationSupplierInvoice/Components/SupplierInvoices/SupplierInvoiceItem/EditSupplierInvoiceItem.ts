@@ -1275,11 +1275,11 @@ export class ModificationItemModel extends BaseComponent {
 
     }
      
-    OnAmountOrCurrencyLostFocus(item:ModificationItemModel){
+    OnAmountOrCurrencyLostFocus(){
 
         var CurrentSession = SessionLocator.SelectedSession;
 
-        if(CurrentSession.CurrentEditComponent.EntityPM.Direction == "E" &&(item.modificationPM.ModificationAffectTypeID == '1' || item.modificationPM.ModificationAffectTypeID == '2'))
+        if(CurrentSession.CurrentEditComponent.EntityPM.Direction == "E")
     {   
 
                 this.supplierInvoiceSharedService.Difference$.next();
