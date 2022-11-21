@@ -1,5 +1,5 @@
 {
-  "HashString": "cc31ea621b49408eb23667bdce77b837",
+  "HashString": "ab3414e5a2174fad90dfdfcf3c0bd91d",
   "Name": "Shipment Statistics",
   "TableName": "ShipmentAnalytics",
   "ObjectTableName": "Shipment",
@@ -15,7 +15,9 @@
       "JoinedTableName": "Card",
       "JoinedTableDBName": "Cards",
       "JoinedTableKey": "Id",
-      "JoinedTableDisplayField": "EnglishName"
+      "JoinedTableDisplayField": "EnglishName",
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "74779349ef83419da24456f63023ff1f",
@@ -28,7 +30,9 @@
       "JoinedTableName": null,
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
-      "JoinedTableDisplayField": null
+      "JoinedTableDisplayField": null,
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "3c51ccc1039c4309858dde98670075a8",
@@ -41,7 +45,9 @@
       "JoinedTableName": "ShipmentType",
       "JoinedTableDBName": "ShipmentTypes",
       "JoinedTableKey": "Id",
-      "JoinedTableDisplayField": "Name"
+      "JoinedTableDisplayField": "Name",
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "eca85f5129814bf8a1f7cb3e520be59e",
@@ -54,7 +60,9 @@
       "JoinedTableName": "TransportMode",
       "JoinedTableDBName": "TransportModes",
       "JoinedTableKey": "Id",
-      "JoinedTableDisplayField": "Name"
+      "JoinedTableDisplayField": "Name",
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "ea35b042864d47d6aa008ba0aad38e56",
@@ -67,7 +75,9 @@
       "JoinedTableName": null,
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
-      "JoinedTableDisplayField": null
+      "JoinedTableDisplayField": null,
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "1f271aafe4b74ba98adfe52112121fac",
@@ -80,7 +90,9 @@
       "JoinedTableName": null,
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
-      "JoinedTableDisplayField": null
+      "JoinedTableDisplayField": null,
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "5f30553bdb9a4401b897aac683da87e1",
@@ -93,7 +105,9 @@
       "JoinedTableName": null,
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
-      "JoinedTableDisplayField": null
+      "JoinedTableDisplayField": null,
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "bab46b9a0c2d47aea72b21413ff8a710",
@@ -106,7 +120,9 @@
       "JoinedTableName": null,
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
-      "JoinedTableDisplayField": null
+      "JoinedTableDisplayField": null,
+      "HasUnit": true,
+      "Unit": "KG"
     },
     {
       "HashString": "1327bd1c40194d16ae089511bbc38d2a",
@@ -119,7 +135,9 @@
       "JoinedTableName": null,
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
-      "JoinedTableDisplayField": null
+      "JoinedTableDisplayField": null,
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "6a30fb574a0d44488f279ad721ae28c9",
@@ -132,7 +150,9 @@
       "JoinedTableName": null,
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
-      "JoinedTableDisplayField": null
+      "JoinedTableDisplayField": null,
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "ca7a20c245fd421fbf3eb5ba68faf228",
@@ -145,7 +165,9 @@
       "JoinedTableName": "Branch",
       "JoinedTableDBName": "Branches",
       "JoinedTableKey": "Id",
-      "JoinedTableDisplayField": "EnglishName"
+      "JoinedTableDisplayField": "EnglishName",
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "8fb00f3d1352439b8ee934d7f603038d",
@@ -158,7 +180,9 @@
       "JoinedTableName": "Incoterm",
       "JoinedTableDBName": "Incoterms",
       "JoinedTableKey": "Id",
-      "JoinedTableDisplayField": "Name"
+      "JoinedTableDisplayField": "Name",
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "3a8405bb192f46e882d77ed3c1dd1a4e",
@@ -171,7 +195,9 @@
       "JoinedTableName": "Contact",
       "JoinedTableDBName": "Contacts",
       "JoinedTableKey": "Id",
-      "JoinedTableDisplayField": "EnglishName"
+      "JoinedTableDisplayField": "EnglishName",
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "9c6234223cc14d0691e395e801e55cd8",
@@ -184,7 +210,9 @@
       "JoinedTableName": "Contact",
       "JoinedTableDBName": "Contacts",
       "JoinedTableKey": "Id",
-      "JoinedTableDisplayField": "EnglishName"
+      "JoinedTableDisplayField": "EnglishName",
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "7865678afa484196ac3768b497469f3f",
@@ -197,7 +225,9 @@
       "JoinedTableName": "Direction",
       "JoinedTableDBName": "Directions",
       "JoinedTableKey": "Id",
-      "JoinedTableDisplayField": "Name"
+      "JoinedTableDisplayField": "Name",
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "a434bea8d8cb4af6bfdee16976a03e83",
@@ -210,7 +240,9 @@
       "JoinedTableName": "ShipmentLevel",
       "JoinedTableDBName": "ShipmentLevels",
       "JoinedTableKey": "Code",
-      "JoinedTableDisplayField": "Name"
+      "JoinedTableDisplayField": "Name",
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "49c34741b8294e74938472c657e3fd4d",
@@ -223,7 +255,9 @@
       "JoinedTableName": "Card",
       "JoinedTableDBName": "Cards",
       "JoinedTableKey": "Id",
-      "JoinedTableDisplayField": "EnglishName"
+      "JoinedTableDisplayField": "EnglishName",
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "6a987a87e5f0429bad52dc39becd90ed",
@@ -236,7 +270,9 @@
       "JoinedTableName": "Card",
       "JoinedTableDBName": "Cards",
       "JoinedTableKey": "Id",
-      "JoinedTableDisplayField": "EnglishName"
+      "JoinedTableDisplayField": "EnglishName",
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "d81eb24286b04f2181e87b376988b010",
@@ -249,7 +285,9 @@
       "JoinedTableName": "Card",
       "JoinedTableDBName": "Cards",
       "JoinedTableKey": "Id",
-      "JoinedTableDisplayField": "EnglishName"
+      "JoinedTableDisplayField": "EnglishName",
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "959515575e4e481e969f8730bc92c4ca",
@@ -262,7 +300,9 @@
       "JoinedTableName": null,
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
-      "JoinedTableDisplayField": null
+      "JoinedTableDisplayField": null,
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "c2978500773d4f6c8f01b82156e1f834",
@@ -275,7 +315,9 @@
       "JoinedTableName": null,
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
-      "JoinedTableDisplayField": null
+      "JoinedTableDisplayField": null,
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "8318cbea833349199999752e6ffb358d",
@@ -288,7 +330,9 @@
       "JoinedTableName": null,
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
-      "JoinedTableDisplayField": null
+      "JoinedTableDisplayField": null,
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "cbb22dfe82b84f5c8c9c33eaad8e607c",
@@ -301,7 +345,9 @@
       "JoinedTableName": null,
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
-      "JoinedTableDisplayField": null
+      "JoinedTableDisplayField": null,
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "6844bb7d308a41aea4c7fe080b137089",
@@ -314,7 +360,9 @@
       "JoinedTableName": "EntityStatus",
       "JoinedTableDBName": "EntityStatus",
       "JoinedTableKey": "Id",
-      "JoinedTableDisplayField": "Name"
+      "JoinedTableDisplayField": "Name",
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "3f3df6d66d694068a82fe35f8629f927",
@@ -327,7 +375,9 @@
       "JoinedTableName": null,
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
-      "JoinedTableDisplayField": null
+      "JoinedTableDisplayField": null,
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "9594e4fd626244f98701cec771542b9b",
@@ -340,7 +390,9 @@
       "JoinedTableName": null,
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
-      "JoinedTableDisplayField": null
+      "JoinedTableDisplayField": null,
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "e3eb44c5ad4b43b0bd3863099a3d62de",
@@ -353,7 +405,9 @@
       "JoinedTableName": null,
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
-      "JoinedTableDisplayField": null
+      "JoinedTableDisplayField": null,
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "79109ba152bf467f9dd34422adf443c2",
@@ -366,7 +420,9 @@
       "JoinedTableName": null,
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
-      "JoinedTableDisplayField": null
+      "JoinedTableDisplayField": null,
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "5b9a249514b2493abc404ef4d2ebfb70",
@@ -379,7 +435,9 @@
       "JoinedTableName": null,
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
-      "JoinedTableDisplayField": null
+      "JoinedTableDisplayField": null,
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "10186bf0833f4d769c3b7d6b07ce4b77",
@@ -392,7 +450,9 @@
       "JoinedTableName": null,
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
-      "JoinedTableDisplayField": null
+      "JoinedTableDisplayField": null,
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "3cdcd1f1d41d49d3a68febbabc032bcd",
@@ -405,7 +465,9 @@
       "JoinedTableName": "Port",
       "JoinedTableDBName": "Ports",
       "JoinedTableKey": "Id",
-      "JoinedTableDisplayField": "EnglishName"
+      "JoinedTableDisplayField": "EnglishName",
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "e1bd1942695f40f9b9fd8d3bc9d72a75",
@@ -418,7 +480,9 @@
       "JoinedTableName": "Port",
       "JoinedTableDBName": "Ports",
       "JoinedTableKey": "Id",
-      "JoinedTableDisplayField": "EnglishName"
+      "JoinedTableDisplayField": "EnglishName",
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "183ce33c57704a459e898a64ad12e53c",
@@ -431,7 +495,9 @@
       "JoinedTableName": null,
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
-      "JoinedTableDisplayField": null
+      "JoinedTableDisplayField": null,
+      "HasUnit": true,
+      "Unit": "{(LocalCurrency)}"
     },
     {
       "HashString": "570220a33c814f20aeaaf88cf40eae3a",
@@ -444,7 +510,9 @@
       "JoinedTableName": null,
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
-      "JoinedTableDisplayField": null
+      "JoinedTableDisplayField": null,
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "803490b4901545a1ace1e14052944be4",
@@ -457,7 +525,9 @@
       "JoinedTableName": null,
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
-      "JoinedTableDisplayField": null
+      "JoinedTableDisplayField": null,
+      "HasUnit": true,
+      "Unit": "{(ProfitCurrency)}"
     },
     {
       "HashString": "d2329aabd59849edb8f287baa569f865",
@@ -470,7 +540,9 @@
       "JoinedTableName": null,
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
-      "JoinedTableDisplayField": null
+      "JoinedTableDisplayField": null,
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "3cb2c642553a4cf7b1980f6c2c803633",
@@ -483,7 +555,9 @@
       "JoinedTableName": null,
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
-      "JoinedTableDisplayField": null
+      "JoinedTableDisplayField": null,
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "5c68cf98429045408e9a6a239510d174",
@@ -496,7 +570,9 @@
       "JoinedTableName": "ShipmentSubType",
       "JoinedTableDBName": "ShipmentSubTypes",
       "JoinedTableKey": "Id",
-      "JoinedTableDisplayField": "Name"
+      "JoinedTableDisplayField": "Name",
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "f2afb3db120548869aa46d43b45a8457",
@@ -509,7 +585,9 @@
       "JoinedTableName": "Card",
       "JoinedTableDBName": "Cards",
       "JoinedTableKey": "Id",
-      "JoinedTableDisplayField": "EnglishName"
+      "JoinedTableDisplayField": "EnglishName",
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "fd5bac32b84541ac8444d48e3d48f454",
@@ -522,7 +600,9 @@
       "JoinedTableName": null,
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
-      "JoinedTableDisplayField": null
+      "JoinedTableDisplayField": null,
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "6f5cd0ab87e74dcaa7405f25cd8d5341",
@@ -535,7 +615,9 @@
       "JoinedTableName": null,
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
-      "JoinedTableDisplayField": null
+      "JoinedTableDisplayField": null,
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "5301cbb870f04540a7d4edd1feafe29d",
@@ -548,7 +630,9 @@
       "JoinedTableName": "Country",
       "JoinedTableDBName": "Countries",
       "JoinedTableKey": "Id",
-      "JoinedTableDisplayField": "EnglishName"
+      "JoinedTableDisplayField": "EnglishName",
+      "HasUnit": false,
+      "Unit": null
     },
     {
       "HashString": "dbd0b2628fb444ddaaf52ad97141f2b2",
@@ -561,7 +645,9 @@
       "JoinedTableName": "Country",
       "JoinedTableDBName": "Countries",
       "JoinedTableKey": "Id",
-      "JoinedTableDisplayField": "EnglishName"
+      "JoinedTableDisplayField": "EnglishName",
+      "HasUnit": false,
+      "Unit": null
     }
   ]
 }

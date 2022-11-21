@@ -7,15 +7,18 @@ using System.Linq;
 using Logitude.Server.Tools;
 using System.Collections.Generic;
 using System;
+using Simplog.Data.CommonDataModel.Repositories;
 
 namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
 {
     public class KpiDataProviderService : BaseDataProviderService
     {
         private AnalyticsFactsFieldsMetaData measureField;
+        private TenantRepository tenantRepository;
 
         public KpiDataProviderService(WidgetPM widget, AnalyticsFactsMetaData entity) : base(widget, entity)
         {
+            tenantRepository = new TenantRepository(_Widget.Tenant);
         }
 
         internal KpiChart GetData<T>(IQueryable<T> query)
@@ -27,8 +30,32 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
 
             this.measureField = widgetMeasureField.MeasureFieldId == null ? null : _EntityFields[widgetMeasureField.MeasureFieldId];
             kpiChart.MeasureLabel = measureField?.DisplayName ?? widgetMeasureField.MeasureCode;
-            kpiChart.Value = FormatKpiValue(BuildKpiChartValue<T>(widgetMeasureField, query), measureField?.DataTypeCode);
+            kpiChart.Unit = GetUnit();
+            kpiChart.Value = FormatKpiValue(BuildKpiChartValue<T>(widgetMeasureField, query), measureField?.DataTypeCode).ToString() + " " + kpiChart.Unit;
             return kpiChart;
+        }
+
+        private string GetUnit()
+        {
+            if (!measureField.HasUnit || string.IsNullOrEmpty(measureField.Unit)) return null;
+            string genericUnitCode = GetGenericUnitCode();
+            if (string.IsNullOrEmpty(genericUnitCode)) return measureField.Unit;
+            return GetUnitByCode(genericUnitCode);
+        }
+
+        private string GetUnitByCode(string genericUnitCode)
+        {
+            if (genericUnitCode == "LocalCurrency") return tenantRepository.GetSingleTenant(_Widget.Tenant)?.Currency?.Code;
+            if (genericUnitCode == "ProfitCurrency") return tenantRepository.GetSingleTenant(_Widget.Tenant)?.ProfitCurrency?.Code;
+            throw new Exception("Please Define The Unit");
+        }
+
+        private string GetGenericUnitCode()
+        {
+            int pFrom = measureField.Unit.IndexOf("{(") + "{(".Length;
+            int pTo = measureField.Unit.LastIndexOf(")}");
+            if (pFrom == -1 || pTo == -1) return null;
+            return measureField.Unit.Substring(pFrom, pTo - pFrom);
         }
 
         private object FormatKpiValue(object value, string dataTypeCode)
