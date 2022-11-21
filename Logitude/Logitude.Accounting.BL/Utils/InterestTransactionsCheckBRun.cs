@@ -99,10 +99,13 @@ namespace Logitude.Accounting.BL.Utils
         }
 
 
-        private void AddErrorRowList(string gLAccount_id, string displayNumber, string lastReportNum, decimal accBlz, decimal repBlz, decimal diff, string message)
+        private void AddErrorRowList(string gLAccount_id, string displayNumber, string lastReportNum, 
+            decimal glaccblz, decimal descblz, decimal accBlz, 
+            decimal repBlz,decimal glaccftr, decimal descftr, 
+            decimal calc, decimal diff, string message)
         {
-            string separator = ";";
-            this.AddErrorRow($"{gLAccount_id}{separator}{displayNumber}{separator}{lastReportNum}{separator}{accBlz.ToString()}{separator}{repBlz.ToString()}{separator}{diff.ToString()}{separator}{message}");
+            string sep = ";";
+            this.AddErrorRow($"{gLAccount_id}{sep}{displayNumber}{sep}{lastReportNum}{sep}{glaccblz}{sep}{descblz}{sep}{accBlz}{sep}{repBlz}{sep}{glaccftr}{sep}{descftr}{sep}{calc}{sep}{diff}{sep}{message}");
         }
 
 
@@ -149,8 +152,8 @@ namespace Logitude.Accounting.BL.Utils
                          // LocalName = acc.LocalName,
                          DisplayNumber = acc.DisplayNumber,
                          Tenant = acc.Tenant,
-                         BalanceInLocalCurrency = md.BalanceInLocalCurrency,
-                         //InterestOpenBalance = acc.InterestOpenBalance, // see 159870
+                         BalanceInLocalCurrency = md.BalanceInLocalCurrency, // GLAccount balance
+                         //IntReportOpenBalance = acc.IntReportOpenBalance, // see 159870
                      }
                     );
 
@@ -179,8 +182,8 @@ namespace Logitude.Accounting.BL.Utils
                      select new GLAccountDescMDatasDTO4Tester2()
                      {
                          ParentAccId = g.Key,
-                         DescBalanceInLocalCurrency = g.Sum(r => r.BalanceInLocalCurrency),
-                         //DescInterestOpenBalance = g.Sum(r => r.InterestOpenBalance),
+                         DescBalanceInLocalCurrency = g.Sum(r => r.BalanceInLocalCurrency), // descendants' balance  
+                         //DescIntReportOpenBalance = g.Sum(r => r.IntReportOpenBalance),
                      });
             var test3 = dbAllDescendants.ToList();
 
@@ -196,8 +199,10 @@ namespace Logitude.Accounting.BL.Utils
                             //   LocalName = acc.LocalName,
                             DisplayNumber = acc.DisplayNumber,
                             //   Tenant = acc.Tenant,
-                            BalanceInLocalCurrency = ad != null ? acc.BalanceInLocalCurrency + ad.DescBalanceInLocalCurrency : acc.BalanceInLocalCurrency,
-                            //InterestOpenBalance = ad != null ? acc.InterestOpenBalance + ad.DescInterestOpenBalance : acc.InterestOpenBalance, 
+                            GLAccountBalance = acc.BalanceInLocalCurrency,
+                            DescBalance = ad != null ? ad.DescBalanceInLocalCurrency : 0m,
+                            BalanceInLocalCurrency = ad != null ? acc.BalanceInLocalCurrency + ad.DescBalanceInLocalCurrency : acc.BalanceInLocalCurrency, // GLAccount and descendants 
+                            //IntReportOpenBalance = ad != null ? acc.IntReportOpenBalance + ad.DescIntReportOpenBalance : acc.IntReportOpenBalance, 
                         }
                      );
 
@@ -207,9 +212,9 @@ namespace Logitude.Accounting.BL.Utils
 
 
             ////////////////
-            /// 2. Compute InterestOpenBalances
+            /// 2. Compute IntReportOpenBalances
 
-            var calcInterestOpenBalances =
+            var calcIntReportOpenBalances =
                      (
                         from intRep in
                             myInterestReportRepo.GetAll(_Tenant).Where(intRep => intRep.CreateDateTime.HasValue).OrderBy(intRep => intRep.CreateDateTime.Value).Where(intRep => (intRep.InterestReportStatusCode == "2" || intRep.InterestReportStatusCode == "4"))
@@ -218,51 +223,56 @@ namespace Logitude.Accounting.BL.Utils
                         select new InterestReportDiff4Tester
                         {
                             AccountId = intRep.GLAccountId,
-                            InterestOpenBalance = intRep.OpenBalance.HasValue ? intRep.OpenBalance.Value : 0m,
+                            IntReportOpenBalance = intRep.OpenBalance.HasValue ? intRep.OpenBalance.Value : 0m, // last report open balance - of the GLAccount
                             LastReportNum = intRep.ReportNumber,
                             DisplayNumber = acc.DisplayNumber,
                         }
                      );
 
-            var test5 = calcInterestOpenBalances.ToList();
+            var test5 = calcIntReportOpenBalances.ToList();
             string testDisplayNo = test5.FirstOrDefault().DisplayNumber;
 
-            var calcInterestOpenBalancesDesc =
-                     (
-                        from intRep in
-                            myInterestReportRepo.GetAll(_Tenant).Where(intRep => intRep.CreateDateTime.HasValue).OrderBy(intRep => intRep.CreateDateTime.Value).Where(intRep => (intRep.InterestReportStatusCode == "2" || intRep.InterestReportStatusCode == "4"))
-                        where intRep.Tenant == _Tenant
-                        join descendants in dbAllDescendantsOnly on intRep.GLAccountId equals descendants.DescAccId
-                        select new InterestReportDiffDesc4Tester
-                        {
-                            ParentAccountId = descendants.ParentAccId,
-                            DescInterestOpenBalance = intRep.OpenBalance.HasValue ? intRep.OpenBalance.Value : 0m,
-                            LastReportNum = intRep.ReportNumber,
-                        }
-                     );
+            //var calcIntReportOpenBalancesDesc =
+            //         (
+            //            from intRep in
+            //                myInterestReportRepo.GetAll(_Tenant) // -- .Where(intRep => intRep.CreateDateTime.HasValue).OrderBy(intRep => intRep.CreateDateTime.Value).Where(intRep => (intRep.InterestReportStatusCode == "2" || intRep.InterestReportStatusCode == "4"))
+            //            where intRep.Tenant == _Tenant
+            //            join descendants in dbAllDescendantsOnly on intRep.GLAccountId equals descendants.DescAccId
+            //            join mainRep in calcIntReportOpenBalances on intRep.ReportNumber equals mainRep.LastReportNum
+            //            select new InterestReportDiffDesc4Tester
+            //            {
+            //                ParentAccountId = descendants.ParentAccId,
+            //                DescIntReportOpenBalance = intRep.OpenBalance.HasValue ? intRep.OpenBalance.Value : 0m, // last report open balance - of the descendants
+            //                LastReportNum = intRep.ReportNumber,
+            //            }
+            //         );
+
+            //var test6 = calcIntReportOpenBalancesDesc.ToList();      
+            // the above may be not needed since calcIntReportOpenBalances.LastReportNum == calcIntReportOpenBalancesDesc.LastReportNum AND calcIntReportOpenBalances.IntReportOpenBalance == calcIntReportOpenBalancesDesc.DescIntReportOpenBalance  
 
 
-            var test6 = calcInterestOpenBalancesDesc.ToList();
+            //var calcIntReportOpenBalancesInclDesc =
+            //         (
+            //            from acc in calcIntReportOpenBalances
+            //            join descs in calcIntReportOpenBalancesDesc on acc.AccountId equals descs.ParentAccountId
+            //            into accDescendantsJoin
+            //            from ad in accDescendantsJoin.DefaultIfEmpty()
+            //            select new InterestReportDiff4Tester2
+            //            {
+            //                AccountId = acc.AccountId,// ad.ParentAccountId,
+            //                                          //   LocalName = acc.LocalName,
+            //                DisplayNumber = acc.DisplayNumber,
+            //                //  Tenant = ad.Tenant,
+            //                IntReportOpenBalance = ad != null ? acc.IntReportOpenBalance + ad.DescIntReportOpenBalance : acc.IntReportOpenBalance,
+            //                LastReportNum = acc.LastReportNum,
+            //                GLAccountIntRepOpenBalance = acc.IntReportOpenBalance,
+            //                DescIntRepOpenBalance = ad != null ? ad.DescIntReportOpenBalance : 0m,
+            //            }
+            //         );
 
-            var calcInterestOpenBalancesInclDesc =
-                     (
-                        from acc in calcInterestOpenBalances
-                        join descs in calcInterestOpenBalancesDesc on acc.AccountId equals descs.ParentAccountId
-                        into accDescendantsJoin
-                        from ad in accDescendantsJoin.DefaultIfEmpty()
-                        select new InterestReportDiff4Tester2
-                        {
-                            AccountId = acc.AccountId,// ad.ParentAccountId,
-                                                      //   LocalName = acc.LocalName,
-                            DisplayNumber = acc.DisplayNumber,
-                            //  Tenant = ad.Tenant,
-                            InterestOpenBalance = ad != null ? acc.InterestOpenBalance + ad.DescInterestOpenBalance : acc.InterestOpenBalance,
-                            LastReportNum = acc.LastReportNum,
-                        }
-                     );
 
-
-            var test7 = calcInterestOpenBalancesInclDesc.ToList();  ////
+            //var test7 = calcIntReportOpenBalancesInclDesc.ToList();   
+            // the above may be not needed since calcIntReportOpenBalances.LastReportNum == calcIntReportOpenBalancesDesc.LastReportNum AND calcIntReportOpenBalances.IntReportOpenBalance == calcIntReportOpenBalancesDesc.DescIntReportOpenBalance  
 
 
 
@@ -280,7 +290,7 @@ namespace Logitude.Accounting.BL.Utils
                         select new InterestReportDiff4Tester3
                         {
                             AccountId = g.Key,
-                            FutureInterestTransactionsBalance = g.Sum(r => r.LocalAmount),
+                            FutureInterestTransactionsBalance = g.Sum(r => r.LocalAmount), // of the GLAccount
                         }
                      );
 
@@ -296,7 +306,7 @@ namespace Logitude.Accounting.BL.Utils
                         select new InterestReportDiffDesc4Tester2
                         {
                             ParentAccountId = g.Key,
-                            DescFutureInterestTransactionsBalance = g.Sum(r => r.LocalAmount),
+                            DescFutureInterestTransactionsBalance = g.Sum(r => r.LocalAmount), // of the descendants
                         }
                      );
             var test9 = calcFutureInterestTransDesc.ToList();
@@ -314,6 +324,9 @@ namespace Logitude.Accounting.BL.Utils
                             //   DisplayNumber = acc.DisplayNumber,
                             //    Tenant = acc.Tenant,
                             FutureInterestTransactionsBalance = ad != null ? acc.FutureInterestTransactionsBalance + ad.DescFutureInterestTransactionsBalance : acc.FutureInterestTransactionsBalance,
+                            GLAccountFutureBalance = acc.FutureInterestTransactionsBalance,
+                            DescFutureBalance = ad != null ? ad.DescFutureInterestTransactionsBalance : 0m,
+
                             //       LastReportNum = acc.LastReportNum,
                         }
                      );
@@ -324,12 +337,12 @@ namespace Logitude.Accounting.BL.Utils
 
 
             ////////////////
-            /// 4. Assemble BalanceInLocalCurrency, InterestOpenBalances, FutureInterestTrans
+            /// 4. Assemble BalanceInLocalCurrency, IntReportOpenBalances, FutureInterestTrans
 
 
             var qAccOpen = (
                     from acc in dbAllGLAccountInclDesc
-                    join intRep in calcInterestOpenBalancesInclDesc on acc.AccountId equals intRep.AccountId
+                    join intRep in calcIntReportOpenBalances on acc.AccountId equals intRep.AccountId
                     into accOpenBalanceJoin
                     from ao in accOpenBalanceJoin.DefaultIfEmpty()
                         //        where acc.Tenant == _Tenant
@@ -340,8 +353,10 @@ namespace Logitude.Accounting.BL.Utils
                         DisplayNumber = acc.DisplayNumber,
                         //    Tenant = acc.Tenant,
                         BalanceInLocalCurrency = acc.BalanceInLocalCurrency,
-                        InterestOpenBalance = ao != null ? ao.InterestOpenBalance : 0m,
+                        IntReportOpenBalance = ao != null ? ao.IntReportOpenBalance : 0m,
                         LastReportNum = ao.LastReportNum,
+                        DescBalance = acc.DescBalance,
+                        GLAccountBalance = acc.GLAccountBalance, 
                     });
             var test11 = qAccOpen.ToList();
 
@@ -358,9 +373,14 @@ namespace Logitude.Accounting.BL.Utils
                         DisplayNumber = aco.DisplayNumber,
                         //   Tenant = aco.Tenant,
                         BalanceInLocalCurrency = aco.BalanceInLocalCurrency,
-                        InterestOpenBalance = aco.InterestOpenBalance,
+                        IntReportOpenBalance = aco.IntReportOpenBalance,
                         FutureInterestTransactionsBalance = aof != null ? aof.FutureInterestTransactionsBalance : 0m,
                         LastReportNum = aco.LastReportNum,
+                        DescBalance = aco.DescBalance,
+                        GLAccountBalance = aco.GLAccountBalance,
+                        GLAccountFutureBalance = aof.GLAccountFutureBalance,
+                        DescFutureBalance = aof.DescFutureBalance,
+
                     });
             var test12 = qAccOpenFuture.ToList();
 
@@ -373,8 +393,8 @@ namespace Logitude.Accounting.BL.Utils
             var qDiff = (
                     from acof in qAccOpenFuture
                     where
-                    (acof.InterestOpenBalance + acof.FutureInterestTransactionsBalance - acof.BalanceInLocalCurrency >= 0.001m
-                  || acof.InterestOpenBalance + acof.FutureInterestTransactionsBalance - acof.BalanceInLocalCurrency <= -0.001m)
+                    (acof.IntReportOpenBalance + acof.FutureInterestTransactionsBalance - acof.BalanceInLocalCurrency >= 0.001m
+                  || acof.IntReportOpenBalance + acof.FutureInterestTransactionsBalance - acof.BalanceInLocalCurrency <= -0.001m)
                     select new InterestReportDiff4Tester7
                     {
                         AccountId = acof.AccountId,
@@ -382,11 +402,16 @@ namespace Logitude.Accounting.BL.Utils
                         DisplayNumber = acof.DisplayNumber,
                         //    Tenant = acof.Tenant,
                         BalanceInLocalCurrency = acof.BalanceInLocalCurrency,
-                        InterestOpenBalance = acof.InterestOpenBalance,
+                        IntReportOpenBalance = acof.IntReportOpenBalance,
                         FutureInterestTransactionsBalance = acof.FutureInterestTransactionsBalance,
-                        CalculatedInterestBalance = acof.InterestOpenBalance + acof.FutureInterestTransactionsBalance,
-                        Difference = acof.BalanceInLocalCurrency - acof.BalanceInLocalCurrency,
+                        CalculatedInterestBalance = acof.IntReportOpenBalance + acof.FutureInterestTransactionsBalance,
+                        Difference = acof.BalanceInLocalCurrency - (acof.IntReportOpenBalance + acof.FutureInterestTransactionsBalance),
                         LastReportNum = acof.LastReportNum,
+                        DescBalance = acof.DescBalance,
+                        GLAccountBalance = acof.GLAccountBalance,
+                        GLAccountFutureBalance = acof.GLAccountFutureBalance,
+                        DescFutureBalance = acof.DescFutureBalance,
+
                     }
                     );
 
@@ -396,56 +421,16 @@ namespace Logitude.Accounting.BL.Utils
             resultingList.ForEach(q =>
             {
                 q.ErrorCounter = _ErrorCounter++;
-                this.AddErrorRowList(q.AccountId, q.DisplayNumber, q.LastReportNum, q.BalanceInLocalCurrency, q.CalculatedInterestBalance, q.Difference, "");
+                this.AddErrorRowList(q.AccountId, q.DisplayNumber, q.LastReportNum, 
+                    q.GLAccountBalance, q.DescBalance, q.BalanceInLocalCurrency, 
+                    q.IntReportOpenBalance, q.GLAccountFutureBalance, q.DescFutureBalance,
+                    q.CalculatedInterestBalance, q.Difference, "");
             });
 
             // }
         }
 
 
-
-        //private class ReconciableGroup
-        //{
-        //    public string _Acc { get; set; }
-        //    public List<JournalLineReco> _LineGroup { get; set; }
-        //    public ReconciableGroup(string reference, List<JournalLineReco> lineGroup)
-        //    {
-        //        _LineGroup = lineGroup;
-        //        _Acc = reference;
-        //    }
-        //}
-
-
-        //private class JournalLineReco
-        //{
-
-        //    public Decimal _valueToMatch { get; set; }
-        //    public JournalLine _journalLine { get; set; }
-        //    public LedgerTransaction _oneLineLedger { get; set; }
-        //    public JournalLineReco(JournalLine journalLine, LedgerTransaction ledgerTransaction) //, decimal actualDifference)
-        //    {
-        //        this._journalLine = journalLine;
-        //        this._valueToMatch = 0m;
-        //        if (journalLine.ActionCode == "1")
-        //        {
-        //            //              this._valueToMatch = journalLine.LocalAmount + (journalLine.ExternalOpenAmount ?? 0m); // because in credit lines the ExternalOpenAmount is negative 
-        //            //              this._valueToMatch = -(journalLine.LocalAmount + (journalLine.ExternalOpenAmount ?? 0m)); // because in credit lines the ExternalOpenAmount is negative 
-        //            this._valueToMatch = ledgerTransaction.OpenAmount; ///+ (journalLine.ExternalOpenAmount ?? 0m)); // because in credit lines the ExternalOpenAmount is negative 
-        //        }
-        //        else if (journalLine.ActionCode == "2")
-        //        {
-        //            // this._valueToMatch = -(journalLine.LocalAmount - (journalLine.ExternalOpenAmount ?? 0m));
-        //            //       this._valueToMatch = journalLine.LocalAmount - (journalLine.ExternalOpenAmount ?? 0m);
-        //            this._valueToMatch = ledgerTransaction.OpenAmount; //+ (journalLine.ExternalOpenAmount ?? 0m); // because in credit lines the ExternalOpenAmount is negative 
-        //        }
-        //        else
-        //        {
-        //            this._valueToMatch = ledgerTransaction.OpenAmount;
-        //        }
-        //        this._oneLineLedger = ledgerTransaction; // ledgerTransactionQueryService.GetByJournalLineIdAndLine(journalLine.JournalId, journalLine.Line, journalLine.Tenant);
-        //        this._oneLineLedger.AmountToReconcile = _valueToMatch;
-        //    }
-        //}
 
     }
     public class InterestTransactionsCheckBArg
@@ -487,7 +472,7 @@ namespace Logitude.Accounting.BL.Utils
         //     public string LocalName { get; set; }
 
         public decimal BalanceInLocalCurrency { get; set; }
-        public decimal InterestOpenBalance { get; set; }
+        public decimal IntReportOpenBalance { get; set; }
 
         public decimal FutureInterestTransactionsBalance { get; set; }
 
@@ -499,27 +484,30 @@ namespace Logitude.Accounting.BL.Utils
         public string LastReportNum { get; set; }
     }
 
-    public class InterestReportDiff4Tester2
-    {
-        public int Tenant { get; set; }
+    //public class InterestReportDiff4Tester2
+    //{
+    //    public int Tenant { get; set; }
 
-        public string AccountId { get; set; }
+    //    public string AccountId { get; set; }
 
-        public string DisplayNumber { get; set; }
-        //     public string LocalName { get; set; }
+    //    public string DisplayNumber { get; set; }
+    //    //     public string LocalName { get; set; }
 
-        public decimal BalanceInLocalCurrency { get; set; }
-        public decimal InterestOpenBalance { get; set; }
+    //    public decimal BalanceInLocalCurrency { get; set; }
+    //    public decimal IntReportOpenBalance { get; set; }
 
-        public decimal FutureInterestTransactionsBalance { get; set; }
+    //    public decimal FutureInterestTransactionsBalance { get; set; }
 
-        public decimal CalculatedInterestBalance { get; set; }
-        public decimal Difference { get; set; }
+    //    public decimal CalculatedInterestBalance { get; set; }
+    //    public decimal Difference { get; set; }
 
-        public int ErrorCounter { get; set; }
+    //    public int ErrorCounter { get; set; }
 
-        public string LastReportNum { get; set; }
-    }
+    //    public string LastReportNum { get; set; }
+
+    //    public decimal GLAccountIntRepOpenBalance { get; set; }
+    //    public decimal DescIntRepOpenBalance { get; set; }
+    //}
 
 
     public class InterestReportDiff4Tester3
@@ -532,7 +520,7 @@ namespace Logitude.Accounting.BL.Utils
         //     public string LocalName { get; set; }
 
         public decimal BalanceInLocalCurrency { get; set; }
-        public decimal InterestOpenBalance { get; set; }
+        public decimal IntReportOpenBalance { get; set; }
 
         public decimal FutureInterestTransactionsBalance { get; set; }
 
@@ -555,7 +543,7 @@ namespace Logitude.Accounting.BL.Utils
         //     public string LocalName { get; set; }
 
         public decimal BalanceInLocalCurrency { get; set; }
-        public decimal InterestOpenBalance { get; set; }
+        public decimal IntReportOpenBalance { get; set; }
 
         public decimal FutureInterestTransactionsBalance { get; set; }
 
@@ -565,6 +553,9 @@ namespace Logitude.Accounting.BL.Utils
         public int ErrorCounter { get; set; }
 
         public string LastReportNum { get; set; }
+
+        public decimal GLAccountFutureBalance { get; set; }
+        public decimal DescFutureBalance { get; set; }
     }
 
 
@@ -578,7 +569,10 @@ namespace Logitude.Accounting.BL.Utils
         //   public string LocalName { get; set; }
 
         public decimal BalanceInLocalCurrency { get; set; }
-        public decimal InterestOpenBalance { get; set; }
+        public decimal DescBalance { get; set; }
+        public decimal GLAccountBalance { get; set; }
+
+        public decimal IntReportOpenBalance { get; set; }
 
         public decimal FutureInterestTransactionsBalance { get; set; }
 
@@ -601,7 +595,10 @@ namespace Logitude.Accounting.BL.Utils
         //   public string LocalName { get; set; }
 
         public decimal BalanceInLocalCurrency { get; set; }
-        public decimal InterestOpenBalance { get; set; }
+        public decimal DescBalance { get; set; }
+        public decimal GLAccountBalance { get; set; }
+
+        public decimal IntReportOpenBalance { get; set; }
 
         public decimal FutureInterestTransactionsBalance { get; set; }
 
@@ -611,6 +608,10 @@ namespace Logitude.Accounting.BL.Utils
         public int ErrorCounter { get; set; }
 
         public string LastReportNum { get; set; }
+
+        public decimal GLAccountFutureBalance { get; set; }
+        public decimal DescFutureBalance { get; set; }
+
     }
 
 
@@ -624,7 +625,10 @@ namespace Logitude.Accounting.BL.Utils
         //    public string LocalName { get; set; }
 
         public decimal BalanceInLocalCurrency { get; set; }
-        public decimal InterestOpenBalance { get; set; }
+        public decimal IntReportOpenBalance { get; set; }
+        public decimal DescBalance { get; set; }
+        public decimal GLAccountBalance { get; set; }
+
 
         public decimal FutureInterestTransactionsBalance { get; set; }
 
@@ -634,24 +638,28 @@ namespace Logitude.Accounting.BL.Utils
         public int ErrorCounter { get; set; }
 
         public string LastReportNum { get; set; }
-    }
 
-
-
-
-    public class InterestReportDiffDesc4Tester
-    {
-        public string ParentAccountId { get; set; }
-        public decimal DescInterestOpenBalance { get; set; }
-        public decimal DescFutureInterestTransactionsBalance { get; set; }
-        public string LastReportNum { get; set; }
+        public decimal GLAccountFutureBalance { get; set; }
+        public decimal DescFutureBalance { get; set; }
 
     }
+
+
+
+
+    //public class InterestReportDiffDesc4Tester
+    //{
+    //    public string ParentAccountId { get; set; }
+    //    public decimal DescIntReportOpenBalance { get; set; }
+    //    public decimal DescFutureInterestTransactionsBalance { get; set; }
+    //    public string LastReportNum { get; set; }
+
+    //}
 
     public class InterestReportDiffDesc4Tester2
     {
         public string ParentAccountId { get; set; }
-        public decimal DescInterestOpenBalance { get; set; }
+        public decimal DescIntReportOpenBalance { get; set; }
         public decimal DescFutureInterestTransactionsBalance { get; set; }
         public string LastReportNum { get; set; }
 
@@ -663,7 +671,7 @@ namespace Logitude.Accounting.BL.Utils
         public string ParentAccId { get; set; }
         public string DescAccId { get; set; }
         public decimal DescBalanceInLocalCurrency { get; set; }
-        public decimal DescInterestOpenBalance { get; set; }
+        public decimal DescIntReportOpenBalance { get; set; }
     }
 
     public class GLAccountDescMDatasDTO4Tester2
@@ -671,7 +679,7 @@ namespace Logitude.Accounting.BL.Utils
         public string ParentAccId { get; set; }
         public string DescAccId { get; set; }
         public decimal DescBalanceInLocalCurrency { get; set; }
-        public decimal DescInterestOpenBalance { get; set; }
+        public decimal DescIntReportOpenBalance { get; set; }
     }
 
 
@@ -686,7 +694,7 @@ namespace Logitude.Accounting.BL.Utils
         //     public string LocalName { get; set; }
 
         public decimal BalanceInLocalCurrency { get; set; }
-        public decimal InterestOpenBalance { get; set; }
+        public decimal IntReportOpenBalance { get; set; }
 
     }
 
@@ -699,8 +707,10 @@ namespace Logitude.Accounting.BL.Utils
         public string DisplayNumber { get; set; }
         //   public string LocalName { get; set; }
 
+        public decimal GLAccountBalance { get; set; }
+        public decimal DescBalance { get; set; }
         public decimal BalanceInLocalCurrency { get; set; }
-        public decimal InterestOpenBalance { get; set; }
+        public decimal IntReportOpenBalance { get; set; }
 
     }
 
