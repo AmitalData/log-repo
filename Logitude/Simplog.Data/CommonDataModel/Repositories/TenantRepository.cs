@@ -136,7 +136,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public Tenant GetSingleTenantWithOutIncluded(int id)
         {
-            Tenant entity = (from a in context.Tenants where a.Id == id select a).FirstOrDefault();
+            Tenant entity = context.Tenants
+                                   .Include("Address.Country")
+                                   .Include("Address.State")
+                                   .FirstOrDefault(a => a.Id == id);
             return entity;
         }
 
