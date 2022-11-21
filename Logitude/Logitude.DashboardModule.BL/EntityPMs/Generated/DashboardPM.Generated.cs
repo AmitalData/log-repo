@@ -320,6 +320,41 @@ namespace Logitude.DashboardModule.BL.EntityPMs
               }
              set {  deletedDashboardSharedUsers = value; }
 	    }
+	  
+	   private List<DashboardGlobalFilterPM> dashboardGlobalFilters;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("DashboardGlobalFilters", "Id","DashboardId")]
+	   [DataMember]
+	   public virtual List<DashboardGlobalFilterPM> DashboardGlobalFilters  
+	   {
+	        get
+             {
+                 if (dashboardGlobalFilters == null)
+                 {
+                     dashboardGlobalFilters = new List<DashboardGlobalFilterPM>();
+                 }
+                 return dashboardGlobalFilters;
+              }
+             set { dashboardGlobalFilters = value; }
+	    }
+		   
+	   private List<DashboardGlobalFilterPM>  deletedDashboardGlobalFilters;
+	   public virtual List<DashboardGlobalFilterPM> DeletedDashboardGlobalFilters  
+	   {
+	        get
+             {
+                 if ( deletedDashboardGlobalFilters == null)
+                 {
+                      deletedDashboardGlobalFilters = new List<DashboardGlobalFilterPM>();
+                 }
+                 return  deletedDashboardGlobalFilters;
+              }
+             set {  deletedDashboardGlobalFilters = value; }
+	    }
 	     }
    
 }

@@ -82,6 +82,7 @@
     <None Include="DBTables\QuoteAnalytic.dxml" />
     <None Include="EntityFiles\DashboardSharedUser.lxml" />
     <None Include="EntityFiles\PermissionLevel.lxml" />
+    <None Include="EntityFiles\DashboardGlobalFilter.lxml" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
