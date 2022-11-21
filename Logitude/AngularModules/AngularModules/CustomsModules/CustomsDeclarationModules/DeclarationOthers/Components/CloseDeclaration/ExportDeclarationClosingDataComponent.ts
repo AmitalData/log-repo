@@ -65,6 +65,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
             this.UIProperties.SetEnabled("Smp", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("FlightDate", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("MainAWB", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("ChargingSite", this.ObjectTableName, false);
 
         }
     }
@@ -96,7 +97,6 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         this.UIProperties.SetEnabled("FinalManifestNumber", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("FinalShipCode", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("FinalLoadingSite", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("ChargingSite", this.ObjectTableName, false);
 
     }
 
