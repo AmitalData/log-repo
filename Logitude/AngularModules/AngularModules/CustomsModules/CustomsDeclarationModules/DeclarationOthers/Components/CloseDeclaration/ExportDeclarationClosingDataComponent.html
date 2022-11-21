@@ -12,7 +12,7 @@
                         <table>
                             <tr>
                                 <td>
-                                    <LogLabel [Text]="'שטר מטען רםשי'" [ObjectFieldName]="'MainAWB'"
+                                    <LogLabel [Text]="'שטר מטען ראשי'" [ObjectFieldName]="'MainAWB'"
                                         [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
@@ -30,7 +30,7 @@
                                     <LogLabel [Text]="'שטר מטען פנימי'" [ObjectFieldName]="'Smp'"
                                         [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
-                                <td>ChargingSite
+                                <td>
                                     <LogTextBox [ObjectFieldName]="'Smp'" [DataContext]="DataContext"
                                     [InputType]="'text'" [HideColumns]="true" [ObjectTableName]="ObjectTableName" [Text]="Smp" 
                                     ></LogTextBox>
@@ -46,7 +46,7 @@
                         <table>
                             <tr>
                                 <td>
-                                    <LogLabel [Text]="'םתר טעינה'" [ObjectFieldName]="'LoadingSite'"
+                                    <LogLabel [Text]="'אתר טעינה'" [ObjectFieldName]="'ChargingSite'"
                                         [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
@@ -117,9 +117,8 @@
                                 </td>
                                 <td>
                                     <LogTextBox [ObjectFieldName]="'FinalManifestNumber'" [InputType]="'text'"
-
                                         [DataContext]="DataContext" [ObjectTableName]="ObjectTableName" [Placeholder]="ManifestNumberPlaceholder" 
-                                                [HideColumns]="true" [Text]="FinalManifestNumber"></LogTextBox>
+                                        [HideColumns]="true" [Text]="FinalManifestNumber"></LogTextBox>
                                 </td>
                             </tr>
 
