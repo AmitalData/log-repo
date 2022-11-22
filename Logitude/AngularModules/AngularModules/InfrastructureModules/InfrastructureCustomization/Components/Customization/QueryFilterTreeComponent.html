@@ -73,7 +73,7 @@
                                                 <img class="DeleteButton" src="./Images/Trash-can.png" style="cursor: pointer;" (click)="onDeleteFilterClick(item)" />
                                             </td>
                                             <td style="width:120px;max-width:120px;min-width:120px;">
-                                                <ComboBox style="width:170px;display:table-cell;" [ItemsSource]="AllObjectTables" [SelectedItem]="item.MainEntityName" [WaterMark]="'Table'" (SelectedItemChanged)="item.MainEntityChanged($event)"></ComboBox>
+                                                <ComboBox style="width:170px;display:table-cell;" [ItemsSource]="AllObjectTables" [Binding]="'Name'" [SelectedItem]="SelectedMainEntityName(item)" [WaterMark]="'Table'" (SelectedItemChanged)="MainEntityChanged(item, $event)"></ComboBox>
                                             </td>
                                             <td style="width:7px;">
                                                 <div style="width:7px;"></div>
@@ -120,7 +120,7 @@
                                                 <div style="width:7px;"></div>
                                             </td>
                                             <td *ngIf="item.ShowOtherEntity" style="width:120px;max-width:120px;min-width:120px;">
-                                                <ComboBox style="width:170px;display:table-cell;" [ItemsSource]="AllObjectTables" [SelectedItem]="item.SecondaryEntityName" (SelectedItemChanged)="item.SecondaryEntityChanged($event)" [WaterMark]="'Table'" [IsDisabled]="!item.Operator"></ComboBox>
+                                                <ComboBox style="width:170px;display:table-cell;" [ItemsSource]="AllObjectTables" [Binding]="'Name'" [SelectedItem]="SelectedSecondaryEntityName(item)" (SelectedItemChanged)="SecondaryEntityChanged(item, $event)" [WaterMark]="'Table'" [IsDisabled]="!item.Operator"></ComboBox>
                                             </td>
                                             <td style="width:7px;">
                                                 <div style="width:7px;"></div>
