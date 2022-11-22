@@ -827,6 +827,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var pmList = q.ToList().Select(rec => this.GetEntityPM(rec)).ToList();
             return pmList;
         }
+        public CustomsRequestsSheet GetTenantPriorityByEntityID(string EntityID, int tenant)
+        {
+            CustomsRequestsSheet customsRequestsSheet = repository.GetTenantPriorityByEntityID(EntityID, tenant);
+           
+
+            return customsRequestsSheet;
+        }
+
     }
 
     public class RequestInProgressParams

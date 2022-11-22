@@ -144,6 +144,11 @@ export class CustomsRequestsSheetPM {
     public set FutureSendDateTime(newValue: Date) { if (this.futureSendDateTime != newValue) { this.futureSendDateTime = newValue; this.MarkAsDirty("FutureSendDateTime"); } }
        
 	 
+    private tenantPriority: number;
+    public get TenantPriority() { return this.tenantPriority; }
+    public set TenantPriority(newValue: number) { if (this.tenantPriority != newValue) { this.tenantPriority = newValue; this.MarkAsDirty("TenantPriority"); } }
+       
+	 
 
     public OldEntityPM: CustomsRequestsSheetPM;
 		

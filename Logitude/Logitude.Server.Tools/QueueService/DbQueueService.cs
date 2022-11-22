@@ -79,8 +79,8 @@ namespace Logitude.Server.Tools.QueueService
             int tenant, TimeSpan? delayTime = null, string CustomerId = null, string BatchNumber = null, DateTime? NextRunDate = null//,int tenantPriority = 89
             ,QueueSendModel queueSendModel= null)
         {
-
-            int tenantPriority = queueSendModel?.TenantPriority ?? 89;
+        
+            int tenantPriority = queueSendModel?.TenantPriority ?? 89;  
             if (tenantPriority < 1)
             {
                 tenantPriority = 89;

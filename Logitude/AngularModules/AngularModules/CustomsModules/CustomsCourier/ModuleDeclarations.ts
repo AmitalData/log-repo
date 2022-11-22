@@ -26,6 +26,8 @@ import { BulkFeedPendingComponent } from './Components/CourierWorkSheet/bulk-fee
 import { DeclarationPendingsBulkFeedingComponent } from './Components/CourierPendingReason/DeclarationPendingsBulkFeedingComponent';
 import { MultiUpdateDecComponent } from './Components/CourierPendingReason/MultiUpdateDecComponent';
 import { CourierDeclarationFiltersMenuComponent } from './Components/CourierWorkspaces/FiltersMenu/CourierDeclarationFiltersMenuComponent';
+import { PrioritizeFlightRequestsComponent } from './Components/CourierWorkSheet/PrioritizeFlightRequestsComponent'; 
+import { UpdatePriorityComponent } from './Components/CourierWorkSheet/UpdatePriorityComponent';
 
 export const Components =
     [
@@ -57,6 +59,8 @@ export const Components =
         CourierWorksheetNGComponent,
         CourierWorksheetNGListTemplate,
         CourierDeclarationFiltersMenuComponent,
+        PrioritizeFlightRequestsComponent,
+        UpdatePriorityComponent
     ];
 
 export class ModuleDeclarations {
@@ -95,8 +99,8 @@ export class ModuleDeclarations {
             case "CourierWorksheetNGComponent": { myResult = CourierWorksheetNGComponent; break; }
             case "CourierWorksheetNGListTemplate": { myResult = CourierWorksheetNGListTemplate; break; }
             case "CourierDeclarationFiltersMenuComponent": { myResult = CourierDeclarationFiltersMenuComponent; break; }
-
-                
+            case "PrioritizeFlightRequestsComponent": { myResult = PrioritizeFlightRequestsComponent; break; }
+            case "UpdatePriorityComponent": { myResult = UpdatePriorityComponent; break; }
                 
                 
         }

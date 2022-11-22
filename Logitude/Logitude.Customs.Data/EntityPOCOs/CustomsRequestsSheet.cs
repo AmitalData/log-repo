@@ -71,6 +71,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool IsRestored { get; set; }
         [Column("AnalyzeDcaAggregateKey")]
 	    public string AnalyzeDcaAggregateKey { get; set; }
+        [Column("TenantPriority")]
+	    public int? TenantPriority { get; set; }
     }
 }
 	 

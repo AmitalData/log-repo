@@ -818,7 +818,100 @@ AS */
                 }
             }
         }
+        public static void UpdateQueueMessageTenantPriority(int tenant, string CourierMasterId, string InterfaceTypeCode, int TenantPriority)
+        {
+            string strConnString = GetConnection(tenant);
+            if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+            {
 
+                using (OracleConnection cn = new OracleConnection(strConnString))
+                {
+                    OracleCommand cmd = new OracleCommand();
+                    cmd.Connection = cn;
+                    cmd.CommandText =
+                    //LogitudeDBSchema.LOGITUDE_MAIN.ToString() + "usp_GetNextTableIdValue";
+                    DbContextBaseUtil.GetStoredProcedureName("usp_UpdateQueueMessagePriority", LogitudeDBSchema.LOGITUDE_MAIN,
+                    cmd.Connection.ConnectionString);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    /*
+                      v_pLastNumber OUT VARCHAR2,
+--                    v_pTableName IN VARCHAR2 
+                     * */
+
+                    OracleParameter parameter1 = new OracleParameter("v_Tenant", OracleDbType.Integer);
+                    OracleParameter parameter2 = new OracleParameter("v_CourierMasterId", OracleDbType.VarChar);
+                    OracleParameter parameter3 = new OracleParameter("v_InterfaceTypeCode", OracleDbType.VarChar);
+                    OracleParameter parameter4 = new OracleParameter("v_TenantPriority", OracleDbType.Integer);
+
+                    parameter1.Direction = ParameterDirection.Input;
+                    parameter2.Direction = ParameterDirection.Input;
+                    parameter3.Direction = ParameterDirection.Input;
+                    parameter4.Direction = ParameterDirection.Input;
+
+                    parameter1.Value = tenant;
+                    parameter2.Value = CourierMasterId;
+                    parameter3.Value = InterfaceTypeCode;
+                    parameter4.Value = TenantPriority;
+
+                    cmd.Parameters.Add(parameter1);
+                    cmd.Parameters.Add(parameter2);
+                    cmd.Parameters.Add(parameter3);
+                    cmd.Parameters.Add(parameter4);
+
+                    try
+                    {
+                        cn.Open();
+                        cmd.ExecuteNonQuery();
+
+
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Console.WriteLine("Exception: {0}", ex.ToString());
+                        throw;
+                    }
+
+                    cn.Close();
+                }
+
+
+            }
+            else
+            {
+                using (SqlConnection cn = new SqlConnection(strConnString))
+                {
+                    SqlCommand cmd = new SqlCommand("Customs.usp_UpdateQueueMessagePriority", cn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    SqlParameter param1 = new SqlParameter("@Tenant", SqlDbType.Int);
+                    param1.Direction = ParameterDirection.Input;
+                    param1.Value = tenant;
+                    cmd.Parameters.Add(param1);
+
+                    SqlParameter param2 = new SqlParameter("@CourierMasterId", SqlDbType.VarChar);
+                    param2.Direction = ParameterDirection.Input;
+                    param2.Value = CourierMasterId;
+                    cmd.Parameters.Add(param2);
+
+                    SqlParameter param3 = new SqlParameter("@InterfaceTypeCode", SqlDbType.VarChar);
+                    param3.Direction = ParameterDirection.Input;
+                    param3.Value = InterfaceTypeCode;
+                    cmd.Parameters.Add(param3);
+
+
+                    SqlParameter param4 = new SqlParameter("@TenantPriority", SqlDbType.Int);
+                    param4.Direction = ParameterDirection.Input;
+                    param4.Value = TenantPriority;
+                    cmd.Parameters.Add(param4);
+
+
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+                    cn.Close();
+                }
+            }
+
+        }
 
         public static string GetConnection(int tenant)
         {
