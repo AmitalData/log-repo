@@ -81,6 +81,10 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.GroupByQueryFilters.addAdditionalFilter("DataTypeCode", "PickList,LookUp,DateTime,Date", null, null, "InList", false, true, false, "string", false, true, true);
     }
 
+
+
+
+
     GetFilters() {
         if (!this.EntityPM.Filters) return;
         var filters = JSON.parse(this.EntityPM.Filters);
@@ -360,11 +364,14 @@ export class AddEditWidgetComponent extends BaseComponent {
         if (this.GroupByDateIsNotValid()) {
             errors.push("Date Group Type Field is Required");
         }
-        if (this.isMaximumGroupingVisible && !this.MaximumGrouping) {
-            errors.push("Group By Field is Required");
+        if (this.isMaximumGroupingVisible && !this.MaximumGrouping && this.MaximumGrouping != 0) {
+            errors.push("Maximum Grouping Field is Required");
         }
         if (this.isSortByVisible && !this.SortDirection) {
             errors.push("Sort By Direction Field is Required");
+        }
+        if (this.isMaximumGroupingVisible && (this.MaximumGrouping < 1 || this.MaximumGrouping > 50)){
+            errors.push("Maximum Grouping should be Less than or equal 50 and Greater than or equal 1"); 
         }
         this.ValidateMeasures(errors);
         this.ValidateSort(errors);
