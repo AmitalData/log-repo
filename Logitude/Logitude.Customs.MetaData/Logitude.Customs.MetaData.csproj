@@ -165,7 +165,7 @@
     <None Include="DBScripts\Pre\20201215_AddAddonCourierAuto.sxml" />
     <None Include="DBScripts\Pre\20210726_CustomPartnerFTPSDropIndex.sxml" />
     <None Include="DBScripts\Pre\20210929_AddMoveTypes.sxml" />
-    <None Include="DBScripts\Pre\20221108_UpdateQueueMessage.sxml" />
+    <None Include="DBScripts\Post\20221108_UpdateQueueMessage.sxml" />
     <None Include="DBScripts\Pre\20220720_UpdateExportStorages.sxml" />
     <None Include="DBScripts\Pre\20211125_UpdateIsMultiCustomer.sxml" />
     <None Include="DBScripts\Pre\20220425_DOCUMENTDBIDCOUNTERS_SEQ.sxml" />

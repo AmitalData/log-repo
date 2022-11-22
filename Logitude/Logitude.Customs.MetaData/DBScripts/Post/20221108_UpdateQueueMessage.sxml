@@ -34,7 +34,7 @@
                                                       RequestStatusCode = '2' or RequestStatusCode = '21') and RequestCreateDate >= GETDATE()-7 and ObjectTableId1 = '1-343' and EntityId1 in (
 													  select DeclarationId from Customs.CourierDeclarations
 													   where Tenant = @Tenant and CourierMasterId = @CourierMasterId
-													  )
+													  
 													  
 													  )										  
 		END
@@ -70,7 +70,7 @@
                                                       RequestStatusCode = '2' or RequestStatusCode = '21') and RequestCreateDate >= sysdate-7 and ObjectTableId1 = '1-343' and EntityId1 in (
 													  select DeclarationId from CourierDeclarations
 													   where Tenant = v_Tenant and  CourierMasterId = v_CourierMasterId
-													  )
+													 
 
                                                      );
 
