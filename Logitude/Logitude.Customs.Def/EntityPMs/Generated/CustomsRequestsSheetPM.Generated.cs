@@ -572,6 +572,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private int? tenantPriority ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? TenantPriority  
+	   {
+	    
+	     get
+		{
+		   return tenantPriority;
+		 }
+		 set
+		 {
+		   if(tenantPriority != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TenantPriority",OldValue=tenantPriority,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   tenantPriority=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
