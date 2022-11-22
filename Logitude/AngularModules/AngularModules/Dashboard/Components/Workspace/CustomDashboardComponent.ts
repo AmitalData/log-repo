@@ -182,6 +182,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         this.IsEditLayoutButtonVisible = false;
         this.IsEditDashboardButtonVisible = this.SelectedDashboard.CreatedByUserId == SessionLocator.LoggedUserId;
         this.IsEditLayoutModeActive = true;
+        this.IsGlobalFiltersOpened = false;
         var cloneWidgets: WidgetPM[] = []
         for (const item of this.SelectedDashboard.Widgets) {
             cloneWidgets.push(ServiceHelper.CloneEntityPM(item))

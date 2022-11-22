@@ -33,7 +33,6 @@ namespace Logitude.CRM.Data.EntityPOCOs
         public DateTime? NextActivityDate { get; set; }
         public string NextActivityTypeCode { get; set; }
         public string NextActivitySubject { get; set; }
-        public string Notes { get; set; }
         public DateTime? StageDueDate { get; set; }
         public string BusinessUnitId { get; set; }
         public string LeadUserId { get; set; }
