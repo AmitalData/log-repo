@@ -10,6 +10,8 @@ using System.Linq;
 using System.Web;
 using WebFreight.Web.InfrastructureModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System.Threading;
+using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web.Helpers.SignUp.Logbox
 {
@@ -78,8 +80,15 @@ namespace WebFreight.Web.Helpers.SignUp.Logbox
                 PartnerTypeId = AgentPartnerTypeCode,
             };
 
-            AgentService agentService = new AgentService(commonContext, agentPM, contactPMId);
-            agentService.Create(agentPM);
+            var thread = new Thread(() =>
+            {
+                AuthenticationUtil.AuthenticatedUserEmail = signUpInfoClass.Email;
+                AgentService agentService = new AgentService(commonContext, agentPM, contactPMId);
+                agentService.Create(agentPM);
+            });
+
+            thread.Start();
+            thread.Join();
 
             return agentPM.Id;
         }

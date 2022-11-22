@@ -42,6 +42,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     public isSortByVisible: boolean = true;
     public isMaximumGroupingVisible: boolean = true;
     public isAdvancedSettingVisible : boolean = false;
+    public isAdvancedSettingLinkVisible: boolean = true;
 
     constructor() {
         super();
@@ -53,11 +54,10 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.DashboardPM = windowArgs['DashboardPM'];
         this.isNew = windowArgs['IsNew'];
         this.FirstTime = this.isNew != true;
-        this.DataContext = this;
-
+        this.DataContext = this;    
         if(this.isNew){
-        this.EntityPM.MaximumGrouping = 10;
-        }
+            this.isAdvancedSettingLinkVisible = false;
+        }   
         this.ComputeChartImageSrc();
         this.BuildMeasures();
         this.CheckMeasureAddVisiblity();
@@ -66,6 +66,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.BuildQueryFilters();
         this.InitView();
         this.SetUIProperties();
+       
     }
     SetUIProperties(){
         this.UIProperties.SetValidity("MaximumGrouping", this.ObjectTableName, true, "");
@@ -190,8 +191,18 @@ export class AddEditWidgetComponent extends BaseComponent {
             this.ComputeChartImageSrc();
             this.CheckMeasureAddVisiblity();
             this.InitView();
+            this.SetMaximumGrouping();
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget Type Change ", Message: "Changed To" + this.EntityPM.TypeCode, DashboardId: this.DashboardPM?.Id });
+            this.isAdvancedSettingLinkVisible = true;
         }
+    }
+    private SetMaximumGrouping(){
+        if(!AppTool.IsNullOrEmpty(this.TypeCode) && this.TypeCode != "kpi"){
+            if(AppTool.IsNullOrZero(this.MaximumGrouping))
+                this.MaximumGrouping = 10;
+        }
+        else
+            this.MaximumGrouping = null;
     }
 
     InitView() {
@@ -250,7 +261,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         }
     }
 
-    get MaximumGrouping() {
+    get MaximumGrouping() {      
         return this.EntityPM.MaximumGrouping;
     }
     set MaximumGrouping(value: number) {
