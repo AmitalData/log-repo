@@ -12,6 +12,7 @@ using WebFreight.Web.InfrastructureModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Threading;
 using Logitude.Server.Tools.Helpers;
+using Logitude.BL.Security;
 
 namespace WebFreight.Web.Helpers.SignUp.Logbox
 {
@@ -82,6 +83,7 @@ namespace WebFreight.Web.Helpers.SignUp.Logbox
 
             var thread = new Thread(() =>
             {
+                SecurityUtility.IsWorkerRoleCall = true;
                 AuthenticationUtil.AuthenticatedUserEmail = signUpInfoClass.Email;
                 AgentService agentService = new AgentService(commonContext, agentPM, contactPMId);
                 agentService.Create(agentPM);
