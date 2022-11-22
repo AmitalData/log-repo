@@ -1,5 +1,5 @@
 {
-  "HashString": "f4498cd07b544ed9adf288d8d2cce7f0",
+  "HashString": "93bb115de3e649aca8704effd66adf4d",
   "Name": "Quotes Statistics",
   "TableName": "QuoteAnalytics",
   "ObjectTableName": "Quote",
@@ -961,8 +961,8 @@
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": true,
+      "Unit": "KG"
     },
     {
       "HashString": "b1777eb61f5b4b179d7a84064197d9e2",
@@ -1006,8 +1006,8 @@
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": true,
+      "Unit": "{(LocalCurrency)}"
     },
     {
       "HashString": "c6b45c544c244e969374da2bb6cf717b",
@@ -1021,8 +1021,8 @@
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": true,
+      "Unit": "{(ProfitCurrency)}"
     },
     {
       "HashString": "527d9facf2b44609961c5258feb5927f",

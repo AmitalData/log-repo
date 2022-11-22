@@ -1,5 +1,5 @@
 {
-  "HashString": "3cf232dd3bb742c89297b02d71c96026",
+  "HashString": "fffbe5b9fce549769484ad16013c855e",
   "Name": "AR Invoices Statistics",
   "TableName": "ARInvoiceAnalytics",
   "ObjectTableName": "ARInvoice",
@@ -241,8 +241,8 @@
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": true,
+      "Unit": "{(ProfitCurrency)}"
     },
     {
       "HashString": "130b4e545ba344b1b4dfb11128db769c",
