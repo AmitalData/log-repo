@@ -1538,7 +1538,7 @@
     IsDeleted="false"
     ObjectTableName="&quot;Customs.LogisticActionRequest&quot;"
     FieldsDataType="&quot;LookUp&quot;"
-    LookUpTableName="&quot;LogisticActionResponseRequestS&quot;"
+    LookUpTableName="&quot;Customs.LogisticActionResponseReqS&quot;"
     MinLength="0"
     MaxLength="2"
     IsRequired="false"
@@ -1577,10 +1577,10 @@
     DisplayLongName="false"
     FullFieldLable="&quot;ResponseStatusCode&quot;"
     DefaultText="&quot;Response Status Code&quot;"
-    FullLocalDefaultText="&quot;קוד סטטוס תשובה&quot;"
+    FullLocalDefaultText="&quot;קוד סטטוס בקשה&quot;"
     ListFieldLable="&quot;ResponseStatusCodeListLable&quot;"
     ListLableDefaultText="&quot;Response Status Code&quot;"
-    ListLocalDefaultText="&quot;קוד סטטוס תשובה&quot;"
+    ListLocalDefaultText="&quot;קוד סטטוס בקשה&quot;"
     IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="LogisticActionResponseReqS"
@@ -1616,9 +1616,10 @@
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;Customs.LogisticActionRequest&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;LookUp&quot;"
+    LookUpTableName="&quot;LogisticActionResponseReqS&quot;"
     MinLength="0"
-    MaxLength="35"
+    MaxLength="2"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -1627,10 +1628,9 @@
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
-    SystemMaxLength="35"
+    SystemMaxLength="2"
     DisplayInList="true"
     IsCustomFilter="false"
-    Operator="&quot;Contains&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -1660,8 +1660,10 @@
     ListLableDefaultText="&quot;Operational Status&quot;"
     ListLocalDefaultText="&quot;סטטוס בקשת ביטול&quot;"
     IsNullable="true"
-    IsForeignKey="false"
+    IsForeignKey="true"
+    ForeignEntity="LogisticActionResponseReqS"
     DontBuildRelationOnDB="false"
+    NavigationPropertyName="OperationalStatusReq"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -2515,6 +2517,156 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;dc50a38a-7095-4d9a-b8f5-d7ab265f0ab8&quot;"
+    FieldName="&quot;OperationalStatusName&quot;"
+    OldNames="OperationalStatusName"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;Customs.LogisticActionRequest&quot;"
+    FieldsDataType="&quot;nText&quot;"
+    MinLength="0"
+    MaxLength="40"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="40"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;OperationalStatusName&quot;"
+    ListPropertyPath="&quot;OperationalStatusName&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;Customs.LogisticActionRequest&quot;"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;OperationalStatusName&quot;"
+    DefaultText="&quot;Operational Status Name&quot;"
+    FullLocalDefaultText="&quot;סטטוס בקשת ביטול&quot;"
+    ListFieldLable="&quot;OperationalStatusNameListLable&quot;"
+    ListLableDefaultText="&quot;Operational Status Name&quot;"
+    ListLocalDefaultText="&quot;סטטוס בקשת ביטול&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;78219a23-90e3-4cef-bee5-c808c8a9b246&quot;"
+    FieldName="&quot;ResponseStatus&quot;"
+    OldNames="ResponseStatus"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;Customs.LogisticActionRequest&quot;"
+    FieldsDataType="&quot;nText&quot;"
+    MinLength="0"
+    MaxLength="40"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="40"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;ResponseStatus&quot;"
+    ListPropertyPath="&quot;ResponseStatus&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;Customs.LogisticActionRequest&quot;"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;ResponseStatus&quot;"
+    DefaultText="&quot;Response Status&quot;"
+    FullLocalDefaultText="&quot;סטטוס בקשה&quot;"
+    ListFieldLable="&quot;ResponseStatusListLable&quot;"
+    ListLableDefaultText="&quot;Response Status&quot;"
+    ListLocalDefaultText="&quot;סטטוס בקשה&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <Query
     Code="&quot;OpenImportCancelRequest&quot;"
     TextCode="&quot;Open Import Cancel Request&quot;"
@@ -2539,61 +2691,66 @@
       <QueryColumn
         QueryCode="&quot;OpenImportCancelRequest&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;ExportFileNo&quot;"
+        ObjectFieldName="&quot;ResponseStatus&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenImportCancelRequest&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;OperationalStatus&quot;"
-        ColumnWidth="145" />
+        ObjectFieldName="&quot;ExportFileNo&quot;"
+        ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenImportCancelRequest&quot;"
         IndexOrder="3"
+        ObjectFieldName="&quot;OperationalStatus&quot;"
+        ColumnWidth="145" />      
+      <QueryColumn
+        QueryCode="&quot;OpenImportCancelRequest&quot;"
+        IndexOrder="4"
         ObjectFieldName="&quot;RequestDate&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenImportCancelRequest&quot;"
-        IndexOrder="4"
+        IndexOrder="5"
         ObjectFieldName="&quot;CargoIdentifierKey1&quot;"
         ColumnWidth="125" />
       <QueryColumn
         QueryCode="&quot;OpenImportCancelRequest&quot;"
-        IndexOrder="5"
+        IndexOrder="6"
         ObjectFieldName="&quot;CargoIdentifierKey2&quot;"
         ColumnWidth="132" />
       <QueryColumn
         QueryCode="&quot;OpenImportCancelRequest&quot;"
-        IndexOrder="6"
+        IndexOrder="7"
         ObjectFieldName="&quot;CargoIdentifierKey3&quot;"
         ColumnWidth="139" />
       <QueryColumn
         QueryCode="&quot;OpenImportCancelRequest&quot;"
-        IndexOrder="7"
+        IndexOrder="8"
         ObjectFieldName="&quot;RequestReason&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenImportCancelRequest&quot;"
-        IndexOrder="8"
+        IndexOrder="9"
         ObjectFieldName="&quot;DeclarationNumber&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenImportCancelRequest&quot;"
-        IndexOrder="9"
+        IndexOrder="10"
         ObjectFieldName="&quot;TransportmodeId&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenImportCancelRequest&quot;"
-        IndexOrder="10"
+        IndexOrder="11"
         ObjectFieldName="&quot;DecisionRmarks&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenImportCancelRequest&quot;"
-        IndexOrder="11"
+        IndexOrder="12"
         ObjectFieldName="&quot;RequestNumber&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenImportCancelRequest&quot;"
-        IndexOrder="12"
+        IndexOrder="13"
         ObjectFieldName="&quot;IsClosed&quot;"
         ColumnWidth="40" />
     </QueryColumns>
@@ -2626,61 +2783,66 @@
       <QueryColumn
         QueryCode="&quot;ClosedImportCancelRequest&quot;"
         IndexOrder="0"
-        ObjectFieldName="&quot;ExportFileNo&quot;"
-        ColumnWidth="100" />
-      <QueryColumn
-        QueryCode="&quot;ClosedImportCancelRequest&quot;"
-        IndexOrder="1"
         ObjectFieldName="&quot;OperationalStatus&quot;"
         ColumnWidth="145" />
       <QueryColumn
         QueryCode="&quot;ClosedImportCancelRequest&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;ExportFileNo&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ClosedImportCancelRequest&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;RequestDate&quot;"
+        ObjectFieldName="&quot;ResponseStatus&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ClosedImportCancelRequest&quot;"
         IndexOrder="3"
-        ObjectFieldName="&quot;CargoIdentifierKey1&quot;"
+        ObjectFieldName="&quot;RequestDate&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ClosedImportCancelRequest&quot;"
         IndexOrder="4"
-        ObjectFieldName="&quot;CargoIdentifierKey2&quot;"
+        ObjectFieldName="&quot;CargoIdentifierKey1&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ClosedImportCancelRequest&quot;"
         IndexOrder="5"
-        ObjectFieldName="&quot;CargoIdentifierKey3&quot;"
+        ObjectFieldName="&quot;CargoIdentifierKey2&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ClosedImportCancelRequest&quot;"
         IndexOrder="6"
-        ObjectFieldName="&quot;RequestReason&quot;"
+        ObjectFieldName="&quot;CargoIdentifierKey3&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ClosedImportCancelRequest&quot;"
         IndexOrder="7"
-        ObjectFieldName="&quot;DeclarationNumber&quot;"
+        ObjectFieldName="&quot;RequestReason&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ClosedImportCancelRequest&quot;"
         IndexOrder="8"
-        ObjectFieldName="&quot;TransportmodeId&quot;"
+        ObjectFieldName="&quot;DeclarationNumber&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ClosedImportCancelRequest&quot;"
         IndexOrder="9"
-        ObjectFieldName="&quot;DecisionRmarks&quot;"
+        ObjectFieldName="&quot;TransportmodeId&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ClosedImportCancelRequest&quot;"
         IndexOrder="10"
-        ObjectFieldName="&quot;RequestNumber&quot;"
+        ObjectFieldName="&quot;DecisionRmarks&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ClosedImportCancelRequest&quot;"
         IndexOrder="11"
+        ObjectFieldName="&quot;RequestNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ClosedImportCancelRequest&quot;"
+        IndexOrder="12"
         ObjectFieldName="&quot;IsClosed&quot;"
         ColumnWidth="40" />
     </QueryColumns>
@@ -2723,51 +2885,56 @@
       <QueryColumn
         QueryCode="&quot;AllImportCancelRequest&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;RequestDate&quot;"
+        ObjectFieldName="&quot;ResponseStatus&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllImportCancelRequest&quot;"
         IndexOrder="3"
-        ObjectFieldName="&quot;CargoIdentifierKey1&quot;"
+        ObjectFieldName="&quot;RequestDate&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllImportCancelRequest&quot;"
         IndexOrder="4"
-        ObjectFieldName="&quot;CargoIdentifierKey2&quot;"
+        ObjectFieldName="&quot;CargoIdentifierKey1&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllImportCancelRequest&quot;"
         IndexOrder="5"
-        ObjectFieldName="&quot;CargoIdentifierKey3&quot;"
+        ObjectFieldName="&quot;CargoIdentifierKey2&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllImportCancelRequest&quot;"
         IndexOrder="6"
-        ObjectFieldName="&quot;RequestReason&quot;"
+        ObjectFieldName="&quot;CargoIdentifierKey3&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllImportCancelRequest&quot;"
         IndexOrder="7"
-        ObjectFieldName="&quot;DeclarationNumber&quot;"
+        ObjectFieldName="&quot;RequestReason&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllImportCancelRequest&quot;"
         IndexOrder="8"
-        ObjectFieldName="&quot;TransportmodeId&quot;"
+        ObjectFieldName="&quot;DeclarationNumber&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllImportCancelRequest&quot;"
         IndexOrder="9"
-        ObjectFieldName="&quot;DecisionRmarks&quot;"
+        ObjectFieldName="&quot;TransportmodeId&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllImportCancelRequest&quot;"
         IndexOrder="10"
-        ObjectFieldName="&quot;RequestNumber&quot;"
+        ObjectFieldName="&quot;DecisionRmarks&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllImportCancelRequest&quot;"
         IndexOrder="11"
+        ObjectFieldName="&quot;RequestNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllImportCancelRequest&quot;"
+        IndexOrder="12"
         ObjectFieldName="&quot;IsClosed&quot;"
         ColumnWidth="40" />
     </QueryColumns>
@@ -2802,51 +2969,56 @@
       <QueryColumn
         QueryCode="&quot;DeclartionsConnctedRequest&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;RequestDate&quot;"
+        ObjectFieldName="&quot;ResponseStatus&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;DeclartionsConnctedRequest&quot;"
         IndexOrder="3"
-        ObjectFieldName="&quot;CargoIdentifierKey1&quot;"
+        ObjectFieldName="&quot;RequestDate&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;DeclartionsConnctedRequest&quot;"
         IndexOrder="4"
-        ObjectFieldName="&quot;CargoIdentifierKey2&quot;"
+        ObjectFieldName="&quot;CargoIdentifierKey1&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;DeclartionsConnctedRequest&quot;"
         IndexOrder="5"
-        ObjectFieldName="&quot;CargoIdentifierKey3&quot;"
+        ObjectFieldName="&quot;CargoIdentifierKey2&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;DeclartionsConnctedRequest&quot;"
         IndexOrder="6"
-        ObjectFieldName="&quot;RequestReason&quot;"
+        ObjectFieldName="&quot;CargoIdentifierKey3&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;DeclartionsConnctedRequest&quot;"
         IndexOrder="7"
-        ObjectFieldName="&quot;DeclarationNumber&quot;"
+        ObjectFieldName="&quot;RequestReason&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;DeclartionsConnctedRequest&quot;"
         IndexOrder="8"
-        ObjectFieldName="&quot;TransportmodeId&quot;"
+        ObjectFieldName="&quot;DeclarationNumber&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;DeclartionsConnctedRequest&quot;"
         IndexOrder="9"
-        ObjectFieldName="&quot;DecisionRmarks&quot;"
+        ObjectFieldName="&quot;TransportmodeId&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;DeclartionsConnctedRequest&quot;"
         IndexOrder="10"
-        ObjectFieldName="&quot;RequestNumber&quot;"
+        ObjectFieldName="&quot;DecisionRmarks&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;DeclartionsConnctedRequest&quot;"
         IndexOrder="11"
+        ObjectFieldName="&quot;RequestNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsConnctedRequest&quot;"
+        IndexOrder="12"
         ObjectFieldName="&quot;IsClosed&quot;"
         ColumnWidth="40" />
     </QueryColumns>
@@ -2884,56 +3056,61 @@
       <QueryColumn
         QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;RequestDate&quot;"
+        ObjectFieldName="&quot;ResponseStatus&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;CargoIdentifierKey1&quot;"
+        ObjectFieldName="&quot;RequestDate&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
         IndexOrder="3"
-        ObjectFieldName="&quot;CargoIdentifierKey2&quot;"
+        ObjectFieldName="&quot;CargoIdentifierKey1&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
         IndexOrder="4"
-        ObjectFieldName="&quot;CargoIdentifierKey3&quot;"
+        ObjectFieldName="&quot;CargoIdentifierKey2&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
         IndexOrder="5"
-        ObjectFieldName="&quot;RequestReason&quot;"
+        ObjectFieldName="&quot;CargoIdentifierKey3&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
         IndexOrder="6"
-        ObjectFieldName="&quot;DeclarationNumber&quot;"
+        ObjectFieldName="&quot;RequestReason&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
         IndexOrder="7"
-        ObjectFieldName="&quot;TransportmodeId&quot;"
+        ObjectFieldName="&quot;DeclarationNumber&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
         IndexOrder="8"
+        ObjectFieldName="&quot;TransportmodeId&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
+        IndexOrder="9"
         ObjectFieldName="&quot;OperationalStatus&quot;"
         ColumnWidth="145" />
       <QueryColumn
         QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
-        IndexOrder="9"
+        IndexOrder="10"
         ObjectFieldName="&quot;DecisionRmarks&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
-        IndexOrder="10"
+        IndexOrder="11"
         ObjectFieldName="&quot;RequestNumber&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;DeclartionsNotConnctedRequest&quot;"
-        IndexOrder="11"
+        IndexOrder="12"
         ObjectFieldName="&quot;IsClosed&quot;"
         ColumnWidth="40" />
     </QueryColumns>
