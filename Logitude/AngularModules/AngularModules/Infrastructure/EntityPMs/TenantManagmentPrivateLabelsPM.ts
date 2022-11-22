@@ -159,7 +159,9 @@ export class TenantManagmentPrivateLabelsPM {
     public get CreateOShipmentsWithoutDocs() { return this.createOShipmentsWithoutDocs; }
     public set CreateOShipmentsWithoutDocs(newValue: boolean) { if (this.createOShipmentsWithoutDocs != newValue) { this.createOShipmentsWithoutDocs = newValue; this.MarkAsDirty("CreateOShipmentsWithoutDocs"); } }
        
-	 
+    private filingInboxDomain: string;
+    public get FilingInboxDomain() { return this.filingInboxDomain; }
+    public set FilingInboxDomain(newValue: string) { if (this.filingInboxDomain != newValue) { this.filingInboxDomain = newValue; this.MarkAsDirty("FilingInboxDomain"); } }
 
     public OldEntityPM: TenantManagmentPrivateLabelsPM;
 		

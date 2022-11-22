@@ -61,6 +61,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              QueryFiltersHighlightColor = a.QueryFiltersHighlightColor,
                                              CreateShipmentsWithoutDocs = a.CreateShipmentsWithoutDocs,
                                              CreateOShipmentsWithoutDocs = a.CreateOShipmentsWithoutDocs,
+                                             FilingInboxDomain = a.FilingInboxDomain
                                          }).FirstOrDefault();
 
             return entity;
@@ -97,6 +98,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                          QueryFiltersHighlightColor = a.QueryFiltersHighlightColor,
                                                          CreateShipmentsWithoutDocs = a.CreateShipmentsWithoutDocs,
                                                          CreateOShipmentsWithoutDocs = a.CreateOShipmentsWithoutDocs,
+                                                         FilingInboxDomain = a.FilingInboxDomain
                                                      }).FirstOrDefault();
 
             return entity;
@@ -133,6 +135,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                            QueryFiltersHighlightColor = a.QueryFiltersHighlightColor,
                                                            CreateShipmentsWithoutDocs = a.CreateShipmentsWithoutDocs,
                                                            CreateOShipmentsWithoutDocs = a.CreateOShipmentsWithoutDocs,
+                                                           FilingInboxDomain = a.FilingInboxDomain
                                                        }).FirstOrDefault();
 
             return entity;
@@ -168,6 +171,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         QueryFiltersHighlightColor = a.QueryFiltersHighlightColor,
                         CreateShipmentsWithoutDocs = a.CreateShipmentsWithoutDocs,
                         CreateOShipmentsWithoutDocs = a.CreateOShipmentsWithoutDocs,
+                        FilingInboxDomain = a.FilingInboxDomain
                     });
         }
 
@@ -203,6 +207,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         QueryFiltersHighlightColor = a.QueryFiltersHighlightColor,
                         CreateShipmentsWithoutDocs = a.CreateShipmentsWithoutDocs,
                         CreateOShipmentsWithoutDocs = a.CreateOShipmentsWithoutDocs,
+                        FilingInboxDomain = a.FilingInboxDomain
                     });
         }
 
@@ -237,6 +242,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         QueryFiltersHighlightColor = a.QueryFiltersHighlightColor,
                         CreateShipmentsWithoutDocs = a.CreateShipmentsWithoutDocs,
                         CreateOShipmentsWithoutDocs = a.CreateOShipmentsWithoutDocs,
+                        FilingInboxDomain = a.FilingInboxDomain
                     });
         }
 
@@ -272,6 +278,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        QueryFiltersHighlightColor = a.QueryFiltersHighlightColor,
                        CreateShipmentsWithoutDocs = a.CreateShipmentsWithoutDocs,
                        CreateOShipmentsWithoutDocs = a.CreateOShipmentsWithoutDocs,
+                       FilingInboxDomain = a.FilingInboxDomain
                    };
 
         }
