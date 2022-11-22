@@ -579,7 +579,7 @@ export class HelpResourceArgs {
     get IsNew() { return this.entity.IsNew; }
     private HowToMethod() {
         ServiceLocator.SendTotangoUserActivity("Help Center", "How-To");
-        var url = ServiceHelper.GetLogitudeURL() + 'WebPages/HowToDownloadPage.aspx';
+        var url = ServiceHelper.GetLogitudeURL() + 'WebPages/HowToDownloadPage.aspx?id=' + this.entity.Code;
         var params: any[] = [{ name: "Token", value: SessionInfo.DocumentDownloadToken }, { name: "Code", value: this.Code } ]
         ServiceHelper.OpenWindowWithParams(url, params);
 
