@@ -198,32 +198,27 @@
                                                 <div></div>
                                             </td>
                                         </tr>
-                                        <tr class="FormFieldRow">
+                                        <tr class="FormFieldRow" *ngIf="isMaximumGroupingVisible">
                                             <td>
                                                 <span class="LinkBtn" (click)="isAdvancedSettingVisible = !isAdvancedSettingVisible">  Advanced Settings</span>
                                             </td>
-                                        </tr>
-
-                                        <table *ngIf="isAdvancedSettingVisible">
-                                            <tr class="FormFieldRow" *ngIf="isMaximumGroupingVisible"> 
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'MaximumGrouping'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" style="width: 2px;"></LogLabel>
-                                                </td>
-                                                <td>
-                                            
-                                                    <LogTextBox 
-                                                    [ObjectFieldName]="'MaximumGrouping'" 
-                                                    [InputType]="'integer'" 
-                                                    [DataContext]="DataContext"
-                                                    [ObjectTableName]="ObjectTableName" [HideColumns]="true" style="width: 2px;">
-                                                </LogTextBox>
-                                                </td>
-                                                
-                                                <td>
-                                                    <div></div>
-                                                </td>
-                                            </tr>
-                                        </table>
+                                        </tr>   
+                                                    <tr class="FormFieldRow" *ngIf="isAdvancedSettingVisible"> 
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'MaximumGrouping'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" style="width: 2px;"></LogLabel>
+                                                        </td>
+                                                        <td>
+                                                            <LogTextBox 
+                                                            [ObjectFieldName]="'MaximumGrouping'" 
+                                                            [InputType]="'integer'" 
+                                                            [DataContext]="DataContext"
+                                                            [ObjectTableName]="ObjectTableName" [HideColumns]="true" style="width: 2px;">
+                                                        </LogTextBox>
+                                                        </td>  
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
                                     </table>
                                 </td>
 

@@ -274,5 +274,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string OldSimilarInactiveContactId { get; set; }
         [DataMember]
         public string DigitalPortalCardId { get; set; }
+
+        [DataMember]
+        public string TimeZone { get; set; }
     }
 }

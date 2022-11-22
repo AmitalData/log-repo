@@ -1,5 +1,5 @@
 {
-  "HashString": "ab3414e5a2174fad90dfdfcf3c0bd91d",
+  "HashString": "1fb0f4ba67b5476ba316d8c3a03805a9",
   "Name": "Shipment Statistics",
   "TableName": "ShipmentAnalytics",
   "ObjectTableName": "Shipment",
@@ -31,8 +31,8 @@
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": true,
+      "Unit": "{(LocalCurrency)}"
     },
     {
       "HashString": "3c51ccc1039c4309858dde98670075a8",
@@ -136,8 +136,8 @@
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": true,
+      "Unit": "KG"
     },
     {
       "HashString": "6a30fb574a0d44488f279ad721ae28c9",
@@ -331,8 +331,8 @@
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": true,
+      "Unit": "CBM"
     },
     {
       "HashString": "cbb22dfe82b84f5c8c9c33eaad8e607c",
@@ -391,8 +391,8 @@
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": true,
+      "Unit": "{(LocalCurrency)}"
     },
     {
       "HashString": "e3eb44c5ad4b43b0bd3863099a3d62de",
@@ -406,8 +406,8 @@
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": true,
+      "Unit": "{(LocalCurrency)}"
     },
     {
       "HashString": "79109ba152bf467f9dd34422adf443c2",
@@ -421,8 +421,8 @@
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": true,
+      "Unit": "{(ProfitCurrency)}"
     },
     {
       "HashString": "5b9a249514b2493abc404ef4d2ebfb70",
@@ -436,8 +436,8 @@
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": true,
+      "Unit": "{(ProfitCurrency)}"
     },
     {
       "HashString": "10186bf0833f4d769c3b7d6b07ce4b77",
@@ -451,8 +451,8 @@
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": true,
+      "Unit": "{(ProfitCurrency)}"
     },
     {
       "HashString": "3cdcd1f1d41d49d3a68febbabc032bcd",
@@ -511,8 +511,8 @@
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": true,
+      "Unit": "{(LocalCurrency)}"
     },
     {
       "HashString": "803490b4901545a1ace1e14052944be4",
@@ -541,8 +541,8 @@
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": true,
+      "Unit": "{(ProfitCurrency)}"
     },
     {
       "HashString": "3cb2c642553a4cf7b1980f6c2c803633",

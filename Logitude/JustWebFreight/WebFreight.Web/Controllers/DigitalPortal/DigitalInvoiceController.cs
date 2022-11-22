@@ -49,7 +49,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var arInvoices = new List<ShipmentARInvoicePM>();
                 var arInvoiceReps = new ARInvoiceRepository(tenant);
                 var aRInvoiceLineQuery = new ARInvoiceLineQuery(tenant);
-                var invoices = arInvoiceReps.GetDigitalInvoicesByShipmentIdAndBillToId(shipmentId, cardId, tenant);
+                var invoices = arInvoiceReps.GetDigitalInvoicesByShipmentIdAndBillToId(shipmentId, shipment.CustomerId, tenant);
                 var lines = new List<ARInvoiceLinePM>();
                 var currencyRepository = new CurrencyRepository(tenant);
                 var aRInvoiceStatusRepository = new ARInvoiceStatusRepository(tenant);
@@ -95,7 +95,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         entity.ConsolidationInvoiceNumber = arInvoiceReps.GetInvoiceNumber(entity.ConsolidationInvoiceId, tenant);
                     }
 
-                    entity.ReportUrl = GetDocumntURL(item, documentOutQuery, documentTypeQuery, cardId);
+                    entity.ReportUrl = GetDocumntURL(item, documentOutQuery, documentTypeQuery, shipment.CustomerId);
                     var currency = currencyRepository.GetSingleCurrency(item.InvoiceCurrencyId, tenant);
                     if (currency != null)
                     {
