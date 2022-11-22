@@ -67,6 +67,16 @@ export class DashboardGlobalFilterPM {
     public set FilterOperator(newValue: string) { if (this.filterOperator != newValue) { this.filterOperator = newValue; this.MarkAsDirty("FilterOperator"); } }
        
 	 
+    private dataTypeCode: string;
+    public get DataTypeCode() { return this.dataTypeCode; }
+    public set DataTypeCode(newValue: string) { if (this.dataTypeCode != newValue) { this.dataTypeCode = newValue; this.MarkAsDirty("DataTypeCode"); } }
+       
+	 
+    private lineNumber: number;
+    public get LineNumber() { return this.lineNumber; }
+    public set LineNumber(newValue: number) { if (this.lineNumber != newValue) { this.lineNumber = newValue; this.MarkAsDirty("LineNumber"); } }
+       
+	 
 
     public OldEntityPM: DashboardGlobalFilterPM;
 	

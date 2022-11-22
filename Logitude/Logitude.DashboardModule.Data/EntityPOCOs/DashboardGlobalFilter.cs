@@ -44,6 +44,10 @@ namespace Logitude.DashboardModule.Data.EntityPOCOs
         public virtual AnalyticsFactsFieldsMetaData DataSetField { get; set; }
         [Column("FilterOperator")]
 	    public string FilterOperator { get; set; }
+        [Column("DataTypeCode")]
+	    public string DataTypeCode { get; set; }
+        [Column("LineNumber")]
+	    public int LineNumber { get; set; }
     }
 }
 	 

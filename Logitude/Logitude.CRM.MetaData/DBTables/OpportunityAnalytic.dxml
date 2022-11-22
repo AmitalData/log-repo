@@ -199,13 +199,6 @@
 		  Nullable="true" />
 	</Column>
 	<Column
-	  Name="Notes"
-	  Type="nvarchar"
-	  Size="-1">
-		<Constraints
-		  Nullable="true" />
-	</Column>
-	<Column
 	  Name="StageDueDate"
 	  Type="datetime">
 		<Constraints

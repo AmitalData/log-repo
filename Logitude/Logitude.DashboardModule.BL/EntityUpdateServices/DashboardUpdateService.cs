@@ -58,6 +58,9 @@ namespace Logitude.DashboardModule.BL.EntityUpdateServices
 
             DashboardSharedUserUpdateService dashboardSharedUserUpdateService = new DashboardSharedUserUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
             dashboardSharedUserUpdateService.UpdateMulti(entityPM.DashboardSharedUsers, entityPM.DeletedDashboardSharedUsers, entityPM, false);
+
+            DashboardGlobalFilterUpdateService dashboardGlobalFilterUpdateService = new DashboardGlobalFilterUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+            dashboardGlobalFilterUpdateService.UpdateMulti(entityPM.DashboardGlobalFilters, entityPM.DeletedDashboardGlobalFilters, entityPM, false);
         }
 
         public void Delete(string dashboardId, int tenant)
@@ -69,6 +72,7 @@ namespace Logitude.DashboardModule.BL.EntityUpdateServices
 
             this.DeleteWidgets(context, entityPOCO);
             this.DeleteSharedUsers(context, entityPOCO);
+            this.DeleteGlobalFilters(context, entityPOCO);
 
             dashboardRepository.Remove(entityPOCO);
             dashboardRepository.SubmitChanges();
@@ -99,6 +103,16 @@ namespace Logitude.DashboardModule.BL.EntityUpdateServices
             foreach (DashboardSharedUser item in users)
             {
                 sharedUserRepository.Remove(item);
+            }
+        }
+
+        private void DeleteGlobalFilters(IDashboardContext context, Dashboard entityPOCO)
+        {
+            DashboardGlobalFilterRepository dashboardGlobalFilterRepository = new DashboardGlobalFilterRepository(context);
+            List<DashboardGlobalFilter> users = dashboardGlobalFilterRepository.GetDashboardFiltersByDashboardId(entityPOCO.Id, entityPOCO.Tenant).ToList();
+            foreach (DashboardGlobalFilter item in users)
+            {
+                dashboardGlobalFilterRepository.Remove(item);
             }
         }
     }

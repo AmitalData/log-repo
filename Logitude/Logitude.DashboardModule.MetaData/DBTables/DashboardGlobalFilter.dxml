@@ -60,6 +60,19 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="DataTypeCode"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="LineNumber"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="DashboardId"
     ReferencedTable="Dashboards"

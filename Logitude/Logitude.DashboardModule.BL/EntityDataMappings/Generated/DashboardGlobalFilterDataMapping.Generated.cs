@@ -29,7 +29,9 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         CommonFilterField, 
 	         DataSetId, 
 	         DataSetFieldId, 
-	         FilterOperator,
+	         FilterOperator, 
+	         DataTypeCode, 
+	         LineNumber,
 	      }
 
 
@@ -43,7 +45,9 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         CommonFilterField, 
 	         DataSetId, 
 	         DataSetFieldId, 
-	         FilterOperator,
+	         FilterOperator, 
+	         DataTypeCode, 
+	         LineNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -85,6 +89,16 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FilterOperator))
             {
 				entityPOCO.FilterOperator = entityPM.FilterOperator;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DataTypeCode))
+            {
+				entityPOCO.DataTypeCode = entityPM.DataTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LineNumber))
+            {
+				entityPOCO.LineNumber = entityPM.LineNumber;
 			}
 			}
 
@@ -131,6 +145,16 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 					entityPM.FilterOperator = entityPOCO.FilterOperator;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DataTypeCode))
+            {
+					entityPM.DataTypeCode = entityPOCO.DataTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LineNumber))
+            {
+					entityPM.LineNumber = entityPOCO.LineNumber;
+            }
+
 		}
 
 		public void PMToOldPM(DashboardGlobalFilterPM entityPM, DashboardGlobalFilterPM oldEntityPM)
@@ -170,6 +194,16 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FilterOperator))
             {
                 oldEntityPM.FilterOperator = entityPM.FilterOperator;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DataTypeCode))
+            {
+                oldEntityPM.DataTypeCode = entityPM.DataTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LineNumber))
+            {
+                oldEntityPM.LineNumber = entityPM.LineNumber;
             }
 			
 		}

@@ -31,12 +31,6 @@ Module="Quote">
       Nullable="false" />
   </Column>
   <Column
-    Name="EstimateProfit"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="IsFixedPrice"
     Type="bit">
     <Constraints
@@ -48,13 +42,7 @@ Module="Quote">
     Size="15">
     <Constraints
       Nullable="false" />
-  </Column>
-  <Column
-    Name="ExchangeRate"
-    Type="float">
-    <Constraints
-      Nullable="false" />
-  </Column>  
+  </Column> 
   <Column
     Name="IsCancelled"
     Type="bit">
@@ -173,29 +161,11 @@ Module="Quote">
       Nullable="false" />
   </Column>
   <Column
-    Name="ChargeableWeight"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="GrossWeight"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="IsClosed"
     Type="bit">
     <Constraints
       Nullable="false" />
-  </Column>  
-  <Column
-    Name="Volume"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>  
+  </Column> 
   <Column
     Name="NumberOfPackages"
     Type="int">
@@ -381,25 +351,11 @@ Module="Quote">
       Nullable="true" />
   </Column>
   <Column
-    Name="ValueOfGoods"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ValueOfGoodsCurrencyId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="IsChargesByVAT"
     Type="bit">
     <Constraints
       Nullable="false" />
-  </Column>
- 
+  </Column> 
   <Column
     Name="GrossWeightInKG"
     Type="float">
@@ -463,12 +419,6 @@ Module="Quote">
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="ProfitExchangeRate"
-    Type="float">
-    <Constraints
-      Nullable="true" />
-  </Column> 
   <Column
     Name="QuoteClosingReasonId"
     Type="varchar"
