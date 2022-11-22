@@ -117,6 +117,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                             CreateOShipmentsWithoutDocs = entityPM.CreateOShipmentsWithoutDocs,
                             SearchFields = entityPM.PrivateLabelName + "," + entityPM.PrivateLabelShortName + "," + entityPM.PrivateLabelUrl + "," + entityPM.ContactUsEmail + ",",
                             Id = IdCounter.GetNumber("TenantManagmentPrivateLabels", 0).ToString(),
+                            FilingInboxDomain = entityPM.FilingInboxDomain,
                         };
 
                         repository.Add(poco);
@@ -183,6 +184,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                         Poco.CreateOShipmentsWithoutDocs = entityPM.CreateOShipmentsWithoutDocs;
                         Poco.SearchFields = entityPM.PrivateLabelName + "," + entityPM.PrivateLabelShortName + "," + entityPM.PrivateLabelUrl + "," + entityPM.ContactUsEmail + ",";
                         Poco.QueryFiltersHighlightColor = entityPM.QueryFiltersHighlightColor;
+                        Poco.FilingInboxDomain = entityPM.FilingInboxDomain;
                         tenantManagmentPrivateLabelsRepository.Update(Poco);
                         tenantManagmentPrivateLabelsRepository.SubmitChanges();
                         scope.Complete();

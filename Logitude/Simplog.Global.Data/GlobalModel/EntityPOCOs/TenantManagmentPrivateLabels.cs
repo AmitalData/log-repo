@@ -42,6 +42,8 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public bool CreateShipmentsWithoutDocs { get; set; }
         public bool CreateOShipmentsWithoutDocs { get; set; }
 
+        public string FilingInboxDomain { get; set; }
+
         //[ForeignKey("MainLogoId")]
         //public virtual ImageDetail ImageDetail { get; set; }
 
