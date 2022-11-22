@@ -32,7 +32,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             var interestTransactionsForARPayments = GetInterestTransactionsForARPayments(interestTransactionQuery);
             
             IQueryable<InterestTransactionList> query
-                = (from interestTransaction in interestTransactionQuery
+                = (from interestTransaction in interestTransactionQuery.Include("Currency")
 
                    join journal in context.Journals.Include("AccountingEntity")
                    on new { AccountingEntityId = interestTransaction.EntityId, AccountingEntityCode = interestTransaction.AccountingEntityCode, Tenant = interestTransaction.Tenant } equals
@@ -67,6 +67,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                        InterestReportId = interestTransaction.InterestReportId,
                        IsClosed = interestTransaction.IsClosed,
                        IsCancelled = interestTransaction.IsCancelled,
+                       CurrencyCode = interestTransaction.Currency.Code,
                        InterestReportNumber = report == null ? null : report.ReportNumber,
 
                        JournalId = journal.Id,
@@ -77,13 +78,13 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                        SourceType = journal.AccountingEntity == null ? null : journal.AccountingEntity.EnglishName,
                        SourceTypeCode = journal.AccountingEntityCode,
                        SourceId = journal.AccountingEntityId,
-                       AccountingEntityCode = interestTransaction.AccountingEntityCode
+                       AccountingEntityCode = interestTransaction.AccountingEntityCode,
                    }).Union(interestTransactionsForAdustmentsAndRevaluationJournals).Union(interestTransactionsForARPayments);
             return query;
         }
 
         private IQueryable<InterestTransactionList> GetInterestTransactionsForAdustmentsAndRevaluationJournals(IQueryable<InterestTransaction> interestTransactionQuery) {
-            return from interestTransaction in interestTransactionQuery
+            return from interestTransaction in interestTransactionQuery.Include("Currency")
 
                         join journal in context.Journals.Include("AccountingEntity")
                         on new { AccountingEntityId = interestTransaction.EntityId, Tenant = interestTransaction.Tenant } equals
@@ -118,6 +119,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                             InterestReportId = interestTransaction.InterestReportId,
                             IsClosed = interestTransaction.IsClosed,
                             IsCancelled = interestTransaction.IsCancelled,
+                            CurrencyCode = interestTransaction.Currency.Code,
                             InterestReportNumber = report == null ? null : report.ReportNumber,
 
                             JournalId = journal.Id,
@@ -133,7 +135,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         }
         private IQueryable<InterestTransactionList> GetInterestTransactionsForARPayments(IQueryable<InterestTransaction> interestTransactionQuery)
         {
-            return from interestTransaction in interestTransactionQuery
+            return from interestTransaction in interestTransactionQuery.Include("Currency")
 
                    join journal in context.Journals.Include("AccountingEntity")
                    on new { AccountingEntityId = interestTransaction.EntityId, AccountingEntityCode = interestTransaction.AccountingEntityCode, Tenant = interestTransaction.Tenant } equals
@@ -174,6 +176,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                        InterestReportId = interestTransaction.InterestReportId,
                        IsClosed = interestTransaction.IsClosed,
                        IsCancelled = interestTransaction.IsCancelled,
+                       CurrencyCode = interestTransaction.Currency.Code,
                        InterestReportNumber = report == null ? null : report.ReportNumber,
 
                        JournalId = journal.Id,
@@ -193,12 +196,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
             List<InterestTransactionList> list
                 = (from interestTransaction in interestTransactions
-                   join currency in currencies on interestTransaction.CurrencyId equals currency.Id
 
                    select new InterestTransactionList()
                    {
-                       CurrencyCode = currency.Code,
-
+                       CurrencyCode = interestTransaction.CurrencyCode,
                        Id = interestTransaction.Id,
                        Tenant = interestTransaction.Tenant,
                        CreateDateTime = interestTransaction.CreateDateTime,
