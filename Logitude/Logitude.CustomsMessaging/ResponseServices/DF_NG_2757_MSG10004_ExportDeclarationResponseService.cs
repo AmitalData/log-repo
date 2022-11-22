@@ -30,6 +30,8 @@ using UnifreightIIG.Common.ExportDeclarationServiceReference;
 using Exception = System.Exception;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel;
+using System.IO;
+using System.Xml.Serialization;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -228,13 +230,45 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     requestParams.AppicationId = myQueryService.GetIdByExternalDeclarationNumber(customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, requestParams.Tenant);
                 }
             }
+            _MyDeclarationPM = myQueryService.GetSingle(requestParams.AppicationId, true, false);
+            var setting = CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant);
+            if (_MyDeclarationPM != null)
+            {
+                
+                if (_MyDeclarationPM.Direction == "E" && requestParams.RequestVIA == SendRequestVIA.WebServiceBatch && !setting.IsConnectedToUniFreight && customResponse.ResponseContentHeader?.Exception?.Length > 0 && customResponse.Response?.Declaration == null)
+                {
+                    DeclarationError declarationError = new DeclarationError();
+                    declarationError.Entitites = new List<Entity>();
+                    foreach (var item in customResponse.ResponseContentHeader?.Exception)
+                    {
+                        Entity entity = new Entity();
+                        entity.FieldErrors = new List<field>();
+                        entity.FieldErrors.Add(new field()
+                        {
+                            MessageError = item.ExeptionDescription,
+                            Code = "Exception",
+                            ListVersionID="4"
 
+                        });
+                        declarationError.Entitites.Add(entity);
+                    }
 
+                    XmlSerializer xmlSerializer = new XmlSerializer(declarationError.GetType());
+
+                    using (StringWriter textWriter = new StringWriter())
+                    {
+                        xmlSerializer.Serialize(textWriter, declarationError);
+                        _MyDeclarationPM.ErrosXml = textWriter.ToString();
+                    }
+
+                }
+                //myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
+            }
             if (customResponse.ResponseContentHeader != null && customResponse.ResponseContentHeader.Exception != null && customResponse.ResponseContentHeader.Exception.Count() > 0)
             {
                 if (!string.IsNullOrWhiteSpace(requestParams.AppicationId))
-                {
-                    _MyDeclarationPM = myQueryService.GetSingle(requestParams.AppicationId, true, false);
+                {   if(_MyDeclarationPM==null)
+                         _MyDeclarationPM = myQueryService.GetSingle(requestParams.AppicationId, true, false);
                     if (_MyDeclarationPM != null)
                     {
                         _MyDeclarationPM.IsSubmitDeclaration = false;
@@ -273,7 +307,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 this.MyResponseData.UserMessage = "Can not find declaration" + requestParams.AppicationId;
                 return;
             }
-
+            setting = CustomsSettingQueryService.GetSettingByTenant(_MyDeclarationPM.Tenant);
             if (_MyDeclarationPM.IsCourierDeclaration && this._MyDeclarationPM.PaymentDate.HasValue)
             {
                 if (customResponse.Response != null && customResponse.Response.Status != null && customResponse.Response.Status[0].NameCode.Value == "13")
@@ -405,7 +439,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
 
 
-            var setting = CustomsSettingQueryService.GetSettingByTenant(_MyDeclarationPM.Tenant);
+           
 
             ICommonDataContext commondbContext = CommonDataContext.GetContext(_MyDeclarationPM.Tenant);
             UserRepository userRepository = new UserRepository(commondbContext);
@@ -561,14 +595,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             currentDeclarationCourierStatusPM.CourierDeclarationStatusCode = "X";
                         });
                 }
-               if(_MyDeclarationPM.Direction=="E" && requestParams.RequestVIA== SendRequestVIA.WebServiceBatch && !setting.IsConnectedToUniFreight && customResponse.ResponseContentHeader.Exception.Length>0 &&customResponse.Response.Declaration==null)
-                {
-
-
-
-
-
-                }
+               
 
                 this.MyResponseData.ApplicationID = requestParams.AppicationId;
                 this.MyResponseData.Succeeded = true;
