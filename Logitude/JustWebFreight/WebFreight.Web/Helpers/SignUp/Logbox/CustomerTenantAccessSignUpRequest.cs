@@ -1,5 +1,8 @@
-﻿using Logitude.BL.CommonDataModel.EntityQueries;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.Server.Tools.QueueService;
+using Simplog.Data.CommonDataModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,15 +17,23 @@ namespace WebFreight.Web.Helpers.SignUp.Logbox
         {
             if (!signUpInfo.IsCreateLogboxTenantFromCloud) return;
 
-            HybridPartnerQuery hybridPartnerQuery = new HybridPartnerQuery(signUpInfo.Tenant);
-            var hybridPartners = hybridPartnerQuery.GetHybridPartnerLists(signUpInfo.Tenant);
+            HybridPartnerQuery hybridPartnerQuery = new HybridPartnerQuery(tenant);
+            var hybridPartners = hybridPartnerQuery.GetHybridPartnerLists(tenant);
             if (hybridPartners == null) return;
             var selectedHybridPartner = hybridPartners.Where(hybridPartner => hybridPartner.PartnerTenant == signUpInfo.Tenant).FirstOrDefault();
             if (selectedHybridPartner == null) return;
 
-            IQueueService queue = new DbQueueService();
-            queue.InitializeQueue("CustomerTenantAccessRequestQueue", 0);
-            queue.Send(new Dictionary<string, string>() { { "RequestId", selectedHybridPartner.Id }, { "Tenant", tenant.ToString() } }, tenant);
+            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+            CustomerTenantAccessRequestService service = new CustomerTenantAccessRequestService(commonContext, tenant);
+            CustomerTenantAccessRequestPM customerTenantAccessRequestPM = new CustomerTenantAccessRequestPM
+            {
+                ForwarderId = selectedHybridPartner.Id,
+                Tenant = tenant,
+            };
+            service.Create(customerTenantAccessRequestPM);
+
+            customerTenantAccessRequestPM.RequestStatus = "W";
+            service.Update(customerTenantAccessRequestPM);
         }
     }
 }
