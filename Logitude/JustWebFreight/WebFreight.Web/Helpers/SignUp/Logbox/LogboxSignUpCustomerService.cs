@@ -35,12 +35,25 @@ namespace WebFreight.Web.Helpers.SignUp.Logbox
             };
 
             customerPM.Addresses.Add(GetNewAddressPM(signUpInfoClass, tenant));
-            customerPM.Contacts.Add(GetNewContactPM(signUpInfoClass, tenant));
+            customerPM.Contacts.Add(GetContactPM(signUpInfoClass, tenant));
 
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             CustomerService customerService = new CustomerService(commonContext, customerPM);
             customerService.Create();
             signUpInfoClass.CustomerId = customerPM.Id;
+        }
+
+        private static ContactPM GetContactPM(SignUpInfoClass signUpInfoClass, int tenant)
+        {
+            ContactRepository contactRepository = new ContactRepository(tenant);
+            ContactQuery contactQuery = new ContactQuery(contactRepository);
+            ContactPM contactPM = contactQuery.GetContactByEmailOnly(signUpInfoClass.Email, tenant);
+            if (contactPM == null)
+            {
+                return GetNewContactPM(signUpInfoClass, tenant);
+            }
+
+            return contactPM;
         }
 
         private static  AddressPM GetNewAddressPM(SignUpInfoClass signUpInfoClass, int tenant)
