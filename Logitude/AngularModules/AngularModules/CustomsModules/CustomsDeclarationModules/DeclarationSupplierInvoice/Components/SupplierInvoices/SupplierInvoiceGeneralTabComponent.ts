@@ -697,7 +697,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             this.AdjustmentsList.Insert(new ModificationItemModel(ExtraPayments160, this, "160"));
         }
 
-      
+
         this.ExportModificationCurrency = this.EntityPM.InvoiceCurrencyTypeCode;
         this.EntityPM.IsDirty = false;
     }
@@ -3003,7 +3003,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
                     let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
                         .subscribe(
-                            async (mess: UnifreightMessageM) => {
+                             (mess: UnifreightMessageM) => {
 
                                 var IsMatchUnifreightCallbackCommand = (
                                     mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
@@ -3023,18 +3023,17 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                                     confirmWindow.Height = 200;
                                     confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
                                     confirmWindow.ShowNoButton=false;
-                                    if (!AppTool.IsNullOrEmpty(InsuranceAmount) && !AppTool.IsNullOrEmpty(InsuranceCurrency)) {
-
-                                        let Insurance67: SupplierInvoiceModificationPM = this.FindModificationByCode("67");        
-                                        var index = this.AdjustmentsList.FindIndex("67");
-                                
-                                        Insurance67.CurrencyTypeCode = InsuranceCurrency;                                    
-                                        Insurance67.Amount = Number(InsuranceAmount);
-                                        Insurance67.CurrencyTypeName= await new Promise<any>((resolve, reject) => {
-                                            (new CurrencyTypeListService()).getSingleFromCache(InsuranceCurrency).subscribe(x=>resolve(x.Result.LocalName))
-                                        }) 
-                                                                           
-                                          this.AdjustmentsList.UpdateWithIndex(index,new ModificationItemModel(Insurance67, this, "67"));                                
+                                    if (!AppTool.IsNullOrEmpty(InsuranceAmount) && !AppTool.IsNullOrEmpty(InsuranceCurrency)) {                                         
+                                          
+                                          (new CurrencyTypeListService()).getSingleFromCache(InsuranceCurrency).subscribe(x=>{
+                                            let Insurance67: SupplierInvoiceModificationPM = this.FindModificationByCode("67");        
+                                            var index = this.AdjustmentsList.FindIndex("67");
+                                  
+                                            Insurance67.CurrencyTypeCode = InsuranceCurrency;                                    
+                                            Insurance67.Amount = Number(InsuranceAmount);
+                                            Insurance67.CurrencyTypeName =x.Result.LocalName;               
+                                            this.AdjustmentsList.UpdateWithIndex(index,new ModificationItemModel(Insurance67, this, "67")); 
+                                      })
                                     }
                                     else if (!AppTool.IsNullOrEmpty(InvoiceNumber)) {
                                         confirmWindow.Show(`נפתחה תוספת ביטוח מס' ` + InvoiceNumber + ` , יש להשלימה בתהליך ידני ביוניפרייט`);
