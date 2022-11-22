@@ -59,6 +59,12 @@ namespace Logitude.DashboardModule.Data.EntityPOCOs
 	    public int? SortBy { get; set; }
         [Column("SortDirection")]
 	    public string SortDirection { get; set; }
+        [Column("TimeOverTime")]
+	    public bool TimeOverTime { get; set; }
+        [Column("ComparisonPeriod")]
+	    public string ComparisonPeriod { get; set; }
+        [Column("Increase")]
+	    public string Increase { get; set; }
     }
 }
 	 

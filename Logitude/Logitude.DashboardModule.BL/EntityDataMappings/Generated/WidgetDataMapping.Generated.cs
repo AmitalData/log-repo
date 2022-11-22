@@ -35,7 +35,10 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         DateGroupCode, 
 	         MaximumGrouping, 
 	         SortBy, 
-	         SortDirection,
+	         SortDirection, 
+	         TimeOverTime, 
+	         ComparisonPeriod, 
+	         Increase,
 	      }
 
 
@@ -56,7 +59,10 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         MaximumGrouping, 
 	         SortBy, 
 	         SortDirection, 
-	         Key,
+	         Key, 
+	         TimeOverTime, 
+	         ComparisonPeriod, 
+	         Increase,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -128,6 +134,21 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SortDirection))
             {
 				entityPOCO.SortDirection = entityPM.SortDirection;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TimeOverTime))
+            {
+				entityPOCO.TimeOverTime = entityPM.TimeOverTime;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ComparisonPeriod))
+            {
+				entityPOCO.ComparisonPeriod = entityPM.ComparisonPeriod;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Increase))
+            {
+				entityPOCO.Increase = entityPM.Increase;
 			}
 			}
 
@@ -204,6 +225,21 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 					entityPM.SortDirection = entityPOCO.SortDirection;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TimeOverTime))
+            {
+					entityPM.TimeOverTime = entityPOCO.TimeOverTime;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ComparisonPeriod))
+            {
+					entityPM.ComparisonPeriod = entityPOCO.ComparisonPeriod;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Increase))
+            {
+					entityPM.Increase = entityPOCO.Increase;
+            }
+
 		}
 
 		public void PMToOldPM(WidgetPM entityPM, WidgetPM oldEntityPM)
@@ -273,6 +309,21 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SortDirection))
             {
                 oldEntityPM.SortDirection = entityPM.SortDirection;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TimeOverTime))
+            {
+                oldEntityPM.TimeOverTime = entityPM.TimeOverTime;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ComparisonPeriod))
+            {
+                oldEntityPM.ComparisonPeriod = entityPM.ComparisonPeriod;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Increase))
+            {
+                oldEntityPM.Increase = entityPM.Increase;
             }
 			
 		}

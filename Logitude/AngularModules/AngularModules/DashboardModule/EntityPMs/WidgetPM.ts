@@ -137,6 +137,21 @@ export class WidgetPM {
     public set Key(newValue: string) { if (this.key != newValue) { this.key = newValue; this.MarkAsDirty("Key"); } }
        
 	 
+    private timeOverTime: boolean;
+    public get TimeOverTime() { return this.timeOverTime; }
+    public set TimeOverTime(newValue: boolean) { if (this.timeOverTime != newValue) { this.timeOverTime = newValue; this.MarkAsDirty("TimeOverTime"); } }
+       
+	 
+    private comparisonPeriod: string;
+    public get ComparisonPeriod() { return this.comparisonPeriod; }
+    public set ComparisonPeriod(newValue: string) { if (this.comparisonPeriod != newValue) { this.comparisonPeriod = newValue; this.MarkAsDirty("ComparisonPeriod"); } }
+       
+	 
+    private increase: string;
+    public get Increase() { return this.increase; }
+    public set Increase(newValue: string) { if (this.increase != newValue) { this.increase = newValue; this.MarkAsDirty("Increase"); } }
+       
+	 
 
     public OldEntityPM: WidgetPM;
 	

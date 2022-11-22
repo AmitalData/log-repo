@@ -400,6 +400,75 @@ namespace Logitude.DashboardModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private bool timeOverTime ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool TimeOverTime  
+	   {
+	    
+	     get
+		{
+		   return timeOverTime;
+		 }
+		 set
+		 {
+		   if(timeOverTime != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TimeOverTime",OldValue=timeOverTime,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   timeOverTime=value;
+		   }
+			
+		 }
+	   }
+	  private string comparisonPeriod ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ComparisonPeriod  
+	   {
+	    
+	     get
+		{
+		   return comparisonPeriod;
+		 }
+		 set
+		 {
+		   if(comparisonPeriod != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ComparisonPeriod",OldValue=comparisonPeriod,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   comparisonPeriod=value;
+		   }
+			
+		 }
+	   }
+	  private string increase ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Increase  
+	   {
+	    
+	     get
+		{
+		   return increase;
+		 }
+		 set
+		 {
+		   if(increase != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Increase",OldValue=increase,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   increase=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

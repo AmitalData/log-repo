@@ -101,6 +101,26 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="TimeOverTime"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ComparisonPeriod"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Increase"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="GroupById"
     ReferencedTable="AnalyticsFactsFieldsMetaDatas"

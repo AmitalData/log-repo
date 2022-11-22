@@ -50,6 +50,12 @@ namespace Logitude.DashboardModule.Data.EntityMapping
             this.Property(t => t.SortBy).HasColumnName("SortBy");
 
             this.Property(t => t.SortDirection).HasColumnName("SortDirection").HasMaxLength(4).IsUnicode(false);
+
+            this.Property(t => t.TimeOverTime).HasColumnName("TimeOverTime");
+
+            this.Property(t => t.ComparisonPeriod).HasColumnName("ComparisonPeriod").HasMaxLength(100).IsUnicode(false);
+
+            this.Property(t => t.Increase).HasColumnName("Increase").HasMaxLength(50).IsUnicode(false);
         }
     }
 }

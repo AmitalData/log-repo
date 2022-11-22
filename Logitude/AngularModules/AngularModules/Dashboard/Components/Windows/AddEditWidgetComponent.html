@@ -220,6 +220,20 @@
                                                 <div></div>
                                             </td>
                                         </tr>
+                                        <tr class="FormFieldRow" *ngIf="isAdvancedSettingVisible">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'timeOverTime'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" style="width: 2px;"></LogLabel>
+                                            </td>
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'timeOverTime'" [ObjectTableName]="ObjectTableName"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td>
+                                                <CheckBox></CheckBox>
+                                            </td>
+                                            <td><div></div></td>
+                                        </tr>
                                     </table>
                                 </td>
 
