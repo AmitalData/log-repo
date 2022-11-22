@@ -393,6 +393,7 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
 
     IsScreenSectionsNamesValid() {
         let isValid = true;
+        if (!this.MyArgs.ScreenSections || this.MyArgs.ScreenSections.length == 0) return isValid;
         this.MyArgs.ScreenSections.filter(d => !d.Inactive).forEach((section) => {
             if (!section.Name) isValid = false;
         });

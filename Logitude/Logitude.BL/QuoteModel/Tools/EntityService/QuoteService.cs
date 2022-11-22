@@ -176,6 +176,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             this.UpdateTotalVats();
             QuoteTracing.Trace(entityPM, entityPoco, initializer.LoggedContactId, isNewEntity);
 
+            this.SaveChildEntitiesCustomFields();
 
             EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = entityPoco, EntityPM = entityPM, OldEntityPM = new QuotePM(), AutomationType = "OnCreate", ObjectTableName = "Quote", Tenant = entityPM.Tenant, EntityId = entityPM.Id, EntityReference = entityPM.QuoteNumber});
             entityAutomationService.RunAutomation();
@@ -193,6 +194,12 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             ObjectTable objecttable = objecttableRepository.GetObjectTableByName("Quote", 0, true);
             ActivityLogger.AddAcitivityLog(entityPM.Id, objecttable.Id, entityPM.Tenant, "N", initializer.LoggedContactId);
             entityAutomationService.RunAutomationThatDependencyOnLastEntityUpdate();
+        }
+
+        private void SaveChildEntitiesCustomFields()
+        {
+            new CustomChildEntityService(new CustomChildEntityArgs() { ParentEntity = entityPM, ParentEntityId = entityPM.Id, ParentObjectTableName = "Quote", Tenant = tenant }).Update();
+
         }
 
         public class QuoteChangeTracking
@@ -260,6 +267,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
                     SendQuoteToIntegratedSystem(objecttable.Id);
                 }
+
+                this.SaveChildEntitiesCustomFields();
 
                 EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = entityPoco, EntityPM = entityPM, OldEntityPM = new QuotePM(), AutomationType = "OnUpdate", ObjectTableName = "Quote", Tenant = entityPM.Tenant, EntityId = entityPM.Id, EntityAutomationMappingPMFields = new EntityAutomationQuoteMappingPMFields(), EntityReference = entityPM.QuoteNumber });
                 entityAutomationService.RunAutomation();

@@ -35,6 +35,7 @@ import {QuoteFollowUpPM} from '../../EntityPMs/QuoteFollowUpPM';
 import {QuoteDocumentVersionPM} from '../../EntityPMs/QuoteDocumentVersionPM';
 import {QuoteTotalVATPM} from '../../EntityPMs/QuoteTotalVATPM';
 import {QuoteValidator} from '../../Validators/QuoteValidator';
+import { CustomChildObjectPMService } from '../../../Infrastructure/Services/ExtendedPMs/CustomChildObjectPMService';
 
 @Injectable()
 
@@ -218,7 +219,9 @@ export class QuotePMService {
                this.MapQuoteDocumentVersions(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapTotalVATs(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
-            
+          let customChildObjectPMService: CustomChildObjectPMService = new CustomChildObjectPMService(entityPM, "Quote");
+          customChildObjectPMService.MapCustomChildEntities(jsonPM, mapParent);
+
 
 		if (mapParent) {
                 entityPM.OldEntityPM = this.clone(entityPM);
