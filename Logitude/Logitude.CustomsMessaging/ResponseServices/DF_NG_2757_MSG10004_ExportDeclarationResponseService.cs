@@ -253,13 +253,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         declarationError.Entitites.Add(entity);
                     }
 
-                    XmlSerializer xmlSerializer = new XmlSerializer(declarationError.GetType());
 
-                    using (StringWriter textWriter = new StringWriter())
-                    {
-                        xmlSerializer.Serialize(textWriter, declarationError);
-                        _MyDeclarationPM.ErrosXml = textWriter.ToString();
-                    }
+                    var myDeclaretionErrorXml = XmlGenericUtil<DeclarationError>.SerializeObject(declarationError);
+                    _MyDeclarationPM.ErrosXml = myDeclaretionErrorXml;
+                    //using (var stringwriter = new System.IO.StringWriter())
+                    //{
+                    //    var serializer = new XmlSerializer(declarationError.GetType());
+                    //    serializer.Serialize(stringwriter, declarationError);
+                    //    
+                    //}
+
+                    this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
 
                 }
                 //myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
