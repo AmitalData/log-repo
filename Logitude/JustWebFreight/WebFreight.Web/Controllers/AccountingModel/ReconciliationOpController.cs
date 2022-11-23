@@ -507,7 +507,7 @@ tenant);
         }
 
         [HttpGet]
-        public HttpResponseMessage GetFirst500LedgerForReconciliation(string gLAccountId, [FromUri] ApiQueryFilters filters)
+        public HttpResponseMessage GetFirst5000LedgerForReconciliation(string gLAccountId, [FromUri] ApiQueryFilters filters)
         {
             try
             {
@@ -528,7 +528,7 @@ tenant);
                     response.Count = count;
                 }
 
-                response.Result = openTransactions.Take(500);
+                response.Result = openTransactions.Take(5000);
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 
                 return reponseMessage;
