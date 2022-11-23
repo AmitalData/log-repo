@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Simplog.Server.Infrastructure.Helpers;
+using System.Text;
 
 namespace Simplog.Data.ShipmentsModel.Repositories
 {
@@ -125,6 +126,23 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             return (from container in context.Containers
                     where container.Id == containerId && container.Tenant == tenant
                     select container.ConcurrencyGUID).FirstOrDefault();
+        }
+
+        public List<Container> GetContainersFromIds(List<string> containerIds, int tenant)
+        {
+            List<Container> containers = new List<Container>();
+            if (containerIds.Count() == 0) return containers;
+
+            IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
+            StringBuilder values = new StringBuilder();
+            values.AppendFormat("{0}", "'" + containerIds[0] + "'");
+            for (int i = 1; i < containerIds.Count; i++)
+                values.AppendFormat(", {0}", "'" + containerIds[i] + "'");
+
+            string sql = string.Format("SELECT * FROM Containers WHERE ID IN ({0})", values);
+            containers = shipmentsContext.GetActiveDbContext().Database.SqlQuery<Container>(sql).ToList();
+
+            return containers;
         }
     }
 }
