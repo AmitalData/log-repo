@@ -76,7 +76,6 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public double? EstimatedProfitInLocal { get; set; }
         public double? EstimatedProfitInProfit { get; set; }
         public string ProfitCurrencyId { get; set; }
-        public double? ProfitExchangeRate { get; set; }
         public string ShipmentSubTypeId { get; set; }
         public string RegionalTaxId { get; set; }
         public double? RegionalTaxPercentage { get; set; }
