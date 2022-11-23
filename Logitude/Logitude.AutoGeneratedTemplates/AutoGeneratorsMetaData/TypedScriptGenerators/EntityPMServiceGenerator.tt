@@ -259,7 +259,9 @@ void SaveEntityPMServiceOutput(string outputFileName)
 			 infrastructureImportString += Environment.NewLine + "import {SessionInfo} from '../../Utilities/SessionInfo';";
 			 infrastructureImportString += Environment.NewLine + "import {PerformanceLogger} from '../../Utilities/PerformanceLogger';";
 			 infrastructureImportString += Environment.NewLine + "import {CustomFieldClass} from '../../DataContracts/CustomFieldClass'";
-
+			 if(entity.SupportSubEntity.ToString() == "true") {
+			 infrastructureImportString += Environment.NewLine + "import { CustomChildObjectPMService } from '../../Infrastructure/Services/ExtendedPMs/CustomChildObjectPMService'";
+			 }
 
          }
 		 else{
@@ -270,7 +272,9 @@ void SaveEntityPMServiceOutput(string outputFileName)
 			 infrastructureImportString += Environment.NewLine + "import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';";
 			 infrastructureImportString += Environment.NewLine + "import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';";	
 			 infrastructureImportString += Environment.NewLine + "import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'";
-		  
+		     if(entity.SupportSubEntity.ToString() == "true") {
+			 infrastructureImportString += Environment.NewLine + "import { CustomChildObjectPMService } from '../../../Infrastructure/Services/ExtendedPMs/CustomChildObjectPMService'";
+			 }
 			
 			 infrastructureImportString += Environment.NewLine + "import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';";			  
          }
@@ -522,6 +526,13 @@ if(hasCustomValidator)
 		   }
 		 
          }
+
+		 if(entity.SupportSubEntity.ToString() == "true") {
+		 #>
+		 let customChildObjectPMService: CustomChildObjectPMService = new CustomChildObjectPMService(entityPM, "<#= tableName#>");
+		 customChildObjectPMService.MapCustomChildEntities(jsonPM, mapParent);
+		 <#+
+		 }
 #>
 			 
             

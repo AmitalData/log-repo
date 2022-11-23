@@ -17,6 +17,7 @@ import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
+import { CustomChildObjectPMService } from '../../../Infrastructure/Services/ExtendedPMs/CustomChildObjectPMService'
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 
 import {WarehouseReleasePM} from '../../EntityPMs/WarehouseReleasePM';
@@ -197,7 +198,9 @@ export class WarehouseReleasePMService {
             }
 			
                this.MapWarehouseReleasePackages(entityPM, jsonPM, mapParent); // Call composition tables map methods
-			 
+		 let customChildObjectPMService: CustomChildObjectPMService = new CustomChildObjectPMService(entityPM, "WarehouseRelease");
+		 customChildObjectPMService.MapCustomChildEntities(jsonPM, mapParent);
+		 			 
             
 
 		if (mapParent) {

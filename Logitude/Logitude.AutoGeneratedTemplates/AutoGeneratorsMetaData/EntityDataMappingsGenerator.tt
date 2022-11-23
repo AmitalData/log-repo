@@ -318,6 +318,8 @@ using Logitude.Server.Tools;
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure.DataContracts;
+<#+ if(entity.SupportSubEntity.ToString() == "true") {#>using Logitude.BL.InfrastructureModel.Tools.EntityService;
+<#+}#>
 using <#= pocosspacestring #>
 using <#= pmsspacestring #> 
 using <#= dataprojectnamespace #>
@@ -426,6 +428,14 @@ namespace <#= mapnamespacestring #>
 		 }
          
 		 }
+
+		 if(entity.SupportSubEntity.ToString() == "true"){
+		 #>
+
+			new CustomChildEntityService(new CustomChildEntityArgs() { ParentEntity = entityPM, ParentEntityId = entityPM.Id, ParentObjectTableName = "<#=tableName #>", Tenant = entityPM.Tenant }).Update();
+		 <#+
+		 }
+
          if (IsSearchable)
          { 
 		 #>
@@ -478,6 +488,12 @@ namespace <#= mapnamespacestring #>
 		 }
          
 		 }
+		 }
+		 if(entity.SupportSubEntity.ToString() == "true"){
+		 #>
+
+			new CustomChildEntityService(new CustomChildEntityArgs() { ParentEntity = entityPM, ParentEntityId = entityPM.Id, ParentObjectTableName = "<#=tableName #>", Tenant = entityPM.Tenant }).Set();
+		 <#+
 		 }
 		 #>
 
