@@ -250,6 +250,33 @@ namespace Logitude.BL.InfrastructureModel
                 Description = "DeleteOldPerformanceLogsTask", 
                 IsInternallyDefined = false, 
 			});
+			 
+            all.Add(new SchedulerProcedureDetails()
+            {    
+                Code = "DeleteOldBIReportsExecutionLogsTask", 
+                Name = "DeleteOldBIReportsExecutionLogsTask", 
+                SearchFields = "DeleteOldBIReportsExecutionLogsTask", 
+                Description = "DeleteOldBIReportsExecutionLogsTask", 
+                IsInternallyDefined = false, 
+			});
+			 
+            all.Add(new SchedulerProcedureDetails()
+            {    
+                Code = "DeleteOldReportExecutionLogsTask", 
+                Name = "DeleteOldReportExecutionLogsTask", 
+                SearchFields = "DeleteOldReportExecutionLogsTask", 
+                Description = "DeleteOldReportExecutionLogsTask", 
+                IsInternallyDefined = false, 
+			});
+			 
+            all.Add(new SchedulerProcedureDetails()
+            {    
+                Code = "DeleteOldDocumentsExecutionLogsTask", 
+                Name = "DeleteOldDocumentsExecutionLogsTask", 
+                SearchFields = "DeleteOldDocumentsExecutionLogsTask", 
+                Description = "DeleteOldDocumentsExecutionLogsTask", 
+                IsInternallyDefined = false, 
+			});
 			
             return all;
        }
