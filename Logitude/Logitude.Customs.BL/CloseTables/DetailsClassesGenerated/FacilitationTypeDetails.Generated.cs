@@ -38,6 +38,24 @@ namespace Logitude.Customs.BL
                 Inactive = false, 
                 LocalName = "יבואן מאושר", 
 			});
+			 
+            all.Add(new FacilitationTypeDetails()
+            {    
+                Code = "3", 
+                LocalName = "יצואן מאושר", 
+                SearchFields = "3,יצואן מאושר,Approved Exporter", 
+                EnglishName = "Approved Exporter", 
+                Inactive = false, 
+			});
+			 
+            all.Add(new FacilitationTypeDetails()
+            {    
+                Code = "4", 
+                LocalName = "יבואן / יצואן מאושר", 
+                SearchFields = "4,יבואן / יצואן מאושר,Approved Exporter / Importer", 
+                EnglishName = "Approved Exporter / Importer", 
+                Inactive = false, 
+			});
 			
             return all;
        }
