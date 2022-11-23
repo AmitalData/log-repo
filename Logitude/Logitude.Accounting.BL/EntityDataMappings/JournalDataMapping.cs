@@ -47,7 +47,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 if (entityPM.TypeCode == RegularJournal && entityPM.AccountingEntityReference == null) // Manual
                 {
                     var accEntityReconciliation10 = GetAccountingEntityDetails();
-                    if (accEntityReconciliation10.Code != entityPM.AccountingEntityCode)
+                    var bankAdjustment = "12";
+                    if (accEntityReconciliation10.Code != entityPM.AccountingEntityCode &&  entityPM.AccountingEntityCode != bankAdjustment)
                     {
                         entityPM.AccountingEntityReference = entityPM.JournalNumber;
                         entityPOCO.AccountingEntityReference = entityPM.JournalNumber;
