@@ -110,6 +110,7 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
 
         private List<SeriesMeasureVulue> FillDateGaps(List<SeriesMeasureVulue> seriesMeasureVulues)
         {
+            if (_Widget.TypeCode == "pie" || _Widget.TypeCode == "donut") return seriesMeasureVulues;
             if (seriesMeasureVulues == null || seriesMeasureVulues.Count == 0 || seriesMeasureVulues.Count == 1) return seriesMeasureVulues;
 
             var result = FillAllDateGaps(seriesMeasureVulues);
