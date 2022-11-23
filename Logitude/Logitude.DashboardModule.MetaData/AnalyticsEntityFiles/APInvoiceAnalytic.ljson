@@ -1,5 +1,5 @@
 {
-  "HashString": "b7ac44f210734d2db6e1d7c4bd620189",
+  "HashString": "2c0006749d3e4e32ad3abcf5e9059337",
   "Name": "AP Invoices Statistics",
   "TableName": "APInvoiceAnalytics",
   "ObjectTableName": "APInvoice",
@@ -76,8 +76,8 @@
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": true,
+      "Unit": "{(LocalCurrency)}"
     },
     {
       "HashString": "64cc97baf712481488c9555efa8c9194",
