@@ -32,25 +32,21 @@ export class ActivityZoomComponent implements OnInit {
     PartnerTypeId: string;
     DateParameter: string;
     DataContext: any;
+    IsDigital: boolean;
+
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _sharedLogisticsService: SharedLogisticsService) {
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
     }
 
-    ngOnInit(
-
-    ) {
-
+    ngOnInit ()
+    {
         this.Run();
-
     }
-
 
     Run() {
         this.BuildFilters();
     }
-
-
 
     BuildFilters() {
 
@@ -81,29 +77,48 @@ export class ActivityZoomComponent implements OnInit {
        
        this.ActivityList = [];
        this.ActivityDetailsList = [];
-       this._sharedLogisticsService.getCardLogDetails(this.PartnerTypeId, this.DateParameter, SessionInfo.LoggedUserTenant).subscribe((res: any) => {
-            var pmResponse: ServiceResponse = res;
-            if (!pmResponse.HasError) {
-                var myResult = pmResponse.Result;
-                if (myResult) {
-                    myResult.forEach((item) => {
-                        this.ActivityList.push(new ActivityZoomItemViewModel(item));
-        });
-                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
-                    if (this.ActivityList && this.ActivityList.length > 0) {
 
-                        this.GetActivityDetailsList(this.ActivityList[0]);
-                    }
-                   
+       if (this.IsDigital)
+       {
+           this._sharedLogisticsService.getDigitalCardLogDetails(this.PartnerTypeId, this.DateParameter, SessionInfo.LoggedUserTenant).subscribe((res: any) => {
+               var pmResponse: ServiceResponse = res;
+               if (!pmResponse.HasError) {
+                   var myResult = pmResponse.Result;
+                   if (myResult) {
+                       myResult.forEach((item) => {
+                           this.ActivityList.push(new ActivityZoomItemViewModel(item));
+                       });
+                       this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                       if (this.ActivityList && this.ActivityList.length > 0) {
 
-                }
+                           this.GetActivityDetailsList(this.ActivityList[0]);
+                       }
+                   }
+               }
+               else this.CurrentSession.CurrentWindow.StopBusyIndicator();
+           });
+       }
+       else
+       {
+           this._sharedLogisticsService.getCardLogDetails(this.PartnerTypeId, this.DateParameter, SessionInfo.LoggedUserTenant).subscribe((res: any) => {
+               var pmResponse: ServiceResponse = res;
+               if (!pmResponse.HasError) {
+                   var myResult = pmResponse.Result;
+                   if (myResult) {
+                       myResult.forEach((item) => {
+                           this.ActivityList.push(new ActivityZoomItemViewModel(item));
+                       });
+                       this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                       if (this.ActivityList && this.ActivityList.length > 0) {
 
-            }
-            else this.CurrentSession.CurrentWindow.StopBusyIndicator();
-        });
-
+                           this.GetActivityDetailsList(this.ActivityList[0]);
+                       }
+                   }
+               }
+               else this.CurrentSession.CurrentWindow.StopBusyIndicator();
+           });
+       }
     }
-
 
     //GetActivityDetailsList
 
@@ -116,48 +131,53 @@ export class ActivityZoomComponent implements OnInit {
             if (this.ActivityZoomSelectedItemViewModel) {
                 this.ActivityDetailsList = [];
                 this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
-                this._sharedLogisticsService.getCardLogActivityDetailsList(item.LogDetails.CardId, item.LogDetails.ContactId, this.PartnerTypeId, this.DateParameter, SessionInfo.LoggedUserTenant).subscribe((res: any) => {
-                    var pmResponse: ServiceResponse = res;
-
-             
-                    if (!pmResponse.HasError) {
-                        var myResult = pmResponse.Result;
-                        if (myResult) {
-                            myResult.forEach((item) => {
-                                this.ActivityDetailsList.push(new ActivityItemDetailsViewModel(item, this.ActivityZoomSelectedItemViewModel));
-                            });
+                if (this.IsDigital) {
+                    this._sharedLogisticsService.getDigitalCardLogActivityDetailsList(item.LogDetails.CardId, item.LogDetails.ContactId, this.PartnerTypeId, this.DateParameter, SessionInfo.LoggedUserTenant).subscribe((res: any) => {
+                        var pmResponse: ServiceResponse = res;
+                        if (!pmResponse.HasError) {
+                            var myResult = pmResponse.Result;
+                            if (myResult) {
+                                myResult.forEach((item) => {
+                                    this.ActivityDetailsList.push(new ActivityItemDetailsViewModel(item, this.ActivityZoomSelectedItemViewModel));
+                                });
+                            }
                         }
 
-                    }
-                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    });
+                }
+                else {
+                    this._sharedLogisticsService.getCardLogActivityDetailsList(item.LogDetails.CardId, item.LogDetails.ContactId, this.PartnerTypeId, this.DateParameter, SessionInfo.LoggedUserTenant).subscribe((res: any) => {
+                        var pmResponse: ServiceResponse = res;
+                        if (!pmResponse.HasError) {
+                            var myResult = pmResponse.Result;
+                            if (myResult) {
+                                myResult.forEach((item) => {
+                                    this.ActivityDetailsList.push(new ActivityItemDetailsViewModel(item, this.ActivityZoomSelectedItemViewModel));
+                                });
+                            }
+                        }
+                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
-                });
+                    });
+                }
             }
         }
     }
-
 
     CloseButtonClicked() {
 
         this.CurrentSession.CloseCurrentWindow();
     }
 
-
-
-
-
     SetWindowArgs(args: any) {
         this.PartnerTypeId = args.PartnerTypeId;
         this.DateParameter = args.DateParameter;
         this.DataContext = args.DataContext;
-
+        this.IsDigital = args.IsDigital || false;
     }
-
-
-
-
-
 }
+
 class CodeNameClass {
     Code: string;
     Name: string;

@@ -58,10 +58,29 @@ export class SharedLogisticsService {
         }),catchError(ServiceHelper.HandleServiceError));
     }
 
+    getDigitalCardLogDetails(partnerTypeId: string, dateParameter: string, tenant: number)
+    {
+        return this._http.get(ServiceHelper.GetLogitudeURL() + 'api/DigitalActivity/GetDigitalCardLogDetails/?' + 'partnerTypeId=' + partnerTypeId + '&dateParameter=' + dateParameter + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+            pmresponse.Result = response;
+            return pmresponse;
+        }),catchError(ServiceHelper.HandleServiceError));
+    }
+
     getCardLogActivityDetailsList(cardId: string, contactId: string, partnerTypeId: string, dateParameter: string, tenant: number) {
 
 
         return this._http.get(this._apiUrl + '/getcardlogactivitydetailslist/?' + 'cardId=' + cardId + '&contactId=' + contactId + '&partnerTypeId=' + partnerTypeId + '&dateParameter=' + dateParameter + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+            pmresponse.Result = response;
+            return pmresponse;
+        }),catchError(ServiceHelper.HandleServiceError));
+    }
+
+    getDigitalCardLogActivityDetailsList(cardId: string, contactId: string, partnerTypeId: string, dateParameter: string, tenant: number) {
+        return this._http.get(ServiceHelper.GetLogitudeURL() + 'api/DigitalActivity/getcardlogactivitydetailslist/?' + 'cardId=' + cardId + '&contactId=' + contactId + '&partnerTypeId=' + partnerTypeId + '&dateParameter=' + dateParameter + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
             pmresponse.Result = response;
