@@ -135,6 +135,12 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     //constructor(public entityArgs: EntityArgs) {
     constructor(public _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
+        if (FeatureLocator.HasFeaturePermession("Customs.CourierPendingReason", "PendingRequiresApproval")) {
+            this.HasRequiresApprovalFeature = true;
+        }
+        this.EntityResourceService.getEntityResourceByTableName("Customs.CourierPendingReason").subscribe(response => {
+        });
+        
         //this.entityPM = entityArgs.EntityPM;
         this._TabFilterList.push(new TabFilter("ALL", "כל הש.מ.ב ", null, null));
         this._TabFilterList.push(new TabFilter("DOC", "בעיות במסמכים ", null, null));
