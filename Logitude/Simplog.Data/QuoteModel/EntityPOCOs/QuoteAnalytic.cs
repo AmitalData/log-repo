@@ -57,7 +57,6 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public string AgentId { get; set; }
         public double? TEU { get; set; }
         public string SaleCurrencyId { get; set; }
-        public double? ExchangeRate { get; set; }
         public bool IsFixedPrice { get; set; }
         public bool IsSaleCurrencySameAsCost { get; set; }
         public bool IsMultiCurrency { get; set; }
