@@ -18592,6 +18592,19 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
         }
 
+        public void FillFacilitationType()
+        {
+
+            FacilitationTypeRepository facilitationTypeRepository = new FacilitationTypeRepository(0);
+            Dictionary<string, FacilitationType> Tenant = facilitationTypeRepository.GetAll().ToDictionary(d => d.Code, a => a);
+
+            AddClosedTables.AddFacilitationType(new  FacilitationType() { Code = "3", LocalName = "יצואן מאושר", EnglishName = "Approved Exporter",Inactive = false }, facilitationTypeRepository);
+            AddClosedTables.AddFacilitationType(new  FacilitationType() { Code = "4", LocalName = "יבואן / יצואן מאושר", EnglishName = "Approved Exporter / Importer", Inactive = false }, facilitationTypeRepository);
+
+            facilitationTypeRepository.SubmitChanges();
+
+        }
+
 
     }
 

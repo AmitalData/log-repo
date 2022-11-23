@@ -3398,6 +3398,25 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             }
         }
 
+        public static void AddFacilitationType(FacilitationType facilitationType, FacilitationTypeRepository facilitationTypeRepository)
+        {
+            Dictionary<string, FacilitationType> tenant = facilitationTypeRepository.GetAll().ToDictionary(d => d.Code, a => a);
+
+            if (tenant.Keys.Contains(facilitationType.Code))
+            {
+                FacilitationType facilitationTypes = facilitationTypeRepository.GetSingle(facilitationType.Code);
+                facilitationTypes.LocalName = facilitationType.LocalName;
+                facilitationTypes.SearchFields = (facilitationType.Code + "," + facilitationType.LocalName + "," + facilitationType.EnglishName).ToLower();
+                facilitationTypes.EnglishName = facilitationType.EnglishName;
+                facilitationTypes.Inactive = facilitationType.Inactive;
+                facilitationTypeRepository.Update(facilitationTypes);
+            }
+            else
+            {
+                FacilitationType newFacilitationType = new FacilitationType() { Code = facilitationType.Code, LocalName = facilitationType.LocalName, SearchFields = (facilitationType.Code + "," + facilitationType.LocalName + "," + facilitationType.EnglishName).ToLower(), EnglishName = facilitationType.EnglishName , Inactive = facilitationType.Inactive };
+                facilitationTypeRepository.Add(newFacilitationType);
+            }
+        }
 
     }
 }

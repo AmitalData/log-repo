@@ -781,6 +781,8 @@ namespace WebFreight.Web.MetaDataUpdate
 
             updateClass.FillPhysicalCheckCode();
             updateClass.FillToggle();
+            updateClass.FillFacilitationType();
+
         }
 
         private static void UpdateTenantData(int tenant)
