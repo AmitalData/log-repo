@@ -24,6 +24,9 @@ namespace Logitude.DashboardModule.BL.EntityQueryServices
 
             DashboardSharedUserQueryService dashboardSharedUserQuery = new DashboardSharedUserQueryService(context);
             entityPM.DashboardSharedUsers = dashboardSharedUserQuery.GetMulti(dashboardKeys, true);
+
+            DashboardGlobalFilterQueryService dashboardGlobalFilterQuery = new DashboardGlobalFilterQueryService(context);
+            entityPM.DashboardGlobalFilters = dashboardGlobalFilterQuery.GetMulti(dashboardKeys, true);
         }
 
         public string GetDefaultDashboardId(int tenant, string loggedContactId)

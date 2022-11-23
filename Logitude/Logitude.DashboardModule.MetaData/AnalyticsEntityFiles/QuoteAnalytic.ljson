@@ -1,5 +1,5 @@
 {
-  "HashString": "208d8eb1045b4d18853ad3352dd76d47",
+  "HashString": "ade20bfc4b284276862f057934820866",
   "Name": "Quotes Statistics",
   "TableName": "QuoteAnalytics",
   "ObjectTableName": "Quote",
@@ -35,21 +35,6 @@
       "Unit": null
     },
     {
-      "HashString": "1a20f90b5d3545c4b0088567f465da10",
-      "DataTypeCode": "Decimal",
-      "CanMeasure": true,
-      "CanGroup": false,
-      "FieldCode": "EstimateProfit",
-      "DisplayName": "Estimate Profit",
-      "DisplayNamePlural": "Estimate Profit",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
-    },
-    {
       "HashString": "b3dcf3d419be4ccc87e3ce91c0a50dc9",
       "DataTypeCode": "Boolean",
       "CanMeasure": false,
@@ -76,21 +61,6 @@
       "JoinedTableDBName": "Currencies",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "Code",
-      "HasUnit": false,
-      "Unit": null
-    },
-    {
-      "HashString": "b4e642be899149909b43b7e8447e1a33",
-      "DataTypeCode": "Decimal",
-      "CanMeasure": true,
-      "CanGroup": false,
-      "FieldCode": "ExchangeRate",
-      "DisplayName": "Exchange Rate",
-      "DisplayNamePlural": "Exchange Rate",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
       "HasUnit": false,
       "Unit": null
     },
@@ -350,36 +320,6 @@
       "Unit": null
     },
     {
-      "HashString": "fa142df07d084b1bbcb52388b6fb2641",
-      "DataTypeCode": "Decimal",
-      "CanMeasure": true,
-      "CanGroup": false,
-      "FieldCode": "ChargeableWeight",
-      "DisplayName": "Chargeable Weight",
-      "DisplayNamePlural": "Chargeable Weight",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": true,
-      "Unit": "KG"
-    },
-    {
-      "HashString": "d2466be8650c4e0782d60cabeac52173",
-      "DataTypeCode": "Decimal",
-      "CanMeasure": true,
-      "CanGroup": false,
-      "FieldCode": "GrossWeight",
-      "DisplayName": "Gross Weight",
-      "DisplayNamePlural": "Gross Weight",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": true,
-      "Unit": "KG"
-    },
-    {
       "HashString": "658141da036d4fb29c53e9a7432d630c",
       "DataTypeCode": "Boolean",
       "CanMeasure": false,
@@ -393,21 +333,6 @@
       "JoinedTableDisplayField": null,
       "HasUnit": false,
       "Unit": null
-    },
-    {
-      "HashString": "3bd95dea8990460b8cf9ea664ee87dbf",
-      "DataTypeCode": "Decimal",
-      "CanMeasure": true,
-      "CanGroup": false,
-      "FieldCode": "Volume",
-      "DisplayName": "Volume",
-      "DisplayNamePlural": "Volume",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": true,
-      "Unit": "CBM"
     },
     {
       "HashString": "e97a5ae7d1ee429eb2b12c6b45978f4c",
@@ -845,36 +770,6 @@
       "Unit": null
     },
     {
-      "HashString": "d8fb1a6f4d544adc96a7dbb677cc1e07",
-      "DataTypeCode": "Decimal",
-      "CanMeasure": true,
-      "CanGroup": false,
-      "FieldCode": "ValueOfGoods",
-      "DisplayName": "Value of Goods",
-      "DisplayNamePlural": "Value of Goods",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
-    },
-    {
-      "HashString": "e0666dd1f3c84e319fb138a29a688257",
-      "DataTypeCode": "LookUp",
-      "CanMeasure": false,
-      "CanGroup": true,
-      "FieldCode": "ValueOfGoodsCurrencyId",
-      "DisplayName": "Value of Goods Currency",
-      "DisplayNamePlural": "Value of Goods Currency",
-      "JoinedTableName": "Currency",
-      "JoinedTableDBName": "Currencies",
-      "JoinedTableKey": "Id",
-      "JoinedTableDisplayField": "Code",
-      "HasUnit": false,
-      "Unit": null
-    },
-    {
       "HashString": "2f5360fb17e94e6a8e472b9d5d307c64",
       "DataTypeCode": "Boolean",
       "CanMeasure": false,
@@ -1036,21 +931,6 @@
       "JoinedTableDBName": "Currencies",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "Code",
-      "HasUnit": false,
-      "Unit": null
-    },
-    {
-      "HashString": "4b9ce662df5e43b8aabd8677b1762529",
-      "DataTypeCode": "Decimal",
-      "CanMeasure": false,
-      "CanGroup": false,
-      "FieldCode": "ProfitExchangeRate",
-      "DisplayName": "Profit Exchange Rate",
-      "DisplayNamePlural": "Profit Exchange Rate",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
       "HasUnit": false,
       "Unit": null
     },
