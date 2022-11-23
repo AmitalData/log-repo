@@ -529,7 +529,9 @@ export class EditSupplierInvoiceItem extends BaseComponent {
         console.log("... Removing ", item);
         this.ModificationsList.Remove(item);
         this.OriginalItemPM.RemoveSupplierInvoiceItemsMod(item.ModificationPM); // remove from entity
-    }
+        this.CurrentSession.CurrentEditComponent.EntityPM.Direction == "E" ? this.supplierInvoiceSharedService.Difference$.next() : '';
+
+        }  
     IsModificationValid(modificationM: ModificationItemModel) {
         if (!AppTool.IsNullOrEmpty(modificationM)) {
             // requierd fields for last row
@@ -834,6 +836,7 @@ export class EditSupplierInvoiceItem extends BaseComponent {
     CancelButtonClicked() {
         this.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CurrentEditComponent.EntityPM.Direction == "E" ? this.supplierInvoiceSharedService.Difference$.next() : '';
     }
 
     digit: string = null;
@@ -1213,6 +1216,7 @@ export class ModificationItemModel extends BaseComponent {
     public ModificationPM: SupplierInvoiceItemsModPM = null;
     public ObjectTableName = "Customs.SupplierInvoiceItemsMod";
     public DataContext = this;
+    public CurrentSession = SessionLocator.SelectedSession;
 
     constructor(private modificationPM: SupplierInvoiceItemsModPM ,private supplierInvoiceSharedService:SupplierInvoiceSharedService) {
         super();
@@ -1276,15 +1280,8 @@ export class ModificationItemModel extends BaseComponent {
     }
      
     OnAmountOrCurrencyLostFocus(){
-
-        var CurrentSession = SessionLocator.SelectedSession;
-
-        if(CurrentSession.CurrentEditComponent.EntityPM.Direction == "E")
-    {   
-
-                this.supplierInvoiceSharedService.Difference$.next();
-
-    }
+ 
+        this.CurrentSession.CurrentEditComponent.EntityPM.Direction == "E" ? this.supplierInvoiceSharedService.Difference$.next() : '';
 
     }
 }

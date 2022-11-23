@@ -187,18 +187,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         //FRITZ
         this.IFritz_feature = FeatureLocator.Features.filter(d => d.Code == "IFRITZ")[0];
         console.log("IFritz feature: ", this.IFritz_feature);
-        
-        this.modificationAndDiscountTypeListService.getAllFromCache().subscribe((response: ServiceResponse) => {
-            if(response.Result){
-                
-                response.Result.forEach(item => {
-                
-                this.ModificationAndDiscountTypeList.set(item.Code,item.NetoValuesModificationAffectID)
-               
-            });
-            }
-        });
-
+            
         this.initTradeAgreementFilter();
 
  
@@ -211,7 +200,21 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             this.TooltipEdit = "עריכת פריט";
             this.setAdjustmentsWarning(this.IncotermCode)
         }
-        this.supplierInvoiceSharedService.Difference$.subscribe(()=>this.GetDifference())
+        if(this.declarationPM.Direction =='E'){
+
+            this.modificationAndDiscountTypeListService.getAllFromCache().subscribe((response: ServiceResponse) => {
+                if(response.Result){
+                    
+                    response.Result.forEach(item => {
+                    
+                    this.ModificationAndDiscountTypeList.set(item.Code,item.NetoValuesModificationAffectID)
+                   
+                });
+                }
+            });
+        
+        } 
+        this.supplierInvoiceSharedService.Difference$.subscribe(()=>this.GetDifference()) 
     }
   
 
@@ -548,7 +551,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                     //  this.CurrentSession.AccumulatedFilterChangedEvent.emit({ filter: this.AccumulatedFilterSelectedValue, ParentCount: this.ParentItems.length, childrenCount: this.ChildrenItems.length });
 
                     if (getFreightTotals) {
-                        this.GetFreightTotals();
+                        this.declarationPM.Direction != 'E' ? this.GetFreightTotals() : this.GetDifference();
                     }
                     //if (entityPM.InsruancePercentage) {
                     //    this.CalculateInsuranceAmount(entityPM.InsruancePercentage);
@@ -1002,7 +1005,10 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         this.InvoiceCurrency = currency;
         if (this.InvoiceCurrency){
             this.Parent.invoiceCurrencyName = this.InvoiceCurrency.LocalName;
-                if(this.declarationPM.Direction == 'E') this.GetDifference();
+                if(this.declarationPM.Direction == 'E') 
+                {
+                    this.GetDifference();
+                }
                 
         }
            
@@ -1672,136 +1678,170 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
     GetDifference(){
             
-            this.SumDifference = 0;
+        this.SumDifference = 0;
+        var SumTotalForeignCurrency = 0;
 
-            if(this.ModificationAndDiscountTypeList){
+        if(this.ModificationAndDiscountTypeList){
+        
+        this.EntityPM.SupplierInvoiceModifications.forEach(item => {
             
-            this.EntityPM.SupplierInvoiceModifications.forEach(item => {
-                
-                var  ModificationAffectType = !AppTool.IsNullOrEmpty(this.ModificationAndDiscountTypeList.get(item.TypeCode)) ? this.ModificationAndDiscountTypeList.get(item.TypeCode) : ''
-                   
+            var  ModificationAffectType = !AppTool.IsNullOrEmpty(this.ModificationAndDiscountTypeList.get(item.TypeCode)) ? this.ModificationAndDiscountTypeList.get(item.TypeCode) : ''
                
+           
 
-                if(item.Amount!=null && (ModificationAffectType == '1') || ModificationAffectType =='2' ){
+            if(item.Amount !=null){
 
-                    if(item.CurrencyTypeCode != this.EntityPM.InvoiceCurrencyTypeCode )
-                    {
-                        this.TotalExportModificationInInvoiceCurrency = 0;
-                        var ratePM: any;
-                        var firstRatePM: any;
-                        var InvocieCurrencyRate: number = 0;
-                        var rate: number = 0;
-                        var total: number = 0;
-                        if (this.ExchangeRates) {// this is a bug in errorslog filter of undefined, solution: if no exchange rate try to load them if not it will not be calculated----mohammad.
-                            ratePM = this.ExchangeRates.filter(d => d.CurrencyTypeCode == this.ExportModificationCurrency)[0];//.ExchangeRate;
-                            //firstRatePM = this.ExchangeRates.filter(d => d.CurrencyTypeCode == firstInvoice.InvoiceCurrencyTypeCode)[0];//.FirstExchangeRate;
+                if(item.CurrencyTypeCode != this.EntityPM.InvoiceCurrencyTypeCode )
+                {
+                    this.TotalExportModificationInInvoiceCurrency = 0;
+                    var ratePM: any;
+                    var firstRatePM: any;
+                    var InvocieCurrencyRate: number = 0;
+                    var rate: number = 0;
+                    var total: number = 0;
+                    if (this.ExchangeRates) {// this is a bug in errorslog filter of undefined, solution: if no exchange rate try to load them if not it will not be calculated----mohammad.
+                        ratePM = this.ExchangeRates.filter(d => d.CurrencyTypeCode == this.EntityPM.InvoiceCurrencyTypeCode)[0];//.ExchangeRate;
+                        //firstRatePM = this.ExchangeRates.filter(d => d.CurrencyTypeCode == firstInvoice.InvoiceCurrencyTypeCode)[0];//.FirstExchangeRate;
+                    }
+                    else {
+                        this.LoadExchangeRatesForModification(item);
+                        return;
+                    }
+                    if (ratePM) {
+                        InvocieCurrencyRate = ratePM.ExchangeRate;
+                    }
+                    total = (isNaN(item.Amount)) ? 0 : item.Amount;
+                    var ModificationCurrencyRate = this.ExchangeRates.filter(d => d.CurrencyTypeCode == item.CurrencyTypeCode)[0];
+                    if (ModificationCurrencyRate) {
+                        rate = ModificationCurrencyRate.ExchangeRate;
+                        if (InvocieCurrencyRate > 0) {
+                            total = total * (rate / InvocieCurrencyRate);
                         }
                         else {
-                            this.LoadExchangeRatesForModification(item);
-                            return;
+                            total = total * rate;
                         }
-                        if (ratePM) {
-                            InvocieCurrencyRate = ratePM.ExchangeRate;
-                        }
-                        total = (isNaN(item.Amount)) ? 0 : item.Amount;
-                        var ModificationCurrencyRate = this.ExchangeRates.filter(d => d.CurrencyTypeCode == item.CurrencyTypeCode)[0];
-                        if (ModificationCurrencyRate) {
-                            rate = ModificationCurrencyRate.ExchangeRate;
-                            if (InvocieCurrencyRate > 0) {
-                                total = total * (rate / InvocieCurrencyRate);
+                    }
+                    this.TotalExportModificationInInvoiceCurrency = (this.TotalExportModificationInInvoiceCurrency + total);
+                
+                    ModificationAffectType == '1' ? this.SumDifference += this.TotalExportModificationInInvoiceCurrency : ''; 
+                    ModificationAffectType == '2' ? this.SumDifference -= this.TotalExportModificationInInvoiceCurrency : '';
+                    SumTotalForeignCurrency += this.TotalExportModificationInInvoiceCurrency;
+
+
+                }
+
+            else{
+
+                ModificationAffectType == '1' ? this.SumDifference += item.Amount : '';
+                ModificationAffectType =='2' ? this.SumDifference -= item.Amount : '';
+                SumTotalForeignCurrency += item.Amount;
+
+            }
+                
+                   
+            }
+            
+        
+        });
+        if (this.EntityPM.SupplierInvoiceItems.length > 0) 
+        {
+            this.EntityPM.SupplierInvoiceItems.forEach(item =>{
+
+                if(item.SupplierInvoiceItemsMods.length > 0) {
+
+                item.SupplierInvoiceItemsMods.forEach(Modifications =>{
+                    var  ModificationAffectType = !AppTool.IsNullOrEmpty(this.ModificationAndDiscountTypeList.get(Modifications.TypeCode))?this.ModificationAndDiscountTypeList.get(Modifications.TypeCode):''
+
+                    
+                    if(Modifications.Amount!=null){
+
+                        if(Modifications.CurrencyTypeCode != this.EntityPM.InvoiceCurrencyTypeCode )
+                        {
+                            this.TotalExportModificationInInvoiceCurrency = 0;
+                            var ratePM: any;
+                            var firstRatePM: any;
+                            var InvocieCurrencyRate: number = 0;
+                            var rate: number = 0;
+                            var total: number = 0;
+                            if (this.ExchangeRates) {// this is a bug in errorslog filter of undefined, solution: if no exchange rate try to load them if not it will not be calculated----mohammad.
+                                ratePM = this.ExchangeRates.filter(d => d.CurrencyTypeCode == this.EntityPM.InvoiceCurrencyTypeCode)[0];//.ExchangeRate;
+                                //firstRatePM = this.ExchangeRates.filter(d => d.CurrencyTypeCode == firstInvoice.InvoiceCurrencyTypeCode)[0];//.FirstExchangeRate;
                             }
                             else {
-                                total = total * rate;
+                                this.LoadExchangeRatesForModification(Modifications);
+                                return;
                             }
-                        }
-                        this.TotalExportModificationInInvoiceCurrency = (this.TotalExportModificationInInvoiceCurrency + total);
-                    
-                        ModificationAffectType == '1' ? this.SumDifference += this.TotalExportModificationInInvoiceCurrency : this.SumDifference -= this.TotalExportModificationInInvoiceCurrency
-
-                    }
-
-                else{
-
-                    ModificationAffectType == '1' ? this.SumDifference += item.Amount : this.SumDifference -= item.Amount
-                }
-                    
-                       
-                }
-                
-            
-            });
-            if (this.EntityPM.SupplierInvoiceItems.length > 0) 
-            {
-                this.EntityPM.SupplierInvoiceItems.forEach(item =>{
-
-                    if(item.SupplierInvoiceItemsMods.length > 0) {
-
-                    item.SupplierInvoiceItemsMods.forEach(Modifications =>{
-                        var  ModificationAffectType = !AppTool.IsNullOrEmpty(this.ModificationAndDiscountTypeList.get(Modifications.TypeCode))?this.ModificationAndDiscountTypeList.get(Modifications.TypeCode):''
-
-                        
-                        if(Modifications.Amount!=null && ModificationAffectType == '1' || ModificationAffectType == '2'){
- 
-                            if(Modifications.CurrencyTypeCode != this.EntityPM.InvoiceCurrencyTypeCode )
-                            {
-                                this.TotalExportModificationInInvoiceCurrency = 0;
-                                var ratePM: any;
-                                var firstRatePM: any;
-                                var InvocieCurrencyRate: number = 0;
-                                var rate: number = 0;
-                                var total: number = 0;
-                                if (this.ExchangeRates) {// this is a bug in errorslog filter of undefined, solution: if no exchange rate try to load them if not it will not be calculated----mohammad.
-                                    ratePM = this.ExchangeRates.filter(d => d.CurrencyTypeCode == this.ExportModificationCurrency)[0];//.ExchangeRate;
-                                    //firstRatePM = this.ExchangeRates.filter(d => d.CurrencyTypeCode == firstInvoice.InvoiceCurrencyTypeCode)[0];//.FirstExchangeRate;
+                            if (ratePM) {
+                                InvocieCurrencyRate = ratePM.ExchangeRate;
+                            }
+                            total = (isNaN(Modifications.Amount)) ? 0 : Modifications.Amount;
+                            var ModificationCurrencyRate = this.ExchangeRates.filter(d => d.CurrencyTypeCode == Modifications.CurrencyTypeCode)[0];
+                            if (ModificationCurrencyRate) {
+                                rate = ModificationCurrencyRate.ExchangeRate;
+                                if (InvocieCurrencyRate > 0) {
+                                    total = total * (rate / InvocieCurrencyRate);
                                 }
                                 else {
-                                    this.LoadExchangeRatesForModification(Modifications);
-                                    return;
+                                    total = total * rate;
                                 }
-                                if (ratePM) {
-                                    InvocieCurrencyRate = ratePM.ExchangeRate;
-                                }
-                                total = (isNaN(Modifications.Amount)) ? 0 : Modifications.Amount;
-                                var ModificationCurrencyRate = this.ExchangeRates.filter(d => d.CurrencyTypeCode == Modifications.CurrencyTypeCode)[0];
-                                if (ModificationCurrencyRate) {
-                                    rate = ModificationCurrencyRate.ExchangeRate;
-                                    if (InvocieCurrencyRate > 0) {
-                                        total = total * (rate / InvocieCurrencyRate);
-                                    }
-                                    else {
-                                        total = total * rate;
-                                    }
-                                }
-                                this.TotalExportModificationInInvoiceCurrency = (this.TotalExportModificationInInvoiceCurrency + total);
-                            
-                                ModificationAffectType == '1' ? this.SumDifference += this.TotalExportModificationInInvoiceCurrency : this.SumDifference -= this.TotalExportModificationInInvoiceCurrency
-        
                             }
-        
-                        else{
-        
-                            ModificationAffectType == '1' ? this.SumDifference += Modifications.Amount : this.SumDifference -= Modifications.Amount
-                        }
-                            
-                               
-                        }
+                            this.TotalExportModificationInInvoiceCurrency = (this.TotalExportModificationInInvoiceCurrency + total);
                         
-        
-                    });                    
+                            ModificationAffectType == '1' ? this.SumDifference += this.TotalExportModificationInInvoiceCurrency : '';
+                            ModificationAffectType == '2' ? this.SumDifference -= this.TotalExportModificationInInvoiceCurrency : '';
+                            SumTotalForeignCurrency += this.TotalExportModificationInInvoiceCurrency;
 
-                }
-                });
-        
-        
+    
+                        }
+    
+                    else{
+    
+                        ModificationAffectType == '1' ? this.SumDifference += Modifications.Amount : ''
+                        ModificationAffectType == '2' ? this.SumDifference -= Modifications.Amount : ''
+                        SumTotalForeignCurrency += Modifications.Amount;
+
+                    }
+                        
+                           
+                    }
+                    
+    
+                });                    
+
             }
-         
-            this.SumDifference += this.EntityPM.SupplierInvoiceItems.reduce((acc , cur) => acc + cur.ItemPrice, 0);
-
-            this.Parent.Difference = this.InvoiceAmount - this.SumDifference;
+            });
+    
+    
         }
+     
+        this.SumDifference += this.EntityPM.SupplierInvoiceItems.reduce((acc , cur) => acc + cur.ItemPrice, 0);
+
+        this.Parent.Difference = Math.abs(this.InvoiceAmount - this.SumDifference);
+
+        SumTotalForeignCurrency += this.EntityPM.SupplierInvoiceItems.reduce((acc , cur) => acc + cur.ItemPrice, 0);
+
+        this.Parent.TotalForeignCurrency = SumTotalForeignCurrency;
+       
+        if (isNaN(this.Parent.TotalForeignCurrency)) this.Parent.TotalForeignCurrency = 0;       
+
+        if (this.Parent.TotalForeignCurrency != 0) {
+            if (this.Parent.Difference != null) {
+                if (this.Parent.Difference != 0) {
+                    this.Parent.DifferenceColor = FontTool.Red; //red
+                }
+                else {
+                    this.Parent.DifferenceColor = FontTool.Green; //green
+                }
+            }
+        } 
     }
+}
+
+
 
     GetFreightTotals() { 
+
+        if(this.declarationPM.Direction != "E"){
         this.supplierInvoiceService.GetTotalForeignCurrencyForInvoice(this.EntityPM.DeclarationId, this.EntityPM.InvoiceCounterKey).subscribe((response: any) => {
             if (response != null) {
                 this.Parent.TotalForeignCurrency = response.Result;
@@ -1833,7 +1873,8 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                 }
             }
         });
-
+    }
+   
     }
 
     private timerToken: any;
@@ -4718,17 +4759,17 @@ export class ModificationItemModel extends BaseComponent {
     DiscountInDsicCurrency: number = 0;
 
     OnCurrentTypeLostFocus(){
-
-        if(this.parent.declarationPM.Direction == 'E' && (this.EntityPM.ModificationAffectTypeID == '1' || this.EntityPM.ModificationAffectTypeID == '2')){
-            this.parent.GetDifference()
+        
+        if(this.parent.declarationPM.Direction == 'E' && !AppTool.IsNullOrEmpty(this.EntityPM.Amount)  ){
+                this.parent.GetDifference()
         }
     }
 
 
     OnAmountLostFocus() {
+        if(this.parent.declarationPM.Direction == 'E' && !AppTool.IsNullOrEmpty(this.EntityPM.Amount)  ){
 
-        if(this.parent.declarationPM.Direction == 'E' && (this.EntityPM.ModificationAffectTypeID == '1' || this.EntityPM.ModificationAffectTypeID == '2')){
-            this.parent.GetDifference()
+                this.parent.GetDifference()
         }
         if (this.doCalculate) {
             var value = this.Amount;
@@ -4766,6 +4807,11 @@ export class ModificationItemModel extends BaseComponent {
         if (item != null) {
             this.Amount = null;
             this.CurrencyType = null;
+             if(this.parent.declarationPM.Direction == "E"){
+                this.parent.GetDifference();
+             }  
+
+            
             switch (item.code) {
                 /*case "67":
                     this.parent.InsuranceAmount = null;

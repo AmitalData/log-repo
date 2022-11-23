@@ -257,6 +257,10 @@ export class SupplierInvoiceMoreTabComponent extends BaseComponent {
         console.log("... Removing ", item);
         this.ModificationsList.Remove(item);
         this.InvoicePM.RemoveSupplierInvoiceModification(item.ModificationPM); // remove from entity
+        this.declarationPM.Direction == 'E'? this.supplierInvoiceSharedService.Difference$.next() : '';
+        
+        
+        
     }
 
     RemovePayment(item: PaymentItemModel) {
