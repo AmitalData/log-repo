@@ -5,6 +5,7 @@ import { AppTool } from '../../../../../../Infrastructure/Tools';
 import { ScreenPM } from '../../../../../../Infrastructure/EntityPMs/ScreenPM';
 import { CustomizationObjectTableService } from '../../../../ExternalService/CustomizationObjectTableService';
 import { ObjectTablePM } from '../../../../../../Infrastructure/EntityPMs/ObjectTablePM';
+import { ApiQueryFilters } from '../../../../../../Infrastructure/DataContracts/ApiQueryFilters';
 declare var window;
 
 @Component({
@@ -18,9 +19,10 @@ export class AddEditGridScreenSectionComponent extends BaseComponent {
     private IsNew: boolean = false;
     private ObjecttableId: string;
     AllGridScreens: ScreenPM[];
-    SelectedScreen: ScreenPM;
+    SelectedScreen: string;
     CustomizationObjectTableService: CustomizationObjectTableService;
     ChildObjectTables: ObjectTablePM[] = [];
+    ScreenFilterItems: ApiQueryFilters;
     constructor() {
         super();
         this.CustomizationObjectTableService = new CustomizationObjectTableService();
@@ -31,7 +33,11 @@ export class AddEditGridScreenSectionComponent extends BaseComponent {
         this.ObjecttableId = args.ObjecttableId;
         this.FillChildObjectTableIds();
         this.FillGridScreens();
-        if (this.IsNew) return;
+        this.InitLOVFilters();
+        if (this.IsNew) {
+            this.IsLogLovReady = true;
+            return;
+        }
         this.FillEditArgsMode(args);
     }
 
@@ -46,12 +52,21 @@ export class AddEditGridScreenSectionComponent extends BaseComponent {
         this.AllGridScreens = window.Screens.filter(screen => this.ChildObjectTables.some(childObjectTable => childObjectTable.Id == screen.ObjectTableId) && screen.Type == "Grid" && !screen.Inactive);
     }
 
+    public IsLogLovReady: boolean = false;
+    InitLOVFilters() {
+
+        this.ScreenFilterItems = new ApiQueryFilters();
+        this.ScreenFilterItems.addAdditionalFilter("ChildScreenGrid", this.ObjecttableId, null, null, "Equals", true, false, false, "string");
+        this.ScreenFilterItems.Tenant = SessionLocator.Tenant;
+        
+    }
     FillEditArgsMode(args: any) {
         this.Name = args.Name;
         let selectedScreen = window.Screens.filter(screen => this.ChildObjectTables.some(childObjectTable => childObjectTable.Id == screen.ObjectTableId) && screen.Type == "Grid" && screen.Code == args.RelatedScreenCode && !screen.Inactive);
         if (selectedScreen && selectedScreen[0]) {
             this.GridScreensSelectionChanged(selectedScreen[0])
         }
+        this.IsLogLovReady = true;
     }
 
     private name: string;
@@ -72,7 +87,7 @@ export class AddEditGridScreenSectionComponent extends BaseComponent {
     //}
 
     GridScreensSelectionChanged(selectedScreen: any) {
-        this.SelectedScreen = selectedScreen ? selectedScreen : null;
+        this.SelectedScreen = selectedScreen ? selectedScreen.Id : null;
         this.RelatedScreenCode = selectedScreen ? selectedScreen.Code : "";
     }
 

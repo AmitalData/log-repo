@@ -43,6 +43,8 @@ using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Logitude.BL.CommonDataModel.CustomFilters;
+
 namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControllers
 { 
 
@@ -234,7 +236,10 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                 nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
                 listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
-				
+
+                ScreenCustomFilter customfilters = new ScreenCustomFilter(tenant);
+                entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
+
                 entityPocos = genericFilter.GetFilteredQuery<Screen>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
                 IQueryable<ScreenList> entityLists = screenQuery.GetIQueryableEntityList(entityPocos);

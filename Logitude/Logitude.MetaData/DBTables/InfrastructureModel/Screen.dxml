@@ -93,6 +93,21 @@
     <Constraints
       Nullable="true" />  
   </Column>
+    </Column>
+    <Column
+    Name="ChildScreenGrid"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ObjectTableId"
     ReferencedTable="ObjectTables"

@@ -27,8 +27,8 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public bool Inactive { get; set; }
         public string SortedByFieldCode { get; set; }
         public string SortedType { get; set; }
-
-
+        public string SearchFields { get; set; }
+        public string ChildScreenGrid { get; set; }
 
         //[Include]
         //[Association("ObjectTableScreen", "ObjectTableId", "Id",IsForeignKey=true)]

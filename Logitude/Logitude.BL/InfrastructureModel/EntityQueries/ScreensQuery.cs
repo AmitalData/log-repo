@@ -60,6 +60,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                    Type = a.Type,
                                    SortedByFieldCode = a.SortedByFieldCode,
                                    SortedType = a.SortedType,
+                                   SearchFields = a.SearchFields,
+                                   ChildScreenGrid = a.ChildScreenGrid
                                }).ToList();
 
 
@@ -110,8 +112,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                       Type = a.Type,
                                       SortedByFieldCode = a.SortedByFieldCode,
                                       SortedType = a.SortedType,
-
-
+                                      SearchFields = a.SearchFields,
+                                      ChildScreenGrid = a.ChildScreenGrid
                                   }).ToList();
 
             }
@@ -142,7 +144,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Type = a.Type,
                         SortedByFieldCode = a.SortedByFieldCode,
                         SortedType = a.SortedType,
-
+                        SearchFields = a.SearchFields,
+                        ChildScreenGrid = a.ChildScreenGrid
                     }).FirstOrDefault();
 
         }
@@ -169,7 +172,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Type = a.Type,
                         SortedByFieldCode = a.SortedByFieldCode,
                         SortedType = a.SortedType,
-
+                        SearchFields = a.SearchFields,
+                        ChildScreenGrid = a.ChildScreenGrid
                     }).ToList();
         }
 
@@ -188,6 +192,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      ObjectTableName = a.ObjectTable.Name,
                                                      Tenant = a.Tenant,
                                                      Type = a.Type,
+                                                     SearchFields = a.SearchFields,
+                                                     ChildScreenGrid = a.ChildScreenGrid
                                                  };
             return result;
         }

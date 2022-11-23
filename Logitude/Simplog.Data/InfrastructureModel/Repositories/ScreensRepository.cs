@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
@@ -36,7 +37,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public Screen GetSingleScreen(string id)
         {
-            return (from a in context.Screens
+            return (from a in context.Screens.Include("ObjectTable")
                     where a.Id == id
                     select a).FirstOrDefault();
         }

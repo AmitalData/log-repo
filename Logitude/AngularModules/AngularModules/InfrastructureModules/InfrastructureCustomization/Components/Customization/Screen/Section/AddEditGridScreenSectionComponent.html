@@ -71,17 +71,19 @@
                                         </ComboBox>-->
 
 
-                                        <LogLov
-                                                [ObjectFieldName]="'RelatedScreenCode'"
+                                        <LogLov *ngIf="IsLogLovReady"  (SelectedItemChanged)="GridScreensSelectionChanged($event)"
+                                                [ObjectFieldName]="'SelectedScreen'"
                                                 [ObjectTableName]="'ScreenSection'"
                                                 [DataContext]="DataContext"
                                                 [LookUpTableName]="'Screen'"
                                                 [NoValidation]="true"
                                                 [IsFreeText]="true"
-                                                [SelectedValue]="RelatedScreenCode"
+                                                [SelectedValue]="SelectedScreen"
                                                 [HideColumns]="true"
                                                 [HideLastColumn]="true"
-                                                [DisplayMemberPath]="'Name'">
+                                                [DisplayMemberPath]="'Name'"
+                                                [QueryFilterItems]="ScreenFilterItems"
+                                                >
                                         </LogLov>
 
 

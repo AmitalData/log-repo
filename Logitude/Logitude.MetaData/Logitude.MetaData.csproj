@@ -265,7 +265,6 @@
     <None Include="EntityFiles\InfrastructureModel\ChildEntitiesCustomField.lxml" />
     <None Include="EntityFiles\InfrastructureModel\CustomChildObject.lxml" />
     <None Include="EntityFiles\InfrastructureModel\ImageLibrary.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\Screen.lxml" />
     <None Include="EntityFiles\InfrastructureModel\ScreenSection.lxml" />
     <None Include="EntityFiles\QuoteModel\ValidByType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ContainerTrackingResponse.lxml" />

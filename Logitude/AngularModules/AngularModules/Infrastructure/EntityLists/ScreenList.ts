@@ -17,5 +17,7 @@ export class ScreenList {
 		ObjectTableName: string;
 		Name: string;
 		Type: string;
+		SearchFields: string;
+		ChildScreenGrid: string;
 	
 }
