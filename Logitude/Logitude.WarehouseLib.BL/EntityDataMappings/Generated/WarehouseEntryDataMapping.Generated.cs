@@ -10,6 +10,7 @@ using Logitude.Server.Tools;
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.WarehouseLib.Data.EntityPOCOs;
 using Logitude.WarehouseLib.BL.EntityPMs; 
 using Logitude.WarehouseLib.Data;
@@ -469,6 +470,8 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 				entityPOCO.MasterShipmentNumber = entityPM.MasterShipmentNumber;
 			}
 			
+			new CustomChildEntityService(new CustomChildEntityArgs() { ParentEntity = entityPM, ParentEntityId = entityPM.Id, ParentObjectTableName = "WarehouseEntry", Tenant = entityPM.Tenant }).Update();
+		 
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
 
@@ -780,6 +783,8 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 					entityPM.MasterShipmentNumber = entityPOCO.MasterShipmentNumber;
             }
 
+			new CustomChildEntityService(new CustomChildEntityArgs() { ParentEntity = entityPM, ParentEntityId = entityPM.Id, ParentObjectTableName = "WarehouseEntry", Tenant = entityPM.Tenant }).Set();
+		 
 		}
 
 		public void PMToOldPM(WarehouseEntryPM entityPM, WarehouseEntryPM oldEntityPM)
