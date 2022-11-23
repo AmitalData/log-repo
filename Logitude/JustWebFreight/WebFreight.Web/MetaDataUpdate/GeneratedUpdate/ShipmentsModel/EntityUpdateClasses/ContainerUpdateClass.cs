@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ContainerUpdateClass
    {  		
-		public const string HashString = "ca4b8290994491487462bce1d674db14";
+		public const string HashString = "b7b2460a46b3b4d9aef1a06ab86d9b43";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -100,6 +100,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    HasCustomFilter =  true,
 			      				    HasCustomFields =  true,
 			      				    AvailableInCustomization =  true,
+			      				    SupportSubEntity =  false,
 			      				    HasHelper =  true,
 			      				    HasShortTitle =  true,
 			      				    HasFiltersMenu =  false,
@@ -17791,6 +17792,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 		   Feature ContainerFeature_ContainersActivated = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ContainersActivated", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Container.Features.ContainersActivated", NameTextCodeDefaultText = @"Containers Activated" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ContainerObjectTable);
 
 		   Feature ContainerFeature_TABSCUSTOMIZATION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TABSCUSTOMIZATION", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Container.Features.TABSCUSTOMIZATION", NameTextCodeDefaultText = @"Tabs Customization" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ContainerObjectTable);
+
+		   Feature ContainerFeature_MULTIUPDATE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MULTIUPDATE", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Container.Features.MULTIUPDATECONTAINER", NameTextCodeDefaultText = @"Multi Update" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ContainerObjectTable);
 
    
 	    

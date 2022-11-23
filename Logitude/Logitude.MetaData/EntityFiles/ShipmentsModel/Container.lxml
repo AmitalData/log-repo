@@ -10,6 +10,7 @@
   HasCustomFilter="true"
   HasCustomFields="true"
   AvailableInCustomization="true"
+  SupportSubEntity="false"
   HasHelper="true"
   HasShortTitle="true"
   HasFiltersMenu="false"
@@ -26514,6 +26515,15 @@
       FeatureTypeCode="&quot;AREA&quot;"
       FeatureTextCodeCode="&quot;Container.Features.TABSCUSTOMIZATION&quot;"
       FeatureDefaultText="&quot;Tabs Customization&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;MULTIUPDATE&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Container.Features.MULTIUPDATECONTAINER&quot;"
+      FeatureDefaultText="&quot;Multi Update&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
