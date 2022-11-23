@@ -207,7 +207,7 @@
 
                                         <tr class="FormFieldRow" *ngIf="isAdvancedSettingVisible && isMaximumGroupingVisible">
                                             <td>
-                                                <LogLabel [ObjectFieldName]="'MaximumGrouping'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" style="width: 2px;"></LogLabel>
+                                                <LogLabel [ObjectFieldName]="'MaximumGrouping'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
                                             <td>
                                                 <LogTextBox [ObjectFieldName]="'MaximumGrouping'"
@@ -221,16 +221,59 @@
                                             </td>
                                         </tr>
                                         <tr class="FormFieldRow" *ngIf="isAdvancedSettingVisible">
+                                           
                                             <td>
-                                                <LogLabel [ObjectFieldName]="'timeOverTime'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" style="width: 2px;"></LogLabel>
-                                            </td>
-                                            <td>
-                                                <LogLabel [ObjectFieldName]="'timeOverTime'" [ObjectTableName]="ObjectTableName"
-                                                          [DataContext]="DataContext"></LogLabel>
+                                                <LogLabel [ObjectFieldName]="'TimeOverTime'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
 
                                             <td>
                                                 <CheckBox></CheckBox>
+                                            </td>
+                                            <td><div></div></td>
+                                        </tr>
+                                        <tr class="FormFieldRow" *ngIf="isAdvancedSettingVisible">
+                                           
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'ComparisonPeriod'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" style="width: 80px;"></LogLabel>
+                                            </td>
+
+                                            <td>
+                                                <!--to choose the operator -->
+                                                <ComboBox (SelectedItemChanged)="SortBy = $event.Code"
+                                                    [ItemsSource]="SortByCodes"
+                                                    [SelectedItem]="GetSelectedSort()"
+                                                    [Binding]="'Text'">
+                                                </ComboBox>
+                                            </td>
+                                            <td>
+                                                <!--this is for num of days or ... -->
+                                                <LogTextBox [ObjectFieldName]="'MaximumGrouping'"
+                                                            [InputType]="'integer'"
+                                                            [DataContext]="DataContext"
+                                                            [ObjectTableName]="ObjectTableName" [HideColumns]="true" style="width: 2px;">
+                                                </LogTextBox>
+                                            </td>
+                                            <td>
+                                                <!--to choose the period type  -->
+                                                <ComboBox (SelectedItemChanged)="SortBy = $event.Code"
+                                                    [ItemsSource]="SortByCodes"
+                                                    [SelectedItem]="GetSelectedSort()"
+                                                    [Binding]="'Text'">
+                                                 </ComboBox> 
+                                            </td>
+                                        </tr>
+                                        <tr class="FormFieldRow" *ngIf="isAdvancedSettingVisible">
+                                           
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'Increase'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" ></LogLabel>
+                                            </td>
+
+                                            <td>
+                                                <ComboBox (SelectedItemChanged)="SortBy = $event.Code"
+                                                    [ItemsSource]="SortByCodes"
+                                                    [SelectedItem]="GetSelectedSort()"
+                                                    [Binding]="'Text'">
+                                                </ComboBox>  
                                             </td>
                                             <td><div></div></td>
                                         </tr>

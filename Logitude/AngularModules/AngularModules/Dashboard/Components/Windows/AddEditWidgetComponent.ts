@@ -37,6 +37,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     public DateGroupCodes = ['Day', 'Month', 'Year', 'Quarter'];
     public SortByCodes = [];
     public SortByDirections = [{name:'Ascending',code:'asc'},{name:'Descending',code: 'desc'}];
+    public IncreaseDecreases = ['Positive', 'Negative'];
     public GroupByQueryFilters: ApiQueryFilters;
     public isGroupByVisible: boolean = true;
     public isSortByVisible: boolean = true;
