@@ -72,7 +72,7 @@
                                     <table>
                                         <tr style="height:25px;">
                                             <td style="font-size: 11px;" *ngIf="!GlobalFilters || GlobalFilters.length == 0">
-                                                <Hyperlink (click)="AddFilterClicked(item)">Add Filters</Hyperlink>
+                                                <Hyperlink (click)="AddFilterClicked()">Add Filters</Hyperlink>
                                             </td>
                                         </tr>
 
@@ -171,7 +171,7 @@
 
                                         <tr style="height:25px;">
                                             <td style="font-size: 11px;" *ngIf="GlobalFilters && GlobalFilters.length > 0 && GlobalFilters.length < 6">
-                                                <Hyperlink (click)="AddFilterClicked(item)">Add Filters</Hyperlink>
+                                                <Hyperlink (click)="AddFilterClicked()">Add Filters</Hyperlink>
                                             </td>
                                         </tr>
                                     </table>
