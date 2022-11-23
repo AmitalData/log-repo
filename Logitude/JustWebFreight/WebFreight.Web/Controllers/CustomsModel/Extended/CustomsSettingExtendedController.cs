@@ -354,7 +354,13 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 CustomsSettingQueryService customsSettingQuery = new CustomsSettingQueryService(MyContext);
 
-                var tenantMs = customsSettingQuery.GetTenantDetailsMessagesPMs();
+                Func<int, string> getDcaFilterByEnvironment = new Func<int, string>(tenant =>
+                {
+                    var dcaFilterByEnvironmentService = new Logitude.CustomsMessaging.Dca.DcaFilterByEnvironmentService();
+                    var res = dcaFilterByEnvironmentService.GetDCAEnvPerTenant(tenant);
+                    return res.ToString();
+                });
+                var tenantMs = customsSettingQuery.GetTenantDetailsMessagesPMs(getDcaFilterByEnvironment);
 
                 return Request.CreateResponse(HttpStatusCode.OK,   tenantMs  );
             }
