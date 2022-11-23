@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.EntityPMs;
 
 namespace Logitude.BL.QuoteModel.EntityPMs
 {
@@ -794,5 +795,7 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public string SummaryMarkup { get; set; }
 
         public double? TotalVATInSalesCurrency { get; set; }
+        public List<CustomChildEntity> CustomChildEntities { get; set; }
+
     }
 }

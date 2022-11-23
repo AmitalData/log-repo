@@ -196,7 +196,8 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
             Styles: { width: '95px' },
             HtmlListComponentName: 'GlAccountInterestTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountInterestTransactionsListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true
         });
         this.QueryColumns.push(this.excelService.GetQueryColumn("Source", 'Text', TextCodeTranslator.Translate("InterestTransaction.F.InterestEntityTypeCode")));
 
@@ -207,7 +208,8 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
             Styles: { width: '100px' },
             HtmlListComponentName: 'GlAccountInterestTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountInterestTransactionsListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true
         });
         this.QueryColumns.push(this.excelService.GetQueryColumn("InterestValueDate", 'DateTime', TextCodeTranslator.Translate("InterestTransaction.F.InterestValueDate")));
 
@@ -218,7 +220,8 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
             Styles: { width: '85px' },
             HtmlListComponentName: 'GlAccountInterestTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountInterestTransactionsListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true
         });
         this.QueryColumns.push(this.excelService.GetQueryColumn("CreateDateTime", 'DateTime', TextCodeTranslator.Translate("InterestTransaction.F.CreateDateTime")));
 
@@ -231,7 +234,8 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
             Styles: { width: '120px' },
             HtmlListComponentName: 'GlAccountInterestTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountInterestTransactionsListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true
         });
         this.QueryColumns.push(this.excelService.GetQueryColumn("LocalAmount", 'Number', TextCodeTranslator.Translate("InterestTransaction.F.LocalAmount")));
 
@@ -242,7 +246,8 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
            Styles: { width: '100px' },
            HtmlListComponentName: 'GlAccountInterestTransactionsListTemplate',
            HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountInterestTransactionsListTemplate',
-           IsCustomTemplate: true
+           IsCustomTemplate: true,
+           ServerSideSortable: true
         });
         this.QueryColumns.push(this.excelService.GetQueryColumn("CurrencyCode", 'Text', TextCodeTranslator.Translate("InterestTransaction.F.CurrencyCode")));
 
@@ -253,7 +258,8 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
             Styles: { width: '120px' },
             HtmlListComponentName: 'GlAccountInterestTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountInterestTransactionsListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true
         });
         this.QueryColumns.push(this.excelService.GetQueryColumn("ForeignAmount", 'Number', TextCodeTranslator.Translate("InterestTransaction.F.ForeignAmount")));
 
@@ -265,7 +271,8 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
             Styles: { width: '100px' },
             HtmlListComponentName: 'GlAccountInterestTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountInterestTransactionsListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true
         });
         this.QueryColumns.push(this.excelService.GetQueryColumn("JournalNumber", 'Text', TextCodeTranslator.Translate("InterestTransaction.F.JournalNumber")));
 
@@ -276,7 +283,8 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
             Styles: { width: '100px' },
             HtmlListComponentName: 'GlAccountInterestTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountInterestTransactionsListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true
         });
         this.QueryColumns.push(this.excelService.GetQueryColumn("InterestReportNumber", 'Text', TextCodeTranslator.Translate("InterestTransaction.F.InterestReportNumber")));
 
@@ -287,7 +295,8 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
             Styles: { width: '90px' },
             HtmlListComponentName: 'GlAccountInterestTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountInterestTransactionsListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true
         });
         this.QueryColumns.push(this.excelService.GetQueryColumn("IsClosed", 'Boolean', TextCodeTranslator.Translate("InterestTransaction.F.IsClosed")));
 
@@ -299,7 +308,8 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
             Styles: { width: '90px' },
             HtmlListComponentName: 'GlAccountInterestTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountInterestTransactionsListTemplate',
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            ServerSideSortable: true
         });
         this.QueryColumns.push(this.excelService.GetQueryColumn("IsCancelled", 'Boolean', TextCodeTranslator.Translate("InterestTransaction.F.IsCancelled")));
 

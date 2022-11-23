@@ -145,49 +145,59 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         }
         public ContactPM GetSinglePM(string id, int tenant)
         {
-            if (!string.IsNullOrEmpty(id))
+            if (!string.IsNullOrWhiteSpace(id))
             {
-                ContactPM instance = (from a in repository.context.Contacts
-                                      where a.Tenant == tenant && a.UserType == "R"
-                                      && a.Id == id
-                                      select new ContactPM()
-                                      {
-                                          Anniversary = a.Anniversary,
-                                          Birthday = a.Birthday,
-                                          BusinessPhone = a.BusinessPhone,
-                                          Email = a.Email,
-                                          EnglishName = a.EnglishName,
-                                          FacebookId = a.FacebookId,
-                                          Fax = a.Fax,
-                                          Id = a.Id,
-                                          InActive = a.InActive,
-                                          LocalName = a.LocalName,
-                                          SearchFields = a.SearchFields,
-                                          DontShowLocalLabels = a.DontShowLocalLabels,
-                                          Mobile = a.Mobile,
-                                          Notes = a.Notes,
-                                          Tenant = a.Tenant,
-                                          Signature = a.Signature,
-                                          SignatureHtml = a.SignatureHtml,
-                                          ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
-                                          DontShowLocal = a.DontShowLocalLabels,
-                                          DisplayGettingStarted = a.DisplayGettingStarted,
-                                          BirthdayReminder = a.BirthdayReminder,
-                                          AnniversaryReminder = a.AnniversaryReminder,
-                                          ImageDetailId = a.ImageDetailId,
-                                          DoneDate = a.DoneDate,
-                                          BirthDayOfYear = a.BirthDayOfYear,
-                                          ContactDoneMethodCode = a.ContactDoneMethod != null ? a.ContactDoneMethod.Code : null,
-                                          ContactDoneMethodName = a.ContactDoneMethod != null ? a.ContactDoneMethod.Name : null,
-                                          Position = a.Position,
-                                          ExternalId = a.ExternalId,
-                                          CompanyName = a.CompanyName,
-                                          CreateDate = a.CreateDate,
-                                          IndexColor = a.IndexColor,
-                                      }).FirstOrDefault();
+                ContactPM instance = repository.context
+                                               .Contacts
+                                               .Where(a => a.Tenant == tenant
+                                                           && a.UserType.Equals("R", StringComparison.InvariantCultureIgnoreCase)
+                                                           && a.Id == id)
+                                               .Select( a => new ContactPM()
+                                               {
+                                                   Anniversary = a.Anniversary,
+                                                   Birthday = a.Birthday,
+                                                   BusinessPhone = a.BusinessPhone,
+                                                   Email = a.Email,
+                                                   EnglishName = a.EnglishName,
+                                                   FacebookId = a.FacebookId,
+                                                   Fax = a.Fax,
+                                                   Id = a.Id,
+                                                   InActive = a.InActive,
+                                                   LocalName = a.LocalName,
+                                                   SearchFields = a.SearchFields,
+                                                   DontShowLocalLabels = a.DontShowLocalLabels,
+                                                   Mobile = a.Mobile,
+                                                   Notes = a.Notes,
+                                                   Tenant = a.Tenant,
+                                                   Signature = a.Signature,
+                                                   SignatureHtml = a.SignatureHtml,
+                                                   ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
+                                                   DontShowLocal = a.DontShowLocalLabels,
+                                                   DisplayGettingStarted = a.DisplayGettingStarted,
+                                                   BirthdayReminder = a.BirthdayReminder,
+                                                   AnniversaryReminder = a.AnniversaryReminder,
+                                                   ImageDetailId = a.ImageDetailId,
+                                                   DoneDate = a.DoneDate,
+                                                   BirthDayOfYear = a.BirthDayOfYear,
+                                                   ContactDoneMethodCode = a.ContactDoneMethod != null ? a.ContactDoneMethod.Code : null,
+                                                   ContactDoneMethodName = a.ContactDoneMethod != null ? a.ContactDoneMethod.Name : null,
+                                                   Position = a.Position,
+                                                   ExternalId = a.ExternalId,
+                                                   CompanyName = a.CompanyName,
+                                                   CreateDate = a.CreateDate,
+                                                   IndexColor = a.IndexColor,
+                                               })
+                                               .FirstOrDefault();
 
                 if (instance != null)
                 {
+                    TenantRepository tenantRepository = new TenantRepository(tenant);
+
+                    var tenantInfo = tenantRepository.GetSingleTenantWithOutIncluded(tenant);
+
+                    var tenantAddress = tenantInfo.Address != null ? tenantInfo.Address.City : "";
+
+                    instance.TimeZone = $"(UTC {tenantInfo.TimeZoneOffset}:00) {tenantAddress}";
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
                         IGlobalContext globalContext = GlobalContext.GetContext();

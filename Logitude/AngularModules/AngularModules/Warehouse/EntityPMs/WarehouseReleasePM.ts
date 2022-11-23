@@ -14,6 +14,7 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+import { CustomChildEntity } from '../../Infrastructure/EntityPMs/CustomChildEntity';
 
 export class WarehouseReleasePM {
 
@@ -349,6 +350,10 @@ export class WarehouseReleasePM {
     public set MasterShipmentNumber(newValue: string) { if (this.masterShipmentNumber != newValue) { this.masterShipmentNumber = newValue; this.MarkAsDirty("MasterShipmentNumber"); } }
        
 	 
+    private customChildEntities: CustomChildEntity[];
+    public get CustomChildEntities() { return this.customChildEntities; }
+    public set CustomChildEntities(newValue: CustomChildEntity[]) { if (this.customChildEntities != newValue) { this.customChildEntities = newValue; this.MarkAsDirty("CustomChildEntities"); } }
+
 
     public OldEntityPM: WarehouseReleasePM;
 		

@@ -25,6 +25,7 @@ using Simplog.Data.QuoteModel;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Logitude.CRM.Data.Repsitories;
+using Logitude.BL.InfrastructureModel.Tools.EntityService;
 
 namespace Logitude.BL.QuoteModel.EntityQueries
 {
@@ -2593,6 +2594,9 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             entityPM.TicketId = GetConnectedTicketId(entityPOCO, tenant);
             entityPM.SummaryMarkup = this.GetSummaryMarkup(entityPM);
             entityPM.TotalVATInSalesCurrency = this.GetSummaryTotalVAT(entityPM);
+
+            new CustomChildEntityService(new CustomChildEntityArgs() { ParentEntity = entityPM, ParentEntityId = entityPM.Id, ParentObjectTableName = "Quote", Tenant = tenant }).Set();
+
             return entityPM;
         }
 

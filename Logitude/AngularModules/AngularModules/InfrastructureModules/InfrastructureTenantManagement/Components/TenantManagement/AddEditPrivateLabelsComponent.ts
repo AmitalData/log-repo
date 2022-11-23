@@ -817,6 +817,15 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
         }
     }
 
+    get FilingInboxDomain() {
+        return this.EntityPM.FilingInboxDomain;
+    }
+    set FilingInboxDomain(value: string) {
+        if (value != this.EntityPM.FilingInboxDomain) {
+            this.EntityPM.FilingInboxDomain = value;
+
+        }
+    }
    
 
      get ContactUsEmail() {

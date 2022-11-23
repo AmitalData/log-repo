@@ -91,8 +91,8 @@
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": true,
+      "Unit": "{(LocalCurrency)}"
     },
     {
       "HashString": "6bd0b2bfbb5b41589e3174a3951eccf5",
@@ -181,8 +181,8 @@
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": true,
+      "Unit": "{(ProfitCurrency)}"
     },
     {
       "HashString": "2dd570f613d14907915f741a2953e324",
@@ -241,8 +241,8 @@
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": true,
+      "Unit": "{(LocalCurrency)}"
     },
     {
       "HashString": "30c3b641a6814076bdb3dee14ce89da3",
@@ -256,8 +256,8 @@
       "JoinedTableDBName": null,
       "JoinedTableKey": null,
       "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": true,
+      "Unit": "{(ProfitCurrency)}"
     },
     {
       "HashString": "a62897fc0aab4f4980ffe4df27d6955c",

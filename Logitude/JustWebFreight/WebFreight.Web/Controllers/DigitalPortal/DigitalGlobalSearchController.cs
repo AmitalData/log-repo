@@ -120,7 +120,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     ShipmentNumber = item.ShipmentNumber,
                     Direction = item.DirectionId,
                     TransportMode = item.TransportModeId,
-                    Reference = item.DirectionId == "I" ? item.ShipperName : item.ConsigneeName
+                    Reference = item.CustomerName
                 });
             });
 

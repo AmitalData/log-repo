@@ -10,6 +10,9 @@ using System.Linq;
 using System.Web;
 using WebFreight.Web.InfrastructureModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System.Threading;
+using Logitude.Server.Tools.Helpers;
+using Logitude.BL.Security;
 
 namespace WebFreight.Web.Helpers.SignUp.Logbox
 {
@@ -47,7 +50,7 @@ namespace WebFreight.Web.Helpers.SignUp.Logbox
             newTenant.AddressId = TenantAddress.Id;
             newTenant.IsDocumentsArchive = true;
             newTenant.CustomerId = signUpInfoClass.CustomerId;
-            //newTenant.AgentId = signUpInfoClass.IsCreateLogboxTenantFromCloud ? GetNewAgentId(signUpInfoClass) : newTenant.AgentId;
+            newTenant.AgentId = signUpInfoClass.IsCreateLogboxTenantFromCloud ? GetNewAgentId(signUpInfoClass) : newTenant.AgentId;
             newTenant.CustomerTenantShareImportFile = true;
             newTenant.AutoArchiveOnInvoice = !string.IsNullOrEmpty(newTenant.PrivateLabelId) ? true : newTenant.AutoArchiveOnInvoice;
             newTenant.AutoArchiveOnPODExport = !string.IsNullOrEmpty(newTenant.PrivateLabelId) ? true : newTenant.AutoArchiveOnPODExport;
@@ -78,8 +81,16 @@ namespace WebFreight.Web.Helpers.SignUp.Logbox
                 PartnerTypeId = AgentPartnerTypeCode,
             };
 
-            AgentService agentService = new AgentService(commonContext, agentPM, contactPMId);
-            agentService.Create(agentPM);
+            var thread = new Thread(() =>
+            {
+                SecurityUtility.IsWorkerRoleCall = true;
+                AuthenticationUtil.AuthenticatedUserEmail = signUpInfoClass.Email;
+                AgentService agentService = new AgentService(commonContext, agentPM, contactPMId);
+                agentService.Create(agentPM);
+            });
+
+            thread.Start();
+            thread.Join();
 
             return agentPM.Id;
         }

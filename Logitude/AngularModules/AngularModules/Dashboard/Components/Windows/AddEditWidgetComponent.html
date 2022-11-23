@@ -1,3 +1,4 @@
+
 <style type="text/css">
     .LinkBtn {
         text-decoration: underline;
@@ -7,13 +8,13 @@
         text-indent: 3px;
     }
 
-    .LinkBtn:hover {
-        text-decoration: underline;
-        float: left;
-        color: lightskyblue;
-        font-size: 11px;
-        cursor: pointer;
-    }
+        .LinkBtn:hover {
+            text-decoration: underline;
+            float: left;
+            color: lightskyblue;
+            font-size: 11px;
+            cursor: pointer;
+        }
 </style>
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
@@ -187,7 +188,7 @@
                                                                       [ItemsSource]="SortByDirections"
                                                                       [SelectedItem]="GetSelectedSortDirection()"
                                                                       [Binding]="'name'">
-                                                                      >
+                                                                >
                                                             </ComboBox>
                                                         </td>
                                                     </tr>
@@ -198,32 +199,27 @@
                                                 <div></div>
                                             </td>
                                         </tr>
-                                        <tr class="FormFieldRow">
+                                        <tr class="FormFieldRow" *ngIf="isMaximumGroupingVisible && isAdvancedSettingLinkVisible">
                                             <td>
                                                 <span class="LinkBtn" (click)="isAdvancedSettingVisible = !isAdvancedSettingVisible">  Advanced Settings</span>
                                             </td>
                                         </tr>
 
-                                        <table *ngIf="isAdvancedSettingVisible">
-                                            <tr class="FormFieldRow" *ngIf="isMaximumGroupingVisible"> 
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'MaximumGrouping'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" style="width: 2px;"></LogLabel>
-                                                </td>
-                                                <td>
-                                            
-                                                    <LogTextBox 
-                                                    [ObjectFieldName]="'MaximumGrouping'" 
-                                                    [InputType]="'integer'" 
-                                                    [DataContext]="DataContext"
-                                                    [ObjectTableName]="ObjectTableName" [HideColumns]="true" style="width: 2px;">
+                                        <tr class="FormFieldRow" *ngIf="isAdvancedSettingVisible && isMaximumGroupingVisible">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'MaximumGrouping'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" style="width: 2px;"></LogLabel>
+                                            </td>
+                                            <td>
+                                                <LogTextBox [ObjectFieldName]="'MaximumGrouping'"
+                                                            [InputType]="'integer'"
+                                                            [DataContext]="DataContext"
+                                                            [ObjectTableName]="ObjectTableName" [HideColumns]="true" style="width: 2px;">
                                                 </LogTextBox>
-                                                </td>
-                                                
-                                                <td>
-                                                    <div></div>
-                                                </td>
-                                            </tr>
-                                        </table>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
                                     </table>
                                 </td>
 
@@ -231,17 +227,17 @@
                                     <img width="150" [attr.src]="ChartImageSrc" />
                                 </td>
                             </tr>
-                
+
                             <tr style="height: 10px;">
                                 <td>
                                     <div></div>
                                 </td>
                             </tr>
-                            
+
                             <tr *ngIf="EntityId" style="height: 0;">
                                 <td colspan="2" style="height: 250px;">
                                     <div style="overflow-x: auto; overflow-y: hidden; height: 100%; width: 100%;">
-                                        <WidgetFilter [IsRoot]="true" [EntityId]="EntityId" [DataSource]="RootFilter" [DashboardId] = "DashboardPM?.Id"></WidgetFilter>
+                                        <WidgetFilter [IsRoot]="true" [EntityId]="EntityId" [DataSource]="RootFilter" [DashboardId]="DashboardPM?.Id"></WidgetFilter>
                                     </div>
                                 </td>
                             </tr>

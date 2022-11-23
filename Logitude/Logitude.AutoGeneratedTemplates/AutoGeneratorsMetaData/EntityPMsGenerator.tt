@@ -95,6 +95,7 @@ string validationclassname = "ValidationClass";
  private void WritePMMethod(dynamic entity)
 {
 	string tableName = entity.ObjectTableName.Trim('"');
+	string tableSupportSubEntity = entity.SupportSubEntity.ToString();
 	string dBTableName = entity.DBTableName.Trim('"');
 	string schema ="";
 	 
@@ -134,6 +135,8 @@ using System.ServiceModel.DomainServices.Server;
 using Logitude.Server.Tools; 
 using System.Runtime.Serialization;
 using Simplog.Server.Infrastructure.DataContracts; 
+<#+ if(entity.SupportSubEntity.ToString() == "true") {#>using Logitude.BL.InfrastructureModel.EntityPMs;
+<#+}#>
 using <#= validatorsnamespace #>
   
 namespace <#= pmnamespacestring #>
@@ -176,7 +179,7 @@ namespace <#= pmnamespacestring #>
            }
 	 }
 
-	  
+	  if(entity.SupportSubEntity.ToString() == "true") {WriteSubEntityProperty();}
 
 	 #>
    }
@@ -296,7 +299,26 @@ else
  }
 #>
 
+<#+
+public void WriteSubEntityProperty(){
+#>
 
+	   private List<CustomChildEntity> customChildEntities;
+	   [CustomValidation(typeof(<#= validationclassname #>), "ValidateClass")]
+	   [DataMember]
+       public List<CustomChildEntity> CustomChildEntities
+	   {
+	     get { return customChildEntities; }
+		 set {
+		   if(customChildEntities == value) return;
+		   NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomChildEntities",OldValue=customChildEntities,NewValue=value,PropertyType="List<CustomChildEntity>"};
+		   NotifyPropertyChanged(values);
+		   customChildEntities=value;
+		 }
+	   }
+<#+
+}
+#>
 
 <#+
 public void WritePMList(dynamic field)

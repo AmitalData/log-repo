@@ -10,5 +10,6 @@ namespace Logitude.DashboardModule.BL.DataProviders.Models
     {
         public string MeasureLabel { get; set; }
         public object Value { get; set; }
+        public string Unit { get; set; }
     }
 }

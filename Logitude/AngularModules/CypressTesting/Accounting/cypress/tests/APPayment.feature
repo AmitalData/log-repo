@@ -1,4 +1,4 @@
-@smoke @smoke2
+@smoke @smoke3
 Feature: AP Payment
     The user creates new AP Payment and approve the AP Payment
 

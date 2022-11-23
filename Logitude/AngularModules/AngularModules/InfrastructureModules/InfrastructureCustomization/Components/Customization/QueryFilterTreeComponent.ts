@@ -5,6 +5,7 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import { AppTool } from '../../../../Infrastructure/Tools';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 
+declare var window: any;
 
 @Component({
     selector: 'QueryFilterTree',
@@ -15,7 +16,7 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 export class QueryFilterTreeComponent extends BaseComponent implements OnInit {
     public CurrentSession = SessionLocator.SelectedSession;
     public EntityResourceService: EntityResourceService = new EntityResourceService();
-    AllObjectTables: string[] = [];
+    AllObjectTables: ShortObjectTableDetails[] = [];
 
     constructor() {
         super();
@@ -39,15 +40,38 @@ export class QueryFilterTreeComponent extends BaseComponent implements OnInit {
 
     LoadLookUpTableResources() {
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ...");
-        this.EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response: any) => {
-            this.EntityResourceService.getEntityResourceByTableName(this.ParentObjectTableName).subscribe((response: any) => {
-                this.CurrentSession.StopBusyIndicator();
-                let dataSourceItem = this.DataSource[0];
-                if (dataSourceItem && dataSourceItem.length != 1) {
-                    this.DataSource = this.GetAllFilters(dataSourceItem);
-                }
+        this.LoadObjectTableEntityResources();
+    }
+    LoadObjectTableEntityResources() {
+        let objectTable = window.ObjectTables.filter(ob => ob.Name == this.ObjectTableName)[0];
+        if (objectTable && !objectTable.IsCustom) {
+            this.EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response: any) => {
+                this.LoadParentObjectTableEntityResources();
             });
-        });
+        }
+        else {
+            this.LoadParentObjectTableEntityResources();
+        }
+    }
+
+    LoadParentObjectTableEntityResources() {
+        let parentObjectTable = window.ObjectTables.filter(ob => ob.Name == this.ParentObjectTableName)[0];
+        if (parentObjectTable && !parentObjectTable.IsCustom) {
+            this.EntityResourceService.getEntityResourceByTableName(this.ParentObjectTableName).subscribe((response: any) => {
+                this.LoadEntityResourcesFinished();
+            });
+        }
+        else {
+            this.LoadEntityResourcesFinished();
+        }
+    }
+
+    LoadEntityResourcesFinished() {
+        this.CurrentSession.StopBusyIndicator();
+        let dataSourceItem = this.DataSource[0];
+        if (dataSourceItem && dataSourceItem.length != 1) {
+            this.DataSource = this.GetAllFilters(dataSourceItem);
+        }
     }
 
     MustAddEmptyFilter() {
@@ -135,10 +159,37 @@ export class QueryFilterTreeComponent extends BaseComponent implements OnInit {
 
     FillAllObjectTables() {
         this.AllObjectTables = [];
-        this.AllObjectTables.push(this.ParentObjectTableName);
-        if (this.ParentObjectTableName != this.ObjectTableName) {
-            this.AllObjectTables.push(this.ObjectTableName);
-        }
+        this.PushParentObjectTable();
+        this.PushObjectTable();
+    }
+    
+    PushParentObjectTable() {
+        if (!this.ParentObjectTableName) return;
+        let objectTableNameSplitter = this.ParentObjectTableName.split('.');
+        this.AllObjectTables.push(new ShortObjectTableDetails(this.ParentObjectTableName, objectTableNameSplitter[objectTableNameSplitter.length - 1]));
+    }
+
+    PushObjectTable() {
+        if (!this.ObjectTableName) return;
+        if (this.ParentObjectTableName == this.ObjectTableName) return;
+        let objectTableNameSplitter = this.ObjectTableName.split('.');
+        this.AllObjectTables.push(new ShortObjectTableDetails(this.ObjectTableName, objectTableNameSplitter[objectTableNameSplitter.length - 1]));
+    }
+
+    SelectedMainEntityName(item) {
+        return this.AllObjectTables.filter(ob => ob.Code == item.MainEntityName)[0];
+    }
+
+    SelectedSecondaryEntityName(item) {
+        return this.AllObjectTables.filter(ob => ob.Code == item.SecondaryEntityName)[0];
+    }
+
+    MainEntityChanged(item, selectedShortObjectTable) {
+        item.MainEntityChanged(selectedShortObjectTable.Code);
+    }
+
+    SecondaryEntityChanged(item, selectedShortObjectTable) {
+        item.SecondaryEntityChanged(selectedShortObjectTable.Code);
     }
 
     AddFilterToGroup(item: QueryFilterViewItem) {
@@ -201,4 +252,13 @@ export class QueryFilterTreeComponent extends BaseComponent implements OnInit {
         newTreeFilter.QueryFilterItems.push(emptyTreeFilter);
         this.DataSource.push(newTreeFilter);
     }
+}
+
+class ShortObjectTableDetails {
+    constructor(code: string, name: string) {
+        this.Code = code;
+        this.Name = name;
+    }
+    Code: string;
+    Name: string;
 }

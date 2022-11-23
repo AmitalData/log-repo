@@ -7,8 +7,6 @@ using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
 {
@@ -27,7 +25,7 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             {
                 var seriesMeasure = new SeriesMeasure();
 
-                seriesMeasure.Name = GetSeriesName(measure) ;
+                seriesMeasure.Name = GetSeriesName(measure);
                 seriesMeasure.MeasureFieldId = measure.MeasureFieldId;
                 seriesMeasure.SeriesMeasureVulues = GetSeriesMeasureVulues(query, measure);
                 seriesMeasures.Add(seriesMeasure);
@@ -42,12 +40,8 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             if (measure.MeasureFieldId != null)
                 measureField = _EntityFields.ContainsKey(measure.MeasureFieldId) ? _EntityFields[measure.MeasureFieldId] : throw new Exception($"Meta Data Field '{measure.MeasureFieldId}' not found");
             var measureCodeName = GetMeasureCodeName(measure.MeasureCode);
-            if (measureField != null)
-                return $"{measureCodeName} of {measureField.DisplayName}";
-
-
+            if (measureField != null) return $"{measureCodeName} of {measureField.DisplayName}";
             return $"{measureCodeName} of {_Entity.Name}";
-
         }
 
         private string GetMeasureCodeName(string measureCode)
@@ -76,12 +70,13 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             string querys = CreateQuery(measure, groupBy, measureField, resultQueryable);
             var conterxt = DashboardContext.GetContext(0);
             var resultQueryables = conterxt.GetActiveDbContext().Database.SqlQuery<SeriesMeasureVulue>(querys, new object[0]).AsQueryable();
-            var results = resultQueryables.ToList();
+            List<SeriesMeasureVulue> seriesMeasureVulues = resultQueryables.ToList();
             if (groupBy.DataTypeCode == "Date" || groupBy.DataTypeCode == "DateTime")
             {
-                UpdateDateString(results);
+                seriesMeasureVulues = FillDateGaps(seriesMeasureVulues);
+                UpdateDateString(seriesMeasureVulues);
             }
-            return results;
+            return seriesMeasureVulues;
         }
 
         private string CreateQuery<T>(WidgetMeasurePM measure, AnalyticsFactsFieldsMetaData groupBy, AnalyticsFactsFieldsMetaData measureField, IQueryable<T> resultQueryable)
@@ -113,5 +108,88 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
                             group by {Label},{groupByField} {sortBy}";
         }
 
+        private List<SeriesMeasureVulue> FillDateGaps(List<SeriesMeasureVulue> seriesMeasureVulues)
+        {
+            if (seriesMeasureVulues == null || seriesMeasureVulues.Count == 0 || seriesMeasureVulues.Count == 1) return seriesMeasureVulues;
+
+            var result = FillAllDateGaps(seriesMeasureVulues);
+
+            if (_Widget.SortBy != null) return result;
+            return _Widget.SortDirection == "asc" ? result.OrderBy(x => x.Label).ToList() : result.OrderByDescending(x => x.Label).ToList();
+        }
+
+        private List<SeriesMeasureVulue> FillAllDateGaps(List<SeriesMeasureVulue> seriesMeasureVulues)
+        {
+            var dates = new List<string>();
+            if (_Widget.DateGroupCode == "Quarter") dates = BuildQuarterDates(seriesMeasureVulues);
+            else dates = BuildDateList(seriesMeasureVulues);
+
+            var result = new List<SeriesMeasureVulue>();
+            foreach (var item in dates)
+            {
+                var seriesMeasureVulue = seriesMeasureVulues.FirstOrDefault(x => x.Label == item);
+                if (seriesMeasureVulue == null)
+                {
+                    seriesMeasureVulue = new SeriesMeasureVulue
+                    {
+                        Label = item,
+                        GroupById = item
+                    };
+                }
+                result.Add(seriesMeasureVulue);
+            }
+            return result;
+        }
+
+        private List<string> BuildQuarterDates(List<SeriesMeasureVulue> seriesMeasureVulues)
+        {
+            var listDates = seriesMeasureVulues.Select(x => x.Label).OrderBy(x => x).ToList();
+            var minDate = listDates.FirstOrDefault();
+            var maxDate = listDates.LastOrDefault();
+
+            int currentYear = int.Parse(minDate.Split('/')[0]);
+            int currentQuarter = int.Parse(minDate.Split('/')[1].Remove(0, 1));
+
+            int endYear = int.Parse(maxDate.Split('/')[0]);
+            int endQuarter = int.Parse(maxDate.Split('/')[1].Remove(0, 1));
+
+            var allDates = new List<string>();
+            for (; currentYear <= endYear; currentYear++)
+            {
+                if (allDates.Any()) currentQuarter = 1;
+                for (; currentQuarter <= 4; currentQuarter++)
+                {
+                    if (currentYear == endYear && currentQuarter == endQuarter) break;
+                    allDates.Add(currentYear + "/Q" + currentQuarter);
+                }
+            }
+            return allDates;
+        }
+
+        private List<string> BuildDateList(List<SeriesMeasureVulue> seriesMeasureVulues)
+        {
+            List<DateTime> listDates = seriesMeasureVulues.Select(x => DateTime.ParseExact(x.GroupById, "yyyy/MM/dd", null)).ToList();
+            DateTime minDate = listDates.Min();
+            DateTime maxDate = listDates.Max();
+
+            var allDates = new List<DateTime>();
+            for (; maxDate.CompareTo(minDate) > 0; minDate = ApplyDateAddition(minDate))
+            {
+                allDates.Add(minDate);
+            }
+            if (_Widget.MaximumGrouping == null) allDates.Select(x => x.ToString("yyyy/MM/dd")).ToList();
+            return allDates.Take(_Widget.MaximumGrouping.Value).Select(x => x.ToString("yyyy/MM/dd")).ToList();
+        }
+
+        private DateTime ApplyDateAddition(DateTime minDate)
+        {
+            switch (_Widget.DateGroupCode)
+            {
+                case "Day": return minDate.AddDays(1);
+                case "Month": return minDate.AddMonths(1);
+                case "Year": return minDate.AddYears(1);
+                default: return minDate.AddDays(1);
+            }
+        }
     }
 }
