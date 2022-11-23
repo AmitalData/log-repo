@@ -409,6 +409,9 @@
     <Compile Include="Services\SAT\UpdateCanceledSATEntitiesStatusesService.cs" />
     <Compile Include="Services\Scheduler\ConnectionStringConfiguration.cs" />
     <Compile Include="ShipmentDocsInUploaderWorkerRole.cs" />
+    <Compile Include="Tasks\DeleteOldBIReportsExecutionLogsTask.cs" />
+    <Compile Include="Tasks\DeleteOldReportExecutionLogsTask.cs" />
+    <Compile Include="Tasks\DeleteOldDocumentsExecutionLogsTask.cs" />
     <Compile Include="Tasks\DeleteOldAnalyzeQueuesTask.cs" />
     <Compile Include="Tasks\DeleteOldContactActivityLogsTask.cs" />
     <Compile Include="Tasks\DeleteOldMobileNotificationLogsTask.cs" />
