@@ -72,7 +72,13 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
 
     initializeFlowVariablesTree() {
         if (!this.IsEntityField || !this.IsEntityFieldValue) {
-            this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId);
+            let showVariables = {
+                ShowRecordsVariables: true,
+                ShowDeclaredVariables: true,
+                ShowRecordsCollectionVariables: false,
+                ShowDeclaredCollectionVariables: false
+            };
+            this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId, showVariables);
             this.FlowVariablesTreeItems = this.FlowVariablesTreeList.Items;
         }
     }

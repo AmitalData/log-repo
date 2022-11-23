@@ -36,6 +36,7 @@ import { ConditionDisabledPipe } from "./Pipes/ConditionDisabledPipe";
 import { ExpressionComponent } from "./Components/Base/ExpressionComponent";
 import { ExpressionLogicComponent } from "./Components/Base/ExpressionLogicComponent";
 import { CollectionFilterPropertiesComponent } from './Components/Properties/CollectionFilterPropertiesComponent';
+import { ShowEditableVariablesTreeItemPipe } from "./Pipes/ShowEditableVariablesTreeItemPipe";
 
 export const Components = [
     WorkflowBuilderComponent,
@@ -79,6 +80,7 @@ export const Pipes = [
     ShowFlowVariablesTreeItemPipe,
     EntityLabelPipe,
     ConditionDisabledPipe,
+    ShowEditableVariablesTreeItemPipe,
 ];
 
 export class ModuleDeclarations {
