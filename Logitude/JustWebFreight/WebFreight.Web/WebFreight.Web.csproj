@@ -734,6 +734,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\DigitalPortal\DigitalActivityController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalCustomizationController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\ObjectTableController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowCustomerController.cs" />
@@ -7643,6 +7644,7 @@
     <Folder Include="MobileApplication\Views\CurrencyType\" />
     <Folder Include="MobileApplication\Views\DashboardAnalytics\" />
     <Folder Include="MobileApplication\Views\DeclarationVehicleModification\" />
+    <Folder Include="MobileApplication\Views\DigitalActivity\" />
     <Folder Include="MobileApplication\Views\IIGGeneralMessages\" />
     <Folder Include="MobileApplication\Views\InterfaceManagementListExtended\" />
     <Folder Include="MobileApplication\Views\QuoteApiV1\" />
