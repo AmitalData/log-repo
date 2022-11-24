@@ -192,7 +192,7 @@ namespace Logitude.Accounting.BL.Utils
                         from acc in dbAllGLAccount
                         join descs in dbAllDescendants on acc.AccountId equals descs.ParentAccId
                         into accDescendantsJoin
-                        from ad in accDescendantsJoin.DefaultIfEmpty()
+                        from descs in accDescendantsJoin.DefaultIfEmpty()
                         select new GLAccountMDatasDTO4Tester2
                         {
                             AccountId = acc.AccountId,
@@ -200,9 +200,9 @@ namespace Logitude.Accounting.BL.Utils
                             DisplayNumber = acc.DisplayNumber,
                             //   Tenant = acc.Tenant,
                             GLAccountBalance = acc.BalanceInLocalCurrency,
-                            DescBalance = ad != null ? ad.DescBalanceInLocalCurrency : 0m,
-                            BalanceInLocalCurrency = ad != null ? acc.BalanceInLocalCurrency + ad.DescBalanceInLocalCurrency : acc.BalanceInLocalCurrency, // GLAccount and descendants 
-                            //IntReportOpenBalance = ad != null ? acc.IntReportOpenBalance + ad.DescIntReportOpenBalance : acc.IntReportOpenBalance, 
+                            DescBalance = descs != null ? descs.DescBalanceInLocalCurrency : 0m,
+                            BalanceInLocalCurrency = descs != null ? acc.BalanceInLocalCurrency + descs.DescBalanceInLocalCurrency : acc.BalanceInLocalCurrency, // GLAccount and descendants 
+                            //IntReportOpenBalance = descs != null ? acc.IntReportOpenBalance + ad.DescIntReportOpenBalance : acc.IntReportOpenBalance, 
                         }
                      );
 
@@ -302,7 +302,13 @@ namespace Logitude.Accounting.BL.Utils
                             myInterestTransactionRepository.GetAll(_Tenant).Where(intTrans => intTrans.InterestValueDate >= DateTime.Today.Date)
                         where intTrans.Tenant == _Tenant
                         join descendants in dbAllDescendantsOnly on intTrans.GLAccountId equals descendants.DescAccId
-                        group intTrans by intTrans.GLAccountId into g
+                        select new InterestReportDiffDesc4Tester1_5
+                        {
+                            ParentAccountId = descendants.ParentAccId,
+                            LocalAmount = intTrans.LocalAmount,
+                        }
+                        into grs
+                        group grs by grs.ParentAccountId into g
                         select new InterestReportDiffDesc4Tester2
                         {
                             ParentAccountId = g.Key,
@@ -316,16 +322,16 @@ namespace Logitude.Accounting.BL.Utils
                         from acc in calcFutureInterestTrans
                         join descs in calcFutureInterestTransDesc on acc.AccountId equals descs.ParentAccountId
                         into accDescendantsJoin
-                        from ad in accDescendantsJoin.DefaultIfEmpty()
+                        from descs in accDescendantsJoin.DefaultIfEmpty()
                         select new InterestReportDiff4Tester4
                         {
                             AccountId = acc.AccountId,
                             //   LocalName = acc.LocalName,
                             //   DisplayNumber = acc.DisplayNumber,
                             //    Tenant = acc.Tenant,
-                            FutureInterestTransactionsBalance = ad != null ? acc.FutureInterestTransactionsBalance + ad.DescFutureInterestTransactionsBalance : acc.FutureInterestTransactionsBalance,
+                            FutureInterestTransactionsBalance = descs != null ? acc.FutureInterestTransactionsBalance + descs.DescFutureInterestTransactionsBalance : acc.FutureInterestTransactionsBalance,
                             GLAccountFutureBalance = acc.FutureInterestTransactionsBalance,
-                            DescFutureBalance = ad != null ? ad.DescFutureInterestTransactionsBalance : 0m,
+                            DescFutureBalance = descs != null ? descs.DescFutureInterestTransactionsBalance : 0m,
 
                             //       LastReportNum = acc.LastReportNum,
                         }
@@ -344,7 +350,7 @@ namespace Logitude.Accounting.BL.Utils
                     from acc in dbAllGLAccountInclDesc
                     join intRep in calcIntReportOpenBalances on acc.AccountId equals intRep.AccountId
                     into accOpenBalanceJoin
-                    from ao in accOpenBalanceJoin.DefaultIfEmpty()
+                    from intRep in accOpenBalanceJoin.DefaultIfEmpty()
                         //        where acc.Tenant == _Tenant
                     select new InterestReportDiff4Tester5
                     {
@@ -353,8 +359,8 @@ namespace Logitude.Accounting.BL.Utils
                         DisplayNumber = acc.DisplayNumber,
                         //    Tenant = acc.Tenant,
                         BalanceInLocalCurrency = acc.BalanceInLocalCurrency,
-                        IntReportOpenBalance = ao != null ? ao.IntReportOpenBalance : 0m,
-                        LastReportNum = ao.LastReportNum,
+                        IntReportOpenBalance = intRep != null ? intRep.IntReportOpenBalance : 0m,
+                        LastReportNum = intRep.LastReportNum,
                         DescBalance = acc.DescBalance,
                         GLAccountBalance = acc.GLAccountBalance, 
                     });
@@ -364,7 +370,7 @@ namespace Logitude.Accounting.BL.Utils
                     from aco in qAccOpen
                     join intTrans in calcFutureInterestTransInclDesc on aco.AccountId equals intTrans.AccountId
                     into accOpenBalanceFutureJoin
-                    from aof in accOpenBalanceFutureJoin.DefaultIfEmpty()
+                    from intTrans in accOpenBalanceFutureJoin.DefaultIfEmpty()
                         //   where aco.Tenant == _Tenant
                     select new InterestReportDiff4Tester6
                     {
@@ -374,12 +380,12 @@ namespace Logitude.Accounting.BL.Utils
                         //   Tenant = aco.Tenant,
                         BalanceInLocalCurrency = aco.BalanceInLocalCurrency,
                         IntReportOpenBalance = aco.IntReportOpenBalance,
-                        FutureInterestTransactionsBalance = aof != null ? aof.FutureInterestTransactionsBalance : 0m,
+                        FutureInterestTransactionsBalance = intTrans != null ? intTrans.FutureInterestTransactionsBalance : 0m,
                         LastReportNum = aco.LastReportNum,
                         DescBalance = aco.DescBalance,
                         GLAccountBalance = aco.GLAccountBalance,
-                        GLAccountFutureBalance = aof.GLAccountFutureBalance,
-                        DescFutureBalance = aof.DescFutureBalance,
+                        GLAccountFutureBalance = intTrans.GLAccountFutureBalance,
+                        DescFutureBalance = intTrans.DescFutureBalance,
 
                     });
             var test12 = qAccOpenFuture.ToList();
@@ -655,6 +661,13 @@ namespace Logitude.Accounting.BL.Utils
     //    public string LastReportNum { get; set; }
 
     //}
+
+    public class InterestReportDiffDesc4Tester1_5
+    {
+        public string ParentAccountId { get; set; }
+        public decimal LocalAmount { get; set; }
+    }
+
 
     public class InterestReportDiffDesc4Tester2
     {
