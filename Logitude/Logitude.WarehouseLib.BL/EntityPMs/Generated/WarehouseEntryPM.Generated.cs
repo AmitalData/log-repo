@@ -1712,6 +1712,29 @@ namespace Logitude.WarehouseLib.BL.EntityPMs
 			
 		 }
 	   }
+	  private string connectedToReferenceNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ConnectedToReferenceNumber  
+	   {
+	    
+	     get
+		{
+		   return connectedToReferenceNumber;
+		 }
+		 set
+		 {
+		   if(connectedToReferenceNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ConnectedToReferenceNumber",OldValue=connectedToReferenceNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   connectedToReferenceNumber=value;
+		   }
+			
+		 }
+	   }
 
 	   private List<CustomChildEntity> customChildEntities;
 	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
