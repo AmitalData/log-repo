@@ -195,6 +195,8 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     }
 
     TabFilterClick(item) {
+        if (!item)
+            return;
         this._CourierWorksheetSharedDataService._SelectedItems.Collection = [];
         this._SelectedTabFilter = item;
         this._SelectedMNFValue = 'A';
@@ -693,6 +695,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     _PAY_C_Total = 0;
     _PAY_R_Total = 0;
     _PAY_I_Total = 0;
+    _TotalNotAccepted  =0;
    // _DecWithoutHaTra = 0;
 
     _PendingCodes: KeyValuePair[] = [];
@@ -2366,7 +2369,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
        currRequestParams.Tenant = SessionLocator.Tenant;
        currRequestParams.CourierMasterId = this.entityPM.Id;
        currRequestParams.MAWB = this.entityPM.MAWB;
-       let text = "האם לאשר את כל Pending שלא אושרו בטיסה";
+       let text = "הםם לםשר םת כל Pending שלם םושרו בטיסה";
        
        var confirmWindow = new ConfirmWindow();
        confirmWindow.Show(text);
