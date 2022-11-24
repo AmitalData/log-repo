@@ -53,9 +53,13 @@ namespace Logitude.DashboardModule.Data.EntityMapping
 
             this.Property(t => t.TimeOverTime).HasColumnName("TimeOverTime");
 
-            this.Property(t => t.ComparisonPeriod).HasColumnName("ComparisonPeriod").IsRequired().HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.ComparisonPeriod).HasColumnName("ComparisonPeriod");
 
-            this.Property(t => t.Increase).HasColumnName("Increase").IsRequired().HasMaxLength(50).IsUnicode(false);
+            this.Property(t => t.Increase).HasColumnName("Increase").HasMaxLength(100).IsUnicode(false);
+
+            this.Property(t => t.ComparisonOperator).HasColumnName("ComparisonOperator").HasMaxLength(100).IsUnicode(false);
+
+            this.Property(t => t.ComparisonDateGroup).HasColumnName("ComparisonDateGroup").HasMaxLength(100).IsUnicode(false);
         }
     }
 }

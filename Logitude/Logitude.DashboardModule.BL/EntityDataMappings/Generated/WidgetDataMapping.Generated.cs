@@ -38,7 +38,9 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         SortDirection, 
 	         TimeOverTime, 
 	         ComparisonPeriod, 
-	         Increase,
+	         Increase, 
+	         ComparisonOperator, 
+	         ComparisonDateGroup,
 	      }
 
 
@@ -62,7 +64,9 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         Key, 
 	         TimeOverTime, 
 	         ComparisonPeriod, 
-	         Increase,
+	         Increase, 
+	         ComparisonOperator, 
+	         ComparisonDateGroup,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -149,6 +153,16 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Increase))
             {
 				entityPOCO.Increase = entityPM.Increase;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ComparisonOperator))
+            {
+				entityPOCO.ComparisonOperator = entityPM.ComparisonOperator;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ComparisonDateGroup))
+            {
+				entityPOCO.ComparisonDateGroup = entityPM.ComparisonDateGroup;
 			}
 			}
 
@@ -240,6 +254,16 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 					entityPM.Increase = entityPOCO.Increase;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ComparisonOperator))
+            {
+					entityPM.ComparisonOperator = entityPOCO.ComparisonOperator;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ComparisonDateGroup))
+            {
+					entityPM.ComparisonDateGroup = entityPOCO.ComparisonDateGroup;
+            }
+
 		}
 
 		public void PMToOldPM(WidgetPM entityPM, WidgetPM oldEntityPM)
@@ -324,6 +348,16 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Increase))
             {
                 oldEntityPM.Increase = entityPM.Increase;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ComparisonOperator))
+            {
+                oldEntityPM.ComparisonOperator = entityPM.ComparisonOperator;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ComparisonDateGroup))
+            {
+                oldEntityPM.ComparisonDateGroup = entityPM.ComparisonDateGroup;
             }
 			
 		}

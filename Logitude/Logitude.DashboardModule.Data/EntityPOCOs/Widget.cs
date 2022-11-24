@@ -62,9 +62,13 @@ namespace Logitude.DashboardModule.Data.EntityPOCOs
         [Column("TimeOverTime")]
 	    public bool TimeOverTime { get; set; }
         [Column("ComparisonPeriod")]
-	    public string ComparisonPeriod { get; set; }
+	    public int? ComparisonPeriod { get; set; }
         [Column("Increase")]
 	    public string Increase { get; set; }
+        [Column("ComparisonOperator")]
+	    public string ComparisonOperator { get; set; }
+        [Column("ComparisonDateGroup")]
+	    public string ComparisonDateGroup { get; set; }
     }
 }
 	 

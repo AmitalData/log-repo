@@ -33,10 +33,10 @@
                                 <td style="width:400px; vertical-align:top;">
                                     <table style="display: table-cell;" cellspacing="0">
                                         <tr class="FormFieldRow">
-                                            <td>
+                                            <td style="width:120px;">
                                                 <LogLabel [ObjectFieldName]="'TypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
-                                            <td>
+                                            <td style="width:250px;">
                                                 <LogLov [ObjectFieldName]="'TypeCode'"
                                                         [SelectedValue]="TypeCode"
                                                         [ObjectTableName]="ObjectTableName"
@@ -53,10 +53,10 @@
                                         </tr>
 
                                         <tr class="FormFieldRow">
-                                            <td style="width:120px;">
+                                            <td>
                                                 <LogLabel [ObjectFieldName]="'Title'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
-                                            <td style="width:250px;">
+                                            <td>
                                                 <LogTextBox [ObjectFieldName]="'Title'" [Text]="Title" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                             </td>
                                             <td>
@@ -107,7 +107,6 @@
                                             </td>
                                         </tr>
 
-
                                         <tr class="FormFieldRow" *ngIf="SelectedGroupField && (SelectedGroupField.DataTypeCode == 'DateTime' || SelectedGroupField.DataTypeCode == 'Date')">
                                             <td>
                                                 <LogLabel [Text]="'Date Group Type'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -122,6 +121,7 @@
                                                 <div></div>
                                             </td>
                                         </tr>
+
                                         <tr class="FormFieldRow" *ngFor="let item of WidgetMeasuresList">
                                             <td>
                                                 <LogLabel *ngIf="!item.IsDeleteMeasureVisible" [ObjectFieldName]="'MeasureFieldId'" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext"></LogLabel>
@@ -199,89 +199,131 @@
                                                 <div></div>
                                             </td>
                                         </tr>
-                                        <tr class="FormFieldRow" *ngIf="isMaximumGroupingVisible && isAdvancedSettingLinkVisible">
+
+                                        <tr class="FormFieldRow" *ngIf="isAdvancedSettingLinkVisible">
                                             <td>
-                                                <span class="LinkBtn" (click)="isAdvancedSettingVisible = !isAdvancedSettingVisible">  Advanced Settings</span>
+                                                <span class="LinkBtn" (click)="IsAdvancedSettingVisible = !IsAdvancedSettingVisible">  Advanced Settings</span>
                                             </td>
                                         </tr>
 
-                                        <tr class="FormFieldRow" *ngIf="isAdvancedSettingVisible && isMaximumGroupingVisible">
+                                        <tr class="FormFieldRow" *ngIf="IsAdvancedSettingVisible && isMaximumGroupingVisible">
                                             <td>
-                                                <LogLabel [ObjectFieldName]="'MaximumGrouping'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                <LogLabel [ObjectFieldName]="'MaximumGrouping'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" style="width: 2px;"></LogLabel>
                                             </td>
                                             <td>
+
                                                 <LogTextBox [ObjectFieldName]="'MaximumGrouping'"
                                                             [InputType]="'integer'"
                                                             [DataContext]="DataContext"
                                                             [ObjectTableName]="ObjectTableName" [HideColumns]="true" style="width: 2px;">
                                                 </LogTextBox>
                                             </td>
+
                                             <td>
                                                 <div></div>
                                             </td>
-                                        </tr>
-                                        <tr class="FormFieldRow" *ngIf="isAdvancedSettingVisible">
-                                           
-                                            <td>
-                                                <LogLabel [ObjectFieldName]="'TimeOverTime'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            </td>
-
-                                            <td>
-                                                <CheckBox></CheckBox>
-                                            </td>
-                                            <td><div></div></td>
-                                        </tr>
-                                        <tr class="FormFieldRow" *ngIf="isAdvancedSettingVisible">
-                                           
-                                            <td>
-                                                <LogLabel [ObjectFieldName]="'ComparisonPeriod'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" style="width: 80px;"></LogLabel>
-                                            </td>
-
-                                            <td>
-                                                <!--to choose the operator -->
-                                                <ComboBox (SelectedItemChanged)="SortBy = $event.Code"
-                                                    [ItemsSource]="SortByCodes"
-                                                    [SelectedItem]="GetSelectedSort()"
-                                                    [Binding]="'Text'">
-                                                </ComboBox>
-                                            </td>
-                                            <td>
-                                                <!--this is for num of days or ... -->
-                                                <LogTextBox [ObjectFieldName]="'MaximumGrouping'"
-                                                            [InputType]="'integer'"
-                                                            [DataContext]="DataContext"
-                                                            [ObjectTableName]="ObjectTableName" [HideColumns]="true" style="width: 2px;">
-                                                </LogTextBox>
-                                            </td>
-                                            <td>
-                                                <!--to choose the period type  -->
-                                                <ComboBox (SelectedItemChanged)="SortBy = $event.Code"
-                                                    [ItemsSource]="SortByCodes"
-                                                    [SelectedItem]="GetSelectedSort()"
-                                                    [Binding]="'Text'">
-                                                 </ComboBox> 
-                                            </td>
-                                        </tr>
-                                        <tr class="FormFieldRow" *ngIf="isAdvancedSettingVisible">
-                                           
-                                            <td>
-                                                <LogLabel [ObjectFieldName]="'Increase'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" ></LogLabel>
-                                            </td>
-
-                                            <td>
-                                                <ComboBox (SelectedItemChanged)="SortBy = $event.Code"
-                                                    [ItemsSource]="SortByCodes"
-                                                    [SelectedItem]="GetSelectedSort()"
-                                                    [Binding]="'Text'">
-                                                </ComboBox>  
-                                            </td>
-                                            <td><div></div></td>
                                         </tr>
                                     </table>
                                 </td>
 
                                 <td style="vertical-align:top">
                                     <img width="150" [attr.src]="ChartImageSrc" />
+                                </td>
+                            </tr>
+
+                            <!--KPI Settings-->
+                            <tr style="height:1px; vertical-align: top;" *ngIf="isAdvancedSettingForKPI">
+                                <td colspan="2">
+                                    <table>
+                                        <tr class="FormFieldRow">
+                                            <td style="width:120px;">
+                                                <LogLabel [Text]="'TimeOverTime'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td style="width:250px;">
+                                                <LogCheckBox [ObjectFieldName]="'TimeOverTime'" [Checked]="TimeOverTime" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <LogLabel [Text]="'Comparison Period'" [NoObjectField]="true" [DataContext]="DataContext" style="width: 80px;"></LogLabel>
+                                            </td>
+
+                                            <td colspan="2">
+                                                <table>
+                                                    <tr>
+                                                        <td style="width:120px;">
+                                                            <!--this is for operator -->
+                                                            <ComboBox (SelectedItemChanged)="ComparisonOperator = $event"
+                                                                      [ItemsSource]="PeriodOperators"
+                                                                      [SelectedItem]="ComparisonOperator"
+                                                                      [IsDisabled]="!TimeOverTime">
+                                                            </ComboBox>
+                                                        </td>
+
+                                                        <td style="width:2px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td style="width:120px;">
+                                                            <!--this is for num of days or ... -->
+                                                            <LogTextBox [ObjectFieldName]="'ComparisonPeriod'"
+                                                                        [InputType]="'integer'"
+                                                                        [DataContext]="DataContext"
+                                                                        [ObjectTableName]="ObjectTableName" [HideColumns]="true" style="width: 2px;">
+                                                            </LogTextBox>
+                                                        </td>
+
+                                                        <td style="width:2px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td style="width:120px;">
+                                                            <!--to choose the period type  -->
+                                                            <ComboBox (SelectedItemChanged)="ComparisonDateGroup = $event"
+                                                                [ItemsSource]="DateGroupCodes"
+                                                                [SelectedItem]="ComparisonDateGroup"
+                                                                [IsDisabled]="!TimeOverTime">
+                                                            </ComboBox>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <LogLabel [Text]="'Increase'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td>
+                                                <ComboBox (SelectedItemChanged)="IncreaseValue = $event.code"
+                                                          [ItemsSource]="IncreaseDecreases"
+                                                          [SelectedItem]="GetSelectedIncrease()"
+                                                          [Binding]="'name'"
+                                                          [IsDisabled]="!TimeOverTime">
+                                                </ComboBox>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </td>
                             </tr>
 
@@ -296,6 +338,12 @@
                                     <div style="overflow-x: auto; overflow-y: hidden; height: 100%; width: 100%;">
                                         <WidgetFilter [IsRoot]="true" [EntityId]="EntityId" [DataSource]="RootFilter" [DashboardId]="DashboardPM?.Id"></WidgetFilter>
                                     </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div></div>
                                 </td>
                             </tr>
                         </table>

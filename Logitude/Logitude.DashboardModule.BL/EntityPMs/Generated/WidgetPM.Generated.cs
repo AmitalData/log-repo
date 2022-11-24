@@ -423,12 +423,12 @@ namespace Logitude.DashboardModule.BL.EntityPMs
 			
 		 }
 	   }
-	  private string comparisonPeriod ;
+	  private int? comparisonPeriod ;
 	  	  
        
 	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string ComparisonPeriod  
+       public int? ComparisonPeriod  
 	   {
 	    
 	     get
@@ -439,7 +439,7 @@ namespace Logitude.DashboardModule.BL.EntityPMs
 		 {
 		   if(comparisonPeriod != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ComparisonPeriod",OldValue=comparisonPeriod,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ComparisonPeriod",OldValue=comparisonPeriod,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
 		   comparisonPeriod=value;
 		   }
@@ -465,6 +465,52 @@ namespace Logitude.DashboardModule.BL.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Increase",OldValue=increase,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   increase=value;
+		   }
+			
+		 }
+	   }
+	  private string comparisonOperator ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ComparisonOperator  
+	   {
+	    
+	     get
+		{
+		   return comparisonOperator;
+		 }
+		 set
+		 {
+		   if(comparisonOperator != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ComparisonOperator",OldValue=comparisonOperator,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   comparisonOperator=value;
+		   }
+			
+		 }
+	   }
+	  private string comparisonDateGroup ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ComparisonDateGroup  
+	   {
+	    
+	     get
+		{
+		   return comparisonDateGroup;
+		 }
+		 set
+		 {
+		   if(comparisonDateGroup != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ComparisonDateGroup",OldValue=comparisonDateGroup,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   comparisonDateGroup=value;
 		   }
 			
 		 }

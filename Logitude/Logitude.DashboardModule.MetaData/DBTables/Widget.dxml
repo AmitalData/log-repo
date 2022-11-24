@@ -109,17 +109,32 @@
   </Column>
   <Column
     Name="ComparisonPeriod"
-    Type="varchar"
-    Size="100">
+    Type="int">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="Increase"
     Type="varchar"
-    Size="50">
+    Size="100">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ComparisonOperator"
+    OldNames="Operator"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ComparisonDateGroup"
+    OldNames="DateGroup"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="GroupById"
