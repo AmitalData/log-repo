@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Main" Module="Customs"  Pre="true">
+	<Sql Version="1">
+	</Sql>
+
+	<Oracle Version="1">
+		<![CDATA[
+			declare
+ n int := 0;
+begin SELECT
+                                COUNT(*)
+                            INTO n
+                            FROM
+                                all_objects
+                            WHERE
+                                object_type IN ( 'TABLE' )
+                                AND object_name = 'PHYSICALCHECKCODES';
+  if n = 0 then
+CREATE TABLE "PHYSICALCHECKCODES" 
+   (	"CODE" VARCHAR2(1 CHAR), 
+	"NAME" NVARCHAR2(50), 
+	"SEARCHFIELDS" NVARCHAR2(100)
+   )
+    INSERT INTO physicalcheckcodes (
+        code,
+        name,
+        searchfields
+    ) VALUES (
+        '1',
+        'בדיקה פיזית פתוחה',
+        '1,בדיקה פיזית פתוחה'
+    );
+
+    INSERT INTO physicalcheckcodes (
+        code,
+        name,
+        searchfields
+    ) VALUES (
+        '2',
+        'בדיקה פיזית סגורה',
+        '2,בדיקה פיזית סגורה'
+    );
+   end if;
+end;
+
+ 
+    ]]>
+	</Oracle>
+</Script>
