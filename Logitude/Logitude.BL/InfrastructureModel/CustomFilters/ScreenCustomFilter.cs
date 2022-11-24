@@ -33,15 +33,16 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                 {
                     if (item.FieldName == "ChildScreenGrid")
                     {
-                        string filterFieldId = item.FieldValue as string;
+                        string fieldValue = item.FieldValue as string;
 
-                        if (!string.IsNullOrEmpty(filterFieldId))
+                        if (!string.IsNullOrEmpty(fieldValue))
                         {
-                            queryableData = queryableData.Where(s => s.ObjectTable.ParentObjectTableId == filterFieldId 
+                            queryableData = queryableData.Where(s => s.ObjectTable.ParentObjectTableId == fieldValue
                                                                   && s.ObjectTable.IsCustom
                                                                   && s.ObjectTable.AvailableInCustomization
                                                                   && !s.Inactive 
-                                                                  && s.Type == "Grid");
+                                                                  && s.Type == "Grid"
+                                                                  && s.Tenant == Tenant);
                         }
                     }
                 }
