@@ -82,7 +82,7 @@ import { ClassificationTypeListService } from '../../Customs/Services/StandardLi
 import { TransactionNatureTypeListService } from '../../Customs/Services/StandardLists/TransactionNatureTypeListService';
 //import { AutonomyRegionTypeListService } from '../../Customs/Services/StandardLists/AutonomyRegionTypeListService';
 
-// Business Process
+// Business Process 
 import {BusinessRoleListService} from '../Services/StandardLists/BusinessRoleListService'; 
 import {BusinessProcessQueueListService } from '../Services/StandardLists/BusinessProcessQueueListService'; 
 import {TeamListService} from '../Services/StandardLists/TeamListService'; 

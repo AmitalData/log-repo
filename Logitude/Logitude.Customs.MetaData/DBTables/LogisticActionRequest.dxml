@@ -147,7 +147,7 @@
   <Column
     Name="OperationalStatus"
     Type="varchar"
-    Size="35">
+    Size="2">
     <Constraints
       Nullable="true" />
   </Column>
@@ -214,6 +214,11 @@
     ReferencedTableSchema="Customs" />
   <Relation
     ForeignKeyColumn="ResponseStatusCode"
+    ReferencedTable="LogisticActionResponseReqSes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="OperationalStatus"
     ReferencedTable="LogisticActionResponseReqSes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />

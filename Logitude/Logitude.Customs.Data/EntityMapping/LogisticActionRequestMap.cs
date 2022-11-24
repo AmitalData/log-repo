@@ -63,7 +63,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.ResponseStatusCode).HasColumnName("ResponseStatusCode").HasMaxLength(2).IsUnicode(false);
 
-            this.Property(t => t.OperationalStatus).HasColumnName("OperationalStatus").HasMaxLength(35).IsUnicode(false);
+            this.Property(t => t.OperationalStatus).HasColumnName("OperationalStatus").HasMaxLength(2).IsUnicode(false);
 
             this.Property(t => t.Direction).HasColumnName("Direction").HasMaxLength(1).IsUnicode(false);
 
