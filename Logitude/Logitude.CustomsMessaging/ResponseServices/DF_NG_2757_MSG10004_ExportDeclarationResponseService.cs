@@ -428,7 +428,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         List<string> statusList = new List<string>()
                         {
-                            "2","4","22","23","26","35","40","41","42","45","47","48","49"
+                            "2","4","22","23","26","35","40","41"
                         };
                         if (statusList.Contains(customResponse.Response.Status[0].NameCode.Value))
                         {
