@@ -98,8 +98,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 else
                     functionalReferenceID = "";
 
-                var declaration = myDeclarationQueryService.GetDeclarationByfunctionalReferenceID(functionalReferenceID, requestParams.Tenant);
+                string declarationNumber = "";
+                if (customResponse.Response?.Declaration?.ID != null)
+                    declarationNumber = customResponse.Response.Declaration.ID.Value.ToString();
+                else
+                    declarationNumber = "";
 
+
+                var declaration = myDeclarationQueryService.GetDeclarationByfunctionalReferenceID(functionalReferenceID, declarationNumber, requestParams.Tenant);
 
 
                 if (declaration != null)
