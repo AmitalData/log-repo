@@ -116,7 +116,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             }
             else if(this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "H") {
                 if (FeatureLocator.HasFeaturePermession("WarehouseEntry", "Module")) {
-                    this.IsShowNewWarehouseEntryButton = true;
+                    this.IsShowNewWarehouseEntryButton = this.EntityPM.DirectionId == "I";
                 }
             }
 

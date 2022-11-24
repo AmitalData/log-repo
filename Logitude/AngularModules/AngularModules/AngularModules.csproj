@@ -440,6 +440,8 @@
     <Content Include="TariffModule\Components\Workspaces\SaleWorkspaceComponent.html" />
     <Content Include="TasksApp\Components\TasksAppComponent.html" />
     <Content Include="TasksApp\Scripts\tasks-app.js" />
+    <Content Include="Warehouse\Components\ChooseWarehouseEntryComponent.html" />
+    <Content Include="Warehouse\Components\SelectionAddChooseWarehouseEntryComponent.html" />
     <Content Include="Workflow\Components\WorkflowBuilder\WorkflowBuilderComponent.html" />
     <Content Include="Workflow\Components\Properties\ConditionPropertiesComponent.html" />
     <Content Include="Workflow\Components\Properties\LoopPropertiesComponent.html" />
@@ -8066,6 +8068,8 @@
     <TypeScriptCompile Include="Warehouse\Components\MenuButtons\WarehouseReleaseMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Warehouse\Components\NewEntity\NewFullWarehouseEntryComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\NewEntity\NewFullWarehouseReleaseComponent.ts" />
+    <TypeScriptCompile Include="Warehouse\Components\ChooseWarehouseEntryComponent.ts" />
+    <TypeScriptCompile Include="Warehouse\Components\SelectionAddChooseWarehouseEntryComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\NewWarehouseEntryComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\NewWarehouseReleaseComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\ShortTitles\WarehouseEntryShortTitleComponent.ts" />
