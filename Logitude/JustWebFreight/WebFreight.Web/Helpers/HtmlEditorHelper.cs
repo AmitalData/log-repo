@@ -1099,8 +1099,10 @@ namespace WebFreight.Web.Helpers
                     {
                         foreach (HtmlNode node in spansList)
                         {
+                            SetNodeCustomFieldVariables(tenant, node);
 
                             string textValue = node.InnerHtml;
+
                             if (!String.IsNullOrEmpty(textValue))
                             {
                                 if (textValue.Contains("[") && textValue.Contains("]"))
@@ -1426,6 +1428,37 @@ namespace WebFreight.Web.Helpers
                 ReplyTo = replyTo
             };
         }
+
+        private void SetNodeCustomFieldVariables(int tenant, HtmlNode node)
+        {
+            if (node.Attributes["Id"] == null || string.IsNullOrEmpty(node.Attributes["Id"].Value)) return;
+            var values = node.Attributes["Id"].Value.Split('_');
+            if (values.Length < 2) return;
+            node.InnerHtml = node.InnerHtml.Replace(values[0], values[1]);
+
+            if (node.InnerHtml.Contains("id") && node.InnerHtml.Contains("span"))
+            {
+                SetInnerNodeCustomFieldVariables(tenant, node);
+            }
+        }
+
+        private void SetInnerNodeCustomFieldVariables(int tenant, HtmlNode node)
+        {
+            var document = new HtmlDocument();
+            document.LoadHtml(node.InnerHtml);
+            IEnumerable<HtmlNode> spanLists = GetDocumentSpanNode(tenant, document);
+            if (spanLists.Count() == 0) return;
+            foreach (HtmlNode htmlNode in spanLists.Where(d=> d.Attributes["Id"] != null && !string.IsNullOrEmpty(d.Attributes["Id"].Value)))
+            {
+                SetNodeCustomFieldVariables(tenant, htmlNode);
+            }
+
+            var stringWriter = new StringWriter();
+            document.Save(stringWriter);
+            node.InnerHtml = stringWriter.ToString();
+        }
+
+   
 
         private static IEnumerable<HtmlNode> GetDocumentSpanNode(int tenant, HtmlDocument document)
         {

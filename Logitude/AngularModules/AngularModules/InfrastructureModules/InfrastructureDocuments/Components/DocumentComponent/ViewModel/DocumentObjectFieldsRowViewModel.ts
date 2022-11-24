@@ -21,14 +21,14 @@ export class DocumentObjectFieldsRowViewModel   {
     Order: number;
     ObjectTableId: string;
     ObjectTableName: string;
-
+    IsCustom: boolean= false;
     DisplayListOnly: boolean;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     public constructor(objectField: ObjectFieldPM, resultFieldName: string, objectFieldType: string) {
 
         if (objectField) {
             this.CurrentObjectField = objectField;
-
+            this.IsCustom = this.CurrentObjectField.IsCustom;
      
 
             this.FieldName = objectField.FieldName;
