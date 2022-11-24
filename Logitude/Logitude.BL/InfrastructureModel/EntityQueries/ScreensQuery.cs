@@ -10,6 +10,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
 using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.EntityLists;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
@@ -59,6 +60,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                    Type = a.Type,
                                    SortedByFieldCode = a.SortedByFieldCode,
                                    SortedType = a.SortedType,
+                                   SearchFields = a.SearchFields,
                                }).ToList();
 
 
@@ -109,8 +111,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                       Type = a.Type,
                                       SortedByFieldCode = a.SortedByFieldCode,
                                       SortedType = a.SortedType,
-
-
+                                      SearchFields = a.SearchFields,
                                   }).ToList();
 
             }
@@ -141,7 +142,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Type = a.Type,
                         SortedByFieldCode = a.SortedByFieldCode,
                         SortedType = a.SortedType,
-
+                        SearchFields = a.SearchFields,
                     }).FirstOrDefault();
 
         }
@@ -168,9 +169,28 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Type = a.Type,
                         SortedByFieldCode = a.SortedByFieldCode,
                         SortedType = a.SortedType,
-
+                        SearchFields = a.SearchFields,
                     }).ToList();
         }
 
+        public IQueryable<ScreenList> GetIQueryableEntityList(IQueryable<Screen> iQueryable)
+        {
+            IQueryable<ScreenList> result = from a in iQueryable
+                                                 select new ScreenList()
+                                                 {
+                                                     Code = a.Code,
+                                                     Id = a.Id,
+                                                     IsReadOnly = a.IsReadOnly,
+                                                     NumberOfColumns = a.NumberOfColumns,
+                                                     NumberOfRows = a.NumberOfRows,
+                                                     ObjectTableId = a.ObjectTableId,
+                                                     Name = a.Name,
+                                                     ObjectTableName = a.ObjectTable.Name,
+                                                     Tenant = a.Tenant,
+                                                     Type = a.Type,
+                                                     SearchFields = a.SearchFields,
+                                                 };
+            return result;
+        }
     }
 }

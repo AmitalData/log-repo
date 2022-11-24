@@ -736,7 +736,9 @@
   <ItemGroup>
     <Compile Include="Controllers\DigitalPortal\DigitalActivityController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalCustomizationController.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\ScreenViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\ObjectTableController.Generated.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\ScreenController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowCustomerController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowOpportunityController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowShipmentPayableController.cs" />
@@ -3634,6 +3636,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\SchedulerLogsUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\SchedulerProcedureUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\ScreenSectionUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\ScreenUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\SharedLogisticsInvitationStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\TabModificationUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\TaskSchedulerHistoryUpdateClass.cs" />

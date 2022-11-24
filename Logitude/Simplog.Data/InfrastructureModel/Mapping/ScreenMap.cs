@@ -43,6 +43,9 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .HasMaxLength(10)
                 .IsUnicode(false);
 
+            this.Property(t => t.SearchFields)
+                .HasMaxLength(1000)
+                .IsUnicode(true);
 
             // Table & Column Mappings
             this.ToTable("Screens");
@@ -57,8 +60,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Type).HasColumnName("Type");
             this.Property(t => t.SortedByFieldCode).HasColumnName("SortedByFieldCode");
             this.Property(t => t.SortedType).HasColumnName("SortedType");
-
-
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             // Relationships
             //this.HasRequired(t => t.ObjectTable)
             //    .WithMany(t => t.Screens)
