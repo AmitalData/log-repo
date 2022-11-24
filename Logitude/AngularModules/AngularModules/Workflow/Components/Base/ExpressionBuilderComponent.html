@@ -15,32 +15,19 @@
         border-bottom: 1px solid #6E6E6E;
     }
 
-    .expression-label .Label {
-        color: black !important;
-        font-size: 12px !important;
-    }
-
-    .expression-container {
-        border: 1px solid black;
-        height: 252px;
-    }
-
-    .expression-container:focus {
-        border: 1px #1e88e5 solid;
-    }
-
     .functions-header {
         background: lightgray;
-        padding-bottom: 5px;
+        padding: 5px 5px 10px;
+        border: 1px solid #AAAAAA;
+        border-bottom: 0px;
     }
 
     .functions-label {
-        margin-bottom: 5px;
+        margin-bottom: 2px;
     }
 
     .functions-container {
         display: flex;
-        margin-left: 10px;
     }
 
     .expression-category-dropdown {
@@ -49,25 +36,21 @@
 
     .expression-tree {
         width: 360px;
+        margin-left: 10px;
     }
 
-    .resources-tree {
+    .variables-tree {
         width: 220px;
         margin-left: 10px;
     }
 
-    .expression-textarea {
-        height: 200px;
-        border-radius: 0px;
-        font-size: 13px;
-        font-weight: bold;
-    }
-
-    .check-Syntax-btn {
-        width: 120px;
-        background: white;
-        font-size: 14px;
-        border: 2px solid black;
+    .expression-editor {
+        height: 200px !important;
+        border-radius: 0px !important;
+        font-size: 13px !important;
+        font-weight: bold !important;
+        padding: 6px !important;
+        border: 1px solid #AAAAAA !important;
     }
 
     .item-container {
@@ -78,19 +61,18 @@
 
     .item-title {
         font-size: 11px;
-        font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-        font-weight: 400;
-        font-style: normal;
+        font-weight: 700;
         color: black;
         height: 16px;
     }
 
     .item-description {
         font-size: 11px;
-        font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-        font-weight: 400;
-        font-style: normal;
         color: dimgrey;
+    }
+
+    .check-syntax-btn {
+        width: 100px;
     }
 </style>
 
@@ -109,68 +91,59 @@
 
     <tr class="table-row">
         <td class="table-row-cell">
-            <div class="expression-label">
-                <LogLabel [NoObjectField]="true" [Text]="'Expression'" [ObjectFieldName]="'Expression'"
-                    [DataContext]="DataContext"></LogLabel>
-            </div>
-        </td>
-    </tr>
-
-    <tr class="table-row">
-        <td class="table-row-cell">
-            <div class="expression-container">
+            <div>
                 <div class="functions-header">
-                    <div class="functions-label">
-                        <LogLabel [NoObjectField]="true" [Text]="'Functions'" [ObjectFieldName]="'Expression'"
-                            [DataContext]="DataContext"></LogLabel>
-                    </div>
-                    <div class="functions-container">
+                    <div class="functions-label">Functions</div>
+                    <div *ngIf="ExpressionCategories && ExpressionsTreeItems && FlowVariablesTreeItems"
+                        class="functions-container">
                         <div class="expression-category-dropdown">
-                            <ComboBox [ItemsSource]="ExpressionCategoryList" [Binding]="'Name'"
-                                [SelectedItem]="SelectedCategory"
+                            <ComboBox [ItemsSource]="ExpressionCategories" [Binding]="'Name'"
+                                [SelectedItem]="ExpressionCategory"
                                 (SelectedItemChanged)="updateExpressionCategory($event)" [ListType]="''"
-                                [CyData]="'expression'">
+                                [CyData]="'expression-category'">
                             </ComboBox>
                         </div>
                         <div class="expression-tree">
-                            <TreeSelect *ngIf="SelectedCategoryChanged" [Items]="ExpressionFunctionTreeItems"
+                            <TreeSelect *ngIf="ExpressionCategoryChanged" [Items]="ExpressionsTreeItems"
                                 [Width]="'360px'" [SetSelectedValue]="false" [IsReturnedTreeSelectItem]="true"
                                 [AllowClear]="false" [DisplayTitle]="false" [ShowExpand]="false"
-                                [Template]="expressionTemplate" (ValueChanged)="updateExpression($event)"
-                                [ShowItem]="SelectedCategoryCode | ShowExpressionTreeItemPipe">
+                                [Template]="expressionsTreeSelectTemplate" (ValueChanged)="updateExpression($event)"
+                                [ShowItem]="ExpressionCategory.Code | ShowExpressionTreeItemPipe">
                             </TreeSelect>
-                            <TreeSelect *ngIf="!SelectedCategoryChanged" [Items]="ExpressionFunctionTreeItems"
+                            <TreeSelect *ngIf="!ExpressionCategoryChanged" [Items]="ExpressionsTreeItems"
                                 [Width]="'360px'" [SetSelectedValue]="false" [IsReturnedTreeSelectItem]="true"
                                 [AllowClear]="false" [DisplayTitle]="false" [ShowExpand]="false"
-                                [Template]="expressionTemplate" (ValueChanged)="updateExpression($event)"
-                                [ShowItem]="SelectedCategoryCode | ShowExpressionTreeItemPipe">
+                                [Template]="expressionsTreeSelectTemplate" (ValueChanged)="updateExpression($event)"
+                                [ShowItem]="ExpressionCategory.Code | ShowExpressionTreeItemPipe">
                             </TreeSelect>
-                            <ng-template #expressionTemplate let-item>
+                            <ng-template #expressionsTreeSelectTemplate let-item>
                                 <div class="item-container">
                                     <div class="item-title">{{ item.title }}</div>
                                     <div class="item-description">{{ item.origin.data.Description }}</div>
                                 </div>
                             </ng-template>
                         </div>
-                        <div class="resources-tree">
+                        <div *ngIf="FlowVariablesTreeItems" class="variables-tree">
                             <TreeSelect [Items]="FlowVariablesTreeItems" [Width]="'220px'" [SetSelectedValue]="false"
-                                (ValueChanged)="updateResources($event)" [AllowClear]="false" [DisplayTitle]="false">
+                                (ValueChanged)="selectVariable($event)" [AllowClear]="false" [DisplayTitle]="false">
                             </TreeSelect>
                         </div>
                     </div>
                 </div>
-                <textarea class="expression-textarea" id="ETextArea" (click)="setCurserPoints($event)"
-                    [(ngModel)]='ExpressionTextArea' (ngChange)='updateExpressionTextArea($event.Value)'
-                    (keyup)="curserPointReset($event)"></textarea>
+                <div>
+                    <textarea class="expression-editor" [(ngModel)]="ExpressionValue"
+                        (click)="updateCursorPointer($event?.target?.selectionStart, $event?.target?.selectionEnd)"
+                        (ngChange)="updateExpressionValue($event.Value)" (keyup)="updateCursorPointerFromEvent($event)"
+                        autocorrect="off" autocapitalize="off" spellcheck="false">
+                    </textarea>
+                </div>
             </div>
         </td>
     </tr>
 
-    <tr>
-        <td>
-            <div>
-                <button class="check-Syntax-btn" (click)="checkSyntax()">check Syntax</button>
-            </div>
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <button class="Button check-syntax-btn" (click)="checkExpressionSyntax()">Check Syntax</button>
         </td>
     </tr>
 

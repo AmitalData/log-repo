@@ -34,9 +34,6 @@ export class TreeSelectComponent implements OnInit, AfterViewInit {
     public Title: string | null = null;
 
     ngOnInit() {
-        if (this.IsDisabled) {
-            this.AllowClear = false;
-        }
         this.TreeItems = JSON.parse(JSON.stringify(this.Items));
         this.TreeItems = this.checkItemsToShow(this.TreeItems);
         this.setFilteredTreeItems("");

@@ -131,8 +131,8 @@ export class FlowVariablesTreeList {
 
     private initializeTreeItems() {
         this.initializeRecordsVariables();
-        this.initializeDeclaredVariables();
         this.initializeRecordsCollectionVariables();
+        this.initializeDeclaredVariables();
         this.initializeDeclaredCollectionVariables();
     }
 
@@ -144,19 +144,19 @@ export class FlowVariablesTreeList {
         }
     }
 
-    private initializeDeclaredVariables() {
-        if (this.ShowVariables && this.ShowVariables.ShowDeclaredVariables) {
-            let declaredVariablesItemChildren = this.getDeclaredVariablesItemChildren();
-            let declaredVariablesItem = new TreeSelectItem("declaredvariables", "Declared Variables", false, false, true, true, declaredVariablesItemChildren);
-            this.Items.push(declaredVariablesItem);
-        }
-    }
-
     private initializeRecordsCollectionVariables() {
         if (this.ShowVariables && this.ShowVariables.ShowRecordsCollectionVariables) {
             let recordsCollectionVariablesItemChildren = this.getRecordsCollectionVariablesItemChildren();
             let recordsCollectionVariablesItem = new TreeSelectItem("recordscollectionvariables", "Records Collection Variables", false, false, true, true, recordsCollectionVariablesItemChildren);
             this.Items.push(recordsCollectionVariablesItem);
+        }
+    }
+
+    private initializeDeclaredVariables() {
+        if (this.ShowVariables && this.ShowVariables.ShowDeclaredVariables) {
+            let declaredVariablesItemChildren = this.getDeclaredVariablesItemChildren();
+            let declaredVariablesItem = new TreeSelectItem("declaredvariables", "Declared Variables", false, false, true, true, declaredVariablesItemChildren);
+            this.Items.push(declaredVariablesItem);
         }
     }
 
