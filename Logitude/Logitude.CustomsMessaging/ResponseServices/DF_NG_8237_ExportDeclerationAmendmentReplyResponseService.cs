@@ -635,7 +635,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                         var listConnectedEntity = new List<UnifreightIIG.Common.MessageLib.Ransom.ConnectedEntity>();
                         var entityXml = new UnifreightIIG.Common.MessageLib.Ransom.ConnectedEntity();
-                        entityXml.entityType = 1055;
+                        entityXml.entityType = documentItem.ConnectedEntity.FirstOrDefault().entityType;
                         //    entityXml.entityIdKey1 = customResponse..LeadDocumentIDNum;
                         listConnectedEntity.Add(entityXml);
 
