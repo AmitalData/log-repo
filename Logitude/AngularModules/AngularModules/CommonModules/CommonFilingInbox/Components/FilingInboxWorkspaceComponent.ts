@@ -304,6 +304,10 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
             return "inbox.dsv.co.il";
         }
 
+        if (!AppTool.IsNullOrEmpty(privateLableSetting?.FilingInboxDomain)) {
+            return privateLableSetting.FilingInboxDomain;
+        }
+
         return privateLableSetting?.PrivateLabelDomain;
     }
 
