@@ -171,6 +171,7 @@
     <None Include="DBScripts\Pre\20211125_UpdateIsMultiCustomer.sxml" />
     <None Include="DBScripts\Pre\20220425_DOCUMENTDBIDCOUNTERS_SEQ.sxml" />
     <None Include="DBScripts\Pre\20220425_COMMLOG_DBIDCOUNTERS_SEQ.sxml" />
+    <None Include="DBScripts\Pre\20221124_CreatePhysicalCheckCodeAndInsert.sxml" />
     <None Include="DBScripts\Pre\20220905_UpdateDeclarationPhysicalCheck.sxml" />
     <None Include="DBTables\AcceptanceStatus.dxml" />
     <None Include="DBTables\AccumalationState.dxml" />
@@ -1051,9 +1052,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="EntityFiles\ExportDeclarationClosingData.lxml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="DBScripts\Post\XMLFile1.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
