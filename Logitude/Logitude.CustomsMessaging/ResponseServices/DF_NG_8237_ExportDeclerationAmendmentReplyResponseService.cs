@@ -82,14 +82,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 else
                     functionalReferenceID = "";
 
-                string declarationNumber = "";
-                if (customResponse.Response?.Declaration?.ID != null)
-                    declarationNumber = customResponse.Response.Declaration.ID.Value.ToString();
+                string agentFileReferenceID = "";
+                if (customResponse.Response?.Declaration?.DMExtensions?.AgentFileReferenceID != null)
+                    agentFileReferenceID = customResponse.Response.Declaration.DMExtensions.AgentFileReferenceID.Value.ToString();
                 else
-                    declarationNumber = "";
+                    agentFileReferenceID = "";
 
 
-                var declaration = myDeclarationQueryService.GetDeclarationByfunctionalReferenceID(functionalReferenceID, declarationNumber, requestParams.Tenant);
+                var declaration = myDeclarationQueryService.GetDeclarationByfunctionalReferenceID(functionalReferenceID, agentFileReferenceID, requestParams.Tenant);
+
                 _MyDeclarationPM = declaration;
                 if (declaration != null)
                 {
