@@ -982,7 +982,15 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     private HasMultiUpdateFeature(): boolean {
-        return this.ObjectTableName == "Shipment" && FeatureLocator.HasFeaturePermession("Shipment", "MULTIUPDATE");
+        if (this.ObjectTableName == "Shipment") {
+            return FeatureLocator.HasFeaturePermession("Shipment", "MULTIUPDATE");
+        }
+
+        else if (this.ObjectTableName == "Container") {
+            return FeatureLocator.HasFeaturePermession("Container", "MULTIUPDATE");
+        }
+
+        else return false;
     }
     private IsMultiPrintFeatureOn(): boolean {
         return (this.ObjectTableName == "ARInvoice" || this.ObjectTableName == "Shipment") && FeatureLocator.HasFeaturePermession("General", "MultiPrint");
