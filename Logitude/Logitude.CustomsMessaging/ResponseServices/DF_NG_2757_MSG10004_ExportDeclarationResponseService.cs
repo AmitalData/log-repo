@@ -711,7 +711,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             if (DealValueWithoutFactor != 0) _MyDeclarationPM.DealValueWithoutFactor = Math.Round(DealValueWithoutFactor, 2);
 
-            if (requestParams.InterfaceTypeCode == "2751")
+            if (requestParams.InterfaceTypeCode == "2751" || requestParams.InterfaceTypeCode == "2751T")
             {
                 if (!string.IsNullOrWhiteSpace(RequestSheetContext.Current.GetContextOrDefault().SignByX509SubjectName))
                 {
