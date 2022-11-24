@@ -394,7 +394,7 @@ export class DocumentObjectFieldsComponent implements OnInit {
     TextSelected: string;
     SaveButtonClicked() {
         this.TextSelected = "";
-
+        let desplyName = "";
         if (this.SelectObjectDataFieldsRowViewModel) {
 
             var selectedField = this.SelectObjectDataFieldsRowViewModel;
@@ -403,7 +403,11 @@ export class DocumentObjectFieldsComponent implements OnInit {
             else
                 this.TextSelected = "[" + selectedField.ResultFieldName + "]";
 
-            if (this.InSertDataFieldType == "FroalaEditor") this.TextSelected = "<span>" + this.TextSelected + "</span>";
+            let objectFieldDisplayValue = this.GetObjectFieldResolverFieldValue(selectedField);
+            let spanCustomAttribute = selectedField.IsCustom ? ("id='" + objectFieldDisplayValue + "_" + this.TextSelected + "'") :"";
+            if (this.InSertDataFieldType == "FroalaEditor") {
+                this.TextSelected = "<span " + spanCustomAttribute + " >" + objectFieldDisplayValue + " </span>";
+            }
         }
         else if (this.SelectSystemDataObjectFieldsRowViewModel) {
             var selectedField = this.SelectSystemDataObjectFieldsRowViewModel;
@@ -417,13 +421,22 @@ export class DocumentObjectFieldsComponent implements OnInit {
 
             else {
                 this.TextSelected = "[SystemData." + selectedField.ResultFieldName + "]"
+                let objectFieldDisplayValue = this.GetObjectFieldResolverFieldValue(selectedField);
+                let spanCustomAttribute = selectedField.IsCustom ? ("id='" + objectFieldDisplayValue + "_" + this.TextSelected+ "'") : "";
+                this.TextSelected = "<span " + spanCustomAttribute + " >" + objectFieldDisplayValue + " </span>";
 
-                this.TextSelected=   "<span>" + this.TextSelected + "</span>"
+
             }
 
         }
 
         this.CurrentSession.CurrentWindow.Close(this.TextSelected);
+    }
+    GetObjectFieldResolverFieldValue(selectedField: DocumentObjectFieldsRowViewModel) {
+        if (selectedField.IsCustom) {
+            return this.TextSelected.replace(selectedField.ResultFieldName, selectedField.TranslatedText)
+        }
+        return this.TextSelected;
     }
 
 
