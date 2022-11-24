@@ -32,7 +32,7 @@
                     <tr *ngIf="ItemsSource.length == 0">
                         <td style="background-color:white">
                             <div style="font-size:15px;text-align:center;">
-                                All Shipments were updated successfully.
+                                All {{ObjectTableName}}s were updated successfully.
                             </div>
                         </td>
                     </tr>
@@ -42,7 +42,7 @@
                                 <div class="SimpleGridViewHeader">
                                     <table>
                                         <tr class="SimpleGridHeaderRow">
-                                            <td style="padding-right: 5px; padding-left: 5px;width: 150px; max-width: 150px">Shipment #</td>
+                                            <td style="padding-right: 5px; padding-left: 5px;width: 150px; max-width: 150px">{{ObjectTableName}} #</td>
                                             <td style="padding-right: 5px; padding-left: 5px;">Error</td>
                                             <td></td>
                                         </tr>
