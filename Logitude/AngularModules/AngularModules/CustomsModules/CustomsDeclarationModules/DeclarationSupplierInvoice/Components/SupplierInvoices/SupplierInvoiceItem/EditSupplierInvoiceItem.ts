@@ -529,7 +529,7 @@ export class EditSupplierInvoiceItem extends BaseComponent {
         console.log("... Removing ", item);
         this.ModificationsList.Remove(item);
         this.OriginalItemPM.RemoveSupplierInvoiceItemsMod(item.ModificationPM); // remove from entity
-        this.CurrentSession.CurrentEditComponent.EntityPM.Direction == "E" ? this.supplierInvoiceSharedService.Difference$.next() : '';
+        this.CurrentSession.CurrentEditComponent.EntityPM.Direction == "E" ? this.supplierInvoiceSharedService.DifferenceAndTotalForeignCurrency$.next() : '';
 
         }  
     IsModificationValid(modificationM: ModificationItemModel) {
@@ -836,7 +836,7 @@ export class EditSupplierInvoiceItem extends BaseComponent {
     CancelButtonClicked() {
         this.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
-        this.CurrentSession.CurrentEditComponent.EntityPM.Direction == "E" ? this.supplierInvoiceSharedService.Difference$.next() : '';
+        this.CurrentSession.CurrentEditComponent.EntityPM.Direction == "E" ? this.supplierInvoiceSharedService.DifferenceAndTotalForeignCurrency$.next() : '';
     }
 
     digit: string = null;
@@ -1281,7 +1281,7 @@ export class ModificationItemModel extends BaseComponent {
      
     OnAmountOrCurrencyLostFocus(){
  
-        this.CurrentSession.CurrentEditComponent.EntityPM.Direction == "E" ? this.supplierInvoiceSharedService.Difference$.next() : '';
+        this.CurrentSession.CurrentEditComponent.EntityPM.Direction == "E" ? this.supplierInvoiceSharedService.DifferenceAndTotalForeignCurrency$.next() : '';
 
     }
 }

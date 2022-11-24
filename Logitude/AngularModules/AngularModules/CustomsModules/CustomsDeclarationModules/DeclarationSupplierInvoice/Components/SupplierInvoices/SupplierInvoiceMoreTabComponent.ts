@@ -257,7 +257,7 @@ export class SupplierInvoiceMoreTabComponent extends BaseComponent {
         console.log("... Removing ", item);
         this.ModificationsList.Remove(item);
         this.InvoicePM.RemoveSupplierInvoiceModification(item.ModificationPM); // remove from entity
-        this.declarationPM.Direction == 'E'? this.supplierInvoiceSharedService.Difference$.next() : '';
+        this.declarationPM.Direction == 'E'? this.supplierInvoiceSharedService.DifferenceAndTotalForeignCurrency$.next() : '';
         
         
         
@@ -577,8 +577,8 @@ export class ModificationItemModel extends BaseComponent {
 
         if(this.parent.declarationPM.Direction == 'E')
         {   
-          this.supplierInvoiceSharedService.Difference$.next()
-            
+          this.supplierInvoiceSharedService.DifferenceAndTotalForeignCurrency$.next()
+             
         }
     }
 
@@ -586,7 +586,7 @@ export class ModificationItemModel extends BaseComponent {
 
     if(this.parent.declarationPM.Direction == 'E')
     {   
-      this.supplierInvoiceSharedService.Difference$.next();
+      this.supplierInvoiceSharedService.DifferenceAndTotalForeignCurrency$.next();
         
     }
 
