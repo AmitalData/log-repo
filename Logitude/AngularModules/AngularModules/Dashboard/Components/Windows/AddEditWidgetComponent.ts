@@ -370,9 +370,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         if (this.isSortByVisible && !this.SortDirection) {
             errors.push("Sort By Direction Field is Required");
         }
-        if (this.isMaximumGroupingVisible && (this.MaximumGrouping < 1 || this.MaximumGrouping > 50)){
-            errors.push("Maximum Grouping should be Less than or equal 50 and Greater than or equal 1"); 
-        }
+        
         this.ValidateMeasures(errors);
         this.ValidateSort(errors);
         if (this.RootFilter && this.RootFilter.QueryFilterItems && this.RootFilter.QueryFilterItems.length != 0) this.ValidateFilters(errors, this.RootFilter);
