@@ -34,8 +34,9 @@ import { EntityLabelPipe } from "./Pipes/EntityLabelPipe";
 import { GetObjectTablesQueryFiltersPipe } from "./Pipes/GetObjectTablesQueryFiltersPipe";
 import { ConditionDisabledPipe } from "./Pipes/ConditionDisabledPipe";
 import { ExpressionComponent } from "./Components/Base/ExpressionComponent";
-import { ExpressionLogicComponent } from "./Components/Base/ExpressionLogicComponent";
+import { ExpressionBuilderComponent } from "./Components/Base/ExpressionBuilderComponent";
 import { CollectionFilterPropertiesComponent } from './Components/Properties/CollectionFilterPropertiesComponent';
+import { ShowEditableVariablesTreeItemPipe } from "./Pipes/ShowEditableVariablesTreeItemPipe";
 
 export const Components = [
     WorkflowBuilderComponent,
@@ -61,7 +62,7 @@ export const Components = [
     SetValuesComponent,
     DeleteNodeWarningComponent,
     ExpressionComponent,
-    ExpressionLogicComponent,
+    ExpressionBuilderComponent,
     CollectionFilterPropertiesComponent
 ];
 
@@ -79,6 +80,7 @@ export const Pipes = [
     ShowFlowVariablesTreeItemPipe,
     EntityLabelPipe,
     ConditionDisabledPipe,
+    ShowEditableVariablesTreeItemPipe,
 ];
 
 export class ModuleDeclarations {
@@ -108,7 +110,7 @@ export class ModuleDeclarations {
             case "SetValuesComponent": { result = SetValuesComponent; break; }
             case "DeleteNodeWarningComponent": { result = DeleteNodeWarningComponent; break; }
             case "ExpressionComponent": { result = ExpressionComponent; break; }
-            case "ExpressionLogicComponent": { result = ExpressionLogicComponent; break; }
+            case "ExpressionBuilderComponent": { result = ExpressionBuilderComponent; break; }
             case "CollectionFilterPropertiesComponent": { result = CollectionFilterPropertiesComponent; break; }
         }
         return result;

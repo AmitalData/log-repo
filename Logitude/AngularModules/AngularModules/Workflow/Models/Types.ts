@@ -16,3 +16,10 @@ export type NodeType =
     null;
 
 export type ConditionDisabled = null | "d,f,o";
+
+export type ShowVariables = {
+    ShowRecordsVariables: boolean,
+    ShowDeclaredVariables: boolean,
+    ShowRecordsCollectionVariables: boolean,
+    ShowDeclaredCollectionVariables: boolean
+};

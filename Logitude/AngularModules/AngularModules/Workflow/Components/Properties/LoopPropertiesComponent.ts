@@ -42,7 +42,13 @@ export class LoopPropertiesComponent extends BaseComponent {
     }
 
     initializeFlowVariablesTree() {
-        this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId, true);
+        let showVariables = {
+            ShowRecordsVariables: false,
+            ShowDeclaredVariables: false,
+            ShowRecordsCollectionVariables: true,
+            ShowDeclaredCollectionVariables: true
+        };
+        this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId, showVariables);
         this.FlowVariablesTreeItems = this.FlowVariablesTreeList.Items;
     }
 

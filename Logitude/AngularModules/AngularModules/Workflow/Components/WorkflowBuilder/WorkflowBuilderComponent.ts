@@ -15,6 +15,7 @@ import { FlowReader } from "Workflow/Models/FlowReader";
 import { ObjectFields } from "Workflow/Models/ObjectFields";
 import { MessageWindow } from "Controls/Windows/MessageWindow";
 import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
+import { Formatter } from "Workflow/Models/Formatter";
 
 @Component({
     templateUrl: "./WorkflowBuilderComponent.html"
@@ -220,10 +221,10 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
             return variableCode ? ("declaredvariables_" + variableCode) : null;
         } else if (node.type === "getRecordNode") {
             let name = node.data["name"];
-            return name ? (name.replace(/\ /gi, "").replace(/\_/gi, "").toLowerCase()) : null;
+            return name ? (Formatter.getCodeFromName(name) + "_") : null;
         } else if (node.type === "loopNode") {
             let name = node.data["name"];
-            return name ? (name.replace(/\ /gi, "").replace(/\_/gi, "").toLowerCase()) : null;
+            return name ? (Formatter.getCodeFromName(name) + "_") : null;
         }
         return null;
     }
@@ -237,7 +238,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
             nodeDataValues.forEach((dataValue: any) => {
                 let value = dataValue["value"] || null;
                 let field = dataValue["field"] || null;
-                if (value && field && (value.startsWith(nodeUsedData + "_") || field.startsWith(nodeUsedData + "_"))) {
+                if (value && field && (value.startsWith(nodeUsedData) || field.startsWith(nodeUsedData))) {
                     isValid = false;
                     usedInNodes.push(nodeName);
                 }

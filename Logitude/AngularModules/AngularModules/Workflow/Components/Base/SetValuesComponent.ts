@@ -53,7 +53,13 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
     }
 
     initializeFlowVariablesTree() {
-        this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId);
+        let showVariables = {
+            ShowRecordsVariables: true,
+            ShowDeclaredVariables: true,
+            ShowRecordsCollectionVariables: false,
+            ShowDeclaredCollectionVariables: false
+        };
+        this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId, showVariables);
         this.FlowVariablesTreeItems = this.FlowVariablesTreeList.Items;
     }
 

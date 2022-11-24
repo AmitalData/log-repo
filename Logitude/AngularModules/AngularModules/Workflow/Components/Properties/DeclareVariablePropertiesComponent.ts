@@ -4,6 +4,7 @@ import { ObjectTablePM } from "Infrastructure/EntityPMs/ObjectTablePM";
 import { AppTool, FormatTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { DataTypesList } from "Workflow/Models/DataTypesList";
+import { Formatter } from "Workflow/Models/Formatter";
 import { ListItem } from "Workflow/Models/ListItem";
 
 @Component({
@@ -44,11 +45,9 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
 
     updateVariableName(variableName: string) {
         this.Data["variableName"] = variableName;
+        this.Data["variableCode"] = Formatter.getCodeFromName(variableName);
         this.VariableName = variableName;
 
-        if (variableName) {
-            this.Data["variableCode"] = variableName.replace(/\s/g, '').trim().toLowerCase();
-        }
         this.setUIProperties();
     }
 

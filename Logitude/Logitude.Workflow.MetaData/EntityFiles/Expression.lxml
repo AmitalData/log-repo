@@ -10,6 +10,7 @@
   HasCustomFilter="false"
   HasCustomFields="false"
   AvailableInCustomization="false"
+  SupportSubEntity="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -40,7 +41,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Expression&quot;"
-  Code="&quot;9b04&quot;"
+  Code="&quot;b704&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -78,7 +79,7 @@
     ObjectTableName="&quot;Expression&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="3"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="true"
@@ -87,7 +88,7 @@
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
-    SystemMaxLength="3"
+    SystemMaxLength="15"
     DisplayInList="false"
     IsCustomFilter="false"
     IsListFilter="false"
@@ -153,7 +154,7 @@
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
     MaxLength="50"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="true"
     DisplayOnLookUpLocal="false"
@@ -300,7 +301,7 @@
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
     MaxLength="1000"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -342,7 +343,7 @@
     HasDataBaseField="true"
     HasPMField="true"
     IsComposition="false"
-    IsMaxLength="false"
+    IsMaxLength="true"
     NoMetaDataField="false"
     GenerateInList="true"
     IsFixedLength="false"
@@ -412,7 +413,7 @@
     HasDataBaseField="true"
     HasPMField="true"
     IsComposition="false"
-    IsMaxLength="false"
+    IsMaxLength="true"
     NoMetaDataField="false"
     GenerateInList="true"
     IsFixedLength="false"
@@ -540,19 +541,33 @@
   </EventTypes>
   <Records>
     <Record
+      Code="&quot;DATEDIF&quot;"
+      Name="&quot;DATEDIF&quot;"
+      SearchFields="&quot;DATEDIF&quot;"
+      Body="&quot;(start_date,end_date,unit)&quot;"
+      Description="&quot;Calculates the number of days, months, or years between two dates&quot;"
+      CategoryCode="&quot;DTE&quot;" />
+    <Record
       Code="&quot;MIN&quot;"
-      Name="&quot;Min&quot;"
-      SearchFields="&quot;MIN,Min&quot;"
-      Body="&quot;(Collection or item1,item2?,...)&quot;"
+      Name="&quot;MIN&quot;"
+      SearchFields="&quot;MIN&quot;"
+      Body="&quot;(number1,number2)&quot;"
       Description="&quot;Return the smallest value from the numbers supplied&quot;"
       CategoryCode="&quot;MTH&quot;" />
     <Record
-      Code="&quot;DIF&quot;"
-      Name="&quot;DATEDIF&quot;"
-      SearchFields="&quot;DATEDIF,DIF&quot;"
-      Body="&quot;(dtart_date,end_date,unit)&quot;"
-      Description="&quot;Calculates the number of days, months, or years between two&quot;"
-      CategoryCode="&quot;DTE&quot;" />
+      Code="&quot;MAX&quot;"
+      Name="&quot;MAX&quot;"
+      SearchFields="&quot;MAX&quot;"
+      Body="&quot;(number1,number2)&quot;"
+      Description="&quot;Return the biggest value from the numbers supplied&quot;"
+      CategoryCode="&quot;MTH&quot;" />
+    <Record
+      Code="&quot;COUNT&quot;"
+      Name="&quot;COUNT&quot;"
+      SearchFields="&quot;COUNT&quot;"
+      Body="&quot;(list)&quot;"
+      Description="&quot;Return the count of list elements&quot;"
+      CategoryCode="&quot;MTH&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

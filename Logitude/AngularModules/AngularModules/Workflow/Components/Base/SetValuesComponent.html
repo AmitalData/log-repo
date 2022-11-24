@@ -106,8 +106,9 @@
         <div class="set-value-row" [ngStyle]="{'height': isFirstSetValue ? '40px' : '25px'}">
 
             <div class="delete-set-value-container" [ngClass]="{'padding-top-22': setValueIndex === 0}">
-                <img *ngIf="!(SetValues.length == 1) && !setValue.isDisabled" class="delete-set-value-button" src="./Images/Trash-can.png"
-                    (click)="deleteSetValue(setValueIndex)" [attr.data-cy]="'DeleteSetValueButton'" />
+                <img *ngIf="!(SetValues.length == 1) && !setValue.isDisabled" class="delete-set-value-button"
+                    src="./Images/Trash-can.png" (click)="deleteSetValue(setValueIndex)"
+                    [attr.data-cy]="'DeleteSetValueButton'" />
             </div>
 
             <!-- field -->
@@ -127,8 +128,9 @@
                     </LogLov>
 
                     <TreeSelect *ngIf="!IsEntityField" [Items]="FlowVariablesTreeItems" [Width]="'220px'"
-                        [Value]="setValue.field" [IsDisabled]="setValue.isDisabled"
-                        (ValueChanged)="updateSetValueField($event, setValueIndex)">
+                        [Value]="setValue.field"
+                        [ShowItem]="null | ShowEditableVariablesTreeItemPipe"
+                        [IsDisabled]="setValue.isDisabled" (ValueChanged)="updateSetValueField($event, setValueIndex)">
                     </TreeSelect>
 
                 </div>

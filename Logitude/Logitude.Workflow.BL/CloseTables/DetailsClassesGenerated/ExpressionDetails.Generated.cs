@@ -23,22 +23,42 @@ namespace Logitude.Workflow.BL.CLoseTable
 		    var all = new List<ExpressionDetails>();  
             all.Add(new ExpressionDetails()
             {    
+                Code = "DATEDIF", 
+                Name = "DATEDIF", 
+                SearchFields = "DATEDIF", 
+                Body = "(start_date,end_date,unit)", 
+                Description = "Calculates the number of days, months, or years between two dates", 
+                CategoryCode = "DTE", 
+			});
+			 
+            all.Add(new ExpressionDetails()
+            {    
                 Code = "MIN", 
-                Name = "Min", 
-                SearchFields = "MIN,Min", 
-                Body = "(Collection or item1,item2?,...)", 
+                Name = "MIN", 
+                SearchFields = "MIN", 
+                Body = "(number1,number2)", 
                 Description = "Return the smallest value from the numbers supplied", 
                 CategoryCode = "MTH", 
 			});
 			 
             all.Add(new ExpressionDetails()
             {    
-                Code = "DIF", 
-                Name = "DATEDIF", 
-                SearchFields = "DATEDIF,DIF", 
-                Body = "(dtart_date,end_date,unit)", 
-                Description = "Calculates the number of days, months, or years between two", 
-                CategoryCode = "DTE", 
+                Code = "MAX", 
+                Name = "MAX", 
+                SearchFields = "MAX", 
+                Body = "(number1,number2)", 
+                Description = "Return the biggest value from the numbers supplied", 
+                CategoryCode = "MTH", 
+			});
+			 
+            all.Add(new ExpressionDetails()
+            {    
+                Code = "COUNT", 
+                Name = "COUNT", 
+                SearchFields = "COUNT", 
+                Body = "(list)", 
+                Description = "Return the count of list elements", 
+                CategoryCode = "MTH", 
 			});
 			
             return all;

@@ -1,15 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { LogitudeWindow } from "Controls/Windows/LogitudeWindow";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
-import { ServiceResponse } from "Infrastructure/DataContracts/ServiceResponse";
 import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
-import { ObjectTablePM } from "Infrastructure/EntityPMs/ObjectTablePM";
-import { FieldTypes } from "Workflow/Constants/FieldTypes";
-import { ExpressionList } from "Workflow/EntityLists/ExpressionList";
-import { BooleanValuesList } from "Workflow/Models/BooleanValuesList";
-import { ListItem } from "Workflow/Models/ListItem";
-import { ObjectTables } from "Workflow/Models/ObjectTables";
-import { ExpressionListService } from "Workflow/Services/StandardLists/ExpressionListService";
 
 @Component({
     selector: "Expression",
@@ -25,11 +17,6 @@ export class ExpressionComponent extends BaseComponent implements OnInit {
     @Input() IsDisabled: boolean = false;
     @Output() ValueChanged = new EventEmitter<string>();
 
-    public DataContext: any = this;
-    public ExpressionList: ExpressionList[] = [];
-    public expressionListService: ExpressionListService = new ExpressionListService();
-
-
     public ExpressionValue: string;
 
     constructor() {
@@ -37,50 +24,38 @@ export class ExpressionComponent extends BaseComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.ExpressionValue = this.CurrentValue
-        this.initializeExpressionData();
-
+        this.ExpressionValue = this.CurrentValue;
     }
 
-    initializeExpressionData() {
-        this.expressionListService.getAll().subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                this.ExpressionList = this.ExpressionList.concat(myResponse.Result);
-            }
-        });
-    }
-
-    expressionHandle() {
+    openExpressionBuilder() {
         if (!this.IsDisabled) {
-            let propertiesComponentPath = "./Workflow/Components/Base/ExpressionLogicComponent";
-            let propertiesWindow = this.buildPropertiesWindow();
-            propertiesWindow.Show(propertiesComponentPath);
-            propertiesWindow.WindowClosed.subscribe((data: any) => { this.handlePropertiesWindowClosed(data); });
+            let expressionBuilderComponentPath = "./Workflow/Components/Base/ExpressionBuilderComponent";
+            let expressionBuilderWindow = this.buildExpressionBuilderWindow();
+            expressionBuilderWindow.Show(expressionBuilderComponentPath);
+            expressionBuilderWindow.WindowClosed.subscribe((data: any) => { this.handleExpressionBuilderWindowClosed(data); });
         }
     }
 
-    handlePropertiesWindowClosed(data) {
-        if (data) {
-            this.ExpressionValue = data
-            this.ValueChanged.emit(data);
+    handleExpressionBuilderWindowClosed(data: any) {
+        if (data.Action === "save") {
+            this.ExpressionValue = data.ExpressionValue;
+            this.ValueChanged.emit(data.ExpressionValue);
         }
     }
 
-    buildPropertiesWindow() {
-        let propertiesWindow = new LogitudeWindow();
-        let propertiesWindowArgs: any = {
+    buildExpressionBuilderWindow() {
+        let expressionBuilderWindow = new LogitudeWindow();
+        let expressionBuilderWindowArgs: any = {
             FlowObject: this.FlowObject,
             CurrentNodeId: this.CurrentNodeId,
             FlowObjectFields: this.FlowObjectFields,
-            ExpressionValue: this.ExpressionValue,
-            ExpressionList: this.ExpressionList
+            ExpressionValue: this.ExpressionValue
         };
-        propertiesWindow.Height = 440;
-        propertiesWindow.Width = 985;
-        propertiesWindow.RTL = false;
-        propertiesWindow.Title = "Field Expression";
-        propertiesWindow.WindowArgs = propertiesWindowArgs;
-        return propertiesWindow;
+        expressionBuilderWindow.Width = 900;
+        expressionBuilderWindow.Height = 420;
+        expressionBuilderWindow.RTL = false;
+        expressionBuilderWindow.Title = "Build Expression";
+        expressionBuilderWindow.WindowArgs = expressionBuilderWindowArgs;
+        return expressionBuilderWindow;
     }
-
 }
