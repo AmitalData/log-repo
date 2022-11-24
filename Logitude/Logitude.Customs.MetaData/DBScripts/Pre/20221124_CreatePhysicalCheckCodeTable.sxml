@@ -16,30 +16,13 @@ begin SELECT
                                 object_type IN ( 'TABLE' )
                                 AND object_name = 'PHYSICALCHECKCODES';
   if n = 0 then
-CREATE TABLE "PHYSICALCHECKCODES" 
+EXECUTE IMMEDIATE('CREATE TABLE "PHYSICALCHECKCODES" 
    (	"CODE" VARCHAR2(1 CHAR), 
 	"NAME" NVARCHAR2(50), 
 	"SEARCHFIELDS" NVARCHAR2(100)
-   )
-    INSERT INTO physicalcheckcodes (
-        code,
-        name,
-        searchfields
-    ) VALUES (
-        '1',
-        'בדיקה פיזית פתוחה',
-        '1,בדיקה פיזית פתוחה'
-    );
-
-    INSERT INTO physicalcheckcodes (
-        code,
-        name,
-        searchfields
-    ) VALUES (
-        '2',
-        'בדיקה פיזית סגורה',
-        '2,בדיקה פיזית סגורה'
-    );
+   );');
+   
+    
    end if;
 end;
 
