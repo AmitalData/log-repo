@@ -194,6 +194,8 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     }
 
     TabFilterClick(item) {
+        if (!item)
+            return;
         this._CourierWorksheetSharedDataService._SelectedItems.Collection = [];
         this._SelectedTabFilter = item;
         this._SelectedMNFValue = 'A';
@@ -692,7 +694,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     _PAY_C_Total = 0;
     _PAY_R_Total = 0;
     _PAY_I_Total = 0;
-    _TotalNotAccepted =0;
+    _TotalNotAccepted  =0;
    // _DecWithoutHaTra = 0;
 
     _PendingCodes: KeyValuePair[] = [];
