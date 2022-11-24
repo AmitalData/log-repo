@@ -5,6 +5,6 @@ import { Subject } from "rxjs";
 
 export class SupplierInvoiceSharedService{
 
-    Difference$ = new Subject()
+    DifferenceAndTotalForeignCurrency$ = new Subject()
 
 }
