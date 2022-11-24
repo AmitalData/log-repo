@@ -25,7 +25,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             screen.Code = screenPM.Code;
             screen.SortedByFieldCode = screenPM.SortedByFieldCode;
             screen.SortedType = screenPM.SortedType;
-            screen.ChildScreenGrid = screenPM.ChildScreenGrid;
 
             if (screenModification != null)
             {

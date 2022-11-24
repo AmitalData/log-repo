@@ -93,13 +93,6 @@
     <Constraints
       Nullable="true" />  
   </Column>
-    <Column
-    Name="ChildScreenGrid"
-    Type="varchar"
-    Size="100">
-    <Constraints
-      Nullable="true" />
-  </Column>
   <Column
     Name="SearchFields"
     Type="nvarchar"
