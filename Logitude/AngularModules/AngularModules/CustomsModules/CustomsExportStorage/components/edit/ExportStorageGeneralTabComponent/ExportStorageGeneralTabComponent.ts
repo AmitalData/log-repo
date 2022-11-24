@@ -44,6 +44,7 @@ export class ExportStorageGeneralTabComponent extends BaseComponent {
       'FirstCargoID',
       'ThirdCargoID',
       'ExportDealIdentification',
+      'ShipCode',
       'PackageQuantity',
         'GrossMassMeasure',
         'MarksNumbers',
@@ -66,6 +67,7 @@ export class ExportStorageGeneralTabComponent extends BaseComponent {
   public get ExportDealIdentification() { return this.EntityPM.ExportDealIdentification; }
   public get ExporterCode() { return this.EntityPM.ExporterCode; }
 
+  public get ShipCode() {return this.EntityPM.ShipCode}
   public get PackageQuantity() {return this.EntityPM.PackageQuantity}
   
   public get GrossMassMeasure() {return this.EntityPM.GrossMassMeasure}

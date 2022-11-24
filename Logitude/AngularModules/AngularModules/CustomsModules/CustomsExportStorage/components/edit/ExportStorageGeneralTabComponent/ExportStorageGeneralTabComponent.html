@@ -42,6 +42,12 @@
     </div>
 
     <div class="row">        
+        <LogLabel [ObjectFieldName]="'ShipCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        <LogTextBox [ObjectFieldName]="'ShipCode'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+        [DataContext]="DataContext" [Text]="ShipCode"></LogTextBox>
+    </div>
+
+    <div class="row">        
         <LogLabel [ObjectFieldName]="'PackageQuantity'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
         <LogTextBox [ObjectFieldName]="'PackageQuantity'" [ObjectTableName]="ObjectTableName" [HideColumns]="true"
         [DataContext]="DataContext" [Text]="PackageQuantity"></LogTextBox>

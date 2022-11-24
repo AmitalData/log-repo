@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ExportStorageUpdateClass
    {  		
-		public const string HashString = "04add438bc902b09c568da1fca589616";
+		public const string HashString = "9a977ffe18e20c5d7744428cd5965714";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -735,7 +735,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  25,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
-					  						Operator =  "Contains",
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -760,10 +760,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ShipCode",
 					  						DefaultText =  "Ship Code",
-					  						FullLocalDefaultText =  "קוד אוניה",
+					  						FullLocalDefaultText =  "כלי הובלה ימי",
 					  						ListFieldLable =  "ShipCodeListLable",
 					  						ListLableDefaultText =  "Ship Code",
-					  						ListLocalDefaultText =  "קוד אוניה",
+					  						ListLocalDefaultText =  "כלי הובלה ימי",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
