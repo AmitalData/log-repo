@@ -37,8 +37,6 @@ namespace Logitude.Workflow.Data.EntityMapping
 
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsMaxLength().IsUnicode(true);
 
-            this.Property(t => t.WorkflowId).HasColumnName("WorkflowId").IsRequired().HasMaxLength(15).IsUnicode(false);
-
             this.Property(t => t.StatusCode).HasColumnName("StatusCode").IsRequired().HasMaxLength(4).IsUnicode(false);
 
             this.Property(t => t.StartTime).HasColumnName("StartTime");
@@ -48,6 +46,8 @@ namespace Logitude.Workflow.Data.EntityMapping
             this.Property(t => t.BusinessKey).HasColumnName("BusinessKey").HasMaxLength(50).IsUnicode(false);
 
             this.Property(t => t.Duration).HasColumnName("Duration").HasPrecision(18, 3);
+
+            this.Property(t => t.WorkFlowVersionId).HasColumnName("WorkFlowVersionId").HasMaxLength(15).IsUnicode(false);
         }
     }
 }

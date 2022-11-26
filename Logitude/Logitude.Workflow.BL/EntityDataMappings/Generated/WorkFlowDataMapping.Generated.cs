@@ -35,7 +35,8 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 	         StatusCode, 
 	         FlowJson, 
 	         Entity, 
-	         Trigger,
+	         Trigger, 
+	         WorkFlowActiveVersionId,
 	      }
 
 
@@ -59,7 +60,8 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 	         UpdatedByUserName, 
 	         FlowJson, 
 	         Entity, 
-	         Trigger,
+	         Trigger, 
+	         WorkFlowActiveVersionId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -131,6 +133,11 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Trigger))
             {
 				entityPOCO.Trigger = entityPM.Trigger;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WorkFlowActiveVersionId))
+            {
+				entityPOCO.WorkFlowActiveVersionId = entityPM.WorkFlowActiveVersionId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -209,6 +216,11 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 					entityPM.Trigger = entityPOCO.Trigger;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.WorkFlowActiveVersionId))
+            {
+					entityPM.WorkFlowActiveVersionId = entityPOCO.WorkFlowActiveVersionId;
+            }
+
 		}
 
 		public void PMToOldPM(WorkFlowPM entityPM, WorkFlowPM oldEntityPM)
@@ -278,6 +290,11 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Trigger))
             {
                 oldEntityPM.Trigger = entityPM.Trigger;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WorkFlowActiveVersionId))
+            {
+                oldEntityPM.WorkFlowActiveVersionId = entityPM.WorkFlowActiveVersionId;
             }
 			
 		}

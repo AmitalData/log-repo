@@ -9,6 +9,7 @@ import { UpdateRecordPropertiesComponent } from './Components/Properties/UpdateR
 import { GetRecordPropertiesComponent } from './Components/Properties/GetRecordPropertiesComponent';
 import { SendEmailPropertiesComponent } from './Components/Properties/SendEmailPropertiesComponent';
 import { FieldTemplateComponent } from "./Components/Templates/FieldTemplateComponent";
+import { VerstionFieldTemplateComponent } from "./Components/Templates/VerstionFieldTemplateComponent";
 import { CreateWorkflowComponent } from "./Components/CreateEditWorkflow/CreateWorkflowComponent";
 import { EditWorkflowComponent } from "./Components/CreateEditWorkflow/EditWorkflowComponent";
 import { RunHistoryWorkflowComponent } from "./Components/WorkflowInstance/RunHistoryWorkflowComponent";
@@ -36,6 +37,8 @@ import { ConditionDisabledPipe } from "./Pipes/ConditionDisabledPipe";
 import { ExpressionComponent } from "./Components/Base/ExpressionComponent";
 import { ExpressionLogicComponent } from "./Components/Base/ExpressionLogicComponent";
 import { CollectionFilterPropertiesComponent } from './Components/Properties/CollectionFilterPropertiesComponent';
+import { WorkflowVersionComponent } from './Components/WorkflowVersion/WorkflowVersionComponent';
+import { CreateWorkflowVersionComponent } from './Components/WorkflowVersion/CreateWorkflowVersionComponent';
 
 export const Components = [
     WorkflowBuilderComponent,
@@ -49,6 +52,7 @@ export const Components = [
     GetRecordPropertiesComponent,
     SendEmailPropertiesComponent,
     FieldTemplateComponent,
+    VerstionFieldTemplateComponent,
     CreateWorkflowComponent,
     EditWorkflowComponent,
     RunHistoryWorkflowComponent,
@@ -62,7 +66,9 @@ export const Components = [
     DeleteNodeWarningComponent,
     ExpressionComponent,
     ExpressionLogicComponent,
-    CollectionFilterPropertiesComponent
+    CollectionFilterPropertiesComponent,
+    WorkflowVersionComponent,
+    CreateWorkflowVersionComponent
 ];
 
 export const Pipes = [
@@ -96,6 +102,7 @@ export class ModuleDeclarations {
             case "GetRecordPropertiesComponent": { result = GetRecordPropertiesComponent; break; }
             case "SendEmailPropertiesComponent": { result = SendEmailPropertiesComponent; break; }
             case "FieldTemplateComponent": { result = FieldTemplateComponent; break; }
+            case "VerstionFieldTemplateComponent": { result = VerstionFieldTemplateComponent; break; }
             case "CreateWorkflowComponent": { result = CreateWorkflowComponent; break; }
             case "EditWorkflowComponent": { result = EditWorkflowComponent; break; }
             case "RunHistoryWorkflowComponent": { result = RunHistoryWorkflowComponent; break; }
@@ -110,6 +117,8 @@ export class ModuleDeclarations {
             case "ExpressionComponent": { result = ExpressionComponent; break; }
             case "ExpressionLogicComponent": { result = ExpressionLogicComponent; break; }
             case "CollectionFilterPropertiesComponent": { result = CollectionFilterPropertiesComponent; break; }
+            case "WorkflowVersionComponent": { result = WorkflowVersionComponent; break; }
+            case "CreateWorkflowVersionComponent": { result = CreateWorkflowVersionComponent; break; }
         }
         return result;
     }

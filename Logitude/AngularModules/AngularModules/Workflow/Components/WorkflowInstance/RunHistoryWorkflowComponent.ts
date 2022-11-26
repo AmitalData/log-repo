@@ -3,11 +3,13 @@ import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
+import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { AppTool } from 'Infrastructure/Tools';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { WorkFlowPM } from 'Workflow/EntityPMs/WorkFlowPM';
 import { ApiQueryFiltersBuilder } from 'Workflow/Models/ApiQueryFiltersBuilder';
 import { WorkFlowInstanceListService } from 'Workflow/Services/StandardLists/WorkFlowInstanceListService';
+import { WorkFlowVersionListService } from 'Workflow/Services/StandardLists/WorkFlowVersionListService';
 
 const SearchBoxDelayTime = 700;
 
@@ -24,6 +26,7 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
     public AllInstancesCount: number = 0;
     private CurrentSession = SessionLocator.SelectedSession;
     private SearchText: string = null;
+    private VersionIds: string[];
 
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -32,6 +35,7 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
 
     ngOnInit() {
         this.BuildColumns();
+        this.initialize();
     }
 
     LoadData() {
@@ -40,6 +44,18 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
 
     RefreshButtonClicked() {
         this.LoadData();
+    }
+
+    initialize() {
+        var versionservice: WorkFlowVersionListService = new WorkFlowVersionListService();
+        versionservice.GetVersionIds(this.EntityPM.Id)
+            .subscribe((serviceResponse: ServiceResponse) => {
+                if (serviceResponse.Result) {
+                    var result: string[] = serviceResponse.Result;
+                    this.VersionIds = result
+
+                }
+            });
     }
 
     private timerToken: any;
@@ -72,12 +88,13 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
         this.CurrentSession.StartBusyIndicatorLoading();
 
         let businessKeyFilterValue = !AppTool.IsNullOrEmpty(this.SearchText) ? (AppTool.IsNullOrEmpty(this.SearchText.trim()) ? null : this.SearchText) : null;
-        var filters = ApiQueryFiltersBuilder.getWorkflowInstancesApiQueryFilters(this.EntityPM.Id, businessKeyFilterValue);
+
+        var filters = ApiQueryFiltersBuilder.getWorkflowInstancesByVersionApiQueryFilters(this.VersionIds, businessKeyFilterValue);
 
         filters.PageSize = take;
         filters.PageIndex = skip;
         filters.GetAll = false;
-        filters.GetCount = getCount;
+        filters.GetCount = true;
         filters.SortBy = sortingCol;
         filters.SortDirection = sortingDir;
         return new Promise((resolve) => {

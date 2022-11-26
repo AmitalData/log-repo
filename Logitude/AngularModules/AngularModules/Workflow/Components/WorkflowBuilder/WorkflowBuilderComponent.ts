@@ -411,6 +411,27 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         }
     }
 
+    saveAsWorkflow(){
+        let propertiesComponentPath = "./Workflow/Components/WorkflowBuilder/CreateWorkflowVersionComponent";
+        let propertiesWindow = new LogitudeWindow();
+        let propertiesWindowArgs: any = {
+            WorkflowId : this.EntityPM.Id,
+            FlowJson : this.EntityPM.FlowJson
+        };
+        propertiesWindow.Height = 340;
+        propertiesWindow.Width = 985;
+        propertiesWindow.RTL = false;
+        propertiesWindow.Title = "Save New Verison";
+        propertiesWindow.WindowArgs = propertiesWindowArgs;
+
+        propertiesWindow.Show(propertiesComponentPath);
+        propertiesWindow.WindowClosed.subscribe((data: any) => { this.handleVersionPropertiesWindowClosed(data); });
+    }
+
+    handleVersionPropertiesWindowClosed(data) {
+       console.log(data)
+    }
+
     handleUpdateWorkflowResponse(serviceResponse: ServiceResponse, backAfterSave: boolean) {
         if (!serviceResponse.HasError) {
             this.handleSaveWorkflowResponse(serviceResponse.Result);
