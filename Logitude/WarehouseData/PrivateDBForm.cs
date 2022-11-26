@@ -95,9 +95,10 @@ namespace WarehouseData
 
                         FeatureDataWarehouseService featureDataWarehouseService = new FeatureDataWarehouseService(sourceConnectionString.Replace("Main", "Global"), sourceConnectionString);
 
-                        Parallel.ForEach(dWHSettingsTable.Rows.Cast<DataRow>().ToList(), (row) =>
+                        foreach(DataRow row in  dWHSettingsTable.Rows.Cast<DataRow>().ToList())
                         {
                             int tenant = Int32.Parse(row["Tenant"].ToString());
+                         
                             string catalog = row["Catalog"].ToString();
                             string userName = row["UserName"].ToString();
                             string password = row["Password"].ToString();
@@ -128,14 +129,8 @@ namespace WarehouseData
 
                                 if (type == "Build")
                                 {
-                                    Thread thread = new Thread(() =>
-                                    {
-                                        privateMainDataWarehouseService.BuildDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
-                                        privateDataWarehouseViewService.GeneratePrivateViews(new PrivateViewArgs() { ConnectionString = destinationConnectionString, UserName = privateUserName, Tenant = tenant, Catalog = catalog, ApplyGrantOnViews = !string.IsNullOrEmpty(privateUserName) ? true : false, IsParentTenant = isParentTenant });
-                                    });
-                                    thread.Start();
-                                    thread.Join();
-                        
+                                    privateMainDataWarehouseService.BuildDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
+                                    privateDataWarehouseViewService.GeneratePrivateViews(new PrivateViewArgs() { ConnectionString = destinationConnectionString, UserName = privateUserName, Tenant = tenant, Catalog = catalog, ApplyGrantOnViews = !string.IsNullOrEmpty(privateUserName) ? true : false, IsParentTenant = isParentTenant });
                                 }
                                 else privateMainDataWarehouseService.UpdateDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
 
@@ -150,7 +145,7 @@ namespace WarehouseData
                                 allMessage = allMessage.Replace(message, replaceMessage);
                                 SetControlPropertyValue(PrivateDblabel, "Text", allMessage);
                             }
-                        });
+                        }
                         SetControlPropertyValue(PrivateDblabel, "ForeColor", Color.Green);
                         IsBuildDataRunning = false;
 
