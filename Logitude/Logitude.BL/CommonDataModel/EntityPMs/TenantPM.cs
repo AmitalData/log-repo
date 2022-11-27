@@ -399,6 +399,9 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool SharedLogisMasterMessageLink { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public bool ShowMultiUnitsOfMeasurements { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public double? AirRatio { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
