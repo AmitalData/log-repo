@@ -184,8 +184,8 @@ namespace WebFreight.Web.Helpers
                 sheet1.Range["E2"].Text = $"Created Date: {DateTime.UtcNow:dd MMM yyyy}";
                 sheet1.Range["E2"].CellStyle.Font.Size = 12;
 
-                sheet1.Range["A3:S3"].CellStyle.Color = Color.LightGray;
-                sheet1.Range["A3:S3"].RowHeight = 25;
+                sheet1.Range["A3:V3"].CellStyle.Color = Color.LightGray;
+                sheet1.Range["A3:V3"].RowHeight = 25;
 
                 sheet1.Range["A3:V3"].CellStyle.Font.Bold = true;
                 sheet1.Range["A3:V3"].HorizontalAlignment = ExcelHAlign.HAlignLeft;
