@@ -136,14 +136,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
             }
-            if (!String.IsNullOrWhiteSpace(entityPM.ServerName)) //T4 find type == nText 
-            {
-                entityPM.ServerName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ServerName));
-            }
-            if (!String.IsNullOrWhiteSpace(entityPM.ServiceName)) //T4 find type == nText 
-            {
-                entityPM.ServiceName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ServiceName));
-            }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
 
