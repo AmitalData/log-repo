@@ -114,6 +114,11 @@ export class WorkFlowPM {
     public set Trigger(newValue: string) { if (this.trigger != newValue) { this.trigger = newValue; this.MarkAsDirty("Trigger"); } }
        
 	 
+    private workFlowActiveVersionId: string;
+    public get WorkFlowActiveVersionId() { return this.workFlowActiveVersionId; }
+    public set WorkFlowActiveVersionId(newValue: string) { if (this.workFlowActiveVersionId != newValue) { this.workFlowActiveVersionId = newValue; this.MarkAsDirty("WorkFlowActiveVersionId"); } }
+       
+	 
 
     public OldEntityPM: WorkFlowPM;
 		

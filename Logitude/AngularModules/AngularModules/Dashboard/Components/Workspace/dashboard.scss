@@ -8,8 +8,6 @@
 @import "logitude-dashboard-library/dist/assets/styles/colors.scss";
 @import "logitude-dashboard-library/dist/assets/styles/dl-dashboard.scss";
 
-
-
 .dashboard-tooltip {
     cursor: default;
     margin-left: 420px;
@@ -72,4 +70,71 @@
     place-content: center;
     align-items: center;
     pointer-events:revert;
+}
+
+.DashboardTab .DashboardTabHead li:not(.DashboardTabSelected):hover {
+    /*background: #448DCA;*/
+}
+
+.DashboardTab .DashboardTabHead li:not(.DashboardTabSelected) {
+    height: 23px;
+    margin-top: 1px;
+}
+
+.DashboardTab .DashboardTabHead li.DashboardTabSelected {
+    height: 25px;
+    background-color: #F3F3F3;
+    color: #1B90CB;
+}
+
+.DashboardTab .DashboardTabHead li:not(:first-child):not(.DashboardTabSelected) {
+    border-left: 2px solid #F3F3F3;
+}
+
+.DashboardTab .DashboardTabHead li .DashboardInnerTab {
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;    
+}
+
+.DashboardTab .DashboardTabHead li {
+    height: 23px;
+    line-height: 20px;
+    display: inline-block;
+    float: left;
+    cursor: default;    
+    border-bottom: none;
+    overflow: hidden;
+}
+
+.DashboardTab .DashboardTabHead ul {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.DashboardTab .DashboardTabBody {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 25px;
+    border-top: none;
+    background: #F3F3F3;
+}
+
+.DashboardTab .DashboardTabHead {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 25px;
+}
+
+.DashboardTab {
+    width: 100%;
+    height: 100%;
+    position: relative;
 }

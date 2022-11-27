@@ -227,12 +227,12 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     }
 
     handleRecordsType(recordsType: string){
-        if(recordsType == GetRecordTypes.ReadOnly){
+        if(recordsType === GetRecordTypes.ReadOnly){
             this.EnableAddConditions = true;
             this.ShowConditionsOperation = true;
             this.ExcludedEntities = ["Opportunity"];
         }
-        else if (recordsType == GetRecordTypes.Editable) {
+        else if (recordsType === GetRecordTypes.Editable) {
             this.EnableAddConditions = false;
             this.ShowConditionsOperation = false;
             this.ExcludedEntities = ["Customer", "User", "Opportunity"];

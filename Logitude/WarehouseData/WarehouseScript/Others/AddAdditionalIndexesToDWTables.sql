@@ -13,6 +13,13 @@ IF not EXISTS (SELECT *  FROM sys.indexes  WHERE name='IX_ARInvoice_Consolidatio
     AND object_id = OBJECT_ID('[dbo].[dw_ARInvoices]'))
   begin CREATE NONCLUSTERED INDEX [IX_ARInvoice_IsConsolidationInvoice_Id] ON [dbo].[dw_ARInvoices] ([IsConsolidationInvoice],[Id]) end
 
+ IF not EXISTS (SELECT *  FROM sys.indexes  WHERE name='IX_ARInvoice_AutomaticLastUpdateDate_IsConsolidationInvoice_Id' 
+    AND object_id = OBJECT_ID('[dbo].[dw_ARInvoices]'))
+    begin CREATE NONCLUSTERED INDEX [IX_ARInvoice_AutomaticLastUpdateDate_IsConsolidationInvoice_Id] ON [dbo].[dw_ARInvoices] ([AutomaticLastUpdateDate] ASC,[IsConsolidationInvoice] ASC,[Id] ASC) end
+
+
+
+
 end
 
 
@@ -181,6 +188,23 @@ BEGIN
     INCLUDE ([ARInvoiceId],[LocalCurrencyAmount],[ProfitCurrencyAmount],[ForiegnCurrencyAmount],[ForiegnCurrencyId],[Notes],[Description] , [LocalDescription])					  -- ,
 
   end
+
+
+
+
+  IF not EXISTS (SELECT *  FROM sys.indexes  WHERE name='IX_ARInvoiceLines_ARInvoiceId' 
+    AND object_id = OBJECT_ID('[dbo].[dw_ARInvoiceLines]'))
+  begin 
+
+CREATE NONCLUSTERED INDEX [IX_ARInvoiceLines_ARInvoiceId] ON [dbo].[dw_ARInvoiceLines]([ARInvoiceId] ASC )
+INCLUDE([ForiegnCurrencyId],[VatTypeId],[ChargesTypeId],[ForiegnCurrencyAmount],[Description],[LocalDescription],[UnitPrice],[Quantity] , [VatPercentage],[LocalCurrencyAmount],[InvoiceCurrencyAmount],[ProfitCurrencyAmount],[Notes],[ForiegnExchangeRate],[IsExpense],[IsRegionalTax],[EntityId]) 
+
+
+end
+
+
+
+
 
 end
 

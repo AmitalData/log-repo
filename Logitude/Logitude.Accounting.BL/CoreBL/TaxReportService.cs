@@ -811,7 +811,10 @@ namespace Logitude.Accounting.BL.CoreBL
                     //update entity
                     TaxReportUpdateService updateService = new TaxReportUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
                     taxReport.ChangeSetOp = ChangeSetOperation.Update;
-                    taxReport.StatusCode = "T"; // T- Transmitted
+                    if (taxReport.StatusCode != "J")
+                    {
+                        taxReport.StatusCode = "T"; // T- Transmitted
+                    }
                     taxReport.NeedsRebulid = false;
                     updateService.Update(taxReport, true);
 
@@ -823,7 +826,10 @@ namespace Logitude.Accounting.BL.CoreBL
                     TaxReportUpdateService updateService = new TaxReportUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
                     taxReport.ChangeSetOp = ChangeSetOperation.Update;
                     taxReport.NeedsRebulid = true;
-                    taxReport.StatusCode = "T"; // T- Transmitted
+                    if (taxReport.StatusCode != "J")
+                    {
+                        taxReport.StatusCode = "T"; // T- Transmitted
+                    }
                     updateService.Update(taxReport, true);
 
                     throw ex;

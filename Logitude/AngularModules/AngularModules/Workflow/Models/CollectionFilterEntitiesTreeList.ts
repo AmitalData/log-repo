@@ -1,4 +1,5 @@
 import { FlowReader } from "./FlowReader";
+import { Formatter } from "./Formatter";
 import { TreeSelectItem } from "./TreeSelectItem";
 
 type ChildEntity = { Code: string, Name: string, ParentEntityCode: string };
@@ -7,7 +8,6 @@ export class CollectionFilterEntitiesTreeList {
     public Items: TreeSelectItem[] = [];
     private FlowObject: any;
     private CurrentNodeId: string;
-    private ItemKeySplitter: string = "_";
 
     private ChildEntities: ChildEntity[] = [
         { Code: "Container", Name: "Container", ParentEntityCode: "Shipment" },
@@ -33,7 +33,7 @@ export class CollectionFilterEntitiesTreeList {
         this.getGetRecordNodes("FirstRecord").forEach((getRecordNode: any) => {
             let entity = getRecordNode.data["entity"];
             let treeSelectItemName = getRecordNode.data["name"];
-            let treeSelectItemKey = this.formatFlowElementName(treeSelectItemName);
+            let treeSelectItemKey = Formatter.getCodeFromName(treeSelectItemName);
             let childrenItems = this.getChildrenItems(treeSelectItemKey, entity)
             let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, false, false, false, false, childrenItems);
             this.Items.push(treeSelectItem);
@@ -51,7 +51,7 @@ export class CollectionFilterEntitiesTreeList {
         let childrenItems = [];
         let childerItems = this.ChildEntities.filter(c => c.ParentEntityCode === entityCode)
         childerItems.forEach(childEntity => {
-            let childrenItem = new TreeSelectItem(treeItemPrefix + "_" + childEntity.Code, childEntity.Name, true, true, false, false, [], {entity:entityCode});
+            let childrenItem = new TreeSelectItem(treeItemPrefix + "_" + childEntity.Code, childEntity.Name, true, true, false, false, [], {entity:childEntity.Code});
             childrenItems.push(childrenItem);
         });
         return childrenItems;
@@ -64,9 +64,5 @@ export class CollectionFilterEntitiesTreeList {
                     && n.data["entity"] && n.data["entity"].indexOf(".") === -1);
         }
         return [];
-    }
-
-    private formatFlowElementName(name: string) {
-        return name ? name.replace(/\ /gi, "").replace(new RegExp(this.ItemKeySplitter, "gi"), "").toLowerCase() : "";
     }
 }

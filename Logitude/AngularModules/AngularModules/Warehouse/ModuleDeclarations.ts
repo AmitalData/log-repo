@@ -3,6 +3,8 @@
 import {NewWarehouseEntryComponent} from './Components/NewWarehouseEntryComponent';
 import {NewWarehouseReleaseComponent} from './Components/NewWarehouseReleaseComponent';
 import {AddEditWarehouseEntryPackagesAndContainers} from './Components/AddEditWarehouseEntryPackagesAndContainers';
+import {SelectionAddChooseWarehouseEntryComponent} from './Components/SelectionAddChooseWarehouseEntryComponent';
+import {ChooseWarehouseEntryComponent} from './Components/ChooseWarehouseEntryComponent';
 
 import {WarehouseReleaseChoosePackagesComponent} from './Components/WarehouseReleaseChoosePackagesComponent';
 
@@ -68,6 +70,8 @@ export const Components =
         WarehouseReleaseRoutingsTabComponent,
         ChoosePackagesFromWarehousePackageReleasesComponent,
         WarehouseEntryHelperComponent,
+        SelectionAddChooseWarehouseEntryComponent,
+        ChooseWarehouseEntryComponent,
     ];
 
 export class ModuleDeclarations {
@@ -104,6 +108,8 @@ export class ModuleDeclarations {
             case "WarehouseReleaseRoutingsTabComponent": { myResult = WarehouseReleaseRoutingsTabComponent; break; }
             case "ChoosePackagesFromWarehousePackageReleasesComponent": { myResult = ChoosePackagesFromWarehousePackageReleasesComponent; break; }
             case "WarehouseEntryHelperComponent": { myResult = WarehouseEntryHelperComponent; break; }
+            case "SelectionAddChooseWarehouseEntryComponent": { myResult = SelectionAddChooseWarehouseEntryComponent; break; }
+            case "ChooseWarehouseEntryComponent": { myResult = ChooseWarehouseEntryComponent; break; }
 
         }
 

@@ -172,8 +172,29 @@ namespace WebFreight.Web.Controllers.WarehouseModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        
 
+        public HttpResponseMessage GetWarehouseEntriesByWarehouseId(string warehouseId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("WarehouseEntry", "READ", tenant);
+
+                WarehouseEntryQueryService warehouseEntryQueryService = new WarehouseEntryQueryService(tenant);
+                List<WarehouseEntryList> warehouseEntries = warehouseEntryQueryService.GetActiveWarehouseEntryListsByWarehouseId(warehouseId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, warehouseEntries);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
     }
 

@@ -2,6 +2,10 @@
 using Logitude.DashboardModule.BL.EntityQueryServices;
 using Logitude.DashboardModule.BL.EntityUpdateServices;
 using Logitude.DashboardModule.Data;
+using Logitude.DashboardModule.Data.EntityListQueryServices;
+using Logitude.DashboardModule.Data.EntityLists;
+using Logitude.DashboardModule.Data.EntityPOCOs;
+using Logitude.DashboardModule.Data.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -69,6 +73,34 @@ namespace WebFreight.Web.Controllers.DashboardModel.Extended
                 service.Delete(dashboardId, authToken.Tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, "ok");
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetDashboardsFromIds(string dashboardsIds)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("Dashboard", "READ", authToken.Tenant);
+
+                string loggedContactId = this.GetLoggedContactId(authToken.Email, authToken.Tenant);
+
+                IDashboardContext myContext = DashboardContext.GetContext(authToken.Tenant);               
+                DashboardRepository dashboardRepository = new DashboardRepository(myContext);
+                IQueryable<Dashboard> dashboards = dashboardRepository.GetAllByIds(dashboardsIds, authToken.Tenant);
+
+                DashboardListQueryService dashboardQueryService = new DashboardListQueryService(myContext);
+                IQueryable<DashboardList> dashboardLists = dashboardQueryService.GetDashboardsByIds(dashboards);
+
+                return Request.CreateResponse(HttpStatusCode.OK, dashboardLists);
             }
 
             catch (Exception ex)

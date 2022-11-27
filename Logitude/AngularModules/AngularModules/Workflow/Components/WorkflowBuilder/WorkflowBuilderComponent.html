@@ -22,6 +22,18 @@
 
     .save-workflow-button-cell {
         float: right;
+        width: 160px;
+    }
+    .save-buttons-container{
+        display: flex;
+    }
+
+    .save-as-container {
+        width: 80px;
+        margin-right: 10px;
+    }
+
+    .save-container {
         width: 60px;
     }
 
@@ -83,21 +95,33 @@
                             <td class="save-workflow-button-cell">
                                 <table>
                                     <tr>
-                                        <td>
+                                        <td class="save-buttons-container">
+                                            <div class="save-as-container">
+                                                <button class="Button" (click)="saveAsWorkflow()"
+                                                    data-cy="save-as-workflow-button">
+                                                    <img src="./Images/Buttons/Save.png"
+                                                        class="save-button-icon CenterCenter" />
+                                                    <span class="save-button-label">Save as</span>
+                                                </button>
+                                            </div>
 
-                                            <button *ngIf="!HasChanges" class="Button" (click)="saveWorkflow()"
-                                                data-cy="save-workflow-changes-button">
-                                                <img src="./Images/Buttons/Save.png"
-                                                    class="save-button-icon CenterCenter" />
-                                                <span class="save-button-label">Save</span>
-                                            </button>
+                                            <div class="save-container">
+                                                <button *ngIf="!HasChanges" class="Button" (click)="saveWorkflow()"
+                                                    data-cy="save-workflow-changes-button">
+                                                    <img src="./Images/Buttons/Save.png"
+                                                        class="save-button-icon CenterCenter" />
+                                                    <span class="save-button-label">Save</span>
+                                                </button>
 
-                                            <button *ngIf="HasChanges" class="EntityChangesButton"
-                                                (click)="saveWorkflow()" data-cy="save-workflow-changes-button">
-                                                <img src="./Images/Buttons/Save.Red.png"
-                                                    class="save-button-icon CenterCenter" />
-                                                <span class="save-button-label">Save</span>
-                                            </button>
+                                                <button *ngIf="HasChanges" class="EntityChangesButton"
+                                                    (click)="saveWorkflow()" data-cy="save-workflow-changes-button">
+                                                    <img src="./Images/Buttons/Save.Red.png"
+                                                        class="save-button-icon CenterCenter" />
+                                                    <span class="save-button-label">Save</span>
+                                                </button>
+
+                                            </div>
+
 
                                         </td>
                                     </tr>

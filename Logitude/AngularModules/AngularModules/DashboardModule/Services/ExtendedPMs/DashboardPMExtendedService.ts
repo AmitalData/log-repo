@@ -50,5 +50,18 @@ export class DashboardPMExtendedService {
             pmresponse.Result = response;
             return pmresponse;
         }), catchError(ServiceHelper.HandleServiceError));
-    }    
+    }
+
+    GetDashboardsFromIds(dashboardsIds: string) {
+        var url = this._apiUrl + '/GetDashboardsFromIds?dashboardsIds=' + dashboardsIds;
+
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
+                var myResponse: ServiceResponse = new ServiceResponse();
+                myResponse.Result = myResult;
+                return myResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 }

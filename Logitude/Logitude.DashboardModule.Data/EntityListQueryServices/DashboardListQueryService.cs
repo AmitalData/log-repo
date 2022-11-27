@@ -67,6 +67,25 @@ namespace Logitude.DashboardModule.Data.EntityListQueryServices
 		{
 			return iQueryable;
 		}
+
+		public IQueryable<DashboardList> GetDashboardsByIds(IQueryable<Dashboard> iQueryable)
+        {
+			IQueryable<DashboardList> query = (from a in iQueryable
+											   select new DashboardList()
+											   {
+												   Id = a.Id,
+												   Tenant = a.Tenant,
+												   CreateDate = a.CreateDate,
+												   CreatedByUserId = a.CreatedByUserId,
+												   UpdateDate = a.UpdateDate,
+												   UpdatedByUserId = a.UpdatedByUserId,
+												   SearchFields = a.SearchFields,
+												   Name = a.Name,
+												   Description = a.Description,
+											   });
+
+			return query;
+		}
 	}
 }
 	

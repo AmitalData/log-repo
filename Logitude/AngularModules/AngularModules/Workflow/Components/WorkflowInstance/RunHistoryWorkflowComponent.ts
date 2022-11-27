@@ -3,11 +3,13 @@ import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
+import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { AppTool } from 'Infrastructure/Tools';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { WorkFlowPM } from 'Workflow/EntityPMs/WorkFlowPM';
 import { ApiQueryFiltersBuilder } from 'Workflow/Models/ApiQueryFiltersBuilder';
 import { WorkFlowInstanceListService } from 'Workflow/Services/StandardLists/WorkFlowInstanceListService';
+import { WorkFlowVersionService } from 'Workflow/Services/WorkFlowVersionService';
 
 const SearchBoxDelayTime = 700;
 
@@ -24,6 +26,8 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
     public AllInstancesCount: number = 0;
     private CurrentSession = SessionLocator.SelectedSession;
     private SearchText: string = null;
+    private VersionIds: string[];
+    public DataSource: any;
 
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -32,6 +36,7 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
 
     ngOnInit() {
         this.BuildColumns();
+        this.initialize();
     }
 
     LoadData() {
@@ -40,6 +45,33 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
 
     RefreshButtonClicked() {
         this.LoadData();
+    }
+
+    initialize() {
+        var versionservice: WorkFlowVersionService = new WorkFlowVersionService();
+        versionservice.GetVersionIds(this.EntityPM.Id)
+            .subscribe((serviceResponse: ServiceResponse) => {
+                if (serviceResponse.Result) {
+                    var result: string[] = serviceResponse.Result;
+                    this.VersionIds = result;
+
+                    this.SetDataSource();
+                }
+            });
+    }
+
+    SetDataSource() {
+        this.DataSource = {
+            pageSize: 30,
+            rowCount: null,
+            sortingCol: "StartTime",
+            sortingDir: "Descending",
+            getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
+                var tempo = this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
+                this.CurrentSession.StopBusyIndicator();
+                return tempo;
+            },
+        };
     }
 
     private timerToken: any;
@@ -56,28 +88,19 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
         }
     }
 
-    DataSource = {
-        pageSize: 30,
-        rowCount: null,
-        sortingCol: "StartTime",
-        sortingDir: "Descending",
-        getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
-            var tempo = this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
-            this.CurrentSession.StopBusyIndicator();
-            return tempo;
-        },
-    };
+
 
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
         this.CurrentSession.StartBusyIndicatorLoading();
 
         let businessKeyFilterValue = !AppTool.IsNullOrEmpty(this.SearchText) ? (AppTool.IsNullOrEmpty(this.SearchText.trim()) ? null : this.SearchText) : null;
-        var filters = ApiQueryFiltersBuilder.getWorkflowInstancesApiQueryFilters(this.EntityPM.Id, businessKeyFilterValue);
+
+        var filters = ApiQueryFiltersBuilder.getWorkflowInstancesByVersionApiQueryFilters(this.VersionIds, businessKeyFilterValue);
 
         filters.PageSize = take;
         filters.PageIndex = skip;
         filters.GetAll = false;
-        filters.GetCount = getCount;
+        filters.GetCount = true;
         filters.SortBy = sortingCol;
         filters.SortDirection = sortingDir;
         return new Promise((resolve) => {
@@ -98,6 +121,7 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
         });
         this.columns.push({
             FieldName: 'StartTime',
+            AdditionalDataCustom: this.ObjectTableName,
             DataTypeCode: 'Date',
             Display: "Start Time",
             IsCustomTemplate: true,
@@ -116,6 +140,7 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
         });
         this.columns.push({
             FieldName: 'StatusName',
+            AdditionalDataCustom: this.ObjectTableName,
             DataTypeCode: 'String',
             Display: "Status",
             HtmlListComponentName: 'FieldTemplateComponent',

@@ -10,6 +10,7 @@
   HasCustomFilter="false"
   HasCustomFields="false"
   AvailableInCustomization="false"
+  SupportSubEntity="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -40,7 +41,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Expression&quot;"
-  Code="&quot;9b04&quot;"
+  Code="&quot;451d&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -78,7 +79,7 @@
     ObjectTableName="&quot;Expression&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="3"
+    MaxLength="15"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="true"
@@ -87,7 +88,7 @@
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
-    SystemMaxLength="3"
+    SystemMaxLength="15"
     DisplayInList="false"
     IsCustomFilter="false"
     IsListFilter="false"
@@ -153,7 +154,7 @@
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
     MaxLength="50"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="true"
     DisplayOnLookUpLocal="false"
@@ -300,7 +301,7 @@
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
     MaxLength="1000"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
@@ -342,7 +343,7 @@
     HasDataBaseField="true"
     HasPMField="true"
     IsComposition="false"
-    IsMaxLength="false"
+    IsMaxLength="true"
     NoMetaDataField="false"
     GenerateInList="true"
     IsFixedLength="false"
@@ -412,7 +413,7 @@
     HasDataBaseField="true"
     HasPMField="true"
     IsComposition="false"
-    IsMaxLength="false"
+    IsMaxLength="true"
     NoMetaDataField="false"
     GenerateInList="true"
     IsFixedLength="false"
@@ -540,18 +541,88 @@
   </EventTypes>
   <Records>
     <Record
+      Code="&quot;DATEDIF&quot;"
+      Name="&quot;DateDif&quot;"
+      SearchFields="&quot;DATEDIF,DateDif&quot;"
+      Body="&quot;(date1; date2; 'Y')&quot;"
+      Description="&quot;Calculates the number of days, months, or years between two dates. Can be: Y, M, D&quot;"
+      CategoryCode="&quot;DTE&quot;" />
+    <Record
       Code="&quot;MIN&quot;"
-      Name="&quot;Min&quot;"
-      SearchFields="&quot;MIN,Min&quot;"
-      Body="&quot;(Collection or item1,item2?,...)&quot;"
+      Name="&quot;MIN&quot;"
+      SearchFields="&quot;MIN&quot;"
+      Body="&quot;(number1,number2)&quot;"
       Description="&quot;Return the smallest value from the numbers supplied&quot;"
       CategoryCode="&quot;MTH&quot;" />
     <Record
-      Code="&quot;DIF&quot;"
-      Name="&quot;DATEDIF&quot;"
-      SearchFields="&quot;DATEDIF,DIF&quot;"
-      Body="&quot;(dtart_date,end_date,unit)&quot;"
-      Description="&quot;Calculates the number of days, months, or years between two&quot;"
+      Code="&quot;MAX&quot;"
+      Name="&quot;MAX&quot;"
+      SearchFields="&quot;MAX&quot;"
+      Body="&quot;(number1,number2)&quot;"
+      Description="&quot;Return the biggest value from the numbers supplied&quot;"
+      CategoryCode="&quot;MTH&quot;" />
+    <Record
+      Code="&quot;COUNT&quot;"
+      Name="&quot;COUNT&quot;"
+      SearchFields="&quot;COUNT&quot;"
+      Body="&quot;(list)&quot;"
+      Description="&quot;Return the count of list elements&quot;"
+      CategoryCode="&quot;MTH&quot;" />
+    <Record
+      Code="&quot;TIMEDIF&quot;"
+      Name="&quot;TimeDif&quot;"
+      SearchFields="&quot;TIMEDIF,TimeDif&quot;"
+      Body="&quot;(time1; time2; 'H')&quot;"
+      Description="&quot;Calculates the number of hours, minutes, or seconds between two dates. Can be: H, M, S&quot;"
+      CategoryCode="&quot;DTE&quot;" />
+    <Record
+      Code="&quot;NOW&quot;"
+      Name="&quot;Now&quot;"
+      SearchFields="&quot;NOW,Now&quot;"
+      Body="&quot;()&quot;"
+      Description="&quot;Returns Datetime.Now&quot;"
+      CategoryCode="&quot;DTE&quot;" />
+    <Record
+      Code="&quot;TODAY&quot;"
+      Name="&quot;Today&quot;"
+      SearchFields="&quot;TODAY,Today&quot;"
+      Body="&quot;()&quot;"
+      Description="&quot;Returns the current date&quot;"
+      CategoryCode="&quot;DTE&quot;" />
+    <Record
+      Code="&quot;DAY&quot;"
+      Name="&quot;Day&quot;"
+      SearchFields="&quot;DAY,Day&quot;"
+      Body="&quot;(Now(); 'DD')&quot;"
+      Description="&quot;Returns a day from dateTime&quot;"
+      CategoryCode="&quot;DTE&quot;" />
+    <Record
+      Code="&quot;MONTH&quot;"
+      Name="&quot;Month&quot;"
+      SearchFields="&quot;MONTH,Month&quot;"
+      Body="&quot;(Now(); 'MM')&quot;"
+      Description="&quot;Returns a month from dateTime&quot;"
+      CategoryCode="&quot;DTE&quot;" />
+    <Record
+      Code="&quot;YEAR&quot;"
+      Name="&quot;Year&quot;"
+      SearchFields="&quot;YEAR,Year&quot;"
+      Body="&quot;(Now(); 'YY')&quot;"
+      Description="&quot;Returns a year from dateTime&quot;"
+      CategoryCode="&quot;DTE&quot;" />
+    <Record
+      Code="&quot;TODATETIME&quot;"
+      Name="&quot;ToDateTime&quot;"
+      SearchFields="&quot;TODATETIME,ToDateTime&quot;"
+      Body="&quot;('8/15/2002')&quot;"
+      Description="&quot;Returns DateTime value from string&quot;"
+      CategoryCode="&quot;DTE&quot;" />
+    <Record
+      Code="&quot;WEEKDAY&quot;"
+      Name="&quot;WeekDay&quot;"
+      SearchFields="&quot;WEEKDAY,WeekDay&quot;"
+      Body="&quot;(Today())&quot;"
+      Description="&quot;Takes a date and returns a number between 1-7 representing the day of week&quot;"
       CategoryCode="&quot;DTE&quot;" />
   </Records>
   <DataContracts />

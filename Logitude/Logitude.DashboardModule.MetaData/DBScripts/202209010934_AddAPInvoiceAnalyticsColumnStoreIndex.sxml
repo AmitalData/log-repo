@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Dashboard" Env="Logitude,local,test">
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[
       BEGIN
           IF EXISTS (SELECT *  FROM sys.indexes  WHERE NAME='IX_APInvoiceAnalytics_ColumnStore' AND object_id = OBJECT_ID('[APInvoiceAnalytics]'))
@@ -19,25 +19,19 @@ Id
 ,InvoiceDate
 ,PaymentTermId
 ,DueDate
-,InvoiceCurrencyExchangeRate
-,ExchangeRateDate
 ,InvoiceCurrencyId
 ,LocalCurrencyId
 ,SubTotalInLocalCurrency
-,SubTotalInInvoiceCurrency
-,AmountInInvoiceCurrency
 ,AmountInLocalCurrency
 ,StatusCode
 ,CreateDate
 ,CreatedByUserId
 ,IsClosed
 ,ProfitCurrencyId
-,ProfitCurrencyExchangeRate
 ,AmountInProfitCurrency
 ,UpdatedByUserId
 ,UpdateDate
 ,MainEntityReference
-,AmountDue
 ,AmountDueInLocalCurrency
 ,AmountDueInProfitCurrency
 ,BranchId

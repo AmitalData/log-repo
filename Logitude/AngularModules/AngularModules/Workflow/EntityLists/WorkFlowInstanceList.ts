@@ -15,13 +15,13 @@ export class WorkFlowInstanceList {
 	UpdateDate: Date;
 	UpdatedByUserId: string;
 	SearchFields: string;
-	WorkflowId: string;
 	StatusCode: string;
 	StartTime: Date;
 	EndTime: Date;
 	BusinessKey: string;
 	Duration: number;
 	StatusName: string;
+	WorkFlowVersionId: string;
 	
 }
  
