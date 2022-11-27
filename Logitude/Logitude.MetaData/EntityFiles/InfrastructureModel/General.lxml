@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;eb84&quot;"
+  Code="&quot;e7bc&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -7752,7 +7752,7 @@
       IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;SupportUnitMeasurements&quot;"
-      FeatureTypeCode="&quot;OHT&quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
       FeatureTextCodeCode="&quot;General.Features.SupportUnitMeasurements&quot;"
       FeatureDefaultText="&quot;Support Select Unit of Measurements&quot;"
       IsPackagable="true"

@@ -227,7 +227,7 @@
                                         </td>
                                     </tr>
 
-                                    <tr *ngIf="SharedTitleType == 'DigitalPortal'" style="height:100px;vertical-align:top">
+                                    <tr *ngIf="SharedTitleType == 'DigitalPortal' && ShowMultiUnitsOfMeasurementsEnable" style="height:100px;vertical-align:top">
                                         <td>
                                             <table style="text-align:left">
                                                 <tr style="height:30px;">
@@ -236,8 +236,8 @@
                                                     </td>
                                                     <td style="width:20px;text-align:left;">
                                                         <div class="CheckBox">
-                                                            <input [attr.data-cy]="'Show Multi units of measurements'" [attr.id]="SharedLogisticsMasterMessageLinkCheckboxBoxId" [disabled]="ShowMultiUnitsOfMeasurements" [(ngModel)]="SharedLogisticsMasterMessageLink" class="CenterCenter" id="test" type="checkbox" />
-                                                            <label [attr.for]="SharedLogisticsMasterMessageLinkCheckboxBoxId" class="CenterCenter" id="test"></label>
+                                                            <input [attr.data-cy]="'Show Multi units of measurements'" [attr.id]="SharedLogisticsMultiUnitsOfMeasurementsId" [(ngModel)]="ShowMultiUnitsOfMeasurements" class="CenterCenter" id="test" type="checkbox" />
+                                                            <label [attr.for]="SharedLogisticsMultiUnitsOfMeasurementsId" class="CenterCenter" id="test"></label>
                                                         </div>
                                                     </td>
                                                     <td>

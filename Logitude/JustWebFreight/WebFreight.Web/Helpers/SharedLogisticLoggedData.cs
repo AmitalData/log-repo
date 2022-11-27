@@ -22,5 +22,7 @@ namespace WebFreight.Web.Helpers
         public string ContactId { get; set; }
         public bool IsReportsMenuEnabled { get; set; }
         public string ImageFileData  { get; set; }
+
+        public bool ShowMultiUnitsOfMeasurements { get; set; }
     }
 }
