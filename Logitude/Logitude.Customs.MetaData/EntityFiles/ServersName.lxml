@@ -465,6 +465,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Delete&quot;"
     ListPropertyPath="&quot;Delete&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -535,6 +536,11 @@
       <QueryColumn
         QueryCode="&quot;ServersNames&quot;"
         IndexOrder="1"
+        ObjectFieldName="&quot;Delete&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ServersNames&quot;"
+        IndexOrder="2"
         ObjectFieldName="&quot;ServiceName&quot;"
         ColumnWidth="100" />
     </QueryColumns>

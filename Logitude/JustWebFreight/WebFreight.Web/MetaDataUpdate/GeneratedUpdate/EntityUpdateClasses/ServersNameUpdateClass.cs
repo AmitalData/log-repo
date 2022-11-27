@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ServersNameUpdateClass
    {  		
-		public const string HashString = "42619388a937e9894a89361b8715e68e";
+		public const string HashString = "83bfa434c461c6867eaed1ee81b05bbb";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -360,6 +360,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Delete",
 					  						ListPropertyPath =  "Delete",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -433,7 +434,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn ServersNamesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ServersNamesQuery.Id,QueryCode = ServersNamesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ServersName.ServerName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ServersNamesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ServersNamesQuery.Id,QueryCode = ServersNamesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ServersName.ServiceName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ServersNamesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ServersNamesQuery.Id,QueryCode = ServersNamesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ServersName.Delete" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn ServersNamesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ServersNamesQuery.Id,QueryCode = ServersNamesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ServersName.ServiceName" , ColumnWidth = 100 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
