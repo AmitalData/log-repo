@@ -1049,6 +1049,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
         windowArgs.ViewModelTrigger = this;
         windowArgs.IsContainer = !this.IsLCLEntity;
+        windowArgs.ShowNewWarehouseReleaseButton = true;
         var logWindow = new LogitudeWindow();
 
         logWindow.Width = !windowArgs.IsContainer ? 1200 : 1130;
@@ -1077,11 +1078,11 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             else {
                 this.GenerateButtonLabel = TextCodeTranslator.Translate("Shipment.O.GenerateFromOrderPackages").replace("%Number", count.toString());
                 if (this.EntityPM.ShipmentTypeId == "FCL" || this.EntityPM.ShipmentTypeId == "FCLD"|| this.EntityPM.ShipmentTypeId == "FTL") {
-                    this.IsGenerateButtonVisible = this.EntityPM.ShipmentOrderPackages.length > 0 ? true : false;
+                    this.IsGenerateButtonVisible = true;
                 } else {
                     this.IsGenerateButtonVisible = true;
                 }
-                this.IsGenerateButtonEnabled = this.EntityPM.BookingNumberOfPackages > 0 ? true : false;
+                this.IsGenerateButtonEnabled = true;
             }
         }
 
