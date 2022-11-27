@@ -1049,6 +1049,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
         windowArgs.ViewModelTrigger = this;
         windowArgs.IsContainer = !this.IsLCLEntity;
+        windowArgs.ShowNewWarehouseReleaseButton = true;
         var logWindow = new LogitudeWindow();
 
         logWindow.Width = !windowArgs.IsContainer ? 1200 : 1130;
