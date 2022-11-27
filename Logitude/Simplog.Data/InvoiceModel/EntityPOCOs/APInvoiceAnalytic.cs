@@ -26,7 +26,6 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string CreatedByUserId { get; set; }
         public bool IsClosed { get; set; }
         public string ProfitCurrencyId { get; set; }
-        public double? ProfitCurrencyExchangeRate { get; set; }
         public double? AmountInProfitCurrency { get; set; }
         public string UpdatedByUserId { get; set; }
         public DateTime? UpdateDate { get; set; }
