@@ -38,8 +38,7 @@
 		End
 	CLOSE VatTypesCursor
 	DEALLOCATE VatTypesCursor
-	
+		update dw_WaterMarks set LastUpdateDate = @MaxAutomaticLastUpdateDate where TableName = 'VatType'
 	End
 
 
-	update dw_WaterMarks set LastUpdateDate = @MaxAutomaticLastUpdateDate where TableName = 'VatType'

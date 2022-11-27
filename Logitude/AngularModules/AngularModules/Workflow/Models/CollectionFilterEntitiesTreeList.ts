@@ -51,7 +51,7 @@ export class CollectionFilterEntitiesTreeList {
         let childrenItems = [];
         let childerItems = this.ChildEntities.filter(c => c.ParentEntityCode === entityCode)
         childerItems.forEach(childEntity => {
-            let childrenItem = new TreeSelectItem(treeItemPrefix + "_" + childEntity.Code, childEntity.Name, true, true, false, false, [], {entity:entityCode});
+            let childrenItem = new TreeSelectItem(treeItemPrefix + "_" + childEntity.Code, childEntity.Name, true, true, false, false, [], {entity:childEntity.Code});
             childrenItems.push(childrenItem);
         });
         return childrenItems;
