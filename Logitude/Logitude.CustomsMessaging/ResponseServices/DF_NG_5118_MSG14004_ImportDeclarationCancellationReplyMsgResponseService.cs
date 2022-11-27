@@ -157,7 +157,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                 }
 
-
+            if(_MyDeclarationPM.Direction != "E") 
+            { 
                 switch (_MyDeclarationPM.CancelRequestStatusCode)
                 {
                     case "6":
@@ -224,7 +225,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             break;
                         }
                 }
-
+            }
 
                 if (customResponse.ProceduralFaultMsg != null)
                 {
