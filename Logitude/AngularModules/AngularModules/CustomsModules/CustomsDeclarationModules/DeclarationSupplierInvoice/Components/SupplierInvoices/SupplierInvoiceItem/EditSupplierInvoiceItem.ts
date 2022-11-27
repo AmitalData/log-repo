@@ -1278,6 +1278,12 @@ export class ModificationItemModel extends BaseComponent {
         }
 
     }
+    OnTypeCodeLostFocus(){
+        if(this.CurrentSession.CurrentEditComponent.EntityPM.Direction == "E" && this.Amount !=null){
+            this.supplierInvoiceSharedService.DifferenceAndTotalForeignCurrency$.next()
+        }
+
+    }
      
     OnAmountOrCurrencyLostFocus(){
  

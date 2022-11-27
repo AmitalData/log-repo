@@ -260,7 +260,8 @@
                                                     [LookUpTableName]="'Customs.ModificationAndDiscountType'"
                                                     (SelectedItemChanged)="item.SetLocalName($event, 'TypeName')"
                                                     [QueryFilterItems]="TypeCodeFilterItems"
-                                                    [FocusOnMe]="true">
+                                                    [FocusOnMe]="true"
+                                                    (LostFocus)="item.OnTypeCodeLostFocus()">
                                             </LogLov>
 
                                         </div>

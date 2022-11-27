@@ -573,9 +573,18 @@ export class ModificationItemModel extends BaseComponent {
     InvoiceCurrencyExchangeRtae: number = 0;
     DiscountInDsicCurrency: number = 0;
 
-    OnCurrencyTypeLostFocus(){
+    OnTypeCodeLostFocus(){
 
-        if(this.parent.declarationPM.Direction == 'E')
+        if(this.parent.declarationPM.Direction == 'E' && this.Amount !=null)
+        {   
+          this.supplierInvoiceSharedService.DifferenceAndTotalForeignCurrency$.next()
+             
+        }
+    }
+
+
+    OnCurrencyTypeLostFocus(){
+        if(this.parent.declarationPM.Direction == 'E' && this.Amount !=null)
         {   
           this.supplierInvoiceSharedService.DifferenceAndTotalForeignCurrency$.next()
              
