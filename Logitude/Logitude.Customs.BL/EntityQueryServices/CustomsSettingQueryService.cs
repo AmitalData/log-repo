@@ -185,7 +185,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                     string myDcaFilterByEnvironment = getDcaFilterByEnvironment(item.Tenant);
                     tenantM.DcaFilterByEnvironment = myDcaFilterByEnvironment;
                 }
-                tenantM.SuppressDCA_FileFree = IsSuppressDca(Tenant);
+                tenantM.SuppressDCA_FileFree = IsSuppressDca(item.Tenant);
                 tenantMs.Add(tenantM);
             }
             //var allPMs = poco.Select(rec => GetEntityPM(rec)).ToList();
