@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Dashboard" Env="Logitude,local,test">
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[
       BEGIN
           IF EXISTS (SELECT *  FROM sys.indexes  WHERE NAME='IX_ARInvoiceAnalytics_ColumnStore' AND object_id = OBJECT_ID('[ARInvoiceAnalytics]'))
@@ -15,14 +15,11 @@ Id
 ,Tenant
 ,IsClosed
 ,AmountInProfitCurrency
-,ProfitCurrencyExchangeRate
 ,ProfitCurrencyId
 ,PrepaidCollectId
 ,IssuedByUserId
-,ExchangeRateDate
 ,DraftNumber
 ,MainEntityReference
-,AmountDue
 ,InvoiceNumber
 ,ARInvoiceTypeCode
 ,PaymentTermId
@@ -40,11 +37,8 @@ Id
 ,UpdateDate
 ,UpdatedByUserId
 ,LocalCurrencyId
-,InvoiceCurrencyExchangeRate
 ,SubTotalInLocalCurrency
-,SubTotalInInvoiceCurrency
 ,AmountInLocalCurrency
-,AmountInInvoiceCurrency
 ,StatusCode
 ,IsAutoCredit
 ,IsCancelled
