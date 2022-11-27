@@ -2,7 +2,7 @@
     <tr style="height:1px">
         <td>
             <table>
-                <tr class="FormFieldRow">
+                <tr *ngIf="DataSource" class="FormFieldRow">
                     <td style="width: 1px; padding-left: 5px;">
                             <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()" [DataCy]="'RunHistoryRefresh'"></IconButton>
                     </td>

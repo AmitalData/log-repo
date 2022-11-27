@@ -9,7 +9,7 @@ import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { WorkFlowPM } from 'Workflow/EntityPMs/WorkFlowPM';
 import { ApiQueryFiltersBuilder } from 'Workflow/Models/ApiQueryFiltersBuilder';
 import { WorkFlowInstanceListService } from 'Workflow/Services/StandardLists/WorkFlowInstanceListService';
-import { WorkFlowVersionListService } from 'Workflow/Services/StandardLists/WorkFlowVersionListService';
+import { WorkFlowVersionService } from 'Workflow/Services/WorkFlowVersionService';
 
 const SearchBoxDelayTime = 700;
 
@@ -48,7 +48,7 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
     }
 
     initialize() {
-        var versionservice: WorkFlowVersionListService = new WorkFlowVersionListService();
+        var versionservice: WorkFlowVersionService = new WorkFlowVersionService();
         versionservice.GetVersionIds(this.EntityPM.Id)
             .subscribe((serviceResponse: ServiceResponse) => {
                 if (serviceResponse.Result) {

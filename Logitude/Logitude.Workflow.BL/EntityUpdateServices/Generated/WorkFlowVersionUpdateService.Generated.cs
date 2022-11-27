@@ -83,13 +83,9 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
             {
 		        entityPM.UpdatedByUserId = loggedContact.Id;
 		    }
-
-            //WorkFlowVersionRepository workFlowVersionRepository = new WorkFlowVersionRepository(entityPM.Tenant);
-            //var workFlowVersions = workFlowVersionRepository.GetAllByWorkflowId(entityPM.Tenant, entityPM.WorkflowId).ToList();
-            //var versionNumber = workFlowVersions?.Count() == 0 ? 1 : workFlowVersions.LastOrDefault().VersionNumber + 1;
-            //entityPM.VersionNumber = versionNumber;
-            //entityPM.StatusCode = "ACVE";
-        }
+                        
+					
+	    }
         
 		protected override void FillDefaultValuesOnUpdate(WorkFlowVersionPM entityPM)
         {       
