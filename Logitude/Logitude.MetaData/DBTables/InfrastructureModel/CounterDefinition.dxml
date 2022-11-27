@@ -33,7 +33,7 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="Prefix"
+  Name="Prefix"
     Type="varchar"
     Size="20">
     <Constraints
@@ -70,6 +70,12 @@
     Size="20">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="UsePerBranch"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="CounterId"

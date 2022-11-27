@@ -28,5 +28,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public bool IsUsed { get; set; }
 		public int? CounterSize { get; set; }
 		public string Suffix { get; set; }
-	}
+        public bool UsePerBranch { get; set; }
+
+    }
 }

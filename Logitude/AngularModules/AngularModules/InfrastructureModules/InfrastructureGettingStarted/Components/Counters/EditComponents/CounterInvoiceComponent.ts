@@ -10,6 +10,7 @@ import {CountersDomainService, CounterAPIHelper} from '../../../../../Common/Ser
 import {Validator} from '../../../../../Infrastructure/Validators/Validator';
 import {MessageWindow} from '../../../../../Controls/Windows/MessageWindow';
 import {GroupByPipe} from '../../../../../Infrastructure/Pipes/GroupByPipe';
+import { Observable } from 'rxjs';
 
 @Component({
     
@@ -29,7 +30,8 @@ export class CounterInvoiceComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     public SameRadioButtonLabel: string;
     public DiffRadioButtonLabel: string;
-    public HasInterestFeature: boolean=false;
+    public HasInterestFeature: boolean = false;
+    public HasBranchCounterCodeFeature: boolean = false;
     public ItemsSource: CounterInvoiceDefinitionItem[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
@@ -37,6 +39,7 @@ export class CounterInvoiceComponent extends BaseComponent {
 
         this.HasConsolidationFeature = FeatureLocator.HasFeaturePermession("ARInvoice", "Consolidation.Constituent");
         this.HasInterestFeature = FeatureLocator.HasFeaturePermession("InterestReport", "Module");
+        this.HasBranchCounterCodeFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "BCC")[0]? true: false;
 
         if (this.HasConsolidationFeature) {
             this.SameRadioButtonLabel = "Same for Invoice, Credit, Manifest and Consolidation.";
@@ -156,12 +159,29 @@ export class CounterInvoiceComponent extends BaseComponent {
                 itemPM.StartNumber_Old = this.EntityPM.StartNumber_Old;
                 itemPM.Parameter1 = item['Code'];
                 itemPM.Parameter1 = null;
-
+                itemPM.UsePerBranch = false;
                 this.APIHelper.CounterDefinitions.push(itemPM);
             }
 
             this.ItemsSource.push(new CounterInvoiceDefinitionItem(itemPM, item['Name'], this));
         });
+    }
+
+    private seperatePerBranchChanged: boolean = false;
+    private uniquePerPrefixChanged: boolean = false;
+    private seperatePerBranch: boolean = false;
+    public get SeperatePerBranch() {
+        this.seperatePerBranch = this.ItemsSource[0].EntityPM.UsePerBranch;
+        return this.seperatePerBranch;
+    }
+    public set SeperatePerBranch(value: boolean) {
+        if (this.seperatePerBranch != value) {
+            this.seperatePerBranch = value;
+            this.seperatePerBranchChanged = true;
+            this.ItemsSource.forEach(item => {
+                item.EntityPM.UsePerBranch = value;
+            });
+        }
     }
 
     private sameForAllTypes: boolean = true;
@@ -186,7 +206,7 @@ export class CounterInvoiceComponent extends BaseComponent {
     public set UniquePerPrefix(value: boolean) {
         if (this.EntityPM.UniquePerPrefix != value) {
             this.EntityPM.UniquePerPrefix = value;
-
+            this.uniquePerPrefixChanged = true;
             this.EntityPM.Prefix = this.APIHelper.CounterDefinitions.filter(f => f.Parameter1 == "IN")[0].Prefix;
 
             this.ItemsSource.forEach(item => {
@@ -252,11 +272,69 @@ export class CounterInvoiceComponent extends BaseComponent {
         }
     }
 
+    //private largestLastValueOfCounterStat: number = 0;
+
+   
+
+    ValidateStartNumber() {
+        new CountersDomainService().GetLastValueCounterStatByCounterId(this.CounterId).subscribe((myResponse: ServiceResponse) => {
+
+            if (myResponse.HasError) {
+                this.ShowLastValueCounterMessageWindow(myResponse.ErrorsArray[0]);
+                return;
+            }
+
+            this.HandelLastValueCounterStatResponse(myResponse.Result);
+
+        });
+        
+    }
+
+
+    HandelLastValueCounterStatResponse(response) {
+
+        let largestLastValueOfCounterStat = response;
+        if (largestLastValueOfCounterStat == 0 || !largestLastValueOfCounterStat) {
+            this.Save();
+            return;
+        };
+
+        let message = "";
+        this.APIHelper.CounterDefinitions.forEach(item => {
+            if (item.StartNumber <= largestLastValueOfCounterStat) {
+                message = "The start number must be greater than the Last Value Counter " + largestLastValueOfCounterStat + " !";
+            }
+        });
+
+
+        if (!AppTool.IsNullOrEmpty(message)) {
+            this.ShowLastValueCounterMessageWindow(message);
+            return;
+        }
+
+        this.Save();
+    }
+
+
+
+    ShowLastValueCounterMessageWindow(msgValue:string) {
+        var messageWindow = new MessageWindow();
+        messageWindow.Show(msgValue);
+    }
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
-    OkButtonClicked() {
 
+
+
+    OkButtonClicked() {
+        if (this.seperatePerBranchChanged || this.uniquePerPrefixChanged) {
+            this.ValidateStartNumber();
+        } else this.Save();
+
+    }
+
+    Save() {
         var isValidGreaterStartNumber: boolean = true;
 
         this.APIHelper.CounterDefinitions.forEach(item => {
@@ -266,7 +344,7 @@ export class CounterInvoiceComponent extends BaseComponent {
                 }
             }
         });
-           
+
         if (!isValidGreaterStartNumber) {
             var messageWindow = new MessageWindow();
             messageWindow.Show("The new start number must be greater than current start number!");
@@ -282,7 +360,7 @@ export class CounterInvoiceComponent extends BaseComponent {
                     isValidUniquePrefix = false;
                 }
             }
-             
+
             if (!isValidUniquePrefix) {
                 var messageWindow = new MessageWindow();
                 messageWindow.Show("Some Prefix values are invalid (Prefix should be unique)");
@@ -291,13 +369,12 @@ export class CounterInvoiceComponent extends BaseComponent {
             else {
                 var errors: string[] = [];
 
-                if (this.HasEmptyCounterSize())
-                {
+                if (this.HasEmptyCounterSize()) {
                     errors.push("Size field is mandatory!");
-                }  
+                }
 
                 if (this.UniquePerPrefix == true) {
-                    this.APIHelper.CounterDefinitions.forEach(item => {     
+                    this.APIHelper.CounterDefinitions.forEach(item => {
                         if (item.CounterSize > 20) {
                             errors.push("Maximum size allowed for counter is 20");
                         }
@@ -312,7 +389,7 @@ export class CounterInvoiceComponent extends BaseComponent {
                 }
                 else {
 
-                    if ((this.StartNumber).toString().length + AppTool.GetCounterPrefixLength(this.Prefix) + AppTool.GetCounterPrefixLength(this.Suffix)> 20) {
+                    if ((this.StartNumber).toString().length + AppTool.GetCounterPrefixLength(this.Prefix) + AppTool.GetCounterPrefixLength(this.Suffix) > 20) {
                         errors.push("Maximum length allowed for [Prefix + StartNumber + Suffix] is 20");
                     }
 
@@ -348,6 +425,8 @@ export class CounterInvoiceComponent extends BaseComponent {
         }
     }
 
+
+
     public SampleValue: string;
 
     private HasEmptyCounterSize() {
@@ -359,6 +438,7 @@ export class CounterInvoiceComponent extends BaseComponent {
         this.SampleValue = AppTool.GetCounterResolvedNumber(this.Prefix, this.StartNumber, this.Suffix, this.CounterSize);
 
     }
+
 }
 export class CounterInvoiceDefinitionItem extends BaseComponent {
     public Name: string;

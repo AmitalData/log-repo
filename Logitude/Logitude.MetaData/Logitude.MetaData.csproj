@@ -113,6 +113,7 @@
     <None Include="DBOthers\InfrastructureModel\Procedures\DeleteOldAnalyzeQueues.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\DeleteOldContactActivityLogs.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\ResetFullTextSearchIndexChangeTracking.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Procedures\usp_GetNextTableNumberValueWithSnapshot.dxml" />
     <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdatePayablesData.dxml" />
     <None Include="DBOthers\ShipmentsModel\Views\DigitalShipmentDataView.dxml" />
     <None Include="DBScripts\CommonModel\202208160224_AddBinaryTypeToFieldDataTypes.sxml" />

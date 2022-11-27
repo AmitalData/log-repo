@@ -60,6 +60,9 @@ export class CounterDefinitionPM {
     public get Suffix() { return this.suffix; }
     public set Suffix(newValue: string) { if (this.suffix != newValue) { this.suffix = newValue; this.MarkAsDirty("Suffix"); } }
 
+    private usePerBranch: boolean;
+    public get UsePerBranch() { return this.usePerBranch; }
+    public set UsePerBranch(newValue: boolean) { if (this.usePerBranch != newValue) { this.usePerBranch = newValue; this.MarkAsDirty("UsePerBranch"); } }
 
     public OldEntityPM: CounterDefinitionPM;
 

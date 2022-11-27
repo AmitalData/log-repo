@@ -38,6 +38,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .HasMaxLength(15)
                 .IsUnicode(false);
 
+
             // Table & Column Mappings
             this.ToTable("CounterDefinitions");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -50,12 +51,12 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.CounterId).HasColumnName("CounterId");
 			this.Property(t => t.CounterSize).HasColumnName("CounterSize");
 			this.Property(t => t.Suffix).HasColumnName("Suffix");
+            this.Property(t => t.UsePerBranch).HasColumnName("UsePerBranch");
+            // Relationships
+            //this.HasRequired(t => t.Counter)
+            //    .WithMany(t => t.CounterDefinitions)
+            //    .HasForeignKey(d => d.CounterId);
 
-			// Relationships
-			//this.HasRequired(t => t.Counter)
-			//    .WithMany(t => t.CounterDefinitions)
-			//    .HasForeignKey(d => d.CounterId);
-
-		}
+        }
 	}
 }
