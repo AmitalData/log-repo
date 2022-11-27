@@ -25,6 +25,7 @@ import { DeclarationPMService } from 'Customs/Services/StandardPMs/DeclarationPM
 import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
 import { PendingByKeywordWebService } from 'Customs/Services/ExtendedPMs/PendingByKeywordWebService';
 import { LogisticActionRequestsCloseSharedDataService } from 'Customs/Services/DataChange/LogisticActionRequestCloseSharedDataService';
+import { ServersNameExtendedPMService } from 'Customs/Services/ExtendedPMs/ServersNameExtendedPMService';
 @Component({
 
     templateUrl: './FieldTemplateComponent.html',
@@ -43,6 +44,8 @@ export class FieldTemplateComponent {
     public IsHeaderScreenTemplate: boolean = false;
     courierMasterService: CourierMasterService = new CourierMasterService();
     customsAutonomyKeywordExtendedPMService: CustomsAutonomyKeywordExtendedPMService = new CustomsAutonomyKeywordExtendedPMService();
+
+    serversNameExtendedPMService: ServersNameExtendedPMService = new ServersNameExtendedPMService();
     declarationPMService: DeclarationPMService = new DeclarationPMService();
     exceptionReasonExtendedListService: ExceptionReasonExtendedListService = new ExceptionReasonExtendedListService();
     _declarationReferantDataPMService: DeclarationReferantDataPMService = new DeclarationReferantDataPMService();
@@ -287,6 +290,24 @@ export class FieldTemplateComponent {
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) { // YES
                     this.customsAutonomyKeywordExtendedPMService.deleteByid(value).subscribe((response: ServiceResponse) => {
+                        SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
+                        SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.Entity.DeclarationId, { rowIndex: this.RowIndex });
+                        this.CD.detectChanges();
+                    });
+                }
+            });
+        }
+    }
+    DeleteServerName(value: number) {
+        this._ListComponentArgs.SuppressOnRowSelectedField = true;
+        if (!AppTool.IsNullOrEmpty(value)) {
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Width = 400;
+            confirmWindow.Height = 150;
+            confirmWindow.Show("האם אתה בטוח שברצונך למחוק את שם השרת?");
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) { // YES
+                    this.serversNameExtendedPMService.deleteByid(value).subscribe((response: ServiceResponse) => {
                         SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
                         SessionLocator.SelectedSession.CurrentListComponent.OnBackFromEdit(this.Entity.DeclarationId, { rowIndex: this.RowIndex });
                         this.CD.detectChanges();
