@@ -156,6 +156,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
     
     SharedLogisticsMessageLinkEnable: boolean;
     SharedLogisticsMasterMessageLinkEnable: boolean = true;
+    ShowMultiUnitsOfMeasurementsEnable: boolean = true;
 
 
     IsSharedLogisticsActivatedCheckboxBoxId: string;
@@ -165,6 +166,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
     IsDigitalPortalAccessActivatedCheckboxBoxId: string;
     SharedLogisticsMessageLinkCheckboxBoxId: string;
     SharedLogisticsMasterMessageLinkCheckboxBoxId: string;
+    SharedLogisticsMultiUnitsOfMeasurementsId: string;
 
     IsShowActivateWebAccessArea: boolean = true;
 
@@ -201,7 +203,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
             this.SaveButtonClicked();
 
         });
-
+ 
     }
 
 
@@ -232,7 +234,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
         }
 
         if (!FeatureLocator.HasFeaturePermession("General", "SupportUnitMeasurements")) {
-            this.ShowMultiUnitsOfMeasurements = false;
+            this.ShowMultiUnitsOfMeasurementsEnable = false;
         }
 
 
@@ -244,6 +246,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
         this.IsDigitalPortalAccessActivatedCheckboxBoxId = Guid.newGuid();
         this.SharedLogisticsMessageLinkCheckboxBoxId = Guid.newGuid();
         this.SharedLogisticsMasterMessageLinkCheckboxBoxId = Guid.newGuid();
+        this.SharedLogisticsMultiUnitsOfMeasurementsId = Guid.newGuid();
 
         this.SetPropertiesEnable();
 
