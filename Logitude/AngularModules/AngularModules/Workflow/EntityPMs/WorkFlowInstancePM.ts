@@ -59,11 +59,6 @@ export class WorkFlowInstancePM {
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
        
 	 
-    private workflowId: string;
-    public get WorkflowId() { return this.workflowId; }
-    public set WorkflowId(newValue: string) { if (this.workflowId != newValue) { this.workflowId = newValue; this.MarkAsDirty("WorkflowId"); } }
-       
-	 
     private statusCode: string;
     public get StatusCode() { return this.statusCode; }
     public set StatusCode(newValue: string) { if (this.statusCode != newValue) { this.statusCode = newValue; this.MarkAsDirty("StatusCode"); } }
@@ -92,6 +87,11 @@ export class WorkFlowInstancePM {
     private statusName: string;
     public get StatusName() { return this.statusName; }
     public set StatusName(newValue: string) { if (this.statusName != newValue) { this.statusName = newValue; this.MarkAsDirty("StatusName"); } }
+       
+	 
+    private workFlowVersionId: string;
+    public get WorkFlowVersionId() { return this.workFlowVersionId; }
+    public set WorkFlowVersionId(newValue: string) { if (this.workFlowVersionId != newValue) { this.workFlowVersionId = newValue; this.MarkAsDirty("WorkFlowVersionId"); } }
        
 	 
 

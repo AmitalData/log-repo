@@ -39,11 +39,6 @@ namespace Logitude.Workflow.Data.EntityPOCOs
         public virtual User UpdatedByUser { get; set; }
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
-        [ForeignKey("Workflow")]
-        [Column("WorkflowId")]
-	    public string WorkflowId { get; set; }
-	      
-        public virtual WorkFlow Workflow { get; set; }
         [ForeignKey("Status")]
         [Column("StatusCode")]
 	    public string StatusCode { get; set; }
@@ -57,6 +52,11 @@ namespace Logitude.Workflow.Data.EntityPOCOs
 	    public string BusinessKey { get; set; }
         [Column("Duration")]
 	    public decimal? Duration { get; set; }
+        [ForeignKey("WorkFlowVersion")]
+        [Column("WorkFlowVersionId")]
+	    public string WorkFlowVersionId { get; set; }
+	      
+        public virtual WorkFlowVersion WorkFlowVersion { get; set; }
     }
 }
 	 

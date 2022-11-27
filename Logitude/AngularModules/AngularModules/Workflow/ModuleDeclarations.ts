@@ -37,6 +37,8 @@ import { ExpressionComponent } from "./Components/Base/ExpressionComponent";
 import { ExpressionBuilderComponent } from "./Components/Base/ExpressionBuilderComponent";
 import { CollectionFilterPropertiesComponent } from './Components/Properties/CollectionFilterPropertiesComponent';
 import { ShowEditableVariablesTreeItemPipe } from "./Pipes/ShowEditableVariablesTreeItemPipe";
+import { WorkflowVersionComponent } from './Components/WorkflowVersion/WorkflowVersionComponent';
+import { CreateWorkflowVersionComponent } from './Components/WorkflowVersion/CreateWorkflowVersionComponent';
 
 export const Components = [
     WorkflowBuilderComponent,
@@ -63,7 +65,9 @@ export const Components = [
     DeleteNodeWarningComponent,
     ExpressionComponent,
     ExpressionBuilderComponent,
-    CollectionFilterPropertiesComponent
+    CollectionFilterPropertiesComponent,
+    WorkflowVersionComponent,
+    CreateWorkflowVersionComponent
 ];
 
 export const Pipes = [
@@ -112,6 +116,8 @@ export class ModuleDeclarations {
             case "ExpressionComponent": { result = ExpressionComponent; break; }
             case "ExpressionBuilderComponent": { result = ExpressionBuilderComponent; break; }
             case "CollectionFilterPropertiesComponent": { result = CollectionFilterPropertiesComponent; break; }
+            case "WorkflowVersionComponent": { result = WorkflowVersionComponent; break; }
+            case "CreateWorkflowVersionComponent": { result = CreateWorkflowVersionComponent; break; }
         }
         return result;
     }

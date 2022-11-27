@@ -52,13 +52,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="WorkflowId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="StatusCode"
     Type="varchar"
     Size="4">
@@ -92,6 +85,14 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="WorkFlowVersionId"
+    OldNames="VersionId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
@@ -103,13 +104,13 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="WorkflowId"
-    ReferencedTable="WorkFlows"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
     ForeignKeyColumn="StatusCode"
     ReferencedTable="WorkFlowInstanceStatuses"
     ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="WorkFlowVersionId"
+    ReferencedTable="WorkFlowVersions"
+    ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

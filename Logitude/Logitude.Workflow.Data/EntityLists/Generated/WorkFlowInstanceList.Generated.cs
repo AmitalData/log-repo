@@ -29,8 +29,6 @@ namespace Logitude.Workflow.Data.EntityLists
        [DataMember]
        public string SearchFields  { get; set; }
        [DataMember]
-       public string WorkflowId  { get; set; }
-       [DataMember]
        public string StatusCode  { get; set; }
        [DataMember]
        public DateTime? StartTime  { get; set; }
@@ -42,6 +40,8 @@ namespace Logitude.Workflow.Data.EntityLists
        public decimal? Duration  { get; set; }
        [DataMember]
        public string StatusName  { get; set; }
+       [DataMember]
+       public string WorkFlowVersionId  { get; set; }
    }
 
 }

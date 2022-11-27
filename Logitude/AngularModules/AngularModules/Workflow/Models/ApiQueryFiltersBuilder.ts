@@ -46,11 +46,36 @@ export class ApiQueryFiltersBuilder {
         return apiQueryFilters;
     }
 
+    
+    static getWorkflowInstancesByVersionApiQueryFilters(idsList: string[], businessKey: string | null, getAll: boolean = false) {
+        let apiQueryFilters = new ApiQueryFilters(getAll);
+
+        if (idsList) {
+            apiQueryFilters.addAdditionalFilter("WorkFlowVersionId", idsList.join(','), null, null, "InListExact", false, false, false, "Text");
+        }
+
+        if (businessKey) {
+            apiQueryFilters.addAdditionalFilter("BusinessKey", businessKey, null, null, "Contains", false, false, false, "Text");
+        }
+
+        return apiQueryFilters;
+    }
+
     static getWorkflowInstanceActivities(workflowInstanceId: string | null, getAll: boolean = false) {
         let apiQueryFilters = new ApiQueryFilters(getAll);
 
         if (workflowInstanceId) {
             apiQueryFilters.addAdditionalFilter("WorkflowInstanceId", workflowInstanceId, null, null, this.getOperator(workflowInstanceId), false, false, false, "Text");
+        }
+
+        return apiQueryFilters;
+    }
+
+    static getWorkflowVersionApiQueryFilters(workflowId: string | null, getAll: boolean = false) {
+        let apiQueryFilters = new ApiQueryFilters(getAll);
+
+        if (workflowId) {
+            apiQueryFilters.addAdditionalFilter("WorkflowId", workflowId, null, null, this.getOperator(workflowId), false, false, false, "Text");
         }
 
         return apiQueryFilters;
