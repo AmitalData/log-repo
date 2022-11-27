@@ -2075,7 +2075,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                                     logWindow.Show('./CustomsModules/CustomsClient/Components/EditTabs/ClientEditComponent');
 
                                                     logWindow.WindowClosed.subscribe(($event1: any) => {
-                                                        $event.isEntityChange =  (logWindow.ComponentRef.instance as ClientEditComponent).isEntityChange;
+                                                        $event.isEntityChange =  (logWindow.InstanceComponent.ComponentInstance as ClientEditComponent).isEntityChange;
                                                         this.isEditControlOpened = false;
                                                         this.OnBackFromEdit(selectedEntityId, $event);
                                                     });
@@ -2129,7 +2129,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                                             logWindow.Show('./CustomsModules/CustomsVendor/Components/EditTabs/VendorEditComponent');
 
                                                             logWindow.WindowClosed.subscribe(($event1: any) => {
-                                                                $event.isEntityChange =  (logWindow.ComponentRef.instance as VendorEditComponent).GENERAL.isEntityChange;
+                                                                $event.isEntityChange =  (logWindow.InstanceComponent.ComponentInstance as VendorEditComponent).GENERAL.isEntityChange;
                                                                 this.isEditControlOpened = false;
                                                                 this.OnBackFromEdit(selectedEntityId, $event);
                                                             });
@@ -2173,7 +2173,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                                                     logWindow.Show('./CustomsModules/CustomsCollateral/Components/CustomsCollateralComponent');
 
                                                                     logWindow.WindowClosed.subscribe(($event1: any) => {
-                                                                        $event.isEntityChange =  (logWindow.ComponentRef.instance as CustomsCollateralComponent).isEntityChange;
+                                                                        $event.isEntityChange =  (logWindow.InstanceComponent.ComponentInstance as CustomsCollateralComponent).isEntityChange;
                                                                         this.isEditControlOpened = false;
                                                                         this.OnBackFromEdit(selectedEntityId, $event);
                                                                     });
@@ -2211,7 +2211,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                                     logWindow.Show('./CustomsModules/CustomsProceduralFault/Components/EditTabs/General/ProceduralFaultsGeneralTabComponent');
 
                                                     logWindow.WindowClosed.subscribe(($event1: any) => {
-                                                        $event.isEntityChange =  (logWindow.ComponentRef.instance as ProceduralFaultsGeneralTabComponent).isEntityChange;
+                                                        $event.isEntityChange =  (logWindow.InstanceComponent.ComponentInstance as ProceduralFaultsGeneralTabComponent).isEntityChange;
                                                         this.isEditControlOpened = false;
                                                         this.OnBackFromEdit(selectedEntityId, $event);
                                                     });
@@ -2237,7 +2237,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
                                     logWindow.WindowClosed.subscribe(($event1: any) => {
                                         this.isEditControlOpened = false;
-                                        $event.isEntityChange =  (logWindow.ComponentRef.instance as SharedManifestComponent).isEntityChange;
+                                        $event.isEntityChange =  (logWindow.InstanceComponent.ComponentInstance as SharedManifestComponent).isEntityChange;
                                         this.OnBackFromEdit(selectedEntityId, $event);
                                         this.RefreshBtnClick();
                                     });
@@ -2259,7 +2259,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                     logWindow.Show("./QuoteModules/QuoteTemplates/Components/EditQuoteTemplateComponent");
                                     
                                     logWindow.WindowClosed.subscribe(($event1: any) => {
-                                        $event.isEntityChange =  (logWindow.ComponentRef.instance as EditQuoteTemplateComponent).isEntityChange;
+                                        $event.isEntityChange =  (logWindow.InstanceComponent.ComponentInstance as EditQuoteTemplateComponent).isEntityChange;
                                         this.isEditControlOpened = false;
                                         this.OnBackFromEdit(selectedEntityId, $event);
                                     });
@@ -2299,7 +2299,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                                         logWindow.Show('./CustomsModules/CustomsDeclarationCargoSplit/Components/EditTabs/General/CargoSplitGeneralTabComponent');
 
                                                         logWindow.WindowClosed.subscribe(($event1: any) => {
-                                                            $event.isEntityChange =  (logWindow.ComponentRef.instance as CargoSplitGeneralTabComponent).isEntityChange;
+                                                            $event.isEntityChange =  (logWindow.InstanceComponent.ComponentInstance as CargoSplitGeneralTabComponent).isEntityChange;
                                                             this.isEditControlOpened = false;
                                                             this.OnBackFromEdit(selectedEntityId, $event);
                                                         });
@@ -2341,7 +2341,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                                         logWindow.Show('./CustomsModules/CustomsLogisticActionRequest/Components/EditTabs/General/LogisticActionRequestGeneralTabComponent');
 
                                                         logWindow.WindowClosed.subscribe(($event1: any) => {
-                                                            $event.isEntityChange =  (logWindow.ComponentRef.instance as LogisticActionRequestGeneralTabComponent).isEntityChange;
+                                                            $event.isEntityChange =  (logWindow.InstanceComponent.ComponentInstance as LogisticActionRequestGeneralTabComponent).isEntityChange;
                                                             this.isEditControlOpened = false;
                                                             this.OnBackFromEdit(selectedEntityId, $event);
                                                         });
@@ -2557,7 +2557,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                 });
                                 cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
                                     this.isEditControlOpened = false;
-                                    $event.isEntityChange = cmpRef.instance.isEntityChange;
+                                    $event.isEntityChange = (cmpRef.instance as any).isEntityChange;
                                     this.OnBackFromEdit(selectedEntityId, $event)
                                 });
                                 //  if (SessionLocator.LoggedUserPM.Email == "mohammad@fnarsoft.com") {
@@ -2573,7 +2573,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     private getIsEntityChange(logWindow: LogitudeWindow): any {
-        return ((logWindow.ComponentRef.instance as AWBWizardLoadComponent).childComponentInstance as AWBWizardComponent).isEntityChange;
+        return (((logWindow.InstanceComponent.ComponentInstance as AWBWizardLoadComponent).childComponentInstance as AWBWizardComponent) as any)?.isEntityChange;
     }
 
     private ShowINTTRABookingWizard(selectedEntityId: string, $event) {

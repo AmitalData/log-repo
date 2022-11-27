@@ -435,7 +435,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         const res = await this.logtuideTableDataService.getDataFromService(
             (isInsert ? this.logisticActionRequestPMService.insert(this.entityPM) : this.logisticActionRequestPMService.update(this.entityPM)))
 
-        this.isEntityChange;
+        this.isEntityChange = true;
             
         this.logger.sendError('after save', 'res: ', JSON.stringify(res));
 
