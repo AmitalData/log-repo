@@ -360,7 +360,15 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                     var res = dcaFilterByEnvironmentService.GetDCAEnvPerTenant(tenant);
                     return res.ToString();
                 });
-                var tenantMs = customsSettingQuery.GetTenantDetailsMessagesPMs(getDcaFilterByEnvironment);
+
+                Func<int, bool> IsSuppressDca = new Func<int, bool>(tenant =>
+                    {
+                        return SecurityUtility.CheckFeature("Customs.Declaration", "DCA", tenant);
+
+                    });
+                //Feature DeclarationFeature_DCA = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DCA", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.DCA", NameTextCodeDefaultText = @"SUPPRESSDCA" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes, DeclarationObjectTable);
+
+                var tenantMs = customsSettingQuery.GetTenantDetailsMessagesPMs(getDcaFilterByEnvironment, IsSuppressDca);
 
                 return Request.CreateResponse(HttpStatusCode.OK,   tenantMs  );
             }

@@ -161,7 +161,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
 
 
-        public List<TenantM> GetTenantDetailsMessagesPMs(Func<int, string> getDcaFilterByEnvironment)
+        public List<TenantM> GetTenantDetailsMessagesPMs(
+            Func<int, string> getDcaFilterByEnvironment,
+            Func<int, bool> IsSuppressDca
+            )
         {
             List<TenantM> tenantMs = new List<TenantM>();
             var poco = repository.GetRealAll().ToList();
@@ -182,6 +185,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                     string myDcaFilterByEnvironment = getDcaFilterByEnvironment(item.Tenant);
                     tenantM.DcaFilterByEnvironment = myDcaFilterByEnvironment;
                 }
+                tenantM.SuppressDCA_FileFree = IsSuppressDca(Tenant);
                 tenantMs.Add(tenantM);
             }
             //var allPMs = poco.Select(rec => GetEntityPM(rec)).ToList();
@@ -217,7 +221,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
         
         public string DcaFilterByEnvironment { get; internal set; }
 
-
+        
+        public bool SuppressDCA_FileFree { get; internal set; }
     }
 
 #if false
