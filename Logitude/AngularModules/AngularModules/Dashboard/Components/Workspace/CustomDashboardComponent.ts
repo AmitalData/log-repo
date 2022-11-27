@@ -15,6 +15,7 @@ import { DashboardListService } from '../../../DashboardModule/Services/Standard
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { DashboardList } from '../../../DashboardModule/EntityLists/DashboardList';
 import { LocationDirective } from '../../../Infrastructure/Utilities/LocationDirective';
+import { DashboardPMExtendedService } from '../../../DashboardModule/Services/ExtendedPMs/DashboardPMExtendedService';
 
 @Component({
     templateUrl: 'CustomDashboardComponent.html',
@@ -32,8 +33,10 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     private filterControlNameSpace: string = "Workspace.CustomDashboard";    
     public DashboardsTabs: DashboardTab[] = [];
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
+    private dashboardExtendedService: DashboardPMExtendedService;
     constructor() {
         super();
+        this.dashboardExtendedService = new DashboardPMExtendedService();
         this.RunComponent();
     }
 
@@ -107,6 +110,19 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     private GetDefaultDashboards() {
         this.CurrentSession.StartBusyIndicatorLoading();
 
+        //var rememberedDashboards: string = LastFilterClass.GetFilterValue(this.filterControlNameSpace, this.filterName_SelectedDashboard);
+        //if (!AppTool.IsNullOrEmpty(rememberedDashboards)) {
+        //    this.dashboardExtendedService.GetDashboardsFromIds(rememberedDashboards).subscribe((myResponse: ServiceResponse) => {
+        //        if (!myResponse.HasError) {
+        //            this.loadedDashboards = myResponse.Result;
+        //            this.BuildTabs();
+        //        }
+
+        //        this.CurrentSession.StopBusyIndicator();
+        //    });
+        //}
+
+
         var filters: ApiQueryFilters = new ApiQueryFilters();
         filters.PageSize = 6;
         filters.SortBy = "CreateDate";
@@ -157,11 +173,24 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         if (this.selectedDashboardId != value) {
             this.selectedDashboardId = value;
 
-            if (value)
-                MixPanelLocator.PostDashboardAction({ ActionName: "Dashboard drop down", DashboardId: value });            
-
-            LastFilterClass.UpdateFilter(this.filterControlNameSpace, this.filterName_SelectedDashboard, value);
+            if (value) {
+                MixPanelLocator.PostDashboardAction({ ActionName: "Dashboard drop down", DashboardId: value });
+                this.UpdateSelectedDashboards();
+            }
         }
+    }
+
+    private UpdateSelectedDashboards() {
+        var selectedDashboards: string = LastFilterClass.GetFilterValue(this.filterControlNameSpace, this.filterName_SelectedDashboard);
+        if (AppTool.IsNullOrEmpty(selectedDashboards)) {
+            selectedDashboards = this.SelectedDashboardId;
+        }
+
+        else {
+            selectedDashboards = selectedDashboards + "," + this.SelectedDashboardId;
+        }
+
+        LastFilterClass.UpdateFilter(this.filterControlNameSpace, this.filterName_SelectedDashboard, selectedDashboards);
     }
 
     private selectedDashboard: DashboardList;
