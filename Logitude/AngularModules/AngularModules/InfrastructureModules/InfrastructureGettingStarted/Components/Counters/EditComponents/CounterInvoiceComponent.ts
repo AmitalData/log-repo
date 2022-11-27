@@ -168,7 +168,6 @@ export class CounterInvoiceComponent extends BaseComponent {
     }
 
     private seperatePerBranchChanged: boolean = false;
-    private uniquePerPrefixChanged: boolean = false;
     private seperatePerBranch: boolean = false;
     public get SeperatePerBranch() {
         this.seperatePerBranch = this.ItemsSource[0].EntityPM.UsePerBranch;
@@ -206,7 +205,7 @@ export class CounterInvoiceComponent extends BaseComponent {
     public set UniquePerPrefix(value: boolean) {
         if (this.EntityPM.UniquePerPrefix != value) {
             this.EntityPM.UniquePerPrefix = value;
-            this.uniquePerPrefixChanged = true;
+
             this.EntityPM.Prefix = this.APIHelper.CounterDefinitions.filter(f => f.Parameter1 == "IN")[0].Prefix;
 
             this.ItemsSource.forEach(item => {
@@ -328,7 +327,7 @@ export class CounterInvoiceComponent extends BaseComponent {
 
 
     OkButtonClicked() {
-        if (this.seperatePerBranchChanged || this.uniquePerPrefixChanged) {
+        if (this.seperatePerBranchChanged) {
             this.ValidateStartNumber();
         } else this.Save();
 
