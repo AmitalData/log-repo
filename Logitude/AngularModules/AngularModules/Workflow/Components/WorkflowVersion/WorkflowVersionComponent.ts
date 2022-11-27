@@ -103,16 +103,18 @@ export class WorkflowVersionComponent extends BaseComponent {
             Display: "CreateDate",
             IsCustomTemplate: true,
             Styles: { width: '400px' },
-            HtmlListComponentName: 'VerstionFieldTemplateComponent',
-            HtmlListComponentUrl: './Workflow/Components/Templates/VerstionFieldTemplateComponent',
+            AdditionalDataCustom : this.ObjectTableName,
+            HtmlListComponentName: 'FieldTemplateComponent',
+            HtmlListComponentUrl: './Workflow/Components/Templates/FieldTemplateComponent',
             ServerSideSortable: true
         });
         this.columns.push({
             FieldName: 'StatusName',
             DataTypeCode: 'String',
             Display: "Status",
-            HtmlListComponentName: 'VerstionFieldTemplateComponent',
-            HtmlListComponentUrl: './Workflow/Components/Templates/VerstionFieldTemplateComponent',
+            AdditionalDataCustom : this.ObjectTableName,
+            HtmlListComponentName: 'FieldTemplateComponent',
+            HtmlListComponentUrl: './Workflow/Components/Templates/FieldTemplateComponent',
             IsCustomTemplate: true,
             Styles: { width: '400px' },
         });

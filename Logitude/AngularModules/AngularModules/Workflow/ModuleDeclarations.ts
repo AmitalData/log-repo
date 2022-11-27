@@ -9,7 +9,6 @@ import { UpdateRecordPropertiesComponent } from './Components/Properties/UpdateR
 import { GetRecordPropertiesComponent } from './Components/Properties/GetRecordPropertiesComponent';
 import { SendEmailPropertiesComponent } from './Components/Properties/SendEmailPropertiesComponent';
 import { FieldTemplateComponent } from "./Components/Templates/FieldTemplateComponent";
-import { VerstionFieldTemplateComponent } from "./Components/Templates/VerstionFieldTemplateComponent";
 import { CreateWorkflowComponent } from "./Components/CreateEditWorkflow/CreateWorkflowComponent";
 import { EditWorkflowComponent } from "./Components/CreateEditWorkflow/EditWorkflowComponent";
 import { RunHistoryWorkflowComponent } from "./Components/WorkflowInstance/RunHistoryWorkflowComponent";
@@ -52,7 +51,6 @@ export const Components = [
     GetRecordPropertiesComponent,
     SendEmailPropertiesComponent,
     FieldTemplateComponent,
-    VerstionFieldTemplateComponent,
     CreateWorkflowComponent,
     EditWorkflowComponent,
     RunHistoryWorkflowComponent,
@@ -102,7 +100,6 @@ export class ModuleDeclarations {
             case "GetRecordPropertiesComponent": { result = GetRecordPropertiesComponent; break; }
             case "SendEmailPropertiesComponent": { result = SendEmailPropertiesComponent; break; }
             case "FieldTemplateComponent": { result = FieldTemplateComponent; break; }
-            case "VerstionFieldTemplateComponent": { result = VerstionFieldTemplateComponent; break; }
             case "CreateWorkflowComponent": { result = CreateWorkflowComponent; break; }
             case "EditWorkflowComponent": { result = EditWorkflowComponent; break; }
             case "RunHistoryWorkflowComponent": { result = RunHistoryWorkflowComponent; break; }

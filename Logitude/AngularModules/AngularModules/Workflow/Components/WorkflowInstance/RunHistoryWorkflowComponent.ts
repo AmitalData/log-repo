@@ -27,6 +27,7 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     private SearchText: string = null;
     private VersionIds: string[];
+    public DataSource: any;
 
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -52,10 +53,25 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
             .subscribe((serviceResponse: ServiceResponse) => {
                 if (serviceResponse.Result) {
                     var result: string[] = serviceResponse.Result;
-                    this.VersionIds = result
+                    this.VersionIds = result;
 
+                    this.SetDataSource();
                 }
             });
+    }
+
+    SetDataSource() {
+        this.DataSource = {
+            pageSize: 30,
+            rowCount: null,
+            sortingCol: "StartTime",
+            sortingDir: "Descending",
+            getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
+                var tempo = this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
+                this.CurrentSession.StopBusyIndicator();
+                return tempo;
+            },
+        };
     }
 
     private timerToken: any;
@@ -72,17 +88,7 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
         }
     }
 
-    DataSource = {
-        pageSize: 30,
-        rowCount: null,
-        sortingCol: "StartTime",
-        sortingDir: "Descending",
-        getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
-            var tempo = this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
-            this.CurrentSession.StopBusyIndicator();
-            return tempo;
-        },
-    };
+
 
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
         this.CurrentSession.StartBusyIndicatorLoading();
@@ -115,6 +121,7 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
         });
         this.columns.push({
             FieldName: 'StartTime',
+            AdditionalDataCustom: this.ObjectTableName,
             DataTypeCode: 'Date',
             Display: "Start Time",
             IsCustomTemplate: true,
@@ -133,6 +140,7 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
         });
         this.columns.push({
             FieldName: 'StatusName',
+            AdditionalDataCustom: this.ObjectTableName,
             DataTypeCode: 'String',
             Display: "Status",
             HtmlListComponentName: 'FieldTemplateComponent',
