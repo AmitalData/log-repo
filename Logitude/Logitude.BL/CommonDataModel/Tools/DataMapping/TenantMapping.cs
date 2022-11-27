@@ -115,6 +115,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.DefaultSLAId = entityPM.DefaultSLAId;
             poco.IsIncrementalBuildRunning = entityPM.IsIncrementalBuildRunning;
             poco.SharedLogisMasterMessageLink = entityPM.SharedLogisMasterMessageLink;
+            poco.ShowMultiUnitsOfMeasurements = entityPM.ShowMultiUnitsOfMeasurements;
 
             poco.EcommerceSupportEmail = entityPM.EcommerceSupportEmail;
             poco.CBSA = entityPM.CBSA;

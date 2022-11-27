@@ -13360,6 +13360,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             var myResult = from f in shipments
                            select new DigitalShipmentList()
                            {
+                               ChargeableWeightInKG = f.ChargeableWeightInKG,
+                               GrossWeightInKG = f.GrossWeightInKG,
+                               VolumeInCBM = f.VolumeInCBM,
                                InlandDomesticFromCountryId = f.InlandDomesticFromCountryId,
                                InlandDomesticToCountryId = f.InlandDomesticToCountryId,
                                InlandDomesticFromTypeCode = f.InlandDomesticFromTypeCode,

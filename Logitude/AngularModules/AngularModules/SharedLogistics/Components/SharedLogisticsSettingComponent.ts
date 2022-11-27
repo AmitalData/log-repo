@@ -119,9 +119,25 @@ export class SharedLogisticsSettingComponent implements OnInit {
         }
         else return false;
     }
+    
     public set SharedLogisticsMasterMessageLink(value: boolean) {
         if (this.TenantPM) {
             this.TenantPM.SharedLogisMasterMessageLink = value;
+        }
+
+    }
+
+    public get ShowMultiUnitsOfMeasurements() {
+
+        if (this.TenantPM) {
+            return this.TenantPM.ShowMultiUnitsOfMeasurements;
+        }
+        else return false;
+    }
+    
+    public set ShowMultiUnitsOfMeasurements(value: boolean) {
+        if (this.TenantPM) {
+            this.TenantPM.ShowMultiUnitsOfMeasurements = value;
         }
 
     }
@@ -190,14 +206,14 @@ export class SharedLogisticsSettingComponent implements OnInit {
 
 
     Run() {
-
-         this.IsSharedLogisticsActivated = this.TenantPM.IsSharedLogisticsActivated;
-         this.IsWebAccessActivated = this.TenantPM.IsWebAccessActivated;
+        this.IsSharedLogisticsActivated = this.TenantPM.IsSharedLogisticsActivated;
+        this.IsWebAccessActivated = this.TenantPM.IsWebAccessActivated;
         this.IsCargoTrackWebAccessActivated = this.TenantPM.IsCargoTrackWebAccessActivated;
         this.IsDigitalPortalAccessActivated = this.TenantPM.IsDigitalPortalAccessActivated;
-         this.IsMobileActivated = this.TenantPM.IsMobileActivated;
-         this.SharedLogisticsMessageLink = this.TenantPM.SharedLogisticsMessageLink;
-         this.SharedLogisticsMasterMessageLink = this.TenantPM.SharedLogisMasterMessageLink;
+        this.IsMobileActivated = this.TenantPM.IsMobileActivated;
+        this.SharedLogisticsMessageLink = this.TenantPM.SharedLogisticsMessageLink;
+        this.SharedLogisticsMasterMessageLink = this.TenantPM.SharedLogisMasterMessageLink;
+        this.ShowMultiUnitsOfMeasurements = this.TenantPM.ShowMultiUnitsOfMeasurements;
         this.IsQuotesRequestActivatedInSharedLogistics = this.TenantPM.IsQuotesRequestActivatedInShared;
 
         if (!FeatureLocator.HasFeaturePermession("General", "MOBILE") || this.SharedTitleType == "CargoTracking" || this.SharedTitleType == "DigitalPortal") {
@@ -213,6 +229,10 @@ export class SharedLogisticsSettingComponent implements OnInit {
 
         if (!FeatureLocator.HasFeaturePermession("General", "MASTERSDOCUMENTSLINK")) {
             this.SharedLogisticsMasterMessageLinkEnable = false;
+        }
+
+        if (!FeatureLocator.HasFeaturePermession("General", "SupportUnitMeasurements")) {
+            this.ShowMultiUnitsOfMeasurements = false;
         }
 
 
