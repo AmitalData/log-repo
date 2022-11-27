@@ -62,11 +62,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (entity != null)
             {
-                var ER1TaskStatus =new int?[] { 2, 9, 8 };
-                if (ER1TaskStatus.Contains(customResponse.CargoDetails?.CargoStatusID))
-                {
-                    RaiseExportStorageStatus("ER1", "ER1", entity, "");
-                }
+               
                 LogMessagingUtil.Instance.AppendLine("entity found, id: " + entity.Id);
                 if (customResponse.Exception != null)
                 {
@@ -77,7 +73,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         xml += XmlGenericUtil<UnifreightIIG.Common.MessageLib.ExportStorage.MN2791.Exception>.MySerializeObject(item);
                         if(item.ExceptionLevel == 1)
                         {
-                            RaiseExportStorageStatus("ER2", "ER2", entity, item.ExeptionDescription);
+                            RaiseExportStorageStatus("ER1", "ER1", entity, item.ExeptionDescription);
                         }
                         if (item.ExceptionLevel == 2)
                         {
