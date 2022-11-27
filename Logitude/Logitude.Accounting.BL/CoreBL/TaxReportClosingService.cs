@@ -98,13 +98,9 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public void CloseTaxReport()
         {
-            using (TransactionScope scope = TransactionFactory.GetTransaction())
-            {
-                CreateJournal();
-                CreateJournalAdditionalDatas();
-                SetTaxReportAsTransmittedAndClosingJournal();
-                scope.Complete();
-            }
+            CreateJournal();
+            CreateJournalAdditionalDatas();
+            SetTaxReportAsTransmittedAndClosingJournal();
         }
 
         public void CancelClosingJournal()
