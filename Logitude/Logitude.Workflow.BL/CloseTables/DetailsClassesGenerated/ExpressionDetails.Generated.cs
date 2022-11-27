@@ -24,10 +24,10 @@ namespace Logitude.Workflow.BL.CLoseTable
             all.Add(new ExpressionDetails()
             {    
                 Code = "DATEDIF", 
-                Name = "DATEDIF", 
-                SearchFields = "DATEDIF", 
-                Body = "(start_date,end_date,unit)", 
-                Description = "Calculates the number of days, months, or years between two dates", 
+                Name = "DateDif", 
+                SearchFields = "DATEDIF,DateDif", 
+                Body = "(date1; date2; 'Y')", 
+                Description = "Calculates the number of days, months, or years between two dates. Can be: Y, M, D", 
                 CategoryCode = "DTE", 
 			});
 			 
@@ -59,6 +59,86 @@ namespace Logitude.Workflow.BL.CLoseTable
                 Body = "(list)", 
                 Description = "Return the count of list elements", 
                 CategoryCode = "MTH", 
+			});
+			 
+            all.Add(new ExpressionDetails()
+            {    
+                Code = "TIMEDIF", 
+                Name = "TimeDif", 
+                SearchFields = "TIMEDIF,TimeDif", 
+                Body = "(time1; time2; 'H')", 
+                Description = "Calculates the number of hours, minutes, or seconds between two dates. Can be: H, M, S", 
+                CategoryCode = "DTE", 
+			});
+			 
+            all.Add(new ExpressionDetails()
+            {    
+                Code = "NOW", 
+                Name = "Now", 
+                SearchFields = "NOW,Now", 
+                Body = "()", 
+                Description = "Returns Datetime.Now", 
+                CategoryCode = "DTE", 
+			});
+			 
+            all.Add(new ExpressionDetails()
+            {    
+                Code = "TODAY", 
+                Name = "Today", 
+                SearchFields = "TODAY,Today", 
+                Body = "()", 
+                Description = "Returns the current date", 
+                CategoryCode = "DTE", 
+			});
+			 
+            all.Add(new ExpressionDetails()
+            {    
+                Code = "DAY", 
+                Name = "Day", 
+                SearchFields = "DAY,Day", 
+                Body = "(Now(); 'DD')", 
+                Description = "Returns a day from dateTime", 
+                CategoryCode = "DTE", 
+			});
+			 
+            all.Add(new ExpressionDetails()
+            {    
+                Code = "MONTH", 
+                Name = "Month", 
+                SearchFields = "MONTH,Month", 
+                Body = "(Now(); 'MM')", 
+                Description = "Returns a month from dateTime", 
+                CategoryCode = "DTE", 
+			});
+			 
+            all.Add(new ExpressionDetails()
+            {    
+                Code = "YEAR", 
+                Name = "Year", 
+                SearchFields = "YEAR,Year", 
+                Body = "(Now(); 'YY')", 
+                Description = "Returns a year from dateTime", 
+                CategoryCode = "DTE", 
+			});
+			 
+            all.Add(new ExpressionDetails()
+            {    
+                Code = "TODATETIME", 
+                Name = "ToDateTime", 
+                SearchFields = "TODATETIME,ToDateTime", 
+                Body = "('8/15/2002')", 
+                Description = "Returns DateTime value from string", 
+                CategoryCode = "DTE", 
+			});
+			 
+            all.Add(new ExpressionDetails()
+            {    
+                Code = "WEEKDAY", 
+                Name = "WeekDay", 
+                SearchFields = "WEEKDAY,WeekDay", 
+                Body = "(Today())", 
+                Description = "Takes a date and returns a number between 1-7 representing the day of week", 
+                CategoryCode = "DTE", 
 			});
 			
             return all;

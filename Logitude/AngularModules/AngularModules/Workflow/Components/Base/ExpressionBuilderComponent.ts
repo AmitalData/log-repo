@@ -91,7 +91,7 @@ export class ExpressionBuilderComponent extends BaseComponent {
     }
 
     updateExpression(expressionItem: TreeSelectItem) {
-        let expression: ExpressionList = expressionItem.data;
+        let expression: ExpressionList = expressionItem?.data;
         if (expression) {
             this.ExpressionValue = expression.Name + expression.Body;
             let expressionValueLength = this.ExpressionValue.length;
