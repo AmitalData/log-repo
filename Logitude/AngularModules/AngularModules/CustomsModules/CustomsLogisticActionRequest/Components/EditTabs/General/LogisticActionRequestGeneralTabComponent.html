@@ -96,7 +96,7 @@
                         <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
                     </td>
                 </tr>
-                <tr [class.disabled]="!entityPM?.TransportmodeId">
+                <tr [class.disabled]="!entityPM?.TransportmodeId || entityPM.ResponseStatusCode=='1' || entityPM.ResponseStatusCode=='3' || entityPM.ResponseStatusCode=='6'">
                     <td colspan="2" style="vertical-align: top;">
                         <table style="height: 500px;padding-top: 10px;float:right;">
                             <tr class="FormFieldRow" style="width:200px;text-align: right;">
@@ -374,7 +374,7 @@
                         <table>
                             <tr>
                                 <td>
-                                    <button class="Button" (click)="ViewDocumentsComponent()" style="width: 50px; top: 4px; margin-right: 25px;">
+                                    <button class="Button" (click)="ViewDocumentsComponent()" style="width: 50px; top: 4px; margin-right: 25px;" [disabled]="entityPM.ResponseStatusCode=='1' || entityPM.ResponseStatusCode=='3' || entityPM.ResponseStatusCode=='6'">
                                         {{'General.MH.Documents' | TextCodeTranslationPipe}}
                                     </button>
                                 </td>
@@ -388,14 +388,14 @@
                                 </td>
                                 <td style="width: 57px;vertical-align: bottom;">
                                     <button class="RedButton" (click)="OkButtonClicked()"
-                                        [disabled]="!OKButtonEnabled || entityPM.OperationalStatus === ('Customs.General.O.Send' | TextCodeTranslationPipe)">{{'General.B.Save' |
+                                        [disabled]="!OKButtonEnabled || entityPM.ResponseStatusCode=='1' || entityPM.ResponseStatusCode=='3' || entityPM.ResponseStatusCode=='6' || entityPM.OperationalStatus === ('Customs.General.O.Send' | TextCodeTranslationPipe)">{{'General.B.Save' |
                                         TextCodeTranslationPipe}}</button>
                                 </td>
                                 <td style="width: 10px;vertical-align: bottom;">
                                     <div></div>
                                 </td>
                                 <td style="width:110px;  vertical-align: bottom;">
-                                    <custom-send-options [IsDisabled]="!SendButtonEnabled || entityPM.OperationalStatus === ('Customs.General.O.Send' | TextCodeTranslationPipe)" [AvoidDoubleClick]="true"
+                                    <custom-send-options [IsDisabled]="!SendButtonEnabled || entityPM.ResponseStatusCode=='1' || entityPM.ResponseStatusCode=='3' || entityPM.ResponseStatusCode=='6' || entityPM.OperationalStatus === ('Customs.General.O.Send' | TextCodeTranslationPipe)" [AvoidDoubleClick]="true"
                                         #MyCustomSendOptionsComponent
                                         (SendButtonClicked)="OnCustomSendOptionsButtonClick($event)">
                                     </custom-send-options>
