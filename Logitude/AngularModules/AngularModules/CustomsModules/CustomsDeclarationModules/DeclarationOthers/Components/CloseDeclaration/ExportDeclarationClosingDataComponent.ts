@@ -59,14 +59,13 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     SetUIProperty() {
 
         this.UIProperties.SetWarning("LoadingDateTime", this.ObjectTableName, true);
+        this.UIProperties.SetEnabled("FinalShipCode", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("Smp", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("FlightDate", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("MainAWB", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("ChargingSite", this.ObjectTableName, false);
 
-        if (this.DecPM.TransportModeId != "O") {
-            this.UIProperties.SetEnabled("FinalShipCode", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("Smp", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("FlightDate", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("MainAWB", this.ObjectTableName, false);
-
-        }
+        
     }
 
 
