@@ -11,6 +11,7 @@ import { ObjectTables } from "Workflow/Models/ObjectTables";
 import { SetValue } from "Workflow/Models/SetValue";
 import { SetValueOperatorsList } from "Workflow/Models/SetValueOperatorsList";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
+import { ExpressionValue } from "Workflow/Models/Types";
 import { GetObjectFieldPipe } from "Workflow/Pipes/GetObjectFieldPipe";
 import { IsDeclaredVariablePipe } from "Workflow/Pipes/IsDeclaredVariablePipe";
 
@@ -71,9 +72,16 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
     isValidSetValues() {
         let result = true;
         for (let setValues of (this.SetValues)) {
-            if (!setValues.field || !setValues.value || !setValues.operator) {
-                result = false;
-                break;
+            if (setValues.operator === SetValueOperators.Expression) {
+                if (!setValues.field || !setValues.expressionValue || !setValues.expressionValue.expression || setValues.expressionValue.expression === "") {
+                    result = false;
+                    break;
+                }
+            } else {
+                if (!setValues.field || !setValues.operator || !setValues.value) {
+                    result = false;
+                    break;
+                }
             }
         }
         return result;
@@ -143,6 +151,7 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
         if (operatorCode !== this.SetValues[setValueIndex]?.operator) {
             this.SetValues[setValueIndex].operator = operatorCode;
             this.SetValues[setValueIndex].value = null;
+            this.SetValues[setValueIndex].expressionValue = null;
             this.setValuesChanged();
         }
     }
@@ -150,6 +159,18 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
     updateSetValue(value: string, setValueIndex: number) {
         if (value !== this.SetValues[setValueIndex]?.value) {
             this.SetValues[setValueIndex].value = value;
+            this.setValuesChanged();
+        }
+    }
+
+    updateSetValueExpression(expressionValue: ExpressionValue, setValueIndex: number) {
+        if (expressionValue) {
+            if (expressionValue.expression !== this.SetValues[setValueIndex]?.expressionValue?.expression) {
+                this.SetValues[setValueIndex].expressionValue = expressionValue;
+                this.setValuesChanged();
+            }
+        } else {
+            this.SetValues[setValueIndex].expressionValue = null;
             this.setValuesChanged();
         }
     }

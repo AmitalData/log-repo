@@ -184,7 +184,7 @@
 
                 </div>
                 <div *ngIf="(setValue.operator == 'Expression')" class="set-value-value-container">
-                    <Expression [CurrentValue]="setValue.value" (ValueChanged)="updateSetValue($event, setValueIndex)"
+                    <Expression [CurrentValue]="setValue.expressionValue" (ValueChanged)="updateSetValueExpression($event, setValueIndex)"
                         [FlowObject]="FlowObject" [FlowObjectFields]="FlowObjectFields" [CurrentNodeId]="CurrentNodeId"
                         [IsDisabled]="setValue.isDisabled">
                     </Expression>

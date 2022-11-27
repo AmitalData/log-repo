@@ -22,7 +22,7 @@
     <td>
         <div class="expression-element" (click)="openExpressionBuilder()">
             <input [disabled]="IsDisabled" class="expression-input" type="text" placeholder="Expression ..."
-                [(ngModel)]="ExpressionValue" readonly />
+                [(ngModel)]="ExpressionValue.expression" readonly />
             <img class="function-icon" src="./Images/function.png" />
         </div>
     </td>
