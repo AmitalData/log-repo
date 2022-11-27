@@ -3,7 +3,7 @@
   <Sql Version="1">
   </Sql>
 
-  <Oracle Version="1">
+  <Oracle Version="2">
     <![CDATA[
  declare
  n int := 0;
@@ -14,7 +14,6 @@ begin
  if n = 0 then
  
 Insert into COUNTERLASTNUMBERS (ID,TABLENAME,TENANT,LASTNUMBER) values (9999,'AmendmentRequestNumber',1,5000);
-S
 
 
 commit;
