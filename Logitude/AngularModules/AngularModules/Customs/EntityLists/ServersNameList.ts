@@ -13,6 +13,7 @@ export class ServersNameList {
 	SearchFields: string;
 	ServerName: string;
 	ServiceName: string;
+	Delete: boolean;
 	
 }
  
