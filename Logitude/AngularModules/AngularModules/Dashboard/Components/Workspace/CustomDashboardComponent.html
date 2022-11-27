@@ -38,7 +38,7 @@
                     <div></div>
                 </td>
 
-                <td style="width:200px; height:22px;" *ngIf="!IsEditLayoutModeActive">
+                <td style="width:200px; height:22px;">
                     <LogLov [ObjectFieldName]="'SelectedDashboardId'"
                             [ObjectTableName]="'Dashboard'"
                             [NoObjectField]="true"
@@ -54,7 +54,7 @@
                     <div></div>
                 </td>
 
-                <td style="width: 55px; min-width: 55px;" *ngIf="!IsEditLayoutModeActive">
+                <td style="width: 55px; min-width: 55px;">
                     <button class="Button" (click)="AdDashboardClicked()">Add new dashboard</button>
                 </td>
             </tr>

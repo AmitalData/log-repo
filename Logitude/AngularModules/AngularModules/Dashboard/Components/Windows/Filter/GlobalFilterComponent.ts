@@ -92,8 +92,8 @@ export class GlobalFilterItem extends BaseComponent {
         switch (dataTypeCode) {
             case "DateTime":
             case "Date":
-                this.Operators.push(new CodeNameClass("After", "GreaterThan"));
-                this.Operators.push(new CodeNameClass("Before", "LessThan"));
+                this.Operators.push(new CodeNameClass("GreaterThan", "After"));
+                this.Operators.push(new CodeNameClass("LessThan", "Before"));
                 this.Operators.push(new CodeNameClass("Previous", "Previous"));
                 this.Operators.push(new CodeNameClass("Current", "Current"));
                 this.Operators.push(new CodeNameClass("Next", "Next"));
@@ -104,35 +104,35 @@ export class GlobalFilterItem extends BaseComponent {
             case "Decimal":
             case "Double":
                 this.Operators.push(new CodeNameClass("Equal", "Equal"));
-                this.Operators.push(new CodeNameClass("Does Not Equal", "NotEqual"));
-                this.Operators.push(new CodeNameClass("Greater Than", "GreaterThan"));
-                this.Operators.push(new CodeNameClass("Less Than", "LessThan"));
-                this.Operators.push(new CodeNameClass("Greater Than Or Equal", "GreaterThanOrEqual"));
-                this.Operators.push(new CodeNameClass("Less Than Or Equal", "LessThanOrEqual"));
-                this.Operators.push(new CodeNameClass("Is Empty", "IsEmpty"));
-                this.Operators.push(new CodeNameClass("Is not Empty", "IsNotEmpty"));
+                this.Operators.push(new CodeNameClass("NotEqual", "Does Not Equal"));
+                this.Operators.push(new CodeNameClass("GreaterThan", "Greater Than"));
+                this.Operators.push(new CodeNameClass("LessThan", "Less Than"));
+                this.Operators.push(new CodeNameClass("GreaterThanOrEqual", "Greater Than Or Equal"));
+                this.Operators.push(new CodeNameClass("LessThanOrEqual", "Less Than Or Equal"));
+                this.Operators.push(new CodeNameClass("IsEmpty", "Is Empty"));
+                this.Operators.push(new CodeNameClass("IsNotEmpty", "Is not Empty"));
                 break;
 
             case "Boolean":
                 this.Operators.push(new CodeNameClass("Equal", "Equal"));
-                this.Operators.push(new CodeNameClass("Is Empty", "IsEmpty"));
-                this.Operators.push(new CodeNameClass("Is not Empty", "IsNotEmpty"));
+                this.Operators.push(new CodeNameClass("IsEmpty", "Is Empty"));
+                this.Operators.push(new CodeNameClass("IsNotEmpty", "Is not Empty"));
                 break;
 
             case "LookUp":
                 this.Operators.push(new CodeNameClass("Equal", "Equal"));
-                this.Operators.push(new CodeNameClass("Does Not Equal", "NotEqual"));
-                this.Operators.push(new CodeNameClass("Is Empty", "IsEmpty"));
-                this.Operators.push(new CodeNameClass("Is not Empty", "IsNotEmpty"));
+                this.Operators.push(new CodeNameClass("NotEqual", "Does Not Equal"));
+                this.Operators.push(new CodeNameClass("IsEmpty", "Is Empty"));
+                this.Operators.push(new CodeNameClass("IsNotEmpty", "Is not Empty"));
                 break;
 
             default:
                 this.Operators.push(new CodeNameClass("Equal", "Equal"));
-                this.Operators.push(new CodeNameClass("Does Not Equal", "NotEqual"));
+                this.Operators.push(new CodeNameClass("NotEqual", "Does Not Equal"));
                 this.Operators.push(new CodeNameClass("Contains", "Contains"));
-                this.Operators.push(new CodeNameClass("Does Not Contain", "NotContains"));
-                this.Operators.push(new CodeNameClass("Is Empty", "IsEmpty"));
-                this.Operators.push(new CodeNameClass("Is not Empty", "IsNotEmpty"));
+                this.Operators.push(new CodeNameClass("NotContains", "Does Not Contain"));
+                this.Operators.push(new CodeNameClass("IsEmpty", "Is Empty"));
+                this.Operators.push(new CodeNameClass("IsNotEmpty", "Is not Empty"));
                 break;
         }
     }
