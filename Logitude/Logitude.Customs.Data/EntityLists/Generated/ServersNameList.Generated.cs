@@ -24,6 +24,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string ServerName  { get; set; }
        [DataMember]
        public string ServiceName  { get; set; }
+       [DataMember]
+       public bool Delete  { get; set; }
    }
 
 }
