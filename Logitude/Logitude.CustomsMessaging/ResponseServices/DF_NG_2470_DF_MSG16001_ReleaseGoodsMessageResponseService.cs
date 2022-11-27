@@ -29,6 +29,7 @@ using Logitude.Server.Tools.Contracts;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using Logitude.Customs.BL.TraceEvents;
+using System.Data.Entity;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -115,6 +116,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             myEventContextTagModel.EventCode = "RSG";
                             myEventContextTagModel.StatusDateTime = statusDateTime;
                             declarationPM.DeclarationStatusTypeCode = "7";
+
+                            this.CloseCustomsCollateral(declarationPM);
+                           
+
                             var setting = CustomsSettingQueryService.GetSettingByTenant(declarationPM.Tenant);
                             if (setting.IsConnectedToUniFreight)
                             {
@@ -400,5 +405,27 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         }
 
+        private void CloseCustomsCollateral(DeclarationPM dec)
+        {
+            ICustomContext dbContext = CustomContext.GetContext(dec.Tenant);
+            var CustomsCollateralQueryService = new CustomsCollateralQueryService(dbContext);
+            var declarationIdWithComma = dec.AmendmentOriginalDeclartation + "," + dec.Id;
+            var CollList = CustomsCollateralQueryService.GetDecCollListByOriginalDecId(declarationIdWithComma, dec.Tenant);
+            var customsCollateralUpdateService = new CustomsCollateralUpdateService(dbContext, new Dictionary<string, IContext>(), dec.Tenant);
+
+            if (CollList != null && CollList.Count > 0)
+            {
+                foreach(var Coll in CollList)
+                {
+                    if (!Coll.IsClosed)
+                    {
+                        Coll.IsClosed = true;
+                        Coll.ChangeSetOp = ChangeSetOperation.Update;
+                        customsCollateralUpdateService.Update(Coll,true);
+
+                    }
+                }
+            }
+        }
     }
 }

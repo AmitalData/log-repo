@@ -58,6 +58,23 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return customsCollateralList;
         }
 
+        public List<CustomsCollateralPM> GetDecCollListByOriginalDecId(string declarationId, int tenant)
+        {
+            List<CustomsCollateral> customsCollaterals = repository.GetDecCollListByOriginalDecId(declarationId, tenant);
+            List<CustomsCollateralPM> customsCollateralList = new List<CustomsCollateralPM>();
+            if (customsCollaterals != null)
+            {
+                foreach (var customsCollateralItem in customsCollaterals)
+                {
+                    CustomsCollateralPM customsCollateralPM = this.GetSingle(customsCollateralItem.Id, true, false);
+                    customsCollateralList.Add(customsCollateralPM);
+                }
+            }
+
+
+            return customsCollateralList;
+        }
+
         public List<CustomsCollateralPM> GetCollateralsListByDeclarationConstraint(string customsEntityTypeCode, string entityIdKey1, string entityIdKey2, int tenant)
         {
             List<CustomsCollateral> customsCollaterals = repository.GetCollateralsListByDeclarationConstraint(customsEntityTypeCode, entityIdKey1, entityIdKey2, tenant);
