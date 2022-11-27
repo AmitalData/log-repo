@@ -1246,8 +1246,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 int index = 0;
                 bool dirty = false;
-                if(entityPM.AmendmentDontDisplayInList != true) {
-                   foreach (Consignment item in consignments)
+                if (entityPM.AmendmentDontDisplayInList != true || entityPM.ChangeSetOp != ChangeSetOperation.Update)
+                {
+                    foreach (Consignment item in consignments)
                    {
                        index += 1;
                        if (item.SequenceNumeric == index) continue;
