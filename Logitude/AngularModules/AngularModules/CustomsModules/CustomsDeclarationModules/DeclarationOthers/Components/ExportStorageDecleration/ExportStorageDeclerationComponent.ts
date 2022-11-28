@@ -338,6 +338,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
                                     this.exportStoragePMService.update(this.exportStorage.Result).subscribe((response: ServiceResponse) => {
                                         var index1 = this.declarationPM.Consignments.findIndex(u => u == isConsignment)
                                         this.declarationPM.Consignments[index1].ExportStoragesId = ExportStorageId;
+                                        this.declarationPM.Consignments[index1].ShipCode = this.exportStorage.Result?.ShipCode
 
                                     });
 
@@ -364,6 +365,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
                                     consignment.SequenceNumeric = SequenceNumeric;
                                     consignment.ExportStoragesId = this.exportStorage.Result.Id
                                     consignment.FinalDestinationPortCode = this.exportStorage.Result.FinalDestinationPortCode;
+                                    consignment.ShipCode = this.exportStorage.Result?.ShipCode;
 
 
                                     var consignmentPackage: ConsignmentPackagePM;

@@ -25,6 +25,8 @@ using Unifreight.Data.AmitalModel;
 using System.Transactions;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.AmitalMessaging.Customs.CustomFile.ExportStorageDTD;
+using Logitude.Customs.BL.Messaging.U2L.ImportDeclaration;
+using Logitude.Customs.Data.EntityPOCOs;
 
 namespace Logitude.Customs.BL.Messaging.U2L.ExportStorage
 {
@@ -192,6 +194,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.ExportStorage
                     _DBExportStoragePM.FirstCargoID = _UnifreigntExportStorage.CargoIdentifier.CargoIdentifierKey1;
                     _DBExportStoragePM.SecondCargoID = _UnifreigntExportStorage.CargoIdentifier.CargoIdentifierKey2;
                     _DBExportStoragePM.ThirdCargoID = _UnifreigntExportStorage.CargoIdentifier.CargoIdentifierKey3;
+                }
+
+                if(_DBExportStoragePM.ShipCode != null)
+                {
+                    this.ClearWrongValues(_DBExportStoragePM);
                 }
 
                 if (_UnifreigntExportStorage.CargoDetails != null)
@@ -411,6 +418,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.ExportStorage
         public override void ProccessBASE64Request(string BASE64DataIn1, string BASE64DataIn2, string BASE64DataIn3, out string BASE64DataOut1, out string BASE64DataOut2, out string BASE64DataOut3, out string SUCCESS, ref string MoreParams, out string MessageOut)
         {
             throw new NotImplementedException();
+        }
+        private void ClearWrongValues(ExportStoragePM exportStoragePM)
+        {
+            int tenant = ResolvedTenant();
+            ForiegnKeyCheck.CheckClosedTable(exportStoragePM, tenant);
+            ForiegnKeyCheck.Check<Logitude.Customs.Data.EntityPOCOs.ExportStorage>(exportStoragePM, tenant);
+
+           
         }
 
     }
