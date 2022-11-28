@@ -41,7 +41,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Expression&quot;"
-  Code="&quot;451d&quot;"
+  Code="&quot;425c&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -544,26 +544,26 @@
       Code="&quot;DATEDIF&quot;"
       Name="&quot;DateDif&quot;"
       SearchFields="&quot;DATEDIF,DateDif&quot;"
-      Body="&quot;(date1; date2; 'Y')&quot;"
+      Body="&quot;(date1,date2,unit)&quot;"
       Description="&quot;Calculates the number of days, months, or years between two dates. Can be: Y, M, D&quot;"
       CategoryCode="&quot;DTE&quot;" />
     <Record
       Code="&quot;MIN&quot;"
-      Name="&quot;MIN&quot;"
+      Name="&quot;Min&quot;"
       SearchFields="&quot;MIN&quot;"
       Body="&quot;(number1,number2)&quot;"
       Description="&quot;Return the smallest value from the numbers supplied&quot;"
       CategoryCode="&quot;MTH&quot;" />
     <Record
       Code="&quot;MAX&quot;"
-      Name="&quot;MAX&quot;"
+      Name="&quot;Max&quot;"
       SearchFields="&quot;MAX&quot;"
       Body="&quot;(number1,number2)&quot;"
       Description="&quot;Return the biggest value from the numbers supplied&quot;"
       CategoryCode="&quot;MTH&quot;" />
     <Record
       Code="&quot;COUNT&quot;"
-      Name="&quot;COUNT&quot;"
+      Name="&quot;Count&quot;"
       SearchFields="&quot;COUNT&quot;"
       Body="&quot;(list)&quot;"
       Description="&quot;Return the count of list elements&quot;"
@@ -572,7 +572,7 @@
       Code="&quot;TIMEDIF&quot;"
       Name="&quot;TimeDif&quot;"
       SearchFields="&quot;TIMEDIF,TimeDif&quot;"
-      Body="&quot;(time1; time2; 'H')&quot;"
+      Body="&quot;(time1,time2,unit)&quot;"
       Description="&quot;Calculates the number of hours, minutes, or seconds between two dates. Can be: H, M, S&quot;"
       CategoryCode="&quot;DTE&quot;" />
     <Record
@@ -593,35 +593,35 @@
       Code="&quot;DAY&quot;"
       Name="&quot;Day&quot;"
       SearchFields="&quot;DAY,Day&quot;"
-      Body="&quot;(Now(); 'DD')&quot;"
+      Body="&quot;(date,unit)&quot;"
       Description="&quot;Returns a day from dateTime&quot;"
       CategoryCode="&quot;DTE&quot;" />
     <Record
       Code="&quot;MONTH&quot;"
       Name="&quot;Month&quot;"
       SearchFields="&quot;MONTH,Month&quot;"
-      Body="&quot;(Now(); 'MM')&quot;"
+      Body="&quot;(date,unit)&quot;"
       Description="&quot;Returns a month from dateTime&quot;"
       CategoryCode="&quot;DTE&quot;" />
     <Record
       Code="&quot;YEAR&quot;"
       Name="&quot;Year&quot;"
       SearchFields="&quot;YEAR,Year&quot;"
-      Body="&quot;(Now(); 'YY')&quot;"
+      Body="&quot;(date,unit)&quot;"
       Description="&quot;Returns a year from dateTime&quot;"
       CategoryCode="&quot;DTE&quot;" />
     <Record
       Code="&quot;TODATETIME&quot;"
       Name="&quot;ToDateTime&quot;"
       SearchFields="&quot;TODATETIME,ToDateTime&quot;"
-      Body="&quot;('8/15/2002')&quot;"
+      Body="&quot;(date)&quot;"
       Description="&quot;Returns DateTime value from string&quot;"
       CategoryCode="&quot;DTE&quot;" />
     <Record
       Code="&quot;WEEKDAY&quot;"
       Name="&quot;WeekDay&quot;"
       SearchFields="&quot;WEEKDAY,WeekDay&quot;"
-      Body="&quot;(Today())&quot;"
+      Body="&quot;(date)&quot;"
       Description="&quot;Takes a date and returns a number between 1-7 representing the day of week&quot;"
       CategoryCode="&quot;DTE&quot;" />
   </Records>
