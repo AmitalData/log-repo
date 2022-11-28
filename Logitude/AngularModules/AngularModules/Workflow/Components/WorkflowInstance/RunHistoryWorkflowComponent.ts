@@ -1,13 +1,18 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { LogitudeGridExportToExcelComponent } from 'Common/Components/LogitudeGridExportToExcel/LogitudeGridExportToExcelComponent';
 import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
+import { ObjectFieldPM } from 'Infrastructure/EntityPMs/ObjectFieldPM';
+import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
+import { ObjectFieldPMExtendedService } from 'Infrastructure/Services/ExtendedPMs/ObjectFieldPMExtendedService';
 import { AppTool } from 'Infrastructure/Tools';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { WorkFlowPM } from 'Workflow/EntityPMs/WorkFlowPM';
 import { ApiQueryFiltersBuilder } from 'Workflow/Models/ApiQueryFiltersBuilder';
+import { ObjectFields } from 'Workflow/Models/ObjectFields';
 import { WorkFlowInstanceListService } from 'Workflow/Services/StandardLists/WorkFlowInstanceListService';
 import { WorkFlowVersionService } from 'Workflow/Services/WorkFlowVersionService';
 
@@ -20,14 +25,27 @@ const SearchBoxDelayTime = 700;
 export class RunHistoryWorkflowComponent extends BaseComponent {
     @Output() onQueryChangeEvent = new EventEmitter();
     @Output() MenuHeaderchangeevent = new EventEmitter();
+    public DataSource: any;
+    public DataContext: RunHistoryWorkflowComponent = this;
     public EntityPM: WorkFlowPM;
     public ObjectTableName: string = "WorkFlowInstance";
-    public DataContext: RunHistoryWorkflowComponent = this;
     public AllInstancesCount: number = 0;
+
+    public QueryColumns: QueryColumnPM[] = [];
+    public columns: any[] = null;
+
     private CurrentSession = SessionLocator.SelectedSession;
     private SearchText: string = null;
     private VersionIds: string[];
-    public DataSource: any;
+
+    public StartTimeObjectfield: any;
+    public Filters: ApiQueryFilters;
+    public FilterValue1: any;
+    public FilterValue2: any;
+    public FilterOperator: string;
+    public IsDateFilter: boolean;
+
+    public LogitudeGridExportToExcelComponent: LogitudeGridExportToExcelComponent = new LogitudeGridExportToExcelComponent();
 
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -36,7 +54,9 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
 
     ngOnInit() {
         this.BuildColumns();
-        this.initialize();
+        this.InitializeVersionIds();
+        this.BuildQueryColumns();
+        this.GetStartTimeObjectFields();
     }
 
     LoadData() {
@@ -47,7 +67,7 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
         this.LoadData();
     }
 
-    initialize() {
+    InitializeVersionIds() {
         var versionservice: WorkFlowVersionService = new WorkFlowVersionService();
         versionservice.GetVersionIds(this.EntityPM.Id)
             .subscribe((serviceResponse: ServiceResponse) => {
@@ -58,6 +78,14 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
                     this.SetDataSource();
                 }
             });
+    }
+
+    GetStartTimeObjectFields() {
+        var objectFieldPMExtendedService = new ObjectFieldPMExtendedService()
+        objectFieldPMExtendedService.GetObjectFieldsByObjectTable(this.ObjectTableName).subscribe((response: any) => {
+            if (!response) return;
+            this.StartTimeObjectfield = response.find((e: { FieldName: string; }) => e.FieldName == 'StartTime')
+        });
     }
 
     SetDataSource() {
@@ -75,7 +103,7 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
     }
 
     private timerToken: any;
-    TextChanged(searchtext) {
+    TextChanged(searchtext: string) {
         if (searchtext != null || searchtext != undefined) {
             this.timerToken = setTimeout(() => {
                 this.SearchText = searchtext;
@@ -88,28 +116,28 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
         }
     }
 
-
-
-    getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
+    getRows(skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
         this.CurrentSession.StartBusyIndicatorLoading();
 
         let businessKeyFilterValue = !AppTool.IsNullOrEmpty(this.SearchText) ? (AppTool.IsNullOrEmpty(this.SearchText.trim()) ? null : this.SearchText) : null;
+        this.Filters = ApiQueryFiltersBuilder.getWorkflowInstancesByVersionApiQueryFilters(this.VersionIds, businessKeyFilterValue);
 
-        var filters = ApiQueryFiltersBuilder.getWorkflowInstancesByVersionApiQueryFilters(this.VersionIds, businessKeyFilterValue);
+        if (this.IsDateFilter) {
+            this.Filters.addAdditionalFilter(this.StartTimeObjectfield.FieldName, this.FilterValue1, this.FilterValue2, null, this.FilterOperator, false, false, false, this.StartTimeObjectfield.dataTypeCode)
+        }
 
-        filters.PageSize = take;
-        filters.PageIndex = skip;
-        filters.GetAll = false;
-        filters.GetCount = true;
-        filters.SortBy = sortingCol;
-        filters.SortDirection = sortingDir;
+        this.Filters.PageSize = take;
+        this.Filters.PageIndex = skip;
+        this.Filters.GetAll = false;
+        this.Filters.GetCount = true;
+        this.Filters.SortBy = sortingCol;
+        this.Filters.SortDirection = sortingDir;
         return new Promise((resolve) => {
             var service: WorkFlowInstanceListService = new WorkFlowInstanceListService();
-            resolve(service.getByFilters(filters));
+            resolve(service.getByFilters(this.Filters));
         });
     }
 
-    public columns: any[] = null;
     BuildColumns() {
         this.columns = [];
         this.columns.push({
@@ -150,7 +178,14 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
         });
     }
 
-    onRowSelected($event) {
+    BuildQueryColumns() {
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("BusinessKey", 'String', "Business Key"));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("StartTime", 'Date', "Start Time"));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Duration", 'Date', "Duration"));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("StatusName", 'String', "Status"));
+    }
+
+    onRowSelected($event: { rowData: { Id: any; }; }) {
         if ($event != null) {
             var logWindow = new LogitudeWindow();
             logWindow.Width = 960;
@@ -162,6 +197,32 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
             windowArgs.ObjectTableName = "WorkFlowInstanceActivity";
             logWindow.WindowArgs = windowArgs;
             logWindow.Show('./Workflow/Components/CreateEditWorkflow/WorkflowInstanceActivityComponent');
+        }
+    }
+
+    public ExportToExcel() {
+        this.LogitudeGridExportToExcelComponent.ExportToExcelExcute(this.ObjectTableName, this.Filters, this.QueryColumns);
+    }
+
+    setDateFilter(event: any) {
+        if (event) {
+            if (event.FromDate && event.ToDate) {
+                this.FilterValue1 = event.FromDate;
+                this.FilterValue2 = event.ToDate;
+                this.FilterOperator = "Between";
+                this.IsDateFilter = true
+            } else if (event.Date) {
+                this.FilterValue1 = event.Date;
+                this.FilterValue2 = null;
+                this.FilterOperator = event.Operation;
+                this.IsDateFilter = true
+            } else if (event == "NoDate") {
+                this.IsDateFilter = false
+            }
+            this.LoadData();
+        } else {
+            this.IsDateFilter = false
+            this.LoadData();
         }
     }
 }
