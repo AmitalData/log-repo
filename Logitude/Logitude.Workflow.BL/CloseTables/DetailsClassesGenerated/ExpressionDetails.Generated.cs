@@ -126,7 +126,7 @@ namespace Logitude.Workflow.BL.CLoseTable
                 Code = "TODATETIME", 
                 Name = "ToDateTime", 
                 SearchFields = "TODATETIME,ToDateTime", 
-                Body = "(date)", 
+                Body = "(string)", 
                 Description = "Returns DateTime value from string", 
                 CategoryCode = "DTE", 
 			});

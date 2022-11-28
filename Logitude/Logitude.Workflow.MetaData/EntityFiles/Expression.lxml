@@ -41,7 +41,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Expression&quot;"
-  Code="&quot;e010&quot;"
+  Code="&quot;1b4f&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -614,7 +614,7 @@
       Code="&quot;TODATETIME&quot;"
       Name="&quot;ToDateTime&quot;"
       SearchFields="&quot;TODATETIME,ToDateTime&quot;"
-      Body="&quot;(date)&quot;"
+      Body="&quot;(string)&quot;"
       Description="&quot;Returns DateTime value from string&quot;"
       CategoryCode="&quot;DTE&quot;" />
     <Record
