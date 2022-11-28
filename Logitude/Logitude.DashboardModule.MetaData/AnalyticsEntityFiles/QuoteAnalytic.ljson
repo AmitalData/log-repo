@@ -1,5 +1,5 @@
 {
-  "HashString": "ade20bfc4b284276862f057934820866",
+  "HashString": "c75f04be623844919d4ac154a54a418a",
   "Name": "Quotes Statistics",
   "TableName": "QuoteAnalytics",
   "ObjectTableName": "Quote",
@@ -1002,21 +1002,6 @@
       "FieldCode": "IsMultiCurrency",
       "DisplayName": "Is Multi Currency",
       "DisplayNamePlural": "Is Multi Currency",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
-    },
-    {
-      "HashString": "e86794eacbc5468e9f9cc3388f873f70",
-      "DataTypeCode": "Integer",
-      "CanMeasure": true,
-      "CanGroup": false,
-      "FieldCode": "PackagesQuantity",
-      "DisplayName": "Packages Quantity",
-      "DisplayNamePlural": "Packages Quantity",
       "JoinedTableName": null,
       "JoinedTableDBName": null,
       "JoinedTableKey": null,

@@ -154,7 +154,8 @@
                                                                                   [SelectedItem]="item.SelectedOperator"
                                                                                   [Binding]="'Name'"
                                                                                   [WaterMark]="'Operator'"
-                                                                                  (SelectedItemChanged)="item.SelectedOperator = $event">
+                                                                                  (SelectedItemChanged)="item.SelectedOperator = $event"
+                                                                                  [IsDisabled]="!item.DataSetFieldId && !item.SelectedCommonFilterField">
                                                                         </ComboBox>
                                                                     </td>
 

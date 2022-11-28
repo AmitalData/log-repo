@@ -7,84 +7,42 @@
 @import "logitude-dashboard-library/dist/assets/styles/global.scss";
 @import "logitude-dashboard-library/dist/assets/styles/colors.scss";
 @import "logitude-dashboard-library/dist/assets/styles/dl-dashboard.scss";
+@import url('https://fonts.cdnfonts.com/css/manrope');
 
-.dashboard-tooltip {
-    cursor: default;
-    margin-left: 420px;
-    margin-top: -10px;
-    height: 45px;
-    width: 250px;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    background: white;
-    box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.3);
-    z-index: 1;
-    background: #EDEADE;
-    border-radius: 5px;
-    &__arrow {
-        width: 90px;
-        height: 46px;
-        position: absolute;
-        top: -2%;
-        left: -45px;
-        transform: translateX(-50%);
-        overflow: hidden;
-
-        &::after {
-            content: "";
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: #EDEADE;
-            transform: translateX(-50%) translateY(-50%) rotate(45deg);
-            top: 22px;
-            left: 104%;
-            box-shadow: 1px 1px 20px 0px rgba(0,0,0,0.3);
-        }
-    }
+.Table-cell10 {
+    width: 10px;
 }
 
-.dashboard-tooltip:hover {
-    color: black;
+.Table-cell05 {
+    width: 5px;
 }
 
-.tooltip-container {
-
+.Table-cell2 {
+    width: 2px;
 }
 
-.tooltip-button {
-    background-color: transparent;
-    background-repeat: no-repeat;
-    border: none;
-    overflow: hidden;
-    outline: none;
-    color: blue;
-    cursor: pointer;
-}
-
-.tooltop-btn-container {
-    width: 100%;
-    flex-direction: row;
-    box-sizing: border-box;
-    display: flex;
-    place-content: center;
-    align-items: center;
-    pointer-events:revert;
+.Dashboard-body {
+    height: 100%;
+   /* padding: 2px;*/
+    margin: 0;
+    font-family: Manrope;
+    flex: none;
+    font-style: normal;
 }
 
 .DashboardTab .DashboardTabHead li:not(.DashboardTabSelected):hover {
-    /*background: #448DCA;*/
+   /* background: #448DCA;*/
 }
 
 .DashboardTab .DashboardTabHead li:not(.DashboardTabSelected) {
-    height: 23px;
+    height: 20px;
     margin-top: 1px;
 }
 
 .DashboardTab .DashboardTabHead li.DashboardTabSelected {
-    height: 25px;
+    height: 20px;
     background-color: #F3F3F3;
-    color: #1B90CB;
+    color: #5FAFDA;
 }
 
 .DashboardTab .DashboardTabHead li:not(:first-child):not(.DashboardTabSelected) {
@@ -94,13 +52,21 @@
 .DashboardTab .DashboardTabHead li .DashboardInnerTab {
     height: 100%;
     width: 100%;
-    text-align: center;
+    text-align: left;
     padding-left: 10px;
-    padding-right: 10px;    
+    padding-right: 10px;
+    max-width: 150px;
+    min-width:100px;
+    font-size: 11px;
+    /*font-weight:500;*/
+}
+
+.DashboardTab .DashboardTabHead li:not(.DashboardTabSelected) {
+    color: #292D30;
 }
 
 .DashboardTab .DashboardTabHead li {
-    height: 23px;
+    height: 20px;
     line-height: 20px;
     display: inline-block;
     float: left;
@@ -120,7 +86,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    top: 25px;
+    top: 20px;
     border-top: none;
     background: #F3F3F3;
 }
@@ -130,7 +96,7 @@
     left: 0;
     right: 0;
     top: 0;
-    height: 25px;
+    height: 20px;
 }
 
 .DashboardTab {

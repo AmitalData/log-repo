@@ -21,6 +21,23 @@ export class FlowVariablesTreeList {
         this.initializeTreeItems();
     }
 
+    public getItem(itemKey: string, items: TreeSelectItem[] | null = null) {
+        if (itemKey) {
+            let result: TreeSelectItem | null = null;
+            for (let item of (items || this.Items)) {
+                if (item.key === itemKey) {
+                    result = item;
+                    break;
+                }
+                if (item.children && item.children.length > 0) {
+                    result = this.getItem(itemKey, item.children);
+                }
+            }
+            return result;
+        }
+        return null;
+    }
+
     public compareItemType(item: TreeSelectItem, compareWithType: string, compareWithLookupOrPickListType: string) {
         switch (compareWithType) {
             case FieldTypes.LookUp:
@@ -214,10 +231,11 @@ export class FlowVariablesTreeList {
         let recordsCollectionVariablesItemChildren: TreeSelectItem[] = [];
 
         this.getGetRecordNodes("AllRecords").forEach((getRecordNode: any) => {
+            let entity = getRecordNode.data["entity"];
             let treeSelectItemName = getRecordNode.data["name"];
             let isReadOnly = getRecordNode.data["recordsType"] === GetRecordTypes.ReadOnly;
             let treeSelectItemKey = Formatter.getCodeFromName(treeSelectItemName);
-            let itemData = { isReadOnlyVariable: isReadOnly };
+            let itemData = { isReadOnlyVariable: isReadOnly, type: (entity ? (entity + "[]") : null) };
             let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, true, true, false, false, [], itemData);
             recordsCollectionVariablesItemChildren.push(treeSelectItem);
         });

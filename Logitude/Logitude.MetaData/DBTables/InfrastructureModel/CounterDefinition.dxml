@@ -33,7 +33,7 @@
       Nullable="true" />
   </Column>
     <Column
-    Name="Prefix"
+  Name="Prefix"
     Type="varchar"
     Size="20">
     <Constraints
@@ -73,6 +73,12 @@
   </Column>
   <Column
     Name="InActive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="UsePerBranch"
     Type="bit">
     <Constraints
       Nullable="false" />

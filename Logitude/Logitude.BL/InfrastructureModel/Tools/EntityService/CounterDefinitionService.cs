@@ -73,7 +73,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 throw new Exception("The new start number must be greater than current start number!");
             }
 
-            if (counterDefinition.UniquePerPrefix != theEntityPm.UniquePerPrefix)
+            if (counterDefinition.UniquePerPrefix != theEntityPm.UniquePerPrefix || counterDefinition.UsePerBranch != theEntityPm.UsePerBranch)
             {
                 List<CounterStat> counterStats = counterStatRepository.GetCounterCounterStats(theEntityPm.CounterId, theEntityPm.Tenant);
                 if (counterStats.Count > 0)
@@ -91,13 +91,13 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 if (counterDefinition.StartNumber != theEntityPm.StartNumber)
                 {
                     string prefix = counterDefinition.UniquePerPrefix ? counterDefinition.Prefix : null;
-                    CounterStat counterStat = counterStatRepository.GetSingleCounterStat(counterDefinition.CounterId, prefix, counterDefinition.Tenant);
-                    if (counterStat != null)
+                    List< CounterStat> counterStats = counterStatRepository.GetCounterStatsByCounterIdAndPrefix(counterDefinition.CounterId, prefix, counterDefinition.Tenant);
+                    foreach (CounterStat counterStat in counterStats)
                     {
                         counterStat.LastValue = theEntityPm.StartNumber;
                         counterStatRepository.Update(counterStat);
-                        counterStatRepository.SubmitChanges();
                     }
+                    counterStatRepository.SubmitChanges();
                 }
             }
 

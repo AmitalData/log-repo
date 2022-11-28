@@ -1,5 +1,5 @@
 {
-  "HashString": "cf4d8cbd51bd4b139fbf034094cd12a5",
+  "HashString": "cae4705409dd41cd8265eac3293b139d",
   "Name": "Shipment Statistics",
   "TableName": "ShipmentAnalytics",
   "ObjectTableName": "Shipment",
@@ -333,21 +333,6 @@
       "JoinedTableDisplayField": null,
       "HasUnit": true,
       "Unit": "CBM"
-    },
-    {
-      "HashString": "cbb22dfe82b84f5c8c9c33eaad8e607c",
-      "DataTypeCode": "Integer",
-      "CanMeasure": true,
-      "CanGroup": false,
-      "FieldCode": "PackagesQuantity",
-      "DisplayName": "Packages Quantity",
-      "DisplayNamePlural": "Packages Quantity",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
     },
     {
       "HashString": "6844bb7d308a41aea4c7fe080b137089",

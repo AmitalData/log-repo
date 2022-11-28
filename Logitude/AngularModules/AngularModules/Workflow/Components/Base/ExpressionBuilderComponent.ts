@@ -8,6 +8,7 @@ import { ExpressionsTreeList } from "Workflow/Models/ExpressionsTreeList";
 import { FlowVariablesTreeList } from "Workflow/Models/FlowVariablesTreeList";
 import { ListItem } from "Workflow/Models/ListItem";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
+import { ExpressionValue } from "Workflow/Models/Types";
 import { ExpressionCategoryListService } from "Workflow/Services/StandardLists/ExpressionCategoryListService";
 import { ExpressionListService } from "Workflow/Services/StandardLists/ExpressionListService";
 
@@ -24,7 +25,7 @@ export class ExpressionBuilderComponent extends BaseComponent {
     public FlowObject: any;
     public CurrentNodeId: string;
     public FlowObjectFields: ObjectFieldList[];
-    public ExpressionValue: string;
+    public ExpressionValue: ExpressionValue;
 
     public CursorStartPoint: number = 0;
     public CursorEndPoint: number = 0;
@@ -33,6 +34,7 @@ export class ExpressionBuilderComponent extends BaseComponent {
     public DefaultExpressionCategory = new ListItem("ALL", "All Functions");
     public ExpressionCategory: ListItem = this.DefaultExpressionCategory;
 
+    public FlowVariablesTreeList: FlowVariablesTreeList;
     public FlowVariablesTreeItems: TreeSelectItem[];
     public ExpressionsTreeItems: TreeSelectItem[];
 
@@ -46,7 +48,11 @@ export class ExpressionBuilderComponent extends BaseComponent {
         this.FlowObject = args.FlowObject ? args.FlowObject : null;
         this.CurrentNodeId = args.CurrentNodeId ? args.CurrentNodeId : null;
         this.FlowObjectFields = args.FlowObjectFields ? args.FlowObjectFields : [];
-        this.ExpressionValue = args.ExpressionValue || null;
+        let defaultExpressionValue: ExpressionValue = {
+            expression: null,
+            variables: []
+        };
+        this.ExpressionValue = args.ExpressionValue ? JSON.parse(JSON.stringify(args.ExpressionValue)) : defaultExpressionValue;
     }
 
     ngOnInit() {
@@ -82,7 +88,8 @@ export class ExpressionBuilderComponent extends BaseComponent {
             ShowRecordsCollectionVariables: true,
             ShowDeclaredCollectionVariables: true
         };
-        this.FlowVariablesTreeItems = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId, showVariables).Items;
+        this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId, showVariables);
+        this.FlowVariablesTreeItems = this.FlowVariablesTreeList.Items;
     }
 
     updateExpressionCategory(expressionCategory: ListItem) {
@@ -93,14 +100,10 @@ export class ExpressionBuilderComponent extends BaseComponent {
     updateExpression(expressionItem: TreeSelectItem) {
         let expression: ExpressionList = expressionItem?.data;
         if (expression) {
-            this.ExpressionValue = expression.Name + expression.Body;
-            let expressionValueLength = this.ExpressionValue.length;
-            this.updateCursorPointer(expressionValueLength, expressionValueLength);
+            this.updateExpressionValue(expression.Name + expression.Body);
+            let expressionLength = this.ExpressionValue.expression.length;
+            this.updateCursorPointer(expressionLength, expressionLength);
         }
-    }
-
-    updateExpressionValue(value: string) {
-        this.ExpressionValue = value;
     }
 
     updateCursorPointer(startPoint: number, endPoint: number) {
@@ -134,13 +137,40 @@ export class ExpressionBuilderComponent extends BaseComponent {
     setVariableInExpression(variable: string) {
         if (variable) {
             let variableWithBrackets = "{" + variable + "}";
-            let currentExpressionValue = this.ExpressionValue;
-            if (currentExpressionValue) {
-                let newExpressionValue = currentExpressionValue.slice(0, this.CursorStartPoint) + variableWithBrackets + currentExpressionValue.slice(this.CursorEndPoint);
-                this.ExpressionValue = newExpressionValue;
+            let currentExpression = this.ExpressionValue.expression;
+            if (currentExpression) {
+                let newExpression = currentExpression.slice(0, this.CursorStartPoint) + variableWithBrackets + currentExpression.slice(this.CursorEndPoint);
+                this.updateExpressionValue(newExpression);
             } else {
-                this.ExpressionValue = variableWithBrackets;
+                this.updateExpressionValue(variableWithBrackets);
             }
+        }
+    }
+
+    updateExpressionValue(expression: string) {
+        if (expression && expression !== "") {
+            this.ExpressionValue.expression = expression;
+            this.ExpressionValue.variables = [];
+            let expressionVariables = expression.match(/\{(.*?)\}/g);
+            if (expressionVariables && expressionVariables.length > 0) {
+                expressionVariables.forEach(expressionVariable => {
+                    if (expressionVariable && expressionVariable !== "") {
+                        let variableCode = expressionVariable.replace("{", "").replace("}", "");
+                        let variableItem = this.FlowVariablesTreeList.getItem(variableCode);
+                        if (variableItem && this.ExpressionValue.variables.filter(v => v.code === variableCode).length === 0) {
+                            this.ExpressionValue.variables.push(
+                                {
+                                    code: variableCode,
+                                    type: ((variableItem.data && variableItem.data.type) ? variableItem.data.type : null)
+                                }
+                            );
+                        }
+                    }
+                });
+            }
+        } else {
+            this.ExpressionValue.expression = null;
+            this.ExpressionValue.variables = [];
         }
     }
 
@@ -154,7 +184,7 @@ export class ExpressionBuilderComponent extends BaseComponent {
 
     saveButtonClicked() {
         this.ValidationErrorsList = [];
-        if (this.ExpressionValue) {
+        if (this.ExpressionValue && this.ExpressionValue.expression && this.ExpressionValue.expression !== "") {
             this.closeExpressionBuilder(true);
         }
         else {

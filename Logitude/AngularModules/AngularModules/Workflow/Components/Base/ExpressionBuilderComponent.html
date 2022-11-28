@@ -124,17 +124,18 @@
                             </ng-template>
                         </div>
                         <div *ngIf="FlowVariablesTreeItems" class="variables-tree">
-                            <TreeSelect [Items]="FlowVariablesTreeItems" [Width]="'220px'" [SetSelectedValue]="false"
-                                (ValueChanged)="selectVariable($event)" [AllowClear]="false" [DisplayTitle]="false">
+                            <TreeSelect [Items]="FlowVariablesTreeItems" [Width]="'220px'"
+                                [SetSelectedValue]="false" (ValueChanged)="selectVariable($event)" [AllowClear]="false"
+                                [DisplayTitle]="false">
                             </TreeSelect>
                         </div>
                     </div>
                 </div>
                 <div>
-                    <textarea class="expression-editor" [(ngModel)]="ExpressionValue"
+                    <textarea class="expression-editor" [(ngModel)]="ExpressionValue.expression"
                         (click)="updateCursorPointer($event?.target?.selectionStart, $event?.target?.selectionEnd)"
-                        (ngChange)="updateExpressionValue($event.Value)" (keyup)="updateCursorPointerFromEvent($event)"
-                        autocorrect="off" autocapitalize="off" spellcheck="false">
+                        (input)="updateExpressionValue($event.target.value)" (keyup)="updateCursorPointerFromEvent($event)" autocorrect="off" autocapitalize="off"
+                        spellcheck="false">
                     </textarea>
                 </div>
             </div>
