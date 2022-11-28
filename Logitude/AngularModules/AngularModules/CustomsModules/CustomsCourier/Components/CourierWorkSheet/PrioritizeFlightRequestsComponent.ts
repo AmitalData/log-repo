@@ -113,20 +113,18 @@ export class PrioritizeFlightRequestsComponent
         this.ngUnsubscribe.complete();
     }
     InitScreen() {
-        //this.CurrentSession.StartBusyIndicator("");
         this._entityResourceService.getEntityResourceByTableName("Customs.CustomsRequestsSheet", 0).subscribe((response: any) => {
             this._entityResourceService.getEntityResourceByTableName("CommunicationLog", 0).subscribe((response: any) => {
                 this._entityResourceService.getEntityResourceByTableName("Customs.Declaration", 0).subscribe((response: any) => {                 
                     this._entityListService = new EntityListService();
 
-                    interval(1000 * 3).pipe(takeUntil(this.ngUnsubscribe)).subscribe(() => this.GetStatisticsByCourierDeclarations());
+                    // interval(1000 * 3).pipe(takeUntil(this.ngUnsubscribe)).subscribe(() => this.GetStatisticsByCourierDeclarations());
                
                         this._TranslationLoaded = true;
                         var isDestroyed: boolean = this._CD['destroyed'];
                         if (!isDestroyed) {
                             this._CD.detectChanges();
                         }
-                        // this.CRSSearch();
                         this.GetStatisticsByCourierDeclarations()
 
                    
@@ -149,7 +147,6 @@ export class PrioritizeFlightRequestsComponent
         this.customsSettingListService.getSingleFromCache(SessionLocator.Tenant.toString()).subscribe((response: ServiceResponse) => {
             
             var customsSetting = response.Result;
-            //if (!AppTool.IsNullOrEmpty(customsSetting) && customsSetting.CompanyType == "B") {
                 this.StatisticsVisibility = !this.CurrentSession?.CurrentEditComponent?.EntityPM;;
                 var service = new CustomsRequestsSheetWebService();
                 var statistics = service.GetStatisticsByCourierDeclarations(this.courierMasterPM.Id).subscribe((response: any) => {
@@ -163,7 +160,7 @@ export class PrioritizeFlightRequestsComponent
                         }
                     }
                 });
-           // }
+           
         });
 
     }
@@ -172,22 +169,12 @@ export class PrioritizeFlightRequestsComponent
   
    
 
-    // CRSSearch() {
-    //     this.GetStatisticsByCourierDeclarations();
-       
-    //     //this.CurrentSession.StartBusyIndicator("");
-    //     setTimeout(() => {
-    //         this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
-    //     }, 10);
+    
 
-    //     //this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); 
-    // }
 
-    // filterAgrs: ApiQueryFilters;    
-
-    // RefreshButtonClicked() {
-    //     this.CRSSearch();
-    // }
+    RefreshButtonClicked(){
+        this.GetStatisticsByCourierDeclarations()
+    }
     ChangePriority($event){
         var logitudeWindow = new LogitudeWindow();
         var windowArgs: any = {};
@@ -206,27 +193,11 @@ export class PrioritizeFlightRequestsComponent
 }
 
 ////////////////////////////////////////
-// export class CustomsRequestsSheetStatusListVM {
-//     constructor(public MyItem: CustomsRequestsSheetStatusList, isdeclaration?: boolean, isReAnAnalysis?: boolean) {
-//         var Code = MyItem.Code;
-//         if (!isReAnAnalysis) {
-//             if (Code == "1" || Code == "2" || Code == "3" || Code == "4" || Code == "5" || Code == "21" || Code == "99") {
-//                 this.IsChecked = true;
-//             }
 
-//             if (//declarationPM != null
-//                 isdeclaration
-//                 && Code != "99") {
-
-//                 this.IsChecked = true;
-//             }
-//         }
-//     }
-//     IsChecked: boolean;
-// }
 export class CustomsRequestsSheetSummary {
     id: string;
     count: number;
+    totalCount:number;
     InterfaceTypeName: string;
 }
 //////////////////////////////////////////////////
