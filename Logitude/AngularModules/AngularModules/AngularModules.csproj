@@ -317,7 +317,6 @@
     <Content Include="Dashboard\Components\Windows\ChooseUsersComponent.html" />
     <Content Include="Dashboard\Components\Windows\Filter\GlobalFilterComponent.html" />
     <Content Include="Dashboard\Components\Windows\Filter\WidgetFilterComponent.html" />
-    <Content Include="Dashboard\Components\Workspace\CustomDashboardComponent.css" />
     <Content Include="Dashboard\Components\Workspace\CustomDashboardComponent.html" />
     <Content Include="Dashboard\Components\Workspace\DashboardTabComponent.html" />
     <Content Include="Images\Arrow-down-s.png" />
@@ -8812,7 +8811,7 @@
   <ItemGroup>
     <Content Include="web.config" />
     <Content Include="DashboardModule\Components\Workspace\DashboardLists\DashboardListComponent.scss" />
-    <Content Include="Dashboard\Components\Workspace\dashboard.scss" />
+    <Content Include="Dashboard\Components\Workspace\CustomDashboardCSS.scss" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

@@ -8,7 +8,7 @@
                     <div></div>
                 </td>
 
-                <td style="width: 1px; font-size: 16px; color: black;">
+                <td style="width: 1px; font-size: 14px; color: #292D30; font-weight: 600;">
                     {{SelectedDashboardName}}
                 </td>
 
@@ -20,7 +20,7 @@
                     <IconButton [Left]="3" [Name]="'Refresh'" [IsSmall]="true" (click)="RefreshLayoutClicked()"></IconButton>
                 </td>
 
-                <td class="Table-cell10">
+                <td class="Table-cell2">
                     <div></div>
                 </td>
 
@@ -64,7 +64,7 @@
                     <div></div>
                 </td>
 
-                <td style="width: 17px; vertical-align: middle;">
+                <td *ngIf="!IsEditLayoutModeActive" style="width: 17px; vertical-align: middle;">
                     <img *ngIf="IsGlobalFiltersOpened == false" src="./Images/FilterGrayTrans.png" style="cursor: pointer;" (click)="OpenFilterAreaClick()" class="CenterCenter" />
                     <img *ngIf="IsGlobalFiltersOpened == true" src="./Images/FilterGrayTrans.png" style="cursor: pointer;" (click)="CloseFilterAreaClick()" class="CenterCenter" />
                 </td>
@@ -72,7 +72,7 @@
                 <td style="width: 2px;">
                     <div></div>
                 </td>
-                <td style="width: 12px; vertical-align: middle;">
+                <td *ngIf="!IsEditLayoutModeActive" style="width: 12px; vertical-align: middle;">
                     <img *ngIf="IsGlobalFiltersOpened == false" src="./Images/FiltersOpen.png" style="cursor: pointer;" (click)="OpenFilterAreaClick()" class="CenterCenter" />
                     <img *ngIf="IsGlobalFiltersOpened == true" src="./Images/FiltersClose.png" style="cursor: pointer;" (click)="CloseFilterAreaClick()" class="CenterCenter" />
                 </td>
