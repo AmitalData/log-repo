@@ -181,7 +181,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             EventContextTagModel myUpdateEventContextTagModel = null;
             string key = ProcessLockTableUtil.Instance.GetKey4Declaration(_MyDeclarationPM.Id, requestParams.Tenant);
 
-            _MyDeclarationPM.HatraDate = customResponse.Response?.Declaration?.DMExtensions?.ReleaseDateTime?.Value;
+            
 
             using (var disposableToken = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "8237ResponseService.Update"))
             {
@@ -490,6 +490,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     _MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status[0].NameCode.Value;
                     _MyDeclarationPM.PaymentDate = _MyDeclarationPMOrg.PaymentDate;
+                    _MyDeclarationPM.HatraDate = customResponse.Response?.Declaration?.DMExtensions?.ReleaseDateTime?.Value;
                     if (fromMehes)
                     {
                         var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
