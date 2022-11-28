@@ -326,8 +326,9 @@ namespace Logitude.CustomsMessaging.RequestServices
             
             req.Response.AdditionalInformation = AdditionalInformation();
 
+          
 
-            if(isExportClose)
+            if (isExportClose)
             {
                 req.Response.FunctionCode = new ResponseFunctionCodeType { Value = "3" };
             }

@@ -295,6 +295,9 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             req.Response.FunctionalReferenceID = new ResponseFunctionalReferenceIDType { Value = string.IsNullOrEmpty(_DeclarationPM.AmendmentRequestNumber) ? GetNextAmendmentRequestNumber() : _DeclarationPM.AmendmentRequestNumber
             };
+
+           
+
             functionalReferenceID = req.Response.FunctionalReferenceID.Value;
 
             req.Response.IssueDateTime = DataTypeConvertorUtil.Convert(DateTime.Now);
