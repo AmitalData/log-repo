@@ -327,8 +327,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             
             req.Response.AdditionalInformation = AdditionalInformation();
 
-            if (_DeclarationPM.HatraDate.HasValue)
-                req.Response.Declaration.DMExtensions.ReleaseDateTime = new ReleaseDateType { Value = _DeclarationPM.HatraDate.Value };
+          
 
             if (isExportClose)
             {
