@@ -44,8 +44,8 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     public IsNew: boolean = false;
     private exportDeclarationClosingWebService: ExportDeclarationClosingWebService = new ExportDeclarationClosingWebService();
-    public ActualSailingDate: string = "תאריך הפלגה בפועל";
-    public ActualTakeOffDate: string = "תאריך המראה בפועל";
+    public ActualSailingDate: string = "תםריך הפלגה בפועל";
+    public ActualTakeOffDate: string = "תםריך המרםה בפועל";
 
     ManifestNumberPlaceholder: string = '';
     SecondCargoIdPlaceholder: string = '';
@@ -110,8 +110,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
             this.exportDeclarationClosingDatasExtendPMService.GetSingleWithEFIFILEMData(id).subscribe((response: any) => {
                 this.EntityPM = response.Result;
-                
-                if (this.EntityPM)
+                 if (this.EntityPM)
                 
                     if (response.Result.ChangeSetOp == "1") {
                         this.EntityPM.IsDirty = true;
@@ -358,7 +357,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     }
     SendButtonClicked(event: CustomSendOptionsArgs) {
         if (AppTool.IsNullOrEmpty(this.EntityPM.LoadingDateTime)) {
-            var msg = " שדה תאריך טעינה שדה חובה";
+            var msg = " שדה תםריך טעינה שדה חובה";
             this.ValidationErrors.push(msg);
             this.FillValidationErrors("Errors");
         }
@@ -507,10 +506,6 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                     this.ManifestNumberPlaceholder = Response.Result.CargoIdentifierKey1Name;
                     this.SecondCargoIdPlaceholder = Response.Result.CargoIdentifierKey2Name ?? '';
                     this.ThirdCargoIdPlaceholder = Response.Result.CargoIdentifierKey3Name ?? '';
-
-                    // this.FinalManifestNumber = this.FinalManifestNumber ??'';
-                    // this.FinalSecondCargoId = this.FinalSecondCargoId ??'';
-                    // this.FinalThirdCargoId =this.FinalThirdCargoId ??'';
 
                     this.setWarningValues();
                 }
