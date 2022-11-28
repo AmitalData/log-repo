@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
-		public const string HashString = "143aea5e6d303489bef0b371814b94e8";
+		public const string HashString = "1ad3cad982682ccba1a5f49183faa3d7";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -15432,6 +15432,32 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  		   TextCode ARInvoiceTextCode_ARInvoiceMConfirmNotAutoCreditedIfNotApproveInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.ConfirmNotAutoCreditedIfNotApproveInvoice", DefaultText = "You have unsaved changes in this Auto Credit Invoice. The original invoice will not be auto-credited if you do not approve this invoice. Please confirm.",LocalDefaultText = @"חשבונית הזיכוי לא נשמרה לפיכך ,החשבונית המקורית לא תבוטל אם לא תאשר חשבונית זיכוי זו. אנא אשר המשך תהליך ללא ביטול החשבונית המקורית.", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ARInvoiceTextCode_ARInvoiceMBlockVoidingInvoicesInSAT = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.BlockVoidingInvoicesInSAT", DefaultText = "you can't void this invoice, you have to Auto credit it then create a new one",LocalDefaultText = @"", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceGInvoicing = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.G.Invoicing", DefaultText = "Invoicing",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceGClearFilter = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.G.ClearFilter", DefaultText = "Clear filters",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceGAllTime = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.G.AllTime", DefaultText = "All time",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceGSearchPlaceholder = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.G.SearchPlaceholder", DefaultText = "Search bill to / ref# / invoice#",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceGSortBy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.G.SortBy", DefaultText = "Sort by",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceGTotalAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.G.TotalAmount", DefaultText = "Total amount",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceGOpenAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.G.OpenAmount", DefaultText = "Open amount",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceGGeneralInformation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.G.GeneralInformation", DefaultText = "General information",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceGDueDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.G.DueDate", DefaultText = "Due date",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceGInvoiceDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.G.InvoiceDetails", DefaultText = "Invoice Details",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceGSubtotal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.G.Subtotal", DefaultText = "Subtotal",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceGInvoiceType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.G.InvoiceType", DefaultText = "Invoice type",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceGInvoiceNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.G.InvoiceNumber", DefaultText = "Number",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

@@ -116874,6 +116874,371 @@
       DefaultText="&quot;Edit Destination Warehouse / Terminal&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.StatusUpdated&quot;"
+      DefaultText="&quot;Status Updated&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.SearchPartner&quot;"
+      DefaultText="&quot;Search partner&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.SearchFrom&quot;"
+      DefaultText="&quot;Search From&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.SearchDestination&quot;"
+      DefaultText="&quot;Search Destination&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.SearchPlaceholder&quot;"
+      DefaultText="&quot;Search ports/ references/ carrier&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.GeneralInformation&quot;"
+      DefaultText="&quot;General information&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.Invoiced&quot;"
+      DefaultText="&quot;Invoiced&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.EquipmentInformation&quot;"
+      DefaultText="&quot;Equipments information&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.TotalInformation&quot;"
+      DefaultText="&quot;Total information&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.SealNumber&quot;"
+      DefaultText="&quot;Seal number&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.PackagesEmptyResultMsg&quot;"
+      DefaultText="&quot;No packages items exist&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.TransitTime&quot;"
+      DefaultText="&quot;Transit time&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.FlightNumber&quot;"
+      DefaultText="&quot;Flight number&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.Documents&quot;"
+      DefaultText="&quot;Documents&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.DocumentsFileName&quot;"
+      DefaultText="&quot;File name&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.InvoicesOpenAmount&quot;"
+      DefaultText="&quot;Open amount&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.EventDate&quot;"
+      DefaultText="&quot;Date&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.EventTime&quot;"
+      DefaultText="&quot;Event Time&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.MainRouteInformation&quot;"
+      DefaultText="&quot;Main route information&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.PreCarrigeInformation&quot;"
+      DefaultText="&quot;Pre carriage information&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.MainCarrigeInformation&quot;"
+      DefaultText="&quot;Main carriage information&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.Transshipment1Information&quot;"
+      DefaultText="&quot;Transshipment 1 information&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.Transshipment2Information&quot;"
+      DefaultText="&quot;Transshipment 2 information&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.Transshipment3Information&quot;"
+      DefaultText="&quot;Transshipment 3 information&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.OnCarrigeInformation&quot;"
+      DefaultText="&quot;On carriage information&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.Archive&quot;"
+      DefaultText="&quot;Archive&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.Archived&quot;"
+      DefaultText="&quot;Archived&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.Unarchive&quot;"
+      DefaultText="&quot;Unarchive&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.Inprogress&quot;"
+      DefaultText="&quot;In progress&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.All&quot;"
+      DefaultText="&quot;All&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.MyPartner&quot;"
+      DefaultText="&quot;My partner&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.ETADate&quot;"
+      DefaultText="&quot;ETA date&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.AllTime&quot;"
+      DefaultText="&quot;All time&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.SortBy&quot;"
+      DefaultText="&quot;Sort by&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.References&quot;"
+      DefaultText="&quot;References&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.Notes&quot;"
+      DefaultText="&quot;Notes&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.ShipmentLevel&quot;"
+      DefaultText="&quot;Shipment level&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.ChWeight&quot;"
+      DefaultText="&quot;Ch. weight&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.PackagesInformation&quot;"
+      DefaultText="&quot;Packages information&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.ContainerType&quot;"
+      DefaultText="&quot;Type&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.ContainerNumber&quot;"
+      DefaultText="&quot;Container number&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.PortOfLoading&quot;"
+      DefaultText="&quot;Port of loading/Port of discharge&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.Reference1&quot;"
+      DefaultText="&quot;Reference1&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.Reference2&quot;"
+      DefaultText="&quot;Reference2&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.Address1&quot;"
+      DefaultText="&quot;Address1&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.Address2&quot;"
+      DefaultText="&quot;Address2&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.Date&quot;"
+      DefaultText="&quot;Date&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.Upload&quot;"
+      DefaultText="&quot;Upload&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.DownloadAll&quot;"
+      DefaultText="&quot;Download all&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.ViewDocument&quot;"
+      DefaultText="&quot;View document&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.F.ViewConsolidation&quot;"
+      DefaultText="&quot;View consolidation&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.View&quot;"
+      DefaultText="&quot;View&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.Timeline&quot;"
+      DefaultText="&quot;Timeline&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.NoResult&quot;"
+      DefaultText="&quot;No results found&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.UploadDocuments&quot;"
+      DefaultText="&quot;Upload Documents&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.CancelButton&quot;"
+      DefaultText="&quot;Cancel&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.SearchDefaultMSG&quot;"
+      DefaultText="&quot;No shipments results found Sorry, we couldn't find what you’re looking for, Please try another way.&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.InvoicesLable&quot;"
+      DefaultText="&quot;Invoices&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.TransportMode&quot;"
+      DefaultText="&quot;Transport mode&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.ShipmentStatus&quot;"
+      DefaultText="&quot;Shipment status&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.FinalDestination&quot;"
+      DefaultText="&quot;Final destination&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.CreateDate&quot;"
+      DefaultText="&quot;Create date&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.DescriptionOfGoods&quot;"
+      DefaultText="&quot;Description of goods&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.OBL&quot;"
+      DefaultText="&quot;OBL&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.CMR/RWB#&quot;"
+      DefaultText="&quot;CMR/ RWB#/ PRO#&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.GrossWeight&quot;"
+      DefaultText="&quot;Gross weight&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.CarrierLastStatusName&quot;"
+      DefaultText="&quot;Last status&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.GatewayDestinationLable&quot;"
+      DefaultText="&quot;Gateway/Destination&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.DocumentType&quot;"
+      DefaultText="&quot;Document Type&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.ATD&quot;"
+      DefaultText="&quot;ATD&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.Qty&quot;"
+      DefaultText="&quot;Qty&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.Airline&quot;"
+      DefaultText="&quot;Airline&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.Shippingline&quot;"
+      DefaultText="&quot;Shipping line&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

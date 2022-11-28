@@ -19938,6 +19938,71 @@
       LocalDefaultText="&quot;&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.Invoicing&quot;"
+      DefaultText="&quot;Invoicing&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.ClearFilter&quot;"
+      DefaultText="&quot;Clear filters&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.AllTime&quot;"
+      DefaultText="&quot;All time&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.SearchPlaceholder&quot;"
+      DefaultText="&quot;Search bill to / ref# / invoice#&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.SortBy&quot;"
+      DefaultText="&quot;Sort by&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.TotalAmount&quot;"
+      DefaultText="&quot;Total amount&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.OpenAmount&quot;"
+      DefaultText="&quot;Open amount&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.GeneralInformation&quot;"
+      DefaultText="&quot;General information&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.DueDate&quot;"
+      DefaultText="&quot;Due date&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.InvoiceDetails&quot;"
+      DefaultText="&quot;Invoice Details&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.Subtotal&quot;"
+      DefaultText="&quot;Subtotal&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.InvoiceType&quot;"
+      DefaultText="&quot;Invoice type&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.InvoiceNumber&quot;"
+      DefaultText="&quot;Number&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
