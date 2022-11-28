@@ -38,26 +38,18 @@ namespace Logitude.CustomsMessaging.MessagingServices
             get { return "CourierMastersConnected"; }
         }
 
-        public string CreateCRS(CourierMasterPM entityPM)
+        public string CreateCRS(DCI_CourierMastersConnectedResponseContentHeader myDCAInUCBClosePendingWithResponseContentHeader)
         {
-            if (CheckHaveReqInQ("Customs.CourierMaster", entityPM.Tenant, entityPM.Id))
+            if (CheckHaveReqInQ("Customs.CourierMaster", myDCAInUCBClosePendingWithResponseContentHeader.tenant, myDCAInUCBClosePendingWithResponseContentHeader.courierMasterId))
                 return "קיים מסר זהה בתהליך";
 
             LogMessagingUtil.Instance.AppendLine($"Build !!!Requestsheet  with Interface Type  = ${MainInterfaceCode} !!!");
 
-            var myDCAInUCBClosePendingWithResponseContentHeader = new DCI_CourierMastersConnectedResponseContentHeader()
-            {
-                courierMasterId = entityPM.Id,
-                MAWB = entityPM.MAWB,
-                tenant = entityPM.Tenant,
-                ConnectedDeclarations = entityPM.ConnectedDeclarations,
-                NotConnectedDeclarations = entityPM.NotConnectedDeclarations,
-                ResponseContentHeader = new DefaultResponseContentHeader() { TransmitionDateTime = DateTime.Now },
-            };
+            myDCAInUCBClosePendingWithResponseContentHeader.ResponseContentHeader = new DefaultResponseContentHeader() { TransmitionDateTime = DateTime.Now };
 
             string body = XmlGenericUtil<DCI_CourierMastersConnectedResponseContentHeader>.SerializeObject(myDCAInUCBClosePendingWithResponseContentHeader);
 
-            return SendToQ(body, entityPM.Tenant);
+            return SendToQ(body, myDCAInUCBClosePendingWithResponseContentHeader.tenant);
         }
 
 
@@ -161,20 +153,21 @@ namespace Logitude.CustomsMessaging.MessagingServices
     [XmlType(AnonymousType = true, Namespace = "http://amital.com/customs/Prod/DCI_CourierMastersConnectedResponseContentHeader")]
     public class DCI_CourierMastersConnectedResponseContentHeader : IINF_MSG_Generic
     {
+        public string courierMasterId { get; set; }
+        public int tenant { get; set; }
+        public string MAWB { get; set; }
+        public bool connectedAll { get; set; }
+        public bool disconnectedAll { get; set; }
+        public string[] connectedItems { get; set; }
+        public string[] disconnectedItems { get; set; }
+        public List<string> ServerSplitDeclarationsList { get; set; }
+        public bool Connect { get; set; }
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        public string LoggingUserId { get; set; }
+        public DefaultResponseContentHeader ResponseContentHeader { get; set; }
         public IResponseContentHeader GetResponseContentHeader()
         {
             return ResponseContentHeader;
         }
-
-        public List<string> ServerSplitDeclarationsList { get; set; }
-        public string ConnectedDeclarations { get; set; }
-        public string NotConnectedDeclarations { get; set; }
-        public DefaultResponseContentHeader ResponseContentHeader { get; set; }
-        public string courierMasterId { get; set; }
-        public int tenant { get; set; }
-        public string MAWB { get; set; }
-        public bool connect { get; set; }
-        public string LoggingUserId { get; set; }
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     }
 }
