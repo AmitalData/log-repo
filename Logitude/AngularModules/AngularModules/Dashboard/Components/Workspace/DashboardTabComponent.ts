@@ -225,6 +225,24 @@ export class DashboardTabComponent implements AfterViewInit {
         });
     }
 
+    SaveDashboard(fromUI: boolean = false) {
+        //this.CheckDeletedWidgets(dashboard);
+        if (fromUI) MixPanelLocator.PostDashboardAction({ ActionName: "Submit Dashboard Save Click", DashboardId: this.SelectedDashboard?.Id });
+
+        this.CurrentSession.StartBusyIndicatorSaving();
+        this.dashboardPMService.update(this.SelectedDashboard).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.SelectedDashboard = myResponse.Result;
+                this.SelectedDashboardId = this.SelectedDashboard?.Id;
+                this.SelectedDashboardName = this.SelectedDashboard?.Name;
+                this.applyWDashboard();
+                this.ResetFlags();
+            }
+
+            this.CurrentSession.StopBusyIndicator();
+        });
+    }
+
     private ResetFlags() {
         this.IsEditLayoutButtonVisible = !AppTool.IsNullOrEmpty(this.SelectedDashboardId) && this.SelectedDashboard.CreatedByUserId == SessionLocator.LoggedUserId;
         this.IsEditDashboardButtonVisible = false;
