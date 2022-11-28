@@ -16,6 +16,7 @@ export class ExpressionComponent extends BaseComponent implements OnInit {
     @Input() FlowObjectFields: ObjectFieldList[];
     @Input() CurrentNodeId: string;
     @Input() IsDisabled: boolean = false;
+    @Input() Width: string = "300px";
     @Output() ValueChanged = new EventEmitter<string>();
 
     public ExpressionValue: ExpressionValue;
