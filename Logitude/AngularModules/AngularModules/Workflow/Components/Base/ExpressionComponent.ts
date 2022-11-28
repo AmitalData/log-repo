@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { LogitudeWindow } from "Controls/Windows/LogitudeWindow";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
 import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
+import { ExpressionValue } from "Workflow/Models/Types";
 
 @Component({
     selector: "Expression",
@@ -10,21 +11,26 @@ import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 
 export class ExpressionComponent extends BaseComponent implements OnInit {
 
-    @Input() CurrentValue: string;
+    @Input() CurrentValue: ExpressionValue;
     @Input() FlowObject: any;
     @Input() FlowObjectFields: ObjectFieldList[];
     @Input() CurrentNodeId: string;
     @Input() IsDisabled: boolean = false;
+    @Input() Width: string = "300px";
     @Output() ValueChanged = new EventEmitter<string>();
 
-    public ExpressionValue: string;
+    public ExpressionValue: ExpressionValue;
 
     constructor() {
         super();
     }
 
     ngOnInit() {
-        this.ExpressionValue = this.CurrentValue;
+        let defaultExpressionValue: ExpressionValue = {
+            expression: null,
+            variables: []
+        };
+        this.ExpressionValue = this.CurrentValue || defaultExpressionValue;
     }
 
     openExpressionBuilder() {
