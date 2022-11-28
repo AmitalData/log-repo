@@ -90,9 +90,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable < CustomsRequestsSheetList > query = (from a in context.CustomsRequestsSheets
                                                               where a.Tenant == tenant &&  (a.RequestStatusCode == "5" || a.RequestStatusCode == "1" ||
                                                               a.RequestStatusCode == "2" || a.RequestStatusCode == "21")
-                                                              && a.RequestCreateDate >= lastweek && a.ObjectTableId1 == "1-343" && query1.Contains(a.EntityId1)
+                                                              && a.RequestCreateDate >= lastweek
                                                               select new CustomsRequestsSheetList()
                                                               {
+                                                                  ObjectTableId1=a.ObjectTableId1,
+                                                                  EntityId1 = a.EntityId1,
                                                                   InterfaceTypeCode = a.InterfaceTypeCode,
                                                                   InterfaceTypeName = a.InterfaceManagement != null ? a.InterfaceManagement.Description : null,
                                                               });
@@ -101,11 +103,12 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             var qGroupIt = query.GroupBy(q =>new { q.InterfaceTypeName, q.InterfaceTypeCode }).Select(g => new PriorityRequestsSheetSummary
             {
                 Id = new Guid(),
-                count = g.Select(x => x.InterfaceTypeCode).Count(),
+                count = g.Where(y => y.ObjectTableId1 == "1-343" && query1.Contains(y.EntityId1)).Select(x => x.InterfaceTypeCode).Count(),
+                totalCount=g.Select(x => x.InterfaceTypeCode).Count(),
                 InterfaceTypeName = g.Key.InterfaceTypeName,
                 InterfaceTypeCode = g.Key.InterfaceTypeCode
             });
-            return qGroupIt.ToList();
+            return qGroupIt.Where(r => r.count > 0).ToList();
         }
 
 
