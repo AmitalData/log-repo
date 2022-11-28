@@ -27,7 +27,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
 
             entityPM.EntityCounterKey = line + 1;
-            entityPM.ClaimEntityNumber = entityPM.ClaimEntityNumber.Trim();
+            
             base.OnCreating(entityPM, entityParentPM);
         }
 
