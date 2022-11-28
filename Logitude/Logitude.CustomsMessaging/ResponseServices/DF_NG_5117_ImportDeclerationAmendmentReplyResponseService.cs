@@ -591,7 +591,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     }
 
-                    _MyDeclarationPM.HatraDate = customResponse.Response.Declaration.DMExtensions.ReleaseDateTime.Value;
+                   
 
                     if (myUpdateEventContextTagModel != null)
                         this._MyDeclarationPM.CurrentContextTag = myUpdateEventContextTagModel;

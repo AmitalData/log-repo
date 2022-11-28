@@ -189,7 +189,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             EventContextTagModel myUpdateEventContextTagModel = null;
             string key = ProcessLockTableUtil.Instance.GetKey4Declaration(_MyDeclarationPM.Id, requestParams.Tenant);
 
-            _MyDeclarationPM.HatraDate = customResponse.Response.Declaration.DMExtensions.ReleaseDateTime.Value;
+            _MyDeclarationPM.HatraDate = customResponse.Response?.Declaration?.DMExtensions?.ReleaseDateTime?.Value;
 
             using (var disposableToken = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "8237ResponseService.Update"))
             {
