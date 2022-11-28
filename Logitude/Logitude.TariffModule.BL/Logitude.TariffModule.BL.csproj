@@ -48,9 +48,6 @@
       <HintPath>..\Logitude.SystemLogs\bin\Debug\Logitude.SystemLogs.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
-    <Reference Include="Simplog.Data">
-      <HintPath>..\Simplog.Data\bin\Debug\Simplog.Data.dll</HintPath>
-    </Reference>
     <Reference Include="Simplog.Data.Global">
       <HintPath>..\Simplog.Global.Data\bin\Debug\Simplog.Data.Global.dll</HintPath>
     </Reference>
@@ -182,6 +179,10 @@
     <ProjectReference Include="..\Logitude.TariffModule.Data\Logitude.TariffModule.Data.csproj">
       <Project>{0a2a3ab8-4d14-4140-be2f-2d95b235bb7c}</Project>
       <Name>Logitude.TariffModule.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
+      <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
+      <Name>Simplog.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
       <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
