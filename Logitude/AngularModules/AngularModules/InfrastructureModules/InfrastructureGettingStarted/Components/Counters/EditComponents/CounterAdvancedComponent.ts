@@ -28,6 +28,7 @@ export class CounterAdvancedComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     public ItemsSource: any[] = [];
     public HasAllTransportsFeature: boolean = false;
+    //public HasBranchCounterCodeFeature: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
@@ -35,6 +36,7 @@ export class CounterAdvancedComponent extends BaseComponent {
         if (FeatureLocator.HasFeaturePermession("Shipment", "ALLTRANSPORTMODES")) {
             this.HasAllTransportsFeature = true;
         }
+        //this.HasBranchCounterCodeFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "BCC")[0] ? true : false;
     }
 
     SetWindowArgs(args: any) {
@@ -247,6 +249,19 @@ export class CounterAdvancedComponent extends BaseComponent {
             this.CalculateSampleValue();
         }
     }
+
+    //private seperatePerBranch: boolean = false;
+    //public get SeperatePerBranch() {
+    //    this.seperatePerBranch = this.ItemsSource[0].EntityPM.UsePerBranch;
+    //    return this.seperatePerBranch;
+    //}
+    //public set SeperatePerBranch(value: boolean) {
+    //    if (this.seperatePerBranch == value) return;
+    //    this.seperatePerBranch = value;
+    //    this.ItemsSource.forEach(item => {
+    //        item.EntityPM.UsePerBranch = value;
+    //    });
+    //}
 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
