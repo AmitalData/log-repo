@@ -31,22 +31,22 @@
 }
 
 .DashboardTab .DashboardTabHead li:not(.DashboardTabSelected):hover {
-    /*background: #448DCA;*/
+   /* background: #448DCA;*/
 }
 
 .DashboardTab .DashboardTabHead li:not(.DashboardTabSelected) {
-    height: 22px;
+    height: 20px;
     margin-top: 1px;
 }
 
 .DashboardTab .DashboardTabHead li.DashboardTabSelected {
-    height: 22px;
-    background-color: #F0F0F0;
+    height: 20px;
+    background-color: #F3F3F3;
     color: #5FAFDA;
 }
 
 .DashboardTab .DashboardTabHead li:not(:first-child):not(.DashboardTabSelected) {
-    border-left: 2px solid #F0F0F0;
+    border-left: 2px solid #F3F3F3;
 }
 
 .DashboardTab .DashboardTabHead li .DashboardInnerTab {
@@ -56,13 +56,13 @@
     padding-left: 10px;
     padding-right: 10px;
     max-width: 150px;
-   /* min-width:100px;*/
+    min-width:100px;
     font-size: 11px;    
 }
 
 .DashboardTab .DashboardTabHead li {
-    height: 22px;
-    line-height: 22px;
+    height: 20px;
+    line-height: 20px;
     display: inline-block;
     float: left;
     cursor: default;    
@@ -81,9 +81,9 @@
     left: 0;
     right: 0;
     bottom: 0;
-    top: 22px;
+    top: 20px;
     border-top: none;
-    background: #F0F0F0;
+    background: #F3F3F3;
 }
 
 .DashboardTab .DashboardTabHead {
@@ -91,7 +91,7 @@
     left: 0;
     right: 0;
     top: 0;
-    height: 22px;
+    height: 20px;
 }
 
 .DashboardTab {
