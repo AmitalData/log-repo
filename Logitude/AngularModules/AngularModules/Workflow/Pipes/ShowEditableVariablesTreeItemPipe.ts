@@ -7,7 +7,7 @@ import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 
 export class ShowEditableVariablesTreeItemPipe implements PipeTransform {
 
-    transform() {
+    transform(_arg: any) {
         return (item: TreeSelectItem) => {
             if (item.data && item.data.isReadOnlyVariable) {
                 return false;

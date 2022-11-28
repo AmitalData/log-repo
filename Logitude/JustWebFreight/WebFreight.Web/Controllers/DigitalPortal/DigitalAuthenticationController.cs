@@ -141,6 +141,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     myResult.TenantDateTimeFormat = myTenant.DateTimeFormat;
                     myResult.DisplayDocumentsAndEvents = myTenant.DisplayDocumentsAndEvents;
                     myResult.IsQuotesRequestsMenuEnabled = myTenant.IsQuotesRequestActivatedInShared;
+                    myResult.ShowMultiUnitsOfMeasurements = myTenant.ShowMultiUnitsOfMeasurements;
                 }
 
                 var sharedLogisticsSettingRepository = new SharedLogisticsSettingRepository(tenant);

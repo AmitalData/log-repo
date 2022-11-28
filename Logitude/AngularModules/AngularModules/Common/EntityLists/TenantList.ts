@@ -108,6 +108,7 @@ export class TenantList {
 		AllowCustomersInAgentsLOV: boolean;
 		VatUniquePartnerTypeCode: string;
 		SharedLogisMasterMessageLink: boolean;
+		ShowMultiUnitsOfMeasurements: boolean;
 		IsQuotesRequestActivatedInShared: boolean;
 		IsCargoTrackWebAccessActivated: boolean;
 		EnableDeliveryOptions: boolean;
@@ -115,4 +116,4 @@ export class TenantList {
 		ShipmentATAClosingDays: number;
 		IsDigitalPortalAccessActivated: boolean;
         UseNewTermsOfUse: boolean;
-}
+}

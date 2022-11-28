@@ -47,7 +47,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 														  CounterSize = a.CounterSize,
 														  Suffix = a.Suffix,
                                                           InActive = a.InActive,
+                                                          UsePerBranch = a.UsePerBranch
                                                       }
+
        );
             //List<CounterDefinitionPM> defList = result.Where(
             //    c => c.Tenant == tenant &&
@@ -81,7 +83,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                        StartNumber_Old = a.StartNumber,
 					   CounterSize = a.CounterSize,
 					   Suffix = a.Suffix,
-                       InActive = a.InActive
+                       InActive = a.InActive,
+                       UsePerBranch = a.UsePerBranch
                    });
 
             return result;

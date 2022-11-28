@@ -214,10 +214,11 @@ export class FlowVariablesTreeList {
         let recordsCollectionVariablesItemChildren: TreeSelectItem[] = [];
 
         this.getGetRecordNodes("AllRecords").forEach((getRecordNode: any) => {
+            let entity = getRecordNode.data["entity"];
             let treeSelectItemName = getRecordNode.data["name"];
             let isReadOnly = getRecordNode.data["recordsType"] === GetRecordTypes.ReadOnly;
             let treeSelectItemKey = Formatter.getCodeFromName(treeSelectItemName);
-            let itemData = { isReadOnlyVariable: isReadOnly };
+            let itemData = { isReadOnlyVariable: isReadOnly, type: (entity ? (entity + "[]") : null) };
             let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, true, true, false, false, [], itemData);
             recordsCollectionVariablesItemChildren.push(treeSelectItem);
         });

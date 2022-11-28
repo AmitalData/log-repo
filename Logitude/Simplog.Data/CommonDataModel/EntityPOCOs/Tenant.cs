@@ -100,6 +100,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 
         public bool IsMobileActivated { get; set; }
         public bool SharedLogisticsMessageLink { get; set; }
+        public bool ShowMultiUnitsOfMeasurements { get; set; }
         public bool IsCustomerTelRequired { get; set; }
         public bool IsCustomerFaxRequired { get; set; }
         public bool IsPickDelAdrsRequired { get; set; }

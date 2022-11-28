@@ -138,6 +138,7 @@
         public object VatUniquePartnerTypeCode { get; set; }
         public string TransferQuotationsToUnifreightTrigger { get; set; }
         public bool SharedLogisMasterMessageLink { get; set; }
+        public bool ShowMultiUnitsOfMeasurements { get; set; }
         public double AirRatio { get; set; }
         public double LCLRatio { get; set; }
         public double FCLRatio { get; set; }

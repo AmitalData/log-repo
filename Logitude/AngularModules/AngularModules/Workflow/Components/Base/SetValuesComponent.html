@@ -128,8 +128,7 @@
                     </LogLov>
 
                     <TreeSelect *ngIf="!IsEntityField" [Items]="FlowVariablesTreeItems" [Width]="'220px'"
-                        [Value]="setValue.field"
-                        [ShowItem]="null | ShowEditableVariablesTreeItemPipe"
+                        [Value]="setValue.field" [ShowItem]="null | ShowEditableVariablesTreeItemPipe"
                         [IsDisabled]="setValue.isDisabled" (ValueChanged)="updateSetValueField($event, setValueIndex)">
                     </TreeSelect>
 
@@ -184,9 +183,10 @@
 
                 </div>
                 <div *ngIf="(setValue.operator == 'Expression')" class="set-value-value-container">
-                    <Expression [CurrentValue]="setValue.value" (ValueChanged)="updateSetValue($event, setValueIndex)"
-                        [FlowObject]="FlowObject" [FlowObjectFields]="FlowObjectFields" [CurrentNodeId]="CurrentNodeId"
-                        [IsDisabled]="setValue.isDisabled">
+                    <Expression [CurrentValue]="setValue.expressionValue"
+                        (ValueChanged)="updateSetValueExpression($event, setValueIndex)" [FlowObject]="FlowObject"
+                        [FlowObjectFields]="FlowObjectFields" [CurrentNodeId]="CurrentNodeId"
+                        [IsDisabled]="setValue.isDisabled" [Width]="'220px'">
                     </Expression>
                 </div>
             </div>

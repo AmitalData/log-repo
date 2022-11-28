@@ -45,9 +45,6 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Simplog.Data">
-      <HintPath>..\Simplog.Data\bin\Debug\Simplog.Data.dll</HintPath>
-    </Reference>
     <Reference Include="Simplog.Data.Global">
       <HintPath>..\Simplog.Global.Data\bin\Debug\Simplog.Data.Global.dll</HintPath>
     </Reference>
@@ -162,6 +159,10 @@
     <ProjectReference Include="..\Logitude.TimeManagement.Data\Logitude.TimeManagement.Data.csproj">
       <Project>{68f57541-574a-4ee9-b3fe-8c535c74456a}</Project>
       <Name>Logitude.TimeManagement.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
+      <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
+      <Name>Simplog.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

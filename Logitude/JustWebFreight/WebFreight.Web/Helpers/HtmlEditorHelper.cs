@@ -5892,13 +5892,14 @@ namespace WebFreight.Web.Helpers
             string logoCode = " ";
             string fileName = logoName;
             string fileExtension = "jpg";
-            string logoFileName = fileName + tenant;
             string folderName = "logos";
             if (fileName == "WideLogo")
             {
                 fileName = "sharedLogtsitcslogo";
                 fileExtension = "png";
             }
+
+            string logoFileName = fileName + tenant;
 
             if (fileName == "CompanyBrandingLogo")
             {

@@ -29,12 +29,12 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 	         UpdateDate, 
 	         UpdatedByUserId, 
 	         SearchFields, 
-	         WorkflowId, 
 	         StatusCode, 
 	         StartTime, 
 	         EndTime, 
 	         BusinessKey, 
-	         Duration,
+	         Duration, 
+	         WorkFlowVersionId,
 	      }
 
 
@@ -48,13 +48,13 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 	         UpdateDate, 
 	         UpdatedByUserId, 
 	         SearchFields, 
-	         WorkflowId, 
 	         StatusCode, 
 	         StartTime, 
 	         EndTime, 
 	         BusinessKey, 
 	         Duration, 
-	         StatusName,
+	         StatusName, 
+	         WorkFlowVersionId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -93,11 +93,6 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 				entityPOCO.SearchFields = entityPM.SearchFields;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WorkflowId))
-            {
-				entityPOCO.WorkflowId = entityPM.WorkflowId;
-			}
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusCode))
             {
 				entityPOCO.StatusCode = entityPM.StatusCode;
@@ -121,6 +116,11 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Duration))
             {
 				entityPOCO.Duration = entityPM.Duration;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WorkFlowVersionId))
+            {
+				entityPOCO.WorkFlowVersionId = entityPM.WorkFlowVersionId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -164,11 +164,6 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 					entityPM.SearchFields = entityPOCO.SearchFields;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.WorkflowId))
-            {
-					entityPM.WorkflowId = entityPOCO.WorkflowId;
-            }
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StatusCode))
             {
 					entityPM.StatusCode = entityPOCO.StatusCode;
@@ -192,6 +187,11 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Duration))
             {
 					entityPM.Duration = entityPOCO.Duration;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.WorkFlowVersionId))
+            {
+					entityPM.WorkFlowVersionId = entityPOCO.WorkFlowVersionId;
             }
 
 		}
@@ -230,11 +230,6 @@ namespace Logitude.Workflow.BL.EntityDataMappings
                 oldEntityPM.SearchFields = entityPM.SearchFields;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WorkflowId))
-            {
-                oldEntityPM.WorkflowId = entityPM.WorkflowId;
-            }
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusCode))
             {
                 oldEntityPM.StatusCode = entityPM.StatusCode;
@@ -258,6 +253,11 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Duration))
             {
                 oldEntityPM.Duration = entityPM.Duration;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WorkFlowVersionId))
+            {
+                oldEntityPM.WorkFlowVersionId = entityPM.WorkFlowVersionId;
             }
 			
 		}

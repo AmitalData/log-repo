@@ -23,3 +23,13 @@ export type ShowVariables = {
     ShowRecordsCollectionVariables: boolean,
     ShowDeclaredCollectionVariables: boolean
 };
+
+export type ExpressionVariable = {
+    code: string,
+    type: string
+};
+
+export type ExpressionValue = {
+    expression: string,
+    variables: ExpressionVariable[]
+};

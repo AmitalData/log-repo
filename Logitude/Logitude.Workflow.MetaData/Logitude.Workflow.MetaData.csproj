@@ -58,6 +58,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ContextGenerator.cs</LastGenOutput>
     </None>
+    <None Include="DBScripts\0_PrepareWorkflows.sxml" />
     <None Include="DBScripts\DeleteExpressions.sxml" />
     <None Include="DBScripts\ReplaceWorkflowsJsonEntityNameKeyWithEntityKey.sxml" />
     <None Include="DBScripts\FillWorkflowsTriggerField.sxml" />
@@ -70,6 +71,8 @@
     <None Include="DBTables\WorkFlowInstanceStatus.dxml" />
     <None Include="DBTables\WorkFlowInstanceVariable.dxml" />
     <None Include="DBTables\WorkFlowStatus.dxml" />
+    <None Include="DBTables\WorkFlowVersion.dxml" />
+    <None Include="DBTables\WorkFlowVersionStatus.dxml" />
     <None Include="EntityFiles\Expression.lxml" />
     <None Include="EntityFiles\ExpressionCategory.lxml" />
     <None Include="EntityFiles\WorkFlow.lxml" />
@@ -79,6 +82,8 @@
     <None Include="EntityFiles\WorkFlowInstanceStatus.lxml" />
     <None Include="EntityFiles\WorkFlowInstanceVariable.lxml" />
     <None Include="EntityFiles\WorkFlowStatus.lxml" />
+    <None Include="EntityFiles\WorkFlowVersion.lxml" />
+    <None Include="EntityFiles\WorkFlowVersionStatus.lxml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="AutoGenerators\WorkflowClassesGenerator.tt">

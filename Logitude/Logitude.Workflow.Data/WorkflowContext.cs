@@ -85,6 +85,10 @@ namespace Logitude.Workflow.Data
             modelBuilder.Configurations.Add(new WorkFlowInstanceVariableMap());
 	
             modelBuilder.Configurations.Add(new WorkFlowStatusMap());
+	
+            modelBuilder.Configurations.Add(new WorkFlowVersionMap());
+	
+            modelBuilder.Configurations.Add(new WorkFlowVersionStatusMap());
 				
 				
 			modelBuilder.Entity<WorkFlowInstance>().Property(x => x.Duration).HasPrecision(18, 3);
@@ -418,6 +422,18 @@ namespace Logitude.Workflow.Data
 	 }
 	
 	 public IDbSet<WorkFlowStatus> WorkFlowStatuses 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<WorkFlowVersion> WorkFlowVersions 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<WorkFlowVersionStatus> WorkFlowVersionStatuses 
 	 {
 	      get; set;
 	 

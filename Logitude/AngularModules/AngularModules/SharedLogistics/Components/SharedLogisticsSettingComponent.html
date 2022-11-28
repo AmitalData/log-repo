@@ -224,12 +224,38 @@
                                                     </td>
                                                 </tr>
                                             </table>
-
-
                                         </td>
-
                                     </tr>
 
+                                    <tr *ngIf="SharedTitleType == 'DigitalPortal' && ShowMultiUnitsOfMeasurementsEnable" style="height:100px;vertical-align:top">
+                                        <td>
+                                            <table style="text-align:left">
+                                                <tr style="height:30px;">
+                                                    <td style="width:5px;">
+                                                        <div style="width:5px"></div>
+                                                    </td>
+                                                    <td style="width:20px;text-align:left;">
+                                                        <div class="CheckBox">
+                                                            <input [attr.data-cy]="'Show Multi units of measurements'" [attr.id]="SharedLogisticsMultiUnitsOfMeasurementsId" [(ngModel)]="ShowMultiUnitsOfMeasurements" class="CenterCenter" id="test" type="checkbox" />
+                                                            <label [attr.for]="SharedLogisticsMultiUnitsOfMeasurementsId" class="CenterCenter" id="test"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div style="text-align:left;margin-top:-3px;font-size:14px;margin-left:40px">Show Multi units of measurements</div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td colspan="3" style="vertical-align:top">
+                                                        <div class="MessageText" style="display:block;margin-left:5px;font-size:12px;margin-top:5px;vertical-align:top">
+                                                             Use this setting to show/hide values in Imperial units of measurements in addition to Metric units of measurements, disabling it will only show Metric units.
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+                                        </td>
+                                    </tr>
 
                                     <tr *ngIf="IsShowQuotesRequestActivatedInSharedLogistics" style="height:80px;vertical-align:top">
                                         <td>
