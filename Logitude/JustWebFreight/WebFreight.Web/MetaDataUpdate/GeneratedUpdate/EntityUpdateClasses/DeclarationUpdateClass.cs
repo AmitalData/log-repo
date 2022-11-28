@@ -85,7 +85,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "93b85fd89e50af56cd86d3e319ca9637";
+
+		public const string HashString = "76598a75dba01114e6304caa6e93c58d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -18527,6 +18528,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 Code =  "RDC",
                 EnglishName =  "Required Document Verified By Customer",
                 LocalName =  "מסמך נדרש אומת בנוכחות לקוח",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = DeclarationObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "EXT",
+                EnglishName =  "Exit from storage site",
+                LocalName =  "יציאה ממסוף מטען",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,

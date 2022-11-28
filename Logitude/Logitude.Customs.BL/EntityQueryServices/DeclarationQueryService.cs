@@ -1219,7 +1219,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
             if (String.IsNullOrWhiteSpace(declarationId)) return "";
             return repository.GetCustomFileNoByDeclarationId(declarationId, tenant);
         }
-
+        public Declaration GetDeclarationByConsignment(string cargoTypeCode, string manifestNumber, string secondCargoID, string thirdCargoID)
+        {
+            return repository.GetDeclarationByConsignment(cargoTypeCode, manifestNumber, secondCargoID, thirdCargoID);
+        }
 
         public List<DeclarationPM> GetMultiByKeys(int tenant, List<string> keys)
         {
@@ -2193,6 +2196,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
         public string GetHatraDateForDecId(string decId,int tenant)
         {
             return repository.GetHatraDateForDecId(decId, tenant);
+        }
+
+        public string GetDeclarationByConsignment()
+        {
+            return "";
         }
 
     }

@@ -35,7 +35,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
         DF_NG_2751_MSG10000_ExportDeclarationMessagingService>
         ((new DF_NG_2751_MSG10000_ExportDeclarationMessagingService()).MainInterfaceCode);
 
-
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+    DCAInCC_MSG1_EntryExitToFromCustomsStorageSitesMessageMessagingService>
+    ((new DCAInCC_MSG1_EntryExitToFromCustomsStorageSitesMessageMessagingService()).MainInterfaceCode);
             //2715
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                 D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityMessagingService>
