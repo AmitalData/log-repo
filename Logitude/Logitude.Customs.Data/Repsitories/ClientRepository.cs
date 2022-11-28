@@ -67,6 +67,7 @@ namespace Logitude.Customs.Data.Repsitories
 
             Client client = (from a in context.Clients
                              where a.Code == code
+                             && a.Tenant == Tenant
                              select a).FirstOrDefault();
             return client;
 
