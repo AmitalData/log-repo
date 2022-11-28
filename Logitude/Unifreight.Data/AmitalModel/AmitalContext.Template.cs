@@ -4524,7 +4524,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUCARSC>()
                 .Property(p => p.VEHICLEFILE)
                     .HasColumnName(@"VEHICLE_FILE")
-                    .HasMaxLength(10)
+                    .HasMaxLength(12)
                     .HasColumnType("char");
             modelBuilder.Entity<CCUCARSC>()
                 .Property(p => p.CARMODEL)
