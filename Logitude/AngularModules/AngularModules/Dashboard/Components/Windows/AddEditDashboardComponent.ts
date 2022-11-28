@@ -368,6 +368,11 @@ export class GlobalFilterItem extends BaseComponent {
         this.SetFilterType();
         this.SetFilterField();
         this.SetOperator();
+        this.SetUIProperties();
+    }
+
+    private SetUIProperties() {
+        this.UIProperties.SetEnabled("DataSetFieldId", this.ObjectTableName, !AppTool.IsNullOrEmpty(this.DataSetId))
     }
 
     private SetFilterType() {
@@ -508,6 +513,7 @@ export class GlobalFilterItem extends BaseComponent {
         if (this.EntityPM.DataSetId != value) {
             this.EntityPM.DataSetId = value;
             this.DataSetFieldId = null;
+            this.SetUIProperties();
         }
     }
 
