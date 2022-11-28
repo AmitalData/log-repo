@@ -103,8 +103,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
             this.exportDeclarationClosingDatasExtendPMService.GetSingleWithEFIFILEMData(id).subscribe((response: any) => {
                 this.EntityPM = response.Result;
-                
-                if (this.EntityPM)
+                 if (this.EntityPM)
                 
                     if (response.Result.ChangeSetOp == "1") {
                         this.EntityPM.IsDirty = true;
@@ -485,10 +484,6 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                 this.SecondCargoIdPlaceholder = Response.Result.CargoIdentifierKey2Name ?? '';
                 this.ThirdCargoIdPlaceholder = Response.Result.CargoIdentifierKey3Name ?? '';
 
-                this.FinalManifestNumber = '';
-                this.FinalSecondCargoId = '';
-                this.FinalThirdCargoId = '';
-                            
                 this.setWarningValues();
             }
         });
