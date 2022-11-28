@@ -296,8 +296,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             req.Response.FunctionalReferenceID = new ResponseFunctionalReferenceIDType { Value = string.IsNullOrEmpty(_DeclarationPM.AmendmentRequestNumber) ? GetNextAmendmentRequestNumber() : _DeclarationPM.AmendmentRequestNumber
             };
 
-            if (_DeclarationPM.HatraDate.HasValue)
-                req.Response.Declaration.DMExtensions.ReleaseDateTime = new ReleaseDateType { Value = _DeclarationPM.HatraDate.Value };
+           
 
             functionalReferenceID = req.Response.FunctionalReferenceID.Value;
 

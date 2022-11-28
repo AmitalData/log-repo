@@ -490,7 +490,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     _MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status[0].NameCode.Value;
                     _MyDeclarationPM.PaymentDate = _MyDeclarationPMOrg.PaymentDate;
-                    _MyDeclarationPM.HatraDate = customResponse.Response?.Declaration?.DMExtensions?.ReleaseDateTime?.Value;
+                    _MyDeclarationPM.HatraDate = _MyDeclarationPMOrg.HatraDate;
                     if (fromMehes)
                     {
                         var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
