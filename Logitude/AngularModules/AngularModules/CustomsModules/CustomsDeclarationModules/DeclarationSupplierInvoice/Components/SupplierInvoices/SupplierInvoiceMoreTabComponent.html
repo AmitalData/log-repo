@@ -260,7 +260,8 @@
                                                     [LookUpTableName]="'Customs.ModificationAndDiscountType'"
                                                     (SelectedItemChanged)="item.SetLocalName($event, 'TypeName')"
                                                     [QueryFilterItems]="TypeCodeFilterItems"
-                                                    [FocusOnMe]="true">
+                                                    [FocusOnMe]="true"
+                                                    (LostFocus)="item.OnTypeCodeLostFocus()">
                                             </LogLov>
 
                                         </div>
@@ -282,7 +283,9 @@
                                                     [HideColumns]="true"
                                                     [LookUpTableName]="'Customs.CurrencyType'"
                                                     (SelectedItemChanged)="item.SetLocalName($event, 'CurrencyTypeName')"
-                                                    [FocusOnMe]="true">
+                                                    [FocusOnMe]="true"
+                                                    (LostFocus)="item.OnCurrencyTypeLostFocus()" 
+                                                    >
                                             </LogLov>
 
                                         </div>

@@ -472,6 +472,43 @@ ID List :
                                                         LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
                                                         newExt.MyModificationAndDiscountType.ExtraNumericData = dr["ExtraNumericData"].ToString();
                                                     }
+                                                    if (dr["IsCustomsValueComponent"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyModificationAndDiscountType.IsCustomsValueComponent = true;
+                                                    }
+                                                    if (dr["IsCustomsValueComponentExport"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyModificationAndDiscountType.IsCustomsValueComponentExport = true;
+                                                    }
+                                                    
+                                                    if (dr["CurrencyMustBeSameAsInvoice"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyModificationAndDiscountType.CurrencyMustBeSameAsInvoice = true;
+                                                    }
+                                                    if (dr["CurrencyMustBeSameAsInvoiceExport"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyModificationAndDiscountType.CurrencyMustSameInvoiceExport = true;
+                                                    }
+                                                    if (dr["IsCustomUseExport"].ToString().Equals(true.ToString(), StringComparison.OrdinalIgnoreCase))
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyModificationAndDiscountType.IsCustomUseExport = true;
+                                                    }
+                                                    if (dr["ExportNetoValuesModificationAffectTypeID"].ToString() != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyModificationAndDiscountType.ExportNetoValuesModificationAffectTypeID = dr["ExportNetoValuesModificationAffectTypeID"].ToString();
+                                                    }
+                                                    if (dr["ExportFOBValuesModificationAffectTypeID"].ToString() != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyModificationAndDiscountType.ExportFOBValuesModificationAffectTypeID = dr["ExportFOBValuesModificationAffectTypeID"].ToString();
+                                                    }
+
                                                     extList.Add(newExt);
                                                 });
                         return extList;

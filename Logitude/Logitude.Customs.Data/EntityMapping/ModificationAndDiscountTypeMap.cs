@@ -42,6 +42,20 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.IsRelevantGoodsItemExport).HasColumnName("IsRelevantGoodsItemExport");
 
             this.Property(t => t.ExtraNumericData).HasColumnName("ExtraNumericData").HasMaxLength(5).IsUnicode(true);
+
+            this.Property(t => t.IsCustomsValueComponent).HasColumnName("IsCustomsValueComponent");
+
+            this.Property(t => t.IsCustomsValueComponentExport).HasColumnName("IsCustomsValueComponentExport");
+
+            this.Property(t => t.CurrencyMustSameInvoiceExport).HasColumnName("CurrencyMustSameInvoiceExport");
+
+            this.Property(t => t.CurrencyMustBeSameAsInvoice).HasColumnName("CurrencyMustBeSameAsInvoice");
+
+            this.Property(t => t.IsCustomUseExport).HasColumnName("IsCustomUseExport");
+
+            this.Property(t => t.NetoValuesModificationAffectID).HasColumnName("NetoValuesModificationAffectID").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.ExportFOBModificationAffectID).HasColumnName("ExportFOBModificationAffectID").HasMaxLength(2).IsUnicode(false);
         }
     }
 }

@@ -27,13 +27,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="ModificationCounterKey"
-    Type="int">
-    <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
-  </Column>
-  <Column
     Name="TypeCode"
     Type="varchar"
     Size="3">
@@ -60,6 +53,13 @@
     Scale="2">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="ModificationCounterKey"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="DeclarationId,InvoiceCounterKey,LineNumber"

@@ -74,6 +74,41 @@ export class ModificationAndDiscountTypePM {
     public set ExtraNumericData(newValue: string) { if (this.extraNumericData != newValue) { this.extraNumericData = newValue; this.MarkAsDirty("ExtraNumericData"); } }
        
 	 
+    private isCustomsValueComponent: boolean;
+    public get IsCustomsValueComponent() { return this.isCustomsValueComponent; }
+    public set IsCustomsValueComponent(newValue: boolean) { if (this.isCustomsValueComponent != newValue) { this.isCustomsValueComponent = newValue; this.MarkAsDirty("IsCustomsValueComponent"); } }
+       
+	 
+    private isCustomsValueComponentExport: boolean;
+    public get IsCustomsValueComponentExport() { return this.isCustomsValueComponentExport; }
+    public set IsCustomsValueComponentExport(newValue: boolean) { if (this.isCustomsValueComponentExport != newValue) { this.isCustomsValueComponentExport = newValue; this.MarkAsDirty("IsCustomsValueComponentExport"); } }
+       
+	 
+    private currencyMustSameInvoiceExport: boolean;
+    public get CurrencyMustSameInvoiceExport() { return this.currencyMustSameInvoiceExport; }
+    public set CurrencyMustSameInvoiceExport(newValue: boolean) { if (this.currencyMustSameInvoiceExport != newValue) { this.currencyMustSameInvoiceExport = newValue; this.MarkAsDirty("CurrencyMustSameInvoiceExport"); } }
+       
+	 
+    private currencyMustBeSameAsInvoice: boolean;
+    public get CurrencyMustBeSameAsInvoice() { return this.currencyMustBeSameAsInvoice; }
+    public set CurrencyMustBeSameAsInvoice(newValue: boolean) { if (this.currencyMustBeSameAsInvoice != newValue) { this.currencyMustBeSameAsInvoice = newValue; this.MarkAsDirty("CurrencyMustBeSameAsInvoice"); } }
+       
+	 
+    private isCustomUseExport: boolean;
+    public get IsCustomUseExport() { return this.isCustomUseExport; }
+    public set IsCustomUseExport(newValue: boolean) { if (this.isCustomUseExport != newValue) { this.isCustomUseExport = newValue; this.MarkAsDirty("IsCustomUseExport"); } }
+       
+	 
+    private netoValuesModificationAffectID: string;
+    public get NetoValuesModificationAffectID() { return this.netoValuesModificationAffectID; }
+    public set NetoValuesModificationAffectID(newValue: string) { if (this.netoValuesModificationAffectID != newValue) { this.netoValuesModificationAffectID = newValue; this.MarkAsDirty("NetoValuesModificationAffectID"); } }
+       
+	 
+    private exportFOBModificationAffectID: string;
+    public get ExportFOBModificationAffectID() { return this.exportFOBModificationAffectID; }
+    public set ExportFOBModificationAffectID(newValue: string) { if (this.exportFOBModificationAffectID != newValue) { this.exportFOBModificationAffectID = newValue; this.MarkAsDirty("ExportFOBModificationAffectID"); } }
+       
+	 
 
     public OldEntityPM: ModificationAndDiscountTypePM;
 		

@@ -30,6 +30,8 @@ import { SupplierInvoiceModificationPM } from '../../../../../Customs/EntityPMs/
 import { AddEditSupplierInvoiceComponent } from './AddEditSupplierInvoiceComponent';
 import { SupplierInvoiceUCRPM } from '../../../../../Customs/EntityPMs/SupplierInvoiceUCRPM';
 import { SupplierInvoicePaymentPM } from '../../../../../Customs/EntityPMs/SupplierInvoicePaymentPM';
+import { SupplierInvoiceGeneralTabComponent } from './SupplierInvoiceGeneralTabComponent';
+import { SupplierInvoiceSharedService } from './Services/SupplierInvoiceSharedService';
 
 
 @Component({
@@ -52,7 +54,7 @@ export class SupplierInvoiceMoreTabComponent extends BaseComponent {
     //Services
     private declarationPMService: DeclarationPMService = new DeclarationPMService;
 
-    constructor() {
+    constructor(private supplierInvoiceSharedService:SupplierInvoiceSharedService) {
         super();
         this.ModificationsList = new ObservableCollection([]);
 
@@ -82,10 +84,10 @@ export class SupplierInvoiceMoreTabComponent extends BaseComponent {
         for (let item of this.InvoicePM.SupplierInvoiceModifications) {
             if (item.TypeCode != "I02" && item.TypeCode != "67" && item.TypeCode != "104") {
                 if (this.declarationPM.Direction == "E" && item.TypeCode != "160") {
-                    this.ModificationsList.Insert(new ModificationItemModel(item, this));
+                    this.ModificationsList.Insert(new ModificationItemModel(item, this,this.supplierInvoiceSharedService));
                 }
                 else if (this.declarationPM.Direction != "E") {
-                    this.ModificationsList.Insert(new ModificationItemModel(item, this));
+                    this.ModificationsList.Insert(new ModificationItemModel(item, this, this.supplierInvoiceSharedService));
                 }
             }
         }
@@ -245,7 +247,7 @@ export class SupplierInvoiceMoreTabComponent extends BaseComponent {
         this.InvoicePM.AddSupplierInvoiceModification(item);
 
         // 5- add it to observable list
-        this.ModificationsList.Insert(new ModificationItemModel(item, this));
+        this.ModificationsList.Insert(new ModificationItemModel(item, this, this.supplierInvoiceSharedService));
 
         this.NewModificationAdded = true;
 
@@ -255,6 +257,10 @@ export class SupplierInvoiceMoreTabComponent extends BaseComponent {
         console.log("... Removing ", item);
         this.ModificationsList.Remove(item);
         this.InvoicePM.RemoveSupplierInvoiceModification(item.ModificationPM); // remove from entity
+        this.declarationPM.Direction == 'E'? this.supplierInvoiceSharedService.DifferenceAndTotalForeignCurrency$.next() : '';
+        
+        
+        
     }
 
     RemovePayment(item: PaymentItemModel) {
@@ -444,7 +450,7 @@ export class ModificationItemModel extends BaseComponent {
     isValid: boolean;
     public customsExchangeRateExtendedPMService: CustomsExchangeRateExtendedPMService = new CustomsExchangeRateExtendedPMService();
 
-    constructor(private modificationPM: SupplierInvoiceModificationPM, private parent: SupplierInvoiceMoreTabComponent) {
+    constructor(private modificationPM: SupplierInvoiceModificationPM, private parent: SupplierInvoiceMoreTabComponent ,private supplierInvoiceSharedService:SupplierInvoiceSharedService, ) {
         super();
         this.ModificationPM = modificationPM;
         this.isValid = true;
@@ -567,7 +573,32 @@ export class ModificationItemModel extends BaseComponent {
     InvoiceCurrencyExchangeRtae: number = 0;
     DiscountInDsicCurrency: number = 0;
 
+    OnTypeCodeLostFocus(){
+
+        if(this.parent.declarationPM.Direction == 'E' && this.Amount !=null)
+        {   
+          this.supplierInvoiceSharedService.DifferenceAndTotalForeignCurrency$.next()
+             
+        }
+    }
+
+
+    OnCurrencyTypeLostFocus(){
+        if(this.parent.declarationPM.Direction == 'E' && this.Amount !=null)
+        {   
+          this.supplierInvoiceSharedService.DifferenceAndTotalForeignCurrency$.next()
+             
+        }
+    }
+
     OnAmountLostFocus() {
+
+    if(this.parent.declarationPM.Direction == 'E')
+    {   
+      this.supplierInvoiceSharedService.DifferenceAndTotalForeignCurrency$.next();
+        
+    }
+
         if (this.doCalculate) {
             var value = this.Amount;
 

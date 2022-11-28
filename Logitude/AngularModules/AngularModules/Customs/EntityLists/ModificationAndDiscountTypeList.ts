@@ -18,6 +18,13 @@ export class ModificationAndDiscountTypeList {
 	IsRelevantInvoiceExport: boolean;
 	IsRelevantGoodsItemExport: boolean;
 	ExtraNumericData: string;
+	IsCustomsValueComponent: boolean;
+	IsCustomsValueComponentExport: boolean;
+	CurrencyMustSameInvoiceExport: boolean;
+	CurrencyMustBeSameAsInvoice: boolean;
+	IsCustomUseExport: boolean;
+	NetoValuesModificationAffectID: string;
+	ExportFOBModificationAffectID: string;
 	
 }
  

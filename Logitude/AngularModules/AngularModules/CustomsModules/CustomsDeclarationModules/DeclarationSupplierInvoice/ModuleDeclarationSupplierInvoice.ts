@@ -3,6 +3,7 @@ import { InfrastructureModule } from '../../../Infrastructure/Module_INFR';
 import { Components, ModuleDeclarations } from './ModuleDeclarations';
 import { ModuleCustomsControls } from '../../CustomsControls/ModuleCustomsControls';
 import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
+import { SupplierInvoiceSharedService } from './Components/SupplierInvoices/Services/SupplierInvoiceSharedService';
 
 
 @NgModule({
@@ -12,6 +13,7 @@ import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/componen
   entryComponents: [...Components],
   providers: [
     LogtuideTableDataService,
+    SupplierInvoiceSharedService
   ]
 })
 

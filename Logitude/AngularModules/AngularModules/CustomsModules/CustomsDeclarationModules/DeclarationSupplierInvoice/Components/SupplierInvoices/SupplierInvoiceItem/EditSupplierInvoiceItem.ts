@@ -31,6 +31,7 @@ import { SupplierInvoiceItemsPricePM } from '../../../../../../Customs/EntityPMs
 import { SuppInvoiceItemsAbachStatementPM } from '../../../../../../Customs/EntityPMs/SuppInvoiceItemsAbachStatementPM';
 import { CustomsRequiredFieldExtendedListService } from '../../../../../../Customs/Services/ExtendedLists/CustomsRequiredFieldExtendedListService';
 import { customsItemsService } from 'QuoteOPM/Utilities/customsItems.service';
+import { SupplierInvoiceSharedService } from '../Services/SupplierInvoiceSharedService';
 
 
 @Component({
@@ -59,7 +60,7 @@ export class EditSupplierInvoiceItem extends BaseComponent {
     taxExemptCodeTypesFilter: ApiQueryFilters;
 
     public InvoiceNumberText: string = "Customs.SupplierInvoiceItemsConDeclar.F.InvoiceNumber";
-    constructor(private cd: ChangeDetectorRef) {
+    constructor(private cd: ChangeDetectorRef, private supplierInvoiceSharedService:SupplierInvoiceSharedService) {
         super();
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
         this.CustomsBookTypeFilterItems = new ApiQueryFilters();
@@ -120,7 +121,7 @@ export class EditSupplierInvoiceItem extends BaseComponent {
         // Modification List
         this.ModificationsList = new ObservableCollection([]);
         for (let item of this.OriginalItemPM.SupplierInvoiceItemsMods) {
-            this.ModificationsList.Insert(new ModificationItemModel(item));
+            this.ModificationsList.Insert(new ModificationItemModel(item,this.supplierInvoiceSharedService));
         }
 
         this.PricesList = new ObservableCollection([]);
@@ -520,7 +521,7 @@ export class EditSupplierInvoiceItem extends BaseComponent {
                 item.ChangeSetOp = "Insert",
 
                 this.OriginalItemPM.AddSupplierInvoiceItemsMod(item);
-            this.ModificationsList.Insert(new ModificationItemModel(item));
+            this.ModificationsList.Insert(new ModificationItemModel(item,this.supplierInvoiceSharedService));
             //this.CurrentSession.ResetRowIndex();
         }
     }
@@ -528,7 +529,9 @@ export class EditSupplierInvoiceItem extends BaseComponent {
         console.log("... Removing ", item);
         this.ModificationsList.Remove(item);
         this.OriginalItemPM.RemoveSupplierInvoiceItemsMod(item.ModificationPM); // remove from entity
-    }
+        this.CurrentSession.CurrentEditComponent.EntityPM.Direction == "E" ? this.supplierInvoiceSharedService.DifferenceAndTotalForeignCurrency$.next() : '';
+
+        }  
     IsModificationValid(modificationM: ModificationItemModel) {
         if (!AppTool.IsNullOrEmpty(modificationM)) {
             // requierd fields for last row
@@ -833,6 +836,7 @@ export class EditSupplierInvoiceItem extends BaseComponent {
     CancelButtonClicked() {
         this.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CurrentEditComponent.EntityPM.Direction == "E" ? this.supplierInvoiceSharedService.DifferenceAndTotalForeignCurrency$.next() : '';
     }
 
     digit: string = null;
@@ -1212,8 +1216,9 @@ export class ModificationItemModel extends BaseComponent {
     public ModificationPM: SupplierInvoiceItemsModPM = null;
     public ObjectTableName = "Customs.SupplierInvoiceItemsMod";
     public DataContext = this;
+    public CurrentSession = SessionLocator.SelectedSession;
 
-    constructor(private modificationPM: SupplierInvoiceItemsModPM) {
+    constructor(private modificationPM: SupplierInvoiceItemsModPM ,private supplierInvoiceSharedService:SupplierInvoiceSharedService) {
         super();
         this.ModificationPM = modificationPM;
     }
@@ -1271,6 +1276,18 @@ export class ModificationItemModel extends BaseComponent {
         } else {
             this[fieldName] = null;
         }
+
+    }
+    OnTypeCodeLostFocus(){
+        if(this.CurrentSession.CurrentEditComponent.EntityPM.Direction == "E" && this.Amount !=null){
+            this.supplierInvoiceSharedService.DifferenceAndTotalForeignCurrency$.next()
+        }
+
+    }
+     
+    OnAmountOrCurrencyLostFocus(){
+ 
+        this.CurrentSession.CurrentEditComponent.EntityPM.Direction == "E" ? this.supplierInvoiceSharedService.DifferenceAndTotalForeignCurrency$.next() : '';
 
     }
 }
