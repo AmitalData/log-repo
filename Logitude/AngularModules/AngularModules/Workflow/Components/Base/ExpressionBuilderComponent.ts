@@ -1,4 +1,4 @@
-import { Component, ViewChild } from "@angular/core";
+import { Component } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
 import { ServiceResponse } from "Infrastructure/DataContracts/ServiceResponse";
 import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
@@ -34,12 +34,11 @@ export class ExpressionBuilderComponent extends BaseComponent {
     public DefaultExpressionCategory = new ListItem("ALL", "All Functions");
     public ExpressionCategory: ListItem = this.DefaultExpressionCategory;
 
+    public FlowVariablesTreeList: FlowVariablesTreeList;
     public FlowVariablesTreeItems: TreeSelectItem[];
     public ExpressionsTreeItems: TreeSelectItem[];
 
     public ExpressionCategoryChanged: boolean = false;
-
-    @ViewChild("flowVariablesTreeSelect") FlowVariablesTreeSelect: any;
 
     constructor() {
         super();
@@ -89,7 +88,8 @@ export class ExpressionBuilderComponent extends BaseComponent {
             ShowRecordsCollectionVariables: true,
             ShowDeclaredCollectionVariables: true
         };
-        this.FlowVariablesTreeItems = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId, showVariables).Items;
+        this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId, showVariables);
+        this.FlowVariablesTreeItems = this.FlowVariablesTreeList.Items;
     }
 
     updateExpressionCategory(expressionCategory: ListItem) {
@@ -156,7 +156,7 @@ export class ExpressionBuilderComponent extends BaseComponent {
                 expressionVariables.forEach(expressionVariable => {
                     if (expressionVariable && expressionVariable !== "") {
                         let variableCode = expressionVariable.replace("{", "").replace("}", "");
-                        let variableItem = this.FlowVariablesTreeSelect?.getItem(variableCode);
+                        let variableItem = this.FlowVariablesTreeList.getItem(variableCode);
                         if (variableItem && this.ExpressionValue.variables.filter(v => v.code === variableCode).length === 0) {
                             this.ExpressionValue.variables.push(
                                 {
