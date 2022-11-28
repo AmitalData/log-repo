@@ -145,7 +145,7 @@
                         </span>
                     </div>
                     <div *ngIf="row && row.Type != 'Head' && row.IsGroupOpened" class="ag-row Row" [class.Selected]="(SelectedRow == row.rowData || row.IsSelected == true)" (mouseleave)="OnMouseleave(row)" (mouseover)="OnMouseOver(row)" (click)="onRowSelected(row.rowData)" (dblclick)="OnRowDoubleClick(row.rowData)" [ngStyle]="row.styles" tabindex="-1" [id]="'row'+ row.rowIndex"
-                    [style.background-color]="row.rowData[ColumnName] ==Condition? '#F7F7F7': ''"   style="width:100%;line-height: 25px; position: absolute; height: 27px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; margin-left:0px; max-height: 27px; display: flex; border: 1px solid #DDDDDD; border-top: 1px solid transparent;border-left: 0px;border-right: 0px;"  >
+                    [style.background-color]="row.rowData[ColumnName] ==Condition? '#f1f1f1': ''"   style="width:100%;line-height: 25px; position: absolute; height: 27px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; margin-left:0px; max-height: 27px; display: flex; border: 1px solid #DDDDDD; border-top: 1px solid transparent;border-left: 0px;border-right: 0px;"  >
                         <div *ngIf="groupby" style="width: 15px; background-color:#E4E4E4; margin-top: -2px; margin-left: -1px; margin-bottom: -1px; " [style.marginRight.px]="RTL == true ? 0 : 5"></div>
                         <img [src]="row.DetailsIcon" *ngIf="DetailButtonVisibile && row.IsExpandable" (click)="OnPlusClick(row)" style="width:11px;height:11px;margin: 7px;" />
                         <!--<button *ngIf="DetailButtonVisibile" (click)="OnPlusClick(row)" style="width:20px;">{{row.DetailsIcon}}</button>-->
