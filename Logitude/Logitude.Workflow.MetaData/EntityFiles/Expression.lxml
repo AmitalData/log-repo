@@ -41,7 +41,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Expression&quot;"
-  Code="&quot;425c&quot;"
+  Code="&quot;e010&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -593,21 +593,21 @@
       Code="&quot;DAY&quot;"
       Name="&quot;Day&quot;"
       SearchFields="&quot;DAY,Day&quot;"
-      Body="&quot;(date,unit)&quot;"
+      Body="&quot;(date)&quot;"
       Description="&quot;Returns a day from dateTime&quot;"
       CategoryCode="&quot;DTE&quot;" />
     <Record
       Code="&quot;MONTH&quot;"
       Name="&quot;Month&quot;"
       SearchFields="&quot;MONTH,Month&quot;"
-      Body="&quot;(date,unit)&quot;"
+      Body="&quot;(date)&quot;"
       Description="&quot;Returns a month from dateTime&quot;"
       CategoryCode="&quot;DTE&quot;" />
     <Record
       Code="&quot;YEAR&quot;"
       Name="&quot;Year&quot;"
       SearchFields="&quot;YEAR,Year&quot;"
-      Body="&quot;(date,unit)&quot;"
+      Body="&quot;(date)&quot;"
       Description="&quot;Returns a year from dateTime&quot;"
       CategoryCode="&quot;DTE&quot;" />
     <Record

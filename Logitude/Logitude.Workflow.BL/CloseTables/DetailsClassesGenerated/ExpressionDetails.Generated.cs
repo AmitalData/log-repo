@@ -96,7 +96,7 @@ namespace Logitude.Workflow.BL.CLoseTable
                 Code = "DAY", 
                 Name = "Day", 
                 SearchFields = "DAY,Day", 
-                Body = "(date,unit)", 
+                Body = "(date)", 
                 Description = "Returns a day from dateTime", 
                 CategoryCode = "DTE", 
 			});
@@ -106,7 +106,7 @@ namespace Logitude.Workflow.BL.CLoseTable
                 Code = "MONTH", 
                 Name = "Month", 
                 SearchFields = "MONTH,Month", 
-                Body = "(date,unit)", 
+                Body = "(date)", 
                 Description = "Returns a month from dateTime", 
                 CategoryCode = "DTE", 
 			});
@@ -116,7 +116,7 @@ namespace Logitude.Workflow.BL.CLoseTable
                 Code = "YEAR", 
                 Name = "Year", 
                 SearchFields = "YEAR,Year", 
-                Body = "(date,unit)", 
+                Body = "(date)", 
                 Description = "Returns a year from dateTime", 
                 CategoryCode = "DTE", 
 			});
