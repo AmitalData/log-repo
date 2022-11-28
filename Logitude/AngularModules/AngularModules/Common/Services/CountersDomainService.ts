@@ -256,22 +256,22 @@ export class CountersDomainService {
         return entityPM;
     }
 
-    GetLastValueCounterStatByCounterId(counterId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+    //GetLastValueCounterStatByCounterId(counterId: string) {
+    //    var authHeader = new Headers();
+    //    authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetLargestLastValueFromCounterStatByCounterId?counterId=' + counterId , ServiceHelper.GetHttpHeaders())
-                .pipe(
-                    map(response => {
-                        var myResult = response;
-                        var serviceResponse: ServiceResponse;
-                        serviceResponse = new ServiceResponse();
-                        serviceResponse.Result = myResult;
-                        return serviceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
-    }
+    //    return defer(() => {
+    //        return this._http.get(this._apiUrl + '/GetLargestLastValueFromCounterStatByCounterId?counterId=' + counterId , ServiceHelper.GetHttpHeaders())
+    //            .pipe(
+    //                map(response => {
+    //                    var myResult = response;
+    //                    var serviceResponse: ServiceResponse;
+    //                    serviceResponse = new ServiceResponse();
+    //                    serviceResponse.Result = myResult;
+    //                    return serviceResponse;
+    //        }), catchError(ServiceHelper.HandleServiceError));
+    //    });
+    //}
 
     clone(jsonPM: any) {
         var entityPM: any;

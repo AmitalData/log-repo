@@ -254,27 +254,27 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             
             return Request.CreateResponse(HttpStatusCode.OK, myResult);
         }
-        public HttpResponseMessage GetLargestLastValueFromCounterStatByCounterId(string counterId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
+        //public HttpResponseMessage GetLargestLastValueFromCounterStatByCounterId(string counterId)
+        //{
+        //    try
+        //    {
+        //        string token = HttpContext.Current.Request.Headers["Token"];
+        //        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+        //        int tenant = authToken.Tenant;
 
-                SecurityUtility.AuthenticationOnTenant(tenant);
+        //        SecurityUtility.AuthenticationOnTenant(tenant);
 
-                CounterStatRepository counterStatRepository = new CounterStatRepository(tenant);
-                int myResult = counterStatRepository.GetLargestLastValueOfCounterStatsByCounterId(counterId, tenant);
+        //        CounterStatRepository counterStatRepository = new CounterStatRepository(tenant);
+        //        int myResult = counterStatRepository.GetLargestLastValueOfCounterStatsByCounterId(counterId, tenant);
 
-                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-            }
+        //        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+        //    }
 
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
+        //    catch (Exception ex)
+        //    {
+        //        return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+        //    }
+        //}
     }
 
     public class CounterAPIHelper
