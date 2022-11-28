@@ -43,10 +43,10 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             _collateralRequestDetails = new CollateralRequestDetails[1];
             _collateralRequestDetails[0] = new CollateralRequestDetails
             {
-                collateralRequestNumber = 6,
+                collateralRequestNumber = int.Parse(DateTime.Now.ToString("MMddhhmm")),
                 collateralValidityDate = DateTime.Now.AddDays(200),
                 requestValidityDate = DateTime.Now.AddYears(2),
-                collateralRequestStatus = 2,
+                collateralRequestStatus = 1,
                 requestedCollateralType = 3,
                 IncludingThirdPartyGuarantee = true
             };
