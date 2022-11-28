@@ -1,19 +1,89 @@
-<table style="padding:10px">
-    <tr style="height:1px">
+<style>
+    .table {
+        padding: 10px
+    }
+
+    .table-row {
+        height: 1px
+    }
+
+    .refresh-row {
+        width: 1px;
+        padding-left: 5px;
+    }
+
+    .count-row {
+        vertical-align: middle;
+        width: 50px;
+        padding-left: 5px;
+    }
+
+    .count-data {
+        color: #1B90CB;
+    }
+
+    .excel-row {
+        height: 21px;
+        width: 21px;
+        vertical-align: middle;
+    }
+
+    .excel-button {
+        height: 21px;
+        width: 21px;
+    }
+
+    .filter-row {
+        width: 350px;
+    }
+
+    .filter-container {
+        display: inline-flex
+    }
+
+    .filter-name {
+        padding-right: 5px;
+    }
+
+    .search-row {
+        width: 200px;
+        padding-right: 5px;
+    }
+</style>
+
+<table class="table">
+    <tr *ngIf="DataSource" class="table-row">
         <td>
             <table>
-                <tr *ngIf="DataSource" class="FormFieldRow">
-                    <td style="width: 1px; padding-left: 5px;">
-                            <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()" [DataCy]="'RunHistoryRefresh'"></IconButton>
+                <tr class="FormFieldRow">
+                    <td class="refresh-row">
+                        <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()" [DataCy]="'RunHistoryRefresh'">
+                        </IconButton>
                     </td>
-                    <td style="vertical-align: middle;width:310px; padding-left: 5px;">
-                        <span class="Counter" style="color: #1B90CB;">Run({{DataSource.rowCount}})</span>
+                    <td class="count-row">
+                        <span class="Counter" class="count-data">Run({{DataSource.rowCount}})</span>
+                    </td>
+                    <td class="excel-row">
+                        <button class="excel-button Button" (click)="ExportToExcel()"><img class="CenterCenter"
+                                title="Export To Excel" src="./Images/Buttons/excelicon.png" /></button>
                     </td>
                     <td>
                         <div></div>
                     </td>
-                    <td style="width: 200px; padding-right: 5px;">
-                        <SearchTextBox [ObjectTableName]="ObjectTableName" [PlaceHolder]="'Search key'" (SearchTextChangeEvent)="TextChanged($event)" [DataCy]="'RunHistorySearchBox'"></SearchTextBox>
+
+                    <td class="filter-row">
+                        <div class="filter-container">
+                            <span class="filter-name">Start Time</span>
+                            <CustomDatePicker (SelectedItemChanged)="setDateFilter($event)"
+                                [QueryCode]="ObjectTableName" [ObjectField]="StartTimeObjectfield"></CustomDatePicker>
+                        </div>
+                    </td>
+
+
+                    <td class="search-row">
+                        <SearchTextBox [ObjectTableName]="ObjectTableName" [PlaceHolder]="'Search key'"
+                            (SearchTextChangeEvent)="TextChanged($event)" [DataCy]="'RunHistorySearchBox'">
+                        </SearchTextBox>
                     </td>
                 </tr>
             </table>
@@ -23,13 +93,13 @@
         <td style="vertical-align:top">
             <div class="MediaFill">
                 <div *ngIf="DataSource" style="vertical-align:top;" class="GeneratedGridContainer">
-                    <logitude-grid-v2 GridWidth="100%" GridHeight="100%" [ObjectTable]="ObjectTableName" 
+                    <logitude-grid-v2 GridWidth="100%" GridHeight="100%" [ObjectTable]="ObjectTableName"
                         [dataSource]="DataSource" [columns]="columns" [autoLoad]="true" [IsCustomTemplate]="true"
-                        [QueryChangeEvent]="onQueryChangeEvent" [MenuHeaderchangeevent]="MenuHeaderchangeevent" 
+                        [QueryChangeEvent]="onQueryChangeEvent" [MenuHeaderchangeevent]="MenuHeaderchangeevent"
                         (rowSelectedEvent)="onRowSelected($event)" [DataCy]="'HistoryRow'">
                     </logitude-grid-v2>
 
-                    
+
                 </div>
 
             </div>
