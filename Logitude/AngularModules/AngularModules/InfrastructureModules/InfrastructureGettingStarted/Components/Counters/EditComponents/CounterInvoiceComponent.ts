@@ -186,13 +186,12 @@ export class CounterInvoiceComponent extends BaseComponent {
         return this.seperatePerBranch;
     }
     public set SeperatePerBranch(value: boolean) {
-        if (this.seperatePerBranch != value) {
-            this.seperatePerBranch = value;
-            this.seperatePerBranchChanged = true;
-            this.ItemsSource.forEach(item => {
-                item.EntityPM.UsePerBranch = value;
-            });
-        }
+        if (this.seperatePerBranch == value) return;
+        this.seperatePerBranch = value;
+        this.seperatePerBranchChanged = true;
+        this.ItemsSource.forEach(item => {
+            item.EntityPM.UsePerBranch = value;
+        });
     }
 
     private sameForAllTypes: boolean = true;
