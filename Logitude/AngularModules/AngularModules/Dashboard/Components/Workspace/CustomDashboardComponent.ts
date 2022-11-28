@@ -387,6 +387,20 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
         this.SelectedTabItem.Name = dashboard.Name;
     }
 
+    public RefreshTabsAfterDelete(deletedDashboardId: string) {
+        var deletedTab: DashboardTab = this.DashboardsTabs.find(d => d.DashboardId == deletedDashboardId);
+        if (deletedTab) {
+            var index = this.DashboardsTabs.indexOf(deletedTab);
+            if (index != -1) {
+                this.DashboardsTabs.splice(index, 1);
+                this.BuildTabs();
+
+                //this.selectedDashboardId = this.DashboardsTabs[0]?.DashboardId;
+                //this.SelectionChanged(this.DashboardsTabs[0]);
+            }
+        }
+    }
+
     private myCloner: Cloner;
     private Clone() {
         //this.myCloner = new Cloner(this.SelectedDashboard);

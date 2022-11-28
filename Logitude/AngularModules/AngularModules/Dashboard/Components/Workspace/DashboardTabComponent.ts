@@ -103,7 +103,7 @@ export class DashboardTabComponent implements AfterViewInit {
         }
     }
 
-    public IsEditDashboardButtonVisible: boolean = true;   
+    public IsEditDashboardButtonVisible: boolean = false;   
     public IsEditLayoutButtonVisible: boolean = !this.IsEditLayoutModeActive && !AppTool.IsNullOrEmpty(this.SelectedDashboardId);
 
     private LoadSelectedDashboard() {
@@ -212,11 +212,10 @@ export class DashboardTabComponent implements AfterViewInit {
             logitudeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     if (s == "OK_delete") {
-                        //this.LoadDefaultDashboardFromServer();
+                        this.FatherComponent.RefreshTabsAfterDelete(this.SelectedDashboard?.Id);
                     }
 
                     else {
-                        //this.HasChanges = this.SelectedDashboard.IsDirty;
                         this.SelectedDashboardName = this.SelectedDashboard.Name;
                         this.FatherComponent.RefereshTabAfterEdit(this.SelectedDashboard);
                     }
@@ -248,6 +247,7 @@ export class DashboardTabComponent implements AfterViewInit {
         this.IsEditDashboardButtonVisible = false;
         this.IsEditLayoutModeActive = false;
         this.HasChanges = false;
+        this.FatherComponent.HasChanges = false;
     }
 
     AddWidgetClicked() {
