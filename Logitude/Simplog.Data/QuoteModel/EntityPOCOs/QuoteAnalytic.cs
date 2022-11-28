@@ -78,7 +78,6 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public string ShipmentSubTypeId { get; set; }
         public string RegionalTaxId { get; set; }
         public double? RegionalTaxPercentage { get; set; }
-        public int? PackagesQuantity { get; set; }
         public string SpecialServicesTypeId { get; set; }
         public string ValidByTypeCode { get; set; }
         public bool? ConnectedToOpportunity { get; set; }
