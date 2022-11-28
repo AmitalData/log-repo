@@ -330,12 +330,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
 
 
-        public int GetDeclarationMaxAmendmentRequestNumber( int tenant)
-        {
-             DeclarationRepository declarationRepository = new DeclarationRepository(context);
-            return declarationRepository.GetDeclarationMaxAmendmentRequestNumber(tenant);
-        }
-
 
         public int GetDeclarationMaxCancelRequestNumber(int tenant, string id)
         {
@@ -360,11 +354,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return repository.GetMinDeclarationByDeclarationNumber(declarationNumber, tenant);
         }
 
-        public DeclarationPM GetDeclarationByfunctionalReferenceID( string functionalReferenceID,  int tenant)
+        public DeclarationPM GetDeclarationByfunctionalReferenceID( string functionalReferenceID,string agentFileReferenceID,  int tenant)
         {
              if (String.IsNullOrWhiteSpace(functionalReferenceID)) return null;
 
-            var declaration = repository.GetDeclarationByFunctionalReferenceID(functionalReferenceID , tenant);
+            var declaration = repository.GetDeclarationByFunctionalReferenceID(functionalReferenceID, agentFileReferenceID, tenant);
             DeclarationPM declarationPM = new DeclarationPM();
             DeclarationDataMapping mapping = new DeclarationDataMapping();
             if (declaration == null) return null;

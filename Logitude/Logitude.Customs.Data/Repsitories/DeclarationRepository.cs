@@ -199,28 +199,6 @@ namespace Logitude.Customs.Data.Repsitories
 
             return max;
         }
-        public int GetDeclarationMaxAmendmentRequestNumber(int tenant)
-        {
-            //var x=  (from a in context.Declarations
-            //         where a.Tenant == tenant
-            //         select Convert.ToInt32(a.AmendmentRequestNumber)).Max();
-
-
-            //  return (from a in context.Declarations
-            //          where  a.Tenant == tenant
-            //          select a).Max(rec => Convert.ToInt32( rec.AmendmentRequestNumber));
-
-            var list = (from a in context.Declarations
-                        where a.Tenant == tenant && a.AmendmentRequestNumber != null
-                        select a.AmendmentRequestNumber).ToList();
-
-            int max = 0;
-
-            if (list.Count() != 0)
-                max = list.Select(int.Parse).ToList().Max();
-
-            return max;
-        }
 
         public void GetDailyStatistic(int tenant,
             out int TotDec,
@@ -538,7 +516,7 @@ namespace Logitude.Customs.Data.Repsitories
 
 
 
-        public Declaration GetDeclarationByFunctionalReferenceID(string functionalReferenceID, int tenant)
+        public Declaration GetDeclarationByFunctionalReferenceID(string functionalReferenceID,string agentFileReferenceID, int tenant)
         {
             //Declaration declarationParent = (from a in context.Declarations
             //                           where declarationNumber == a.DeclarationNumber
@@ -546,7 +524,7 @@ namespace Logitude.Customs.Data.Repsitories
 
 
             Declaration declaration = (from a in context.Declarations
-                                       where functionalReferenceID == a.AmendmentRequestNumber && a.Tenant == tenant
+                                       where functionalReferenceID == a.AmendmentRequestNumber && a.Tenant == tenant && a.CustomFileNo == agentFileReferenceID
                                        select a).FirstOrDefault();
 
             return declaration;
