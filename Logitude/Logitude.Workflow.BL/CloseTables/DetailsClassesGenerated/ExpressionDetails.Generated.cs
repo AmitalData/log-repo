@@ -26,7 +26,7 @@ namespace Logitude.Workflow.BL.CLoseTable
                 Code = "DATEDIF", 
                 Name = "DateDif", 
                 SearchFields = "DATEDIF,DateDif", 
-                Body = "(date1; date2; 'Y')", 
+                Body = "(date1,date2,unit)", 
                 Description = "Calculates the number of days, months, or years between two dates. Can be: Y, M, D", 
                 CategoryCode = "DTE", 
 			});
@@ -34,7 +34,7 @@ namespace Logitude.Workflow.BL.CLoseTable
             all.Add(new ExpressionDetails()
             {    
                 Code = "MIN", 
-                Name = "MIN", 
+                Name = "Min", 
                 SearchFields = "MIN", 
                 Body = "(number1,number2)", 
                 Description = "Return the smallest value from the numbers supplied", 
@@ -44,7 +44,7 @@ namespace Logitude.Workflow.BL.CLoseTable
             all.Add(new ExpressionDetails()
             {    
                 Code = "MAX", 
-                Name = "MAX", 
+                Name = "Max", 
                 SearchFields = "MAX", 
                 Body = "(number1,number2)", 
                 Description = "Return the biggest value from the numbers supplied", 
@@ -54,7 +54,7 @@ namespace Logitude.Workflow.BL.CLoseTable
             all.Add(new ExpressionDetails()
             {    
                 Code = "COUNT", 
-                Name = "COUNT", 
+                Name = "Count", 
                 SearchFields = "COUNT", 
                 Body = "(list)", 
                 Description = "Return the count of list elements", 
@@ -66,7 +66,7 @@ namespace Logitude.Workflow.BL.CLoseTable
                 Code = "TIMEDIF", 
                 Name = "TimeDif", 
                 SearchFields = "TIMEDIF,TimeDif", 
-                Body = "(time1; time2; 'H')", 
+                Body = "(time1,time2,unit)", 
                 Description = "Calculates the number of hours, minutes, or seconds between two dates. Can be: H, M, S", 
                 CategoryCode = "DTE", 
 			});
@@ -96,7 +96,7 @@ namespace Logitude.Workflow.BL.CLoseTable
                 Code = "DAY", 
                 Name = "Day", 
                 SearchFields = "DAY,Day", 
-                Body = "(Now(); 'DD')", 
+                Body = "(date)", 
                 Description = "Returns a day from dateTime", 
                 CategoryCode = "DTE", 
 			});
@@ -106,7 +106,7 @@ namespace Logitude.Workflow.BL.CLoseTable
                 Code = "MONTH", 
                 Name = "Month", 
                 SearchFields = "MONTH,Month", 
-                Body = "(Now(); 'MM')", 
+                Body = "(date)", 
                 Description = "Returns a month from dateTime", 
                 CategoryCode = "DTE", 
 			});
@@ -116,7 +116,7 @@ namespace Logitude.Workflow.BL.CLoseTable
                 Code = "YEAR", 
                 Name = "Year", 
                 SearchFields = "YEAR,Year", 
-                Body = "(Now(); 'YY')", 
+                Body = "(date)", 
                 Description = "Returns a year from dateTime", 
                 CategoryCode = "DTE", 
 			});
@@ -126,7 +126,7 @@ namespace Logitude.Workflow.BL.CLoseTable
                 Code = "TODATETIME", 
                 Name = "ToDateTime", 
                 SearchFields = "TODATETIME,ToDateTime", 
-                Body = "('8/15/2002')", 
+                Body = "(string)", 
                 Description = "Returns DateTime value from string", 
                 CategoryCode = "DTE", 
 			});
@@ -136,7 +136,7 @@ namespace Logitude.Workflow.BL.CLoseTable
                 Code = "WEEKDAY", 
                 Name = "WeekDay", 
                 SearchFields = "WEEKDAY,WeekDay", 
-                Body = "(Today())", 
+                Body = "(date)", 
                 Description = "Takes a date and returns a number between 1-7 representing the day of week", 
                 CategoryCode = "DTE", 
 			});
