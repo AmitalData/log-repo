@@ -978,6 +978,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 CourierDeclarationQueryService myCourierDeclarationQueryService = new CourierDeclarationQueryService(_Context);
                 CourierMasterPM courierMasterPM = null;
                 CourierDeclarationPM courierDeclarationPM = myCourierDeclarationQueryService.GetCourierDeclarationByDeclarationId(_DirtyDeclarationPM.Id, _DirtyDeclarationPM.Tenant);
+                if(courierDeclarationPM == null)
+                {
+                    DeclarationQueryService myDeclarationQueryService = new DeclarationQueryService(_Context);
+                    var dec = myDeclarationQueryService.GetAcceptDeclarationAmendment(_DirtyDeclarationPM.Id, _DirtyDeclarationPM.Tenant);
+                    if (dec != null)
+                    {
+                        courierDeclarationPM = myCourierDeclarationQueryService.GetCourierDeclarationByDeclarationId(dec.Id, _DirtyDeclarationPM.Tenant);
+                    }
+                }
                 if (courierDeclarationPM != null)
                 {
                     //Get CourierMaster
