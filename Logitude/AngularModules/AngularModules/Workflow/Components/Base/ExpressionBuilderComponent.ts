@@ -40,6 +40,8 @@ export class ExpressionBuilderComponent extends BaseComponent {
 
     public ExpressionCategoryChanged: boolean = false;
 
+    public IsSaving: boolean = false;
+
     constructor() {
         super();
     }
@@ -150,28 +152,10 @@ export class ExpressionBuilderComponent extends BaseComponent {
     updateExpressionValue(expression: string) {
         if (expression && expression !== "") {
             this.ExpressionValue.expression = expression;
-            this.ExpressionValue.variables = [];
-            let expressionVariables = expression.match(/\{(.*?)\}/g);
-            if (expressionVariables && expressionVariables.length > 0) {
-                expressionVariables.forEach(expressionVariable => {
-                    if (expressionVariable && expressionVariable !== "") {
-                        let variableCode = expressionVariable.replace("{", "").replace("}", "");
-                        let variableItem = this.FlowVariablesTreeList.getItem(variableCode);
-                        if (variableItem && this.ExpressionValue.variables.filter(v => v.code === variableCode).length === 0) {
-                            this.ExpressionValue.variables.push(
-                                {
-                                    code: variableCode,
-                                    type: ((variableItem.data && variableItem.data.type) ? variableItem.data.type : null)
-                                }
-                            );
-                        }
-                    }
-                });
-            }
         } else {
             this.ExpressionValue.expression = null;
-            this.ExpressionValue.variables = [];
         }
+        this.ExpressionValue.variables = [];
     }
 
     checkExpressionSyntax() {
@@ -193,10 +177,52 @@ export class ExpressionBuilderComponent extends BaseComponent {
     }
 
     closeExpressionBuilder(isSaved: boolean = false) {
-        let data: any = {
-            Action: (isSaved ? "save" : "cancel"),
-            ExpressionValue: this.ExpressionValue
-        };
-        this.CurrentSession.CurrentWindow.Close(data);
+        if (isSaved) {
+            this.IsSaving = true;
+            setTimeout(() => {
+                new Promise((resolve, _reject) => {
+                    this.setExpressionVariables();
+                    resolve(null);
+                }).then(() => {
+                    let dataToReturn: any = {
+                        Action: "save",
+                        ExpressionValue: this.ExpressionValue
+                    };
+                    this.CurrentSession.CurrentWindow.Close(dataToReturn);
+                });
+            }, 50);
+        } else {
+            let dataToReturn: any = {
+                Action: "cancel",
+                ExpressionValue: null
+            };
+            this.CurrentSession.CurrentWindow.Close(dataToReturn);
+        }
+    }
+
+    setExpressionVariables() {
+        let expression = this.ExpressionValue.expression;
+        if (expression && expression !== "") {
+            this.ExpressionValue.variables = [];
+            let expressionVariables = expression.match(/\{(.*?)\}/g);
+            if (expressionVariables && expressionVariables.length > 0) {
+                expressionVariables.forEach(expressionVariable => {
+                    if (expressionVariable && expressionVariable !== "") {
+                        let variableCode = expressionVariable.replace("{", "").replace("}", "");
+                        let variableItem = this.FlowVariablesTreeList.getItem(variableCode);
+                        if (variableItem && this.ExpressionValue.variables.filter(v => v.code === variableCode).length === 0) {
+                            this.ExpressionValue.variables.push(
+                                {
+                                    code: variableCode,
+                                    type: ((variableItem.data && variableItem.data.type) ? variableItem.data.type : null)
+                                }
+                            );
+                        }
+                    }
+                });
+            }
+        } else {
+            this.ExpressionValue.variables = [];
+        }
     }
 }
