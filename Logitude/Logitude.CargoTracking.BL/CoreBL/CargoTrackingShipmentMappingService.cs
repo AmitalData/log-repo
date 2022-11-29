@@ -26,6 +26,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         public CargoTrackingShipmentPM cargoShipmentPM;
         ShipmentOrderPM shipmentOrderPM;
         ShipmentPM shipmentPM;
+        ShipmentPM forwardingShipmentPM;
 
 
         public void MapCargoTrackingShipmentFields(CargoTrackingShipmentPM cargoShipmentPM, Dictionary<string, CargoTrackingMilestoneList> milestoneDictionary)
@@ -60,15 +61,32 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         private void GetConnectedEntities()
         {
             GetShipmentOrder();
+            GetForwardingShipment();
             GetShipmentPM();
         }
+        private string GetWarehouseLegName()
+        {
+            if (forwardingShipmentPM == null && cargoShipmentPM.EntityType == "C") {
+                return null;
+            }
+            if (forwardingShipmentPM != null && cargoShipmentPM.EntityType == "C")
+            {
+                string warehouselegname = !string.IsNullOrEmpty(forwardingShipmentPM?.WarehouseLegLocalName) ? forwardingShipmentPM?.WarehouseLegLocalName : forwardingShipmentPM?.WarehouseLegEnglishName;
+                return warehouselegname == "---" ? null : warehouselegname;
+            }
+            else
+            {
+                return !string.IsNullOrEmpty(shipmentPM?.WarehouseLegLocalName) ? shipmentPM?.WarehouseLegLocalName : shipmentPM?.WarehouseLegEnglishName;
+            }
+        }
+
         private void MapShipmentPMFields()
         {
 
             cargoShipmentPM.CustomsBrokerReference = shipmentPM?.CustomFileNumber;
             cargoShipmentPM.ContainersNumbers = shipmentPM?.ContainersNumbers;
             cargoShipmentPM.IncotermName = shipmentOrderPM != null ? shipmentOrderPM.IncotermCode : shipmentPM?.IncotermCode;
-            cargoShipmentPM.WarehouseLegName = !string.IsNullOrEmpty(shipmentPM?.WarehouseLegLocalName) ? shipmentPM?.WarehouseLegLocalName : shipmentPM?.WarehouseLegEnglishName;
+            cargoShipmentPM.WarehouseLegName = GetWarehouseLegName();
             cargoShipmentPM.ImportManifest = shipmentPM?.ImportManifest;
             cargoShipmentPM.TotalTax = shipmentPM?.TotalTax;
             cargoShipmentPM.ShipmentTypeName = shipmentPM?.ShipmentTypeName;
@@ -231,6 +249,18 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             shipmentOrderPM = shipmentOrderQuery.GetSinglePMForCargo(cargoShipmentPM.EntityId, cargoShipmentPM.Tenant);
             return shipmentOrderPM;
         }
+
+        private ShipmentPM GetForwardingShipment()
+        {
+            if (!string.IsNullOrWhiteSpace(cargoShipmentPM.ForwardingShipmentHeaderId))
+            {
+                ShipmentQuery shipmentQuery = new ShipmentQuery(cargoShipmentPM.Tenant);
+                forwardingShipmentPM = shipmentQuery.GetShipmentPMForCargoTrackingByEntityId(cargoShipmentPM.ForwardingShipmentHeaderId, cargoShipmentPM.Tenant);
+                return forwardingShipmentPM;
+            }
+            return null;
+        }
+
         private ShipmentPM GetShipmentPM()
         {
             ShipmentQuery shipmentQuery = new ShipmentQuery(cargoShipmentPM.Tenant);
