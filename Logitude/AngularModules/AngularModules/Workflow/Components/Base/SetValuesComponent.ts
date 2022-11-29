@@ -164,15 +164,8 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
     }
 
     updateSetValueExpression(expressionValue: ExpressionValue, setValueIndex: number) {
-        if (expressionValue) {
-            if (expressionValue.expression !== this.SetValues[setValueIndex]?.expressionValue?.expression) {
-                this.SetValues[setValueIndex].expressionValue = expressionValue;
-                this.setValuesChanged();
-            }
-        } else {
-            this.SetValues[setValueIndex].expressionValue = null;
-            this.setValuesChanged();
-        }
+        this.SetValues[setValueIndex].expressionValue = expressionValue;
+        this.setValuesChanged();
     }
 
     addSetValue() {

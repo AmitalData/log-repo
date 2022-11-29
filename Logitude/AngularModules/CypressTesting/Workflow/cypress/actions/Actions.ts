@@ -311,7 +311,7 @@ export function FillDecisionGroupConditionDetails(IsRootGroup: boolean, groupCon
 function FillConditionFieldName(IsList: boolean, index: number, FieldName: string) {
     if (IsList) {
         cy.get(WorkflowSelectors.WorkflowConditionFieldFromList(index)).find(BaseSelectors.input).click().type(FieldName).then(() => {
-            cy.get(BaseSelectors.SpanElement).contains(FieldName).eq(0).click()
+            cy.get(WorkflowSelectors.WorkflowfieldsListTitle).contains(FieldName).eq(0).click()
         });
     } else {
         cy.SelectDropDownListItem2(WorkflowSelectors.WorkflowConditionField(index), FieldName);

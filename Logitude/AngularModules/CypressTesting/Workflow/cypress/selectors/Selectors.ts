@@ -45,6 +45,7 @@ export class WorkflowSelectors {
     public static readonly NodeSettingFooter = ".node-settings-panel-footer";
     public static readonly AddDecisionNode = ".add-condition-node";
     public static readonly WorkflowEditElementButton = ".edit-button";
+    public static readonly WorkflowfieldsListTitle = "nz-tree-node-title";
 
     public static WorkflowConditionField(index: number): string {
         return "input[data-cy^='ConditionField_" + index.toString() + "']";
