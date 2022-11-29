@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "2b1cbf62fc4c7ef1a02f396430e0cf44";
+		public const string HashString = "0960031818012bd22b7ed84c470f7bcc";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "ef20",
+			      				    Code =  "efc9",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -2589,6 +2589,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_GeneralGDownloadDataMSG = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.DownloadDataMSG", DefaultText = "Preparing data for downloading. This may take several seconds. Please, do not refresh the page or close this window.",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode GeneralTextCode_GeneralGDownloadDataMSG = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.DownloadDataMSG", DefaultText = "Preparing data for downloading. This may take several seconds. Please, do not refresh the page or close this window.",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralGDownloadDataSuccessMSG = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.DownloadDataSuccessMSG", DefaultText = "Done!",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -2635,6 +2636,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  		   TextCode GeneralTextCode_GeneralGConfirmPassword = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.ConfirmPassword", DefaultText = "Confirm password",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralGPasswordChange = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.PasswordChange", DefaultText = "Password change",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralGPasswordInfo1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.PasswordInfo1", DefaultText = "8 or more characters",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralGPasswordInfo2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.PasswordInfo2", DefaultText = "Upper & lowercase letters",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralGPasswordInfo3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.PasswordInfo3", DefaultText = "At least one number",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralGPasswordInfo4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.PasswordInfo4", DefaultText = "Not more than 3 consecutive repeating characters",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;ef20&quot;"
+  Code="&quot;efc9&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5445,6 +5445,26 @@
     <TextCode
       Code="&quot;General.G.PasswordChange&quot;"
       DefaultText="&quot;Password change&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.PasswordInfo1&quot;"
+      DefaultText="&quot;8 or more characters&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.PasswordInfo2&quot;"
+      DefaultText="&quot;Upper &amp; lowercase letters&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.PasswordInfo3&quot;"
+      DefaultText="&quot;At least one number&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.PasswordInfo4&quot;"
+      DefaultText="&quot;Not more than 3 consecutive repeating characters&quot;"
       TextCodeTypeCode="&quot;G&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
