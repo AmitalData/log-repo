@@ -45,8 +45,8 @@
 		End
 	CLOSE AddressesCursor
 	DEALLOCATE AddressesCursor
-	
+
+		update dw_WaterMarks set LastUpdateDate = @MaxAutomaticLastUpdateDate where TableName = 'Address'
 	End
 
 
-	update dw_WaterMarks set LastUpdateDate = @MaxAutomaticLastUpdateDate where TableName = 'Address'
