@@ -19944,11 +19944,6 @@
       TextCodeTypeCode="&quot;G&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;ARInvoice.G.ClearFilter&quot;"
-      DefaultText="&quot;Clear filters&quot;"
-      TextCodeTypeCode="&quot;G&quot;"
-      IsSpellChecked="false" />
-    <TextCode
       Code="&quot;ARInvoice.G.AllTime&quot;"
       DefaultText="&quot;All time&quot;"
       TextCodeTypeCode="&quot;G&quot;"
