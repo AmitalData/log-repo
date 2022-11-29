@@ -368,7 +368,10 @@ export class AddEditWidgetComponent extends BaseComponent {
             errors.push("Maximum Grouping Field is Required");
         }
         if (this.isMaximumGroupingVisible && this.MaximumGrouping && (this.MaximumGrouping < 1 || this.MaximumGrouping > 50)) {
-            errors.push("The Maximum Grouping must be greater than or equal 1 and less than or equal 50");
+            errors.push("Maximum Grouping must be greater than or equal 1 and less than or equal 50");
+        }
+        if (this.isMaximumGroupingVisible && this.MaximumGrouping == 0) {
+            errors.push("Maximum Grouping must be greater than or equal 1 and less than or equal 50");
         }
         if (this.isSortByVisible && !this.SortDirection) {
             errors.push("Sort By Direction Field is Required");

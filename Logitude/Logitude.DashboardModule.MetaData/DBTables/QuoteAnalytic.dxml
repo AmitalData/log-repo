@@ -451,12 +451,6 @@ Module="Quote">
     Type="bit">
     <Constraints
       Nullable="false" />
-  </Column> 
-  <Column
-    Name="PackagesQuantity"
-    Type="int">
-    <Constraints
-      Nullable="true" />
   </Column>  
   <Column
     Name="SpecialServicesTypeId"

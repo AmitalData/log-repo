@@ -185,12 +185,4 @@ export class TreeSelectComponent implements OnInit, AfterViewInit {
         }
         return null;
     }
-
-    getItem(itemKey: string) {
-        if (itemKey) {
-            let item = this.NzTreeSelect.getTreeNodeByKey(itemKey);
-            return item ? item.origin : null;
-        }
-        return null;
-    }
 }

@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.Initializers;
 using Logitude.Server.Tools.Helpers;
+using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Interfaces;
@@ -78,11 +79,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
             if (isTakenCounter)
             {
+                string branchId =!string.IsNullOrEmpty(initializer.EntityPM.BranchId) ? initializer.EntityPM.BranchId : GetCreatedByUserBranchId(initializer.EntityPM.CreatedByUserId , initializer.EntityPM.Tenant);
                 Dictionary<string, string> counterAdditionalParameters = new Dictionary<string, string>() { { "[B]", "" } };
-                if (!string.IsNullOrEmpty(initializer.EntityPM.BranchId))
+                if (!string.IsNullOrEmpty(branchId))
                 {
                     BranchRepository branchRepository = new BranchRepository(initializer.CommonContext);
-                    Branch myBranch = branchRepository.GetSingleBranch(initializer.EntityPM.BranchId, initializer.EntityPM.Tenant);
+                    Branch myBranch = branchRepository.GetSingleBranch(branchId, initializer.EntityPM.Tenant);
 
                     if (myBranch != null && !string.IsNullOrEmpty(myBranch.CounterCode))
                     {
@@ -118,6 +120,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             {
                 
             }
+        }
+
+        private string GetCreatedByUserBranchId(string createdByUserId , int tenant)
+        {
+            if(string.IsNullOrEmpty(createdByUserId)) return null;
+            var commonContext = CommonDataContext.GetContext(tenant);
+            User user = (from d in commonContext.Users where d.Id == entityPM.CreatedByUserId && d.Tenant == tenant select d).FirstOrDefault();
+            if (user == null) return null;
+            return user.BranchId;
         }
 
         private bool IsUpdatingHousesConnectedMasters()
