@@ -300,10 +300,14 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
     _GLAccountPMId: string;
 
     TotalDifference: any;
+    TotalCredit: any;
+    TotalDebit: any;
     SetWindowArgs(winArgs) {
         this._SelectedLines = winArgs.SelectedLines;
         this._GLAccountPMId = winArgs.GLAccountPMId;
         this.TotalDifference = winArgs.TotalDifference;
+        this.TotalCredit = winArgs.TotalCredit;
+        this.TotalDebit = winArgs.TotalDebit;
     }
     FillErrors() {
         this.ValidationErrorsList = [];
