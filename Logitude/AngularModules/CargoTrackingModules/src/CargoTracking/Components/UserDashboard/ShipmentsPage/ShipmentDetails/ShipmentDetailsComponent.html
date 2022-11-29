@@ -584,7 +584,7 @@
                             <div style="display:inline" class="description">{{cargoTrackingShipmentPM.Volume || 0 }}
                             </div><span style="display:inline"> CBM</span>
                         </div>
-                        <div *ngIf=" !IsOrderShipment">
+                        <div *ngIf="!IsOrderShipment && cargoTrackingShipmentPM.WarehouseLegName">
                             <div class="title">storage site</div>
                             <div class="description TextTrimming">
                                 {{cargoTrackingShipmentPM?.WarehouseLegName}}
