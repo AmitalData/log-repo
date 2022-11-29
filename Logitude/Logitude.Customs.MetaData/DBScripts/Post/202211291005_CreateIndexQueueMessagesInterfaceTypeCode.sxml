@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Main" Module="Customs">
+	<Sql Version="1">
+		<![CDATA[
+		CREATE INDEX interfaceTypeCodeIndex
+		ON dbo.QUEUEMESSAGES (interfaceTypeCode); 
+		]]>
+		
+	</Sql>
+
+	<Oracle Version="1">
+		<![CDATA[
+		CREATE INDEX interfaceTypeCodeIndex
+		ON QUEUEMESSAGES (interfaceTypeCode);
+		]]>
+	</Oracle>
+</Script>
