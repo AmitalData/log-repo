@@ -49,7 +49,7 @@ namespace Logitude.Customs.Data.Repsitories
         public List<SupplierInvoice> GetSupplierInvoicesForDeclaration(string declarationId, int tenant)
         {
             var q = (from a in context.SupplierInvoices
-                     where a.DeclarationId == declarationId
+                     where a.Tenant== tenant && a.DeclarationId == declarationId
                      orderby a.SequenceNumeric
                      select a);
             return q.ToList();
