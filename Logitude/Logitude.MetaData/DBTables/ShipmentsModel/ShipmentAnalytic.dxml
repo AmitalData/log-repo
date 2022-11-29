@@ -150,13 +150,7 @@
 	  Type="float">
 		<Constraints
 		  Nullable="true" />
-	</Column>
-	<Column
-	  Name="PackagesQuantity"
-	  Type="int">
-		<Constraints
-		  Nullable="true" />
-	</Column>
+	</Column>	
 	<Column
 	  Name="StatusId"
 	  Type="varchar"

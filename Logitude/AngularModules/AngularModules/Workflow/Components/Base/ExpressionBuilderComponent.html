@@ -124,7 +124,7 @@
                             </ng-template>
                         </div>
                         <div *ngIf="FlowVariablesTreeItems" class="variables-tree">
-                            <TreeSelect #flowVariablesTreeSelect [Items]="FlowVariablesTreeItems" [Width]="'220px'"
+                            <TreeSelect [Items]="FlowVariablesTreeItems" [Width]="'220px'"
                                 [SetSelectedValue]="false" (ValueChanged)="selectVariable($event)" [AllowClear]="false"
                                 [DisplayTitle]="false">
                             </TreeSelect>
