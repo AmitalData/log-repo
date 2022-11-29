@@ -926,7 +926,9 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                         logitudeWindow.WindowArgs = {
                             "SelectedLines": this.SelectedLines,
                              "GLAccountPMId": this.GLAccountPM.Id,
-                             TotalDifference: this.TotalsDeference };
+                             TotalDifference: this.TotalsDeference,
+                             TotalCredit: this.TotalCredit,
+                             TotalDebit: this.TotalDebit };
                         logitudeWindow.Show('./Accounting/Components/Others/JournalReconcileComponent');
                         logitudeWindow.WindowClosed.subscribe(($event: any) => {
                             // Close Reconcile window
