@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;e0cc&quot;"
+  Code="&quot;7e2d&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5470,6 +5470,11 @@
     <TextCode
       Code="&quot;General.G.ClearFilter&quot;"
       DefaultText="&quot;Clear filters&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.DownloadDataSuccessMSG2&quot;"
+      DefaultText="&quot;Done&quot;"
       TextCodeTypeCode="&quot;G&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
