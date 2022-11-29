@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;efc9&quot;"
+  Code="&quot;f5a4&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5465,6 +5465,11 @@
     <TextCode
       Code="&quot;General.G.PasswordInfo4&quot;"
       DefaultText="&quot;Not more than 3 consecutive repeating characters&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.UploadingDocumentHeaderMsg&quot;"
+      DefaultText="&quot;Uploading document&quot;"
       TextCodeTypeCode="&quot;G&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
