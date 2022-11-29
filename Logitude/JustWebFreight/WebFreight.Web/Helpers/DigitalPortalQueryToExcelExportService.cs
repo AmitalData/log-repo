@@ -259,8 +259,8 @@ namespace WebFreight.Web.Helpers
 
                     sheet1.Range[$"E{index}:F{index}"].NumberFormat = "dd MMM yyyy";
 
-                    sheet1.Range[$"M{index}:O{index}"].NumberFormat = "#,##0.00";
-                    sheet1.Range[$"Q{index}:Q{index}"].NumberFormat = "#,##0.00";
+                    sheet1.Range[$"M{index}:Q{index}"].NumberFormat = "#,##0.00";
+                    sheet1.Range[$"S{index}:T{index}"].NumberFormat = "#,##0.00";
                     sheet1.Range[$"V{index}:V{index}"].NumberFormat = "#,##0.00";
 
                     DataRow row = table.NewRow();
