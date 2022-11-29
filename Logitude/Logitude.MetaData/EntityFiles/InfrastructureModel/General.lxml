@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;f5a4&quot;"
+  Code="&quot;f35b&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5320,11 +5320,6 @@
     <TextCode
       Code="&quot;General.G.NoDataDefaultMSG&quot;"
       DefaultText="&quot;You don’t have any information here All information will be displayed here, when it will be added by the forwarder&quot;"
-      TextCodeTypeCode="&quot;G&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;General.G.DownloadDataMSG&quot;"
-      DefaultText="&quot;Preparing data for downloading. This may take several seconds. Please, do not refresh the page or close this window.&quot;"
       TextCodeTypeCode="&quot;G&quot;"
       IsSpellChecked="false" />
     <TextCode

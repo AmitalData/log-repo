@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "ae8e7016f44e2dedc4b18a9eb7fc0d4f";
+		public const string HashString = "3c516e099dc14ba67f3eb7e91fb6ff97";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "f5a4",
+			      				    Code =  "f35b",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -2586,8 +2586,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  		   TextCode GeneralTextCode_GeneralGDownloadData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.DownloadData", DefaultText = "Download data",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralGNoDataDefaultMSG = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.NoDataDefaultMSG", DefaultText = "You don’t have any information here All information will be displayed here, when it will be added by the forwarder",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode GeneralTextCode_GeneralGDownloadDataMSG = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.DownloadDataMSG", DefaultText = "Preparing data for downloading. This may take several seconds. Please, do not refresh the page or close this window.",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralGDownloadDataMSG = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.DownloadDataMSG", DefaultText = "Preparing data for downloading. This may take several seconds. Please, do not refresh the page or close this window.",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
