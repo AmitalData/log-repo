@@ -504,7 +504,7 @@
                     </div>
 
                     <div class="footer-cell " float-start style="padding-left: 30px;">
-                        <div style="font-size: 15px; color:#0f9776;" [class.red]="TotalsDeference!=0" class="notranslate">{{TotalsDeference | NumbersPipe:'N2'}}</div>
+                        <div style="font-size: 15px; color:#0f9776;" [class.red]="TotalCredit>TotalDebit" class="notranslate">{{TotalsDeference | NumbersPipe:'N2'}}</div>
                         <div style="font-size: 13px; color: #6f6f6f;">{{'Accounting.General.O.Difference' | TextCodeTranslationPipe}} </div>
                     </div>
                 </div>
