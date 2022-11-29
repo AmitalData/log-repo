@@ -20003,6 +20003,51 @@
       DefaultText="&quot;Number&quot;"
       TextCodeTypeCode="&quot;G&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.InvoiceAmount&quot;"
+      DefaultText="&quot;Invoice amount&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.InvoiceAmountPaid&quot;"
+      DefaultText="&quot;Invoice amount paid&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.InvoiceAmountDue&quot;"
+      DefaultText="&quot;Invoice amount due&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.ConstituentInvoices&quot;"
+      DefaultText="&quot;Constituent Invoices&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.ShipmentReference&quot;"
+      DefaultText="&quot;Shipment reference&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.MasterNo&quot;"
+      DefaultText="&quot;Master no&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.HouseNo&quot;"
+      DefaultText="&quot;House no&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.ShipmentNo&quot;"
+      DefaultText="&quot;Shipment no&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.G.NoInvoiceMSG&quot;"
+      DefaultText="&quot;You don't have invoices yetInformation about invoices will be displayed here, when they will be added by the forwarder.&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

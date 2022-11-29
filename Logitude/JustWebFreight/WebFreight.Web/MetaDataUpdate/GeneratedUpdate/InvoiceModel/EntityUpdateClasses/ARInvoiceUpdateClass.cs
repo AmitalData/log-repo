@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
-		public const string HashString = "1ad3cad982682ccba1a5f49183faa3d7";
+		public const string HashString = "a0efed28b6ab123d86d8ed1bf2bbbd83";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -15458,6 +15458,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  		   TextCode ARInvoiceTextCode_ARInvoiceGInvoiceType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.G.InvoiceType", DefaultText = "Invoice type",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ARInvoiceTextCode_ARInvoiceGInvoiceNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.G.InvoiceNumber", DefaultText = "Number",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceGInvoiceAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.G.InvoiceAmount", DefaultText = "Invoice amount",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceGInvoiceAmountPaid = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.G.InvoiceAmountPaid", DefaultText = "Invoice amount paid",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceGInvoiceAmountDue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.G.InvoiceAmountDue", DefaultText = "Invoice amount due",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceGConstituentInvoices = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.G.ConstituentInvoices", DefaultText = "Constituent Invoices",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceGShipmentReference = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.G.ShipmentReference", DefaultText = "Shipment reference",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceGMasterNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.G.MasterNo", DefaultText = "Master no",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceGHouseNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.G.HouseNo", DefaultText = "House no",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceGShipmentNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.G.ShipmentNo", DefaultText = "Shipment no",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceGNoInvoiceMSG = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.G.NoInvoiceMSG", DefaultText = "You don't have invoices yetInformation about invoices will be displayed here, when they will be added by the forwarder.",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
