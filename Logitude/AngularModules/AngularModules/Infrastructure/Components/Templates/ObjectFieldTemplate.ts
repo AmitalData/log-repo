@@ -39,6 +39,7 @@ export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
   public Direction: string = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
   public TextAlign = this.Direction == 'rtl' ? 'right' : 'left';
   public NumberFieldTextAlign: string = "right";
+  public NumberFieldRightPadding: string = "20px";
   public isRTL: boolean = false;
   private CurrentSession = SessionLocator.SelectedSession;
     @ViewChild(ChildDirective) Child: ChildDirective;
