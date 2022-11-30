@@ -1000,14 +1000,22 @@ namespace Logitude.Customs.Data.Repsitories
 
         public DeclarationConsignments GetDeclarationConsignment(string exportFile)
         {
-            var myQ = (from d in context.Declarations
-                       join c in context.Consignments on d.Id equals c.DeclarationId into cjoin
-                       from cj in cjoin.DefaultIfEmpty()
-
-                       where d.ExportFile == exportFile
-                       select new { Consignment = cj, d }
+            var declarationsQ = (from d in context.Declarations                      
+                       where d.ExportFile == exportFile                       
+                       select d
                        );
-            Consignment Consignment = myQ.Take(1).ToList().FirstOrDefault()?.Consignment;
+            List<Declaration> declarations = declarationsQ.ToList();
+
+              var consignmentsQ = (from d in context.Declarations
+
+                                   join c in context.Consignments
+                                   on d.Id equals c.DeclarationId into cjoin
+                                   from cj in cjoin.DefaultIfEmpty()
+
+                                   where d.ExportFile == exportFile
+                                   select cj
+                                );
+            List<Consignment> consignments = consignmentsQ.ToList();
 
             var myQ2 = (from d in context.Declarations.Where(d => d.ExportFile == exportFile).Take(1)
 
@@ -1018,7 +1026,7 @@ namespace Logitude.Customs.Data.Repsitories
                     );
             List<ConsignmentPackagesShort> ConsignmentPackages = myQ2.ToList();
 
-            return new DeclarationConsignments { ConsignmentPackages = ConsignmentPackages, Consignment = Consignment };
+            return new DeclarationConsignments { ConsignmentPackages = ConsignmentPackages, Declarations = declarations, Consignments = consignments};
         }
 
         public DeclarationId GetDeclarationId(string exportFileNo, string exporterNumber, string transportmodeId, string cargoIdentifierType, string cargoIdentifierKey1, string cargoIdentifierKey2, string cargoIdentifierKey3)
@@ -1184,57 +1192,56 @@ namespace Logitude.Customs.Data.Repsitories
         }
 
    
-    public List<ExportReport2> GetReportDeclarationForExportReport2(DateTime? ExportFrom, DateTime? ExportTo)
-    {
-
-        List<ExportReport2> ExportReports2 = new List<ExportReport2>();
-        string strConnString = TenantServerConfigration.GetDbConnection(0);
-        using (SqlConnection cn = new SqlConnection(strConnString))
+        public List<ExportReport2> GetReportDeclarationForExportReport2(DateTime? ExportFrom, DateTime? ExportTo)
         {
-           
-                SqlParameter pFrom = new SqlParameter("@pFrom", SqlDbType.Date);
-                SqlParameter pTo = new SqlParameter("@pTo", SqlDbType.Date);
 
-                pFrom.Direction = ParameterDirection.Input;
-                pTo.Direction = ParameterDirection.Input;
-
-                pFrom.Value = ExportFrom;
-                pTo.Value = ExportTo.Value.AddDays(1);
-
-                SqlCommand cmd = new SqlCommand("dbo.usp_ExportReport2", cn);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.Add(pFrom);
-                cmd.Parameters.Add(pTo);
-
-
-                cn.Open();
-
-
-            SqlDataReader reader = cmd.ExecuteReader();
-
-
-            ExportReport2 exportReport = null;
-
-            while (reader.Read())
+            List<ExportReport2> ExportReports2 = new List<ExportReport2>();
+            string strConnString = TenantServerConfigration.GetDbConnection(0);
+            using (SqlConnection cn = new SqlConnection(strConnString))
             {
-                exportReport = new ExportReport2();
-                exportReport.company = reader["company"].ToString();
-                exportReport.localname = reader["localname"].ToString();
-                exportReport.count = int.Parse(reader["count"].ToString());
+           
+                    SqlParameter pFrom = new SqlParameter("@pFrom", SqlDbType.Date);
+                    SqlParameter pTo = new SqlParameter("@pTo", SqlDbType.Date);
+
+                    pFrom.Direction = ParameterDirection.Input;
+                    pTo.Direction = ParameterDirection.Input;
+
+                    pFrom.Value = ExportFrom;
+                    pTo.Value = ExportTo.Value.AddDays(1);
+
+                    SqlCommand cmd = new SqlCommand("dbo.usp_ExportReport2", cn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add(pFrom);
+                    cmd.Parameters.Add(pTo);
+
+
+                    cn.Open();
+
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+
+                ExportReport2 exportReport = null;
+
+                while (reader.Read())
+                {
+                    exportReport = new ExportReport2();
+                    exportReport.company = reader["company"].ToString();
+                    exportReport.localname = reader["localname"].ToString();
+                    exportReport.count = int.Parse(reader["count"].ToString());
               
-                ExportReports2.Add(exportReport);
+                    ExportReports2.Add(exportReport);
+                }
+
+
+                cn.Close();
             }
 
+            return ExportReports2;
 
-            cn.Close();
         }
-
-        return ExportReports2;
-
     }
-
-}
 public class ExportReport1
     {
         public string company { get; set; }
@@ -1278,7 +1285,8 @@ public class ContainerizationKey
     public class DeclarationConsignments
     {
         public List<ConsignmentPackagesShort> ConsignmentPackages { get; set; }
-        public Consignment Consignment { get; set; }
+        public List<Declaration> Declarations { get; set; }
+        public List<Consignment> Consignments { get; set; }        
     }
 
 
