@@ -1801,5 +1801,57 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return isHR;
         }
+
+
+
+        public UserPM UserCustomDataMappingAndValidatin(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.User MyEntity, int Tenant, string ComputingPartnerName = "")
+        {
+
+            try
+            {
+                var temp = new UserPM();
+                if (!string.IsNullOrEmpty(MyEntity.Id))
+                {
+                    temp = this.GetSinglePM(MyEntity.Id, Tenant);
+                }
+
+                else
+                {
+                    temp = this.GetSingleUserPMByCode(MyEntity.ExternalCode, Tenant, false);
+                }
+
+
+                if (temp != null)
+                {
+
+
+                    if (string.IsNullOrEmpty(temp.Id))
+                    {
+                        temp.Id = MyEntity.Id;
+                    }
+                    if (string.IsNullOrEmpty(temp.Code))
+                    {
+                        temp.Code = MyEntity.ExternalCode;
+                    }
+                    if (string.IsNullOrEmpty(temp.EnglishName))
+                    {
+                        temp.EnglishName = MyEntity.EnglishName;
+                    }
+                    if (string.IsNullOrEmpty(temp.LocalName))
+                    {
+                        temp.LocalName = MyEntity.LocalName;
+                    }
+                }
+                return temp;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+
+
     }
 }
