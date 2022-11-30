@@ -2256,7 +2256,7 @@ namespace WebFreight.Web.WebServices
                     #region
 
                     this.SetFromLocation_InlandDomestic(myDataProvider);
-                    this.SetToLocation_InlandDomestic(myDataProvider);                    
+                    this.SetToLocation_InlandDomestic(myDataProvider);
 
                     if (shipment.MainCarriageFromPartnerId != null)
                     {
@@ -2304,8 +2304,8 @@ namespace WebFreight.Web.WebServices
                     myDataProvider.ToLocation_Label = "";
                     myDataProvider.FromLocation_Label = "";
 
-                    if (!string.IsNullOrEmpty(myDataProvider.FromLocation))                    
-                        myDataProvider.FromLocation_Label = "Place of Loading";                   
+                    if (!string.IsNullOrEmpty(myDataProvider.FromLocation))
+                        myDataProvider.FromLocation_Label = "Place of Loading";
 
                     if (!string.IsNullOrEmpty(myDataProvider.ToLocation))                    
                         myDataProvider.ToLocation_Label = "Place of Discharge";                    

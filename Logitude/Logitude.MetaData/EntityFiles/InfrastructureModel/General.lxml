@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;7e2d&quot;"
+  Code="&quot;a232&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -130,7 +130,7 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;General.MH.Dashboard&quot;"
-      DefaultText="&quot;Dashboard&quot;"
+      DefaultText="&quot;Custom Dashboard&quot;"
       TextCodeTypeCode="&quot;MH&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -5278,8 +5278,8 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;General.MH.ClassicDashboard&quot;"
-      DefaultText="&quot;Classic Dashboard&quot;"
-      LocalDefaultText="&quot;Classic Dashboard&quot;"
+      DefaultText="&quot;Dashboard&quot;"
+      LocalDefaultText="&quot;Dashboard&quot;"
       TextCodeTypeCode="&quot;MH&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -7650,15 +7650,6 @@
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
     <Feature
-      Code="&quot;CUSTOMDASH&quot;"
-      FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.CUSTOMDASH&quot;"
-      FeatureDefaultText="&quot;Custom Dashboard&quot;"
-      IsPackagable="true"
-      IsOld="false"
-      IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
-    <Feature
       Code="&quot;CustomFieldsCustomization&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
       FeatureTextCodeCode="&quot;General.Features.CustomFieldsCustomization&quot;"
@@ -7731,19 +7722,19 @@
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
     <Feature
-      Code="&quot;CLASSICDASHBOARD&quot;"
-      FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.CLASSICDASHBOARD&quot;"
-      FeatureDefaultText="&quot;Classic Dashboard&quot;"
+      Code="&quot;SupportUnitMeasurements&quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;General.Features.SupportUnitMeasurements&quot;"
+      FeatureDefaultText="&quot;Support Select Unit of Measurements&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
     <Feature
-      Code="&quot;SupportUnitMeasurements&quot;"
-      FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.SupportUnitMeasurements&quot;"
-      FeatureDefaultText="&quot;Support Select Unit of Measurements&quot;"
+      Code="&quot;CUSTOMDASHBOARD&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.CUSTOMDASHBOARD&quot;"
+      FeatureDefaultText="&quot;Custom Dashboard&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
