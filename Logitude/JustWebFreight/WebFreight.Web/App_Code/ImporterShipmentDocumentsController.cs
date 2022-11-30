@@ -398,7 +398,7 @@ namespace WebFreight.Web.App_Code
                 {
                     LogPM.PartnerName = Partner.Name;
                 }
-                LogPM.Subject = "Insert Documents To Importer Tenant";
+                LogPM.Subject = "Send Update Documents To Importer Tenant";
                 if (IsNewLog)
                 {
                     apiLogsService.Create(LogPM);
