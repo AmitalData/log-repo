@@ -555,7 +555,7 @@ namespace Logitude.Accounting.BL.Utils
                         IntReportCloseBalance = acof.IntReportCloseBalance,
                         FutureInterestTransactionsBalance = acof.FutureInterestTransactionsBalance,
                         CalculatedInterestBalance = acof.IntReportCloseBalance + acof.FutureInterestTransactionsBalance + acof.BalanceBeforeStart + acof.BalanceInbetween,
-                        Difference = acof.BalanceInLocalCurrency - (acof.IntReportCloseBalance + acof.FutureInterestTransactionsBalance),
+                        Difference = acof.BalanceInLocalCurrency - (acof.IntReportCloseBalance + acof.FutureInterestTransactionsBalance + acof.BalanceBeforeStart + acof.BalanceInbetween),
                         LastReportNum = acof.LastReportNum,
                         DescBalance = acof.DescBalance,
                         GLAccountBalance = acof.GLAccountBalance,
