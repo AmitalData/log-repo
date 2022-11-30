@@ -267,7 +267,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
             List<ARInvoice> list = iQuery.Where(d => cardId == null 
                                                      || !cards.Any()
                                                      || cards.Contains(d.BillToId)
-                                                     || d.BillToId.Equals(cardBillToId, StringComparison.InvariantCultureIgnoreCase)).ToList();
+                                                     || cardBillToId.Contains(d.BillToId)).ToList();
 
             return list;
         }
@@ -284,12 +284,12 @@ namespace Simplog.Data.InvoiceModel.Repositories
             iQuery = FilterInvoicesStatuses(iQuery);
             var cardBillToId = GetCardBillToId(cardId, tenant);
             var list = iQuery.Where(a => a.BillToId.Equals(cardId, StringComparison.InvariantCultureIgnoreCase)
-                                         || a.BillToId.Equals(cardBillToId, StringComparison.InvariantCultureIgnoreCase)).ToList();
+                                         || cardBillToId.Contains(a.BillToId)).ToList();
 
             return list;
         }
 
-        private string GetCardBillToId(string cardId, int tenant)
+        private List<string> GetCardBillToId(string cardId, int tenant)
         {
             CardRepository cardRepository = new CardRepository(tenant);
             var cardBillToId =  cardRepository.GetBillToCardById(cardId, tenant);

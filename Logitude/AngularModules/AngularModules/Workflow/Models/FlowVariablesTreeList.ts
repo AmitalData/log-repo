@@ -21,21 +21,21 @@ export class FlowVariablesTreeList {
         this.initializeTreeItems();
     }
 
-    public getItem(itemKey: string, items: TreeSelectItem[] | null = null) {
-        if (itemKey) {
-            let result: TreeSelectItem | null = null;
-            for (let item of (items || this.Items)) {
-                if (item.key === itemKey) {
-                    result = item;
-                    break;
-                }
-                if (item.children && item.children.length > 0) {
-                    result = this.getItem(itemKey, item.children);
-                }
+    public getItem(itemKey: string, item: TreeSelectItem | null = null) {
+        let result = null;
+        item = item || this.Items[0];
+        if (item) {
+            if (item.key === itemKey) {
+                return item;
             }
-            return result;
+            if (item.children && item.children.length > 0) {
+                item.children.some((i) => {
+                    result = this.getItem(itemKey, i);
+                    return result;
+                });
+            }
         }
-        return null;
+        return result;
     }
 
     public compareItemType(item: TreeSelectItem, compareWithType: string, compareWithLookupOrPickListType: string) {

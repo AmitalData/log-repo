@@ -694,7 +694,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return cards;
         }
 
-        public string GetBillToCardById(string ids, int tenant)
+        public List<string> GetBillToCardById(string ids, int tenant)
         {
             if (string.IsNullOrWhiteSpace(ids))
             {
@@ -702,11 +702,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
             }
 
             List<string> cards = ids?.Split(',').ToList<string>();
-            string billToId = (from a in context.Cards
+            var billToIds = (from a in context.Cards
                                    where cards.Contains(a.Id) && a.Tenant == tenant
-                                   select a.BillToId).FirstOrDefault();
+                                   select a.BillToId).ToList();
 
-            return billToId;
+            return billToIds;
         }
     }
 }

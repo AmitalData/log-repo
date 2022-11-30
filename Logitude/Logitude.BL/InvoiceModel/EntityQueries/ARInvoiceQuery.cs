@@ -2424,10 +2424,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             var cardFilterValues = newFilters.CardId;
             if (!string.IsNullOrWhiteSpace(cardFilterValues))
             {
-                var cardBillToId = GetCardBillToId(newFilters.CardId, tenant);
-                if (!string.IsNullOrWhiteSpace(cardBillToId))
+                var cardBillToIds = GetCardBillToId(newFilters.CardId, tenant);
+                if (cardBillToIds.Any())
                 {
-                    cardFilterValues = cardFilterValues + "," + cardBillToId;
+                    cardFilterValues = cardFilterValues + "," + string.Join(",", cardBillToIds);
                     queryOperations.SetFilter("PartnerId", newFilters.CardId, false, "InList", null, false);
                 }
 
@@ -2548,11 +2548,11 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return entityLists;
         }
 
-        private string GetCardBillToId(string cardId, int tenant)
+        private List<string> GetCardBillToId(string cardId, int tenant)
         {
             CardRepository cardRepository = new CardRepository(tenant);
-            var cardBillToId = cardRepository.GetBillToCardById(cardId, tenant);
-            return cardBillToId;
+            var cardBillToIds = cardRepository.GetBillToCardById(cardId, tenant);
+            return cardBillToIds;
         }
 
         #endregion Digital Portal 

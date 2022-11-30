@@ -124,9 +124,8 @@
                             </ng-template>
                         </div>
                         <div *ngIf="FlowVariablesTreeItems" class="variables-tree">
-                            <TreeSelect [Items]="FlowVariablesTreeItems" [Width]="'220px'"
-                                [SetSelectedValue]="false" (ValueChanged)="selectVariable($event)" [AllowClear]="false"
-                                [DisplayTitle]="false">
+                            <TreeSelect [Items]="FlowVariablesTreeItems" [Width]="'220px'" [SetSelectedValue]="false"
+                                (ValueChanged)="selectVariable($event)" [AllowClear]="false" [DisplayTitle]="false">
                             </TreeSelect>
                         </div>
                     </div>
@@ -134,7 +133,8 @@
                 <div>
                     <textarea class="expression-editor" [(ngModel)]="ExpressionValue.expression"
                         (click)="updateCursorPointer($event?.target?.selectionStart, $event?.target?.selectionEnd)"
-                        (input)="updateExpressionValue($event.target.value)" (keyup)="updateCursorPointerFromEvent($event)" autocorrect="off" autocapitalize="off"
+                        (input)="updateExpressionValue($event.target.value)"
+                        (keyup)="updateCursorPointerFromEvent($event)" autocorrect="off" autocapitalize="off"
                         spellcheck="false">
                     </textarea>
                 </div>
@@ -144,7 +144,9 @@
 
     <tr class="table-row">
         <td class="table-row-cell">
-            <button class="Button check-syntax-btn" (click)="checkExpressionSyntax()">Check Syntax</button>
+            <button class="Button check-syntax-btn" (click)="checkExpressionSyntax()" [disabled]="IsSaving">
+                Check Syntax
+            </button>
         </td>
     </tr>
 
@@ -157,7 +159,8 @@
     <tr class="table-row">
         <td>
             <FooterButtons [SaveButtonLabel]="'Ok'" (SaveButtonClicked)="saveButtonClicked()"
-                (CancelButtonClicked)="cancelButtonClicked()" [SaveButtonDataCy]="'expression-save-button'"
+                (CancelButtonClicked)="cancelButtonClicked()" [IsSaveButtonDisabled]="IsSaving"
+                [IsCancelButtonDisabled]="IsSaving" [SaveButtonDataCy]="'expression-save-button'"
                 [CancelButtonDataCy]="'expression-cancel-button'">
             </FooterButtons>
         </td>
