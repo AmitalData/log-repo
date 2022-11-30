@@ -54,6 +54,8 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
     public class SendWEBAPIMessage2MamanWR
         : CustomsWorkerEntryPoint
     {
+        const int MaxRetries = 16;
+        
         QueueDescription _QueueDescription;
         QueueClient _QueueClient;
         public override void Run()
@@ -245,9 +247,16 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                             Thread.Sleep(TimeSpan.FromSeconds(15));//not using soo mach 
                             break;
                         }
-                        if (_ReceivedBrokeredMessage.RetryNumber > 5)
+                        if (_ReceivedBrokeredMessage.RetryNumber > MaxRetries)
                         {
-                            _IQueueService.CompleteAsFailed();
+                            if (true)
+                            {
+                                _IQueueService.Complete();
+                            }
+                            else
+                            {
+                                _IQueueService.CompleteAsFailed();
+                            }                     
                         }
                         InitParams();
 
@@ -302,7 +311,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
             {
                 //ExceptionHandler.HandleException(exc, DateTime.Now, _Tenant, "", "WorkerRole", "", null);
                 _WaitingCommLog.Retries++;
-                if (_WaitingCommLog.Retries > 5)
+                if (_WaitingCommLog.Retries > MaxRetries)
                 {
                     _WaitingCommLog.CommunicationStatusTypeCode = "F";
                 }
@@ -333,10 +342,10 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                 .AppendLine("CommunicationLogId:" + _CommunicationLogId)
                 .AppendLine(",Tenant" + _Tenant);
         }
-
+        
         private void SentWAPIComm(bool forceRetryFromTester=false)
         {
-            if (forceRetryFromTester ||_ReceivedBrokeredMessage.RetryNumber < 5)
+            if (forceRetryFromTester ||_ReceivedBrokeredMessage.RetryNumber < MaxRetries)
             {
                 LastActivity = DateTime.UtcNow;
                 LogMessagingUtil.Instance.Append("DoAction(PostWebAPI)..");
@@ -351,7 +360,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
             }
             else
             {
-                LogMessagingUtil.Instance.AppendLine("RetryNumber >= 5>>> Failed ");
+                LogMessagingUtil.Instance.AppendLine($"RetryNumber >= {MaxRetries}>>> Failed ");
                 _WaitingCommLog.CommunicationStatusTypeCode = "F";
                 _IQueueService.Complete();
             }
@@ -513,6 +522,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
 
                 using (var client = new HttpClient())
                 {
+                    client.Timeout = TimeSpan.FromMinutes(MyWebClient.TimeOutFromMinutes);//The default value is 100,000 milliseconds (100 seconds).
                     //var GetURI = URI + "ImporterShipmentDocuments/GetIfNew?id=" + DocumentFilingPM.CustomerDocumentId + "&tenant=" + importerTenant;// +"&importertenant=" + importerTenant;
 
                     var ADD = "User-Agent: Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36";
@@ -538,6 +548,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
 
                 using (var client = new HttpClient())
                 {
+                    client.Timeout = TimeSpan.FromMinutes(MyWebClient.TimeOutFromMinutes);//The default value is 100,000 milliseconds (100 seconds).
                     //var GetURI = URI + "ImporterShipmentDocuments/GetIfNew?id=" + DocumentFilingPM.CustomerDocumentId + "&tenant=" + importerTenant;// +"&importertenant=" + importerTenant;
 
                     //string webApiURI = host;//URI + "APIAuthentication";
@@ -596,7 +607,18 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
     }
 
 
+    class MyWebClient : WebClient
+    {
+        public const int TimeOutFromMinutes = 3;
+            
 
+        protected override WebRequest GetWebRequest(Uri uri)
+        {
+            WebRequest w = base.GetWebRequest(uri);
+            w.Timeout = (int)TimeSpan.FromMinutes(TimeOutFromMinutes).TotalMilliseconds;
+            return w;
+        }
+    }
 
     public class WebAPINetworkCredentialMessage
     {
@@ -629,8 +651,9 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
 
 
                     
-                    using (var client = new WebClient())
+                    using (var client = new MyWebClient())
                     {
+                        
                         client.UseDefaultCredentials = false;
                         client.Credentials = myCredentials;
                         client.Encoding = System.Text.Encoding.UTF8;
@@ -674,7 +697,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
 
             var postData = @"{""CourierCompanyVat"":""514193408"",""CourierHawbNumber"":""99994668068"",""CourierHawbDate"":""2019-02-12T00: 00:00"",""MawbPrefix"":""114"",""Mawb"":15381173,""Hawb"":""1514112"",""FlightNumber"":316,""FltDate"":null,""EstimatedArrivalDate"":""2018-12-24T20:00:00"",""PackageQuantity"":1,""Weight"":0.30,""GoodValueInUSD"":12.0,""Description"":""IBOX 2331"",""ImporterName"":""Kobi Cohen"",""ImporterAddress"":""Dekel 27 2nd avenu 13 ddk Tel Aviv ISRAEL"",""DistributionLine"":"""",""DistributionCompanyVat"":"""",""DistributorHP"":null,""DistributorName"":null,""DeclarationNumber"":""19041052508346"",""CustomsSuspention"":"""",""Preclearence"":false}";
 
-            using (var client = new WebClient())
+            using (var client = new MyWebClient())
             {
                 client.UseDefaultCredentials = false;
                 client.Credentials = myCredentials;
@@ -700,7 +723,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
             var myCredentials = new NetworkCredential("", "", "");
             myCredentials.UserName = @"ovrs\crmamital";
             myCredentials.Password = "Amital123456";
-            //using (var client = new WebClient())
+            //using (var client = new MyWebClient())
             //{
             //    client.UseDefaultCredentials = false;
             //    client.Credentials = myCredentials;
@@ -765,7 +788,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
             var myCredentials = new NetworkCredential("", "", "");
             myCredentials.UserName = @"ovrs\crmamital";
             myCredentials.Password = "Amital123456";
-            //using (var client = new WebClient())
+            //using (var client = new MyWebClient())
             //{
             //    client.UseDefaultCredentials = false;
             //    client.Credentials = myCredentials;
@@ -823,4 +846,5 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
         }
 
     }
+
 }
