@@ -109,6 +109,9 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     _CourierWorksheet: DeclarationCourierStatusList;
     _TestCase: TestCase;
     IsAutomaticPayment: boolean;
+    public MyGoldPaymentDefaults: GoldPaymentDefaults;
+    public IsLoadedGoldPaymentMethodes: boolean = false;
+
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public declarationExtendedListService: DeclarationExtendedListService) {
         super();
@@ -594,7 +597,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         date.setUTCMilliseconds(0);
         return date;
     }
-    public MyGoldPaymentDefaults: GoldPaymentDefaults;
+    
     async GetGoldPaymentDefaults() {
         this.MyGoldPaymentDefaults = await this.declarationWebService.GetGoldPaymentDefaults(this.DeclarationPM.CustomerCode);
         console.log(this.MyGoldPaymentDefaults);
@@ -3231,14 +3234,14 @@ export class PaymentMethodModel extends BaseComponent {
         if (this.methodPM.InternalBankId != value) {        
             this.methodPM.InternalBankId = value;
 
-            this.customBankListService.getAllFromCache().subscribe(async (response: ServiceResponse) => {
-                if (response) {
-                    if (!response.HasError) {
+            this.customBankListService.getAllFromCache().subscribe(async (responseBankFromCache: ServiceResponse) => {
+                if (responseBankFromCache) {
+                    if (!responseBankFromCache.HasError) {
                         if (!this.BankIsNull) {
                             let usingCustomBank_ImporterMasav: boolean = false;
                             let usingDsvPayKupa: boolean = false;
 
-                            var customBank: CustomBankList = response.Result.filter(d => d.Id == value)[0];
+                            var customBank: CustomBankList = responseBankFromCache.Result.filter(d => d.Id == value)[0];
 
                             if (customBank == null && this.BanksList != null) {
                                 customBank = this.BanksList.filter(d => d.Id == value)[0];
@@ -3294,6 +3297,10 @@ export class PaymentMethodModel extends BaseComponent {
                                     this.methodPM.AccountNumber = customBank.AccountNumber;
                                     this.methodPM.PayerActivityTypeCode = customBank.PayerTypeCode;
                                     this.PayerActivityTypeName = customBank.PayerTypeName;
+                                    if (!AppTool.IsNullOrEmpty(this.methodPM.BankCode)) {
+                                        usingCustomBank_ImporterMasav = true;
+                                        console.log("DefaultPaymentMethod-fromCache??->מסב הכנסה- יבואן");
+                                    }
 
 
                                 }
@@ -3356,7 +3363,8 @@ export class PaymentMethodModel extends BaseComponent {
                                 }
                                 // this.parent.PaymentMethodsList.Insert(this.methodPM);
                             }
-                            if (!usingCustomBank_ImporterMasav && !usingDsvPayKupa) {
+                            if (!this.parent.IsLoadedGoldPaymentMethodes && !usingCustomBank_ImporterMasav && !usingDsvPayKupa) {
+                                this.parent.IsLoadedGoldPaymentMethodes = true;
                                 this.maximumAgentPaymentMethod();
                             }
 
@@ -3382,9 +3390,10 @@ export class PaymentMethodModel extends BaseComponent {
 
         let maxTaxAgentPayDefault: number = +this.parent.MyGoldPaymentDefaults.CompanyDefaultMaxPayMASAV_CGG_MAX_AGT_PAY;
         if (maxTaxAgentPayDefault > 0) {
+            console.log("DefaultPaymentMethod-->CompanyDefaultMaxPayMASAV_CGG_MAX_AGT_PAY:" + maxTaxAgentPayDefault + ";CustomerDefaultGoldPay_CIM_GOLD_PAY=" + this.parent.MyGoldPaymentDefaults.CustomerDefaultGoldPay_CIM_GOLD_PAY);
             //3.1
             if (this.parent.MyGoldPaymentDefaults.CustomerDefaultGoldPay_CIM_GOLD_PAY == "ALL") {
-                console.log("אם ללקוח מוגדר הדיפולט החדש 'תשלום בניצול העברת זהב לקוח' כל סכום");
+                console.log("אם ללקוח מוגדר הדיפולט החדש 'תשלום בניצול העברת זהב לקוח' כל סכום3.1");
                 console.log("DefaultPaymentMethod-->ניצול העברת זהב -יבואן");
                 this.updateDefaultPaymentMethod(
                     "79",/*ניצול העברת זהב*/
@@ -3394,8 +3403,8 @@ export class PaymentMethodModel extends BaseComponent {
             //3.2
             else if (
                 this.parent.MyGoldPaymentDefaults.CustomerDefaultGoldPay_CIM_GOLD_PAY == "ABOVE_MAX" && 
-                this.parent.DeclarationPM.TotalTax > maxTaxAgentPayDefault) {//this.methodPM.Amount = this.parent.DeclarationPM.TotalTax ?!?!
-                console.log("'שהדיפולט מוגדר רק סכום מעל סכום חסימה של המכס וסכום המיסים גדול מסכום שהוזן בדיפולט 'סכום מיסים מקסימלי");
+                this.parent.DeclarationPM.TotalTax > maxTaxAgentPayDefault) {//this.methodPM.Amount = 
+                console.log("'3.2 שהדיפולט מוגדר רק סכום מעל סכום חסימה של המכס וסכום המיסים גדול מסכום שהוזן בדיפולט 'סכום מיסים מקסימלי");
                 console.log("DefaultPaymentMethod-->ניצול העברת זהב -יבואן");
                 this.updateDefaultPaymentMethod(
                     "79",/*ניצול העברת זהב*/
@@ -3405,10 +3414,9 @@ export class PaymentMethodModel extends BaseComponent {
             }
             //4
             else if (
-                //שהדיפולט מוגדר רק סכום מעל סכום חסימה של המכס וסכום המיסים גדול מסכום שהוזן בדיפולט 'סכום מיסים מקסימלי   
                 AppTool.IsNullOrEmpty(this.parent.MyGoldPaymentDefaults.CustomerDefaultGoldPay_CIM_GOLD_PAY) &&
                 this.parent.DeclarationPM.TotalTax > maxTaxAgentPayDefault) {
-                console.log("אם הדיפולט 'תשלום בניצול העברת זהב לקוח' לא הוגדר וסכום המיסים גדול מהסכום שהוזן  בדיפולט החדש -סכום מיסים לתשלום בניצול העברת זהב");
+                console.log("אם הדיפולט 'תשלום בניצול העברת זהב לקוח' לא הוגדר וסכום המיסים גדול מהסכום שהוזן  בדיפולט החדש -סכום מיסים לתשלום בניצול העברת זהב4 ");
                 console.log("DefaultPaymentMethod-->ניצול העברת זהב -סוכן");
                 this.updateDefaultPaymentMethod(
                     "79",/*ניצול העברת זהב*/
@@ -3418,8 +3426,7 @@ export class PaymentMethodModel extends BaseComponent {
             //5
             else if (
                 this.parent.DeclarationPM.TotalTax <= maxTaxAgentPayDefault) {
-                //סכום המיסים קטן שווה מהסכום שהוזן בדיפולט החדש "סכום מיסים לתשלום בניצול העברת זהב"
-                console.log("אחרת סכום המיסים קטן שווה מהסכום שהוזן בדיפולט החדש -סכום מיסים לתשלום בניצול העברת זהב  ");
+                console.log("אחרת סכום המיסים קטן שווה מהסכום שהוזן בדיפולט החדש -סכום מיסים לתשלום בניצול העברת זהב  5");
                 console.log("DefaultPaymentMethod-->מסב הכנסה -סוכן");
                 this.updateDefaultPaymentMethod(
                     "1",//מס"ב הכנסה
@@ -3432,9 +3439,9 @@ export class PaymentMethodModel extends BaseComponent {
     }
 
     updateDefaultPaymentMethod(methodTypeCode: string, payerActivityTypeCode: string) {
-        this.methodPM.MethodTypeCode = "79"; //ניצול העברת זהב
+        this.methodPM.MethodTypeCode = methodTypeCode
 
-        this.methodPM.PayerActivityTypeCode = "0";//יבואן/יצואן
+        this.methodPM.PayerActivityTypeCode = payerActivityTypeCode
         this.methodPM.Amount = this.parent.DeclarationPM.TotalTax;
         this.parent.paymentMethodTypeListService.getSingleFromCache(this.methodPM.MethodTypeCode).subscribe((response: ServiceResponse) => {
             this.methodPM.MethodTypeName = response.Result.LocalName;
