@@ -61,7 +61,7 @@ export class LogitudeWindow {
     }
 
     public ComponentRef: ComponentRef<any> = null;
-    private InstanceComponent: LogitudeWindowTemplateComponent = null;
+    public InstanceComponent: LogitudeWindowTemplateComponent = null;
     public Show(myContent: any) {
         if (myContent != null) {
             var viewContainerRefLocation: ViewContainerRef = this.CurrentSession.SessionLocation.viewContainerRef;
@@ -499,7 +499,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
     }
 
     private ComponentRef: any = null;
-    private ComponentInstance: any = null;
+    public ComponentInstance: any = null;
     private LoadChildComponent() {
         if (this.isChildInjected && this.isAfterViewInited) {
             if (this.ChildComponentPath != null) {
