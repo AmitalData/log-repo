@@ -20,6 +20,7 @@ export class FieldTemplateComponent implements AfterViewInit {
     public IsHeaderScreenTemplate: boolean = false;
     public localCurrency: string = "(" + SessionLocator.LocalCurrencyCode + ")";
     public ProfitCurrency: string = "(" + SessionLocator.TenantPM.ProfitCurrencyCode + ")";
+    public NumberFieldRightPadding = "20px";
     @ViewChild(ChildDirective) Child: ChildDirective;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
