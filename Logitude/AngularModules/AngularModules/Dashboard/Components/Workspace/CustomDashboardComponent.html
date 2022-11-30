@@ -50,7 +50,7 @@
             </ul>
         </div>
 
-        <div class="DashboardTabBody" [ngStyle]="{'top': dashbaordCount > 0 ? '20px': '0'}">
+        <div class="DashboardTabBody" [ngStyle]="{'top': dashbaordCount > 0 ? '19px': '0'}">
             <div *ngIf="dashbaordCount > 0">
                 <div class="MediaFillAbsolute" *ngFor="let item of DashboardsTabs;" [hidden]="!item.IsSelected">
                     <div LocationDirective Code="DashboardTabLocation" ItemCode="{{item.DashboardId}}"></div>
