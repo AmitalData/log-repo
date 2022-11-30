@@ -187,6 +187,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<DeclarationCourierStatus> DeclarationCourierStatuses { get; }
 		 IDbSet<DeclarationErrorMapping> DeclarationErrorMappings { get; }
 		 IDbSet<DeclarationExportRecipient> DeclarationExportRecipients { get; }
+		 IDbSet<DeclarationFollowUp> DeclarationFollowUps { get; }
 		 IDbSet<DeclarationMamanSpecialAction> DeclarationMamanSpecialActions { get; }
 		 IDbSet<DeclarationPayment> DeclarationPayments { get; }
 		 IDbSet<DeclarationPaymentMethod> DeclarationPaymentMethods { get; }

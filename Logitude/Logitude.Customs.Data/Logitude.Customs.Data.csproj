@@ -172,6 +172,7 @@
     <Compile Include="EntityKeys\DeclarationConsAcceptanceKeys.cs" />
     <Compile Include="EntityKeys\DeclarationCourierStatusKeys.cs" />
     <Compile Include="EntityKeys\DeclarationExportRecipientKeys.cs" />
+    <Compile Include="EntityKeys\DeclarationFollowUpKeys.cs" />
     <Compile Include="EntityKeys\DeclarationMamanSpecialActionKeys.cs" />
     <Compile Include="EntityKeys\DeclarationPendingKeys.cs" />
     <Compile Include="EntityKeys\DeclarationReferantDataKeys.cs" />
@@ -321,6 +322,7 @@
     <Compile Include="EntityListQueryServices\DeclarationConsAcceptanceListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationCourierStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationExportRecipientListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\DeclarationFollowUpListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationMamanSpecialActionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationPendingListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationReferantDataListQueryService.cs" />
@@ -411,6 +413,7 @@
     <Compile Include="EntityListQueryServices\Generated\DeclarationConsAcceptanceListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationCourierStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationExportRecipientListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\DeclarationFollowUpListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationMamanSpecialActionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationPendingListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationReferantDataListQueryService.Generated.cs" />
@@ -617,6 +620,7 @@
     <Compile Include="EntityLists\Generated\DeclarationConsAcceptanceList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeclarationCourierStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeclarationExportRecipientList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\DeclarationFollowUpList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeclarationMamanSpecialActionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeclarationPendingList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeclarationReferantDataList.Generated.cs" />
@@ -767,6 +771,7 @@
     <Compile Include="EntityMapping\DeclarationConsAcceptanceMap.cs" />
     <Compile Include="EntityMapping\DeclarationCourierStatusMap.cs" />
     <Compile Include="EntityMapping\DeclarationExportRecipientMap.cs" />
+    <Compile Include="EntityMapping\DeclarationFollowUpMap.cs" />
     <Compile Include="EntityMapping\DeclarationMamanSpecialActionMap.cs" />
     <Compile Include="EntityMapping\DeclarationPendingMap.cs" />
     <Compile Include="EntityMapping\DeclarationReferantDataMap.cs" />
@@ -916,6 +921,7 @@
     <Compile Include="EntityPOCOs\DeclarationConsAcceptance.cs" />
     <Compile Include="EntityPOCOs\DeclarationCourierStatus.cs" />
     <Compile Include="EntityPOCOs\DeclarationExportRecipient.cs" />
+    <Compile Include="EntityPOCOs\DeclarationFollowUp.cs" />
     <Compile Include="EntityPOCOs\DeclarationMamanSpecialAction.cs" />
     <Compile Include="EntityPOCOs\DeclarationPending.cs" />
     <Compile Include="EntityPOCOs\DeclarationReferantData.cs" />
@@ -1066,6 +1072,7 @@
     <Compile Include="Repsitories\DeclarationConsAcceptanceRepository.cs" />
     <Compile Include="Repsitories\DeclarationCourierStatusRepository.cs" />
     <Compile Include="Repsitories\DeclarationExportRecipientRepository.cs" />
+    <Compile Include="Repsitories\DeclarationFollowUpRepository.cs" />
     <Compile Include="Repsitories\DeclarationMamanSpecialActionRepository.cs" />
     <Compile Include="Repsitories\DeclarationPendingRepository.cs" />
     <Compile Include="Repsitories\DeclarationReferantDataRepository.cs" />
@@ -1156,6 +1163,7 @@
     <Compile Include="Repsitories\Generated\DeclarationConsAcceptanceRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationCourierStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationExportRecipientRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\DeclarationFollowUpRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationMamanSpecialActionRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationPendingRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationReferantDataRepository.Generated.cs" />
