@@ -89,6 +89,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                         IInvoiceContext MyContext = InvoiceContext.GetContext(entity.Tenant);
                         ARInvoiceQueryService mappingService = new ARInvoiceQueryService(entity.Tenant);
+                        if (tenant == 1153) entity = mappingService.SetARInvoiceSystemUser(entity);
                         ARInvoicePM entityPM = mappingService.ARInvoiceDataMappingAndValidatin(entity, entity.Tenant);
                         mappingService.SetInvoiceLinesEntityId(entityPM, entity.Tenant);
                         mappingService.ValidateAccountingExternalEntityId(entity);

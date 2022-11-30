@@ -176,6 +176,70 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
             transferstatusCodes.Add(new TransferStatusCodeItem("BLTO", billToAccountingCard));
         }
+
+        public APInvoice SetAPInvoiceSystemUser(APInvoice entity)
+        {
+            String systemUserId = "";
+            UserPM myCreatedByUserPM = null;
+            Logitude.BL.CommonDataModel.APIDataContract.ApiV1.User systemUser = null;
+            if (entity.CreatedByUser != null)
+            {
+                UserQuery query = new UserQuery(entity.Tenant);
+                myCreatedByUserPM = query.UserCustomDataMappingAndValidatin(entity.CreatedByUser, entity.Tenant);
+            }
+
+
+
+            if (entity.CreatedByUser == null || myCreatedByUserPM == null)
+            {
+                systemUserId = AuthenticationUtil.ResolveSystemUserId(entity.Tenant);
+                if (!String.IsNullOrEmpty(systemUserId))
+                {
+                    entity.CreatedByUser = null;
+
+                    UserQueryService userQueryService = new UserQueryService(entity.Tenant);
+                    systemUser = userQueryService.GetUserById(systemUserId, entity.Tenant);
+                    if (systemUser != null)
+                    {
+                        entity.CreatedByUser = new CommonDataModel.APIDataContract.ApiV1.User();
+                        entity.CreatedByUser.Id = systemUser.Id;
+                        entity.CreatedByUser.EnglishName = systemUser.EnglishName;
+                        entity.CreatedByUser.ExternalCode = systemUser.ExternalCode;
+                        entity.CreatedByUser.LocalName = systemUser.LocalName;
+
+                    }
+                }
+            }
+
+
+            UserPM myIssuedByUserPM = null;
+            if (entity.UpdatedByUser != null)
+            {
+                UserQuery query = new UserQuery(entity.Tenant);
+                myIssuedByUserPM = query.UserCustomDataMappingAndValidatin(entity.UpdatedByUser, entity.Tenant);
+            }
+
+
+
+            if (entity.UpdatedByUser == null || myIssuedByUserPM == null)
+            {
+                entity.UpdatedByUser = null;
+                if (systemUser != null)
+                {
+                    entity.UpdatedByUser = new CommonDataModel.APIDataContract.ApiV1.User();
+                    entity.UpdatedByUser.Id = systemUser.Id;
+                    entity.UpdatedByUser.EnglishName = systemUser.EnglishName;
+                    entity.UpdatedByUser.ExternalCode = systemUser.ExternalCode;
+                    entity.UpdatedByUser.LocalName = systemUser.LocalName;
+
+                }
+            }
+
+
+
+            return entity;
+        }
+
         private void InitAndValidateGeneralData(AccountingSetting accountingSetting)
         {
             if (string.IsNullOrEmpty(this.aPInvoicePM.InvoiceNumber))
