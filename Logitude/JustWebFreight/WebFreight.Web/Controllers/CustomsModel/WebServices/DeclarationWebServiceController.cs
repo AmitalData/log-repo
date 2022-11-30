@@ -1573,7 +1573,38 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
-        //declaration payment
+        public HttpResponseMessage GetGoldPaymentDefaults(string CustomerCode)
+        {
+            string CustomerDefaultGoldPay_CIM_GOLD_PAY = null;
+            string CompanyDefaultMaxPayMASAV_CGG_MAX_AGT_PAY = null;
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                ICustomContext customContext = CustomContext.GetContext(tenant);
+                //CIM_GOLD_PAY CGG_MAX_AGT_PAY
+                var declarationQS = new DeclarationQueryService(customContext);
+                if (!string.IsNullOrWhiteSpace(CustomerCode))
+                {
+                    ///דיפולט באינדקס לקוח "תשלום בניצול העברת זהב לקוח "
+                    CustomerDefaultGoldPay_CIM_GOLD_PAY = declarationQS.GetDefault("ISRAEL", "CIM_GOLD_PAY", "NON", CustomerCode, tenant);
+
+                }
+                ///דיפולט ברמת חברה "סכום מיסים מקסימלי לתשלום במס"ב סוכן
+                CompanyDefaultMaxPayMASAV_CGG_MAX_AGT_PAY = declarationQS.GetDefault("ISRAEL", "CGG_MAX_AGT_PAY", "NON", "NON", tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, new {
+                    CustomerDefaultGoldPay_CIM_GOLD_PAY = CustomerDefaultGoldPay_CIM_GOLD_PAY,
+                    CompanyDefaultMaxPayMASAV_CGG_MAX_AGT_PAY= CompanyDefaultMaxPayMASAV_CGG_MAX_AGT_PAY
+                });
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+            //declaration payment
+            
         public HttpResponseMessage GetSingleDeclarationPaymentPMandDefaultExplain(string id, string CustomerCode)
         {
             try
