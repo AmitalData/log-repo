@@ -69,15 +69,15 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
         private void SetCrossDockWeightDetails()
         {
 
-            double? varGrossWeightInKG = General.ComputeWeightInSelectedUnit((double?)warehouseEntryPM.TotalGrossWeight, warehouseEntryPM.GrossWeightUnitCode, "KG");
-            double? varGrossWeightInLB = General.ComputeWeightInSelectedUnit((double?)warehouseEntryPM.TotalGrossWeight, warehouseEntryPM.GrossWeightUnitCode, "LB");
-            if (varGrossWeightInKG != null)
+            double? grossWeightInKG = General.ComputeWeightInSelectedUnit((double?)warehouseEntryPM.TotalGrossWeight, warehouseEntryPM.GrossWeightUnitCode, "KG");
+            double? grossWeightInLB = General.ComputeWeightInSelectedUnit((double?)warehouseEntryPM.TotalGrossWeight, warehouseEntryPM.GrossWeightUnitCode, "LB");
+            if (grossWeightInKG != null)
             {
-                crossDockEntryDataProvider.GrossWeightInKG = String.Format("{0:#,0.00}", varGrossWeightInKG.Value);
+                crossDockEntryDataProvider.GrossWeightInKG = String.Format("{0:#,0.00}", grossWeightInKG.Value);
             }
-            if (varGrossWeightInLB != null)
+            if (grossWeightInLB != null)
             {
-                crossDockEntryDataProvider.GrossWeightInLB = String.Format("{0:#,0.00}", varGrossWeightInLB.Value);
+                crossDockEntryDataProvider.GrossWeightInLB = String.Format("{0:#,0.00}", grossWeightInLB.Value);
             }
 
         }
@@ -89,15 +89,15 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
         }
         private void SetWarehouseEntryPackageWeightDetails(EntryPackage entryPackage, double? packageWeight)
         {
-            double? varWarehouseEntryPackageWeightInKG = General.ComputeWeightInSelectedUnit(packageWeight, entryPackage.WeightUnit, "KG");
-            double? varWarehouseEntryPackageWeightInLB = General.ComputeWeightInSelectedUnit(packageWeight, entryPackage.WeightUnit, "LB");
-            if (varWarehouseEntryPackageWeightInKG != null)
+            double? warehouseEntryPackageWeightInKG = General.ComputeWeightInSelectedUnit(packageWeight, entryPackage.WeightUnit, "KG");
+            double? warehouseEntryPackageWeightInLB = General.ComputeWeightInSelectedUnit(packageWeight, entryPackage.WeightUnit, "LB");
+            if (warehouseEntryPackageWeightInKG != null)
             {
-                entryPackage.GrossWeightInKG = String.Format("{0:#,0.00}", varWarehouseEntryPackageWeightInKG.Value);
+                entryPackage.GrossWeightInKG = String.Format("{0:#,0.00}", warehouseEntryPackageWeightInKG.Value);
             }
-            if (varWarehouseEntryPackageWeightInLB != null)
+            if (warehouseEntryPackageWeightInLB != null)
             {
-                entryPackage.GrossWeightInLB = String.Format("{0:#,0.00}", varWarehouseEntryPackageWeightInLB.Value);
+                entryPackage.GrossWeightInLB = String.Format("{0:#,0.00}", warehouseEntryPackageWeightInLB.Value);
             }
 
         }
