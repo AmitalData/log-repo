@@ -290,7 +290,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             try
             {
-                
+
                 //<--- Yuval Chalup 30.12.2015 TASK-18507
                 if (HttpContextUtil.IsCustomDomainService())
                 {
@@ -343,13 +343,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                 var declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
 
-                if (entityPM.IsAmendment==true && eventContextTagModel != null  && eventContextTagModel.CallProccessID == EventContextTagModel.ProccessEnum.DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseServiceUpdate)
+                if (entityPM.IsAmendment == true && eventContextTagModel != null && eventContextTagModel.CallProccessID == EventContextTagModel.ProccessEnum.DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseServiceUpdate)
                 {
 
                     var entityPMOrg = declarationQueryService.GetSingle(entityPM.AmendmentOriginalDeclartation, true, false);
                     entityPMOrg.CurrentContextTag = eventContextTagModel;
                     entityPMOrg.HatraDate = entityPM.HatraDate;
-                  //  entityPMOrg.DeclarationNumber = entityPM.DeclarationNumber;
+                    //  entityPMOrg.DeclarationNumber = entityPM.DeclarationNumber;
 
                     UpdateUnifreight(entityPMOrg);
 
@@ -357,19 +357,19 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
 
 
-               // var entityAmend = declarationQueryService.GetAcceptDeclarationAmendment(entityPM.Id, entityPM.Tenant);
+                // var entityAmend = declarationQueryService.GetAcceptDeclarationAmendment(entityPM.Id, entityPM.Tenant);
 
-                if (entityPM.IsConnectedToUnifreight && !( entityPM.PaymentDate.HasValue && string.IsNullOrEmpty(entityPM.DeclarationNumber)))
+                if (entityPM.IsConnectedToUnifreight && !(entityPM.PaymentDate.HasValue && string.IsNullOrEmpty(entityPM.DeclarationNumber)))
                 {
                     UpdateUnifreight(entityPM);
                 }
 
 
-                if(entityPM.IsDiamondDeclaration)
+                if (entityPM.IsDiamondDeclaration)
                 {
-                  //  DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
+                    //  DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
 
-                    entityPM.IsValidTicketsDiamond= declarationQueryService.IsValidTickets(entityPM);
+                    entityPM.IsValidTicketsDiamond = declarationQueryService.IsValidTickets(entityPM);
 
                     entityPM.IsMissMandatoryDiamond = declarationQueryService.IsMissingMandatoryFields(entityPM);
 
@@ -540,12 +540,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     var crsQS = new CustomsRequestsSheetQueryService(entityPM.Tenant);
                     var listCRS = crsQS.GetCustomsRequestsSheetByCustomFileNumber(entityPM.CustomFileNo, entityPM.Tenant);
-                    var CRS2755=  listCRS.FirstOrDefault(r => r.InterfaceTypeCode == "2755");// - מסר הגשה
+                    var CRS2755 = listCRS.FirstOrDefault(r => r.InterfaceTypeCode == "2755");// - מסר הגשה
                     if (CRS2755 != null)
                     {
                         throw new Exception(" קיימת בקשה של הגשת תשלום - לא ניתן לבצע איפוס");
                     }
-                    
+
 
                     ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
 
@@ -561,7 +561,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
                         DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
 
-                        DeclarationCourierStatusPM declarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(entityPM.Id,true,false);
+                        DeclarationCourierStatusPM declarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(entityPM.Id, true, false);
                         declarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                         declarationCourierStatusPM.CourierDeclarationStatusCode = null;
                         declarationCourierStatusPM.CourierPaymentStatusCode = null;
@@ -570,25 +570,29 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                 }
 
-                string ImporterCode = entityPM.ImporterCode;
-
-               
-                if (entityPM.ImporterCode.Length > 9)
+                if (!string.IsNullOrEmpty(entityPM.ImporterCode) && entityPM.IsCourierDeclaration)
                 {
-                    ImporterCode = entityPM.ImporterCode.Substring(0, 9);
+
+                    string ImporterCode = entityPM.ImporterCode;
+
+
+                    if (entityPM.ImporterCode.Length > 9)
+                    {
+                        ImporterCode = entityPM.ImporterCode.Substring(0, 9);
+                    }
+                    string clientId = TranslateClient(ImporterCode);
+                    FeatureQuery featureQuery = new FeatureQuery();
+                    var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(entityPM.Tenant), entityPM.Tenant);
+                    var feature = features.Features.FirstOrDefault(x => x.Code == "AddNewClientFromManifest");
+
+
+                    if (clientId == null && feature != null)
+                    {
+                        SendClientSearch(entityPM);
+
+                    }
                 }
-                string clientId = TranslateClient(ImporterCode);
-                FeatureQuery featureQuery = new FeatureQuery();
-                var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(entityPM.Tenant), entityPM.Tenant);
-                var feature = features.Features.FirstOrDefault(x => x.Code == "AddNewClientFromManifest");
-
-
-                if(clientId == null && feature != null)
-                {
-                    SendClientSearch(entityPM);
-
-                }
-
+            
 
                 if (entityPM.VatChanged)
                 {
