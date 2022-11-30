@@ -3269,21 +3269,25 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             var res = new Def.Contracts.SendDeclarationChecksResult() { HasError = false };
 
-            var siWithInsurance = declaration.SupplierInvoices.Where(r => r.InsuranceAmount.HasValue).ToList();
-            if (siWithInsurance.Count > 1)
+            if(declaration.Direction != "E")
             {
+             var siWithInsurance = declaration.SupplierInvoices.Where(r => r.InsuranceAmount.HasValue).ToList();
+                 if (siWithInsurance.Count > 1)
+                 {
 
-                var siWithValues = siWithInsurance.Where(r => r.InsuranceAmount > 0).ToList();
-                if (siWithValues.Count > 1)
-                {
+                 var siWithValues = siWithInsurance.Where(r => r.InsuranceAmount > 0).ToList();
+                 if (siWithValues.Count > 1)
+                    {
 
-
-                    res.HasError = true;
-                    res.ErrorMessages = new List<string>() { "קיים יותר מחשבון ספק אחד עם ערך בשדה ביטוח " };
+                      res.HasError = true;
+                      res.ErrorMessages = new List<string>() { "קיים יותר מחשבון ספק אחד עם ערך בשדה ביטוח " };
                     
-                }
+                    }
                 
+                 }
             }
+
+           
             return res;//new Contracts.SendDeclarationChecksResult() { HasError = false };
         }
         
