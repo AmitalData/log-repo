@@ -54,6 +54,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
     public class SendWEBAPIMessage2MamanWR
         : CustomsWorkerEntryPoint
     {
+        const int MaxRetries = 16;
         QueueDescription _QueueDescription;
         QueueClient _QueueClient;
         public override void Run()
@@ -245,9 +246,16 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                             Thread.Sleep(TimeSpan.FromSeconds(15));//not using soo mach 
                             break;
                         }
-                        if (_ReceivedBrokeredMessage.RetryNumber > 5)
+                        if (_ReceivedBrokeredMessage.RetryNumber > MaxRetries)
                         {
-                            _IQueueService.CompleteAsFailed();
+                            if (true)
+                            {
+                                _IQueueService.Complete();
+                            }
+                            else
+                            {
+                                _IQueueService.CompleteAsFailed();
+                            }                     
                         }
                         InitParams();
 
@@ -302,7 +310,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
             {
                 //ExceptionHandler.HandleException(exc, DateTime.Now, _Tenant, "", "WorkerRole", "", null);
                 _WaitingCommLog.Retries++;
-                if (_WaitingCommLog.Retries > 5)
+                if (_WaitingCommLog.Retries > MaxRetries)
                 {
                     _WaitingCommLog.CommunicationStatusTypeCode = "F";
                 }
@@ -333,10 +341,10 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                 .AppendLine("CommunicationLogId:" + _CommunicationLogId)
                 .AppendLine(",Tenant" + _Tenant);
         }
-
+        
         private void SentWAPIComm(bool forceRetryFromTester=false)
         {
-            if (forceRetryFromTester ||_ReceivedBrokeredMessage.RetryNumber < 5)
+            if (forceRetryFromTester ||_ReceivedBrokeredMessage.RetryNumber < MaxRetries)
             {
                 LastActivity = DateTime.UtcNow;
                 LogMessagingUtil.Instance.Append("DoAction(PostWebAPI)..");
@@ -351,7 +359,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
             }
             else
             {
-                LogMessagingUtil.Instance.AppendLine("RetryNumber >= 5>>> Failed ");
+                LogMessagingUtil.Instance.AppendLine($"RetryNumber >= {MaxRetries}>>> Failed ");
                 _WaitingCommLog.CommunicationStatusTypeCode = "F";
                 _IQueueService.Complete();
             }
