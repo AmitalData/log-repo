@@ -570,7 +570,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                 }
 
-                if (string.IsNullOrEmpty(entityPM.ImporterCode) && entityPM.IsCourierDeclaration)
+                if (!string.IsNullOrEmpty(entityPM.ImporterCode) && entityPM.IsCourierDeclaration)
                 {
 
                     string ImporterCode = entityPM.ImporterCode;
