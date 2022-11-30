@@ -2084,7 +2084,8 @@ export interface ConsignmentPackage {
 export interface ConsignmentDeclartions {
     $id: string;
     ConsignmentPackages: ConsignmentPackage[];
-    Consignment: ConsignmentPM;
+    Declarations: DeclarationPM[];
+    Consignments: ConsignmentPM[];
 }
 
 export interface ExportStorageConnectToDeclaration {

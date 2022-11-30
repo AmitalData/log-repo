@@ -27,6 +27,7 @@ import { loggerService } from 'Infrastructure/Utilities/logger.service';
 import { LogisticActionRequestPM } from 'Customs/EntityPMs/LogisticActionRequestPM';
 import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
 import { LogisticActionRequestsCloseSharedDataService } from 'Customs/Services/DataChange/LogisticActionRequestCloseSharedDataService';
+import { ConsignmentPM } from 'Customs/EntityPMs/ConsignmentPM';
 
 @Component({
     templateUrl: './LogisticActionRequestGeneralTabComponent.html',
@@ -76,6 +77,8 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     exportFileNoCurrentValue: string = '';
     private isImporterClicked: boolean = false;
     private currentClient: ClientList;
+    consignments: ConsignmentPM[] = [];
+    consignmentSelected: ConsignmentPM;
 
     get ExportFileNo() { return this.entityPM?.ExportFileNo }
     set ExportFileNo(value: string) {
@@ -219,31 +222,43 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
             arr.splice(index, 1);
     }
 
-
     private async syncDeclaration() {
         const consignmentDeclartion: ConsignmentDeclartions = await this.getDeclarationsandConsignment();
-        if (!consignmentDeclartion.Consignment || !(await this.confirmSyncDeclaration())) return;
 
-        const declaration: DeclarationPM = (consignmentDeclartion.Consignment as any).Declaration;
+        if (consignmentDeclartion.Declarations.length !== 1 || !(await this.confirmSyncDeclaration())) return;
+
+        const declaration: DeclarationPM = consignmentDeclartion.Declarations[0];
 
         this.ExporterNumber = declaration.ImporterCode;
         this.entityPM.DeclarationId = declaration.Id;
         this.entityPM.DeclarationNumber = declaration.DeclarationNumber;
-        this.CargoIdentifierType = consignmentDeclartion.Consignment.CargoTypeCode
-        this.CargoIdentifierKey1 = consignmentDeclartion.Consignment.ManifestNumber
-        this.CargoIdentifierKey2 = consignmentDeclartion.Consignment.SecondCargoID
-        this.CargoIdentifierKey3 = consignmentDeclartion.Consignment.ThirdCargoID
-        this.DeliverySiteID = consignmentDeclartion.Consignment.StorageSiteCode
 
-         this.declartionVal = declaration;
+        this.declartionVal = declaration;
         if (consignmentDeclartion.ConsignmentPackages.length === 1) {
             this.entityPM.PackagingTypeCode = consignmentDeclartion.ConsignmentPackages[0].PackageTypeCode
             this.entityPM.Quantity = consignmentDeclartion.ConsignmentPackages[0].Quantity;
         }
 
+        this.consignments = consignmentDeclartion.Consignments;
+        if (this.consignments.length > 0) {
+            const consignment: ConsignmentPM = this.consignments[0];
+            this.CargoIdentifierType = consignment.CargoTypeCode
+            this.DeliverySiteID = consignment.StorageSiteCode
+            this.selectCargoIdentifierKey(consignment)
+        }
+
+        this.setDisabledConsignmentFields();
         this.cdr.detectChanges();
     }
 
+    selectCargoIdentifierKey(consignment: ConsignmentPM) {
+        this.CargoIdentifierKey1 = consignment.ManifestNumber;
+        this.CargoIdentifierKey2 = consignment.SecondCargoID;
+        this.CargoIdentifierKey3 = consignment.ThirdCargoID;
+
+        if(this.consignmentSelected != consignment)
+            this.consignmentSelected = consignment
+    }
 
     private async openConfirmWindow(msg: string): Promise<boolean> {
         const myConfirmWindow = new ConfirmWindow();
@@ -285,10 +300,8 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
         // this.subscribesyncDeclaration()
 
-        this.UIProperties.SetEnabled("RequestCancelStatus", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("RequestNumber", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("DecisionRmarks", this.ObjectTableName, false);
-
+        this.setDisabledFields();
+        this.setDisabledConsignmentFields();
         this.setRequiredFields();
         this.clientListService = new ClientListService();
     }
@@ -308,10 +321,23 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         this.entityPM.ExporterIdentifierType = '1'
     }
 
+    setDisabledConsignmentFields() {
+        ["CargoIdentifierKey2", "CargoIdentifierKey3"].forEach((fieldName: string) =>
+            this.UIProperties.SetEnabled(fieldName, this.ObjectTableName, !this.consignments?.length));
+    }
+
+    setDisabledFields() {
+        ["RequestCancelStatus", "RequestNumber", "DecisionRmarks"].forEach((fieldName: string) =>
+            this.UIProperties.SetEnabled(fieldName, this.ObjectTableName, false));
+    }
 
     onBlurExportFileNo() {
-        if (this.entityPM.ExportFileNo && this.entityPM.ExportFileNo !== this.exportFileNoCurrentValue)
-            this.syncDeclaration()
+        if(this.entityPM.ExportFileNo !== this.exportFileNoCurrentValue){
+            this.consignments = [];
+
+            if (this.entityPM.ExportFileNo)
+                this.syncDeclaration()
+        }        
 
         this.exportFileNoCurrentValue = this.entityPM.ExportFileNo;
         // this.syncDeclaration$.next()
@@ -475,7 +501,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
 
     async OnCustomSendOptionsButtonClick(customSendOptionsArgs) {
-         this.logger.sendError('OnCustomSendOptionsButtonClick')
+        this.logger.sendError('OnCustomSendOptionsButtonClick')
         this.submit = true;
         if (this.invalidate()) return;
 
@@ -484,7 +510,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
         SessionLocator.SelectedSession.StartBusyIndicatorSaving();
 
-        const param: LogisticActionRequestRequestParams =await this.getCustomsParams();
+        const param: LogisticActionRequestRequestParams = await this.getCustomsParams();
         this.logger.sendError('param', 'param: ' + JSON.stringify(param));
         const res: ResponseDataBase = await this.logisticActionRequestWebService.SendCustomsMessage8410(param);
         this.logger.sendError('after SendCustomsMessage8410', 'res: ' + JSON.stringify(res));
@@ -514,15 +540,15 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
         param.CargoIdentifierKey3 = this.entityPM.CargoIdentifierKey3;
         param.PackagingTypeCode = this.entityPM.PackagingTypeCode;
         param.Quantity = this.entityPM.Quantity;
-        param.CustomsFile =  this.declartionVal?.CustomFileNo;
+        param.CustomsFile = this.declartionVal?.CustomFileNo;
         param.Tenant = this.entityPM.Tenant;
         param.ExportFile = this.entityPM.ExportFileNo;
 
         if (!AppTool.IsNullOrEmpty(this.entityPM.DeclarationId) && AppTool.IsNullOrEmpty(param.CustomsFile)) {
             var consignmentDeclartion: ConsignmentDeclartions = await this.getDeclarationsandConsignment();
 
-            const declaration: DeclarationPM = (consignmentDeclartion.Consignment as any).Declaration;
-            param.CustomsFile =  declaration?.CustomFileNo;
+            const declaration: DeclarationPM = (consignmentDeclartion as any).Declarations[0];
+            param.CustomsFile = declaration?.CustomFileNo;
 
         }
 

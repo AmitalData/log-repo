@@ -138,8 +138,8 @@
                                 </td>
                                 <td style="width: 25px;"><IconButton [IsSmall]="true" [Name]="'Edit'" (click)="EditImporter()"></IconButton></td>
                                 <td style="width: 120px; min-width: 120px; max-width: 120px; text-align: right; padding-right: 5px;">
-        <div style="color: #646464; font-size: 11px;">{{CalculatedExporterName}}</div>
-    </td>
+                                    <div style="color: #646464; font-size: 11px;">{{CalculatedExporterName}}</div>
+                                </td>
                             </tr>
 
                             <tr class="FormFieldRow" style="width:200px;text-align: right;">
@@ -193,7 +193,10 @@
                                 </td>
                                 <td style="width:130px">
                                     <div style="width:135px">
-                                        <LogTextBox [ObjectFieldName]="'CargoIdentifierKey1'"
+                                        <select class="select-CargoIdentifierKey" *ngIf="consignments?.length" (ngModelChange)="selectCargoIdentifierKey($event)" [(ngModel)]="consignmentSelected">
+                                            <option *ngFor="let c of consignments" [ngValue]="c">{{c.ManifestNumber}}</option>
+                                        </select>
+                                        <LogTextBox *ngIf="!consignments?.length" [ObjectFieldName]="'CargoIdentifierKey1'"
                                                     [InputType]="'integertext'"
                                                     [DataContext]="DataContext"
                                                     [ObjectTableName]="ObjectTableName"
