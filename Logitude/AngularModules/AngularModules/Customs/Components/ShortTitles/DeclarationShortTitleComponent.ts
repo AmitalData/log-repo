@@ -100,19 +100,19 @@ export class DeclarationShortTitleComponent {
         this._CustomsSettingListService.getSingleFromCache(SessionLocator.Tenant.toString())
             .subscribe((customsSettingList: ServiceResponse) => {
                 if (customsSettingList) {
-                    debugger
+                    
                     isConnectToUnifreight = customsSettingList.Result ? customsSettingList?.Result?.IsConnectedToUniFreight : null;
+                    if (AmitalGatewayUtil.Instance.AmitalBrowserInUse && AmitalGatewayUtil.Instance.IsTabCA23) {
 
+                        this._ShowEntityNumberClick = true;
+                    }
+                    if (!isConnectToUnifreight && this.EntityPM.Direction == 'E')
+                        this._ShowEntityNumberClick = false;
                 }
             });
 
 
-        if (AmitalGatewayUtil.Instance.AmitalBrowserInUse && AmitalGatewayUtil.Instance.IsTabCA23) {
-
-            this._ShowEntityNumberClick = true;
-        }
-        if (!isConnectToUnifreight && this.EntityPM.Direction == 'E')
-            this._ShowEntityNumberClick = false;
+        
     }
 
     EntityNumberClick() {
