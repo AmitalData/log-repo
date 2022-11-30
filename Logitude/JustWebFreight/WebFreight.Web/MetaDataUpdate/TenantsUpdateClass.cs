@@ -782,6 +782,8 @@ namespace WebFreight.Web.MetaDataUpdate
             updateClass.FillPhysicalCheckCode();
             updateClass.FillToggle();
             updateClass.FillFacilitationType();
+            updateClass.FillContainerizationHataraStatus();
+
 
         }
 

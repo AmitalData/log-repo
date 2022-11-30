@@ -18594,7 +18594,18 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             facilitationTypeRepository.SubmitChanges();
 
         }
+        public void FillContainerizationHataraStatus()
+        {
 
+            ContainerizationHataraStatusRepository containerizationHataraStatusRepository = new ContainerizationHataraStatusRepository(0);
+            Dictionary<string, ContainerizationHataraStatus> Tenant = containerizationHataraStatusRepository.GetAll().ToDictionary(d => d.Code, a => a);
+
+            AddClosedTables.AddContainerizationHataraStatus(new ContainerizationHataraStatus() { Code = "1", Name = "המכלה הותרה" }, containerizationHataraStatusRepository);
+            AddClosedTables.AddContainerizationHataraStatus(new ContainerizationHataraStatus() { Code = "2", Name = "המכלה טרם הותרה" }, containerizationHataraStatusRepository);
+
+            containerizationHataraStatusRepository.SubmitChanges();
+
+        }
 
     }
 
