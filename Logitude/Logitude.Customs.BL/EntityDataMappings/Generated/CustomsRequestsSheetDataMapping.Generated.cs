@@ -41,7 +41,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsDCA, 
 	         SearchFields, 
 	         IsRestored, 
-	         AnalyzeDcaAggregateKey,
+	         AnalyzeDcaAggregateKey, 
+	         TenantPriority,
 	      }
 
 
@@ -71,7 +72,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         RequestStatusName, 
 	         IsRestored, 
 	         AnalyzeDcaAggregateKey, 
-	         FutureSendDateTime,
+	         FutureSendDateTime, 
+	         TenantPriority,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -173,6 +175,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AnalyzeDcaAggregateKey))
             {
 				entityPOCO.AnalyzeDcaAggregateKey = entityPM.AnalyzeDcaAggregateKey;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TenantPriority))
+            {
+				entityPOCO.TenantPriority = entityPM.TenantPriority;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -281,6 +288,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.AnalyzeDcaAggregateKey = entityPOCO.AnalyzeDcaAggregateKey;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TenantPriority))
+            {
+					entityPM.TenantPriority = entityPOCO.TenantPriority;
+            }
+
 		}
 
 		public void PMToOldPM(CustomsRequestsSheetPM entityPM, CustomsRequestsSheetPM oldEntityPM)
@@ -380,6 +392,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AnalyzeDcaAggregateKey))
             {
                 oldEntityPM.AnalyzeDcaAggregateKey = entityPM.AnalyzeDcaAggregateKey;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TenantPriority))
+            {
+                oldEntityPM.TenantPriority = entityPM.TenantPriority;
             }
 			
 		}

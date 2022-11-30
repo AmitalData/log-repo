@@ -17,4 +17,15 @@ namespace Logitude.Customs.Data.DataContracts
         public string InterfaceTypeName { get; set; }
 
     }
+
+
+    public class PriorityRequestsSheetSummary
+    {
+        [Key]
+        public Guid Id { get; set; }
+        public int count { get; set; }
+        public int totalCount { get; set; }
+        public string InterfaceTypeName { get; set; }
+        public string InterfaceTypeCode { get; set; }
+    }
 }

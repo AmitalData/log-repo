@@ -26,4 +26,15 @@ export class QueueMessagesWebService {
             }), catchError(ServiceHelper.HandleServiceError));
         });
     }
+    UpdateTenantPriorityStatistics(tenantId: number, CourierMasterId:string,InterfaceTypeCode:string,TenantPriority:number) {
+        var url = this._apiUrl + '/GetUpdateTenantPriorityStatistics?tenantId=' + tenantId+'&CourierMasterId='+CourierMasterId+'&InterfaceTypeCode='+InterfaceTypeCode+'&TenantPriority='+TenantPriority;
+
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+
+                return response;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 }

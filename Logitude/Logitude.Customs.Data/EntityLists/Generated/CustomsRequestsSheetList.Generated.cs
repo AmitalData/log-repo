@@ -62,6 +62,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string AnalyzeDcaAggregateKey  { get; set; }
        [DataMember]
        public DateTime? FutureSendDateTime  { get; set; }
+       [DataMember]
+       public int? TenantPriority  { get; set; }
    }
 
 }

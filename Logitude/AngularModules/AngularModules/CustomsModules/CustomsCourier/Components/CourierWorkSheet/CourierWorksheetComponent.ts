@@ -2668,6 +2668,22 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         logitudeWindow.WindowClosed.subscribe(($event: any) => this.RefreshButtonClicked());
     }
 
+    PrioritizeFlightRequestsMethod() {
+        var logitudeWindow = new LogitudeWindow();
+        var windowArgs: any = {};
+        windowArgs.CourierMasterPM = this.entityPM;
+        logitudeWindow.Width = 400;
+        logitudeWindow.Height = 600;
+        logitudeWindow.IsShowCloseButton = true;
+        logitudeWindow.Title = "תעדוף בקשות לטיסה"; 
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/PrioritizeFlightRequestsComponent');
+        this.ChangedUnloadPortSite = true;
+        logitudeWindow.WindowClosed.subscribe(($event: any) => {
+            this.RefreshButtonClicked();
+        });
+    }
+
 }
 
 

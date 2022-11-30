@@ -88,7 +88,8 @@ namespace Logitude.Server.Tools.QueueService
             , queueSendModel);
             }
 
-            int tenantPriority = queueSendModel?.TenantPriority ?? 89;
+
+            int tenantPriority = queueSendModel?.TenantPriority ?? 89;  
             if (tenantPriority < 1)
             {
                 tenantPriority = 89;
