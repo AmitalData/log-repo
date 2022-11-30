@@ -141,8 +141,8 @@
     <Compile Include="BL\CacheHelper.cs" />
     <Compile Include="BL\CalculateDeclarationCourierStatus.cs" />
     <Compile Include="BL\CreateContainerization.cs" />
-	<Compile Include="BL\CancelOldCommunicationLogs.cs" />
-	  <Compile Include="BL\EFIFILEMDataInExportDeclarationClosing.cs" />
+    <Compile Include="BL\CancelOldCommunicationLogs.cs" />
+    <Compile Include="BL\EFIFILEMDataInExportDeclarationClosing.cs" />
     <Compile Include="BL\ExternalFieldMappingBL.cs" />
     <Compile Include="BL\PrivacyProtection.cs" />
     <Compile Include="BL\ReferantUnifreightStatuses.cs" />
@@ -497,6 +497,7 @@
     <Compile Include="EntityDataMappings\DeclarationDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationErrorMappingDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationExportRecipientDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DeclarationFollowUpDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationMamanSpecialActionDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationPaymentDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationPaymentMethodDataMapping.cs" />
@@ -710,6 +711,7 @@
     <Compile Include="EntityDataMappings\Generated\DeclarationDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationErrorMappingDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationExportRecipientDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DeclarationFollowUpDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationMamanSpecialActionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationPaymentDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationPaymentMethodDataMapping.Generated.cs" />
@@ -1118,17 +1120,15 @@
     <Compile Include="EntityQueryServices\CargoIdentifireTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\ConfirmationTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\CurrencyTypeQueryService.cs" />
+    <Compile Include="EntityQueryServices\Generated\DeclarationFollowUpQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\SchedulerParamQueryService.cs" />
     <Compile Include="EntityQueryServices\ExternalFieldMappingQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\ClientsTapagQueryService.Generated.cs" />
-
-
     <Compile Include="EntityQueryServices\Generated\SignStationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\PhysicalCheckCodeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\StorageStatusTableQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ServersNameQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SchedulerParamQueryService.Generated.cs" />
-   
     <Compile Include="EntityQueryServices\ItemGovernmentProcedureTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\LogisticPermitQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\ExportLogisticPermitActionQueryService.Generated.cs" />
@@ -1644,13 +1644,13 @@
     <Compile Include="EntityUpdateServices\CargoSealUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientsTapagUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ConfirmationTypeUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Generated\DeclarationFollowUpUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\ServersNameUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ExportDeclarationClosingDataUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\ClientsTapagUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ExportLogisticPermitActionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\LogisticActionResponseReqSUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\LogisticPermitUpdateService.Generated.cs" />
-
     <Compile Include="EntityUpdateServices\Generated\SignStationUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\StorageStatusTableUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ServersNameUpdateService.Generated.cs" />

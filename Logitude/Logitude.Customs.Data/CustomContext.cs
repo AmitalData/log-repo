@@ -408,6 +408,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new DeclarationExportRecipientMap());
 	
+            modelBuilder.Configurations.Add(new DeclarationFollowUpMap());
+	
             modelBuilder.Configurations.Add(new DeclarationMamanSpecialActionMap());
 	
             modelBuilder.Configurations.Add(new DeclarationPaymentMap());
@@ -2366,6 +2368,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<DeclarationExportRecipient> DeclarationExportRecipients 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<DeclarationFollowUp> DeclarationFollowUps 
 	 {
 	      get; set;
 	 
