@@ -81,6 +81,26 @@ namespace WebFreight.Web.Controllers.DashboardModel.Extended
             }
         }
 
+        public HttpResponseMessage GetUsersDashboardsCount()
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("Dashboard", "READ", authToken.Tenant);
+
+                IDashboardContext myContext = DashboardContext.GetContext(authToken.Tenant);
+                int count = new DashboardListQueryService(myContext).GetUsersDashboardsCount(authToken.Tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, count);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetDashboardsFromIds(string dashboardsIds)
         {
             try

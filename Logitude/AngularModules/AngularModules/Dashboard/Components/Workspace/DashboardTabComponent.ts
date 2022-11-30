@@ -17,7 +17,9 @@ import { DashboardAnalyticsService } from '../../../DashboardModule/Services/Das
 import { CustomDashboardComponent } from './CustomDashboardComponent';
 
 @Component({
-    templateUrl: 'DashboardTabComponent.html'
+    templateUrl: 'DashboardTabComponent.html',
+    selector:'DashboardTabComponent',
+    styleUrls: ['CustomDashboardCSS.scss'],
 })
 
 export class DashboardTabComponent implements AfterViewInit {
