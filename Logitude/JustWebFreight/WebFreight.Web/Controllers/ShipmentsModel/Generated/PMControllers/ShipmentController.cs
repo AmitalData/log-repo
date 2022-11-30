@@ -39,6 +39,7 @@ using System.Xml;
 using WebFreight.Web.Controllers.ShipmentsModel.ApiHelpers;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
+using Marvin.JsonPatch;
 
 namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 {
@@ -205,6 +206,43 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             else
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+            }
+        }
+
+        // PATCH api/shipment?id={shipmentId}
+        public HttpResponseMessage Patch(string id, JsonPatchDocument<ShipmentPM> shipmentJsonPatch)
+        {
+            try {
+                using (TransactionScope transactionScope = TransactionFactory.GetTransaction())
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authenticationToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    int tenant = authenticationToken.Tenant;
+
+                    SecurityUtility.AuthenticationOnTenant(tenant);
+                    SecurityUtility.CheckContactFeature("Shipment", "UPDATE", tenant);
+
+                    IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
+                    ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
+                    ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
+                    ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(id, tenant);
+
+                    if (shipmentPM == null) { throw new Exception("Cannot find the shipment"); }
+
+                    SecurityUtility.AuthenticationOnEntityTenant("Shipment", shipmentPM.Tenant, tenant);
+
+                    shipmentJsonPatch.ApplyTo(shipmentPM);
+
+                    ShipmentService shipmentService = new ShipmentService(shipmentsContext, shipmentPM, SecurityUtility.GetAuthenticatedUser());
+                    shipmentService.Update(true, isPatchUpdate: true);
+
+                    ShipmentPM updatedShipmentPM = shipmentQuery.GetSinglePM(shipmentPM.Id, shipmentPM.Tenant);
+
+                    transactionScope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK, updatedShipmentPM);
+                }
+            } catch (Exception exception) {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(exception));
             }
         }
 

@@ -38,7 +38,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 {
     public class ShipmentValidating
     {
-        public static void Validate(ShipmentPM entityPM, Shipment entityPoco, bool isNewEntity, ICommonDataContext myCommonContext, Tenant loggedTenant)
+        public static void Validate(ShipmentPM entityPM, Shipment entityPoco, bool isNewEntity, ICommonDataContext myCommonContext, Tenant loggedTenant, bool isPatchUpdate = false)
         {
             if (isNewEntity)
             {
@@ -47,7 +47,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
             else
             {
-                ValidateConcurrencyGUID(entityPM, entityPoco);
+                if (!isPatchUpdate)
+                {
+                    ValidateConcurrencyGUID(entityPM, entityPoco);
+                }
             }
 
             if (entityPM.DirectionId.ToUpper() == "D")
