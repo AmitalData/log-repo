@@ -230,7 +230,7 @@
   <Column
     Name="TruckerReference"
     Type="varchar"
-    Size="15">
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>
