@@ -5722,7 +5722,42 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-   }
+
+	   private List<DeclarationFollowUpPM> declarationFollowUp;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("DeclarationDeclarationFollowUp", "Id","DeclarationId")]
+	   [DataMember]
+	   public virtual List<DeclarationFollowUpPM> DeclarationFollowUp  
+	   {
+	        get
+             {
+                 if (declarationFollowUp == null)
+                 {
+                     declarationFollowUp = new List<DeclarationFollowUpPM>();
+                 }
+                 return declarationFollowUp;
+              }
+             set { declarationFollowUp = value; }
+	    }
+		   
+	   private List<DeclarationFollowUpPM>  deletedDeclarationFollowUp;
+	   public virtual List<DeclarationFollowUpPM> DeletedDeclarationFollowUp  
+	   {
+	        get
+             {
+                 if ( deletedDeclarationFollowUp == null)
+                 {
+                      deletedDeclarationFollowUp = new List<DeclarationFollowUpPM>();
+                 }
+                 return  deletedDeclarationFollowUp;
+              }
+             set {  deletedDeclarationFollowUp = value; }
+	    }
+	     }
    
 }
 	 

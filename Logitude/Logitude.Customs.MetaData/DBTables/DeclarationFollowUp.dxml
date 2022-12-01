@@ -45,9 +45,21 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="DeclarationId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreateBy"
     ReferencedTable="Users"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DeclarationId"
+    ReferencedTable="Declarations"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="Customs" />
 </Table>

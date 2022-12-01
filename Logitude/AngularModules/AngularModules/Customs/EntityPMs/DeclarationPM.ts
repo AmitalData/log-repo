@@ -15,6 +15,7 @@ import {DeclarationErrorViewPM} from './DeclarationErrorViewPM';
 import {DeclarationConsAcceptancePM} from './DeclarationConsAcceptancePM';
 import {DecDangersContactPM} from './DecDangersContactPM';
 import {DeclarationExportRecipientPM} from './DeclarationExportRecipientPM';
+import {DeclarationFollowUpPM} from './DeclarationFollowUpPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -1424,7 +1425,41 @@ export class DeclarationPM {
     public set PhysicalCheckName(newValue: string) { if (this.physicalCheckName != newValue) { this.physicalCheckName = newValue; this.MarkAsDirty("PhysicalCheckName"); } }
        
 	 
+     
+	private declarationFollowUp: DeclarationFollowUpPM[];
+    get  DeclarationFollowUp() {
+        if (this.declarationFollowUp == null) {
+            this.declarationFollowUp = [];
+        }
 
+        return this.declarationFollowUp;
+    }
+    set  DeclarationFollowUp(newValue: DeclarationFollowUpPM[]) {
+        if (this.declarationFollowUp != newValue) {
+            this.declarationFollowUp = newValue;
+        }
+    }
+    public AddDeclarationFollowUp(item: DeclarationFollowUpPM) {
+        if (item != null) {
+            var index = this. DeclarationFollowUp.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. DeclarationFollowUp.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveDeclarationFollowUp(item: DeclarationFollowUpPM) {
+        if (item != null) {
+            var index = this. DeclarationFollowUp.indexOf(item);
+            if (index > -1) {
+                this. DeclarationFollowUp.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public DeclarationFollowUp: Array<DeclarationFollowUpPM>= [];
+ 
     public OldEntityPM: DeclarationPM;
 		
     public IsDirty: boolean;

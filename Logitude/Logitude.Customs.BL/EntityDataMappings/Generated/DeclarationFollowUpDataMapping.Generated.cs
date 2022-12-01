@@ -27,7 +27,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Code, 
 	         StatusDate, 
 	         CreateBy, 
-	         Remarks,
+	         Remarks, 
+	         DeclarationId,
 	      }
 
 
@@ -39,7 +40,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Code, 
 	         StatusDate, 
 	         CreateBy, 
-	         Remarks,
+	         Remarks, 
+	         DeclarationId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -71,6 +73,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Remarks))
             {
 				entityPOCO.Remarks = entityPM.Remarks;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationId))
+            {
+				entityPOCO.DeclarationId = entityPM.DeclarationId;
 			}
 			}
 
@@ -107,6 +114,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.Remarks = entityPOCO.Remarks;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeclarationId))
+            {
+					entityPM.DeclarationId = entityPOCO.DeclarationId;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationFollowUpPM entityPM, DeclarationFollowUpPM oldEntityPM)
@@ -136,6 +148,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Remarks))
             {
                 oldEntityPM.Remarks = entityPM.Remarks;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationId))
+            {
+                oldEntityPM.DeclarationId = entityPM.DeclarationId;
             }
 			
 		}
