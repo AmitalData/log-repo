@@ -162,6 +162,16 @@ export class WidgetPM {
     public set ComparisonDateGroup(newValue: string) { if (this.comparisonDateGroup != newValue) { this.comparisonDateGroup = newValue; this.MarkAsDirty("ComparisonDateGroup"); } }
        
 	 
+    private fromDate: Date;
+    public get FromDate() { return this.fromDate; }
+    public set FromDate(newValue: Date) { if (this.fromDate != newValue) { this.fromDate = newValue; this.MarkAsDirty("FromDate"); } }
+       
+	 
+    private toDate: Date;
+    public get ToDate() { return this.toDate; }
+    public set ToDate(newValue: Date) { if (this.toDate != newValue) { this.toDate = newValue; this.MarkAsDirty("ToDate"); } }
+       
+	 
 
     public OldEntityPM: WidgetPM;
 	

@@ -24,6 +24,13 @@ export class DashboardMapping {
             myWidget.SortBy = widget.SortBy;
             myWidget.SortDirection = widget.SortDirection;
             myWidget.MaximumGrouping = widget.MaximumGrouping;
+            myWidget.TimeOverTime = widget.TimeOverTime;
+            myWidget.ComparisonOperator = widget.ComparisonOperator;
+            myWidget.ComparisonPeriod = widget.ComparisonPeriod;
+            myWidget.ComparisonDateGroup = widget.ComparisonDateGroup;
+            myWidget.Increase = widget.Increase;
+            myWidget.FromDate = widget.FromDate;
+            myWidget.ToDate = widget.ToDate;
             myWidget.Layout = {
                 minH: 5,
                 minW: 3,

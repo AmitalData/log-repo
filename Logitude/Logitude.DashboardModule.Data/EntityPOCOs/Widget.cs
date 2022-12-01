@@ -69,6 +69,10 @@ namespace Logitude.DashboardModule.Data.EntityPOCOs
 	    public string ComparisonOperator { get; set; }
         [Column("ComparisonDateGroup")]
 	    public string ComparisonDateGroup { get; set; }
+        [Column("FromDate")]
+	    public DateTime? FromDate { get; set; }
+        [Column("ToDate")]
+	    public DateTime? ToDate { get; set; }
     }
 }
 	 

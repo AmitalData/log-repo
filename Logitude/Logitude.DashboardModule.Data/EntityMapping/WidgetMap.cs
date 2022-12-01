@@ -60,6 +60,10 @@ namespace Logitude.DashboardModule.Data.EntityMapping
             this.Property(t => t.ComparisonOperator).HasColumnName("ComparisonOperator").HasMaxLength(100).IsUnicode(false);
 
             this.Property(t => t.ComparisonDateGroup).HasColumnName("ComparisonDateGroup").HasMaxLength(100).IsUnicode(false);
+
+            this.Property(t => t.FromDate).HasColumnName("FromDate");
+
+            this.Property(t => t.ToDate).HasColumnName("ToDate");
         }
     }
 }

@@ -515,6 +515,52 @@ namespace Logitude.DashboardModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private DateTime? fromDate ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? FromDate  
+	   {
+	    
+	     get
+		{
+		   return fromDate;
+		 }
+		 set
+		 {
+		   if(fromDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FromDate",OldValue=fromDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   fromDate=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? toDate ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? ToDate  
+	   {
+	    
+	     get
+		{
+		   return toDate;
+		 }
+		 set
+		 {
+		   if(toDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToDate",OldValue=toDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   toDate=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -32,6 +32,10 @@ namespace Logitude.DashboardModule.Data.EntityLists
        public string ComparisonOperator  { get; set; }
        [DataMember]
        public string ComparisonDateGroup  { get; set; }
+       [DataMember]
+       public DateTime? FromDate  { get; set; }
+       [DataMember]
+       public DateTime? ToDate  { get; set; }
    }
 
 }

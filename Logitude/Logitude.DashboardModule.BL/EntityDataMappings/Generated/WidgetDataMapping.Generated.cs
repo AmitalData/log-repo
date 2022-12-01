@@ -40,7 +40,9 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         ComparisonPeriod, 
 	         Increase, 
 	         ComparisonOperator, 
-	         ComparisonDateGroup,
+	         ComparisonDateGroup, 
+	         FromDate, 
+	         ToDate,
 	      }
 
 
@@ -66,7 +68,9 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         ComparisonPeriod, 
 	         Increase, 
 	         ComparisonOperator, 
-	         ComparisonDateGroup,
+	         ComparisonDateGroup, 
+	         FromDate, 
+	         ToDate,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -163,6 +167,16 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ComparisonDateGroup))
             {
 				entityPOCO.ComparisonDateGroup = entityPM.ComparisonDateGroup;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromDate))
+            {
+				entityPOCO.FromDate = entityPM.FromDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToDate))
+            {
+				entityPOCO.ToDate = entityPM.ToDate;
 			}
 			}
 
@@ -264,6 +278,16 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 					entityPM.ComparisonDateGroup = entityPOCO.ComparisonDateGroup;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FromDate))
+            {
+					entityPM.FromDate = entityPOCO.FromDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ToDate))
+            {
+					entityPM.ToDate = entityPOCO.ToDate;
+            }
+
 		}
 
 		public void PMToOldPM(WidgetPM entityPM, WidgetPM oldEntityPM)
@@ -358,6 +382,16 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ComparisonDateGroup))
             {
                 oldEntityPM.ComparisonDateGroup = entityPM.ComparisonDateGroup;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromDate))
+            {
+                oldEntityPM.FromDate = entityPM.FromDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToDate))
+            {
+                oldEntityPM.ToDate = entityPM.ToDate;
             }
 			
 		}

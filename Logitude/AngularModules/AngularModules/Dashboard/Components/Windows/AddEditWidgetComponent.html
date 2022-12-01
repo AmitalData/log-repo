@@ -232,12 +232,12 @@
                             </tr>
 
                             <!--KPI Settings-->
-                            <tr style="height:1px; vertical-align: top;" *ngIf="isAdvancedSettingForKPI">
+                            <tr style="height:1px; vertical-align: top;" *ngIf="IsAdvancedSettingVisible && isAdvancedSettingForKPI">
                                 <td colspan="2">
                                     <table>
                                         <tr class="FormFieldRow">
                                             <td style="width:120px;">
-                                                <LogLabel [Text]="'TimeOverTime'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
+                                                <LogLabel [Text]="'Time Over Time'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
                                             </td>
 
                                             <td style="width:250px;">
@@ -248,6 +248,7 @@
                                                 <div></div>
                                             </td>
                                         </tr>
+
 
                                         <tr class="FormFieldRow">
                                             <td>
@@ -270,8 +271,9 @@
                                                             <div></div>
                                                         </td>
 
-                                                        <td style="width:120px;">
-                                                            <!--this is for num of days or ... -->
+
+                                                        <td style="width:120px;" *ngIf="!IsBetweenDatesVisible">
+
                                                             <LogTextBox [ObjectFieldName]="'ComparisonPeriod'"
                                                                         [InputType]="'integer'"
                                                                         [DataContext]="DataContext"
@@ -283,15 +285,36 @@
                                                             <div></div>
                                                         </td>
 
-                                                        <td style="width:120px;">
-                                                            <!--to choose the period type  -->
+                                                        <td style="width:120px;" *ngIf="!IsBetweenDatesVisible">
                                                             <ComboBox (SelectedItemChanged)="ComparisonDateGroup = $event"
-                                                                [ItemsSource]="DateGroupCodes"
-                                                                [SelectedItem]="ComparisonDateGroup"
-                                                                [IsDisabled]="!TimeOverTime">
+                                                                      [ItemsSource]="DateGroupCodes"
+                                                                      [SelectedItem]="ComparisonDateGroup"
+                                                                      [IsDisabled]="!TimeOverTime">
                                                             </ComboBox>
                                                         </td>
 
+                                                        <td style="width:70px;" *ngIf="IsBetweenDatesVisible">
+                                                            <LogLabel [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName"
+                                                                      [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td style="width: 100px;" *ngIf="IsBetweenDatesVisible">
+                                                            <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName"
+                                                                           [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                        </td>
+                                                        <td style="width:2px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td style="width:70px;" *ngIf="IsBetweenDatesVisible">
+                                                            <LogLabel [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName"
+                                                                      [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td style="width: 100px;" *ngIf="IsBetweenDatesVisible">
+                                                            <LogDatePicker [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName"
+                                                                           [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                        </td>
                                                         <td>
                                                             <div></div>
                                                         </td>
@@ -306,10 +329,9 @@
                                             </td>
 
                                             <td>
-                                                <ComboBox (SelectedItemChanged)="IncreaseValue = $event.code"
+                                                <ComboBox (SelectedItemChanged)="Increase = $event"
                                                           [ItemsSource]="IncreaseDecreases"
-                                                          [SelectedItem]="GetSelectedIncrease()"
-                                                          [Binding]="'name'"
+                                                          [SelectedItem]="Increase"
                                                           [IsDisabled]="!TimeOverTime">
                                                 </ComboBox>
                                             </td>

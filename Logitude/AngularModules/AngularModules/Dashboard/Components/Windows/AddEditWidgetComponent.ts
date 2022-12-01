@@ -14,6 +14,7 @@ import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 import { retry } from 'rxjs/operators';
 import { Guid } from 'Infrastructure/Utilities/Guid';
+import { Console } from 'console';
 
 @Component({
     templateUrl: './AddEditWidgetComponent.html',
@@ -38,7 +39,8 @@ export class AddEditWidgetComponent extends BaseComponent {
     public SortByCodes = [];
     public PeriodOperators = ['After', 'Before', 'Previous', 'Current', 'Next', 'Between'];
     public SortByDirections = [{ name: 'Ascending', code: 'asc' }, { name: 'Descending', code: 'desc' }];
-    public IncreaseDecreases = [{ name: 'Positive', code: 'positive' }, { name: 'Negative', code: 'negative' }];
+    //public IncreaseDecreases = [{ name: 'Positive', code: 'positive' }, { name: 'Negative', code: 'negative' }];
+    public IncreaseDecreases = ['Positive', 'Negative'];
     public GroupByQueryFilters: ApiQueryFilters;
     public isGroupByVisible: boolean = true;
     public isSortByVisible: boolean = true;
@@ -46,6 +48,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     public isAdvancedSettingLinkVisible: boolean = true;
     public isAdvancedSettingForKPI: boolean = false;
     public isAdvancedSettingForChart: boolean = false;
+    public IsBetweenDatesVisible: boolean = false;
 
     constructor() {
         super();
@@ -61,6 +64,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         if (this.isNew) {
             this.isAdvancedSettingLinkVisible = false;
         }
+
         this.ComputeChartImageSrc();
         this.BuildMeasures();
         this.CheckMeasureAddVisiblity();
@@ -70,6 +74,8 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.InitView();
         this.SetUIProperties();
         this.SetAdvanceSettingItems();
+        this.SetTimeOverTimeValue();
+        this.SetUIForOperator();
 
     }
     SetUIProperties() {
@@ -199,9 +205,16 @@ export class AddEditWidgetComponent extends BaseComponent {
             this.InitView();
             this.SetMaximumGrouping();
             this.SetAdvanceSettingItems();
+            this.SetTimeOverTimeDefaultValue();
             this.SetTimeOverTimeValue();
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget Type Change ", Message: "Changed To" + this.EntityPM.TypeCode, DashboardId: this.DashboardPM?.Id });
             this.isAdvancedSettingLinkVisible = true;
+        }
+    }
+
+    private SetTimeOverTimeDefaultValue(){
+        if (this.TypeCode != "kpi"){
+            this.TimeOverTime = false;
         }
     }
 
@@ -213,7 +226,10 @@ export class AddEditWidgetComponent extends BaseComponent {
             this.Increase = null;
             return;
         }
-        this.Increase = this.Increase ? "Positive" : this.Increase;
+
+        this.Increase = this.Increase ? this.Increase : "Postive";
+        //this.selectedIncDecItem = this.IncreaseDecreases.filter(d => d.code == this.Increase ? this.Increase : "positive")[0];
+        
     }
 
     private isAdvancedSettingVisible: boolean = false;
@@ -245,6 +261,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         else
             this.MaximumGrouping = null;
     }
+   
 
     InitView() {
         this.isGroupByVisible = this.TypeCode != "kpi";
@@ -335,8 +352,17 @@ export class AddEditWidgetComponent extends BaseComponent {
     get ComparisonOperator() { return this.EntityPM.ComparisonOperator; }
     set ComparisonOperator(value: string) {
         if (this.EntityPM.ComparisonOperator != value) {
-            this.EntityPM.ComparisonOperator = value;
+            this.EntityPM.ComparisonOperator = value;            
+            
+            this.SetUIForOperator();
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget Comparison Period Value Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
+        }
+    }
+    SetUIForOperator() {
+        this.IsBetweenDatesVisible = false;
+
+        if (this.ComparisonOperator == "Between") {
+            this.IsBetweenDatesVisible = true;
         }
     }
     get ComparisonPeriod() { return this.EntityPM.ComparisonPeriod; }
@@ -362,6 +388,20 @@ export class AddEditWidgetComponent extends BaseComponent {
     }
    
 
+    get FromDate() { return this.EntityPM.FromDate; }
+    set FromDate(value: Date) {
+        if (this.EntityPM.FromDate != value) {
+            this.EntityPM.FromDate = value;
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget From Date Value Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
+        }
+    }
+    get ToDate() { return this.EntityPM.ToDate; }
+    set ToDate(value: Date) {
+        if (this.EntityPM.ToDate != value) {
+            this.EntityPM.ToDate = value;
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget To Date Value Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
+        }
+    }
 
     public GetSelectedSort() {
         return this.SortByCodes.find(x => x.Code == this.SortBy);
@@ -369,9 +409,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     public GetSelectedSortDirection() {
         return this.SortByDirections.find(x => x.code == this.SortDirection);
     }
-    public GetSelectedIncrease() {
-        return this.IncreaseDecreases.find(x => x.code == this.Increase);
-    }
+   
 
     public selectedGroupField: AnalyticsFactsFieldsMetaDataList = null;
     get SelectedGroupField() { return this.selectedGroupField; }
@@ -392,6 +430,19 @@ export class AddEditWidgetComponent extends BaseComponent {
 
     }
 
+
+//     private selectedIncDecItem:any;
+// get SelectedIncDecItem(){ return this.selectedIncDecItem;}
+// set SelectedIncDecItem(value: any) {
+// if(this.selectedIncDecItem != value){
+//     this.selectedIncDecItem = value;
+
+//     this.Increase = null;
+//     if(value){
+//         this.Increase = value.code;
+//     }
+// }
+// }
 
     SetDefaultSortByField() {
         if (!this.selectedGroupField) return;
@@ -453,6 +504,28 @@ export class AddEditWidgetComponent extends BaseComponent {
         if (this.isSortByVisible && !this.SortDirection) {
             errors.push("Sort By Direction Field is Required");
         }
+        if(this.TypeCode == "kpi" && this.TimeOverTime && !this.ComparisonOperator){
+            errors.push("Comparison Operater Field is Required");
+        }
+        if(this.TypeCode == "kpi" && this.TimeOverTime && !this.ComparisonPeriod && this.ComparisonOperator != "Between"){
+            errors.push("Comparison Period Field is Required");
+        }
+        if(this.TypeCode == "kpi" && this.TimeOverTime && !this.ComparisonDateGroup && this.ComparisonOperator != "Between"){
+            errors.push("Comparison Date Group Field is Required");
+        }
+        if(this.TypeCode == "kpi" && this.TimeOverTime && !this.Increase){
+            errors.push("Increase Field is Required");
+        }
+        if(this.TypeCode == "kpi" && this.TimeOverTime && this.ComparisonOperator == "Between" && !this.FromDate){
+            errors.push("From Date Field is Required");
+        }
+        if(this.TypeCode == "kpi" && this.TimeOverTime && this.ComparisonOperator == "Between" && !this.ToDate){
+            errors.push("To Date Field is Required");
+        }
+        if(this.TypeCode == "kpi" && this.TimeOverTime && this.ComparisonOperator == "Between" && this.FromDate && this.ToDate && this.FromDate > this.ToDate){
+            errors.push("From Date Value should be Before To Date Value");
+        }
+
         this.ValidateMeasures(errors);
         this.ValidateSort(errors);
         if (this.RootFilter && this.RootFilter.QueryFilterItems && this.RootFilter.QueryFilterItems.length != 0) this.ValidateFilters(errors, this.RootFilter);
@@ -527,10 +600,13 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.myCloner.AddField('SortDirection');
         this.myCloner.AddField('SortBy');
         this.myCloner.AddField('MaximumGrouping');
+        this.myCloner.AddField('TimeOverTime');
         this.myCloner.AddField('ComparisonOperator');
         this.myCloner.AddField('ComparisonPeriod');
         this.myCloner.AddField('ComparisonDateGroup');
         this.myCloner.AddField('Increase');
+        this.myCloner.AddField('FromDate');
+        this.myCloner.AddField('ToDate');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DashboardPM);
 

@@ -136,6 +136,18 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="FromDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ToDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="GroupById"
     ReferencedTable="AnalyticsFactsFieldsMetaDatas"
