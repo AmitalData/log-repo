@@ -80,6 +80,7 @@ export class WarehouseHelper {
         });
     }
     SetWarehouseData(result: CardList, shipmentPM: ShipmentPM) {
+        shipmentPM.WarehouseLegAddressId = AppTool.IsNullOrEmpty(shipmentPM.WarehouseLegAddressId) ? result.MainAddressId : shipmentPM.WarehouseLegAddressId;
         if (result.WarehouseTypeCode == "CFS") {
             shipmentPM.IsCFSWarehouse = true;
             this.SetStorageDefaults(result, shipmentPM);
