@@ -46,7 +46,8 @@ export class AddEditScreenComponent extends BaseComponent {
 
     FillScreenTypes() {
         this.ScreenTypes.push(new ScreenTypeDetails("Grid", "Grid Screen Layout"));
-        this.ScreenTypes.push(new ScreenTypeDetails("LIGHTENING", "Form Screen Layout"));
+        this.SelectedScreenType = this.ScreenTypes[0];
+        //this.ScreenTypes.push(new ScreenTypeDetails("LIGHTENING", "Form Screen Layout"));
     }
 
     SetWindowArgs(args: any) {
