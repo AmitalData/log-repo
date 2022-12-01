@@ -3,7 +3,7 @@
 	<Sql Version="1">
 		<![CDATA[
 		CREATE INDEX interfaceTypeCodeIndex
-		ON dbo.QUEUEMESSAGES (interfaceTypeCode); 
+		ON dbo.QUEUEMESSAGES (interfaceTypeCode) 
 		]]>
 		
 	</Sql>
