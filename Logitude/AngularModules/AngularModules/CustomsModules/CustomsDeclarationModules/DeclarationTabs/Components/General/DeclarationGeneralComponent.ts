@@ -243,7 +243,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
                     this.checkImportersVisibility();
                     this.DisplayOnlyCheck();
                     this.getExportStorageData();
-                    
+
                 }
 
                 this.ShowXMLErrors(args.DeclarationError);
@@ -494,7 +494,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
         this.RecipientList?.forEach(element => {
             element.SetScreenFieldsEditability();
         });
-        
+
         this.IsImporerCodeEnabled = !this.IsDisplayOnly;
         this.IsTransferImporterEnabled = !this.IsDisplayOnly;
         this.IsEntitleImporterEnabled = !this.IsDisplayOnly;
@@ -561,7 +561,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
             this.EntityPM.ImporterCode = newValue;
         }
     }
-         
+
 
     public get ImporterCode() { return this.EntityPM.ImporterCode; }
     public set ImporterCode(newValue: string) {
@@ -640,7 +640,8 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
     public set TransferExporterCode(newValue: string) {
         if (this.EntityPM.TransferExporterCode != newValue) {
             this.EntityPM.TransferExporterCode = newValue;
-            this.EntityPM.TransferImporterCode = newValue;}
+            this.EntityPM.TransferImporterCode = newValue;
+        }
     }
 
     public get TransferImporterCode() {
@@ -769,16 +770,16 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
     setRequiredTranssshipment() {
 
         if (this.EntityPM.Direction == 'E' && this.EntityPM.DeclarationTypeCode == '3' && this.ExportDeclarationOfficeCode == null) {
-           
-                this.UIProperties.SetWarning('ExportDeclarationOfficeCode', 'Customs.Declaration', true);
-                
-           
+
+            this.UIProperties.SetWarning('ExportDeclarationOfficeCode', 'Customs.Declaration', true);
+
+
 
         }
-        else{
+        else {
             this.UIProperties.SetWarning('ExportDeclarationOfficeCode', 'Customs.Declaration', false);
         }
-        
+
 
 
     }
@@ -1443,7 +1444,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
         if (!AppTool.IsNullOrEmpty(tab)) {
 
             let msg: string = TextCodeTranslator.Translate("Customs.Declaration.O.DeleteConsignment");
-            if(this.EntityPM.Direction === 'E' && this.EntityPM.TransportModeId === 'O' && tab.EntityPM.ExportStoragesId)
+            if (this.EntityPM.Direction === 'E' && this.EntityPM.TransportModeId === 'O' && tab.EntityPM.ExportStoragesId)
                 msg = TextCodeTranslator.Translate("Customs.Declaration.O.ConnectedDelcaration") + '\n' + msg;
 
             var confirmWindow = new ConfirmWindow();
@@ -1501,7 +1502,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
     }
     ChangeTransportMode() {
-        if (!AppTool.IsNullOrEmpty(this.DeclarationOfficeCode) && this.EntityPM.Direction!="E") {
+        if (!AppTool.IsNullOrEmpty(this.DeclarationOfficeCode) && this.EntityPM.Direction != "E") {
             this.customsHouseTypeExtendedPMService.GetHouseTypewithAdditional(this.DeclarationOfficeCode).subscribe((result: ServiceResponse) => {
                 if (!AppTool.IsNullOrEmpty(result.Result)) {
 
@@ -1544,6 +1545,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
 
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
         declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.EntityPM).subscribe((response: any) => {
+            
             var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
             this.IsDisplayOnly = displayOnlyCheckResult.IsDisplayOnly;
             if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
@@ -1562,7 +1564,10 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
                 this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
             }
 
-
+            else if (this.EntityPM.ErrosXml.includes("Exception")) {
+                this.DisplayOnlyMessage = displayOnlyCheckResult.DisplayOnlyMessage;
+                this.IsDisplayMessage=true;
+            }
 
             this.SetScreenFieldsEditability();
             DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
@@ -1578,11 +1583,11 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
             tab.Parent = this.EntityPM;
             tab.Code = item.SequenceNumeric.toString();
             tab.Header = (item.ManifestNumber ? (item.ManifestNumber + '-') : '') + item.SequenceNumeric;
-            if(this.EntityPM.Direction=='E'&&this.EntityPM.TransportModeId=='O'&& !AppTool.IsNullOrEmpty(item.ConsignmentPackages[0]?.MarksNumbers)) {
-               
-                tab.Title =(item.ConsignmentPackages[0].MarksNumbers + '-')  + item.SequenceNumeric;
+            if (this.EntityPM.Direction == 'E' && this.EntityPM.TransportModeId == 'O' && !AppTool.IsNullOrEmpty(item.ConsignmentPackages[0]?.MarksNumbers)) {
+
+                tab.Title = (item.ConsignmentPackages[0].MarksNumbers + '-') + item.SequenceNumeric;
             }
-          
+
             tab.ComponentPath = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/ConsigmentTabContent/ConsigmentTabContentComponent";
             this.ConsigmentTabs.push(tab);
         }
@@ -1610,7 +1615,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
             var requiredFields = response.Result;
             requiredFields.forEach((field) => {
                 var objectField = window.ObjectFields.filter(d => d.FieldCode == field.ObjectfieldCode)[0];
-                if(objectField)
+                if (objectField)
                     this.UIProperties.SetWarning(objectField.FieldName, 'Customs.Declaration', true);
             });
         });
@@ -1619,9 +1624,9 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
 
     }
 
-    
+
     async getExportStorageData() {
-        this.exportStorageConnectToDeclaration =  await new DeclarationWebService().getExportStorageConnectToDeclaration(this.EntityPM.Id);
+        this.exportStorageConnectToDeclaration = await new DeclarationWebService().getExportStorageConnectToDeclaration(this.EntityPM.Id);
         console.log(this.exportStorageConnectToDeclaration)
     }
 
@@ -1662,7 +1667,7 @@ export class DeclarationExportRecipientModel extends BaseComponent {
 
 
     }
-    public SetScreenFieldsEditability():void{
+    public SetScreenFieldsEditability(): void {
         this.UIProperties.SetEnabled("RecipientIssueCountryCode", this.ObjectTableName, !this.Parent.IsDisplayOnly);
         this.UIProperties.SetEnabled("RecipientAddress", this.ObjectTableName, !this.Parent.IsDisplayOnly);
         this.UIProperties.SetEnabled("RecipientName", this.ObjectTableName, !this.Parent.IsDisplayOnly);

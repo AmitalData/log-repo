@@ -31,6 +31,7 @@ export class DeclarationDisplayOnlyChecks {
 
     public DeclarationViewDisplayOnlyChecks(entityPM: DeclarationPM) {
         var editComponentNeedsRefresh: boolean = null;
+        
         if (this.CurrentSession.CurrentEditComponent) {
             editComponentNeedsRefresh = this.CurrentSession.CurrentEditComponent.EditComponentController.MustRefresh;
         }
@@ -58,6 +59,7 @@ export class DeclarationDisplayOnlyChecks {
                 if (this.CurrentSession.CurrentEditComponent) {
                     this.CurrentSession.CurrentEditComponent.IsSaveBtnDisable = true;
                 }
+                
                 serviceResponse.Result = new DisplayOnlyCheckResult(true, message);
                 return of(serviceResponse);
             });
@@ -65,6 +67,7 @@ export class DeclarationDisplayOnlyChecks {
         if (this.entityPM.CancelRequestStatusCode == "2") {
             return defer(() => {
                 var message = TextCodeTranslator.Translate("Customs.Declaration.O.CancelRequestSent");
+                
                 serviceResponse.Result = new DisplayOnlyCheckResult(true, message);
                 return of(serviceResponse);
             });
@@ -87,6 +90,7 @@ export class DeclarationDisplayOnlyChecks {
                 if (this.CurrentSession.CurrentEditComponent) {
                     this.CurrentSession.CurrentEditComponent.IsSaveBtnDisable = true;
                 }
+                
                 return of(serviceResponse);
             });
         }
@@ -94,6 +98,7 @@ export class DeclarationDisplayOnlyChecks {
             return defer(() => {
                 var text = this.CurrentSession.CurrentEditComponent.EditComponentController.MustRefreshMessage;
                 serviceResponse.Result = new DisplayOnlyCheckResult(true, text);
+                
                 return of(serviceResponse);
             });
             
@@ -113,6 +118,7 @@ export class DeclarationDisplayOnlyChecks {
                         editComponentNeedsRefresh = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefresh;
                         SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefreshMessage = errorMessage;
                         serviceResponse.Result = new DisplayOnlyCheckResult(true, errorMessage);
+                        
                         return serviceResponse;
                     }
                 }
@@ -132,6 +138,7 @@ export class DeclarationDisplayOnlyChecks {
                         editComponentNeedsRefresh = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefresh;
                         SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefreshMessage = errorMessage;
                         serviceResponse.Result = new DisplayOnlyCheckResult(true, errorMessage);
+                        
                         return serviceResponse;
                     }
                 }
@@ -151,6 +158,7 @@ export class DeclarationDisplayOnlyChecks {
                     editComponentNeedsRefresh = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefresh;
                     SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefreshMessage = errorMessage;
                     serviceResponse.Result = new DisplayOnlyCheckResult(true, errorMessage);
+                    
                     return serviceResponse;
                 }
             }
@@ -161,6 +169,7 @@ export class DeclarationDisplayOnlyChecks {
             {
                 return defer(() => {
 
+
                      var errorMessage: string = this.entityPM.AmendmentMessage;
                     SessionLocator.SelectedSession.CurrentEditComponent.IsSaveBtnDisable = true;
                     SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefresh = true;
@@ -168,6 +177,7 @@ export class DeclarationDisplayOnlyChecks {
                     SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefreshMessage = errorMessage;
                     serviceResponse.Result = new DisplayOnlyCheckResult(this.entityPM.IsAmendmentDisplayOnly, errorMessage);
                    // return serviceResponse;
+                   
                     return of(serviceResponse);
                 });
              }
@@ -178,15 +188,26 @@ export class DeclarationDisplayOnlyChecks {
         return defer(() => {
           return this.http.get(this.apiUrl + '/GetRequestInProgress/?' + 'tenant=' + entityPM.Tenant + '&interfaceTypeCode= 2750' + '&objectTableId1=' + "" + '&entityId1=' + "" + '&objectTableId2=' + "" + '&entityId2=' + "" + '&customFileNo=' + entityPM.CustomFileNo + '&displayOnlyMode= true', ServiceHelper.GetHttpHeaders())
                 .pipe(map(response => {
+                    
+                    
                     var serviceResponse: ServiceResponse = new ServiceResponse();
                     var requestSheets:any = response;
+                    if((requestSheets == null || requestSheets.length == 0)  || requestSheets[0].InterfaceTypeCode==null 
+                    && this.entityPM.ErrosXml.includes('Exception')){
+                         serviceResponse.Result = new DisplayOnlyCheckResult(false, "התקבלה הודעת שגיאה במסך תשובה לתיק");
+                       
+                        
+                        return serviceResponse;
+                    }
                     if ((requestSheets == null || requestSheets.length == 0) && !editComponentNeedsRefresh) {
                         if (this.CurrentSession.CurrentEditComponent) {
                             this.CurrentSession.CurrentEditComponent.IsSaveBtnDisable = false;
                             this.CurrentSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = false;
 
                         }
+                        
                         serviceResponse.Result = new DisplayOnlyCheckResult(false, "");
+                        
                         return serviceResponse;
                     }
                     else if ((requestSheets[0].InterfaceTypeCode == null || requestSheets[0].InterfaceTypeCode == undefined) && !editComponentNeedsRefresh) {//DUMMY From ITZIK
@@ -195,7 +216,9 @@ export class DeclarationDisplayOnlyChecks {
                             this.CurrentSession.CurrentEditComponent.IsSaveBtnDisable = false;
                             this.CurrentSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = false;
                         }
+                        
                         serviceResponse.Result = new DisplayOnlyCheckResult(false, "");
+                        
                         return serviceResponse;
 
                         //if (this.entityPM.ConcurrencyGUID != requestSheets[0].MainEntityConcurrencyGUID) {
@@ -223,6 +246,7 @@ export class DeclarationDisplayOnlyChecks {
                                 this.CurrentSession.CurrentEditComponent.EditComponentController.MustRefreshMessage = text;
                             }
                             serviceResponse.Result = new DisplayOnlyCheckResult(true, text);
+                            
                             return serviceResponse;
                         };
                         if (requestSheets[0].InterfaceTypeCode == "2755" && requestSheets[0].FutureSendDateTime) {
@@ -251,6 +275,7 @@ export class DeclarationDisplayOnlyChecks {
                                     this.CurrentSession.CurrentEditComponent.EditComponentController.MustRefreshMessage = text;
                                 }
                                 serviceResponse.Result = new DisplayOnlyCheckResult(true, text);
+                                
                                 return serviceResponse;
                             }
 
@@ -265,6 +290,7 @@ export class DeclarationDisplayOnlyChecks {
                                 editComponentNeedsRefresh = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefresh;
                                 SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefreshMessage = errorMessage;
                                 serviceResponse.Result = new DisplayOnlyCheckResult(true, errorMessage);
+                                
                                 return serviceResponse;
                             }
                             return returnDefualt();
