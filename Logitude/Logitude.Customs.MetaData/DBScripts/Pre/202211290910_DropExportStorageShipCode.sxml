@@ -3,7 +3,7 @@
   <Sql Version="1">
 	  <![CDATA[
 		ALTER TABLE customs.EXPORTSTORAGES
-		DROP COLUMN ShipCode;
+		DROP COLUMN ShipCode
 	  ]]> 
   </Sql>
 
