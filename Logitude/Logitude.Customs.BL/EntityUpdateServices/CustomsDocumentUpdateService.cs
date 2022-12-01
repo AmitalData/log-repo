@@ -95,7 +95,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //{
             var customDocumentTypeMetaDataQuery = new CustomDocumentTypeMetaDataQueryService(customContext);
             var customsDocumentMetaDataValueQueryService = new CustomsDocumentMetaDataValueQueryService(customContext);
-            var metaDataPoco = customsDocumentMetaDataValueQueryService.GetMulti(new Data.EntityKeys.CustomsDocumentKeys { DocumentsFilingId = entityPM.DocumentId }, false);
+            var metaDataPoco = customsDocumentMetaDataValueQueryService.GetMulti(new Data.EntityKeys.CustomsDocumentKeys { DocumentsFilingId = entityPM.DocumentsFilingId }, false);
             var CustomDocumentTypeMetaData = customDocumentTypeMetaDataQuery.GetCustomDocumentTypeMetaDataByType(entityPM.DocumentTypeCode);
 
             var deleteItems = metaDataPoco.Where(x => CustomDocumentTypeMetaData.Find(y => x.MetaDataTypeCode == y.MetaDataTypeCode) == null).ToList();
