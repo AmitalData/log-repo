@@ -129,7 +129,21 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             ContactService newContactService = new ContactService(this.objectContext, this.tenant);
             newContactService.Update(entityPM);
         }
+        internal void DisableOldContact(string disableOldContactId, int tenant)
+        {
+            //update contacts  set inactive=1, computedkey  = id  where id='1-10622'
+            var oldContact =entityRepository.GetSingleContactForUpdate(disableOldContactId, tenant);
+            oldContact.InActive = true;
+            oldContact.Email = disableOldContactId;
+            //oldContact.ComputedKey = disableOldContactId;
+            
 
+            entityRepository.Update(oldContact);
+            entityRepository.SubmitChanges();
+
+
+
+        }
         public void Update(ContactPM entityPM)
         {
             this.isNewEntity = false;
@@ -297,6 +311,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
             }
         }
+
+        
+
         private void InitializeCustomerCard()
         {
             if (this.isNewEntity)
