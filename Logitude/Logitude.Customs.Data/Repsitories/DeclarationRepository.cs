@@ -47,6 +47,19 @@ namespace Logitude.Customs.Data.Repsitories
                     select a).FirstOrDefault();
         }
 
+        public Declaration GetDeclarationByConsignment(string cargoTypeCode, string manifestNumber, string secondCargoID, string thirdCargoID)
+        { 
+             var  query= (
+                    from d in context.Declarations
+                    join a in context.Consignments
+                     on d.Id equals a.DeclarationId
+                    where a.CargoTypeCode.ToLower() == cargoTypeCode.ToLower() & a.ManifestNumber.ToLower() == manifestNumber.ToLower()
+                 & a.SecondCargoID.ToLower() == secondCargoID.ToLower() & a.ThirdCargoID.ToLower() == thirdCargoID.ToLower()
+                    select d
+                        ).ToList().FirstOrDefault();
+            return query;
+        }
+
         public string GetLastAmendmentIdByCustomFileNo(string customFileNo, int tenant)
         {
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
@@ -210,28 +223,6 @@ namespace Logitude.Customs.Data.Repsitories
                 var maxCancelRequestNumber = list.Select(r => ((r.CancelRequestNumber).HasValue) ? r.CancelRequestNumber.Value : 0).ToList().Max();
                 max = (maxAmendmentRequestNumber > maxCancelRequestNumber) ? maxAmendmentRequestNumber : maxCancelRequestNumber;
             }
-
-            return max;
-        }
-        public int GetDeclarationMaxAmendmentRequestNumber(int tenant)
-        {
-            //var x=  (from a in context.Declarations
-            //         where a.Tenant == tenant
-            //         select Convert.ToInt32(a.AmendmentRequestNumber)).Max();
-
-
-            //  return (from a in context.Declarations
-            //          where  a.Tenant == tenant
-            //          select a).Max(rec => Convert.ToInt32( rec.AmendmentRequestNumber));
-
-            var list = (from a in context.Declarations
-                        where a.Tenant == tenant && a.AmendmentRequestNumber != null
-                        select a.AmendmentRequestNumber).ToList();
-
-            int max = 0;
-
-            if (list.Count() != 0)
-                max = list.Select(int.Parse).ToList().Max();
 
             return max;
         }
@@ -549,7 +540,7 @@ namespace Logitude.Customs.Data.Repsitories
         
 
 
-        public Declaration GetDeclarationByFunctionalReferenceID(string functionalReferenceID, int tenant)
+        public Declaration GetDeclarationByFunctionalReferenceID(string functionalReferenceID,string agentFileReferenceID, int tenant)
         {
             //Declaration declarationParent = (from a in context.Declarations
             //                           where declarationNumber == a.DeclarationNumber
@@ -557,7 +548,7 @@ namespace Logitude.Customs.Data.Repsitories
 
 
             Declaration declaration = (from a in context.Declarations
-                                       where functionalReferenceID == a.AmendmentRequestNumber && a.Tenant == tenant
+                                       where functionalReferenceID == a.AmendmentRequestNumber && a.Tenant == tenant && a.CustomFileNo == agentFileReferenceID
                                        select a).FirstOrDefault();
 
             return declaration;

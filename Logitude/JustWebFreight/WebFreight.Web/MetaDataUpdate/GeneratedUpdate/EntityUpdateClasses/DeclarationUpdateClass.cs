@@ -85,7 +85,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "4761ed1de54c3def9360bd827e9c609e";
+
+
+		public const string HashString = "76598a75dba01114e6304caa6e93c58d";
 
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
@@ -18764,6 +18766,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 Code =  "DCR",
                 EnglishName =  "Declaration Created From Recovery",
                 LocalName =  "ההצהרה הוקמה כתוצאה משחזור",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = DeclarationObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "EXT",
+                EnglishName =  "Exit from storage site",
+                LocalName =  "יציאה ממסוף מטען",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,

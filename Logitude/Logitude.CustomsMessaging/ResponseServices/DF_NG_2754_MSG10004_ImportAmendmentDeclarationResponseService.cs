@@ -32,6 +32,7 @@ using System.Transactions;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
 using Unifreight.BL.EntityPMs.UGenerated;
+using Logitude.Server.Tools.Counters;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -226,6 +227,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     declarationPM.ExcludeConsignment = declarationOrg.ExcludeConsignment;
                     //declarationPM.IsClose = declarationOrg.IsClose;
                     declarationPM.IsDiamondDeclaration = declarationOrg.IsDiamondDeclaration;
+                    declarationPM.AmendmentRequestNumber = CodeCounter.GetNumber("AmendmentRequestNumber", tenant).ToString();
+
                     if (declarationOrg.IsCourierDeclaration)
                     {
 
@@ -317,7 +320,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         else
 
                             declarationPM.AmendmentOriginalDeclartation = declarationOrg.Id;
-                        declarationPM.AmendmentRequestNumber = GetNextAmendmentRequestNumber(tenant);
+
                     }
                 }
 
@@ -592,15 +595,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 return null;
             }
         }
-        private string GetNextAmendmentRequestNumber(int tenent)
-        {
-            DeclarationQueryService declarationQueryService = new DeclarationQueryService(tenent);
 
-
-            return (declarationQueryService.GetDeclarationMaxAmendmentRequestNumber(tenent) + 1).ToString();
-
-
-        }
         private void DeleteSomeObjects(DeclarationPM declarationPM, int tenant, ICustomContext context)
         {
 

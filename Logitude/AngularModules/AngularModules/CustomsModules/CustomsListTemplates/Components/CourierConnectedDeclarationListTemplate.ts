@@ -96,47 +96,43 @@ export class CourierConnectedDeclarationListTemplate {
 
     }
 
-    OnConnectedCheckBoxChecked($event) {
-
-        if (!this.entityPM.NotConnectedDeclarations) {
+    OnConnectedCheckBoxChecked(checked: boolean) {
+        if (!this.entityPM.NotConnectedDeclarations)
             this.entityPM.NotConnectedDeclarations = "";
-        }
- 
-        this._courierMasterService.connectedSelectAll = false;
-                this.entityPM.NotConnectedDeclarations=   this.entityPM.NotConnectedDeclarations.replace("ALL", "");
+        
+        this.entityPM.NotConnectedDeclarations = this.entityPM.NotConnectedDeclarations.replace("ALL", "");
 
-        if (!$event) {
-            if (!this.entityPM.NotConnectedDeclarations.includes(this.rowData.Id)) {
-                this.entityPM.NotConnectedDeclarations = this.entityPM.NotConnectedDeclarations + this.rowData.Id + ",";
-            }
-        }
-        else {
-            if (this.entityPM.NotConnectedDeclarations.includes(this.rowData.Id)) {
- 
-                this.entityPM.NotConnectedDeclarations = this.entityPM.NotConnectedDeclarations.replace(this.rowData.Id + ",", "");
-            }
-        }
+        if (!checked) {
+            if (!this.entityPM.NotConnectedDeclarations.includes(this.rowData.Id))
+                this.entityPM.NotConnectedDeclarations += this.rowData.Id + ",";
+            
+        } else if (this.entityPM.NotConnectedDeclarations.includes(this.rowData.Id))
+            this.entityPM.NotConnectedDeclarations = this.entityPM.NotConnectedDeclarations.replace(this.rowData.Id + ",", "");
 
+
+        if((this._courierMasterService.connectedSelectAll && checked) || (!this._courierMasterService.connectedSelectAll && !checked))
+            this._courierMasterService.connectedItems.Remove(this.rowData.Id)
+        else
+            this._courierMasterService.connectedItems.Insert(this.rowData.Id)
     }
 
-    OnNotConnectedCheckBoxChecked($event) {
-        if (!this.entityPM.ConnectedDeclarations) {
-            this.entityPM.ConnectedDeclarations = "";
-        }
- 
-        this._courierMasterService.disconnectedSelectAll = false;
-             this.entityPM.ConnectedDeclarations = this.entityPM.ConnectedDeclarations.replace("ALL", "");
-        if ($event) {
-            if (!this.entityPM.ConnectedDeclarations.includes(this.rowData.Id)) {
-                this.entityPM.ConnectedDeclarations = this.entityPM.ConnectedDeclarations + this.rowData.Id + ",";
-            }
-        }
-        else {
-            if (this.entityPM.ConnectedDeclarations.includes(this.rowData.Id)) {
- 
-                this.entityPM.ConnectedDeclarations = this.entityPM.ConnectedDeclarations.replace(this.rowData.Id + ",", "");
-            }
-        }
+    OnNotConnectedCheckBoxChecked(checked: boolean) {
+        if (!this.entityPM.ConnectedDeclarations)
+            this.entityPM.ConnectedDeclarations = "";        
+         
+        this.entityPM.ConnectedDeclarations = this.entityPM.ConnectedDeclarations.replace("ALL", "");
+
+        if (checked) {
+            if (!this.entityPM.ConnectedDeclarations.includes(this.rowData.Id))
+                this.entityPM.ConnectedDeclarations += this.rowData.Id + ",";
+
+        } else if (this.entityPM.ConnectedDeclarations.includes(this.rowData.Id))
+            this.entityPM.ConnectedDeclarations = this.entityPM.ConnectedDeclarations.replace(this.rowData.Id + ",", "");
+
+        if((this._courierMasterService.disconnectedSelectAll && checked) || (!this._courierMasterService.disconnectedSelectAll && !checked))
+            this._courierMasterService.disconnectedItems.Remove(this.rowData.Id)
+        else
+            this._courierMasterService.disconnectedItems.Insert(this.rowData.Id)
     }
 
 

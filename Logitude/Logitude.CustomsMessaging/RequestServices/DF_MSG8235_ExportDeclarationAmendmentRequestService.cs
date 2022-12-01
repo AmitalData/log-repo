@@ -45,6 +45,7 @@ using Unifreight.Data.AmitalModel.Repsitories;
 using Simplog.Data.Helpers;
 using Logitude.Customs.BL.BL;
 using UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference;
+using Logitude.Server.Tools.Counters;
 
 namespace Logitude.CustomsMessaging.RequestServices
 {
@@ -317,7 +318,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             //{
                 req.Response.FunctionalReferenceID = new ResponseFunctionalReferenceIDType
                 {
-                    Value = string.IsNullOrEmpty(_DeclarationPM.AmendmentRequestNumber) ? GetNextAmendmentRequestNumber() : _DeclarationPM.AmendmentRequestNumber
+                    Value = string.IsNullOrEmpty(_DeclarationPM.AmendmentRequestNumber) ?  CodeCounter.GetNumber("AmendmentRequestNumber", _DeclarationPMOrg.Tenant).ToString() : _DeclarationPM.AmendmentRequestNumber
                 };
                 functionalReferenceID = req.Response.FunctionalReferenceID.Value;
 
@@ -395,19 +396,6 @@ namespace Logitude.CustomsMessaging.RequestServices
             declarationUpdateService.Update(_DeclarationPM, true);
         }
 
-        private string GetNextAmendmentRequestNumber()
-        {
-           DeclarationQueryService declarationQueryService = new DeclarationQueryService(_DeclarationPMOrg.Tenant);
-
-            //var declarations=  declarationQueryService.GetDeclarationAmendmentsById(_DeclarationPMOrg.Tenant, _DeclarationPMOrg.Id);
-
-            //return (Convert.ToInt32( declarations.Max(x => x.AmendmentRequestNumber) )+ 1).ToString();
-
-
-            return (declarationQueryService.GetDeclarationMaxAmendmentRequestNumber(_DeclarationPMOrg.Tenant)+1).ToString();
-
-
-         }
 
         private ResponseAdditionalInformation[] AdditionalInformation()
         {
