@@ -21,13 +21,10 @@
                     <div></div>
                 </td>
 
-                <td style="width:1px;" *ngIf="!IsEditLayoutModeActive">
-                    <IconButton [Left]="3" [Name]="'Refresh'" [IsSmall]="true" (click)="RefreshLayoutClicked()"></IconButton>
-                </td>
-
-                <td class="Table-cell2">
+                
+                <!-- <td class="Table-cell2">
                     <div></div>
-                </td>
+                </td> -->
 
                 <td>
                     <IconButton *ngIf="IsEditDashboardButtonVisible" [Left]="3" [Name]="'Edit'" [IsSmall]="true" (click)="EditDashboardClicked()"></IconButton>
@@ -56,20 +53,16 @@
                 <td style="width: 55px; min-width: 55px;" *ngIf="IsEditLayoutModeActive">
                     <button class="BlueButton" (click)="AddWidgetClicked()">Add Widget</button>
                 </td>
-
+              
                 <td class="Table-cell05">
                     <div></div>
                 </td>
 
-                <td style="width:1px;">
+                <!-- <td style="width:1px;">
                     <IconButton *ngIf="IsEditLayoutButtonVisible" [Left]="3" [Name]="'Edit'" [IsSmall]="true" (click)="EditLayoutClicked()"></IconButton>
-                </td>
+                </td> -->
 
-                <td class="Table-cell05">
-                    <div></div>
-                </td>
-
-                <td *ngIf="!IsEditLayoutModeActive" style="width: 17px; vertical-align: middle;">
+                <!-- <td *ngIf="!IsEditLayoutModeActive" style="width: 17px; vertical-align: middle;">
                     <img *ngIf="IsGlobalFiltersOpened == false" src="./Images/FilterGrayTrans.png" style="cursor: pointer;" (click)="OpenFilterAreaClick()" class="CenterCenter" />
                     <img *ngIf="IsGlobalFiltersOpened == true" src="./Images/FilterGrayTrans.png" style="cursor: pointer;" (click)="CloseFilterAreaClick()" class="CenterCenter" />
                 </td>
@@ -80,7 +73,55 @@
                 <td *ngIf="!IsEditLayoutModeActive" style="width: 12px; vertical-align: middle;">
                     <img *ngIf="IsGlobalFiltersOpened == false" src="./Images/FiltersOpen.png" style="cursor: pointer;" (click)="OpenFilterAreaClick()" class="CenterCenter" />
                     <img *ngIf="IsGlobalFiltersOpened == true" src="./Images/FiltersClose.png" style="cursor: pointer;" (click)="CloseFilterAreaClick()" class="CenterCenter" />
+                </td> -->
+                
+                    
+                <td style="width: 87px; min-width: 87px; height: 22px;" *ngIf="!IsEditLayoutModeActive">
+                    <button  class="TabButton"  (click)="OpenFilterAreaClick()" *ngIf="IsGlobalFiltersOpened == false">
+                       <img style="width: 12px; height: 13px;" src="./Images/FilterGrayTrans.png" />
+                       Show filters
+                       <!-- <LogLabel [Text]="'Show filters'" [NoObjectField]="true" style="width: 63px; height: 12px;">Show filters</LogLabel> -->         
+                </button>
+
+                    <button class="TabButton" *ngIf="IsGlobalFiltersOpened == true" (click)="CloseFilterAreaClick()">
+                        <img style="width: 12px; height: 13px" src="./Images/FilterGrayTrans.png" />
+                     Hide filters</button>
                 </td>
+                
+                <td class="Table-cell05" *ngIf="!IsEditLayoutModeActive">
+                    <div></div>
+                </td>
+
+                <td style="width: 105px;" *ngIf="IsEditLayoutButtonVisible">
+                    <button class="TabButton" (click)="EditLayoutClicked()">
+                       <img style="width: 12px; height: 13px" src="./Images/Buttons/Edit.png" />
+                    Edit dashboard</button>
+                </td>
+                
+                <td class="Table-cell05" *ngIf="!IsEditLayoutModeActive">
+                    <div></div>
+                </td>
+                <!-- <td style="width:30px; vertical-align: middle;"  *ngIf="!IsEditLayoutModeActive">
+                    <IconButton style="width:90px; vertical-align: middle;" [Name]="'Refresh'" [Left]="3" (click)="RefreshLayoutClicked()">Refresh</IconButton>
+                </td> -->
+                <td style="width: 69px;" *ngIf="!IsEditLayoutModeActive">
+                    <button class="TabButton" (click)="RefreshLayoutClicked()">
+                       <img style="width: 15px; height: 17px" src="./Images/Buttons/Refresh.png" />
+                    Refresh</button>
+                </td>
+                <td class="Table-cell05" *ngIf="!IsEditLayoutModeActive">
+                    <div></div>
+                </td>
+                <td style="width:24px; vertical-align: middle;" *ngIf="!IsEditLayoutModeActive">
+                    <button class="TabButton">
+                        <img style="width:2px; height: 12px; position: absolute; left: 43.75%; right: 43.75%; top: 12.5%; bottom: 12.5%;" class="p-button-icon p-c pi pi-ellipsis-v" />
+                     </button>
+                    <!-- <IconButton style="width:2px; height: 12px; vertical-align: middle;" src="./Images/Buttons/verticaldots.png"></IconButton> -->
+                </td>
+                <td class="Table-cell05" *ngIf="!IsEditLayoutModeActive">
+                    <div></div>
+                </td>
+               
             </tr>
         </table>
     </div>
@@ -119,4 +160,5 @@
         </div>
     </div>
 
+    
 </div>

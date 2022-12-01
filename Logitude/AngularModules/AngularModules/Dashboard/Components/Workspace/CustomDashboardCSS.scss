@@ -141,3 +141,36 @@
     display: table; 
     margin: 0 auto;
 }
+.TabButton{
+     font-size: 12px;
+     color: #46494A; 
+     font-family: 'Roboto';
+     font-style: normal;
+     
+    // background: linear-gradient(#F8FAFB,#C9D5E4); 
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 5px 4px;
+    gap: 4px;
+    height: 22px;
+    background: linear-gradient(180deg, #F8FAFB 20.94%, #C9D5E4 77.13%);
+    border: 1px solid #708197;
+    border-radius: 4px;
+
+}
+.Dashboard-create-button{
+    font-family: 'Roboto';
+    font-style: normal; 
+    color: #46494A;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 100%;
+    text-align: center;
+    background: linear-gradient(180deg, #FFFFFE 0%, #E8C39B 100%); 
+    border: 1px solid #708197;
+    border-radius: 4px;
+    top: 6px;
+    left: 4px;
+}
