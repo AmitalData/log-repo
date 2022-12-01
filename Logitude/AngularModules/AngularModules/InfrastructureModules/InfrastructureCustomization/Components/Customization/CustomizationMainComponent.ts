@@ -29,6 +29,7 @@ export class CustomizationMainComponent {
     private entityResourceService: EntityResourceService
     private CurrentSession = SessionLocator.SelectedSession;
     public NumberOfItems: number = 0;
+    public IsEnabledCreatingCustomObjects: boolean = false;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
 
     constructor() {
@@ -58,6 +59,7 @@ export class CustomizationMainComponent {
     LoadPermessions() {
         this.IsObjectTableFilterEnabled = this.SetIsObjectTableFilterEnabled();
         this.IsCustomizationToggleActive = SessionLocator.FeatureToggles.some(d => d.ToggleCode == "CUS");
+        this.IsEnabledCreatingCustomObjects = FeatureLocator.HasFeaturePermession("General", "Customization.CreateSubObjects");
     }
 
     SetIsObjectTableFilterEnabled(): boolean {

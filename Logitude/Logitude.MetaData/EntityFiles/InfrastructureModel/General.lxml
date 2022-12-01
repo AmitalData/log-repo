@@ -37,7 +37,8 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;a232&quot;"
+
+  Code="&quot;ac2c&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -7735,6 +7736,15 @@
       FeatureTypeCode="&quot;MENU&quot;"
       FeatureTextCodeCode="&quot;General.Features.CUSTOMDASHBOARD&quot;"
       FeatureDefaultText="&quot;Custom Dashboard&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;Customization.CreateSubObjects&quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;General.Features.Customization.CreateSubObjects&quot;"
+      FeatureDefaultText="&quot;Create Sub Objects&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
