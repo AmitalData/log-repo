@@ -41,7 +41,7 @@
                                 <td style="width:300px; text-align: end;">
                                     <div style="display:inline-flex">
                                         <SearchBox style="width:140px; margin-right:5px" [attr.data-cy]="'CustomizationSearch'" [SearchText]="SearchText" (TextChanged)="SearchTextChanged($event)"></SearchBox>
-                                        <button *ngIf="IsEnabledCreatingCustomObjects" class="Button" style="width:140px; margin-left:5px" (click)="NewCustomEntityClicked()" disabled>New Custom Entity</button>
+                                        <button *ngIf="IsEnabledCreatingCustomObjects" class="Button" style="width:140px; margin-left:5px" (click)="NewCustomEntityClicked()">New Custom Entity</button>
 
                                     </div>
 

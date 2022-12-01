@@ -31,7 +31,6 @@ export class SubEntitiesComponent {
     public SubEntitiesList: Array<ObjectTablePM>;
     private _entityResourceService: EntityResourceService;
     private textCodeTranslationPipe: TextCodeTranslationPipe;
-    public enableAddCustomChildEntity: boolean = false;
     public IsEnabledCreatingCustomObjects: boolean = false;
     public SupportSubEntity: boolean = false;
     constructor() {
@@ -44,7 +43,6 @@ export class SubEntitiesComponent {
     SetWindowArgs(args: any) {
         this.ObjectTableId = args['ObjectTableId'];
         this.IsObjectTableFilterEnabled = args['IsObjectTableFilterEnabled'];
-        this.enableAddCustomChildEntity = FeatureLocator.HasFeaturePermession("General", "AddCustomChildEntity");
         this.SupportSubEntity = window.ObjectTables.filter(o => o.Id == this.ObjectTableId)[0].SupportSubEntity;
         this.BuildSubEntitiesList();
     }
