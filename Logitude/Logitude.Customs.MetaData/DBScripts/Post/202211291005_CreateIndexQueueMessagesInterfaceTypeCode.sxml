@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Script DBType="Main" Module="Customs">
-	<Sql Version="1">
+	<Sql Version="2">
 		<![CDATA[
         CREATE INDEX interfaceTypeCodeIndex
         ON dbo.QUEUEMESSAGES (interfaceTypeCode)
@@ -10,7 +10,7 @@
 
 
 
-	<Oracle Version="1">
+	<Oracle Version="2">
 		<![CDATA[
 		EXECUTE IMMEDIATE 'CREATE INDEX interfaceTypeCodeIndex
         ON QUEUEMESSAGES (interfaceTypeCode)';
