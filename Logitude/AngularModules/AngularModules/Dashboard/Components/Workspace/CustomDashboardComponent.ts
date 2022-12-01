@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, OnInit, Input, OnDestroy, ViewEncapsulation, ViewChildren, QueryList, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation, ViewChildren, QueryList, Output, EventEmitter } from '@angular/core';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
@@ -27,13 +27,13 @@ import { Cloner } from '../../../Infrastructure/Utilities/Cloner';
     encapsulation: ViewEncapsulation.None,
 })
 
-export class CustomDashboardComponent extends BaseComponent implements OnInit, AfterViewInit, OnDestroy {    
+export class CustomDashboardComponent extends BaseComponent implements OnInit, OnDestroy {
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
-    public DataContext = this;        
-    @Input('Show') Show = false;
+    public DataContext = this;
+
     private filterName_SelectedDashboard: string = "SelectedDashboard";
-    private filterControlNameSpace: string = "Workspace.CustomDashboard";    
+    private filterControlNameSpace: string = "Workspace.CustomDashboard";
     public DashboardsTabs: DashboardTab[] = [];
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private dashboardExtendedService: DashboardPMExtendedService;
@@ -42,45 +42,14 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     public SavedDashboard: DashboardPM = null;
     @Output() SaveDashboardCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() EditLayoutChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
+    public dashbaordCount = -1;
+
     constructor() {
         super();
         this.dashboardExtendedService = new DashboardPMExtendedService();
-        this.RunComponent();
     }
 
-    private Retries: number = 0;
-    private timerToken: any;
-    RunComponent() {
-        if (this.AllLocations) {
-            if (this.AllLocations.length == 0) {
-                this.RunComponentTimer();
-            }
 
-            else {
-                this.selectedDashboardId = this.DashboardsTabs[0]?.DashboardId;
-                this.SelectionChanged(this.DashboardsTabs[0]);
-            }
-        }
-
-        else {
-            this.RunComponentTimer();
-        }
-    }
-    RunComponentTimer() {
-        this.Retries++;
-
-        if (this.timerToken) {
-            clearTimeout(this.timerToken);
-        }
-
-        if (this.Retries < 10) {
-            this.timerToken = setTimeout(() => this.RunComponent(), 1);
-        }
-    }
-
-    InitComponent() {
-        //this.Show = true;
-    }
 
     DashboardDataBinding: DashboardDataBinding = {
         isOnEditLayout: new Subject(),
@@ -91,6 +60,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
     }
 
     ngOnInit(): void {
+        this.CurrentSession.StartBusyIndicatorLoading();
         this._entityResourceService.getEntityResourceByTableName("Dashboard").subscribe((res1: any) => {
             this._entityResourceService.getEntityResourceByTableName("Widget").subscribe((res2: any) => {
                 this._entityResourceService.getEntityResourceByTableName("WidgetMeasure").subscribe((res2: any) => {
@@ -104,10 +74,6 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
                 });
             });
         });
-    }
-
-    ngAfterViewInit(): void {
-        this.Show = true;
     }
 
     private SessionEvent: any = null;
@@ -154,8 +120,14 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
                 this.loadedDashboards = myResponse.Result;
                 this.BuildTabs();
             }
-
+            this.GetUsersDashboardsCount();
+        });
+    }
+    GetUsersDashboardsCount() {
+        this.dashboardExtendedService.GetUsersDashboardsCount().subscribe((myResponse: ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();
+            if (myResponse?.HasError) return;
+            this.dashbaordCount = myResponse?.Result ?? 0;
         });
     }
 
@@ -276,14 +248,15 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
                 if (s) {
                     this.SelectedDashboardId = comp.EntityPM.Id;
                     this.openEditLayout = true;
+                    this.dashbaordCount++;
                 }
             });
         });
-    }    
+    }
 
     private openEditLayout: boolean = false;
     private selectedDashboardsFromLOV: DashboardList[] = [];
-    
+
     public SelectedTabItem: DashboardTab;
     private clickdTab: DashboardTab;
     SelectionChanged(clickdTab: DashboardTab) {
@@ -334,53 +307,48 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, A
             this.CurrentSession.StopBusyIndicator();
         });
     }
+    
     public NavigateToSelectedTab() {
         if (this.SelectedTabItem != this.clickdTab) {
             this.SelectedTabItem = this.clickdTab;
-
             this.DashboardsTabs.forEach((item) => {
                 item.IsSelected = false;
             });
-
             this.SelectedTabItem.IsSelected = true;
         }
+        if (this.SelectedTabItem.IsTabLoaded || !this.SelectedTabItem.ComponentPath) return;
 
-        if (this.SelectedTabItem.IsTabLoaded) {
-
+        let locs = this.AllLocations.toArray().filter(f => f.Code == 'DashboardTabLocation');
+        let location: LocationDirective = locs.filter(f => f.ItemCode == this.SelectedTabItem.DashboardId)[0];
+        if (location == null) {
+            this.Retries = 0;
+            this.RunComponentTimer();
+            return;
         }
 
-        else {
-            let locs = this.AllLocations.toArray().filter(f => f.Code == 'DashboardTabLocation');
-
-            let location: LocationDirective = locs.filter(f => f.ItemCode == this.SelectedTabItem.DashboardId)[0];
-            if (location == null) {
-                this.Retries = 0;
-                this.RunComponentTimer();
+        SessionLocator.DynamicLoader.Load(this.SelectedTabItem.ComponentPath, location.viewContainerRef).then(cmpRef => {
+            this.SelectedTabItem.IsTabLoaded = true;
+            if (this.DashboardsTabs.filter(p => p.DashboardId == this.SelectedTabItem.DashboardId)[0]) {
+                this.DashboardsTabs.filter(p => p.DashboardId == this.SelectedTabItem.DashboardId)[0].IsTabLoaded = true;
             }
 
-            if (location) {
-                if (this.SelectedTabItem.IsTabLoaded) {
-
-                }
-
-                else if (this.SelectedTabItem.ComponentPath) {
-                    SessionLocator.DynamicLoader.Load(this.SelectedTabItem.ComponentPath, location.viewContainerRef).then(cmpRef => {
-                        this.SelectedTabItem.IsTabLoaded = true;
-                        if (this.DashboardsTabs.filter(p => p.DashboardId == this.SelectedTabItem.DashboardId)[0]) {
-                            this.DashboardsTabs.filter(p => p.DashboardId == this.SelectedTabItem.DashboardId)[0].IsTabLoaded = true;
-                        }
-
-                        if (this.SelectedTabItem.DashboardId) {
-                            cmpRef.instance.Intialize({
-                                SelectedDashboardId: this.SelectedTabItem.DashboardId,
-                                OpenEditLayout: this.openEditLayout,
-                                FatherComponent: this,
-                            });
-                        }
-                    });
-                }
+            if (this.SelectedTabItem.DashboardId) {
+                cmpRef.instance.Intialize({
+                    SelectedDashboardId: this.SelectedTabItem.DashboardId,
+                    OpenEditLayout: this.openEditLayout,
+                    FatherComponent: this,
+                });
             }
-        }
+        });
+    }
+
+    private Retries: number = 0;
+    private timerToken: any;
+
+    RunComponentTimer() {
+        this.Retries++;
+        if (this.timerToken) clearTimeout(this.timerToken);     
+        if (this.Retries < 10) this.timerToken = setTimeout(() => this.NavigateToSelectedTab(), 1);      
     }
 
     public RefereshTabAfterEdit(dashboard: DashboardPM) {

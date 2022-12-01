@@ -6,11 +6,11 @@
                     Dashboard
                 </td>
 
-                <td>
+                <td *ngIf="dashbaordCount > 0">
                     <div></div>
                 </td>
 
-                <td style="width:200px; height:22px;">
+                <td style="width:200px; height:22px;" *ngIf="dashbaordCount > 0">
                     <LogLov [ObjectFieldName]="'SelectedDashboardId'"
                             [ObjectTableName]="'Dashboard'"
                             [NoObjectField]="true"
@@ -22,11 +22,11 @@
                     </LogLov>
                 </td>
 
-                <td class="Table-cell10">
+                <td class="Table-cell10" *ngIf="dashbaordCount > 0">
                     <div></div>
                 </td>
 
-                <td style="width: 130px; min-width: 130px;">
+                <td style="width: 130px; min-width: 130px;" *ngIf="dashbaordCount > 0">
                     <button class="Button" (click)="AdDashboardClicked()">
                         <svg width="20" height="20" viewBox="0 0 5 5"style="display: inline-block; vertical-align: middle;">
                             <path fill="#4D8ABB" d="M2 1 h1 v1 h1 v1 h-1 v1 h-1 v-1 h-1 v-1 h1 z" />
@@ -37,7 +37,7 @@
         </table>
     </div>
 
-    <div style="height:10px;"></div>
+    <div style="height:10px;" *ngIf="dashbaordCount > 0"></div>
 
     <div class="DashboardTab">
         <div class="DashboardTabHead">
@@ -50,9 +50,41 @@
             </ul>
         </div>
 
-        <div class="DashboardTabBody">
-            <div class="MediaFillAbsolute" *ngFor="let item of DashboardsTabs;" [hidden]="!item.IsSelected">
-                <div LocationDirective Code="DashboardTabLocation" ItemCode="{{item.DashboardId}}"></div>
+        <div class="DashboardTabBody" [ngStyle]="{'top': dashbaordCount > 0 ? '19px': '0'}">
+            <div *ngIf="dashbaordCount > 0">
+                <div class="MediaFillAbsolute" *ngFor="let item of DashboardsTabs;" [hidden]="!item.IsSelected">
+                    <div LocationDirective Code="DashboardTabLocation" ItemCode="{{item.DashboardId}}"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="DashboardTabBody" style="top: 0;" *ngIf="dashbaordCount == 0">
+            <div class="dl-info-card">
+
+                <div class="dl-info-image-cotainer">
+                    <img class="TopCenter" style="position: unset;width: 290px; height: 202px;"
+                        src="./Images/Charts/Empty-Dashboard3.png" />
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <div class="dl-info-center-div">
+                        <p class="dl-info-header-text"> You don’t have any information here</p>
+                    </div>
+                    <div class="dl-info-center-div">
+                        <p class="dl-info-description-text">There are currently no dashboards.<br> It is time to add a new
+                            one</p>
+                    </div>
+                </div>
+
+                <td class="dl-info-center-div" style="margin-top: 12px;">
+                    <button class="Button" (click)="AdDashboardClicked()">
+                        <svg width="20" height="20" viewBox="0 0 5 5"
+                            style="display: inline-block; vertical-align: middle;">
+                            <path fill="#4D8ABB" d="M2 1 h1 v1 h1 v1 h-1 v1 h-1 v-1 h-1 v-1 h1 z" />
+                        </svg>
+                        Add new dashboard</button>
+                </td>
+
             </div>
         </div>
     </div>

@@ -1,5 +1,4 @@
 
-
 <div style="height: 100%;">
     <div class="FormFieldRow">
         <table>
@@ -95,50 +94,29 @@
     </div>
 
     <div *ngIf="IsEmptyDashboardVisible" class="MediaFillRelative">
-        <table>
-            <tr style="height:80px;">
-                <td>
-                    <div></div>
-                </td>
-            </tr>
+        <div class="dl-info-card">
+            <div class="dl-info-image-cotainer">
+                <img class="TopCenter" style="position: unset;width: 290px; height: 202px;" src="./Images/Charts/Empty-Dashboard3.png" />
+            </div>
 
-            <tr style="height:25px;" *ngIf="!IsPermissionMessageVisible">
-                <td>
-                    <div></div>
-                </td>
-                <td>
-                    <div style="float:left; text-align:center; font-size: 13px; color: #282E30;" class="CenterCenter">
-                        <span style="margin-left: 3px; font-size: 13px;">Click </span>
-                        <span style="margin-left: 3px;"> <Hyperlink [FontSize]="13" (click)="HereClicked()">here</Hyperlink> </span>
-                        <span style="margin-left: 3px; font-size: 13px;"> to add widgets to your dashboard.</span>
-                    </div>
-                </td>
-                <td>
-                    <div></div>
-                </td>
-            </tr>
+            <div style="margin-top: 20px;">
+                <div class="dl-info-center-div">
+                    <p class="dl-info-header-text">{{IsPermissionMessageVisible ? "Sorry, you have no permissions" : "You don’t have any information here"}}</p>      
+                </div>
+                <div class="dl-info-center-div" *ngIf="!IsPermissionMessageVisible">
+                    <p class="dl-info-description-text">There are currently no widgets.<br> It is time to add a new one</p>    
+                </div>
+            </div>
 
-            <tr style="height:25px;" *ngIf="IsPermissionMessageVisible">
-                <td>
-                    <div></div>
-                </td>
-                <td>
-                    <div style="float:left; text-align:center; font-size: 13px; color: #282E30;" class="CenterCenter">
-                        <span style="margin-left: 3px;">Sorry, you have no permissions</span>
-                    </div>
-                </td>
-                <td>
-                    <div></div>
-                </td>
-            </tr>
+            <td class="dl-info-center-div" style="margin-top: 12px;" *ngIf="!IsPermissionMessageVisible">
+                <button class="Button" (click)="HereClicked()">
+                    <svg width="20" height="20" viewBox="0 0 5 5"style="display: inline-block; vertical-align: middle;">
+                        <path fill="#4D8ABB" d="M2 1 h1 v1 h1 v1 h-1 v1 h-1 v-1 h-1 v-1 h1 z" />
+                    </svg>
+                Add new widget</button>
+            </td>
 
-            <tr>
-                <td colspan="3">
-                    <img class="TopCenter" src="./Images/Charts/Empty-Dashboard2.png" />
-                </td>
-            </tr>
-
-        </table>
-
+        </div>
     </div>
+
 </div>

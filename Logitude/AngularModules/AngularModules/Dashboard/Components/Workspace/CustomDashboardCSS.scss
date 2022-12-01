@@ -104,3 +104,40 @@
     height: 100%;
     position: relative;
 }
+
+
+.dl-info-card {
+    margin: 12px;
+    background-color: white;
+    border: 1px solid #F0F0F0;
+    border-radius: 4px;
+    padding-bottom: 40px;
+}
+.dl-info-image-cotainer {
+    display: table;
+    margin: 0 auto;
+    margin-top: 37px;
+}
+.dl-info-header-text {
+    font-family: 'Manrope';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: #292D30;
+}
+.dl-info-description-text {
+    font-family: 'Manrope';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    text-align: center;
+    color: #292D30;
+    margin-top: 4px;
+    width: 175px;
+}
+.dl-info-center-div {
+    display: table; 
+    margin: 0 auto;
+}
