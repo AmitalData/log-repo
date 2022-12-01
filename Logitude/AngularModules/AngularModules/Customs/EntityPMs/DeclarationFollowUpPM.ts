@@ -57,6 +57,11 @@ export class DeclarationFollowUpPM {
     public set Remarks(newValue: string) { if (this.remarks != newValue) { this.remarks = newValue; this.MarkAsDirty("Remarks"); } }
        
 	 
+    private declarationId: string;
+    public get DeclarationId() { return this.declarationId; }
+    public set DeclarationId(newValue: string) { if (this.declarationId != newValue) { this.declarationId = newValue; this.MarkAsDirty("DeclarationId"); } }
+       
+	 
 
     public OldEntityPM: DeclarationFollowUpPM;
 	

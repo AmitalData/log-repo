@@ -34,6 +34,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual User User { get; set; }
         [Column("Remarks")]
 	    public string Remarks { get; set; }
+        [ForeignKey("Declaration")]
+        [Column("DeclarationId")]
+	    public string DeclarationId { get; set; }
+	      
+        public virtual Declaration Declaration { get; set; }
     }
 }
 	 

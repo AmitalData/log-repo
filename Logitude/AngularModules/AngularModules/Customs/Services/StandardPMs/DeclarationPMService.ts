@@ -56,6 +56,7 @@ import {DeclarationErrorViewPM} from '../../EntityPMs/DeclarationErrorViewPM';
 import {DeclarationConsAcceptancePM} from '../../EntityPMs/DeclarationConsAcceptancePM';
 import {DecDangersContactPM} from '../../EntityPMs/DecDangersContactPM';
 import {DeclarationExportRecipientPM} from '../../EntityPMs/DeclarationExportRecipientPM';
+import {DeclarationFollowUpPM} from '../../EntityPMs/DeclarationFollowUpPM';
 import {DeclarationValidator} from '../../Validators/DeclarationValidator';
 
 @Injectable()
@@ -238,6 +239,7 @@ export class DeclarationPMService {
                this.MapDeclarationConsAcceptances(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapDecDangersContacts(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapDeclarationExportRecipients(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapDeclarationFollowUp(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
@@ -475,6 +477,15 @@ export class DeclarationPMService {
 						
 							 
             entityPM.OldEntityPM.DeclarationExportRecipients.push(newDeclarationExportRecipientPM);
+            }
+			   			   			   
+            entityPM.OldEntityPM.DeclarationFollowUp = [];
+            for (var item in entityPM.DeclarationFollowUp) {
+            var myDeclarationFollowUpPM = entityPM.DeclarationFollowUp[item];
+            var newDeclarationFollowUpPM: DeclarationFollowUpPM = this.clone(myDeclarationFollowUpPM);
+						
+							 
+            entityPM.OldEntityPM.DeclarationFollowUp.push(newDeclarationFollowUpPM);
             }
 			   
 		}
@@ -1430,6 +1441,98 @@ export class DeclarationPMService {
                         
                         deletedPM.OldEntityPM = null;
                         entityPM.DeclarationExportRecipients.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+    MapDeclarationFollowUp(entityPM: DeclarationPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldDeclarationFollowUp: DeclarationFollowUpPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldDeclarationFollowUp = entityPM.OldEntityPM.DeclarationFollowUp;
+        }
+
+        entityPM.DeclarationFollowUp = new Array<DeclarationFollowUpPM>();
+        for (var item in jsonPM.DeclarationFollowUp) {
+            var jItem = jsonPM.DeclarationFollowUp[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newDeclarationFollowUpPM: DeclarationFollowUpPM;
+	  
+            if (mapParent) {
+                newDeclarationFollowUpPM = new DeclarationFollowUpPM(entityPM);
+            }
+            else
+            {
+                newDeclarationFollowUpPM = new DeclarationFollowUpPM(null);
+            }
+ 			newDeclarationFollowUpPM.DisableMarkAsDirty = true;
+               
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newDeclarationFollowUpPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newDeclarationFollowUpPM.UniqueKey = Guid.newGuid();
+                newDeclarationFollowUpPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newDeclarationFollowUpPM.OldEntityPM = this.clone(newDeclarationFollowUpPM);
+
+				
+            }
+            else {
+                if (newDeclarationFollowUpPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newDeclarationFollowUpPM.ChangeSetOp = "Update";
+                }
+                else {
+                        newDeclarationFollowUpPM.ChangeSetOp = "Insert";
+                }
+ 
+                newDeclarationFollowUpPM.OldEntityPM = null;
+                newDeclarationFollowUpPM.EntityParentPM = null;
+            }
+			 newDeclarationFollowUpPM.DisableMarkAsDirty = false;
+			 newDeclarationFollowUpPM.IsDirty = false;
+            entityPM.DeclarationFollowUp.push(newDeclarationFollowUpPM);
+        }
+        if (oldDeclarationFollowUp) {
+            
+            for (var itemKey in oldDeclarationFollowUp) {
+                if (entityPM.DeclarationFollowUp.filter(p=> p.UniqueKey === oldDeclarationFollowUp[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldDeclarationFollowUp[itemKey]) {
+                        //oldDeclarationFollowUp[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.DeclarationFollowUp.push(oldDeclarationFollowUp[itemKey]);
+						var oldItemJson = oldDeclarationFollowUp[itemKey];
+                        var deletedPM: DeclarationFollowUpPM = new DeclarationFollowUpPM(null);
+						deletedPM.DisableMarkAsDirty = true;
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.DeclarationFollowUp.push(deletedPM);
                     }
                 }
             }
