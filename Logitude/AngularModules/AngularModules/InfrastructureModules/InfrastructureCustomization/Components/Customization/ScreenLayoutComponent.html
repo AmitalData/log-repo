@@ -149,9 +149,9 @@
                                 <button class="Button" (click)="NewSectionButtonClick('Standard')">New Section</button>
                             </div>
                             <div *ngIf="!IsSubEntity && !IsGridScreen" class="buttons" style="width:45px;">
-                                <ToggleButton [Title]="'New'" [DropDownWidth]="110" [DropDownHeight]="52">
+                                <ToggleButton [Title]="'New'" [DropDownWidth]="110" [DropDownHeight]="IsEnabledCreatingCustomObjects?'52':'30'">
                                     <ToggleButtonItem [Text]="'Section'" (click)="NewSectionButtonClick('Standard')" style="height:100%; width: 100%;"></ToggleButtonItem>
-                                    <ToggleButtonItem [Text]="'Child Entities Grids'" (click)="NewSectionButtonClick('Grid')" style="height:100%; width: 100%;"></ToggleButtonItem>
+                                    <ToggleButtonItem [hidden]="!IsEnabledCreatingCustomObjects" [Text]="'Child Entities Grids'" (click)="NewSectionButtonClick('Grid')" style="height:100%; width: 100%; align-content:flex-end "></ToggleButtonItem>
                                 </ToggleButton>
                             </div>
                         </div>
