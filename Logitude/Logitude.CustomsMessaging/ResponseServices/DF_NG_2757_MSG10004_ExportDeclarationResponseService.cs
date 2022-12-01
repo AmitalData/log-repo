@@ -164,6 +164,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
 
                 }
+                if(_MyDeclarationPM.Direction == "E" && requestParams.RequestVIA != SendRequestVIA.WebServiceBatch && !setting.IsConnectedToUniFreight && customResponse.ResponseContentHeader?.Exception?.Length > 0 && customResponse.Response?.Declaration == null)
+                {
+                    _MyDeclarationPM.ErrosXml = "";
+                    this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                }
+                
                 //myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
             }
             if (customResponse.ResponseContentHeader != null && customResponse.ResponseContentHeader.Exception != null && customResponse.ResponseContentHeader.Exception.Count() > 0)
