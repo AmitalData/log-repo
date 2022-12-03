@@ -17,13 +17,14 @@ using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.SystemLogs;
 using System.Net.Http;
 using System.Net;
+using Logitude.BL.InvoiceModel.EntityLists;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
     public class DigitalDashboardController : ApiController
     {
         [HttpPost]
-        [Route("DigitalDashboardController/GetInvoicesGroupedByPaidStatus")]
+        [Route("DigitalDashboard/GetInvoicesGroupedByPaidStatus")]
         public HttpResponseMessage GetInvoicesGroupedByPaidStatus(GeneralFilters newFilters)
         {
             int tenant = 0;
@@ -57,8 +58,45 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             }
         }
 
+
         [HttpPost]
-        [Route("DigitalDashboardController/GetShipmentsGroupedByStatus")]
+        [Route("DigitalDashboard/GetInvoicesGroupedByDate")]
+        public HttpResponseMessage GetInvoicesGroupedByDate(GeneralFilters newFilters)
+        {
+            int tenant = 0;
+            string email = "";
+            try
+            {
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                tenant = authToken.Tenant;
+                email = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, newFilters.CardId);
+
+                newFilters.Tenant = authToken.Tenant;
+                var aRInvoiceQuery = new ARInvoiceQuery(authToken.Tenant);
+                var invoices = aRInvoiceQuery.GetByFilters(newFilters);
+
+                var res = invoices.Where(r => r.DueDate != null
+                                              && r.PaidStatus != "Paid")
+                                  .ToList();
+
+                var response = GetInvoicesSummaries(tenant, res);
+                return Request.CreateResponse(HttpStatusCode.OK, response);
+            }
+            catch (AutenticationException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        [HttpPost]
+        [Route("DigitalDashboard/GetShipmentsGroupedByStatus")]
         public HttpResponseMessage GetShipmentsGroupedByStatus(GeneralFilters newFilters)
         {
             int tenant = 0;
@@ -74,6 +112,37 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var shipmentQuery = new ShipmentQuery(authToken.Tenant);
                 var shipments = shipmentQuery.GetByFilters(newFilters).Where(r => !string.IsNullOrEmpty(r.StatusCode)).ToList();
                 var res = GetDigitalStatusesWithCount(shipments, authToken.Tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, res);
+            }
+            catch (AutenticationException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.Unauthorized, ApiExceptionBuilder.BuildException(ex));
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        [HttpPost]
+        [Route("DigitalDashboard/GetShipmentsGroupedByStatusWeight")]
+        public HttpResponseMessage GetShipmentsGroupedByStatusweight(GeneralFilters newFilters)
+        {
+            int tenant = 0;
+            string email = "";
+            try
+            {
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                tenant = authToken.Tenant;
+                email = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, newFilters.CardId);
+                newFilters.Tenant = authToken.Tenant;
+                var shipmentQuery = new ShipmentQuery(authToken.Tenant);
+                var shipments = shipmentQuery.GetByFilters(newFilters).Where(r => !string.IsNullOrEmpty(r.StatusCode)).ToList();
+                var res = GetDigitalStatusesWeightWithCount(shipments, authToken.Tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, res);
             }
@@ -136,6 +205,66 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         #region Private Methods 
 
+        private Dictionary<string, object> GetInvoicesSummaries(int tenant, List<ARInvoiceList> res)
+        {
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+
+            var currentMonthInvocies = res.Where(a => a.DueDate.Value.Month == todayDate.Month)
+                              .GroupBy(a => a.DueDate.Value.Month)
+                              .ToDictionary(t => t.Key,
+                                                 t => new
+                                                 {
+                                                     PartiallyPaidCount = t.Where(a => a.PaidStatus == "Partially Paid").Count(),
+                                                     OverDueCount = t.Where(a => a.DueDate < todayDate).Count()
+                                                 });
+
+            var lastMonthInvocies = res.Where(a => a.DueDate.Value.Month == todayDate.AddMonths(-1).Month)
+                                       .GroupBy(a => a.DueDate.Value.Month)
+                                       .ToDictionary(t => t.Key,
+                                                          t => new
+                                                          {
+                                                              PartiallyPaidCount = t.Where(a => a.PaidStatus == "Partially Paid").Count(),
+                                                              OverDueCount = t.Where(a => a.DueDate < todayDate).Count()
+                                                          });
+
+            var last2MonthInvocies = res.Where(a => a.DueDate.Value.Month == todayDate.AddMonths(-2).Month)
+                                        .GroupBy(a => a.DueDate.Value.Month)
+                                        .ToDictionary(t => t.Key,
+                                                           t => new
+                                                           {
+                                                               PartiallyPaidCount = t.Where(a => a.PaidStatus == "Partially Paid").Count(),
+                                                               OverDueCount = t.Where(a => a.DueDate < todayDate).Count()
+                                                           });
+
+            var lessThan2MonthInvocies = res.Where(a => a.DueDate.Value.Month < todayDate.AddMonths(-2).Month)
+                                            .GroupBy(a => a.DueDate.Value.Month)
+                                            .ToDictionary(t => t.Key,
+                                                               t => new
+                                                               {
+                                                                   PartiallyPaidCount = t.Where(a => a.PaidStatus == "Partially Paid").Count(),
+                                                                   OverDueCount = t.Where(a => a.DueDate < todayDate).Count()
+                                                               });
+
+            var tempOverDueCount = lessThan2MonthInvocies.Values.Sum(a => a.OverDueCount);
+            var tempPartiallyPaidCount = lessThan2MonthInvocies.Values.Sum(a => a.PartiallyPaidCount);
+
+            var response = new Dictionary<string, object>
+            {
+                {"Current",  currentMonthInvocies.Values},
+                {"Last Month",  lastMonthInvocies.Values},
+                {"Last 2 Month",  last2MonthInvocies.Values},
+                {"Less than 2 Month", 
+                    new
+                    {
+                        PartiallyPaidCount = tempOverDueCount,
+                        OverDueCount = tempPartiallyPaidCount
+                    }
+                }
+            };
+
+            return response;
+        }
+
         private Dictionary<string, object> GetDigitalStatusesWithCount(List<DigitalShipmentList> shipments, int tenant)
         {
             var shipmentsGroupedByStatus = new Dictionary<string, object>();
@@ -158,6 +287,46 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             shipmentsGroupedByStatus.Add("Others", new { Count = others.Count(), Statuses = othersStatusesIds });
 
             return shipmentsGroupedByStatus;
+        }
+
+        private Dictionary<string, object> GetDigitalStatusesWeightWithCount(List<DigitalShipmentList> shipments, int tenant)
+        {
+            var shipmentsGroupedByStatus = new Dictionary<string, object>();
+            var entityStatusQuery = new EntityStatusQuery(tenant);
+            var blockedStatus = new List<string> { "PSDL", "PODR" };
+            var allStatuses = entityStatusQuery.GetEntityStatusPMsByTenant(tenant).ToList();
+
+            var digitalEntityStatusCodes = allStatuses.Where(a => a.IsDigitalPortal 
+                                                                  && !blockedStatus.Contains(a.Code))
+                                                      .Select(a => a.Code)
+                                                      .ToList();
+
+            var allStatusesCodes = allStatuses.Select(a => a.Code);
+
+            var digitalStatusesOrigin = new List<string> { "SHOR", "SHP2" };
+            var dataOrigin = shipments.Where(r => digitalStatusesOrigin.Contains(r.StatusCode))
+                                .GroupBy(a => a.TransportModeId)
+                                .ToDictionary(x => x.Key, y => y.Count());
+
+            var digitalStatusesInTransit = new List<string> { "SDEP" };            
+            var dataInTransit = shipments.Where(r => digitalStatusesInTransit.Contains(r.StatusCode))
+                                         .GroupBy(a => a.TransportModeId)
+                                         .ToDictionary(x => x.Key, y => y.Count());
+
+            var digitalStatusesAtDestination = new List<string> { "SARR", "SDL2", "SDLY"};
+
+            var dataAtDestination = shipments.Where(r => digitalStatusesInTransit.Contains(r.StatusCode))
+                                         .GroupBy(a => a.TransportModeId)
+                                         .ToDictionary(x => x.Key, y => y.Count());
+
+            var result = new Dictionary<string, object>
+            {
+                { "Origin", dataOrigin },
+                { "InTransit", dataInTransit },
+                { "dataAtDestination", dataAtDestination }
+            };
+
+            return result;
         }
 
         private string GetDigitalStatusName(string code, string exactStatusName)
