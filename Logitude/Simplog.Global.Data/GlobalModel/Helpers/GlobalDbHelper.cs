@@ -31,7 +31,7 @@ namespace Simplog.Global.Data.GlobalModel.Helpers
                                                      select a).FirstOrDefault();
 
 //#if ORACLE_DB
-                        string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+                        string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");                        
                         if (dbms == "oracle")
                         {
                             if (globaltenant == null)
@@ -72,8 +72,8 @@ namespace Simplog.Global.Data.GlobalModel.Helpers
                             }
                         }
 //#endif
-                        
-
+                        if(LogitudeSettings.IsCostomsDeploy)
+                            currentDb.DBConnection = ConfigurationManager.ConnectionStrings["LogitudeStr"].ConnectionString;                        
 
                         CacheManager.CacheWrapper.Insert(name, GetGlobalDbWithoutProxy(currentDb), null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                         scope.Complete();
