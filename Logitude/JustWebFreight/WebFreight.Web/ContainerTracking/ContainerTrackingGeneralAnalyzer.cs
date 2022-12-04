@@ -41,7 +41,7 @@ namespace WebFreight.Web.ContainerTracking
         private int? logitudeTenant = null;
         private string trackingSource;
         private ContainerUpdatedFields containerUpdatedFields;
-
+        private PortRepository portRepository;
         public ContainerTrackingGeneralAnalyzer(string trackingSource, AnalyzeQueue analyzeQueue, AnalyzeQueueRepository analyzeQueueRepository)
         {
             if (analyzeQueue != null)
@@ -181,11 +181,12 @@ namespace WebFreight.Web.ContainerTracking
             try
             {
                 var analyz = false;
-                var container = GetContanerPM(containerTrackingRequest);
-                var shipment = GetShipmentPM(containerTrackingRequest);
+                ContainerPM container = GetContanerPM(containerTrackingRequest);
+                ShipmentPM shipment = GetShipmentPM(containerTrackingRequest);
                 manager.SetContainer(container);
                 manager.SetShipment(shipment);
-                if (IsValidToAnalyzed(shipment, container, containerTrackingRequest))
+                portRepository = new PortRepository(containerTrackingRequest.Tenant);
+                if (IsUpdatingShipmentAndContainer(shipment, container, containerTrackingRequest))
                 {
                     MapContainersExternalData(container);
                     manager.Update();
@@ -215,6 +216,47 @@ namespace WebFreight.Web.ContainerTracking
 
         }
 
+        private bool IsUpdatingShipmentAndContainer(ShipmentPM shipment, ContainerPM container, ContainerTrackingRequest containerTrackingRequest)
+        {
+            if (shipment.IsOperationalClosed)
+            {
+                return false;
+            }
+            if (!IsTheSamePOLLocation(shipment))
+            {
+                return false;
+            }
+            if (!IsTheSamePODLocation(shipment))
+            {
+                return false;
+            }
+            if (!IsValidToAnalyzed(shipment, container, containerTrackingRequest))
+            {
+                return false;
+            }
+
+            return true;
+        }
+        private bool IsTheSamePOLLocation(ShipmentPM shipment)
+        {
+            var polPortId = this.GetPortId(containerUpdatedFields.POLLocation, shipment.Tenant);
+            if (shipment.MainCarriageFromPortId == polPortId)
+            {
+                return true;
+            }
+
+            return false;
+        }
+        private bool IsTheSamePODLocation(ShipmentPM shipment)
+        {
+            var podPortId = this.GetPortId(containerUpdatedFields.PODLocation, shipment.Tenant);
+            if (shipment.MainCarriageFinalDestinationPortId == podPortId)
+            {
+                return true;
+            }
+
+            return false;
+        }
         private bool IsValidToAnalyzed(ShipmentPM shipment, ContainerPM container, ContainerTrackingRequest containerTrackingRequest)
         {
             return (
@@ -224,6 +266,20 @@ namespace WebFreight.Web.ContainerTracking
                     ) &&
                     !container.IsCancelled &&
                     !container.IsClosed;
+        }
+        private string GetPortId(string portCode, int tenant)
+        {
+            Port port = portRepository.GetOceanPortByCombinedCode(portCode, tenant);
+            string portId = null;
+            if (port != null)
+            {
+                portId = port.Id;
+            }
+            else
+            {
+                //portId = this.CopyPortCopyToCurrentTenant(portCode);
+            }
+            return portId;
         }
 
         private void SetComunicationLogDone(CommunicationLog comunicationLog, bool wasAnalyzed)
