@@ -52,8 +52,9 @@ export class EntityPMService {
         var servicename = objectTableName + "PMService";
         var servicelink = './' + moduleName + '/Services/StandardPMs/' + servicename;
 
-        //check feature toggle for patch here
-        if(oldEntityPM) {
+        var hasPatchUpdateFeatureToggle = SessionLocator.FeatureToggles.filter(f => f.ToggleCode === "PUP")[0];
+
+        if(hasPatchUpdateFeatureToggle && oldEntityPM) {
             return new Promise((resolve, reject) => {
                 SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
                     if(Object.getPrototypeOf(service).update.length === 2) {
