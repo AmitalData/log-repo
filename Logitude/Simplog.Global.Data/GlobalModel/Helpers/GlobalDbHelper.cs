@@ -54,8 +54,10 @@ namespace Simplog.Global.Data.GlobalModel.Helpers
                             //}
                         }
 
+                        //else if (LogitudeSettings.IsCostomsDeploy)
+                        //    currentDb.DBConnection = ConfigurationManager.ConnectionStrings["LogitudeStr"].ConnectionString;
 
-//#else
+                        //#else
                         else
                         {
                             if (globaltenant == null)
@@ -72,8 +74,6 @@ namespace Simplog.Global.Data.GlobalModel.Helpers
                             }
                         }
 //#endif
-                        if(LogitudeSettings.IsCostomsDeploy)
-                            currentDb.DBConnection = ConfigurationManager.ConnectionStrings["LogitudeStr"].ConnectionString;                        
 
                         CacheManager.CacheWrapper.Insert(name, GetGlobalDbWithoutProxy(currentDb), null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                         scope.Complete();
