@@ -26,6 +26,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string CreateBy  { get; set; }
        [DataMember]
        public string Remarks  { get; set; }
+       [DataMember]
+       public string DeclarationId  { get; set; }
    }
 
 }
