@@ -231,7 +231,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 
                     SecurityUtility.AuthenticationOnEntityTenant("Shipment", shipmentPM.Tenant, tenant);
 
-                    shipmentJsonPatch.ApplyTo(shipmentPM);
+                    //shipmentJsonPatch.ApplyTo(shipmentPM);
+                    shipmentPM = new JsonPatchApplier<ShipmentPM>(shipmentJsonPatch, shipmentPM).Apply();
 
                     ShipmentService shipmentService = new ShipmentService(shipmentsContext, shipmentPM, SecurityUtility.GetAuthenticatedUser());
                     shipmentService.Update(true, isPatchUpdate: true);

@@ -36,6 +36,8 @@ import { CommodityPackagePM } from '../../EntityPMs/CommodityPackagePM';
 import { ShipmentProductItemPM } from '../../EntityPMs/ShipmentProductItemPM';
 import { ShipmentUnassignedFieldPM } from '../../EntityPMs/ShipmentUnassignedFieldPM';
 import { CustomChildObjectPMService } from '../../../Infrastructure/Services/ExtendedPMs/CustomChildObjectPMService';
+import { CloneEntityPM } from 'Infrastructure/Helpers/SafeCloneDeep';
+import { compare } from 'fast-json-patch';
 
 @Injectable()
 
@@ -390,49 +392,68 @@ export class ShipmentPMService {
             }
         });         
     }
-    update(entityPM: ShipmentPM) {                       
-            return defer(() => {
+    update(entityPM: ShipmentPM, oldEntityPM: ShipmentPM | null = null) {                       
+        return defer(() => {
 
-                var validator: ClassLevelValidator = new ClassLevelValidator();
-                var entityValidator: ShipmentValidator = new ShipmentValidator();
+            var validator: ClassLevelValidator = new ClassLevelValidator();
+            var entityValidator: ShipmentValidator = new ShipmentValidator();
 
-                var errors = validator.Validate("Shipment", entityPM);
-                var entityErrors = entityValidator.Validate(entityPM);
+            var errors = validator.Validate("Shipment", entityPM);
+            var entityErrors = entityValidator.Validate(entityPM);
 
-                if (entityErrors) {
-                    errors = errors.concat(entityErrors);
-                }
+            if (entityErrors) {
+                errors = errors.concat(entityErrors);
+            }
 
-                var response: ServiceResponse;
-                response = new ServiceResponse();
-                //errorsArray = [];
-                if (errors.length == 0) {
+            var response: ServiceResponse;
+            response = new ServiceResponse();
+            //errorsArray = [];
+            if (errors.length == 0) {
+                var httpRequest: any;
+
+                if(oldEntityPM) {
+                    var mappedEntityPM: ShipmentPM = this.MapJsonToEntityPM(entityPM, false);
+
+                    var clonedOldEntityPM = CloneEntityPM(oldEntityPM);
+                    var clonedEntityPM = CloneEntityPM(mappedEntityPM);
+                    var shipmentPatch = compare(clonedOldEntityPM, clonedEntityPM);
+                    console.log(shipmentPatch);
+
+                    var shipmentPatchString = JSON.stringify(shipmentPatch);
+                    var patchRequestUrl = this._apiUrl + "?id=" + mappedEntityPM.Id;
+
+                    httpRequest = this._http.patch(patchRequestUrl, shipmentPatchString, ServiceHelper.GetHttpHeaders());
+                }else {
                     var shipment: ShipmentPM;
                     shipment = this.MapJsonToEntityPM(entityPM, false);
                     var shipString: string;
-
+    
                     shipString = JSON.stringify(shipment);
                     //console.log(shipString);
-                    return this._http.put(this._apiUrl, shipString, ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                            var pm = res;
-                            var shipment: ShipmentPM;
-                            shipment = this.MapJsonToEntityPM(pm, true, entityPM);
 
-                            response.Result = shipment;
-                            return response;
-
-                        }),catchError(ServiceHelper.HandleServiceError));
+                    httpRequest = this._http.put(this._apiUrl, shipString, ServiceHelper.GetHttpHeaders());
                 }
-                else {
 
-                    response.HasError = true;
-                    response.ErrorsArray = errors;
+                return httpRequest.pipe(map((res) => {
+                        var pm = res;
+                        var shipment: ShipmentPM;
+                        shipment = this.MapJsonToEntityPM(pm, true, entityPM);
 
-                    return of(response);
-                   
-                }
-        });
-    }
+                        response.Result = shipment;
+                        return response;
+
+                    }),catchError(ServiceHelper.HandleServiceError));
+            }
+            else {
+
+                response.HasError = true;
+                response.ErrorsArray = errors;
+
+                return of(response);
+               
+            }
+    });
+}
     GetNewEntityPM() {
         var entityPM: ShipmentPM;
         entityPM = new ShipmentPM();
