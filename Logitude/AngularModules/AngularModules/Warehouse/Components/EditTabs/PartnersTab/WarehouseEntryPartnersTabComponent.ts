@@ -755,7 +755,7 @@ export class PartnerItem extends BaseComponent {
             this.BuildAddressCityText();
             this.OnLoadCompleted();
         }
-    }
+    } 
  
     BuildAddressCityText() { 
         var myResult = null;
