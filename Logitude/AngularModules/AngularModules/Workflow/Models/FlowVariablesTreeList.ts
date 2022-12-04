@@ -206,13 +206,22 @@ export class FlowVariablesTreeList {
 
         this.getLoopNodes().forEach((loopNode: any) => {
             let collectionVariable = loopNode.data["collectionVariable"] || null;
-            let getRecordNode = this.getGetRecordNodes("AllRecords").find(n => Formatter.getCodeFromName(n.data["name"]) === collectionVariable);
-            if (getRecordNode) {
-                let entity = getRecordNode.data["entity"];
-                let returnedFields = getRecordNode.data["returnedFields"];
+            let isCollectionFilterVariable = loopNode.data["isCollectionFilterVariable"] || false;
+
+            let collectionNode: any;
+
+            if (isCollectionFilterVariable) {
+                collectionNode = this.getCollectionFilterNodes().find(n => Formatter.getCodeFromName(n.data["name"]) === collectionVariable);
+            } else {
+                collectionNode = this.getGetRecordNodes("AllRecords").find(n => Formatter.getCodeFromName(n.data["name"]) === collectionVariable);
+            }
+
+            if (collectionNode) {
+                let entity = collectionNode.data["entity"];
+                let returnedFields = collectionNode.data["returnedFields"];
                 let returnedFieldsCodes = returnedFields ? returnedFields.map((returnedField: ReturnedField) => { return returnedField.fieldCode }) : null;
                 let treeSelectItemName = loopNode.data["name"];
-                let isReadOnly = getRecordNode.data["recordsType"] === GetRecordTypes.ReadOnly;
+                let isReadOnly = isCollectionFilterVariable ? false : (collectionNode.data["recordsType"] === GetRecordTypes.ReadOnly);
                 let treeSelectItemKey = Formatter.getCodeFromName(treeSelectItemName);
                 let treeSelectItemChildren = this.getObjectFieldsItems(treeSelectItemKey, entity, returnedFieldsCodes);
                 let treeSelectItemLoopName = "Current item from loop " + treeSelectItemName;
@@ -240,6 +249,16 @@ export class FlowVariablesTreeList {
             this.ItemsList.push(treeSelectItem);
         });
 
+        this.getCollectionFilterNodes().forEach((collectionFilterNode: any) => {
+            let entity = collectionFilterNode.data["entity"];
+            let treeSelectItemName = collectionFilterNode.data["name"];
+            let treeSelectItemKey = Formatter.getCodeFromName(treeSelectItemName);
+            let itemData = { isReadOnlyVariable: false, type: (entity ? (entity + "[]") : null), isCollectionFilterVariable: true };
+            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, true, true, false, false, [], itemData);
+            recordsCollectionVariablesItemChildren.push(treeSelectItem);
+            this.ItemsList.push(treeSelectItem);
+        });
+        
         return recordsCollectionVariablesItemChildren;
     }
 
@@ -265,6 +284,13 @@ export class FlowVariablesTreeList {
         if (this.FlowObject) {
             return FlowReader.getAllPreviousNodes(this.FlowObject, this.CurrentNodeId, "getRecordNode")
                 .filter((n: any) => n.data["recordsLimit"] === recordsLimit);
+        }
+        return [];
+    }
+
+    private getCollectionFilterNodes() {
+        if (this.FlowObject) {
+            return FlowReader.getAllPreviousNodes(this.FlowObject, this.CurrentNodeId, "collectionFilterNode");
         }
         return [];
     }
