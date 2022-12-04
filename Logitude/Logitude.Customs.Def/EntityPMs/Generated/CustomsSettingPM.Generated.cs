@@ -664,6 +664,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private DateTime? suppressIIGMessageFromDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? SuppressIIGMessageFromDate  
+	   {
+	    
+	     get
+		{
+		   return suppressIIGMessageFromDate;
+		 }
+		 set
+		 {
+		   if(suppressIIGMessageFromDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SuppressIIGMessageFromDate",OldValue=suppressIIGMessageFromDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   suppressIIGMessageFromDate=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? suppressIIGMessageToDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? SuppressIIGMessageToDate  
+	   {
+	    
+	     get
+		{
+		   return suppressIIGMessageToDate;
+		 }
+		 set
+		 {
+		   if(suppressIIGMessageToDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SuppressIIGMessageToDate",OldValue=suppressIIGMessageToDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   suppressIIGMessageToDate=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
