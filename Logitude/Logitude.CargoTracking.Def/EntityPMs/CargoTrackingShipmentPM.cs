@@ -39,8 +39,8 @@ namespace Logitude.CargoTracking.Def.EntityPMs
         public string ForwardingMaster { get; set; }
         [DataMember]
         public List<Milestone> Milestones { get; set; }
-        [DataMember]
-        public string IncotermName { get; set; }
+        //[DataMember]
+        //public string IncotermName { get; set; }
         [DataMember]
         public string FutureMilstoneCode { get; set; }
         [DataMember]
