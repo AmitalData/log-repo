@@ -16,6 +16,7 @@ import { ObjectFields } from "Workflow/Models/ObjectFields";
 import { MessageWindow } from "Controls/Windows/MessageWindow";
 import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { Formatter } from "Workflow/Models/Formatter";
+import { EntityArgs } from "Infrastructure/DataContracts/EntityArgs";
 
 @Component({
     templateUrl: "./WorkflowBuilderComponent.html"
@@ -43,48 +44,39 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
 
     public FlowObjectFields: ObjectFieldList[] = [];
 
-    public WorkFlowPMService: WorkFlowPMService;
+    public WorkFlowPMService: WorkFlowPMService = new WorkFlowPMService();;
 
     private CurrentSession = SessionLocator.SelectedSession;
 
     @Output() BackCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    constructor() {
+    constructor(public entityArgs: EntityArgs) {
         super();
-    }
-
-    public Run(args: any) {
-        this.initializeServices();
-        this.WorkflowId = args['EntityId'];
+        this.EntityPM = this.entityArgs.EntityPM;
+        this.WorkflowId = this.entityArgs.EntityPM.Id
+        this.loadWorkflow();
     }
 
     ngOnInit() {
-        this.loadWorkflow();
     }
 
     ngOnDestroy() {
         ReactDOM.unmountComponentAtNode(this.containerRef.nativeElement);
     }
 
-    initializeServices() {
-        this.WorkFlowPMService = new WorkFlowPMService();
-    }
 
     loadWorkflow() {
-        if (this.WorkflowId) {
+        if (this.EntityPM) {
             this.startBusyIndicator("Loading ...");
-            this.WorkFlowPMService.get(this.WorkflowId).subscribe((serviceResponse: ServiceResponse) => { this.handleGetWorkflowResponse(serviceResponse); });
+            this.WorkFlowPMService.get(this.WorkflowId).subscribe((serviceResponse: ServiceResponse) => { this.handleGetWorkflowResponse(); });
         }
     }
 
-    handleGetWorkflowResponse(serviceResponse: ServiceResponse) {
-        if (!serviceResponse.HasError) {
-            this.EntityPM = serviceResponse.Result;
-            this.WorkflowName = this.EntityPM.Name;
-            this.WorkflowEntity = this.EntityPM.Entity;
-            this.renderReactFlowModeler();
-            this.loadObjectFields();
-        }
+    handleGetWorkflowResponse() {
+        this.WorkflowName = this.EntityPM.Name;
+        this.WorkflowEntity = this.EntityPM.Entity;
+        this.renderReactFlowModeler();
+        this.loadObjectFields();
     }
 
     startBusyIndicator(message: string) {
@@ -103,6 +95,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
             let props = {
                 flow: flowObject,
                 flowChangedEvent: (event: any) => this.flowChangedEvent(event),
+                flowObjectChangedEvent: (event: any) => this.flowObjectChangedEvent(event),
                 openPropertiesEvent: (openPropertiesEventObject: any) => this.openPropertiesEvent(openPropertiesEventObject),
                 confirmDeleteNodeEvent: (nodeToDelete: any) => this.confirmDeleteNodeEvent(nodeToDelete),
                 returnPropertiesDataEventKey: this.ReturnPropertiesDataEventKey,
@@ -143,6 +136,12 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         } else {
             let messageWindow: MessageWindow = new MessageWindow();
             messageWindow.Show(event.message ? event.message : "Error");
+        }
+    }
+
+    flowObjectChangedEvent(flowObject: any) {
+        if (flowObject) {
+            this.setWorkflow(flowObject)
         }
     }
 
@@ -412,12 +411,21 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         }
     }
 
-    saveAsWorkflow(){
+    setWorkflow(flowObject: any) {
+        if (flowObject) {
+            let startNode = FlowReader.getStartNode(flowObject);
+            this.EntityPM.Entity = startNode ? (startNode.data["entity"] || null) : null;
+            this.EntityPM.Trigger = startNode ? (startNode.data["trigger"] || null) : null;
+            this.EntityPM.FlowJson = JSON.stringify(flowObject);
+        }
+    }
+
+    saveAsWorkflow() {
         let propertiesComponentPath = "./Workflow/Components/WorkflowBuilder/CreateWorkflowVersionComponent";
         let propertiesWindow = new LogitudeWindow();
         let propertiesWindowArgs: any = {
-            WorkflowId : this.EntityPM.Id,
-            FlowJson : this.EntityPM.FlowJson
+            WorkflowId: this.EntityPM.Id,
+            FlowJson: this.EntityPM.FlowJson
         };
         propertiesWindow.Height = 340;
         propertiesWindow.Width = 985;
@@ -430,7 +438,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     }
 
     handleVersionPropertiesWindowClosed(data) {
-       console.log(data)
+        console.log(data)
     }
 
     handleUpdateWorkflowResponse(serviceResponse: ServiceResponse, backAfterSave: boolean) {

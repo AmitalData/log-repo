@@ -123,6 +123,7 @@ export class WorkflowVersionComponent extends BaseComponent {
     onRowSelected($event) {
         this.ClickedVersion = $event.rowData
         this.HasChanges = true;
+        this.entityArgs.EditComponentArgument = {...this.entityArgs.EditComponentArgument,Row : $event.rowData}
     }
 
     activateVersion() {

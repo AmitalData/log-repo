@@ -39,6 +39,7 @@ import { CollectionFilterPropertiesComponent } from './Components/Properties/Col
 import { ShowEditableVariablesTreeItemPipe } from "./Pipes/ShowEditableVariablesTreeItemPipe";
 import { WorkflowVersionComponent } from './Components/WorkflowVersion/WorkflowVersionComponent';
 import { CreateWorkflowVersionComponent } from './Components/WorkflowVersion/CreateWorkflowVersionComponent';
+import { WorkFlowShortTitleComponent } from './Components/ShortTitles/WorkFlowShortTitleComponent';
 
 export const Components = [
     WorkflowBuilderComponent,
@@ -67,7 +68,8 @@ export const Components = [
     ExpressionBuilderComponent,
     CollectionFilterPropertiesComponent,
     WorkflowVersionComponent,
-    CreateWorkflowVersionComponent
+    CreateWorkflowVersionComponent,
+    WorkFlowShortTitleComponent,
 ];
 
 export const Pipes = [
@@ -118,6 +120,7 @@ export class ModuleDeclarations {
             case "CollectionFilterPropertiesComponent": { result = CollectionFilterPropertiesComponent; break; }
             case "WorkflowVersionComponent": { result = WorkflowVersionComponent; break; }
             case "CreateWorkflowVersionComponent": { result = CreateWorkflowVersionComponent; break; }
+            case "WorkFlowShortTitleComponent": { result = WorkFlowShortTitleComponent; break; }
         }
         return result;
     }
