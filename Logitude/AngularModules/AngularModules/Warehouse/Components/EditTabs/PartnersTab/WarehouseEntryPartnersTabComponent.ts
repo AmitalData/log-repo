@@ -15,6 +15,7 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {NewEntityArgs} from '../../../../Infrastructure/Args';
 import {AppTool} from '../../../../Infrastructure/Tools';
+import { AddressPM } from '../../../../Common/EntityPMs/AddressPM';
 
 @Component({
     selector: 'WarehouseEntryPartnersTabComponent',
@@ -679,6 +680,10 @@ export class PartnerItem extends BaseComponent {
 
     }
 
+
+
+
+
     public IsReseting: boolean = false;
     private isAddressLoaded = false;
     private isContactLoaded = false;
@@ -736,6 +741,7 @@ export class PartnerItem extends BaseComponent {
 
         if (myAddressId != null) {
             var myService = this.fatherComponent.AddressListService;
+
             myService.getSingle(myAddressId).subscribe((myResponse: ServiceResponse) => {
 
                 if (myResponse != null) {
@@ -756,7 +762,69 @@ export class PartnerItem extends BaseComponent {
             this.OnLoadCompleted();
         }
     }
- 
+
+    // Add|Edit Address
+    AddAddressClicked() {
+
+        var entityPM: AddressPM = new AddressPM();
+        entityPM.Tenant = SessionLocator.Tenant;
+        entityPM.AddressTypeId = "O";
+        entityPM.CardId = this.PartnerId;
+
+        var myPartnerTypeId: string = null;
+        var isCustomer: boolean;
+        if (this.PartnerCardList != null) {
+            myPartnerTypeId = this.PartnerCardList.PartnerTypeId;
+            isCustomer = this.PartnerCardList.IsCustomer;
+        }
+
+        if (entityPM != null) {
+            var logeWindow = new LogitudeWindow();
+            logeWindow.Width = 630;
+            logeWindow.Height = 430;
+            logeWindow.Title = "Add Address";
+            logeWindow.WindowArgs = { EntityPM: entityPM };
+            logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
+            logeWindow.WindowClosed.subscribe(s => {
+                if (s) {
+                    this.AddressId = null;
+                    this.AddressId = entityPM.Id;
+                }
+            });
+        }
+    }
+    /*EditAddressClicked() {
+        var myAddressId = this.AddressId;
+        var myPartnerTypeId: string = null;
+        var isCustomer: boolean;
+        if (this.PartnerCardList != null) {
+            myPartnerTypeId = this.PartnerCardList.PartnerTypeId;
+            isCustomer = this.PartnerCardList.IsCustomer;
+        }
+
+        if (!AppTool.IsNullOrEmpty(myAddressId)) {
+            var logeWindow = new LogitudeWindow();
+            logeWindow.Width = 630;
+            logeWindow.Height = 430;
+            logeWindow.Title = "Edit Address";
+            logeWindow.WindowArgs = { EntityId: myAddressId };
+            logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
+            logeWindow.WindowClosed.subscribe(s => {
+                if (s) {
+
+                    var list = this.fatherComponent.AllAddresses.filter(f => f.Id == myAddressId)[0];
+                    if (list) {
+                        var indexOfList = this.fatherComponent.AllAddresses.indexOf(list);
+                        this.fatherComponent.AllAddresses.splice(indexOfList, 1);
+                    }
+
+                    this.AddressId = null;
+                    this.AddressId = myAddressId;
+                }
+            });
+        }
+    }*/
+
     BuildAddressCityText() {
         var myResult = null;
 
