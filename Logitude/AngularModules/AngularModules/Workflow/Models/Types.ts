@@ -4,6 +4,7 @@ export type NodeType =
     "loopNode" |
     "setValueNode" |
     "declareVariableNode" |
+    "collectionFilterNode" |
     "createRecordNode" |
     "updateRecordNode" |
     "getRecordNode" |

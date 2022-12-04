@@ -1,3 +1,4 @@
+import { GetRecordTypes } from "Workflow/Constants/GetRecordTypes";
 import { FlowReader } from "./FlowReader";
 import { Formatter } from "./Formatter";
 import { TreeSelectItem } from "./TreeSelectItem";
@@ -27,10 +28,10 @@ export class CollectionFilterEntitiesTreeList {
     }
 
     private getGetRecordItemChildren() {
-        
+
         this.buildTriggerRecordTreeSelectItem();
 
-        this.getGetRecordNodes("FirstRecord").forEach((getRecordNode: any) => {
+        this.getGetRecordNodes("FirstRecord", true).forEach((getRecordNode: any) => {
             let entity = getRecordNode.data["entity"];
             let treeSelectItemName = getRecordNode.data["name"];
             let treeSelectItemKey = Formatter.getCodeFromName(treeSelectItemName);
@@ -40,7 +41,7 @@ export class CollectionFilterEntitiesTreeList {
         });
     }
 
-    private buildTriggerRecordTreeSelectItem(){
+    private buildTriggerRecordTreeSelectItem() {
         let triggeringRecordEntity = FlowReader.getStartNodeEntity(this.FlowObject);
         let triggeringRecordchildrenItem = this.getChildrenItems("triggeringrecord", triggeringRecordEntity)
         let triggeringrecordItem = new TreeSelectItem("triggeringrecord", "Triggering record", false, false, false, false, triggeringRecordchildrenItem)
@@ -51,17 +52,23 @@ export class CollectionFilterEntitiesTreeList {
         let childrenItems = [];
         let childerItems = this.ChildEntities.filter(c => c.ParentEntityCode === entityCode)
         childerItems.forEach(childEntity => {
-            let childrenItem = new TreeSelectItem(treeItemPrefix + "_" + childEntity.Code, childEntity.Name, true, true, false, false, [], {entity:childEntity.Code});
+            let childrenItem = new TreeSelectItem(treeItemPrefix + "_" + childEntity.Code, childEntity.Name, true, true, false, false, [], { entity: childEntity.Code });
             childrenItems.push(childrenItem);
         });
         return childrenItems;
     }
 
-    private getGetRecordNodes(recordsLimit: "FirstRecord" | "AllRecords") {
+    private getGetRecordNodes(recordsLimit: "FirstRecord" | "AllRecords", justEditableRecords: boolean) {
         if (this.FlowObject) {
-            return FlowReader.getAllPreviousNodes(this.FlowObject, this.CurrentNodeId, "getRecordNode")
+            let getRecordNodes = FlowReader.getAllPreviousNodes(this.FlowObject, this.CurrentNodeId, "getRecordNode")
                 .filter((n: any) => n.data["recordsLimit"] === recordsLimit
                     && n.data["entity"] && n.data["entity"].indexOf(".") === -1);
+
+            if (justEditableRecords) {
+                return getRecordNodes.filter((n: any) => n.data["recordsType"] === GetRecordTypes.Editable);
+            }
+
+            return getRecordNodes;
         }
         return [];
     }

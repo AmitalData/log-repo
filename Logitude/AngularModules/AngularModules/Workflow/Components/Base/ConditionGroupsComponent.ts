@@ -44,6 +44,7 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
     @Input() FlowObjectFields: ObjectFieldList[];
     @Input() CurrentNodeId: string;
     @Input() EnableAdd: boolean = true;
+    @Input() IsOneLevelConditions: boolean = false;
 
     @Output() ConditionsChangedEvent = new EventEmitter();
 
@@ -215,6 +216,10 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
     }
 
     addCondition(conditionIndex: number, isGroup: boolean) {
+        if(isGroup && this.IsOneLevelConditions){
+            return;
+        }
+        
         if (this.IsValidConditions && this.EnableAdd) {
             let condition = new Condition(isGroup);
             condition.id = this.ConditionsCounter;
@@ -248,17 +253,6 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
 
     emitConditionsChanged(event: any = null) {
         this.ConditionsChangedEvent.emit(event);
-    }
-
-    showFlowVariablesTreeItem(conditionIndex: number) {
-        let condition = this.Conditions[conditionIndex];
-        let compareWithLookupOrPickListType: string | null = null;
-        if (condition.type === FieldTypes.LookUp) {
-            compareWithLookupOrPickListType = condition.lookupType;
-        } else if (condition.type === FieldTypes.PickList) {
-            compareWithLookupOrPickListType = condition.picklistType;
-        }
-        return (item: TreeSelectItem) => this.FlowVariablesTreeList.compareItemType(item, condition.type, compareWithLookupOrPickListType);
     }
 
     getDeclaredVariableFieldType(field: string) {
