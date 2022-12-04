@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "3ee7da5a74e053141d735fe78ba791e3";
+		public const string HashString = "b98f6dc242e43866c9147b77399d8257";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "9d20",
+			      				    Code =  "ae8f",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -687,7 +687,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 		   Feature GeneralFeature_SupportUnitMeasurements = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SupportUnitMeasurements", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.SupportUnitMeasurements", NameTextCodeDefaultText = @"Support Select Unit of Measurements" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
-		   Feature GeneralFeature_Customization_CreateSubObjects = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customization.CreateSubObjects", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.Customization.CreateSubObjects", NameTextCodeDefaultText = @"Create Sub Objects" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
+		   Feature GeneralFeature_Customization_CreateSubObjects = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customization.CreateSubObjects", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.Customization.CreateSubObjects", NameTextCodeDefaultText = @"Create Sub Object in Customization" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
+
+		   Feature GeneralFeature_Customization_CreateObjects = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customization.CreateObjects", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.Customization.CreateObjects", NameTextCodeDefaultText = @"Create Custom object in Customization " }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
    
 	    

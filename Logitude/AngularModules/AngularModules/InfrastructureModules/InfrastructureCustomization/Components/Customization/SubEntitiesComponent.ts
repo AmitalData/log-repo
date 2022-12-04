@@ -31,13 +31,13 @@ export class SubEntitiesComponent {
     public SubEntitiesList: Array<ObjectTablePM>;
     private _entityResourceService: EntityResourceService;
     private textCodeTranslationPipe: TextCodeTranslationPipe;
-    public IsEnabledCreatingCustomObjects: boolean = false;
+    public IsEnabledCreatingSubCustomObjects: boolean = false;
     public SupportSubEntity: boolean = false;
     constructor() {
         this.customizationObjectTableService = new CustomizationObjectTableService();
         this._entityResourceService = new EntityResourceService();
         this.textCodeTranslationPipe = new TextCodeTranslationPipe();
-        this.IsEnabledCreatingCustomObjects = FeatureLocator.HasFeaturePermession("General", "Customization.CreateSubObjects");
+        this.IsEnabledCreatingSubCustomObjects = FeatureLocator.HasFeaturePermession("General", "Customization.CreateSubObjects");
     }
 
     SetWindowArgs(args: any) {

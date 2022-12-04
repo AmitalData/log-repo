@@ -69,7 +69,7 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
     get Modified() { return this.modified }
     public IsObjectTableFilterEnabled: boolean = false;
     public IsTabsCustomizationEnabled: boolean = false;
-    public IsEnabledCreatingCustomObjects: boolean = false;
+    public IsEnabledCreatingSubCustomObjects: boolean = false;
     public IsSubEntity: boolean = false;
     public GridScreenSelectedFields: ObjectFieldPM[] = [];
     private screenLayoutService: IScreenLayoutService;
@@ -82,7 +82,7 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
         this.myService = new EntityResourceService();
         this.myGeneralService = new GeneralDomainService();
         this.loginService = new LoginService();
-        this.IsEnabledCreatingCustomObjects = FeatureLocator.HasFeaturePermession("General", "Customization.CreateSubObjects");
+        this.IsEnabledCreatingSubCustomObjects = FeatureLocator.HasFeaturePermession("General", "Customization.CreateSubObjects");
     }
 
     ngOnInit() {
