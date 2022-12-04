@@ -85,7 +85,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "87a36e30925a9f205d65ce44566ab13a";
+
+		public const string HashString = "6a302541c126f50273aad75d3c973792";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -17432,6 +17433,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature DeclarationFeature_IIGEXPORTIMPORTDECLARATION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IIGEXPORTIMPORTDECLARATION", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.IIGEXPORTIMPORTDECLARATION", NameTextCodeDefaultText = @"Export & Import IIG Tenant" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
 		   Feature DeclarationFeature_CancelOldCommunication = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CancelOldCommunication", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.CancelOldCommunication", NameTextCodeDefaultText = @"CancelOldCommunication" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
+		   Feature DeclarationFeature_EntryExit = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EntryExit", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.EntryExit", NameTextCodeDefaultText = @"יציאה ממסוף / נמל" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
    
 	    
