@@ -58,6 +58,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         private EventTracerArgs _LastTraceEventParams;
         private CourierMasterPM _CourierMasterPM;
 
+
         public bool IsProcedureCurrentCodeChanged { get; set; }
 
         public bool IsFromCustomsFeedback { get; set; }
@@ -293,7 +294,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             try
             {
-                
+
                 //<--- Yuval Chalup 30.12.2015 TASK-18507
                 if (HttpContextUtil.IsCustomDomainService())
                 {
@@ -346,13 +347,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                 var declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
 
-                if (entityPM.IsAmendment==true && eventContextTagModel != null  && eventContextTagModel.CallProccessID == EventContextTagModel.ProccessEnum.DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseServiceUpdate)
+                if (entityPM.IsAmendment == true && eventContextTagModel != null && eventContextTagModel.CallProccessID == EventContextTagModel.ProccessEnum.DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseServiceUpdate)
                 {
 
                     var entityPMOrg = declarationQueryService.GetSingle(entityPM.AmendmentOriginalDeclartation, true, false);
                     entityPMOrg.CurrentContextTag = eventContextTagModel;
                     entityPMOrg.HatraDate = entityPM.HatraDate;
-                  //  entityPMOrg.DeclarationNumber = entityPM.DeclarationNumber;
+                    //  entityPMOrg.DeclarationNumber = entityPM.DeclarationNumber;
 
                     UpdateUnifreight(entityPMOrg);
 
@@ -360,19 +361,19 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
 
 
-               // var entityAmend = declarationQueryService.GetAcceptDeclarationAmendment(entityPM.Id, entityPM.Tenant);
+                // var entityAmend = declarationQueryService.GetAcceptDeclarationAmendment(entityPM.Id, entityPM.Tenant);
 
-                if (entityPM.IsConnectedToUnifreight && !( entityPM.PaymentDate.HasValue && string.IsNullOrEmpty(entityPM.DeclarationNumber)))
+                if (entityPM.IsConnectedToUnifreight && !(entityPM.PaymentDate.HasValue && string.IsNullOrEmpty(entityPM.DeclarationNumber)))
                 {
                     UpdateUnifreight(entityPM);
                 }
 
 
-                if(entityPM.IsDiamondDeclaration)
+                if (entityPM.IsDiamondDeclaration)
                 {
-                  //  DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
+                    //  DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
 
-                    entityPM.IsValidTicketsDiamond= declarationQueryService.IsValidTickets(entityPM);
+                    entityPM.IsValidTicketsDiamond = declarationQueryService.IsValidTickets(entityPM);
 
                     entityPM.IsMissMandatoryDiamond = declarationQueryService.IsMissingMandatoryFields(entityPM);
 
@@ -544,12 +545,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     var crsQS = new CustomsRequestsSheetQueryService(entityPM.Tenant);
                     var listCRS = crsQS.GetCustomsRequestsSheetByCustomFileNumber(entityPM.CustomFileNo, entityPM.Tenant);
-                    var CRS2755=  listCRS.FirstOrDefault(r => r.InterfaceTypeCode == "2755");// - מסר הגשה
+                    var CRS2755 = listCRS.FirstOrDefault(r => r.InterfaceTypeCode == "2755");// - מסר הגשה
                     if (CRS2755 != null)
                     {
                         throw new Exception(" קיימת בקשה של הגשת תשלום - לא ניתן לבצע איפוס");
                     }
-                    
+
 
                     ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
 
@@ -565,7 +566,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
                         DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
 
-                        DeclarationCourierStatusPM declarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(entityPM.Id,true,false);
+                        DeclarationCourierStatusPM declarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(entityPM.Id, true, false);
                         declarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                         declarationCourierStatusPM.CourierDeclarationStatusCode = null;
                         declarationCourierStatusPM.CourierPaymentStatusCode = null;
@@ -573,6 +574,30 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
 
                 }
+
+                if (!string.IsNullOrEmpty(entityPM.ImporterCode) && entityPM.IsCourierDeclaration)
+                {
+
+                    string ImporterCode = entityPM.ImporterCode;
+
+
+                    if (entityPM.ImporterCode.Length > 9)
+                    {
+                        ImporterCode = entityPM.ImporterCode.Substring(0, 9);
+                    }
+                    string clientId = TranslateClient(ImporterCode);
+                    FeatureQuery featureQuery = new FeatureQuery();
+                    var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(entityPM.Tenant), entityPM.Tenant);
+                    var feature = features.Features.FirstOrDefault(x => x.Code == "AddNewClientFromManifest");
+
+
+                    if (clientId == null && feature != null)
+                    {
+                        SendClientSearch(entityPM);
+
+                    }
+                }
+            
 
                 if (entityPM.VatChanged)
                 {
@@ -664,7 +689,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             }
         }
-
+        
         private void DeleteExportStorage(int tenant, string id)
         {
             ExportStoragePM exportStoragePM = new ExportStorageQueryService(tenant).GetSingle(id, true, false);
@@ -3462,6 +3487,62 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
 
             return false;
+        }
+
+        public void SendClientSearch(DeclarationPM entityPM)
+        {
+
+            if (entityPM.IsCourierDeclaration && this.EntityPOCO.ImporterCode != entityPM.ImporterCode) { 
+
+            var loggedUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
+            string importerId = entityPM.ImporterCode;
+            if (entityPM.ImporterCode.Length > 9)
+            {
+                importerId = entityPM.ImporterCode.Substring(0, 9);
+            }
+            var newClientSearchRequestParams = new ClientSearchRequestParams()
+            {
+                LoggingEnabled = true,
+                IsFakeResponse = true,
+                InterfaceTypeCode = "3610",
+                Tenant = Tenant,
+                RequestName = "Client Search",
+                ResponseName = "Client Search",
+                LoggingUserId = loggedUserId,
+                RequestVIA = SendRequestVIA.WebServiceBatch,
+                SuppressSplitWR = true,
+                ExternalId = importerId,
+            };
+
+            try
+            {
+                SBQMessageService.CreateSheetSBQMessage<Logitude.CustomsMessaging.Common.RequestParams.ClientSearchRequestParams>(newClientSearchRequestParams
+                    , false, DateTime.Now
+                    );
+            }
+            catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
+            {
+                if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
+                {
+                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("3610 RequestInProgress stop create a new one !! ");
+                }
+                throw;
+            }
+            }
+        }
+
+        private string TranslateClient(string Importercode)
+        {
+
+            ClientQueryService clientQueryService = new ClientQueryService(ResolvedTenant());
+
+            var clientId = clientQueryService.GetIdByCode(Importercode, ResolvedTenant());
+
+            if (clientId == null)
+            {
+                return null;
+            }
+            return clientId;
         }
     }
 }
