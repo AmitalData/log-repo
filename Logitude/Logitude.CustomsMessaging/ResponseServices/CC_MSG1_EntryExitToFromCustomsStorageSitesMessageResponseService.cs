@@ -21,6 +21,8 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityMapping;
 using System.Runtime.Remoting.Contexts;
 using System.Data.Entity.Infrastructure;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Server.Tools;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -63,7 +65,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     this.MyResponseData.ApplicationID = declaration.Id;
                     this.MyRequestSheetParam.EntityId1 = declaration.Id;
                     this.MyRequestSheetParam.CustomFileNo = declaration.CustomFileNo ;
-                    SendEXT(requestParams.Tenant, declaration, customResponse);
+                    FeatureQuery featureQuery = new FeatureQuery();
+                    var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(declaration.Tenant), declaration.Tenant);
+                    var feature = features.Features.FirstOrDefault(x => x.Code == "EntryExit");
+                    if (feature != null)
+                    {
+                        SendEXT(requestParams.Tenant, declaration, customResponse);
+                    }
                 }
                 else
                 {
@@ -98,6 +106,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 DeliverySiteTypeQueryService deliverySiteTypeQueryService = new DeliverySiteTypeQueryService(Tanent);
                 var deliverySiteType = deliverySiteTypeQueryService.GetSingle(customResponse.ReportingDetails.exitEntrySiteNumber, false, true);
                 var storageSite = deliverySiteType?.LocalName;
+                var commentsStorageSite = storageSite != null ? ", שם אתר: " + storageSite + " " : "";
+                var commentsContainerNumber = customResponse.ReportingDetails.containerNumber != null ? ", מכולה: " + customResponse.ReportingDetails.containerNumber : "";
+
 
                 //var declarationQueryService = new DeclarationQueryService(dbContext);
                 //DeclarationPM connectedDeclarationPM = declarationQueryService.GetSingle(declaration.Id, false, false);
@@ -120,10 +131,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         status = "new",
                         xml_status = "new",
                         status_id = "EXT",
-                        status_DateTime = DateTime.Now,
+                        status_DateTime = customResponse.General.entryExitDateTime != null ? customResponse.General.entryExitDateTime : DateTime.Now  ,
                         //status_place = "FRA",
                         //status_save = "no_fail",
-                        comments = "תאריך שעה הסטטוס:" + customResponse.General.entryExitDateTime + storageSite != null? ", שם אתר:" + storageSite : "" + customResponse.ReportingDetails.containerNumber != null ? ", מכולה:" + customResponse.ReportingDetails.containerNumber : "",
+                        comments = commentsStorageSite + commentsContainerNumber,
                         //מספ]ר מכולה  + אתר אחסון לשלוף מטבלת מכס , לקחת מהקאש
                     }
                 };

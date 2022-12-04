@@ -1278,6 +1278,6 @@
     Columns="IsAmendment" />
   <Index
     Columns="TaxationDateTime" />
-	<Index
-  Columns="AmendmentRequestNumber" />
+  <Index
+    Columns="AmendmentRequestNumber" />
 </Table>
