@@ -59,7 +59,7 @@ export class CustomizationMainComponent {
     LoadPermessions() {
         this.IsObjectTableFilterEnabled = this.SetIsObjectTableFilterEnabled();
         this.IsCustomizationToggleActive = SessionLocator.FeatureToggles.some(d => d.ToggleCode == "CUS");
-        this.IsEnabledCreatingCustomObjects = FeatureLocator.HasFeaturePermession("General", "Customization.CreateSubObjects");
+        this.IsEnabledCreatingCustomObjects = FeatureLocator.HasFeaturePermession("General", "Customization.CreateObjects");
     }
 
     SetIsObjectTableFilterEnabled(): boolean {
