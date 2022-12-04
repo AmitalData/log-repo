@@ -164,16 +164,6 @@ export class CustomsSettingPM {
     public set LastNumOfMessagesDCAWS(newValue: number) { if (this.lastNumOfMessagesDCAWS != newValue) { this.lastNumOfMessagesDCAWS = newValue; this.MarkAsDirty("LastNumOfMessagesDCAWS"); } }
        
 	 
-    private suppressIIGMessageFromDate: Date;
-    public get SuppressIIGMessageFromDate() { return this.suppressIIGMessageFromDate; }
-    public set SuppressIIGMessageFromDate(newValue: Date) { if (this.suppressIIGMessageFromDate != newValue) { this.suppressIIGMessageFromDate = newValue; this.MarkAsDirty("SuppressIIGMessageFromDate"); } }
-       
-	 
-    private suppressIIGMessageToDate: Date;
-    public get SuppressIIGMessageToDate() { return this.suppressIIGMessageToDate; }
-    public set SuppressIIGMessageToDate(newValue: Date) { if (this.suppressIIGMessageToDate != newValue) { this.suppressIIGMessageToDate = newValue; this.MarkAsDirty("SuppressIIGMessageToDate"); } }
-       
-	 
 
     public OldEntityPM: CustomsSettingPM;
 		

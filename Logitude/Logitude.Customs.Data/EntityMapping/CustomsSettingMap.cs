@@ -74,10 +74,6 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.LastRunningDCAWS).HasColumnName("LastRunningDCAWS");
 
             this.Property(t => t.LastNumOfMessagesDCAWS).HasColumnName("LastNumOfMessagesDCAWS");
-
-            this.Property(t => t.SuppressIIGMessageFromDate).HasColumnName("SuppressIIGMessageFromDate");
-
-            this.Property(t => t.SuppressIIGMessageToDate).HasColumnName("SuppressIIGMessageToDate");
         }
     }
 }
