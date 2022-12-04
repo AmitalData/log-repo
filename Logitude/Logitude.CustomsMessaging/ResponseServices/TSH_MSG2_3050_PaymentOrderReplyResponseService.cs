@@ -29,6 +29,7 @@ using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using System.Data.Entity.Validation;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -304,6 +305,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //Yuval Chalup 28.09.2016 --->
             if (_DeclarationPM != null && _DeclarationPM.IsCourierDeclaration) // moran 16.11.17 - AMI-61878
             {
+                LogMessagingUtil.Instance.AppendLine("_PaymentOrderPM.PaymentProcessCode= " + _PaymentOrderPM.PaymentProcessCode + " _PaymentOrderPM.PaymentStatusCode= " + _PaymentOrderPM.PaymentStatusCode);
                 if (_PaymentOrderPM.PaymentProcessCode == "1" && _PaymentOrderPM.PaymentStatusCode == "3")// && HighLowValue != "L")//Eitan H 12/12/18 task 46063 remove != "L"
                 {
                     var myInsertEventContextTagModel = _PaymentOrderPM.CurrentContextTag as EventContextTagModel;
@@ -314,7 +316,26 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     _DeclarationPM.PaymentStatusCode = _PaymentOrderPM.PaymentStatusCode;
                     _DeclarationPM.PaymentOrderNumber = _PaymentOrderPM.PaymentNumber;
                     _DeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
-                    myDeclarationUpdateService.Update(_DeclarationPM, true);
+                    LogMessagingUtil.Instance.AppendLine("Before DeclarationUpdateService: _DeclarationPM.PaymentStatusCode= " + _DeclarationPM.PaymentStatusCode + " _DeclarationPM.PaymentOrderNumber= " + _DeclarationPM.PaymentOrderNumber);
+                    try
+                    {
+                        myDeclarationUpdateService.Update(_DeclarationPM, true);
+                    }
+                    catch (DbEntityValidationException ex)
+                    {
+                        var FormatedException = ExceptionFormatUtil.GetFormated(ex);
+                        LogMessagingUtil.Instance.AppendLine("Declaration Update Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(2000));
+                        LogMessagingUtil.Instance.AppendLine("Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
+                        return;
+                    }
+                    catch (System.Exception e)
+                    {
+                        LogMessagingUtil.Instance.AppendLine("Declaration Update Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(2000));
+                        LogMessagingUtil.Instance.AppendLine("Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
+                        return;
+                    }
+
+
                 }
                 else
                 {
