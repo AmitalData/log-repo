@@ -1610,7 +1610,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                 //    throw new BusinessErrorException("Error in parsing QUANTITY (" + invoiceItemConDeclar.STATISTICQUANTITY + ") into integer");
                 }
                 }*/
-                SupplierInvoiceItemConDeclarPM.Quantity = supplierInvoiceItemPM.InvoiceQuantity; // moran 27.10.16 - AMI-58519
+                //SupplierInvoiceItemConDeclarPM.Quantity = supplierInvoiceItemPM.InvoiceQuantity; // moran 27.10.16 - AMI-58519
+                SupplierInvoiceItemConDeclarPM.Quantity = supplierInvoiceItemPM.StatisticQuantity;
                 SupplierInvoiceItemConDeclarPM.QuantityTypeCode = TranslateMeasurmentUnit(invoiceItemConDeclar.QTY_UNIT); // moran 13.1.16 - AMI-55589
 
 
