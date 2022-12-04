@@ -15,6 +15,7 @@ export class FieldTemplateComponent {
     public IsSpotLightTemplate: boolean = false;
     public IsInlandDomestic: boolean = false;
     public ImageSrc: string = null;
+    public NumberFieldRightPadding = "20px";
     constructor() {
 
     }
