@@ -136,6 +136,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 item.VolumetricWeight = package.VolumetricWeight;
                 item.VolumetricWeightUnit = warehouseEntryPM.ChargeableWeightUnitCode;
                 item.InStock = package.Instock;
+                item.Location = package.Location;
                 SetWarehouseEntryPackageVolumeDetails(item, (double?)package.Volume);
                 SetWarehouseEntryPackageWeightDetails(item, (double?)package.Weight);
 
