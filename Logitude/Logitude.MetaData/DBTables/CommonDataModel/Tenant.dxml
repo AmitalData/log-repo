@@ -802,6 +802,7 @@
     <Constraints
       Nullable="false" />
   </Column>
+	
   <Relation
     ForeignKeyColumn="AddressId"
     ReferencedTable="Addresses"

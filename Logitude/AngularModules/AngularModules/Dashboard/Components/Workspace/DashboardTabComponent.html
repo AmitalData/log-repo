@@ -52,10 +52,10 @@
                     <div></div>
                 </td>
 
-                <td *ngIf="!IsEditLayoutModeActive" style="width: 309px; height: 22px; top: 12px;">
+                <td *ngIf="!IsEditLayoutModeActive" style="width: 309px; height: 22px; top: 12px; bottom: 12px;">
               <tr>
                 <table>
-                    <td style="width: 87px; min-width: 87px; height: 22px;">
+                    <td style="width: 87px; min-width: 87px; height: 22px; bottom: 12px;">
                         <button class="TabButton" (click)="OpenFilterAreaClick()"
                             *ngIf="IsGlobalFiltersOpened == false">
                             <img style="width: 12px; height: 13px;" src="./Images/FilterGrayTrans.png" />
@@ -72,7 +72,7 @@
                         <div></div>
                     </td>
 
-                    <td style="width: 105px;">
+                    <td style="width: 105px; bottom: 12px;">
                         <button class="TabButton" (click)="EditLayoutClicked()">
                             <img style="width: 12px; height: 13px;" src="./Images/Buttons/Edit.png" />
                             Edit dashboard</button>
@@ -82,7 +82,7 @@
                         <div></div>
                     </td>
                    
-                    <td style="width: 69px;">
+                    <td style="width: 69px; bottom: 12px;">
                         <button class="TabButton" (click)="RefreshLayoutClicked()">
                             <img style="width: 15px; height: 17px;" src="./Images/Buttons/Refresh.png" />
                             Refresh</button>
@@ -91,7 +91,7 @@
                         <div></div>
                     </td>
                     
-                    <td style="width:24px;">
+                    <td style="width:24px; bottom: 12px;">
                         <button class="TabButton">
                             <img style="opacity: 0; width: 16px; height: 16px; top:3px; left: 4px; position: absolute;"
                                  src="./Images/Buttons/transparentbackground.png"/>
