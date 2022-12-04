@@ -157,7 +157,7 @@ export function FillRootConditionsDetails(groupCondition: string, conditionDetai
 
 export function FillGroupConditionDetails(IsRootGroup: boolean, groupCondition: string, conditionDetailsList: ConditionDetails[], IsFromList: boolean) {
     OpenEditStartNode();
-    
+
     if (!IsRootGroup) {
         cy.Click(WorkflowSelectors.WorkflowRootGroupCondition, null);
     }
@@ -217,6 +217,42 @@ export function RefreshRunHistory() {
 
 export function AssertRefreshRunHistory() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetMockWorkflowInstances, 200);
+}
+
+export function ExportRunHistoryInstances() {
+    cy.DefineRequestWait(RestAPI.POST, URLs.PostGetQueryToExcelData, RequestAliases.PostGetQueryToExcelData);
+    cy.Click(WorkflowSelectors.RunHistoryExportFile, null)
+}
+
+export function AsserExportRunHistoryInstances() {
+    BaseAssertion.AssertStatusCode(RequestAliases.PostGetQueryToExcelData, 200);
+    BaseAssertion.AssertElementContain(WorkflowSelectors.WorkflowLinkButton, 'Download file');
+    cy.Click(BaseSelectors.button, BaseSelectors.ContainsCancel);
+}
+
+export function SortRunHistoryInstances(SortField: string) {
+    cy.fixture(WorkflowRunHistoryFixturePath.MockWorkflowInstaces).then(response => {
+        cy.DefineMockRequestWait(RestAPI.GET, URLs.Getworkflowinstance, RequestAliases.GetMockWorkflowInstances, response);
+    });
+    cy.Click(WorkflowSelectors.RunHistoryHeaderColumnSelector(SortField), null)
+}
+
+export function AssertSortRunHistoryInstances() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetMockWorkflowInstances, 200);
+}
+
+export function FilterInstancesBycurrentdate() {
+    cy.fixture(WorkflowRunHistoryFixturePath.MockWorkflowInstaces).then(response => {
+        cy.DefineMockRequestWait(RestAPI.GET, URLs.Getworkflowinstance, RequestAliases.GetMockWorkflowInstances, response);
+    });
+    cy.Click(WorkflowSelectors.RunHistoryDatePicker, null).then(() =>{
+        cy.get(WorkflowSelectors.DatePickertodatDate).click();
+    });
+}
+
+export function AssertFilterInstancesBycurrentdate() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetMockWorkflowInstances, 200);
+
 }
 
 export function SearchInstanceByBusinessKey() {

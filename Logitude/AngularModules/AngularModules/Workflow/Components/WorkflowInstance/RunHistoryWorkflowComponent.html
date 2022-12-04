@@ -65,7 +65,7 @@
                     </td>
                     <td class="excel-row">
                         <button class="excel-button Button" (click)="ExportToExcel()"><img class="CenterCenter"
-                                title="Export To Excel" src="./Images/Buttons/excelicon.png" /></button>
+                                title="Export To Excel" src="./Images/Buttons/excelicon.png" id="RunHistoryExport"/></button>
                     </td>
                     <td>
                         <div></div>
@@ -75,7 +75,7 @@
                         <div class="filter-container">
                             <span class="filter-name">Start Time</span>
                             <CustomDatePicker (SelectedItemChanged)="setDateFilter($event)"
-                                [QueryCode]="ObjectTableName" [ObjectField]="StartTimeObjectfield"></CustomDatePicker>
+                                [QueryCode]="ObjectTableName" [ObjectField]="StartTimeObjectfield" id="RunHistoryDatePicker"></CustomDatePicker>
                         </div>
                     </td>
 

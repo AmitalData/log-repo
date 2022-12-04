@@ -46,6 +46,14 @@ export class WorkflowSelectors {
     public static readonly AddDecisionNode = ".add-condition-node";
     public static readonly WorkflowEditElementButton = ".edit-button";
     public static readonly WorkflowfieldsListTitle = "nz-tree-node-title";
+    public static readonly RunHistoryDatePicker = "#RunHistoryDatePicker";
+    public static readonly RunHistoryExportFile = "#RunHistoryExport";
+    public static readonly DatePickerList = "[data-cy^='RunHistoryDatePickerdropDown']";
+    public static readonly DatePickertodatDate = "#TodayDateItem";
+
+    public static RunHistoryHeaderColumnSelector(SortField: string): string {
+        return "[data-cy^='" + SortField + "']";
+    }
 
     public static WorkflowConditionField(index: number): string {
         return "input[data-cy^='ConditionField_" + index.toString() + "']";
