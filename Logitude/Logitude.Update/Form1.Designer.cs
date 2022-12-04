@@ -116,6 +116,8 @@
             this.UpdateINFlble = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.updateDashboardLabel = new System.Windows.Forms.Label();
+            this.updateDashboardButton = new System.Windows.Forms.Button();
             this.updateWorkflowLabel = new System.Windows.Forms.Label();
             this.updateWorkflowButton = new System.Windows.Forms.Button();
             this.UpdateSHOLabel = new System.Windows.Forms.Label();
@@ -275,19 +277,23 @@
             this.label25 = new System.Windows.Forms.Label();
             this.uploadContactsButton = new System.Windows.Forms.Button();
             this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.EmptyMap = new System.Windows.Forms.CheckBox();
             this.vizionTenantTextBox = new System.Windows.Forms.TextBox();
             this.label26 = new System.Windows.Forms.Label();
             this.updateContainersButton = new System.Windows.Forms.Button();
             this.getContainersListView = new System.Windows.Forms.ListView();
             this.getContainersButton = new System.Windows.Forms.Button();
+            this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.label27 = new System.Windows.Forms.Label();
+            this.portsStatesTenantTextBox = new System.Windows.Forms.TextBox();
+            this.updatePortsStatesButton = new System.Windows.Forms.Button();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.OITimer = new System.Windows.Forms.Timer(this.components);
-            this.updateDashboardLabel = new System.Windows.Forms.Label();
-            this.updateDashboardButton = new System.Windows.Forms.Button();
-            this.label26 = new System.Windows.Forms.Label();
-            this.vizionTenantTextBox = new System.Windows.Forms.TextBox();
-            this.EmptyMap = new System.Windows.Forms.CheckBox();
+            this.portsStatesLabel = new System.Windows.Forms.Label();
+            this.excelListView = new System.Windows.Forms.ListView();
+            this.logsLabel = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -305,6 +311,8 @@
             this.PanelShipmentResults.SuspendLayout();
             this.tabPage6.SuspendLayout();
             this.tabPage7.SuspendLayout();
+            this.tabPage8.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -1140,6 +1148,7 @@
             this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Controls.Add(this.tabPage6);
             this.tabControl1.Controls.Add(this.tabPage7);
+            this.tabControl1.Controls.Add(this.tabPage8);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 24);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
@@ -1225,6 +1234,29 @@
             this.tabPage1.Text = "Update";
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
+            // updateDashboardLabel
+            // 
+            this.updateDashboardLabel.AutoSize = true;
+            this.updateDashboardLabel.Location = new System.Drawing.Point(206, 617);
+            this.updateDashboardLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.updateDashboardLabel.MinimumSize = new System.Drawing.Size(100, 0);
+            this.updateDashboardLabel.Name = "updateDashboardLabel";
+            this.updateDashboardLabel.Size = new System.Drawing.Size(100, 13);
+            this.updateDashboardLabel.TabIndex = 107;
+            this.updateDashboardLabel.Text = "...";
+            // 
+            // updateDashboardButton
+            // 
+            this.updateDashboardButton.Location = new System.Drawing.Point(16, 613);
+            this.updateDashboardButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.updateDashboardButton.Name = "updateDashboardButton";
+            this.updateDashboardButton.Size = new System.Drawing.Size(184, 22);
+            this.updateDashboardButton.TabIndex = 106;
+            this.updateDashboardButton.Text = "Update Dashboard";
+            this.updateDashboardButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.updateDashboardButton.UseVisualStyleBackColor = true;
+            this.updateDashboardButton.Click += new System.EventHandler(this.updateDashboardButton_Click);
+            // 
             // updateWorkflowLabel
             // 
             this.updateWorkflowLabel.AutoSize = true;
@@ -1300,7 +1332,7 @@
             this.cbxOldUpdateCode.Location = new System.Drawing.Point(431, 350);
             this.cbxOldUpdateCode.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.cbxOldUpdateCode.Name = "cbxOldUpdateCode";
-            this.cbxOldUpdateCode.Size = new System.Drawing.Size(102, 17);
+            this.cbxOldUpdateCode.Size = new System.Drawing.Size(103, 17);
             this.cbxOldUpdateCode.TabIndex = 99;
             this.cbxOldUpdateCode.Text = "Run Old Update";
             this.cbxOldUpdateCode.UseVisualStyleBackColor = true;
@@ -1551,7 +1583,7 @@
             this.tabPage2.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.tabPage2.Size = new System.Drawing.Size(1016, 622);
+            this.tabPage2.Size = new System.Drawing.Size(1016, 648);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Other";
             // 
@@ -1569,7 +1601,7 @@
             this.label22.AutoSize = true;
             this.label22.Location = new System.Drawing.Point(746, 269);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(45, 13);
+            this.label22.Size = new System.Drawing.Size(42, 13);
             this.label22.TabIndex = 115;
             this.label22.Text = "Output:";
             // 
@@ -1585,7 +1617,7 @@
             this.label19.AutoSize = true;
             this.label19.Location = new System.Drawing.Point(744, 240);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(45, 13);
+            this.label19.Size = new System.Drawing.Size(44, 13);
             this.label19.TabIndex = 113;
             this.label19.Text = "Tenant:";
             // 
@@ -1647,7 +1679,7 @@
             this.UploadTimeZonesLabel.Location = new System.Drawing.Point(6, 226);
             this.UploadTimeZonesLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.UploadTimeZonesLabel.Name = "UploadTimeZonesLabel";
-            this.UploadTimeZonesLabel.Size = new System.Drawing.Size(19, 13);
+            this.UploadTimeZonesLabel.Size = new System.Drawing.Size(16, 13);
             this.UploadTimeZonesLabel.TabIndex = 108;
             this.UploadTimeZonesLabel.Text = "...";
             // 
@@ -1720,7 +1752,7 @@
             this.linkLabel3.Location = new System.Drawing.Point(162, 42);
             this.linkLabel3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.linkLabel3.Name = "linkLabel3";
-            this.linkLabel3.Size = new System.Drawing.Size(20, 13);
+            this.linkLabel3.Size = new System.Drawing.Size(19, 13);
             this.linkLabel3.TabIndex = 81;
             this.linkLabel3.TabStop = true;
             this.linkLabel3.Text = "(?)";
@@ -1741,7 +1773,7 @@
             this.label10.Location = new System.Drawing.Point(12, 42);
             this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(43, 13);
+            this.label10.Size = new System.Drawing.Size(40, 13);
             this.label10.TabIndex = 80;
             this.label10.Text = "tenant:";
             // 
@@ -1772,7 +1804,7 @@
             this.updateBluesnapTransactionsLabel.Location = new System.Drawing.Point(212, 573);
             this.updateBluesnapTransactionsLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.updateBluesnapTransactionsLabel.Name = "updateBluesnapTransactionsLabel";
-            this.updateBluesnapTransactionsLabel.Size = new System.Drawing.Size(19, 13);
+            this.updateBluesnapTransactionsLabel.Size = new System.Drawing.Size(16, 13);
             this.updateBluesnapTransactionsLabel.TabIndex = 101;
             this.updateBluesnapTransactionsLabel.Text = "...";
             // 
@@ -1809,7 +1841,7 @@
             this.linkLabel2.Location = new System.Drawing.Point(162, 42);
             this.linkLabel2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(20, 13);
+            this.linkLabel2.Size = new System.Drawing.Size(19, 13);
             this.linkLabel2.TabIndex = 81;
             this.linkLabel2.TabStop = true;
             this.linkLabel2.Text = "(?)";
@@ -1841,7 +1873,7 @@
             this.label8.Location = new System.Drawing.Point(12, 42);
             this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(43, 13);
+            this.label8.Size = new System.Drawing.Size(40, 13);
             this.label8.TabIndex = 80;
             this.label8.Text = "tenant:";
             // 
@@ -2339,7 +2371,7 @@
             this.checkBox1.Location = new System.Drawing.Point(522, 23);
             this.checkBox1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(84, 17);
+            this.checkBox1.Size = new System.Drawing.Size(85, 17);
             this.checkBox1.TabIndex = 18;
             this.checkBox1.Text = "Save to disk";
             this.checkBox1.UseVisualStyleBackColor = true;
@@ -2391,7 +2423,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(1016, 622);
+            this.tabPage3.Size = new System.Drawing.Size(1016, 648);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Airline Logos";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -2402,7 +2434,7 @@
             this.AirlineLogosCheckBox.Location = new System.Drawing.Point(73, 83);
             this.AirlineLogosCheckBox.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.AirlineLogosCheckBox.Name = "AirlineLogosCheckBox";
-            this.AirlineLogosCheckBox.Size = new System.Drawing.Size(123, 17);
+            this.AirlineLogosCheckBox.Size = new System.Drawing.Size(118, 17);
             this.AirlineLogosCheckBox.TabIndex = 106;
             this.AirlineLogosCheckBox.Text = "Apply for all tenants";
             this.AirlineLogosCheckBox.UseVisualStyleBackColor = true;
@@ -2413,7 +2445,7 @@
             this.UpdateLogosLabel.Location = new System.Drawing.Point(128, 101);
             this.UpdateLogosLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.UpdateLogosLabel.Name = "UpdateLogosLabel";
-            this.UpdateLogosLabel.Size = new System.Drawing.Size(23, 13);
+            this.UpdateLogosLabel.Size = new System.Drawing.Size(19, 13);
             this.UpdateLogosLabel.TabIndex = 105;
             this.UpdateLogosLabel.Text = "....";
             // 
@@ -2423,7 +2455,7 @@
             this.label6.Location = new System.Drawing.Point(389, 30);
             this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(218, 13);
+            this.label6.Size = new System.Drawing.Size(223, 13);
             this.label6.TabIndex = 104;
             this.label6.Text = "ex: C:\\Users\\SAMARA\\Desktop\\AirlineLogos";
             // 
@@ -2441,7 +2473,7 @@
             this.label5.Location = new System.Drawing.Point(20, 30);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(48, 13);
+            this.label5.Size = new System.Drawing.Size(47, 13);
             this.label5.TabIndex = 102;
             this.label5.Text = "File path";
             // 
@@ -2487,7 +2519,7 @@
             this.tabPage4.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.tabPage4.Size = new System.Drawing.Size(1016, 622);
+            this.tabPage4.Size = new System.Drawing.Size(1016, 648);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Accounting Tools";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -2536,7 +2568,7 @@
             this.linkLabel1.Location = new System.Drawing.Point(157, 61);
             this.linkLabel1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(20, 13);
+            this.linkLabel1.Size = new System.Drawing.Size(19, 13);
             this.linkLabel1.TabIndex = 81;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "(?)";
@@ -2568,7 +2600,7 @@
             this.label2.Location = new System.Drawing.Point(12, 61);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(43, 13);
+            this.label2.Size = new System.Drawing.Size(40, 13);
             this.label2.TabIndex = 80;
             this.label2.Text = "tenant:";
             // 
@@ -2603,7 +2635,7 @@
             this.label14.Location = new System.Drawing.Point(214, 144);
             this.label14.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(58, 13);
+            this.label14.Size = new System.Drawing.Size(57, 13);
             this.label14.TabIndex = 10;
             this.label14.Text = "Completed";
             this.label14.Visible = false;
@@ -2615,7 +2647,7 @@
             this.label13.Location = new System.Drawing.Point(214, 102);
             this.label13.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(58, 13);
+            this.label13.Size = new System.Drawing.Size(57, 13);
             this.label13.TabIndex = 9;
             this.label13.Text = "Completed";
             this.label13.Visible = false;
@@ -2637,7 +2669,7 @@
             this.label12.Location = new System.Drawing.Point(10, 50);
             this.label12.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(81, 13);
+            this.label12.Size = new System.Drawing.Size(82, 13);
             this.label12.TabIndex = 7;
             this.label12.Text = "Document Date";
             // 
@@ -2719,7 +2751,7 @@
             this.tabPage5.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPage5.Size = new System.Drawing.Size(1016, 622);
+            this.tabPage5.Size = new System.Drawing.Size(1016, 648);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "Shipment";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -2819,7 +2851,7 @@
             this.label20.Location = new System.Drawing.Point(9, 54);
             this.label20.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(82, 13);
+            this.label20.Size = new System.Drawing.Size(81, 13);
             this.label20.TabIndex = 6;
             this.label20.Text = "Fail Shipments :";
             this.label20.Click += new System.EventHandler(this.label20_Click);
@@ -2830,7 +2862,7 @@
             this.EstimatedDoneTime.Location = new System.Drawing.Point(113, 79);
             this.EstimatedDoneTime.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.EstimatedDoneTime.Name = "EstimatedDoneTime";
-            this.EstimatedDoneTime.Size = new System.Drawing.Size(71, 13);
+            this.EstimatedDoneTime.Size = new System.Drawing.Size(68, 13);
             this.EstimatedDoneTime.TabIndex = 5;
             this.EstimatedDoneTime.Text = "Calculating...";
             // 
@@ -2840,7 +2872,7 @@
             this.label23.Location = new System.Drawing.Point(9, 79);
             this.label23.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(84, 13);
+            this.label23.Size = new System.Drawing.Size(81, 13);
             this.label23.TabIndex = 4;
             this.label23.Text = "Estimated time :";
             // 
@@ -2870,7 +2902,7 @@
             this.NumberOfShipments.Location = new System.Drawing.Point(113, 9);
             this.NumberOfShipments.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.NumberOfShipments.Name = "NumberOfShipments";
-            this.NumberOfShipments.Size = new System.Drawing.Size(71, 13);
+            this.NumberOfShipments.Size = new System.Drawing.Size(68, 13);
             this.NumberOfShipments.TabIndex = 1;
             this.NumberOfShipments.Text = "Calculating...";
             // 
@@ -2880,7 +2912,7 @@
             this.label18.Location = new System.Drawing.Point(9, 9);
             this.label18.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(118, 13);
+            this.label18.Size = new System.Drawing.Size(116, 13);
             this.label18.TabIndex = 0;
             this.label18.Text = "Number Of Shipments :";
             // 
@@ -2917,7 +2949,7 @@
             this.label17.Location = new System.Drawing.Point(4, 85);
             this.label17.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(45, 13);
+            this.label17.Size = new System.Drawing.Size(46, 13);
             this.label17.TabIndex = 4;
             this.label17.Text = "To Date";
             // 
@@ -2927,7 +2959,7 @@
             this.label16.Location = new System.Drawing.Point(4, 53);
             this.label16.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(57, 13);
+            this.label16.Size = new System.Drawing.Size(56, 13);
             this.label16.TabIndex = 2;
             this.label16.Text = "From Date";
             // 
@@ -2970,7 +3002,7 @@
             this.tabPage6.Controls.Add(this.uploadContactsButton);
             this.tabPage6.Location = new System.Drawing.Point(4, 22);
             this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Size = new System.Drawing.Size(1016, 622);
+            this.tabPage6.Size = new System.Drawing.Size(1016, 648);
             this.tabPage6.TabIndex = 5;
             this.tabPage6.Text = "Upload Contacts";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -2990,7 +3022,7 @@
             this.uploadContactsLabel.AutoSize = true;
             this.uploadContactsLabel.Location = new System.Drawing.Point(226, 27);
             this.uploadContactsLabel.Name = "uploadContactsLabel";
-            this.uploadContactsLabel.Size = new System.Drawing.Size(19, 13);
+            this.uploadContactsLabel.Size = new System.Drawing.Size(16, 13);
             this.uploadContactsLabel.TabIndex = 122;
             this.uploadContactsLabel.Text = "...";
             // 
@@ -3030,10 +3062,20 @@
             this.tabPage7.Controls.Add(this.getContainersButton);
             this.tabPage7.Location = new System.Drawing.Point(4, 22);
             this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Size = new System.Drawing.Size(1016, 622);
+            this.tabPage7.Size = new System.Drawing.Size(1016, 648);
             this.tabPage7.TabIndex = 6;
             this.tabPage7.Text = "Vizion";
             this.tabPage7.UseVisualStyleBackColor = true;
+            // 
+            // EmptyMap
+            // 
+            this.EmptyMap.AutoSize = true;
+            this.EmptyMap.Location = new System.Drawing.Point(68, 49);
+            this.EmptyMap.Name = "EmptyMap";
+            this.EmptyMap.Size = new System.Drawing.Size(114, 17);
+            this.EmptyMap.TabIndex = 5;
+            this.EmptyMap.Text = "Map Empty Return";
+            this.EmptyMap.UseVisualStyleBackColor = true;
             // 
             // vizionTenantTextBox
             // 
@@ -3081,6 +3123,57 @@
             this.getContainersButton.UseVisualStyleBackColor = true;
             this.getContainersButton.Click += new System.EventHandler(this.getContainersButton_Click);
             // 
+            // tabPage8
+            // 
+            this.tabPage8.Controls.Add(this.logsLabel);
+            this.tabPage8.Controls.Add(this.excelListView);
+            this.tabPage8.Controls.Add(this.groupBox5);
+            this.tabPage8.Location = new System.Drawing.Point(4, 22);
+            this.tabPage8.Name = "tabPage8";
+            this.tabPage8.Size = new System.Drawing.Size(1016, 648);
+            this.tabPage8.TabIndex = 7;
+            this.tabPage8.Text = "Excel Updates";
+            this.tabPage8.UseVisualStyleBackColor = true;
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.portsStatesLabel);
+            this.groupBox5.Controls.Add(this.label27);
+            this.groupBox5.Controls.Add(this.portsStatesTenantTextBox);
+            this.groupBox5.Controls.Add(this.updatePortsStatesButton);
+            this.groupBox5.Location = new System.Drawing.Point(19, 15);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(226, 106);
+            this.groupBox5.TabIndex = 0;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Update Ports States";
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(7, 31);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(41, 13);
+            this.label27.TabIndex = 2;
+            this.label27.Text = "Tenant";
+            // 
+            // portsStatesTenantTextBox
+            // 
+            this.portsStatesTenantTextBox.Location = new System.Drawing.Point(54, 25);
+            this.portsStatesTenantTextBox.Name = "portsStatesTenantTextBox";
+            this.portsStatesTenantTextBox.Size = new System.Drawing.Size(157, 20);
+            this.portsStatesTenantTextBox.TabIndex = 1;
+            // 
+            // updatePortsStatesButton
+            // 
+            this.updatePortsStatesButton.Location = new System.Drawing.Point(6, 62);
+            this.updatePortsStatesButton.Name = "updatePortsStatesButton";
+            this.updatePortsStatesButton.Size = new System.Drawing.Size(93, 27);
+            this.updatePortsStatesButton.TabIndex = 0;
+            this.updatePortsStatesButton.Text = "Update";
+            this.updatePortsStatesButton.UseVisualStyleBackColor = true;
+            this.updatePortsStatesButton.Click += new System.EventHandler(this.updatePortsStatesButton_Click);
+            // 
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Name = "contextMenuStrip1";
@@ -3092,58 +3185,31 @@
             this.OITimer.Interval = 1000;
             this.OITimer.Tick += new System.EventHandler(this.OITimer_Tick);
             // 
-            // EmptyMap
+            // portsStatesLabel
             // 
-            this.EmptyMap.AutoSize = true;
-            this.EmptyMap.Location = new System.Drawing.Point(68, 49);
-            this.EmptyMap.Name = "EmptyMap";
-            this.EmptyMap.Size = new System.Drawing.Size(115, 17);
-            this.EmptyMap.TabIndex = 5;
-            this.EmptyMap.Text = "Map Empty Return";
-            this.EmptyMap.UseVisualStyleBackColor = true;
+            this.portsStatesLabel.AutoSize = true;
+            this.portsStatesLabel.Location = new System.Drawing.Point(105, 69);
+            this.portsStatesLabel.Name = "portsStatesLabel";
+            this.portsStatesLabel.Size = new System.Drawing.Size(16, 13);
+            this.portsStatesLabel.TabIndex = 3;
+            this.portsStatesLabel.Text = "...";
             // 
-            // updateDashboardLabel
+            // excelListView
             // 
-            this.updateDashboardLabel.AutoSize = true;
-            this.updateDashboardLabel.Location = new System.Drawing.Point(206, 617);
-            this.updateDashboardLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.updateDashboardLabel.MinimumSize = new System.Drawing.Size(100, 0);
-            this.updateDashboardLabel.Name = "updateDashboardLabel";
-            this.updateDashboardLabel.Size = new System.Drawing.Size(100, 13);
-            this.updateDashboardLabel.TabIndex = 107;
-            this.updateDashboardLabel.Text = "...";
+            this.excelListView.HideSelection = false;
+            this.excelListView.Location = new System.Drawing.Point(19, 170);
+            this.excelListView.Name = "excelListView";
+            this.excelListView.Size = new System.Drawing.Size(971, 456);
+            this.excelListView.TabIndex = 1;
+            this.excelListView.UseCompatibleStateImageBehavior = false;
             // 
-            // updateDashboardButton
+            // logsLabel
             // 
-            this.updateDashboardButton.Location = new System.Drawing.Point(16, 613);
-            this.updateDashboardButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.updateDashboardButton.Name = "updateDashboardButton";
-            this.updateDashboardButton.Size = new System.Drawing.Size(184, 22);
-            this.updateDashboardButton.TabIndex = 106;
-            this.updateDashboardButton.Text = "Update Dashboard";
-            this.updateDashboardButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.updateDashboardButton.UseVisualStyleBackColor = true;
-            this.updateDashboardButton.Click += new System.EventHandler(this.updateDashboardButton_Click);
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(21, 25);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(41, 13);
-            this.label26.TabIndex = 3;
-            this.label26.Text = "Tenant";
-            // 
-            // vizionTenantTextBox
-            // EmptyMap
-            // 
-            this.EmptyMap.AutoSize = true;
-            this.EmptyMap.Location = new System.Drawing.Point(68, 49);
-            this.EmptyMap.Name = "EmptyMap";
-            this.EmptyMap.Size = new System.Drawing.Size(115, 17);
-            this.EmptyMap.TabIndex = 5;
-            this.EmptyMap.Text = "Map Empty Return";
-            this.EmptyMap.UseVisualStyleBackColor = true;
+            this.logsLabel.AutoSize = true;
+            this.logsLabel.Location = new System.Drawing.Point(19, 151);
+            this.logsLabel.Name = "logsLabel";
+            this.logsLabel.Size = new System.Drawing.Size(0, 13);
+            this.logsLabel.TabIndex = 2;
             // 
             // Form1
             // 
@@ -3191,6 +3257,10 @@
             this.tabPage6.PerformLayout();
             this.tabPage7.ResumeLayout(false);
             this.tabPage7.PerformLayout();
+            this.tabPage8.ResumeLayout(false);
+            this.tabPage8.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -3467,7 +3537,14 @@
         private System.Windows.Forms.Button updateWorkflowButton;
         private System.Windows.Forms.Label updateDashboardLabel;
         private System.Windows.Forms.Button updateDashboardButton;
-        
+        private System.Windows.Forms.TabPage tabPage8;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.TextBox portsStatesTenantTextBox;
+        private System.Windows.Forms.Button updatePortsStatesButton;
+        private System.Windows.Forms.Label portsStatesLabel;
+        private System.Windows.Forms.Label logsLabel;
+        private System.Windows.Forms.ListView excelListView;
     }
 }
 
