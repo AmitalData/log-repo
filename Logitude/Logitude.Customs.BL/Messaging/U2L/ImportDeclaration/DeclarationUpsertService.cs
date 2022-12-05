@@ -365,15 +365,6 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                             }
                             string clientId = TranslateClient(importerId);
 
-                            //FeatureQuery featureQuery = new FeatureQuery();
-                            int.TryParse(_AmitalCustomsFile.Tenant, out int tenant);
-                            //var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(tenant), tenant);
-                            //var feature = features.Features.FirstOrDefault(x => x.Code == "AddNewClientFromManifest");
-                            bool featureAddNewClientFromManifest =  SecurityUtility.CheckFeature("Customs.Declaration", "AddNewClientFromManifest", tenant);
-                            if (clientId == null && mode == "UpdateNotEmpty" && featureAddNewClientFromManifest /*feature != null*/)
-                            {
-                                SendClientSearch();
-                            }
                             this._MyDeclarationPM.ImporterId = clientId;
                             this._MyDeclarationPM.ImporterCode = importerId;
 
