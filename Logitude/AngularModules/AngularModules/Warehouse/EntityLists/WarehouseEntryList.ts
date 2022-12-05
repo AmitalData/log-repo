@@ -77,6 +77,7 @@ export class WarehouseEntryList {
 	ConnectedTo: string;
 	Ratio: number;
 	MasterShipmentNumber: string;
+	ConnectedToReferenceNumber: string;
 	
 }
  

@@ -63,4 +63,14 @@ export class ScreenPM {
     private sortedType: string;
     public get SortedType() { return this.sortedType; }
     public set SortedType(newValue: string) { this.sortedType = newValue; }
+
+    public OldEntityPM: ScreenPM;
+
+    private isDirty: boolean;
+    public get IsDirty() { return this.isDirty; }
+    public set IsDirty(newValue: boolean) { this.isDirty = newValue; }
+
+    private disableMarkAsDirty: boolean;
+    public get DisableMarkAsDirty() { return this.disableMarkAsDirty; }
+    public set DisableMarkAsDirty(newValue: boolean) { this.disableMarkAsDirty = newValue; }
 }

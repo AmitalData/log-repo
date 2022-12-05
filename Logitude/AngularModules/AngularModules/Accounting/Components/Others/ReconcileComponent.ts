@@ -504,7 +504,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         this._isAllSelected = v;
 
         if (v) {
-            this.GetFirst500LedgerForReconciliation();
+            this.GetFirst5000LedgerForReconciliation();
         } else {
             this.ReloadScreen();
             this.SelectedLines.Clear();
@@ -926,7 +926,9 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                         logitudeWindow.WindowArgs = {
                             "SelectedLines": this.SelectedLines,
                              "GLAccountPMId": this.GLAccountPM.Id,
-                             TotalDifference: this.TotalsDeference };
+                             TotalDifference: this.TotalsDeference,
+                             TotalCredit: this.TotalCredit,
+                             TotalDebit: this.TotalDebit };
                         logitudeWindow.Show('./Accounting/Components/Others/JournalReconcileComponent');
                         logitudeWindow.WindowClosed.subscribe(($event: any) => {
                             // Close Reconcile window
@@ -1241,7 +1243,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             this.CalculateTotals();
 
             // update select all checkbox
-            if (this.SelectedLines.Length >= this.DataSource.rowCount || this.SelectedLines.Length >= 500)
+            if (this.SelectedLines.Length >= this.DataSource.rowCount || this.SelectedLines.Length >= 5000)
                 this._isAllSelected = true;
         }
     }
@@ -1319,12 +1321,12 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     }
     //#endregion
 
-    GetFirst500LedgerForReconciliation()
+    GetFirst5000LedgerForReconciliation()
     {
         this.ValidationErrorsList = [];
         var filters = this.GetAPIFilters();
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.PrepareTransactions")); //"Preparing Transactions..."
-        this._LedgerTransactionExtendedListService.GetFirst500LedgerForReconciliation(this.GLAccountPM.Id, filters).subscribe((myResult: ServiceResponse) => {
+        this._LedgerTransactionExtendedListService.GetFirst5000LedgerForReconciliation(this.GLAccountPM.Id, filters).subscribe((myResult: ServiceResponse) => {
             var mm: ServiceResponse = myResult;
             var first100Transactions = mm.Result;
             if (!mm.HasError) {
@@ -1368,7 +1370,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         if (this.foreignAmountFilter) {
             filters.AdditionalFilters.push(this.foreignAmountFilter);
         }
-        filters.PageSize = 500;
+        filters.PageSize = 5000;
         filters.PageIndex = 1; // decremented 1 in the service
         filters.GetAll = true;
         filters.GetCount = true;

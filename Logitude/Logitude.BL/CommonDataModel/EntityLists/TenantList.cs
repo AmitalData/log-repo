@@ -110,6 +110,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool AllowCustomersInAgentsLOV { get; set; }
         public string VatUniquePartnerTypeCode { get; set; }
         public bool SharedLogisMasterMessageLink { get; set; }
+        public bool ShowMultiUnitsOfMeasurements { get; set; }
         public bool IsQuotesRequestActivatedInShared { get; set; }
         public bool IsCargoTrackWebAccessActivated { get; set; }
         public bool EnableDeliveryOptions { get; set; }

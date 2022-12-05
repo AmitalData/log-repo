@@ -80,6 +80,7 @@ export class WarehouseHelper {
         });
     }
     SetWarehouseData(result: CardList, shipmentPM: ShipmentPM) {
+        shipmentPM.WarehouseLegAddressId = AppTool.IsNullOrEmpty(shipmentPM.WarehouseLegAddressId) ? result.MainAddressId : shipmentPM.WarehouseLegAddressId;
         if (result.WarehouseTypeCode == "CFS") {
             shipmentPM.IsCFSWarehouse = true;
             this.SetStorageDefaults(result, shipmentPM);
@@ -167,7 +168,26 @@ export class WarehouseHelper {
         }
     }
 
+    ShowSelectionAddChooseWarehouseEntryWindow(windowArgs: any) {
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 450;
+        logWindow.Height = 180;
+        logWindow.Title = "Add Cross Dock Entry";
+        logWindow.WindowArgs = windowArgs;
+        logWindow.ShowCloseButton = true;
+        logWindow.Show("./Warehouse/Components/SelectionAddChooseWarehouseEntryComponent");
+        logWindow.WindowClosed.subscribe((event: any) => {
+            if (event == "NewCrossDockEntry") {
+                this.ShowNewWarehouseEntryComponent(windowArgs);
+            }
+            else if (event == "ChooseCrossDockEntry") {
+                this.ShowChooseWarehouseEntryComponent(windowArgs);
+            }
+        });
+    }
+
     ShowNewWarehouseEntryComponent(windowArgs: any) {
+        this.CurrentSession.StopBusyIndicator();
 
     var shipmentPackages: any[] = [];
     var entityPM: ShipmentPM = windowArgs.EntityPM;
@@ -195,6 +215,18 @@ export class WarehouseHelper {
         });
     }
 
+    ShowChooseWarehouseEntryComponent(windowArgs: any) {
+        this.CurrentSession.StopBusyIndicator();
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 1010;
+        logWindow.Height = 620;
+        logWindow.Title = "Choose Cross Dock Entry";
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Show("./Warehouse/Components/ChooseWarehouseEntryComponent");
+        logWindow.WindowClosed.subscribe((event: any) => {
+            //
+        });
+    }
 
     FullWarehouseEntryPackagePM(shipmentPackages: any, entityPM: ShipmentPM, packageType: string = null ) {
         var warehouseEntryPackagesLists: WarehouseEntryPackagePM[] = [];
@@ -346,7 +378,7 @@ export class WarehouseHelper {
                                 //    this.SaveChanges();
                                 //    if (IsRefreshWareHouseLeg) this.CurrentSession.FireEvent("RefreshWareHouseLeg");
                                 //}
-
+                                this.LoadParentComponentConnectedWarehouseEntry(viewModel);
                                 this.CurrentSession.StopBusyIndicator();
                                 this.CurrentSession.CurrentWindow.Close("Refresh");
                             }
@@ -370,6 +402,11 @@ export class WarehouseHelper {
 
 
 
+
+    private LoadParentComponentConnectedWarehouseEntry(viewModel: any) {
+        if (!viewModel.ParentComponent) return;
+        viewModel.ParentComponent.LoadConnectedWarehouseEntry();
+    }
 
     CreateWarehouseRelease(entityPM: WarehouseReleasePM, viewModel: any) {
 

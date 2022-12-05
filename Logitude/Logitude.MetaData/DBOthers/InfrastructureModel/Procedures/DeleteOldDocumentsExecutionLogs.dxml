@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Procedure
+  DBType="Main"
+  Name="DeleteOldDocumentsExecutionLogs"
+  Schema="dbo"
+  Module="Common">
+	<SqlScript>
+		<![CDATA[
+create procedure [dbo].[DeleteOldDocumentsExecutionLogs] as
+IF OBJECT_ID('tempdb..#tblOldDocumentsExecutionLogs') IS NOT NULL
+DROP TABLE #tblOldDocumentsExecutionLogs
+CREATE TABLE #tblOldDocumentsExecutionLogs
+(
+Id varchar(40) NOT NULL PRIMARY KEY
+)
+INSERT #tblOldDocumentsExecutionLogs (Id)
+SELECT Id
+FROM [dbo].[DocumentsExecutionLogs]
+WHERE CreateDate < DATEADD(MONTH,-6,GETDATE())
+if(@@ROWCOUNT >0 )
+begin
+declare @skiprows int
+declare @Rows int
+set @Rows = 1
+set @skiprows = 0
+while (@Rows <> 0)
+BEGIN
+DELETE
+FROM [dbo].[DocumentsExecutionLogs]
+where [Id] in (
+select  Id
+from #tblOldDocumentsExecutionLogs
+order by Id
+OFFSET ( @skiprows * 5000) ROWS FETCH NEXT 5000 ROWS ONLY
+)
+SET @Rows = @@ROWCOUNT
+print @Rows
+set @skiprows = @skiprows + 1
+print @skiprows
+WAITFOR DELAY '00:00:02'
+END
+end
+DROP TABLE #tblOldDocumentsExecutionLogs
+]]>
+	</SqlScript>
+	<OracleScript>
+	</OracleScript>
+</Procedure>

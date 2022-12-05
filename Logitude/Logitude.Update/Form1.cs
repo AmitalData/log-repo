@@ -6305,7 +6305,163 @@ User/Pass",
 
             return true;
         }
+
+        private void updatePortsStatesButton_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(portsStatesTenantTextBox.Text))
+                MessageBox.Show("Please insert tenant");
+
+            else
+            {
+                UploadPortsStatesExcelFile();
+            }
+        }
+        private void UploadPortsStatesExcelFile()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Multiselect = false;
+            openFileDialog.Filter = "csv|*.csv";
+            if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                Stream stream = openFileDialog.OpenFile();
+                StreamReader streamReader = new StreamReader(stream);
+                this.UpdatePortsStatesMethod(streamReader);
+            }
+        }
+        private void UpdatePortsStatesMethod(StreamReader streamReader)
+        {
+            List<DataItem> AllDataLines = new List<DataItem>();
+
+            string line = "";
+            string[] lineParts = null;
+            while ((line = streamReader.ReadLine()) != null)
+            {
+                lineParts = line.Split(',');
+
+                if (lineParts.Count() >= 2)
+                {
+                    string portCombinedCode = this.GetText(lineParts, 0);
+                    string stateCode = this.GetText(lineParts, 1);
+
+                    if (!string.IsNullOrEmpty(portCombinedCode) && !string.IsNullOrEmpty(stateCode) && portCombinedCode != "LOCODE")
+                    {
+                        portCombinedCode = RemoveSpecialCharacters(portCombinedCode.ToUpper());
+                        stateCode = RemoveSpecialCharacters(stateCode.ToUpper());                        
+
+                        DataItem myDataItem = new DataItem();
+                        myDataItem.PortCombinedCode = portCombinedCode;
+                        myDataItem.StateCode = stateCode;
+                        AllDataLines.Add(myDataItem);
+                    }
+                }
+            }
+
+            List<DataItem> distinctItems = AllDataLines.GroupBy(p => new { p.PortCombinedCode, p.StateCode }).Select(g => g.Last()).ToList();
+            Thread thread = new Thread(() => this.RunUpdatePortsStates(distinctItems));
+            thread.IsBackground = true;
+            thread.Start();
+        }
+        private string RemoveSpecialCharacters(string myString)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in myString)
+            {
+                if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
+                {
+                    sb.Append(c);
+                }
+            }
+            return sb.ToString();
+        }
+        private void RunUpdatePortsStates(List<DataItem> allDataLines)
+        {
+            if (allDataLines.Count > 0)
+            {
+                logsLabel.Text = "Missed States";
+                excelListView.Items.Clear();
+                excelListView.Columns.Clear();
+                excelListView.View = View.Details;
+                excelListView.GridLines = true;
+                excelListView.FullRowSelect = true;
+                excelListView.Columns.Add("Port Code", 100);
+                excelListView.Columns.Add("State Code", 100);
+               
+                int tenant = Convert.ToInt32(portsStatesTenantTextBox.Text);
+
+                List<DataItem> portsList = allDataLines.GroupBy(p => p.PortCombinedCode).Select(g => g.First()).ToList();
+                List<string> allPortsCodes = portsList.Select(a => a.PortCombinedCode).ToList();
+
+                List<DataItem> statesList = allDataLines.GroupBy(p => p.StateCode).Select(g => g.First()).ToList();
+                List<string> allStatesCodes = statesList.Select(a => a.StateCode).ToList();
+
+                SetControlPropertyValue(portsStatesLabel, "Text", "Updating...");
+
+                Stopwatch stopWatch = new Stopwatch();
+                stopWatch.Start();
+
+                ICommonDataContext myCommonContext = CommonDataContext.GetContext(0);
+                PortRepository portRepository = new PortRepository(myCommonContext);
+                StateRepository stateRepository = new StateRepository(myCommonContext);
+
+                List<Port> allPorts = (from d in myCommonContext.Ports
+                                       where d.Tenant == tenant
+                                       && allPortsCodes.Contains(d.CombinedCode)
+                                       select d).ToList();
+
+                List<State> allStates = (from d in myCommonContext.States
+                                              where d.Tenant == tenant
+                                              && allStatesCodes.Contains(d.Code)
+                                              select d).ToList();
+
+                var myCount = 0;
+                var count = 0;
+                var isUpdated = false;
+                string[] missedStatesArray = new string[2];
+                foreach (DataItem item in allDataLines)
+                {
+                    count++;
+
+                    State myState = allStates.Where(d => d.Code == item.StateCode).FirstOrDefault();
+                    if (myState == null)
+                    {
+                        missedStatesArray[0] = item.PortCombinedCode;
+                        missedStatesArray[1] = item.StateCode;
+                        excelListView.Items.Add(new ListViewItem(missedStatesArray));
+                    }
+                    else
+                    {
+                        Port myPort = allPorts.Where(d => d.Code == item.PortCombinedCode && d.Tenant == tenant).FirstOrDefault();
+                        if (myPort != null && myPort.StateId == null)
+                        {
+                            isUpdated = true;
+                            myPort.StateCode = myState.Code;
+                            myPort.StateName = myState.EnglishName;
+                            myPort.StateId = myState.Id;
+                            portRepository.Update(myPort);
+                        }
+                    }
+
+                    if (myCount == 1000)
+                    {
+                        if (isUpdated)
+                        {
+                            portRepository.SubmitChanges();
+                        }
+                        myCount = 0;
+                        isUpdated = false;
+                    }
+
+                    myCount++;                    
+                }
+
+                portRepository.SubmitChanges();
+                stopWatch.Stop();                
+                TimeSpan ts = stopWatch.Elapsed;
+                SetControlPropertyValue(portsStatesLabel, "Text", "Done in " + ts.ToString());
+            }
+        }
     }
+
     public class TimeZoneExcelItem
     {
         public string Name { get; set; }
@@ -6317,7 +6473,6 @@ User/Pass",
         public int Tenant { get; set; }
         public string Mail { get; set; }
     }
-
     public class MyFeature
     {
 
@@ -6333,7 +6488,6 @@ User/Pass",
         public bool IsCoreFeature { get; set; }
 
     }
-
     public class HtmlStringParsingParams
     {
         public string Company { get; set; }
@@ -6344,7 +6498,6 @@ User/Pass",
         public string NumberOfBranches { get; set; }
         public string NumberOfUsers { get; set; }
     }
-
     public class DataItem
     {
         public string Id { get; set; }
@@ -6355,8 +6508,9 @@ User/Pass",
         public bool IsAir { get; set; }
         public bool IsOcean { get; set; }
         public bool IsInland { get; set; }
+        public string PortCombinedCode { get; set; }
+        public string StateCode { get; set; }
     }
-
     public class WarehouseItem
     {
         public string Id { get; set; }
@@ -6367,22 +6521,18 @@ User/Pass",
         public string State { get; set; }
         public string ZipCode { get; set; }
     }
-
     public class ComputingPartnerTranslationListData
     {
         public string OurCode { get; set; }
         public string PartnerCode { get; set; }
     }
-
     public class CityDataItem
     {
         public string CityCode { get; set; }
         public string CityName { get; set; }
         public string CountryCode { get; set; }
         public string StateCode { get; set; }
-
     }
-
     public class ExcelContactItem
     {
         public string PartnerName { get; set; }
@@ -6394,14 +6544,12 @@ User/Pass",
         public string Phone { get; set; }
         public string Mobile { get; set; }
     }
-
     public class UploadContactFailItem
     {
         public string PartnerName { get; set; }
         public string Email { get; set; }
         public string ErrorMessage { get; set; }
     }
-
     public class ExcelOI
     {
         public int? tenant { get; set; }

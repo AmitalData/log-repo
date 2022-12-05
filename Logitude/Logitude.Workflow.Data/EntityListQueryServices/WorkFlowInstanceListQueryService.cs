@@ -39,7 +39,7 @@ namespace Logitude.Workflow.Data.EntityListQueryServices
 					
 					                          SearchFields = a.SearchFields,
 					
-					                          WorkflowId = a.WorkflowId,
+					                          WorkFlowVersionId = a.WorkFlowVersionId,
 											  StartTime = a.StartTime ,
 											  BusinessKey = a.BusinessKey,
 											  StatusCode = a.StatusCode,

@@ -19,7 +19,7 @@ export class EntityPMService {
         var moduleName = table.ClientModuleName;
         var servicename = objectTableName + "PMService";
         var servicelink = './' + moduleName + '/Services/StandardPMs/' + servicename;
-       
+
         return new Promise((resolve) => {
             SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
                 resolve(service.get(id));
@@ -43,7 +43,7 @@ export class EntityPMService {
         });
     }
 
-    update(objectTableName: string, entityPM: any) {
+    update(objectTableName: string, entityPM: any, oldEntityPM: any = null) {
         var table = window.ObjectTables.filter(d => d.Name === objectTableName)[0];
         if (objectTableName.indexOf('Customs.') > -1) {
             objectTableName = objectTableName.split('.')[1];
@@ -51,6 +51,20 @@ export class EntityPMService {
         var moduleName = table.ClientModuleName;
         var servicename = objectTableName + "PMService";
         var servicelink = './' + moduleName + '/Services/StandardPMs/' + servicename;
+
+        var hasPatchUpdateFeatureToggle = SessionLocator.FeatureToggles.filter(f => f.ToggleCode === "PUP")[0];
+
+        if(hasPatchUpdateFeatureToggle && oldEntityPM) {
+            return new Promise((resolve, reject) => {
+                SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
+                    if(Object.getPrototypeOf(service).update.length === 2) {
+                        resolve(service.update(entityPM, oldEntityPM));
+                    }else {
+                        resolve(service.update(entityPM));
+                    }
+                });
+            });
+        }
 
         return new Promise((resolve, reject) => {
             SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {

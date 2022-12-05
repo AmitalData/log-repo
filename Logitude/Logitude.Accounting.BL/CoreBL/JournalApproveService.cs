@@ -638,8 +638,6 @@ namespace Logitude.Accounting.BL.CoreBL
                                         this._JournalPM.AccountingEntityCode == "12"// - Reconciliation
                                         ///OnCreate There is A fill ?!?!?  --- && String.IsNullOrWhiteSpace(this._JournalPM.AccountingEntityId)
                                         &&
-                                        String.IsNullOrWhiteSpace(this._JournalPM.AccountingEntityReference)
-                                        &&
                                         this._JournalPM.JournalExternalReconciles.Count > 0
                                         &&
                                         myCreateAutoExternalReconcileWhileStreamingService.ExternalReconciliationList.Count >= 1

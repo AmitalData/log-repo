@@ -25,6 +25,7 @@ import {WidgetPM} from '../../EntityPMs/WidgetPM';
 
 import {WidgetMeasurePM} from '../../EntityPMs/WidgetMeasurePM';
 import {DashboardSharedUserPM} from '../../EntityPMs/DashboardSharedUserPM';
+import {DashboardGlobalFilterPM} from '../../EntityPMs/DashboardGlobalFilterPM';
 
 @Injectable()
 
@@ -188,6 +189,7 @@ export class DashboardPMService {
 			
                this.MapWidgets(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapDashboardSharedUsers(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapDashboardGlobalFilters(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
@@ -217,6 +219,15 @@ export class DashboardPMService {
 						
 							 
             entityPM.OldEntityPM.DashboardSharedUsers.push(newDashboardSharedUserPM);
+            }
+			   			   			   
+            entityPM.OldEntityPM.DashboardGlobalFilters = [];
+            for (var item in entityPM.DashboardGlobalFilters) {
+            var myDashboardGlobalFilterPM = entityPM.DashboardGlobalFilters[item];
+            var newDashboardGlobalFilterPM: DashboardGlobalFilterPM = this.clone(myDashboardGlobalFilterPM);
+						
+							 
+            entityPM.OldEntityPM.DashboardGlobalFilters.push(newDashboardGlobalFilterPM);
             }
 			   
 		}
@@ -521,6 +532,98 @@ export class DashboardPMService {
                         
                         deletedPM.OldEntityPM = null;
                         entityPM.DashboardSharedUsers.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+    MapDashboardGlobalFilters(entityPM: DashboardPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldDashboardGlobalFilters: DashboardGlobalFilterPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldDashboardGlobalFilters = entityPM.OldEntityPM.DashboardGlobalFilters;
+        }
+
+        entityPM.DashboardGlobalFilters = new Array<DashboardGlobalFilterPM>();
+        for (var item in jsonPM.DashboardGlobalFilters) {
+            var jItem = jsonPM.DashboardGlobalFilters[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newDashboardGlobalFilterPM: DashboardGlobalFilterPM;
+	  
+            if (mapParent) {
+                newDashboardGlobalFilterPM = new DashboardGlobalFilterPM(entityPM);
+            }
+            else
+            {
+                newDashboardGlobalFilterPM = new DashboardGlobalFilterPM(null);
+            }
+ 			newDashboardGlobalFilterPM.DisableMarkAsDirty = true;
+               
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+				                  var pmProperty = pmKeysArray[pmKey];
+                newDashboardGlobalFilterPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newDashboardGlobalFilterPM.UniqueKey = Guid.newGuid();
+                newDashboardGlobalFilterPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newDashboardGlobalFilterPM.OldEntityPM = this.clone(newDashboardGlobalFilterPM);
+
+				
+            }
+            else {
+                if (newDashboardGlobalFilterPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newDashboardGlobalFilterPM.ChangeSetOp = "Update";
+                }
+                else {
+                        newDashboardGlobalFilterPM.ChangeSetOp = "Insert";
+                }
+ 
+                newDashboardGlobalFilterPM.OldEntityPM = null;
+                newDashboardGlobalFilterPM.EntityParentPM = null;
+            }
+			 newDashboardGlobalFilterPM.DisableMarkAsDirty = false;
+			 newDashboardGlobalFilterPM.IsDirty = false;
+            entityPM.DashboardGlobalFilters.push(newDashboardGlobalFilterPM);
+        }
+        if (oldDashboardGlobalFilters) {
+            
+            for (var itemKey in oldDashboardGlobalFilters) {
+                if (entityPM.DashboardGlobalFilters.filter(p=> p.UniqueKey === oldDashboardGlobalFilters[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldDashboardGlobalFilters[itemKey]) {
+                        //oldDashboardGlobalFilters[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.DashboardGlobalFilters.push(oldDashboardGlobalFilters[itemKey]);
+						var oldItemJson = oldDashboardGlobalFilters[itemKey];
+                        var deletedPM: DashboardGlobalFilterPM = new DashboardGlobalFilterPM(null);
+						deletedPM.DisableMarkAsDirty = true;
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.DashboardGlobalFilters.push(deletedPM);
                     }
                 }
             }

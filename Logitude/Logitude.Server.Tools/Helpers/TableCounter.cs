@@ -60,6 +60,12 @@ namespace Logitude.Server.Tools.Helpers
                 prefix = counterDef.Prefix;
             }
 
+            string branchCounterCode = null;
+            if (counterDef.UsePerBranch && additionalParameters != null)
+            {
+                branchCounterCode = additionalParameters["[B]"];
+            }
+
             int startNumber = counterDef.StartNumber;
             string number = null;
             string strConnString = GetConnection(tenant);//ConfigurationManager.ConnectionStrings["str"].ConnectionString;
@@ -70,14 +76,14 @@ namespace Logitude.Server.Tools.Helpers
                 {
                     using (TransactionScope scope = TransactionFactory.GetNewReadCommittedTransaction())
                     {
-                        counterLastNumberValue = ExecuteNextTableNumberValueProcedure(tenant, counter, prefix, startNumber, strConnString);
+                        counterLastNumberValue = ExecuteNextTableNumberValueProcedure(tenant, counter, prefix, startNumber, strConnString, branchCounterCode);
                         scope.Complete();
                     }
                 }
             }
             else
             {
-                counterLastNumberValue = ExecuteNextTableNumberValueProcedure(tenant, counter, prefix, startNumber, strConnString);
+                counterLastNumberValue = ExecuteNextTableNumberValueProcedure(tenant, counter, prefix, startNumber, strConnString, branchCounterCode);
             }
 
             number = GetCounterLastNumberWithPrefixSuffix(counter, counterDef, tenant, counterLastNumberValue, additionalParameters);
@@ -85,7 +91,7 @@ namespace Logitude.Server.Tools.Helpers
             return number;
         }
 
-        private static string ExecuteNextTableNumberValueProcedure(int tenant, Counter counter, string prefix, int startNumber, string strConnString)
+        private static string ExecuteNextTableNumberValueProcedure(int tenant, Counter counter, string prefix, int startNumber, string strConnString, string branchCounterCode)
         {
             string counterLastNumberValue;
             if (LogitudeSettings.DatabaseManagementSystem == "oracle")
@@ -177,12 +183,14 @@ namespace Logitude.Server.Tools.Helpers
                     SqlParameter tenantPar = new SqlParameter("@pTenant", SqlDbType.Int);
                     SqlParameter prefixPar = new SqlParameter("@pPrefix", SqlDbType.NVarChar);
                     SqlParameter startNumberPar = new SqlParameter("@pStartNumber", SqlDbType.Int);
+                    SqlParameter branchCounterCodePar = new SqlParameter("@pBranchCounterCode", SqlDbType.VarChar);
 
                     lastValuePar.Direction = ParameterDirection.Output;
                     counterIdPar.Direction = ParameterDirection.Input;
                     tenantPar.Direction = ParameterDirection.Input;
                     prefixPar.Direction = ParameterDirection.Input;
                     startNumberPar.Direction = ParameterDirection.Input;
+                    branchCounterCodePar.Direction = ParameterDirection.Input;
 
                     counterIdPar.Value = counter.Id;
                     tenantPar.Value = tenant;
@@ -198,11 +206,21 @@ namespace Logitude.Server.Tools.Helpers
                         prefixPar.Value = DBNull.Value;
                     }
 
+                    if (branchCounterCode != null)
+                    {
+                        branchCounterCodePar.Value = branchCounterCode;
+                    }
+                    else
+                    {
+                        branchCounterCodePar.Value = DBNull.Value;
+                    }
+
                     cmd.Parameters.Add(lastValuePar);
                     cmd.Parameters.Add(tenantPar);
                     cmd.Parameters.Add(prefixPar);
                     cmd.Parameters.Add(counterIdPar);
                     cmd.Parameters.Add(startNumberPar);
+                    cmd.Parameters.Add(branchCounterCodePar);
 
 
                     cn.Open();

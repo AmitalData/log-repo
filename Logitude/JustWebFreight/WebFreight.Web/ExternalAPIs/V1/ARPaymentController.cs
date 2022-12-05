@@ -100,7 +100,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                         IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
                         ARPaymentQueryService mappingService = new ARPaymentQueryService(tenant);
-                        
+                        if (tenant == 1153) entity = mappingService.SetARPaymentSystemUser(entity);
                         ARPaymentPM entityPM = mappingService.ARPaymentDataMappingAndValidatin(entity, tenant);
                         entityPM.UpdatedByUserId = entityPM.CreatedByUserId;
                         entityPM.Tenant = tenant;
@@ -182,7 +182,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             throw new ApplicationException("ARPayment with number " + entity.PaymentNo + " doesn't exist");
                         }
                         entity.Id = payment.Id;
-                       ARPaymentPM entityPM = mappingService.ARPaymentDataMappingAndValidatin(entity, tenant);
+                        if (tenant == 1153) entity = mappingService.SetARPaymentSystemUser(entity);
+                        ARPaymentPM entityPM = mappingService.ARPaymentDataMappingAndValidatin(entity, tenant);
                         entityPM.IsExternalEntity = true;
                         mappingService.CheckARPaymentNumber(entityPM.PaymentNo, entityPM.Id, entityPM.Tenant);
                         if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))

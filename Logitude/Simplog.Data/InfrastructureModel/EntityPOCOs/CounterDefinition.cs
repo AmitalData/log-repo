@@ -29,6 +29,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 
 		public bool InActive { get; set; }
 
+		public bool UsePerBranch { get; set; }
 		//[Include]
 		//[Association("CounterCounterDefinition", "CounterId", "Id", IsForeignKey = true)]
 		[ForeignKey("CounterId")]

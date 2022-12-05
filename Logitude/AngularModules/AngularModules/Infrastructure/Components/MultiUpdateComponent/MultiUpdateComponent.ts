@@ -354,7 +354,7 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
     DataEntityMap(item: any): MultiEntityUpdateDataEntity {
         var entity = new MultiEntityUpdateDataEntity();
         entity.EntityId = item.Id;
-        entity.EntityNumber = item.ShipmentNumber;
+        entity.EntityNumber = this.ObjectTableName == "Shipment" ? item.ShipmentNumber : item.ContainerNumber
         entity.Tenant = SessionLocator.Tenant;
         entity.StatusCode = "W";
         return entity;
@@ -383,6 +383,10 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
     }
 
     private AutomationSetValueValidation(item: AutomationSetValueViewModel) {
+        if (AppTool.IsNullOrEmpty(item.CurrentEntityPM.ObjectFieldCode)) {
+            this.ValidationErrorsList.push("Please select at least one field to be updated");
+            return;
+        }
         if (AppTool.IsNullOrEmpty(item.CurrentEntityPM.Value)) {
             this.ValidationErrorsList.push(item.SelectedCustomField.FullNameTextCodeDefaultText + " field is required");
             return;

@@ -119,9 +119,25 @@ export class SharedLogisticsSettingComponent implements OnInit {
         }
         else return false;
     }
+    
     public set SharedLogisticsMasterMessageLink(value: boolean) {
         if (this.TenantPM) {
             this.TenantPM.SharedLogisMasterMessageLink = value;
+        }
+
+    }
+
+    public get ShowMultiUnitsOfMeasurements() {
+
+        if (this.TenantPM) {
+            return this.TenantPM.ShowMultiUnitsOfMeasurements;
+        }
+        else return false;
+    }
+    
+    public set ShowMultiUnitsOfMeasurements(value: boolean) {
+        if (this.TenantPM) {
+            this.TenantPM.ShowMultiUnitsOfMeasurements = value;
         }
 
     }
@@ -140,6 +156,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
     
     SharedLogisticsMessageLinkEnable: boolean;
     SharedLogisticsMasterMessageLinkEnable: boolean = true;
+    ShowMultiUnitsOfMeasurementsEnable: boolean = true;
 
 
     IsSharedLogisticsActivatedCheckboxBoxId: string;
@@ -149,6 +166,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
     IsDigitalPortalAccessActivatedCheckboxBoxId: string;
     SharedLogisticsMessageLinkCheckboxBoxId: string;
     SharedLogisticsMasterMessageLinkCheckboxBoxId: string;
+    SharedLogisticsMultiUnitsOfMeasurementsId: string;
 
     IsShowActivateWebAccessArea: boolean = true;
 
@@ -185,19 +203,19 @@ export class SharedLogisticsSettingComponent implements OnInit {
             this.SaveButtonClicked();
 
         });
-
+ 
     }
 
 
     Run() {
-
-         this.IsSharedLogisticsActivated = this.TenantPM.IsSharedLogisticsActivated;
-         this.IsWebAccessActivated = this.TenantPM.IsWebAccessActivated;
+        this.IsSharedLogisticsActivated = this.TenantPM.IsSharedLogisticsActivated;
+        this.IsWebAccessActivated = this.TenantPM.IsWebAccessActivated;
         this.IsCargoTrackWebAccessActivated = this.TenantPM.IsCargoTrackWebAccessActivated;
         this.IsDigitalPortalAccessActivated = this.TenantPM.IsDigitalPortalAccessActivated;
-         this.IsMobileActivated = this.TenantPM.IsMobileActivated;
-         this.SharedLogisticsMessageLink = this.TenantPM.SharedLogisticsMessageLink;
-         this.SharedLogisticsMasterMessageLink = this.TenantPM.SharedLogisMasterMessageLink;
+        this.IsMobileActivated = this.TenantPM.IsMobileActivated;
+        this.SharedLogisticsMessageLink = this.TenantPM.SharedLogisticsMessageLink;
+        this.SharedLogisticsMasterMessageLink = this.TenantPM.SharedLogisMasterMessageLink;
+        this.ShowMultiUnitsOfMeasurements = this.TenantPM.ShowMultiUnitsOfMeasurements;
         this.IsQuotesRequestActivatedInSharedLogistics = this.TenantPM.IsQuotesRequestActivatedInShared;
 
         if (!FeatureLocator.HasFeaturePermession("General", "MOBILE") || this.SharedTitleType == "CargoTracking" || this.SharedTitleType == "DigitalPortal") {
@@ -215,6 +233,10 @@ export class SharedLogisticsSettingComponent implements OnInit {
             this.SharedLogisticsMasterMessageLinkEnable = false;
         }
 
+        if (!FeatureLocator.HasFeaturePermession("General", "SupportUnitMeasurements")) {
+            this.ShowMultiUnitsOfMeasurementsEnable = false;
+        }
+
 
 
         this.IsSharedLogisticsActivatedCheckboxBoxId = Guid.newGuid();
@@ -224,6 +246,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
         this.IsDigitalPortalAccessActivatedCheckboxBoxId = Guid.newGuid();
         this.SharedLogisticsMessageLinkCheckboxBoxId = Guid.newGuid();
         this.SharedLogisticsMasterMessageLinkCheckboxBoxId = Guid.newGuid();
+        this.SharedLogisticsMultiUnitsOfMeasurementsId = Guid.newGuid();
 
         this.SetPropertiesEnable();
 

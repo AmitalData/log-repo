@@ -1,170 +1,94 @@
-
-<style>
-    .Table-cell10 {
-        width: 10px;
-    }
-
-    .Table-cell05 {
-        width: 5px;
-    }
-
-    .Dashboard-body {
-        height: 100%;
-        padding: 2px;
-        margin: 0;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        border-radius: 8px;
-    }
-</style>
-
-
-
-<div style="height: 100%;">
-    <div style="height:10px;">
-    </div>
-
+<div style="height: 100%;" class="Dashboard-body">
     <div class="FormFieldRow">
         <table>
-            <tr>
-                <td class="Table-cell10">
+            <tr style="height:22px;">
+                <td style="width: 1px; font-size: 18px; color: #292D30; font-weight: 600; line-height: 120%;">
+                    Dashboard
+                </td>
+
+                <td *ngIf="dashbaordCount > 0">
                     <div></div>
                 </td>
 
-                <td style="width:30px;" *ngIf="IsEditLayoutModeActive">
-                    <BackButton [Text]="BackButtonLable" (click)="BackButtonClicked()"></BackButton>
-                </td>
-
-                <td class="Table-cell10" *ngIf="IsEditDashboardButtonVisible">
-                    <div></div>
-                </td>
-
-                <td style="width:200px; height:22px;" *ngIf="!IsEditLayoutModeActive">
+                <td style="width:200px; height:22px;" *ngIf="dashbaordCount > 0">
                     <LogLov [ObjectFieldName]="'SelectedDashboardId'"
                             [ObjectTableName]="'Dashboard'"
                             [NoObjectField]="true"
                             [SelectedValue]="SelectedDashboardId"
                             [DataContext]="DataContext"
                             [LookUpTableName]="'Dashboard'"
-                            [HideColumns]="true">
+                            [HideColumns]="true"
+                            (SelectedItemChanged)="SelectedDashboard = $event">
                     </LogLov>
                 </td>
 
-                <td>
-                    <IconButton *ngIf="IsEditDashboardButtonVisible" [Left]="3" [Name]="'Edit'" [IsSmall]="true" (click)="EditDashboardClicked()"></IconButton>
-                </td>
-
-                <td style="width: 55px; min-width: 55px;" *ngIf="IsEditLayoutModeActive">
-                    <button *ngIf="!HasChanges" class="Button">
-                        <img src="./Images/Buttons/Save.png" class="LeftCenter" style="margin-left:2px;" />
-                        <span style=" line-height: 19px; vertical-align: middle; margin-left: 17px;">Save</span>
-                    </button>
-
-                    <button *ngIf="HasChanges" class="EntityChangesButton" (click)="SaveDashboard(true)">
-                        <img src="./Images/Buttons/Save.Red.png" class="LeftCenter" style="margin-left:2px;" />
-                        <span style=" line-height: 19px; vertical-align: middle; margin-left: 17px;">Save</span>
-                    </button>
-                </td>
-
-                <td class="Table-cell05">
+                <td class="Table-cell10" *ngIf="dashbaordCount > 0">
                     <div></div>
                 </td>
 
-                <td style="width: 55px; min-width: 55px;" *ngIf="IsEditLayoutModeActive">
-                    <button class="BlueButton" (click)="AddWidgetClicked()">Add Widget</button>
-                </td>
-
-                <td class="Table-cell05">
-                    <div></div>
-                </td>
-
-                <td style="width:1px;" *ngIf="!IsEditLayoutModeActive">
-                    <IconButton [Left]="3" [Name]="'Add'" [IsSmall]="true" (click)="AdDashboardClicked()"></IconButton>
-                </td>
-
-                <td style="width:1px;" *ngIf="!IsEditLayoutModeActive">
-                    <IconButton [Left]="3" [Name]="'Refresh'" [IsSmall]="true" (click)="RefreshLayoutClicked()"></IconButton>
-                </td>
-
-                <td style="width:1px;">
-                    <IconButton *ngIf="IsEditLayoutButtonVisible" [Left]="3" [Name]="'Edit'" [IsSmall]="true" (click)="EditLayoutClicked()"></IconButton>
-                </td>
-
-                <td class="Table-cell05">
-                    <div></div>
-                </td>
-
-                <td style="width: 17px; vertical-align: middle;">
-                    <img *ngIf="IsGlobalFiltersOpened == false" src="./Images/FilterGrayTrans.png" style="cursor: pointer;" (click)="OpenFilterAreaClick()" class="CenterCenter" />
-                    <img *ngIf="IsGlobalFiltersOpened == true" src="./Images/FilterGrayTrans.png" style="cursor: pointer;" (click)="CloseFilterAreaClick()" class="CenterCenter" />
-                </td>
-
-                <td style="width: 2px;">
-                    <div></div>
-                </td>
-                <td style="width: 12px; vertical-align: middle;">
-                    <img *ngIf="IsGlobalFiltersOpened == false" src="./Images/FiltersOpen.png" style="cursor: pointer;" (click)="OpenFilterAreaClick()" class="CenterCenter" />
-                    <img *ngIf="IsGlobalFiltersOpened == true" src="./Images/FiltersClose.png" style="cursor: pointer;" (click)="CloseFilterAreaClick()" class="CenterCenter" />
+                <td style="width: 117px; height: 22px;" *ngIf="dashbaordCount > 0">
+                    <button class="Dashboard-create-button" (click)="AdDashboardClicked()">
+                        <img style="width:10px; height: 10px; margin-right: 4px; color: #F3942F;"
+                                src="./Images/Buttons/add.orange.png" />
+                        <!-- <svg width="10" height="10" viewBox="0 0 5 5"style="display: inline-block; vertical-align: middle;">
+                            <path fill="#F3942F" d="M2 1 h1 v1 h1 v1 h-1 v1 h-1 v-1 h-1 v-1 h1 z" />
+                        </svg> -->
+                    Create dashboard</button>
                 </td>
             </tr>
         </table>
     </div>
 
-    <div *ngIf="IsGlobalFiltersOpened" style="background:#FFFADC; border:1px solid #BABABA; border-radius:3px; -webkit-border-radius:3px; width:calc(100%-2px); height:150px;">
-        <!--<AdvSearchComponent [ObjectTableName]="ObjectTableName" [QueryChangeEvent]="onQueryChangeEvent" [QueryId]="SelectedQueryId" [QueryCode]="SelectedQueryCode" [Filterchangeevent]="Filterchangeevent"></AdvSearchComponent>-->
-    </div>
+    <div style="height:10px;" *ngIf="dashbaordCount > 0"></div>
 
-    <div [hidden]="IsEmptyDashboardVisible" class="Dashboard-body">
-        <custom-layout [Show]="Show" (onReactChangeLayouts)="onReactChangeLayouts($event)" (openEditWidget)="openEditWidget($event)" [IsEditLayout]="IsEditLayoutModeActive" [DashboardDataBinding]="DashboardDataBinding" [SelectedDashboard]="SelectedDashboard"></custom-layout>
-    </div>
-
-    <div *ngIf="IsEmptyDashboardVisible" class="MediaFillRelative">
-        <table>
-            <tr style="height:80px;">
-                <td>
-                    <div></div>
-                </td>
-            </tr>
-
-            <tr style="height:25px;" *ngIf="!IsPermissionMessageVisible">
-                <td>
-                    <div></div>
-                </td>
-                <td>
-                    <div style="float:left; text-align:center; font-size: 13px; color: #282E30;" class="CenterCenter">
-                        <span style="margin-left: 3px; font-size: 13px;">Click </span>
-                        <span style="margin-left: 3px;"> <Hyperlink [FontSize]="13" (click)="HereClicked()">here</Hyperlink> </span>
-                        <span style="margin-left: 3px; font-size: 13px;"> to add widgets to your dashboard.</span>
+    <div class="DashboardTab">
+        <div class="DashboardTabHead">
+            <ul>
+                <li *ngFor="let item of DashboardsTabs" [class.DashboardTabSelected]="item.IsSelected" (click)="SelectionChanged(item)">
+                    <div class="DashboardInnerTab TextTrimming" [class.InnerTabSelected]="item.IsSelected">
+                        {{item.Name}}
                     </div>
-                </td>
-                <td>
-                    <div></div>
-                </td>
-            </tr>
+                </li>
+            </ul>
+        </div>
 
-            <tr style="height:25px;" *ngIf="IsPermissionMessageVisible">
-                <td>
-                    <div></div>
-                </td>
-                <td>
-                    <div style="float:left; text-align:center; font-size: 13px; color: #282E30;" class="CenterCenter">
-                        <span style="margin-left: 3px;">Sorry, you have no permissions</span>
+        <div class="DashboardTabBody" [ngStyle]="{'top': dashbaordCount > 0 ? '19px': '0'}">
+            <div *ngIf="dashbaordCount > 0">
+                <div class="MediaFillAbsolute" *ngFor="let item of DashboardsTabs;" [hidden]="!item.IsSelected">
+                    <div LocationDirective Code="DashboardTabLocation" ItemCode="{{item.DashboardId}}"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="DashboardTabBody" style="top: 0;" *ngIf="dashbaordCount == 0">
+            <div class="dl-info-card">
+
+                <div class="dl-info-image-cotainer">
+                    <img class="TopCenter" style="position: unset;width: 290px; height: 202px;"
+                        src="./Images/Charts/Empty-Dashboard3.png" />
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <div class="dl-info-center-div">
+                        <p class="dl-info-header-text"> You don’t have any information here</p>
                     </div>
-                </td>
-                <td>
-                    <div></div>
-                </td>
-            </tr>
+                    <div class="dl-info-center-div">
+                        <p class="dl-info-description-text">There are currently no dashboards.<br> It is time to add a new
+                            one</p>
+                    </div>
+                </div>
 
-            <tr>
-                <td colspan="3">
-                    <img class="TopCenter" src="./Images/Charts/Empty-Dashboard2.png" />
+                <td class="dl-info-center-div" style="margin-top: 12px;">
+                    <button class="Button" (click)="AdDashboardClicked()">
+                        <svg width="20" height="20" viewBox="0 0 5 5"
+                            style="display: inline-block; vertical-align: middle;">
+                            <path fill="#4D8ABB" d="M2 1 h1 v1 h1 v1 h-1 v1 h-1 v-1 h-1 v-1 h1 z" />
+                        </svg>
+                        Add new dashboard</button>
                 </td>
-            </tr>
 
-        </table>
-
+            </div>
+        </div>
     </div>
 </div>
 

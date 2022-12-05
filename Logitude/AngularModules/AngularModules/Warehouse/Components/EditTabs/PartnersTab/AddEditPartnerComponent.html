@@ -155,8 +155,21 @@
                                                         <td>
                                                             <table>
                                                                 <tr>
-                                                                    <td class="Label">
-                                                                        Main Address
+                                                                    <td style="width: 300px;">
+                                                                        <LogLov [ObjectFieldName]="DataContext.PartnerAddressIdProperty"
+                                                                                [SelectedValue]="DataContext.AddressId"
+                                                                                [ObjectTableName]="ObjectTableName"
+                                                                                [DataContext]="DataContext"
+                                                                                [LookUpTableName]="'Address'"
+                                                                                [DependencyFilter1Value]="DataContext.PartnerId">
+                                                                        </LogLov>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <div style="float: right;">
+                                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="DataContext.EditAddressClicked()" [IsEnabled]="DataContext.AddressId && DataContext.IsEditingEnabled"></IconButton>
+                                                                            <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="DataContext.AddAddressClicked()" [IsEnabled]="DataContext.IsEditingEnabled && DataContext.PartnerId"></IconButton>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                             </table>

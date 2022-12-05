@@ -43,10 +43,11 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
     ShipmentPM: ShipmentPM;
     warehouseEntryPM: WarehouseEntryPM = new WarehouseEntryPM();
     SelectedWarehouseEntryPackage: WarehouseEntryPackagePM;
-
+    public ParentComponent: any;
     IsNewEntity: boolean = false;
     validator: ClassLevelValidator;
     ObjectTableId: string;
+    ChildEntityReference: string;
     IsFromShipment: boolean = true;
     IsLoadPage: boolean = false;
     private PageChild_WEPD: any = null;
@@ -86,6 +87,8 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
 
         this.RunComponent();
         this.ShipmentPM = args.ShipmentPM;
+        this.ChildEntityReference = args.ChildEntityReference;
+        this.ParentComponent = args.ParentComponent;
         this.ValidationErrorsList = [];
         var emptyWarehouseEntryPackagesLists: boolean = args.WarehouseEntryPackagesLists == null ? true : args.WarehouseEntryPackagesLists.length == 0 ? true : false;
         if (this.ShipmentPM.DirectionId == "I" && emptyWarehouseEntryPackagesLists) {
@@ -285,6 +288,7 @@ export class NewWarehouseEntryComponent extends BaseComponent implements OnInit 
 
     SaveButtonClicked() {
         this.warehouseEntryPM.ConnectedToShipment = true;
+        this.warehouseEntryPM.ConnectedToReferenceNumber = this.ChildEntityReference;
         this.SetShipmentPackagesAsUsed();
         this.warehouseHelper.CreateWarehouseEntry(this.warehouseEntryPM, this);
 

@@ -10,6 +10,7 @@ using Logitude.Server.Tools;
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.WarehouseLib.Data.EntityPOCOs;
 using Logitude.WarehouseLib.BL.EntityPMs; 
 using Logitude.WarehouseLib.Data;
@@ -82,7 +83,8 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         FromTypeCode, 
 	         FromCountryId, 
 	         ToCountryId, 
-	         MasterShipmentNumber,
+	         MasterShipmentNumber, 
+	         ConnectedToReferenceNumber,
 	      }
 
 
@@ -160,7 +162,8 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         FromTypeCode, 
 	         FromCountryId, 
 	         ToCountryId, 
-	         MasterShipmentNumber,
+	         MasterShipmentNumber, 
+	         ConnectedToReferenceNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -469,6 +472,13 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 				entityPOCO.MasterShipmentNumber = entityPM.MasterShipmentNumber;
 			}
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConnectedToReferenceNumber))
+            {
+				entityPOCO.ConnectedToReferenceNumber = entityPM.ConnectedToReferenceNumber;
+			}
+			
+			new CustomChildEntityService(new CustomChildEntityArgs() { ParentEntity = entityPM, ParentEntityId = entityPM.Id, ParentObjectTableName = "WarehouseEntry", Tenant = entityPM.Tenant }).Update();
+		 
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
 
@@ -780,6 +790,13 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 					entityPM.MasterShipmentNumber = entityPOCO.MasterShipmentNumber;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ConnectedToReferenceNumber))
+            {
+					entityPM.ConnectedToReferenceNumber = entityPOCO.ConnectedToReferenceNumber;
+            }
+
+			new CustomChildEntityService(new CustomChildEntityArgs() { ParentEntity = entityPM, ParentEntityId = entityPM.Id, ParentObjectTableName = "WarehouseEntry", Tenant = entityPM.Tenant }).Set();
+		 
 		}
 
 		public void PMToOldPM(WarehouseEntryPM entityPM, WarehouseEntryPM oldEntityPM)
@@ -1086,6 +1103,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
                 oldEntityPM.MasterShipmentNumber = entityPM.MasterShipmentNumber;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConnectedToReferenceNumber))
+            {
+                oldEntityPM.ConnectedToReferenceNumber = entityPM.ConnectedToReferenceNumber;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(WarehouseEntryPM entityPM)
@@ -1110,6 +1132,10 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.ConsigneeName)) //T4 find type == nText 
             {
                 entityPM.ConsigneeName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ConsigneeName));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ConnectedToReferenceNumber)) //T4 find type == nText 
+            {
+                entityPM.ConnectedToReferenceNumber = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ConnectedToReferenceNumber));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

@@ -224,5 +224,10 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime? MainCarriageETATime { get; set; }
         public bool IsCustomerArchived { get; set; }
         public string NotesSharedWithCustomer { get; set; }
+
+        public double? ChargeableWeightInKG { get; set; }
+        public double? GrossWeightInKG { get; set; }
+        public double? VolumeInCBM { get; set; }
+
     }
 }

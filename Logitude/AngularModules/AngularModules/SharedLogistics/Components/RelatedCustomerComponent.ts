@@ -393,7 +393,8 @@ export class RelatedCustomerComponent extends BaseComponent{
         }       
     }
     getBatchData() {
-        this.BatchVisibility = true;
+        this.BatchVisibility = FeatureLocator.HasFeaturePermession("CustomerTenantAccessCardsBatch", "BATCHBUILDAREA");
+        if (!this.BatchVisibility) return;
         var service: CommonDomainService = new CommonDomainService();
         this.BatchObsList = [];
         service.GetCustomerTenantAccessCardsBatchPMsByCustomerIdCustomerTenantAccessId(this.SelectedItem.EntityPM.CustomerId, this.SelectedItem.EntityPM.CustomerTenantAccessId).subscribe((res:any) => {

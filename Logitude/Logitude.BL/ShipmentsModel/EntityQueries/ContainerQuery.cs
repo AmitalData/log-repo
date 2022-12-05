@@ -6,14 +6,17 @@ using Simplog.Data.ShipmentsModel.Repositories;
 using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
-using System.Data.Entity;
 using Simplog.Server.Infrastructure.DataContracts;
+using System.Threading.Tasks;
+using Simplog.Server.Infrastructure.Helpers;
+using Logitude.BL.Helpers;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
     public class ContainerQuery
     {
         ContainerRepository repository;
+        private bool isMultipleUpdate = false;
         public ContainerQuery(int tenant)
         {
             repository = new ContainerRepository(tenant);
@@ -355,7 +358,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             containerPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
         }
 
-        public List<ContainerPM> GetContainers(string id , int tenant)
+        public List<ContainerPM> GetContainers(string id, int tenant)
         {
             return (from container in repository.context.Containers.Include("CarrierCard").Include("VesselCard").Include("ShipmentOnCarriageToPort").Include("ShipmentOnCarriageFromPort").
                     Include("ShipmentTransshipment3ToPort").Include("ShipmentTransshipment3FromPort").Include("ShipmentTransshipment2ToPort").Include("ShipmentTransshipment2FromPort")
@@ -1180,10 +1183,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             ContainerPM containerPM = null;
             Container container = (from a in repository.context.Containers
-                                    where a.Tenant == tenant && a.ContainerNumber == containerNumber && a.ShipmentId == shipmentId
-                                    select a).FirstOrDefault();
+                                   where a.Tenant == tenant && a.ContainerNumber == containerNumber && a.ShipmentId == shipmentId
+                                   select a).FirstOrDefault();
 
-            if(container != null)
+            if (container != null)
             {
                 containerPM = new ContainerPM()
                 {
@@ -1668,7 +1671,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     IsCancelled = container.IsCancelled,
                     CancelledDate = container.CancelledDate,
                     ShipmentDeliveryTruckerId = container.ShipmentDeliveryTruckerId,
-                    ShipmentDeliveryTruckerName = container.TruckerCard!= null ? container.TruckerCard.EnglishName : "",
+                    ShipmentDeliveryTruckerName = container.TruckerCard != null ? container.TruckerCard.EnglishName : "",
                     Leg1VesselId = container.Leg1VesselId,
                     Leg2VesselId = container.Leg2VesselId,
                     Leg3VesselId = container.Leg3VesselId,
@@ -1971,6 +1974,297 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 };
             }
 
+            return containerPM;
+        }
+
+        public List<ContainerPM> GetContainerPMsByIds(List<string> containerIds, int tenant)
+        {
+            isMultipleUpdate = true;
+            if (containerIds.Count() == 0) return null;
+
+            List<Container> containers = repository.GetContainersFromIds(containerIds, tenant);
+            if (containers.Count() == 0) return null;
+
+            List<ContainerPM> containerPMs = new List<ContainerPM>();
+            foreach (Container container in containers)
+            {
+                containerPMs.Add(new ContainerPM() { Id = container.Id });
+            }
+
+            Parallel.ForEach(containers, (container) =>
+            {
+                ContainerPM containerPM = containerPMs.Where(a => a.Id == container.Id).FirstOrDefault();
+                containerPM = MapContainerToContainerPM(containerPM, container);
+            });
+
+            return containerPMs;
+        }
+
+        public ContainerPM MapContainerToContainerPM(ContainerPM containerPM, Container container)
+        {
+            containerPM.Id = container.Id;
+            containerPM.Tenant = container.Tenant;
+            containerPM.CreateDate = container.CreateDate;
+            containerPM.CreatedByUserId = container.CreatedByUserId;
+            containerPM.UpdateDate = container.UpdateDate;
+            containerPM.UpdatedByUserId = container.UpdatedByUserId;
+            containerPM.MainCarriageCarrierId = container.MainCarriageCarrierId;
+            containerPM.MainCarriageCarrierNumber = container.MainCarriageCarrierNumber;
+            containerPM.MainCarriageATA = container.MainCarriageATA;
+            containerPM.MainCarriageATD = container.MainCarriageATD;
+            containerPM.MainCarriageETA = container.MainCarriageETA;
+            containerPM.MainCarriageETD = container.MainCarriageETD;
+            containerPM.ContainerNumber = container.ContainerNumber;
+            containerPM.MainCarriageVesselId = container.MainCarriageVesselId;
+            containerPM.ShipmentPackagesId = container.ShipmentPackagesId;
+            containerPM.SearchFields = container.SearchFields;
+            containerPM.DischargeDate = container.DischargeDate;
+            containerPM.Master = container.Master;
+            containerPM.CarrierName = container.CarrierCard != null ? container.CarrierCard.EnglishName : "";
+            containerPM.VesselName = container.VesselName;
+            containerPM.ShipmentId = container.ShipmentId;
+            containerPM.ActualEmptyPickupDate = container.ActualEmptyPickupDate;
+            containerPM.EstimatedEmptyPickupDate = container.EstimatedEmptyPickupDate;
+            containerPM.CurrentStatus = container.CurrentStatus;
+            containerPM.CurrentStatusDate = container.CurrentStatusDate;
+            containerPM.HasContainerException = container.HasContainerException;
+            containerPM.CurrentLocation = container.CurrentLocation;
+            containerPM.EmptyPickupLocation = container.EmptyPickupLocation;
+            containerPM.DepartureLocation = container.DepartureLocation;
+            containerPM.DestinationLocation = container.DestinationLocation;
+            containerPM.ShipmentPickupFrom = container.ShipmentPickupFrom;
+            containerPM.ShipmentPickupTo = container.ShipmentPickupTo;
+            containerPM.ShipmentPreCarriageFromId = container.ShipmentPreCarriageFromId;
+            containerPM.ShipmentPreCarriageToId = container.ShipmentPreCarriageToId;
+            containerPM.ShipmentMainCarriageFromId = container.ShipmentMainCarriageFromId;
+            containerPM.ShipmentMainCarriageToId = container.ShipmentMainCarriageToId;
+            containerPM.ShipmentTransshipment1FromId = container.ShipmentTransshipment1FromId;
+            containerPM.ShipmentTransshipment1ToId = container.ShipmentTransshipment1ToId;
+            containerPM.ShipmentTransshipment2FromId = container.ShipmentTransshipment2FromId;
+            containerPM.ShipmentTransshipment2ToId = container.ShipmentTransshipment2ToId;
+            containerPM.ShipmentTransshipment3FromId = container.ShipmentTransshipment3FromId;
+            containerPM.ShipmentTransshipment3ToId = container.ShipmentTransshipment3ToId;
+            containerPM.ShipmentOnCarriageFromId = container.ShipmentOnCarriageFromId;
+            containerPM.ShipmentOnCarriageToId = container.ShipmentOnCarriageToId;
+            containerPM.ShipmentPreCarriageFrom = container.ShipmentPreCarriageFromPort != null ? container.ShipmentPreCarriageFromPort.CombinedCode : "";
+            containerPM.ShipmentPreCarriageTo = container.ShipmentPreCarriageToPort != null ? container.ShipmentPreCarriageToPort.CombinedCode : "";
+            containerPM.ShipmentMainCarriageFrom = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CombinedCode : "";
+            containerPM.ShipmentMainCarriageTo = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CombinedCode : "";
+            containerPM.ShipmentTransshipment1From = container.ShipmentTransshipment1FromPort != null ? container.ShipmentTransshipment1FromPort.CombinedCode : "";
+            containerPM.ShipmentTransshipment1To = container.ShipmentTransshipment1ToPort != null ? container.ShipmentTransshipment1ToPort.CombinedCode : "";
+            containerPM.ShipmentTransshipment2From = container.ShipmentTransshipment2FromPort != null ? container.ShipmentTransshipment2FromPort.CombinedCode : "";
+            containerPM.ShipmentTransshipment2To = container.ShipmentTransshipment2ToPort != null ? container.ShipmentTransshipment2ToPort.CombinedCode : "";
+            containerPM.ShipmentTransshipment3From = container.ShipmentTransshipment3FromPort != null ? container.ShipmentTransshipment3FromPort.CombinedCode : "";
+            containerPM.ShipmentTransshipment3To = container.ShipmentTransshipment3ToPort != null ? container.ShipmentTransshipment3ToPort.CombinedCode : "";
+            containerPM.ShipmentOnCarriageFrom = container.ShipmentOnCarriageFromPort != null ? container.ShipmentOnCarriageFromPort.CombinedCode : "";
+            containerPM.ShipmentOnCarriageTo = container.ShipmentOnCarriageToPort != null ? container.ShipmentOnCarriageToPort.CombinedCode : "";
+            containerPM.ShipmentDeliveryFrom = container.ShipmentDeliveryFrom;
+            containerPM.ShipmentDeliveryTo = container.ShipmentDeliveryTo;
+            containerPM.PreCarriageLocation = container.PreCarriageLocation;
+            containerPM.PreCarriageETD = container.PreCarriageETD;
+            containerPM.PreCarriageATD = container.PreCarriageATD;
+            containerPM.POLLocation = container.POLLocation;
+            containerPM.EstimatedPOLArrival = container.EstimatedPOLArrival;
+            containerPM.ActualPOLArrival = container.ActualPOLArrival;
+            containerPM.EstimatedPOLLoaded = container.EstimatedPOLLoaded;
+            containerPM.ActualPOLLoaded = container.ActualPOLLoaded;
+            containerPM.EstimatedPOLVesselDeparture = container.EstimatedPOLVesselDeparture;
+            containerPM.ActualPOLVesselDeparture = container.ActualPOLVesselDeparture;
+            containerPM.TransshipmentCount = container.TransshipmentCount;
+            containerPM.Transshipment1Location = container.Transshipment1Location;
+            containerPM.EstimatedTrans1VesselArrival = container.EstimatedTrans1VesselArrival;
+            containerPM.ActualTransshipment1VesselArrival = container.ActualTransshipment1VesselArrival;
+            containerPM.EstimatedTransshipment1Discharge = container.EstimatedTransshipment1Discharge;
+            containerPM.ActualTransshipment1Discharge = container.ActualTransshipment1Discharge;
+            containerPM.EstimatedTransshipment1Loaded = container.EstimatedTransshipment1Loaded;
+            containerPM.ActualTransshipment1Loaded = container.ActualTransshipment1Loaded;
+            containerPM.EstimatedTrans1VesselDeparture = container.EstimatedTrans1VesselDeparture;
+            containerPM.ActualTrans1VesselDeparture = container.ActualTrans1VesselDeparture;
+            containerPM.Transshipment2Location = container.Transshipment2Location;
+            containerPM.EstimatedTrans2VesselArrival = container.EstimatedTrans2VesselArrival;
+            containerPM.ActualTransshipment2VesselArrival = container.ActualTransshipment2VesselArrival;
+            containerPM.EstimatedTransshipment2Discharge = container.EstimatedTransshipment2Discharge;
+            containerPM.ActualTransshipment2Discharge = container.ActualTransshipment2Discharge;
+            containerPM.EstimatedTransshipment2Loaded = container.EstimatedTransshipment2Loaded;
+            containerPM.ActualTransshipment2Loaded = container.ActualTransshipment2Loaded;
+            containerPM.EstimatedTrans2VesselDeparture = container.EstimatedTrans2VesselDeparture;
+            containerPM.ActualTrans2VesselDeparture = container.ActualTrans2VesselDeparture;
+            containerPM.Transshipment3Location = container.Transshipment3Location;
+            containerPM.EstimatedTrans3VesselArrival = container.EstimatedTrans3VesselArrival;
+            containerPM.ActualTransshipment3VesselArrival = container.ActualTransshipment3VesselArrival;
+            containerPM.EstimatedTransshipment3Discharge = container.EstimatedTransshipment3Discharge;
+            containerPM.ActualTransshipment3Discharge = container.ActualTransshipment3Discharge;
+            containerPM.EstimatedTransshipment3Loaded = container.EstimatedTransshipment3Loaded;
+            containerPM.ActualTransshipment3Loaded = container.ActualTransshipment3Loaded;
+            containerPM.EstimatedTrans3VesselDeparture = container.EstimatedTrans3VesselDeparture;
+            containerPM.ActualTrans3VesselDeparture = container.ActualTrans3VesselDeparture;
+            containerPM.Transshipment4Location = container.Transshipment4Location;
+            containerPM.EstimatedTrans4VesselArrival = container.EstimatedTrans4VesselArrival;
+            containerPM.ActualTransshipment4VesselArrival = container.ActualTransshipment4VesselArrival;
+            containerPM.EstimatedTransshipment4Discharge = container.EstimatedTransshipment4Discharge;
+            containerPM.ActualTransshipment4Discharge = container.ActualTransshipment4Discharge;
+            containerPM.EstimatedTransshipment4Loaded = container.EstimatedTransshipment4Loaded;
+            containerPM.ActualTransshipment4Loaded = container.ActualTransshipment4Loaded;
+            containerPM.EstimatedTrans4VesselDeparture = container.EstimatedTrans4VesselDeparture;
+            containerPM.ActualTrans4VesselDeparture = container.ActualTrans4VesselDeparture;
+            containerPM.Leg1Vessel = container.Leg1Vessel;
+            containerPM.Leg1Voyage = container.Leg1Voyage;
+            containerPM.Leg2Vessel = container.Leg2Vessel;
+            containerPM.Leg2Voyage = container.Leg2Voyage;
+            containerPM.Leg3Vessel = container.Leg3Vessel;
+            containerPM.Leg3Voyage = container.Leg3Voyage;
+            containerPM.Leg4Vessel = container.Leg4Vessel;
+            containerPM.Leg4Voyage = container.Leg4Voyage;
+            containerPM.Leg5Vessel = container.Leg5Vessel;
+            containerPM.Leg5Voyage = container.Leg5Voyage;
+            containerPM.PODLocation = container.PODLocation;
+            containerPM.EstimatedPODVesselArrival = container.EstimatedPODVesselArrival;
+            containerPM.ActualPODVesselArrival = container.ActualPODVesselArrival;
+            containerPM.EstimatedPODDischarge = container.EstimatedPODDischarge;
+            containerPM.ActualPODDischarge = container.ActualPODDischarge;
+            containerPM.EstimatedPODDeparture = container.EstimatedPODDeparture;
+            containerPM.ActualPODDeparture = container.ActualPODDeparture;
+            containerPM.OnCarriageLocation = container.OnCarriageLocation;
+            containerPM.OnCarriageETD = container.OnCarriageETD;
+            containerPM.OnCarriageATD = container.OnCarriageATD;
+            containerPM.LIFLocation = container.LIFLocation;
+            containerPM.EstimatedLIFArrival = container.EstimatedLIFArrival;
+            containerPM.ActualLIFArrival = container.ActualLIFArrival;
+            containerPM.EstimatedOnCarriageDeparture = container.EstimatedOnCarriageDeparture;
+            containerPM.ActualOnCarriageDeparture = container.ActualOnCarriageDeparture;
+            containerPM.GateIn = container.GateIn;
+            containerPM.GateOut = container.GateOut;
+            containerPM.EmptyReturnLocation = container.EmptyReturnLocation;
+            containerPM.EstimatedEmptyReturn = container.EstimatedEmptyReturn;
+            containerPM.ActualEmptyReturn = container.ActualEmptyReturn;
+            containerPM.CustomsReleaseState = container.CustomsReleaseState;
+            containerPM.CustomsReleaseDate = container.CustomsReleaseDate;
+            containerPM.CarrierReleaseState = container.CarrierReleaseState;
+            containerPM.CarrierReleaseDate = container.CarrierReleaseDate;
+            containerPM.AvailablityDate = container.AvailablityDate;
+            containerPM.AvailabilityLocation = container.AvailabilityLocation;
+            containerPM.FreeDays = container.FreeDays;
+            containerPM.LastFreeDayDate = container.LastFreeDayDate;
+            containerPM.ShipmentStatusId = container.ShipmentStatusId;
+            containerPM.ShipmentStatusName = container.ShipmentEntityStatus?.Name;
+            containerPM.EmptyPickupLocationPortId = container.EmptyPickupLocationPortId;
+            containerPM.PreCarriageLocationPortId = container.PreCarriageLocationPortId;
+            containerPM.EmptyReturnLocationPortId = container.EmptyReturnLocationPortId;
+            containerPM.AvailabilityLocationPortId = container.AvailabilityLocationPortId;
+            containerPM.OnCarriageLocationPortId = container.OnCarriageLocationPortId;
+            containerPM.LIFLocationPortId = container.LIFLocationPortId;
+            containerPM.POLLocationPortId = container.POLLocationPortId;
+            containerPM.PODLocationPortId = container.PODLocationPortId;
+            containerPM.Transshipment1LocationPortId = container.Transshipment1LocationPortId;
+            containerPM.Transshipment2LocationPortId = container.Transshipment2LocationPortId;
+            containerPM.Transshipment3LocationPortId = container.Transshipment3LocationPortId;
+            containerPM.Transshipment4LocationPortId = container.Transshipment4LocationPortId;
+            containerPM.TerminalId = container.TerminalId;
+            containerPM.TerminalAddress = container.TerminalAddress;
+            containerPM.TerminalName = container.TerminalCard != null ? container.TerminalCard.EnglishName : "";
+            containerPM.TerminalPhone = container.TerminalPhone;
+            containerPM.TerminalAddressId = container.TerminalAddressId;
+            containerPM.ShipmentPickupETA = container.ShipmentPickupETA;
+            containerPM.ShipmentPickupETD = container.ShipmentPickupETD;
+            containerPM.ShipmentPickupATA = container.ShipmentPickupATA;
+            containerPM.ShipmentPickupATD = container.ShipmentPickupATD;
+            containerPM.ShipmentPreCarriageETA = container.ShipmentPreCarriageETA;
+            containerPM.ShipmentPreCarriageETD = container.ShipmentPreCarriageETD;
+            containerPM.ShipmentPreCarriageATA = container.ShipmentPreCarriageATA;
+            containerPM.ShipmentPreCarriageATD = container.ShipmentPreCarriageATD;
+            containerPM.ShipmentMainCarriageETA = container.ShipmentMainCarriageETA;
+            containerPM.ShipmentMainCarriageETD = container.ShipmentMainCarriageETD;
+            containerPM.ShipmentMainCarriageATA = container.ShipmentMainCarriageATA;
+            containerPM.ShipmentMainCarriageATD = container.ShipmentMainCarriageATD;
+            containerPM.ShipmentTransshipment1ETA = container.ShipmentTransshipment1ETA;
+            containerPM.ShipmentTransshipment1ETD = container.ShipmentTransshipment1ETD;
+            containerPM.ShipmentTransshipment1ATA = container.ShipmentTransshipment1ATA;
+            containerPM.ShipmentTransshipment1ATD = container.ShipmentTransshipment1ATD;
+            containerPM.ShipmentTransshipment2ETA = container.ShipmentTransshipment2ETA;
+            containerPM.ShipmentTransshipment2ETD = container.ShipmentTransshipment2ETD;
+            containerPM.ShipmentTransshipment2ATA = container.ShipmentTransshipment2ATA;
+            containerPM.ShipmentTransshipment2ATD = container.ShipmentTransshipment2ATD;
+            containerPM.ShipmentTransshipment3ETA = container.ShipmentTransshipment3ETA;
+            containerPM.ShipmentTransshipment3ETD = container.ShipmentTransshipment3ETD;
+            containerPM.ShipmentTransshipment3ATA = container.ShipmentTransshipment3ATA;
+            containerPM.ShipmentTransshipment3ATD = container.ShipmentTransshipment3ATD;
+            containerPM.ShipmentOnCarriageETA = container.ShipmentOnCarriageETA;
+            containerPM.ShipmentOnCarriageETD = container.ShipmentOnCarriageETD;
+            containerPM.ShipmentOnCarriageATA = container.ShipmentOnCarriageATA;
+            containerPM.ShipmentOnCarriageATD = container.ShipmentOnCarriageATD;
+            containerPM.ShipmentDeliveryETA = container.ShipmentDeliveryETA;
+            containerPM.ShipmentDeliveryETD = container.ShipmentDeliveryETD;
+            containerPM.ShipmentDeliveryATA = container.ShipmentDeliveryATA;
+            containerPM.ShipmentDeliveryATD = container.ShipmentDeliveryATD;
+            containerPM.ShipmentOriginAgentId = container.ShipmentOriginAgentId;
+            containerPM.ShipmentDestinationAgentId = container.ShipmentDestinationAgentId;
+            containerPM.ShipmentOriginAgentName = container.ShipmentOriginAgent != null ? container.ShipmentOriginAgent.EnglishName : "";
+            containerPM.ShipmentDestinationAgentName = container.ShipmentDestinationAgent != null ? container.ShipmentDestinationAgent.EnglishName : "";
+            containerPM.ShipmentNumber = container.ShipmentNumber;
+            containerPM.ShipmentTypeId = container.ShipmentTypeId;
+            containerPM.ShipmentTypeName = container.ShipmentType != null ? container.ShipmentType.Name : "";
+            containerPM.OPClosed = container.OPClosed;
+            containerPM.ContainersCount = container.ContainersCount;
+            containerPM.HandlerId = container.HandlerId;
+            containerPM.HandlerName = container.Handler?.Contact?.EnglishName;
+            containerPM.CustomerId = container.CustomerId;
+            containerPM.CustomerName = container.CustomerCard?.EnglishName;
+            containerPM.ShipmentCreateDate = container.ShipmentCreateDate;
+            containerPM.PODReceivedOnDate = container.PODReceivedOnDate;
+            containerPM.IsAutomaticUpdates = container.IsAutomaticUpdates;
+            containerPM.IsClosed = container.IsClosed;
+            containerPM.ClosedDate = container.ClosedDate;
+            containerPM.MasterEntityId = container.ShipmentId;
+            containerPM.CustomerContactId = container.CustomerCard?.PrimaryContactId;
+            containerPM.HandlerContactId = container.Handler?.Contact?.Id;
+            containerPM.ConsigneeContactId = container.Shipment?.ConsigneeContactId;
+            containerPM.ShipperContactId = container.Shipment?.ShipperContactId;
+            containerPM.ShipperNotExporterContactId = container.Shipment?.ShipperNotExporterContactId;
+            containerPM.FreightForwarderContactId = container.Shipment?.FreightForwarderContactId;
+            containerPM.StatusId = container.StatusId;
+            containerPM.IsCancelled = container.IsCancelled;
+            containerPM.CancelledDate = container.CancelledDate;
+            containerPM.ShipmentDeliveryTruckerId = container.ShipmentDeliveryTruckerId;
+            containerPM.ShipmentDeliveryTruckerName = container.TruckerCard != null ? container.TruckerCard.EnglishName : "";
+            containerPM.Leg1VesselId = container.Leg1VesselId;
+            containerPM.Leg2VesselId = container.Leg2VesselId;
+            containerPM.Leg3VesselId = container.Leg3VesselId;
+            containerPM.Leg4VesselId = container.Leg4VesselId;
+            containerPM.Leg5VesselId = container.Leg5VesselId;
+            containerPM.ExceptionDate = container.ExceptionDate;
+            containerPM.ExceptionResolvedDescription = container.ExceptionResolvedDescription;
+            containerPM.HasException = container.HasException;
+            containerPM.LastExceptionDescription = container.LastExceptionDescription;
+            containerPM.ExceptionDescription = container.ExceptionDescription;
+            containerPM.IsExceptionResolved = container.IsExceptionResolved;
+            containerPM.EmptyContainerReturnTo = container.EmptyContainerReturnTo;
+            containerPM.EmptyContainerReturnFrom = container.EmptyContainerReturnFrom;
+            containerPM.EmptyContainerReturnETA = container.EmptyContainerReturnETA;
+            containerPM.EmptyContainerReturnATA = container.EmptyContainerReturnATA;
+            containerPM.EmptyContainerReturnATD = container.EmptyContainerReturnATD;
+            containerPM.EmptyContainerReturnETD = container.EmptyContainerReturnETD;
+            containerPM.OnCarriageGateOut = container.OnCarriageGateOut;
+            containerPM.PreCarriageGateIn = container.PreCarriageGateIn;
+            containerPM.ConcurrencyGUID = container.ConcurrencyGUID;
+            containerPM.UpdatedByPartner = container.UpdatedByPartner;
+            containerPM.ContainerTypeId = container.ContainerTypeId;
+            containerPM.GrossWeight = container.GrossWeight;
+            containerPM.Volume = container.Volume;
+            containerPM.VolumeUnitCode = container.VolumeUnitCode;
+            containerPM.GrossWeightUnitCode = container.GrossWeightUnitCode;
+            containerPM.AdditionalReference1 = container.AdditionalReference1;
+            containerPM.AdditionalReference2 = container.AdditionalReference2;
+            containerPM.AdditionalReference3 = container.AdditionalReference3;
+            containerPM.AdditionalReference4 = container.AdditionalReference4;
+            containerPM.HasTransshipments = container.HasTransshipments;
+
+            if (container.EntityStatus != null)
+            {
+                containerPM.StatusName = container.EntityStatus.Name;
+                containerPM.StatusWeight = container.EntityStatus.StatusWeight;
+            }
+
+            MapCustomFields(containerPM, container);
             return containerPM;
         }
     }

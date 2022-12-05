@@ -34,9 +34,6 @@ export class TreeSelectComponent implements OnInit, AfterViewInit {
     public Title: string | null = null;
 
     ngOnInit() {
-        if (this.IsDisabled) {
-            this.AllowClear = false;
-        }
         this.TreeItems = JSON.parse(JSON.stringify(this.Items));
         this.TreeItems = this.checkItemsToShow(this.TreeItems);
         this.setFilteredTreeItems("");
@@ -115,6 +112,7 @@ export class TreeSelectComponent implements OnInit, AfterViewInit {
     getFilteredTreeItems(searchTerm: string, items: TreeSelectItem[] | null = null) {
         let filteredTreeItems = [];
         JSON.parse(JSON.stringify((items ? items : this.TreeItems))).forEach((item: TreeSelectItem) => {
+            //item.children.length > 0 || (item.children.length === 0 && item.selectable)
             if (item.title.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 || (this.Value && item.key.toLowerCase() === this.Value.toLowerCase())) {
                 filteredTreeItems.push(item);
             } else {

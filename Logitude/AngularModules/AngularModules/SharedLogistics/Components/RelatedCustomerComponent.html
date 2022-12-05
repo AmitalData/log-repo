@@ -43,7 +43,7 @@
                 </table>
             </td>
         </tr>
-        <tr style="height:30%;max-height:30%">
+        <tr [style.height] ="BatchVisibility? '30%': '100%'" [style.max-height]="BatchVisibility? '30%': '100%'">
             <td>
                 <div class="MediaFill">
                     <div class="SimpleGridView">

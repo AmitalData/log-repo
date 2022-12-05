@@ -19,6 +19,11 @@
     .failed-instanceStatus {
         color: #db2121 !important;
     }
+
+    .active-version{
+        font-weight: bold;
+        color: #54aa41;
+    }
 </style>
 
 <table *ngIf="Entity">
@@ -43,7 +48,7 @@
                     </tr>
                 </table>
 
-                <table *ngIf="ObjectTableName != 'WorkFlow'">
+                <table *ngIf="ObjectTableName == 'WorkFlowInstance'">
                     <tr>
                         <td>
                             <div class="MediaFill">
@@ -64,6 +69,24 @@
                     </tr>
                 </table>
 
+                <table *ngIf="ObjectTableName == 'WorkFlowVersion'">
+                    <tr>
+                        <td>
+                            <div class="MediaFill">
+
+                                <div *ngIf="FieldName == 'StatusName'">
+                                    <div
+                                        [ngClass]="'version ' + (Entity[FieldName] ? (' ' + Entity[FieldName].toLowerCase() + '-version') : '')">
+                                        {{Entity[FieldName]}}
+                                    </div>
+                                </div>
+
+                                <div class="TextTrimming" *ngIf="FieldName == 'CreateDate'">{{ Entity[FieldName] | DateTimePipe:'SD' }}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </td>
     </tr>

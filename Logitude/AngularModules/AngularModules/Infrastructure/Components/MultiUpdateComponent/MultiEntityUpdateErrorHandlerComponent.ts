@@ -15,6 +15,7 @@ export class MultiEntityUpdateErrorHandlerComponent extends BaseComponent implem
     MultiEntityUpdatedLogPM: MultiEntityUpdateLogPM;
     MultiEntityUpdateDataEntities: MultiEntityUpdateDataEntity[] = [];
     ItemsSource: any;
+    ObjectTableName: string;
     constructor(private _entityListService: EntityListService) {
         super();
     }
@@ -24,6 +25,7 @@ export class MultiEntityUpdateErrorHandlerComponent extends BaseComponent implem
 
     SetWindowArgs(windowArgs: any) {
         this.MultiEntityUpdatedLogPM = windowArgs.multiEntityUpdateLogPM;
+        this.ObjectTableName = this.MultiEntityUpdatedLogPM.MultiEntityUpdateData.ObjectTableName;
         this.FillItemsSource();
     }
 

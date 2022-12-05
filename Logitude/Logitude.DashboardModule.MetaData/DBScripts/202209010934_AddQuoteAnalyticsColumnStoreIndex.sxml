@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Dashboard" Env="Logitude,local,test">
-  <Sql Version="1">
+  <Sql Version="3">
     <![CDATA[
       BEGIN
           IF EXISTS (SELECT *  FROM sys.indexes  WHERE NAME='IX_QuoteAnalytics_ColumnStore' AND object_id = OBJECT_ID('[QuoteAnalytics]'))
@@ -12,10 +12,8 @@ Id
 ,Tenant
 ,LastStageDate
 ,IsSaleCurrencySameAsCost
-,EstimateProfit
 ,IsFixedPrice
 ,SaleCurrencyId
-,ExchangeRate
 ,IsCancelled
 ,QuoteNumber
 ,MainCarriageCarrierId
@@ -33,10 +31,7 @@ Id
 ,SalesmanUserId
 ,CreatedByUserId
 ,OpenDate
-,ChargeableWeight
-,GrossWeight
 ,IsClosed
-,Volume
 ,NumberOfPackages
 ,NumberOfContainers
 ,IsDangerous
@@ -66,8 +61,6 @@ Id
 ,AgentId
 ,MoveTypeId
 ,TEU
-,ValueOfGoods
-,ValueOfGoodsCurrencyId
 ,IsChargesByVAT
 ,GrossWeightInKG
 ,GrossWeightPerTon
@@ -79,13 +72,11 @@ Id
 ,EstimatedProfitInLocal
 ,EstimatedProfitInProfit
 ,ProfitCurrencyId
-,ProfitExchangeRate
 ,QuoteClosingReasonId
 ,ShipmentSubTypeId
 ,RegionalTaxId
 ,RegionalTaxPercentage
 ,IsMultiCurrency
-,PackagesQuantity
 ,SpecialServicesTypeId
 ,ValidByTypeCode
 ,ConnectedToOpportunity

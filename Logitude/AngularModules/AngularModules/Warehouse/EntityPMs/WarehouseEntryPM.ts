@@ -14,6 +14,7 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+import { CustomChildEntity } from '../../Infrastructure/EntityPMs/CustomChildEntity';
 
 export class WarehouseEntryPM {
 
@@ -419,6 +420,15 @@ export class WarehouseEntryPM {
     public set MasterShipmentNumber(newValue: string) { if (this.masterShipmentNumber != newValue) { this.masterShipmentNumber = newValue; this.MarkAsDirty("MasterShipmentNumber"); } }
        
 	 
+    private connectedToReferenceNumber: string;
+    public get ConnectedToReferenceNumber() { return this.connectedToReferenceNumber; }
+    public set ConnectedToReferenceNumber(newValue: string) { if (this.connectedToReferenceNumber != newValue) { this.connectedToReferenceNumber = newValue; this.MarkAsDirty("ConnectedToReferenceNumber"); } }
+       
+	 
+    private customChildEntities: CustomChildEntity[];
+    public get CustomChildEntities() { return this.customChildEntities; }
+    public set CustomChildEntities(newValue: CustomChildEntity[]) { if (this.customChildEntities != newValue) { this.customChildEntities = newValue; this.MarkAsDirty("CustomChildEntities"); } }
+
 
     public OldEntityPM: WarehouseEntryPM;
 		

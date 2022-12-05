@@ -160,6 +160,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         {
                             apinvoice.Tenant = tenant;
                             apinvoiceQuery.CustomeValidateAPInvoice(apinvoice);
+                            if (tenant == 1153) apinvoice = apinvoiceQuery.SetAPInvoiceSystemUser(apinvoice);
+
                             apinvoicePM = apinvoiceQuery.APInvoiceDataMappingAndValidatin(apinvoice, tenant);
                             apinvoiceQuery.APInvoiceCustomDataMapping(apinvoice, tenant);
                             apinvoiceQuery.PaymentTermMapAndValidate(apinvoice, apinvoicePM, tenant);

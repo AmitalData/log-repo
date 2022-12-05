@@ -28,6 +28,20 @@ export class DashboardPMExtendedService {
             }), catchError(ServiceHelper.HandleServiceError));
         });
     }
+
+    GetUsersDashboardsCount() {
+        var url = this._apiUrl + '/GetUsersDashboardsCount';
+
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
+                var myResponse: ServiceResponse = new ServiceResponse();
+                myResponse.Result = myResult;
+                return myResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
     MapDashboardPM(jsonList: any) {
         var entityList: DashboardPM;
         entityList = new DashboardPM();
@@ -50,5 +64,18 @@ export class DashboardPMExtendedService {
             pmresponse.Result = response;
             return pmresponse;
         }), catchError(ServiceHelper.HandleServiceError));
-    }    
+    }
+
+    GetDashboardsFromIds(dashboardsIds: string) {
+        var url = this._apiUrl + '/GetDashboardsFromIds?dashboardsIds=' + dashboardsIds;
+
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
+                var myResponse: ServiceResponse = new ServiceResponse();
+                myResponse.Result = myResult;
+                return myResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 }

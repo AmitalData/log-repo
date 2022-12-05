@@ -172,7 +172,8 @@
                      *ngFor="let col of columns; let i = index" [attr.ColId]="col.FieldName" [attr.LogGridId]="LogGridId"
                      [id]="ColumnId + 'resizable-column-,' + i" [class.SortEnabled]="sortingCol === col.FieldName"
                      [ngStyle]="col.Styles"
-                     style="position: absolute;display: inline-block;min-width:25px;">
+                     style="position: absolute;display: inline-block;min-width:25px;"
+                     [attr.data-cy]="col.FieldName">
 
                     <div style="width: calc(100% - 5px);" [style.float]="RTL == true ? 'right' : 'left'" (mousedown)="ServerSort(col, ColumnId + 'resizable-column-,'+i)">
                         <list-header-template *ngIf="col.ColumnHeaderTemplateName" [htmlListHeaderUrl]="col.ColumnHeaderTemplateUrl" [colDef]="col"></list-header-template>

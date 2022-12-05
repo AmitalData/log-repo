@@ -26,6 +26,8 @@ namespace Logitude.Workflow.Data
 		 IDbSet<WorkFlowInstanceStatus> WorkFlowInstanceStatuses { get; }
 		 IDbSet<WorkFlowInstanceVariable> WorkFlowInstanceVariables { get; }
 		 IDbSet<WorkFlowStatus> WorkFlowStatuses { get; }
+		 IDbSet<WorkFlowVersion> WorkFlowVersions { get; }
+		 IDbSet<WorkFlowVersionStatus> WorkFlowVersionStatuses { get; }
 	 
          void SetAsModified(object entity);
          void DetectChanges();

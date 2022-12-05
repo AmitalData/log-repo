@@ -93,6 +93,10 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.GroupByQueryFilters.addAdditionalFilter("DataTypeCode", "PickList,LookUp,DateTime,Date", null, null, "InList", false, true, false, "string", false, true, true);
     }
 
+
+
+
+
     GetFilters() {
         if (!this.EntityPM.Filters) return;
         var filters = JSON.parse(this.EntityPM.Filters);
@@ -495,40 +499,63 @@ export class AddEditWidgetComponent extends BaseComponent {
         if (this.GroupByDateIsNotValid()) {
             errors.push("Date Group Type Field is Required");
         }
-        if (this.isMaximumGroupingVisible && !this.MaximumGrouping) {
-            errors.push("Group By Field is Required");
+        if (this.isMaximumGroupingVisible && !this.MaximumGrouping && this.MaximumGrouping != 0) {
+            errors.push("Maximum Grouping Field is Required");
         }
         if (this.isMaximumGroupingVisible && this.MaximumGrouping && (this.MaximumGrouping < 1 || this.MaximumGrouping > 50)) {
-            errors.push("The Maximum Grouping must be greater than or equal 1 and less than or equal 50");
+            errors.push("Maximum Grouping must be greater than or equal 1 and less than or equal 50");
+        }
+        if (this.isMaximumGroupingVisible && this.MaximumGrouping == 0) {
+            errors.push("Maximum Grouping must be greater than or equal 1 and less than or equal 50");
         }
         if (this.isSortByVisible && !this.SortDirection) {
             errors.push("Sort By Direction Field is Required");
         }
-        if(this.TypeCode == "kpi" && this.TimeOverTime && !this.ComparisonOperator){
-            errors.push("Comparison Operater Field is Required");
-        }
-        if(this.TypeCode == "kpi" && this.TimeOverTime && !this.ComparisonPeriod && this.ComparisonOperator != "Between"){
-            errors.push("Comparison Period Field is Required");
-        }
-        if(this.TypeCode == "kpi" && this.TimeOverTime && !this.ComparisonDateGroup && this.ComparisonOperator != "Between"){
-            errors.push("Comparison Date Group Field is Required");
-        }
-        if(this.TypeCode == "kpi" && this.TimeOverTime && !this.Increase){
-            errors.push("Increase Field is Required");
-        }
-        if(this.TypeCode == "kpi" && this.TimeOverTime && this.ComparisonOperator == "Between" && !this.FromDate){
-            errors.push("From Date Field is Required");
-        }
-        if(this.TypeCode == "kpi" && this.TimeOverTime && this.ComparisonOperator == "Between" && !this.ToDate){
-            errors.push("To Date Field is Required");
-        }
-        if(this.TypeCode == "kpi" && this.TimeOverTime && this.ComparisonOperator == "Between" && this.FromDate && this.ToDate && this.FromDate > this.ToDate){
-            errors.push("From Date Value should be Before To Date Value");
-        }
+
+        var timeOverTimeErrors: string[] = this.ValidateTimeOverTime();        
+        errors.concat(timeOverTimeErrors);
 
         this.ValidateMeasures(errors);
         this.ValidateSort(errors);
         if (this.RootFilter && this.RootFilter.QueryFilterItems && this.RootFilter.QueryFilterItems.length != 0) this.ValidateFilters(errors, this.RootFilter);
+    }
+    private ValidateTimeOverTime(): string[] {
+        var errors: string[] = [];
+
+        if (this.TypeCode != "kpi") return [];
+        if (!this.TimeOverTime) return [];
+
+        if (!this.ComparisonOperator) {
+            errors.push("Comparison Operater Field is Required");
+        }
+
+        else {
+            if (this.ComparisonOperator == "Between") {
+                if (!this.FromDate) {
+                    errors.push("From Date Field is Required");
+                }
+                if (!this.ToDate) {
+                    errors.push("To Date Field is Required");
+                }
+                if (this.FromDate && this.ToDate && this.FromDate > this.ToDate) {
+                    errors.push("From Date Value should be Before To Date Value");
+                }
+            }
+
+            else {
+                if (!this.ComparisonPeriod) {
+                    errors.push("Comparison Period Field is Required");
+                }
+                if (!this.ComparisonDateGroup) {
+                    errors.push("Comparison Date Group Field is Required");
+                }
+            }
+        }
+       
+        if (!this.Increase) {
+            errors.push("Increase Field is Required");
+        }
+        return errors;
     }
 
     GroupByDateIsNotValid() {

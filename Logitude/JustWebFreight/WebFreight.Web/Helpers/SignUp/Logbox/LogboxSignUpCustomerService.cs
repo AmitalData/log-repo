@@ -35,7 +35,9 @@ namespace WebFreight.Web.Helpers.SignUp.Logbox
             };
 
             customerPM.Addresses.Add(GetNewAddressPM(signUpInfoClass, tenant));
-            customerPM.Contacts.Add(GetContactPM(signUpInfoClass, tenant));
+            ContactPM contactPM = GetContactPM(signUpInfoClass, tenant);
+            customerPM.ExistedContactId = contactPM.Id;
+            customerPM.Contacts.Add(contactPM);
 
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             CustomerService customerService = new CustomerService(commonContext, customerPM);
@@ -52,6 +54,9 @@ namespace WebFreight.Web.Helpers.SignUp.Logbox
             {
                 return GetNewContactPM(signUpInfoClass, tenant);
             }
+
+            contactPM.IsCreatedWithPartner = true;
+            contactPM.SetAsPrimaryForCard = true;
 
             return contactPM;
         }

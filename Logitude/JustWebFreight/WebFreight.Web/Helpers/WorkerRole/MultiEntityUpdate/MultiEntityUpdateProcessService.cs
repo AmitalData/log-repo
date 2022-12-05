@@ -122,16 +122,21 @@ namespace WebFreight.Web.Helpers.WorkerRole.MultiEntityUpdate
             object oldEntityPM = MultiEntityUpdateCloner.CloneEntity(entityPM);
             foreach (AutomationSetValue item in multiEntityUpdateData.SetValueLists)
             {
-                ShipmentHouseValidator.HandleOperationallyClosedShipmentValidation(oldEntityPM, item); //for now! Maintenance #160028 
-                ShipmentHouseValidator.HandleHouseConnectedToMasterShipmentValidation(entityPM, item); //for now! Maintenance #159814 
+                this.ValidateShipment(oldEntityPM, entityPM, item);                
                 SetNewValueToEntityPM(multiEntityUpdateData, entityPM, item);
             }
 
             SetIsMultiUpdateValueToEntity(entityPM);
-            ShipmentBaseValidator.ValidateUpdate(entityPM, oldEntityPM); //For now, untill move this to shipment service
+            if (multiEntityUpdateData.ObjectTableName == "Shipment")  ShipmentBaseValidator.ValidateUpdate(entityPM, oldEntityPM); //For now, untill move this to shipment service
             UpdateEntityArgs updateEntityArgs = GetUpdateEntityArgs(entityPM);
             InjectionUtil.Instance.UpdateEntity(updateEntityArgs);
             UpdateMultiEntityDataEntity(multiEntityUpdateDataEntity, null);
+        }
+        private void ValidateShipment(object oldEntityPM, object entityPM, AutomationSetValue automationSetValue)
+        {
+            if (multiEntityUpdateData.ObjectTableName != "Shipment") return;
+            ShipmentHouseValidator.HandleOperationallyClosedShipmentValidation(oldEntityPM, automationSetValue); //for now! Maintenance #160028 
+            ShipmentHouseValidator.HandleHouseConnectedToMasterShipmentValidation(entityPM, automationSetValue); //for now! Maintenance #159814 
         }
 
         private UpdateEntityArgs GetUpdateEntityArgs(object entityPM)

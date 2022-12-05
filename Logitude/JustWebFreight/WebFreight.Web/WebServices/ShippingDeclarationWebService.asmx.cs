@@ -995,10 +995,12 @@ namespace WebFreight.Web.WebServices
                             }
 
                             myDataProvider.Broker = myDataProvider.Broker + Environment.NewLine + DataProviders.General.GetAddress(customAgentImportAddress);
+                            myDataProvider.BrokerAddressOnly = Environment.NewLine + DataProviders.General.GetAddress(customAgentImportAddress);
 
                             if (customAgentImportAddress.PhoneNumber != null || customAgentImportAddress.FaxNumber != null)
                             {
                                 myDataProvider.Broker = myDataProvider.Broker + Environment.NewLine + (customAgentImportAddress.PhoneNumber != null ? "Tel: " + customAgentImportAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(customAgentImportAddress.FaxNumber) ? "Fax: " + customAgentImportAddress.FaxNumber + " " : "");
+                                myDataProvider.BrokerPhone = customAgentImportAddress.PhoneNumber;
                             }
 
                             myDataProvider.CustomsAgentAddress = DataProviders.General.GetAddress(customAgentImportAddress);
@@ -1011,6 +1013,7 @@ namespace WebFreight.Web.WebServices
                         if (customAgentImportContact != null)
                         {
                             myDataProvider.BrokerEmail = customAgentImportContact.Email;
+                            myDataProvider.BrokerContactName = customAgentImportContact.EnglishName;
                             myDataProvider.CustomsAgentContactDetails = this.BuildContactDetails(customAgentImportContact);                            
                         }                        
                     }
@@ -2254,30 +2257,14 @@ namespace WebFreight.Web.WebServices
                     myDataProvider.FromLocationCountryCode = this.FillInlandDomecticCountryCode(shipment);
 
                     #region
-                    Address fromAddress = null;
-                    if (shipment.MainCarriageFromAddressId != null)
-                    {
-                        fromAddress = addressRepository.GetSingleAddress(shipment.MainCarriageFromAddressId, shipment.Tenant);
 
-                        if (fromAddress != null)
-                        {
-                            myDataProvider.FromLocation = fromAddress.City + " " + (fromAddress.Country != null ? fromAddress.Country.Code : "");
-
-                            if (!string.IsNullOrEmpty(myDataProvider.FromLocation))
-                            {
-                                myDataProvider.FromLocation_Label = "Place of Loading";
-                            }
-
-                            else
-                            {
-                                myDataProvider.FromLocation_Label = "";
-                            }
-                        }
-                    }
+                    this.SetFromLocation_InlandDomestic(myDataProvider);
+                    this.SetToLocation_InlandDomestic(myDataProvider);
 
                     if (shipment.MainCarriageFromPartnerId != null)
                     {
                         Card fromPartner = commonContext.Cards.Where(d => d.Id == shipment.MainCarriageFromPartnerId && d.Tenant == shipment.Tenant).FirstOrDefault();
+                        Address fromAddress = addressRepository.GetSingleAddress(shipment.MainCarriageFromAddressId, shipment.Tenant);
                         if (fromPartner != null)
                         {
                             myDataProvider.FromPartnerName = fromPartner.EnglishName;
@@ -2291,16 +2278,14 @@ namespace WebFreight.Web.WebServices
 
                                 myDataProvider.FromPartnerFullAddress = DataProviders.General.GetAddress(fromAddress);
                             }
-
                         }
-
                     }
 
                     if (shipment.MainCarriageToPartnerId != null)
                     {
                         Card toPartner = commonContext.Cards.Where(d => d.Id == shipment.MainCarriageToPartnerId && d.Tenant == shipment.Tenant).FirstOrDefault();
-
                         Address toAddress = addressRepository.GetSingleAddress(shipment.MainCarriageToAddressId, shipment.Tenant);
+
                         if (toPartner != null)
                         {
                             myDataProvider.ToPartnerName = toPartner.EnglishName;
@@ -2318,34 +2303,15 @@ namespace WebFreight.Web.WebServices
                         }
                     }
 
-                    switch (shipment.InlandDomesticToTypeCode)
-                    {
-                        case "PART":
-                            {
-                                this.SetToLocationFromInlanDomesticPartner(myDataProvider);
-                                break;
-                            }
-
-                        case "PORT":
-                            {
-                                myDataProvider.ToLocation = shipment.MainCarriageToPortName;
-                                break;
-                            }
-
-                        case "CASL":
-                            {
-                                this.SetToLocationFromInlanDomesticCasual(myDataProvider);
-                                break;
-                            }
-                    }
-
                     myDataProvider.FinalLocation = myDataProvider.ToLocation;
                     myDataProvider.ToLocation_Label = "";
+                    myDataProvider.FromLocation_Label = "";
 
-                    if (!string.IsNullOrEmpty(myDataProvider.ToLocation))
-                    {
-                        myDataProvider.ToLocation_Label = "Place of Discharge";
-                    }
+                    if (!string.IsNullOrEmpty(myDataProvider.FromLocation))
+                        myDataProvider.FromLocation_Label = "Place of Loading";
+
+                    if (!string.IsNullOrEmpty(myDataProvider.ToLocation))                    
+                        myDataProvider.ToLocation_Label = "Place of Discharge";                    
 
                     #endregion
                 }
@@ -5030,6 +4996,76 @@ namespace WebFreight.Web.WebServices
             return handlerUser.EnglishName;
         }
 
+        private void SetFromLocation_InlandDomestic(ShippingDeclarationDataProvider myDataProvider)
+        {
+            switch (shipment.InlandDomesticFromTypeCode)
+            {
+                case "PART":
+                    {
+                        this.SetFromLocationFromInlanDomesticPartner(myDataProvider);
+                        break;
+                    }
+
+                case "PORT":
+                    {
+                        myDataProvider.FromLocation = shipment.MainCarriageFromPortName;
+                        break;
+                    }
+
+                case "CASL":
+                    {
+                        this.SetFromLocationFromInlanDomesticCasual(myDataProvider);
+                        break;
+                    }
+            }
+        }
+        private void SetFromLocationFromInlanDomesticPartner(ShippingDeclarationDataProvider myDataProvider)
+        {
+            Address fromAddress = addressRepository.GetSingleAddress(shipment.MainCarriageFromAddressId, tenant);
+            if (fromAddress != null)
+            {
+                myDataProvider.FromLocation = fromAddress.City + " " + (fromAddress.Country != null ? fromAddress.Country.Code : "");
+                myDataProvider.FromLocationCountryCode = fromAddress.Country != null ? fromAddress.Country.Code : "";
+            }
+        }
+        private void SetFromLocationFromInlanDomesticCasual(ShippingDeclarationDataProvider myDataProvider)
+        {
+            myDataProvider.FromLocation = shipment.InlandDomesticFromCity;
+
+            if (!string.IsNullOrEmpty(shipment.InlandDomesticFromCountryId))
+            {
+                Country country = countryRepository.GetSingleCountry(shipment.InlandDomesticFromCountryId, tenant);
+                if (country != null)
+                {
+                    myDataProvider.FromLocation += " " + country.Code;
+                    myDataProvider.FromLocationCountryCode = country.Code;
+                }
+            }
+        }
+
+        private void SetToLocation_InlandDomestic(ShippingDeclarationDataProvider myDataProvider)
+        {
+            switch (shipment.InlandDomesticToTypeCode)
+            {
+                case "PART":
+                    {
+                        this.SetToLocationFromInlanDomesticPartner(myDataProvider);
+                        break;
+                    }
+
+                case "PORT":
+                    {
+                        myDataProvider.ToLocation = shipment.MainCarriageToPortName;
+                        break;
+                    }
+
+                case "CASL":
+                    {
+                        this.SetToLocationFromInlanDomesticCasual(myDataProvider);
+                        break;
+                    }
+            }
+        }
         private void SetToLocationFromInlanDomesticPartner(ShippingDeclarationDataProvider myDataProvider)
         {
             Address toAddress = addressRepository.GetSingleAddress(shipment.MainCarriageToAddressId, tenant);
@@ -5039,7 +5075,6 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.ToLocationCountryCode = toAddress.Country != null ? toAddress.Country.Code : "";
             }
         }
-
         private void SetToLocationFromInlanDomesticCasual(ShippingDeclarationDataProvider myDataProvider)
         {
             myDataProvider.ToLocation = shipment.InlandDomesticToCity;
@@ -5063,7 +5098,6 @@ namespace WebFreight.Web.WebServices
             this.GetPreCarriageData(shippingDeclarationDataProvider, routingDataProvider);
             this.GetOnCarriageData(shippingDeclarationDataProvider, routingDataProvider);
         }
-
         private void GetPreForwardingData(ShippingDeclarationDataProvider shippingDeclarationDataProvider, RoutingDataProvider routingDataProvider)
         {
             shippingDeclarationDataProvider.PreForwardingATD = routingDataProvider.PreForwardingATD;

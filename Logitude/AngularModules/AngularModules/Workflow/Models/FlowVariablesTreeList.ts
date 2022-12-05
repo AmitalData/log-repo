@@ -1,21 +1,32 @@
 import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { FieldTypes } from "Workflow/Constants/FieldTypes";
+import { GetRecordTypes } from "Workflow/Constants/GetRecordTypes";
 import { FlowReader } from "./FlowReader";
+import { Formatter } from "./Formatter";
 import { ObjectTables } from "./ObjectTables";
 import { ReturnedField } from "./ReturnedField";
 import { TreeSelectItem } from "./TreeSelectItem";
+import { ShowVariables } from "./Types";
 
 export class FlowVariablesTreeList {
     private FlowObjectFields: ObjectFieldList[];
     private FlowObject: any;
     private CurrentNodeId: string;
-    private IsCollectionVariables: boolean;
+    private ShowVariables: ShowVariables;
     private ItemKeySplitter: string = "_";
+    private ItemsList: TreeSelectItem[] = [];
     public Items: TreeSelectItem[] = [];
 
-    constructor(flowObjectFields: ObjectFieldList[], flowObject: any, currentNodeId: string, isCollectionVariables: boolean = false) {
-        this.initialize(flowObjectFields, flowObject, currentNodeId, isCollectionVariables);
-        this.initializeVariablesTreeItems();
+    constructor(flowObjectFields: ObjectFieldList[], flowObject: any, currentNodeId: string, showVariables: ShowVariables) {
+        this.initialize(flowObjectFields, flowObject, currentNodeId, showVariables);
+        this.initializeTreeItems();
+    }
+
+    public getItem(itemKey: string) {
+        if (itemKey) {
+            return this.ItemsList.find((i: TreeSelectItem) => i.key === itemKey) || null;
+        }
+        return null;
     }
 
     public compareItemType(item: TreeSelectItem, compareWithType: string, compareWithLookupOrPickListType: string) {
@@ -119,75 +130,105 @@ export class FlowVariablesTreeList {
         return true;
     }
 
-    private initialize(flowObjectFields: ObjectFieldList[], flowObject: any, currentNodeId: string, isCollectionVariables: boolean) {
+    private initialize(flowObjectFields: ObjectFieldList[], flowObject: any, currentNodeId: string, showVariables: ShowVariables) {
         this.FlowObjectFields = flowObjectFields ? flowObjectFields : [];
         this.FlowObject = flowObject;
         this.CurrentNodeId = currentNodeId;
-        this.IsCollectionVariables = isCollectionVariables;
+        this.ShowVariables = showVariables;
     }
 
-    private initializeVariablesTreeItems() {
-        if (!this.IsCollectionVariables) {
-            this.setVariablesTreeItems();
-        } else {
-            this.setCollectionVariablesTreeItems();
+    private initializeTreeItems() {
+        this.initializeRecordsVariables();
+        this.initializeRecordsCollectionVariables();
+        this.initializeDeclaredVariables();
+        this.initializeDeclaredCollectionVariables();
+    }
+
+    private initializeRecordsVariables() {
+        if (this.ShowVariables && this.ShowVariables.ShowRecordsVariables) {
+            let recordsVariablesItemChildren = this.getRecordsVariablesItemChildren();
+            let recordsVariablesItem = new TreeSelectItem("recordsvariables", "Records Variables", false, false, true, true, recordsVariablesItemChildren);
+            this.Items.push(recordsVariablesItem);
+            this.ItemsList.push(recordsVariablesItem);
         }
     }
 
-    private setVariablesTreeItems() {
-        let recordsVariablesItemChildren = this.getRecordsVariablesItemChildren();
-        let declaredVariablesItemChildren = this.getDeclaredVariablesItemChildren();
-
-        let recordsVariablesItem = new TreeSelectItem("recordsvariables", "Records Variables", false, false, true, true, recordsVariablesItemChildren);
-        let declaredVariablesItem = new TreeSelectItem("declaredvariables", "Declared Variables", false, false, true, true, declaredVariablesItemChildren);
-
-        this.Items.push(recordsVariablesItem);
-        this.Items.push(declaredVariablesItem);
+    private initializeRecordsCollectionVariables() {
+        if (this.ShowVariables && this.ShowVariables.ShowRecordsCollectionVariables) {
+            let recordsCollectionVariablesItemChildren = this.getRecordsCollectionVariablesItemChildren();
+            let recordsCollectionVariablesItem = new TreeSelectItem("recordscollectionvariables", "Records Collection Variables", false, false, true, true, recordsCollectionVariablesItemChildren);
+            this.Items.push(recordsCollectionVariablesItem);
+            this.ItemsList.push(recordsCollectionVariablesItem);
+        }
     }
 
-    private setCollectionVariablesTreeItems() {
-        let recordsCollectionVariablesItemChildren = this.getRecordsCollectionVariablesItemChildren();
-        let declaredCollectionVariablesItemChildren = [];
+    private initializeDeclaredVariables() {
+        if (this.ShowVariables && this.ShowVariables.ShowDeclaredVariables) {
+            let declaredVariablesItemChildren = this.getDeclaredVariablesItemChildren();
+            let declaredVariablesItem = new TreeSelectItem("declaredvariables", "Declared Variables", false, false, true, true, declaredVariablesItemChildren);
+            this.Items.push(declaredVariablesItem);
+            this.ItemsList.push(declaredVariablesItem);
+        }
+    }
 
-        let recordsVariablesItem = new TreeSelectItem("recordscollectionvariables", "Records Collection Variables", false, false, true, true, recordsCollectionVariablesItemChildren);
-        let declaredVariablesItem = new TreeSelectItem("declaredcollectionvariables", "Declared Collection Variables", false, false, true, true, declaredCollectionVariablesItemChildren);
-
-        this.Items.push(recordsVariablesItem);
-        this.Items.push(declaredVariablesItem);
+    private initializeDeclaredCollectionVariables() {
+        if (this.ShowVariables && this.ShowVariables.ShowDeclaredCollectionVariables) {
+            let declaredCollectionVariablesItemChildren = [];
+            let declaredCollectionVariablesItem = new TreeSelectItem("declaredcollectionvariables", "Declared Collection Variables", false, false, true, true, declaredCollectionVariablesItemChildren);
+            this.Items.push(declaredCollectionVariablesItem);
+            this.ItemsList.push(declaredCollectionVariablesItem);
+        }
     }
 
     private getRecordsVariablesItemChildren() {
         let triggeringRecordEntity = FlowReader.getStartNodeEntity(this.FlowObject);
         let triggeringRecordItemChildren = this.getObjectFieldsItems("triggeringrecord", triggeringRecordEntity, null);
 
-        let recordsVariablesItemChildren: TreeSelectItem[] = [
-            new TreeSelectItem("triggeringrecord", "Triggering record", false, false, false, false, triggeringRecordItemChildren)
-        ];
+        let triggeringRecordItem = new TreeSelectItem("triggeringrecord", "Triggering record", false, false, false, false, triggeringRecordItemChildren);
+        let recordsVariablesItemChildren: TreeSelectItem[] = [];
+
+        recordsVariablesItemChildren.push(triggeringRecordItem);
+        this.ItemsList.push(triggeringRecordItem);
 
         this.getGetRecordNodes("FirstRecord").forEach((getRecordNode: any) => {
             let entity = getRecordNode.data["entity"];
             let returnedFields = getRecordNode.data["returnedFields"];
-            let returnedFieldsCodes = returnedFields ? returnedFields.map((returnedField: ReturnedField) => { return returnedField.fieldCode }) : [];
+            let returnedFieldsCodes = returnedFields ? returnedFields.map((returnedField: ReturnedField) => { return returnedField.fieldCode }) : null;
             let treeSelectItemName = getRecordNode.data["name"];
-            let treeSelectItemKey = this.formatFlowElementName(treeSelectItemName);
+            let isReadOnly = getRecordNode.data["recordsType"] === GetRecordTypes.ReadOnly;
+            let treeSelectItemKey = Formatter.getCodeFromName(treeSelectItemName);
             let treeSelectItemChildren = this.getObjectFieldsItems(treeSelectItemKey, entity, returnedFieldsCodes);
-            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, false, false, false, false, treeSelectItemChildren);
+            let itemData = { isReadOnlyVariable: isReadOnly };
+            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, false, false, false, false, treeSelectItemChildren, itemData);
             recordsVariablesItemChildren.push(treeSelectItem);
+            this.ItemsList.push(treeSelectItem);
         });
 
         this.getLoopNodes().forEach((loopNode: any) => {
             let collectionVariable = loopNode.data["collectionVariable"] || null;
-            let getRecordNode = this.getGetRecordNodes("AllRecords").find(n => this.formatFlowElementName(n.data["name"]) === collectionVariable);
-            if (getRecordNode) {
-                let entity = getRecordNode.data["entity"];
-                let returnedFields = getRecordNode.data["returnedFields"];
-                let returnedFieldsCodes = returnedFields ? returnedFields.map((returnedField: ReturnedField) => { return returnedField.fieldCode }) : [];
+            let isCollectionFilterVariable = loopNode.data["isCollectionFilterVariable"] || false;
+
+            let collectionNode: any;
+
+            if (isCollectionFilterVariable) {
+                collectionNode = this.getCollectionFilterNodes().find(n => Formatter.getCodeFromName(n.data["name"]) === collectionVariable);
+            } else {
+                collectionNode = this.getGetRecordNodes("AllRecords").find(n => Formatter.getCodeFromName(n.data["name"]) === collectionVariable);
+            }
+
+            if (collectionNode) {
+                let entity = collectionNode.data["entity"];
+                let returnedFields = collectionNode.data["returnedFields"];
+                let returnedFieldsCodes = returnedFields ? returnedFields.map((returnedField: ReturnedField) => { return returnedField.fieldCode }) : null;
                 let treeSelectItemName = loopNode.data["name"];
-                let treeSelectItemKey = this.formatFlowElementName(treeSelectItemName);
+                let isReadOnly = isCollectionFilterVariable ? false : (collectionNode.data["recordsType"] === GetRecordTypes.ReadOnly);
+                let treeSelectItemKey = Formatter.getCodeFromName(treeSelectItemName);
                 let treeSelectItemChildren = this.getObjectFieldsItems(treeSelectItemKey, entity, returnedFieldsCodes);
                 let treeSelectItemLoopName = "Current item from loop " + treeSelectItemName;
-                let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemLoopName, false, false, false, false, treeSelectItemChildren);
+                let itemData = { isReadOnlyVariable: isReadOnly };
+                let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemLoopName, false, false, false, false, treeSelectItemChildren, itemData);
                 recordsVariablesItemChildren.push(treeSelectItem);
+                this.ItemsList.push(treeSelectItem);
             }
         });
 
@@ -198,12 +239,26 @@ export class FlowVariablesTreeList {
         let recordsCollectionVariablesItemChildren: TreeSelectItem[] = [];
 
         this.getGetRecordNodes("AllRecords").forEach((getRecordNode: any) => {
+            let entity = getRecordNode.data["entity"];
             let treeSelectItemName = getRecordNode.data["name"];
-            let treeSelectItemKey = this.formatFlowElementName(treeSelectItemName);
-            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, true, true, false, false, []);
+            let isReadOnly = getRecordNode.data["recordsType"] === GetRecordTypes.ReadOnly;
+            let treeSelectItemKey = Formatter.getCodeFromName(treeSelectItemName);
+            let itemData = { isReadOnlyVariable: isReadOnly, type: (entity ? (entity + "[]") : null) };
+            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, true, true, false, false, [], itemData);
             recordsCollectionVariablesItemChildren.push(treeSelectItem);
+            this.ItemsList.push(treeSelectItem);
         });
 
+        this.getCollectionFilterNodes().forEach((collectionFilterNode: any) => {
+            let entity = collectionFilterNode.data["entity"];
+            let treeSelectItemName = collectionFilterNode.data["name"];
+            let treeSelectItemKey = Formatter.getCodeFromName(treeSelectItemName);
+            let itemData = { isReadOnlyVariable: false, type: (entity ? (entity + "[]") : null), isCollectionFilterVariable: true };
+            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, true, true, false, false, [], itemData);
+            recordsCollectionVariablesItemChildren.push(treeSelectItem);
+            this.ItemsList.push(treeSelectItem);
+        });
+        
         return recordsCollectionVariablesItemChildren;
     }
 
@@ -218,6 +273,7 @@ export class FlowVariablesTreeList {
             };
             let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, true, true, false, false, [], data);
             declaredVariablesItemChildren.push(treeSelectItem);
+            this.ItemsList.push(treeSelectItem);
         });
 
         let sortedDeclaredVariablesItemChildren = this.sortTreeSelectItems(declaredVariablesItemChildren);
@@ -228,6 +284,13 @@ export class FlowVariablesTreeList {
         if (this.FlowObject) {
             return FlowReader.getAllPreviousNodes(this.FlowObject, this.CurrentNodeId, "getRecordNode")
                 .filter((n: any) => n.data["recordsLimit"] === recordsLimit);
+        }
+        return [];
+    }
+
+    private getCollectionFilterNodes() {
+        if (this.FlowObject) {
+            return FlowReader.getAllPreviousNodes(this.FlowObject, this.CurrentNodeId, "collectionFilterNode");
         }
         return [];
     }
@@ -267,6 +330,7 @@ export class FlowVariablesTreeList {
             };
             let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, true, true, false, false, [], data);
             objectFieldsItems.push(treeSelectItem);
+            this.ItemsList.push(treeSelectItem);
         });
 
         let sortedObjectFieldsItems = this.sortTreeSelectItems(objectFieldsItems);
@@ -292,9 +356,5 @@ export class FlowVariablesTreeList {
             return sortedItems;
         }
         return items;
-    }
-
-    private formatFlowElementName(name: string) {
-        return name ? name.replace(/\ /gi, "").replace(new RegExp(this.ItemKeySplitter, "gi"), "").toLowerCase() : "";
     }
 }

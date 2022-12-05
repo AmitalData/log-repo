@@ -43,7 +43,7 @@ export class CustomChildObjectPMService {
     private MapCustomChildEntitiesKeys(jsonPM: any, customChildEntity: string, mapParent: boolean) {
         var itemJson = jsonPM.CustomChildEntities[customChildEntity];
         if (mapParent && (itemJson.ChangeSetOp == "Delete" || itemJson.ChangeSetOp == 3)) {
-            return;
+            return { itemJson, pmKeys, key, property };
         }
 
         var itemPM: CustomChildEntity;
@@ -188,7 +188,7 @@ export class CustomChildObjectPMService {
 
         var itemJson = jsonPM.Values[value];
         if (mapParent && (itemJson.ChangeSetOp == "Delete" || itemJson.ChangeSetOp == 3)) {
-            return;
+            return { pmKeys, key, property };
         }
 
         var itemPM: CustomChildObjectPM;
@@ -227,7 +227,7 @@ export class CustomChildObjectPMService {
         var itemPM = customChildObjectsKeysMapperArgs.itemPM;
 
         if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties") {
-            return;
+            return property;
         }
 
         var customFields: Array<string> = [];

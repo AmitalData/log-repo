@@ -10,6 +10,7 @@ import {CountersDomainService, CounterAPIHelper} from '../../../../../Common/Ser
 import {Validator} from '../../../../../Infrastructure/Validators/Validator';
 import {MessageWindow} from '../../../../../Controls/Windows/MessageWindow';
 import {GroupByPipe} from '../../../../../Infrastructure/Pipes/GroupByPipe';
+import { Observable } from 'rxjs';
 
 @Component({
     
@@ -29,7 +30,9 @@ export class CounterInvoiceComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     public SameRadioButtonLabel: string;
     public DiffRadioButtonLabel: string;
-    public HasInterestFeature: boolean=false;
+    public HasInterestFeature: boolean = false;
+    public HasBranchCounterCodeFeature: boolean = false;
+    public HasSeparatePerBranchCounterCodeFeature: boolean = false;
     public ItemsSource: CounterInvoiceDefinitionItem[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
@@ -37,6 +40,8 @@ export class CounterInvoiceComponent extends BaseComponent {
 
         this.HasConsolidationFeature = FeatureLocator.HasFeaturePermession("ARInvoice", "Consolidation.Constituent");
         this.HasInterestFeature = FeatureLocator.HasFeaturePermession("InterestReport", "Module");
+        this.HasBranchCounterCodeFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "BCC")[0] ? true : false;
+        this.HasSeparatePerBranchCounterCodeFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SPB")[0] ? true : false;
 
         if (this.HasConsolidationFeature) {
             this.SameRadioButtonLabel = "Same for Invoice, Credit, Manifest, Customs, Customs Credit, Consolidation and Credit Consolidation.";
@@ -168,10 +173,26 @@ export class CounterInvoiceComponent extends BaseComponent {
                 itemPM.Parameter1 = item['Code'];
                 itemPM.Parameter1 = null;
                 itemPM.InActive = false;
+                itemPM.UsePerBranch = false;
                 this.APIHelper.CounterDefinitions.push(itemPM);
             }
 
             this.ItemsSource.push(new CounterInvoiceDefinitionItem(itemPM, item['Name'], this));
+        });
+    }
+
+    //private seperatePerBranchChanged: boolean = false;
+    private seperatePerBranch: boolean = false;
+    public get SeperatePerBranch() {
+        this.seperatePerBranch = this.ItemsSource[0].EntityPM.UsePerBranch;
+        return this.seperatePerBranch;
+    }
+    public set SeperatePerBranch(value: boolean) {
+        if (this.seperatePerBranch == value) return;
+        this.seperatePerBranch = value;
+        //this.seperatePerBranchChanged = true;
+        this.ItemsSource.forEach(item => {
+            item.EntityPM.UsePerBranch = value;
         });
     }
 
@@ -264,101 +285,247 @@ export class CounterInvoiceComponent extends BaseComponent {
         }
     }
 
+    //private largestLastValueOfCounterStat: number = 0;
+
+   
+
+    //ValidateStartNumber() {
+    //    new CountersDomainService().GetLastValueCounterStatByCounterId(this.CounterId).subscribe((myResponse: ServiceResponse) => {
+
+    //        if (myResponse.HasError) {
+    //            this.ShowLastValueCounterMessageWindow(myResponse.ErrorsArray[0]);
+    //            return;
+    //        }
+
+    //        this.HandelLastValueCounterStatResponse(myResponse.Result);
+
+    //    });
+        
+    //}
+
+
+    //HandelLastValueCounterStatResponse(response) {
+
+    //    let largestLastValueOfCounterStat = response;
+    //    if (largestLastValueOfCounterStat == 0 || !largestLastValueOfCounterStat) {
+    //        this.Save();
+    //        return;
+    //    };
+
+    //    let message = "";
+    //    this.APIHelper.CounterDefinitions.forEach(item => {
+    //        if (item.StartNumber <= largestLastValueOfCounterStat) {
+    //            message = "The start number must be greater than the Last Value Counter " + largestLastValueOfCounterStat + " !";
+    //        }
+    //    });
+
+
+    //    if (!AppTool.IsNullOrEmpty(message)) {
+    //        this.ShowLastValueCounterMessageWindow(message);
+    //        return;
+    //    }
+
+    //    this.Save();
+    //}
+
+
+
+    //ShowLastValueCounterMessageWindow(msgValue:string) {
+    //    var messageWindow = new MessageWindow();
+    //    messageWindow.Show(msgValue);
+    //}
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
+
+
+
     OkButtonClicked() {
+        {
+            var isValidGreaterStartNumber: boolean = true;
 
-        var isValidGreaterStartNumber: boolean = true;
-
-        this.APIHelper.CounterDefinitions.forEach(item => {
-            if (!AppTool.IsNullOrEmpty(item.StartNumber)) {
-                if (item.StartNumber < item.StartNumber_Old) {
-                    isValidGreaterStartNumber = false;
+            this.APIHelper.CounterDefinitions.forEach(item => {
+                if (!AppTool.IsNullOrEmpty(item.StartNumber)) {
+                    if (item.StartNumber < item.StartNumber_Old) {
+                        isValidGreaterStartNumber = false;
+                    }
                 }
-            }
-        });
-           
-        if (!isValidGreaterStartNumber) {
-            var messageWindow = new MessageWindow();
-            messageWindow.Show("The new start number must be greater than current start number!");
-        }
+            });
 
-        else {
-            var isValidUniquePrefix: boolean = true;
-
-            if (this.UniquePerPrefix) {
-                var myPipe = new GroupByPipe();
-                var myGroupbyCount: number = myPipe.transform(this.APIHelper.CounterDefinitions, "Prefix").length;
-                if (myGroupbyCount != this.APIHelper.CounterDefinitions.length) {
-                    isValidUniquePrefix = false;
-                }
-            }
-             
-            if (!isValidUniquePrefix) {
+            if (!isValidGreaterStartNumber) {
                 var messageWindow = new MessageWindow();
-                messageWindow.Show("Some Prefix values are invalid (Prefix should be unique)");
+                messageWindow.Show("The new start number must be greater than current start number!");
             }
 
             else {
-                var errors: string[] = [];
+                var isValidUniquePrefix: boolean = true;
 
-                if (this.HasEmptyCounterSize())
-                {
-                    errors.push("Size field is mandatory!");
-                }  
-
-                if (this.UniquePerPrefix == true) {
-                    this.APIHelper.CounterDefinitions.forEach(item => {     
-                        if (item.CounterSize > 20) {
-                            errors.push("Maximum size allowed for counter is 20");
-                        }
-                        Validator.TryValidateObject(item, this.ObjectTableName, errors);
-
-                        if (item.UniquePerPrefix && !AppTool.IsNullOrEmpty(item.Prefix) && !AppTool.IsNullOrEmpty(item.StartNumber)) {
-                            if ((item.StartNumber).toString().length + AppTool.GetCounterPrefixLength(item.Prefix) + AppTool.GetCounterPrefixLength(item.Suffix) > 20) {
-                                errors.push("Maximum length allowed for [Prefix + StartNumber + Suffix] is 20");
-                            }
-                        }
-                    });
+                if (this.UniquePerPrefix) {
+                    var myPipe = new GroupByPipe();
+                    var myGroupbyCount: number = myPipe.transform(this.APIHelper.CounterDefinitions, "Prefix").length;
+                    if (myGroupbyCount != this.APIHelper.CounterDefinitions.length) {
+                        isValidUniquePrefix = false;
+                    }
                 }
-                else {
 
-                    if ((this.StartNumber).toString().length + AppTool.GetCounterPrefixLength(this.Prefix) + AppTool.GetCounterPrefixLength(this.Suffix)> 20) {
-                        errors.push("Maximum length allowed for [Prefix + StartNumber + Suffix] is 20");
+                if (!isValidUniquePrefix) {
+                    var messageWindow = new MessageWindow();
+                    messageWindow.Show("Some Prefix values are invalid (Prefix should be unique)");
+                }
+
+                else {
+                    var errors: string[] = [];
+
+                    if (this.HasEmptyCounterSize()) {
+                        errors.push("Size field is mandatory!");
                     }
 
-                    this.APIHelper.CounterDefinitions.forEach(item => {
-                        if (item.CounterSize > 20) {
-                            errors.push("Maximum size allowed for counter is 20");
-                        }
-                        Validator.TryValidateObject(item, this.ObjectTableName, errors);
-                    });
-                }
+                    if (this.UniquePerPrefix == true) {
+                        this.APIHelper.CounterDefinitions.forEach(item => {
+                            if (item.CounterSize > 20) {
+                                errors.push("Maximum size allowed for counter is 20");
+                            }
+                            Validator.TryValidateObject(item, this.ObjectTableName, errors);
 
-                this.ValidationErrorsList = errors;
+                            if (item.UniquePerPrefix && !AppTool.IsNullOrEmpty(item.Prefix) && !AppTool.IsNullOrEmpty(item.StartNumber)) {
+                                if ((item.StartNumber).toString().length + AppTool.GetCounterPrefixLength(item.Prefix) + AppTool.GetCounterPrefixLength(item.Suffix) > 20) {
+                                    errors.push("Maximum length allowed for [Prefix + StartNumber + Suffix] is 20");
+                                }
+                            }
+                        });
+                    }
+                    else {
 
-                if (errors.length == 0) {
-
-                    this.CurrentSession.StartBusyIndicatorSaving();
-
-                    var myService = new CountersDomainService();
-                    myService.Post(this.APIHelper).subscribe((myResponse: ServiceResponse) => {
-
-                        this.CurrentSession.StopBusyIndicator();
-
-                        if (myResponse.HasError) {
-                            this.ValidationErrorsList = myResponse.ErrorsArray;
+                        if ((this.StartNumber).toString().length + AppTool.GetCounterPrefixLength(this.Prefix) + AppTool.GetCounterPrefixLength(this.Suffix) > 20) {
+                            errors.push("Maximum length allowed for [Prefix + StartNumber + Suffix] is 20");
                         }
 
-                        else {
-                            this.CurrentSession.CloseCurrentWindowEmit("Ok");
-                        }
-                    });
+                        this.APIHelper.CounterDefinitions.forEach(item => {
+                            if (item.CounterSize > 20) {
+                                errors.push("Maximum size allowed for counter is 20");
+                            }
+                            Validator.TryValidateObject(item, this.ObjectTableName, errors);
+                        });
+                    }
+
+                    this.ValidationErrorsList = errors;
+
+                    if (errors.length == 0) {
+
+                        this.CurrentSession.StartBusyIndicatorSaving();
+
+                        var myService = new CountersDomainService();
+                        myService.Post(this.APIHelper).subscribe((myResponse: ServiceResponse) => {
+
+                            this.CurrentSession.StopBusyIndicator();
+
+                            if (myResponse.HasError) {
+                                this.ValidationErrorsList = myResponse.ErrorsArray;
+                            }
+
+                            else {
+                                this.CurrentSession.CloseCurrentWindowEmit("Ok");
+                            }
+                        });
+                    }
                 }
             }
         }
+
     }
+
+    //Save() {
+    //    var isValidGreaterStartNumber: boolean = true;
+
+    //    this.APIHelper.CounterDefinitions.forEach(item => {
+    //        if (!AppTool.IsNullOrEmpty(item.StartNumber)) {
+    //            if (item.StartNumber < item.StartNumber_Old) {
+    //                isValidGreaterStartNumber = false;
+    //            }
+    //        }
+    //    });
+
+    //    if (!isValidGreaterStartNumber) {
+    //        var messageWindow = new MessageWindow();
+    //        messageWindow.Show("The new start number must be greater than current start number!");
+    //    }
+
+    //    else {
+    //        var isValidUniquePrefix: boolean = true;
+
+    //        if (this.UniquePerPrefix) {
+    //            var myPipe = new GroupByPipe();
+    //            var myGroupbyCount: number = myPipe.transform(this.APIHelper.CounterDefinitions, "Prefix").length;
+    //            if (myGroupbyCount != this.APIHelper.CounterDefinitions.length) {
+    //                isValidUniquePrefix = false;
+    //            }
+    //        }
+
+    //        if (!isValidUniquePrefix) {
+    //            var messageWindow = new MessageWindow();
+    //            messageWindow.Show("Some Prefix values are invalid (Prefix should be unique)");
+    //        }
+
+    //        else {
+    //            var errors: string[] = [];
+
+    //            if (this.HasEmptyCounterSize()) {
+    //                errors.push("Size field is mandatory!");
+    //            }
+
+    //            if (this.UniquePerPrefix == true) {
+    //                this.APIHelper.CounterDefinitions.forEach(item => {
+    //                    if (item.CounterSize > 20) {
+    //                        errors.push("Maximum size allowed for counter is 20");
+    //                    }
+    //                    Validator.TryValidateObject(item, this.ObjectTableName, errors);
+
+    //                    if (item.UniquePerPrefix && !AppTool.IsNullOrEmpty(item.Prefix) && !AppTool.IsNullOrEmpty(item.StartNumber)) {
+    //                        if ((item.StartNumber).toString().length + AppTool.GetCounterPrefixLength(item.Prefix) + AppTool.GetCounterPrefixLength(item.Suffix) > 20) {
+    //                            errors.push("Maximum length allowed for [Prefix + StartNumber + Suffix] is 20");
+    //                        }
+    //                    }
+    //                });
+    //            }
+    //            else {
+
+    //                if ((this.StartNumber).toString().length + AppTool.GetCounterPrefixLength(this.Prefix) + AppTool.GetCounterPrefixLength(this.Suffix) > 20) {
+    //                    errors.push("Maximum length allowed for [Prefix + StartNumber + Suffix] is 20");
+    //                }
+
+    //                this.APIHelper.CounterDefinitions.forEach(item => {
+    //                    if (item.CounterSize > 20) {
+    //                        errors.push("Maximum size allowed for counter is 20");
+    //                    }
+    //                    Validator.TryValidateObject(item, this.ObjectTableName, errors);
+    //                });
+    //            }
+
+    //            this.ValidationErrorsList = errors;
+
+    //            if (errors.length == 0) {
+
+    //                this.CurrentSession.StartBusyIndicatorSaving();
+
+    //                var myService = new CountersDomainService();
+    //                myService.Post(this.APIHelper).subscribe((myResponse: ServiceResponse) => {
+
+    //                    this.CurrentSession.StopBusyIndicator();
+
+    //                    if (myResponse.HasError) {
+    //                        this.ValidationErrorsList = myResponse.ErrorsArray;
+    //                    }
+
+    //                    else {
+    //                        this.CurrentSession.CloseCurrentWindowEmit("Ok");
+    //                    }
+    //                });
+    //            }
+    //        }
+    //    }
+    //}
+
+
 
     public SampleValue: string;
 
@@ -371,6 +538,7 @@ export class CounterInvoiceComponent extends BaseComponent {
         this.SampleValue = AppTool.GetCounterResolvedNumber(this.Prefix, this.StartNumber, this.Suffix, this.CounterSize);
 
     }
+
 }
 export class CounterInvoiceDefinitionItem extends BaseComponent {
     public Name: string;

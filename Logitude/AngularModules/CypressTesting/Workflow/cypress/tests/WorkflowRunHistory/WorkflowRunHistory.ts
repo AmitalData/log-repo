@@ -30,12 +30,36 @@ Then("the instances should refresh successfully", () => {
     Actions.AssertRefreshRunHistory();
 });
 
+When("export instances run history", () => {
+    Actions.ExportRunHistoryInstances();
+});
+
+Then("the instances excel file should export successfully", () => {
+    Actions.AsserExportRunHistoryInstances();
+});
+
+When("sort instances run history by {string}", (SortField: string) => {
+    Actions.SortRunHistoryInstances(SortField);
+});
+
+Then("the instances should sort successfully", () => {
+    Actions.AssertRefreshRunHistory();
+});
+
 When("search instance in run history", () => {
     Actions.SearchInstanceByBusinessKey();
 });
 
 Then("the result instances should appear successfully", () => {
     Actions.AssertSearchInstanceByBusinessKey();
+});
+
+When("filter instances by current date", () => {
+    Actions.FilterInstancesBycurrentdate();
+});
+
+Then("the instances should filter successfully", () => {
+    Actions.AssertFilterInstancesBycurrentdate();
 });
 
 When("open instance activity list", () => {

@@ -16,6 +16,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public int LastValue { get; set; }
 
         public string CounterId { get; set; }
+        public string BranchCounterCode { get; set; }
 
         //[Include]
         //[Association("CounterCounterStat", "CounterId", "Id", IsForeignKey = true)]

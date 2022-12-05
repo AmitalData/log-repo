@@ -703,8 +703,11 @@ export class TenantPM {
     private sharedLogisMasterMessageLink: boolean;
     public get SharedLogisMasterMessageLink() { return this.sharedLogisMasterMessageLink; }
     public set SharedLogisMasterMessageLink(newValue: boolean) { if (this.sharedLogisMasterMessageLink != newValue) { this.sharedLogisMasterMessageLink = newValue; this.MarkAsDirty("SharedLogisMasterMessageLink"); } }
-       
-	 
+
+    private showMultiUnitsOfMeasurements: boolean;
+    public get ShowMultiUnitsOfMeasurements() { return this.showMultiUnitsOfMeasurements; }
+    public set ShowMultiUnitsOfMeasurements(newValue: boolean) { if (this.showMultiUnitsOfMeasurements != newValue) { this.showMultiUnitsOfMeasurements = newValue; this.MarkAsDirty("ShowMultiUnitsOfMeasurements"); } }
+
     private airRatio: number;
     public get AirRatio() { return this.airRatio; }
     public set AirRatio(newValue: number) { if (this.airRatio != newValue) { this.airRatio = newValue; this.MarkAsDirty("AirRatio"); } }
@@ -797,4 +800,4 @@ export class TenantPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

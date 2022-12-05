@@ -10,6 +10,7 @@ using System.ServiceModel.DomainServices.Server;
 using Logitude.Server.Tools; 
 using System.Runtime.Serialization;
 using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.WarehouseLib.BL.Validators;
   
 namespace Logitude.WarehouseLib.BL.EntityPMs
@@ -1709,6 +1710,43 @@ namespace Logitude.WarehouseLib.BL.EntityPMs
 		   masterShipmentNumber=value;
 		   }
 			
+		 }
+	   }
+	  private string connectedToReferenceNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ConnectedToReferenceNumber  
+	   {
+	    
+	     get
+		{
+		   return connectedToReferenceNumber;
+		 }
+		 set
+		 {
+		   if(connectedToReferenceNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ConnectedToReferenceNumber",OldValue=connectedToReferenceNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   connectedToReferenceNumber=value;
+		   }
+			
+		 }
+	   }
+
+	   private List<CustomChildEntity> customChildEntities;
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public List<CustomChildEntity> CustomChildEntities
+	   {
+	     get { return customChildEntities; }
+		 set {
+		   if(customChildEntities == value) return;
+		   NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomChildEntities",OldValue=customChildEntities,NewValue=value,PropertyType="List<CustomChildEntity>"};
+		   NotifyPropertyChanged(values);
+		   customChildEntities=value;
 		 }
 	   }
    }

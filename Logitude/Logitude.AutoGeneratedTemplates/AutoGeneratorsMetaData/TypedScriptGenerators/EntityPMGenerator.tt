@@ -167,6 +167,8 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+<#+ if(entity.SupportSubEntity.ToString() == "true") {#>import { CustomChildEntity } from '../../Infrastructure/EntityPMs/CustomChildEntity';
+<#+}#>
 <#+ if(hasCompstionCustomField){#> import { ChildEntitiesCustomFieldPM } from '../../Infrastructure/EntityPMs/ChildEntitiesCustomFieldPMExtended';<#+}#>
 
 export class <#=tableName #>PM<#+ if(hasCompstionCustomField){#> extends ChildEntitiesCustomFieldPM<#+}#> {
@@ -240,7 +242,7 @@ else{
            }
 	 }
 
-	  
+	  if(entity.SupportSubEntity.ToString() == "true") {WriteTypeScriptSubEntityProperty();}
 
 	 #>
 
@@ -385,6 +387,18 @@ else
   
  }
 #>
+
+<#+
+public void WriteTypeScriptSubEntityProperty(){
+#>
+    private customChildEntities: CustomChildEntity[];
+    public get CustomChildEntities() { return this.customChildEntities; }
+    public set CustomChildEntities(newValue: CustomChildEntity[]) { if (this.customChildEntities != newValue) { this.customChildEntities = newValue; this.MarkAsDirty("CustomChildEntities"); } }
+
+<#+
+}
+#>
+
 <#+
 public  string FirstCharacterToLowerTS(string str)
 {

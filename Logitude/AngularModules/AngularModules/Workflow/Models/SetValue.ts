@@ -1,3 +1,5 @@
+import { ExpressionValue } from "./Types";
+
 export class SetValue {
     public field: string;
     public fieldCode: string;
@@ -6,6 +8,7 @@ export class SetValue {
     public picklistType: string;
     public operator: string;
     public value: string;
+    public expressionValue: ExpressionValue;
     public isDisabled: boolean;
     public fieldChangedToggle: boolean;
 
@@ -17,6 +20,7 @@ export class SetValue {
         this.picklistType = null;
         this.operator = null;
         this.value = null;
+        this.expressionValue = null;
         this.isDisabled = false;
         this.fieldChangedToggle = false;
     }

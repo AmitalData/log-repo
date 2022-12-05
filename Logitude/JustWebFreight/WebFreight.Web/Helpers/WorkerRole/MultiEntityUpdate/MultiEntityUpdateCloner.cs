@@ -16,6 +16,11 @@ namespace WebFreight.Web.Helpers.WorkerRole.MultiEntityUpdate
                 cloneEntity = CloneShipmentPMEntity(entityPM);
             }
 
+            else if (entityPM.GetType() == typeof(ContainerPM))
+            {
+                cloneEntity = CloneContainerPMEntity(entityPM);
+            }
+
             return cloneEntity;
         }
 
@@ -27,6 +32,15 @@ namespace WebFreight.Web.Helpers.WorkerRole.MultiEntityUpdate
                 IsOperationalClosed = ShipmentPM.IsOperationalClosed,
                 IsAccountingClosed = ShipmentPM.IsAccountingClosed,
                 Tenant = ShipmentPM.Tenant
+            };
+        }
+
+        private static object CloneContainerPMEntity(object entityPM)
+        {
+            ContainerPM containerPM = (ContainerPM)entityPM;
+            return new ContainerPM()
+            {
+                Tenant = containerPM.Tenant
             };
         }
     }

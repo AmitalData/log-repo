@@ -18,9 +18,7 @@ namespace WebFreight.Web.Helpers.SignUp.Logbox
             if (!signUpInfo.IsCreateLogboxTenantFromCloud) return;
 
             HybridPartnerQuery hybridPartnerQuery = new HybridPartnerQuery(tenant);
-            var hybridPartners = hybridPartnerQuery.GetHybridPartnerLists(tenant);
-            if (hybridPartners == null) return;
-            var selectedHybridPartner = hybridPartners.Where(hybridPartner => hybridPartner.PartnerTenant == signUpInfo.Tenant).FirstOrDefault();
+            var selectedHybridPartner = hybridPartnerQuery.GetSinglePMByPartnerTenant(signUpInfo.Tenant);
             if (selectedHybridPartner == null) return;
 
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);

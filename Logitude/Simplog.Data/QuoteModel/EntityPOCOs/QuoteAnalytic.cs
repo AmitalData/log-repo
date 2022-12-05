@@ -29,12 +29,9 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public string SalesmanUserId { get; set; }
         public string CreatedByUserId { get; set; }
         public DateTime OpenDate { get; set; }
-        public double? ChargeableWeight { get; set; }
         public double? ChargeableWeightInKG { get; set; }
         public double? VolumeInCBM { get; set; }
-        public double? GrossWeight { get; set; }
         public bool IsClosed { get; set; }
-        public double? Volume { get; set; }
         public int? NumberOfPackages { get; set; }
         public int? NumberOfContainers { get; set; }
         public bool IsDangerous { get; set; }
@@ -44,7 +41,6 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public string DepartmentId { get; set; }
         public string BranchId { get; set; }
         public string QuoteTypeCode { get; set; }
-        public double? EstimateProfit { get; set; }
         public string MainCarriageCarrierId { get; set; }
         public bool IsCancelled { get; set; }
         public bool IncludePickUp { get; set; }
@@ -61,12 +57,9 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public string AgentId { get; set; }
         public double? TEU { get; set; }
         public string SaleCurrencyId { get; set; }
-        public double? ExchangeRate { get; set; }
         public bool IsFixedPrice { get; set; }
         public bool IsSaleCurrencySameAsCost { get; set; }
         public bool IsMultiCurrency { get; set; }
-        public double? ValueOfGoods { get; set; }
-        public string ValueOfGoodsCurrencyId { get; set; }
         public bool IsChargesByVAT { get; set; }
         public double? GrossWeightInKG { get; set; }
         public double? GrossWeightPerTon { get; set; }
@@ -82,11 +75,9 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public double? EstimatedProfitInLocal { get; set; }
         public double? EstimatedProfitInProfit { get; set; }
         public string ProfitCurrencyId { get; set; }
-        public double? ProfitExchangeRate { get; set; }
         public string ShipmentSubTypeId { get; set; }
         public string RegionalTaxId { get; set; }
         public double? RegionalTaxPercentage { get; set; }
-        public int? PackagesQuantity { get; set; }
         public string SpecialServicesTypeId { get; set; }
         public string ValidByTypeCode { get; set; }
         public bool? ConnectedToOpportunity { get; set; }

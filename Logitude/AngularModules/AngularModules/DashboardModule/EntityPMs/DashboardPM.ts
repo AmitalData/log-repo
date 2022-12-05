@@ -9,6 +9,7 @@
 
 import {WidgetPM} from './WidgetPM';
 import {DashboardSharedUserPM} from './DashboardSharedUserPM';
+import {DashboardGlobalFilterPM} from './DashboardGlobalFilterPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -144,6 +145,40 @@ export class DashboardPM {
         }
     }
     //public DashboardSharedUsers: Array<DashboardSharedUserPM>= [];
+      
+	private dashboardGlobalFilters: DashboardGlobalFilterPM[];
+    get  DashboardGlobalFilters() {
+        if (this.dashboardGlobalFilters == null) {
+            this.dashboardGlobalFilters = [];
+        }
+
+        return this.dashboardGlobalFilters;
+    }
+    set  DashboardGlobalFilters(newValue: DashboardGlobalFilterPM[]) {
+        if (this.dashboardGlobalFilters != newValue) {
+            this.dashboardGlobalFilters = newValue;
+        }
+    }
+    public AddDashboardGlobalFilter(item: DashboardGlobalFilterPM) {
+        if (item != null) {
+            var index = this. DashboardGlobalFilters.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. DashboardGlobalFilters.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveDashboardGlobalFilter(item: DashboardGlobalFilterPM) {
+        if (item != null) {
+            var index = this. DashboardGlobalFilters.indexOf(item);
+            if (index > -1) {
+                this. DashboardGlobalFilters.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public DashboardGlobalFilters: Array<DashboardGlobalFilterPM>= [];
  
     public OldEntityPM: DashboardPM;
 		

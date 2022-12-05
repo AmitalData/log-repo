@@ -38,7 +38,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Scheduler Procedure&quot;"
-  Code="&quot;264b&quot;"
+  Code="&quot;b38a&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -604,6 +604,24 @@
       Name="&quot;DeleteOldPerformanceLogsTask&quot;"
       SearchFields="&quot;DeleteOldPerformanceLogsTask&quot;"
       Description="&quot;DeleteOldPerformanceLogsTask&quot;"
+      IsInternallyDefined="false" />
+    <Record
+      Code="&quot;DeleteOldBIReportsExecutionLogsTask&quot;"
+      Name="&quot;DeleteOldBIReportsExecutionLogsTask&quot;"
+      SearchFields="&quot;DeleteOldBIReportsExecutionLogsTask&quot;"
+      Description="&quot;DeleteOldBIReportsExecutionLogsTask&quot;"
+      IsInternallyDefined="false" />
+    <Record
+      Code="&quot;DeleteOldReportExecutionLogsTask&quot;"
+      Name="&quot;DeleteOldReportExecutionLogsTask&quot;"
+      SearchFields="&quot;DeleteOldReportExecutionLogsTask&quot;"
+      Description="&quot;DeleteOldReportExecutionLogsTask&quot;"
+      IsInternallyDefined="false" />
+    <Record
+      Code="&quot;DeleteOldDocumentsExecutionLogsTask&quot;"
+      Name="&quot;DeleteOldDocumentsExecutionLogsTask&quot;"
+      SearchFields="&quot;DeleteOldDocumentsExecutionLogsTask&quot;"
+      Description="&quot;DeleteOldDocumentsExecutionLogsTask&quot;"
       IsInternallyDefined="false" />
   </Records>
   <DataContracts />

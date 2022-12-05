@@ -1,12 +1,12 @@
 <style>
     .expression-element {
         height: 22px;
-        width: 200px;
         float: left;
     }
 
     .expression-input {
         padding-left: 24px;
+        padding-right: 6px;
     }
 
     .function-icon {
@@ -20,9 +20,9 @@
 
 <tr>
     <td>
-        <div class="expression-element" (click)="expressionHandle()">
-            <input [attr.disabled]="IsDisabled" class="expression-input" type="text" placeholder="Expression..." [(ngModel)]="ExpressionValue"
-                readonly />
+        <div class="expression-element" [ngStyle]="{ 'width': Width }" (click)="openExpressionBuilder()">
+            <input [disabled]="IsDisabled" class="expression-input" type="text" placeholder="Expression ..."
+                [(ngModel)]="ExpressionValue.expression" readonly />
             <img class="function-icon" src="./Images/function.png" />
         </div>
     </td>

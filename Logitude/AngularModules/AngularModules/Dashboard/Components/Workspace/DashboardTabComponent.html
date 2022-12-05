@@ -1,0 +1,154 @@
+<div style="height: 100%;">
+    <div class="FormFieldRow">
+        <table>
+            <tr style="height:10px;">
+                <td>
+                    <div></div>
+                </td>
+            </tr>
+
+            <tr>
+                <td style="width: 12px;">
+                    <div></div>
+                </td>
+
+                <td style="width: 1px; font-size: 14px; color: #292D30;">
+                    {{SelectedDashboardName}}
+                </td>
+
+                <td class="Table-cell10">
+                    <div></div>
+                </td>
+                <td>
+                    <IconButton *ngIf="IsEditDashboardButtonVisible" [Left]="3" [Name]="'Edit'" [IsSmall]="true"
+                        (click)="EditDashboardClicked()"></IconButton>
+                </td>
+
+                <td>
+                    <div></div>
+                </td>
+
+                <td style="width: 55px; min-width: 55px;" *ngIf="IsEditLayoutModeActive">
+                    <button *ngIf="!HasChanges" class="Button">
+                        <img src="./Images/Buttons/Save.png" class="LeftCenter" style="margin-left:2px;" />
+                        <span style=" line-height: 19px; vertical-align: middle; margin-left: 17px;">Save</span>
+                    </button>
+
+                    <button *ngIf="HasChanges" class="EntityChangesButton" (click)="SaveDashboard(true)">
+                        <img src="./Images/Buttons/Save.Red.png" class="LeftCenter" style="margin-left:2px;" />
+                        <span style=" line-height: 19px; vertical-align: middle; margin-left: 17px;">Save</span>
+                    </button>
+                </td>
+
+                <td class="Table-cell05">
+                    <div></div>
+                </td>
+
+                <td style="width: 55px; min-width: 55px;" *ngIf="IsEditLayoutModeActive">
+                    <button class="BlueButton" (click)="AddWidgetClicked()">Add Widget</button>
+                </td>
+
+                <td class="Table-cell05">
+                    <div></div>
+                </td>
+
+                <td *ngIf="!IsEditLayoutModeActive" style="width: 309px; height: 22px; top: 12px; bottom: 12px;">
+              <tr>
+                <table>
+                    <td style="width: 87px; min-width: 87px; height: 22px; bottom: 12px;">
+                        <button class="TabButton" (click)="OpenFilterAreaClick()"
+                            *ngIf="IsGlobalFiltersOpened == false">
+                            <img style="width: 12px; height: 13px;" src="./Images/FilterGrayTrans.png" />
+                            Show filters
+                        </button>
+
+                        <button class="TabButton" *ngIf="IsGlobalFiltersOpened == true"
+                            (click)="CloseFilterAreaClick()">
+                            <img style="width: 12px; height: 13px;" src="./Images/FilterGrayTrans.png" />
+                            Hide filters</button>
+                    </td>
+
+                    <td style="width: 8px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 105px; bottom: 12px;">
+                        <button class="TabButton" (click)="EditLayoutClicked()">
+                            <img style="width: 12px; height: 13px;" src="./Images/Buttons/Edit.png" />
+                            Edit dashboard</button>
+                    </td>
+
+                    <td style="width: 8px;">
+                        <div></div>
+                    </td>
+                   
+                    <td style="width: 69px; bottom: 12px;">
+                        <button class="TabButton" (click)="RefreshLayoutClicked()">
+                            <img style="width: 15px; height: 17px;" src="./Images/Buttons/Refresh.png" />
+                            Refresh</button>
+                    </td>
+                    <td style="width: 8px;">
+                        <div></div>
+                    </td>
+                    
+                    <td style="width:24px; bottom: 12px;">
+                        <button class="TabButton">
+                            <img style="opacity: 0; width: 16px; height: 16px; top:3px; left: 4px; position: absolute;"
+                                 src="./Images/Buttons/transparentbackground.png"/>
+                            <img style="width:2px; height: 12px; left:11px; top: 5px; position: absolute;"
+                                src="./Images/Buttons/threedots.png" />
+                        </button>
+                    </td>
+                </table>
+            </tr>
+            </td>
+            <td style="width: 8px;">
+                <div></div>
+            </td>
+            </tr>
+        </table>
+    </div>
+
+    <div *ngIf="IsGlobalFiltersOpened"
+        style="background:#FFFADC; border:1px solid #BABABA; border-radius:3px; -webkit-border-radius:3px; width:calc(100%-2px); height:150px;">
+        <GlobalFilter [Dashboard]="SelectedDashboard"></GlobalFilter>
+    </div>
+
+    <div [hidden]="IsEmptyDashboardVisible" class="Dashboard-body">
+        <custom-layout [Show]="Show" (onReactChangeLayouts)="onReactChangeLayouts($event)"
+            (openEditWidget)="openEditWidget($event)" [IsEditLayout]="IsEditLayoutModeActive"
+            [DashboardDataBinding]="DashboardDataBinding" [SelectedDashboard]="SelectedDashboard"></custom-layout>
+    </div>
+
+    <div *ngIf="IsEmptyDashboardVisible" class="MediaFillRelative">
+        <div class="dl-info-card">
+            <div class="dl-info-image-cotainer">
+                <img class="TopCenter" style="position: unset;width: 290px; height: 202px;"
+                    src="./Images/Charts/Empty-Dashboard3.png" />
+            </div>
+
+            <div style="margin-top: 20px;">
+                <div class="dl-info-center-div">
+                    <p class="dl-info-header-text">{{IsPermissionMessageVisible ? "Sorry, you have no permissions" :
+                        "You don’t have any information here"}}</p>
+                </div>
+                <div class="dl-info-center-div" *ngIf="!IsPermissionMessageVisible">
+                    <p class="dl-info-description-text">There are currently no widgets.<br> It is time to add a new one
+                    </p>
+                </div>
+            </div>
+
+            <td class="dl-info-center-div" style="margin-top: 12px;" *ngIf="!IsPermissionMessageVisible">
+                <button class="Button" (click)="HereClicked()">
+                    <svg width="20" height="20" viewBox="0 0 5 5"
+                        style="display: inline-block; vertical-align: middle;">
+                        <path fill="#4D8ABB" d="M2 1 h1 v1 h1 v1 h-1 v1 h-1 v-1 h-1 v-1 h1 z" />
+                    </svg>
+                    Add new widget</button>
+            </td>
+
+        </div>
+    </div>
+
+
+</div>

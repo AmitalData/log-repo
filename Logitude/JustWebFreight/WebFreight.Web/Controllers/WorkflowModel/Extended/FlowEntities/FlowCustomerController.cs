@@ -1,6 +1,7 @@
-﻿using Logitude.Server.Tools.Helpers;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.TreeFilterQuery;
-using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
@@ -30,9 +31,8 @@ namespace WebFreight.Web.Controllers.WorkflowModel.Extended.FlowEntities
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 int tenant = authToken.Tenant;
 
-                ICommonDataContext customerContext = CommonDataContext.GetContext(authToken.Tenant);
-                CustomerRepository customerRepository = new CustomerRepository(customerContext);
-                IQueryable<Customer> customerQuery = customerRepository.GetCustomers(authToken.Tenant);
+                CustomerQuery customersQuery = new CustomerQuery(authToken.Tenant);
+                IQueryable<CustomerPM> customerQuery = customersQuery.GetCustomerPMsByTenant(authToken.Tenant);
 
                 JavaScriptSerializer javaScriptSerializer = new JavaScriptSerializer();
                 TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()

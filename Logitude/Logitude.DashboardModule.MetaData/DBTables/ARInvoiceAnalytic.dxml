@@ -18,7 +18,6 @@
     <Constraints
       Nullable="false" />
   </Column>
-
   <Column
     Name="IsClosed"
     Type="bit">
@@ -31,18 +30,7 @@
     DefaultValue="0">
     <Constraints
       Nullable="false" />
-  </Column>
-  <Column
-    Name="ProfitCurrencyExchangeRate"
-    Type="float"
-    DefaultValue="0">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  
- 
- 
-  
+  </Column>  
   <Column
     Name="ProfitCurrencyId"
     Type="varchar"
@@ -65,12 +53,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="ExchangeRateDate"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="DraftNumber"
     Type="varchar"
     Size="20">
@@ -83,12 +65,6 @@
     Size="20">
     <Constraints
       Nullable="true" />
-  </Column>
-  <Column
-    Name="AmountDue"
-    Type="float">
-    <Constraints
-      Nullable="false" />
   </Column>
   <Column
     Name="InvoiceNumber"
@@ -204,31 +180,13 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="InvoiceCurrencyExchangeRate"
-    Type="float">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="SubTotalInLocalCurrency"
     Type="float">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
-    Name="SubTotalInInvoiceCurrency"
-    Type="float">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="AmountInLocalCurrency"
-    Type="float">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="AmountInInvoiceCurrency"
     Type="float">
     <Constraints
       Nullable="false" />
@@ -251,9 +209,7 @@
     Type="bit">
     <Constraints
       Nullable="false" />
-  </Column>
-  
- 
+  </Column> 
   <Column
     Name="DueDate"
     Type="datetime">
@@ -277,17 +233,14 @@
     Type="bit">
     <Constraints
       Nullable="false" />
-  </Column>
-  
+  </Column>  
   <Column
     Name="TransferError"
     Type="nvarchar"
     Size="250">
     <Constraints
       Nullable="true" />
-  </Column>
-  
-  
+  </Column>  
   <Column
     Name="TransferStatusCode"
     Type="varchar"
@@ -309,14 +262,12 @@
     <Constraints
       Nullable="false" />
   </Column>
-
   <Column
     Name="IsConsolidationInvoice"
     Type="bit">
     <Constraints
       Nullable="false" />
-  </Column>
-  
+  </Column>  
   <Column
     Name="IsTransferStarted"
     Type="bit">
@@ -354,8 +305,7 @@
     Size="15">
     <Constraints
       Nullable="true" />
-  </Column>
- 
+  </Column> 
   <Column
     Name="Intercompany"
     Type="bit">
@@ -381,15 +331,13 @@
     Type="float">
     <Constraints
       Nullable="true" />
-  </Column>
-  
+  </Column>  
   <Column
     Name="PaidDate"
     Type="datetime">
     <Constraints
       Nullable="true" />
-  </Column>
-  
+  </Column>  
   <Column
     Name="PartnerId"
     Type="varchar"

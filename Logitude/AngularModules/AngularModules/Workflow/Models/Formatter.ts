@@ -22,4 +22,11 @@ export class Formatter {
         return null;
     }
 
+    static getCodeFromName(name: string, splitter: string = "_") {
+        if (name) {
+            return name.replace(/\ /gi, "").replace(new RegExp(splitter, "gi"), "").toLowerCase();
+        }
+        return null;
+    }
+
 }

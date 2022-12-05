@@ -15,8 +15,8 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public string ObjectTableName { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
-
-        
+        public string SearchFields { get; set; }
+        public string ChildScreenGrid { get; set; }
 
 
     }

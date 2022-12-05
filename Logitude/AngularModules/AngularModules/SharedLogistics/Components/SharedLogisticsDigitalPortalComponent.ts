@@ -486,6 +486,7 @@ export class SharedLogisticsDigitalPortalComponent implements OnInit {
     ActivityZoomLinkClick(m: string) {
         var windowArgs: any = {};
         windowArgs.TenantPM = this.myTenantPM;
+        windowArgs.IsDigital = true;
 
         switch (m) {
             case "Today Customers":

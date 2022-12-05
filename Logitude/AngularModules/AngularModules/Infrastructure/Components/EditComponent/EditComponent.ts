@@ -27,6 +27,7 @@ import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator'
 import { HeaderScreenDataResult } from '../../Interface/IHeaderScreenService';
 import { TableTabService } from 'Infrastructure/Services/ExtendedPMs/TableTabService';
 import { ObjectTableTabPM } from 'Infrastructure/EntityPMs/ObjectTableTabPM';
+import { CloneEntityPM } from 'Infrastructure/Helpers/SafeCloneDeep';
 
 
 const InterestTransactionTabCode = 'GLIT';
@@ -49,6 +50,7 @@ export class EditComponent implements OnDestroy {
     @Output() OnFirstTimeAfterSingleDataLoaded: EventEmitter<string> = new EventEmitter<string>();
     public ComponentRef: ComponentRef<EditComponent>;
     public EntityPM: any = null;
+    public ClonedEntityPM: any = null;
     public EntityId: string = null;
     public ObjectTable: ObjectTablePM;
     public ObjectTableId: string;
@@ -284,6 +286,8 @@ export class EditComponent implements OnDestroy {
     private SetEntityPMAfterLoadIt(result)
     {
         this.EntityPM = result;
+        this.ClonedEntityPM = CloneEntityPM(this.EntityPM);
+
         if (this.EntityFields) {
             this.EntityFields.forEach(itemField =>
             {
@@ -1543,7 +1547,7 @@ export class EditComponent implements OnDestroy {
             else {
                 this._totangoService.SendTotangoUserActivity(this.ObjectTableName, "Edit " + this.ObjectTableName);
 
-                this.entityPMService.update(this.ObjectTableName, this.EntityPM).then((res: any) => {
+                this.entityPMService.update(this.ObjectTableName, this.EntityPM, this.ClonedEntityPM).then((res: any) => {
                     res.subscribe((myResponse: ServiceResponse) => {
 
                         this.StopBusyIndicator();
@@ -1590,6 +1594,8 @@ export class EditComponent implements OnDestroy {
 
                             }
                         }
+
+                        this.ClonedEntityPM = CloneEntityPM(this.EntityPM);
 
                     }, error => {
                         this.OnSavingFailed();

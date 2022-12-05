@@ -27,6 +27,17 @@ export class WarehouseEntryListExtendedService {
         }), catchError(ServiceHelper.HandleServiceError));
     }
 
+    GetActiveWarehouseEntriesByWarehouseId(warehouseId) {
+        return this._http.get(this._apiUrl + '/GetWarehouseEntriesByWarehouseId?warehouseId=' + warehouseId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+
+            pmresponse.Result = response;
+            return pmresponse;
+        }), catchError(ServiceHelper.HandleServiceError));
+    }
+
     GetRecentWarehouseEntries() {
         
         

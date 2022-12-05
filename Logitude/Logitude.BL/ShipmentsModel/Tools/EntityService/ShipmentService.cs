@@ -408,7 +408,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
 
         string CustomerChanged = "false";
-        public void Update(bool mapComposition = false, bool isFromUpdateTool = false)
+        public void Update(bool mapComposition = false, bool isFromUpdateTool = false, bool isPatchUpdate = false)
         {
             using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
@@ -445,7 +445,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     {
                         this.initializer.HandleValidators();
 
-                        ShipmentValidating.Validate(entityPM, entityPoco, isNewEntity, myCommonContext, loggedTenant);
+                        ShipmentValidating.Validate(entityPM, entityPoco, isNewEntity, myCommonContext, loggedTenant, isPatchUpdate);
                         ShipmentValidating.ValidateFutureRoutingDates(entityPM, initializer.ShipmentPickUpsChangeSet, initializer.ShipmentDeliveriesChangeSet);
                     }
 

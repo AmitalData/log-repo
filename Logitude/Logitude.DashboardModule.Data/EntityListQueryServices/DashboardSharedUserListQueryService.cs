@@ -15,35 +15,29 @@ using Logitude.DashboardModule.Data.EntityPOCOs;
 using Logitude.DashboardModule.Data.EntityLists;
 
 namespace Logitude.DashboardModule.Data.EntityListQueryServices
-{ 
+{
 
-    public partial class DashboardSharedUserListQueryService
-    {
-	    private IQueryable<DashboardSharedUserList> GetIqueryableList(IQueryable<DashboardSharedUser> iQueryable)
-        {
-		IQueryable<DashboardSharedUserList> query = (from a in iQueryable
-                                            select new DashboardSharedUserList()
-											{
-                     
-					                          Id = a.Id,
-					
-					                          Tenant = a.Tenant,
-					
-		                    	            });
-            return query;
+	public partial class DashboardSharedUserListQueryService
+	{
+		private IQueryable<DashboardSharedUserList> GetIqueryableList(IQueryable<DashboardSharedUser> iQueryable)
+		{
+			IQueryable<DashboardSharedUserList> query = (from a in iQueryable
+														 select new DashboardSharedUserList()
+														 {
+															 Id = a.Id,
+															 Tenant = a.Tenant,
+														 });
+			return query;
 		}
 
-		private IQueryable<DashboardSharedUser> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<DashboardSharedUser> iQueryable, int tenant)
-        {
-			throw new NotImplementedException();
-		}
-				private IQueryable<DashboardSharedUser> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<DashboardSharedUser> iQueryable, int tenant)
-        {
+		private IQueryable<DashboardSharedUser> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<DashboardSharedUser> iQueryable, int tenant)
+		{
 			return iQueryable;
 		}
-		
-			}
-
-
+		private IQueryable<DashboardSharedUser> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<DashboardSharedUser> iQueryable, int tenant)
+		{
+			return iQueryable;
+		}
+	}
 }
 	

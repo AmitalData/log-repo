@@ -359,6 +359,21 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 {
                     shipmentPM.MainCarriageFromPortId = masterData.MainCarriageFromPortId;
                     shipmentPM.MainCarriageToPortId = masterData.MainCarriageToPortId;
+
+                    if (!string.IsNullOrEmpty(shipmentPM.MainCarriageFromPortId))
+                    {
+                        PortPM mainCarriageFromPort = portQuery.GetSinglePM(shipmentPM.MainCarriageFromPortId, masterData.Tenant);
+                        shipmentPM.MainCarriageFromPortCode = mainCarriageFromPort?.Code;
+                        shipmentPM.MainCarriageFromPortName = mainCarriageFromPort?.EnglishName;
+                    }
+
+                    if (!string.IsNullOrEmpty(shipmentPM.MainCarriageToPortId))
+                    {
+                        PortPM mainCarriageToPort = portQuery.GetSinglePM(shipmentPM.MainCarriageToPortId, masterData.Tenant);
+                        shipmentPM.MainCarriageToPortCode = mainCarriageToPort?.Code;
+                        shipmentPM.MainCarriageToPortName = mainCarriageToPort?.EnglishName;
+                    }
+
                     shipmentPM.MainCarriageFromPartnerId = masterData.MainCarriageFromPartnerId;
                     shipmentPM.MainCarriageFromAddressId = masterData.MainCarriageFromAddressId;
                     shipmentPM.MainCarriageToPartnerId = masterData.MainCarriageToPartnerId;
@@ -13360,6 +13375,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             var myResult = from f in shipments
                            select new DigitalShipmentList()
                            {
+                               ChargeableWeightInKG = f.ChargeableWeightInKG,
+                               GrossWeightInKG = f.GrossWeightInKG,
+                               VolumeInCBM = f.VolumeInCBM,
                                InlandDomesticFromCountryId = f.InlandDomesticFromCountryId,
                                InlandDomesticToCountryId = f.InlandDomesticToCountryId,
                                InlandDomesticFromTypeCode = f.InlandDomesticFromTypeCode,

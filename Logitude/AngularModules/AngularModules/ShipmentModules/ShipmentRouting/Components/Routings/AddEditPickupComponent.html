@@ -169,8 +169,12 @@
                         <div></div>
                     </td>
 
-                    <td *ngIf="IsShowNewWarehouseEntryButton" style="width: 130px;">
+                    <td *ngIf="IsShowNewWarehouseEntryButton && !ConnectedWarehouseEntry && IsResourcesReady" style="width: 130px;">
                         <button style="width:130px;float:right;" class="Button" (click)="NewWarehouseEntryButtonClicked()">New Cross Dock Entry</button>
+                    </td>
+
+                    <td *ngIf="IsShowNewWarehouseEntryButton && ConnectedWarehouseEntry && IsResourcesReady" style="width: 130px;">
+                        <span class="hyperlink" style="width:90px;float:right;" (click)="ViewWareHouseEntry()">View Entry {{ConnectedWarehouseEntry.EntryNumber}}</span>
                     </td>
 
                     <td *ngIf="IsShowNewWarehouseEntryButton" style="width: 5px;">
@@ -184,7 +188,7 @@
                                         class="RedButton"
                                         [disabled]="!IsCreateStandaloneShipmentEnabled"
                                         style="width:190px;border-radius: 0px 5px 5px 0px;float:right">
-                                         Create Standalone Shipment
+                                    Create Standalone Shipment
                                 </button>
                                 <button [attr.id]="'arrow'" class="x-button x-button-drop"
                                         style="width: 20px;border-radius: 5px 0px 0px 5px;color:gray;float:right"

@@ -18,9 +18,10 @@ export class FieldTemplateComponent {
     constructor(private CD: ChangeDetectorRef) {
     }
 
-    setVariables(rowData: any, fieldName: string) {
+    setVariables(rowData: any, fieldName: string , additionalData:any) {
         this.Entity = rowData;
         this.FieldName = fieldName; 
+        this.ObjectTableName = additionalData;
         
         if (rowData[fieldName]) {
             var temp: boolean = rowData[fieldName];

@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
@@ -37,6 +38,22 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
                 screen.NumberOfRows = screenPM.NumberOfRows;
             }
 
+            BuildSearchFields(screenPM, screen);
+        }
+        private static void BuildSearchFields(ScreenPM entityPM, Screen entityPOCO)
+        {
+            string mySearchFields = "";
+
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Code);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Name);
+
+            if (mySearchFields.Length > 1000)
+            {
+                mySearchFields = mySearchFields.Substring(0, 1000);
+            }
+
+            entityPM.SearchFields = mySearchFields;
+            entityPOCO.SearchFields = mySearchFields;
         }
     }
 }

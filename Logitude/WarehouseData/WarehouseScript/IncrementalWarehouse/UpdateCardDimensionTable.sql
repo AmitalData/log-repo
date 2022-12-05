@@ -96,6 +96,6 @@
 	CLOSE PartnersCursor
 	DEALLOCATE PartnersCursor
 	
+		update dw_WaterMarks set LastUpdateDate = @MaxAutomaticLastUpdateDate where TableName = 'Card'
 End
 
-	update dw_WaterMarks set LastUpdateDate = @MaxAutomaticLastUpdateDate where TableName = 'Card'

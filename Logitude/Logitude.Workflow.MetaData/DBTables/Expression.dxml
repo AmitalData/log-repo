@@ -7,7 +7,7 @@
   <Column
     Name="Code"
     Type="varchar"
-    Size="3">
+    Size="15">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
@@ -17,7 +17,7 @@
     Type="varchar"
     Size="50">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="SearchFields"
@@ -29,14 +29,14 @@
   <Column
     Name="Body"
     Type="varchar"
-    Size="1000">
+    Size="-1">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="Description"
     Type="varchar"
-    Size="1000">
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>

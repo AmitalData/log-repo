@@ -28,8 +28,8 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string Type { get; set; }
         public string SortedByFieldCode { get; set; }
         public string SortedType { get; set; }
-
-
+        public string SearchFields { get; set; }
+        public string ChildScreenGrid { get; set; }
         [Include]
         [Association("ScreenScreenField", "Id", "ScreenId")]
         public virtual List<ScreenFieldPM> ScreenFields { get; set; }

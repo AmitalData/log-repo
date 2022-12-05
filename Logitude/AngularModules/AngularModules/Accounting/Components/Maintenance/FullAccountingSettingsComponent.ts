@@ -167,6 +167,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
         if (this.AccountingActivated && this.AccountingActivationDate != null) {
             this.enableAllFields = true;
+            this.UIProperties.SetEnabled("AccountingActivationDate", "Tenant", true);
         }
         this.UIProperties.SetEnabled("DeductionFileNumber", this.ObjectTableName, this.enableAllFields);
         this.UIProperties.SetEnabled("ConsolidationVAT", this.ObjectTableName, this.enableAllFields);
@@ -212,8 +213,10 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
             this.EntityPM.AccountingActivated = value;
             if (value == true) {
                 this.AccountingActivationDate = new Date();
+                this.UIProperties.SetEnabled("AccountingActivationDate", "Tenant", true);
             } else if (value == false) {
                 this.AccountingActivationDate = null;
+                this.UIProperties.SetEnabled("AccountingActivationDate", "Tenant", false);
             }
 
             this.ToggleAgingDefinitionTab(value);

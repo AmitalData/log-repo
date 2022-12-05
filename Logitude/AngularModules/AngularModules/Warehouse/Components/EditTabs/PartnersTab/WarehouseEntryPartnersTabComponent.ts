@@ -15,6 +15,7 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {NewEntityArgs} from '../../../../Infrastructure/Args';
 import {AppTool} from '../../../../Infrastructure/Tools';
+import { AddressPM } from '../../../../Common/EntityPMs/AddressPM';
 
 @Component({
     selector: 'WarehouseEntryPartnersTabComponent',
@@ -670,13 +671,6 @@ export class PartnerItem extends BaseComponent {
                 }
             }
         });
-
-
-
-
-
-
-
     }
 
     public IsReseting: boolean = false;
@@ -736,6 +730,7 @@ export class PartnerItem extends BaseComponent {
 
         if (myAddressId != null) {
             var myService = this.fatherComponent.AddressListService;
+
             myService.getSingle(myAddressId).subscribe((myResponse: ServiceResponse) => {
 
                 if (myResponse != null) {
@@ -756,8 +751,47 @@ export class PartnerItem extends BaseComponent {
             this.OnLoadCompleted();
         }
     }
- 
-    BuildAddressCityText() {
+
+    //Add|Edit Address
+    AddAddressClicked() {
+        var entityPM: AddressPM = new AddressPM();
+        entityPM.Tenant = SessionLocator.Tenant;
+        let otherAddressTypeId = "O";
+        entityPM.AddressTypeId = otherAddressTypeId;
+        entityPM.CardId = this.PartnerId;
+
+        var logeWindow = new LogitudeWindow();
+        logeWindow.Width = 630;
+        logeWindow.Height = 430;
+        logeWindow.Title = "Add Address";
+        logeWindow.WindowArgs = { EntityPM: entityPM };
+        logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
+        logeWindow.WindowClosed.subscribe(event => {
+            if (event) {
+                this.AddressId = entityPM.Id;
+            }
+        });
+    }
+
+    EditAddressClicked() {
+        var myAddressId = this.AddressId;
+        if (AppTool.IsNullOrEmpty(myAddressId))
+            return;
+        var logeWindow = new LogitudeWindow();
+        logeWindow.Width = 630;
+        logeWindow.Height = 430;
+        logeWindow.Title = "Edit Address";
+        logeWindow.WindowArgs = { EntityId: myAddressId };
+        logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
+        logeWindow.WindowClosed.subscribe(event => {
+            if (!event)
+                return;
+            this.AddressId = null;
+            this.AddressId = myAddressId;
+        });
+    }
+
+    BuildAddressCityText() { 
         var myResult = null;
 
         if (this.PartnerAddressList) {

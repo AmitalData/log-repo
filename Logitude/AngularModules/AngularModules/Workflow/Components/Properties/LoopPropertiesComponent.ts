@@ -22,7 +22,6 @@ export class LoopPropertiesComponent extends BaseComponent {
     public CurrentNodeId: string;
     public FlowObjectFields: ObjectFieldList[];
 
-    public FlowVariablesTreeList: FlowVariablesTreeList;
     public FlowVariablesTreeItems: TreeSelectItem[];
 
     public ValidationErrorsList: string[];
@@ -42,8 +41,13 @@ export class LoopPropertiesComponent extends BaseComponent {
     }
 
     initializeFlowVariablesTree() {
-        this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId, true);
-        this.FlowVariablesTreeItems = this.FlowVariablesTreeList.Items;
+        let showVariables = {
+            ShowRecordsVariables: false,
+            ShowDeclaredVariables: false,
+            ShowRecordsCollectionVariables: true,
+            ShowDeclaredCollectionVariables: true
+        };
+        this.FlowVariablesTreeItems = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId, showVariables).Items;
     }
 
     initialize() {
@@ -67,9 +71,12 @@ export class LoopPropertiesComponent extends BaseComponent {
         this.setUIProperties();
     }
 
-    updateCollectionVariable(collectionVariable: string) {
-        this.Data["collectionVariable"] = collectionVariable || null;
-        this.CollectionVariable = collectionVariable || null;
+    updateCollectionVariable(collectionVariableItem: TreeSelectItem) {
+        let collectionVariable = collectionVariableItem ? collectionVariableItem.key : null;
+        let isCollectionFilterVariable = collectionVariableItem ? (collectionVariableItem.data["isCollectionFilterVariable"] || false) : null;
+        this.Data["collectionVariable"] = collectionVariable;
+        this.Data["isCollectionFilterVariable"] = isCollectionFilterVariable;
+        this.CollectionVariable = collectionVariable;
         this.setUIProperties();
     }
 

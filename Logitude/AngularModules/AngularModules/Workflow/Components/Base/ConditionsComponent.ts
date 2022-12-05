@@ -24,6 +24,7 @@ export class ConditionsComponent extends BaseComponent implements OnInit, OnChan
     @Input() CurrentNodeId: string;
     @Input() EnableAdd: boolean = true;
     @Input() ShowConditionsOperation: boolean = true;
+    @Input() IsOneLevelConditions: boolean = false;
 
     @Output() ConditionsOperationChange = new EventEmitter<string>();
     @Output() IsValidConditionsChange = new EventEmitter<boolean>();

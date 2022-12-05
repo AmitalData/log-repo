@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Dashboard" Env="Logitude,local,test">
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[
       BEGIN
           IF EXISTS (SELECT *  FROM sys.indexes  WHERE NAME='IX_ShipmentAnalytics_ColumnStore' AND object_id = OBJECT_ID('[ShipmentAnalytics]'))
@@ -12,7 +12,7 @@
 				SalesmanUserId, AccountManagerUserId, ShipmentTypeId, TransportModeId,
 				DirectionId, ShipmentLevelCode, ShipperId, ConsigneeId, AgentId,
 				CustomerId, IsOperationalClosed, IsAccountingClosed, GrossWeightInKG,
-				ChargeableWeightInKG, VolumeInCBM, TEU, PackagesQuantity, StatusId,
+				ChargeableWeightInKG, VolumeInCBM, TEU, StatusId,
 				IsCancelled, OpenReceivablesInLocalCurrency, AccountedReceivablesInLocalCurrency,
 				ProfitInLocalCurrency, ProfitInProfitCurrency,OpenReceivablesInProfitCurrency,
 				AccountedReceivablesInProfitCurrency,OpenPayablesInLocalCurrency, AccountedPayablesInLocalCurrency,

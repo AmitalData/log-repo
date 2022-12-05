@@ -756,6 +756,21 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "ABD,Auto Build in Document Send", 
                 Description = "Auto Build in Document Send", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "PUP", 
+                Name = "Patch Update", 
+                SearchFields = "PUP,Patch Update", 
+                Description = "Enable Patch Update", 
+			});
+            all.Add(new ToggleDetails()
+            {    
+                Code = "SPB", 
+                Name = "Separate Per Branch in Counters", 
+                SearchFields = "SPB,Separate Per Branch in Counters", 
+                Description = "Separate Per Branch in Counters", 
+			});
 			
             return all;
        }

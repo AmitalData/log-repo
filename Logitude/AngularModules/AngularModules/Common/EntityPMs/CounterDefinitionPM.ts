@@ -63,6 +63,9 @@ export class CounterDefinitionPM {
     private inActive: boolean;
     public get InActive() { return this.inActive; }
     public set InActive(newValue: boolean) { if (this.inActive != newValue) { this.inActive = newValue; this.MarkAsDirty("InActive"); } }
+    private usePerBranch: boolean;
+    public get UsePerBranch() { return this.usePerBranch; }
+    public set UsePerBranch(newValue: boolean) { if (this.usePerBranch != newValue) { this.usePerBranch = newValue; this.MarkAsDirty("UsePerBranch"); } }
 
     public OldEntityPM: CounterDefinitionPM;
 
