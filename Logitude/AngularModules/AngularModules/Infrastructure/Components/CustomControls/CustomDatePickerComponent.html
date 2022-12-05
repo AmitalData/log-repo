@@ -112,7 +112,7 @@
         }
 </style>
 
-<div class="ComboBox" [class.ComboBoxDisabled]="IsDisabled" [attr.id]="ControlId" style="width:250px;" (focus)="OnFocus()" (blur)="OnLostFocus()" (mouseover)="onMouseOver()" (mouseout)="onMouseOut()" tabindex="0">
+<div [attr.data-cy]="DataCy" class="ComboBox" [class.ComboBoxDisabled]="IsDisabled" [attr.id]="ControlId" style="width:250px;" (focus)="OnFocus()" (blur)="OnLostFocus()" (mouseover)="onMouseOver()" (mouseout)="onMouseOut()" tabindex="0">
     <table (mousedown)="mousedown()">
         <tr>
             <td style="width: 2px;">
@@ -158,7 +158,7 @@
                         </tr>
                     </table>
                 </li>
-                <li class="ComboBoxItem TextTrimming" (click)="ItemClicked('Today')" style="border:none;" [class.Selected]="'Today' === SelectedItem">
+                <li [attr.data-cy]="'TodayDateItem'" class="ComboBoxItem TextTrimming" (click)="ItemClicked('Today')" style="border:none;" [class.Selected]="'Today' === SelectedItem">
                     <table>
                         <tr>
                             <td style="width:90px;cursor:default;">Today</td>
