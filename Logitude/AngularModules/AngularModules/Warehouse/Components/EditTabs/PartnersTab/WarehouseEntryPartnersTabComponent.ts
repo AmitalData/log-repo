@@ -766,8 +766,8 @@ export class PartnerItem extends BaseComponent {
         logeWindow.Title = "Add Address";
         logeWindow.WindowArgs = { EntityPM: entityPM };
         logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
-        logeWindow.WindowClosed.subscribe(s => {
-            if (s) {
+        logeWindow.WindowClosed.subscribe(event => {
+            if (event) {
                 this.AddressId = entityPM.Id;
             }
         });
@@ -783,8 +783,8 @@ export class PartnerItem extends BaseComponent {
         logeWindow.Title = "Edit Address";
         logeWindow.WindowArgs = { EntityId: myAddressId };
         logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
-        logeWindow.WindowClosed.subscribe(s => {
-            if (!s)
+        logeWindow.WindowClosed.subscribe(event => {
+            if (!event)
                 return;
             this.AddressId = null;
             this.AddressId = myAddressId;
