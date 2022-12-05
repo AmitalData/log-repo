@@ -239,13 +239,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     CustomerId = container.CustomerId,
                     CustomerName = container.CustomerCard?.EnglishName,
                     ShipmentCreateDate = container.ShipmentCreateDate,
-
                     PODReceivedOnDate = container.PODReceivedOnDate,
-
                     IsAutomaticUpdates = container.IsAutomaticUpdates,
                     IsClosed = container.IsClosed,
                     ClosedDate = container.ClosedDate,
-
                     MasterEntityId = container.ShipmentId,
                     CustomerContactId = container.CustomerCard?.PrimaryContactId,
                     HandlerContactId = container.Handler?.Contact?.Id,
