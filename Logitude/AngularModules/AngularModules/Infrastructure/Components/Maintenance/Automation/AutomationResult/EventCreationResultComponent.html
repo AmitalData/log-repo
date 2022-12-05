@@ -18,14 +18,15 @@
                                 </td>
                                 <td>
                                     <div style="text-align:left;width:270px;">
-                                        <LogLov [ObjectFieldName]="'EventTypeId'"
-                                                [SelectedValue]="AutomationEvent?.EventTypeId"
+                                        <LogLov *ngIf="IsReady"
+                                                [ObjectFieldName]="'EventTypeId'"
+                                                [SelectedValue]="EventTypeId"
                                                 [NoObjectField]="true"
                                                 [DataContext]="DataContext"
                                                 [LookUpTableName]="'EventType'"
                                                 [DependencyFilter1Value]="true"
                                                 [DependencyFilter2Value]="AutomationEvent?.ObjectTableId"
-                                                (SelectedItemChanged)="AutomationEvent.EventTypeId = $event"
+                                                (SelectedItemChanged)="SelectedEventTypeChanged($event)"
                                                 [HideColumns]="true"
                                                 style="width:270px;">
                                         </LogLov>    
