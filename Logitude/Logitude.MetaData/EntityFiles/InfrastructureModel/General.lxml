@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;d21e&quot;"
+  Code="&quot;9f3e&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5509,7 +5509,7 @@
       TextCodeTypeCode="&quot;G&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;General.B.Save&quot;"
+      Code="&quot;General.G.SaveBtn&quot;"
       DefaultText="&quot;Save&quot;"
       TextCodeTypeCode="&quot;B&quot;"
       IsSpellChecked="false" />
