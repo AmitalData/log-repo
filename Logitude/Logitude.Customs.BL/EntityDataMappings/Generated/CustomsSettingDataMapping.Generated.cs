@@ -84,7 +84,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         QtyFeedbackInPendingMessage, 
 	         LastRunningDCAWS, 
 	         LastNumOfMessagesDCAWS, 
-	         ServiceScript,
+	         ServiceScript, 
 	         SuppressIIGMessageFromDate, 
 	         SuppressIIGMessageToDate,
 	      }
