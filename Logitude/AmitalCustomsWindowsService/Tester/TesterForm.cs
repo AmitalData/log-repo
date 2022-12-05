@@ -316,6 +316,10 @@ namespace AmitalCustomsWindowsService.Tester
         bool _MultiThreard = false;
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            TestMaman();
+            return;
+
+
             clsTester.Check_UserWcfService(GetTenant());
             return;
 
@@ -364,6 +368,77 @@ namespace AmitalCustomsWindowsService.Tester
             //clsTester.TestLockTab();
             //return;
             clsTester.TestNull();
+        }
+
+        private void TestMaman()
+        {
+            var t=Task.Run(() =>
+            {
+                string communicationLogId = "1-6851300";
+                for (int i = 0; i < 100; i++)
+                {
+                    SendECTHRToMaman(communicationLogId);
+                }
+            });
+
+
+            var t2 = Task.Run(() =>
+            {
+                string communicationLogId = "1-6856383";
+                for (int i = 0; i < 100; i++)
+                {
+                    SendECTHRToMaman(communicationLogId);
+                }
+            });
+
+            var t3 = Task.Run(() =>
+            {
+                string communicationLogId = "1-6856804";
+                for (int i = 0; i < 100; i++)
+                {
+                    SendECTHRToMaman(communicationLogId);
+                }
+            });
+            var t4 = Task.Run(() =>
+            {
+                string communicationLogId = "1-6855943";
+                for (int i = 0; i < 100; i++)
+                {
+                    SendECTHRToMaman(communicationLogId);
+                }
+            });
+
+
+            var t5 = Task.Run(() =>
+            {
+                string communicationLogId = "1-6856959";
+                for (int i = 0; i < 100; i++)
+                {
+                    SendECTHRToMaman(communicationLogId);
+                }
+            });
+            var t6 = Task.Run(() =>
+            {
+                string communicationLogId = "1-6856749";
+                for (int i = 0; i < 100; i++)
+                {
+                    SendECTHRToMaman(communicationLogId);
+                }
+            });
+
+            Task.WaitAll(t,t2,t3,t4,t5,t6);
+
+            
+
+        }
+
+        private static void SendECTHRToMaman(string communicationLogId)
+        {
+            
+            int Tenant = 3;
+            string @intarface = "ECTHR";
+            var SendWEBAPIMessage2MamanWR = new SendWEBAPIMessage2MamanWR();
+            SendWEBAPIMessage2MamanWR.DebugStep(communicationLogId, @intarface, Tenant);
         }
 
         private void signUpWorkerRoleToolStripMenuItem_Click(object sender, EventArgs e)
