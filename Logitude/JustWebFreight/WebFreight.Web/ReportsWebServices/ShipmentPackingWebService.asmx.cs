@@ -48,7 +48,7 @@ namespace WebFreight.Web.ReportsWebServices
         private ShipmentPackingDataProvider BuildProvider(string shipmentId, int tenant)
         {
             ShipmentPackingDataProvider provider = new ShipmentPackingDataProvider();
-            ShipmentPackingService shipmentPackingService = new ShipmentPackingService();
+            ShipmentPackingDataProviderService shipmentPackingService = new ShipmentPackingDataProviderService();
 
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             AddressRepository addressRepository = new AddressRepository(commonContext);
@@ -72,8 +72,8 @@ namespace WebFreight.Web.ReportsWebServices
                 provider.TotalGrossWeight = shipment.GrossWeight;
                 provider.TotalNumberOfPackages = shipment.NumberOfPackages;
 
-                shipmentPackingService.SetShipmentPackingDataProviderWeightDetails(provider, shipment);
-                shipmentPackingService.SetShipmentPackingDataProviderVolumeDetails(provider, shipment);
+                shipmentPackingService.MapWeightDetails(provider, shipment);
+                shipmentPackingService.MapVolumeDetails(provider, shipment);
                 #region ShipmentMethod
                 string shipmentMethod = "";
                 TransportModeRepository transportModeRepository = new TransportModeRepository(tenant);
@@ -238,7 +238,7 @@ namespace WebFreight.Web.ReportsWebServices
                 ShipmentPackageItemRepository shipmentPackageItemRepository = new ShipmentPackageItemRepository(tenant);
 
                 List<ShipmentPackage> shipmentPackages = shipmentPackageRepository.GetShipmentPackagesForShipmentTenant(shipmentId, tenant).ToList();
-                decimal? totalAmountOfPackageItems = null;
+                double? totalAmountOfPackageItems = null;
                 if (shipmentPackages.Count > 0)
                 {
                     provider.ShipmentPackages = new List<ShipmentPackageProvider>();
@@ -252,8 +252,9 @@ namespace WebFreight.Web.ReportsWebServices
                             ShipmentPackageProvider shipmentPackageProvider = new ShipmentPackageProvider();
 
                             shipmentPackageProvider.PackageItems = new List<PackageItemProvider>();
-                            shipmentPackageProvider.NumberOfPieces = shipmentPackage.Quantity + "";
-                            shipmentPackageProvider.PackageType = string.IsNullOrEmpty(shipmentPackage.PackageType.EnglishName) ? "" : shipmentPackage.PackageType.EnglishName;
+                            shipmentPackageProvider.PackageItemsWithAllDetails = new List<PackageItemProviderWithAllDetails>();
+                            shipmentPackageProvider.Quantity = shipmentPackage.Quantity + "";
+                            shipmentPackageProvider.PackageType = shipmentPackage.PackageType == null || string.IsNullOrEmpty(shipmentPackage.PackageType.EnglishName) ? "" : shipmentPackage.PackageType.EnglishName;
                             shipmentPackageProvider.Seal = string.IsNullOrEmpty(shipmentPackage.ShipperSeal) ? "" : shipmentPackage.ShipperSeal;
                             shipmentPackageProvider.ContainerNumber = string.IsNullOrEmpty(shipmentPackage.ContainerNumber) ? "" : shipmentPackage.ContainerNumber;
                             shipmentPackageProvider.GrossWeight = shipmentPackage.Weight;
@@ -327,7 +328,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 }
                             }
 
-                            totalAmountOfPackageItems = shipmentPackingService.GetTotalAmountOfPackageItems(shipmentPackageItems);
+                            totalAmountOfPackageItems = (double?) shipmentPackingService.GetTotalAmountOfPackageItems(shipmentPackageItems);
 
                             provider.ShipmentPackages.Add(shipmentPackageProvider);
                         }
@@ -336,9 +337,14 @@ namespace WebFreight.Web.ReportsWebServices
                 }
 
                 List<string> freightChargesTypesIds = shipmentPackingService.GetFreightChargesIdsByTenant(tenant);
-                provider.TotalReceivablesForFreightCharges = shipmentPackingService.GetTotalReceivablesForFreightChargesByFreightChargesTypesIds(shipment,freightChargesTypesIds);
-                provider.TotalReceivablesForOtherCharges = shipmentPackingService.GetTotalReceivablesForOtherChargesByFreightChargesTypesIds(shipment, freightChargesTypesIds);
-                provider.TotalAmounts = provider.TotalReceivablesForFreightCharges + provider.TotalReceivablesForOtherCharges + totalAmountOfPackageItems;
+                
+                double? totalReceivablesForFreightCharges = shipmentPackingService.GetTotalReceivablesForFreightChargesByFreightChargesTypesIds(shipment, freightChargesTypesIds);
+                double? totalReceivablesForOtherCharges = shipmentPackingService.GetTotalReceivablesForOtherChargesByFreightChargesTypesIds(shipment, freightChargesTypesIds);
+                double? totalAmount = totalReceivablesForFreightCharges + totalReceivablesForOtherCharges + totalAmountOfPackageItems;
+                
+                provider.TotalReceivablesForFreightCharges = shipmentPackingService.GetFormatedNumber(totalReceivablesForFreightCharges);
+                provider.TotalReceivablesForOtherCharges = shipmentPackingService.GetFormatedNumber(totalReceivablesForOtherCharges);
+                provider.TotalAmounts = shipmentPackingService.GetFormatedNumber(totalAmount);
             }
 
             DocumentType currentdocumentType = commonContext.DocumentTypes.Where(doc => doc.Code == "PALI" && doc.Tenant == tenant).FirstOrDefault();

@@ -9,9 +9,9 @@ using WebFreight.Web.DataProviders;
 
 namespace WebFreight.Web.ReportsWebServices
 {
-    public class ShipmentPackingService
+    public class ShipmentPackingDataProviderService
     {
-        public ShipmentPackingService()
+        public ShipmentPackingDataProviderService()
         {
 
         }
@@ -21,15 +21,18 @@ namespace WebFreight.Web.ReportsWebServices
             return new PackageItemProviderWithAllDetails()
             {
                 Description = item.Description,
-                Quantity = item.Quantity == null ? "" : String.Format("{0:#,0.00}", item.Quantity),
+                Quantity = item.Quantity == null ? "" : item.Quantity + "",
                 Value = item.GoodsValue == null ? "" : String.Format("{0:#,0.00}", item.GoodsValue),
                 Amount = item.Quantity == null || item.GoodsValue == null ? "" : String.Format("{0:#,0.00}", item.Quantity * item.GoodsValue)
             };
         }
-        public void SetShipmentPackingDataProviderWeightDetails(ShipmentPackingDataProvider provider, ShipmentPM shipment)
+        public void MapWeightDetails(ShipmentPackingDataProvider provider, ShipmentPM shipment)
         {
-            double? grossWeightInKG = General.ComputeWeightInSelectedUnit(shipment.GrossWeight, shipment.GrossWeightUnitCode, "KG");
-            double? grossWeightInLB = General.ComputeWeightInSelectedUnit(shipment.GrossWeight, shipment.GrossWeightUnitCode, "LB");
+            const string kiloGramUnitCode = "KG";
+            const string boundUnitCode = "LB";
+
+            double? grossWeightInKG = General.ComputeWeightInSelectedUnit(shipment.GrossWeight, shipment.GrossWeightUnitCode, kiloGramUnitCode);
+            double? grossWeightInLB = General.ComputeWeightInSelectedUnit(shipment.GrossWeight, shipment.GrossWeightUnitCode, boundUnitCode);
             if (grossWeightInKG != null)
             {
                 provider.GrossWeightInKG = String.Format("{0:#,0.00}", grossWeightInKG.Value);
@@ -39,10 +42,12 @@ namespace WebFreight.Web.ReportsWebServices
                 provider.GrossWeightInLB = String.Format("{0:#,0.00}", grossWeightInLB.Value);
             }
         }
-        public void SetShipmentPackingDataProviderVolumeDetails(ShipmentPackingDataProvider provider, ShipmentPM shipment)
+        public void MapVolumeDetails(ShipmentPackingDataProvider provider, ShipmentPM shipment)
         {
-            provider.VolumeInCBM = General.ComputeVolumeInSelectedUnit(shipment.Volume, shipment.VolumeUnitCode, "CBM");
-            provider.VolumeInCBF = General.ComputeVolumeInSelectedUnit(shipment.Volume, shipment.VolumeUnitCode, "CBF");
+            const string VolumeCBMUnitCode = "CBM";
+            const string VolumeCBFUnitCode = "CBF";
+            provider.VolumeInCBM = General.ComputeVolumeInSelectedUnit(shipment.Volume, shipment.VolumeUnitCode, VolumeCBMUnitCode);
+            provider.VolumeInCBF = General.ComputeVolumeInSelectedUnit(shipment.Volume, shipment.VolumeUnitCode, VolumeCBFUnitCode);
         }
 
         public decimal? GetTotalAmountOfPackageItems(List<ShipmentPackageItem> shipmentPackageItems)
@@ -66,35 +71,35 @@ namespace WebFreight.Web.ReportsWebServices
             return freightChargesTypesIds;
         }
 
-        public string GetTotalReceivablesForFreightChargesByFreightChargesTypesIds(ShipmentPM shipment, List<string> freightChargesTypesIds)
+        public double? GetTotalReceivablesForFreightChargesByFreightChargesTypesIds(ShipmentPM shipment, List<string> freightChargesTypesIds)
         {
-            if (freightChargesTypesIds == null || freightChargesTypesIds.Count == 0) return "0.00";
-            if (shipment == null) return "0.00";
-            if (shipment.ShipmentReceivables == null || shipment.ShipmentReceivables.Count == 0) return "0.00";
+            if (freightChargesTypesIds == null || freightChargesTypesIds.Count == 0) return 0;
+            if (shipment == null) return 0;
+            if (shipment.ShipmentReceivables == null || shipment.ShipmentReceivables.Count == 0) return 0;
 
             List<ShipmentReceivablePM> shipmentReceivables = shipment.ShipmentReceivables
                 .Where(shipmentReceivable => freightChargesTypesIds.Contains(shipmentReceivable.ChargesTypeId)).ToList();
 
-            if (shipmentReceivables == null || shipmentReceivables.Count == 0) return "0.00";
+            if (shipmentReceivables == null || shipmentReceivables.Count == 0) return 0;
 
             double? totalReceivablesForFreightCharges = GetTotalReceivables(shipmentReceivables);
 
-            return String.Format("{0:#,0.00}", totalReceivablesForFreightCharges.Value);
+            return totalReceivablesForFreightCharges;
         }
 
-        public string GetTotalReceivablesForOtherChargesByFreightChargesTypesIds(ShipmentPM shipment, List<string> freightChargesTypesIds)
+        public double? GetTotalReceivablesForOtherChargesByFreightChargesTypesIds(ShipmentPM shipment, List<string> freightChargesTypesIds)
         {
-            if (freightChargesTypesIds == null || freightChargesTypesIds.Count == 0) return "0.00";
-            if (shipment == null) return "0.00";
-            if (shipment.ShipmentReceivables == null || shipment.ShipmentReceivables.Count == 0) return "0.00";
+            if (freightChargesTypesIds == null || freightChargesTypesIds.Count == 0) return 0;
+            if (shipment == null) return 0;
+            if (shipment.ShipmentReceivables == null || shipment.ShipmentReceivables.Count == 0) return 0;
 
             List<ShipmentReceivablePM> shipmentReceivables = shipment.ShipmentReceivables
                 .Where(shipmentReceivable => !freightChargesTypesIds.Contains(shipmentReceivable.ChargesTypeId)).ToList();
 
-            if (shipmentReceivables == null || shipmentReceivables.Count == 0) return "0.00";
+            if (shipmentReceivables == null || shipmentReceivables.Count == 0) return 0;
             double? totalReceivablesForOtherCharges = GetTotalReceivables(shipmentReceivables);
 
-            return String.Format("{0:#,0.00}", totalReceivablesForOtherCharges.Value);
+            return totalReceivablesForOtherCharges;
         }
 
         private static double? GetTotalReceivables(List<ShipmentReceivablePM> shipmentReceivables)
@@ -104,6 +109,12 @@ namespace WebFreight.Web.ReportsWebServices
                 if (shipmentReceivable.TotalAmount == null) return 0;
                 return shipmentReceivable.TotalAmount;
             });
+        }
+
+        public string GetFormatedNumber(double? number)
+        {
+            if (number == null) return "";
+            return String.Format("{0:#,0.00}", number.Value);
         }
     }
 }

@@ -49,7 +49,7 @@ namespace WebFreight.Web.DataProviders
         public string HorseCurrentStable { get; set; }
         public string HorseOwner { get; set; }
         public string HorseRemarks { get; set; }
-        public string NumberOfPieces { get; set; }
+        public string Quantity { get; set; }
         public string PackageType { get; set; }
 
         public List<PackageItemProvider> PackageItems { get; set; }

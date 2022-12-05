@@ -6411,7 +6411,7 @@
       <DependentUpon>ShipmentPackingWebService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ReportsWebServices\ShipmentPackingService.cs">
+    <Compile Include="ReportsWebServices\ShipmentPackingDataProviderService.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="RequestParams\GetQuickbooksTablesRequestParams.Shared.cs" />
