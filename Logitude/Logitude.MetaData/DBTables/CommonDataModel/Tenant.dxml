@@ -796,6 +796,7 @@
     <Constraints
       Nullable="true" />
   </Column>
+	
   <Column
     Name="ShowMultiUnitsOfMeasurements"
     Type="bit">
