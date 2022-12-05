@@ -1024,7 +1024,7 @@ export class AmitalGatewayUtil {
             LOV_FORM: string,
             PRIMARY_KEY:string) {
 
-            var unifreightMessageM = AmitalGatewayUtil.Instance.DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName,"");
+            var unifreightMessageM = AmitalGatewayUtil.Instance.DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName,"CFIFILEM");
             unifreightMessageM.Requset.push(["LOV_FORM", LOV_FORM]);
             unifreightMessageM.Requset.push(["PRIMARY_KEY", PRIMARY_KEY]);
             

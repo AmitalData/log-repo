@@ -1425,6 +1425,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private decimal claimAmount ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal ClaimAmount  
+	   {
+	    
+	     get
+		{
+		   return claimAmount;
+		 }
+		 set
+		 {
+		   if(claimAmount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClaimAmount",OldValue=claimAmount,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChanged(values);
+		   claimAmount=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

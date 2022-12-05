@@ -60,6 +60,7 @@ export class ClaimList {
 	ReferantName: string;
 	IsSendClaimsRelatedEntity: boolean;
 	CustomsBranchName: string;
+	ClaimAmount: number;
 	
 }
  

@@ -115,13 +115,13 @@ namespace Logitude.Customs.Data.Repsitories
                    select a).ToList();
 
         }
-
         public List<Consignment> GetConsgnmentByDeclarationId(string declarationId, int tenant)
         {
             return (from a in context.Consignments
                     where a.DeclarationId == declarationId && a.Tenant == tenant
                     select a).ToList();
         }
+
         public IQueryable<Consignment> GetConsigmentByExportContainerizationID(string exportContainerizationID, int tenant)
         { 
             var query = (from b in context.Consignments
@@ -133,6 +133,9 @@ namespace Logitude.Customs.Data.Repsitories
                 
         }
 
+
+
+  
         //partial void onRemove(Consignment entity)
         //{
         //    //entity.DeclarationId

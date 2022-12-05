@@ -3398,6 +3398,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             }
         }
 
+       
         public static void AddFacilitationType(FacilitationType facilitationType, FacilitationTypeRepository facilitationTypeRepository)
         {
             Dictionary<string, FacilitationType> tenant = facilitationTypeRepository.GetAll().ToDictionary(d => d.Code, a => a);
@@ -3413,8 +3414,26 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             }
             else
             {
-                FacilitationType newFacilitationType = new FacilitationType() { Code = facilitationType.Code, LocalName = facilitationType.LocalName, SearchFields = (facilitationType.Code + "," + facilitationType.LocalName + "," + facilitationType.EnglishName).ToLower(), EnglishName = facilitationType.EnglishName , Inactive = facilitationType.Inactive };
+                FacilitationType newFacilitationType = new FacilitationType() { Code = facilitationType.Code, LocalName = facilitationType.LocalName, SearchFields = (facilitationType.Code + "," + facilitationType.LocalName + "," + facilitationType.EnglishName).ToLower(), EnglishName = facilitationType.EnglishName, Inactive = facilitationType.Inactive };
                 facilitationTypeRepository.Add(newFacilitationType);
+            }
+        }
+        public static void AddContainerizationHataraStatus(ContainerizationHataraStatus containerizationHataraStatus, ContainerizationHataraStatusRepository containerizationHataraStatusRepository)
+        {
+            Dictionary<string, ContainerizationHataraStatus> tenant = containerizationHataraStatusRepository.GetAll().ToDictionary(d => d.Code, a => a);
+
+            if (tenant.Keys.Contains(containerizationHataraStatus.Code))
+            {
+                ContainerizationHataraStatus myContainerizationHataraStatus = containerizationHataraStatusRepository.GetSingle(containerizationHataraStatus.Code);
+                myContainerizationHataraStatus.Name = containerizationHataraStatus.Name;
+                myContainerizationHataraStatus.SearchFields = (containerizationHataraStatus.Code + "," + containerizationHataraStatus.Name).ToLower();
+
+                containerizationHataraStatusRepository.Update(myContainerizationHataraStatus);
+            }
+            else
+            {
+                ContainerizationHataraStatus newContainerizationHataraStatus = new ContainerizationHataraStatus() { Code = containerizationHataraStatus.Code, Name = containerizationHataraStatus.Name, SearchFields = (containerizationHataraStatus.Code + "," + containerizationHataraStatus.Name).ToLower() };
+                containerizationHataraStatusRepository.Add(newContainerizationHataraStatus);
             }
         }
 

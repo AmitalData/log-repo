@@ -45,6 +45,10 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         [Column("HaveRabbitMQ")]
         public string HaveRabbitMQ { get; set; }
 
+        [Column("EntityCode")]
+        public string EntityCode { get; set; }
+        [Column("EntityId")]
+        public string EntityId { get; set; }
 
 
 

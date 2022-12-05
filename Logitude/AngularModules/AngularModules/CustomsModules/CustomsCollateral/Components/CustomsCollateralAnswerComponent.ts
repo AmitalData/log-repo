@@ -51,7 +51,7 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
     selectAll: boolean;
     public ValidationErrorsList: string[] = [];
     isInclude: boolean = false;
-    taxExemptCodeTypesFilter: ApiQueryFilters;
+    TapagNumberTypesFilter: ApiQueryFilters;
 
 
     constructor(private _customsCollateralAnswerSharedDataService: CustomsCollateralAnswerSharedDataService, public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService, private _customsCollateralPMService: CustomsCollateralPMService, private _declarationExtendedListService: DeclarationExtendedListService) {
@@ -59,7 +59,7 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
     }
 
     ngOnInit(): void {
-        this.taxExemptCodeTypesFilter = this.initTaxExemptCodeTypesFilter();
+        this.TapagNumberTypesFilter = this.initTapagNumberTypesFilter();
 
        
     }
@@ -784,15 +784,15 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
 
     }
  
-    initTaxExemptCodeTypesFilter(): ApiQueryFilters {
+    initTapagNumberTypesFilter(): ApiQueryFilters {
 
-        const taxExemptCodeTypesFilter = new ApiQueryFilters();
-        taxExemptCodeTypesFilter.GetAll = true; 
-        taxExemptCodeTypesFilter.addAdditionalFilter("ClientId", this.EntityPM.EntityParentPM.ImporterId, null, null, "Equals", true, false, false, "string");
+        const TapagNumberTypesFilter = new ApiQueryFilters();
+        TapagNumberTypesFilter.GetAll = true; 
+        TapagNumberTypesFilter.addAdditionalFilter("ClientId", this.EntityPM.EntityParentPM.ImporterId, null, null, "Equals", true, false, false, "string");
 
         
 
-        return taxExemptCodeTypesFilter;
+        return TapagNumberTypesFilter;
     }
 
  

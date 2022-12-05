@@ -30,6 +30,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using Logitude.Customs.BL.TraceEvents;
 using Simplog.Data.CommonDataModel;
+using System.Data.Entity;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -77,7 +78,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                     MyRequestSheetParam.RequestDescription = "התרה לתיק- מספר הצהרה: " + declarationNumber;
 
-                    DeclarationPM declarationPM = declarationUpdateService.GetSertByConvertedDeclarationNumber(declarationNumber, requestParams.Tenant);
+                    DeclarationPM declarationPM = declarationUpdateService.GetSertByConvertedDeclarationNumber(declarationNumber, requestParams.Tenant,true);
                     if (declarationPM == null || string.IsNullOrWhiteSpace(declarationPM.Id))
                     {
                         var errMess = "DeclarationPM not found: DeclarationNumber=" + declarationNumber;
@@ -103,7 +104,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     var myCourierMasterQueryService = new CourierMasterQueryService(dbContext);
                     CourierMasterPM _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(declarationPM.Id, requestParams.Tenant);
-                    if (declarationPM.IsAmendment == true && declarationPM.AmendmentOriginalDeclartation != null)
+                    if (declarationPM.IsAmendment == true && declarationPM.AmendmentOriginalDeclartation != null && _CourierMasterPM == null)
                     {
                         _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(declarationPM.AmendmentOriginalDeclartation, requestParams.Tenant);
                     }
@@ -116,10 +117,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             myEventContextTagModel.EventCode = "RSG";
                             myEventContextTagModel.StatusDateTime = statusDateTime;
                             declarationPM.DeclarationStatusTypeCode = "7";
+
+                            this.CloseCustomsCollateral(declarationPM);
                            
                             ICommonDataContext commonDbContext = CommonDataContext.GetContext(declarationPM.Tenant);
                             UserRepository userRepository = new UserRepository(commonDbContext);
                             var user = userRepository.GetSingleUserByCode("MEHES", declarationPM.Tenant, true);
+
 
                             var setting = CustomsSettingQueryService.GetSettingByTenant(declarationPM.Tenant);
                             
@@ -407,5 +411,27 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         }
 
+        private void CloseCustomsCollateral(DeclarationPM dec)
+        {
+            ICustomContext dbContext = CustomContext.GetContext(dec.Tenant);
+            var CustomsCollateralQueryService = new CustomsCollateralQueryService(dbContext);
+            var declarationIdWithComma = dec.AmendmentOriginalDeclartation + "," + dec.Id;
+            var CollList = CustomsCollateralQueryService.GetDecCollListByOriginalDecId(declarationIdWithComma, dec.Tenant);
+            var customsCollateralUpdateService = new CustomsCollateralUpdateService(dbContext, new Dictionary<string, IContext>(), dec.Tenant);
+
+            if (CollList != null && CollList.Count > 0)
+            {
+                foreach(var Coll in CollList)
+                {
+                    if (!Coll.IsClosed)
+                    {
+                        Coll.IsClosed = true;
+                        Coll.ChangeSetOp = ChangeSetOperation.Update;
+                        customsCollateralUpdateService.Update(Coll,true);
+
+                    }
+                }
+            }
+        }
     }
 }

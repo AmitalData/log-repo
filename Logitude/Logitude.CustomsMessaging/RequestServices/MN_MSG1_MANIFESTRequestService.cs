@@ -82,15 +82,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             this.MyRequestSheetParam.EntityId1 = requestParams.LoggingEntityId;
             this.MyRequestSheetParam.RequestDescription = "מסר מניפסט";
 
-            EventContextTagModel myEventContextTagModel = new EventContextTagModel()
-            {
-                CallProccessID = EventContextTagModel.ProccessEnum.MN_MSG4_SendManifestFeedBack_MessageResponseService,
-                EventCode = "MNS",
-                EventRemarks = "Manifest Sent ",
-                StatusDateTime = DateTime.Now,
-            };
-            string loggingUserId = AuthenticationUtil.ResolveUserId(_DeclarationPM.Tenant);
-            RaiseEvent(_DeclarationPM, loggingUserId, myEventContextTagModel);
+
             //this._DeclarationPM.CurrentContextTag = myInsertEventContextTagModel;
             _DeclarationPM.ManifestCargoStatusCode = "4";
             _DeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
@@ -145,6 +137,7 @@ namespace Logitude.CustomsMessaging.RequestServices
         {
             UnifreightIIG.Common.MANIFESTRequestServiceReference.Declaration _DeclarationPM = new UnifreightIIG.Common.MANIFESTRequestServiceReference.Declaration();
 
+            DeclarationPM OrgDeclaration=null;
             //Get Declaration
             DeclarationQueryService myDeclarationQueryService = new DeclarationQueryService(_Context);
             this._DeclarationPM = myDeclarationQueryService.GetSingle(requestParams.DeclarationId, true, false);
@@ -153,9 +146,21 @@ namespace Logitude.CustomsMessaging.RequestServices
                 return _DeclarationPM;
             }
             CheckLock(requestParams, this._DeclarationPM);
+
+            if(this._DeclarationPM.IsAmendment == true)
+            {
+                OrgDeclaration = myDeclarationQueryService.GetAcceptDeclarationAmendment(this._DeclarationPM.AmendmentOriginalDeclartation, this._DeclarationPM.Tenant);
+
+            }
+
+            string declarationId = this._DeclarationPM.Id;
+
+            if (OrgDeclaration!= null) {
+                declarationId = OrgDeclaration.Id;
+            }
             //Get CourierDeclaration
             CourierDeclarationQueryService myCourierDeclarationQueryService = new CourierDeclarationQueryService(_Context);
-            _CourierDeclarationPM = myCourierDeclarationQueryService.GetCourierDeclarationByDeclarationId(this._DeclarationPM.Id, _Tenant.Id);
+            _CourierDeclarationPM = myCourierDeclarationQueryService.GetCourierDeclarationByDeclarationId(declarationId, _Tenant.Id);
             if (_CourierDeclarationPM == null)
             {
                 return _DeclarationPM;

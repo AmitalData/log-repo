@@ -291,17 +291,16 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         if (this.EntityPM.IsCourierDeclaration) {
                             button.IsHidden = false;
                             if (!this.IsDisplayOnly) {
-                                if (!((this.EntityPM.CourierPaymentStatusCode != 'P' || this.EntityPM.CourierPaymentStatusCode == null) &&
+                                if (this.EntityPM.IsAmendment == true && !AppTool.IsNullOrEmpty(this.EntityPM.AmendmentStatus)) {
+                                    button.IsDisabled = true;
+                                }
+                                if (this.EntityPM.IsAmendment!= true && !((this.EntityPM.CourierPaymentStatusCode != 'P' || this.EntityPM.CourierPaymentStatusCode == null) &&
                                     (this.EntityPM.CourierManifestStatusCode == 'V' || this.EntityPM.CourierManifestStatusCode == 'R' || this.EntityPM.CourierManifestStatusCode == 'X' || this.EntityPM.CourierManifestStatusCode == 'M')
                                 )) {
 
                                     button.IsDisabled = true;
                                 }
                             }
-
-
-                            if (this.EntityPM.AmendmentDontDisplayInList == true)
-                                button.IsDisabled = true;
 
                         }
                         else {
@@ -735,7 +734,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         };
         var logWindow = new LogitudeWindow();
         logWindow.Width = 600;
-        logWindow.Height = 350;
+        logWindow.Height = 400;
         logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.DeclarationCancellation");
         logWindow.WindowArgs = args;
         logWindow.ShowCloseButton = true;
@@ -1689,7 +1688,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                 windowArgs.DeclarationId = this.EntityPM.Id;
                 windowArgs.CourierHawb = this.EntityPM.MAWBCourierMaster;
 
-                logitudeWindow.Width = 470;
+                logitudeWindow.Width = 500;
                 logitudeWindow.Height = 300;
                 logitudeWindow.IsShowCloseButton = true;
                 logitudeWindow.Title = "Pending";//TextCodeTranslator.Translate("Customs.CourierMaster.O.MarkPending");

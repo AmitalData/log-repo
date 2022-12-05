@@ -387,8 +387,6 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string FinalLoadingSite  { get; set; }
        [DataMember]
-       public int? RequestedCustomsDocId  { get; set; }
-       [DataMember]
        public string ExportDeclarationOfficeCode  { get; set; }
        [DataMember]
        public string PhysicalCheck  { get; set; }
@@ -431,11 +429,11 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public bool? IsExportDeclarationAmendments  { get; set; }
        [DataMember]
+       public string CargoTypeCode  { get; set; }
+       [DataMember]
        public string LoadingPortName  { get; set; }
        [DataMember]
        public string ExportLoadingPortCode  { get; set; }
-       [DataMember]
-       public string CargoTypeCode  { get; set; }
        [DataMember]
        public string PhysicalCheckName  { get; set; }
    }

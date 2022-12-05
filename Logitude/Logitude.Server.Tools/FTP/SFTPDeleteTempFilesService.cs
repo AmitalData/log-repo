@@ -49,8 +49,7 @@ namespace Logitude.Server.Tools.FTP
                     _ftpHost = ftpHost;
                     if (!_TenantFeatureExist.ContainsKey(tenant))
                     {
-                        bool exist = Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("SFD", tenant);
-                        Debug.WriteLine($"SFTPDeleteTempFilesService:HasFeatureToggle(tenant:{tenant})[SFD]={exist }");
+                        bool exist = true;
                         _TenantFeatureExist[tenant] = exist;
                     }
 

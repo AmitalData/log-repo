@@ -439,6 +439,11 @@ export class ClaimPM {
     public set CustomsBranchName(newValue: string) { if (this.customsBranchName != newValue) { this.customsBranchName = newValue; this.MarkAsDirty("CustomsBranchName"); } }
        
 	 
+    private claimAmount: number;
+    public get ClaimAmount() { return this.claimAmount; }
+    public set ClaimAmount(newValue: number) { if (this.claimAmount != newValue) { this.claimAmount = newValue; this.MarkAsDirty("ClaimAmount"); } }
+       
+	 
 
     public OldEntityPM: ClaimPM;
 		

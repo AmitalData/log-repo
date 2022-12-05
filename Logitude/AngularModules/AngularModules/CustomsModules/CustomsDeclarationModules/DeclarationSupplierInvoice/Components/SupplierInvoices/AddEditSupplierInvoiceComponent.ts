@@ -1243,7 +1243,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
         if (!AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
             if (this.EntityPM.IsDirty || this.ForceSave) {
-                return this.SavingPromise(true);
+                return  this.SavingPromise(true);
             }
             else {
                 this.FinishPromiseDoWhatPlanned(true);
@@ -1251,7 +1251,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
         }
         Promise.resolve("lets go")
-            .then((res) => {
+            .then( (res) => {
                 ///Just Saving  .....
                 this.LogMe("this.SavingPromise();")
                 if (this.EntityPM.IsDirty || this.ForceSave) {
@@ -1308,6 +1308,8 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                 SessionLocator.SelectedSession.StartBusyIndicator("Check Insurance ...");
                 var toPromise = true;
                 return this.SendUnifaceRequestAndWaitPromise();
+                      
+              
 
             })
 

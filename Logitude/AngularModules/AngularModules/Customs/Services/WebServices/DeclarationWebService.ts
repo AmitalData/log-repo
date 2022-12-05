@@ -1276,6 +1276,26 @@ export class DeclarationWebService {
         );
     }
 
+
+    GetDeclarationExportStoragesByDeclarationIdAndExportFile(declarationId: string,exportFile:string, tenant: number) {
+        return defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+
+            return this._http.get(this._apiUrl + "/GetDeclarationExportStoragesByDeclarationIdAndExportFile/?declarationId=" + declarationId +"&exportFile=" + exportFile+ "&tenant=" + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var res = response;
+                serviceResponse.Result = res;
+                return serviceResponse;
+            }),catchError(ServiceHelper.HandleServiceError));
+        }
+        );
+    }
+
     GetDeclarationMamanSpecialAction(declarationId: string, tenant: number, actionCode: string, mamanSpecialActionCode: string) {
         return defer(() => {
             var authHeader = new Headers();
@@ -1934,6 +1954,22 @@ export class DeclarationWebService {
         }
     }
 
+    SendPRIVEventPrivacyProtection(declarationID:string,tenant:number,customFileNo:string){
+        return defer(() => {
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+
+            return this._http.get(this._apiUrl + "/SendPRIVEventPrivacyProtection/?tenant=" + tenant + "&declarationId=" + declarationID + "&customFileNo=" + customFileNo, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var res = response;
+                serviceResponse.Result = res;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
 
     MapJsonToCorrectionView(jsonPM: any, mapParent: boolean = true, entityPM: DeclarationCorrectionView = null) {
 
@@ -2020,6 +2056,21 @@ export class DeclarationWebService {
         // return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
         return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
     }
+
+
+    public GetGoldPaymentDefaults(CustomerCode: string): Promise<GoldPaymentDefaults> {
+        const ajax: Observable<any> = this._http.get(
+            this._apiUrl + "/GetGoldPaymentDefaults/?CustomerCode=" + CustomerCode
+            ,
+            {
+                headers: ServiceHelper.GetHttpHeaders().headers,
+                params: { CustomerCode: CustomerCode }
+            }
+        );
+
+        // return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
+        return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
+    }
 }
 
 
@@ -2033,7 +2084,8 @@ export interface ConsignmentPackage {
 export interface ConsignmentDeclartions {
     $id: string;
     ConsignmentPackages: ConsignmentPackage[];
-    Consignment: ConsignmentPM;
+    Declarations: DeclarationPM[];
+    Consignments: ConsignmentPM[];
 }
 
 export interface ExportStorageConnectToDeclaration {
@@ -2041,4 +2093,8 @@ export interface ExportStorageConnectToDeclaration {
     Connect: number;
     CustomsStatus: number;
     ActionCode: number;
+}
+export interface GoldPaymentDefaults {
+    CustomerDefaultGoldPay_CIM_GOLD_PAY: string
+    CompanyDefaultMaxPayMASAV_CGG_MAX_AGT_PAY: string
 }

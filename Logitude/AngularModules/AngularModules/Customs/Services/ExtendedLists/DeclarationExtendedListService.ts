@@ -19,24 +19,35 @@ export class DeclarationExtendedListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/Declarartion';
     }
 
-        GetSingleDeclarationByCustomFileNo(customFileNo: string) {
-
+    GetSingleDeclarationByCustomFileNo(customFileNo: string) {
         return defer(() => {
             return this._http.get(this._apiUrl + '/GetSingleDeclarationByCustomFileNo/?' + 'customFileNo=' + customFileNo,
                 ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
                     serviceResponse.Result = response;
                     var declarationList: DeclarationList;
                     if (serviceResponse.Result) {
-
-
                         var entity: DeclarationList;
                         declarationList = entity = this.MapJsonToEntityList(serviceResponse.Result);
+                    }
 
+                    serviceResponse.Result = declarationList;
+                    return serviceResponse;
+                }),catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 
-
+    GetLastAmendmentByCustomFileNo(customFileNo: string) {
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetLastAmendmentByCustomFileNo/?' + 'customFileNo=' + customFileNo,
+                ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                    var serviceResponse: ServiceResponse = new ServiceResponse();
+                    serviceResponse.Result = response;
+                    var declarationList: DeclarationList;
+                    if (serviceResponse.Result) {
+                        var entity: DeclarationList;
+                        declarationList = entity = this.MapJsonToEntityList(serviceResponse.Result);
                     }
 
                     serviceResponse.Result = declarationList;

@@ -31,7 +31,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ErrorPlace, 
 	         Tenant, 
 	         UnifreightStatusCode, 
-	         MamanSuspendedCode,
+	         MamanSuspendedCode, 
+	         SwissportSuspendedCode, 
+	         RequiresApproval,
 	      }
 
 
@@ -48,7 +50,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Tenant, 
 	         UnifreightStatusCode, 
 	         ErrorPlaceName, 
-	         MamanSuspendedCode,
+	         MamanSuspendedCode, 
+	         SwissportSuspendedCode, 
+	         RequiresApproval,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -100,6 +104,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MamanSuspendedCode))
             {
 				entityPOCO.MamanSuspendedCode = entityPM.MamanSuspendedCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SwissportSuspendedCode))
+            {
+				entityPOCO.SwissportSuspendedCode = entityPM.SwissportSuspendedCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequiresApproval))
+            {
+				entityPOCO.RequiresApproval = entityPM.RequiresApproval;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -158,6 +172,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.MamanSuspendedCode = entityPOCO.MamanSuspendedCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SwissportSuspendedCode))
+            {
+					entityPM.SwissportSuspendedCode = entityPOCO.SwissportSuspendedCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.RequiresApproval))
+            {
+					entityPM.RequiresApproval = entityPOCO.RequiresApproval;
+            }
+
 		}
 
 		public void PMToOldPM(CourierPendingReasonPM entityPM, CourierPendingReasonPM oldEntityPM)
@@ -207,6 +231,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MamanSuspendedCode))
             {
                 oldEntityPM.MamanSuspendedCode = entityPM.MamanSuspendedCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SwissportSuspendedCode))
+            {
+                oldEntityPM.SwissportSuspendedCode = entityPM.SwissportSuspendedCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequiresApproval))
+            {
+                oldEntityPM.RequiresApproval = entityPM.RequiresApproval;
             }
 			
 		}

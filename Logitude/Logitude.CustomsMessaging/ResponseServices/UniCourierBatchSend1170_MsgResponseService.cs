@@ -27,6 +27,16 @@ using Logitude.Customs.Data.Repsitories;
 using Logitude.CustomsMessaging.Utils;
 using Simplog.Server.Infrastructure.Helpers;
 
+ 
+using Devart.Data.Oracle;
+using Simplog.Data.InfrastructureModel;
+using System.Data.Common;
+using System.Data.SqlClient;
+using System.Transactions;
+//using System.Data.OracleClient;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+ 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
     public class UniCourierBatchSend1170_MsgResponseService : ResponseServiceBase
@@ -165,9 +175,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
                     {
                         Create1170(requestParams, mess, objectTableId, objectTableIdCourierMaster, itemPM);
-                        
-                        string updateSql = $"Update DeclarationCourierStatuses set COURIERMANIFESTSTATUSCODE='I' where DECLARATIONID ='{itemPM.DeclarationId}' ";
-                        CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
+
+                        RealSetDeclarationCourierManifestStatusCode(requestParams.Tenant, itemPM.DeclarationId);
+
+
+                        //string updateSql = $"Update DeclarationCourierStatuses set COURIERMANIFESTSTATUSCODE='I' where DECLARATIONID ='{itemPM.DeclarationId}' ";
+                        //CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
 
                         scopeNewCRS.Complete();
                     }
@@ -191,6 +204,45 @@ namespace Logitude.CustomsMessaging.ResponseServices
 //    CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
 //});
         }
+
+
+
+        public static void RealSetDeclarationCourierManifestStatusCode(int tenant, string declarationId)
+        {
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            string strConnString = TenantServerConfigration.GetDbConnection(tenant);
+            if (dbms == "oracle")
+            {
+
+                using (OracleConnection con = new OracleConnection(strConnString))
+                {
+                    string cmd = "Update DeclarationCourierStatuses set COURIERMANIFESTSTATUSCODE='I'";
+                    cmd = cmd + "  where DECLARATIONID=:p1 ";
+
+                    OracleCommand oracleCommand = new OracleCommand(cmd, con);
+                    oracleCommand.Parameters.Add(new OracleParameter("p1", declarationId));
+                    con.Open();
+                    oracleCommand.ExecuteNonQuery();
+                    con.Close();
+                }
+
+            }
+            else
+            {
+                using (SqlConnection cn = new SqlConnection(strConnString))
+                {
+                    string cmd = "Update Customs.DeclarationCourierStatuses set COURIERMANIFESTSTATUSCODE='I'";
+                    cmd = cmd + " where DECLARATIONID=" + "'" + declarationId + "'";
+
+                    SqlCommand sqlCommand = new SqlCommand(cmd, cn);
+
+                    cn.Open();
+                    sqlCommand.ExecuteNonQuery();
+                    cn.Close();
+                }
+            }
+        }
+
 
         private static void Create1170(GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, DeclarationCourierStatus itemPM)
         {

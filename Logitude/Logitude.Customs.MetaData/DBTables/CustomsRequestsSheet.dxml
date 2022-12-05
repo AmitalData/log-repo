@@ -140,6 +140,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="TenantPriority"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="RequestStatusCode"
     ReferencedTable="CustomsRequestsSheetStatuses"

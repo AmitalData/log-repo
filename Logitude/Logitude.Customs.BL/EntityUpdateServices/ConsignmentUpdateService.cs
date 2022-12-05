@@ -15,6 +15,16 @@ using System.Configuration;
 using System.Globalization;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Customs.BL.EntityQueryServices;
+using System.Data.Entity.Validation;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using System.Data.Common;
+using Simplog.Data.InfrastructureModel;
+using Devart.Data.Oracle;
+using System.Data.SqlClient;
+using System.Transactions;
+using Simplog.Server.Infrastructure.Helpers;
+using System.Data;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -45,20 +55,21 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void OnUpdating(ConsignmentPM entityPM, Consignment entityPOCO)
         {
-            if (EntityParentPM.Direction == "I") { 
 
-               entityPM.ManifestNumber = entityPM.ManifestNumber?.Trim();
-               entityPM.SecondCargoID = entityPM.SecondCargoID?.Trim();
-               entityPM.ThirdCargoID = entityPM.ThirdCargoID?.Trim();
+            if (EntityParentPM?.Direction == "I") { 
+
+                entityPM.ManifestNumber = entityPM.ManifestNumber?.Trim();
+                entityPM.SecondCargoID = entityPM.SecondCargoID?.Trim();
+                entityPM.ThirdCargoID = entityPM.ThirdCargoID?.Trim();
             }
 
             if (String.IsNullOrWhiteSpace(entityPM.UnloadPortCode))
             {
-                if (!string.IsNullOrWhiteSpace(EntityPOCO.UnloadPortCode) )
+                if (!string.IsNullOrWhiteSpace(EntityPOCO.UnloadPortCode))
                 {
                     LogHowClearUnloadPort(entityPM, entityPOCO);
                 }
-                
+
             }
 
             if ((string.IsNullOrWhiteSpace(entityPM.OriginCountryCode) && entityPM.OriginCountryCode != entityPOCO.OriginCountryCode) || (string.IsNullOrWhiteSpace(entityPM.CargoDescription) && entityPM.CargoDescription != entityPOCO.CargoDescription))
@@ -74,11 +85,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
 
                 string logData = "";
-                logData = $"entityPOCO.OriginCountryCode={entityPOCO.OriginCountryCode},entityPOCO.CargoDescription={entityPOCO.CargoDescription}"; 
+                logData = $"entityPOCO.OriginCountryCode={entityPOCO.OriginCountryCode},entityPOCO.CargoDescription={entityPOCO.CargoDescription}";
                 LogitudeSettings.HandleLogMe("Origin Country || Cargo Description deleted " + logData, false, "DeletedData", stopLogAt);
             }
 
-            UpdatePendingByKeyWords(entityPM);  
+            UpdatePendingByKeyWords(entityPM);
             base.OnUpdating(entityPM, entityPOCO);
         }
 
@@ -110,7 +121,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                             if (!isActive) continue;
 
-                            if (!String.IsNullOrWhiteSpace(courierReasonCode) && !pendingReasonCodeList.Contains(courierReasonCode ) )
+                            if (!String.IsNullOrWhiteSpace(courierReasonCode) && !pendingReasonCodeList.Contains(courierReasonCode))
                             {
                                 pendingReasonCodeList.Add(courierReasonCode);
                                 DeclarationPendingPM declarationPendingPM = new DeclarationPendingPM();
@@ -150,7 +161,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         private ConsignmentPM GetDBEntity(ConsignmentPM entityPM)
         {
             var consignmentQueryService = new ConsignmentQueryService(entityPM.Tenant);
-            var myDBEntity = consignmentQueryService.GetSingle(entityPM.DeclarationId,entityPM.ConsignmentNumber, true, false);
+            var myDBEntity = consignmentQueryService.GetSingle(entityPM.DeclarationId, entityPM.ConsignmentNumber, true, false);
             return myDBEntity ?? new ConsignmentPM();
         }
 
@@ -205,12 +216,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void UpdateComposition(ConsignmentPM entityPM)
         {
-            ConsignmentPackageUpdateService consignmentPackageUpdateService = new ConsignmentPackageUpdateService(MainContext,new Dictionary<string,Simplog.Server.Infrastructure.IContext>(),Tenant);
-           consignmentPackageUpdateService.UpdateMulti(entityPM.ConsignmentPackages, entityPM.DeletedConsignmentPackages, entityPM, false);
+            ConsignmentPackageUpdateService consignmentPackageUpdateService = new ConsignmentPackageUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
+            consignmentPackageUpdateService.UpdateMulti(entityPM.ConsignmentPackages, entityPM.DeletedConsignmentPackages, entityPM, false);
 
-             
 
-            
+
+
 
 
             ConsignmentInternalTransitionUpdateService consignmentInternalTransitionUpdateService = new ConsignmentInternalTransitionUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
@@ -218,7 +229,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             base.UpdateComposition(entityPM);
         }
 
-        protected override void AfterUpdating(ConsignmentPM entityPM,DeclarationPM entityParentPM)
+        protected override void AfterUpdating(ConsignmentPM entityPM, DeclarationPM entityParentPM)
         {
 
             //if (entityPM.ChangeSetOp == ChangeSetOperation.Insert || entityPM.ChangeSetOp == ChangeSetOperation.Delete)
@@ -227,7 +238,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //    ICustomContext context = MainContext as CustomContext;
             //    ConsignmentRepository consignmentRepository = new ConsignmentRepository(context);
             //    List<Consignment> consignments = consignmentRepository.GetMulti(new DeclarationKeys() { Id = entityPM.DeclarationId });
-                
+
             //    int index = 0;
             //    foreach (Consignment item in consignments)
             //    {
@@ -241,14 +252,156 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //    }
             //    consignmentRepository.SubmitChanges();
             //}
-          
-          
-            
+
+
+
         }
 
         public void FastDeleteComposition(Logitude.Customs.Data.EntityKeys.DeclarationKeys entityKeyFields)
         {
             (Repository as Logitude.Customs.Data.Repsitories.ConsignmentRepository).FastDeleteMulti(entityKeyFields);
+        }
+
+        private static string GetConnection(int tenant)
+        {
+            GlobalDB currentDb;
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
+                scope.Complete();
+            }
+
+            string dbConnectionInfo = currentDb.DBConnection;
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
+            WebFreightContext context = new WebFreightContext(connection);
+            return context.Database.Connection.ConnectionString;
+        }
+
+        public void FastUpdateUnloadPortCode(List<string> declarationIds, int tenant, string unloadPortCode)
+        {
+            ICustomContext context = MainContext as CustomContext;
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            string strConnString = GetConnection(Tenant);
+            string whereIn = "";
+            string declarations = "";
+            if (declarationIds.Count() > 0)
+            {
+                declarations = string.Join("','", declarationIds);
+                declarations = "'" + declarations + "'";
+            }
+            if(!string.IsNullOrEmpty(unloadPortCode)) unloadPortCode = "'" + unloadPortCode + "'";
+            int i = 0;
+            if (!string.IsNullOrEmpty(declarations) && declarations.Split(',').Count() > 990)
+            {
+                foreach (var item in declarations.Split(','))
+                {
+                    if (i < 990)
+                    {
+                        whereIn += item + ',';
+                        i++;
+                    }
+                    else
+                    {
+                        whereIn = whereIn.TrimEnd(',');
+                        whereIn += ") OR  ID IN (" + item + ',';
+                        i = 0;
+                    }
+                }
+                whereIn = whereIn.TrimEnd(',');
+            }
+            else
+            {
+                whereIn = declarations;
+            }
+
+            if (dbms == "oracle")
+            {
+                using (OracleConnection con = new OracleConnection(strConnString))
+                {
+                    if (Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("SQL_P", tenant))
+                    {
+                        string cmd = "Update Consignments set UnloadPortCode =:pu ";
+                        cmd = cmd + " where UnloadPortCode is null and declarationid IN (";
+                        //cmd = cmd + " where UnloadPortCode is null and declarationid IN (:p2)";
+
+                        OracleCommand oracleCommand = new OracleCommand(cmd, con);
+                        oracleCommand.Parameters.Add(new OracleParameter("pu", unloadPortCode));
+                        //oracleCommand.Parameters.Add(new OracleParameter("p2", whereIn));
+
+                        string formattedParams = whereIn.Replace(" ", string.Empty); // Or a custom format
+                        string[] splitParams = formattedParams.Split(',');
+
+                        ////List<OracleParamter> parameters = new List<OracleParameter>();
+
+                        ////string sql = @"SELECT * FROM FooTable WHERE FooValue IN (";
+                        for (int n = 0; n < splitParams.Length; n++)
+                        {
+                            cmd += ":p" + n + ",";
+                            //oracleCommand.Parameters.Add(new OracleParameter(":p" + n, OracleDbType.VarChar, splitParams[n], ParameterDirection.Input));
+                            oracleCommand.Parameters.Add(new OracleParameter(":p" + n, splitParams[n]));
+                        }
+                        cmd = cmd.Substring(0, (cmd.Length - 1));
+                        cmd += ')';
+
+                        con.Open();
+                        oracleCommand.ExecuteNonQuery();
+                        con.Close();
+                    }
+                    else
+                    {
+                        string cmd = "Update Consignments set UnloadPortCode = " + unloadPortCode;
+                        cmd = cmd + " where UnloadPortCode is null and declarationid IN (" + whereIn + ")";
+
+                        OracleCommand oracleCommand = new OracleCommand(cmd, con);
+
+                        con.Open();
+                        oracleCommand.ExecuteNonQuery();
+                        con.Close();
+                    }
+                    
+                }
+            }
+            else
+            {
+                using (SqlConnection cn = new SqlConnection(strConnString))
+                {
+                    
+                    if (Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("SQL_P", tenant))
+                    {
+                        string cmd = "Update Consignments set UnloadPortCode =:pu ";
+                        cmd = cmd + " where UnloadPortCode is null and declarationid IN (";
+                        
+                        SqlCommand sqlCommand = new SqlCommand(cmd, cn);
+                        sqlCommand.Parameters.Add(new SqlParameter("pu", unloadPortCode));
+                        
+                        string formattedParams = whereIn.Replace(" ", string.Empty); // Or a custom format
+                        string[] splitParams = formattedParams.Split(',');
+
+                        for (int n = 0; n < splitParams.Length; n++)
+                        {
+                            cmd += ":p" + n + ",";
+                            sqlCommand.Parameters.Add(new SqlParameter(":p" + n, splitParams[n]));
+                        }
+                        cmd = cmd.Substring(0, (cmd.Length - 1));
+                        cmd += ')';
+
+                        cn.Open();
+                        sqlCommand.ExecuteNonQuery();
+                        cn.Close();
+                    }
+                    else
+                    {
+                        string cmd = "Update Consignments set UnloadPortCode = " + unloadPortCode;
+                        cmd = cmd + " where UnloadPortCode is null and declarationid IN (" + whereIn + ")";
+
+                        SqlCommand sqlCommand = new SqlCommand(cmd, cn);
+
+                        cn.Open();
+                        sqlCommand.ExecuteNonQuery();
+                        cn.Close();
+                    }
+                }
+            }
         }
     }
 }

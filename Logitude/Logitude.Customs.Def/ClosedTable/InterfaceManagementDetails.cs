@@ -1867,6 +1867,23 @@ namespace Logitude.Customs.Def.ClosedTable
                 ResponseInterfaceCode = null,
                 //   NeedSignature = false
             });
+
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "1050",
+                InOut = InOutEnum.I.ToString(),
+                Description = "מסר יציאה ממסוף/נמל",
+                DcaPrefixName = "SendCC_MSG1050_EntryExitToFromCustomsStorageSitesMessage_Out.",
+                DcaPrefixName2 = "SendCC_MSG1050_EntryExitToFromCustomsStorageSitesMessage_EX_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = CONST_DefaultPriority,
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = null,
+                //   NeedSignature = false
+            });
+
             // moran 25.1.15 - Task 9967 <--
 
             all.Add(new InterfaceManagementDetails()
@@ -2755,6 +2772,21 @@ namespace Logitude.Customs.Def.ClosedTable
                 //  NeedSignature = false
             });
 
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "UCBUDCSMC",
+                InOut = InOutEnum.I.ToString(),
+                Description = "עדכון שטרי מטען בלדר בקישור לטיסה",
+                DcaPrefixName = "UCBUDCSMC_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = CONST_DefaultPriority,
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "",
+                InterfaceType = "B",
+            });
+
 
             all.Add(new InterfaceManagementDetails()
             {
@@ -2946,6 +2978,24 @@ namespace Logitude.Customs.Def.ClosedTable
                 InOut = InOutEnum.I.ToString(),
                 Description = "סגירה גורפת ל-Pending",
                 DcaPrefixName = "UnifreightCourierBatchTerminal_ClosePending_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = CONST_DefaultPriority,
+                AllowRestore = true,
+
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "",
+                //  NeedSignature = false
+                InterfaceType = "B",
+            });
+            all.Add(new InterfaceManagementDetails()
+            {
+                //TML ==>https://www.abbreviations.com/abbreviation/terminal
+                Code = "DCAInUCBApproveAllPending",
+
+                InOut = InOutEnum.I.ToString(),
+                Description = "אישור PENDING",
+                DcaPrefixName = "UnifreightCourierBatchTerminal_DCAInUCBApproveAllPending_Out.",
                 DefaultSendOptionsCode = null,
                 DefaultPriority = CONST_DefaultPriority,
                 AllowRestore = true,
@@ -3243,6 +3293,21 @@ namespace Logitude.Customs.Def.ClosedTable
                 SendAsDual = false,
                 ResponseInterfaceCode = null,
              });
+            
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "CourierMastersConnected",
+                InOut = InOutEnum.I.ToString(),
+                Description = "קישור הצהרות לטיסה",
+                DcaPrefixName = "UnifreightCourierBatchTerminal_CourierMastersConnected_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = CONST_DefaultPriority,
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "",
+                InterfaceType = "B",
+            });
 
             //C:\LogitudeWorld\Amital\Logitude.Customs.BL\EntityPMs\InterfaceManagementPM.cs
             var pm = new Logitude.Customs.Def.EntityPMs.InterfaceManagementPM();

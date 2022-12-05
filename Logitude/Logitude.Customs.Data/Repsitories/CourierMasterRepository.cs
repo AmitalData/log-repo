@@ -142,6 +142,10 @@ namespace Logitude.Customs.Data.Repsitories
             //var courierDecs = context.CourierDeclarations.Where(y => y.CourierMasterId == couriermasterid).Select(y => y.DeclarationId);
             //return (context.Declarations.Count(x => x.HatraDate == null && courierDecs.Contains(x.Id)));
         }
+        public CourierMaster GetCourierMasterByMawb(int tenant,string mawb)
+        {
+            return (from a in context.CourierMasters where a.Tenant == tenant && a.MAWB == mawb select a).FirstOrDefault();
+        }
     }
 
 }

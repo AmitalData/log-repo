@@ -48,6 +48,7 @@ using SupplierInvoicePM = Logitude.Customs.Def.EntityPMs.SupplierInvoicePM;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.AmitalMessaging.Utils;
 using Newtonsoft.Json;
+using Logitude.Customs.BL.BL;
 using WebFreight.Web.CustomWebServices.BL.XLSReports;
 using System.Net.Http.Headers;
 
@@ -1621,7 +1622,38 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
-        //declaration payment
+        public HttpResponseMessage GetGoldPaymentDefaults(string CustomerCode)
+        {
+            string CustomerDefaultGoldPay_CIM_GOLD_PAY = null;
+            string CompanyDefaultMaxPayMASAV_CGG_MAX_AGT_PAY = null;
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                ICustomContext customContext = CustomContext.GetContext(tenant);
+                //CIM_GOLD_PAY CGG_MAX_AGT_PAY
+                var declarationQS = new DeclarationQueryService(customContext);
+                if (!string.IsNullOrWhiteSpace(CustomerCode))
+                {
+                    ///דיפולט באינדקס לקוח "תשלום בניצול העברת זהב לקוח "
+                    CustomerDefaultGoldPay_CIM_GOLD_PAY = declarationQS.GetDefault("ISRAEL", "CIM_GOLD_PAY", "NON", CustomerCode, tenant);
+
+                }
+                ///דיפולט ברמת חברה "סכום מיסים מקסימלי לתשלום במס"ב סוכן
+                CompanyDefaultMaxPayMASAV_CGG_MAX_AGT_PAY = declarationQS.GetDefault("ISRAEL", "CGG_MAX_AGT_PAY", "NON", "NON", tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, new {
+                    CustomerDefaultGoldPay_CIM_GOLD_PAY = CustomerDefaultGoldPay_CIM_GOLD_PAY,
+                    CompanyDefaultMaxPayMASAV_CGG_MAX_AGT_PAY= CompanyDefaultMaxPayMASAV_CGG_MAX_AGT_PAY
+                });
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+            //declaration payment
+            
         public HttpResponseMessage GetSingleDeclarationPaymentPMandDefaultExplain(string id, string CustomerCode)
         {
             try
@@ -2271,6 +2303,23 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
 
         }
+        [HttpGet]
+        public HttpResponseMessage SendPRIVEventPrivacyProtection(int tenant, string declarationId, string customFileNo)
+        {
+            try
+            {
+                var privacyProtection = new PrivacyProtection();
+                privacyProtection.SendPRIVEventPrivacyProtectionMethod(tenant,declarationId, customFileNo);
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+
+        }
         //RaiseCLSHWBEvent
 
         [HttpGet]
@@ -2339,6 +2388,22 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             responseData.UserMessage = submitResponseData.UserMessage;
             responseData.ContinueProcessInBackground = submitResponseData.ContinueProcessInBackground;
             return responseData;
+        }
+        public HttpResponseMessage GetDeclarationExportStoragesByDeclarationIdAndExportFile(string declarationId,string exportFile ,int tenant)
+        {
+            try
+            {
+                ICustomContext customContext = CustomContext.GetContext(tenant);
+                ExportStorageQueryService queryService = new ExportStorageQueryService(customContext);
+                List<ExportStoragePM> declarationExportStoragesList = queryService.GetDeclarationExportStoragesList(declarationId, exportFile, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, declarationExportStoragesList);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
         }
         public HttpResponseMessage GetExportReport2Excel(string tenant, string ExportFromDate, string ExportToDate)
         {

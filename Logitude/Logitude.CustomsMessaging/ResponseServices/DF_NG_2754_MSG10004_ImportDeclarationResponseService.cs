@@ -34,6 +34,7 @@ using Logitude.AmitalMessaging.Customs.CustomFile;
 using Logitude.Customs.BL.Messaging.L2U.CustomFile;
 using Logitude.Customs.BL.Messaging.Customs;
 using Simplog.Server.Infrastructure.Helpers;
+using System.Threading.Tasks;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -156,15 +157,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 return;
             }
 
-            if (_MyDeclarationPM.IsCourierDeclaration && customResponse.Response != null && customResponse.Response.Status != null && customResponse.Response.Status.NameCode.Value == "13")
+            if (_MyDeclarationPM.IsCourierDeclaration && customResponse.Response != null && customResponse.Response.Status != null && (customResponse.Response.Status.NameCode.Value == "13" ||   customResponse.Response.Status.NameCode.Value == "14"))
             {
                 // update payment status code
                 DeclarationCourierStatusPM dcapm = new DeclarationCourierStatusQueryService(context)
                     .GetByDeclarationIdList(requestParams.Tenant, new List<string>() { _MyDeclarationPM.Id }).FirstOrDefault();
-                dcapm.CourierPaymentStatusCode = "R";
+                if (dcapm != null)
+                {
+                    dcapm.CourierPaymentStatusCode = "R";
+                    dcapm.ChangeSetOp = ChangeSetOperation.Update;
 
-                new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant)
-                    .Update(dcapm, true);
+                    new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant)
+                        .Update(dcapm, true);
+                }
             }
 
             if (_MyDeclarationPM.IsCourierDeclaration && this._MyDeclarationPM.PaymentDate.HasValue)
@@ -298,6 +303,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (requestParams.InterfaceTypeCode == "2755")
             {
+                AmitalInsertToQueueService.insertToQueue(this._MyDeclarationPM);
+
+
                 this._IsSubmitDeclarationResponse = true;
             }
 
@@ -1259,8 +1267,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     InterfaceTypeCode = "2755",
                                     LoggingUserId = requestParams.LoggingUserId,
                                     RequestVIA = SendRequestVIA.WebServiceBatch,
-                                    LoggingEntityReference = "AutoPayment",
-                                };
+                                 };
                                 if (requestDate != DateTime.MinValue)
                                 {
                                     requestDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, requestDate.Hour, requestDate.Minute, requestDate.Second);
@@ -1268,11 +1275,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                                     requestParams2755.RequestVIAChangeDue = string.Concat("נרשמה בקשה מתוזמנת לתאריך ", requestDate.ToShortDateString(), " שעה ", requestDate.ToShortTimeString());// "הבקשה תשלח בעתיד";
                                     requestParams2755.FutureSendDateTime = requestDate;
-                                    SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false, requestDate);
+                                    Task.Run(async () => {
+                                        await Task.Delay(TimeSpan.FromSeconds(30));
+                                        SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false, requestDate);
+                                    });
                                 }
                                 else
                                 {
-                                    SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false);
+                                    Task.Run(async () => {
+                                        await Task.Delay(TimeSpan.FromSeconds(30));
+                                        SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false);
+                                    });
                                 }
 
                                 scopeNewCRS.Complete();
@@ -1798,10 +1811,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 supplierInvoicePM.SupplierInvoiceItems.RemoveAll(rec => rec.IsParent != true);
             }
+
             foreach (var governmentAgencyGoodsItem in goodsShipment.GovernmentAgencyGoodsItem)
             {
                 var supplierInvoiceItemPM = supplierInvoicePM.SupplierInvoiceItems.FirstOrDefault(si => si.SequenceNumeric == governmentAgencyGoodsItem.SequenceNumeric);
                 //<--- Added by Yuval Chalup 26.05.2015 TASK-13473
+                LogMessagingUtil.Instance.AppendLine("My log");
+                LogMessagingUtil.Instance.AppendLine("supplierInvoiceItemPM DeclarationId" + supplierInvoiceItemPM.DeclarationId);
+                LogMessagingUtil.Instance.AppendLine("supplierInvoiceItemPM CounterKey" + supplierInvoiceItemPM.CounterKey
+                    );
+                LogMessagingUtil.Instance.AppendLine("supplierInvoiceItemPM SequenceNumeric" + supplierInvoiceItemPM.SequenceNumeric);
+                LogMessagingUtil.Instance.AppendLine("governmentAgencyGoodsItem.SequenceNumeric " + governmentAgencyGoodsItem.SequenceNumeric);
+               
                 if (supplierInvoiceItemPM == null)
                 {
                     if (governmentAgencyGoodsItem.Commodity != null)
@@ -1812,6 +1833,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             {
                                 if (governmentAgencyGoodsItem.Commodity.Classification[0] != null)
                                 {
+                                   
+
                                     throw new System.Exception(
                                        "unable to find the supplierInvoiceItemPM from governmentAgencyGoodsItem.Commodity.Classification " + governmentAgencyGoodsItem.Commodity.Classification[0].ID.Value);
                                 }

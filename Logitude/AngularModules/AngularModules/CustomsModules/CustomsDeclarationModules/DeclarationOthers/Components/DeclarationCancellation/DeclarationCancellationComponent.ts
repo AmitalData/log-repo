@@ -336,6 +336,9 @@ export class DeclarationCancellationComponent extends BaseComponent implements O
         logWindow.WindowClosed.subscribe(($event: any) => this.SkipCtor = true);
         logWindow.Show('./CustomsModules/CustomsDocuments/Components/CustomsDocumentsComponent');
     }
+    CancelButtonClicked() {
+        this.CurrentSession.CloseCurrentWindow();
+    }
 
     //ViewDocumentsComponent() {
 

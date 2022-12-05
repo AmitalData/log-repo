@@ -137,6 +137,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
             AppendLogLine("CheckIntegrity:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
             MyGenericResponseObj.Stage = "GetContext";
             _context = CustomContext.GetContext(ResolvedTenant());
+            amitalContext = AmitalContext.GetContext(ResolvedTenant());
             var myQueryService = new DeclarationQueryService(_context);
 
             //Delete Supplier Invoice

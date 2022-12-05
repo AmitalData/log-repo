@@ -156,6 +156,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCB2750",//,Batch Send 2750 per CourierMasterId
 "UCB2755",//,Batch Send 2755 per CourierMasterId
 "UCB1170",//,Batch Send 1170 per CourierMasterId
+"UCBUDCSMC",//Batch update declarationCourierStatus MasterChanged
 "UCB8250",//,Batch Send 8250 per CourierMasterId
 "UCBUD2LT",///UniCourierBatchSendUCBUD2LT_MsgResponseService
 "UCB8212",/// Batch Send Collateral
@@ -185,8 +186,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "2751T2", // תשובה להצהרת שטעון
 "UCADPE", // הזנה גורפת PENDING
 "DCACSIFF", // יצירת חשבון ספק מאקסל
+"DCAInUCBApproveAllPending",//אישור PENDING
+"CourierMastersConnected", // קישור הצהרות לטיסה
 "8235T", // תיקון שטעון
-
             };
 
             string[] intrefaceTypeListDisplayOnly = GetintrefaceTypeListDisplayOnly();
@@ -306,15 +308,15 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCB2750",//,Batch Send 2750 per CourierMasterId
 "UCB2755",//,Batch Send 2755 per CourierMasterId
 "UCB1170",//,Batch Send 1170 per CourierMasterId
+"UCBUDCSMC",//Batch update declarationCourierStatus MasterChanged
 "UCB8250",//,Batch Send 8250 per CourierMasterId
 "UCBUD2LT",///UniCourierBatchSendUCBUD2LT_MsgResponseService
 "UCB8212",/// Batch Send Collateral
 "8250",
 "2892",
 "2450",
-
-"UCUDO", 
 "UCBNDCD",///  Send bonded filing
+"UCUDO", 
 ///"8302", //בקשה לטופס הצהרה
 
 "2751"//הצהרת יצוא- מסר יוצא
@@ -338,11 +340,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "2751T", // הצהרת שטעון
 "2751T2", // תשובה להצהרת שטעון
 "UCADPE", // add multi pending
+"DCAInUCBApproveAllPending",//אישור PENDING
+"CourierMastersConnected", // קישור הצהרות לטיסה
+"UCADPE", // add multi pending
 "8235T", // תיקון שטעון
             };
 
             string[] intrefaceTypeListDisplayOnly = GetintrefaceTypeListDisplayOnly();
-            if (!requestInProgressParams.DisplayOnlyMode && !intrefaceTypeList.Contains(requestInProgressParams.InterfaceTypeCode))
+            if (!requestInProgressParams.DisplayOnlyMode && !intrefaceTypeList.Contains(requestInProgressParams.InterfaceTypeCode) && !(requestInProgressParams.InterfaceTypeCode == "UCUDO"))
             {
                 return new List<CustomsRequestsSheetPM>();
             }
@@ -448,13 +453,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCB2750",//,Batch Send 2750 per CourierMasterId
 "UCB2755",//,Batch Send 2755 per CourierMasterId
 "UCB1170",//,Batch Send 2750 per CourierMasterId
+"UCBUDCSMC",//Batch update declarationCourierStatus MasterChanged
 "UCBCMSS",//,Batch Send change StorageSite per CourierMasterId
 "1170", // - מסר מצהר
 "1171", // - מסר תשובה מצהר
 "1172", // - מסר תשובה מצהר - נדחף
 "8373",//"שאילתא לשחזור נתוני הצהרה"
 "9079",//"שאילתא לשחזור נתוני הצהרת יצוא"
-"UCUDO", 
  "UCB8212"
  ,"2892" ,
  "ClosePending",//סגירה גורפת ל-Pending
@@ -470,7 +475,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "2751T", // הצהרת שטעון
 "2751T2", // תשובה להצהרת שטעון
 "UCADPE",
+"DCAInUCBApproveAllPending",//אישור PENDING
 //"8302" //בקשה לטופס הצהרה
+"CourierMastersConnected", // קישור הצהרות לטיסה
 "8235T", // תיקון שטעון
 };
 
@@ -832,6 +839,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var pmList = q.ToList().Select(rec => this.GetEntityPM(rec)).ToList();
             return pmList;
         }
+        public CustomsRequestsSheet GetTenantPriorityByEntityID(string EntityID, int tenant)
+        {
+            CustomsRequestsSheet customsRequestsSheet = repository.GetTenantPriorityByEntityID(EntityID, tenant);
+           
+
+            return customsRequestsSheet;
+        }
+
     }
 
     public class RequestInProgressParams

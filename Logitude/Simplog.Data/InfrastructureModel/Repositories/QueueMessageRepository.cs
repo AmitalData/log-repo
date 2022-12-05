@@ -36,6 +36,12 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     where a.Id == id
                     select a).FirstOrDefault();
         }
+        public QueueMessage GetSingleQueueMessage(string entityId,string entityCode)
+        {
+            return (from a in context.QueueMessages
+                    where a.EntityId == entityId && a.EntityCode == entityCode
+                    select a).FirstOrDefault();
+        }
 
         public void Add(QueueMessage entity)
         {

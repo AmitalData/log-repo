@@ -8,7 +8,7 @@ import { ContainerizationPMService } from 'Customs/Services/StandardPMs/Containe
 import { ContainerizationMessagesService } from 'Customs/Services/WebServices/ContainerizationMessagesService';
 import { DeclarationEventManager } from 'Customs/Utilities/DeclarationEventManager';
 import { CustomMessageProgressComponent } from 'CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
-import { result } from 'cypress/types/lodash';
+import { List, result } from 'cypress/types/lodash';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ApiQueryFilters, FilterItem } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
@@ -59,7 +59,8 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
     consignmentPackagePM: ConsignmentPackagePM;
     DeliverySiteTypeList: ServiceResponse
     InternationalSiteList: ServiceResponse
-
+   
+    listSite: ObservableCollection;
     declarationPMService: DeclarationPMService = new DeclarationPMService();
 
     private selectedValue: string = "All";
@@ -114,6 +115,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
 
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService, public exportStorageExtendedListService: ExportStorageExtendedListService) {
         super();
+        this.listSite = new ObservableCollection([]);
         this.entityPM = new ExportStoragePM();
         this.entityPM.Tenant = SessionLocator.Tenant;
         this.connectedListIds = new ObservableCollection([]);
@@ -132,7 +134,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
 
 
     DataSource = {
-        pageSize: 30,
+        pageSize: 2000,
         rowCount: null,
         sortingCol: "OpenDate",
         sortingDir: "Decending",
@@ -157,7 +159,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
             filters.AdditionalFilters.push(this.SearchFieldsFilter);
         }
 
-        filters.PageSize = 30;
+        filters.PageSize = 2000;
         filters.PageIndex = 0; // decremented 1 in the service
         filters.GetAll = false;
         filters.GetCount = true;
@@ -189,7 +191,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'OpenDate',
             DataTypeCode: 'DateTime',
-            Display: "תאריך פתיחה",
+            Display: "תםריך פתיחה",
             Styles: { width: '110px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -201,7 +203,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'ExporterName',
             DataTypeCode: 'String',
-            Display: 'יצואן',
+            Display: 'יצוםן',
             Styles: { width: '150px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -211,7 +213,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'ExportFileNo',
             DataTypeCode: 'String',
-            Display: "מס' תיק יצוא",
+            Display: "מס' תיק יצום",
             Styles: { width: '100px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -222,7 +224,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
 
             FieldName: 'StorageNo',
             DataTypeCode: 'String',//'Number',
-            Display: 'מספר אחסנה',
+            Display: 'מספר םחסנה',
             Styles: { width: '90px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -231,7 +233,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'ShipName',
             DataTypeCode: 'String',
-            Display: 'אוניה',
+            Display: 'םוניה',
             Styles: { width: '140px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -251,7 +253,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'StorageStatusName',
             DataTypeCode: 'String',
-            Display: 'סטטוס אחסנה',
+            Display: 'סטטוס םחסנה',
             Styles: { width: '80px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -308,7 +310,9 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
     async SendButtonClicked() {
 
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.Saving"));
- 
+        this.InternationalSiteService.getAll().subscribe(Response=>{
+            this.listSite=Response.Result;
+        }) ;
 
         let ArrayExportStorageId = this.exportStorageExtendedListService.ConnectedExportStorage.split(',');
         let ConsignmentNumber = this.declarationPM.Consignments.length > 0 ? this.declarationPM.Consignments[this.declarationPM.Consignments.length - 1].ConsignmentNumber : 0;
@@ -334,6 +338,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
                                     this.exportStoragePMService.update(this.exportStorage.Result).subscribe((response: ServiceResponse) => {
                                         var index1 = this.declarationPM.Consignments.findIndex(u => u == isConsignment)
                                         this.declarationPM.Consignments[index1].ExportStoragesId = ExportStorageId;
+                                        this.declarationPM.Consignments[index1].ShipCode = this.exportStorage.Result?.ShipCode
 
                                     });
 
@@ -350,8 +355,8 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
                                     consignment.CargoDescription = this.exportStorage.Result.MarksNumbers;
                                     consignment.StorageSiteCode = this.checkStorageSiteCode(this.exportStorage.Result.StorageSiteCode) ? this.exportStorage.Result.StorageSiteCode : null;
                                     consignment.IsDangerousGoods = this.exportStorage.Result.IsDangerousGoods == null ? null : this.exportStorage.Result.IsDangerousGoods;
-                                    consignment.ExportUnloadingPortCode = this.checkloadingPortCodAndUn(this.exportStorage.Result.ExportUnloadingPortCode) ? this.exportStorage.Result.ExportUnloadingPortCode : "" //this.exportStorage.Result.ExportUnloadingPortCode;
-                                    consignment.ExportLoadingPortCode = this.checkloadingPortCodAndUn(this.exportStorage.Result.ExportLoadingPortcode) ? this.exportStorage.Result.ExportLoadingPortcode : ""//this.exportStorage.Result.ExportLoadingPortCode;
+                                    consignment.ExportUnloadingPortCode =this.listSite.GetIndex(this.exportStorage.Result.ExportUnloadingPortCode) !=-1  ? this.exportStorage.Result.ExportUnloadingPortCode : null //this.exportStorage.Result.ExportUnloadingPortCode;
+                                    consignment.ExportLoadingPortCode = this.listSite.GetIndex(this.exportStorage.Result.ExportLoadingPortcode) !=-1? this.exportStorage.Result.ExportLoadingPortcode : null//this.exportStorage.Result.ExportLoadingPortCode;
                                     consignment.ConsignmentType = "E";
                                     consignment.DeclarationId = this.declarationPM.Id;
                                     ConsignmentNumber++;
@@ -360,6 +365,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
                                     consignment.SequenceNumeric = SequenceNumeric;
                                     consignment.ExportStoragesId = this.exportStorage.Result.Id
                                     consignment.FinalDestinationPortCode = this.exportStorage.Result.FinalDestinationPortCode;
+                                    consignment.ShipCode = this.exportStorage.Result?.ShipCode;
 
 
                                     var consignmentPackage: ConsignmentPackagePM;

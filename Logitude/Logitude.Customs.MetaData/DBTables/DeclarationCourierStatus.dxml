@@ -217,6 +217,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="NotApprovedPendingList"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DeclarationId"
     ReferencedTable="Declarations"

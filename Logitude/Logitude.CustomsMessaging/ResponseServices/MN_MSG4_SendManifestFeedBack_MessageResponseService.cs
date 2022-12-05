@@ -157,17 +157,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //    //return;
             //}
 
-            if (!string.IsNullOrWhiteSpace(this.MyResponseData.UserMessage) && customResponse.Response == null)
-            {
-                myEventContextTagModel = new EventContextTagModel()
-                {
-                    CallProccessID = EventContextTagModel.ProccessEnum.MN_MSG4_SendManifestFeedBack_MessageResponseService,
-                    EventCode = "MNE",
-                    EventRemarks = this.MyResponseData.UserMessage,
-                    StatusDateTime = DateTime.Now,
-                };
-            }
-            else
+            
+            if (!(!string.IsNullOrWhiteSpace(this.MyResponseData.UserMessage) && customResponse.Response == null))
             {
                 /*
                  if(customResponse.ResponseContentHeader.Exception != null)
@@ -332,43 +323,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
 " + customResponse.ResponseContentHeader.Remark;
                 }
                 
-                    switch (_MyDeclarationPM.ManifestCargoStatusCode)
-                {
-                    case "1":
-                    case "2":
-                        myEventContextTagModel = new EventContextTagModel()
-                        {
-                            CallProccessID = EventContextTagModel.ProccessEnum.MN_MSG4_SendManifestFeedBack_MessageResponseService,
-                            EventCode = "MNC",
-                            EventRemarks = "Manifest Correct ",
-                            StatusDateTime = DateTime.Now,
-                        };
-                        if (!string.IsNullOrWhiteSpace(this.MyResponseData.UserMessage))
-                        {
-                            myEventContextTagModel.EventRemarks = myEventContextTagModel.EventRemarks + @"
-" + this.MyResponseData.UserMessage;
-                        }
-                        //this._MyDeclarationPM.CurrentContextTag = myEventContextTagModel;
-                        break;
-                    case "3":
-                        myEventContextTagModel = new EventContextTagModel()
-                        {
-                            CallProccessID = EventContextTagModel.ProccessEnum.MN_MSG4_SendManifestFeedBack_MessageResponseService,
-                            EventCode = "MNE",
-                            EventRemarks = "Manifest Error " + this.MyResponseData.UserMessage,
-                            StatusDateTime = DateTime.Now,
-                        };
-                        //this._MyDeclarationPM.CurrentContextTag = myEventContextTagModel;
-                        break;
-                    default:
-
-                        break;
-                }
+                   
             }
 
-            if (!string.IsNullOrWhiteSpace(myEventContextTagModel.EventCode))
-            {
-                if (myEventContextTagModel.EventCode == "MNC")//MNC its success !
+            
+                if (_MyDeclarationPM.ManifestCargoStatusCode=="1" || _MyDeclarationPM.ManifestCargoStatusCode=="2")//MNC its success !
                 {
                     DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
                     DeclarationCourierStatusPM declarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(requestParams.DeclarationId, true, false);
@@ -397,10 +356,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
 
                    
-                }
+                
 
-                string loggingUserId = AuthenticationUtil.ResolveUserId(_MyDeclarationPM.Tenant);
-                RaiseEvent(_MyDeclarationPM, loggingUserId, myEventContextTagModel);
+                
             }
 
             _MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;

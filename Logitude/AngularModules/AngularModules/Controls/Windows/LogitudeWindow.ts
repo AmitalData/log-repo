@@ -1,4 +1,4 @@
-import {Component, AfterViewInit, ViewChild, ViewContainerRef, Output, EventEmitter, HostListener} from '@angular/core';
+import {Component, AfterViewInit, ViewChild, ViewContainerRef, Output, EventEmitter, HostListener, ComponentRef} from '@angular/core';
 import { ChildDirective } from '../Directives/ChildDirective';
 import { Settings } from '../../Infrastructure/Settings';
 import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
@@ -60,8 +60,8 @@ export class LogitudeWindow {
         }
     }
 
-    private ComponentRef: any = null;
-    private InstanceComponent: LogitudeWindowTemplateComponent = null;
+    public ComponentRef: ComponentRef<any> = null;
+    public InstanceComponent: LogitudeWindowTemplateComponent = null;
     public Show(myContent: any) {
         if (myContent != null) {
             var viewContainerRefLocation: ViewContainerRef = this.CurrentSession.SessionLocation.viewContainerRef;
@@ -499,7 +499,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
     }
 
     private ComponentRef: any = null;
-    private ComponentInstance: any = null;
+    public ComponentInstance: any = null;
     private LoadChildComponent() {
         if (this.isChildInjected && this.isAfterViewInited) {
             if (this.ChildComponentPath != null) {

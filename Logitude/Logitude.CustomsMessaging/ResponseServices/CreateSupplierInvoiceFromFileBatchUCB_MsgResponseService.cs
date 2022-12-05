@@ -235,6 +235,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     InvoiceQuantity = 1,
                     InvoiceNumber = invoiceFromFile.InvoiceNumber,
                     ItemDescription = invoiceItemFromFile.ItemDescription,
+                    ItemCode = invoiceItemFromFile.ItemDescription,
                     //ClassificationCode = "84253990000"//todo
                 };
                 CTBCARMODRepository re = new CTBCARMODRepository(amitalContext);

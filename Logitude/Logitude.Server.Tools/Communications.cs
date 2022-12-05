@@ -66,6 +66,16 @@ namespace Logitude.Server.Tools
             var myCommLog = communicationLogRep.GetSingleCommunicationLogInProccess(entityId, tenant , to , correlationID);
             return myCommLog;
         }
+        public static CommunicationLog GetSingleCommunicationLogInProccess(int tenant, string entityId, List<string> subjects)
+        {
+
+            //CommunicationLog communicationLog = null;
+            var myContext = CommonDataContext.GetContext(tenant);
+            CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(myContext);
+
+            var myCommLog = communicationLogRep.GetSingleCommunicationLogInProccess(entityId, tenant, subjects);
+            return myCommLog;
+        }
 
 
         public static string GetData(CommunicationLog myCommLog)

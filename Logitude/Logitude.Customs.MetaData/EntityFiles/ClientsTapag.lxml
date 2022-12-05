@@ -40,6 +40,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="Client"
   DefaultText="&quot;Clients Tapag&quot;"
+
   Code="&quot;325a&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"

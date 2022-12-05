@@ -526,6 +526,7 @@ export class MaintenanceComponent {
                 }
 
             });
+
         }
 
         let yaronWantWithoutLogiUpdate = false;// in "customs" branch do not use it !!

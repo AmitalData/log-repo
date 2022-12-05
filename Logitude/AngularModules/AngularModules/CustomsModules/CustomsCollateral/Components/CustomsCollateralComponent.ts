@@ -37,6 +37,8 @@ export class CustomsCollateralComponent extends BaseComponent {
    responseData: INF_MSG_GenericResponseData = new INF_MSG_GenericResponseData();
     declarationMessagesService: DeclarationMessagesService = new DeclarationMessagesService();
     private CurrentSession = SessionLocator.SelectedSession;
+    public isEntityChange: boolean = false;
+    
    constructor(public entityArgs: EntityArgs) {
         super();
     }
@@ -398,6 +400,7 @@ export class CustomsCollateralComponent extends BaseComponent {
                                     this.customsCollateralPMService.get(this.CurrentEntity.Id).subscribe((response: ServiceResponse) => {
                                         if (response) {
                                             if (!response.HasError) {
+                                                this.isEntityChange = true;
                                                 this.CurrentEntity = response.Result;
                                                 this.BuildAnswersTabs();
                                             }

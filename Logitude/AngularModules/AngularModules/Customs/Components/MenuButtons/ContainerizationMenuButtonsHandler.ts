@@ -382,8 +382,8 @@ export class ContainerizationMenuButtonsHandler implements OnDestroy {
                 }
             });
         }
-    }
-    }
+        }
+    }    
 
     DisplayOnlyCheck() {
     }

@@ -1,4 +1,5 @@
 ﻿
+using Logitude.Customs.Def.EntityPMs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,5 +22,10 @@ namespace Logitude.Customs.Def.EntityQueryServicesExt
     public interface IDICustomsSettingQueryService
     {
         bool IsCourierTenant(int tenant);
+    }
+
+    public interface IDIUnifreightTaskService
+    {
+        void OpenUnifreighTaskGen(DeclarationPM dirtyDeclarationPM, string entname, string primary, string taskType, string status, bool raiseStatus, string xmlStatus, bool toLock);
     }
 }

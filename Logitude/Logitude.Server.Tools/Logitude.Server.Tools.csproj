@@ -244,9 +244,16 @@
     <Compile Include="Communications.cs" />
     <Compile Include="Contracts\ICustomsSendReportExel.cs" />
     <Compile Include="Contracts\ICustomsExchangeRatesQuery.cs" />
+    <Compile Include="Contracts\ICustomsDeleteCustomRequestSheet.cs" />
+    <Compile Include="Contracts\ICustomsDeleteQueMessMoreDetails.cs" />
+    <Compile Include="Contracts\ICustomsDeleteNotToCustomCommunication.cs" />
     <Compile Include="Contracts\IUpdateOpenDeclarationInCourierMasterService.cs" />
     <Compile Include="FTP\SFTPDeleteTempFilesService.cs" />
+
+    <Compile Include="Helpers\SqlBulkInsert.cs" />
+
     <Compile Include="Helpers\TableCounter.Customs.cs" />
+
     <Compile Include="KafkaConfigurations\KakaMessageTypes.cs" />
     <Compile Include="ContainerAccessor.cs" />
     <Compile Include="Contracts\GenericResponse.cs">

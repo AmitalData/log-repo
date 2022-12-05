@@ -81,7 +81,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsMessagesPending, 
 	         QtyFeedbackInPendingMessage, 
 	         LastRunningDCAWS, 
-	         LastNumOfMessagesDCAWS,
+	         LastNumOfMessagesDCAWS, 
+	         ServiceScript,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -81,9 +82,9 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
             return shortConnectedPartnersDetails;
         }
 
-
-
      
+
+
 
     }
 }

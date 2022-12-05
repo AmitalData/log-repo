@@ -88,7 +88,8 @@ namespace Logitude.Server.Tools.QueueService
             , queueSendModel);
             }
 
-            int tenantPriority = queueSendModel?.TenantPriority ?? 89;
+
+            int tenantPriority = queueSendModel?.TenantPriority ?? 89;  
             if (tenantPriority < 1)
             {
                 tenantPriority = 89;
@@ -398,19 +399,18 @@ namespace Logitude.Server.Tools.QueueService
 
         public QueueResponse Receive(TimeSpan? serverWaitTime = null)
         {
-             return ReceiveDetail(serverWaitTime, suppressSleep: false);
-        }
-        public QueueResponse ReceiveDetail(TimeSpan? serverWaitTime, bool suppressSleep)
-        {
  
+            return ReceiveDetail(serverWaitTime, suppressSleep: false);
+        }
+        public QueueResponse ReceiveDetail(TimeSpan? serverWaitTime,bool suppressSleep)
+        {
+
+
             if (LogitudeSettings.IsCostomsDeploy)
             {
                 return ReceiveCustoms(((int)(serverWaitTime??TimeSpan.FromSeconds(60)).TotalSeconds));
             }
-            if (LogitudeSettings.IsCostomsDeploy)
-            {
-                return ReceiveCustoms(((int)(serverWaitTime??TimeSpan.FromSeconds(60)).TotalSeconds));
-            }
+
              if (serverWaitTime == null) { serverWaitTime = TimeSpan.FromSeconds(5); }
 
             long messageId = -1;

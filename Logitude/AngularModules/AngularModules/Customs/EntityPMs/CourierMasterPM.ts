@@ -329,6 +329,31 @@ export class CourierMasterPM {
     public set NoOfCourierHawbWithoutDelivery(newValue: string) { if (this.noOfCourierHawbWithoutDelivery != newValue) { this.noOfCourierHawbWithoutDelivery = newValue; this.MarkAsDirty("NoOfCourierHawbWithoutDelivery"); } }
        
 	 
+    private hawbQuantityNoDocuments: number;
+    public get HawbQuantityNoDocuments() { return this.hawbQuantityNoDocuments; }
+    public set HawbQuantityNoDocuments(newValue: number) { if (this.hawbQuantityNoDocuments != newValue) { this.hawbQuantityNoDocuments = newValue; this.MarkAsDirty("HawbQuantityNoDocuments"); } }
+       
+	 
+    private hawbQuantityNoClassification: number;
+    public get HawbQuantityNoClassification() { return this.hawbQuantityNoClassification; }
+    public set HawbQuantityNoClassification(newValue: number) { if (this.hawbQuantityNoClassification != newValue) { this.hawbQuantityNoClassification = newValue; this.MarkAsDirty("HawbQuantityNoClassification"); } }
+       
+	 
+    private hawbQuantityNoTransManifest: number;
+    public get HawbQuantityNoTransManifest() { return this.hawbQuantityNoTransManifest; }
+    public set HawbQuantityNoTransManifest(newValue: number) { if (this.hawbQuantityNoTransManifest != newValue) { this.hawbQuantityNoTransManifest = newValue; this.MarkAsDirty("HawbQuantityNoTransManifest"); } }
+       
+	 
+    private hawbQuantityNoTransDeclaration: number;
+    public get HawbQuantityNoTransDeclaration() { return this.hawbQuantityNoTransDeclaration; }
+    public set HawbQuantityNoTransDeclaration(newValue: number) { if (this.hawbQuantityNoTransDeclaration != newValue) { this.hawbQuantityNoTransDeclaration = newValue; this.MarkAsDirty("HawbQuantityNoTransDeclaration"); } }
+       
+	 
+    private hawbQuantityNoTransPayment: number;
+    public get HawbQuantityNoTransPayment() { return this.hawbQuantityNoTransPayment; }
+    public set HawbQuantityNoTransPayment(newValue: number) { if (this.hawbQuantityNoTransPayment != newValue) { this.hawbQuantityNoTransPayment = newValue; this.MarkAsDirty("HawbQuantityNoTransPayment"); } }
+       
+	 
 
     public OldEntityPM: CourierMasterPM;
 		

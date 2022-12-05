@@ -129,6 +129,7 @@ export class CargoSplitGeneralTabComponent
     //}
     _EntityResourceFinished: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public isEntityChange: boolean = false;
 
     constructor(private EntityResourceService: EntityResourceService) {
         super();
@@ -1341,7 +1342,7 @@ export class CargoSplitGeneralTabComponent
         Validator.TryValidateObject(this.EntityPM, "Customs.DeclarationCargoSplit", errors);
         
         if (this.EntityPM.DecCargoSplitCons == null || this.EntityPM.DecCargoSplitCons.length < 1) {
-            errors.push(TextCodeTranslator.Translate("חובה להזין נתונים לפחות ליבואן םחד"));
+            errors.push(TextCodeTranslator.Translate("חובה להזין נתונים לפחות ליבוםן םחד"));
         } else {
             this.Tabs.forEach((consignment) => {
                 Validator.TryValidateObject(consignment.EntityPM, "Customs.DecCargoSplitCon", errors);
@@ -1437,6 +1438,7 @@ export class CargoSplitGeneralTabComponent
                 }
 
                 else {
+                    this.isEntityChange = true;
                     if (myResponse.Result instanceof DeclarationCargoSplitPM) this.EntityPM = myResponse.Result;
                     if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
 
@@ -1557,7 +1559,7 @@ export class CargoSplitGeneralTabComponent
         }
 
         if (this.Tabs == null || this.Tabs.length < 1) {
-            errors.push("חובה להזין נתונים לפחות ליבואן םחד");
+            errors.push("חובה להזין נתונים לפחות ליבוםן םחד");
         }
         for (let tab of this.Tabs) {
             if (AppTool.IsNullOrEmpty(tab.EntityPM.ImporterCode)) {

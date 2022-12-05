@@ -330,12 +330,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
 
 
-        public int GetDeclarationMaxAmendmentRequestNumber( int tenant)
-        {
-             DeclarationRepository declarationRepository = new DeclarationRepository(context);
-            return declarationRepository.GetDeclarationMaxAmendmentRequestNumber(tenant);
-        }
-
 
         public int GetDeclarationMaxCancelRequestNumber(int tenant, string id)
         {
@@ -360,11 +354,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return repository.GetMinDeclarationByDeclarationNumber(declarationNumber, tenant);
         }
 
-        public DeclarationPM GetDeclarationByfunctionalReferenceID( string functionalReferenceID,  int tenant)
+        public DeclarationPM GetDeclarationByfunctionalReferenceID( string functionalReferenceID,string agentFileReferenceID,  int tenant)
         {
              if (String.IsNullOrWhiteSpace(functionalReferenceID)) return null;
 
-            var declaration = repository.GetDeclarationByFunctionalReferenceID(functionalReferenceID , tenant);
+            var declaration = repository.GetDeclarationByFunctionalReferenceID(functionalReferenceID, agentFileReferenceID, tenant);
             DeclarationPM declarationPM = new DeclarationPM();
             DeclarationDataMapping mapping = new DeclarationDataMapping();
             if (declaration == null) return null;
@@ -1250,7 +1244,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
             if (String.IsNullOrWhiteSpace(declarationId)) return "";
             return repository.GetCustomFileNoByDeclarationId(declarationId, tenant);
         }
-
+        public Declaration GetDeclarationByConsignment(string cargoTypeCode, string manifestNumber, string secondCargoID, string thirdCargoID)
+        {
+            return repository.GetDeclarationByConsignment(cargoTypeCode, manifestNumber, secondCargoID, thirdCargoID);
+        }
 
         public List<DeclarationPM> GetMultiByKeys(int tenant, List<string> keys)
         {
@@ -2232,9 +2229,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
         {
             return repository.GetHatraDateForDecId(decId, tenant);
         }
+
         public List<ContainerizationUniqueConsignment> GetContainerizationUniqueConsignment(List<string> declarationList)
         {
             return this.repository.GetContainerizationUniqueConsignment(declarationList);
+        }
+        public string GetDeclarationByDeclarationNum(string decNumber,int tenant)
+        {
+            return repository.GetDeclarationByDeclarationNum(decNumber, tenant);
         }
 
         public List<ExportReport1> GetReportDeclarationForExportReport1(DateTime? ExportFrom, DateTime? ExportTo)
@@ -2249,5 +2251,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var ExportReportData = this.repository.GetReportDeclarationForExportReport2(ExportFrom, ExportTo);
             return ExportReportData;
         }
+        public string GetDeclarationByConsignment()
+        {
+            return "";
+        }
+
     }
 }

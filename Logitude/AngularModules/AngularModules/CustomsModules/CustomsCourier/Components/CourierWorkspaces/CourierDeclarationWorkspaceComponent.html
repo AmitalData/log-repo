@@ -347,14 +347,10 @@
                             </tr>
 
 
-                            <!--Pending-->
-                            <tr [style.height.%]="this._SelectedTabFilter.Code  =='PEN' ? 100 : 0">
+                                <!--Pending-->
+                            <tr [style.display]="this._SelectedTabFilter.Code  =='PEN' ? 'table-row' : 'none'">
                                 <td>
                                     <table>
-
-                                       
-
-
                                         <tr style="height:100%;">
                                             <td style="height: 100%;width:25%;background-color: white; ">
 
@@ -442,6 +438,7 @@
                                     </table>
                                 </td>
                             </tr>
+                        
 
 
                         </table>

@@ -6,6 +6,7 @@ using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.Customs.Data;
+using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Def.EntityQueryServicesExt;
 using Logitude.CustomsMessaging.Common.RequestParams;
@@ -404,24 +405,58 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         private bool CheckIsSendByDocType(string logData)
         {
+
+            DateTime stopLogAt = DateTime.MinValue;//DateTime stopLogAt = new DateTime(2020, 09, 01);
+            string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20222010T095633.LogUntilDateyyyyMMdd"];
+            if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+            {
+                stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
+                                                    "yyyyMMdd",
+                                                    CultureInfo.InvariantCulture,
+                                                    DateTimeStyles.None);
+            }
+
+            LogitudeSettings.HandleLogMe("CheckIsSendByDocTypeBonded  ", false, "SendBondedCustomDocument", stopLogAt);
+
+
             bool IsSendByDocType = false;
             string CustomsDocumentUpload = "";
             try
             {
-                DocumentTypeCustomsDataQueryService documentTypeCustomsDataQueryService = new DocumentTypeCustomsDataQueryService(_DocumentsFilingPM.Tenant);
-                DocumentTypeCustomsDataPM documentTypeCustomsDataPM = documentTypeCustomsDataQueryService.GetSingle(_DocumentsFilingPM.DocumentTypeId, false, true);
+                DocumentTypeQueryService documentTypeQueryService = new DocumentTypeQueryService(_DocumentsFilingPM.Tenant);
+                DocumentTypePM documentTypePM = documentTypeQueryService.GetDocumentTypeCodeById(_DocumentsFilingPM.DocumentTypeId, _DocumentsFilingPM.Tenant);
 
-                if (documentTypeCustomsDataPM != null && !String.IsNullOrWhiteSpace(documentTypeCustomsDataPM.CustomsDoucumentTypeCode))
+                if (documentTypePM != null && !String.IsNullOrWhiteSpace(documentTypePM.Code))
                 {
-                    CustomDocumentTypeQueryService customDocumentTypeQueryService = new CustomDocumentTypeQueryService(_DocumentsFilingPM.Tenant);
-                    CustomDocumentTypePM customDocumentTypePM = customDocumentTypeQueryService.GetSingle(documentTypeCustomsDataPM.CustomsDoucumentTypeCode, false, true);
+                    LogitudeSettings.HandleLogMe("  if (documentTypePM != null && !String.IsNullOrWhiteSpace(documentTypePM.Code))"+ documentTypePM?.Code, false, "SendBondedCustomDocument", stopLogAt);
+                    DocumentTypeCustomsDataQueryService documentTypeCustomsDataQueryService = new DocumentTypeCustomsDataQueryService(_DocumentsFilingPM.Tenant);
+                    DocumentTypeCustomsDataPM documentTypeCustomsDataPM = documentTypeCustomsDataQueryService.GetSingle(documentTypePM.Code, false, true);
 
-                    if (customDocumentTypePM != null && !String.IsNullOrEmpty(customDocumentTypePM.CustomsDocumentUpload))
+                    if (documentTypeCustomsDataPM != null && !String.IsNullOrWhiteSpace(documentTypeCustomsDataPM.CustomsDoucumentTypeCode))
                     {
-                        CustomsDocumentUpload = customDocumentTypePM.CustomsDocumentUpload;
-                        if (customDocumentTypePM.CustomsDocumentUpload == "C" || customDocumentTypePM.CustomsDocumentUpload == "U")
+
+                        LogitudeSettings.HandleLogMe("   if (documentTypeCustomsDataPM != null && !String.IsNullOrWhiteSpace(documentTypeCustomsDataPM.CustomsDoucumentTypeCode))" + documentTypeCustomsDataPM?.CustomsDoucumentTypeCode, false, "SendBondedCustomDocument", stopLogAt);
+
+                        CustomDocumentTypeQueryService customDocumentTypeQueryService = new CustomDocumentTypeQueryService(_DocumentsFilingPM.Tenant);
+                        CustomDocumentTypePM customDocumentTypePM = customDocumentTypeQueryService.GetSingle(documentTypeCustomsDataPM.CustomsDoucumentTypeCode, false, false);
+
+                        if (customDocumentTypePM != null && !String.IsNullOrEmpty(customDocumentTypePM.CustomsDocumentUpload))
                         {
-                            IsSendByDocType = true;
+
+                            LogitudeSettings.HandleLogMe("  if (customDocumentTypePM != null && !String.IsNullOrEmpty(customDocumentTypePM.CustomsDocumentUpload))" + customDocumentTypePM?.CustomsDocumentUpload, false, "SendBondedCustomDocument", stopLogAt);
+
+                            CustomsDocumentUpload = customDocumentTypePM.CustomsDocumentUpload;
+
+
+                            if (customDocumentTypePM.CustomsDocumentUpload == "U" || customDocumentTypePM.CustomsDocumentUpload == "C")
+
+                            {
+
+                                LogitudeSettings.HandleLogMe("   if (customDocumentTypePM.CustomsDocumentUpload == U || customDocumentTypePM.CustomsDocumentUpload == C)  " + customDocumentTypePM?.CustomsDocumentUpload, false, "SendBondedCustomDocument", stopLogAt);
+
+                                IsSendByDocType = true;
+
+                            }
                         }
                     }
                 }
@@ -543,7 +578,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             }
             customsDocumentPM.DocumentsFilingId = DocumentsFilingPMId;
-            customsDocumentPM.DocumentTypeCode = CustomsDoucumentTypeCode;//_DocumentsFilingPM.DocumentTypeCode;
+            ICustomContext dbContext = CustomContext.GetContext(Tenant);
+            var myDocumentTypeCustomsDatatQueryService = new DocumentTypeCustomsDataQueryService(dbContext);
+            var DocumentTypeCustomsDatat = myDocumentTypeCustomsDatatQueryService.GetSingle(CustomsDoucumentTypeCode, true, false);
+            customsDocumentPM.DocumentTypeCode = DocumentTypeCustomsDatat.CustomsDoucumentTypeCode;//_DocumentsFilingPM.DocumentTypeCode;
                                                                           //myCustomsDocumentPM.CurrentCustomsDocumentsTicketId = customsDocumentsTicketPM.Id;
             customsDocumentPM.Tenant = Tenant;
 

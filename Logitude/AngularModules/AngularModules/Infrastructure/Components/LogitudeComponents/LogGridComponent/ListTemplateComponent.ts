@@ -1,9 +1,10 @@
-import {Component, ElementRef, OnInit, ViewContainerRef,ChangeDetectorRef} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewContainerRef,ChangeDetectorRef, ChangeDetectionStrategy, Input} from '@angular/core';
 import {SessionLocator} from '../../../Utilities/SessionLocator';
 import {ObjectsLocator} from '../../../Locators/ObjectsLocator';
 
 @Component({
     selector: 'list-template',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     template: `<div style="overflow: hidden; text-overflow: ellipsis;">
                 
                <span>
@@ -32,6 +33,10 @@ export class ListTemplateComponent implements OnInit {
     public SearchTerm: string;
     public RTL: boolean = ObjectsLocator.GlobalSetting == undefined ? false : (ObjectsLocator.GlobalSetting.LayoutDirection == 'rtl' ? true : false);
     public LoadedComponent: any;
+    @Input('markChecked') set markChecked(mark: boolean) {
+        if(mark)
+            this.CD.markForCheck();
+    }
 
     constructor(private _elementRef: ElementRef, private _ViewContainerRef: ViewContainerRef, private CD: ChangeDetectorRef) {
         this.noComponent = false;

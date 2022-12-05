@@ -35,6 +35,8 @@ using System.Net.Http.Headers;
 using Logitude.Customs.BL.Messaging.ILSWS;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.BL.BL;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -288,7 +290,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-        public HttpResponseMessage PostSendClosePending(SendClosePendingRequestParams requestParamsData)
+        public HttpResponseMessage PostSendClosePending(PendingRequestParams requestParamsData)
         {
             try
             {
@@ -300,6 +302,28 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
                 var messagingService = new DCAInUCBClosePending_MsgMessagingService();
+                var sts = messagingService.CreateCRS(tenant, null, requestParamsData);
+
+                return Request.CreateResponse(HttpStatusCode.OK, sts);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        public HttpResponseMessage PostApproveAllPending(PendingRequestParams requestParamsData)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+                var messagingService = new DCAInUCAApproveAllPending_MsgMessagingService();
                 var sts = messagingService.CreateCRS(tenant, null, requestParamsData);
 
                 return Request.CreateResponse(HttpStatusCode.OK, sts);
@@ -587,9 +611,17 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 CourierMasterQueryService queryService = new CourierMasterQueryService(customContext);
                 IQueryable<DeclarationPM> declarations = queryService.GetCourierConnectedDeclarations(queryOperations, tenant);
 
-                ServiceResponse response = new ServiceResponse();
-                response.Count = declarations.Count();
-                response.Result = declarations;
+                declarations = declarations.OrderBy(r => r.Id);
+                if (!queryOperations.GetAll)
+                {
+                    int skippedPorts = queryOperations.PageIndex;
+                    declarations = declarations.Skip(skippedPorts);
+                    declarations = declarations.Take(queryOperations.PageSize);
+                }
+
+                ServiceResponse response = new ServiceResponse();                
+                response.Count = queryService.GetCourierConnectedDeclarations(queryOperations, tenant).Count();
+                response.Result = declarations.ToList();
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             }
 
@@ -770,6 +802,22 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                     var amitalContext = AmitalContext.GetContext(tenant);
                     var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
                     var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", false, true);
+                    FeatureQuery featureQuery = new FeatureQuery();
+                    var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(tenant), tenant);
+                    var feature = features.Features.FirstOrDefault(x => x.Code == "CancelOldCommunication");
+                    if (feature != null)
+                    {
+                        try
+                        {
+                            var cancelOldCommunicationLogs = new CancelOldCommunicationLogs();
+                            cancelOldCommunicationLogs.CancelOldECTHRDataMaman(tenant, declarationId);
+                        }
+                        catch
+                        {
+
+                        }
+                       
+                    }
 
                     if (def.DEFDATA.Contains("ILMMN") && declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILMMN") // Maman
                     {
@@ -933,6 +981,21 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
 
+        }
+
+        [HttpPost]
+        public HttpResponseMessage SendConnectDeclaration([FromBody] DCI_CourierMastersConnectedResponseContentHeader param)
+        {
+            try
+            {
+                var res = new DCI_CourierMastersConnectedMessagingService().CreateCRS(param);
+                return Request.CreateResponse(HttpStatusCode.OK, res);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
         }
     }
 }

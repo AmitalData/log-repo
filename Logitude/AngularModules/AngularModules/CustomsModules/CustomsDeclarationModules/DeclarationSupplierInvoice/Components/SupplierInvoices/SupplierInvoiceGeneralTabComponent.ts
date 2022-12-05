@@ -134,12 +134,12 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     TooltipCar: string;
     TooltipEdit: string;
     SumDifference: number = 0;
-
+ 
 
     old_currency;
     old_amount;
     old_vendor;
-
+    
     public addedVehicles: any[] = [];
 
     private CurrentSession = SessionLocator.SelectedSession;
@@ -169,6 +169,9 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             this.IsAccumulationStateVisibile = true;
             this.IsNotForAccumaltionVisibile = true;
         }
+        else {
+            this.IsNotForAccumaltionVisibile = false;
+        }
         //this.CurrentSession.SubscriptionAdd(
         //this.CurrentSession.SelectInvoiceItemEvent.subscribe((res) => {
         //    var item: SupplierInvoiceItemLine = this.ItemsSource.Collection.filter(d => d.SequenceNumeric == res.filter)[0];
@@ -187,13 +190,12 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             
         this.initTradeAgreementFilter();
 
-
  
     }
     ngOnInit() {
         if (this.allowExport) {
             this.TooltipCopy = "שכפל שורה"; 
-            this.TooltipCertificate = "אישורים"
+            this.TooltipCertificate = "םישורים"
             this.TooltipCar = "נתוני רכב";
             this.TooltipEdit = "עריכת פריט";
             this.setAdjustmentsWarning(this.IncotermCode)
@@ -214,7 +216,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         } 
         this.supplierInvoiceSharedService.DifferenceAndTotalForeignCurrency$.subscribe(()=>this.GetDifferenceAndTotalForeignCurrency()) 
     }
-
+  
 
     initTradeAgreementFilter() {
         this.tradeAgreementFilter = new ApiQueryFilters();
@@ -347,7 +349,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
         windowArgs.Parent = this;
         windowArgs.IsDisplayOnly = this.IsDisplayOnly;
-        var windowTitle = "נתונים נוספים ליצוא - חטיבת חשבון יצואן";
+        var windowTitle = "נתונים נוספים ליצום - חטיבת חשבון יצוםן";
 
         var logWindow = new LogitudeWindow();
         logWindow.Width = 700;
@@ -414,7 +416,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             this.AccumulatedFilterSelectedValue = itemValue;
             if (this.AccumulatedFilterSelectedValue == 'Accumulated') {
                 this.AccumulatedFilter = "parent";
-                this.AccumulatedMessageText = "חשבון צבור - פרטי מכס ניתנים לעריכה רק במצב לא צבור";
+                this.AccumulatedMessageText = "חשבון צבור - פרטי מכס ניתנים לעריכה רק במצב לם צבור";
 
                 this.IsActionButtonsEnabled = false;
             }
@@ -528,7 +530,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
                     if (this.EntityPM.IsAccumalated) {
                         this.IsAccumulated = true;
-                        this.AccumulatedMessageText = "חשבון צבור - פרטי מכס ניתנים לעריכה רק במצב לא צבור";
+                        this.AccumulatedMessageText = "חשבון צבור - פרטי מכס ניתנים לעריכה רק במצב לם צבור";
                         if (this.AccumulatedFilterSelectedValue == 'Accumulated') {
                             this.IsActionButtonsEnabled = false;
 
@@ -671,6 +673,8 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         //}
 
         //this.GetCountryPURForItems();
+        
+
     }
 
     //GetExchagneRates() {
@@ -709,14 +713,14 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             this.AddModification("104", paymentCounter, "הובלה בפועל");
         } else {
             Freight104.TypeName = "הובלה בפועל"
-           this.AdjustmentsList.Insert(new ModificationItemModel(Freight104, this, "104"));
+            this.AdjustmentsList.Insert(new ModificationItemModel(Freight104, this, "104"));
         }
 
         if (ExtraPayments160 == null) {
             paymentCounter += 1;
-            this.AddModification("160", paymentCounter, "הוצאות נוספות");
+            this.AddModification("160", paymentCounter, "הוצםות נוספות");
         } else {
-            ExtraPayments160.TypeName = "הוצאות נוספות"
+            ExtraPayments160.TypeName = "הוצםות נוספות"
             this.AdjustmentsList.Insert(new ModificationItemModel(ExtraPayments160, this, "160"));
         }
 
@@ -970,7 +974,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             this.vendor = myResponse.Result;
             if (this.vendor != null) {
                 this.EntityPM.IssueCountryCode = this.vendor.CountryCode;
-                this.EntityPM.IssueCountryName = "טאיוואן";
+                this.EntityPM.IssueCountryName = "טםיווםן";
                 this.vendorNumber = this.vendor.VendorNumber;
                 this.SetDepositionStatus();
             }
@@ -1169,16 +1173,16 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
         this.setAdjustmentsWarning(newValue);
     }
-    
+
     private async setAdjustmentsWarning(incotermCode: string) {
         if (incotermCode) {
             const filters: ApiQueryFilters = new ApiQueryFilters();
             filters.PageIndex = 0;
             filters.PageSize = 50;
             filters.addAdditionalFilter("ENGLISHNAME", incotermCode, null, null, "Contains", false, false, false, "Text", false, false);
-            filters.addAdditionalFilter("LeadDocumentTypeName", 'הצהרת יצוא', null, null, "Contains", false, false, false, "Text", false, false);
+            filters.addAdditionalFilter("LeadDocumentTypeName", 'הצהרת יצום', null, null, "Contains", false, false, false, "Text", false, false);
             const incotemrsFileValidationList: IncotemrsFileValidationList[] = await this.logtuideTableDataService.getDataFromService(this.incotemrsFileValidationListService.getByFilters(filters))
-            
+
             this.isInsurance = incotemrsFileValidationList.some(x => x.IsInsurance)
             this.isFreightCharge = incotemrsFileValidationList.some(x => x.IsFreightCharge)
         } else
@@ -1407,7 +1411,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                     var confirm = new ConfirmWindow();
                     confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
                     confirm.ShowNoButton = true;
-                    confirm.Show(" קיים כבר חשבון ספק עם מספר חשבון זהה - שורה" + exist.SequenceNumeric + "- האם להמשיך ?");
+                    confirm.Show(" קיים כבר חשבון ספק עם מספר חשבון זהה - שורה" + exist.SequenceNumeric + "- הםם להמשיך ?");
                     confirm.WindowClosed.subscribe((event: any) => {
                         confirm.Close();
                         this.InvoiceNumber = newValue;
@@ -1444,7 +1448,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         var confirm = new ConfirmWindow();
 
         confirm.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.UpdateAndOverride");
-        confirm.NoButtonText =  TextCodeTranslator.Translate("Customs.Declaration.O.Update");
+        confirm.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Update");
         confirm.ShowNoButton = true;
         confirm.Show(TextCodeTranslator.Translate("Customs.Declaration.O.UpdateOrOverride"));
         confirm.WindowClosed.subscribe((event: any) => {
@@ -1464,23 +1468,23 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                 confirm.Close();
                 for (let item of this.ItemsSource.Collection) {
                     if (item.InvoiceQuantityType == null) {
-        
+
                         if (item.QunatityTypeCode != null) {
                             var s = item.QunatityTypeCode.slice(1, item.QunatityTypeCode.length - 1);
                             //var s = item.QunatityTypeCode.split('(');
                             //var st = s[1].split(')');
-        
+
                             item.InvoiceQuantityType = s;
                         }
-        
+
                     }
                 }
-        
-                
+
+
             }
 
         });
-        
+
         if (this.ItemsSource.Collection.length == 500) {
 
             var msg = new MessageWindow();
@@ -3166,8 +3170,149 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         }
 
     }
+   
 
 
+    InspectionRequest() {
+
+
+        if (!this.EntityPM.IsDirty) return;
+
+        if (!AmitalGatewayUtil.Instance.AmitalBrowserInUse) return;
+
+        if (AppTool.IsNullOrEmpty(this.EntityPM.InvoiceCurrencyTypeCode) || AppTool.IsNullOrEmpty(this.EntityPM.InvoiceAmount) || AppTool.IsNullOrEmpty(this.EntityPM.IncotermCode)) return;
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+
+        let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
+            .subscribe(
+                (mess: UnifreightMessageM) => {
+                    var IsMatchUnifreightCallbackCommand = (
+                        mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
+                        mess.LogitudeEntityNumber == this.EntityPM.DeclarationId &&
+                        mess.LogitudeViewModel == "SupplierInvoiceGeneralTabComponent.ts-ApprovalToInsurance");
+                    if (IsMatchUnifreightCallbackCommand) {
+                        sub.unsubscribe();
+                        SessionLocator.SelectedSession.StopBusyIndicator();
+                        let ApprovalToInsure = ""; ApprovalToInsure = UnifreightMessageM.GetStringValue(mess, "ApprovalToInsure");                      
+                        this.ActivateInsurance(ApprovalToInsure)
+                    }
+                }
+            );
+
+
+        var unifreightMessageM =
+            AmitalGatewayUtil.Instance.
+                DeclarationMessaging.GetMessage(this.declarationPM.CustomFileNo, this.EntityPM.DeclarationId, "SupplierInvoiceGeneralTabComponent.ts-ApprovalToInsurance", "BFIFILE");
+        unifreightMessageM.Requset.push(["AmountToInsure", this.EntityPM.InvoiceAmount.toString()]);
+        unifreightMessageM.Requset.push(["Currency", this.EntityPM.InvoiceCurrencyTypeCode]);
+        unifreightMessageM.Requset.push(["Incoterms", this.EntityPM.IncotermCode]);
+        unifreightMessageM.Requset.push(["CustomerUNF", ""]);
+        unifreightMessageM.Requset.push(["DefineToInsure", "Yes"]);
+        unifreightMessageM.Requset.push(["ApprovalToInsure", ""]);
+        unifreightMessageM.Requset.push(["InsuranceAmount", ""]);
+        unifreightMessageM.Requset.push(["InsuranceCurrency", ""]);
+
+        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+            "AmitalGatewayUtil.CustomExportApprovalToInsurance",
+            "BFIHMAIN.LogitudeTask",
+            "CustomExportApprovalToInsurance",
+            unifreightMessageM,
+            "הםם םפשרי לפתוח תיק ביטוח");
+
+    }
+
+
+
+
+     ActivateInsurance(ApprovalToInsure) {
+        
+        if (ApprovalToInsure == "Yes") {
+            var confirm = new ConfirmWindow();
+
+            confirm.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+            confirm.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
+            confirm.Width = 400;
+            confirm.Show(`הלקוח מוגדר לביצוע ביטוח םוטומטי, הםם לבטח ?`);           
+            confirm.WindowClosed.subscribe((event: any) => {
+
+                if (confirm.Yes == true) {
+                    SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+
+                    let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
+                        .subscribe(
+                             (mess: UnifreightMessageM) => {
+
+                                var IsMatchUnifreightCallbackCommand = (
+                                    mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
+                                    mess.LogitudeEntityNumber == this.EntityPM.DeclarationId &&
+                                    mess.LogitudeViewModel == "SupplierInvoiceGeneralTabComponent.ts-ActivateInsurance");
+                                if (IsMatchUnifreightCallbackCommand) {
+                                    sub.unsubscribe();
+                                    SessionLocator.SelectedSession.StopBusyIndicator();
+
+                                    let InsuranceAmount = ""; InsuranceAmount = UnifreightMessageM.GetStringValue(mess, "InsuranceAmount");
+                                    let InsuranceCurrency = ""; InsuranceCurrency = UnifreightMessageM.GetStringValue(mess, "InsuranceCurrency");
+                                    let InvoiceNumber = ""; InvoiceNumber = UnifreightMessageM.GetStringValue(mess, "InvoiceNumber");
+
+                                    let confirmWindow = new ConfirmWindow();
+                                    confirmWindow.Title = "יצירת ביטוח";
+                                    confirmWindow.Width = 350;
+                                    confirmWindow.Height = 200;
+                                    confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                                    confirmWindow.ShowNoButton=false;
+                                    if (!AppTool.IsNullOrEmpty(InsuranceAmount) && !AppTool.IsNullOrEmpty(InsuranceCurrency)) {                                         
+                                          
+                                          (new CurrencyTypeListService()).getSingleFromCache(InsuranceCurrency).subscribe(x=>{
+                                            let Insurance67: SupplierInvoiceModificationPM = this.FindModificationByCode("67");        
+                                            var index = this.AdjustmentsList.FindIndex("67");
+                                  
+                                            Insurance67.CurrencyTypeCode = InsuranceCurrency;                                    
+                                            Insurance67.Amount = Number(InsuranceAmount);
+                                            Insurance67.CurrencyTypeName =x.Result.LocalName;               
+                                            this.AdjustmentsList.UpdateWithIndex(index,new ModificationItemModel(Insurance67, this, "67")); 
+                                      })
+                                    }
+                                    else if (!AppTool.IsNullOrEmpty(InvoiceNumber)) {
+                                        confirmWindow.Show(`נפתחה תוספת ביטוח מס' ` + InvoiceNumber + ` , יש להשלימה בתהליך ידני ביוניפרייט`);
+
+                                    }
+                                    else {
+                                        confirmWindow.Show(`תהליך פתיחת תוספת ביטוח םוטומטי נכשל`);
+
+                                    }
+                                }
+                            }
+                        );
+
+
+                    var unifreightMessageM =
+                        AmitalGatewayUtil.Instance.
+                            DeclarationMessaging.GetMessage(this.declarationPM.CustomFileNo, this.EntityPM.DeclarationId, "SupplierInvoiceGeneralTabComponent.ts-ActivateInsurance", "BFIFILE");
+                    unifreightMessageM.Requset.push(["AmountToInsure", this.EntityPM.InvoiceAmount.toString()]);
+                    unifreightMessageM.Requset.push(["Currency", this.EntityPM.InvoiceCurrencyTypeCode]);
+                    unifreightMessageM.Requset.push(["Incoterms", this.EntityPM.IncotermCode]);
+                    unifreightMessageM.Requset.push(["CustomerUNF", ""]);
+                    unifreightMessageM.Requset.push(["DefineToInsure", "Yes"]);
+                    unifreightMessageM.Requset.push(["ApprovalToInsure", "Yes"]);
+                    unifreightMessageM.Requset.push(["InsuranceAmount", ""]);
+                    unifreightMessageM.Requset.push(["InsuranceCurrency", ""]);
+
+
+                    AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+                        "AmitalGatewayUtil.CustomExportActivateInsurance",
+                        "BFIHMAIN.LogitudeTask",
+                        "CustomExportActivateInsurance",
+                        unifreightMessageM,
+                        "מבצע פתיחת תיק ביטוח");
+
+                }
+
+            });
+
+
+        }
+
+    }
 
     //#endregion
 }
@@ -3720,10 +3865,10 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             logWindow.Width = 1000;
             logWindow.Height = 600;
             if (item.ClassificationCode != null) {
-                logWindow.Title = "אישורים לפרט מכס" + " " + item.ClassificationCode;
+                logWindow.Title = "םישורים לפרט מכס" + " " + item.ClassificationCode;
             }
             else {
-                logWindow.Title = "אישורים לפרט מכס";
+                logWindow.Title = "םישורים לפרט מכס";
             }
             logWindow.ShowCloseButton = false;
             logWindow.WindowArgs = windowArgs;
@@ -4416,8 +4561,8 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                 this.ShowValidatioIcon = true;
                 this.Parent.Parent.tariffErrorItems += 1;
             }
-            var agreementCode = !AppTool.IsNullOrEmpty(this.TradeAgreementCode) ? this.TradeAgreementCode : "לא מוזן";
-            this.TariffErrorText = "קוד הסכם " + agreementCode + ", לא מתאים למדינה " + this.OriginCountryName + " (" + " הסכם " + this.CustomsCountry.TarriffCode + " )";
+            var agreementCode = !AppTool.IsNullOrEmpty(this.TradeAgreementCode) ? this.TradeAgreementCode : "לם מוזן";
+            this.TariffErrorText = "קוד הסכם " + agreementCode + ", לם מתםים למדינה " + this.OriginCountryName + " (" + " הסכם " + this.CustomsCountry.TarriffCode + " )";
 
         }
         else {

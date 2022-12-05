@@ -94,7 +94,7 @@ namespace Logitude.CustomsMessaging.RabbitMQ
                     //}
                     try
                     {
-                        var factory = RabbitmqHelper.GetConnectionFactory();
+                        var factory = RabbitmqHelper.GetConnectionFactory(true);
                         _connection = factory.CreateConnection();
                     }
                     catch (Exception)

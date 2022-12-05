@@ -173,7 +173,9 @@ namespace WebFreight.Web.CustomWebServices
 
             curr = "Logitude.Customs.BL.Messaging.U2L.CommMasterCourier.CommMasterCourierService";
             _AllIUnifreightGenericService.Add(curr);
-            _UnityContainer.RegisterType<UnifreightGenericService, Logitude.Customs.BL.Messaging.U2L.CommMasterCourier.CommMasterCourierService>(curr);
+            //_UnityContainer.RegisterType<UnifreightGenericService, Logitude.Customs.BL.Messaging.U2L.CommMasterCourier.CommMasterCourierService>(curr);
+            //change from Logitude.Customs.BL.Messaging.U2L.CommMasterCourier to Logitude.CustomsMessaging.UnifreightGateway due to use of DCAInUCBUpdateDeclarationCourierStatusMasterChanged_MsgMessagingService
+            _UnityContainer.RegisterType<UnifreightGenericService, Logitude.CustomsMessaging.UnifreightGateway.CommMasterCourierService>(curr);
 
             curr = "Logitude.Customs.BL.Messaging.U2L.Courier.CourierPendingReasonService";
             _AllIUnifreightGenericService.Add(curr);

@@ -28,6 +28,7 @@ export class ContainerFollowupWizardComponent extends BaseComponent implements A
     public Shipmentd: string;
     public ValidationErrorsList: string[] = [];
     public IsResourcesReady: boolean = false;
+    public isEntityChange: boolean = false;
     public TemplateComponent: ContainerFollowupWizardTemplate;
     @ViewChild('Child', { read: ViewContainerRef, static: false }) ChildViewContainerRef: ViewContainerRef; 
     private entityPMService: ShipmentPMService;
@@ -169,6 +170,7 @@ export class ContainerFollowupWizardComponent extends BaseComponent implements A
                 else {
                     this.ShipmentPM = myResponse.Result;
                     this.EntityPM = this.ShipmentPM.ShipmentPackages.filter(f => f.Id == this.EntityId)[0];
+                    this.isEntityChange = true;
                     this.LoadTemplate();
                     this.OnSaveCompleted(myCommandCode);
                 }

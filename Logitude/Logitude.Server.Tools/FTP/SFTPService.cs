@@ -240,7 +240,7 @@ namespace Logitude.Server.Tools.FTP
             }
         }
 
-        public void DeleteFile(string p_filename, out string p_status, out string p_message)
+        public void DeleteFile(string p_filename, out string p_status, out string p_message, bool toDir = true)
         {
             MyStart();
             p_status = "";
@@ -260,7 +260,7 @@ namespace Logitude.Server.Tools.FTP
                 }
                 sftp.RemoteFile = p_filename;
                 //if (!sftp.FileExists)
-                if (!IsRemoteFileExist(p_filename))
+                if (toDir && !IsRemoteFileExist(p_filename))
                 {
                     p_message = "File '" + p_filename + "' not exist";
                     if (sftp.RemotePath != "") p_message += " in directory '" + sftp.RemotePath + "'";
@@ -289,7 +289,7 @@ namespace Logitude.Server.Tools.FTP
 
             p_message = FTPLogBuilder.BuildLogLine(p_message);
         }
-
+   
         private bool IsRemoteFileExist(string p_filename)
         {
 
@@ -633,9 +633,9 @@ namespace Logitude.Server.Tools.FTP
 
             return filesList;
         }
+      
 
-
-        public byte[] DownloadFile(string p_filename, out string p_status, out string p_message)
+        public byte[] DownloadFile(string p_filename, out string p_status, out string p_message,bool toDir=true)
         {
             MemoryStream downloadStream = new MemoryStream();
             //p_continue = false;
@@ -651,7 +651,7 @@ namespace Logitude.Server.Tools.FTP
                 //sftp.LocalFile = p_localpath + @"\" + p_filename;
                 sftp.Overwrite = true;
                 //if (!sftp.FileExists)
-                if (!IsRemoteFileExist(p_filename))
+                if (toDir &&  !IsRemoteFileExist(p_filename))
                 {
                     // p_continue = true;
                     p_status = "-2";

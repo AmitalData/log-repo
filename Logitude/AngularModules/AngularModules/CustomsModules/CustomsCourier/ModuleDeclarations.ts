@@ -26,6 +26,11 @@ import { BulkFeedPendingComponent } from './Components/CourierWorkSheet/bulk-fee
 import { DeclarationPendingsBulkFeedingComponent } from './Components/CourierPendingReason/DeclarationPendingsBulkFeedingComponent';
 import { MultiUpdateDecComponent } from './Components/CourierPendingReason/MultiUpdateDecComponent';
 import { CourierDeclarationFiltersMenuComponent } from './Components/CourierWorkspaces/FiltersMenu/CourierDeclarationFiltersMenuComponent';
+import { AWBWizardLoadComponent } from 'ShipmentModules/ShipmentAWB/Components/AWBWizard/AWBWizardLoadComponent';
+import { AWBWizardComponent } from 'ShipmentModules/ShipmentAWB/Components/AWBWizard/AWBWizardComponent';
+import { SharedManifestComponent } from 'ShipmentModules/ShipmentSharedManifest/Components/SharedManifestComponent';
+import { PrioritizeFlightRequestsComponent } from './Components/CourierWorkSheet/PrioritizeFlightRequestsComponent'; 
+import { UpdatePriorityComponent } from './Components/CourierWorkSheet/UpdatePriorityComponent';
 
 export const Components =
     [
@@ -57,6 +62,11 @@ export const Components =
         CourierWorksheetNGComponent,
         CourierWorksheetNGListTemplate,
         CourierDeclarationFiltersMenuComponent,
+        SharedManifestComponent,
+        AWBWizardComponent,
+        AWBWizardLoadComponent,
+        PrioritizeFlightRequestsComponent,
+        UpdatePriorityComponent
     ];
 
 export class ModuleDeclarations {
@@ -96,9 +106,13 @@ export class ModuleDeclarations {
             case "CourierWorksheetNGListTemplate": { myResult = CourierWorksheetNGListTemplate; break; }
             case "CourierDeclarationFiltersMenuComponent": { myResult = CourierDeclarationFiltersMenuComponent; break; }
 
+            case "SharedManifestComponent": { myResult = SharedManifestComponent; break; }
+            case "PrioritizeFlightRequestsComponent": { myResult = PrioritizeFlightRequestsComponent; break; }
+            case "UpdatePriorityComponent": { myResult = UpdatePriorityComponent; break; }
                 
-                
-                
+            case "SharedManifestComponent": { myResult = SharedManifestComponent; break; }
+            case "AWBWizardComponent": { myResult = AWBWizardComponent; break; }
+            case "AWBWizardLoadComponent": { myResult = AWBWizardLoadComponent; break; }   
         }
 
         return myResult;

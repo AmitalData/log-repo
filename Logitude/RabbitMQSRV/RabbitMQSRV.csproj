@@ -149,13 +149,16 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.3.1803.56\lib\Net40\UnifreightIIG.Common.dll</HintPath>
+
+      <HintPath>..\packages\UnifreightIIG.3.1803.60\lib\Net40\UnifreightIIG.Common.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.3.1803.56\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
+
+      <HintPath>..\packages\UnifreightIIG.3.1803.60\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.UServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.3.1803.56\lib\Net40\UnifreightIIG.UServer.dll</HintPath>
+
+      <HintPath>..\packages\UnifreightIIG.3.1803.60\lib\Net40\UnifreightIIG.UServer.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
@@ -230,10 +233,6 @@
     <ProjectReference Include="..\Logitude.Customs.Def\Logitude.Customs.Def.csproj">
       <Project>{89132340-6F21-4CE1-8DE4-1CA45E2CD9F3}</Project>
       <Name>Logitude.Customs.Def</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Logitude.CustomsMessaging\Logitude.CustomsMessaging.csproj">
-      <Project>{7994d6f2-00a7-4c0d-a7d3-fd7d5304b665}</Project>
-      <Name>Logitude.CustomsMessaging</Name>
     </ProjectReference>
     <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
       <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>

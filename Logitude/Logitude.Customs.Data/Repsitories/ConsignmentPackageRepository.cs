@@ -32,7 +32,16 @@ namespace Logitude.Customs.Data.Repsitories
             (context as DbContextBase)
                 .DeleteWhere<ConsignmentPackage>(rec => rec.DeclarationId == entityKeyFields.Id);
         }
-   }
+
+        public List<ConsignmentPackage> GetConsignmentPackagesFilterByMeasureQualifierCode(string declarationId)
+        {
+            string code = "2" ; 
+
+            return (from a in context.ConsignmentPackages
+                    where a.DeclarationId == declarationId && a.PackageMeasureQualifierCode == code
+                    select a).ToList();
+        }
+    }
 
 }
    

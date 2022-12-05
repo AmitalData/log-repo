@@ -662,6 +662,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
             return cards;
         }
+      
 
     }
 }

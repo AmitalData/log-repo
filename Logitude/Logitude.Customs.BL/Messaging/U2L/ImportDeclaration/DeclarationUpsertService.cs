@@ -159,6 +159,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 //var mySupplierInvoiceItemsTaxUpdateService = new SupplierInvoiceItemsTaxUpdateService(context, new Dictionary<string, IContext>(), ResolvedTenant());
                 //var myDeclarationTaxUpdateService = new DeclarationTaxUpdateService(context, new Dictionary<string, IContext>(), ResolvedTenant());
                 //amitalContext = AmitalContext.GetContext(ResolvedTenant());
+                if ((new CustomsSettingQueryService(ResolvedTenant())).GetSettingByTenantN(ResolvedTenant()).IsConnectedToUniFreight)
+                {
+                    amitalContext = AmitalContext.GetContext(ResolvedTenant());
+                }
+
 
                 if (String.IsNullOrWhiteSpace(_AmitalCustomsFile.Id))
                 {
@@ -250,8 +255,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
                     this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                 }
-                CustomsSettingQueryService settingService = new CustomsSettingQueryService(_MyDeclarationPM.Tenant);
-                CustomsSettingPM setting = settingService.GetSettingByTenantN(_MyDeclarationPM.Tenant);
+                CustomsSettingQueryService settingService = new CustomsSettingQueryService(ResolvedTenant());
+                CustomsSettingPM setting = settingService.GetSettingByTenantN(ResolvedTenant());
                 this._MyDeclarationPM.MarkAsChanged = true; // moran 2.6.15 - Task 13803
 
                 MyGenericResponseObj.Stage = "Mapping";
@@ -340,7 +345,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                             if (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.CasualImporterCountry))
                             {
                                 string countryCode = "";
-                                if (_AmitalCustomsFile.CasualImporterCountry.Length > 2 && setting.IsConnectedToUniFreight)
+                                if (_AmitalCustomsFile.CasualImporterCountry.Length > 2 && setting != null && setting.IsConnectedToUniFreight)
                                 {
                                     countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", _AmitalCustomsFile.CasualImporterCountry);
                                 }
@@ -563,7 +568,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     {
                         //this._MyDeclarationPM.Consignments[0].OriginCountryCode = _AmitalCustomsFile.OriginCountryCode;
                         string countryCode = "";
-                        if (_AmitalCustomsFile.OriginCountryCode.Length > 2 && setting.IsConnectedToUniFreight)
+                        if (_AmitalCustomsFile.OriginCountryCode.Length > 2 && setting != null  && setting.IsConnectedToUniFreight)
                         {
                             countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", _AmitalCustomsFile.OriginCountryCode);
                         }
@@ -635,7 +640,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
                         var packingType = new PackingTypeRepository(ResolvedTenant());
                         var myPackingType = packingType.GetSingle(_AmitalCustomsFile.PackageTypeCode);
-                        if (myPackingType == null && setting.IsConnectedToUniFreight)
+                        if (myPackingType == null && setting != null && setting.IsConnectedToUniFreight)
                         {
                             string PackageTypeCode = "";
                             PackageTypeCode = GetTranslationL2P("IIGC", "CTBPACKTYPE", _AmitalCustomsFile.PackageTypeCode);
@@ -898,6 +903,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 {
                     try
                     {
+                        currentDeclarationCourierStatusPM.MAWB = _AmitalCustomsFile.MAWB;
                         DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
                         declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
 
@@ -1075,44 +1081,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             }
         }
 
-        public void SendClientSearch()
-        {
-            int.TryParse(_AmitalCustomsFile.Tenant, out int Tenant);
-            var loggedUserId = AuthenticationUtil.ResolveUserId(Tenant);
-            string importerId = _AmitalCustomsFile.ImporterId;
-            if (_AmitalCustomsFile.ImporterId.Length > 9)
-            {
-                importerId = _AmitalCustomsFile.ImporterId.Substring(0, 9);
-            }
-            var newClientSearchRequestParams = new ClientSearchRequestParams()
-            {
-                LoggingEnabled = true,
-                IsFakeResponse = true,
-                InterfaceTypeCode = "3610",
-                Tenant = Tenant,
-                RequestName = "Client Search",
-                ResponseName = "Client Search",
-                LoggingUserId = loggedUserId,
-                RequestVIA = SendRequestVIA.WebServiceBatch,
-                SuppressSplitWR = true,
-                ExternalId = importerId,
-            };
-
-            try
-            {
-                SBQMessageService.CreateSheetSBQMessage<Logitude.CustomsMessaging.Common.RequestParams.ClientSearchRequestParams>(newClientSearchRequestParams
-                    , false, DateTime.Now
-                    );
-            }
-            catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
-            {
-                if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
-                {
-                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("3610 RequestInProgress stop create a new one !! ");
-                }
-                throw;
-            }
-        }
+        
 
         private void DeclarationReferantDataUpdate()
         {
@@ -1427,7 +1396,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 return null;
             }
             var repository = new DepartmentRepository(ResolvedTenant());
-            var myCard = repository.GetSingleDepartmentByCode(amitalDepartmentCode, ResolvedTenant());  //TODO: this function include all 
+            var myCard = repository.GetSingleDepartmentByCode(amitalDepartmentCode, ResolvedTenant(),true);  //TODO: this function include all 
             if (myCard == null)
             {
                 AppendLogLine("amitalDepartmentCode = " + amitalDepartmentCode + " could not translate to Logitude Id");
@@ -1488,6 +1457,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     cardRep.SubmitChanges();
 
                     AppendLogLine("Create new Card  = " + amitalCustomerCode + " because could not translate to Logitude Id");
+                    AppendLogLine("  teannt is   = "+ ResolvedTenant());
 
                     //Create a new customer
                     Customer myCustomer = new Customer()
@@ -1748,6 +1718,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
         public string GetTranslationL2P(string partnerID, string tableID, string localCode)
         {
+            if (amitalContext == null) return null;
             var rec = (from a in amitalContext.GTRTRANs
                        where a.PARTNERID == partnerID && a.TABLEID == tableID && a.LOCALCODE == localCode
                        select a).FirstOrDefault();
@@ -1761,6 +1732,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
         private string GetAmitalDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
         {
+            if (amitalContext == null) return null;
             var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
 
             if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
@@ -1828,6 +1800,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
                     currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                     currentDeclarationCourierStatusPM.TruckerId = truckerId;
+                    currentDeclarationCourierStatusPM.MAWB = _AmitalCustomsFile.MAWB;
                     currentDeclarationCourierStatusPM.DistributionArea = _AmitalCustomsFile.DistributionArea;
                     AppendLogLine("try to update trucker " + truckerId + " to declarationCourierStatus for DeclarationPM.Id: " + _MyDeclarationPM.Id);
                     try

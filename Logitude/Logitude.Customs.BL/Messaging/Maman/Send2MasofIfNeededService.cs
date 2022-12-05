@@ -17,11 +17,17 @@ namespace Logitude.Customs.BL.Messaging.Maman
 {
     public class Send2MasofIfNeededService
     {
+
+        [ThreadStatic]
+        public static bool SuppressSend=false;
         public void Send2Masof(DeclarationPM drityEntityPM,bool pHaveChange, DeclarationPM dbPM,bool forceSend=false)
         {
             try
             {
-
+                if (SuppressSend==true)
+                {
+                    return;
+                }
                 if (!drityEntityPM.IsCourierDeclaration)
                 {
                     return;
@@ -148,34 +154,36 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 }
 
             
-              else if (listStorageDefault.Contains("ILSWS") && myStorageSiteCode == "ILSWS") 
-            {
-                var courierECSWSTHRMessageRequestService = new CourierECSWSTHRMessageRequestService();
-                drityMessage = courierECSWSTHRMessageRequestService.GetMessageUpdateHawbStatus(drityEntityPM.Id, drityEntityPM.Tenant, drityEntityPM, null);
-                if (!dataHaveChangeSendIt && dbPM != null)
+              else if (listStorageDefault.Contains("ILSWS") && myStorageSiteCode == "ILSWS")
                 {
-
-                    dbMessage = courierECSWSTHRMessageRequestService.GetMessageUpdateHawbStatus(dbPM.Id, dbPM.Tenant, dbPM, null);
-
-                    if (dbMessage != drityMessage)
+                    if (drityEntityPM.CourierCustomStatusCode != dbPM.CourierCustomStatusCode)
                     {
-                        dataHaveChangeSendIt = true;
-                    }
-                }
-                if (dataHaveChangeSendIt)
-                {
+                        var courierECSWSTHRMessageRequestService = new CourierECSWSTHRMessageRequestService();
+                        drityMessage = courierECSWSTHRMessageRequestService.GetMessageUpdateHawbStatus(drityEntityPM.Id, drityEntityPM.Tenant, drityEntityPM, null);
+                        if (!dataHaveChangeSendIt && dbPM != null)
+                        {
 
-                    List<string> requiredField = courierECSWSTHRMessageRequestService.GetRequiredField(drityMessage);
-                    if (requiredField.Count > 0)
-                    {
-                        Debug.WriteLine($"חסרים שדות חובה :{String.Join(",", requiredField)}");
-                        return;// $"חסרים שדות חובה :{String.Join(",", requiredField)}";
-                    }
-                    var XMLdrityMessage=courierECSWSTHRMessageRequestService.DeserializeXmlNode(drityMessage);
-                    var res = courierECSWSTHRMessageRequestService.BuildUpdateHawbStatus(drityEntityPM.Id, drityEntityPM.Tenant, XMLdrityMessage);
-                    Debug.WriteLine(res);
-                }
+                            dbMessage = courierECSWSTHRMessageRequestService.GetMessageUpdateHawbStatus(dbPM.Id, dbPM.Tenant, dbPM, null);
+                            
+                            if (dbMessage != null && dbMessage != drityMessage)
+                            {
+                                dataHaveChangeSendIt = true;
+                            }
+                        }
+                        if (dataHaveChangeSendIt)
+                        {
 
+                            List<string> requiredField = courierECSWSTHRMessageRequestService.GetRequiredField(drityMessage);
+                            if (requiredField.Count > 0)
+                            {
+                                Debug.WriteLine($"חסרים שדות חובה :{String.Join(",", requiredField)}");
+                                return;// $"חסרים שדות חובה :{String.Join(",", requiredField)}";
+                            }
+                            var XMLdrityMessage = courierECSWSTHRMessageRequestService.DeserializeXmlNode(drityMessage);
+                            var res = courierECSWSTHRMessageRequestService.BuildUpdateHawbStatus(drityEntityPM.Id, drityEntityPM.Tenant, XMLdrityMessage);
+                            Debug.WriteLine(res);
+                        }
+                    }
             }
 
         }
@@ -205,7 +213,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
             {
                 listStorageDefault.Add("ILOVL");
             }
-            if (def.DEFDATA.Contains("ILOVL")) // OVS
+            if (def.DEFDATA.Contains("ILSWS")) // OVS
             {
                 listStorageDefault.Add("ILSWS");
             }

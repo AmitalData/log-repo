@@ -53,10 +53,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 return;
             }
 
-            this._MyClaimPM.ChangeSetOp = ChangeSetOperation.Update;
+            this._MyClaimPM.ChangeSetOp = ChangeSetOperation.Update;    
             foreach (var claimsRelatedEntitiy in customResponse.ClaimEntitySystemAnswer)
             {
-                ClaimsRelatedEntityPM claimsRelatedEntityPM = GetClaimsRelatedEntitiy(claimsRelatedEntitiy.claimEntity.ToString(), claimsRelatedEntitiy.claimEntityID);
+                ClaimsRelatedEntityPM claimsRelatedEntityPM = GetClaimsRelatedEntitiy(claimsRelatedEntitiy.claimEntity.ToString(), claimsRelatedEntitiy.claimEntityID);              
                 if (claimsRelatedEntityPM != null)
                 {
                     claimsRelatedEntityPM.ChangeSetOp = ChangeSetOperation.Update;
@@ -104,7 +104,40 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             userMessage = userMessage + "\n" + exceptionItem.ExeptionDescription;
                         }
                     }
+                } 
+
+                var declarationQueryService = new DeclarationQueryService(context);
+                var declarationNumber = claimsRelatedEntitiy.claimEntityID.ToString();
+                string declarationID = declarationQueryService.GetDeclarationByDeclarationNum(declarationNumber, requestParams.Tenant);
+              
+                var myTapagConnectionTableQueryService = new TapagConnectionTableQueryService(context);
+                var myTapagConnectionTable  = myTapagConnectionTableQueryService.GetSingle(_MyClaimPM.Id, declarationID, true, false);
+                var myTapagConnectionTableUpdateService = new TapagConnectionTableUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
+               
+                if (myTapagConnectionTable != null)
+                {
+
+                    myTapagConnectionTable.ChangeSetOp = ChangeSetOperation.Update;
+                    myTapagConnectionTable.Tenant = requestParams.Tenant;
+                    myTapagConnectionTable.CustomsTapagFile = claimsRelatedEntitiy.ClaimReferentialData?.TPGIdentifier.fileNumber;
+                    myTapagConnectionTable.CustomsNumeral = claimsRelatedEntitiy.ClaimReferentialData?.TPGIdentifier.numeral;
+                    myTapagConnectionTable.RequestFileNumber = claimsRelatedEntitiy.ClaimReferentialData?.claimRequestNumber.ToString();
+                    myTapagConnectionTableUpdateService.Update(myTapagConnectionTable, true);
+
                 }
+                else
+                {
+                    TapagConnectionTablePM tapagConnectionTablePM = new TapagConnectionTablePM();
+                    tapagConnectionTablePM.ChangeSetOp = ChangeSetOperation.Insert;
+                    tapagConnectionTablePM.TapagId = _MyClaimPM.Id;
+                    tapagConnectionTablePM.DeclarationId = declarationID;
+                    tapagConnectionTablePM.Tenant = requestParams.Tenant;
+                    tapagConnectionTablePM.CustomsTapagFile = claimsRelatedEntitiy.ClaimReferentialData?.TPGIdentifier.fileNumber;
+                    tapagConnectionTablePM.CustomsNumeral = claimsRelatedEntitiy.ClaimReferentialData?.TPGIdentifier.numeral;
+                    tapagConnectionTablePM.RequestFileNumber = claimsRelatedEntitiy.ClaimReferentialData?.claimRequestNumber.ToString();
+                    myTapagConnectionTableUpdateService.Update(tapagConnectionTablePM, true);
+                }
+              
             }
             myClaimUpdateService.Update(this._MyClaimPM, true);
 

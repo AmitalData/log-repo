@@ -31,6 +31,14 @@ namespace Logitude.BL.Helpers
 
         public string GetComputingPartnerCodeTranslation(string logitudeCode, string computingPartner, string objectTableName)
         {
+            string key = $"GetComputingPartnerCodeTranslation({logitudeCode}, {computingPartner}, {objectTableName})";
+            return Simplog.Server.Infrastructure.Helpers.CacheManager.GetOrInsertNewObject<string>(key, () =>
+            {
+                return GetComputingPartnerCodeTranslationReal(logitudeCode, computingPartner, objectTableName);
+            });
+        }
+        string GetComputingPartnerCodeTranslationReal(string logitudeCode, string computingPartner, string objectTableName)
+        {
           
             ObjectTable objectTable = myObjectTabelRepository.GetObjectTableByName(objectTableName, 0, true);
             ComputingPartnerPM partner = computingPartnerQuery.GetSinglePMByCode(computingPartner, tenant);

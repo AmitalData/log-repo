@@ -2,8 +2,7 @@
 <Table
   Name="CurrencyTypeTenants"
   Schema="Customs"
-  DBType="Main"
-  Module="Customs">
+  DBType="Main">
   <Column
     Name="Id"
     Type="varchar"

@@ -214,26 +214,38 @@ namespace Logitude.Server.Tools.StorageService
 
         public void Write(byte[] data, BlobFileInfo fileInfo)
         {
+         
             string localPath = null;
             CloudBlobContainer blobContainer = null;
             GetFileBlobContainerInfo(fileInfo, out localPath, out blobContainer);
 
-
+            
             var blobfile = blobContainer.GetBlockBlobReference(localPath);
             using (Stream blobstream = blobfile.OpenWrite())
             {
-                if (fileInfo.FolderName != "logos")
+                if (fileInfo.FolderName != "logos")                
                 {
                     DocumentRepository documentRepository = new DocumentRepository(fileInfo.Tenant);
                     Document document = documentRepository.GetSingleDocument(fileInfo.Tenant, fileInfo.FileName);
                     if ((document != null && document.IsEncrypted) || fileInfo.IsEncrypted)
                     {
+
+                        DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(fileInfo.Tenant);
+                        DocumentsFiling documentsFiling = documentsFilingRepository.GetSingleDocumentsFilingByDocumentId(fileInfo.FileName, fileInfo.Tenant);
+
+                        if (documentsFiling != null)
+                        {
+                            KeyValuePair<string, string> metadata = new KeyValuePair<string, string>("Code", documentsFiling.Code);
+
+                            blobfile.Metadata.Add(metadata);
+                        }
+
                         AesFunction aesFunction = new AesFunction();
                         data = aesFunction.EncryptData(data, fileInfo.Tenant, fileInfo.AesKey);
                     }
 
                 }
-
+                
                 blobstream.Write(data, 0, (int)data.Length);
 
             }
@@ -289,6 +301,17 @@ namespace Logitude.Server.Tools.StorageService
                             Document document = documentRepository.GetSingleDocument(fileInfo.Tenant, fileInfo.FileName);
                             if ((document != null && document.IsEncrypted) || fileInfo.IsEncrypted)
                             {
+
+                                DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(fileInfo.Tenant);
+                                DocumentsFiling documentsFiling = documentsFilingRepository.GetSingleDocumentsFilingByDocumentId(fileInfo.FileName, fileInfo.Tenant);
+
+                                if(documentsFiling != null)
+                                {
+                                    KeyValuePair<string, string> metadata = new KeyValuePair<string, string>("Code", documentsFiling.Code);
+
+                                    finalcloudBlockBlob.Metadata.Add(metadata);
+                                }
+
                                 AesFunction aesFunction = new AesFunction();
                                 result = aesFunction.EncryptData(result, fileInfo.Tenant);
 

@@ -661,7 +661,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                  join recConsignment in q1stConsignments
                                                  on a.Id equals recConsignment.DeclarationId into qjoinConsignments
                                                  from myJoinConsignment in qjoinConsignments.DefaultIfEmpty()
-
+                                                 where a.AmendmentDontDisplayInList != true
 
                                                  select new DeclarationList()
                                                  {

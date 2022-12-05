@@ -408,6 +408,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new DeclarationExportRecipientMap());
 	
+            modelBuilder.Configurations.Add(new DeclarationFollowUpMap());
+	
             modelBuilder.Configurations.Add(new DeclarationMamanSpecialActionMap());
 	
             modelBuilder.Configurations.Add(new DeclarationPaymentMap());
@@ -686,6 +688,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new SalesTaxExemptionTypeMap());
 	
+            modelBuilder.Configurations.Add(new SchedulerParamMap());
+	
             modelBuilder.Configurations.Add(new SealCompletenesMap());
 	
             modelBuilder.Configurations.Add(new SealTypeMap());
@@ -697,6 +701,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new SeizureFactorTypeMap());
 	
             modelBuilder.Configurations.Add(new SeizureMethodTypeMap());
+	
+            modelBuilder.Configurations.Add(new ServersNameMap());
 	
             modelBuilder.Configurations.Add(new SignatureTypeMap());
 	
@@ -2367,6 +2373,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<DeclarationFollowUp> DeclarationFollowUps 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<DeclarationMamanSpecialAction> DeclarationMamanSpecialActions 
 	 {
 	      get; set;
@@ -3201,6 +3213,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<SchedulerParam> SchedulerParams 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<SealCompletenes> SealCompleteness 
 	 {
 	      get; set;
@@ -3232,6 +3250,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<SeizureMethodType> SeizureMethodTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ServersName> ServersNames 
 	 {
 	      get; set;
 	 

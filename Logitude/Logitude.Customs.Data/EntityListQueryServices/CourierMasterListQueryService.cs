@@ -37,10 +37,31 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 
 );
+            var qJoinsta =
+                  (from p in context.CourierDeclarations
+                   join sts1 in context.DeclarationCourierStatuses
+                   on p.DeclarationId equals sts1.DeclarationId
+                   into DeclarationCourierStatusesJoin
+                   from myDeclarationCourierStatuses in DeclarationCourierStatusesJoin
+                   where myDeclarationCourierStatuses.IsClosedForFollowUp == false
+                   group myDeclarationCourierStatuses by p.CourierMasterId into q
+                   select new { q.Key, q }
+                   
+                  );
+
 
 
 
             IQueryable<CourierMasterList> query = (from a in iQueryable.Include("CustomsAirline").Include("MAWBType").Include("OriginPort").Include("GatewayPort").Include("Card")
+
+
+                                                       join recJoin in qJoinsta
+                                                                on a.Id equals recJoin.Key
+                                                              into qrecJoin
+                                                       from myJoin in qrecJoin
+
+
+
 
                                                    select new CourierMasterList()
                                                    {
@@ -86,13 +107,24 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        a.EstimatedArrivalDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(a.EstimatedArrivalDate.Value) == today ? "Blue" :
                                                        (System.Data.Entity.DbFunctions.TruncateTime(a.EstimatedArrivalDate.Value) < today ? "Red" : "Black")) : "Black",
                                                        OpenDeclarations = a.OpenDeclarations,
-                                                       CourierMasterRemarks =a.CourierMasterRemarks,
-                                                       EstimatedArrivalTimeOnly= a.EstimatedArrivalDate,
+                                                       CourierMasterRemarks = a.CourierMasterRemarks,
+                                                       EstimatedArrivalTimeOnly = a.EstimatedArrivalDate,
                                                        EstimatedArrivalDateOnly = a.EstimatedArrivalDate,
                                                        NoOfCourierHawbWithoutDelivery = a.NoOfCourierHawbWithoutDelivery,
-                                                       NoOfCourierHawbwWithoutHatara =a.NoOfCourierHawbwWithoutHatara,
+                                                       NoOfCourierHawbwWithoutHatara = a.NoOfCourierHawbwWithoutHatara,
+                                                       LandingDateDateOnly = a.LandingDate,
+                                                       LandingDateTimeOnly = (DateTime)a.LandingDate,
+                                                      HawbQuantityNoClassification = myJoin.q.Count(s=>s.IsCourierMissingClassification),
+                                                      HawbQuantityNoDocuments= myJoin.q.Count(s=>s.DocumentStatusCode == "M"),
+                                                       HawbQuantityNoTransDeclaration= myJoin.q.Count(s=>s.CourierDeclarationStatusCode == "R" || s.CourierDeclarationStatusCode == "I"),
+                                                       HawbQuantityNoTransManifest= myJoin.q.Count(s=>s.CourierManifestStatusCode == "R" || s.CourierManifestStatusCode == "I"),
+                                                      HawbQuantityNoTransPayment= myJoin.q.Count(s=>s.CourierPaymentStatusCode=="R")
+
 
                                                    });
+
+
+           
 
             return query;
         }

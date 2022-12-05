@@ -32,8 +32,17 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return (from record in context.Branches where record.Tenant == tenant select record);
         }
-
         public Branch GetSingleBranch(string id, int tenant)
+        {
+                string key = $"GetSingleBranch({id}, {tenant})";
+                return Simplog.Server.Infrastructure.Helpers.CacheManager.GetOrInsertNewObject<Branch>(key, () =>
+                {
+                    return GetSingleBranchReal(id, tenant);
+                });
+
+
+        }
+        private Branch GetSingleBranchReal(string id, int tenant)
         {
             return (from record in context.Branches where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
         }

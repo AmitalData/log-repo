@@ -59,7 +59,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 ICustomContext customContext = CustomContext.GetContext(tenant);
                 var CreateContainerizationBL = new CreateContainerization();
                 List<ContainerizationDetails> ContainerizationList = CreateContainerizationBL.CreateContainerizations(entityPM);
-                if (ContainerizationList != null)
+                if (ContainerizationList != null && ContainerizationList?[0]?.Id!="0")
                 {
 
 

@@ -53,6 +53,7 @@ export class SharedManifestComponent implements AfterViewInit {
     IsLoadComponent: boolean = false;
 
     ShowAreaButton: boolean = false;
+    public isEntityChange: boolean = false;
 
 
     SetWindowArgs(args: any) {
@@ -289,6 +290,7 @@ export class SharedManifestComponent implements AfterViewInit {
         this.CurrentEntity.UpdateDate = DateTool.GetCurrentDateAsUtc();
         this._aentSharedManifestPMService.update(this.CurrentEntity).subscribe((res:any) => {
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.isEntityChange = true;
             this.RefreshSharedManifiestoStatus();
         });
     }

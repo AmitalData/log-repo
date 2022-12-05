@@ -427,12 +427,15 @@ namespace CustomsWorkerRole
                 {
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
-                        CustomDBQueueMessage receivedMessage=null;
+
+                        CustomDBQueueMessage receivedMessage = null;
 
                         using (TransactionScope scopeRecive = TransactionFactory.GetNewReadCommittedTransaction())
                         {
-                            receivedMessage = _CustomDbQueueService.Receive(CustomsWorkerRole.Utils.GenUtil.GetQueueTimeOutInMin()*60);
+                            receivedMessage = _CustomDbQueueService.Receive(CustomsWorkerRole.Utils.GenUtil.GetQueueTimeOutInMin() * 60);
+                            scopeRecive.Complete();
                         }
+
                         if (receivedMessage == null || String.IsNullOrWhiteSpace(receivedMessage.MessageId))
                         {
                             //Thread.Sleep(TimeSpan.FromSeconds(5));

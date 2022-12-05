@@ -65,9 +65,11 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
     froalaEditorSetting: FroalaEditorSetting;
     QuoteOPTemplatePMService: QuoteOPTemplatePMService;
     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
-
+    
     IsDisableEditButton: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public isEntityChange: boolean = false;
+
     constructor() {
         super();
       
@@ -727,6 +729,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
             this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteOPTemplate.M.Saving"));
             this.SaveQuoteOPTemplateSection(QuoteOPTemplateSectionChangedLists);
             this.SaveQuoteOPTemplate();
+            this.isEntityChange = true;
         }
         else this.SaveCompleted();
 

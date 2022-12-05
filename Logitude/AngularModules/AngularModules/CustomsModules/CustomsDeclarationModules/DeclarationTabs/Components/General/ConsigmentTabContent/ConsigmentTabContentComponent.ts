@@ -78,7 +78,7 @@ export class ConsigmentTabContentComponent
     public ImportCargoTypeFilterItems: ApiQueryFilters;
     private CurrentSession = SessionLocator.SelectedSession;
 
-    public ConsignmentTypes: ConsignmentType[] = [{ Id: "E", Value: "יצוא" }, { Id: "I", Value: "יבוא" }];
+    public ConsignmentTypes: ConsignmentType[] = [{ Id: "E", Value: "יצום" }, { Id: "I", Value: "יבום" }];
     CargoIdKeyOrigin: { a: string, b: string, c: string } = { a: '', b: '', c: '' };
 
 
@@ -173,7 +173,7 @@ export class ConsigmentTabContentComponent
         windowArgs.declarationPM = this.declarationPM;
         windowArgs.IsDisplayOnly = this.IsDisplayOnly;
         //var windowTitle = TextCodeTranslator.Translate("Customs.ExportDeclarationDataQuery.F.ExportDeclarationData");
-        var windowTitle = "נתונים נוספים ליצוא - חטיבת משגור";
+        var windowTitle = "נתונים נוספים ליצום - חטיבת משגור";
 
         var logWindow = new LogitudeWindow();
         //windowArgs.Type = "Importer";
@@ -387,7 +387,9 @@ export class ConsigmentTabContentComponent
         // initialize query filters for LoadingPort according to CountryCode
         if (!AppTool.IsNullOrEmpty(this.OriginCountryCode)) {
             this.LoadingPortFilterItems.removeAdditionalFilter("CountryTypeCode");
-            this.LoadingPortFilterItems.addAdditionalFilter("CountryTypeCode", this.OriginCountryCode, null, null, "Equals", false, false, false, "string", false, true);
+            var CountryFilter = new FilterItem("CountryTypeCode", this.OriginCountryCode, null, null, "Equals", false, false, false, "string", false, true, true);
+            this.LoadingPortFilterItems.AdditionalFilters.push(CountryFilter);
+            //this.LoadingPortFilterItems.addAdditionalFilter("CountryTypeCode", this.OriginCountryCode, null, null, "Equals", false, false, false, "string", false, true);
             //this.LoadingPortFilterItems.ForceCacheRefresh = true;
         }
         else {
@@ -661,7 +663,6 @@ export class ConsigmentTabContentComponent
     //#endregion
 
     setRequired() {
- 
         if (this.declarationPM.Direction == 'E') {
             this.UIProperties.SetWarning("ManifestNumber", this.ObjectTableName, true);
             if (!AppTool.IsNullOrEmpty(this.ManifestNumber)) {
@@ -691,12 +692,11 @@ export class ConsigmentTabContentComponent
                     this.UIProperties.SetWarning("ExportUnloadingPortCode", this.ObjectTableName, false);
                 }
 
- 
                 this.UIProperties.SetWarning("ExportLoadingPortCode", this.ObjectTableName, true);
                 if (this.ExportLoadingPortCode != null) {
                     this.UIProperties.SetWarning("ExportLoadingPortCode", this.ObjectTableName, false);
                 }
-             }
+            }
             if (this.EntityPM.ConsignmentType == 'I') {
                 this.UIProperties.SetWarning("LoadingPortCode", this.ObjectTableName, true);
                 if (this.LoadingPortCode != null) {
@@ -709,7 +709,7 @@ export class ConsigmentTabContentComponent
                 }
             }
         }
-    }
+    }   
     SetTipsInsideCargoIdentifires(value: string) {
 
         if (this.declarationPM.Direction == 'E') {
@@ -839,19 +839,21 @@ export class ConsigmentTabContentComponent
 
 
     RemovePackageButton(item) {
+        
+        if (!this.IsDisplayOnly) {
+            if (!AppTool.IsNullOrEmpty(item)) {
 
-        if (!AppTool.IsNullOrEmpty(item)) {
+                var msg = TextCodeTranslator.Translate("Customs.Declaration.O.DeletePackage");
+                var confirmWindow = new ConfirmWindow();
+                confirmWindow.Width = 400;
+                confirmWindow.Height = 150;
+                confirmWindow.Show(msg);
+                confirmWindow.WindowClosed.subscribe((event: any) => {
 
-            var msg = TextCodeTranslator.Translate("Customs.Declaration.O.DeletePackage");
-            var confirmWindow = new ConfirmWindow();
-            confirmWindow.Width = 400;
-            confirmWindow.Height = 150;
-            confirmWindow.Show(msg);
-            confirmWindow.WindowClosed.subscribe((event: any) => {
+                    if (confirmWindow.Yes) { // YES
+                        this.ConsimentPackages.Remove(item);
+                        this.EntityPM.RemoveConsignmentPackage(item.EntityPM);
 
-                if (confirmWindow.Yes) { // YES
-                    this.ConsimentPackages.Remove(item);
-                    this.EntityPM.RemoveConsignmentPackage(item.EntityPM);
                      if(this.declarationPM.Direction=='E'&&this.declarationPM.TransportModeId=='O'){
                          if(this.ConsimentPackages.Length==0||AppTool.IsNullOrEmpty(this.EntityPM.ConsignmentPackages[0]?.MarksNumbers)){
                              this.Tab.Title=null;
@@ -860,11 +862,25 @@ export class ConsigmentTabContentComponent
                             var val=this.EntityPM.ConsignmentPackages[0]?.MarksNumbers.replace("\n", "");
                              this.Tab.Title = (this.EntityPM.ConsignmentPackages[0]?.MarksNumbers.replace("\n", "") + '-')  + this.EntityPM.SequenceNumeric;
                          }
+
+
                      }
                 }
             });
 
+            }
         }
+        else{
+            var messageWindow = new MessageWindow();
+            messageWindow.Title = ""
+            messageWindow.RTL=true;
+            messageWindow.Width = 250;
+            messageWindow.Height = 150;
+            messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+            messageWindow.Show("ההצהרה נעולה. לם ניתן למחוק נתוני סידורי במטען");
+            return;
+        }
+
     }
 
     OnSecondCargoLostFocus() {

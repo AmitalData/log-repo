@@ -24,6 +24,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference.DF_NG_8235_MSG14000_ExportDeclarationAmendmentRequestMsg req = exportDeclarationAmentmentRequestService.GetRequest(requestParams);
             DF_NG_8235_MSG14000_ExportDeclarationAmendmentRequestMsg castreq = Serializer.CastXML<DF_NG_8235_MSG14000_ExportDeclarationAmendmentRequestMsg, UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference.DF_NG_8235_MSG14000_ExportDeclarationAmendmentRequestMsg>(req);
             return castreq;
+
         }
     }
 }

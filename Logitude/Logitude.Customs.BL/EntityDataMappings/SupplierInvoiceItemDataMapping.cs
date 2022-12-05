@@ -80,7 +80,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 CustomsCountryQueryService countryQueryService = new CustomsCountryQueryService(entityPOCO.Tenant);
                 CustomsCountryPM country = countryQueryService.GetSingle(entityPOCO.OriginCountryCode, false, true);
-                entityPM.OriginCountryName = country.LocalName;
+                if(country != null)
+                   entityPM.OriginCountryName = country.LocalName;
             }
 
             if (entityPOCO.TradeAgreementCode != null)

@@ -32,6 +32,7 @@ using System.Transactions;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
 using Unifreight.BL.EntityPMs.UGenerated;
+using Logitude.Server.Tools.Counters;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -226,6 +227,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     declarationPM.ExcludeConsignment = declarationOrg.ExcludeConsignment;
                     //declarationPM.IsClose = declarationOrg.IsClose;
                     declarationPM.IsDiamondDeclaration = declarationOrg.IsDiamondDeclaration;
+                    declarationPM.AmendmentRequestNumber = CodeCounter.GetNumber("AmendmentRequestNumber", tenant).ToString();
+
                     if (declarationOrg.IsCourierDeclaration)
                     {
 
@@ -307,10 +310,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                         }
                         declarationPM.AmendmentOriginalDeclartation = declarationOrg.AmendmentOriginalDeclartation;
-                        //declarationPM.AmendmentRequestNumber = declarationOrg.AmendmentRequestNumber;
+                       
                     }
                     else
-
                     {
                         if (declarationOrg.IsAmendment == true)
                             declarationPM.AmendmentOriginalDeclartation = declarationOrg.AmendmentOriginalDeclartation;

@@ -85,6 +85,29 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
            
         }
+
+
+        public HttpResponseMessage GetStatisticsByCourierDeclarations(string CourierMasterId)
+        {
+
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                ICustomContext context = CustomContext.GetContext(tenant);
+                CustomsRequestsSheetListQueryService customsRequestsSheetQuery = new CustomsRequestsSheetListQueryService(context);
+                var summary = customsRequestsSheetQuery.GetStatisticsByCourierDeclarations(tenant, CourierMasterId);         
+
+                return Request.CreateResponse(HttpStatusCode.OK, summary);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
         public uint GetMessageCount(string queueName)
         {
             try

@@ -1,13 +1,15 @@
 
 import { Component, ChangeDetectorRef } from '@angular/core';
-import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
-import {DeclarationPM} from '../../EntityPMs/DeclarationPM';
-import {AmitalGatewayUtil, UnifreightMessageM} from '../../../Infrastructure/Utilities/AmitalGatewayUtil';
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
+import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
+import { DeclarationPM } from '../../EntityPMs/DeclarationPM';
+import { AmitalGatewayUtil, UnifreightMessageM } from '../../../Infrastructure/Utilities/AmitalGatewayUtil';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 //C:\LW\Customs\AngularModules\AngularModules\Customs\Controller\DeclarationEditComponentController.ts
-import {DeclarationEditComponentController} from '../../Controller/DeclarationEditComponentController';
+import { DeclarationEditComponentController } from '../../Controller/DeclarationEditComponentController';
+import { CustomsSettingListService } from 'Customs/Services/StandardLists/CustomsSettingListService';
+import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 @Component({
-    
+
     templateUrl: "DeclarationShortTitleComponent.html",
 })
 
@@ -15,7 +17,8 @@ import {DeclarationEditComponentController} from '../../Controller/DeclarationEd
 export class DeclarationShortTitleComponent {
     public EntityPM: DeclarationPM;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(private cd: ChangeDetectorRef,public entityArgs: EntityArgs) {
+    _CustomsSettingListService: CustomsSettingListService = new CustomsSettingListService();
+    constructor(private cd: ChangeDetectorRef, public entityArgs: EntityArgs) {
         this.EntityPM = this.entityArgs.EntityPM;
         this.Listen();
 
@@ -31,7 +34,7 @@ export class DeclarationShortTitleComponent {
     private Listen() {
         if (this.CurrentSession.CurrentEditComponent != null) {
 
-     
+
             this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
                 this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess && this.CurrentSession.CurrentEditComponent) {
@@ -42,11 +45,11 @@ export class DeclarationShortTitleComponent {
                 })
             );
 
-   
+
         }
     }
-    
-    
+
+
 
     public get CourierImporterName() {
         if (this.EntityPM.ImporterCode) {
@@ -91,16 +94,29 @@ export class DeclarationShortTitleComponent {
                 this.EntityNumber = this.EntityPM.CustomFileNo;
             }
 
-            
-        }
 
-        if (AmitalGatewayUtil.Instance.AmitalBrowserInUse && AmitalGatewayUtil.Instance.IsTabCA23) {
-            this._ShowEntityNumberClick = true;
         }
+        var isConnectToUnifreight = null;
+        this._CustomsSettingListService.getSingleFromCache(SessionLocator.Tenant.toString())
+            .subscribe((customsSettingList: ServiceResponse) => {
+                if (customsSettingList) {
+                    
+                    isConnectToUnifreight = customsSettingList.Result ? customsSettingList?.Result?.IsConnectedToUniFreight : null;
+                    if (AmitalGatewayUtil.Instance.AmitalBrowserInUse && AmitalGatewayUtil.Instance.IsTabCA23) {
+
+                        this._ShowEntityNumberClick = true;
+                    }
+                    if (!isConnectToUnifreight && this.EntityPM.Direction == 'E')
+                        this._ShowEntityNumberClick = false;
+                }
+            });
+
+
+        
     }
 
-    EntityNumberClick() {   
-        
+    EntityNumberClick() {
+
         if (!this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty) {
             this.ShowCustomFileOPCFromDeclaration();
         } else {
@@ -110,14 +126,15 @@ export class DeclarationShortTitleComponent {
                 sub.unsubscribe();
                 if (isSaveSuccess) {
                     this.ShowCustomFileOPCFromDeclaration();
-                } 
+                }
             });
             this.CurrentSession.CurrentEditComponent.SaveChanges();
         }
     }
-
     RefreshButtonClicked() {
+        this.CurrentSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+
     }
 
 

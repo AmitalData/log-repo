@@ -187,6 +187,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<DeclarationCourierStatus> DeclarationCourierStatuses { get; }
 		 IDbSet<DeclarationErrorMapping> DeclarationErrorMappings { get; }
 		 IDbSet<DeclarationExportRecipient> DeclarationExportRecipients { get; }
+		 IDbSet<DeclarationFollowUp> DeclarationFollowUps { get; }
 		 IDbSet<DeclarationMamanSpecialAction> DeclarationMamanSpecialActions { get; }
 		 IDbSet<DeclarationPayment> DeclarationPayments { get; }
 		 IDbSet<DeclarationPaymentMethod> DeclarationPaymentMethods { get; }
@@ -326,12 +327,14 @@ namespace Logitude.Customs.Data
 		 IDbSet<RequiredGuaranteeType> RequiredGuaranteeTypes { get; }
 		 IDbSet<ReturnCondition> ReturnConditions { get; }
 		 IDbSet<SalesTaxExemptionType> SalesTaxExemptionTypes { get; }
+		 IDbSet<SchedulerParam> SchedulerParams { get; }
 		 IDbSet<SealCompletenes> SealCompleteness { get; }
 		 IDbSet<SealType> SealTypes { get; }
 		 IDbSet<SealUpdateReasonType> SealUpdateReasonTypes { get; }
 		 IDbSet<SecurityClearenceTypeCode> SecurityClearenceTypeCodes { get; }
 		 IDbSet<SeizureFactorType> SeizureFactorTypes { get; }
 		 IDbSet<SeizureMethodType> SeizureMethodTypes { get; }
+		 IDbSet<ServersName> ServersNames { get; }
 		 IDbSet<SignatureType> SignatureTypes { get; }
 		 IDbSet<SignStation> SignStations { get; }
 		 IDbSet<SiteLookup> SiteLookups { get; }

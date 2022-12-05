@@ -329,7 +329,12 @@ export class DeclarationCourierStatusPM {
         }
     }
     //public DeclarationPendings: Array<DeclarationPendingPM>= [];
-     private lastMileStatusName: string;
+     private mAWB: string;
+    public get MAWB() { return this.mAWB; }
+    public set MAWB(newValue: string) { if (this.mAWB != newValue) { this.mAWB = newValue; this.MarkAsDirty("MAWB"); } }
+       
+	 
+    private lastMileStatusName: string;
     public get LastMileStatusName() { return this.lastMileStatusName; }
     public set LastMileStatusName(newValue: string) { if (this.lastMileStatusName != newValue) { this.lastMileStatusName = newValue; this.MarkAsDirty("LastMileStatusName"); } }
        
@@ -412,6 +417,16 @@ export class DeclarationCourierStatusPM {
     private missedDocumentStatusCode: string;
     public get MissedDocumentStatusCode() { return this.missedDocumentStatusCode; }
     public set MissedDocumentStatusCode(newValue: string) { if (this.missedDocumentStatusCode != newValue) { this.missedDocumentStatusCode = newValue; this.MarkAsDirty("MissedDocumentStatusCode"); } }
+       
+	 
+    private approvedCourierPendingList: string;
+    public get ApprovedCourierPendingList() { return this.approvedCourierPendingList; }
+    public set ApprovedCourierPendingList(newValue: string) { if (this.approvedCourierPendingList != newValue) { this.approvedCourierPendingList = newValue; this.MarkAsDirty("ApprovedCourierPendingList"); } }
+       
+	 
+    private notApprovedPendingList: string;
+    public get NotApprovedPendingList() { return this.notApprovedPendingList; }
+    public set NotApprovedPendingList(newValue: string) { if (this.notApprovedPendingList != newValue) { this.notApprovedPendingList = newValue; this.MarkAsDirty("NotApprovedPendingList"); } }
        
 	 
 

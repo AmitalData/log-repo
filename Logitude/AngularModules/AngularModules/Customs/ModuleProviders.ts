@@ -255,7 +255,9 @@ import { PhysicalCheckSearchResultTypeListService } from './Services/StandardLis
 import { GTBFUSTATUListService } from './Services/StandardLists/GTBFUSTATUListService';
 import { StorageStatusTableListService } from './Services/StandardLists/StorageStatusTableListService';
 import { ClientsTapagListService } from './Services/StandardLists/ClientsTapagListService';
+import { ServersNameListService } from './Services/StandardLists/ServersNameListService';
 import { PhysicalCheckCodeListService } from './Services/StandardLists/PhysicalCheckCodeListService';
+import { SchedulerParamListService } from './Services/StandardLists/SchedulerParamListService';
 
 
 //#endregion
@@ -312,6 +314,7 @@ import { CustomsCountryPMService } from './Services/StandardPMs/CustomsCountryPM
 import { PendingByKeywordPMService } from './Services/StandardPMs/PendingByKeywordPMService';
 import { ReferantTeamPMService } from './Services/StandardPMs/ReferantTeamPMService';
 import { ExportStorgePMService } from './Services/StandardPMs/ExportStorgePMService';
+import { SchedulerParamPMService } from './Services/StandardPMs/SchedulerParamPMService';
 
 //#endregion
 
@@ -446,6 +449,8 @@ import { ExternalFieldMappingListService } from './Services/StandardLists/Extern
 import { ExternalFieldMappingPMService } from './Services/StandardPMs/ExternalFieldMappingPMService';
 import { StatusFieldTypeListService } from './Services/StandardLists/StatusFieldTypeListService';
 import { GTBFUSTATUWebService } from './Services/WebServices/GTBFUSTATUWebService';
+import { ManifestCargoStatusListService } from './Services/StandardLists/ManifestCargoStatusListService';
+import { ServersNamePMService } from './Services/StandardPMs/ServersNamePMService';
 
 
 export class ModuleProviders {
@@ -709,7 +714,7 @@ export class ModuleProviders {
             case "ExporterRoleTypeListService": { myResult = new ExporterRoleTypeListService(); break; }
             case "AutonomyRegionTypeListService": { myResult = new AutonomyRegionTypeListService(); break; }
             case "GTBFUSTATUListService": { myResult = new GTBFUSTATUListService(); break; }
-
+            case "SchedulerParamListService": { myResult = new SchedulerParamListService(); break; }
             case "StorageStatusTableListService": { myResult = new StorageStatusTableListService(); break; }
             case "CancellationReasonRequestTypeListService": { myResult = new CancellationReasonRequestTypeListService(); break; }
             case "CancellationRequestStatusListService": { myResult = new CancellationRequestStatusListService(); break; }
@@ -748,8 +753,9 @@ export class ModuleProviders {
             case "PhysicalCheckSearchResultTypeListService": { myResult = new PhysicalCheckSearchResultTypeListService(); break; }
             case "IncotemrsFileValidationListService": { myResult = new IncotemrsFileValidationListService(); break; }
             case "ExternalFieldMappingListService": { myResult = new ExternalFieldMappingListService(); break; }
+            case "ManifestCargoStatusListService": { myResult = new ManifestCargoStatusListService(); break; }
+            case "PhysicalCheckCodeListService": { myResult = new PhysicalCheckCodeListService(); break; }            
             case "PhysicalCheckCodeListService": { myResult = new PhysicalCheckCodeListService(); break; }
-                
              //#endregion                
 
             //#region StandardPMs
@@ -813,7 +819,9 @@ export class ModuleProviders {
             case "TradeAgreementProtocolListService": { myResult = new TradeAgreementProtocolListService(); break; }
             case "LogisticActionRequestPMService": { myResult = new LogisticActionRequestPMService(); break; }
             case "ExternalFieldMappingPMService": { myResult = new ExternalFieldMappingPMService(); break; }
+            case "SchedulerParamPMService": { myResult = new SchedulerParamPMService(); break; }
             case "StatusFieldTypeListService": { myResult = new StatusFieldTypeListService(); break; }
+            case "ServersNameListService": { myResult = new ServersNameListService(); break; }
 
             //#endregion
 
@@ -848,7 +856,7 @@ export class ModuleProviders {
             case "SupplierInvoiceExtendedPMService": { myResult = new SupplierInvoiceExtendedPMService(); break; }
             case "ReferantExceptionExtendedPMService": { myResult = new ReferantExceptionExtendedPMService(); break; }
             case "ExportDeclarationClosingDatasExtendPMService": { myResult = new ExportDeclarationClosingDatasExtendPMService(); break; }
-
+            case "ServersNamePMService": { myResult = new ServersNamePMService(); break; }
             //#endregion
 
             //MetaData
