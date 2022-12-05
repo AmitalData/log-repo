@@ -2349,10 +2349,10 @@ export class ListComponent implements OnInit, AfterViewInit {
                                         cmpRef.instance.ComponentRef = cmpRef;
                                         cmpRef.instance.Run({ EntityId: $event.rowData.Id, EntityPM: entitypm, ObjectTableName: 'WorkFlow', BackButtonLabel: "WorkFlows" });
 
-                                        cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                                        cmpRef.instance.BackCompleted.subscribe(() => {
                                             this.isEditControlOpened = false;
                                             this.OnBackFromEdit(selectedEntityId, $event)
-                                            this.RefreshBtnClick();
+                                            //this.RefreshBtnClick();
                                         });
                                     });
                             }

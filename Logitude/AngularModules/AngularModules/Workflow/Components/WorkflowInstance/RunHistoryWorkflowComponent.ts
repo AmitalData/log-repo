@@ -44,12 +44,14 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
     public FilterValue2: any;
     public FilterOperator: string;
     public IsDateFilter: boolean;
+    private TabSelectedEvent: any = null;
 
     public LogitudeGridExportToExcelComponent: LogitudeGridExportToExcelComponent = new LogitudeGridExportToExcelComponent();
 
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
+        this.Listen();
     }
 
     ngOnInit() {
@@ -57,6 +59,20 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
         this.InitializeVersionIds();
         this.BuildQueryColumns();
         this.GetStartTimeObjectFields();
+    }
+
+    private Listen() {
+        if (this.entityArgs.EditComponent) {
+            this.TabSelectedEvent = this.entityArgs.EditComponent.TabSelected.subscribe((tabCode: string) => {
+                if(tabCode == "WFRH"){
+                    this.LoadData()
+                }
+            });
+        }
+    }
+
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.TabSelectedEvent);
     }
 
     LoadData() {
