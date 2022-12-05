@@ -627,11 +627,17 @@
     <Compile Include="ResponseServices\VE_MSG013_VendorAddCommunicationDeviceResponseService.cs" />
     <Compile Include="ResponseServices\VE_MSG052_VendorSearchResultsForCustomsAgentResponseService.cs" />
     <Compile Include="ResponseServices\VP_NG_2691_MSG101_VehicleInResponseService.cs" />
+
     <Compile Include="Tasks\SendReportExel.cs" />
     <Compile Include="Tasks\ExchangeRatesQuery.cs" />
     <Compile Include="Tasks\DeleteCustomRequestSheet.cs" />
     <Compile Include="Tasks\DeleteNotToCustomCommunication.cs" />
     <Compile Include="Tasks\DeleteQueMessMoreDetails.cs" />
+
+    
+    
+    
+
  
     <Compile Include="Tasks\SendDeclarationStatus.cs" />
     <Compile Include="Tasks\SendManifestService.cs" />
@@ -724,6 +730,7 @@
       <Project>{6D7FFAD2-35B6-4133-8700-CF73E58D0C85}</Project>
       <Name>Simplog.Global.Data</Name>
     </ProjectReference>
+
     <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
       <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
       <Name>Simplog.Server.Infrastructure</Name>
