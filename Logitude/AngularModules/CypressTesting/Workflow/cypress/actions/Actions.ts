@@ -246,7 +246,7 @@ export function FilterInstancesBycurrentdate() {
         cy.DefineMockRequestWait(RestAPI.GET, URLs.Getworkflowinstance, RequestAliases.GetMockWorkflowInstances, response);
     });
     cy.Click(WorkflowSelectors.RunHistoryDatePicker, null).then(() =>{
-        cy.get(WorkflowSelectors.DatePickertodatDate).click();
+        cy.get(WorkflowSelectors.DatePickertodayDate).click();
     });
 }
 

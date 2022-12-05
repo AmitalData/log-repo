@@ -15,7 +15,7 @@
     .count-row {
         vertical-align: middle;
         width: 50px;
-        padding-left: 5px;
+        padding: 0 5px;
     }
 
     .count-data {
@@ -63,9 +63,9 @@
                     <td class="count-row">
                         <span class="Counter" class="count-data">Run({{DataSource.rowCount}})</span>
                     </td>
-                    <td class="excel-row">
+                    <td class="excel-row" [attr.data-cy]="'RunHistoryExport'">
                         <button class="excel-button Button" (click)="ExportToExcel()"><img class="CenterCenter"
-                                title="Export To Excel" src="./Images/Buttons/excelicon.png" id="RunHistoryExport"/></button>
+                                title="Export To Excel" src="./Images/Buttons/excelicon.png"/></button>
                     </td>
                     <td>
                         <div></div>
@@ -75,7 +75,7 @@
                         <div class="filter-container">
                             <span class="filter-name">Start Time</span>
                             <CustomDatePicker (SelectedItemChanged)="setDateFilter($event)"
-                                [QueryCode]="ObjectTableName" [ObjectField]="StartTimeObjectfield" id="RunHistoryDatePicker"></CustomDatePicker>
+                                [QueryCode]="ObjectTableName" [ObjectField]="StartTimeObjectfield" [DataCy]="'RunHistoryDatePicker'"></CustomDatePicker>
                         </div>
                     </td>
 
