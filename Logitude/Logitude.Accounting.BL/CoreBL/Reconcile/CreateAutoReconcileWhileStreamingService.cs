@@ -323,7 +323,7 @@ namespace Logitude.Accounting.BL.CoreBL
             foreach (var newLTran in orderedLedgerTransactions)
             {
                 ReconciliationLinePM myReconciliationLinePM = GetRecoLineFromNewLTRansSetReconciliationAmountFromStack(ref totReconciliationAmountUseAsStack, myReconciliationPM, ref lineCounter, newLTran, isPartialReconciliation);
-                if(myReconciliationLinePM.ReconciliationAmount != 0)
+                //if(myReconciliationLinePM.ReconciliationAmount != 0)
                     myReconciliationPM.ReconciliationLines.Add(myReconciliationLinePM);
 
             }
