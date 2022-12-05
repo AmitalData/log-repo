@@ -41,9 +41,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData.Succeeded = true;
             this.MyResponseData.HasException = false;
 
-         
 
-            if (customResponse.General.exitEntryEventType==1)
+            FeatureQuery featureQuery = new FeatureQuery();
+            var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(requestParams.Tenant), requestParams.Tenant);
+            var feature = features.Features.FirstOrDefault(x => x.Code == "EntryExit");
+            if (customResponse.General.exitEntryEventType==1 && feature != null)
             {
                 //איתור הצהרה
                 var cargoTypeCode = customResponse.ReportingDetails.cargoIdentifier.cargoIdentifierType;
@@ -65,13 +67,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     this.MyResponseData.ApplicationID = declaration.Id;
                     this.MyRequestSheetParam.EntityId1 = declaration.Id;
                     this.MyRequestSheetParam.CustomFileNo = declaration.CustomFileNo ;
-                    FeatureQuery featureQuery = new FeatureQuery();
-                    var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(declaration.Tenant), declaration.Tenant);
-                    var feature = features.Features.FirstOrDefault(x => x.Code == "EntryExit");
-                    if (feature != null)
-                    {
+                    
+                    
                         SendEXT(requestParams.Tenant, declaration, customResponse);
-                    }
+                    
                 }
                 else
                 {
