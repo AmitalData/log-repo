@@ -66,7 +66,7 @@ export class CustomsSettingsComponent
     Loaded: boolean = false;
     public CompanyTypeList: CodeNameClass[];
     ngOnInit() {
-        //ערכים C - דיפולטיבי (בסקריפט), או B == בלדרות - אסור ריק יאותחל עם הפצה ראשונה + DEFAULT == C
+        //ערכים C - דיפולטיבי (בסקריפט), םו B == בלדרות - םסור ריק יםותחל עם הפצה רםשונה + DEFAULT == C
 
         this.CompanyTypeList = [];
         this.UIProperties.SetEnabled("LastRunningDCAWS", this.ObjectTableName, false);
@@ -121,7 +121,7 @@ export class CustomsSettingsComponent
         });
 
     }
-   
+    
 
     ValidScreen() {
         if (!this.IsConnectedToUniFreight) {
@@ -272,9 +272,14 @@ export class CustomsSettingsComponent
     set LastRunningDCAWS(value: any) { this._LastRunningDCAWS =  value ; }
 
 
-    
+    get SuppressIIGMessageFromDate() { return this.entityPM != null ? this.entityPM.SuppressIIGMessageFromDate : null; }
+    set SuppressIIGMessageFromDate(value) { this.entityPM.SuppressIIGMessageFromDate = value; }
 
-    
+
+
+    get SuppressIIGMessageToDate() { return this.entityPM != null ? this.entityPM.SuppressIIGMessageToDate : null; }
+    set SuppressIIGMessageToDate(value) { this.entityPM.SuppressIIGMessageToDate = value; }
+
     //#endregion
 
     ShowRestartServiceScript(){
@@ -286,10 +291,11 @@ export class CustomsSettingsComponent
         logitudeWindow.Width = 1000;
         logitudeWindow.Height = 500;
         logitudeWindow.IsShowCloseButton = true;
-        logitudeWindow.Title = "אתחול סרוויסים";//TextCodeTranslator.Translate("CommunicationLogSteps.O.Log");
+        logitudeWindow.Title = "םתחול סרוויסים";//TextCodeTranslator.Translate("CommunicationLogSteps.O.Log");
         logitudeWindow.WindowArgs = { Log: script , UseTextarea:true };
         logitudeWindow.Show('./InfrastructureModules/InfrastructureCommunications/Components/Communications/LogFieldComponent');
     }
+
 
     CancelButtonClicked() {
         SessionLocator.SelectedSession.CloseCurrentWindow();
@@ -302,6 +308,21 @@ export class CustomsSettingsComponent
             return;
         }
         if (AppTool.IsNullOrEmpty(this.entityPM.QtyFeedbackInPendingMessage)) this.entityPM.QtyFeedbackInPendingMessage = 100;
+        
+        this.ValidationErrorsList = [];
+        if (this.SuppressIIGMessageFromDate && this.SuppressIIGMessageToDate) {
+            
+
+            if (new Date(this.SuppressIIGMessageFromDate) >= new Date(this.SuppressIIGMessageToDate)) {
+                this.ValidationErrorsList.push("המסרים למכס מושבתים -מתםריך חייב להיות גדול מעד תםריך");
+            }
+        } else if ((this.SuppressIIGMessageFromDate || this.SuppressIIGMessageToDate)) {///קיים םחד לפחות
+            this.ValidationErrorsList.push("המסרים למכס מושבתים -מתםריך חייב להיות גדול מעד תםריך");
+        }
+        if (this.ValidationErrorsList.length > 0) {
+            return
+        }
+
 
         //let msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         //List < ValidationResult > errors = new List<ValidationResult>();
