@@ -116876,7 +116876,7 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Shipment.G.StatusUpdated&quot;"
-      DefaultText="&quot;Status Updated&quot;"
+      DefaultText="&quot;Status updated&quot;"
       TextCodeTypeCode="&quot;G&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -116886,12 +116886,12 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Shipment.G.SearchFrom&quot;"
-      DefaultText="&quot;Search From&quot;"
+      DefaultText="&quot;Search from&quot;"
       TextCodeTypeCode="&quot;G&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Shipment.G.SearchDestination&quot;"
-      DefaultText="&quot;Search Destination&quot;"
+      DefaultText="&quot;Search destination&quot;"
       TextCodeTypeCode="&quot;G&quot;"
       IsSpellChecked="false" />
     <TextCode
