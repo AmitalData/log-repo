@@ -995,10 +995,12 @@ namespace WebFreight.Web.WebServices
                             }
 
                             myDataProvider.Broker = myDataProvider.Broker + Environment.NewLine + DataProviders.General.GetAddress(customAgentImportAddress);
+                            myDataProvider.BrokerAddressOnly = Environment.NewLine + DataProviders.General.GetAddress(customAgentImportAddress);
 
                             if (customAgentImportAddress.PhoneNumber != null || customAgentImportAddress.FaxNumber != null)
                             {
                                 myDataProvider.Broker = myDataProvider.Broker + Environment.NewLine + (customAgentImportAddress.PhoneNumber != null ? "Tel: " + customAgentImportAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(customAgentImportAddress.FaxNumber) ? "Fax: " + customAgentImportAddress.FaxNumber + " " : "");
+                                myDataProvider.BrokerPhone = customAgentImportAddress.PhoneNumber;
                             }
 
                             myDataProvider.CustomsAgentAddress = DataProviders.General.GetAddress(customAgentImportAddress);
@@ -1011,6 +1013,7 @@ namespace WebFreight.Web.WebServices
                         if (customAgentImportContact != null)
                         {
                             myDataProvider.BrokerEmail = customAgentImportContact.Email;
+                            myDataProvider.BrokerContactName = customAgentImportContact.EnglishName;
                             myDataProvider.CustomsAgentContactDetails = this.BuildContactDetails(customAgentImportContact);                            
                         }                        
                     }
