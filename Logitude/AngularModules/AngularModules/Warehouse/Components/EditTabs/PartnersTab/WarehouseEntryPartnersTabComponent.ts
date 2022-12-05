@@ -770,7 +770,6 @@ export class PartnerItem extends BaseComponent {
             if (event) {
                 this.AddressId = entityPM.Id;
             }
-    } 
         });
     }
 
