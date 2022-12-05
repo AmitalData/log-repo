@@ -17,7 +17,6 @@ export class CollectionFilterPropertiesComponent extends BaseComponent {
 
     public DataContext: any = this;
 
-    public WorkflowEntity: string;
     public FlowObject: any;
     public CurrentNodeId: string;
     public FlowObjectFields: ObjectFieldList[];
@@ -38,7 +37,6 @@ export class CollectionFilterPropertiesComponent extends BaseComponent {
 
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
-        this.WorkflowEntity = args.WorkflowEntity ? args.WorkflowEntity : null;
         this.FlowObject = args.FlowObject ? args.FlowObject : null;
         this.CurrentNodeId = args.CurrentNodeId ? args.CurrentNodeId : null;
         this.FlowObjectFields = args.FlowObjectFields ? args.FlowObjectFields : [];

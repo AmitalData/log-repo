@@ -72,7 +72,7 @@
                 <LogLabel [NoObjectField]="true" [Text]="'Collection'" [ObjectFieldName]="'Collection'"
                     [DataContext]="DataContext"></LogLabel>
             </div>
-            <div class="table-row-cell-block collection-tree-container">
+            <div class="table-row-cell-block">
                 <TreeSelect [Items]="CollectionFilterEntitiesTreeItems" [Width]="'300px'" [Value]="Collection"
                     (ValueChanged)="updateCollection($event)" [IsReturnedTreeSelectItem]="true">
                 </TreeSelect>
