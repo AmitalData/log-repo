@@ -40,17 +40,11 @@
         padding-right: 10px;
     }
 
-    .select-entity-label {
-        padding-bottom: 4px;
-    }
-
     .name-input-container {
         width: 320px;
     }
 
-    .select-entity-label,
-    .set-conditions-label,
-    .select-get-record-label {
+    .label-container {
         font-weight: bold;
     }
 
@@ -172,7 +166,7 @@
                     <tr class="table-row">
                         <td class="table-row-cell">
                             <div class="table-row-cell-block">
-                                <div class="select-get-record-label">Select Records Type</div>
+                                <div class="label-container">Select Records Type</div>
                             </div>
                         </td>
                     </tr>
@@ -215,7 +209,7 @@
                     <tr *ngIf="RecordsType" class="table-row">
                         <td class="table-row-cell">
                             <div class="table-row-cell-block">
-                                <div class="select-get-record-label">Get Records Of This Object</div>
+                                <div class="label-container">Get Records Of This Object</div>
                             </div>
                         </td>
                     </tr>
@@ -251,7 +245,7 @@
                     <tr *ngIf="EntityId" class="table-row">
                         <td class="table-row-cell">
                             <div class="table-row-cell-block">
-                                <div class="select-get-record-label">Filter {{Entity | EntityLabelPipe}} Records</div>
+                                <div class="label-container">Filter {{Entity | EntityLabelPipe}} Records</div>
                             </div>
                         </td>
                     </tr>
@@ -283,7 +277,7 @@
                     <tr *ngIf="EntityId && RecordsType === GetRecordTypes.ReadOnly" class="table-row">
                         <td class="table-row-cell">
                             <div class="table-row-cell-block">
-                                <div class="select-get-record-label">How Many Records To Store</div>
+                                <div class="label-container">How Many Records To Store</div>
                             </div>
                         </td>
                     </tr>
@@ -326,7 +320,7 @@
                         class="table-row">
                         <td class="table-row-cell">
                             <div class="table-row-cell-block">
-                                <div class="select-get-record-label">Sort {{Entity | EntityLabelPipe}} Records</div>
+                                <div class="label-container">Sort {{Entity | EntityLabelPipe}} Records</div>
                             </div>
                         </td>
                     </tr>
@@ -378,7 +372,7 @@
                     <tr *ngIf="EntityId && RecordsType === GetRecordTypes.ReadOnly" class="table-row">
                         <td class="table-row-cell">
                             <div class="table-row-cell-block">
-                                <div class="select-get-record-label">Select Fields To Store</div>
+                                <div class="label-container">Select Fields To Store</div>
                             </div>
                         </td>
                     </tr>
