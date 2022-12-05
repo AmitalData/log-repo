@@ -83,7 +83,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CourierStatus
             }
             else if (!String.IsNullOrWhiteSpace(_LogitudeCourierStatus.CustomFileNo))
             {
-                GetDeclarationPMByCustomsFile(_LogitudeCourierStatus.CustomFileNo);
+                GetIdByCustomFileNoAndAmendmentDontDisplayInList(_LogitudeCourierStatus.CustomFileNo);
                 if (_MyDeclarationPM == null)
                 {
                     throw new BusinessErrorException("Declaration with Custom File No. " + _LogitudeCourierStatus.CustomFileNo + " Doesn't exist");
@@ -150,7 +150,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CourierStatus
             var myQueryService = new DeclarationQueryService(_context);
             
             MyGenericResponseObj.Stage = "GetSingle";
-            this._MyDeclarationPM = myQueryService.GetSingle(logitudeFile, true, false);
+            this._MyDeclarationPM = myQueryService.GetAcceptDeclarationAmendment(logitudeFile, ResolvedTenant());
             if (this._MyDeclarationPM == null)
             {
                 throw new BusinessErrorException("LOGITUDE FILE is " + logitudeFile + " but not found");
@@ -160,14 +160,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.CourierStatus
         }
 
 
-        private void GetDeclarationPMByCustomsFile(string CustomFileNo)
+        private void GetIdByCustomFileNoAndAmendmentDontDisplayInList(string CustomFileNo )
         {
             if (String.IsNullOrWhiteSpace(CustomFileNo))
             {
                 throw new BusinessErrorException("Custom File No is missing");
             }
             var myQueryService = new DeclarationQueryService(_context);
-            string existId = myQueryService.GetIdByCustomFileNo(_LogitudeCourierStatus.CustomFileNo, ResolvedTenant());
+            string existId = myQueryService.GetIdByCustomFileNoAndAmendmentDontDisplayInList(_LogitudeCourierStatus.CustomFileNo, ResolvedTenant(),false);
             
             if (String.IsNullOrWhiteSpace(existId))
             {
