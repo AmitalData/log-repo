@@ -383,6 +383,10 @@ export class MultiUpdateComponent extends BaseComponent implements OnInit {
     }
 
     private AutomationSetValueValidation(item: AutomationSetValueViewModel) {
+        if (AppTool.IsNullOrEmpty(item.CurrentEntityPM.ObjectFieldCode)) {
+            this.ValidationErrorsList.push("Please select at least one field to be updated");
+            return;
+        }
         if (AppTool.IsNullOrEmpty(item.CurrentEntityPM.Value)) {
             this.ValidationErrorsList.push(item.SelectedCustomField.FullNameTextCodeDefaultText + " field is required");
             return;
