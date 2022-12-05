@@ -127,7 +127,7 @@ export class APInvoicePaymentsTabComponent implements OnDestroy {
         }
 
         this.IsEditingEnabled = isEditingEnabled;
-        this.AddPaymentButtonIsEnabled = isAddButtonEnabled;
+        this.AddPaymentButtonIsEnabled = isAddButtonEnabled && !this.CantConnectMessageVisibility;
     }
 
     get CantConnectMessageVisibility() {
