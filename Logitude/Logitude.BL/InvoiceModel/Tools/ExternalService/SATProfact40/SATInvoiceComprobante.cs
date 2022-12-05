@@ -1297,13 +1297,20 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             };
             if (totalVat.VatTypeCode != "EXMPT" && _totaltipoFactor != "Exento")
             {
-                traslado.Importe = SATBaseProfact40Service.GetDecimalWithMatchCurrencyDigitsAfterPoint(Math.Abs((totalVat.InvoiceCurrencyVATAmount != null ? ((decimal)totalVat.InvoiceCurrencyVATAmount.Value) : 0)), invoiceCurrencyCode);
+                traslado.Importe = GetNewComprobanteImpuestosImporteValue(totalVat, total_tasaOCuota);
                 traslado.TasaOCuota = total_tasaOCuota;
                 traslado.ImporteSpecified = true;
                 traslado.TasaOCuotaSpecified = true;
             }
 
             return traslado;
+        }
+
+        private decimal GetNewComprobanteImpuestosImporteValue(ARInvoiceTotalVATPM totalVat, string tasaOCuota)
+        {
+            decimal importeValue = Math.Abs((totalVat.InvoiceCurrencyVATAmount != null ? ((decimal)totalVat.InvoiceCurrencyVATAmount.Value) : 0));
+            importeValue = tasaOCuota == "0.000000" ? 0 : importeValue;
+            return SATBaseProfact40Service.GetDecimalWithMatchCurrencyDigitsAfterPoint(importeValue, invoiceCurrencyCode);
         }
     }
 
