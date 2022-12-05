@@ -752,7 +752,7 @@ export class PartnerItem extends BaseComponent {
         }
     }
 
-    // Add|Edit Address
+    //Add|Edit Address
     AddAddressClicked() {
         var entityPM: AddressPM = new AddressPM();
         entityPM.Tenant = SessionLocator.Tenant;
