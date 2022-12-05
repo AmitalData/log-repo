@@ -36,9 +36,9 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             if (_Widget.TimeOverTime && (measureField?.DataTypeCode == null || measureField?.DataTypeCode == "Integer" || measureField?.DataTypeCode == "Decimal"))
             {
                 kpiChart.Ratio = GetRatio(kpiChart.Value, widgetMeasureField, query);
-                kpiChart.ComparisonValue = BuildKpiChartComparsionValue<T>(widgetMeasureField, query)?.ToString() + " " + kpiChart.Unit;
+                kpiChart.ComparisonValue = GetComparisonValue<T>(widgetMeasureField, query);
             }
-            kpiChart.Value = FormatKpiValue(kpiChart.Value, measureField?.DataTypeCode)?.ToString() + " " + kpiChart.Unit;            
+            kpiChart.Value = FormatKpiValue(kpiChart.Value, measureField?.DataTypeCode);            
             return kpiChart;
         }
 
@@ -55,6 +55,15 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             int diffValue = (Convert.ToInt32(value ?? 0) - comparsionValue);
             int ratio =  Convert.ToInt32(((double)diffValue / Math.Abs(comparsionValue)) * 100);
             return ratio;
+        }
+
+        private object GetComparisonValue<T>(WidgetMeasurePM widgetMeasureField, IQueryable<T> query)
+        {
+            object comparisonValue = BuildKpiChartComparsionValue<T>(widgetMeasureField, query);
+            if (comparisonValue == null || comparisonValue == System.DBNull.Value) return 0;
+            return String.Format("{0:n0}", comparisonValue);
+
+
         }
 
         private string GetUnit()
@@ -82,7 +91,7 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
 
         private object FormatKpiValue(object value, string dataTypeCode)
         {
-            if (value == null || value == System.DBNull.Value) return null;
+            if (value == null || value == System.DBNull.Value) return 0;
             if (dataTypeCode == "Date" || dataTypeCode == "DateTime") return ((DateTime)value).ToString("yyyy-MM-dd");
             if (dataTypeCode == null || dataTypeCode == "Integer") return String.Format("{0:n0}", value);
             return String.Format("{0:n}", value);
