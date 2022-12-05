@@ -15,7 +15,8 @@ export class EventCreationResultComponent extends BaseComponent implements OnIni
     SelectedEventType: EventTypeList;
     public AutomationEvent: AutomationEvent;
     public EventNote: string;
-
+    public EventTypeId: string;
+    IsReady: boolean = false;
     constructor() {
         super();
         this.DataContext = this;
@@ -29,11 +30,19 @@ export class EventCreationResultComponent extends BaseComponent implements OnIni
     Run(automationEvent: AutomationEvent) {
         this.AutomationEvent = automationEvent;
         this.EventNote = automationEvent.NoteValue;
+        this.EventTypeId = automationEvent.EventTypeId;
+        this.IsReady = true;
     }
 
     EventNoteChanged(value) {
         this.EventNote = value;
         this.AutomationEvent.NoteValue = value;
     }
+    SelectedEventTypeChanged(event) {
+        if (!event || !this.AutomationEvent) return;
+        this.EventTypeId = event.Id;
+        this.AutomationEvent.EventTypeId = event.Id
+    }
+    
 
 }
