@@ -117239,6 +117239,21 @@
       DefaultText="&quot;Shipping line&quot;"
       TextCodeTypeCode="&quot;G&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.DangerousGoods&quot;"
+      DefaultText="&quot;Dangerous goods&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.Customer&quot;"
+      DefaultText="&quot;Customer&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.ContainersLines&quot;"
+      DefaultText="&quot;Containers lines&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
