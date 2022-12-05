@@ -540,7 +540,7 @@ export class CustomsDocumentTicketViewModel {
    async StartCustomsDocumentMetaDataCheck(relatedDocumentViewModel: RelatedDocumentViewModel) {
         const isConnectTicket: boolean = await this.GetDocConnectTicket(relatedDocumentViewModel.CustomDocument.DocumentsFilingId)
 
-        if (relatedDocumentViewModel.documentsFilingPM.DocumentTypeCode != this.customsDocumentsTicketPM.DocumentTypeCode&&isConnectTicket){
+        if (relatedDocumentViewModel.CustomDocument.DocumentTypeCode != this.customsDocumentsTicketPM.DocumentTypeCode&&isConnectTicket){
             SessionLocator.SelectedSession.StopBusyIndicator();
         var messageWindow = new MessageWindow();
         messageWindow.RTL=true;
