@@ -1611,7 +1611,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                 }
                 }*/
                 //SupplierInvoiceItemConDeclarPM.Quantity = supplierInvoiceItemPM.InvoiceQuantity; // moran 27.10.16 - AMI-58519
-                SupplierInvoiceItemConDeclarPM.Quantity = supplierInvoiceItemPM.StatisticQuantity;
+                SupplierInvoiceItemConDeclarPM.Quantity = (supplierInvoiceItemPM.StatisticQuantity > 0) ? supplierInvoiceItemPM.StatisticQuantity : supplierInvoiceItemPM.InvoiceQuantity; 
                 SupplierInvoiceItemConDeclarPM.QuantityTypeCode = TranslateMeasurmentUnit(invoiceItemConDeclar.QTY_UNIT); // moran 13.1.16 - AMI-55589
 
 
