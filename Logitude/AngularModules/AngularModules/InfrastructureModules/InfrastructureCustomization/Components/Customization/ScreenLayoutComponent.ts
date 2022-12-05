@@ -27,6 +27,7 @@ import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { Guid } from '../../../../Infrastructure/Utilities/Guid';
 import { CustomizationEditComponent } from './CustomizationEditComponent';
 import { GridScreenLayoutService } from '../../ExternalService/GridScreenLayoutService';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 
 
 
@@ -60,7 +61,7 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
     private ObjectTable: ObjectTablePM;
     private CurrentSession = SessionLocator.SelectedSession;
     private modified: boolean = false;
-   public ReloadGridSections: boolean;
+    public ReloadGridSections: boolean;
     set Modified(value: boolean) {
         this.modified = value;
         this.customizationEditComponent.IsDirty = value;
@@ -68,6 +69,7 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
     get Modified() { return this.modified }
     public IsObjectTableFilterEnabled: boolean = false;
     public IsTabsCustomizationEnabled: boolean = false;
+    public IsEnabledCreatingSubCustomObjects: boolean = false;
     public IsSubEntity: boolean = false;
     public GridScreenSelectedFields: ObjectFieldPM[] = [];
     private screenLayoutService: IScreenLayoutService;
@@ -80,6 +82,7 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
         this.myService = new EntityResourceService();
         this.myGeneralService = new GeneralDomainService();
         this.loginService = new LoginService();
+        this.IsEnabledCreatingSubCustomObjects = FeatureLocator.HasFeaturePermession("General", "Customization.CreateSubObjects");
     }
 
     ngOnInit() {
