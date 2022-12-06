@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Script DBType="Main" Module="Customs">
-  <Sql Version="2">
+  <Sql Version="3">
 	  <![CDATA[
 	  update customs.INTERFACETENANTDEFINITIONS set sendtime = (
 	  select sendtime from customs.interfacemanagements where code = '2715' and sendtime is not null)
