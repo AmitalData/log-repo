@@ -49,7 +49,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 DigitalMasterHouseResponse response = new DigitalMasterHouseResponse
                 {
-                    Master = MapMasterData(shipmentId, tenant, partnerType, isExternal),
+                    Master = MapMasterData(shipmentId, tenant, partnerType, isExternal, cardId),
                 };
 
                 housesShipments.Data.ForEach(item =>
@@ -95,7 +95,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             }
         }
 
-        private DigitalMasterHouse MapMasterData(string shipmentId, int tenant, string partnerType, bool isExternal)
+        private DigitalMasterHouse MapMasterData(string shipmentId, int tenant, string partnerType, bool isExternal, string cardId)
         {
             ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
             ShipmentPM masterShipment = shipmentQuery.GetSinglePMWithoutComposition(shipmentId, tenant);
@@ -105,7 +105,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             {
                 Id = masterShipment.Id,
                 ShipmentLevelCode = masterShipment.ShipmentLevelCode,
-                CustomerId = masterShipment.CustomerId,
+                CustomerId = masterShipment.CustomerId != null ? masterShipment.CustomerId : cardId,
                 Tenant = tenant,
                 PartnerType = partnerType,
                 IsExternal = isExternal

@@ -293,6 +293,12 @@ namespace Simplog.Data.InvoiceModel.Repositories
         {
             CardRepository cardRepository = new CardRepository(tenant);
             var cardBillToId =  cardRepository.GetBillToCardById(cardId, tenant);
+
+            if (cardBillToId == null)
+            {
+                return new List<string>();
+            }
+
             return cardBillToId;
         }
 
