@@ -109,7 +109,6 @@ $border-color: #ddd;
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 4px;
     width: 234px;
     height: 22px;
     background: #FFFFFF;
@@ -125,8 +124,7 @@ $border-color: #ddd;
     margin-left: 9px;
     margin-top: 6px;
     margin-bottom: 6px;
-    margin-right: 5px;
-    width: 10px;
+    width: 10px;    
     height: 10px;
     filter: invert(76%) sepia(0%) saturate(2939%) hue-rotate(57deg) brightness(83%) contrast(84%);
 }
@@ -152,6 +150,8 @@ $border-color: #ddd;
     outline: none;
     border: transparent;
     box-shadow: none;
+    letter-spacing: 0.3px;
+    font-size: 10px;
 }
 
 .db-dropdown-search-text::placeholder {

@@ -11,7 +11,7 @@
             <div class="db-dropdown-search-container">
                 <img src="./Images/Charts/db-search-icon.png" class="db-dropdown-search-icon">
                 <input type="text" class="db-dropdown-search-text" [(ngModel)]="SearchText" [disabled]="Loading || !ItemsSource"
-                    placeholder="Search" (input)="onSearchChange($event.target.value)">
+                    placeholder="Search by name" (input)="onSearchChange($event.target.value)">
             </div>
         </div>
         <div class="db-dropdown-scroll">
