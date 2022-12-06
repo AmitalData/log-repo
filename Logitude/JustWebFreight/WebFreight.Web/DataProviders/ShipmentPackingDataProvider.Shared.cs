@@ -26,7 +26,11 @@ namespace WebFreight.Web.DataProviders
         public string TotalReceivablesForFreightCharges { get; set; }
         public string TotalReceivablesForOtherCharges { get; set; }
         public string TotalAmounts { get; set; }
-
+        public string CustomerReference1 { get; set; }
+        public string CustomerReference2 { get; set; }
+        public string PortOfLading { get; set; }
+        public string HouseNumber { get; set; }
+        public string DescriptionOfGoods { get; set; }
         public List<ShipmentPackageProvider> ShipmentPackages { get; set; }
     }
 

@@ -74,6 +74,12 @@ namespace WebFreight.Web.ReportsWebServices
 
                 shipmentPackingService.MapWeightDetails(provider, shipment);
                 shipmentPackingService.MapVolumeDetails(provider, shipment);
+                provider.CustomerReference1 = shipment.CustomerReference1;
+                provider.CustomerReference2 = shipment.CustomerReference2;
+                provider.HouseNumber = shipment.House;
+                provider.DescriptionOfGoods = shipment.DescriptionOfGoods;
+                provider.PortOfLading = shipment.MainCarriageFromPortName;
+
                 #region ShipmentMethod
                 string shipmentMethod = "";
                 TransportModeRepository transportModeRepository = new TransportModeRepository(tenant);

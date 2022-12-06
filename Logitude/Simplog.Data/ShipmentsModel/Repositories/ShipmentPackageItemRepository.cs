@@ -79,6 +79,6 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         {
             throw new NotImplementedException();
         }
-        
+     
     }
 }
