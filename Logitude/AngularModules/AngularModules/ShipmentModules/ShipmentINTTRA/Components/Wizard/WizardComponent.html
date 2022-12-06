@@ -203,7 +203,7 @@
                                         </tr>
 
                                         <!-- IsINTTRAFROB -->
-                                        <tr class="FormFieldRow">
+                                        <tr class="FormFieldRow" *ngIf="IsINTTRAFROBVisible">
                                             <td>
                                                 <LogLabel [ObjectFieldName]="'IsINTTRAFROB'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>

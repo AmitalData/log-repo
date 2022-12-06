@@ -15,8 +15,7 @@ import { CardListService } from '../../../../Common/Services/StandardLists/CardL
 import { ShipmentTool } from '../../../../Shipment/Tools';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
-@Component({
-    
+@Component({    
     templateUrl: './WizardComponent.html',
 })
 
@@ -37,6 +36,7 @@ export class WizardComponent extends BaseComponent {
     private CardListService: CardListService;
     private entityArgs: EntityArgs;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsINTTRAFROBVisible: boolean = false;
     constructor() {
         super();
         this.myService = new INTRAWebService();
@@ -117,6 +117,10 @@ export class WizardComponent extends BaseComponent {
     }
     SetUIProperties() {
         this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.EntityPM);
+
+        if (SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "FOB")[0] && this.EntityPM.ShipmentLevelCode == "C") {
+            this.IsINTTRAFROBVisible = true;
+        }
 
         this.UIProperties.SetEnabled("EmergencyContactId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("INTTRAContractNumber", this.ObjectTableName, this.IsEditingEnabled);

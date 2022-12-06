@@ -2253,11 +2253,7 @@ namespace Logitude.XSD.INTTRA.BL
             {
                 return false;
             }
-            if (this.MasterData.Transshipment1FromPort?.CountryCode != "US" && this.MasterData.Transshipment2FromPort?.CountryCode != "US" && this.MasterData.Transshipment3FromPort?.CountryCode != "US")
-            {
-                return false;
-            }
-            if (this.MasterData.MainCarriageFromPort?.CountryCode == "US" || this.MasterData.MainCarriageFinalDestinationPort?.CountryCode == "US")
+            if(!this.Shipment.IsINTTRAFROB)
             {
                 return false;
             }
