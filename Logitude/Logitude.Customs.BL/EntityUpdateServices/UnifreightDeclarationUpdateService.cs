@@ -1732,7 +1732,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             //Calculate Total Transport Value & Currency
             List<string> freightCurrencyList = (from a in _DirtyDeclarationPM.SupplierInvoices
-                                                where (a.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete)
+                                                where (a.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete && a.FreightCurrencyTypeCode != null)
                                                 select a.FreightCurrencyTypeCode).Distinct().ToList();
 
             if (freightCurrencyList.Count == 1)
