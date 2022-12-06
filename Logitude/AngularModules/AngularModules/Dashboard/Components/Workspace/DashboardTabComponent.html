@@ -52,17 +52,17 @@
                     <div></div>
                 </td>
 
-                <td *ngIf="!IsEditLayoutModeActive" style="width: 309px; height: 22px; top: 12px;">
+                <td *ngIf="!IsEditLayoutModeActive" style="width: 309px; height: 22px; top: 12px; bottom: 12px;">
               <tr>
                 <table>
-                    <td style="width: 87px; min-width: 87px; height: 22px;">
-                        <button class="TabButton" (click)="OpenFilterAreaClick()"
+                    <td style="width: 87px; min-width: 87px; height: 22px; bottom: 12px;">
+                        <button class="TabButton Button" (click)="OpenFilterAreaClick()"
                             *ngIf="IsGlobalFiltersOpened == false">
                             <img style="width: 12px; height: 13px;" src="./Images/FilterGrayTrans.png" />
                             Show filters
                         </button>
 
-                        <button class="TabButton" *ngIf="IsGlobalFiltersOpened == true"
+                        <button class="TabButton Button" *ngIf="IsGlobalFiltersOpened == true"
                             (click)="CloseFilterAreaClick()">
                             <img style="width: 12px; height: 13px;" src="./Images/FilterGrayTrans.png" />
                             Hide filters</button>
@@ -72,8 +72,8 @@
                         <div></div>
                     </td>
 
-                    <td style="width: 105px;">
-                        <button class="TabButton" (click)="EditLayoutClicked()">
+                    <td style="width: 105px; bottom: 12px;">
+                        <button class="TabButton Button" (click)="EditLayoutClicked()">
                             <img style="width: 12px; height: 13px;" src="./Images/Buttons/Edit.png" />
                             Edit dashboard</button>
                     </td>
@@ -82,8 +82,8 @@
                         <div></div>
                     </td>
                    
-                    <td style="width: 69px;">
-                        <button class="TabButton" (click)="RefreshLayoutClicked()">
+                    <td style="width: 69px; bottom: 12px;">
+                        <button class="TabButton Button" (click)="RefreshLayoutClicked()">
                             <img style="width: 15px; height: 17px;" src="./Images/Buttons/Refresh.png" />
                             Refresh</button>
                     </td>
@@ -91,8 +91,8 @@
                         <div></div>
                     </td>
                     
-                    <td style="width:24px;">
-                        <button class="TabButton">
+                    <td style="width:24px; bottom: 12px;">
+                        <button class="TabButton Button">
                             <img style="opacity: 0; width: 16px; height: 16px; top:3px; left: 4px; position: absolute;"
                                  src="./Images/Buttons/transparentbackground.png"/>
                             <img style="width:2px; height: 12px; left:11px; top: 5px; position: absolute;"

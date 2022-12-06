@@ -3,12 +3,12 @@
         height: 1px;
     }
 
-    .table-row-cell {
-        padding-bottom: 10px;
-    }
-
     .first-split-table-row {
         height: 20px;
+    }
+
+    .table-row-cell {
+        padding-bottom: 10px;
     }
 
     .split-block {
@@ -25,27 +25,14 @@
         width: 320px;
     }
 
-    .collection-label,
-    .collection-filters-label {
-        font-weight: bold;
-    }
-
-    .start-collection-filter-container {
+    .table-container {
         overflow: auto;
-        width: 936px;
-        height: 337px;
-    }
-
-    .min-start-collection-filter-container {
-        height: 285px;
-    }
-
-    .collection-tree {
-        width: 220px;
+        height: 515px;
     }
 </style>
 
 <table>
+
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" class="table-row">
         <td>
             <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
@@ -85,35 +72,42 @@
                 <LogLabel [NoObjectField]="true" [Text]="'Collection'" [ObjectFieldName]="'Collection'"
                     [DataContext]="DataContext"></LogLabel>
             </div>
-            <div class="collection-tree">
-                <TreeSelect [Items]="CollectionFilterEntitiesTreeItems" [Width]="'220px'" [Value]="Collection"
+            <div class="table-row-cell-block">
+                <TreeSelect [Items]="CollectionFilterEntitiesTreeItems" [Width]="'300px'" [Value]="Collection"
                     (ValueChanged)="updateCollection($event)" [IsReturnedTreeSelectItem]="true">
                 </TreeSelect>
             </div>
         </td>
     </tr>
 
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
     <tr *ngIf="Collection" class="table-row">
         <td class="table-row-cell">
             <div class="table-row-cell-block">
-                <div class="collection-filters-label">Collection Filters</div>
+                <div>Collection Filters</div>
             </div>
         </td>
     </tr>
 
     <tr *ngIf="Collection" class="table-row">
         <td>
-            <div class="table-row-cell-block start-collection-filter-container"
-                [ngClass]="{'min-start-collection-filter-container': (ValidationErrorsList != null && ValidationErrorsList.length > 0)}">
+            <div class="table-container">
 
                 <Conditions *ngIf="CollectionFilters && CollectionFilters.length > 0" [EntityId]="EntityId"
                     [ShowChangedOperator]="false" [AtLeastOneCondition]="true"
-                    (IsValidConditionsChange)="UpdateIsValidCollectionFilters($event)"
-                    [(ConditionsOperation)]="CollectionFiltersOperation" [(Conditions)]="CollectionFilters" [FlowObject]="FlowObject"
-                    [FlowObjectFields]="FlowObjectFields" [CurrentNodeId]="CurrentNodeId" [IsEntityField]="true">
+                    (IsValidConditionsChange)="setIsValidConditions($event)"
+                    [(ConditionsOperation)]="CollectionFiltersOperation" [(Conditions)]="CollectionFilters"
+                    [FlowObject]="FlowObject" [FlowObjectFields]="FlowObjectFields" [CurrentNodeId]="CurrentNodeId"
+                    [IsEntityField]="true" [IsOneLevelConditions]="true">
                 </Conditions>
 
             </div>
+
         </td>
     </tr>
 
@@ -127,8 +121,9 @@
         <td>
 
             <FooterButtons [SaveButtonLabel]="'Ok'" (SaveButtonClicked)="saveButtonClicked()"
-                (CancelButtonClicked)="cancelButtonClicked()" [SaveButtonDataCy]="'send-email-properties-save-button'"
-                [CancelButtonDataCy]="'send-email-properties-cancel-button'">
+                (CancelButtonClicked)="cancelButtonClicked()"
+                [SaveButtonDataCy]="'collection-filter-properties-save-button'"
+                [CancelButtonDataCy]="'collection-filter-properties-cancel-button'">
             </FooterButtons>
 
         </td>

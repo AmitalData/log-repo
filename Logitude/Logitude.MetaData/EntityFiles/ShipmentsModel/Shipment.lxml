@@ -116876,7 +116876,7 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Shipment.G.StatusUpdated&quot;"
-      DefaultText="&quot;Status Updated&quot;"
+      DefaultText="&quot;Status updated&quot;"
       TextCodeTypeCode="&quot;G&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -116886,12 +116886,12 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Shipment.G.SearchFrom&quot;"
-      DefaultText="&quot;Search From&quot;"
+      DefaultText="&quot;Search from&quot;"
       TextCodeTypeCode="&quot;G&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Shipment.G.SearchDestination&quot;"
-      DefaultText="&quot;Search Destination&quot;"
+      DefaultText="&quot;Search destination&quot;"
       TextCodeTypeCode="&quot;G&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -117115,11 +117115,6 @@
       TextCodeTypeCode="&quot;G&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Shipment.G.DownloadAll&quot;"
-      DefaultText="&quot;Download all&quot;"
-      TextCodeTypeCode="&quot;G&quot;"
-      IsSpellChecked="false" />
-    <TextCode
       Code="&quot;Shipment.G.ViewDocument&quot;"
       DefaultText="&quot;View document&quot;"
       TextCodeTypeCode="&quot;G&quot;"
@@ -117237,6 +117232,21 @@
     <TextCode
       Code="&quot;Shipment.G.Shippingline&quot;"
       DefaultText="&quot;Shipping line&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.DangerousGoods&quot;"
+      DefaultText="&quot;Dangerous goods&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.Customer&quot;"
+      DefaultText="&quot;Customer&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.ContainersLines&quot;"
+      DefaultText="&quot;Containers lines&quot;"
       TextCodeTypeCode="&quot;G&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "5996517194d886f489fa7aa05ae50213";
+		public const string HashString = "018ef0dc72bb639c7e1921081df32e08";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -94262,13 +94262,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
  		   TextCode ShipmentTextCode_ShipmentORoutingsEditDestinationWarehouseLeg = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.EditDestinationWarehouseLeg", DefaultText = "Edit Destination Warehouse / Terminal",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ShipmentTextCode_ShipmentGStatusUpdated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.StatusUpdated", DefaultText = "Status Updated",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ShipmentTextCode_ShipmentGStatusUpdated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.StatusUpdated", DefaultText = "Status updated",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ShipmentTextCode_ShipmentGSearchPartner = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.SearchPartner", DefaultText = "Search partner",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ShipmentTextCode_ShipmentGSearchFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.SearchFrom", DefaultText = "Search From",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ShipmentTextCode_ShipmentGSearchFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.SearchFrom", DefaultText = "Search from",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ShipmentTextCode_ShipmentGSearchDestination = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.SearchDestination", DefaultText = "Search Destination",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ShipmentTextCode_ShipmentGSearchDestination = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.SearchDestination", DefaultText = "Search destination",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ShipmentTextCode_ShipmentGSearchPlaceholder = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.SearchPlaceholder", DefaultText = "Search ports/ references/ carrier",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -94358,8 +94358,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
  		   TextCode ShipmentTextCode_ShipmentGUpload = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.Upload", DefaultText = "Upload",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ShipmentTextCode_ShipmentGDownloadAll = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.DownloadAll", DefaultText = "Download all",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
  		   TextCode ShipmentTextCode_ShipmentGViewDocument = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.ViewDocument", DefaultText = "View document",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ShipmentTextCode_ShipmentFViewConsolidation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.F.ViewConsolidation", DefaultText = "View consolidation",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
@@ -94407,6 +94405,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
  		   TextCode ShipmentTextCode_ShipmentGAirline = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.Airline", DefaultText = "Airline",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ShipmentTextCode_ShipmentGShippingline = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.Shippingline", DefaultText = "Shipping line",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentGDangerousGoods = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.DangerousGoods", DefaultText = "Dangerous goods",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentGCustomer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.Customer", DefaultText = "Customer",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentGContainersLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.ContainersLines", DefaultText = "Containers lines",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

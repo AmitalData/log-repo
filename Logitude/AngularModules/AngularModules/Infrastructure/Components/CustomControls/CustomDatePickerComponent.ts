@@ -11,7 +11,7 @@ import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 
     selector: 'CustomDatePicker',
     templateUrl: './CustomDatePickerComponent.html',
-    inputs: ['ObjectField', 'QueryId', 'QueryCode', 'IsDisabled']
+    inputs: ['ObjectField', 'QueryId', 'QueryCode', 'IsDisabled','DataCy']
 })
 
 export class CustomDatePickerComponent extends BaseComponent implements OnInit {
@@ -52,6 +52,7 @@ export class CustomDatePickerComponent extends BaseComponent implements OnInit {
     IsMenuOpened: boolean = false;
     NoDateVisibile: boolean = true;
     mouseOver: boolean = false;
+    DataCy: any;
     public IsDisabled: boolean = false;
     @Output() SelectedItemChanged: EventEmitter<any> = new EventEmitter();
     private CurrentSession = SessionLocator.SelectedSession;

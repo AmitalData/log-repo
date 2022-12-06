@@ -177,4 +177,9 @@ export class CustomizationMainComponent {
     CloseClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
+
+    IsCustomObjectTableById(objectTableId : string) {
+        let objectTable = window.ObjectTables.filter(objectTable => objectTable.Id == objectTableId)[0];
+        return objectTable.IsCustom;
+    }
 }

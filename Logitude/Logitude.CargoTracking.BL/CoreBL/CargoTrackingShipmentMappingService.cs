@@ -85,7 +85,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
 
             cargoShipmentPM.CustomsBrokerReference = shipmentPM?.CustomFileNumber;
             cargoShipmentPM.ContainersNumbers = shipmentPM?.ContainersNumbers;
-            cargoShipmentPM.IncotermName = shipmentOrderPM != null ? shipmentOrderPM.IncotermCode : shipmentPM?.IncotermCode;
+            //cargoShipmentPM.IncotermName = shipmentOrderPM != null ? shipmentOrderPM.IncotermCode : shipmentPM?.IncotermCode;
             cargoShipmentPM.WarehouseLegName = GetWarehouseLegName();
             cargoShipmentPM.ImportManifest = shipmentPM?.ImportManifest;
             cargoShipmentPM.TotalTax = shipmentPM?.TotalTax;
@@ -95,7 +95,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             cargoShipmentPM.SHOBookingConfirmationNumber = shipmentOrderPM?.BookingConfirmationNumber;
             cargoShipmentPM.SHOPODate = shipmentOrderPM?.PODate;
             cargoShipmentPM.SHOCarrierName = shipmentOrderPM?.CarrierName;
-            cargoShipmentPM.House = shipmentOrderPM?.House;
+            //cargoShipmentPM.House = shipmentOrderPM?.House;
             cargoShipmentPM.CustomerEnglishName = shipmentPM?.CustomerName;
 
 

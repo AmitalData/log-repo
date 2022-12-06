@@ -27,8 +27,8 @@
     <div *ngIf="ShowConditionsOperation" class="entity-conditions-operation-container">
 
         <ComboBox [ItemsSource]="ConditionOperationsItems" [Binding]="'Name'"
-            [SelectedItem]="ConditionsOperation | ListItemPipe" (SelectedItemChanged)="updateConditionsOperation($event)"
-            [ListType]="''" [CyData]="'ConditionsOperation'">
+            [SelectedItem]="ConditionsOperation | ListItemPipe"
+            (SelectedItemChanged)="updateConditionsOperation($event)" [ListType]="''" [CyData]="'ConditionsOperation'">
         </ComboBox>
 
     </div>
@@ -39,7 +39,8 @@
             [IsValidConditions]="IsValidConditions" (ConditionsChangedEvent)="conditionsChanged($event)"
             [ConditionsCounter]="ConditionsCounter" [AtLeastOneCondition]="AtLeastOneCondition"
             [FlowObject]="FlowObject" [FlowObjectFields]="FlowObjectFields" [CurrentNodeId]="CurrentNodeId"
-            [IsEntityField]="IsEntityField" [IsEntityFieldValue]="IsEntityFieldValue" [EnableAdd]="EnableAdd">
+            [IsEntityField]="IsEntityField" [IsEntityFieldValue]="IsEntityFieldValue" [EnableAdd]="EnableAdd"
+            [IsOneLevelConditions]="IsOneLevelConditions">
         </ConditionGroups>
 
     </div>

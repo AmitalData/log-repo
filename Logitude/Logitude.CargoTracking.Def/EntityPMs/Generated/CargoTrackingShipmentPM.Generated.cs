@@ -3217,6 +3217,29 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private string incotermName ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string IncotermName  
+	   {
+	    
+	     get
+		{
+		   return incotermName;
+		 }
+		 set
+		 {
+		   if(incotermName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IncotermName",OldValue=incotermName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   incotermName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
