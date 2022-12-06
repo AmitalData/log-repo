@@ -141,7 +141,7 @@ namespace Logitude.Server.Tools.Helpers
                     LogSettings settingsData = JsonConvert.DeserializeObject<LogSettings>(log.LogSettings);
                     if (settingsData != null)
                     {
-                        string ftpHostIP = @"ftp://" + settingsData.Host;
+                        string ftpHostIP = settingsData.Host;
                         string ftpUserName = settingsData.Username;
                         string ftpPassword = settingsData.Password;
                         string ftpFolderName = settingsData.Folder;

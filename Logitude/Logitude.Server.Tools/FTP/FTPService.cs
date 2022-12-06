@@ -21,7 +21,7 @@ namespace Logitude.Server.Tools.FTP
 		/* Construct Object */
 		public FTPService(string hostIP, string userName, string password)
 		{
-			if (!hostIP.Contains(@"ftp://"))
+			if (!hostIP.Contains(@"ftp://") && !hostIP.Contains(@"ftps://"))
 			{
 				hostIP = @"ftp://" + hostIP;
 			}
