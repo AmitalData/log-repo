@@ -76,7 +76,7 @@
                                             </td>
 
                                             <td style="width: 245px; min-width: 245px; max-width:245px">Name</td>
-                                            <td style="width: 245px; min-width: 245px; max-width:245px">Is Custom</td>
+                                            <td style="width: 100px; min-width: 100px; max-width:100px">Is Custom</td>
                                             <td class="LastChild"><div></div></td>
                                         </tr>
                                     </table>
@@ -152,10 +152,10 @@
                                                         </td>
 
                                                         <!-- IsCustom -->
-                                                        <td class="GridViewCell" style="width: 245px; min-width: 245px; max-width:245px">
-                                                            <img *ngIf="IsCustomObjectTableById(item.ObjectTableID)" src="./Images/CheckBoxIcon.png" class="CenterCenter" style="width:15px; height:12px" />
+                                                        <td class="GridViewCell" style="width: 245px; min-width: 245px; max-width:245px; padding-left:10px">
+                                                            <img *ngIf="IsCustomObjectTableById(item.ObjectTableID)" src="./Images/CheckBoxIcon.png" style="width:15px; height:12px" />
                                                         </td>
-
+                                                        
                                                         <td class="LastChild">
                                                             <div></div>
                                                         </td>
@@ -229,22 +229,9 @@
                                                             <label *ngIf="!SearchText">{{item.DefaultText}}</label>
                                                         </td>
 
-                                                        <!-- Singluar -->
-                                                        <td class="GridViewCell" style="width: 245px; min-width: 245px; max-width:245px">
-                                                            <label *ngIf="SearchText">
-                                                                {{(item.TranslatedText).slice(0,((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length))}}<font style="color:red;">{{(item.TranslatedText).slice(((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[0].length), (((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[0].length) + (((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1]) ? ((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1].length) : 0)))}}</font>{{(item.TranslatedText).slice((((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length) + (((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1]) ? ((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1].length) : 0)))}}
-                                                            </label>
-
-                                                            <label *ngIf="!SearchText">{{item.TranslatedText}}</label>
-                                                        </td>
-
-                                                        <!-- Plural -->
-                                                        <td class="GridViewCell" style="width: 245px; min-width: 245px; max-width:245px">
-                                                            <label *ngIf="SearchText && item.TranslatedTextPlural">
-                                                                {{(item.TranslatedTextPlural).slice(0,((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length))}}<font style="color:red;">{{(item.TranslatedTextPlural).slice(((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[0].length), (((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[0].length) + (((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1]) ? ((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1].length) : 0)))}}</font>{{(item.TranslatedTextPlural).slice((((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length) + (((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1]) ? ((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1].length) : 0)))}}
-                                                            </label>
-
-                                                            <label *ngIf="!SearchText">{{item.TranslatedTextPlural}}</label>
+                                                        <!-- IsCustom -->
+                                                        <td class="GridViewCell" style="width: 245px; min-width: 245px; max-width:245px; padding-left:10px">
+                                                            <img *ngIf="IsCustomObjectTableById(item.ObjectTableID)" src="./Images/CheckBoxIcon.png" style="width:15px; height:12px" />
                                                         </td>
 
                                                         <td class="LastChild">
