@@ -189,7 +189,10 @@ public partial class LogitudeCustomsFile
      private string directionField;
 
     private string commodityField;
- 
+
+    private string referentMAWBField;
+
+    private string referentHAWBField;
 
     /// <remarks/>
     public string CustomFileNo
@@ -1098,5 +1101,30 @@ public partial class LogitudeCustomsFile
             this.commodityField = value;
         }
     }
- 
+
+    /// <remarks/>
+    public string ReferentMAWB
+    {
+        get
+        {
+            return this.referentMAWBField;
+        }
+        set
+        {
+            this.referentMAWBField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string ReferentHAWB
+    {
+        get
+        {
+            return this.referentHAWBField;
+        }
+        set
+        {
+            this.referentHAWBField = value;
+        }
+    }
 }
