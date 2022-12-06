@@ -267,6 +267,8 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public double? ChargeableWeight { get; set; }
         [Column("ChargeableWeightUnitCode")]
 	    public string ChargeableWeightUnitCode { get; set; }
+        [Column("IncotermName")]
+	    public string IncotermName { get; set; }
     }
 }
 	 

@@ -719,6 +719,11 @@ export class CargoTrackingShipmentPM {
     public set ChargeableWeightUnitCode(newValue: string) { if (this.chargeableWeightUnitCode != newValue) { this.chargeableWeightUnitCode = newValue; this.MarkAsDirty("ChargeableWeightUnitCode"); } }
        
 	 
+    private incotermName: string;
+    public get IncotermName() { return this.incotermName; }
+    public set IncotermName(newValue: string) { if (this.incotermName != newValue) { this.incotermName = newValue; this.MarkAsDirty("IncotermName"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingShipmentPM;
 		
