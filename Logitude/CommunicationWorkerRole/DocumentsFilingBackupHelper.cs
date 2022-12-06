@@ -54,7 +54,7 @@ namespace CommunicationWorkerRole
 
                 if (ftpDetail != null)
                 {
-                    string ftpHostIP = @"ftp://" + ftpDetail.Host;
+                    string ftpHostIP = ftpDetail.Host;
                     string ftpUserName = ftpDetail.UserName;
                     string ftpPassword = ftpDetail.Password;
                     string ftpFolderName = ftpDetail.Folder;

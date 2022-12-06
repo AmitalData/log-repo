@@ -48,7 +48,7 @@ export class GeneralTabComponent implements AfterViewInit {
     private SetTabTitle()
     {
         const tab: ObjectTableTabPM = window.ObjectTableTabs.find(d => d.Code == this.entityArgs.SelectedTabCode);
-        this.DisplayTabNameInScreen = !tab.HideTabNameInScreen;
+        this.DisplayTabNameInScreen = !tab?.HideTabNameInScreen;
         if (!this.DisplayTabNameInScreen) return;
         if (tab?.TabNameTextCodeDefaultText)
             return this.title = tab.TabNameTextCodeDefaultText;

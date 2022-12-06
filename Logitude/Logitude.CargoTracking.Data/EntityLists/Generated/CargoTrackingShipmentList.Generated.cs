@@ -314,6 +314,8 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public double? ChargeableWeight  { get; set; }
        [DataMember]
        public string ChargeableWeightUnitCode  { get; set; }
+       [DataMember]
+       public string IncotermName  { get; set; }
    }
 
 }

@@ -24,6 +24,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 
         public void CustomPOCOToPM(CargoTrackingShipmentPM entityPM, CargoTrackingShipment entityPOCO)
         {
+            entityPM.ForwardingHouse = entityPOCO.ForwardingHouse;
+            entityPM.ForwardingMaster = entityPOCO.ForwardingMaster;
             //throw new NotImplementedException();
         }
    }
