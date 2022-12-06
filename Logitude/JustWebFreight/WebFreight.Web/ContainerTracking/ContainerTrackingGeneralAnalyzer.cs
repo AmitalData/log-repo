@@ -280,7 +280,6 @@ namespace WebFreight.Web.ContainerTracking
             }
             return portId;
         }
-
         private void HandleExceptionOnUpdate(CommunicationLog comunicationLog, Exception exception)
         {
             comunicationLog.WasAnalyzed = false;
