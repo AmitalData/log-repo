@@ -223,7 +223,7 @@ export class NewContainerizationComponent extends BaseComponent {
         filters.addAdditionalFilter("IsContainerization", true, null, null, "Equal", true, false, false, "string");
 
 
-        if(this.entityPM.Id!=null){
+        if(this.entityPM.Id!=null && this.entityPM.ContainerizationStatus!="3"){
              var connectDec =SessionLocator.SelectedSession.CurrentEditComponent.EntityPM.ConnectedDeclarations;
              connectDec =connectDec.substring(0, connectDec.length - 1);
 
