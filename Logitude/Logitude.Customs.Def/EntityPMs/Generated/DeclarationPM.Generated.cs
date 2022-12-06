@@ -5757,7 +5757,30 @@ namespace Logitude.Customs.Def.EntityPMs
               }
              set {  deletedDeclarationFollowUp = value; }
 	    }
-	     }
+	  	  private string releaseStatusTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ReleaseStatusTypeCode  
+	   {
+	    
+	     get
+		{
+		   return releaseStatusTypeCode;
+		 }
+		 set
+		 {
+		   if(releaseStatusTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ReleaseStatusTypeCode",OldValue=releaseStatusTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   releaseStatusTypeCode=value;
+		   }
+			
+		 }
+	   }
+   }
    
 }
 	 
