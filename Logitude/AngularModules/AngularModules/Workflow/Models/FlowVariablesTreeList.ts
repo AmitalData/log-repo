@@ -173,7 +173,7 @@ export class FlowVariablesTreeList {
 
     private initializeDeclaredCollectionVariables() {
         if (this.ShowVariables && this.ShowVariables.ShowDeclaredCollectionVariables) {
-            let declaredCollectionVariablesItemChildren = [];
+            let declaredCollectionVariablesItemChildren = this.getDeclaredCollectionVariablesItemChildren();
             let declaredCollectionVariablesItem = new TreeSelectItem("declaredcollectionvariables", "Declared Collection Variables", false, false, true, true, declaredCollectionVariablesItemChildren);
             this.Items.push(declaredCollectionVariablesItem);
             this.ItemsList.push(declaredCollectionVariablesItem);
@@ -258,7 +258,7 @@ export class FlowVariablesTreeList {
             recordsCollectionVariablesItemChildren.push(treeSelectItem);
             this.ItemsList.push(treeSelectItem);
         });
-        
+
         return recordsCollectionVariablesItemChildren;
     }
 
@@ -278,6 +278,25 @@ export class FlowVariablesTreeList {
 
         let sortedDeclaredVariablesItemChildren = this.sortTreeSelectItems(declaredVariablesItemChildren);
         return sortedDeclaredVariablesItemChildren;
+    }
+
+    private getDeclaredCollectionVariablesItemChildren() {
+        let declaredCollectionVariablesItemChildren: TreeSelectItem[] = [];
+
+        this.getDeclareVariableNodes(true).forEach((declareVariableNode: any) => {
+            let treeSelectItemName = declareVariableNode.data["variableName"];
+            let treeSelectItemKey = "declaredvariables" + this.ItemKeySplitter + declareVariableNode.data["variableCode"];
+            let data = {
+                type: (declareVariableNode.data["variableType"] || null),
+                isDeclaredCollectionVariable: true
+            };
+            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, true, true, false, false, [], data);
+            declaredCollectionVariablesItemChildren.push(treeSelectItem);
+            this.ItemsList.push(treeSelectItem);
+        });
+
+        let sortedDeclaredCollectionVariablesItemChildren = this.sortTreeSelectItems(declaredCollectionVariablesItemChildren);
+        return sortedDeclaredCollectionVariablesItemChildren;
     }
 
     private getGetRecordNodes(recordsLimit: "FirstRecord" | "AllRecords") {
@@ -305,9 +324,14 @@ export class FlowVariablesTreeList {
         return [];
     }
 
-    private getDeclareVariableNodes() {
+    private getDeclareVariableNodes(isCollection: boolean = false) {
         if (this.FlowObject) {
-            return FlowReader.getAllPreviousNodes(this.FlowObject, this.CurrentNodeId, "declareVariableNode");
+            let declareVariableNodes = FlowReader.getAllPreviousNodes(this.FlowObject, this.CurrentNodeId, "declareVariableNode");
+            if (isCollection) {
+                return declareVariableNodes.filter((n: any) => n.data["variableType"] && n.data["variableType"].toString().endsWith("[]"));
+            } else {
+                return declareVariableNodes.filter((n: any) => n.data["variableType"] && !n.data["variableType"].toString().endsWith("[]"));
+            }
         }
         return [];
     }

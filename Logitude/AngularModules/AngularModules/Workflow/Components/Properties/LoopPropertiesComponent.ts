@@ -74,8 +74,10 @@ export class LoopPropertiesComponent extends BaseComponent {
     updateCollectionVariable(collectionVariableItem: TreeSelectItem) {
         let collectionVariable = collectionVariableItem ? collectionVariableItem.key : null;
         let isCollectionFilterVariable = collectionVariableItem ? (collectionVariableItem.data["isCollectionFilterVariable"] || false) : null;
+        let isDeclaredCollectionVariable = collectionVariableItem ? (collectionVariableItem.data["isDeclaredCollectionVariable"] || false) : null;
         this.Data["collectionVariable"] = collectionVariable;
         this.Data["isCollectionFilterVariable"] = isCollectionFilterVariable;
+        this.Data["isDeclaredCollectionVariable"] = isDeclaredCollectionVariable;
         this.CollectionVariable = collectionVariable;
         this.setUIProperties();
     }

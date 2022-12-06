@@ -20,56 +20,32 @@
         padding-right: 10px;
     }
 
-    .select-entity-label {
-        padding-bottom: 4px;
-    }
-
     .entity-list-container {
+        width: 320px;
         height: 30px;
     }
 
-    .select-entity-label,
-    .set-conditions-label,
-    .select-trigger-label {
-        font-weight: bold;
-    }
-
-    .entity-list-container,
-    .trigger-radios-container {
-        width: 320px;
-    }
-
-    .trigger-radio-cell {
-        width: 80px;
-    }
-
-    .start-conditions-container {
-        overflow: auto;
-        width: 936px;
-        height: 337px;
-    }
-
-    .min-start-conditions-container {
-        height: 285px;
+    .variable-type-row-cell {
+        width: 345px;
     }
 </style>
 
 <table>
 
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" class="table-row">
-        <td>
+        <td colspan="2">
             <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
         </td>
     </tr>
 
     <tr class="first-split-table-row">
-        <td class="table-row-cell">
+        <td class="table-row-cell" colspan="2">
             <div class="split-block"></div>
         </td>
     </tr>
 
     <tr class="table-row">
-        <td class="table-row-cell">
+        <td class="table-row-cell" colspan="2">
             <div>
                 <LogLabel [NoObjectField]="true" [Text]="'Name'" [ObjectFieldName]="'VariableName'"
                     [DataContext]="DataContext"></LogLabel>
@@ -84,41 +60,51 @@
     </tr>
 
     <tr class="table-row">
-        <td class="table-row-cell">
+        <td class="table-row-cell variable-type-row-cell">
             <div>
                 <LogLabel [NoObjectField]="true" [Text]="'Data Type'" [ObjectFieldName]="'VariableType'"
                     [DataContext]="DataContext"></LogLabel>
             </div>
             <div class="table-row-cell-block entity-list-container">
-                <ComboBox [ItemsSource]="DataTypesItems" [Binding]="'Name'" [SelectedItem]="VariableType | ListItemPipe : DataTypesItems"
-                    (SelectedItemChanged)="DataTypeSelectionMethod($event)" [ListType]="''" [IsDisabled] = "!IsNew">
+                <ComboBox [ItemsSource]="DataTypesItems" [Binding]="'Name'"
+                    [SelectedItem]="VariableType | ListItemPipe : DataTypesItems"
+                    (SelectedItemChanged)="updateVariableType(($event ? $event.Code : null), false)" [ListType]="''"
+                    [IsDisabled]="!IsNew">
                 </ComboBox>
+            </div>
+        </td>
+
+        <td class="table-row-cell">
+            <div>
+                <CheckBox [IsChecked]="IsCollectionVariable" [Text]="'Allow multiple values (Array)'" [Top]="10"
+                    [IsEnabled]="IsNew" [DataCy]="'is-collection-variable'"
+                    (Checked)="updateIsCollectionVariable($event)"></CheckBox>
             </div>
         </td>
     </tr>
 
-    <tr *ngIf="VariableType != null" class="table-row">
-        <td class="table-row-cell">
+    <tr *ngIf="VariableType && !IsCollectionVariable" class="table-row">
+        <td class="table-row-cell" colspan="2">
             <div>
                 <LogLabel [NoObjectField]="true" [Text]="'Default Value'" [ObjectFieldName]="'VariableValue'"
                     [DataContext]="DataContext"></LogLabel>
             </div>
             <div class="table-row-cell-block entity-list-container">
-                <FieldValue [Name]="'defaultValue'" [DataType]="VariableType" [IsIntegerNumberInput]="false"
-                    [CurrentValue]="VariableValue" (ValueChanged)="updateVariableValue($event)">
+                <FieldValue [Name]="'defaultValue'" [DataType]="VariableType" [CurrentValue]="VariableValue"
+                    (ValueChanged)="updateVariableValue($event)">
                 </FieldValue>
             </div>
         </td>
     </tr>
 
     <tr>
-        <td>
+        <td colspan="2">
             <div></div>
         </td>
     </tr>
 
     <tr class="table-row">
-        <td>
+        <td colspan="2">
 
             <FooterButtons [SaveButtonLabel]="'Ok'" (SaveButtonClicked)="saveButtonClicked()"
                 (CancelButtonClicked)="cancelButtonClicked()"
