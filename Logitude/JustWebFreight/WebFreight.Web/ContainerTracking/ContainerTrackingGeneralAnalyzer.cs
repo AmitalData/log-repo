@@ -192,7 +192,7 @@ namespace WebFreight.Web.ContainerTracking
                     manager.SetShipment(shipment);
                     MapContainersExternalData(container);
                     manager.Update(IsUpdateContainerAllowed(container), IsUpdateShipmentAllowed(shipment));
-                    analyz = IsUpdateContainerAllowed(container) && IsUpdateShipmentAllowed(shipment);
+                    analyz = IsUpdateContainerAllowed(container);
                 }
 
                 SetComunicationLogDone(comunicationLog, analyz);
