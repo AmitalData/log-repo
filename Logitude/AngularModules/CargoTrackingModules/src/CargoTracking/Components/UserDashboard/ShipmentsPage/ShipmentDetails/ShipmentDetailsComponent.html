@@ -356,13 +356,9 @@
                             <div class="title">po number</div>
                             <div class="description">{{cargoTrackingShipmentPM.ShipmentOrderPONumber}}</div>
                         </div>
-                        <div *ngIf="cargoTrackingShipmentPM.ForwardingMaster && !IsOrderShipment">
-                            <div class="title">Master</div>
-                            <div class="description">{{cargoTrackingShipmentPM?.ForwardingMaster}}</div>
-                        </div>
-                        <div *ngIf="cargoTrackingShipmentPM.ForwardingHouse  && !IsOrderShipment">
-                            <div class="title">House</div>
-                            <div class="description">{{cargoTrackingShipmentPM?.ForwardingHouse}}</div>
+                        <div *ngIf="SetMasterOrHouseLabel() != null">
+                            <div class="title">{{SetMasterOrHouseLabel()}}</div>
+                            <div class="description">{{SetMasterOrHouseValue()}}</div>
                         </div>
                         <div>
                             <div class="title">Incoterms</div>
@@ -634,22 +630,6 @@
                                 {{cargoTrackingShipmentPM?.SHOCarrierName}}
                             </div>
                         </div>
-                        <div
-                            *ngIf=" cargoTrackingShipmentPM.EntityType == 'O'  && cargoTrackingShipmentPM?.Master !=null && cargoTrackingShipmentPM?.Master.length > 0">
-                            <div class="title">Master </div>
-                            <div class="description">
-                                {{cargoTrackingShipmentPM?.Master}}
-                            </div>
-                        </div>
-                        <div
-                            *ngIf=" cargoTrackingShipmentPM.EntityType == 'O'  && cargoTrackingShipmentPM?.House !=null && cargoTrackingShipmentPM?.House.length > 0">
-                            <div class="title">house </div>
-                            <div class="description">
-                                {{cargoTrackingShipmentPM?.House}}
-                            </div>
-                        </div>
-
-
                     </div>
                 </div>
 
