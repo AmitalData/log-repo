@@ -2223,18 +2223,6 @@ namespace Logitude.XSD.INTTRA.BL
                     {
                         EquipmentIdentifier = myShipmentPackage.ContainerNumber.ToUpper(),
                         SplitGoodsNumberOfPackages = itemQuantity,
-
-                        //SplitGoodsGrossVolume = new SplitGoodsGrossVolume()
-                        //{
-                        //    UOM = SplitGoodsGrossVolumeUOM.MTQ,
-                        //    Value = this.GetVolumeInCBM(myShipmentPackage.Volume),
-                        //},
-
-                        //SplitGoodsGrossWeight = new SplitGoodsGrossWeight()
-                        //{
-                        //    UOM = SplitGoodsGrossWeightUOM.KGM,
-                        //    Value = this.GetWeightInKG(myShipmentPackage.Weight) + "",
-                        //},
                     });
 
                     // Houses 

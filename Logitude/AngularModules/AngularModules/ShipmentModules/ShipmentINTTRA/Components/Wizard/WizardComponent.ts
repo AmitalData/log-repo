@@ -130,6 +130,7 @@ export class WizardComponent extends BaseComponent {
         this.UIProperties.SetEnabled("AdditionalChargesId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("INTTRAInstructions", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("INTTRAComments", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("IsINTTRAFROB", this.ObjectTableName, this.IsEditingEnabled);
 
         this.SetUIProperties_BasicFreight();
         this.SetUIProperties_FreightPayerAddress();
@@ -280,6 +281,13 @@ export class WizardComponent extends BaseComponent {
     set SIHasAttachList(value: boolean) {
         if (this.EntityPM.SIHasAttachList != value) {
             this.EntityPM.SIHasAttachList = value;
+        }
+    }
+
+    get IsINTTRAFROB() { return this.EntityPM.IsINTTRAFROB; }
+    set IsINTTRAFROB(value: boolean) {
+        if (this.EntityPM.IsINTTRAFROB != value) {
+            this.EntityPM.IsINTTRAFROB = value;
         }
     }
 
@@ -441,6 +449,7 @@ export class WizardComponent extends BaseComponent {
         this.myCloner.AddField('INTTRAInstructions');
         this.myCloner.AddField('INTTRAComments');
         this.myCloner.AddField('SIHasAttachList');
+        this.myCloner.AddField('IsINTTRAFROB');
         this.myCloner.AddEntity(this.EntityPM);
     }
     private RejectChanges() {
