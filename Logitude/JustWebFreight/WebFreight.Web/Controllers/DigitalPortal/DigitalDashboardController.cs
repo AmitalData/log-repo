@@ -293,31 +293,47 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         {
             var shipmentsGroupedByStatus = new Dictionary<string, object>();
             var entityStatusQuery = new EntityStatusQuery(tenant);
+
             var blockedStatus = new List<string> { "PSDL", "PODR" };
-            var allStatuses = entityStatusQuery.GetEntityStatusPMsByTenant(tenant).ToList();
 
-            var digitalEntityStatusCodes = allStatuses.Where(a => a.IsDigitalPortal 
-                                                                  && !blockedStatus.Contains(a.Code))
-                                                      .Select(a => a.Code)
-                                                      .ToList();
+            var allStatuses = entityStatusQuery.GetEntityStatusPMsByTenant(tenant)
+                                               .Where(a => !blockedStatus.Contains(a.Code) 
+                                                           && a.IsDigitalPortal)
+                                               .OrderBy(a => a.StatusWeight)
+                                               .Select(a => new 
+                                               {
+                                                    a.Code,
+                                                    a.StatusWeight
+                                               })
+                                               .ToList();
 
-            var allStatusesCodes = allStatuses.Select(a => a.Code);
+            var departedCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SDEP").StatusWeight;
 
-            var digitalStatusesOrigin = new List<string> { "SHOR", "SHP2" };
+            var digitalStatusesOrigin = allStatuses.Where(a => a.StatusWeight < departedCodeWeight)
+                                                   .Select(a => a.Code)
+                                                   .ToList();  //new List<string> { "SHOR", "SHP2" };
+
             var dataOrigin = shipments.Where(r => digitalStatusesOrigin.Contains(r.StatusCode))
                                 .GroupBy(a => a.TransportModeId)
                                 .ToDictionary(x => x.Key, y => y.Count());
 
-            var digitalStatusesInTransit = new List<string> { "SDEP" };            
-            var dataInTransit = shipments.Where(r => digitalStatusesInTransit.Contains(r.StatusCode))
-                                         .GroupBy(a => a.TransportModeId)
-                                         .ToDictionary(x => x.Key, y => y.Count());
+            var arrivedAtDestinationCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SARR").StatusWeight;
 
-            var digitalStatusesAtDestination = new List<string> { "SARR", "SDL2", "SDLY"};
+            var digitalStatusesInTransit = allStatuses.Where(a => a.StatusWeight >= departedCodeWeight && a.StatusWeight < arrivedAtDestinationCodeWeight)
+                                                      .Select(a => a.Code)
+                                                      .ToList(); //new List<string> { "SDEP" };
+            var dataInTransit = allStatuses.Where(a => a.StatusWeight >= departedCodeWeight 
+                                                       && a.StatusWeight < arrivedAtDestinationCodeWeight)
+                                           .Select(a => a.Code)
+                                           .ToList();
+
+            var digitalStatusesAtDestination = allStatuses.Where(a => a.StatusWeight >= arrivedAtDestinationCodeWeight)
+                                                          .Select(a => a.Code)
+                                                          .ToList(); //new List<string> { "SARR", "SDL2", "SDLY"};
 
             var dataAtDestination = shipments.Where(r => digitalStatusesInTransit.Contains(r.StatusCode))
-                                         .GroupBy(a => a.TransportModeId)
-                                         .ToDictionary(x => x.Key, y => y.Count());
+                                             .GroupBy(a => a.TransportModeId)
+                                             .ToDictionary(x => x.Key, y => y.Count());
 
             var result = new Dictionary<string, object>
             {
