@@ -4621,6 +4621,10 @@
                   DefaultText="&quot;Submit&quot;"
                   TextCodeTypeCode="&quot;G&quot;"
                   IsSpellChecked="false" />
+        <TextCode Code="&quot;General.G.DownloadAll&quot;"
+                  DefaultText="&quot;Download all&quot;"
+                  TextCodeTypeCode="&quot;G&quot;"
+                  IsSpellChecked="false" />
     </AdditionalTextCodes>
     <AdditionalFeatures>
         <Feature Code="&quot;DASHBOARD&quot;"
