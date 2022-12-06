@@ -10,7 +10,6 @@ import { EntityResourceService } from 'Infrastructure/Services/EntityResourceSer
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { DashboardDataBinding } from 'logitude-dashboard-library/dist/types/DashboardDataBinding';
 import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
-import { LastFilterClass } from '../../../Infrastructure/Utilities/LastFilterClass';
 import { DashboardListService } from '../../../DashboardModule/Services/StandardLists/DashboardListService';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { DashboardList } from '../../../DashboardModule/EntityLists/DashboardList';
@@ -18,7 +17,6 @@ import { LocationDirective } from '../../../Infrastructure/Utilities/LocationDir
 import { DashboardPMExtendedService } from '../../../DashboardModule/Services/ExtendedPMs/DashboardPMExtendedService';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { DashboardPMService } from '../../../DashboardModule/Services/StandardPMs/DashboardPMService';
-import { Cloner } from '../../../Infrastructure/Utilities/Cloner';
 
 @Component({
     templateUrl: 'CustomDashboardComponent.html',
@@ -32,23 +30,30 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, O
     private CurrentSession = SessionLocator.SelectedSession;
     public DataContext = this;
 
-    private filterName_SelectedDashboard: string = "SelectedDashboard";
-    private filterControlNameSpace: string = "Workspace.CustomDashboard";
     public DashboardsTabs: DashboardTab[] = [];
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
-    private dashboardExtendedService: DashboardPMExtendedService;
+
+
     public HasChanges: boolean = false;
     public IsEditLayoutModeActive: boolean = false;
     public SavedDashboard: DashboardPM = null;
+
     @Output() SaveDashboardCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() EditLayoutChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
     public dashbaordCount = -1;
+    private ItemsSource: DashboardList[] = [];
+    public DashboardDropdownLoading: boolean = true;
+
+    private loadedDashboards: DashboardList[] = [];
+
+    private dashboardExtendedService: DashboardPMExtendedService;
+    private DashboardListService: DashboardListService;
 
     constructor() {
         super();
         this.dashboardExtendedService = new DashboardPMExtendedService();
+        this.DashboardListService = new DashboardListService();
     }
-
 
 
     DashboardDataBinding: DashboardDataBinding = {
@@ -67,7 +72,8 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, O
                     this._entityResourceService.getEntityResourceByTableName("AnalyticsFactsMetaData").subscribe((res3: any) => {
                         this._entityResourceService.getEntityResourceByTableName("AnalyticsFactsFieldsMetaData").subscribe((res4: any) => {
                             setTimeout(e => {
-                                this.LoadDefaultDashboards(6);
+                                this.CurrentSession.StopBusyIndicator();
+                                this.LoadDefaultDashboards(300);
                             }, 70);
                         });
                     });
@@ -81,57 +87,24 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, O
         AppTool.KillEventEmitter(this.SessionEvent);
     }
 
-    private loadedDashboards: DashboardList[] = [];
-    private previousSelectedDashboards: DashboardList[] = [];
-    private GetDashboardsForTabs() {
-        this.CurrentSession.StartBusyIndicatorLoading();
-
-        var rememberedDashboards: string = LastFilterClass.GetFilterValue(this.filterControlNameSpace, this.filterName_SelectedDashboard);
-        if (!AppTool.IsNullOrEmpty(rememberedDashboards)) {
-            this.dashboardExtendedService.GetDashboardsFromIds(rememberedDashboards).subscribe((myResponse: ServiceResponse) => {
-                if (!myResponse.HasError) {
-                    this.previousSelectedDashboards = myResponse.Result;
-                    if (this.previousSelectedDashboards.length == 6) {
-                        this.BuildTabs(true);
-                    }
-
-                    else if (this.previousSelectedDashboards.length < 6) {
-                        this.LoadDefaultDashboards(6 - this.previousSelectedDashboards.length);
-                    }
-                }
-
-                this.CurrentSession.StopBusyIndicator();
-            });
-        }
-
-        else {
-            this.LoadDefaultDashboards(6);
-        }
-    }
     private LoadDefaultDashboards(numberOfDashboard: number) {
         var filters: ApiQueryFilters = new ApiQueryFilters();
         filters.PageSize = numberOfDashboard;
         filters.SortBy = "CreateDate";
         filters.SortDirection = "Descending";
 
-        var dashboardListService: DashboardListService = new DashboardListService();
-        dashboardListService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
+        this.DashboardListService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
-                this.loadedDashboards = myResponse.Result;
+                this.loadedDashboards = myResponse.Result?.slice(0, 6);
+                this.ItemsSource = myResponse.Result ?? [];
+                this.dashbaordCount = this.ItemsSource.length;
+                this.DashboardDropdownLoading = false;
                 this.BuildTabs();
             }
-            this.GetUsersDashboardsCount();
-        });
-    }
-    GetUsersDashboardsCount() {
-        this.dashboardExtendedService.GetUsersDashboardsCount().subscribe((myResponse: ServiceResponse) => {
-            this.CurrentSession.StopBusyIndicator();
-            if (myResponse?.HasError) return;
-            this.dashbaordCount = myResponse?.Result ?? 0;
         });
     }
 
-    BuildTabs(isAllPrevious: boolean = false) {
+    BuildTabs() {
         this.DashboardsTabs = [];
         var list: DashboardTab[] = [];
         var index: number = 0;
@@ -144,91 +117,46 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, O
         }
 
         if (list.length < 6) {
-            if (isAllPrevious) {
-                this.previousSelectedDashboards.forEach(item => {
-                    if (index != 6) {
-                        list.push(new DashboardTab(index, item));
-                        index++;
-                    }
-                });
-            }
-
-            else {
-                this.loadedDashboards.forEach(item => {
-                    if (index != 6) {
-                        list.push(new DashboardTab(index, item));
-                        index++;
-                    }
-                });
-            }
+            this.loadedDashboards.forEach(item => {
+                if (index != 6) {
+                    list.push(new DashboardTab(index, item));
+                    index++;
+                }
+            });
         }
 
         list.forEach((item) => {
             this.DashboardsTabs.push(item);
         })
 
-        this.selectedDashboardId = this.DashboardsTabs[0]?.DashboardId;
-        this.SelectionChanged(this.DashboardsTabs[0]);
+        this.SelectFirstDashboard();
     }
 
-    private selectedDashboardId: string;
-    get SelectedDashboardId() { return this.selectedDashboardId; }
-    set SelectedDashboardId(value: string) {
-        if (this.selectedDashboardId != value) {
-            this.selectedDashboardId = value;
-
-            if (value) {
-                MixPanelLocator.PostDashboardAction({ ActionName: "Dashboard drop down", DashboardId: value });
-            }
-        }
-    }
-
-    private UpdateSelectedDashboards() {
-        //var selectedDashboards: string = LastFilterClass.GetFilterValue(this.filterControlNameSpace, this.filterName_SelectedDashboard);
-        //if (AppTool.IsNullOrEmpty(selectedDashboards)) {
-        //    selectedDashboards = this.SelectedDashboardId;
-        //}
-
-        //else {
-        //    selectedDashboards = selectedDashboards + "," + this.SelectedDashboardId;
-        //}
-
-        //LastFilterClass.UpdateFilter(this.filterControlNameSpace, this.filterName_SelectedDashboard, selectedDashboards);
+    SelectFirstDashboard() {
+        if (!this.SelectedDashboard && this.DashboardsTabs && this.DashboardsTabs.length > 0)
+            this.SelectedDashboard = this.DashboardsTabs[0]?.Dashboard;
     }
 
     private selectedDashboard: DashboardList;
     get SelectedDashboard() { return this.selectedDashboard; }
     set SelectedDashboard(value: DashboardList) {
-        if (this.selectedDashboard != value) {
-            this.selectedDashboard = value;
+        if (this.selectedDashboard == value) return;
+        this.selectedDashboard = value;
+        if (!value) return;
+        MixPanelLocator.PostDashboardAction({ ActionName: "Dashboard drop down", DashboardId: value.Id });
 
-            if (value) {
-                var addedDashboardTab: DashboardTab = this.DashboardsTabs.find(d => d.DashboardId == this.SelectedDashboard.Id);
-                if (addedDashboardTab) {
-                    if (!addedDashboardTab.IsSelected)
-                        this.SelectionChanged(addedDashboardTab);
-                }
-
-                else {
-                    this.selectedDashboardsFromLOV.push(value);
-                    this.selectedDashboardsFromLOV.reverse();
-                    this.UpdateSelectedDashboards();
-                    this.BuildTabs();
-                }
-            }
+        var addedDashboardTab: DashboardTab = this.DashboardsTabs.find(d => d.Dashboard.Id == this.SelectedDashboard.Id);
+        if (addedDashboardTab) {
+            if (!addedDashboardTab.IsSelected) this.SelectionChanged(addedDashboardTab);
+            return;
         }
+        this.selectedDashboardsFromLOV.push(value);
+        this.selectedDashboardsFromLOV.reverse();
+        this.BuildTabs();
+        this.SelectionChanged(this.DashboardsTabs[0]);
     }
 
-    CheckIfDashboardTabAdded(): boolean {
-        var isTabAdded: boolean = false;
-        if (this.DashboardsTabs.find(d => d.DashboardId == this.SelectedDashboard.Id)) {
-            isTabAdded = true;
-        }
-
-        return isTabAdded;
-    }
-
-    AdDashboardClicked() {
+    AddDashboardClicked() {
         MixPanelLocator.PostDashboardAction({ ActionName: "Open Dashboard add page" });
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = "Add Dashboard";
@@ -245,12 +173,20 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, O
         logitudeWindow.Show('./Dashboard/Components/Windows/AddEditDashboardComponent');
         logitudeWindow.ComponentLoaded.subscribe(comp => {
             logitudeWindow.WindowClosed.subscribe(s => {
-                if (s) {
-                    this.SelectedDashboardId = comp.EntityPM.Id;
-                    this.openEditLayout = true;
-                    this.dashbaordCount++;
-                }
+                if (!s) return;
+                this.GetAddedDashboard(comp.EntityPM.Id);
             });
+        });
+    }
+
+    GetAddedDashboard(dashboardId: any) {
+        this.DashboardListService.getSingle(dashboardId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse || myResponse.HasError) return;
+            var addedDasboard = myResponse.Result;
+            this.ItemsSource.unshift(addedDasboard);
+            this.SelectedDashboard = addedDasboard;
+            this.openEditLayout = true;
+            this.dashbaordCount++;
         });
     }
 
@@ -259,23 +195,23 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, O
 
     public SelectedTabItem: DashboardTab;
     private clickdTab: DashboardTab;
-    SelectionChanged(clickdTab: DashboardTab) {
-        if (clickdTab != null) {
-            this.clickdTab = clickdTab;
-            if (this.HasChanges) {
-                this.HasChanges = false;
-                this.ConfirmSave();
-            }
+    SelectionChanged(clickdTab: DashboardTab, fromScreen: boolean = false) {
+        if (!clickdTab) return;
 
-            else if (this.IsEditLayoutModeActive) {
-                this.EditLayoutChanged.emit(true);
-            }
-
-            else {
-                this.NavigateToSelectedTab();
-            }
+        this.clickdTab = clickdTab;
+        if (this.HasChanges) {
+            this.HasChanges = false;
+            this.ConfirmSave();
+        }
+        else if (this.IsEditLayoutModeActive) {
+            this.EditLayoutChanged.emit(true);
+        }
+        else {
+            if (fromScreen) this.selectedDashboard = clickdTab.Dashboard;
+            this.NavigateToSelectedTab();
         }
     }
+
     private ConfirmSave() {
         var confirmWindow: ConfirmWindow = new ConfirmWindow();
         confirmWindow.Title = "Confirm";
@@ -288,26 +224,23 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, O
 
             else if (confirmWindow.No) {
                 MixPanelLocator.PostDashboardAction({ ActionName: "Confirm Window No Click", DashboardId: this.SelectedDashboard?.Id });
-                this.RejectChanges();
                 this.NavigateToSelectedTab();
             }
         });
     }
-    SaveDashboard() {
-        //this.CheckDeletedWidgets(dashboard);
 
+    SaveDashboard() {
         var dashboardPMService: DashboardPMService = new DashboardPMService();
         this.CurrentSession.StartBusyIndicatorSaving();
         dashboardPMService.update(this.SavedDashboard).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.SaveDashboardCompleted.emit(true);
-                //this.NavigateToSelectedTab(clickdTab);
             }
 
             this.CurrentSession.StopBusyIndicator();
         });
     }
-    
+
     public NavigateToSelectedTab() {
         if (this.SelectedTabItem != this.clickdTab) {
             this.SelectedTabItem = this.clickdTab;
@@ -319,7 +252,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, O
         if (this.SelectedTabItem.IsTabLoaded || !this.SelectedTabItem.ComponentPath) return;
 
         let locs = this.AllLocations.toArray().filter(f => f.Code == 'DashboardTabLocation');
-        let location: LocationDirective = locs.filter(f => f.ItemCode == this.SelectedTabItem.DashboardId)[0];
+        let location: LocationDirective = locs.filter(f => f.ItemCode == this.SelectedTabItem.Dashboard.Id)[0];
         if (location == null) {
             this.Retries = 0;
             this.RunComponentTimer();
@@ -328,13 +261,13 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, O
 
         SessionLocator.DynamicLoader.Load(this.SelectedTabItem.ComponentPath, location.viewContainerRef).then(cmpRef => {
             this.SelectedTabItem.IsTabLoaded = true;
-            if (this.DashboardsTabs.filter(p => p.DashboardId == this.SelectedTabItem.DashboardId)[0]) {
-                this.DashboardsTabs.filter(p => p.DashboardId == this.SelectedTabItem.DashboardId)[0].IsTabLoaded = true;
+            if (this.DashboardsTabs.filter(p => p.Dashboard.Id == this.SelectedTabItem.Dashboard.Id)[0]) {
+                this.DashboardsTabs.filter(p => p.Dashboard.Id == this.SelectedTabItem.Dashboard.Id)[0].IsTabLoaded = true;
             }
 
-            if (this.SelectedTabItem.DashboardId) {
+            if (this.SelectedTabItem.Dashboard.Id) {
                 cmpRef.instance.Intialize({
-                    SelectedDashboardId: this.SelectedTabItem.DashboardId,
+                    SelectedDashboardId: this.SelectedTabItem.Dashboard.Id,
                     OpenEditLayout: this.openEditLayout,
                     FatherComponent: this,
                 });
@@ -347,8 +280,8 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, O
 
     RunComponentTimer() {
         this.Retries++;
-        if (this.timerToken) clearTimeout(this.timerToken);     
-        if (this.Retries < 10) this.timerToken = setTimeout(() => this.NavigateToSelectedTab(), 1);      
+        if (this.timerToken) clearTimeout(this.timerToken);
+        if (this.Retries < 10) this.timerToken = setTimeout(() => this.NavigateToSelectedTab(), 1);
     }
 
     public RefereshTabAfterEdit(dashboard: DashboardPM) {
@@ -356,7 +289,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, O
     }
 
     public RefreshTabsAfterDelete(deletedDashboardId: string) {
-        var deletedTab: DashboardTab = this.DashboardsTabs.find(d => d.DashboardId == deletedDashboardId);
+        var deletedTab: DashboardTab = this.DashboardsTabs.find(d => d.Dashboard.Id == deletedDashboardId);
         if (deletedTab) {
             var index = this.DashboardsTabs.indexOf(deletedTab);
             if (index != -1) {
@@ -369,32 +302,18 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, O
         }
     }
 
-    private myCloner: Cloner;
-    private Clone() {
-        //this.myCloner = new Cloner(this.SelectedDashboard);
-        //this.myCloner.AddField('Name');
-        //this.myCloner.AddField('Description');
-        //this.myCloner.AddField('PermissionLevelCode');
-
-        //this.myCloner.AddEntity(this.SelectedDashboard);
-    }
-    private RejectChanges() {
-        //this.SavedDashboard.Widgets = this.CloneDashboardLayout;
-        //this.reactWidgetsLayout = this.BindReactWidgets(this.SelectedDashboard.Widgets);
-        //this.DashboardDataBinding.onGetLayouts.next(DashboardMapping.deepClone(this.reactWidgetsLayout));
-    }
 }
 
 class DashboardTab {
     public Index: number;
-    public DashboardId: string;
+    public Dashboard: DashboardList;
     public Name: string;
     public ComponentPath: string;
     public IsSelected: boolean = false;
     public IsTabLoaded: boolean = false;
     constructor(index: number, dashboard: DashboardList) {
         this.Index = index;
-        this.DashboardId = dashboard.Id;
+        this.Dashboard = dashboard;
         this.Name = dashboard.Name;
         this.ComponentPath = "./Dashboard/Components/Workspace/DashboardTabComponent";
     }

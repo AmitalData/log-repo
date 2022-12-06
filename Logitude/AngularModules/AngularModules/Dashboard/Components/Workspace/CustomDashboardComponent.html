@@ -3,7 +3,7 @@
         <table>
             <tr style="height:22px;">
                 <td style="width: 1px; font-size: 18px; color: #292D30; font-weight: 600; line-height: 120%;">
-                    Dashboard
+                    Dashboards
                 </td>
 
                 <td *ngIf="dashbaordCount > 0">
@@ -11,15 +11,16 @@
                 </td>
 
                 <td style="width:200px; height:22px;" *ngIf="dashbaordCount > 0">
-                    <LogLov [ObjectFieldName]="'SelectedDashboardId'"
-                            [ObjectTableName]="'Dashboard'"
-                            [NoObjectField]="true"
-                            [SelectedValue]="SelectedDashboardId"
-                            [DataContext]="DataContext"
-                            [LookUpTableName]="'Dashboard'"
-                            [HideColumns]="true"
-                            (SelectedItemChanged)="SelectedDashboard = $event">
-                    </LogLov>
+                    <dashboard-dropdown 
+                        [DisplayMemberPath]="'Name'" 
+                        [SelectedItem]="SelectedDashboard" 
+                        [ItemsSource]="ItemsSource" 
+                        (SelectedItemChanged)="SelectedDashboard = $event"
+                        [Loading]="DashboardDropdownLoading">
+                    </dashboard-dropdown>
+                    <!-- <LogLov 
+                            [SelectedValue]="SelectedDashboardId">
+                    </LogLov> -->
                 </td>
 
                 <td class="Table-cell10" *ngIf="dashbaordCount > 0">
@@ -27,7 +28,7 @@
                 </td>
 
                 <td style="width: 117px; height: 22px;" *ngIf="dashbaordCount > 0">
-                    <button class="Dashboard-create-button" (click)="AdDashboardClicked()">
+                    <button class="Dashboard-create-button" (click)="AddDashboardClicked()">
                         <img style="width:10px; height: 10px; margin-right: 4px; color: #F3942F;"
                                 src="./Images/Buttons/add.orange.png" />
                         <!-- <svg width="10" height="10" viewBox="0 0 5 5"style="display: inline-block; vertical-align: middle;">
@@ -44,7 +45,7 @@
     <div class="DashboardTab">
         <div class="DashboardTabHead">
             <ul>
-                <li *ngFor="let item of DashboardsTabs" [class.DashboardTabSelected]="item.IsSelected" (click)="SelectionChanged(item)">
+                <li *ngFor="let item of DashboardsTabs" [class.DashboardTabSelected]="item.IsSelected" (click)="SelectionChanged(item, true)">
                     <div class="DashboardInnerTab TextTrimming" [class.InnerTabSelected]="item.IsSelected">
                         {{item.Name}}
                     </div>
@@ -55,7 +56,7 @@
         <div class="DashboardTabBody" [ngStyle]="{'top': dashbaordCount > 0 ? '19px': '0'}">
             <div *ngIf="dashbaordCount > 0">
                 <div class="MediaFillAbsolute" *ngFor="let item of DashboardsTabs;" [hidden]="!item.IsSelected">
-                    <div LocationDirective Code="DashboardTabLocation" ItemCode="{{item.DashboardId}}"></div>
+                    <div LocationDirective Code="DashboardTabLocation" ItemCode="{{item.Dashboard.Id}}"></div>
                 </div>
             </div>
         </div>
@@ -79,7 +80,7 @@
                 </div>
 
                 <td class="dl-info-center-div" style="margin-top: 12px;">
-                    <button class="Button" (click)="AdDashboardClicked()">
+                    <button class="Button" (click)="AddDashboardClicked()">
                         <svg width="20" height="20" viewBox="0 0 5 5"
                             style="display: inline-block; vertical-align: middle;">
                             <path fill="#4D8ABB" d="M2 1 h1 v1 h1 v1 h-1 v1 h-1 v-1 h-1 v-1 h1 z" />
