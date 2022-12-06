@@ -39,11 +39,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (customResponse.Response != null && customResponse.Response.Declaration != null) 
                    CreateDeclarationFromResponse(customResponse.Response.Declaration, requestParams.Tenant,  customResponse);                                  
             }
-            if (this.MyRequestSheetParam == null)
-                this.MyRequestSheetParam = new RequestSheetParam();
-
-            this.MyRequestSheetParam.CustomFileNo = GetValueIDType(customResponse.Response.Declaration.DMExtensions?.AgentFileReferenceID); ;
-
+           
             if (customResponse.ResponseContentHeader != null &&
                 customResponse.Response == null &&
                 customResponse.AddAGlobalScannedAttachmentToEntityResponse == null &&
@@ -81,6 +77,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     if (requestParams.AppicationId != null && requestParams.DeclarationId == null) requestParams.DeclarationId = requestParams.AppicationId; // moran 10.1.16 Task 19724 + add to condition --><--
                     if (customResponse.Response.Declaration != null && _DF_NG_2754_MSG10004_ExportDeclarationResponseService.MyResponseData.HasException != true)
                     {
+                        if (this.MyRequestSheetParam == null)
+                            this.MyRequestSheetParam = new RequestSheetParam();
+
+                        this.MyRequestSheetParam.CustomFileNo = GetValueIDType(customResponse.Response.Declaration.DMExtensions?.AgentFileReferenceID); ;
+
                         xml = XmlGenericUtil<Declaration>.SerializeObject(customResponse.Response.Declaration);
                         _MyDefaultResponseData.ResponseStatusXML = xml;
                         if (requestParams.IsAngularClient)
