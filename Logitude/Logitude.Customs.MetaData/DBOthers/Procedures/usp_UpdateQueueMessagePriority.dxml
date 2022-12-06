@@ -1,42 +1,7 @@
 ﻿<Procedure DBType="Main" Name="usp_UpdateQueueMessagePriority" Schema="dbo" Module="Customs">
   <SqlScript>
 	  <![CDATA[
-	  IF OBJECT_ID('[Customs].[usp_UpdateQueueMessagePriority]', 'P') IS NOT NULL
-	  drop PROCEDURE [Customs].usp_UpdateQueueMessagePriority
-	  GO
-
-	  Create PROCEDURE [Customs].usp_UpdateQueueMessagePriority
-	  (
-	  @Tenant int,
-	  @CourierMasterId varchar(15),
-	  @InterfaceTypeCode varchar(15),
-	  @TenantPriority int
-	  )
-	  AS
-	  BEGIN
-
-	  update Customs.QueueMessages
-	  set TenantPriority=@TenantPriority
-	  where Tenant = @Tenant and InterfaceTypeCode = @InterfaceTypeCode and NextRunDateTime <= GETDATE() and EntityId in (
-	  select 	Id from Customs.CustomsRequestsSheets	where Tenant = @Tenant	and	(RequestStatusCode = '5' or RequestStatusCode = '1' or
-	  RequestStatusCode = '2' or RequestStatusCode = '21') and RequestCreateDate >= GETDATE()-7 and ObjectTableId1 = '1-343' and EntityId1 in (
-	  select DeclarationId from Customs.CourierDeclarations
-	  where Tenant = @Tenant and CourierMasterId = @CourierMasterId
-	  )
-
-	  )
-
-
-	  update Customs.CustomsRequestsSheets
-	  set TenantPriority=@TenantPriority
-	  where Tenant = @Tenant	and	(RequestStatusCode = '5' or RequestStatusCode = '1' or
-	  RequestStatusCode = '2' or RequestStatusCode = '21') and RequestCreateDate >= GETDATE()-7 and ObjectTableId1 = '1-343' and EntityId1 in (
-	  select DeclarationId from Customs.CourierDeclarations
-	  where Tenant = @Tenant and CourierMasterId = @CourierMasterId
-
-
-	  )
-	  END
+	 
 
     ]]>
   </SqlScript>
