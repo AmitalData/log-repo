@@ -6615,7 +6615,7 @@
         <Feature Code="&quot;SupportUnitMeasurements&quot;"
                  FeatureTypeCode="&quot;OTH&quot;"
                  FeatureTextCodeCode="&quot;General.Features.SupportUnitMeasurements&quot;"
-                 FeatureDefaultText="&quot;Support Select Unit of Measurements&quot;"
+                 FeatureDefaultText="&quot;Support Select Unit of Measurements&quot;"      
                  IsPackagable="true"
                  IsOld="false"
                  IsCoreFeature="false"

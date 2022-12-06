@@ -15,8 +15,7 @@ import { CardListService } from '../../../../Common/Services/StandardLists/CardL
 import { ShipmentTool } from '../../../../Shipment/Tools';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
-@Component({
-    
+@Component({    
     templateUrl: './WizardComponent.html',
 })
 
@@ -37,6 +36,7 @@ export class WizardComponent extends BaseComponent {
     private CardListService: CardListService;
     private entityArgs: EntityArgs;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsINTTRAFROBVisible: boolean = false;
     constructor() {
         super();
         this.myService = new INTRAWebService();
@@ -118,6 +118,10 @@ export class WizardComponent extends BaseComponent {
     SetUIProperties() {
         this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.EntityPM);
 
+        if (SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "FOB")[0] && this.EntityPM.ShipmentLevelCode == "C") {
+            this.IsINTTRAFROBVisible = true;
+        }
+
         this.UIProperties.SetEnabled("EmergencyContactId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("INTTRAContractNumber", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("INTTRADocumentTypeCode", this.ObjectTableName, this.IsEditingEnabled);
@@ -130,6 +134,7 @@ export class WizardComponent extends BaseComponent {
         this.UIProperties.SetEnabled("AdditionalChargesId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("INTTRAInstructions", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("INTTRAComments", this.ObjectTableName, this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("IsINTTRAFROB", this.ObjectTableName, this.IsEditingEnabled);
 
         this.SetUIProperties_BasicFreight();
         this.SetUIProperties_FreightPayerAddress();
@@ -280,6 +285,13 @@ export class WizardComponent extends BaseComponent {
     set SIHasAttachList(value: boolean) {
         if (this.EntityPM.SIHasAttachList != value) {
             this.EntityPM.SIHasAttachList = value;
+        }
+    }
+
+    get IsINTTRAFROB() { return this.EntityPM.IsINTTRAFROB; }
+    set IsINTTRAFROB(value: boolean) {
+        if (this.EntityPM.IsINTTRAFROB != value) {
+            this.EntityPM.IsINTTRAFROB = value;
         }
     }
 
@@ -441,6 +453,7 @@ export class WizardComponent extends BaseComponent {
         this.myCloner.AddField('INTTRAInstructions');
         this.myCloner.AddField('INTTRAComments');
         this.myCloner.AddField('SIHasAttachList');
+        this.myCloner.AddField('IsINTTRAFROB');
         this.myCloner.AddEntity(this.EntityPM);
     }
     private RejectChanges() {
