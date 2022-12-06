@@ -19,6 +19,7 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="TransportModeId" />
         <xs:element minOccurs="0" maxOccurs="1" ref="CreatedByUserId" />
         <xs:element minOccurs="0" maxOccurs="1" ref="ReferentUserId" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Direction" />
         <xs:element minOccurs="0" maxOccurs="1" ref="DepartmentId" />
         <xs:element minOccurs="0" maxOccurs="1" ref="MAWB" />
         <xs:element minOccurs="0" maxOccurs="1" ref="DealId" />
@@ -77,8 +78,9 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="FclLcl" />
         <xs:element minOccurs="0" maxOccurs="1" ref="ForwarderId" />
         <xs:element minOccurs="0" maxOccurs="1" ref="LastMileServiceType" />
-        <xs:element ref="Direction" />
         <xs:element minOccurs="0" maxOccurs="1" ref="Commodity" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ReferentMAWB" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ReferentHAWB" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -151,4 +153,6 @@
   <xs:element name="LastMileServiceType" type="xs:string" />
   <xs:element name="Direction" type="xs:string" />
   <xs:element name="Commodity" type="xs:string" />
+  <xs:element name="ReferentMAWB" type="xs:string" />
+  <xs:element name="ReferentHAWB" type="xs:string" />
 </xs:schema>

@@ -1,5 +1,5 @@
 <!ELEMENT LOGICUSTFILE (LogitudeCustomsFile*)>
-<!ELEMENT LogitudeCustomsFile (CustomFileNo?, Id?, DeclarationOfficeCode?, FileState?, AgentId?, CustomerId?, TransportModeId?, CreatedByUserId?, ReferentUserId?, Direction?, DepartmentId?, MAWB?, DealId?, HAWB?, ManifestNumber?, LoadingPortCode?, OriginCountryCode?, CargoDescription?, PackageTypeCode?, PackageMeasureQualifierCode?, PackageQuantity?, GrossMassMeasure?, VendorId?, ImporterId?, Tenant?, GrantDate?, ManifestDate?, ArrivalDateTime?, Mode?, EnglishName?, HebrewName?, WarehouseId?, UnloadportId?, ProcedureCurrentCode?, ImporterAddress?, CargoTypeCode?, SecondCargoID?, ThirdCargoID?, UnloadDate?, IsCourierDeclaration?, CasualSupplierName?, CasualSupplierAddress?, CourierHawb?, HAWBDATE?, COUWTVAL?, CasualImporterAddress1?, CasualImporterAddress2?, CasualImporterCity?, CasualImporterZipCode?, CasualImporterFax?, CasualImporterEmail?, CasualImportelTel?, CasualImporterContact?, CasualImporterCountry?, IsDiamondsDeclaration?, EstimatedTimeOfArrival?, OrderNumber?, WithPaper?, FileStatus?, NewFile?, ImporterFile?, Team?, FileOpenDate?, TruckerId?, DistributionArea?, FclLcl?, ForwarderId?, LastMileServiceType?, Commodity?)>
+<!ELEMENT LogitudeCustomsFile (CustomFileNo?, Id?, DeclarationOfficeCode?, FileState?, AgentId?, CustomerId?, TransportModeId?, CreatedByUserId?, ReferentUserId?, Direction?, DepartmentId?, MAWB?, DealId?, HAWB?, ManifestNumber?, LoadingPortCode?, OriginCountryCode?, CargoDescription?, PackageTypeCode?, PackageMeasureQualifierCode?, PackageQuantity?, GrossMassMeasure?, VendorId?, ImporterId?, Tenant?, GrantDate?, ManifestDate?, ArrivalDateTime?, Mode?, EnglishName?, HebrewName?, WarehouseId?, UnloadportId?, ProcedureCurrentCode?, ImporterAddress?, CargoTypeCode?, SecondCargoID?, ThirdCargoID?, UnloadDate?, IsCourierDeclaration?, CasualSupplierName?, CasualSupplierAddress?, CourierHawb?, HAWBDATE?, COUWTVAL?, CasualImporterAddress1?, CasualImporterAddress2?, CasualImporterCity?, CasualImporterZipCode?, CasualImporterFax?, CasualImporterEmail?, CasualImportelTel?, CasualImporterContact?, CasualImporterCountry?, IsDiamondsDeclaration?, EstimatedTimeOfArrival?, OrderNumber?, WithPaper?, FileStatus?, NewFile?, ImporterFile?, Team?, FileOpenDate?, TruckerId?, DistributionArea?, FclLcl?, ForwarderId?, LastMileServiceType?, Commodity?, ReferentMAWB?, ReferentHAWB?)>
 <!ELEMENT CustomFileNo (#PCDATA)>
 <!ELEMENT Id (#PCDATA)>
 <!ELEMENT DeclarationOfficeCode (#PCDATA)>
@@ -67,6 +67,7 @@
 <!ELEMENT FclLcl (#PCDATA)>
 <!ELEMENT ForwarderId (#PCDATA)>
 <!ELEMENT LastMileServiceType (#PCDATA)>
- <!ELEMENT Direction (#PCDATA)>
+<!ELEMENT Direction (#PCDATA)>
 <!ELEMENT Commodity (#PCDATA)>
- 
+<!ELEMENT ReferentMAWB (#PCDATA)>
+<!ELEMENT ReferentHAWB (#PCDATA)>
