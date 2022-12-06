@@ -733,6 +733,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 //var time = interfaceManagementQueryService.GetSingle("2715", false, true)?.SendTime;
                 var interfaceTenantDefinitionQueryService = new InterfaceTenantDefinitionQueryService(customContext);
                 var time = interfaceTenantDefinitionQueryService.GetByTenatCode(entityPM.Tenant, "2715")?.SendTime;
+                if(time!=null)
                 time = time.Substring(11, 8);
 
                 var date = entityPM.IsCustomSendTime && !string.IsNullOrEmpty(time) ? DateTime.Today.Add(TimeSpan.Parse(time)) : (DateTime?)null;
