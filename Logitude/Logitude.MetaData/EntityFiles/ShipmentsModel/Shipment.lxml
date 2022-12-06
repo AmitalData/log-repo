@@ -117115,11 +117115,6 @@
       TextCodeTypeCode="&quot;G&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Shipment.G.DownloadAll&quot;"
-      DefaultText="&quot;Download all&quot;"
-      TextCodeTypeCode="&quot;G&quot;"
-      IsSpellChecked="false" />
-    <TextCode
       Code="&quot;Shipment.G.ViewDocument&quot;"
       DefaultText="&quot;View document&quot;"
       TextCodeTypeCode="&quot;G&quot;"
