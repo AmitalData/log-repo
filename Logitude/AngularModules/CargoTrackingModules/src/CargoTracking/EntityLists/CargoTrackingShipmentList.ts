@@ -158,6 +158,7 @@ export class CargoTrackingShipmentList {
 	ChargeableWeightInKG: number;
 	ChargeableWeight: number;
 	ChargeableWeightUnitCode: string;
+	IncotermName: string;
 	
 }
  

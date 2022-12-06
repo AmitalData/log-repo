@@ -367,13 +367,14 @@
                         <div>
                             <div class="title">Incoterms</div>
                             <div class="description TextTrimming">
-                                <span *ngIf="cargoTrackingShipmentPM && cargoTrackingShipmentPM.IncotermName">
+                                <custom-label>{{cargoTrackingShipmentPM.IncotermName}}</custom-label>
+                                <!-- <span *ngIf="cargoTrackingShipmentPM && cargoTrackingShipmentPM.IncotermName">
                                     {{cargoTrackingShipmentPM.IncotermName}}
                                     <a *ngIf="cargoTrackingShipmentPM.IncotermName.length > 18"
                                         (click)="ShowMoreWindow(cargoTrackingShipmentPM.IncotermName)"
                                         style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show
                                         more</a>
-                                </span>
+                                </span> -->
                             </div>
                         </div>
 
