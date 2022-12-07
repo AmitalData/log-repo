@@ -342,15 +342,14 @@ namespace WebFreight.Web.ReportsWebServices
 
                 }
 
-                List<string> freightChargesTypesIds = shipmentPackingService.GetFreightChargesIdsByTenant(tenant);
-                
-                double? totalReceivablesForFreightCharges = shipmentPackingService.GetTotalReceivablesForFreightChargesByFreightChargesTypesIds(shipment, freightChargesTypesIds);
-                double? totalReceivablesForOtherCharges = shipmentPackingService.GetTotalReceivablesForOtherChargesByFreightChargesTypesIds(shipment, freightChargesTypesIds);
-                double? totalAmount = totalReceivablesForFreightCharges + totalReceivablesForOtherCharges + totalAmountOfPackageItems;
-                
-                provider.TotalReceivablesForFreightCharges = shipmentPackingService.GetFormatedNumber(totalReceivablesForFreightCharges);
-                provider.TotalReceivablesForOtherCharges = shipmentPackingService.GetFormatedNumber(totalReceivablesForOtherCharges);
-                provider.TotalAmounts = shipmentPackingService.GetFormatedNumber(totalAmount);
+                MapTotalFieldsParameters mapTotalFieldsParameters = new MapTotalFieldsParameters()
+                {
+                    Tenant = tenant,
+                    ShipmentPackingDataProvider = provider,
+                    Shipment = shipment,
+                    TotalAmountOfPackageItems = totalAmountOfPackageItems
+                };
+                shipmentPackingService.MapTotalFields(mapTotalFieldsParameters); 
             }
 
             DocumentType currentdocumentType = commonContext.DocumentTypes.Where(doc => doc.Code == "PALI" && doc.Tenant == tenant).FirstOrDefault();
@@ -374,5 +373,13 @@ namespace WebFreight.Web.ReportsWebServices
             return provider;
         }
 
+    }
+
+    public class MapTotalFieldsParameters
+    {
+        public int Tenant;
+        public ShipmentPackingDataProvider ShipmentPackingDataProvider;
+        public ShipmentPM Shipment;
+        public double? TotalAmountOfPackageItems;
     }
 }

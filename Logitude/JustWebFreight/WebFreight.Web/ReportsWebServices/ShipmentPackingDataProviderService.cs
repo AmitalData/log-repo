@@ -49,6 +49,18 @@ namespace WebFreight.Web.ReportsWebServices
             provider.VolumeInCBM = General.ComputeVolumeInSelectedUnit(shipment.Volume, shipment.VolumeUnitCode, VolumeCBMUnitCode);
             provider.VolumeInCBF = General.ComputeVolumeInSelectedUnit(shipment.Volume, shipment.VolumeUnitCode, VolumeCBFUnitCode);
         }
+        public void MapTotalFields(MapTotalFieldsParameters mapTotalFieldsParameters)
+        {
+            List<string> freightChargesTypesIds = GetFreightChargesIdsByTenant(mapTotalFieldsParameters.Tenant);
+            
+            double? totalReceivablesForFreightCharges = GetTotalReceivablesForFreightChargesByFreightChargesTypesIds(mapTotalFieldsParameters.Shipment, freightChargesTypesIds);
+            double? totalReceivablesForOtherCharges = GetTotalReceivablesForOtherChargesByFreightChargesTypesIds(mapTotalFieldsParameters.Shipment, freightChargesTypesIds);
+            double? totalAmount = totalReceivablesForFreightCharges + totalReceivablesForOtherCharges + mapTotalFieldsParameters.TotalAmountOfPackageItems;
+
+            mapTotalFieldsParameters.ShipmentPackingDataProvider.TotalReceivablesForFreightCharges = GetFormatedNumber(totalReceivablesForFreightCharges);
+            mapTotalFieldsParameters.ShipmentPackingDataProvider.TotalReceivablesForOtherCharges = GetFormatedNumber(totalReceivablesForOtherCharges);
+            mapTotalFieldsParameters.ShipmentPackingDataProvider.TotalAmounts = GetFormatedNumber(totalAmount);
+        }
 
         public decimal? GetTotalAmountOfPackageItems(List<ShipmentPackageItem> shipmentPackageItems)
         {
