@@ -32,8 +32,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         public string NormalyzekeyWordsList(string keyWordsList)
         {
-            
-            keyWordsList = keyWordsList.Replace(" ", ",");
+            keyWordsList = keyWordsList.Trim();
+            keyWordsList = keyWordsList.Replace(" ,", ",");
+            keyWordsList = keyWordsList.Replace(", ", ",");
             keyWordsList = "," + keyWordsList + ",";
             while (keyWordsList.Contains(",,"))
             {
