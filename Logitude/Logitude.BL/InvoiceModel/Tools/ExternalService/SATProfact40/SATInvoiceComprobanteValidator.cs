@@ -174,10 +174,6 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         {
             if (!arInvoicePM.IsConsolidationInvoice) return;
 
-            if (string.IsNullOrEmpty(arInvoicePM.PeriodCode))
-            {
-                throw new ApplicationException("Period is required ");
-            }
             string regimenFiscalCode = arInvoicePM.RegimenFiscalCode;
             if (string.IsNullOrEmpty(regimenFiscalCode) && !string.IsNullOrEmpty(billToCard.RegimenFiscalCode))
                 regimenFiscalCode = billToCard.RegimenFiscalCode;

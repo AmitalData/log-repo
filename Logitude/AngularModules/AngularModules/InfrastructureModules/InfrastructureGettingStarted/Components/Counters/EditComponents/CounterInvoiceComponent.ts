@@ -32,6 +32,7 @@ export class CounterInvoiceComponent extends BaseComponent {
     public DiffRadioButtonLabel: string;
     public HasInterestFeature: boolean = false;
     public HasBranchCounterCodeFeature: boolean = false;
+    public HasSeparatePerBranchCounterCodeFeature: boolean = false;
     public ItemsSource: CounterInvoiceDefinitionItem[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
@@ -39,7 +40,8 @@ export class CounterInvoiceComponent extends BaseComponent {
 
         this.HasConsolidationFeature = FeatureLocator.HasFeaturePermession("ARInvoice", "Consolidation.Constituent");
         this.HasInterestFeature = FeatureLocator.HasFeaturePermession("InterestReport", "Module");
-        this.HasBranchCounterCodeFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "BCC")[0]? true: false;
+        this.HasBranchCounterCodeFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "BCC")[0] ? true : false;
+        this.HasSeparatePerBranchCounterCodeFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SPB")[0] ? true : false;
 
         if (this.HasConsolidationFeature) {
             this.SameRadioButtonLabel = "Same for Invoice, Credit, Manifest, Customs, Customs Credit, Consolidation and Credit Consolidation.";

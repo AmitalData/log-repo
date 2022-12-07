@@ -425,7 +425,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
         {
             const string dailyPeriodCode = "01";
             bool isPublicInGeneral = comprobanteReceptor.Nombre == SATData.PublicInGeneralNombre;
-            string periodCode = isPublicInGeneral ? dailyPeriodCode : arInvoicePM.PeriodCode;
+            string periodCode = isPublicInGeneral && !arInvoicePM.IsConsolidationInvoice ? dailyPeriodCode : arInvoicePM.PeriodCode;
 
             if (!arInvoicePM.IsConsolidationInvoice && !isPublicInGeneral) return null;
 
@@ -481,7 +481,7 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             BranchRepository branchRepository = new BranchRepository(commonContext);
             Branch branch = branchRepository.GetSingleBranch(arInvoicePM.BranchId, tenant);
             AddressRepository addressReposirory = new AddressRepository(commonContext);
-            if (!string.IsNullOrEmpty(branch.AddressId))
+            if (branch != null && !string.IsNullOrEmpty(branch.AddressId))
             {
                 return addressReposirory.GetSingleAddress(branch.AddressId, branch.Tenant);
             }
