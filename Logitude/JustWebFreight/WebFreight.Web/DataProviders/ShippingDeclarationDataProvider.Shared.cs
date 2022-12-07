@@ -606,5 +606,6 @@ namespace WebFreight.Web.DataProviders
         public double? TotalVolumeINCBF { get; set; }
         public string DestinationWarehouseLegTerminalName { get; set; }
         public string DestinationWarehouseLegTerminalAddress { get; set; }
+        public DateTime? DeliveryETD_DateTime { get; set; }
     }
 }
