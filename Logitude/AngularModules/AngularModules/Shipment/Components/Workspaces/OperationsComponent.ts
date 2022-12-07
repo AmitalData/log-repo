@@ -54,10 +54,8 @@ export class OperationsComponent implements AfterViewInit {
                             this.IsMenuVisible = true;
                         }
 
-                        if (ObjectsLocator.CustomsInterfaceSettingPM.LocalCustomsInterfaceCode == "AMC" ) {
-                            this.IsAMANACItemVisible = true;
-                            this.IsMenuVisible = true;
-                        }
+                        this.IsAMANACItemVisible = true;
+                        this.IsMenuVisible = true;
 
                         this.SelectionChanged();
                     });
