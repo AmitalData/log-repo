@@ -12,8 +12,16 @@
 
 	<Oracle Version="2">
 		<![CDATA[
-		EXECUTE IMMEDIATE 'CREATE INDEX interfaceTypeCodeIndex
-        ON QUEUEMESSAGES (interfaceTypeCode)';
+		DECLARE
+        i INTEGER;
+    BEGIN
+        SELECT COUNT(*) INTO i FROM    all_indexes
+    WHERE   table_name = 'QUEUEMESSAGES' and index_name='INTERFACETYPECODEINDEX';
+        IF i = 0 THEN
+            EXECUTE IMMEDIATE 'CREATE INDEX interfaceTypeCodeIndex
+            ON QUEUEMESSAGES (interfaceTypeCode)';
+        END IF;
+    END;
         ]]>
 	</Oracle>
 </Script>
