@@ -4,13 +4,14 @@ import { AirLineDashboardComponent } from '../Dashboard/Components/Workspace/Air
 import { AddEditDashboardComponent } from '../Dashboard/Components/Windows/AddEditDashboardComponent';
 import { AddEditWidgetComponent } from '../Dashboard/Components/Windows/AddEditWidgetComponent';
 import { CustomDashboardComponent } from '../Dashboard/Components/Workspace/CustomDashboardComponent';
-import { WidgetFilterComponent } from './Components/Windows/Filter/WidgetFilterComponent';
+import { WidgetFilterComponent } from './Components/Windows/Filter/WidgetFilter/WidgetFilterComponent';
 import { ChooseUsersComponent } from './Components/Windows/ChooseUsersComponent';
 import { ChooseUserCheckBoxComponent } from './Components/Windows/ChooseUserCheckBoxComponent';
 import { CustomDashboardLayoutComponent } from './Components/Workspace/CustomDashboardLayoutComponent';
-import { GlobalFilterComponent } from './Components/Windows/Filter/GlobalFilterComponent';
 import { DashboardTabComponent } from './Components/Workspace/DashboardTabComponent';
 import { DashboardDropDownComponent } from './Components/Windows/DashboardDropDown/DashboardDropDown';
+import { GlobalFilterComponent } from './Components/Windows/Filter/GlobalFilter/GlobalFilterComponent';
+import { GlobalFilterValueComponent } from './Components/Windows/Filter/GlobalFilter/GlobalFilterValueComponent';
 
 export const Components =
     [
@@ -27,6 +28,7 @@ export const Components =
         GlobalFilterComponent,
         DashboardTabComponent,
         DashboardDropDownComponent,
+        GlobalFilterValueComponent
     ];
 
 export const Directives =
@@ -53,6 +55,7 @@ export class ModuleDeclarations {
             case "GlobalFilterComponent": { myResult = GlobalFilterComponent; break; }
             case "DashboardTabComponent": { myResult = DashboardTabComponent; break; }
             case "DashboardDropDownComponent": { myResult = DashboardDropDownComponent; break; }
+            case "GlobalFilterValueComponent": { myResult = GlobalFilterValueComponent; break; }
         }
 
         return myResult;

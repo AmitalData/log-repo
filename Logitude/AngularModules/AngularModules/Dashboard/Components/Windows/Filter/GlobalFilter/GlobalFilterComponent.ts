@@ -1,11 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
-import { AppTool } from '../../../../Infrastructure/Tools';
-import { DashboardPM } from '../../../../DashboardModule/EntityPMs/DashboardPM';
-import { DashboardGlobalFilterPM } from '../../../../DashboardModule/EntityPMs/DashboardGlobalFilterPM';
-import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
-import { AnalyticsFactsFieldsMetaDataList } from '../../../../DashboardModule/EntityLists/AnalyticsFactsFieldsMetaDataList';
+import { DashboardPM } from 'DashboardModule/EntityPMs/DashboardPM';
+import { CodeNameClass } from 'Infrastructure/DataContracts/CodeNameClass';
+import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { DashboardGlobalFilterPM } from 'DashboardModule/EntityPMs/DashboardGlobalFilterPM';
 
 @Component({
     selector: 'GlobalFilter',

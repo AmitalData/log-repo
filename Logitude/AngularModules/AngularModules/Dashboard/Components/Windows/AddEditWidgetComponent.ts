@@ -7,14 +7,12 @@ import { Cloner } from '../../../Infrastructure/Utilities/Cloner';
 import { WidgetPM } from '../../../DashboardModule/EntityPMs/WidgetPM';
 import { DashboardPM } from '../../../DashboardModule/EntityPMs/DashboardPM';
 import { WidgetMeasurePM } from '../../../DashboardModule/EntityPMs/WidgetMeasurePM';
-import { WidgetFilterItem } from './Filter/WidgetFilterItem';
 import { AnalyticsFactsFieldsMetaDataList } from 'DashboardModule/EntityLists/AnalyticsFactsFieldsMetaDataList';
 import { AppTool } from 'Infrastructure/Tools';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
-import { retry } from 'rxjs/operators';
 import { Guid } from 'Infrastructure/Utilities/Guid';
-import { Console } from 'console';
+import { WidgetFilterItem } from './Filter/WidgetFilter/WidgetFilterItem';
 
 @Component({
     templateUrl: './AddEditWidgetComponent.html',
