@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main"  Module="Infrastructure" Env="Logitude,local,test,cloud">
-  <Sql Version="4">
+  <Sql Version="5">
     <![CDATA[
  
   
