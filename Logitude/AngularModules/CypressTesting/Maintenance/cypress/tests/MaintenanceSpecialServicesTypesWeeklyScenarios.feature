@@ -5,7 +5,7 @@ Feature: Special Services Type Create and Edit it in Maintenance Module
     Scenario:Add Special Services Type Code with lenght more than 8
         Given the user logged in and navigate to "Special Services Types" in maintenance menu
         When add "123456789" as special services type code
-        Then a validation message with "Code Field must be less than 8" error should appear
+        Then a validation message with "Code Field length must be less than 8" error should appear
 
     Scenario: Create a new special services type
         Given a special services type with the following details

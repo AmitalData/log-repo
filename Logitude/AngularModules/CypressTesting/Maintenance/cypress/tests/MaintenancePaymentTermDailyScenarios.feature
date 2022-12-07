@@ -5,7 +5,7 @@ Feature: Payment Terms fake Create, Search and Edit from Maintenance
     Scenario: Add Payment Term Method Code with lenght more than 4
         Given the user logged in and open "Payment Terms" in maintenance menu
         When add "12345" as payment term code
-        Then a validation message with "Code Field must be less than 4" error should appear
+        Then a validation message with "Code Field length must be less than 4" error should appear
 
     Scenario: Add Payment Term Method Code already exists
         Given add another payment term code: "CH"
