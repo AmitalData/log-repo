@@ -6430,7 +6430,7 @@ User/Pass",
                     }
                     else
                     {
-                        Port myPort = allPorts.Where(d => d.Code == item.PortCombinedCode && d.Tenant == tenant).FirstOrDefault();
+                        Port myPort = allPorts.Where(d => d.CombinedCode == item.PortCombinedCode && d.Tenant == tenant).FirstOrDefault();
                         if (myPort != null && myPort.StateId == null)
                         {
                             isUpdated = true;
