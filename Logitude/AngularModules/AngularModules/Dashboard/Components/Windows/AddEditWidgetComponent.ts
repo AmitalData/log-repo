@@ -14,6 +14,7 @@ import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 import { retry } from 'rxjs/operators';
 import { Guid } from 'Infrastructure/Utilities/Guid';
+import { Console } from 'console';
 
 @Component({
     templateUrl: './AddEditWidgetComponent.html',
@@ -36,13 +37,18 @@ export class AddEditWidgetComponent extends BaseComponent {
     public IsAddNewMeasureVisible: boolean = true;
     public DateGroupCodes = ['Day', 'Month', 'Year', 'Quarter'];
     public SortByCodes = [];
-    public SortByDirections = [{name:'Ascending',code:'asc'},{name:'Descending',code: 'desc'}];
+    public PeriodOperators = ['After', 'Before', 'Previous', 'Current', 'Next', 'Between'];
+    public SortByDirections = [{ name: 'Ascending', code: 'asc' }, { name: 'Descending', code: 'desc' }];
+    //public IncreaseDecreases = [{ name: 'Positive', code: 'positive' }, { name: 'Negative', code: 'negative' }];
+    public IncreaseDecreases = ['Positive', 'Negative'];
     public GroupByQueryFilters: ApiQueryFilters;
     public isGroupByVisible: boolean = true;
     public isSortByVisible: boolean = true;
     public isMaximumGroupingVisible: boolean = true;
-    public isAdvancedSettingVisible : boolean = false;
     public isAdvancedSettingLinkVisible: boolean = true;
+    public isAdvancedSettingForKPI: boolean = false;
+    public isAdvancedSettingForChart: boolean = false;
+    public IsBetweenDatesVisible: boolean = false;
 
     constructor() {
         super();
@@ -54,10 +60,11 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.DashboardPM = windowArgs['DashboardPM'];
         this.isNew = windowArgs['IsNew'];
         this.FirstTime = this.isNew != true;
-        this.DataContext = this;    
-        if(this.isNew){
+        this.DataContext = this;
+        if (this.isNew) {
             this.isAdvancedSettingLinkVisible = false;
-        }   
+        }
+
         this.ComputeChartImageSrc();
         this.BuildMeasures();
         this.CheckMeasureAddVisiblity();
@@ -66,14 +73,19 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.BuildQueryFilters();
         this.InitView();
         this.SetUIProperties();
-       
+        this.SetAdvanceSettingItems();
+        this.SetTimeOverTimeValue();
+        this.SetUIForOperator();
+
     }
-    SetUIProperties(){
+    SetUIProperties() {
         this.UIProperties.SetValidity("MaximumGrouping", this.ObjectTableName, true, "");
 
-        if(this.MaximumGrouping < 1 || this.MaximumGrouping > 50){
-           this.UIProperties.SetValidity("MaximumGrouping", this.ObjectTableName, false, "Maximum Grouping must be greater than 1 and less than 50");
+        if (this.MaximumGrouping < 1 || this.MaximumGrouping > 50) {
+            this.UIProperties.SetValidity("MaximumGrouping", this.ObjectTableName, false, "Maximum Grouping must be greater than 1 and less than 50");
         }
+
+        this.UIProperties.SetEnabled("ComparisonPeriod", this.ObjectTableName, this.TimeOverTime);
     }
 
     BuildQueryFilters() {
@@ -196,18 +208,64 @@ export class AddEditWidgetComponent extends BaseComponent {
             this.CheckMeasureAddVisiblity();
             this.InitView();
             this.SetMaximumGrouping();
+            this.SetAdvanceSettingItems();
+            this.SetTimeOverTimeDefaultValue();
+            this.SetTimeOverTimeValue();
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget Type Change ", Message: "Changed To" + this.EntityPM.TypeCode, DashboardId: this.DashboardPM?.Id });
             this.isAdvancedSettingLinkVisible = true;
         }
     }
-    private SetMaximumGrouping(){
-        if(!AppTool.IsNullOrEmpty(this.TypeCode) && this.TypeCode != "kpi"){
-            if(AppTool.IsNullOrZero(this.MaximumGrouping))
+
+    private SetTimeOverTimeDefaultValue(){
+        if (this.TypeCode != "kpi"){
+            this.TimeOverTime = false;
+        }
+    }
+
+    private SetTimeOverTimeValue() {
+        if (this.TypeCode != "kpi" || !this.TimeOverTime) {
+            this.ComparisonOperator = null;
+            this.ComparisonPeriod = null;
+            this.ComparisonDateGroup = null;
+            this.Increase = null;
+            return;
+        }
+
+        this.Increase = this.Increase ? this.Increase : "Postive";
+        //this.selectedIncDecItem = this.IncreaseDecreases.filter(d => d.code == this.Increase ? this.Increase : "positive")[0];
+        
+    }
+
+    private isAdvancedSettingVisible: boolean = false;
+    get IsAdvancedSettingVisible() { return this.isAdvancedSettingVisible; }
+    set IsAdvancedSettingVisible(value: boolean) {
+        if (this.isAdvancedSettingVisible != value) {
+            this.isAdvancedSettingVisible = value;
+            this.SetAdvanceSettingItems();
+        }
+    }
+
+    public SetAdvanceSettingItems() {
+        if (!AppTool.IsNullOrEmpty(this.TypeCode) && this.TypeCode == "kpi" && this.IsAdvancedSettingVisible) {
+            this.isAdvancedSettingForKPI = true;
+            this.isAdvancedSettingForChart = false;
+        }
+
+        else if (!AppTool.IsNullOrEmpty(this.TypeCode) && this.TypeCode != "kpi" && this.IsAdvancedSettingVisible) {
+            this.isAdvancedSettingForChart = true;
+            this.isAdvancedSettingForKPI = false;
+        }
+    }
+
+    private SetMaximumGrouping() {
+        if (!AppTool.IsNullOrEmpty(this.TypeCode) && this.TypeCode != "kpi") {
+            if (AppTool.IsNullOrZero(this.MaximumGrouping))
                 this.MaximumGrouping = 10;
         }
         else
             this.MaximumGrouping = null;
     }
+   
 
     InitView() {
         this.isGroupByVisible = this.TypeCode != "kpi";
@@ -248,6 +306,15 @@ export class AddEditWidgetComponent extends BaseComponent {
         }
     }
 
+    get TimeOverTime() { return this.EntityPM.TimeOverTime; }
+    set TimeOverTime(value: boolean) {
+        if (this.EntityPM.TimeOverTime != value) {
+            this.EntityPM.TimeOverTime = value;
+            this.SetUIProperties();
+            this.SetTimeOverTimeValue();
+        }
+    }
+
     get DateGroupCode() { return this.EntityPM.DateGroupCode; }
     set DateGroupCode(value: string) {
         if (this.EntityPM.DateGroupCode != value) {
@@ -265,7 +332,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         }
     }
 
-    get MaximumGrouping() {      
+    get MaximumGrouping() {
         return this.EntityPM.MaximumGrouping;
     }
     set MaximumGrouping(value: number) {
@@ -286,12 +353,67 @@ export class AddEditWidgetComponent extends BaseComponent {
         }
     }
 
+    get ComparisonOperator() { return this.EntityPM.ComparisonOperator; }
+    set ComparisonOperator(value: string) {
+        if (this.EntityPM.ComparisonOperator != value) {
+            this.EntityPM.ComparisonOperator = value;            
+            
+            this.SetUIForOperator();
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Comparison Period Value Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
+        }
+    }
+    SetUIForOperator() {
+        this.IsBetweenDatesVisible = false;
+
+        if (this.ComparisonOperator == "Between") {
+            this.IsBetweenDatesVisible = true;
+        }
+    }
+    get ComparisonPeriod() { return this.EntityPM.ComparisonPeriod; }
+    set ComparisonPeriod(value: number) {
+        if (this.EntityPM.ComparisonPeriod != value) {
+            this.EntityPM.ComparisonPeriod = value;
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Comparison Period Value Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
+        }
+    }
+    get ComparisonDateGroup() { return this.EntityPM.ComparisonDateGroup; }
+    set ComparisonDateGroup(value: string) {
+        if (this.EntityPM.ComparisonDateGroup != value) {
+            this.EntityPM.ComparisonDateGroup = value;
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Date Group Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
+        }
+    }
+    get Increase() { return this.EntityPM.Increase; }
+    set Increase(value: string) {
+        if (this.EntityPM.Increase != value) {
+            this.EntityPM.Increase = value;
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Increase Decrease Value Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
+        }
+    }
+   
+
+    get FromDate() { return this.EntityPM.FromDate; }
+    set FromDate(value: Date) {
+        if (this.EntityPM.FromDate != value) {
+            this.EntityPM.FromDate = value;
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget From Date Value Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
+        }
+    }
+    get ToDate() { return this.EntityPM.ToDate; }
+    set ToDate(value: Date) {
+        if (this.EntityPM.ToDate != value) {
+            this.EntityPM.ToDate = value;
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget To Date Value Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
+        }
+    }
+
     public GetSelectedSort() {
         return this.SortByCodes.find(x => x.Code == this.SortBy);
     }
     public GetSelectedSortDirection() {
         return this.SortByDirections.find(x => x.code == this.SortDirection);
     }
+   
 
     public selectedGroupField: AnalyticsFactsFieldsMetaDataList = null;
     get SelectedGroupField() { return this.selectedGroupField; }
@@ -312,6 +434,19 @@ export class AddEditWidgetComponent extends BaseComponent {
 
     }
 
+
+//     private selectedIncDecItem:any;
+// get SelectedIncDecItem(){ return this.selectedIncDecItem;}
+// set SelectedIncDecItem(value: any) {
+// if(this.selectedIncDecItem != value){
+//     this.selectedIncDecItem = value;
+
+//     this.Increase = null;
+//     if(value){
+//         this.Increase = value.code;
+//     }
+// }
+// }
 
     SetDefaultSortByField() {
         if (!this.selectedGroupField) return;
@@ -376,13 +511,54 @@ export class AddEditWidgetComponent extends BaseComponent {
         if (this.isSortByVisible && !this.SortDirection) {
             errors.push("Sort By Direction Field is Required");
         }
-        
+
+        var timeOverTimeErrors: string[] = this.ValidateTimeOverTime();        
+        errors.concat(timeOverTimeErrors);
+
         this.ValidateMeasures(errors);
         this.ValidateSort(errors);
         if (this.RootFilter && this.RootFilter.QueryFilterItems && this.RootFilter.QueryFilterItems.length != 0) this.ValidateFilters(errors, this.RootFilter);
     }
+    private ValidateTimeOverTime(): string[] {
+        var errors: string[] = [];
 
-    GroupByDateIsNotValid(){
+        if (this.TypeCode != "kpi") return [];
+        if (!this.TimeOverTime) return [];
+
+        if (!this.ComparisonOperator) {
+            errors.push("Comparison Operater Field is Required");
+        }
+
+        else {
+            if (this.ComparisonOperator == "Between") {
+                if (!this.FromDate) {
+                    errors.push("From Date Field is Required");
+                }
+                if (!this.ToDate) {
+                    errors.push("To Date Field is Required");
+                }
+                if (this.FromDate && this.ToDate && this.FromDate > this.ToDate) {
+                    errors.push("From Date Value should be Before To Date Value");
+                }
+            }
+
+            else {
+                if (!this.ComparisonPeriod) {
+                    errors.push("Comparison Period Field is Required");
+                }
+                if (!this.ComparisonDateGroup) {
+                    errors.push("Comparison Date Group Field is Required");
+                }
+            }
+        }
+       
+        if (!this.Increase) {
+            errors.push("Increase Field is Required");
+        }
+        return errors;
+    }
+
+    GroupByDateIsNotValid() {
         return this.isGroupByVisible && this.SelectedGroupField && (this.SelectedGroupField.DataTypeCode == 'DateTime' || this.SelectedGroupField?.DataTypeCode == 'Date') && !this.DateGroupCode;
     }
 
@@ -451,7 +627,13 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.myCloner.AddField('SortDirection');
         this.myCloner.AddField('SortBy');
         this.myCloner.AddField('MaximumGrouping');
-
+        this.myCloner.AddField('TimeOverTime');
+        this.myCloner.AddField('ComparisonOperator');
+        this.myCloner.AddField('ComparisonPeriod');
+        this.myCloner.AddField('ComparisonDateGroup');
+        this.myCloner.AddField('Increase');
+        this.myCloner.AddField('FromDate');
+        this.myCloner.AddField('ToDate');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DashboardPM);
 
@@ -557,5 +739,5 @@ export class WidgetMeasureItem extends BaseComponent {
         MixPanelLocator.PostDashboardAction({ ActionName: "Widget Measure Delete Click", DashboardId: this.DashboardPM?.Id });
         this.fatherComponent.CheckMeasureAddVisiblity();
     }
-    
+
 }

@@ -400,6 +400,167 @@ namespace Logitude.DashboardModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private bool timeOverTime ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool TimeOverTime  
+	   {
+	    
+	     get
+		{
+		   return timeOverTime;
+		 }
+		 set
+		 {
+		   if(timeOverTime != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TimeOverTime",OldValue=timeOverTime,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   timeOverTime=value;
+		   }
+			
+		 }
+	   }
+	  private int? comparisonPeriod ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? ComparisonPeriod  
+	   {
+	    
+	     get
+		{
+		   return comparisonPeriod;
+		 }
+		 set
+		 {
+		   if(comparisonPeriod != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ComparisonPeriod",OldValue=comparisonPeriod,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   comparisonPeriod=value;
+		   }
+			
+		 }
+	   }
+	  private string increase ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Increase  
+	   {
+	    
+	     get
+		{
+		   return increase;
+		 }
+		 set
+		 {
+		   if(increase != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Increase",OldValue=increase,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   increase=value;
+		   }
+			
+		 }
+	   }
+	  private string comparisonOperator ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ComparisonOperator  
+	   {
+	    
+	     get
+		{
+		   return comparisonOperator;
+		 }
+		 set
+		 {
+		   if(comparisonOperator != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ComparisonOperator",OldValue=comparisonOperator,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   comparisonOperator=value;
+		   }
+			
+		 }
+	   }
+	  private string comparisonDateGroup ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ComparisonDateGroup  
+	   {
+	    
+	     get
+		{
+		   return comparisonDateGroup;
+		 }
+		 set
+		 {
+		   if(comparisonDateGroup != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ComparisonDateGroup",OldValue=comparisonDateGroup,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   comparisonDateGroup=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? fromDate ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? FromDate  
+	   {
+	    
+	     get
+		{
+		   return fromDate;
+		 }
+		 set
+		 {
+		   if(fromDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FromDate",OldValue=fromDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   fromDate=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? toDate ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? ToDate  
+	   {
+	    
+	     get
+		{
+		   return toDate;
+		 }
+		 set
+		 {
+		   if(toDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToDate",OldValue=toDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   toDate=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

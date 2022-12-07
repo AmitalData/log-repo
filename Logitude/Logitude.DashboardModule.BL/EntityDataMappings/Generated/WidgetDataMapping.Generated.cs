@@ -35,7 +35,14 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         DateGroupCode, 
 	         MaximumGrouping, 
 	         SortBy, 
-	         SortDirection,
+	         SortDirection, 
+	         TimeOverTime, 
+	         ComparisonPeriod, 
+	         Increase, 
+	         ComparisonOperator, 
+	         ComparisonDateGroup, 
+	         FromDate, 
+	         ToDate,
 	      }
 
 
@@ -56,7 +63,14 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         MaximumGrouping, 
 	         SortBy, 
 	         SortDirection, 
-	         Key,
+	         Key, 
+	         TimeOverTime, 
+	         ComparisonPeriod, 
+	         Increase, 
+	         ComparisonOperator, 
+	         ComparisonDateGroup, 
+	         FromDate, 
+	         ToDate,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -128,6 +142,41 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SortDirection))
             {
 				entityPOCO.SortDirection = entityPM.SortDirection;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TimeOverTime))
+            {
+				entityPOCO.TimeOverTime = entityPM.TimeOverTime;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ComparisonPeriod))
+            {
+				entityPOCO.ComparisonPeriod = entityPM.ComparisonPeriod;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Increase))
+            {
+				entityPOCO.Increase = entityPM.Increase;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ComparisonOperator))
+            {
+				entityPOCO.ComparisonOperator = entityPM.ComparisonOperator;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ComparisonDateGroup))
+            {
+				entityPOCO.ComparisonDateGroup = entityPM.ComparisonDateGroup;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromDate))
+            {
+				entityPOCO.FromDate = entityPM.FromDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToDate))
+            {
+				entityPOCO.ToDate = entityPM.ToDate;
 			}
 			}
 
@@ -204,6 +253,41 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 					entityPM.SortDirection = entityPOCO.SortDirection;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TimeOverTime))
+            {
+					entityPM.TimeOverTime = entityPOCO.TimeOverTime;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ComparisonPeriod))
+            {
+					entityPM.ComparisonPeriod = entityPOCO.ComparisonPeriod;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Increase))
+            {
+					entityPM.Increase = entityPOCO.Increase;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ComparisonOperator))
+            {
+					entityPM.ComparisonOperator = entityPOCO.ComparisonOperator;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ComparisonDateGroup))
+            {
+					entityPM.ComparisonDateGroup = entityPOCO.ComparisonDateGroup;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FromDate))
+            {
+					entityPM.FromDate = entityPOCO.FromDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ToDate))
+            {
+					entityPM.ToDate = entityPOCO.ToDate;
+            }
+
 		}
 
 		public void PMToOldPM(WidgetPM entityPM, WidgetPM oldEntityPM)
@@ -273,6 +357,41 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SortDirection))
             {
                 oldEntityPM.SortDirection = entityPM.SortDirection;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TimeOverTime))
+            {
+                oldEntityPM.TimeOverTime = entityPM.TimeOverTime;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ComparisonPeriod))
+            {
+                oldEntityPM.ComparisonPeriod = entityPM.ComparisonPeriod;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Increase))
+            {
+                oldEntityPM.Increase = entityPM.Increase;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ComparisonOperator))
+            {
+                oldEntityPM.ComparisonOperator = entityPM.ComparisonOperator;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ComparisonDateGroup))
+            {
+                oldEntityPM.ComparisonDateGroup = entityPM.ComparisonDateGroup;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromDate))
+            {
+                oldEntityPM.FromDate = entityPM.FromDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToDate))
+            {
+                oldEntityPM.ToDate = entityPM.ToDate;
             }
 			
 		}

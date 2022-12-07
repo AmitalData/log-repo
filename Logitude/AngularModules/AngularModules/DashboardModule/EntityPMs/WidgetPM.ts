@@ -137,6 +137,41 @@ export class WidgetPM {
     public set Key(newValue: string) { if (this.key != newValue) { this.key = newValue; this.MarkAsDirty("Key"); } }
        
 	 
+    private timeOverTime: boolean;
+    public get TimeOverTime() { return this.timeOverTime; }
+    public set TimeOverTime(newValue: boolean) { if (this.timeOverTime != newValue) { this.timeOverTime = newValue; this.MarkAsDirty("TimeOverTime"); } }
+       
+	 
+    private comparisonPeriod: number;
+    public get ComparisonPeriod() { return this.comparisonPeriod; }
+    public set ComparisonPeriod(newValue: number) { if (this.comparisonPeriod != newValue) { this.comparisonPeriod = newValue; this.MarkAsDirty("ComparisonPeriod"); } }
+       
+	 
+    private increase: string;
+    public get Increase() { return this.increase; }
+    public set Increase(newValue: string) { if (this.increase != newValue) { this.increase = newValue; this.MarkAsDirty("Increase"); } }
+       
+	 
+    private comparisonOperator: string;
+    public get ComparisonOperator() { return this.comparisonOperator; }
+    public set ComparisonOperator(newValue: string) { if (this.comparisonOperator != newValue) { this.comparisonOperator = newValue; this.MarkAsDirty("ComparisonOperator"); } }
+       
+	 
+    private comparisonDateGroup: string;
+    public get ComparisonDateGroup() { return this.comparisonDateGroup; }
+    public set ComparisonDateGroup(newValue: string) { if (this.comparisonDateGroup != newValue) { this.comparisonDateGroup = newValue; this.MarkAsDirty("ComparisonDateGroup"); } }
+       
+	 
+    private fromDate: Date;
+    public get FromDate() { return this.fromDate; }
+    public set FromDate(newValue: Date) { if (this.fromDate != newValue) { this.fromDate = newValue; this.MarkAsDirty("FromDate"); } }
+       
+	 
+    private toDate: Date;
+    public get ToDate() { return this.toDate; }
+    public set ToDate(newValue: Date) { if (this.toDate != newValue) { this.toDate = newValue; this.MarkAsDirty("ToDate"); } }
+       
+	 
 
     public OldEntityPM: WidgetPM;
 	
