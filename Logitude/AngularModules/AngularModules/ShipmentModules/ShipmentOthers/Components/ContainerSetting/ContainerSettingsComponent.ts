@@ -35,7 +35,7 @@ export class ContainerSettingsComponent extends BaseComponent implements OnInit 
     FillShipmentATADateComboList() {
         this.ShipmentATADateComboList = [];
         this.ShipmentATADateComboList.push(new CodeNameClass("Vessel", "Vessel Arrival"));
-        this.ShipmentATADateComboList.push(new CodeNameClass("Container", "Container Arrival"));
+        this.ShipmentATADateComboList.push(new CodeNameClass("Container", "First Container Discharged"));
     }
 
     private selectedShipmentATADateItem: CodeNameClass;
