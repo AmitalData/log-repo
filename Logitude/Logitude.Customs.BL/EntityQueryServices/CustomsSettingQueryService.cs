@@ -37,7 +37,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
             {
                 throw new Exception("GetSettingByTenant(tenant) ==null");
             }
-            return new LogitudeCustomsSettingsM() {
+            return new LogitudeCustomsSettingsM()
+            {
                 UnfConnectionString = customsSettingPM.UnfConnectionString,
                 OnPremiseFillingService = customsSettingPM.OnPremiseFillingService,
                 IsConnectedToUniFreight = customsSettingPM.IsConnectedToUniFreight,
@@ -51,13 +52,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
             string entityKeyString = "CustomsSettingQueryService:GetSettingByTenant" + "_" + tenant.ToString();
             settingPM = CacheManager.GetOrInsertNewObject<CustomsSettingPM>(entityKeyString, () =>
-             {
-                 var qs = new CustomsSettingQueryService(tenant);
-                 var settingPoco = qs.repository.GetSettingByTenant(tenant);
-                 settingPM = qs.GetEntityPM(settingPoco);
+            {
+                var qs = new CustomsSettingQueryService(tenant);
+                var settingPoco = qs.repository.GetSettingByTenant(tenant);
+                settingPM = qs.GetEntityPM(settingPoco);
                 //   settingPM.IsConnectedToUniFreight = false;
                 return settingPM;
-             });
+            });
             //settingPM.IsConnectedToUniFreight = false;
             return settingPM ?? new CustomsSettingPM() { Tenant = tenant };
 
@@ -160,7 +161,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
 
 
-        public List<TenantM> GetTenantDetailsMessagesPMs()
+        public List<TenantM> GetTenantDetailsMessagesPMs(
+            Func<int, string> getDcaFilterByEnvironment,
+            Func<int, bool> IsSuppressDca
+            )
         {
             List<TenantM> tenantMs = new List<TenantM>();
             var poco = repository.GetRealAll().ToList();
@@ -171,12 +175,21 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 tenantM.HaveFeature = item.IsMessagesPending;
                 tenantM.TenantId = item.Tenant;
                 tenantM.IIGServiceAddress = item.IIGServiceAddress;
-                tenantM.QtyFeedbackInPendingMessage =Convert.ToInt32( item.QtyFeedbackInPendingMessage);
+                tenantM.QtyFeedbackInPendingMessage = Convert.ToInt32(item.QtyFeedbackInPendingMessage);
                 tenantM.DCAPartnerVault = item.DCAPartnerVault;
+                tenantM.DcaFilterByEnvironment ="";
+                //if (item.IsMessagesPending.GetValueOrDefault() &&
+                //    !String.IsNullOrWhiteSpace(item.IIGServiceAddress) &&
+                //    !String.IsNullOrWhiteSpace(item.DCAPartnerVault))
+                {
+                    string myDcaFilterByEnvironment = getDcaFilterByEnvironment(item.Tenant);
+                    tenantM.DcaFilterByEnvironment = myDcaFilterByEnvironment;
+                }
+                tenantM.SuppressDCA_FileFree = IsSuppressDca(item.Tenant);
                 tenantMs.Add(tenantM);
             }
             //var allPMs = poco.Select(rec => GetEntityPM(rec)).ToList();
-    
+
             return tenantMs;
 
         }
@@ -189,7 +202,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return poco.LastRunningDCAWS;
 
         }
- 
+
 
 
     }
@@ -205,7 +218,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
         public string LastActionLog { get; set; }
         public string DCADownloadFolder { get; internal set; }
         public string DCAPartnerVault { get; internal set; }
+        
+        public string DcaFilterByEnvironment { get; internal set; }
 
+        
+        public bool SuppressDCA_FileFree { get; internal set; }
     }
 
 #if false
@@ -226,7 +243,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
     }
 #endif
 
-    public class DICustomsSettingQueryService: IDICustomsSettingQueryService
+    public class DICustomsSettingQueryService : IDICustomsSettingQueryService
     {
 
         public bool IsCourierTenant(int tenant)
