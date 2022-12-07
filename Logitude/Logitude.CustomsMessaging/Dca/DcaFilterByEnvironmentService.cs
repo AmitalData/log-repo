@@ -24,53 +24,8 @@ namespace Logitude.CustomsMessaging.Dca
     public partial class DcaFilterByEnvironmentService
     {
         static Dictionary<int, DcaFilterByEnvironment> dca = new Dictionary<int, DcaFilterByEnvironment>();
-#if false
-        DcaFilterByEnvironment GetDCAEnvPerTenant_(int tenant)
-        {
-            //var table = Simplog.Data.InfrastructureModel.Repositories.ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-            if (dca.ContainsKey(tenant))
-            {
-                return dca[tenant];
-            }
-            //string email = AuthenticationUtil.ResolveUserIdentityName(tenant);
-            try
-            {
-                SecurityUtility.CheckFeature("Customs.Declaration", "IIGEXPORTIMPORTDECLARATION", tenant);
-                InjectionUtil.Instance.CheckContactFeature(objectTableName: "Customs.Declaration", featureCode: "IIGEXPORTIMPORTDECLARATION", tenant, email);
-                dca[tenant] = DcaFilterByEnvironment.ImportAndExport;
-                Logger.LogMe("DcaFilterByEnvironment.ImportAndExport", false, "DcaFilterByEnvironment");
-            }
-            catch (Logitude.Server.Tools.Helpers.SecurityException)
-            {
-                try
-                {
-                    InjectionUtil.Instance.CheckContactFeature(objectTableName: "Customs.Declaration", featureCode: "EXPORTDECLARATIONPSCREEN", tenant, email);
-                    dca[tenant] = DcaFilterByEnvironment.Export;
-                    Logger.LogMe("DcaFilterByEnvironment.Export", false, "DcaFilterByEnvironment");
-                }
-                catch (Logitude.Server.Tools.Helpers.SecurityException)
-                {
+        static int _Write00LogCounter = 11;//force write immdiatly 
 
-                    dca[tenant] = DcaFilterByEnvironment.Import;
-                    Logger.LogMe("DcaFilterByEnvironment.Import", false, "DcaFilterByEnvironment");
-                }
-
-            }
-            catch (System.Exception ex)
-            {
-                Logger.LogMe(ex.ToString(), true, "DcaFilterByEnvironment");
-
-                Logger.LogMe(ex.ToString(), false, "DcaFilterByEnvironment");
-                Logger.LogMe("DcaFilterByEnvironment.Import  DUE CRASH EROR", false, "DcaFilterByEnvironment");
-                dca[tenant] = DcaFilterByEnvironment.Import;
-
-            }
-
-            return dca[tenant];
-
-        }
-
-#endif
         public DcaFilterByEnvironment GetDCAEnvPerTenant(int tenant)
         {
             if (dca.ContainsKey(tenant))
@@ -151,17 +106,19 @@ namespace Logitude.CustomsMessaging.Dca
             sbLocal.Append($";outgoingMessage_after:{after}");
             if (after == 0)
             {
-                Logger.LogMe("after == 0!!!" + sbLocal.ToString(), false, "DcaFilterByEnvironment_Warning");
+                WriteLogAfter0(tenant, sbLocal);
             }
-            if (after != before)
+            else
             {
+                var list = outgoingMessage.Select(r => r.Filename).ToList();
+                sbLocal.AppendLine(string.Join(Environment.NewLine, list));
 
-                Logger.LogMe(sbLocal.ToString(), false, "DcaFilterByEnvironment");
+                Logger.LogMe(sbLocal.ToString(), false, $"Tenant_{tenant}_DcaFilterByEnvironment");
             }
     
             return new FilterByEnvironmentOutGoingResult(outgoingMessage, sbLocal);
         }
-
+        
         internal FilterByEnvironmentListOfDCAFileResult FilterByEnvironmentListOfDCAFile(int tenant, List<DCAFileModel> listOfDCAFile)
         {
             var sbLocal = new StringBuilder();
@@ -197,18 +154,28 @@ namespace Logitude.CustomsMessaging.Dca
             sbLocal.Append($";outgoingMessage_after:{after}");
             if (after == 0)
             {
-                Logger.LogMe("after == 0!!!" + sbLocal.ToString(), false, "DcaFilterByEnvironment_Warning");
+                WriteLogAfter0(tenant, sbLocal);
             }
-            if (after != before)
+            else
             {
-
-                Logger.LogMe(sbLocal.ToString(), false, "DcaFilterByEnvironment");
+                var list=listOfDCAFile.Select(r => r.SelectedFileDownload).ToList();
+                sbLocal.AppendLine(string.Join(Environment.NewLine, list));
+                Logger.LogMe(sbLocal.ToString(), false, $"Tenant_{tenant}_DcaFilterByEnvironment");
             }
-            Debug.WriteLine(sbLocal.ToString());
+            //Debug.WriteLine(sbLocal.ToString());
             return new FilterByEnvironmentListOfDCAFileResult(listOfDCAFile, sbLocal);
         }
 
-        
+        private static void WriteLogAfter0(int tenant, StringBuilder sbLocal)
+        {
+            if (_Write00LogCounter > 10)
+            {
+                Logger.LogMe("after == 0!!!" + sbLocal.ToString(), false, $"Tenant_{tenant}_DcaFilterByEnvironment_Warning");
+                _Write00LogCounter = 0;
+            }
+            _Write00LogCounter++;
+        }
+
     }
 
     public class FilterByEnvironmentOutGoingResult
