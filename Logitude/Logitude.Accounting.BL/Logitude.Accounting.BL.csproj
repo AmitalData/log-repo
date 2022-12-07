@@ -389,6 +389,7 @@
     <Compile Include="CoreBL\TaxReportClosingService.cs" />
     <Compile Include="CoreBL\Testers\GateWayTester.cs" />
     <Compile Include="CoreBL\YearTransferService.cs" />
+    <Compile Include="DataContract\ARinvoiceSequencesReportParameters.cs" />
     <Compile Include="DataContract\ARPaymentChequeFutureData.cs" />
     <Compile Include="DataContract\CashbookChequesCounter.cs" />
     <Compile Include="DataContract\InterestReportCustomerPM.cs" />
@@ -396,7 +397,9 @@
     <Compile Include="DataContract\OpenFormatReportData.cs" />
     <Compile Include="DataContract\OpenFormatReportDataProvider.cs" />
     <Compile Include="DataContract\TaxDeductionPerVendorReportParameters.cs" />
+    <Compile Include="DataContract\ARinvoiceSequencesReportData.cs" />
     <Compile Include="DataContract\TaxDeductionReportData.cs" />
+    <Compile Include="DataContract\ARinvoiceSequencesReportDataProvider.cs" />
     <Compile Include="DataContract\TaxDeductionReportDataProvider.cs" />
     <Compile Include="DataContract\TaxReportLinesCounter.cs" />
     <Compile Include="EntityDataMappings\AccountingCompanyTypeDataMapping.cs" />
