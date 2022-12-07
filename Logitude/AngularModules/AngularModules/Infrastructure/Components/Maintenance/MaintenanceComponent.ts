@@ -118,8 +118,12 @@ export class MaintenanceComponent {
             FeatureLocator.HasFeaturePermession("General", "General.Features.BusinessProcessBusinessRole")) {
             this.PagesMenu.push(new Menu("BUP", TextCodeTranslator.Translate("General.MC.BusinessProcess")));
         }
-    }
 
+        //check if want to connect to feature
+        this.PagesMenu.push(new Menu("CUS", TextCodeTranslator.Translate("General.MC.Customization.Customization")));
+        
+    }
+    
     // Maintenance Menu
     private AllMaintenanceMenu: MaintenanceMenuItem[];
     private BuildMaintenanceMenu() {
@@ -177,6 +181,7 @@ export class MaintenanceComponent {
         this.BuildAccountingMenus();
         this.BuildOtherMenus();
         this.BuildTransmissionsMenus();
+        this.BuildCustomizationMenus();
         this.PageChanged(this.PagesMenu[0]);
     }
 
@@ -197,7 +202,7 @@ export class MaintenanceComponent {
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item2));
         }
         this.AddTermsOfUseMenuItem();
-   
+
         if (FeatureLocator.HasFeaturePermession("General", "SYSTEMSETTINGS")) {
 
             if (FeatureLocator.HasFeaturePermession("General", "General.Features.CompanyAddress")) {
@@ -443,9 +448,6 @@ export class MaintenanceComponent {
                 item.ObjectTableName = "Container Settings";
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
-
-           var item = this.AddCustomFieldsMenu(item);     
-
             var item1 = new MenusTablePM();
             item1.CategoryTypeCode = "CMS";
             item1.Icon = "Settings"
@@ -526,16 +528,7 @@ export class MaintenanceComponent {
         this.AllMaintenanceMenu.push(new MaintenanceMenuItem(menusTablePM));
     }
 
-    private AddCustomFieldsMenu(item: MenusTablePM) {
-        var item = new MenusTablePM();
-        item.CategoryTypeCode = "CMS";
-        item.Icon = "Settings";
-        item.Code = "CFMM";
-        item.ObjectTableName = "Custom Fields";
-        this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
-        return item;
-    }
-
+   
     private BuildPersonalSettings() {
         if (FeatureLocator.HasFeaturePermession("General", "PERSONALSETTINGS")) {
 
@@ -794,6 +787,80 @@ export class MaintenanceComponent {
         }
     }
 
+
+    IsCustomizationMaintenanceMenuVisible(): boolean {
+
+        if (SessionLocator.Tenant == 261) {
+            return true;
+        }
+        if (FeatureLocator.HasFeaturePermession("General", "General.Features.CustomizationSettings") && this.UserHasCustomizationAccess()) {
+            return true;
+        }
+        if (FeatureLocator.HasFeaturePermession("General", "General.Features.CustomizationSettings") && SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CUS")[0]) {
+            return true;
+        }
+        return false;
+    }
+
+    UserHasCustomizationAccess(): boolean {
+        if (SessionLocator.LoggedUserPM.IsCustomerCare || ObjectsLocator.GlobalSetting.DeploymentStage == "Dev" || SessionLocator.LoggedUserPM.IsDistributor) {
+            return true;
+        }
+        return false;
+    }
+
+    IsTranslationMaintenanceMenusVisible(): boolean {
+        if (SessionLocator.Tenant == 261) {
+            return true;
+        }
+
+        else if (FeatureLocator.HasFeaturePermession("General", "General.Features.Customization")) {
+            return true;
+        }
+        return false;
+    }
+    private BuildCustomizationMenus() {
+        if (this.IsCustomizationMaintenanceMenuVisible()) {
+            this.AddCustomizationMenu();
+        }
+        if (this.IsTranslationMaintenanceMenusVisible()) {
+            this.AddTranslateLabelMenu();
+            this.AddTranslationMenu();
+        }
+        this.AddCustomFieldsMenu();  
+    }
+    private AddCustomFieldsMenu() {
+        let item = new MenusTablePM();
+        item.CategoryTypeCode = "CUS";
+        item.Icon = "Settings";
+        item.Code = "CFMM";
+        item.ObjectTableName = "Custom Fields";
+        this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+    }
+    private AddCustomizationMenu() {
+        let item = new MenusTablePM();
+        item.CategoryTypeCode = "CUS";
+        item.Icon = "list";
+        item.Code = "CUMM";
+        item.ObjectTableName = "Customization";
+        this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+    }
+    private AddTranslationMenu() {
+        let item = new MenusTablePM();
+        item.CategoryTypeCode = "CUS";
+        item.Icon = "list";
+        item.Code = "TRMM";
+        item.ObjectTableName = "Translation";
+        this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+    }
+    private AddTranslateLabelMenu() {
+        let item = new MenusTablePM();
+        item.CategoryTypeCode = "CUS";
+        item.Icon = "list";
+        item.Code = "TLMM";
+        item.ObjectTableName = "Translate Label";
+        this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+    }
     // Commands
     PageChanged(item: Menu) {
         this.SelectedMenu = item;
@@ -1012,7 +1079,7 @@ export class MaintenanceComponent {
                 }
 
                 case "CFMM": { 
-                    var { logWindow, windowArgs }: { logWindow: LogitudeWindow; windowArgs: any; } = this.ShowCustomizationWindow(logWindow, windowArgs);
+                    var { logWindow, windowArgs }: { logWindow: LogitudeWindow; windowArgs: any; } = this.ShowCustomizationCustomFieldsWindow(logWindow, windowArgs);
                     break;
                 }
                      
@@ -1572,6 +1639,20 @@ export class MaintenanceComponent {
                     break;
                 }
 
+                case "CUMM": {
+                    this.ShowCustomizationWindow();
+                    break;
+                }
+
+                case "TRMM": {
+                    this.ShowTranslationWindow();
+                    break;
+                }
+
+                case "TLMM": {
+                    this.ShowTranslateLabelsWindow();
+                    break;
+                }
                 default: {
                     if (item.ObjectTableId) {
                         var allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === item.ObjectTableId).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
@@ -1648,7 +1729,7 @@ export class MaintenanceComponent {
         }
     }
     
-    private ShowCustomizationWindow(logWindow: LogitudeWindow, windowArgs: any) {
+    private ShowCustomizationCustomFieldsWindow(logWindow: LogitudeWindow, windowArgs: any) {
         var logWindow = new LogitudeWindow();
         var windowArgs: any = {};
         windowArgs.IsCustomFieldsMenue = true;
@@ -1660,7 +1741,28 @@ export class MaintenanceComponent {
         logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/CustomizationMainComponent');
         return { logWindow, windowArgs };
     }
-
+    private ShowCustomizationWindow() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "";
+        logWindow.Width = 900;
+        logWindow.Height = 550;
+        logWindow.IsShowCloseButton = false;
+        logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/CustomizationMainComponent');
+    }
+    private ShowTranslateLabelsWindow() {
+        var windowTitle = "Select Translation Language";
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 350;
+        logWindow.Height = 200;
+        logWindow.Title = windowTitle;
+        logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/TranslationLabels/SelectLanguagesComponent');
+    }
+    private ShowTranslationWindow() {
+        var logWindow = new LogitudeWindow();
+        logWindow.IsFillScreen_90 = true;
+        logWindow.Title = "Translation";
+        logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Translations/TranslationComponent');
+    }
     DoJoker(text: string) {
         switch (text) {
             case "jokerinv":
@@ -1904,7 +2006,12 @@ class MaintenanceMenuItem {
     private SetDescriptionText() {
         var myResult = "";
 
-
+        if (this.Code == "CFMM" || this.Code == "CUMM") {
+            switch (this.Code) {
+                case "CUMM": { myResult = "Managing standard and Custom objects such ad Custom Fields, Screen Layout, Tabs, Rules .."; break; }
+                case "CFMM": { myResult = "Managing Custom fields with Pick-list type, defining new Pick-list and adjusting the existing ones"; break; }
+            }
+        }
 
 
         if (this.CategoryTypeCode == "PRS" || this.CategoryTypeCode == "CMS" || this.CategoryTypeCode == "MNG" || this.Code == "FACS" || this.Code == "ACYT") {
