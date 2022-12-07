@@ -39,7 +39,7 @@ Feature: Warehouses Create, Search and Edit from Maintenance
 
     Scenario: Add Terminal Code with lenght more than 25
         When add "01234567890123456789012345" as warehouse terminal code
-        Then a validation message with "Terminal Code Field must be less than 25" error should appear
+        Then a validation message with "Terminal Code Field length must be less than 25" error should appear
 
     Scenario: Edit the warehouse
         Given the user fill the following warehouse details
