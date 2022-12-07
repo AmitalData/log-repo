@@ -132,6 +132,7 @@ export class DeclarationShortTitleComponent {
         }
     }
     RefreshButtonClicked() {
+        
         this.CurrentSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
 
