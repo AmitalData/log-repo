@@ -1,6 +1,5 @@
 import { Component } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
-import { ObjectTablePM } from "Infrastructure/EntityPMs/ObjectTablePM";
 import { AppTool, FormatTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { DataTypesList } from "Workflow/Models/DataTypesList";
@@ -15,13 +14,11 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
 
     public DataContext: any = this;
     public Data: any;
-    public WorkflowEntity: string;
     public VariableName: string = null;
     public VariableType: string = null;
     public VariableValue: string = null;
+    public IsCollectionVariable: boolean = false;
     public ValidationErrorsList: string[];
-    public IsValidConditions: boolean = true;
-    public WorkflowEntityTable: ObjectTablePM;
     public IsNew: boolean = true;
 
     public DataTypesItems: ListItem[] = new DataTypesList().Items;
@@ -30,15 +27,24 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
 
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
-
+        if (Object.keys(this.Data).length !== 0) {
+            this.IsNew = false;
+        }
         this.initialize();
     }
 
     initialize() {
-        this.VariableName = this.Data["variableName"] || null;
-        this.VariableType = this.Data["variableType"] || null;
-        this.VariableValue = this.Data["variableValue"] || null;
-        this.IsNew = this.Data["variableType"] ? false : true;
+        let variableNameData = this.Data["variableName"];
+        let variableTypeData = this.Data["variableType"];
+        let variableValueData = this.Data["variableValue"];
+
+        this.VariableName = variableNameData || null;
+        this.VariableType = this.formatVariableType(variableTypeData);
+        this.VariableValue = variableValueData || null;
+
+        if (variableTypeData && variableTypeData.toString().endsWith("[]")) {
+            this.IsCollectionVariable = true;
+        }
 
         this.setUIProperties();
     }
@@ -51,19 +57,32 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
         this.setUIProperties();
     }
 
-    updateVariableType(VariableType: any) {
-        this.Data["variableType"] = VariableType;
-        this.VariableType = VariableType;
+    updateVariableType(type: string) {
+        if (type) {
+            if (this.IsCollectionVariable) {
+                type = type + "[]";
+            } else {
+                type = type.replace("[]", "");
+            }
+        }
 
-        this.Data["variableValue"] = "";
-        this.VariableValue = "";
+        this.Data["variableType"] = type;
+        this.VariableType = this.formatVariableType(type);
+
+        this.Data["variableValue"] = null;
+        this.VariableValue = null;
 
         this.setUIProperties();
     }
 
-    updateVariableValue(VariableValue: any) {
-        this.Data["variableValue"] = VariableValue;
-        this.VariableValue = VariableValue;
+    updateIsCollectionVariable(isCollection: boolean) {
+        this.IsCollectionVariable = isCollection;
+        this.updateVariableType(this.VariableType);
+    }
+
+    updateVariableValue(value: string) {
+        this.Data["variableValue"] = value || null;
+        this.VariableValue = value || null;
 
         this.setUIProperties();
     }
@@ -77,10 +96,11 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
         }
     }
 
-    DataTypeSelectionMethod(fieldDataType: any) {
-        if (fieldDataType != null) {
-            this.updateVariableType(fieldDataType.Code)
+    formatVariableType(type: string) {
+        if (type) {
+            return type.toString().endsWith("[]") ? type.toString().replace("[]", "") : type;
         }
+        return null;
     }
 
     cancelButtonClicked() {
@@ -92,13 +112,11 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
         let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
         if (notValidUIProperties.length === 0) {
             this.Data["name"] = this.VariableName;
+            //console.log(this.Data);
             this.CurrentSession.CurrentWindow.Close(this.Data);
         } else {
             let validationErrors = notValidUIProperties.map(t => { return t.ValidationError; });
             this.ValidationErrorsList = validationErrors
-
-            if (!this.IsValidConditions)
-                this.ValidationErrorsList.push("Invalid Conditions");
         }
     }
 }
