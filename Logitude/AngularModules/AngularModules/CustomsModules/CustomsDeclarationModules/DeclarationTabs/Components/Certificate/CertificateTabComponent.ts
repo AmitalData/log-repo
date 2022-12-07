@@ -377,8 +377,8 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
         }
         else {
 
-            if (this.EntityPM.IsDirty) {
-                this.declarationPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
+            if (this.entityArgs.EntityPM.IsDirty) {
+                this.declarationPMService.update(this.entityArgs.EntityPM).subscribe((response: ServiceResponse) => {
                     var declaration = response.Result;
 
                     if (!AppTool.IsNullOrEmpty(declaration))
