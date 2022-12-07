@@ -4,9 +4,7 @@ import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { ObjectFieldPM } from "Infrastructure/EntityPMs/ObjectFieldPM";
 import { FieldTypes } from "Workflow/Constants/FieldTypes";
 import { SetValueOperators } from "Workflow/Constants/SetValueOperators";
-import { FlowReader } from "Workflow/Models/FlowReader";
 import { FlowVariablesTreeList } from "Workflow/Models/FlowVariablesTreeList";
-import { Formatter } from "Workflow/Models/Formatter";
 import { ObjectTables } from "Workflow/Models/ObjectTables";
 import { SetValue } from "Workflow/Models/SetValue";
 import { SetValueOperatorsList } from "Workflow/Models/SetValueOperatorsList";
@@ -98,11 +96,13 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
         }
     }
 
-    updateSetValueField(field: string, setValueIndex: number) {
+    updateSetValueField(fieldItem: TreeSelectItem, setValueIndex: number) {
+        let field = fieldItem ? fieldItem.key : null;
         if (field !== this.SetValues[setValueIndex]?.field) {
             if (field) {
                 if (this.isDeclaredVariable(field)) {
-                    this.updateSetValueFieldByDeclaredVariableField(field, setValueIndex);
+                    let fieldType = fieldItem.data["type"] || null;
+                    this.updateSetValueFieldByDeclaredVariableField(field, fieldType, setValueIndex);
                 } else {
                     let objectField = this.getObjectField(field);
                     this.updateSetValueFieldByObjectField(objectField, setValueIndex, field);
@@ -125,10 +125,10 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
         this.SetValues[setValueIndex].fieldChangedToggle = !this.SetValues[setValueIndex].fieldChangedToggle;
     }
 
-    updateSetValueFieldByDeclaredVariableField(field: string, setValueIndex: number) {
+    updateSetValueFieldByDeclaredVariableField(field: string, fieldType: string, setValueIndex: number) {
         this.SetValues[setValueIndex].fieldCode = field ? field : null;
         this.SetValues[setValueIndex].field = field ? field : null;
-        this.SetValues[setValueIndex].type = field ? this.getDeclaredVariableFieldType(field) : null;
+        this.SetValues[setValueIndex].type = fieldType;
         this.SetValues[setValueIndex].lookupType = null;
         this.SetValues[setValueIndex].picklistType = null;
         this.SetValues[setValueIndex].operator = SetValueOperators.Equals;
@@ -182,15 +182,6 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
             this.SetValues.splice(setValueIndex, 1);
             this.setValuesChanged();
         }
-    }
-
-    getDeclaredVariableFieldType(field: string) {
-        if (field) {
-            let fieldCode = Formatter.getFieldCode(field);
-            let declareVariableNode = fieldCode ? FlowReader.getNodes(this.FlowObject, "declareVariableNode").find((n: any) => n.data["variableCode"] === fieldCode) : null;
-            return declareVariableNode ? declareVariableNode.data["variableType"] : null;
-        }
-        return null;
     }
 
     isDeclaredVariable(field: string) {

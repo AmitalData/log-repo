@@ -129,7 +129,8 @@
 
                     <TreeSelect *ngIf="!IsEntityField" [Items]="FlowVariablesTreeItems" [Width]="'220px'"
                         [Value]="setValue.field" [ShowItem]="null | ShowEditableVariablesTreeItemPipe"
-                        [IsDisabled]="setValue.isDisabled" (ValueChanged)="updateSetValueField($event, setValueIndex)">
+                        [IsDisabled]="setValue.isDisabled" [IsReturnedTreeSelectItem]="true"
+                        (ValueChanged)="updateSetValueField($event, setValueIndex)">
                     </TreeSelect>
 
                 </div>

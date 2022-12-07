@@ -15,6 +15,11 @@ export class FlowVariablesTreeList {
     private ShowVariables: ShowVariables;
     private ItemKeySplitter: string = "_";
     private ItemsList: TreeSelectItem[] = [];
+
+    private TriggeringRecordPrefix: string = "triggeringrecord";
+    private DeclaredVariablesPrefix: string = "declaredvariables";
+    private LoopCurrentItemPrefix: string = "Current item from loop ";
+
     public Items: TreeSelectItem[] = [];
 
     constructor(flowObjectFields: ObjectFieldList[], flowObject: any, currentNodeId: string, showVariables: ShowVariables) {
@@ -165,7 +170,7 @@ export class FlowVariablesTreeList {
     private initializeDeclaredVariables() {
         if (this.ShowVariables && this.ShowVariables.ShowDeclaredVariables) {
             let declaredVariablesItemChildren = this.getDeclaredVariablesItemChildren();
-            let declaredVariablesItem = new TreeSelectItem("declaredvariables", "Declared Variables", false, false, true, true, declaredVariablesItemChildren);
+            let declaredVariablesItem = new TreeSelectItem(this.DeclaredVariablesPrefix, "Declared Variables", false, false, true, true, declaredVariablesItemChildren);
             this.Items.push(declaredVariablesItem);
             this.ItemsList.push(declaredVariablesItem);
         }
@@ -182,9 +187,9 @@ export class FlowVariablesTreeList {
 
     private getRecordsVariablesItemChildren() {
         let triggeringRecordEntity = FlowReader.getStartNodeEntity(this.FlowObject);
-        let triggeringRecordItemChildren = this.getObjectFieldsItems("triggeringrecord", triggeringRecordEntity, null);
+        let triggeringRecordItemChildren = this.getObjectFieldsItems(this.TriggeringRecordPrefix, triggeringRecordEntity, null);
 
-        let triggeringRecordItem = new TreeSelectItem("triggeringrecord", "Triggering record", false, false, false, false, triggeringRecordItemChildren);
+        let triggeringRecordItem = new TreeSelectItem(this.TriggeringRecordPrefix, "Triggering record", false, false, false, false, triggeringRecordItemChildren);
         let recordsVariablesItemChildren: TreeSelectItem[] = [];
 
         recordsVariablesItemChildren.push(triggeringRecordItem);
@@ -224,7 +229,7 @@ export class FlowVariablesTreeList {
                 let isReadOnly = isCollectionFilterVariable ? false : (collectionNode.data["recordsType"] === GetRecordTypes.ReadOnly);
                 let treeSelectItemKey = Formatter.getCodeFromName(treeSelectItemName);
                 let treeSelectItemChildren = this.getObjectFieldsItems(treeSelectItemKey, entity, returnedFieldsCodes);
-                let treeSelectItemLoopName = "Current item from loop " + treeSelectItemName;
+                let treeSelectItemLoopName = this.LoopCurrentItemPrefix + treeSelectItemName;
                 let itemData = { isReadOnlyVariable: isReadOnly };
                 let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemLoopName, false, false, false, false, treeSelectItemChildren, itemData);
                 recordsVariablesItemChildren.push(treeSelectItem);
@@ -267,13 +272,33 @@ export class FlowVariablesTreeList {
 
         this.getDeclareVariableNodes().forEach((declareVariableNode: any) => {
             let treeSelectItemName = declareVariableNode.data["variableName"];
-            let treeSelectItemKey = "declaredvariables" + this.ItemKeySplitter + declareVariableNode.data["variableCode"];
+            let treeSelectItemKey = this.DeclaredVariablesPrefix + this.ItemKeySplitter + declareVariableNode.data["variableCode"];
             let data = {
                 type: (declareVariableNode.data["variableType"] || null)
             };
             let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, true, true, false, false, [], data);
             declaredVariablesItemChildren.push(treeSelectItem);
             this.ItemsList.push(treeSelectItem);
+        });
+
+        this.getLoopNodes(true).forEach((loopNode: any) => {
+            let collectionVariable = loopNode.data["collectionVariable"] || null;
+            let declareVariableNodeCode = collectionVariable ? collectionVariable.replace((this.DeclaredVariablesPrefix + this.ItemKeySplitter), "") : null;
+
+            let collectionNode = this.getDeclareVariableNodes(true).find(n => Formatter.getCodeFromName(n.data["name"]) === declareVariableNodeCode);
+
+            if (collectionNode) {
+                let treeSelectItemName = loopNode.data["name"];
+                let treeSelectItemKey = this.DeclaredVariablesPrefix + this.ItemKeySplitter + Formatter.getCodeFromName(treeSelectItemName);
+                let treeSelectItemLoopName = this.LoopCurrentItemPrefix + treeSelectItemName;
+                let variableType = collectionNode.data["variableType"] || null;
+                let data = {
+                    type: variableType ? variableType.replace("[]", "") : null
+                };
+                let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemLoopName, true, true, false, false, [], data);
+                declaredVariablesItemChildren.push(treeSelectItem);
+                this.ItemsList.push(treeSelectItem);
+            }
         });
 
         let sortedDeclaredVariablesItemChildren = this.sortTreeSelectItems(declaredVariablesItemChildren);
@@ -285,7 +310,7 @@ export class FlowVariablesTreeList {
 
         this.getDeclareVariableNodes(true).forEach((declareVariableNode: any) => {
             let treeSelectItemName = declareVariableNode.data["variableName"];
-            let treeSelectItemKey = "declaredvariables" + this.ItemKeySplitter + declareVariableNode.data["variableCode"];
+            let treeSelectItemKey = this.DeclaredVariablesPrefix + this.ItemKeySplitter + declareVariableNode.data["variableCode"];
             let data = {
                 type: (declareVariableNode.data["variableType"] || null),
                 isDeclaredCollectionVariable: true
@@ -314,11 +339,16 @@ export class FlowVariablesTreeList {
         return [];
     }
 
-    private getLoopNodes() {
+    private getLoopNodes(isDeclaredCollectionVariable: boolean = false) {
         if (this.FlowObject) {
             let allPreviousNodes = FlowReader.getAllPreviousNodes(this.FlowObject, this.CurrentNodeId);
             let repeaterNodes = allPreviousNodes.filter(n => n.type === "repeaterNode");
             let loopNodes = allPreviousNodes.filter(n => n.type === "loopNode" && repeaterNodes.filter(rn => rn.data["parentNodeId"] === n.id).length === 0);
+
+            if (isDeclaredCollectionVariable) {
+                return loopNodes.filter(n => n.data["isDeclaredCollectionVariable"] === true);
+            }
+
             return loopNodes;
         }
         return [];
