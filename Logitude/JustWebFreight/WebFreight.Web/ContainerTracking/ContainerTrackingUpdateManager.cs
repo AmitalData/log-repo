@@ -46,17 +46,17 @@ namespace WebFreight.Web.ContainerTracking
         }       
         public void Update(bool isUpatingContainer, bool isUpdatingShipment)
         {
-            this.UpdateContainer(isUpatingContainer);
+            if (!isUpatingContainer) return;
+
+            this.UpdateContainer();
             this.UpdatePackage();
             this.UpdateEmptyReturnLeg();
             this.UpdateShipment(isUpdatingShipment);
             this.SaveShipment();
         }
 
-        private void UpdateContainer(bool isUpatingContainer)
+        private void UpdateContainer()
         {
-            if (!isUpatingContainer) return;
-
             MapContainerFields();
             MapConcurrencyFields();
             if (containerUpdatedFields.TrackingSource == ContainerStatusSourceValues.Vizion)
@@ -429,6 +429,8 @@ namespace WebFreight.Web.ContainerTracking
         }
         private void UpdateShipment(bool isUpdatingShipment)
         {
+            if (!isUpdatingShipment) return;
+
             if (FeatureToggleHelper.HasFeatureToggle("OIU", tenant))
             {
                 if (shipmentPM == null)
