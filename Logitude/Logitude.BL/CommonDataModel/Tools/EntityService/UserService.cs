@@ -262,7 +262,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             if (!String.IsNullOrWhiteSpace(this._DisableOldContactId))
             {
                 //update contacts  set inactive=1, computedkey  = id  where id='1-10622'
-                service.DisableOldContact(this._DisableOldContactId, entityPM.Tenant);
+                contact.ExternalId = service.DisableOldContact(this._DisableOldContactId, entityPM.Tenant);//UPDATE  CONTACTS SET   externalid ='1439'  WHERE   EMAIL ='a59mix_tk4@amitaly.co.il' OR ID IN ('1-10628','1-10627')
             }
             MapUserToContact(entityPM, contact);
             service.Update(contact);
@@ -336,7 +336,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 GlobalContact globalContact = globalContactRepository.GetSingleGlobalContact(entityPm.Id);
                 if (globalContact != null)
                 {
-                    ChangeContactToCurrentUser(globalContactRepository, globalContact);
+                    ChangeContactToCurrentUserRemoveOldGlobalContact(globalContactRepository, globalContact);
                     globalContact.Email = entityPm.Email;
                     globalContact.InActive = entityPm.InActive;
                     globalContactRepository.Update(globalContact);
@@ -379,7 +379,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
         }
 
-        private void ChangeContactToCurrentUser(GlobalContactRepository globalContactRepository, GlobalContact globalContact)
+        private void ChangeContactToCurrentUserRemoveOldGlobalContact(GlobalContactRepository globalContactRepository, GlobalContact globalContact)
         {
             if (globalContact.Email != entityPm.Email)
             {

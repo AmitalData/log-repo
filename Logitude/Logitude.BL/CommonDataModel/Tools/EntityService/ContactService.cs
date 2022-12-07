@@ -129,18 +129,19 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             ContactService newContactService = new ContactService(this.objectContext, this.tenant);
             newContactService.Update(entityPM);
         }
-        internal void DisableOldContact(string disableOldContactId, int tenant)
+        internal string DisableOldContact(string disableOldContactId, int tenant)
         {
             //update contacts  set inactive=1, computedkey  = id  where id='1-10622'
             var oldContact =entityRepository.GetSingleContactForUpdate(disableOldContactId, tenant);
             oldContact.InActive = true;
             oldContact.Email = disableOldContactId;
             //oldContact.ComputedKey = disableOldContactId;
-            
+            string SaveExternalId = oldContact.ExternalId;
+            oldContact.ExternalId = null;//UPDATE  CONTACTS SET   externalid =NULL  WHERE   ID IN ('1-10628') AND inactive =1
 
             entityRepository.Update(oldContact);
             entityRepository.SubmitChanges();
-
+            return SaveExternalId;
 
 
         }
