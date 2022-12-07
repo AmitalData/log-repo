@@ -1289,6 +1289,12 @@ namespace WebFreight.Web.Helpers
                         dataProvider = dataService.GetData();
                         break;
                     }
+                case "ARIS":
+                    {
+                        ARinvoiceSequencesService aRinvoiceSequencesService = new ARinvoiceSequencesService(filters, reportFliter.tenant);
+                        dataProvider = aRinvoiceSequencesService.GetData();
+                        break;
+                    }
                 case "SRQR":
                     {
                         SpotRateQuoteReportDataProviderService spotRateQuoteReportDataProviderService = new SpotRateQuoteReportDataProviderService(filters, reportFliter.tenant);
@@ -1356,7 +1362,14 @@ namespace WebFreight.Web.Helpers
                        
                         break;
                     }
+                case "ARIS":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(ARinvoiceSequencesReportData));
+                        ARinvoiceSequencesReportData reportDataProvider = (ARinvoiceSequencesReportData)serializer.Deserialize(memorystream);
+                        stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "ARIS", Name = "ARinvoiceSequencesReportData", BusinessObjectValue = reportDataProvider };
 
+                        break;
+                    }
                 case "RSTA":
                     {
                         XmlSerializer serializer = new XmlSerializer(typeof(StatementDataProvider));
