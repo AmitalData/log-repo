@@ -68,7 +68,7 @@
             <div class="table-row-cell-block entity-list-container">
                 <ComboBox [ItemsSource]="DataTypesItems" [Binding]="'Name'"
                     [SelectedItem]="VariableType | ListItemPipe : DataTypesItems"
-                    (SelectedItemChanged)="updateVariableType(($event ? $event.Code : null), false)" [ListType]="''"
+                    (SelectedItemChanged)="updateVariableType($event ? $event.Code : null)" [ListType]="''"
                     [IsDisabled]="!IsNew">
                 </ComboBox>
             </div>
