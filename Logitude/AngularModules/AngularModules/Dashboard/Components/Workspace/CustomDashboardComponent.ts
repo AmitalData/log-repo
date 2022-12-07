@@ -41,7 +41,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, O
     @Output() SaveDashboardCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() EditLayoutChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
     public dashbaordCount = -1;
-    private ItemsSource: DashboardList[] = [];
+    public ItemsSource: DashboardList[] = [];
     public DashboardDropdownLoading: boolean = true;
 
     private loadedDashboards: DashboardList[] = [];
