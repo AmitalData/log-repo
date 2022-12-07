@@ -5,7 +5,7 @@ Feature: Move Type Create and Edit it in Maintenance Module
     Scenario:Add Move Type Code with lenght more than 3
         Given the user logged in and navigate to "Move Types" in maintenance menu
         When add "1234" as move type code
-        Then a validation message with "Code Field must be less than 3" error should appear
+        Then a validation message with "Code Field length must be less than 3" error should appear
 
     Scenario: Create a new move type
         Given a move type with the following details

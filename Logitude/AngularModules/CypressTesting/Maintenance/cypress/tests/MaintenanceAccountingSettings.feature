@@ -27,4 +27,4 @@ Feature: Accounting Settings Search and Edit from Maintenance
     Scenario: Edit others in accounting settings
         Given navigate to "Accounting Settings" in maintenance menu
         When the user updates the others with "888888888888888888888" as VAT number
-        Then a validation message with "VAT Number Field must be less than 20" error should appear
+        Then a validation message with "VAT Number Field length must be less than 20" error should appear

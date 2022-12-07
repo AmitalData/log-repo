@@ -11,7 +11,7 @@ Feature: Credit Card Type fake Create and Edit in Maintenance Module
 
     Scenario: Add Credit Card Type Code with lenght more than 2
         When add "12345" as credit card type code
-        Then a validation message with "Code Field must be less than 2" error should appear
+        Then a validation message with "Code Field length must be less than 2" error should appear
 
     Scenario: Create a new credit card type
         Given a credit card type with the following details

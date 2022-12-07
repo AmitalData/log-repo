@@ -34,6 +34,7 @@ When("add another payment term code: {string}", (paymentTermCode) => {
 Then("this validation message error {string} should appear", (validationMessage) => {
     GeneralActions.ValidateSingleErrorMessage(validationMessage)
     cy.Click(BaseSelectors.Button, BaseSelectors.ContainsCancel);
+});
 //#endregion
 
 //#region Create new payment term
