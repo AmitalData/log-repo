@@ -258,7 +258,7 @@ namespace WebFreight.Web.ReportsWebServices
                             ShipmentPackageProvider shipmentPackageProvider = new ShipmentPackageProvider();
 
                             shipmentPackageProvider.PackageItems = new List<PackageItemProvider>();
-                            shipmentPackageProvider.PackageItemsWithAllDetails = new List<PackageItemProviderWithAllDetails>();
+                            shipmentPackageProvider.PackageItemsDetails = new List<PackageItemProviderDetails>();
                             shipmentPackageProvider.Quantity = shipmentPackage.Quantity + "";
                             shipmentPackageProvider.PackageType = shipmentPackage.PackageType == null || string.IsNullOrEmpty(shipmentPackage.PackageType.EnglishName) ? "" : shipmentPackage.PackageType.EnglishName;
                             shipmentPackageProvider.Seal = string.IsNullOrEmpty(shipmentPackage.ShipperSeal) ? "" : shipmentPackage.ShipperSeal;
@@ -320,7 +320,7 @@ namespace WebFreight.Web.ReportsWebServices
                             int i = 0;
                             foreach (ShipmentPackageItem item in shipmentPackageItems)
                             {
-                                shipmentPackageProvider.PackageItemsWithAllDetails.Add(shipmentPackingService.GetPackageItemProviderWithAllDetails(item));
+                                shipmentPackageProvider.PackageItemsDetails.Add(shipmentPackingService.GetPackageItemDetails(item));
                                 for (int t = 0; t < item.Quantity; t++)
                                 {
                                     i += 1;

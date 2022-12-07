@@ -16,9 +16,9 @@ namespace WebFreight.Web.ReportsWebServices
 
         }
 
-        public PackageItemProviderWithAllDetails GetPackageItemProviderWithAllDetails(ShipmentPackageItem item)
+        public PackageItemProviderDetails GetPackageItemDetails(ShipmentPackageItem item)
         {
-            return new PackageItemProviderWithAllDetails()
+            return new PackageItemProviderDetails()
             {
                 Description = item.Description,
                 Quantity = item.Quantity == null ? "" : item.Quantity + "",

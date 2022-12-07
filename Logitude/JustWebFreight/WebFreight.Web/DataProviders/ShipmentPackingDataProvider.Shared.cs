@@ -57,7 +57,7 @@ namespace WebFreight.Web.DataProviders
         public string PackageType { get; set; }
 
         public List<PackageItemProvider> PackageItems { get; set; }
-        public List<PackageItemProviderWithAllDetails> PackageItemsWithAllDetails { get; set; }
+        public List<PackageItemProviderDetails> PackageItemsDetails { get; set; }
     }
 
     public class PackageItemProvider
@@ -66,7 +66,7 @@ namespace WebFreight.Web.DataProviders
         public string Description { get; set; }
         public string Value { get; set; }
     }
-    public class PackageItemProviderWithAllDetails
+    public class PackageItemProviderDetails
     {
         public string Description { get; set; }
         public string Quantity { get; set; }
