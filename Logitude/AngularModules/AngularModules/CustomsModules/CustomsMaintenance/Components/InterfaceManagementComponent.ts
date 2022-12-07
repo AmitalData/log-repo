@@ -266,10 +266,18 @@ export class InterfaceManagementComponent implements OnInit {
         //logWindow.Show('./Customs/Components/Maintenance/AddEditInterfaceManagementComponent');
         if (allowed) {
             logWindow.Show('./CustomsModules/CustomsMaintenance/Components/AddEditInterfaceManagementComponent');
+            logWindow.WindowClosed.subscribe(event => {
+                this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+
+            });
         } else {
             logWindow.Width = 400;
             logWindow.Height = 250;
             logWindow.Show('./CustomsModules/CustomsMaintenance/Components/InterfaceTenantPriorityComponent');
+            logWindow.WindowClosed.subscribe(event => {
+                this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+
+            });
         }
         
 
