@@ -870,7 +870,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
             this.SendButtonEnabled = true;
         }
 
-        if (!AppTool.IsNullOrEmpty(entityPM.IsSubmitDeclaration)) {
+        if (entityPM.IsSubmitDeclaration==true) {
             this.IsDisplayOnly = true;
             this.OkButtonEnabled = false;
             this.SendButtonEnabled = false;
