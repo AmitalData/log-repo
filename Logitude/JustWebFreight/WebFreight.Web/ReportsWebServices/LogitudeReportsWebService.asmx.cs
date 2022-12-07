@@ -10417,7 +10417,9 @@ namespace WebFreight.Web.ReportsWebServices
                     myRecord.FullStatus = a.StatusName;
                     myRecord.FistPickupFromAddress = a.FirstPickupFullAddress;
                     myRecord.LastDeliveryToAddress = a.LastDeliveryFullAddress;
-
+                    myRecord.MainCarriageATD = a.MainCarriageATD;
+                    myRecord.ShipperReference1 = a.ShipperReference1;
+                    myRecord.ShipperReference2 = a.ShipperReference2;
                     if (!string.IsNullOrEmpty(a.StatusLocation))
                     {
                         myRecord.FullStatus = a.StatusName + "(" + a.StatusLocation + ")";
