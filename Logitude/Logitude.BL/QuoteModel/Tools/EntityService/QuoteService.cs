@@ -44,6 +44,7 @@ using Logitude.BL.QuoteModel.Tools.Behaviours;
 using Simplog.Data.InfrastructureModel;
 using System.Reflection;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
+using Logitude.Server.Tools.CustomFields;
 
 namespace Logitude.BL.QuoteModel.Tools.EntityService
 {
@@ -198,10 +199,18 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
         private void SaveChildEntitiesCustomFields()
         {
+            new ChildEntitiesCustomFieldService().Update(new ChildEntitiesCustomFieldArgs()
+            {
+                Tenant = entityPM.Tenant,
+                EntityId = entityPM.Id,
+                ObjectTableName = "Quote",
+                ChildObjectTableName = "QuotePackages",
+                ChildEntities = entityPM.QuotePackages.Cast<object>().ToList()
+            });
+
             new CustomChildEntityService(new CustomChildEntityArgs() { ParentEntity = entityPM, ParentEntityId = entityPM.Id, ParentObjectTableName = "Quote", Tenant = tenant }).Update();
 
         }
-
         public class QuoteChangeTracking
         {
             public QuotePM ChangeTrackingPM { get; set; }
