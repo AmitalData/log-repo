@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, Output, EventEmitter } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { DashboardPM } from '../../../DashboardModule/EntityPMs/DashboardPM';
 import { WidgetPM } from '../../../DashboardModule/EntityPMs/WidgetPM';
 import { ReactWidgetPM } from 'logitude-dashboard-library/dist/types/widget';
@@ -18,7 +18,7 @@ import { CustomDashboardComponent } from './CustomDashboardComponent';
 
 @Component({
     templateUrl: 'DashboardTabComponent.html',
-    selector:'DashboardTabComponent',
+    selector: 'DashboardTabComponent',
 })
 
 export class DashboardTabComponent implements AfterViewInit {
@@ -29,8 +29,6 @@ export class DashboardTabComponent implements AfterViewInit {
     private dashboardPMService: DashboardPMService;
     private CurrentSession = SessionLocator.SelectedSession;
     public reactWidgetsLayout: { lg: ReactWidgetPM[] } = { lg: [] };
-    public IsEmptyDashboardVisible: boolean = false;
-    public IsPermissionMessageVisible: boolean = false;
     public IsGlobalFiltersOpened: boolean = false;
     public newWidgetWidth = 3;
     public newWidgetHeight = 5;
@@ -65,7 +63,7 @@ export class DashboardTabComponent implements AfterViewInit {
             });
 
             this.FatherComponent.EditLayoutChanged.subscribe((isSuccess: boolean) => {
-                if (isSuccess) {                   
+                if (isSuccess) {
                     this.applyWDashboard();
                     this.ResetFlags();
                     this.FatherComponent.NavigateToSelectedTab();
@@ -104,7 +102,7 @@ export class DashboardTabComponent implements AfterViewInit {
         }
     }
 
-    public IsEditDashboardButtonVisible: boolean = false;   
+    public IsEditDashboardButtonVisible: boolean = false;
     public IsEditLayoutButtonVisible: boolean = !this.IsEditLayoutModeActive && !AppTool.IsNullOrEmpty(this.SelectedDashboardId);
 
     private LoadSelectedDashboard() {
@@ -119,7 +117,6 @@ export class DashboardTabComponent implements AfterViewInit {
 
                 else {
                     this.DashboardDataBinding.onGetLayouts.next(DashboardMapping.deepClone({ lg: [] }));
-                    this.SetEmptyDashboardVisibility();
                 }
 
                 this.CurrentSession.StopBusyIndicator();
@@ -127,19 +124,12 @@ export class DashboardTabComponent implements AfterViewInit {
         });
     }
 
-    SetEmptyDashboardVisibility() {
-        this.IsEmptyDashboardVisible = false;
-        this.IsPermissionMessageVisible = false;
+    get IsEmptyDashboardVisible() {
+        return !this.IsEditLayoutModeActive && this.SelectedDashboard && this.SelectedDashboard.Widgets.length == 0;
+    }
 
-        if (!this.IsEditLayoutModeActive && this.SelectedDashboard) {
-            if (this.SelectedDashboard.CreatedByUserId != SessionLocator.LoggedUserId) {
-                this.IsPermissionMessageVisible = true;
-            }
-
-            if (this.SelectedDashboard.Widgets.length == 0) {
-                this.IsEmptyDashboardVisible = true;
-            }
-        }
+    get IsPermissionMessageVisible() {
+        return !this.IsEditLayoutModeActive && this.SelectedDashboard && this.SelectedDashboard.CreatedByUserId != SessionLocator.LoggedUserId;
     }
 
     applyWDashboard() {
@@ -148,10 +138,7 @@ export class DashboardTabComponent implements AfterViewInit {
         this.reactWidgetsLayout = this.BindReactWidgets(this.SelectedDashboard.Widgets);
         this.DashboardDataBinding.onGetLayouts.next(DashboardMapping.deepClone(this.reactWidgetsLayout));
 
-        if (this.OpenEditLayout)
-            this.EditLayoutClicked();
-        else
-            this.SetEmptyDashboardVisibility();
+        if (this.OpenEditLayout) this.EditLayoutClicked();
     }
     private BindReactWidgets(widgets: WidgetPM[]) {
         var reactWidgets: ReactWidgetPM[] = [];
@@ -270,7 +257,6 @@ export class DashboardTabComponent implements AfterViewInit {
                         comp.EntityPM.StartPotistion = e.StartPotistion;
                         comp.EntityPM.EndPosition = e.EndPosition;
                         this.AddWidgetToReactLayout(comp.EntityPM);
-                        this.SetEmptyDashboardVisibility();
                     });
 
                 }
@@ -393,7 +379,6 @@ export class DashboardTabComponent implements AfterViewInit {
     }
 
     HereClicked() {
-        this.IsEmptyDashboardVisible = false;
         this.EditLayoutClicked();
         this.AddWidgetClicked();
     }

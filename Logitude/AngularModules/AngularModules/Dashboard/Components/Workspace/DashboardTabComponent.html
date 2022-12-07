@@ -12,7 +12,7 @@
                     <div></div>
                 </td>
 
-                <td style="width: 1px; font-size: 14px; color: #292D30;">
+                <td style="width: 1px; font-size: 14px; color: #292D30;font-weight: 600;">
                     {{SelectedDashboardName}}
                 </td>
 
@@ -45,14 +45,14 @@
                 </td>
 
                 <td style="width: 55px; min-width: 55px;" *ngIf="IsEditLayoutModeActive">
-                    <button class="BlueButton" (click)="AddWidgetClicked()">Add Widget</button>
+                    <button class="BlueButton" (click)="HereClicked()">Add Widget</button>
                 </td>
 
                 <td class="Table-cell05">
                     <div></div>
                 </td>
 
-                <td *ngIf="!IsEditLayoutModeActive" style="width: 309px; height: 22px; top: 12px; bottom: 12px;">
+                <td *ngIf="!IsEditLayoutModeActive" style="width: 330px; height: 22px; top: 12px; bottom: 12px;">
               <tr>
                 <table>
                     <td style="width: 87px; min-width: 87px; height: 22px; bottom: 12px;">
@@ -92,10 +92,8 @@
                     </td>
                     
                     <td style="width:24px; bottom: 12px;">
-                        <button class="TabButton Button">
-                            <img style="opacity: 0; width: 16px; height: 16px; top:3px; left: 4px; position: absolute;"
-                                 src="./Images/Buttons/transparentbackground.png"/>
-                            <img style="width:2px; height: 12px; left:11px; top: 5px; position: absolute;"
+                        <button class="TabButton Button" style="font-family: 'Roboto';width: 24px;">
+                            <img style="width:2px; height: 12px; top: 5px; position: absolute;"
                                 src="./Images/Buttons/threedots.png" />
                         </button>
                     </td>

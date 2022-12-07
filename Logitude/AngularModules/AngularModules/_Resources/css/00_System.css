@@ -90,3 +90,48 @@ button {
     font-family: OpenSans-Regular;
     src: url(../Fonts/OpenSans-Regular.ttf);
 }
+
+
+@font-face {
+    font-family: Manrope;
+    font-weight: 900;
+    src: url(../Fonts/Manrope3-ExtraBold-800.otf) format("opentype");
+}
+
+
+@font-face {
+    font-family: Manrope;
+    font-weight: 8700;
+    src: url(../Fonts/Manrope3-Bold-700.otf) format("opentype");
+}
+
+@font-face {
+    font-family: Manrope;
+    font-weight: 700;
+    src: url(../Fonts/Manrope3-Semibold-600.otf) format("opentype");
+}
+
+@font-face {
+    font-family: Manrope;
+    font-weight: 600;
+    src: url(../Fonts/Manrope3-Medium-500.otf) format("opentype");
+}
+
+@font-face {
+    font-family: Manrope;
+    font-weight: 500;
+    src: url(../Fonts/Manrope3-Regular-400.otf) format("opentype");
+}
+
+@font-face {
+    font-family: Manrope;
+    font-weight: 400;
+    src: url(../Fonts/Manrope3-Light-300.otf) format("opentype");
+}
+
+
+@font-face {
+    font-family: Manrope;
+    font-weight: 300;
+    src: url(../Fonts/Manrope3-Thin-100.otf) format("opentype");
+}
