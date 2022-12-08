@@ -877,6 +877,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                                              ConsigneeName = d.ConsigneeCard == null ? null : d.ConsigneeCard.EnglishName,
                                                              Direction = d.Direction == null ? null : d.Direction.Name,
                                                              ContainersNumbersArray = m.ContainersNumbers,
+                                                             ProjectNumber = d.ProjectNumber,
                                                          }).ToList();
 
             List<Branch> branches = (from d in commonContext.Branches where d.Tenant == tenant select d).ToList();
@@ -937,6 +938,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     record.Consignee = shipmentEntity.ConsigneeName;
                     record.ShipmentDirection = shipmentEntity.Direction;
                     record.ContainersNumbersArray = shipmentEntity.ContainersNumbersArray;
+                    record.ProjectNumber = shipmentEntity.ProjectNumber;
                 }
 
                 if (record.BranchId != null)
@@ -984,6 +986,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 item.BranchId = d.BranchId;
                 item.ShipmentNumber = d.MainEntityReference;
                 item.OriginalAmount = d.AmountInInvoiceCurrency;
+                
                 customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, d, item);
 
                 myList.Add(item);
@@ -1107,5 +1110,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         public string DescriptionOfGoods { get; set; }
         public string Direction { get; set; }
         public string ContainersNumbersArray { get; set; }
+        public string ProjectNumber { get; set; }
     }
 }
