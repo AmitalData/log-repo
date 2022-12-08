@@ -134,10 +134,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             //update contacts  set inactive=1, computedkey  = id  where id='1-10622'
             var oldContact =entityRepository.GetSingleContactForUpdate(disableOldContactId, tenant);
             oldContact.InActive = true;
-            oldContact.Email = disableOldContactId;
+            oldContact.Email = (disableOldContactId + oldContact.Email) ?? "";
+            oldContact.Email = oldContact.Email.Substring(0, Math.Min(70, oldContact.Email.Length));
             //oldContact.ComputedKey = disableOldContactId;
             string SaveExternalId = oldContact.ExternalId;
-            oldContact.ExternalId = null;//UPDATE  CONTACTS SET   externalid =NULL  WHERE   ID IN ('1-10628') AND inactive =1
+            oldContact.ExternalId = "-" + oldContact.ExternalId;//UPDATE  CONTACTS SET   externalid =NULL  WHERE   ID IN ('1-10628') AND inactive =1
 
             entityRepository.Update(oldContact);
             entityRepository.SubmitChanges();

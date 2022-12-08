@@ -381,7 +381,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void ChangeContactToCurrentUserRemoveOldGlobalContact(GlobalContactRepository globalContactRepository, GlobalContact globalContact)
         {
-            if (globalContact.Email != entityPm.Email)
+            if (LogitudeSettings.IsCostomsDeploy && globalContact.Email != entityPm.Email)
             {
                 if (!string.IsNullOrWhiteSpace(entityPm.Email) && LogitudeSettings.IsCostomsDeploy)
                 {
@@ -395,7 +395,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     if (oldContact != null)
                     {
                         this._DisableOldContactId = oldContact.Id;
-                        globalContactRepository.Remove(oldContact);
+
+                        oldContact.Email = entityPm.Id + entityPm.Email;
+                        oldContact.Email = oldContact.Email ?? "";
+                        oldContact.Email = oldContact.Email.Substring(0, Math.Min(70, oldContact.Email.Length));
+                        globalContactRepository.Update(oldContact);//globalContactRepository.Remove(oldContact);
                         globalContactRepository.SubmitChanges();
                     }
 
