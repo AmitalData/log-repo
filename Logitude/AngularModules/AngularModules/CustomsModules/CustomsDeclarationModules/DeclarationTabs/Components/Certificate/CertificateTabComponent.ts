@@ -23,6 +23,7 @@ import { DeclarationEventManager } from '../../../../../Customs/Utilities/Declar
 
 import { DeclarationWebService } from '../../../../../Customs/Services/WebServices/DeclarationWebService';
 import { ConstraintApprovalRequestParams } from '../../../../../Customs/DataContract/RequestParams/ConstraintApprovalRequestParams';
+import {DeclarationPMService} from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
 
 // Send Request
 import { INF_MSG_GenericResponseData } from '../../../../../Customs/DataContract/ResponseData/INF_MSG_GenericResponseData';
@@ -37,6 +38,7 @@ import { CertificateConnectedItem } from '../../../../../Customs/DataContract/Ce
 import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
 import { ConfirmationTypePM } from '../../../../../Customs/EntityPMs/ConfirmationTypePM';
 import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
+import {Validator} from '../../../../../Infrastructure/Validators/Validator';
 
 @Component({
 
@@ -62,6 +64,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
     @Output() MenuHeaderchangeevent = new EventEmitter();
     public connectedItems: ObservableCollection;
     public ExcludedItems: ObservableCollection;
+    public declarationPMService: DeclarationPMService = new DeclarationPMService();
 
     SelectedItemsCountText: string;
     SelectedItemsCount: number; IsDisplayMessage: boolean;
@@ -358,6 +361,38 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Certificate/CreateEditTicketComponent');
     }
 
+    SaveBeforeUpdate(){
+        if (this.IsDisplayOnly) return;
+
+        var errors = [];
+
+
+        Validator.TryValidateObject(this.EntityPM, "Customs.Declaration", errors);
+        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+
+        if (errors.length > 0) {
+            //this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+            //this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+        }
+        else {
+
+            if (this.entityArgs.EntityPM.IsDirty) {
+                this.declarationPMService.update(this.entityArgs.EntityPM).subscribe((response: ServiceResponse) => {
+                    var declaration = response.Result;
+
+                    if (!AppTool.IsNullOrEmpty(declaration))
+                        this.UpdateAllCertificateWithoutResponse();
+                    else
+                        console.log("[!] No response for saving declaration, adding inice aborted.", response);
+                });
+            } else {
+                this.UpdateAllCertificateWithoutResponse();
+            }
+
+           
+        }
+    }
     UpdateAllCertificateWithoutResponse() {
 
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Loading"));
