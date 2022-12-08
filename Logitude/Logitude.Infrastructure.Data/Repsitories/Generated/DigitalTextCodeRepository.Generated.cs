@@ -12,67 +12,68 @@ using Simplog.Server.Infrastructure;
 
 namespace Logitude.Infrastructure.Data.Repsitories
 {
-   public partial class ToggleRepository:IRepository<Toggle>
+   public partial class DigitalTextCodeRepository:IRepository<DigitalTextCode>
    {
    
         private IInfrastructureContext currentContext;
-        public ToggleRepository(int tenant)
+        public DigitalTextCodeRepository(int tenant)
         {
             currentContext = InfrastructureContext.GetContext(tenant);
         }
 
-        public ToggleRepository(IInfrastructureContext context)
+        public DigitalTextCodeRepository(IInfrastructureContext context)
         {
             currentContext = context;
         }
 
 		 
 		
-		public  Toggle GetSingle(string code)
+		public  DigitalTextCode GetSingle(string id, int tenant)
         {
-            return (from a in context.Toggles
-                    where a.Code == code 
+            return (from a in context.DigitalTextCodes
+                    where a.Id == id && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
-        public IQueryable<Toggle> GetAll()
+        public IQueryable<DigitalTextCode> GetAll(int tenant)
         {
-            return from a in context.Toggles  
+            return from a in context.DigitalTextCodes  
+                   where a.Tenant == tenant
                    select a;
         }
 				 
-        public Toggle GetSingle(EntityKeyFields entityKeys)
+        public DigitalTextCode GetSingle(EntityKeyFields entityKeys)
         {
-            ToggleKeys keys = entityKeys as ToggleKeys;
-            return (from a in context.Toggles
-                    where a.Code == keys.Code
+            DigitalTextCodeKeys keys = entityKeys as DigitalTextCodeKeys;
+            return (from a in context.DigitalTextCodes
+                    where a.Id == keys.Id
                     select a).FirstOrDefault();
         }
 		 		                 
         partial void onAdd();//Partial Methods Definition in Generated
-        public void Add(Toggle entity)
+        public void Add(DigitalTextCode entity)
         {
             onAdd();
-            context.Toggles.Add(entity);
+            context.DigitalTextCodes.Add(entity);
         }
 
-        public void Remove(Toggle entity)
+        public void Remove(DigitalTextCode entity)
         {
-            context.Toggles.Attach(entity);
-            context.Toggles.Remove(entity);
+            context.DigitalTextCodes.Attach(entity);
+            context.DigitalTextCodes.Remove(entity);
         }
 
         partial void onUpdate();//Partial Methods Definition in Generated
-        public void Update(Toggle entity)
+        public void Update(DigitalTextCode entity)
         {
             onUpdate();
-            context.Toggles.Attach(entity);
+            context.DigitalTextCodes.Attach(entity);
             context.SetAsModified(entity);
         }
 
-        public List<Toggle> All()
+        public List<DigitalTextCode> All()
         {
-            return context.Toggles.ToList();
+            return context.DigitalTextCodes.ToList();
         }
 
         private IInfrastructureContext context

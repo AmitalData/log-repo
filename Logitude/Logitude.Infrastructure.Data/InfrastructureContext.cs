@@ -84,6 +84,10 @@ namespace Logitude.Infrastructure.Data
 	
             modelBuilder.Configurations.Add(new BusinessRoleMap());
 	
+            modelBuilder.Configurations.Add(new DigitalTextCodeMap());
+	
+            modelBuilder.Configurations.Add(new IndexerWaterMarkMap());
+	
             modelBuilder.Configurations.Add(new FeatureToggleMap());
 	
             modelBuilder.Configurations.Add(new LastRunDetailMap());
@@ -345,7 +349,6 @@ namespace Logitude.Infrastructure.Data
 			modelBuilder.Configurations.Add(new AWBDescriptionOfGoodsMap());
 			modelBuilder.Configurations.Add(new LogitudeMessagesTransmissionLogMap());
 			modelBuilder.Configurations.Add(new CustomsShipperMap());
-            modelBuilder.Configurations.Add(new IndexerWaterMarkMap());
 			#endregion
 
             base.OnModelCreating(modelBuilder);
@@ -434,6 +437,18 @@ namespace Logitude.Infrastructure.Data
 	 
 	 }
 	
+	 public IDbSet<DigitalTextCode> DigitalTextCodes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<IndexerWaterMark> IndexerWaterMarks 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<FeatureToggle> FeatureToggles 
 	 {
 	      get; set;
@@ -481,14 +496,8 @@ namespace Logitude.Infrastructure.Data
 	      get; set;
 	 
 	 }
-
-        public IDbSet<IndexerWaterMark> IndexerWaterMarks
-        {
-            get; set;
-
-        }
-
-    }
+	  
+ }
 
 
 }
