@@ -1067,7 +1067,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
                 case PartnerTypeNames.Trucker:
                     return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsPickDelivCarriesShared;
                 default:
-                    return true
+                    return false
             }
         }
         return true;
