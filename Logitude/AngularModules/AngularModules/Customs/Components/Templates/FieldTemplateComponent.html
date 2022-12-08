@@ -655,6 +655,47 @@
                     </div>
                 </div>
             </div>
+            <div *ngIf="FieldName == 'HawbQuantityNoDocuments'" style="position:relative;width:100%; height: 100%;">
+                <div style="position: absolute;top: 0;bottom: 0px; left: 0px; right: 0px;">
+                     <img  *ngIf="Entity[FieldName]>0"   class="CenterCenter" style="width:15px;height:15px;margin-top:6px" title={{Entity[FieldName]}} src="./Images/Icons/RedX.png" />
+                     <img  *ngIf="Entity[FieldName]==-3"  class="CenterCenter" style="width:15px;height:15px;margin-top:6px" src="./Images/Icons/GreenV.png" />
+                     <img  *ngIf="Entity[FieldName]==-2" class="CenterCenter" style="width:15px;height:15px;margin-top:6px" src="./Images/Icons/InProgress.png" /> 
+                </div>
+            </div>
+            <div *ngIf="FieldName == 'HawbQuantityNoClassification'" style="position:relative;width:100%; height: 100%;">
+                <div style="position: absolute;top: 0;bottom: 0px; left: 0px; right: 0px;">
+
+                    <img *ngIf="Entity[FieldName]>0" class="CenterCenter" style="width:15px;height:15;margin-top:6px" title={{Entity[FieldName]}} src="./Images/Icons/RedX.png" />
+                    <img *ngIf="Entity[FieldName]==0" class="CenterCenter" style="width:15px;height:15px;margin-top:6px" src="./Images/Icons/GreenV.png" />
+                </div>
+            </div>
+            <div *ngIf="FieldName == 'HawbQuantityNoTransManifest'" style="position:relative;width:100%; height: 100%;">
+                <div style="position: absolute;top: 0;bottom: 0px; left: 0px; right: 0px;">
+                    <img *ngIf="Entity[FieldName]>0" class="CenterCenter" style="width:15px;height:15px;margin-top:6px"  title={{Entity[FieldName]}} src="./Images/Icons/RedX.png" />
+                    <img *ngIf="Entity[FieldName]==-2"class="CenterCenter" style="width:15px;height:15px;margin-top:6px" src="./Images/Icons/OrangeV.png" />
+                    <img *ngIf="Entity[FieldName]==-3"class="CenterCenter" style="width:15px;height:15px;margin-top:6px" src="./Images/Icons/InProgress.png" />
+                    <img *ngIf="Entity[FieldName]==-4" class="CenterCenter" style="width:15px;height:15px;margin-top:6px" src="./Images/Icons/GreenV.png" />
+
+                </div>
+            </div>
+            <div *ngIf="FieldName == 'HawbQuantityNoTransDeclaration'" style="position:relative;width:100%; height: 100%;">
+                <div style="position: absolute;top: 0;bottom: 0px; left: 0px; right: 0px;">
+                    <img *ngIf="Entity[FieldName]>0" class="CenterCenter" style="width:15px;height:15px;margin-top:6px" title={{Entity[FieldName]}} src="./Images/Icons/RedX.png" />
+                    <img *ngIf="Entity[FieldName]==-2" class="CenterCenter" style="width:15px;height:15px;margin-top:6px" src="./Images/Icons/OrangeV.png" />
+                    <img *ngIf="Entity[FieldName]==-3" class="CenterCenter" style="width:15px;height:15px;margin-top:6px" src="./Images/Icons/InProgress.png" />
+                    <img *ngIf="Entity[FieldName]==-4"  class="CenterCenter" style="width:15px;height:15px;margin-top:6px" src="./Images/Icons/GreenV.png" />
+
+                </div>
+            </div>
+            <div *ngIf="FieldName == 'HawbQuantityNoTransPayment'" style="position:relative;width:100%; height: 100%;">
+                <div style="position: absolute;top: 0;bottom: 0px; left: 0px; right: 0px;">
+                    <img  *ngIf="Entity[FieldName]==-1" class="CenterCenter" style="width:15px;height:15px;margin-top:6px" src="./Images/Icons/InProgress.png" />
+                    <img   *ngIf="Entity[FieldName]==-2" class="CenterCenter" style="width:15px;height:15px;margin-top:6px" src="./Images/Icons/OrangeV.png" />
+                    <img  *ngIf="Entity[FieldName]==-3" class="CenterCenter" style="width:15px;height:15px;margin-top:6px" src="./Images/Icons/GreenV.png" />
+                    <img  *ngIf="Entity[FieldName]==-4" class="CenterCenter" style="width:15px;height:15px;margin-top:6px" src="./Images/Icons/BlueChecked.png" />
+
+                </div>
+            </div>
 
             <!-- DeclarationCargoSplit -->
             <div *ngIf="ObjectTableName == 'Customs.DeclarationCargoSplit'">
