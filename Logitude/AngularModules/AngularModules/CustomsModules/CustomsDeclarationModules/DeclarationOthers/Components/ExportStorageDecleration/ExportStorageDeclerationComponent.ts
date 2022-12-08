@@ -203,7 +203,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'ExporterName',
             DataTypeCode: 'String',
-            Display: 'יצוםן',
+            Display: 'יצואן',
             Styles: { width: '150px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
@@ -213,7 +213,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         this.columns.push({
             FieldName: 'ExportFileNo',
             DataTypeCode: 'String',
-            Display: "מס' תיק יצום",
+            Display: "מס' תיק יצוא",
             Styles: { width: '100px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
