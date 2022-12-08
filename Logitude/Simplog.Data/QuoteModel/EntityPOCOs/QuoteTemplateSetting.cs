@@ -488,15 +488,11 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         [ForeignKey("PageFooterArea3FreeTextDesignId")]
         public virtual QuoteTemplateTextDesign PageFooterArea3FreeTextDesign { get; set; }
 
+        public bool ShowSaleIncludingVATContainers { get; set; }
+        public bool ShowSaleIncludingVATPackages { get; set; }
+        public bool ShowLocalSaleIncludingVATContainers { get; set; }
+        public bool ShowLocalSaleIncludingVATPackages { get; set; }
 
-
-
-
-
-        
     }
     
-
-
-   
 }

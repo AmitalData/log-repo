@@ -246,6 +246,14 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
             case "VATPERCENTAGECONTAINERS":
                 return "QuoteTemplate.S.ShowVATPercentage";
                 break;
+            case "SALELOCALAMOUNTInCLUDINGVATPACKAGES":
+            case "SALELOCALAMOUNTInCLUDINGVATCONTAINERS":
+                return "QuoteTemplate.S.LocalSaleAmountIncludingVAT";
+                break;
+            case "SALEAMOUNTInCLUDINGVATPACKAGES":
+            case "SALEAMOUNTInCLUDINGVATCONTAINERS":
+                return "QuoteTemplate.S.SaleAmountIncludingVAT";
+                break;
         }
 
         if (item.Code == "ShowVATType") return this.ShowVATDetails;

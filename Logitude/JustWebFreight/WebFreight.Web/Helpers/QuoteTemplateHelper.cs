@@ -461,7 +461,10 @@ namespace WebFreight.Web.Helpers
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("VATPERCENTAGECONTAINERS", "VAT Percentage", "VAT Percentage", "Containers"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("VATTYPEPACKAGES", "VAT Type", "VAT Type", "Packages"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("VATTYPECONTAINERS", "VAT Type", "VAT Type", "Containers"));
-
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("SALELOCALAMOUNTInCLUDINGVATPACKAGES", "Local Sale Amount Including VAT", "Local Sale Amount Including VAT", "Packages"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("SALEAMOUNTInCLUDINGVATPACKAGES", "Sale Amount Including VAT", "Sale Amount Including VAT", "Packages"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("SALELOCALAMOUNTInCLUDINGVATCONTAINERS", "Local Sale Amount Including VAT", "Local Sale Amount Including VAT", "Containers"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("SALEAMOUNTInCLUDINGVATCONTAINERS", "Sale Amount Including VAT", "Sale Amount Including VAT", "Containers"));
 
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("QUOTEDATE", "Quote Date", "Quote Date", "QuoteHeader"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("EXPIRATIONDATE", "Expiration Date", "Expiration Date", "QuoteHeader"));

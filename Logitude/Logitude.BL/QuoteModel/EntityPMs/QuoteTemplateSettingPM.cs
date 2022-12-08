@@ -26,6 +26,10 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public bool ShowMeasurementContainers { get; set; }
         public bool ShowFixedPriceContainers { get; set; }
         public bool ShowUnitsContainers { get; set; }
+        public bool ShowSaleIncludingVATContainers { get; set; }
+        public bool ShowSaleIncludingVATPackages { get; set; }
+        public bool ShowLocalSaleIncludingVATContainers { get; set; }
+        public bool ShowLocalSaleIncludingVATPackages { get; set; }
         public bool ShowChargeDescriptionPackages { get; set; }
         public bool ShowChargeDescriptionContainers { get; set; }
         public bool ShowUnitsPackages { get; set; }
