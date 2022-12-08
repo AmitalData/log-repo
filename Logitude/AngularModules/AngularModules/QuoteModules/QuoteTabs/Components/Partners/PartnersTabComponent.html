@@ -114,7 +114,7 @@
                             <div tabindex="0" class="ToggleButton" [class.ToggleButtonDisabled]="!IsEditingEnabled">
                                 <label>{{'Quote.B.Partners.AddPartners' | TextCodeTranslationPipe}}</label>
                                 <img src="./Images/ToggleIcon.png" />
-                                <div class="ToggleButtonMenu" style="width: 150px">
+                                <div class="ToggleButtonMenu" style="width: 160px">
                                     <button id="{{ 'SHIPR' | IdGeneratorPipe}}" [disabled]="IsAddDisabled_SHIPR" (click)="AddPartner('SHIPR')">{{'Quote.B.Partners.AddShipper' | TextCodeTranslationPipe}}</button>
                                     <button id="{{ 'CONSI' | IdGeneratorPipe}}" [disabled]="IsAddDisabled_CONSI" (click)="AddPartner('CONSI')">{{'Quote.B.Partners.AddConsignee' | TextCodeTranslationPipe}}</button>
                                     <button id="{{ 'AGENT' | IdGeneratorPipe}}" [disabled]="IsAddDisabled_AGENT" (click)="AddPartner('AGENT')">{{'Quote.B.Partners.AddAgent' | TextCodeTranslationPipe}}</button>

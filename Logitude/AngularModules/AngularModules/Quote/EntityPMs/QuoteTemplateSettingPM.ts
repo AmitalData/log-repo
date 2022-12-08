@@ -105,6 +105,26 @@ export class QuoteTemplateSettingPM {
     public set ShowUnitsContainers(newValue: boolean) { if (this.showUnitsContainers != newValue) { this.showUnitsContainers = newValue; this.MarkAsDirty("ShowUnitsContainers"); } }
        
 	 
+    private showSaleIncludingVATContainers: boolean;
+    public get ShowSaleIncludingVATContainers() { return this.showSaleIncludingVATContainers; }
+    public set ShowSaleIncludingVATContainers(newValue: boolean) { if (this.showSaleIncludingVATContainers != newValue) { this.showSaleIncludingVATContainers = newValue; this.MarkAsDirty("ShowSaleIncludingVATContainers"); } }
+       
+	 
+    private showSaleIncludingVATPackages: boolean;
+    public get ShowSaleIncludingVATPackages() { return this.showSaleIncludingVATPackages; }
+    public set ShowSaleIncludingVATPackages(newValue: boolean) { if (this.showSaleIncludingVATPackages != newValue) { this.showSaleIncludingVATPackages = newValue; this.MarkAsDirty("ShowSaleIncludingVATPackages"); } }
+       
+	 
+    private showLocalSaleIncludingVATContainers: boolean;
+    public get ShowLocalSaleIncludingVATContainers() { return this.showLocalSaleIncludingVATContainers; }
+    public set ShowLocalSaleIncludingVATContainers(newValue: boolean) { if (this.showLocalSaleIncludingVATContainers != newValue) { this.showLocalSaleIncludingVATContainers = newValue; this.MarkAsDirty("ShowLocalSaleIncludingVATContainers"); } }
+       
+	 
+    private showLocalSaleIncludingVATPackages: boolean;
+    public get ShowLocalSaleIncludingVATPackages() { return this.showLocalSaleIncludingVATPackages; }
+    public set ShowLocalSaleIncludingVATPackages(newValue: boolean) { if (this.showLocalSaleIncludingVATPackages != newValue) { this.showLocalSaleIncludingVATPackages = newValue; this.MarkAsDirty("ShowLocalSaleIncludingVATPackages"); } }
+       
+	 
     private showChargeDescriptionPackages: boolean;
     public get ShowChargeDescriptionPackages() { return this.showChargeDescriptionPackages; }
     public set ShowChargeDescriptionPackages(newValue: boolean) { if (this.showChargeDescriptionPackages != newValue) { this.showChargeDescriptionPackages = newValue; this.MarkAsDirty("ShowChargeDescriptionPackages"); } }
