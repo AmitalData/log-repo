@@ -199,11 +199,11 @@ namespace Logitude.Accounting.BL
                 {
                     throw new ApplicationException("BLException :Approved Journal Can Only Change To Voided Property");
                 }
-                if (journalPM.JournalLines.Any(jl => jl.ChangeSetOp != ChangeSetOperation.None))
-                {
-                    var jl1 = journalPM.JournalLines.First(jl => jl.ChangeSetOp != ChangeSetOperation.None);
-                    throw new ApplicationException($"BLException :Approved Journal Can Only Change To Voided Property (Change JournalLines fix credrit or debit) line={jl1.Line} ");
-                }
+                //if (journalPM.JournalLines.Any(jl => jl.ChangeSetOp != ChangeSetOperation.None))
+                //{
+                //    var jl1 = journalPM.JournalLines.First(jl => jl.ChangeSetOp != ChangeSetOperation.None);
+                //    throw new ApplicationException($"BLException :Approved Journal Can Only Change To Voided Property (Change JournalLines fix credrit or debit) line={jl1.Line} ");
+                //}
 
             }
 
