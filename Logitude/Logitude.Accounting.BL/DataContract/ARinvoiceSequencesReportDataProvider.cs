@@ -109,7 +109,7 @@ namespace Logitude.Accounting.BL.DataContract
             List<string> arInvoices = (from a in invoiceContext.ARInvoices
                                                     where (EntityFunctions.TruncateTime(a.CreateDate) >= startDate.Date && EntityFunctions.TruncateTime(a.CreateDate) <= endDate.Date)
                                                     && a.Tenant == Tenant
-                                                    orderby a.InvoiceNumber ascending
+                                                    orderby a.CreateDate ascending
                                                     select a.InvoiceNumber).ToList();
             return arInvoices;
         }
