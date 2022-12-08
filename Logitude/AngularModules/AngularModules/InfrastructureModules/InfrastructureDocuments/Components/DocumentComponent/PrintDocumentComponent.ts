@@ -337,6 +337,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                 case "NCR":
                 case "782":
                 case "ARINV":
+                case "CARICOM":
                     return true;
 
                 default:
