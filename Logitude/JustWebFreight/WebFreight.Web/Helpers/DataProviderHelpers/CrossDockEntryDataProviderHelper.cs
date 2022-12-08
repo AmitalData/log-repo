@@ -208,6 +208,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                     crossDockEntryDataProvider.EntryTruckerName = truckerCard.EnglishName;
                 }
             }
+            crossDockEntryDataProvider.TruckerReference = warehouseEntryPM.TruckerReference;
         }
 
         private void SetCrossDockCountryName(int tenant)
@@ -322,6 +323,8 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                     crossDockEntryDataProvider.ConsigneeAddress = DataProviders.General.GetAddress(address);
                 }
             }
+            crossDockEntryDataProvider.ConsigneeReference1 = warehouseEntryPM.ConsigneeReference1;
+            crossDockEntryDataProvider.ConsigneeReference2 = warehouseEntryPM.ConsigneeReference2;
         }
 
         private Address GetMainAddressByCardId(int tenant , string cardId)

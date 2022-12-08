@@ -73,7 +73,9 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentField10 { get; set; }
         public string ProjectNumber { get; set; }
         public string MasterProjectNumber { get; set; }
-
+        public string ConsigneeReference1 { get; set; }
+        public string ConsigneeReference2 { get; set; }
+        public string TruckerReference { get; set; }
         public CrossDockEntryDataProvider ShallowCopy()
         {
             return (CrossDockEntryDataProvider)this.MemberwiseClone();
