@@ -36,7 +36,9 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 	         FlowJson, 
 	         Entity, 
 	         Trigger, 
-	         WorkFlowActiveVersionId,
+	         WorkFlowActiveVersionId, 
+	         WorkFlowVersionStatusCode, 
+	         WorkFlowVersionNumber,
 	      }
 
 
@@ -61,7 +63,10 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 	         FlowJson, 
 	         Entity, 
 	         Trigger, 
-	         WorkFlowActiveVersionId,
+	         WorkFlowActiveVersionId, 
+	         WorkFlowVersionStatusCode, 
+	         WorkFlowVersionStatusName, 
+	         WorkFlowVersionNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -138,6 +143,16 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WorkFlowActiveVersionId))
             {
 				entityPOCO.WorkFlowActiveVersionId = entityPM.WorkFlowActiveVersionId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WorkFlowVersionStatusCode))
+            {
+				entityPOCO.WorkFlowVersionStatusCode = entityPM.WorkFlowVersionStatusCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WorkFlowVersionNumber))
+            {
+				entityPOCO.WorkFlowVersionNumber = entityPM.WorkFlowVersionNumber;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -221,6 +236,16 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 					entityPM.WorkFlowActiveVersionId = entityPOCO.WorkFlowActiveVersionId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.WorkFlowVersionStatusCode))
+            {
+					entityPM.WorkFlowVersionStatusCode = entityPOCO.WorkFlowVersionStatusCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.WorkFlowVersionNumber))
+            {
+					entityPM.WorkFlowVersionNumber = entityPOCO.WorkFlowVersionNumber;
+            }
+
 		}
 
 		public void PMToOldPM(WorkFlowPM entityPM, WorkFlowPM oldEntityPM)
@@ -295,6 +320,16 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WorkFlowActiveVersionId))
             {
                 oldEntityPM.WorkFlowActiveVersionId = entityPM.WorkFlowActiveVersionId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WorkFlowVersionStatusCode))
+            {
+                oldEntityPM.WorkFlowVersionStatusCode = entityPM.WorkFlowVersionStatusCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WorkFlowVersionNumber))
+            {
+                oldEntityPM.WorkFlowVersionNumber = entityPM.WorkFlowVersionNumber;
             }
 			
 		}

@@ -48,7 +48,7 @@ export class WorkflowVersionComponent extends BaseComponent {
     private Listen() {
         if (this.entityArgs.EditComponent) {
             this.TabSelectedEvent = this.entityArgs.EditComponent.TabSelected.subscribe((tabCode: string) => {
-                if(tabCode == "WFVR"){
+                if (tabCode == "WFVR") {
                     this.LoadData()
                 }
             });
@@ -136,7 +136,27 @@ export class WorkflowVersionComponent extends BaseComponent {
     onRowSelected($event) {
         this.ClickedVersion = $event.rowData
         this.HasChanges = true;
-        this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, Row: $event.rowData }
+        this.openVersionFlowBuilder()
+    }
+
+    openVersionFlowBuilder() {
+        let clickedVersion: WorkFlowVersionPM = this.ClickedVersion;
+        this.EntityPM.FlowJson = clickedVersion.FlowJson;
+        this.EntityPM.WorkFlowActiveVersionId = clickedVersion.Id;
+        this.EntityPM.WorkFlowVersionStatusCode = clickedVersion.StatusCode;
+        this.EntityPM.WorkFlowVersionNumber = clickedVersion.VersionNumber;
+        this.EntityPM.IsDirty = false;
+        this.entityArgs.EditComponentArgument = {...this.entityArgs.EditComponentArgument,VersionNumber:clickedVersion.VersionNumber}
+        
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({ EntityId: this.EntityPM.Id, EntityPM: this.EntityPM, ObjectTableName: 'WorkFlow', BackButtonLabel: "WorkFlows" });
+
+                cmpRef.instance.BackCompleted.subscribe(() => {
+                    this.LoadData();
+                });
+            });
     }
 
     activateVersion() {

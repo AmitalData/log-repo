@@ -38,12 +38,12 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
             }
         }
 
-      private static void SetDefaultValues(WorkFlowVersionPM entityPM, WorkFlowVersionRepository workFlowVersionRepository)
+        private static void SetDefaultValues(WorkFlowVersionPM entityPM, WorkFlowVersionRepository workFlowVersionRepository)
         {
             var workFlowVersions = workFlowVersionRepository.GetAllByWorkflowId(entityPM.Tenant, entityPM.WorkflowId).ToList();
             var versionNumber = workFlowVersions?.Count() == 0 ? 1 : workFlowVersions.LastOrDefault().VersionNumber + 1;
             entityPM.VersionNumber = versionNumber;
-            entityPM.StatusCode = "ACVE";
+            entityPM.StatusCode = versionNumber == 1 ? "DRFT" : "ACVE";
         }
 
         private static void DeactiveVersionStatus(WorkFlowVersionPM entityPM, WorkFlowVersionRepository workFlowVersionRepository)
@@ -66,6 +66,9 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
             WorkFlowRepository workFlowRepository = new WorkFlowRepository(entityPM.Tenant);
             var workflow = workFlowRepository.GetSingle(entityPM.WorkflowId, entityPM.Tenant);
             workflow.WorkFlowActiveVersionId = entityPM.Id;
+            workflow.WorkFlowVersionStatusCode = entityPM.StatusCode;
+            workflow.FlowJson = entityPM.FlowJson;
+            workflow.WorkFlowVersionNumber = entityPM.VersionNumber;
             workFlowRepository.Update(workflow);
             workFlowRepository.SubmitChanges();
         }

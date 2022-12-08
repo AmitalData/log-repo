@@ -34,6 +34,13 @@ namespace Logitude.Workflow.BL.CLoseTable
                 Name = "Inactive", 
                 SearchFields = "INVE,Inactive", 
 			});
+			 
+            all.Add(new WorkFlowVersionStatusDetails()
+            {    
+                Name = "Draft", 
+                SearchFields = "Draft,DRFT", 
+                Code = "DRFT", 
+			});
 			
             return all;
        }

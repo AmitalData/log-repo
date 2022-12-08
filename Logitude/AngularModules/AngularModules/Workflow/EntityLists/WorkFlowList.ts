@@ -27,6 +27,9 @@ export class WorkFlowList {
 	Entity: string;
 	Trigger: string;
 	WorkFlowActiveVersionId: string;
+	WorkFlowVersionStatusCode: string;
+	WorkFlowVersionStatusName: string;
+	WorkFlowVersionNumber: number;
 	
 }
  

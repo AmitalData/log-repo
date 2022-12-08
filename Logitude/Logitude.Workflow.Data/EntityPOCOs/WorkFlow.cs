@@ -61,6 +61,13 @@ namespace Logitude.Workflow.Data.EntityPOCOs
 	    public string Trigger { get; set; }
         [Column("WorkFlowActiveVersionId")]
 	    public string WorkFlowActiveVersionId { get; set; }
+        [ForeignKey("VersionStatus")]
+        [Column("WorkFlowVersionStatusCode")]
+	    public string WorkFlowVersionStatusCode { get; set; }
+	      
+        public virtual WorkFlowVersionStatus VersionStatus { get; set; }
+        [Column("WorkFlowVersionNumber")]
+	    public int? WorkFlowVersionNumber { get; set; }
     }
 }
 	 
