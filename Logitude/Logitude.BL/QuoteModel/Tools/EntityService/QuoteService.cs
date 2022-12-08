@@ -204,7 +204,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 Tenant = entityPM.Tenant,
                 EntityId = entityPM.Id,
                 ObjectTableName = "Quote",
-                ChildObjectTableName = "QuotePackages",
+                ChildObjectTableName = "QuotePackage",
                 ChildEntities = entityPM.QuotePackages.Cast<object>().ToList()
             });
 

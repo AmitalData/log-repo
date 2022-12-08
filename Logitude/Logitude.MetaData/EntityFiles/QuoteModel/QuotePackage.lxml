@@ -35,10 +35,10 @@
   AllowCustomFields="true"
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;BR&quot;"
-  MaxNumberOfCustomFields="50"
+  MaxNumberOfCustomFields="49"
   ParentTableName="Quote"
   DefaultText="&quot;QuotePackage&quot;"
-  Code="&quot;0bbd&quot;"
+  Code="&quot;709d&quot;"
   Name="&quot;QuotePackage&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Quote&quot;"
@@ -1132,6 +1132,16 @@
     ObjectTableName="&quot;QuotePackage&quot;"
     IsReadOnly="true"
     IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
+  <Screen
+    Name="&quot;Additional Fields&quot;"
+    ObjectTableName="&quot;QuotePackage&quot;"
+    IsReadOnly="false"
+    IsHeaderScreen="false"
+    Code="&quot;QuotePackage.AdditionalFields&quot;"
     NumberOfColumns="2"
     NumberOfRows="1">
     <ScreenFields />

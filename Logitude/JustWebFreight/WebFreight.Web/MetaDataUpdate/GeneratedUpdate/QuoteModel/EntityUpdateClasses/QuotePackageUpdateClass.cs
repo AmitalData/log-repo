@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 {
    public class QuotePackageUpdateClass
    {  		
-		public const string HashString = "65ae4ef08ae1c24ec569ecc300c2aab1";
+		public const string HashString = "7138ed39706e67f2a76c59c9a2669762";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -124,9 +124,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			      				    AllowCustomFields =  true,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
-			      				    MaxNumberOfCustomFields =  50,
+			      				    MaxNumberOfCustomFields =  49,
 			      				    DefaultText =  "QuotePackage",
-			      				    Code =  "0bbd",
+			      				    Code =  "709d",
 			      				    Name =  "QuotePackage",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Quote",
@@ -1075,6 +1075,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 		    QuotePackageObjectTable.HeaderScreenCode = QuotePackageQuotePackageHeaderScreenScreen0.Code;
 
 	   		  
+	      
+
+	         Screen QuotePackageAdditionalFieldsScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "QuotePackage.AdditionalFields", Name = "Additional Fields", ObjectTableId = QuotePackageObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = false }, screensRepository, tenantScreens);
+        
 
 	    }
 
