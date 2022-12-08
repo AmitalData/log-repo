@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 {
    public class QuoteTemplateUpdateClass
    {  		
-		public const string HashString = "82b19cf1dcc7788b823d2dbf6107d55c";
+		public const string HashString = "a07d6cc2118b241b24ca23d0f2dd46ea";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2118,9 +2118,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 
  		   TextCode QuoteTemplateTextCode_QuoteTemplateSShowRegionalTax = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowRegionalTax", DefaultText = "Show Regional Tax",LocalDefaultText = @"Show Regional Tax", ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode QuoteTemplateTextCode_QuoteTemplateSLocalSaleAmountIncludingVAT = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.LocalSaleAmountIncludingVAT", DefaultText = "Local Sale Amount Including VAT",LocalDefaultText = @"Local Sale Amount Including VAT", ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode QuoteTemplateTextCode_QuoteTemplateSLocalSaleAmountIncludingVAT = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.LocalSaleAmountIncludingVAT", DefaultText = "Show Local Sale Amount Including VAT",LocalDefaultText = @"Show Local Sale Amount Including VAT", ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode QuoteTemplateTextCode_QuoteTemplateSSaleAmountIncludingVAT = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.SaleAmountIncludingVAT", DefaultText = "Sale Amount Including VAT",LocalDefaultText = @"Sale Amount Including VAT", ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode QuoteTemplateTextCode_QuoteTemplateSSaleAmountIncludingVAT = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.SaleAmountIncludingVAT", DefaultText = "Show Sale Amount Including VAT",LocalDefaultText = @"Show Sale Amount Including VAT", ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
