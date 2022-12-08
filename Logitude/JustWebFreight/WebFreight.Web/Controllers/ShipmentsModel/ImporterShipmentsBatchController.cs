@@ -409,6 +409,14 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             entityPM.ChargeableWeightUnitCode = "KG";
             entityPM.VolumeUnitCode = "CBF";
 
+            if(entityAM.HasException && entityAM.StatusCode == "ARR")
+            {
+                entityPM.HasException = false;
+                entityPM.ExceptionDate = null;
+                entityPM.ExceptionDescription = null;
+                entityPM.ExceptionResolvedDescription = "Shipment Already arrived";
+            }
+
             if (!string.IsNullOrEmpty(entityAM.ForwardingPartnerTenant))
             {
                 int ForwardingPartnerTenant = int.Parse(entityAM.ForwardingPartnerTenant);
