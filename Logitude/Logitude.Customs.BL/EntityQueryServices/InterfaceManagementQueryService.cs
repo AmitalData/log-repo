@@ -106,6 +106,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                                      };
                     if (definition != null)
                     {
+                        interfaceManagement.Active = definition.Active;
                         interfaceManagement.TenantPriority = definition.TenantPriority;
                         interfaceManagement.TenantSendOptionsCode = definition.TenantSendOptionsCode;
                         interfaceManagement.TenantSendOptionName = definition.InterfaceSendOption != null ? definition.InterfaceSendOption.LocalName : null;
