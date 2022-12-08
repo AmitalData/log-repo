@@ -3721,9 +3721,7 @@ namespace Logitude.BL.Helpers
                     {
                         row += 1;
 
-                        string value = GetNumberValueFormate(chargePM.SaleTotalAmountIncludingVAT);
-
-                        string localTotalAmount = value + " " + LocalCurrencyCode;
+                        string localTotalAmount = GetNumberValueFormate(chargePM.SaleTotalAmountIncludingVAT);
 
                         if (included) localTotalAmount = translateInclueLable;
 
