@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;ae8f&quot;"
+  Code="&quot;3cf0&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -7713,19 +7713,10 @@
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
     <Feature
-      Code="&quot;AddCustomChildEntity&quot;"
-      FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.AddCustomChildEntity&quot;"
-      FeatureDefaultText="&quot;Add Custom Child Entity&quot;"
-      IsPackagable="true"
-      IsOld="false"
-      IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
-    <Feature
       Code="&quot;SupportUnitMeasurements&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
       FeatureTextCodeCode="&quot;General.Features.SupportUnitMeasurements&quot;"
-      FeatureDefaultText="&quot;Support Select Unit of Measurements&quot;"      
+      FeatureDefaultText="&quot;Support Select Unit of Measurements&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
