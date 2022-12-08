@@ -310,9 +310,9 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
     async SendButtonClicked() {
 
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.Saving"));
-        this.InternationalSiteService.getAll().subscribe(Response=>{
-            this.listSite=Response.Result;
-        }) ;
+        //this.InternationalSiteService.getAll().subscribe(Response=>{
+        //    this.listSite=Response.Result;
+        //}) ;
 
         let ArrayExportStorageId = this.exportStorageExtendedListService.ConnectedExportStorage.split(',');
         let ConsignmentNumber = this.declarationPM.Consignments.length > 0 ? this.declarationPM.Consignments[this.declarationPM.Consignments.length - 1].ConsignmentNumber : 0;
@@ -355,8 +355,8 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
                                     consignment.CargoDescription = this.exportStorage.Result.MarksNumbers;
                                     consignment.StorageSiteCode = this.checkStorageSiteCode(this.exportStorage.Result.StorageSiteCode) ? this.exportStorage.Result.StorageSiteCode : null;
                                     consignment.IsDangerousGoods = this.exportStorage.Result.IsDangerousGoods == null ? null : this.exportStorage.Result.IsDangerousGoods;
-                                    consignment.ExportUnloadingPortCode =this.listSite.GetIndex(this.exportStorage.Result.ExportUnloadingPortCode) !=-1  ? this.exportStorage.Result.ExportUnloadingPortCode : null //this.exportStorage.Result.ExportUnloadingPortCode;
-                                    consignment.ExportLoadingPortCode = this.listSite.GetIndex(this.exportStorage.Result.ExportLoadingPortcode) !=-1? this.exportStorage.Result.ExportLoadingPortcode : null//this.exportStorage.Result.ExportLoadingPortCode;
+                                    consignment.ExportUnloadingPortCode =  this.exportStorage.Result.ExportUnloadingPortCode  //this.exportStorage.Result.ExportUnloadingPortCode;
+                                    consignment.ExportLoadingPortCode =  this.exportStorage.Result.ExportLoadingPortcode  //this.exportStorage.Result.ExportLoadingPortCode;
                                     consignment.ConsignmentType = "E";
                                     consignment.DeclarationId = this.declarationPM.Id;
                                     ConsignmentNumber++;
