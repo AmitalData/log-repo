@@ -144,8 +144,10 @@
                     </LogLabel>
                 </div>
                 <div class="set-value-operator-container">
-                    <ComboBox [ItemsSource]="SetValuesOperatorsItems" [Binding]="'Name'"
-                        [SelectedItem]="setValue.operator | ListItemPipe" [IsDisabled]="setValue.isDisabled"
+                    <ComboBox
+                        [ItemsSource]="(setValue.type | IsCollectionTypePipe) ? SetValuesCollectionOperatorsItems : SetValuesOperatorsItems"
+                        [Binding]="'Name'" [SelectedItem]="setValue.operator | ListItemPipe"
+                        [IsDisabled]="setValue.isDisabled"
                         (SelectedItemChanged)="updateSetValueOperator($event.Code, setValueIndex)" [ListType]="''">
                     </ComboBox>
                 </div>
@@ -159,7 +161,14 @@
                 </div>
                 <div *ngIf="(setValue.operator | IsFieldOperatorPipe)" class="set-value-value-container">
 
-                    <TreeSelect [Items]="FlowVariablesTreeItems" [Width]="'220px'" [Value]="setValue.value"
+                    <TreeSelect *ngIf="setValue.fieldChangedToggle" [Items]="FlowVariablesTreeItems" [Width]="'220px'"
+                        [Value]="setValue.value"
+                        [ShowItem]="setValue | ShowFlowVariablesTreeItemPipe : FlowVariablesTreeList"
+                        [IsDisabled]="setValue.isDisabled" (ValueChanged)="updateSetValue($event, setValueIndex)">
+                    </TreeSelect>
+
+                    <TreeSelect *ngIf="!setValue.fieldChangedToggle" [Items]="FlowVariablesTreeItems" [Width]="'220px'"
+                        [Value]="setValue.value"
                         [ShowItem]="setValue | ShowFlowVariablesTreeItemPipe : FlowVariablesTreeList"
                         [IsDisabled]="setValue.isDisabled" (ValueChanged)="updateSetValue($event, setValueIndex)">
                     </TreeSelect>
