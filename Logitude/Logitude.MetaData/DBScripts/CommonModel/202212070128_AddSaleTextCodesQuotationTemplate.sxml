@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Common">
-	<Sql Version="2">
+	<Sql Version="3">
 		<![CDATA[
 		declare @QuoteTemplateId as varchar(15)
 		declare @QuoteTemplateTextCodeId as varchar(15)
@@ -15,25 +15,25 @@
 		set @QuoteTemplateTextCodeId = (select Id from QuoteTemplateTextCodes where TextCode = 'SALELOCALAMOUNTInCLUDINGVATPACKAGES' AND QuoteTemplateId = @QuoteTemplateId AND Tenant = @Tenant )
 		if(@QuoteTemplateTextCodeId is null)
 		begin EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'QuoteTemplateTextCode'
-		INSERT INTO QuoteTemplateTextCodes VALUES (@NewEntityId, @Tenant , 'SALELOCALAMOUNTInCLUDINGVATPACKAGES', 'Local Sale Amount Including VAT' , 'Local Sale Amount Including VAT' , @QuoteTemplateId ,'Packages' ,'Local Sale Amount Including VAT','Local Sale Amount Including VAT' );
+		INSERT INTO QuoteTemplateTextCodes VALUES (@NewEntityId, @Tenant , 'SALELOCALAMOUNTInCLUDINGVATPACKAGES', 'Show Local Sale Amount Including VAT' , 'Show Local Sale Amount Including VAT' , @QuoteTemplateId ,'Packages' ,'Show Local Sale Amount Including VAT','Show Local Sale Amount Including VAT' );
 		end 
 
 		set @QuoteTemplateTextCodeId = (select Id from QuoteTemplateTextCodes where TextCode = 'SALEAMOUNTInCLUDINGVATPACKAGES' AND QuoteTemplateId = @QuoteTemplateId AND Tenant = @Tenant )
 		if(@QuoteTemplateTextCodeId is null)
 		begin EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'QuoteTemplateTextCode'
-		INSERT INTO QuoteTemplateTextCodes VALUES (@NewEntityId, @Tenant , 'SALEAMOUNTInCLUDINGVATPACKAGES', 'Sale Amount Including VAT' , 'Sale Amount Including VAT' , @QuoteTemplateId ,'Packages' ,'Sale Amount Including VAT','Sale Amount Including VAT' );
+		INSERT INTO QuoteTemplateTextCodes VALUES (@NewEntityId, @Tenant , 'SALEAMOUNTInCLUDINGVATPACKAGES', 'Show Sale Amount Including VAT' , 'Show Sale Amount Including VAT' , @QuoteTemplateId ,'Packages' ,'Show Sale Amount Including VAT','Show Sale Amount Including VAT' );
 		end 
 
 		set @QuoteTemplateTextCodeId = (select Id from QuoteTemplateTextCodes where TextCode = 'SALELOCALAMOUNTInCLUDINGVATCONTAINERS' AND QuoteTemplateId = @QuoteTemplateId AND Tenant = @Tenant )
 		if(@QuoteTemplateTextCodeId is null)
 		begin EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'QuoteTemplateTextCode'
-		INSERT INTO QuoteTemplateTextCodes VALUES (@NewEntityId, @Tenant , 'SALELOCALAMOUNTInCLUDINGVATCONTAINERS', 'Local Sale Amount Including VAT' , 'Local Sale Amount Including VAT' , @QuoteTemplateId ,'Containers' ,'Local Sale Amount Including VAT','Local Sale Amount Including VAT' );
+		INSERT INTO QuoteTemplateTextCodes VALUES (@NewEntityId, @Tenant , 'SALELOCALAMOUNTInCLUDINGVATCONTAINERS', 'Show Local Sale Amount Including VAT' , 'Show Local Sale Amount Including VAT' , @QuoteTemplateId ,'Containers' ,'Show Local Sale Amount Including VAT','Show Local Sale Amount Including VAT' );
 		end 
 
 		set @QuoteTemplateTextCodeId = (select Id from QuoteTemplateTextCodes where TextCode = 'SALEAMOUNTInCLUDINGVATCONTAINERS' AND QuoteTemplateId = @QuoteTemplateId AND Tenant = @Tenant )
 		if(@QuoteTemplateTextCodeId is null)
 		begin EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'QuoteTemplateTextCode'
-		INSERT INTO QuoteTemplateTextCodes VALUES (@NewEntityId, @Tenant , 'SALEAMOUNTInCLUDINGVATCONTAINERS', 'Sale Amount Including VAT' , 'Sale Amount Including VAT' , @QuoteTemplateId ,'Containers' ,'Sale Amount Including VAT','Sale Amount Including VAT' );
+		INSERT INTO QuoteTemplateTextCodes VALUES (@NewEntityId, @Tenant , 'SALEAMOUNTInCLUDINGVATCONTAINERS', 'Show Sale Amount Including VAT' , 'Show Sale Amount Including VAT' , @QuoteTemplateId ,'Containers' ,'Show Sale Amount Including VAT','Show Sale Amount Including VAT' );
 		end 
 
 		FETCH NEXT FROM QuoteTemplateCursor INTO @QuoteTemplateId , @Tenant 
