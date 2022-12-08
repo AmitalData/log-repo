@@ -530,6 +530,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         AttachedExternalDocumentsIds = a.AttachedExternalDocumentsIds,
                         IsSystem = a.IsSystem,
                         EntityId = a.EntityId,
+                        DocumentTypeCode = a.DocumentType.Code,
 
                     }).FirstOrDefault();
 

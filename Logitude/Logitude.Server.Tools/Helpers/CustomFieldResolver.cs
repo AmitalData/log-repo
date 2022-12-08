@@ -574,10 +574,66 @@ namespace Logitude.BL.Helpers
             return resultValue;
         }
 
+        public object SetFieldDataType(string dataType, string value)
+        {
 
+            if (String.IsNullOrEmpty(value.ToString()))
+            {
+                return null;
+            }
+            switch (dataType)
+            {
+                case "Text":
+                case "nText":
+                case "LookUp":
+                case "PickList":
+                    {
+                        return value.ToString();
+                    }
 
+                case "DateTime":
+                case "Date":
+                    {
+                        return  Convert.ToDateTime(value);
+                    }
 
+                case "Decimal":
+                case "UnsDecimal":
+                    {
+                        decimal decimalValue = 0;
+                        decimal.TryParse(value.ToString(), out decimalValue);
+                        
+                        return decimalValue;
+                    }
+             
+                case "Integer":
+                case "UnsInteger":
+                    {
+                        int intValue = 0;
+                        int.TryParse(value.ToString(), out intValue);
+                        return intValue;
+                    }
+                
+                case "Double":
+                case "SigDouble":
+                    {
+                        double doubleValue = 0;
+                        double.TryParse(value.ToString(), out doubleValue);
+                        return doubleValue;
+                    }
+                case "boolean":
+                    {
+                        return bool.Parse(value);
+                    }
+                default:
+                    {
+                        return (value != null ? value.ToString() : null);
+                    }
+            }
 
+            return null;
+
+        }
 
 
     }
