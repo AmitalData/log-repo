@@ -49,6 +49,9 @@
         width: 200px;
         padding-right: 5px;
     }
+    .margin-5{
+        margin: 5px;
+    }
 </style>
 
 <table class="table">
@@ -91,7 +94,7 @@
     </tr>
     <tr>
         <td style="vertical-align:top">
-            <div class="MediaFill">
+            <div class="MediaFill CurvedArea margin-5">
                 <div *ngIf="DataSource" style="vertical-align:top;" class="GeneratedGridContainer">
                     <logitude-grid-v2 GridWidth="100%" GridHeight="100%" [ObjectTable]="ObjectTableName"
                         [dataSource]="DataSource" [columns]="columns" [autoLoad]="true" [IsCustomTemplate]="true"
@@ -105,3 +108,4 @@
             </div>
         </td>
     </tr>
+    </table>

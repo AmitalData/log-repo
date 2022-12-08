@@ -108,6 +108,19 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="WorkFlowVersionStatusCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="WorkFlowVersionNumber"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
@@ -126,6 +139,11 @@
   <Relation
     ForeignKeyColumn="StatusCode"
     ReferencedTable="WorkFlowStatuses"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="WorkFlowVersionStatusCode"
+    ReferencedTable="WorkFlowVersionStatuses"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
 </Table>

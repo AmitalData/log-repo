@@ -16,25 +16,13 @@
         width: 10px;
     }
 
-    .edit-workflow-button-cell {
-        float: left;
-    }
-
     .save-workflow-button-cell {
         float: right;
-        width: 160px;
     }
-    .save-buttons-container{
+
+    .save-buttons-container {
         display: flex;
-    }
-
-    .save-as-container {
-        width: 80px;
-        margin-right: 10px;
-    }
-
-    .save-container {
-        width: 60px;
+        margin-bottom: 5px;
     }
 
     .save-button-icon {
@@ -42,14 +30,13 @@
         width: 13px;
     }
 
-    .save-button-label {
-        line-height: 19px;
-        vertical-align: middle;
-        margin-left: 3px;
-    }
-
-    .back-button-cell {
-        vertical-align: top;
+    .button-container {
+        margin: 0px 2px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        width: 110px;
+        margin-right: 2px;
     }
 </style>
 
@@ -57,37 +44,10 @@
     <div class="MarginAbsolute10">
         <table>
 
-            <!-- <tr class="table-row">
+            <tr class="table-row">
                 <td>
                     <table>
                         <tr>
-                            <td class="table-row-cell">
-                                <div></div>
-                            </td>
-
-                            <td class="table-row-cell back-button-cell">
-                                <BackButton [Text]="BackButtonLable" (click)="backButtonClicked()"></BackButton>
-                            </td>
-
-                            <td class="table-row-cell">
-                                <div></div>
-                            </td>
-
-                            <td class="table-row-cell">
-                                <div class="TabTitleRow TextTrimming">
-                                    {{WorkflowName}}
-                                </div>
-                            </td>
-
-                            <td class="table-row-cell">
-                                <div></div>
-                            </td>
-
-                            <td class="table-row-cell edit-workflow-button-cell">
-                                <IconButton [Name]="'Edit'" [Title]="'Edit Workflow'" (click)="editWorkflowClicked()">
-                                </IconButton>
-                            </td>
-
                             <td>
                                 <div></div>
                             </td>
@@ -96,33 +56,27 @@
                                 <table>
                                     <tr>
                                         <td class="save-buttons-container">
-                                            <div class="save-as-container">
+                                            <div class="button-container">
+                                                <button class="Button" (click)="saveWorkflow()"
+                                                    data-cy="save-workflow-changes-button"
+                                                    [disabled]="IsSaveDisabled">
+                                                    Save
+                                                </button>
+                                            </div>
+                                            <div class="button-container">
                                                 <button class="Button" (click)="saveAsWorkflow()"
-                                                    data-cy="save-as-workflow-button">
-                                                    <img src="./Images/Buttons/Save.png"
-                                                        class="save-button-icon CenterCenter" />
-                                                    <span class="save-button-label">Save as</span>
+                                                    data-cy="save-as-workflow-button"
+                                                    [disabled]="IsSaveAsDisabled">
+                                                    Save as
                                                 </button>
                                             </div>
-
-                                            <div class="save-container">
-                                                <button *ngIf="!HasChanges" class="Button" (click)="saveWorkflow()"
-                                                    data-cy="save-workflow-changes-button">
-                                                    <img src="./Images/Buttons/Save.png"
-                                                        class="save-button-icon CenterCenter" />
-                                                    <span class="save-button-label">Save</span>
+                                            <div class="button-container">
+                                                <button class="Button" (click)="ActivateVersion()"
+                                                    data-cy="save-as-workflow-button"
+                                                    [disabled]="IsActivateDisabled">
+                                                    {{ActivateButtonTitle}}
                                                 </button>
-
-                                                <button *ngIf="HasChanges" class="EntityChangesButton"
-                                                    (click)="saveWorkflow()" data-cy="save-workflow-changes-button">
-                                                    <img src="./Images/Buttons/Save.Red.png"
-                                                        class="save-button-icon CenterCenter" />
-                                                    <span class="save-button-label">Save</span>
-                                                </button>
-
                                             </div>
-
-
                                         </td>
                                     </tr>
                                 </table>
@@ -134,7 +88,7 @@
 
             <tr class="table-row">
                 <td></td>
-            </tr> -->
+            </tr>
 
             <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" class="table-row">
                 <td>

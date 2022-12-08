@@ -84,7 +84,7 @@ export class CreateWorkflowVersionComponent extends BaseComponent {
             if (serviceResponse) {
                 this.stopBusyIndicator();
                 if (!serviceResponse.HasError) {
-                    this.CurrentSession.CloseCurrentWindowEmit("ok");
+                    this.CurrentSession.CloseCurrentWindowEmit(serviceResponse.Result);
                 }
                 else {
                     this.ValidationErrorsList = serviceResponse.ErrorsArray;

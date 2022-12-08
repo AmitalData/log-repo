@@ -119,6 +119,21 @@ export class WorkFlowPM {
     public set WorkFlowActiveVersionId(newValue: string) { if (this.workFlowActiveVersionId != newValue) { this.workFlowActiveVersionId = newValue; this.MarkAsDirty("WorkFlowActiveVersionId"); } }
        
 	 
+    private workFlowVersionStatusCode: string;
+    public get WorkFlowVersionStatusCode() { return this.workFlowVersionStatusCode; }
+    public set WorkFlowVersionStatusCode(newValue: string) { if (this.workFlowVersionStatusCode != newValue) { this.workFlowVersionStatusCode = newValue; this.MarkAsDirty("WorkFlowVersionStatusCode"); } }
+       
+	 
+    private workFlowVersionStatusName: string;
+    public get WorkFlowVersionStatusName() { return this.workFlowVersionStatusName; }
+    public set WorkFlowVersionStatusName(newValue: string) { if (this.workFlowVersionStatusName != newValue) { this.workFlowVersionStatusName = newValue; this.MarkAsDirty("WorkFlowVersionStatusName"); } }
+       
+	 
+    private workFlowVersionNumber: number;
+    public get WorkFlowVersionNumber() { return this.workFlowVersionNumber; }
+    public set WorkFlowVersionNumber(newValue: number) { if (this.workFlowVersionNumber != newValue) { this.workFlowVersionNumber = newValue; this.MarkAsDirty("WorkFlowVersionNumber"); } }
+       
+	 
 
     public OldEntityPM: WorkFlowPM;
 		

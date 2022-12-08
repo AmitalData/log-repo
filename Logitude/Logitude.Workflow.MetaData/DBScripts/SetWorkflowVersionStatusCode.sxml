@@ -1,0 +1,15 @@
+﻿<Script DBType="Main" Module="Workflow">
+  <Sql Version="1">
+    <![CDATA[
+    
+   update workflows 
+   set WorkFlowVersionStatusCode = (select StatusCode from WorkFlowVersions where WorkFlowVersions.id = WorkFlows.WorkFlowActiveVersionId)
+   where WorkFlowActiveVersionId is not null
+   
+   update workflows 
+   set WorkFlowVersionNumber = (select VersionNumber from WorkFlowVersions where WorkFlowVersions.id = WorkFlows.WorkFlowActiveVersionId)
+   where WorkFlowActiveVersionId is not null
+   
+    ]]>
+  </Sql>
+</Script>

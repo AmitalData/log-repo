@@ -70,7 +70,7 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
                 WorkflowId = entityPM.Id,
                 FlowJson = entityPM.FlowJson,
                 VersionNumber = 1,
-                StatusCode = "ACVE",
+                StatusCode = "DRFT",
                 Description = "First Create WorkFlow Version",
                 SearchFields = "First Create WorkFlow Version"
             };
@@ -83,6 +83,8 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
             if(versionPM.Id != null)
             {
                 entityPM.WorkFlowActiveVersionId = versionPM.Id;
+                entityPM.WorkFlowVersionStatusCode = versionPM.StatusCode;
+                entityPM.WorkFlowVersionNumber = versionPM.VersionNumber;
             }
         }
 
