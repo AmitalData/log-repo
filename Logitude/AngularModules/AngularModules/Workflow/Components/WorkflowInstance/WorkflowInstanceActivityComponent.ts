@@ -1,11 +1,16 @@
 import { Component } from '@angular/core';
+import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
+import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
 import { WorkFlowInstanceActivityList } from 'Workflow/EntityLists/WorkFlowInstanceActivityList';
 import { ApiQueryFiltersBuilder } from 'Workflow/Models/ApiQueryFiltersBuilder';
+import { DataTypesList } from 'Workflow/Models/DataTypesList';
+import { ListItem } from 'Workflow/Models/ListItem';
 import { WorkFlowInstanceActivityListService } from 'Workflow/Services/StandardLists/WorkFlowInstanceActivityListService';
+import { WorkFlowInstanceVariableListService } from 'Workflow/Services/StandardLists/WorkFlowInstanceVariableListService';
 
 @Component({
     templateUrl: './WorkflowInstanceActivityComponent.html',
@@ -13,15 +18,22 @@ import { WorkFlowInstanceActivityListService } from 'Workflow/Services/StandardL
 
 export class WorkflowInstanceActivityComponent extends BaseComponent {
     public EntityId: string;
-    public IsLoading: boolean = false;
+    public IsActivityLoading: boolean = false;
+    public IsVariableLoading: boolean = false;
+    public IsVariablesHasPermission: boolean = false;
     public ObjectTableName: string = "WorkFlowInstanceActivity";
-    public ItemsSource: ObservableCollection;
+    public ActivityItemsSource: ObservableCollection;
+    public VariableItemsSource: ObservableCollection;
     public WorkFlowInstanceActivityListService = new WorkFlowInstanceActivityListService()
+    public WorkFlowInstanceVariableListService = new WorkFlowInstanceVariableListService()
+    public DataTypesItems: ListItem[] = new DataTypesList().Items;
 
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
-        this.ItemsSource = new ObservableCollection([]);
+        this.ActivityItemsSource = new ObservableCollection([]);
+        this.VariableItemsSource = new ObservableCollection([]);
+        this.IsVariablesHasPermission = FeatureLocator.HasFeaturePermession("WorkFlowInstance", "WorkFlowInstance.Variables")
     }
 
     SetWindowArgs(args: any) {
@@ -30,24 +42,47 @@ export class WorkflowInstanceActivityComponent extends BaseComponent {
     }
 
     ngOnInit() {
-        this.IsLoading = true
-        this.LoadData()
+        this.IsActivityLoading = true
+        this.LoadActivityData()
+        this.LoadVariables()
     }
 
     RefreshButtonClicked() {
-        this.IsLoading = true
-        this.LoadData()
+        this.IsActivityLoading = true
+        this.LoadActivityData()
+        this.LoadVariables()
     }
 
-    LoadData() {
+    LoadVariables(){
+        if(this.IsVariablesHasPermission){
+            this.IsVariableLoading = true
+            this.LoadVariablesData()
+        }
+    }
+
+    LoadActivityData() {
         let filters = ApiQueryFiltersBuilder.getWorkflowInstanceActivities(this.EntityId, true);
         
         this.WorkFlowInstanceActivityListService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
                 if (!myResponse.HasError) {
                     var result = myResponse.Result;
-                    this.ItemsSource.InsertCollection(result);
-                    this.IsLoading = false
+                    this.ActivityItemsSource.InsertCollection(result);
+                    this.IsActivityLoading = false
+                }
+            }
+        });
+    }
+
+    LoadVariablesData() {
+        let filters = ApiQueryFiltersBuilder.getWorkflowInstanceActivities(this.EntityId, true);
+        
+        this.WorkFlowInstanceVariableListService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
+            if (myResponse != null) {
+                if (!myResponse.HasError) {
+                    var result = myResponse.Result;
+                    this.VariableItemsSource.InsertCollection(result);
+                    this.IsVariableLoading = false
                 }
             }
         });
@@ -63,6 +98,20 @@ export class WorkflowInstanceActivityComponent extends BaseComponent {
             }
 
             myRow.SetExpandaple(isExpandaple);
+        }
+    }
+
+    DisplayValueObject(item) {
+        if (item != null) {
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 960;
+            logWindow.Height =  400;
+            logWindow.Title = item.Type + " Value Body";
+            logWindow.IsShowCloseButton = true
+            var windowArgs: any = {};
+            windowArgs.Value = item.Value;
+            logWindow.WindowArgs = windowArgs;
+            logWindow.Show('./Workflow/Components/CreateEditWorkflow/WorkflowInstanceVariableObject');
         }
     }
 }
