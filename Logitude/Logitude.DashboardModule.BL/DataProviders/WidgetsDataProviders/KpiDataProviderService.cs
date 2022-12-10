@@ -125,10 +125,10 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
                 var diffTowDates = (_Widget.ToDate).Value.Subtract(_Widget.FromDate.Value).TotalDays;
                 var diffTowDatesInt = Convert.ToInt32(diffTowDates);
          
-                return queryString + $@" where data.{GeteComparsionDate()} Between dateadd(Day, {-diffTowDatesInt}, cast(getDate() as DateTime)) AND '{_Widget.FromDate}'";
+                return queryString + $@" where data.{GeteComparsionDate()} Between (Dateadd(Day, DateDiff(Day, cast('{_Widget.ToDate}' as Date), cast('{_Widget.FromDate}' as Date)), cast('{_Widget.FromDate}' as Date))) AND cast('{_Widget.FromDate}' as Date)";
             }
-            return queryString + $@" where data.{GeteComparsionDate()} Between dateadd ({_Widget.ComparisonDateGroup}, {-2 * _Widget.ComparisonPeriod}, cast(getDate() as DateTime))
-                             AND dateadd ({_Widget.ComparisonDateGroup}, {-_Widget.ComparisonPeriod}, cast(getDate() as DateTime))";
+            return queryString + $@" where data.{GeteComparsionDate()} Between dateadd ({_Widget.ComparisonDateGroup}, {-2 * _Widget.ComparisonPeriod}, cast(getDate() as Date))
+                             AND dateadd ({_Widget.ComparisonDateGroup}, {-_Widget.ComparisonPeriod}, cast(getDate() as Date))";
         }
 
         private string CreateQuery<T>(WidgetMeasurePM widgetMeasureField, IQueryable<T> resultQueryable)
@@ -142,9 +142,9 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
         {
             if (_Widget.ComparisonOperator != "Between")
             {
-                return $@" where data.{GeteComparsionDate()} Between dateadd ({_Widget.ComparisonDateGroup}, {-_Widget.ComparisonPeriod}, cast(getDate() as DateTime)) AND cast(getDate() as DateTime)";
+                return $@" where data.{GeteComparsionDate()} Between dateadd ({_Widget.ComparisonDateGroup}, {-_Widget.ComparisonPeriod}, cast(getDate() as Date)) AND cast(getDate() as Date)";
             }
-            return $@" where data.{GeteComparsionDate()} Between '{_Widget.FromDate}' AND '{_Widget.ToDate}'";
+            return $@" where data.{GeteComparsionDate()} Between '{_Widget.FromDate.Value}' AND '{_Widget.ToDate.Value}'";
         }
 
         private string GeteComparsionDate()
