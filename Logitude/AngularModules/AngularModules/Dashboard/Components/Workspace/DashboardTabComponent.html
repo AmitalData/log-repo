@@ -104,7 +104,7 @@
     </div>
 
     <div *ngIf="IsGlobalFiltersOpened" class="dl-flobal-filter-container">
-        <GlobalFilter [Dashboard]="SelectedDashboard"></GlobalFilter>
+        <GlobalFilter [Dashboard]="SelectedDashboard" (ApplyFilters)="ApplyFilters($event)"></GlobalFilter>
     </div>
 
     <div [hidden]="IsEmptyDashboardVisible" class="Dashboard-body">

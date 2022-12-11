@@ -35,6 +35,8 @@ export class DashboardTabComponent implements AfterViewInit {
     public CloneDashboardLayout: WidgetPM[];
     public Show: boolean = false;
     public FatherComponent: CustomDashboardComponent;
+    public GlobelFilters: string;
+
     constructor() {
         this.dashboardPMService = new DashboardPMService();
     }
@@ -78,6 +80,7 @@ export class DashboardTabComponent implements AfterViewInit {
         widgetUpdated: new Subject(),
         onAddWidget: new Subject(),
         onEditWidget: new Subject(),
+        onApplyGlobalFilters: new Subject(),
     }
 
     private hasChanges: boolean = false;
@@ -400,5 +403,9 @@ export class DashboardTabComponent implements AfterViewInit {
                 }
             });
         });
+    }
+
+    ApplyFilters(filters: string) {
+        this.DashboardDataBinding.onApplyGlobalFilters.next(filters);
     }
 }

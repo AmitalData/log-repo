@@ -22,8 +22,10 @@ namespace Logitude.DashboardModule.BL.DataProviders
         internal Dictionary<string, AnalyticsFactsFieldsMetaData> _EntityFields;
         private AnalyticsFactsFieldsMetaDataRepository analyticsFactsFieldsMetaDataRepository;
         private string[] Months = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+
         protected BaseDataProviderService(WidgetPM widget, AnalyticsFactsMetaData entity)
         {
+            widget.Filters = new GlobalFilterService(widget, entity).AddGlobalFilters();
             this._Widget = widget;
             this._Entity = entity;
             analyticsFactsFieldsMetaDataRepository = new AnalyticsFactsFieldsMetaDataRepository(0);

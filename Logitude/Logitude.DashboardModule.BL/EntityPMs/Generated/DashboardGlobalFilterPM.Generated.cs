@@ -250,6 +250,52 @@ namespace Logitude.DashboardModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private string joinedTableName ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string JoinedTableName  
+	   {
+	    
+	     get
+		{
+		   return joinedTableName;
+		 }
+		 set
+		 {
+		   if(joinedTableName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="JoinedTableName",OldValue=joinedTableName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   joinedTableName=value;
+		   }
+			
+		 }
+	   }
+	  private string fieldCode ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FieldCode  
+	   {
+	    
+	     get
+		{
+		   return fieldCode;
+		 }
+		 set
+		 {
+		   if(fieldCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FieldCode",OldValue=fieldCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   fieldCode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

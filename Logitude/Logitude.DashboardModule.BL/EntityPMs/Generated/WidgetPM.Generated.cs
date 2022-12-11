@@ -561,6 +561,29 @@ namespace Logitude.DashboardModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private string globalFilters ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string GlobalFilters  
+	   {
+	    
+	     get
+		{
+		   return globalFilters;
+		 }
+		 set
+		 {
+		   if(globalFilters != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GlobalFilters",OldValue=globalFilters,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   globalFilters=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

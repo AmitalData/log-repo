@@ -37,6 +37,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -59,9 +62,11 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\MeasureTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PermissionLevelDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\WidgetTypeDetails.Generated.cs" />
+    <Compile Include="DataProviders\CommonGlobalFilterProvider.cs" />
     <Compile Include="DataProviders\DataProviderFactory.cs" />
     <Compile Include="DataProviders\BaseDataProviderService.cs" />
     <Compile Include="DataProviders\BaseTablesDataProvider.cs" />
+    <Compile Include="DataProviders\GlobalFilterService.cs" />
     <Compile Include="DataProviders\Models\KpiChart.cs" />
     <Compile Include="DataProviders\TablesDataProviders\APInvoiceDataProviderService.cs" />
     <Compile Include="DataProviders\TablesDataProviders\ARInvoiceDataProviderService.cs" />

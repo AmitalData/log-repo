@@ -55,19 +55,13 @@
                                 <td style="width:2px;">
                                     <div></div>
                                 </td>
+                                
+                                <td style="width:2px;">
+                                    <div></div>
+                                </td>
 
-                                <td style="width:120px;">
-                                    <LogTextBox [NoValidation]="true"
-                                                [HideLastColumn]="true"
-                                                [Text]="item.TextFieldValue"
-                                                [IsFreeText]="true"
-                                                (ValueChanged)="item.TextBoxValueChange($event)"
-                                                style="height:22px"
-                                                [DataContext]="item"
-                                                HideLastColumn="true"
-                                                HideColumns="true"
-                                                DontAllowAutoSelect="true"
-                                                [InputType]="item.GetTextInputType()"></LogTextBox>
+                                <td>
+                                    <GlobalFilterValue [(FilterItem)]="item"></GlobalFilterValue>
                                 </td>
 
                                 <td>
@@ -153,18 +147,12 @@
                                     <div></div>
                                 </td>
 
-                                <td style="width:120px;">
-                                    <LogTextBox [NoValidation]="true"
-                                                [HideLastColumn]="true"
-                                                [Text]="item.TextFieldValue"
-                                                [IsFreeText]="true"
-                                                (ValueChanged)="item.TextBoxValueChange($event)"
-                                                style="height:22px"
-                                                [DataContext]="item"
-                                                HideLastColumn="true"
-                                                HideColumns="true"
-                                                DontAllowAutoSelect="true"
-                                                [InputType]="item.GetTextInputType()"></LogTextBox>
+                                <td style="width:2px;">
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <GlobalFilterValue [(FilterItem)]="item"></GlobalFilterValue>
                                 </td>
 
                                 <td>
@@ -172,6 +160,27 @@
                                 </td>
                             </tr>
                         </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                    
+                    <td style="width: 185px;">
+                        <div style="padding: 10px;display: flex;">
+                            <div style="width: 87px">
+                                <p style="cursor: pointer;color: #3496F0;" (click)="ClearFiltersClick()">Clear Filters</p>
+                            </div>
+                            <div style="width: 87px">
+                                <button class="TabButton Button" (click)="ApplyFiltersClick()">
+                                    <img style="width: 12px; height: 13px;" src="./Images/GrayTick.png" />
+                                    Apply filters
+                                </button>
+                            </div>
+                   
+                        </div>
                     </td>
                 </tr>
 

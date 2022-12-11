@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DashboardPM } from 'DashboardModule/EntityPMs/DashboardPM';
 import { CodeNameClass } from 'Infrastructure/DataContracts/CodeNameClass';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -11,10 +11,13 @@ import { DashboardGlobalFilterPM } from 'DashboardModule/EntityPMs/DashboardGlob
 
 export class GlobalFilterComponent implements OnInit {
     @Input() public Dashboard: DashboardPM;
+    @Output() ApplyFilters = new EventEmitter<string>();
+
     public CommonFilters: GlobalFilterItem[];
     public DatasetFilters: GlobalFilterItem[];
     public FilterTypes: CodeNameClass[] = [];
     public CommonFilterFields: CodeNameClass[] = [];
+
     constructor() {
         this.CommonFilters = [];
         this.DatasetFilters = [];
@@ -47,6 +50,67 @@ export class GlobalFilterComponent implements OnInit {
             }
         });
     }
+
+    ClearFiltersClick() {
+        if (!this.FilterExist()) return;
+        if (this.CommonFilters) this.CommonFilters.forEach(element => { this.ClearFilter(element); });
+        if (this.DatasetFilters) this.DatasetFilters.forEach(element => { this.ClearFilter(element); });
+        this.ApplyFilters.emit(null);
+    }
+
+    private ClearFilter(element: GlobalFilterItem) {
+        element.FieldValue = null;
+        element.FieldValue2 = null;
+        element.FieldValue3 = null;
+    }
+
+    FilterExist(): boolean {
+        if (this.CommonFilters && this.CommonFilters.length > 0) return true;
+        if (this.DatasetFilters && this.DatasetFilters.length > 0) return true;
+        return false;
+    }
+
+    ApplyFiltersClick() {
+        if (!this.FilterExist()) return;
+        var filterItems = [];
+        this.AddFilterItems(this.CommonFilters, filterItems, true);
+        this.AddFilterItems(this.DatasetFilters, filterItems, false);
+        if (filterItems.length == 0) return;
+        this.ApplyFilters.emit(JSON.stringify(filterItems));
+    }
+
+    AddFilterItems(filters: GlobalFilterItem[], filterItems: any, isCommon: boolean = false): any {
+        if (!filters || filters.length == 0) return filterItems;
+        filters.forEach(element => {
+            if (this.FilterValueEmpty(element)) return;
+            filterItems.push(this.MapFilterToDashboardFilter(element, isCommon));
+        });
+        return filterItems;
+    }
+
+    FilterValueEmpty(element: GlobalFilterItem): boolean {
+        if (element.FilterOperator == "IsEmpty" || element.FilterOperator == "IsNotEmpty") return false;
+        if (element.FilterOperator != "Previous" && element.FilterOperator != "Next" && element.FilterOperator != "Current" && (!element.FieldValue || element.FieldValue == "")) return true;
+        if ((element.FilterOperator == "Previous" || element.FilterOperator == "Next") && (!element.FieldValue3 || element.FieldValue3 == "")) return true;
+        if (element.FilterOperator == "Between" && (!element.FieldValue2 || element.FieldValue2 == "" || element.FieldValue2 <= element.FieldValue)) return true;
+        return false;
+    }
+
+    MapFilterToDashboardFilter(element: GlobalFilterItem, isCommon: boolean): any {
+        return {
+            FieldId: element.DataSetFieldId,
+            DataSetId: element.DataSetId,
+            FieldName: isCommon? element.CommonFilterField : element.EntityPM.FieldCode,
+            IsCommon: isCommon,
+            Operator: element.FilterOperator,
+            DateGroupCode : element.DateGroupCode,
+            FieldDataType: element.DataTypeCode,
+            FieldValue: element.FieldValue,
+            FieldValue2: element.FieldValue2,
+            FieldValue3: element.FieldValue3,
+        }
+    }
+
 }
 
 export class GlobalFilterItem extends BaseComponent {
@@ -54,6 +118,11 @@ export class GlobalFilterItem extends BaseComponent {
     public Operators: CodeNameClass[] = [];
     public ObjectTableName: string = "DashboardGlobalFilter";
     public DataContext = this;
+    public FieldValue: any;
+    public FieldValue2: any;
+    public FieldValue3: any;
+    public DateGroupCode: string;
+
     constructor(filter: DashboardGlobalFilterPM, public fatherComponent: GlobalFilterComponent) {
         super();
         this.EntityPM = filter;
@@ -207,12 +276,4 @@ export class GlobalFilterItem extends BaseComponent {
         }
     }
 
-    public TextFieldValue: any;
-    TextBoxValueChange(newValue) {
-        
-    }
-
-    GetTextInputType() {
-        
-    }
 }
