@@ -30,37 +30,37 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         private IQueryable<CourierMasterList> GetIqueryableList(IQueryable<CourierMaster> iQueryable)
         {
 
-            SetQuantity();
+           //SetQuantity();
 
             var today = DateTime.Now.Date;
 
             IQueryable<CourierMasterList> query = (from a in iQueryable.Include("CustomsAirline").Include("MAWBType").Include("OriginPort").Include("GatewayPort").Include("Card")
 
-                                                   join recHawbQuantityNoDocuments in qHawbQuantityNoDocuments
-                                               on a.Id equals recHawbQuantityNoDocuments.CourierMasterId
-                                                into joingHawbQuantityNoDocuments
-                                                   from recHawbQuantityNoDocuments in joingHawbQuantityNoDocuments.DefaultIfEmpty()
+                                               //    join recHawbQuantityNoDocuments in qHawbQuantityNoDocuments
+                                               //on a.Id equals recHawbQuantityNoDocuments.CourierMasterId
+                                               // into joingHawbQuantityNoDocuments
+                                               //    from recHawbQuantityNoDocuments in joingHawbQuantityNoDocuments.DefaultIfEmpty()
 
-                                                   join recIsCourierMissingClassification in qIsCourierMissingClassification
-                                                on a.Id equals recIsCourierMissingClassification.CourierMasterId
-                                                into joingIsCourierMissingClassification
-                                                   from recIsCourierMissingClassification in joingIsCourierMissingClassification.DefaultIfEmpty()
+                                               //    join recIsCourierMissingClassification in qIsCourierMissingClassification
+                                               // on a.Id equals recIsCourierMissingClassification.CourierMasterId
+                                               // into joingIsCourierMissingClassification
+                                               //    from recIsCourierMissingClassification in joingIsCourierMissingClassification.DefaultIfEmpty()
 
-                                                   join recHawbQuantityNoTransManifest in qHawbQuantityNoTransManifest
-                                                on a.Id equals recHawbQuantityNoTransManifest.CourierMasterId
-                                                into joingHawbQuantityNoTransManifest
-                                                   from recHawbQuantityNoTransManifest in joingHawbQuantityNoTransManifest.DefaultIfEmpty()
+                                               //    join recHawbQuantityNoTransManifest in qHawbQuantityNoTransManifest
+                                               // on a.Id equals recHawbQuantityNoTransManifest.CourierMasterId
+                                               // into joingHawbQuantityNoTransManifest
+                                               //    from recHawbQuantityNoTransManifest in joingHawbQuantityNoTransManifest.DefaultIfEmpty()
 
 
-                                                   join recHawbQuantityNoTransDeclaration in qHawbQuantityNoTransDeclaration
-                                                                                                    on a.Id equals recHawbQuantityNoTransDeclaration.CourierMasterId
-                                                                                                    into joingHawbQuantityNoTransDeclaration
-                                                   from recHawbQuantityNoTransDeclaration in joingHawbQuantityNoTransDeclaration.DefaultIfEmpty()
+                                               //    join recHawbQuantityNoTransDeclaration in qHawbQuantityNoTransDeclaration
+                                               //                                                     on a.Id equals recHawbQuantityNoTransDeclaration.CourierMasterId
+                                               //                                                     into joingHawbQuantityNoTransDeclaration
+                                               //    from recHawbQuantityNoTransDeclaration in joingHawbQuantityNoTransDeclaration.DefaultIfEmpty()
 
-                                                   join recHawbQuantityNoTransPayment in qHawbQuantityNoTransPayment
-                                                on a.Id equals recHawbQuantityNoTransPayment.CourierMasterId
-                                                 into joingHawbQuantityNoTransPayment
-                                                   from recHawbQuantityNoTransPayment in joingHawbQuantityNoTransPayment.DefaultIfEmpty()
+                                               //    join recHawbQuantityNoTransPayment in qHawbQuantityNoTransPayment
+                                               // on a.Id equals recHawbQuantityNoTransPayment.CourierMasterId
+                                               //  into joingHawbQuantityNoTransPayment
+                                               //    from recHawbQuantityNoTransPayment in joingHawbQuantityNoTransPayment.DefaultIfEmpty()
 
                                                    select new CourierMasterList()
                                                    {
@@ -113,11 +113,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        NoOfCourierHawbwWithoutHatara = a.NoOfCourierHawbwWithoutHatara,
                                                        LandingDateDateOnly = a.LandingDate,
                                                        LandingDateTimeOnly = (DateTime)a.LandingDate,
-                                                       HawbQuantityNoTransDeclaration = recHawbQuantityNoTransDeclaration.HawbQuantityNoTransDeclaration!=0? recHawbQuantityNoTransDeclaration.HawbQuantityNoTransDeclaration: recHawbQuantityNoTransDeclaration.Status,
-                                                       HawbQuantityNoTransManifest = recHawbQuantityNoTransManifest.HawbQuantityNoTransManifest!=0? recHawbQuantityNoTransManifest.HawbQuantityNoTransManifest: recHawbQuantityNoTransManifest.Status,
-                                                       HawbQuantityNoClassification = recIsCourierMissingClassification.HawbQuantityNoClassification!=0? recIsCourierMissingClassification.HawbQuantityNoClassification: recIsCourierMissingClassification.Status,
-                                                       HawbQuantityNoDocuments= recHawbQuantityNoDocuments.HawbQuantityNoDocuments!=0? recHawbQuantityNoDocuments.HawbQuantityNoDocuments: recHawbQuantityNoDocuments.Status,
-                                                       HawbQuantityNoTransPayment = recHawbQuantityNoTransPayment.HawbQuantityNoTransPayment!=0? recHawbQuantityNoTransPayment.HawbQuantityNoTransPayment: recHawbQuantityNoTransPayment.Status,
+                                                       //HawbQuantityNoTransDeclaration = recHawbQuantityNoTransDeclaration.HawbQuantityNoTransDeclaration!=0? recHawbQuantityNoTransDeclaration.HawbQuantityNoTransDeclaration: recHawbQuantityNoTransDeclaration.Status,
+                                                       //HawbQuantityNoTransManifest = recHawbQuantityNoTransManifest.HawbQuantityNoTransManifest!=0? recHawbQuantityNoTransManifest.HawbQuantityNoTransManifest: recHawbQuantityNoTransManifest.Status,
+                                                       //HawbQuantityNoClassification = recIsCourierMissingClassification.HawbQuantityNoClassification!=0? recIsCourierMissingClassification.HawbQuantityNoClassification: recIsCourierMissingClassification.Status,
+                                                       //HawbQuantityNoDocuments= recHawbQuantityNoDocuments.HawbQuantityNoDocuments!=0? recHawbQuantityNoDocuments.HawbQuantityNoDocuments: recHawbQuantityNoDocuments.Status,
+                                                       //HawbQuantityNoTransPayment = recHawbQuantityNoTransPayment.HawbQuantityNoTransPayment!=0? recHawbQuantityNoTransPayment.HawbQuantityNoTransPayment: recHawbQuantityNoTransPayment.Status,
 
                                                    });
 
