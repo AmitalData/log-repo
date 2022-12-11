@@ -28,7 +28,7 @@ namespace Logitude.Customs.Data.Repsitories
                 return new List<string>();
             }
             keyWordsList = keyWordsList.ToLower();
-            keyWordsList = keyWordsList.Replace(" ", ",");
+            //keyWordsList = keyWordsList.Replace(" ", ",");
             char[] BAD_CHARS = new char[] { '!', '@', '#', '$', '%', '_' , ')' , '(' , '-' , '*', '&', '^', '~', '.', '"', ';', '\'', '\\', '/', '<', '>', '{', '}', '[', ']','\n' };
             keyWordsList = string.Concat(keyWordsList.Split(BAD_CHARS, StringSplitOptions.RemoveEmptyEntries));
             while (keyWordsList.Contains(",,"))
