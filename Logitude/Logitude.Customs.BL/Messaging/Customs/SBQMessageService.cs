@@ -170,6 +170,10 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 }
                 return;
             }
+
+            var customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(queueSendModel.Tenant);
+            var currCustomsRequestsSheet = customsRequestsSheetQueryService.GetTenantPriorityByEntityID(correlationId, queueSendModel.Tenant);
+
             var interfaceTenantDefinitionQueryService = new InterfaceTenantDefinitionQueryService(queueSendModel.Tenant);
             var currInterfaceTenantDefinition = interfaceTenantDefinitionQueryService.GetFromCacheByTenatCode(queueSendModel.Tenant, queueSendModel.InterfaceTypeCode);
 
@@ -180,7 +184,11 @@ namespace Logitude.Customs.BL.Messaging.Customs
             queueSendModel.EntityId = correlationId;
 
             queueSendModel.QueueGroupCodeRabbit = currInterfaceTenantDefinition.QueueGroupCode;
-            if (!string.IsNullOrWhiteSpace(queueSendModel.InterfaceTypeCode) && queueSendModel.TenantPriority == null)
+            if (currCustomsRequestsSheet?.TenantPriority>0)
+            {
+                queueSendModel.TenantPriority=currCustomsRequestsSheet.TenantPriority;
+            }
+            else if (!string.IsNullOrWhiteSpace(queueSendModel.InterfaceTypeCode) && queueSendModel.TenantPriority == null)
             {
                 //var interfaceTenantDefinitionQueryService = new InterfaceTenantDefinitionQueryService(queueSendModel.Tenant);
                 //int? tenantPriority = interfaceTenantDefinitionQueryService.GetTenantPriorityFromCacheByTenatCode(queueSendModel.Tenant, queueSendModel.InterfaceTypeCode);
