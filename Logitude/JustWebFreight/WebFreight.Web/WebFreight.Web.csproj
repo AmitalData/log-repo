@@ -738,6 +738,7 @@
     <Compile Include="Controllers\DigitalPortal\DigitalCustomizationController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\DigitalTextCodeViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\ScreenViewsController.Generated.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\DigitalTextCodeController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\ObjectTableController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\ScreenController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowCustomerController.cs" />
