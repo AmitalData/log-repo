@@ -45,7 +45,22 @@ namespace Logitude.Customs.Data.Repsitories
             var res = InjectionUtil.Instance.GetAmitalRestrictOwnerModel(getFromCache, tenant, UnifreightUserId);
             return res;
         }
-   }
+
+        public static CustomsSetting GetSettingByTenantCache(int tenant)
+        {
+            string key = $"RepoGetSettingByTenant{tenant}";
+            var res = CacheManager.GetOrInsertNewObject<CustomsSetting>(key,
+                () =>
+            {
+                var repo = new CustomsSettingRepository(tenant);
+                return repo.GetSettingByTenant(tenant);
+
+            });
+            return res;
+            
+        }
+
+    }
 
 }
    
