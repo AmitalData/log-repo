@@ -77,6 +77,10 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public DateTime? LastRunningDCAWS { get; set; }
         [Column("LastNumOfMessagesDCAWS")]
 	    public int? LastNumOfMessagesDCAWS { get; set; }
+        [Column("SuppressIIGMessageFromDate")]
+	    public DateTime? SuppressIIGMessageFromDate { get; set; }
+        [Column("SuppressIIGMessageToDate")]
+	    public DateTime? SuppressIIGMessageToDate { get; set; }
     }
 }
 	 

@@ -47,7 +47,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsMessagesPending, 
 	         QtyFeedbackInPendingMessage, 
 	         LastRunningDCAWS, 
-	         LastNumOfMessagesDCAWS,
+	         LastNumOfMessagesDCAWS, 
+	         SuppressIIGMessageFromDate, 
+	         SuppressIIGMessageToDate,
 	      }
 
 
@@ -82,6 +84,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         QtyFeedbackInPendingMessage, 
 	         LastRunningDCAWS, 
 	         LastNumOfMessagesDCAWS, 
+	         SuppressIIGMessageFromDate, 
+	         SuppressIIGMessageToDate,
+	         
 	         ServiceScript,
 	      }
 
@@ -214,6 +219,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastNumOfMessagesDCAWS))
             {
 				entityPOCO.LastNumOfMessagesDCAWS = entityPM.LastNumOfMessagesDCAWS;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SuppressIIGMessageFromDate))
+            {
+				entityPOCO.SuppressIIGMessageFromDate = entityPM.SuppressIIGMessageFromDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SuppressIIGMessageToDate))
+            {
+				entityPOCO.SuppressIIGMessageToDate = entityPM.SuppressIIGMessageToDate;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -352,6 +367,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.LastNumOfMessagesDCAWS = entityPOCO.LastNumOfMessagesDCAWS;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SuppressIIGMessageFromDate))
+            {
+					entityPM.SuppressIIGMessageFromDate = entityPOCO.SuppressIIGMessageFromDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SuppressIIGMessageToDate))
+            {
+					entityPM.SuppressIIGMessageToDate = entityPOCO.SuppressIIGMessageToDate;
+            }
+
 		}
 
 		public void PMToOldPM(CustomsSettingPM entityPM, CustomsSettingPM oldEntityPM)
@@ -481,6 +506,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastNumOfMessagesDCAWS))
             {
                 oldEntityPM.LastNumOfMessagesDCAWS = entityPM.LastNumOfMessagesDCAWS;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SuppressIIGMessageFromDate))
+            {
+                oldEntityPM.SuppressIIGMessageFromDate = entityPM.SuppressIIGMessageFromDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SuppressIIGMessageToDate))
+            {
+                oldEntityPM.SuppressIIGMessageToDate = entityPM.SuppressIIGMessageToDate;
             }
 			
 		}

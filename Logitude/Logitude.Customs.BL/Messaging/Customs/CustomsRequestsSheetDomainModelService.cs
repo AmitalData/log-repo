@@ -129,11 +129,12 @@ namespace Logitude.Customs.BL.Messaging.Customs
             {
                 this.IsInteractive = isInteractive;
                 CheckRequestParamsBase(requestParams);
+                SuppressSendIIGMessages(requestParams);
 
                 CheckMessageInContainer(requestParams.InterfaceTypeCode, requestParams.MainInterfaceCode);
                 ConcurrentKiller(requestParams, reqSheetDetails);//Leave the campground cleaner than the way you found it.” found it.
 
-                this.RequestParams = requestParams;
+                this.RequestParams = requestParams;            
                 InitMessageDefinition();
                 ThrowIfInterfaceNotActiveOrBelongOurCompanyType();
 
@@ -1017,7 +1018,7 @@ After that Remove file  from DCA  .. ");
             if (string.IsNullOrWhiteSpace(requestParams.LoggingUserId))
             {
                 throw new Exception("LoggingUserId is must");
-            }
+            }         
             if (!String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["AvoidCreateCustomsRequestSheet"]))
             {
                 var code = requestParams.MainInterfaceCode ?? "";
@@ -1078,6 +1079,67 @@ After that Remove file  from DCA  .. ");
                 //        break;
                 //}
 
+            }
+        }
+
+        private static void SuppressSendIIGMessages(RequestParamsBase requestParams)
+        {
+            if (                
+                requestParams.RequestVIA == SendRequestVIA.DCABatch &&        
+                !String.IsNullOrEmpty(requestParams.DCAFileName)        
+                )
+            {
+                return;
+            }
+            var customsSettingsM = CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant);
+            if (
+                customsSettingsM.SuppressIIGMessageFromDate.HasValue &&
+                customsSettingsM.SuppressIIGMessageToDate.HasValue
+                )
+            {
+                if (
+                    customsSettingsM.SuppressIIGMessageFromDate <= DateTime.Now && 
+                    DateTime.Now < customsSettingsM.SuppressIIGMessageToDate
+                    )
+                {
+
+
+                    if (customsSettingsM.CompanyType == "B")
+                    { //Courier
+                        if (requestParams.FutureSendDateTime.HasValue)
+                        {
+                            if (requestParams.FutureSendDateTime <= customsSettingsM.SuppressIIGMessageToDate)
+                            {
+                                requestParams.FutureSendDateTime = customsSettingsM.SuppressIIGMessageToDate;
+                            }
+                        }
+                        else
+                        {
+                            requestParams.FutureSendDateTime = customsSettingsM.SuppressIIGMessageToDate;
+                        }
+                        switch (requestParams.RequestVIA)
+                        {
+                            case SendRequestVIA.Default:
+                            case SendRequestVIA.WebServiceInteractive:
+                                requestParams.RequestVIA = SendRequestVIA.WebServiceBatch;
+                                break;
+                            case SendRequestVIA.WebServiceBatch:
+                                break;
+                            case SendRequestVIA.DCABatch:
+                                break;
+                            default:
+                                break;
+                        }
+                        requestParams.RequestVIAChangeDue = requestParams.RequestVIAChangeDue ?? "";
+                        requestParams.RequestVIAChangeDue += $"{requestParams.FutureSendDateTime} המסרים למכס מושבתים-המסר נדחה עד לסיום תהליך ההסבה";
+
+                    }
+                    else
+                    {//customs
+                        throw new Exception($"{customsSettingsM.SuppressIIGMessageToDate} המסרים למכס מושבתים עד לסיום תהליך ההסבה");
+                    }
+
+                }
             }
         }
 
