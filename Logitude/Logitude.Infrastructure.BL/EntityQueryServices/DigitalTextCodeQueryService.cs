@@ -1,7 +1,5 @@
 ﻿using Logitude.Infrastructure.Data.EntityLists;
 using Logitude.Infrastructure.Data.Repsitories;
-using Newtonsoft.Json;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Logitude.Infrastructure.BL.EntityQueryServices
