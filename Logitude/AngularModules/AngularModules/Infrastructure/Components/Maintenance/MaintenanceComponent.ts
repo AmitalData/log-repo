@@ -1401,7 +1401,7 @@ export class MaintenanceComponent {
                     logitudeWindow.Height = 650;
                     logitudeWindow.Width = 800;
 
-                    logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/Maintenance/CustomsDocumentsDefinitionComponent');
+                    logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/Maintenance/LoadTestComponent');
                     break;
                 }
                 case "MTRC":

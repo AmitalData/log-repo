@@ -42,7 +42,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 {
                     string token = HttpContext.Current.Request.Headers["Token"];
                     var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    Tenant = authToken.Tenant;
+                    Tenant = 3;// authToken.Tenant;
 
                 }
                 catch (Exception)

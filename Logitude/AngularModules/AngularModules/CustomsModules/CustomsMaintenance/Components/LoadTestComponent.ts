@@ -46,6 +46,9 @@ import { DeclarationMessagesService } from '../../../Customs/Services/WebService
 //import { PrintRequestResponseData, PrintRequestResultList } from '../../../DataContract/ResponseData/PrintRequestResponseData';
 
 import {CustomsDocumentPMService} from '../../../Customs/Services/StandardPMs/CustomsDocumentPMService';
+import { ConsignmentPM } from '../../../Customs/EntityPMs/ConsignmentPM';
+import { max } from 'rxjs/operators';
+import { ConsignmentPackagePM } from '../../../Customs/EntityPMs/ConsignmentPackagePM';
 
 @Component({
     
@@ -103,7 +106,7 @@ export class LoadTestComponent
 
 
 
-    _CustomerId: string = "10009065";
+    _CustomerId: string = "1-10937";
     get CustomerId() { return this._CustomerId; }
     set CustomerId(value: string) { this._CustomerId = value; }
 
@@ -112,21 +115,21 @@ export class LoadTestComponent
     get Consignee() { return this._Consignee; }
     set Consignee(value) { this._Consignee = value; }
 
-    _CopyFromDecId: string = "1-104502";
+    _CopyFromDecId: string = "1-101298";
     get CopyFromDecId() { return this._CopyFromDecId; }
     set CopyFromDecId(value) { this._CopyFromDecId = value; }
 
 
-    _CopyFromDecId1: string = "1-104502";
+    _CopyFromDecId1: string = "1-101298";
     get CopyFromDecId1() { return this._CopyFromDecId1; }
     set CopyFromDecId1(value) { this._CopyFromDecId1 = value; }
 
 
-    _CopyFromDecId2: string = "1-104502";
+    _CopyFromDecId2: string = "1-101298";
     get CopyFromDecId2() { return this._CopyFromDecId2; }
     set CopyFromDecId2(value) { this._CopyFromDecId2 = value; }
     //#endregion
-    _COM_ID = "hdefwqjlpk6z_6cwtkessa00000000";///"pkajungqyegfkg6hhqjizw00000000";
+    _COM_ID = "tw33c1fbpk2owmflf1qzog00000000";///"pkajungqyegfkg6hhqjizw00000000";
     get COM_ID() { return this._COM_ID; }
     set COM_ID(value) { this._COM_ID= value; }
 
@@ -150,7 +153,7 @@ export class LoadTestComponent
         this.DoIt();
     }
     CanStartAgain: boolean=true;
-    DoIt() {
+    DoIt_old() {
         this._current = this._current + 1;
         this.CanStartAgain = false;
         if (this._current < this.Max) {
@@ -164,14 +167,39 @@ export class LoadTestComponent
                 .subscribe(() => {
                     this.DoIt();
                 });
-            this._CustomLoadTest.Start();
+            this._CustomLoadTest.StartExport(this._current);
         } else {
             this.CanStartAgain = true;
             this.LogProccess =("Finish !!!!!!!!!!!!!!!!!!!!!!!");
             this._current = 0;
         }
     }
-  
+
+    DoIt() {
+        this._current = this._current + 1;
+        this.CanStartAgain = false;
+        for (this._current < this.Max; this._current++;) {
+
+            this._CustomLoadTest = new CustomLoadTest(this.Consignee, this.CustomerId, this.CopyFromDecId, this.COM_ID, this);
+
+            this._CustomLoadTest.OnLogChange
+                .subscribe((logIt) => {
+                    this.LogProccess = logIt;
+                });
+            this._CustomLoadTest.OnFinish
+                .subscribe(() => {
+                   //this.DoIt();
+                });
+            this._CustomLoadTest.StartExport(this._current);
+        
+
+        if (this._current == this.Max)        {
+            this.CanStartAgain = true;
+            this.LogProccess = ("Finish !!!!!!!!!!!!!!!!!!!!!!!");
+            this._current = 0;
+            }
+        }
+    }
 }
 
 enum TestStartes {
@@ -197,6 +225,7 @@ export class CustomLoadTest {
     private _custDocRelatedDocsWebService: CustDocRelatedDocsWebService = new CustDocRelatedDocsWebService();
     private _DeclarationWebService: DeclarationWebService = new DeclarationWebService();
     private _DeclarationMessagesService: DeclarationMessagesService = new DeclarationMessagesService();
+    private declarationPMService: DeclarationPMService = new DeclarationPMService();
 
     private _CustomsDocumentPMService: CustomsDocumentPMService = new CustomsDocumentPMService();
     _FileNo: string;
@@ -206,13 +235,145 @@ export class CustomLoadTest {
     Objecttable: any;
     _HaveTicket: boolean = false;
     _parentLoadTestComponent: LoadTestComponent;
+    public EntityPM: DeclarationPM;
+
     constructor(public Consignee: string, public CustomerId: string, public CopyFromDecId: string, public FilingCopy: string, parentLoadTestComponent: LoadTestComponent ) {
             this.Objecttable = window.ObjectTables.filter(function (x) { return x.Name === "Customs.Declaration"; })[0];
             this._parentLoadTestComponent = parentLoadTestComponent;
     }
 
     
-    _LastError :string= "";
+    _LastError: string = "";
+    public StartExport(index) {
+        this._SendDeclarationCounter = 0;
+        this.LogMe("strat");
+
+        debugger;
+        this.EntityPM = new DeclarationPM();
+        this.EntityPM.Tenant = SessionLocator.Tenant;
+        this.EntityPM.Direction = "E";
+        this.EntityPM.DeclarationTypeCode = "2";
+        this.EntityPM.AgentRoleCode = "A";
+        this.EntityPM.ExportFile = (9999 + index).toString();
+        this.EntityPM.CustomerId = this.CustomerId;
+        this.EntityPM.TransportModeId = 'A'
+        var Consignment = new ConsignmentPM(this.EntityPM);
+        Consignment.ConsignmentType = 'E';
+        Consignment.CargoTypeCode = "13";
+        //var consignmentPackagePM = new ConsignmentPackagePM(Consignment);
+
+        //consignmentPackagePM.GrossMassMeasure = 321;
+        //consignmentPackagePM.PackageQuantity = 321;
+
+        //Consignment.AddConsignmentPackage(consignmentPackagePM);
+        this.EntityPM.AddConsignment(Consignment);
+
+        this.declarationPMService.insert(this.EntityPM).subscribe(myResult => {
+            var mm: ServiceResponse = myResult;
+            if (mm.HasError) {
+
+                this._LastError = "insert decaration Failed " + Date.now().toLocaleString() + ", error :" + mm.ErrorsArray[0];
+                this.StartExport(index);
+                return
+            }
+            else {
+                var entity = mm.Result;
+
+                this._DeclarationPMService.get(entity.Id)
+                    .subscribe((rsptPMget: any) => {
+                        let declarationPM: DeclarationPM = rsptPMget.Result;
+                        this._DeclarationPM = declarationPM;
+                        this.LogMe("updating GetDeclaration " + this._DeclarationPM.Id);
+                      //  this._DeclarationPM.Consignments[0].ConsignmentPackages[0].PackageQuantity = 321;
+                        this._DeclarationPMService.update(declarationPM)
+                            .subscribe((rsptPMupdate: any) => {
+                                this._DeclarationPM = rsptPMupdate.Result;
+                                this.LogMe("Start copy  GetDeclaration from " + this.CopyFromDecId);
+                                this._DeclarationExtendedListService.PutCopyDeclaration(this.CopyFromDecId, entity.Id, SessionLocator.Tenant)
+                                    .subscribe((rsptCopyDeclaration: any) => {
+                                        this.LogMe(rsptCopyDeclaration.Result);
+
+
+                                        this.HybridUpdateDocFiling();
+
+
+                                    });
+                            });
+                        //});
+                    });
+
+
+            }
+
+        });
+
+    }
+
+
+
+    //    this._LoadTestService.GetNewCustomFile(SessionLocator.Tenant, this.Consignee, this.CustomerId)
+    //        .subscribe((rspNewCustomFile: any) => {
+
+    //            if (rspNewCustomFile == null || rspNewCustomFile.Result == null || rspNewCustomFile.Result.newFileNo == null) {
+    //                this._LastError = "GetNewCustomFile Failed " + Date.now().toLocaleString();
+    //                this.Start();
+    //                return
+    //            }
+    //            let newFileNo = rspNewCustomFile.Result.newFileNo;
+    //            this._FileNo = newFileNo;
+    //            this.LogMe("new file this._FileNo =" + this._FileNo);
+    //            this._LoadTestService.GetDeclarationFromFileNo(SessionLocator.Tenant, newFileNo, this.FilingCopy)
+    //                .subscribe((rspDeclarationFromFileNo: any) => {
+
+    //                    if (rspDeclarationFromFileNo == null || rspDeclarationFromFileNo.Result == null || rspDeclarationFromFileNo.Result.returnFileNo == null) {
+    //                        this._LastError = "GetDeclarationFromFileNo Failed " + Date.now().toLocaleString();
+    //                        this.Start();
+    //                        return
+    //                    }
+    //                    let returnFileNo = rspDeclarationFromFileNo.Result.returnFileNo;
+    //                    this.LogMe("Get GetDeclaration done" + this._FileNo);
+    //                    //this._DeclarationListService.get
+    //                    this._DeclarationExtendedListService.GetSingleDeclarationByCustomFileNo(returnFileNo)
+    //                        .subscribe((rspDeclarationByCustomFileNo: any) => {
+    //                            if (rspDeclarationByCustomFileNo == null || rspDeclarationByCustomFileNo.Result == null || rspDeclarationByCustomFileNo.Result.Id == null) {
+    //                                this._LastError = "GetSingleDeclarationByCustomFileNo Failed " + Date.now().toLocaleString();
+    //                                this.Start();
+    //                                return
+    //                            }
+    //                            let declarationList: DeclarationList = rspDeclarationByCustomFileNo.Result;
+
+    //                            this._DeclarationPMService.get(declarationList.Id)
+    //                                .subscribe((rsptPMget: any) => {
+    //                                    let declarationPM: DeclarationPM = rsptPMget.Result;
+    //                                    this._DeclarationPM = declarationPM;
+    //                                    this.LogMe("updating GetDeclaration " + this._DeclarationPM.Id);
+    //                                    this._DeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasure = 321;
+    //                                    this._DeclarationPM.Consignments[0].ConsignmentPackages[0].PackageQuantity = 321;
+    //                                    this._DeclarationPMService.update(declarationPM)
+    //                                        .subscribe((rsptPMupdate: any) => {
+    //                                            this._DeclarationPM = rsptPMupdate.Result;
+    //                                            this.LogMe("Start copy  GetDeclaration from " + this.CopyFromDecId);
+    //                                            this._DeclarationExtendedListService.PutCopyDeclaration(this.CopyFromDecId, declarationList.Id, SessionLocator.Tenant)
+    //                                                .subscribe((rsptCopyDeclaration: any) => {
+    //                                                    this.LogMe(rsptCopyDeclaration.Result);
+
+
+    //                                                    this.HybridUpdateDocFiling();
+
+
+    //                                                });
+    //                                        });
+    //                                    //});
+    //                                });
+
+    //                        });
+
+
+    //                });
+
+    //        });
+    //}
+
     public Start() {
         this._SendDeclarationCounter = 0;
         this.LogMe("strat");
@@ -355,7 +516,7 @@ export class CustomLoadTest {
             //        this.FillValidationErrors("Errors");
             //    });
         }
-        this._DeclarationWebService.PostSendDeclaration(searchParams)
+        this._DeclarationWebService.PostSendExportDeclaration(searchParams)
             .subscribe((response: ServiceResponse) => {
                 this._SendDeclarationCounter = this._SendDeclarationCounter + 1;
                 let endAt = new Date();
@@ -367,35 +528,36 @@ export class CustomLoadTest {
 
                 var myDuration = Number(t.toPrecision(2));;
                 this._parentLoadTestComponent._SendDecList.push(myDuration);
+                this.SendPrintRequest();
 
                 //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                if (this._ArrayOfDocumentsFilingPM.length > 0) {
-                    if (this._SendDeclarationCounter > 1) {
-                        if (!this._HaveTicket) {
-                            this.ConnectTicket();
-                        } else {
-                            //if (this._HaveTicket)
-                            this.SendPrintRequest();
-                        }
-                    } else {
+                //if (this._ArrayOfDocumentsFilingPM.length > 0) {
+                //    if (this._SendDeclarationCounter > 1) {
+                //        if (!this._HaveTicket) {
+                //            this.ConnectTicket();
+                //        } else {
+                //            //if (this._HaveTicket)
+                //            this.SendPrintRequest();
+                //        }
+                //    } else {
 
-                        this.LogMe("Update&SendDeclaration till 4");
-                        this._DeclarationPMService.get(this._DeclarationPM.Id)
-                            .subscribe((rsptPMget:any) => {
-                                let declarationPM: DeclarationPM = rsptPMget.Result;
-                                this._DeclarationPM = declarationPM;
+                //        this.LogMe("Update&SendDeclaration till 4");
+                //        this._DeclarationPMService.get(this._DeclarationPM.Id)
+                //            .subscribe((rsptPMget:any) => {
+                //                let declarationPM: DeclarationPM = rsptPMget.Result;
+                //                this._DeclarationPM = declarationPM;
 
-                                this._DeclarationPM.Consignments[0].CargoDescription = this._DeclarationPM.Consignments[0].CargoDescription + this._SendDeclarationCounter.toString();
-                                this._DeclarationPMService.update(this._DeclarationPM)
-                                    .subscribe((rsptPMupdate:any) => {
-                                        this._DeclarationPM = rsptPMupdate.Result;
-                                        this.SendDeclaration();
-                                    });
-                            });
-                    }
-                } else {
-                    this.HybridUpdateDocFiling();
-                }
+                //                this._DeclarationPM.Consignments[0].CargoDescription = this._DeclarationPM.Consignments[0].CargoDescription + this._SendDeclarationCounter.toString();
+                //                this._DeclarationPMService.update(this._DeclarationPM)
+                //                    .subscribe((rsptPMupdate:any) => {
+                //                        this._DeclarationPM = rsptPMupdate.Result;
+                //                        this.SendDeclaration();
+                //                    });
+                //            });
+                //    }
+                //} else {
+                //    this.HybridUpdateDocFiling();
+                //}
             });
     }
     ConnectTicket() {
@@ -449,7 +611,8 @@ export class CustomLoadTest {
                 this._DeclarationMessagesService.PostPrintRequestRequest(currRequestParams)
                     .subscribe((myServiceResponse: ServiceResponse) => {
                         this.LogMe("PostPrintRequestRequest");
-                        this.SendDocumentsFiling();
+                        this.OnFinish.emit();
+                      //  this.SendDocumentsFiling();
                     });
             });
     }
