@@ -30,11 +30,4 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
         }
 
     }
-
-    public class DigitalTextCodeObject
-    {
-        public string DisplayText { get; set; }
-
-        public string Code { get; set; }
-    }
 }

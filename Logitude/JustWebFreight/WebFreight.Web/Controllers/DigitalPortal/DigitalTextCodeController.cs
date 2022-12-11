@@ -2,6 +2,7 @@
 using Logitude.SystemLogs;
 using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Server.Infrastructure.DataContracts.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,7 +42,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 {
                     var customTextCodes = textCodeQuery.GetDigitalTextCodesQuery(tenant, objectTableId);
 
-                    customCodesObject = JsonConvert.DeserializeObject<List<DigitalTextCodeObject>>(defaultTextCode.Labels);
+                    if (customTextCodes != null)
+                    {
+                        customCodesObject = JsonConvert.DeserializeObject<List<DigitalTextCodeObject>>(customTextCodes.Labels);
+                    }
                 }
 
                 foreach (var item in customCodesObject)
@@ -65,6 +69,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        [HttpPost]
+        [Route("DigitalTextCode/UpdateTextCodes")]
+        public HttpResponseMessage UpdateTextCodes(string cardId, string objectTableId = null)
+        {
+            return null;
         }
     }
 }
