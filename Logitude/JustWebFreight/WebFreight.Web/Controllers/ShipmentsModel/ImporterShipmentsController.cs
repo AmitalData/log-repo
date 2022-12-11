@@ -928,15 +928,19 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 entityPM.ExceptionDescription = entityAM.ExceptionDescription;
                 entityPM.HasException = entityAM.HasException;
             }
-            if (entityPM.CustomsClearanceDate == null && entityAM.CustomsClearanceDate != null && entityAM.HasException == true)
+            if (entityPM.CustomsClearanceDate == null && entityAM.CustomsClearanceDate != null && entityAM.HasException == true && entityPM.DirectionId != "E")
             {
-
-                entityPM.HasException = false;
-                entityPM.ExceptionDate = null;
-                entityPM.ExceptionDescription = null;
-                entityPM.ExceptionResolvedDescription = "Customs Clearance";
-
+                RemoveExceptionDetails(entityPM, "Customs Clearance");
             }
+            else if (entityPM.DirectionId == "E" && entityAM.HasException && entityAM.StatusCode == "ARR")
+            {
+                RemoveExceptionDetails(entityPM, "Shipment Already arrived");
+            }
+            else if (entityPM.DirectionId == "E" && entityAM.HasException)
+            {
+                HandleRemoveExceptionLogicByEntityStatusWeight(entityAM, entityPM);
+            }
+
             if (entityAM.CustomsClearanceDate != null && entityAM.IsImporterApprovalRequired && entityPM.ApproveDateTime == null && string.IsNullOrEmpty(entityPM.ApprovedBy))
             {
                 entityPM.ApprovedBy = "System";
@@ -1261,6 +1265,24 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
 
             }
             return null;
+        }
+
+        private static void HandleRemoveExceptionLogicByEntityStatusWeight(ShipmentAM entityAM, ShipmentPM entityPM)
+        {
+            EntityStatus shipmentStatus = EntityStatusRepository.GetSingleEntityStatusByCode(entityPM.StatusCode, entityPM.Tenant, true);
+            EntityStatus arrivedStatus = EntityStatusRepository.GetSingleEntityStatusByCode(entityAM.StatusCode, entityPM.Tenant, true);
+            int shipmentStatusWeight = shipmentStatus.StatusLocalWeight != null ? (int)shipmentStatus.StatusLocalWeight : shipmentStatus.StatusWeight;
+            int arrivedStatusWeight = arrivedStatus.StatusLocalWeight != null ? (int)arrivedStatus.StatusLocalWeight : arrivedStatus.StatusWeight;
+            if (shipmentStatusWeight <= arrivedStatusWeight) return;
+            RemoveExceptionDetails(entityPM, "Shipment Already arrived");
+        }
+
+        private static void RemoveExceptionDetails(ShipmentPM entityPM, string exceptionResolvedDescription)
+        {
+            entityPM.HasException = false;
+            entityPM.ExceptionDate = null;
+            entityPM.ExceptionDescription = null;
+            entityPM.ExceptionResolvedDescription = exceptionResolvedDescription;
         }
 
         private static bool GetIsOperationalClosed(ShipmentAM entityAM, ShipmentPM entityPM, TenantPM currentTenant)
