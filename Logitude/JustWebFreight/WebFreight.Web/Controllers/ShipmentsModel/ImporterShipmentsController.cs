@@ -929,7 +929,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 entityPM.HasException = entityAM.HasException;
             }
 
-            HandleRemoveExceptionDetailsByEntityStatusWeight(entityAM, entityPM);
+            HandleRemoveExceptionDetails(entityAM, entityPM);
 
             if (entityAM.CustomsClearanceDate != null && entityAM.IsImporterApprovalRequired && entityPM.ApproveDateTime == null && string.IsNullOrEmpty(entityPM.ApprovedBy))
             {
@@ -1257,7 +1257,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             return null;
         }
 
-        private static void HandleRemoveExceptionDetailsByEntityStatusWeight(ShipmentAM entityAM, ShipmentPM entityPM)
+        private static void HandleRemoveExceptionDetails(ShipmentAM entityAM, ShipmentPM entityPM)
         {
             if (entityPM.CustomsClearanceDate == null && entityAM.CustomsClearanceDate != null && entityAM.HasException == true && entityPM.DirectionId != "E")
             {
@@ -1269,11 +1269,11 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             }
             else if (entityPM.DirectionId == "E" && entityAM.HasException)
             {
-                HandleRemoveExceptionLogicByEntityStatusWeight(entityAM, entityPM);
+                HandleRemoveExceptionDetailsByEntityStatusWeight(entityAM, entityPM);
             }
         }
 
-        private static void HandleRemoveExceptionLogicByEntityStatusWeight(ShipmentAM entityAM, ShipmentPM entityPM)
+        private static void HandleRemoveExceptionDetailsByEntityStatusWeight(ShipmentAM entityAM, ShipmentPM entityPM)
         {
             EntityStatus shipmentStatus = EntityStatusRepository.GetSingleEntityStatusByCode(entityPM.StatusCode, entityPM.Tenant, true);
             EntityStatus arrivedStatus = EntityStatusRepository.GetSingleEntityStatusByCode(entityAM.StatusCode, entityPM.Tenant, true);
