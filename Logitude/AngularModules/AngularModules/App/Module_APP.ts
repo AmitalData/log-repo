@@ -24,7 +24,7 @@ import { ErrorHandlerService } from './Services/ErrorHandler.Service';
   providers: [
     SystemJsNgModuleLoader,
     LogitudeMonitoringService,
-    { provide: ErrorHandler, useClass: ErrorHandlerService },
+    // { provide: ErrorHandler, useClass: ErrorHandlerService },
     { provide: LAZY_WIDGETS, useFactory: LazyArrayToObjects }  
 
      
