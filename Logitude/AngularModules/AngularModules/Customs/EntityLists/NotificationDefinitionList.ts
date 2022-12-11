@@ -17,6 +17,7 @@ export class NotificationDefinitionList {
 	DefaultAssigneeId: string;
 	SearchFields: string;
 	Inactive: boolean;
+	ActiveInExport: boolean;
 	
 }
  
