@@ -21,6 +21,12 @@ using Microsoft.Practices.Unity;
 using Logitude.Server.Tools.StorageService;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Stimulsoft.fonts;
+using WebFreight.Web.Helpers.StimulReportCustomizationDataProvider;
+using System.Collections.Generic;
+using System.Linq;
+using System.IO;
+using WebFreight.Web.DataProviders;
+using Logitude.BL.ShipmentsModel.EntityPMs;
 
 namespace WebFreight.Web.Stimulsoft
 {
@@ -72,8 +78,15 @@ namespace WebFreight.Web.Stimulsoft
                             {
                                 logo.ValueObject = null;
                             }
-
                         }
+
+                        List<StiBusinessObjectData> stiBusinessObjects = new StiBusinessObjectDataService().Get(documentTypeTemplatePM);
+                        if (stiBusinessObjects.Count > 0)
+                        {
+                            report.RegBusinessObject(stiBusinessObjects);
+                            report.Dictionary.SynchronizeBusinessObjects(stiBusinessObjects.Count());
+                        }
+
                     }
                     #endregion
 
@@ -128,13 +141,23 @@ namespace WebFreight.Web.Stimulsoft
             }
         }
 
-        //protected void StiMobileDesigner1_SaveReport(object sender, StiMobileDesigner.StiSaveReportEventArgs e)
-        //{
 
-
-
-        //}
-
+        public bool ByteArrayToFile(string fileName, byte[] byteArray)
+        {
+            try
+            {
+                using (var fs = new FileStream(fileName, FileMode.Create, FileAccess.Write))
+                {
+                    fs.Write(byteArray, 0, byteArray.Length);
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception caught in process: {0}", ex);
+                return false;
+            }
+        }
         protected void LogitudeStiWebDesigner_SaveReport(object sender, StiSaveReportEventArgs e)
         {
             //try
