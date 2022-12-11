@@ -227,29 +227,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private bool activeInExport ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool ActiveInExport  
-	   {
-	    
-	     get
-		{
-		   return activeInExport;
-		 }
-		 set
-		 {
-		   if(activeInExport != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ActiveInExport",OldValue=activeInExport,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   activeInExport=value;
-		   }
-			
-		 }
-	   }
    }
    
 }

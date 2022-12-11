@@ -69,11 +69,6 @@ export class NotificationDefinitionPM {
     public set Inactive(newValue: boolean) { if (this.inactive != newValue) { this.inactive = newValue; this.MarkAsDirty("Inactive"); } }
        
 	 
-    private activeInExport: boolean;
-    public get ActiveInExport() { return this.activeInExport; }
-    public set ActiveInExport(newValue: boolean) { if (this.activeInExport != newValue) { this.activeInExport = newValue; this.MarkAsDirty("ActiveInExport"); } }
-       
-	 
 
     public OldEntityPM: NotificationDefinitionPM;
 		

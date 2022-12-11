@@ -27,8 +27,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         LocalName, 
 	         AssigneeNotificationTypeCode, 
 	         SearchFields, 
-	         Inactive, 
-	         ActiveInExport,
+	         Inactive,
 	      }
 
 
@@ -43,8 +42,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         DefaultAssigneeName, 
 	         DefaultAssigneeId, 
 	         SearchFields, 
-	         Inactive, 
-	         ActiveInExport,
+	         Inactive,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -76,11 +74,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
             {
 				entityPOCO.Inactive = entityPM.Inactive;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ActiveInExport))
-            {
-				entityPOCO.ActiveInExport = entityPM.ActiveInExport;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -119,11 +112,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.Inactive = entityPOCO.Inactive;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ActiveInExport))
-            {
-					entityPM.ActiveInExport = entityPOCO.ActiveInExport;
-            }
-
 		}
 
 		public void PMToOldPM(NotificationDefinitionPM entityPM, NotificationDefinitionPM oldEntityPM)
@@ -153,11 +141,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
             {
                 oldEntityPM.Inactive = entityPM.Inactive;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ActiveInExport))
-            {
-                oldEntityPM.ActiveInExport = entityPM.ActiveInExport;
             }
 			
 		}
