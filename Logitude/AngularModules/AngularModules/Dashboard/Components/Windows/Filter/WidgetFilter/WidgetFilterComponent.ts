@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
-import { AppTool } from '../../../../Infrastructure/Tools';
+import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
+import { AppTool } from '../../../../../Infrastructure/Tools';
 import { WidgetFilterItem } from './WidgetFilterItem';
 import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 

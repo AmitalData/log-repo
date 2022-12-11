@@ -70,7 +70,8 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         ComparisonOperator, 
 	         ComparisonDateGroup, 
 	         FromDate, 
-	         ToDate,
+	         ToDate, 
+	         GlobalFilters,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

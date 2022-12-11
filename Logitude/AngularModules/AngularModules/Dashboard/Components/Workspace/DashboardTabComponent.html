@@ -1,5 +1,5 @@
 <div style="height: 100%;">
-    <div class="FormFieldRow">
+    <div>
         <table>
             <tr style="height:10px;">
                 <td>
@@ -53,63 +53,58 @@
                 </td>
 
                 <td *ngIf="!IsEditLayoutModeActive" style="width: 330px; height: 22px; top: 12px; bottom: 12px;">
-              <tr>
-                <table>
-                    <td style="width: 87px; min-width: 87px; height: 22px; bottom: 12px;">
-                        <button class="TabButton Button" (click)="OpenFilterAreaClick()"
-                            *ngIf="IsGlobalFiltersOpened == false">
-                            <img style="width: 12px; height: 13px;" src="./Images/FilterGrayTrans.png" />
-                            Show filters
-                        </button>
 
-                        <button class="TabButton Button" *ngIf="IsGlobalFiltersOpened == true"
-                            (click)="CloseFilterAreaClick()">
-                            <img style="width: 12px; height: 13px;" src="./Images/FilterGrayTrans.png" />
-                            Hide filters</button>
-                    </td>
+                    <table>
+                        <td style="width: 87px; min-width: 87px; height: 22px; bottom: 12px;">
+                            <button class="TabButton Button" (click)="OpenFilterAreaClick()"
+                                *ngIf="IsGlobalFiltersOpened == false">
+                                <img style="width: 12px; height: 13px;" src="./Images/FilterGrayTrans.png" />
+                                Show filters
+                            </button>
 
-                    <td style="width: 8px;">
-                        <div></div>
-                    </td>
+                            <button class="TabButton Button" *ngIf="IsGlobalFiltersOpened == true"
+                                (click)="CloseFilterAreaClick()">
+                                <img style="width: 12px; height: 13px;" src="./Images/FilterGrayTrans.png" />
+                                Hide filters</button>
+                        </td>
 
-                    <td style="width: 105px; bottom: 12px;">
-                        <button class="TabButton Button" (click)="EditLayoutClicked()">
-                            <img style="width: 12px; height: 13px;" src="./Images/Buttons/Edit.png" />
-                            Edit dashboard</button>
-                    </td>
+                        <td style="width: 8px;">
+                            <div></div>
+                        </td>
 
-                    <td style="width: 8px;">
-                        <div></div>
-                    </td>
-                   
-                    <td style="width: 69px; bottom: 12px;">
-                        <button class="TabButton Button" (click)="RefreshLayoutClicked()">
-                            <img style="width: 15px; height: 17px;" src="./Images/Buttons/Refresh.png" />
-                            Refresh</button>
-                    </td>
-                    <td style="width: 8px;">
-                        <div></div>
-                    </td>
-                    
-                    <td style="width:24px; bottom: 12px;">
-                        <button class="TabButton Button" style="font-family: 'Roboto';width: 24px;">
-                            <img style="width:2px; height: 12px; top: 5px; position: absolute;"
-                                src="./Images/Buttons/threedots.png" />
-                        </button>
-                    </td>
-                </table>
-            </tr>
-            </td>
-            <td style="width: 8px;">
-                <div></div>
-            </td>
+                        <td style="width: 105px; bottom: 12px;">
+                            <button class="TabButton Button" (click)="EditLayoutClicked()">
+                                <img style="width: 12px; height: 13px;" src="./Images/Buttons/Edit.png" />
+                                Edit dashboard</button>
+                        </td>
+
+                        <td style="width: 8px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 69px; bottom: 12px;">
+                            <button class="TabButton Button" (click)="RefreshLayoutClicked()">
+                                <img style="width: 15px; height: 17px;" src="./Images/Buttons/Refresh.png" />
+                                Refresh</button>
+                        </td>
+                        <td style="width: 8px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width:24px; bottom: 12px;">
+                            <button class="TabButton Button" style="font-family: 'Roboto';width: 24px;">
+                                <img style="width:2px; height: 12px; top: 5px; position: absolute;"
+                                    src="./Images/Buttons/threedots.png" />
+                            </button>
+                        </td>
+                    </table>
+                </td>
             </tr>
         </table>
     </div>
 
-    <div *ngIf="IsGlobalFiltersOpened"
-        style="background:#FFFADC; border:1px solid #BABABA; border-radius:3px; -webkit-border-radius:3px; width:calc(100%-2px); height:150px;">
-        <GlobalFilter [Dashboard]="SelectedDashboard"></GlobalFilter>
+    <div *ngIf="IsGlobalFiltersOpened" class="dl-flobal-filter-container">
+        <GlobalFilter [Dashboard]="SelectedDashboard" (ApplyFilters)="ApplyFilters($event)"></GlobalFilter>
     </div>
 
     <div [hidden]="IsEmptyDashboardVisible" class="Dashboard-body">
