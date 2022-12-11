@@ -27,14 +27,14 @@
   </Column>
   <Column
     Name="ServerName"
-    Type="nvarchar"
+    Type="varchar"
     Size="1000">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="ServiceName"
-    Type="nvarchar"
+    Type="varchar"
     Size="1000">
     <Constraints
       Nullable="true" />
