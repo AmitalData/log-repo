@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from "@angular/core";
 import { FieldTypes } from "Workflow/Constants/FieldTypes";
+import { SetValueOperators } from "Workflow/Constants/SetValueOperators";
 import { Condition } from "Workflow/Models/Condition";
 import { FlowVariablesTreeList } from "Workflow/Models/FlowVariablesTreeList";
 import { SetValue } from "Workflow/Models/SetValue";
@@ -19,7 +20,13 @@ export class ShowFlowVariablesTreeItemPipe implements PipeTransform {
             } else if (object.type === FieldTypes.PickList) {
                 compareWithLookupOrPickListType = object.picklistType;
             }
-            return (item: TreeSelectItem) => flowVariablesTreeList.compareItemType(item, object.type, compareWithLookupOrPickListType);
+
+            let type = object.type;
+            if (object.operator === SetValueOperators.Add || object.operator === SetValueOperators.AddField) {
+                type = type ? type.replace("[]", "") : null;
+            }
+
+            return (item: TreeSelectItem) => flowVariablesTreeList.compareItemType(item, type, compareWithLookupOrPickListType);
         }
         return (_treeSelectItem: TreeSelectItem) => { return true };
     }

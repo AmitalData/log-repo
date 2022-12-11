@@ -8,7 +8,7 @@ export class IsFieldOperatorPipe implements PipeTransform {
 
     transform(operatorCode: string) {
         if (operatorCode) {
-            return operatorCode.toString().endsWith("<field>");
+            return operatorCode.toString().endsWith("<field>") || operatorCode.toString().endsWith("<collection>");
         }
         return false;
     }

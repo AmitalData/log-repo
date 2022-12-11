@@ -37,6 +37,7 @@ import { ExpressionComponent } from "./Components/Base/ExpressionComponent";
 import { ExpressionBuilderComponent } from "./Components/Base/ExpressionBuilderComponent";
 import { CollectionFilterPropertiesComponent } from './Components/Properties/CollectionFilterPropertiesComponent';
 import { ShowEditableVariablesTreeItemPipe } from "./Pipes/ShowEditableVariablesTreeItemPipe";
+import { IsCollectionTypePipe } from "./Pipes/IsCollectionTypePipe";
 import { WorkflowVersionComponent } from './Components/WorkflowVersion/WorkflowVersionComponent';
 import { CreateWorkflowVersionComponent } from './Components/WorkflowVersion/CreateWorkflowVersionComponent';
 import { WorkFlowShortTitleComponent } from './Components/ShortTitles/WorkFlowShortTitleComponent';
@@ -91,6 +92,7 @@ export const Pipes = [
     ConditionDisabledPipe,
     ShowEditableVariablesTreeItemPipe,
     IsObjectTypePipe,
+    IsCollectionTypePipe
 ];
 
 export class ModuleDeclarations {
