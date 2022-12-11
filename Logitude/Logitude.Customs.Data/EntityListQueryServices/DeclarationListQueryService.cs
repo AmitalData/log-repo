@@ -262,7 +262,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                 // throw;
             }
-            bool isCourierEnv = context.CustomsSettings.FirstOrDefault(r => r.Tenant == tenant).CompanyType == "B";
+
+            bool isCourierEnv = CustomsSettingRepository.GetSettingByTenantCache(tenant).CompanyType == "B";  //context.CustomsSettings.FirstOrDefault(r => r.Tenant == tenant).CompanyType == "B";
             if (!isCourierEnv)
             {
                 qMyJoin = (from rec in context.CourierDeclarations.Where(r => r.DeclarationId == "-1")
