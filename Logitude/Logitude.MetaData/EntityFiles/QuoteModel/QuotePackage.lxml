@@ -10,6 +10,7 @@
   HasCustomFilter="false"
   HasCustomFields="false"
   AvailableInCustomization="true"
+  SupportSubEntity="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -31,13 +32,13 @@
   IsSaveButtonVisible="true"
   IsComposition="true"
   EnableSecurity="true"
-  AllowCustomFields="false"
+  AllowCustomFields="true"
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;BR&quot;"
-  MaxNumberOfCustomFields="0"
+  MaxNumberOfCustomFields="50"
   ParentTableName="Quote"
   DefaultText="&quot;QuotePackage&quot;"
-  Code="&quot;990c&quot;"
+  Code="&quot;bdf7&quot;"
   Name="&quot;QuotePackage&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Quote&quot;"
@@ -52,6 +53,7 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;43e7&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -1130,6 +1132,16 @@
     ObjectTableName="&quot;QuotePackage&quot;"
     IsReadOnly="true"
     IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
+  <Screen
+    Name="&quot;Additional Fields&quot;"
+    ObjectTableName="&quot;QuotePackage&quot;"
+    IsReadOnly="false"
+    IsHeaderScreen="false"
+    Code="&quot;QuotePackage.AdditionalFields&quot;"
     NumberOfColumns="2"
     NumberOfRows="1">
     <ScreenFields />

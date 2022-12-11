@@ -103,8 +103,12 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 {
                     count = list.Count;
                 }
+                if(ObjectTable.AllowCustomFields && ObjectTable.IsComposition && ObjectTable.MaxNumberOfCustomFields > 0)
+                {
+                    allowedCount = ObjectTable.MaxNumberOfCustomFields;
+                }
 
-                if(ObjectTable.Name == "Shipment" || ObjectTable.Name == "Quote" || ObjectTable.Name == "Opportunity" || ObjectTable.Name == "Container" || ObjectTable.IsCustom)
+                else if(ObjectTable.Name == "Shipment" || ObjectTable.Name == "Quote" || ObjectTable.Name == "Opportunity" || ObjectTable.Name == "Container" || ObjectTable.IsCustom)
                 {
                     allowedCount = ObjectTable.MaxNumberOfCustomFields;
                 }

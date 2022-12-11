@@ -606,14 +606,35 @@ export class QuotePMService {
  			newQuotePackagePM.DisableMarkAsDirty = true;
                
             var pmKeysArray = Object.keys(jItem);
-            for (var pmKey in pmKeysArray) {
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+            //for (var pmKey in pmKeysArray) {
+            //    if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+            //        continue;
+            //    }
+            //    var pmProperty = pmKeysArray[pmKey];
+            //    newQuotePackagePM[pmProperty] = jItem[pmProperty];
+            //}
+            for (var key in pmKeysArray) {
+
+                if ((!mapParent && pmKeysArray[key] === "entityParentPM") || pmKeysArray[key] === "UIProperties" || pmKeysArray[key] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
-                newQuotePackagePM[pmProperty] = jItem[pmProperty];
+
+                var customFields: Array<string> = [];
+                for (var i = 1; i < 51; i++) {
+                    customFields.push("Field" + i);
+                }
+
+                var property = pmKeysArray[key];
+                if (customFields.indexOf(property) > -1) {
+                    if (jItem[property]) {
+                        var customFieldClass: CustomFieldClass = new CustomFieldClass(jItem[property].Value, jItem[property].FieldName, jItem[property].TableName);
+                        newQuotePackagePM[property] = customFieldClass;
+                    }
+                }
+                else {
+                    newQuotePackagePM[property] = jItem[property];
+                }
             }
-           
 			 
             if (mapParent) {
                 newQuotePackagePM.UniqueKey = Guid.newGuid();
