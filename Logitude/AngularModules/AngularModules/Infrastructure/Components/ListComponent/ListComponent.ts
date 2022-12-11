@@ -3061,6 +3061,11 @@ export class ListComponent implements OnInit, AfterViewInit {
                     logWindow.Height = 350;
                     break;
                 }
+                case "Customs.CourierPendingReason": {
+                    logWindow.Width = 500;
+                    logWindow.Height = 450;
+                    break;
+                }
                 case "BankAccount": {
                     logWindow.Width = 500;
                     logWindow.Height = 400;
@@ -3068,7 +3073,6 @@ export class ListComponent implements OnInit, AfterViewInit {
                 }
                 case "Customs.CustomsAirline":
                 case "Customs.CouriersVat":
-                case "Customs.CourierPendingReason":
                     {
 
                         logWindow.Width = 500;
