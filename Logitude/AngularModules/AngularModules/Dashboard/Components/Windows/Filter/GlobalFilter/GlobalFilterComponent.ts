@@ -75,7 +75,6 @@ export class GlobalFilterComponent implements OnInit {
         var filterItems = [];
         this.AddFilterItems(this.CommonFilters, filterItems, true);
         this.AddFilterItems(this.DatasetFilters, filterItems, false);
-        if (filterItems.length == 0) return;
         this.ApplyFilters.emit(JSON.stringify(filterItems));
     }
 
