@@ -39,7 +39,6 @@ export class AddEditWidgetComponent extends BaseComponent {
     public SortByCodes = [];
     public PeriodOperators = ['After', 'Before', 'Previous', 'Current', 'Next', 'Between'];
     public SortByDirections = [{ name: 'Ascending', code: 'asc' }, { name: 'Descending', code: 'desc' }];
-    //public IncreaseDecreases = [{ name: 'Positive', code: 'positive' }, { name: 'Negative', code: 'negative' }];
     public IncreaseDecreases = ['Positive', 'Negative'];
     public GroupByQueryFilters: ApiQueryFilters;
     public isGroupByVisible: boolean = true;
@@ -76,16 +75,25 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.SetAdvanceSettingItems();
         this.SetTimeOverTimeValue();
         this.SetUIForOperator();
-
+        this.SetAdvanceSettingVisibleForTimeOverTime();
     }
     SetUIProperties() {
         this.UIProperties.SetValidity("MaximumGrouping", this.ObjectTableName, true, "");
 
         if (this.MaximumGrouping < 1 || this.MaximumGrouping > 50) {
-            this.UIProperties.SetValidity("MaximumGrouping", this.ObjectTableName, false, "Maximum Grouping must be greater than 1 and less than 50");
+            this.UIProperties.SetValidity("MaximumGrouping", this.ObjectTableName, false, "Maximum Grouping must be Greater Than 1 and Less Than 50");
         }
 
         this.UIProperties.SetEnabled("ComparisonPeriod", this.ObjectTableName, this.TimeOverTime);
+
+        
+    }
+    SetUIProprtiesForComparisonPeriod(){
+        this.UIProperties.SetValidity("ComparisonPeriod", this.ObjectTableName, true, "");
+
+        if (this.ComparisonPeriod < 0) {
+            this.UIProperties.SetValidity("ComparisonPeriod", this.ObjectTableName, false, "Comparison Period must be Greater Than 0");
+        }
     }
 
     BuildQueryFilters() {
@@ -198,7 +206,11 @@ export class AddEditWidgetComponent extends BaseComponent {
             this.RootFilter = new WidgetFilterItem(null, false, this.DashboardPM?.Id);
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget Entity Change ", Message: "Changed To" + this.EntityPM.EntityId, DashboardId: this.DashboardPM?.Id });
         }
+        this.TimeOverTime = false;
+        this.SetTimeOverTimeValue();
     }
+
+    
 
     get TypeCode() { return this.EntityPM.TypeCode; }
     set TypeCode(value: string) {
@@ -210,7 +222,7 @@ export class AddEditWidgetComponent extends BaseComponent {
             this.SetMaximumGrouping();
             this.SetAdvanceSettingItems();
             this.SetTimeOverTimeDefaultValue();
-            this.SetTimeOverTimeValue();
+            this.SetTimeOverTimeValue();            
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget Type Change ", Message: "Changed To" + this.EntityPM.TypeCode, DashboardId: this.DashboardPM?.Id });
             this.isAdvancedSettingLinkVisible = true;
         }
@@ -222,7 +234,15 @@ export class AddEditWidgetComponent extends BaseComponent {
         }
     }
 
+    private SetAdvanceSettingVisibleForTimeOverTime(){
+        if(this.TimeOverTime){
+            this.isAdvancedSettingVisible = true;
+            this.isAdvancedSettingForKPI = true;
+        }
+    }
+
     private SetTimeOverTimeValue() {
+        
         if (this.TypeCode != "kpi" || !this.TimeOverTime) {
             this.ComparisonOperator = null;
             this.ComparisonPeriod = null;
@@ -283,6 +303,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         if (!this.isMaximumGroupingVisible) {
             this.MaximumGrouping = null;
         }
+        
     }
 
     get GroupById() { return this.EntityPM.GroupById; }
@@ -374,6 +395,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         if (this.EntityPM.ComparisonPeriod != value) {
             this.EntityPM.ComparisonPeriod = value;
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget Comparison Period Value Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
+            this.SetUIProprtiesForComparisonPeriod();
         }
     }
     get ComparisonDateGroup() { return this.EntityPM.ComparisonDateGroup; }
@@ -434,20 +456,6 @@ export class AddEditWidgetComponent extends BaseComponent {
 
     }
 
-
-//     private selectedIncDecItem:any;
-// get SelectedIncDecItem(){ return this.selectedIncDecItem;}
-// set SelectedIncDecItem(value: any) {
-// if(this.selectedIncDecItem != value){
-//     this.selectedIncDecItem = value;
-
-//     this.Increase = null;
-//     if(value){
-//         this.Increase = value.code;
-//     }
-// }
-// }
-
     SetDefaultSortByField() {
         if (!this.selectedGroupField) return;
         if (this.selectedGroupField.DataTypeCode == "DateTime" || this.selectedGroupField.DataTypeCode == 'Date') {
@@ -477,7 +485,9 @@ export class AddEditWidgetComponent extends BaseComponent {
         if (errors.length != 0) return;
 
         this.SetFiltersString();
+        
         this.WidgetMeasuresList.forEach(item => {
+            
             if (item.IsNew && this.EntityPM.WidgetMeasures.indexOf(item.EntityPM) == -1) {
                 item.IsNew = false;
                 this.DataContext.EntityPM.AddWidgetMeasure(item.EntityPM);
@@ -512,18 +522,15 @@ export class AddEditWidgetComponent extends BaseComponent {
             errors.push("Sort By Direction Field is Required");
         }
 
-        var timeOverTimeErrors: string[] = this.ValidateTimeOverTime();        
-        errors.concat(timeOverTimeErrors);
-
+        this.ValidateTimeOverTime(errors);        
         this.ValidateMeasures(errors);
         this.ValidateSort(errors);
         if (this.RootFilter && this.RootFilter.QueryFilterItems && this.RootFilter.QueryFilterItems.length != 0) this.ValidateFilters(errors, this.RootFilter);
     }
-    private ValidateTimeOverTime(): string[] {
-        var errors: string[] = [];
-
-        if (this.TypeCode != "kpi") return [];
-        if (!this.TimeOverTime) return [];
+    private ValidateTimeOverTime(errors: string[]) {
+    
+        if (this.TypeCode != "kpi") return;
+        if (!this.TimeOverTime) return;
 
         if (!this.ComparisonOperator) {
             errors.push("Comparison Operater Field is Required");
@@ -546,12 +553,15 @@ export class AddEditWidgetComponent extends BaseComponent {
                 if (!this.ComparisonPeriod) {
                     errors.push("Comparison Period Field is Required");
                 }
+                if(this.ComparisonPeriod && this.ComparisonPeriod < 1){
+                    errors.push("Comparison Period should be Graeter than 0");
+                }
                 if (!this.ComparisonDateGroup) {
                     errors.push("Comparison Date Group Field is Required");
                 }
             }
         }
-       
+        
         if (!this.Increase) {
             errors.push("Increase Field is Required");
         }

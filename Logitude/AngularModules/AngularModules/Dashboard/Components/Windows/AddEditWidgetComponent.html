@@ -110,7 +110,7 @@
                                         <tr class="FormFieldRow" *ngIf="SelectedGroupField && (SelectedGroupField.DataTypeCode == 'DateTime' || SelectedGroupField.DataTypeCode == 'Date')">
                                             <td>
                                                 <LogLabel [Text]="'Date Group Type'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            </td>
+                                             </td>
                                             <td>
                                                 <ComboBox (SelectedItemChanged)="DateGroupCode = $event"
                                                           [ItemsSource]="DateGroupCodes"
@@ -275,9 +275,12 @@
                                                         <td style="width:120px;" *ngIf="!IsBetweenDatesVisible">
 
                                                             <LogTextBox [ObjectFieldName]="'ComparisonPeriod'"
-                                                                        [InputType]="'integer'"
+                                
                                                                         [DataContext]="DataContext"
-                                                                        [ObjectTableName]="ObjectTableName" [HideColumns]="true" style="width: 2px;">
+                                                                        [ObjectTableName]="ObjectTableName"
+                                                                        [HideColumns]="true" 
+                                                                        [Text]="ComparisonPeriod"
+                                                                        style="width: 2px;">
                                                             </LogTextBox>
                                                         </td>
 
@@ -294,7 +297,7 @@
                                                         </td>
 
                                                         <td style="width:70px;" *ngIf="IsBetweenDatesVisible">
-                                                            <LogLabel [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName"
+                                                            <LogLabel [Text]="'From Date'" [NoObjectField]="true"
                                                                       [DataContext]="DataContext"></LogLabel>
                                                         </td>
 
@@ -307,7 +310,7 @@
                                                         </td>
 
                                                         <td style="width:70px;" *ngIf="IsBetweenDatesVisible">
-                                                            <LogLabel [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName"
+                                                            <LogLabel [Text]="'To Date'" [NoObjectField]="true"
                                                                       [DataContext]="DataContext"></LogLabel>
                                                         </td>
 
