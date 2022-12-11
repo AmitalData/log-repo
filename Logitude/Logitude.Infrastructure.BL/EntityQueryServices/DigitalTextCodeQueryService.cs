@@ -1,5 +1,6 @@
 ﻿using Logitude.Infrastructure.Data.EntityLists;
 using Logitude.Infrastructure.Data.Repsitories;
+using Simplog.Server.Infrastructure.DataContracts.Models;
 using System.Linq;
 
 namespace Logitude.Infrastructure.BL.EntityQueryServices
@@ -19,7 +20,8 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                                                                 Labels = x.Labels,
                                                                 CreateDate = x.CreateDate,
                                                                 UpdateDate = x.UpdateDate
-                                                            }).FirstOrDefault();
+                                                            })
+                                                            .FirstOrDefault();
             return defaultTextCode;
         }
 
@@ -28,6 +30,12 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
             DigitalTextCodeRepository digitalTextCodeRepository = new DigitalTextCodeRepository(tenant);
             return digitalTextCodeRepository.CheckTenantTranslation(tenant, objectTableId);
         }
+        
+        public DigitalTextCodeList UpdateDigitalTextCodes(DigitalTextCodeUpdateModel digitalTextCodeUpdateModel)
+        {
+            DigitalTextCodeRepository digitalTextCodeRepository = new DigitalTextCodeRepository(digitalTextCodeUpdateModel.Tenant);
 
+            return null;
+        }
     }
 }

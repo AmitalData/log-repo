@@ -73,9 +73,58 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         [HttpPost]
         [Route("DigitalTextCode/UpdateTextCodes")]
-        public HttpResponseMessage UpdateTextCodes(string cardId, string objectTableId = null)
+        public HttpResponseMessage UpdateTextCodes(DigitalTextCodeUpdateModel digitalTextCodeUpdateModel)
         {
-            return null;
+            int tenant = 0;
+            string email = "";
+            try
+            {
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                tenant = authToken.Tenant;
+                email = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, digitalTextCodeUpdateModel.CardId);
+                var textCodeQuery = new DigitalTextCodeQuery();
+                var customTextCodes = textCodeQuery.GetDigitalTextCodesQuery(digitalTextCodeUpdateModel.Tenant, digitalTextCodeUpdateModel.ObjectTableId);
+
+                var dataToBeSaveed = "";
+
+                if (customTextCodes != null)
+                {
+                    var customCodesMappedObject = JsonConvert.DeserializeObject<List<DigitalTextCodeObject>>(customTextCodes.Labels);
+
+                    foreach (var item in digitalTextCodeUpdateModel.Lables)
+                    {
+                        var existingKey = customCodesMappedObject.FirstOrDefault(a => a.Code.Equals(item.Code));
+
+                        if (existingKey != null)
+                        {
+                            existingKey.DisplayText = item.DisplayText;
+                        }
+                        else
+                        {
+                            customCodesMappedObject.Add(item);
+                        }
+                    }
+
+                    dataToBeSaveed = JsonConvert.SerializeObject(customCodesMappedObject);
+                }
+                else
+                {
+                    dataToBeSaveed = JsonConvert.SerializeObject(digitalTextCodeUpdateModel.Lables);
+                }
+                
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (AutenticationException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
         }
     }
 }
