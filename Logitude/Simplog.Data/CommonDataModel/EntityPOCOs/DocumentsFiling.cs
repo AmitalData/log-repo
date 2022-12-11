@@ -138,6 +138,8 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public DateTime? LastBackupDate { get; set; }
         public bool? IsTransferdToQBO { get; set; }
 
-
+        [ForeignKey("ReceivedByByContactId")]
+        public virtual User ReceivedByByContact { get; set; }
+        public string ReceivedByByContactId { get; set; }
     }
 }

@@ -91,6 +91,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               Received = a.Received,
                                               ReceivedDate = a.ReceivedDate,
                                               ReceivedByUserId = a.ReceivedByUserId,
+                                              ReceivedByByContactId = a.ReceivedByByContactId,
                                               Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                               StatusCode = a.StatusCode,
                                               UpdateDate = a.UpdateDate,
@@ -189,6 +190,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               Received = a.Received,
                                               ReceivedDate = a.ReceivedDate,
                                               ReceivedByUserId = a.ReceivedByUserId,
+                                              ReceivedByByContactId = a.ReceivedByByContactId,
                                               Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                               StatusCode = a.StatusCode,
                                               UpdateDate = a.UpdateDate,
@@ -279,6 +281,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               Received = a.Received,
                                               ReceivedDate = a.ReceivedDate,
                                               ReceivedByUserId = a.ReceivedByUserId,
+                                              ReceivedByByContactId = a.ReceivedByByContactId,
                                               Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                               StatusCode = a.StatusCode,
                                               UpdateDate = a.UpdateDate,
@@ -374,6 +377,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               Received = a.Received,
                                               ReceivedDate = a.ReceivedDate,
                                               ReceivedByUserId = a.ReceivedByUserId,
+                                              ReceivedByByContactId = a.ReceivedByByContactId,
                                               Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                               StatusCode = a.StatusCode,
                                               UpdateDate = a.UpdateDate,
@@ -463,6 +467,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               Received = a.Received,
                                               ReceivedDate = a.ReceivedDate,
                                               ReceivedByUserId = a.ReceivedByUserId,
+                                              ReceivedByByContactId = a.ReceivedByByContactId,
                                               Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                               StatusCode = a.StatusCode,
                                               UpdateDate = a.UpdateDate,
@@ -552,6 +557,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               Received = a.Received,
                                               ReceivedDate = a.ReceivedDate,
                                               ReceivedByUserId = a.ReceivedByUserId,
+                                              ReceivedByByContactId = a.ReceivedByByContactId,
                                               Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                               StatusCode = a.StatusCode,
                                               UpdateDate = a.UpdateDate,
@@ -641,6 +647,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               Received = a.Received,
                                               ReceivedDate = a.ReceivedDate,
                                               ReceivedByUserId = a.ReceivedByUserId,
+                                              ReceivedByByContactId = a.ReceivedByByContactId,
                                               Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                               StatusCode = a.StatusCode,
                                               UpdateDate = a.UpdateDate,
@@ -730,6 +737,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                Received = a.Received,
                                                                ReceivedDate = a.ReceivedDate,
                                                                ReceivedByUserId = a.ReceivedByUserId,
+                                                               ReceivedByByContactId = a.ReceivedByByContactId,
                                                                Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                                                StatusCode = a.StatusCode,
                                                                UpdateDate = a.UpdateDate,
@@ -833,6 +841,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                Received = a.Received,
                                                                ReceivedDate = a.ReceivedDate,
                                                                ReceivedByUserId = a.ReceivedByUserId,
+                                                               ReceivedByByContactId = a.ReceivedByByContactId,
                                                                Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                                                StatusCode = a.StatusCode,
                                                                UpdateDate = a.UpdateDate,
@@ -959,6 +968,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        Received = a.Received,
                                        ReceivedDate = a.ReceivedDate,
                                        ReceivedByUserId = a.ReceivedByUserId,
+                                       ReceivedByByContactId = a.ReceivedByByContactId,
                                        Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                        StatusCode = a.StatusCode,
                                        UpdateDate = a.UpdateDate,
@@ -1022,6 +1032,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     if (!contactIds.Contains(item.ReceivedByUserId)) contactIds.Add(item.ReceivedByUserId);
                 }
 
+                if (!string.IsNullOrEmpty(item.ReceivedByByContactId))
+                {
+                    if (!contactIds.Contains(item.ReceivedByByContactId)) contactIds.Add(item.ReceivedByByContactId);
+                }
             }
 
             List<Contact> contactLists = null;
@@ -1041,7 +1055,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                 if (!string.IsNullOrEmpty(item.ReceivedByUserId))
                 {
-                    Contact receivedByUser = contactLists.Where(d => d.Id == item.ReceivedByUserId).FirstOrDefault();
+                    var receivedByUserId = item.ReceivedByUserId;
+                    if (!string.IsNullOrEmpty(item.ReceivedByByContactId))
+                    {
+                        receivedByUserId = item.ReceivedByByContactId;
+                    }
+
+                    Contact receivedByUser = contactLists.Where(d => d.Id == receivedByUserId).FirstOrDefault();
                     if (receivedByUser != null) item.ReceivedByUserName = receivedByUser.EnglishName;
                 }
             }
@@ -1107,6 +1127,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            Received = a.Received,
                                            ReceivedDate = a.ReceivedDate,
                                            ReceivedByUserId = a.ReceivedByUserId,
+                                           ReceivedByByContactId = a.ReceivedByByContactId,
                                            Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                            StatusCode = a.StatusCode,
                                            UpdateDate = a.UpdateDate,
@@ -1191,6 +1212,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            Received = a.Received,
                                            ReceivedDate = a.ReceivedDate,
                                            ReceivedByUserId = a.ReceivedByUserId,
+                                           ReceivedByByContactId = a.ReceivedByByContactId,
                                            Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                            StatusCode = a.StatusCode,
                                            UpdateDate = a.UpdateDate,
@@ -1332,6 +1354,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            Received = a.Received,
                                            ReceivedDate = a.ReceivedDate,
                                            ReceivedByUserId = a.ReceivedByUserId,
+                                           ReceivedByByContactId = a.ReceivedByByContactId,
                                            Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                            StatusCode = a.StatusCode,
                                            UpdateDate = a.UpdateDate,
@@ -1411,6 +1434,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            Received = a.Received,
                                            ReceivedDate = a.ReceivedDate,
                                            ReceivedByUserId = a.ReceivedByUserId,
+                                           ReceivedByByContactId = a.ReceivedByByContactId,
                                            Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                            StatusCode = a.StatusCode,
                                            UpdateDate = a.UpdateDate,
@@ -1498,6 +1522,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        Received = a.Received,
                                        ReceivedDate = a.ReceivedDate,
                                        ReceivedByUserId = a.ReceivedByUserId,
+                                       ReceivedByByContactId = a.ReceivedByByContactId,
                                        Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                        StatusCode = a.StatusCode,
                                        UpdateDate = a.UpdateDate,
@@ -1605,6 +1630,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        Received = a.Received,
                                        ReceivedDate = a.ReceivedDate,
                                        ReceivedByUserId = a.ReceivedByUserId,
+                                       ReceivedByByContactId = a.ReceivedByByContactId,
                                        Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                        StatusCode = a.StatusCode,
                                        UpdateDate = a.UpdateDate,
@@ -1775,6 +1801,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                          Received = a.Received,
                                                          ReceivedDate = a.ReceivedDate,
                                                          ReceivedByUserId = a.ReceivedByUserId,
+                                                         ReceivedByByContactId = a.ReceivedByByContactId,
                                                          Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                                          StatusCode = a.StatusCode,
                                                          UpdateDate = a.UpdateDate,
@@ -1811,210 +1838,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                          BackedupExternally = a.BackedupExternally,
                                                      };
             return result;
-        }
-
-
-        private string AddFiltersToSqlScript(QueryFilterItem filter, string whereClose, string script, string dbms)
-        {
-            string value = filter.FieldValue.ToString();
-
-            if (string.IsNullOrEmpty(value))
-            {
-                return whereClose;
-            }
-            string value2 = null;
-            if (filter.FieldValue2 != null)
-            {
-                value2 = filter.FieldValue2.ToString();
-            }
-            if (filter.FieldValue.ToString().ToLower() == "true")
-            {
-                value = "1";
-            }
-            if (filter.FieldValue.ToString().ToLower() == "false")
-            {
-                value = "0";
-            }
-            string prefix = "";
-            if (script.Contains("DocumentsFilings." + filter.FieldName))
-            {
-                prefix = "DocumentsFilings.";
-            }
-            switch (filter.Operator)
-            {
-                case "LargerThan":
-                    {
-                        DateTime datetime;
-                        DateTime.TryParse(value, out datetime);
-                        if (datetime != null)
-                        {
-                            value = datetime.ToString("yyyy-MM-dd HH:mm:ss");
-                            if (dbms == "oracle")
-                            {
-                                value = "TO_DATE(" + "'" + value + "'" + ",'YYYY-MM-DD HH24:MI:SS')";
-
-                            }
-                            else
-                            {
-                                value = "convert(datetime," + "'" + value + "')";
-                            }
-                            whereClose = whereClose + " and " + prefix + filter.FieldName + " > " + value;
-                        }
-                        else
-                        {
-                            whereClose = whereClose + " and " + prefix + filter.FieldName + " > '" + value + "'";
-                        }
-
-                        break;
-                    }
-                case "GreaterThanOrEqual":
-                    {
-                        DateTime datetime;
-                        DateTime.TryParse(value, out datetime);
-                        if (datetime != null)
-                        {
-                            value = datetime.ToString("yyyy-MM-dd HH:mm:ss");
-                            if (dbms == "oracle")
-                            {
-                                value = "TO_DATE(" + "'" + value + "'" + ",'YYYY-MM-DD HH24:MI:SS')";
-                            }
-                            else
-                            {
-                                value = "convert(datetime," + "'" + value + "')";
-                            }
-                            whereClose = whereClose + " and " + prefix + filter.FieldName + " >= " + value;
-                        }
-                        else
-                        {
-                            whereClose = whereClose + " and " + prefix + filter.FieldName + " >= '" + value + "'";
-                        }
-                        break;
-                    }
-
-                case "LessThan":
-                    {
-                        DateTime datetime;
-                        DateTime.TryParse(value, out datetime);
-                        if (datetime != null)
-                        {
-                            value = datetime.ToString("yyyy-MM-dd HH:mm:ss");
-                            if (dbms == "oracle")
-                            {
-                                value = "TO_DATE(" + "'" + value + "'" + ",'YYYY-MM-DD HH24:MI:SS')";
-
-                            }
-                            else
-                            {
-                                value = "convert(datetime," + "'" + value + "')";
-                            }
-                            whereClose = whereClose + " and " + prefix + filter.FieldName + " < " + value;
-                        }
-                        else
-                        {
-                            whereClose = whereClose + " and " + prefix + filter.FieldName + " < '" + value + "'";
-                        }
-                        break;
-                    }
-                case "LessThanOrEqual":
-                    {
-                        DateTime datetime;
-                        DateTime.TryParse(value, out datetime);
-                        if (datetime != null)
-                        {
-                            value = datetime.ToString("yyyy-MM-dd HH:mm:ss");
-                            if (dbms == "oracle")
-                            {
-                                value = "TO_DATE(" + "'" + value + "'" + ",'YYYY-MM-DD HH24:MI:SS')";
-
-                            }
-                            else
-                            {
-                                value = "convert(datetime," + "'" + value + "')";
-                            }
-                            whereClose = whereClose + " and " + prefix + filter.FieldName + " <= " + value;
-                        }
-                        else
-                        {
-                            whereClose = whereClose + " and " + prefix + filter.FieldName + " <= '" + value + "'";
-                        }
-                        break;
-                    }
-                case "StartsWith":
-                    {
-
-                        whereClose = whereClose + " and " + prefix + filter.FieldName + " like '" + value + "%'";
-                        break;
-                    }
-                case "Contains":
-                    {
-
-                        whereClose = whereClose + " and " + prefix + filter.FieldName + " like '%" + value + "%'";
-                        break;
-                    }
-
-                case "Between":
-                    {
-                        DateTime datetime;
-                        DateTime.TryParse(value, out datetime);
-                        if (datetime != null)
-                        {
-                            value = datetime.ToString("yyyy-MM-dd HH:mm:ss");
-                            if (dbms == "oracle")
-                            {
-                                value = "TO_DATE(" + "'" + value + "'" + ",'YYYY-MM-DD HH24:MI:SS')";
-
-                            }
-                            else
-                            {
-                                value = "convert(datetime," + "'" + value + "')";
-                            }
-
-                        }
-
-                        DateTime datetime2;
-                        DateTime.TryParse(value2, out datetime2);
-                        if (datetime2 != null)
-                        {
-                            value2 = datetime2.ToString("yyyy-MM-dd HH:mm:ss");
-                            if (dbms == "oracle")
-                            {
-                                value2 = "TO_DATE(" + "'" + value2 + "'" + ",'YYYY-MM-DD HH24:MI:SS')";
-
-                            }
-                            else
-                            {
-                                value2 = "convert(datetime," + "'" + value2 + "')";
-                            }
-
-                        }
-
-                        if (datetime != null && datetime2 != null)
-                        {
-                            whereClose = whereClose + " and " + prefix + filter.FieldName + " > " + value + " and " + prefix + filter.FieldName + " < " + value2;
-                        }
-                        else
-                        {
-                            whereClose = whereClose + " and " + prefix + filter.FieldName + " > '" + value + "'" + " and " + prefix + filter.FieldName + " < '" + value2 + "'";
-                        }
-                        break;
-                    }
-
-                case "NotEqual":
-                    {
-
-                        whereClose = whereClose + " and " + prefix + filter.FieldName + " <> '" + value + "'";
-                        break;
-
-
-                    }
-
-                default:
-                    {
-                        whereClose = whereClose + " and " + prefix + filter.FieldName + " = '" + value + "'";
-                        break;
-                    }
-            }
-            return whereClose;
         }
 
         public List<DocumentsFilingPM> GetDocumentsFilingsForRelatedDocuments(string entityId, string childEntityId, string objectTableId, string directionCode, string referenceNumber, List<string> externalEntityReferences, int tenant)
@@ -2070,6 +1893,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            Received = a.Received,
                                            ReceivedDate = a.ReceivedDate,
                                            ReceivedByUserId = a.ReceivedByUserId,
+                                           ReceivedByByContactId = a.ReceivedByByContactId,
                                            Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                            StatusCode = a.StatusCode,
                                            UpdateDate = a.UpdateDate,
@@ -2156,6 +1980,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            Received = a.Received,
                                            ReceivedDate = a.ReceivedDate,
                                            ReceivedByUserId = a.ReceivedByUserId,
+                                           ReceivedByByContactId = a.ReceivedByByContactId,
                                            Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                            StatusCode = a.StatusCode,
                                            UpdateDate = a.UpdateDate,
@@ -2243,6 +2068,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     Received = a.Received,
                                                     ReceivedDate = a.ReceivedDate,
                                                     ReceivedByUserId = a.ReceivedByUserId,
+                                                    ReceivedByByContactId = a.ReceivedByByContactId,
                                                     Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                                     StatusCode = a.StatusCode,
                                                     UpdateDate = a.UpdateDate,
@@ -2352,6 +2178,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               Received = a.Received,
                                               ReceivedDate = a.ReceivedDate,
                                               ReceivedByUserId = a.ReceivedByUserId,
+                                              ReceivedByByContactId = a.ReceivedByByContactId,
                                               Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                               StatusCode = a.StatusCode,
                                               UpdateDate = a.UpdateDate,
@@ -2442,6 +2269,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               Received = a.Received,
                                               ReceivedDate = a.ReceivedDate,
                                               ReceivedByUserId = a.ReceivedByUserId,
+                                              ReceivedByByContactId = a.ReceivedByByContactId,
                                               Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                               StatusCode = a.StatusCode,
                                               UpdateDate = a.UpdateDate,
@@ -2531,6 +2359,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               Received = a.Received,
                                               ReceivedDate = a.ReceivedDate,
                                               ReceivedByUserId = a.ReceivedByUserId,
+                                              ReceivedByByContactId = a.ReceivedByByContactId,
                                               Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                               StatusCode = a.StatusCode,
                                               UpdateDate = a.UpdateDate,
@@ -2898,6 +2727,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         Received = a.Received,
                         ReceivedDate = a.ReceivedDate,
                         ReceivedByUserId = a.ReceivedByUserId,
+                        ReceivedByByContactId = a.ReceivedByByContactId,
                         Name = a.DocumentType != null ? a.DocumentType.Name : null,
                         StatusCode = a.StatusCode,
                         UpdateDate = a.UpdateDate,
@@ -2981,6 +2811,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        Received = a.Received,
                                                        ReceivedDate = a.ReceivedDate,
                                                        ReceivedByUserId = a.ReceivedByUserId,
+                                                       ReceivedByByContactId = a.ReceivedByByContactId,
                                                        Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                                        StatusCode = a.StatusCode,
                                                        UpdateDate = a.UpdateDate,
@@ -3063,6 +2894,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        Received = a.Received,
                                                        ReceivedDate = a.ReceivedDate,
                                                        ReceivedByUserId = a.ReceivedByUserId,
+                                                       ReceivedByByContactId = a.ReceivedByByContactId,
                                                        Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                                        StatusCode = a.StatusCode,
                                                        UpdateDate = a.UpdateDate,
@@ -3151,6 +2983,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            Received = a.Received,
                                            ReceivedDate = a.ReceivedDate,
                                            ReceivedByUserId = a.ReceivedByUserId,
+                                           ReceivedByByContactId = a.ReceivedByByContactId,
                                            Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                            StatusCode = a.StatusCode,
                                            UpdateDate = a.UpdateDate,
@@ -3230,6 +3063,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            Received = a.Received,
                                            ReceivedDate = a.ReceivedDate,
                                            ReceivedByUserId = a.ReceivedByUserId,
+                                           ReceivedByByContactId = a.ReceivedByByContactId,
                                            Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                            StatusCode = a.StatusCode,
                                            UpdateDate = a.UpdateDate,
@@ -3308,6 +3142,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     Received = a.Received,
                                                     ReceivedDate = a.ReceivedDate,
                                                     ReceivedByUserId = a.ReceivedByUserId,
+                                                    ReceivedByByContactId = a.ReceivedByByContactId,
                                                     Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                                     StatusCode = a.StatusCode,
                                                     UpdateDate = a.UpdateDate,
@@ -3415,6 +3250,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        Received = a.Received,
                                        ReceivedDate = a.ReceivedDate,
                                        ReceivedByUserId = a.ReceivedByUserId,
+                                       ReceivedByByContactId = a.ReceivedByByContactId,
                                        Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                        StatusCode = a.StatusCode,
                                        UpdateDate = a.UpdateDate,
@@ -3548,6 +3384,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               Received = a.Received,
                                               ReceivedDate = a.ReceivedDate,
                                               ReceivedByUserId = a.ReceivedByUserId,
+                                              ReceivedByByContactId = a.ReceivedByByContactId,
                                               Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                               StatusCode = a.StatusCode,
                                               UpdateDate = a.UpdateDate,
@@ -3764,6 +3601,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        Received = a.Received,
                                                        ReceivedDate = a.ReceivedDate,
                                                        ReceivedByUserId = a.ReceivedByUserId,
+                                                       ReceivedByByContactId = a.ReceivedByByContactId,
                                                        Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                                        StatusCode = a.StatusCode,
                                                        UpdateDate = a.UpdateDate,

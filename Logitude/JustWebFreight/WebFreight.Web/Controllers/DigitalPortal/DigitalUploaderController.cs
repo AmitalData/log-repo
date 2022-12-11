@@ -40,7 +40,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 ContactRepository contactRepository = new ContactRepository(tenant);
                 Contact loggedContact = contactRepository.GetSingleContactByEmailAndTenant(email, tenant);
                 DocumentsFilingService service = new DocumentsFilingService(context, tenant);
-                var documentId = service.UploadDigitalDoeument(info,tenant, loggedContact);
+                var documentId = service.UploadDigitalDocument(info,tenant, loggedContact);
 
                 ImageParameter imageParameterfilter =  UploadImage(documentId, info, tenant);
                 AddUploadEvent(info, loggedContact.Id, tenant);
@@ -87,12 +87,23 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 if (info.Notes.Contains('.')) info.Notes = info.Notes.Split('.')[0];
             }
 
+            UserRepository userRepository = new UserRepository(tenant);
+            string loggedUserId = loggedContactId;
+            bool isContactUser = false;
+            isContactUser = userRepository.IsContactIdExist(loggedContactId, tenant);
+            if (!isContactUser)
+            {
+                var loggedUserEmail = "system@tenant" + tenant + ".com";
+                var loggedUser = userRepository.GetSingleUserByEmail(loggedUserEmail, tenant, true);
+                loggedUserId = loggedUser.Id;
+            }
+
             var eventCode = "DOUP";
             EventTracer.CreateTraceEvent(new EventTracerArgs()
             {
                 Tenant = tenant,
                 EventTypeCode = eventCode,
-                UserId = loggedContactId,
+                UserId = loggedUserId,
                 EntityId = info.EntityId,
                 ObjectTableName = info.ObjectTableName,
                 Notes = info.Notes,
