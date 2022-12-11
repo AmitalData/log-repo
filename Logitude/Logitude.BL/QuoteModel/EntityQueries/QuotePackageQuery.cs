@@ -131,6 +131,15 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 item.Dimensions = myDimensions;
             }
 
+            new ChildEntitiesCustomFieldService().Set(new ChildEntitiesCustomFieldArgs()
+            {
+                Tenant = tenant,
+                EntityId = quoteId,
+                ObjectTableName = "Quote",
+                ChildObjectTableName = "QuotePackage",
+                ChildEntities = myResult.Cast<object>().ToList()
+            });
+
             return myResult;
         }
     }
