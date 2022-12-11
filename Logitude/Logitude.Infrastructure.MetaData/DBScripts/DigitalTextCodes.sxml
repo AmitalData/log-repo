@@ -1,8 +1,12 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[	  
-	 	  INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate,  Labels) 
-	  values ('1-1', 0, null, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP,
+	
+      declare @NewEntityId as varchar(15)
+ 	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCodes'
+
+	  INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate,  Labels) 
+	  values (@NewEntityId, 0, null, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP,
 	  '[{
 		"Code": "Dashboard.G.Dashboard",
 		"DisplayText": "Dashboard"
@@ -355,8 +359,10 @@
 	  declare @shipmentObjectTableId as varchar(15)
 	  set @shipmentObjectTableId = (select Id from ObjectTables where [Name] = 'Shipment' and Tenant = 0 )
 
+ 	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCodes'
+
 	  INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, Labels) 
-	  values ('1-2', 0, @shipmentObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,
+	  values (@NewEntityId, 0, @shipmentObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,
 	  '[{
 			"Code": "Shipment.Q.AllShipments",
 			"DisplayText": "Shipments"
@@ -928,9 +934,10 @@
 	  
 	declare @invocieObjectTableId as varchar(15)
 	set @invocieObjectTableId = (select Id from ObjectTables where [Name] = 'ARInvoice' and Tenant = 0)
+ 	EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCodes'
 
 	INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, Labels) 
-	values ('1-3', 0, @invocieObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,
+	values (@NewEntityId, 0, @invocieObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,
 		  '[{
 				"Code": "ARInvoice.G.Invoicing",
 				"DisplayText": "Invoicing"
