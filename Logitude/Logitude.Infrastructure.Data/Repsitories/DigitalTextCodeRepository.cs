@@ -16,7 +16,7 @@ namespace Logitude.Infrastructure.Data.Repsitories
         public IQueryable<DigitalTextCode> GetDigitalTextCodes(int tenant, string objectTableId = "")
         {
             return context.DigitalTextCodes
-                          .Where(a => (a.Tenant == tenant || a.Tenant == 0)
+                          .Where(a => (a.Tenant == tenant)
                                       && (string.IsNullOrEmpty(objectTableId)
                                           || a.ObjectTableId.Equals(objectTableId)));
         }

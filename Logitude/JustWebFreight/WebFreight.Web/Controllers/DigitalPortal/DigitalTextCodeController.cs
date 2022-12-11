@@ -88,8 +88,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var textCodeQuery = new DigitalTextCodeQuery();
                 var customTextCodes = textCodeQuery.GetDigitalTextCodesQuery(digitalTextCodeUpdateModel.Tenant, digitalTextCodeUpdateModel.ObjectTableId);
 
-                var dataToBeSaveed = "";
-
                 if (customTextCodes != null)
                 {
                     var customCodesMappedObject = JsonConvert.DeserializeObject<List<DigitalTextCodeObject>>(customTextCodes.Labels);
@@ -108,22 +106,22 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         }
                     }
 
-                    dataToBeSaveed = JsonConvert.SerializeObject(customCodesMappedObject);
+                    customTextCodes.Labels = JsonConvert.SerializeObject(customCodesMappedObject);
+                    customTextCodes.UpdateDate = DateTime.UtcNow;
                 }
                 else
                 {
-                    dataToBeSaveed = JsonConvert.SerializeObject(digitalTextCodeUpdateModel.Lables);
+                    customTextCodes = new DigitalTextCodeList
+                    {
+                        ObjectTableId = digitalTextCodeUpdateModel.ObjectTableId,
+                        Tenant = digitalTextCodeUpdateModel.Tenant,
+                        Labels = JsonConvert.SerializeObject(digitalTextCodeUpdateModel.Lables),
+                        CreateDate = DateTime.UtcNow,
+                        UpdateDate = DateTime.UtcNow
+                    };
                 }
 
-                var updatedObject = new DigitalTextCodeList
-                {
-                    Id = customTextCodes == null ? null : customTextCodes.Id,
-                    ObjectTableId = digitalTextCodeUpdateModel.ObjectTableId,
-                    Tenant = digitalTextCodeUpdateModel.Tenant,
-                    Labels = dataToBeSaveed,
-                    CreateDate = customTextCodes == null ? DateTime.UtcNow : customTextCodes.CreateDate,
-                    UpdateDate = DateTime.UtcNow
-                };
+                textCodeQuery.UpdateDigitalTextCodes(customTextCodes);
 
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
