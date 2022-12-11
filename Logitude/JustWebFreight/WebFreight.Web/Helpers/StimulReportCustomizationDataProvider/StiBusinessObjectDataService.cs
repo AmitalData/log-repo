@@ -25,7 +25,7 @@ namespace WebFreight.Web.Helpers.StimulReportCustomizationDataProvider
                 case "740":
                 case "AVISC":
                     {
-                        businessObjects.Add(new StiBusinessObjectData("ShipmentPM", "ShipmentPMDataProvider", "ShipmentPMDataProvider", typeof(ShipmentPM)));
+                        //businessObjects.Add(new StiBusinessObjectData("ShipmentPM", "ShipmentPMDataProvider", "ShipmentPMDataProvider", typeof(ShipmentPM)));
                         documentDataProviderArgs = new DocumentDataProviderArgs() { Type = typeof(AWBDataProvider), Category = "AWB" };
                         break;
                     }
