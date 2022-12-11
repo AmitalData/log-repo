@@ -1,4 +1,5 @@
 ﻿using Logitude.Infrastructure.BL.EntityQueryServices;
+using Logitude.Infrastructure.Data.EntityLists;
 using Logitude.SystemLogs;
 using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -113,7 +114,17 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 {
                     dataToBeSaveed = JsonConvert.SerializeObject(digitalTextCodeUpdateModel.Lables);
                 }
-                
+
+                var updatedObject = new DigitalTextCodeList
+                {
+                    Id = customTextCodes == null ? null : customTextCodes.Id,
+                    ObjectTableId = digitalTextCodeUpdateModel.ObjectTableId,
+                    Tenant = digitalTextCodeUpdateModel.Tenant,
+                    Labels = dataToBeSaveed,
+                    CreateDate = customTextCodes == null ? DateTime.UtcNow : customTextCodes.CreateDate,
+                    UpdateDate = DateTime.UtcNow
+                };
+
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (AutenticationException ex)
