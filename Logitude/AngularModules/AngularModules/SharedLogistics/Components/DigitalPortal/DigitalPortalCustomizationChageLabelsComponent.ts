@@ -75,6 +75,7 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
     public set SearchText(value: string) {
         if (this.searchText != value) {
             this.searchText = value;
+            this.BuildItemsSource(value);
         }
     }
 
