@@ -77,12 +77,16 @@ namespace WebFreight.Web.ContainerTracking
         {
             containerPM.PreCarriageLocation = containerUpdatedFields.OriginLocation;
             containerPM.PreCarriageLocationPortId = this.GetPortId(containerUpdatedFields.OriginLocation);
+            containerPM.PreCarriageETD = containerUpdatedFields.EstimatedOriginPickup;
+            containerPM.PreCarriageATD = containerUpdatedFields.ActualOriginPickup;
         }
 
         private void MapOnCarriage()
         {
             containerPM.OnCarriageLocation = containerUpdatedFields.DeliveryLocation;
             containerPM.OnCarriageLocationPortId = this.GetPortId(containerUpdatedFields.DeliveryLocation);
+            containerPM.EstimatedLIFArrival = containerUpdatedFields.EstimatedLIFArrival;
+            containerPM.ActualLIFArrival = containerUpdatedFields.ActualLIFArrival;
         }
 
         private void MapVizionPreCarriage()
@@ -95,6 +99,11 @@ namespace WebFreight.Web.ContainerTracking
             containerPM.PreCarriageLocationPortId = port.Id;
             containerPM.PreCarriageLocation = port.CombinedCode;
 
+            if (containerPM.PreCarriageLocationPortId == shipmentPM.PreCarriageFromPortId)
+            {
+                containerPM.PreCarriageETD = containerUpdatedFields.EstimatedOriginPickup;
+                containerPM.PreCarriageATD = containerUpdatedFields.ActualOriginPickup;
+            }
         }
         private void MapVizionOnCarriage()
         {
@@ -105,6 +114,12 @@ namespace WebFreight.Web.ContainerTracking
                 return;
             containerPM.OnCarriageLocationPortId = port.Id;
             containerPM.OnCarriageLocation = port.CombinedCode;
+
+            if (containerPM.OnCarriageLocationPortId == shipmentPM.OnCarriageToPortId)
+            {
+                containerPM.EstimatedLIFArrival = containerUpdatedFields.EstimatedLIFArrival;
+                containerPM.ActualLIFArrival = containerUpdatedFields.ActualLIFArrival;
+            }
         }
 
         private Port GetPortForVizion(Location portLocation)
@@ -174,8 +189,8 @@ namespace WebFreight.Web.ContainerTracking
             containerPM.CurrentStatusDate = containerUpdatedFields.CurrentStatusDate;
             containerPM.HasContainerException = containerUpdatedFields.HasContainerException;
             containerPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-            containerPM.PreCarriageETD = containerUpdatedFields.EstimatedOriginPickup;
-            containerPM.PreCarriageATD = containerUpdatedFields.ActualOriginPickup;
+            //containerPM.PreCarriageETD = containerUpdatedFields.EstimatedOriginPickup;
+            //containerPM.PreCarriageATD = containerUpdatedFields.ActualOriginPickup;
             containerPM.POLLocation = containerUpdatedFields.POLLocation;
             containerPM.EstimatedPOLLoaded = containerUpdatedFields.EstimatedPOLLoaded;
             containerPM.ActualPOLLoaded = containerUpdatedFields.ActualPOLLoaded;
@@ -195,8 +210,8 @@ namespace WebFreight.Web.ContainerTracking
             containerPM.OnCarriageETD = containerUpdatedFields.EstimatedDelivery;
             containerPM.OnCarriageATD = containerUpdatedFields.ActualDelivery;
             containerPM.LIFLocation = containerUpdatedFields.LIFLocation;
-            containerPM.EstimatedLIFArrival = containerUpdatedFields.EstimatedLIFArrival;
-            containerPM.ActualLIFArrival = containerUpdatedFields.ActualLIFArrival;
+            //containerPM.EstimatedLIFArrival = containerUpdatedFields.EstimatedLIFArrival;
+            //containerPM.ActualLIFArrival = containerUpdatedFields.ActualLIFArrival;
             containerPM.EstimatedOnCarriageDeparture = containerUpdatedFields.EstimatedOnCarriageDeparture;
             containerPM.ActualOnCarriageDeparture = containerUpdatedFields.ActualOnCarriageDeparture;
             containerPM.EmptyReturnLocation = containerUpdatedFields.EmptyReturnLocation;
