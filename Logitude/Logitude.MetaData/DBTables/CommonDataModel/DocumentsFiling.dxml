@@ -375,11 +375,17 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ReceivedByByContactId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DocumentId"
     ReferencedTable="Documents"
     ReferencedColumn="Id"
-    Ignore="true"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="ChildObjectTableId"
@@ -441,6 +447,12 @@
     ReferencedTable="Users"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ReceivedByByContactId"
+    ReferencedTable="Contacts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
   <Index
     Columns="EntityId" />
   <Index
@@ -456,5 +468,5 @@
   <Index
     Columns="ChildEntityId" />
   <Index
-	Columns="Tenant,IsDeleted,IsTransferdToQBO" />
+    Columns="Tenant,IsDeleted,IsTransferdToQBO" />
 </Table>

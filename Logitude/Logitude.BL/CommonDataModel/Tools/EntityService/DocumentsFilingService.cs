@@ -1660,10 +1660,15 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         #region Digital Portal 
 
-        public string UploadDigitalDoeument(DigitalUploaderInfo info, int tenant, Contact loggedContact)
+        public string UploadDigitalDocument(DigitalUploaderInfo info, int tenant, Contact loggedContact)
         {
-           
+            if (loggedContact == null)
+            {
+                return null;
+            }
+
             var objecttableId = GetObjectTableId(info.ObjectTableName, tenant);
+            var todatDate = TenantServerConfigration.GetCurrentDateTime(tenant);
             DocumentsFilingPM newDocument = new DocumentsFilingPM()
             {
                 DocumentTypeId = info.DocumentTypeId,
@@ -1675,17 +1680,34 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 ReceivedDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                 FileExtension = info.FileExtension,
                 FileSize = info.FileSize,
-                ReceivedByUserName = loggedContact?.EnglishName,
-                Notes = info.Notes
+                ReceivedByByContactId = loggedContact.Id,
+                Notes = info.Notes,
+                CreateDate = todatDate,
+                UpdateDate = todatDate,
+                IsFromUnifreightPodMobile = true,
             };
 
-            newDocument.SearchFields = newDocument.Code + "," + newDocument.DirectionCode + "," + loggedContact?.EnglishName + "," + loggedContact?.LocalName;
-            newDocument.Code = CodeCounter.GetNumber("DocumentsFiling", tenant).ToString();
-            newDocument.CreatedByUserId = loggedContact.Id;
-            newDocument.OwnerId = loggedContact.Id;
-            newDocument.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-            newDocument.UpdatedByUserId = loggedContact.Id;
-            newDocument.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            UserRepository userRepository = new UserRepository(tenant);
+            string loggedUserId = loggedContact.Id;
+            newDocument.CreatedByUserId = loggedUserId;
+            newDocument.UpdatedByUserId = loggedUserId;
+            newDocument.ReceivedByUserId = loggedUserId;
+            newDocument.OwnerId = loggedUserId;
+            bool isContactUser = false;
+            isContactUser = userRepository.IsContactIdExist(loggedContact.Id, tenant);
+
+            if (!isContactUser)
+            {
+                var loggedUserEmail = "system@tenant" + tenant + ".com";
+                var loggedUser = userRepository.GetSingleUserByEmail(loggedUserEmail, tenant, true);
+                loggedUserId = loggedUser.Id;
+                newDocument.ReceivedByUserId = loggedUserId;
+                newDocument.CreatedByUserId = loggedUserId;
+                newDocument.UpdatedByUserId = loggedUserId;
+                newDocument.OwnerId = loggedUserId;
+            }
+
+            newDocument.SearchFields = newDocument.Code + "," + newDocument.DirectionCode + "," + loggedContact.EnglishName + "," + loggedContact.LocalName;
             Create(newDocument, null);
 
             return newDocument?.Id;
