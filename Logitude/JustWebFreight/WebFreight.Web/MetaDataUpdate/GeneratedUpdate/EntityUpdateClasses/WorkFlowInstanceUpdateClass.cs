@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class WorkFlowInstanceUpdateClass
    {  		
-		public const string HashString = "1b75a98b7a30eab1b5a1afac33493a58";
+		public const string HashString = "c5b2387e5fa963fab0caba8a93194599";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -127,7 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Workflow Instance",
-			      				    Code =  "e809",
+			      				    Code =  "360b",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "WorkFlow",
@@ -1042,7 +1042,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature WorkFlowInstanceFeature_WorkFlowInstance_Variables = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WorkFlowInstance.Variables", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = WorkFlowInstanceObjectTable.Id, Tenant = 0, NameTextCodeCode = "WorkFlowInstance.Features.WorkFlowInstance.Variables", NameTextCodeDefaultText = @"Variables" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,WorkFlowInstanceObjectTable);
+		   Feature WorkFlowInstanceFeature_WorkFlowInstance_ShowVariables = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WorkFlowInstance.ShowVariables", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = WorkFlowInstanceObjectTable.Id, Tenant = 0, NameTextCodeCode = "WorkFlowInstance.Features.WorkFlowInstance.Variables", NameTextCodeDefaultText = @"Show Variables" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,WorkFlowInstanceObjectTable);
 
    
 	    

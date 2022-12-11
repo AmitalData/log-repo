@@ -155,11 +155,11 @@
                     <log-column [width]="'155'" [header]="'Value'">
                         <ng-template let-item>
                             <log-cell-template #logcelltemplate [IsEditMode]="false">
-                                <div *ngIf="!(item.Type | IsValueObjectPipe  : DataTypesItems)">
+                                <div *ngIf="(item.Type | IsObjectTypePipe)">
                                     <Hyperlink (click)="DisplayValueObject(item)" [FontSize]="12" [Text]="'Object'">
                                     </Hyperlink>
                                 </div>
-                                <div *ngIf="(item.Type | IsValueObjectPipe  : DataTypesItems)">
+                                <div *ngIf="!(item.Type | IsObjectTypePipe)">
                                     {{item.Value}}
                                 </div>
                             </log-cell-template>

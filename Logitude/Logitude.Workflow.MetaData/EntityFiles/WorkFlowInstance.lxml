@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Workflow Instance&quot;"
-  Code="&quot;e809&quot;"
+  Code="&quot;360b&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;WorkFlow&quot;"
@@ -1122,10 +1122,10 @@
   <AdditionalTextCodes />
   <AdditionalFeatures>
     <Feature
-      Code="&quot;WorkFlowInstance.Variables&quot;"
+      Code="&quot;WorkFlowInstance.ShowVariables&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;WorkFlowInstance.Features.WorkFlowInstance.Variables&quot;"
-      FeatureDefaultText="&quot;Variables&quot;"
+      FeatureDefaultText="&quot;Show Variables&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

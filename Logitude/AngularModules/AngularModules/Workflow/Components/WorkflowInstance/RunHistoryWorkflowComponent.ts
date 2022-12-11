@@ -203,7 +203,7 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
     }
 
     onRowSelected($event: { rowData: { Id: any; }; }) {
-        let isVariableHasPermission = FeatureLocator.HasFeaturePermession("WorkFlowInstance", "WorkFlowInstance.Variables")
+        let isVariableHasPermission = FeatureLocator.HasFeaturePermession("WorkFlowInstance", "WorkFlowInstance.ShowVariables")
         if ($event != null) {
             var logWindow = new LogitudeWindow();
             logWindow.Width = 960;

@@ -1,9 +1,1 @@
-<table style="padding:10px">
-    <tr class="table-row">
-        <td>
-          <textarea readonly>
-            {{Value}}
-          </textarea>
-        </td>
-    </tr>
-</table>
+<div *ngIf="ObjectHtml" class="json-container" [innerHTML]="ObjectHtml"></div>

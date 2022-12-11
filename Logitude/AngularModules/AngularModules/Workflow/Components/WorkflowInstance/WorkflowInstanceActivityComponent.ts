@@ -7,8 +7,6 @@ import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
 import { WorkFlowInstanceActivityList } from 'Workflow/EntityLists/WorkFlowInstanceActivityList';
 import { ApiQueryFiltersBuilder } from 'Workflow/Models/ApiQueryFiltersBuilder';
-import { DataTypesList } from 'Workflow/Models/DataTypesList';
-import { ListItem } from 'Workflow/Models/ListItem';
 import { WorkFlowInstanceActivityListService } from 'Workflow/Services/StandardLists/WorkFlowInstanceActivityListService';
 import { WorkFlowInstanceVariableListService } from 'Workflow/Services/StandardLists/WorkFlowInstanceVariableListService';
 
@@ -26,14 +24,13 @@ export class WorkflowInstanceActivityComponent extends BaseComponent {
     public VariableItemsSource: ObservableCollection;
     public WorkFlowInstanceActivityListService = new WorkFlowInstanceActivityListService()
     public WorkFlowInstanceVariableListService = new WorkFlowInstanceVariableListService()
-    public DataTypesItems: ListItem[] = new DataTypesList().Items;
 
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
         this.ActivityItemsSource = new ObservableCollection([]);
         this.VariableItemsSource = new ObservableCollection([]);
-        this.IsVariablesHasPermission = FeatureLocator.HasFeaturePermession("WorkFlowInstance", "WorkFlowInstance.Variables")
+        this.IsVariablesHasPermission = FeatureLocator.HasFeaturePermession("WorkFlowInstance", "WorkFlowInstance.ShowVariables")
     }
 
     SetWindowArgs(args: any) {

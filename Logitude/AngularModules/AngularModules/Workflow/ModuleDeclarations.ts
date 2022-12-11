@@ -40,7 +40,7 @@ import { ShowEditableVariablesTreeItemPipe } from "./Pipes/ShowEditableVariables
 import { WorkflowVersionComponent } from './Components/WorkflowVersion/WorkflowVersionComponent';
 import { CreateWorkflowVersionComponent } from './Components/WorkflowVersion/CreateWorkflowVersionComponent';
 import { WorkFlowShortTitleComponent } from './Components/ShortTitles/WorkFlowShortTitleComponent';
-import { IsValueObjectPipe } from "./Pipes/IsValueObjectPipe";
+import { IsObjectTypePipe } from "./Pipes/IsObjectTypePipe";
 import { WorkflowInstanceVariableObject } from "./Components/WorkflowInstance/WorkflowInstanceVariableObject"
 
 export const Components = [
@@ -90,7 +90,7 @@ export const Pipes = [
     EntityLabelPipe,
     ConditionDisabledPipe,
     ShowEditableVariablesTreeItemPipe,
-    IsValueObjectPipe,
+    IsObjectTypePipe,
 ];
 
 export class ModuleDeclarations {
