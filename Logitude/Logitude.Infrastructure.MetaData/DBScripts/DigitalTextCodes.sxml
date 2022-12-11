@@ -1,0 +1,1176 @@
+﻿<Script DBType="Main" Module="Infrastructure">
+  <Sql Version="1">
+    <![CDATA[	  
+	 	  INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate,  Labels) 
+	  values ('1-1', 0, null, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP,
+	  '[{
+		"Code": "Dashboard.G.Dashboard",
+		"DisplayText": "Dashboard"
+		},
+		{
+			"Code": "Dashboard.G.ShipmentsToArriveWithinOneWeek",
+			"DisplayText": "Excepted shipments to arrive within one week"
+		},
+		{
+			"Code": "Dashboard.G.InvoiceDueDateWithinOneWeek",
+			"DisplayText": "Total number invoices due date is within one week"
+		},
+		{
+			"Code": "Dashboard.G.TotalShipmentByStatus",
+			"DisplayText": "Total shipments by statuses"
+		},
+		{
+			"Code": "General.G.SearchMinNumberOfChars",
+			"DisplayText": "Please enter 3 letters at least to start searching"
+		},
+		{
+			"Code": "Dashboard.G.TotalInvoiceByStatus",
+			"DisplayText": "Total invoices by statuses"
+		},
+		{
+			"Code": "Tab.G.GeneralSearch",
+			"DisplayText": "Search by Invoice No/ Shipment No"
+		},
+		{
+			"Code": "Tab.G.Reports",
+			"DisplayText": "Reports"
+		},
+		{
+			"Code": "Tab.G.Quotes",
+			"DisplayText": "Quotes"
+		},
+		{
+			"Code": "Tab.G.Shipment",
+			"DisplayText": "Shipment"
+		},
+		{
+			"Code": "Tab.G.Invoice",
+			"DisplayText": "Invoice"
+		},
+		{
+			"Code": "Tab.G.Dashboard",
+			"DisplayText": "Dashboard"
+		},
+		{
+			"Code": "Tab.G.HelpCenter",
+			"DisplayText": "Help center"
+		},
+		{
+			"Code": "Shipment.G.Inprogress",
+			"DisplayText": "In progress"
+		},
+		{
+			"Code": "Shipment.G.All",
+			"DisplayText": "All"
+		},
+		{
+			"Code": "Shipment.G.RefreshMSG",
+			"DisplayText": "Some data might have been changed, please refresh the page to see the updated information."
+		},
+		{
+			"Code": "Shipment.G.RefreshBtn",
+			"DisplayText": "Refresh page"
+		},
+		{
+			"Code": "Shipment.G.ShowLoginMsg",
+			"DisplayText": "Login to view more information about this shipment."
+		},
+		{
+			"Code": "Shipment.G.LoginHereBtn",
+			"DisplayText": "Login Here"
+		},
+		{
+			"Code": "Shipment.G.SessionExpired",
+			"DisplayText": "Your session has been expired"
+		},
+		{
+			"Code": "Shipment.G.LoginAgainMsg",
+			"DisplayText": "Please, login again to continue."
+		},
+		{
+			"Code": "General.G.LoginBtn",
+			"DisplayText": "Log in"
+		},
+		{
+			"Code": "General.O.Settings",
+			"DisplayText": "Settings"
+		},
+		{
+			"Code": "Contact.G.GeneralInformation",
+			"DisplayText": "General information"
+		},
+		{
+			"Code": "Contact.G.PersonalInformation",
+			"DisplayText": "Personal information"
+		},
+		{
+			"Code": "Contact.G.PersonalInformationFullName",
+			"DisplayText": "Full name"
+		},
+		{
+			"Code": "Contact.F.Position",
+			"DisplayText": "Position"
+		},
+		{
+			"Code": "Contact.G.PersonalInformationDateOfBirth",
+			"DisplayText": "Date of birth"
+		},
+		{
+			"Code": "General.G.TimeZone",
+			"DisplayText": "Time Zone"
+		},
+		{
+			"Code": "Contact.O.Contacts",
+			"DisplayText": "Contacts"
+		},
+		{
+			"Code": "Contact.F.BusinessPhone",
+			"DisplayText": "Business phone"
+		},
+		{
+			"Code": "Contact.F.Mobile",
+			"DisplayText": "Mobile"
+		},
+		{
+			"Code": "Contact.G.Password",
+			"DisplayText": "Password"
+		},
+		{
+			"Code": "Contact.G.ConfirmPassword",
+			"DisplayText": "Confirm your current password"
+		},
+		{
+			"Code": "Contact.O.CurrentPassword",
+			"DisplayText": "Current password"
+		},
+		{
+			"Code": "Contact.G.EnterNewPassword",
+			"DisplayText": "Set a new password"
+		},
+		{
+			"Code": "Contact.G.NewPassword",
+			"DisplayText": "New password"
+		},
+		{
+			"Code": "Contact.G.ReTypePassword",
+			"DisplayText": "Repeat new password"
+		},
+		{
+			"Code": "General.B.Cancel",
+			"DisplayText": "Cancel"
+		},
+		{
+			"Code": "Contact.G.SaveChangesBtn",
+			"DisplayText": "Save changes"
+		},
+		{
+			"Code": "Contact.G.ChangePassword",
+			"DisplayText": "Change password"
+		},
+		{
+			"Code": "Contact.G.LogoutBtn",
+			"DisplayText": "Logout"
+		},
+		{
+			"Code": "Contact.G.ConfirmLogoutBtn",
+			"DisplayText": "Confirm logout"
+		},
+		{
+			"Code": "Contact.G.ConfirmLogoutMsg",
+			"DisplayText": "Are you sure you want to logout?"
+		},
+		{
+			"Code": "General.B.Confirm",
+			"DisplayText": "Confirm"
+		},
+		{
+			"Code": "General.G.PasswordChange",
+			"DisplayText": "Password change"
+		},
+		{
+			"Code": "General.G.CreatePassword",
+			"DisplayText": "Create password"
+		},
+		{
+			"Code": "General.G.ConfirmPassword",
+			"DisplayText": "Confirm password"
+		},
+		{
+			"Code": "General.G.PasswordInfo1",
+			"DisplayText": "8 or more characters"
+		},
+		{
+			"Code": "General.G.PasswordInfo2",
+			"DisplayText": "Upper & lowercase letters"
+		},
+		{
+			"Code": "General.G.PasswordInfo3",
+			"DisplayText": "At least one number"
+		},
+		{
+			"Code": "General.G.PasswordInfo4",
+			"DisplayText": "Not more than 3 consecutive repeating characters"
+		},
+		{
+			"Code": "General.G.LoginMsg",
+			"DisplayText": "Enter your credentials to access your account."
+		},
+		{
+			"Code": "Contact.F.Email",
+			"DisplayText": "Email"
+		},
+		{
+			"Code": "Contact.F.Password",
+			"DisplayText": "Password"
+		},
+		{
+			"Code": "General.G.EmailPlaceholder",
+			"DisplayText": "email@example.com"
+		},
+		{
+			"Code": "General.G.PasswordPlaceholder",
+			"DisplayText": "password"
+		},
+		{
+			"Code": "General.G.ResetPassword",
+			"DisplayText": "Reset Password"
+		},
+		{
+			"Code": "General.G.ForgetPasswordMsg",
+			"DisplayText": "Please enter your Email and press submit."
+		},
+		{
+			"Code": "Contact.F.Email",
+			"DisplayText": "E-mail"
+		},
+		{
+			"Code": "General.G.EmailPlaceholder",
+			"DisplayText": "email@example.com"
+		},
+		{
+			"Code": "General.G.ForgetPasswwordTroubleLogging",
+			"DisplayText": "Have trouble logging in?"
+		},
+		{
+			"Code": "General.G.CopiedToClipboard",
+			"DisplayText": "Copied to your clipboard"
+		},
+		{
+			"Code": "General.G.DownloadExcel",
+			"DisplayText": "Download Excel"
+		},
+		{
+			"Code": "General.G.ApplyFilter",
+			"DisplayText": "Apply filter"
+		},
+		{
+			"Code": "General.G.EditFilters",
+			"DisplayText": "Edit filter"
+		},
+		{
+			"Code": "General.G.MultiShipments",
+			"DisplayText": "Multi shipments"
+		},
+		{
+			"Code": "General.G.NoMatchingResultsFound",
+			"DisplayText": "No matching results found"
+		},
+		{
+			"Code": "General.G.OnlineViewLoginDirective",
+			"DisplayText": "Login now to view all information about events, documents and more"
+		},
+		{
+			"Code": "General.G.InformationAvailablilityMsg",
+			"DisplayText": "This information is only available to logged-in users"
+		},
+		{
+			"Code": "General.O.LastLogin",
+			"DisplayText": "Last login"
+		},
+		{
+			"Code": "General.G.PackageType",
+			"DisplayText": "Package type"
+		},
+		{
+			"Code": "General.O.NoteText",
+			"DisplayText": "Note text"
+		},
+		{
+			"Code": "General.G.SaveChangesMsg",
+			"DisplayText": "Your changes have been successfully saved!"
+		},
+		{
+			"Code": "General.G.PasswordIssueMsg",
+			"DisplayText": "The current password is wrong!"
+		},
+		{
+			"Code": "Contact.G.PositionValidationMsg",
+			"DisplayText": "Position is required."
+		},
+		{
+			"Code": "Contact.G.FullNameValidationMsg",
+			"DisplayText": "Full name is required."
+		},
+		{
+			"Code": "General.G.CurrentPasswordValidationMsg",
+			"DisplayText": "Current password is required."
+		},
+		{
+			"Code": "General.G.NewPasswordValidationMsg",
+			"DisplayText": "New password is required."
+		},
+		{
+			"Code": "General.G.NewPasswordValidationErrorMsg",
+			"DisplayText": "New password does not meet the below conditions."
+		},
+		{
+			"Code": "General.G.ConfirmNewPasswordValidationErrorMsg",
+			"DisplayText": "The passwords you entered do not match."
+		},
+		{
+			"Code": "General.G.VerificationCode",
+			"DisplayText": "Verification code"
+		},
+		{
+			"Code": "General.G.ForgotPasswordMsg",
+			"DisplayText": "Forgot your password?"
+		},
+		{
+			"Code": "General.G.CapatchPlaceholder",
+			"DisplayText": "Type the text you see"
+		},
+		{
+			"Code": "General.G.SubmitBtn",
+			"DisplayText": "Submit"
+		},
+		{
+			"Code": "General.G.SaveBtn",
+			"DisplayText": "Save"
+		},
+		{
+			"Code": "General.G.DownloadAll",
+			"DisplayText": "Download all"
+		}]');
+
+	  declare @shipmentObjectTableId as varchar(15)
+	  set @shipmentObjectTableId = (select Id from ObjectTables where [Name] = 'Shipment' and Tenant = 0 )
+
+	  INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, Labels) 
+	  values ('1-2', 0, @shipmentObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,
+	  '[{
+			"Code": "Shipment.Q.AllShipments",
+			"DisplayText": "Shipments"
+		},
+		{
+			"Code": "Shipment.G.All",
+			"DisplayText": "All"
+		},
+		{
+			"Code": "Shipment.G.Inprogress",
+			"DisplayText": "In progress"
+		},
+		{
+			"Code": "General.O.Filters",
+			"DisplayText": "Filters"
+		},
+		{
+			"Code": "General.G.ClearFilter",
+			"DisplayText": "Clear filters"
+		},
+		{
+			"Code": "Shipment.G.TransportMode",
+			"DisplayText": "Transport mode"
+		},
+		{
+			"Code": "Shipment.G.ShipmentStatus",
+			"DisplayText": "Shipment status"
+		},
+		{
+			"Code": "Shipment.G.MyPartner",
+			"DisplayText": "My partner"
+		},
+		{
+			"Code": "Shipment.F.From",
+			"DisplayText": "From"
+		},
+		{
+			"Code": "Shipment.G.FinalDestination",
+			"DisplayText": "Final destination"
+		},
+		{
+			"Code": "Shipment.G.CreateDate",
+			"DisplayText": "Create date"
+		},
+		{
+			"Code": "Shipment.G.ETADate",
+			"DisplayText": "ETA date"
+		},
+		{
+			"Code": "Shipment.G.SearchPartner",
+			"DisplayText": "Search partner"
+		},
+		{
+			"Code": "Shipment.G.SearchFrom",
+			"DisplayText": "Search From"
+		},
+		{
+			"Code": "Shipment.G.SearchDestination",
+			"DisplayText": "Search destination"
+		},
+		{
+			"Code": "Shipment.G.SearchPlaceholder",
+			"DisplayText": "Search ports/ references/ carrier"
+		},
+		{
+			"Code": "Shipment.G.SortBy",
+			"DisplayText": "Sort by"
+		},
+		{
+			"Code": "Shipment.G.AllTime",
+			"DisplayText": "All time"
+		},
+		{
+			"Code": "General.G.SearchMinNumberOfChars",
+			"DisplayText": "Please enter 3 letters at least to start searching"
+		},
+		{
+			"Code": "General.B.DownloadExcel",
+			"DisplayText": "Download Excel"
+		},
+		{
+			"Code": "Shipment.G.References",
+			"DisplayText": "References"
+		},
+		{
+			"Code": "Shipment.O.Overview.MAWB",
+			"DisplayText": "MAWB"
+		},
+		{
+			"Code": "Shipment.G.Notes",
+			"DisplayText": "Notes"
+		},
+		{
+			"Code": "Shipment.G.DescriptionOfGoods",
+			"DisplayText": "Description of goods"
+		},
+		{
+			"Code": "Shipment.G.StatusUpdated",
+			"DisplayText": "Status updated"
+		},
+		{
+			"Code": "Shipment.F.ConsigneeName",
+			"DisplayText": "Consignee"
+		},
+		{
+			"Code": "Shipment.F.ShipperName",
+			"DisplayText": "Shipper"
+		},
+		{
+			"Code": "Shipment.G.OBL",
+			"DisplayText": "OBL"
+		},
+		{
+			"Code": "Shipment.G.CMR/RWB#",
+			"DisplayText": "CMR/ RWB#/ PRO#"
+		},
+		{
+			"Code": "Shipment.G.Archive",
+			"DisplayText": "archive"
+		},
+		{
+			"Code": "Shipment.G.Archived",
+			"DisplayText": "archived"
+		},
+		{
+			"Code": "Shipment.G.Unarchive",
+			"DisplayText": "Unarchive"
+		},
+		{
+			"Code": "Shipment.G.GeneralInformation",
+			"DisplayText": "General information"
+		},
+		{
+			"Code": "Shipment.G.FinalDestinationNoResultMsg",
+			"DisplayText": "No final destination found!"
+		},
+		{
+			"Code": "Shipment.F.House",
+			"DisplayText": "House"
+		},
+		{
+			"Code": "Shipment.G.Houses",
+			"DisplayText": "Houses"
+		},
+		{
+			"Code": "Shipment.O.Master",
+			"DisplayText": "Master"
+		},
+		{
+			"Code": "Shipment.G.Invoiced",
+			"DisplayText": "Invoiced"
+		},
+		{
+			"Code": "Shipment.F.IncotermCode",
+			"DisplayText": "Incoterm"
+		},
+		{
+			"Code": "Shipment.F.AccountManagerUserName",
+			"DisplayText": "Account Manager"
+		},
+		{
+			"Code": "Shipment.F.SalesmanUserName",
+			"DisplayText": "Salesman"
+		},
+		{
+			"Code": "Shipment.G.ShipmentLevel",
+			"DisplayText": "Shipment level"
+		},
+		{
+			"Code": "Shipment.G.EquipmentInformation",
+			"DisplayText": "Equipments information"
+		},
+		{
+			"Code": "Shipment.G.TotalInformation",
+			"DisplayText": "Total information"
+		},
+		{
+			"Code": "Shipment.F.NumberOfPackages",
+			"DisplayText": "Packages"
+		},
+		{
+			"Code": "Shipment.G.Volume",
+			"DisplayText": "Volume"
+		},
+		{
+			"Code": "Shipment.G.GrossWeight",
+			"DisplayText": "Gross weight"
+		},
+		{
+			"Code": "Shipment.G.DangerousGoods",
+			"DisplayText": "Dangerous goods"
+		},
+		{
+			"Code": "Shipment.G.Customer",
+			"DisplayText": "Customer"
+		},
+		{
+			"Code": "Shipment.G.ChWeight",
+			"DisplayText": "Ch. weight"
+		},
+		{
+			"Code": "Shipment.G.PackagesInformation",
+			"DisplayText": "Packages information"
+		},
+		{
+			"Code": "Shipment.G.ContainerType",
+			"DisplayText": "Type"
+		},
+		{
+			"Code": "Shipment.G.ContainerNumber",
+			"DisplayText": "Container number"
+		},
+		{
+			"Code": "General.G.Description",
+			"DisplayText": "Description"
+		},
+		{
+			"Code": "Shipment.G.CarrierLastStatusName",
+			"DisplayText": "Last status"
+		},
+		{
+			"Code": "Shipment.F.Reference",
+			"DisplayText": "Reference"
+		},
+		{
+			"Code": "Shipment.G.SealNumber",
+			"DisplayText": "Seal number"
+		},
+		{
+			"Code": "Shipment.F.NumberOfContainers",
+			"DisplayText": "Containers"
+		},
+		{
+			"Code": "Shipment.G.PackagesEmptyResultMsg",
+			"DisplayText": "No packages items exist"
+		},
+		{
+			"Code": "Shipment.F.Routing",
+			"DisplayText": "Routing"
+		},
+		{
+			"Code": "Shipment.G.MainRouteInformation",
+			"DisplayText": "Main route information"
+		},
+		{
+			"Code": "Shipment.G.PreCarrigeInformation",
+			"DisplayText": "Pre carriage information"
+		},
+		{
+			"Code": "Shipment.G.MainCarrigeInformation",
+			"DisplayText": "Main carriage information"
+		},
+		{
+			"Code": "Shipment.G.Transshipment1Information",
+			"DisplayText": "Transshipment 1 information"
+		},
+		{
+			"Code": "Shipment.G.Transshipment2Information",
+			"DisplayText": "Transshipment 2 information"
+		},
+		{
+			"Code": "Shipment.G.Transshipment3Information",
+			"DisplayText": "Transshipment 3 information"
+		},
+		{
+			"Code": "Shipment.G.OnCarrigeInformation",
+			"DisplayText": "On carriage information"
+		},
+		{
+			"Code": "Shipment.G.PortOfLoading",
+			"DisplayText": "Port of loading/Port of discharge"
+		},
+		{
+			"Code": "Shipment.G.GatewayDestinationLable",
+			"DisplayText": "Gateway/Destination"
+		},
+		{
+			"Code": "Shipment.G.TransitTime",
+			"DisplayText": "Transit time"
+		},
+		{
+			"Code": "Shipment.F.To",
+			"DisplayText": "To"
+		},
+		{
+			"Code": "Shipment.F.FlightDate",
+			"DisplayText": "Departure date"
+		},
+		{
+			"Code": "Shipment.O.Routings.ATD",
+			"DisplayText": "Departure date (ATD)"
+		},
+		{
+			"Code": "Shipment.O.Routings.ETD",
+			"DisplayText": "Departure date (ETD)"
+		},
+		{
+			"Code": "Shipment.O.Routings.Carrier",
+			"DisplayText": "Carrier"
+		},
+		{
+			"Code": "Shipment.O.Routings.CarrierNo",
+			"DisplayText": "Carrier No"
+		},
+		{
+			"Code": "Shipment.O.Routings.Airline",
+			"DisplayText": "Airline"
+		},
+		{
+			"Code": "Shipment.G.FlightNumber",
+			"DisplayText": "Flight number"
+		},
+		{
+			"Code": "Shipment.G.VesselName",
+			"DisplayText": "Vessel name"
+		},
+		{
+			"Code": "Shipment.G.Document",
+			"DisplayText": "Document"
+		},
+		{
+			"Code": "Shipment.G.Documents",
+			"DisplayText": "Documents"
+		},
+		{
+			"Code": "Shipment.G.DocumentsFileName",
+			"DisplayText": "File name"
+		},
+		{
+			"Code": "Shipment.G.DocumentType",
+			"DisplayText": "Document Type"
+		},
+		{
+			"Code": "Shipment.G.Date",
+			"DisplayText": "Date"
+		},
+		{
+			"Code": "Shipment.G.Upload",
+			"DisplayText": "Upload"
+		},
+		{
+			"Code": "Shipment.G.ViewDocument",
+			"DisplayText": "View document"
+		},
+		{
+			"Code": "Shipment.G.InvoicesLable",
+			"DisplayText": "Invoices"
+		},
+		{
+			"Code": "ARInvoice.G.InvoiceNumber",
+			"DisplayText": "Number"
+		},
+		{
+			"Code": "ARInvoice.G.InvoiceType",
+			"DisplayText": "Invoice type"
+		},
+		{
+			"Code": "ARInvoice.G.TotalAmount",
+			"DisplayText": "Total amount"
+		},
+		{
+			"Code": "ARInvoice.G.OpenAmount",
+			"DisplayText": "Open amount"
+		},
+		{
+			"Code": "ARInvoice.G.DueDate",
+			"DisplayText": "Due date"
+		},
+		{
+			"Code": "Shipment.F.ViewConsolidation",
+			"DisplayText": "View consolidation"
+		},
+		{
+			"Code": "Shipment.G.View",
+			"DisplayText": "View"
+		},
+		{
+			"Code": "General.G.Download",
+			"DisplayText": "Download"
+		},
+		{
+			"Code": "Shipment.TH.Partners",
+			"DisplayText": "Partners"
+		},
+		{
+			"Code": "Shipment.G.Address1",
+			"DisplayText": "Address 1"
+		},
+		{
+			"Code": "Shipment.G.Address2",
+			"DisplayText": "Address 2"
+		},
+		{
+			"Code": "General.G.Contact",
+			"DisplayText": "Contact"
+		},
+		{
+			"Code": "General.G.PhoneNumber",
+			"DisplayText": "Phone"
+		},
+		{
+			"Code": "Shipment.G.Reference1",
+			"DisplayText": "Reference 1"
+		},
+		{
+			"Code": "Shipment.G.Reference2",
+			"DisplayText": "Reference 2"
+		},
+		{
+			"Code": "Shipment.F.ShipperName",
+			"DisplayText": "Shipper"
+		},
+		{
+			"Code": "Shipment.G.Qty",
+			"DisplayText": "Qty"
+		},
+		{
+			"Code": "Shipment.F.ConsigneeName",
+			"DisplayText": "Consignee"
+		},
+		{
+			"Code": "Shipment.F.AgentName",
+			"DisplayText": "Agent"
+		},
+		{
+			"Code": "Shipment.F.IssuingCarrierAgentId",
+			"DisplayText": "Issuing Carriers Agent"
+		},
+		{
+			"Code": "Shipment.O.Overview.ShipperNotExporter",
+			"DisplayText": "Shipper Not Exporter"
+		},
+		{
+			"Code": "Shipment.O.Overview.ConsigneeNotImporter",
+			"DisplayText": "Consignee Not Importer"
+		},
+		{
+			"Code": "Shipment.F.Notify1Id",
+			"DisplayText": "Notify 1"
+		},
+		{
+			"Code": "Shipment.F.Notify2Id",
+			"DisplayText": "Notify 2"
+		},
+		{
+			"Code": "Shipment.O.Overview.CustomAgentExport",
+			"DisplayText": "Custom Agent Export"
+		},
+		{
+			"Code": "Shipment.O.Overview.CustomAgentImport",
+			"DisplayText": "Custom Agent Import"
+		},
+		{
+			"Code": "Shipment.F.CustomClearancePointId",
+			"DisplayText": "Custom Clearance Point"
+		},
+		{
+			"Code": "Shipment.F.ReleasingAgentId",
+			"DisplayText": "Releasing Agent"
+		},
+		{
+			"Code": "Shipment.F.ColoaderId",
+			"DisplayText": "Coloader"
+		},
+		{
+			"Code": "Shipment.F.FreightForwarderId",
+			"DisplayText": "Freight Forwarder"
+		},
+		{
+			"Code": "Shipment.F.TruckerId",
+			"DisplayText": "Trucker"
+		},
+		{
+			"Code": "Shipment.F.ConsolidatorName",
+			"DisplayText": "Consolidator"
+		},
+		{
+			"Code": "Shipment.TH.Events",
+			"DisplayText": "Events"
+		},
+		{
+			"Code": "Shipment.G.EventDate",
+			"DisplayText": "Date"
+		},
+		{
+			"Code": "Shipment.G.EventTime",
+			"DisplayText": "Time"
+		},
+		{
+			"Code": "EventType.F.EnglishName",
+			"DisplayText": "Name"
+		},
+		{
+			"Code": "Shipment.O.Routings.WarehouseLegRemarks",
+			"DisplayText": "Remarks"
+		},
+		{
+			"Code": "Shipment.G.Timeline",
+			"DisplayText": "Timeline"
+		},
+		{
+			"Code": "General.G.NoDataDefaultMSG",
+			"DisplayText": "You don’t have any information here All information will be displayed here, when it will be added by the forwarder"
+		},
+		{
+			"Code": "Shipment.G.NoResult",
+			"DisplayText": "No results found"
+		},
+		{
+			"Code": "General.G.DownloadData",
+			"DisplayText": "Download data"
+		},
+		{
+			"Code": "General.G.DownloadDataMSG",
+			"DisplayText": "Preparing data for downloading. This may take several seconds. Please, do not refresh the page or close this window."
+		},
+		{
+			"Code": "Shipment.G.UploadDocuments",
+			"DisplayText": "Upload Documents"
+		},
+		{
+			"Code": "Shipment.G.CancelButton",
+			"DisplayText": "Cancel"
+		},
+		{
+			"Code": "Shipment.G.SearchDefaultMSG",
+			"DisplayText": "No shipments results found Sorry, we could not find what you are looking for, Please try another way."
+		},
+		{
+			"Code": "Shipment.G.UploadingDocumentHeaderMsg",
+			"DisplayText": "Uploading document"
+		},
+		{
+			"Code": "General.G.DownloadDataMSG",
+			"DisplayText": "Preparing data for Uploading. This may take several seconds. Please, do not refresh the page or close this window."
+		},
+		{
+			"Code": "General.G.DownloadDataSuccessMSG",
+			"DisplayText": "Done!"
+		},
+		{
+			"Code": "General.G.DownloadDataSuccessMSG2",
+			"DisplayText": "Done"
+		},
+		{
+			"Code": "General.G.DownloadDataPreparing",
+			"DisplayText": "Preparing data..."
+		},
+		{
+			"Code": "Shipment.G.ATD",
+			"DisplayText": "ATD"
+		},
+		{
+			"Code": "Shipment.G.Airline",
+			"DisplayText": "Airline"
+		},
+		{
+			"Code": "Shipment.G.Shippingline",
+			"DisplayText": "Shipping line"
+		},
+		{
+			"Code": "Shipment.F.TruckerId",
+			"DisplayText": "Trucker"
+		},
+		{
+			"Code": "Shipment.G.ContainersLines",
+			"DisplayText": "Containers lines"
+		}]');
+	  
+	declare @invocieObjectTableId as varchar(15)
+	set @invocieObjectTableId = (select Id from ObjectTables where [Name] = 'ARInvoice' and Tenant = 0)
+
+	INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, Labels) 
+	values ('1-3', 0, @invocieObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,
+		  '[{
+				"Code": "ARInvoice.G.Invoicing",
+				"DisplayText": "Invoicing"
+			},
+			{
+				"Code": "General.O.Filters",
+				"DisplayText": "Filters"
+			},
+			{
+				"Code": "General.G.ClearFilter",
+				"DisplayText": "Clear filters"
+			},
+			{
+				"Code": "ARInvoice.F.StatusName",
+				"DisplayText": "Status"
+			},
+			{
+				"Code": "ARInvoice.G.CreateDate",
+				"DisplayText": "Create date"
+			},
+			{
+				"Code": "ARInvoice.G.DueDate",
+				"DisplayText": "Due date"
+			},
+			{
+				"Code": "ARInvoice.G.TotalAmount",
+				"DisplayText": "Total Amount"
+			},
+			{
+				"Code": "ARInvoice.G.TotalAmount2",
+				"DisplayText": "Total amount"
+			},
+			{
+				"Code": "ARInvoice.G.OpenAmount",
+				"DisplayText": "Open Amount"
+			},
+			{
+				"Code": "ARInvoice.G.AllTime",
+				"DisplayText": "All time"
+			},
+			{
+				"Code": "ARInvoice.G.SearchPlaceholder",
+				"DisplayText": "Search bill to / ref# / invoice#"
+			},
+			{
+				"Code": "ARInvoice.G.SortBy",
+				"DisplayText": "Sort by"
+			},
+			{
+				"Code": "General.B.DownloadExcel",
+				"DisplayText": "Download Excel"
+			},
+			{
+				"Code": "ARInvoice.G.All",
+				"DisplayText": "All"
+			},
+			{
+				"Code": "ARInvoice.G.Unpaid",
+				"DisplayText": "Unpaid"
+			},
+			{
+				"Code": "ARInvoice.G.MyReference",
+				"DisplayText": "My reference"
+			},
+			{
+				"Code": "ARInvoice.G.YourReference",
+				"DisplayText": "Your reference"
+			},
+			{
+				"Code": "ARInvoice.G.CreateDate",
+				"DisplayText": "Created"
+			},
+			{
+				"Code": "ARInvoice.G.GeneralInformation",
+				"DisplayText": "General information"
+			},
+			{
+				"Code": "ARInvoice.G.ReferenceNumber",
+				"DisplayText": "Reference #"
+			},
+			{
+				"Code": "ARInvoice.G.AmountDue",
+				"DisplayText": "Amount due"
+			},
+			{
+				"Code": "ARInvoice.G.PaymentTerm",
+				"DisplayText": "Payment term"
+			},
+			{
+				"Code": "ARInvoice.G.InvoiceDate",
+				"DisplayText": "Invoice date"
+			},
+			{
+				"Code": "ARInvoice.G.PrintNotes",
+				"DisplayText": "Print notes"
+			},
+			{
+				"Code": "ARInvoice.G.InvoiceDetails",
+				"DisplayText": "Invoice Details"
+			},
+			{
+				"Code": "ARInvoice.TH.Details",
+				"DisplayText": "Details"
+			},
+			{
+				"Code": "ARInvoice.F.Description",
+				"DisplayText": "Description"
+			},
+			{
+				"Code": "ARInvoiceLine.F.MeasurementId",
+				"DisplayText": "UOM"
+			},
+			{
+				"Code": "ARInvoiceLine.F.Quantity",
+				"DisplayText": "Quantity"
+			},
+			{
+				"Code": "ARInvoiceLine.F.UnitPrice",
+				"DisplayText": "Unit Price"
+			},
+			{
+				"Code": "ARInvoiceLine.F.Amount",
+				"DisplayText": "Amount"
+			},
+			{
+				"Code": "ARInvoiceLine.F.VatTypeId",
+				"DisplayText": "VAT Type"
+			},
+			{
+				"Code": "ARInvoice.G.Totals",
+				"DisplayText": "Totals"
+			},
+			{
+				"Code": "ARInvoice.G.Subtotal",
+				"DisplayText": "Subtotal"
+			},
+			{
+				"Code": "ARInvoice.G.Total",
+				"DisplayText": "Total"
+			},
+			{
+				"Code": "Accounting.General.O.Payments",
+				"DisplayText": "Payments"
+			},
+			{
+				"Code": "ARInvoice.TH.Details",
+				"DisplayText": "Details"
+			},
+			{
+				"Code": "ARInvoice.G.Number",
+				"DisplayText": "Number"
+			},
+			{
+				"Code": "ARInvoice.G.Type",
+				"DisplayText": "Type"
+			},
+			{
+				"Code": "ARInvoice.F.Reference",
+				"DisplayText": "Reference"
+			},
+			{
+				"Code": "ARPayment.F.AmountInPaymentCurrency",
+				"DisplayText": "Amount"
+			},
+			{
+				"Code": "ARInvoice.F.AmountPaid",
+				"DisplayText": "Amount paid"
+			},
+			{
+				"Code": "ARInvoice.G.OpenAmount2",
+				"DisplayText": "Open amount"
+			},
+			{
+				"Code": "ARInvoice.G.InvoiceAmount",
+				"DisplayText": "Invoice amount"
+			},
+			{
+				"Code": "ARInvoice.G.InvoiceAmountPaid",
+				"DisplayText": "Invoice amount paid"
+			},
+			{
+				"Code": "ARInvoice.G.InvoiceAmountDue",
+				"DisplayText": "Invoice amount due"
+			},
+			{
+				"Code": "ARInvoice.G.ConstituentInvoices",
+				"DisplayText": "Constituent Invoices"
+			},
+			{
+				"Code": "ARInvoice.G.ShipmentReference",
+				"DisplayText": "Shipment reference"
+			},
+			{
+				"Code": "ARInvoice.G.MasterNo",
+				"DisplayText": "Master no"
+			},
+			{
+				"Code": "ARInvoice.G.HouseNo",
+				"DisplayText": "House no"
+			},
+			{
+				"Code": "ARInvoice.G.ShipmentNo",
+				"DisplayText": "Shipment no"
+			},
+			{
+				"Code": "ARInvoice.O.VATListLable",
+				"DisplayText": "VAT"
+			},
+			{
+				"Code": "General.G.Download",
+				"DisplayText": "Download"
+			},
+			{
+				"Code": "General.G.NoDataDefaultMSG",
+				"DisplayText": "You do not have any information here All information will be displayed here, when it will be added by the forwarder"
+			},
+			{
+				"Code": "ARInvoice.G.NoInvoiceMSG",
+				"DisplayText": "Information about invoices will be displayed here, when they will be added by the forwarder."
+			},
+			{
+				"Code": "General.G.DownloadData",
+				"DisplayText": "Download data"
+			},
+			{
+				"Code": "General.G.DownloadDataMSG",
+				"DisplayText": "Preparing data for downloading. This may take several seconds. Please, do not refresh the page or close this window."
+			},
+			{
+				"Code": "General.G.DownloadDataSuccessMSG",
+				"DisplayText": "Done!"
+			},
+			{
+				"Code": "General.G.DownloadDataPreparing",
+				"DisplayText": "Preparing data..."
+			},
+			{
+				"Code": "General.G.ReferenceNo",
+				"DisplayText": "Reference no"
+			}]');
+    ]]>       
+  </Sql>
+</Script>
