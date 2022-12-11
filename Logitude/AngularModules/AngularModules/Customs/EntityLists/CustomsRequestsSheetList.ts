@@ -32,6 +32,7 @@ export class CustomsRequestsSheetList {
 	IsRestored: boolean;
 	AnalyzeDcaAggregateKey: string;
 	FutureSendDateTime: Date;
+	TenantPriority: number;
 	
 }
  
