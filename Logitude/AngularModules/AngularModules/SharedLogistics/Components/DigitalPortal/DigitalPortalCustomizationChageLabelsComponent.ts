@@ -6,7 +6,8 @@ import { DigitalPortalCustomizationMainComponent } from './DigitalPortalCustomiz
 import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
-
+import { DigitalTextService } from '../../../Infrastructure/Services/WebServices/DigitalTextService'
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 declare var window: any;
 
 @Component({
@@ -14,14 +15,14 @@ declare var window: any;
 })
 
 export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponent {
-    private myService: GeneralDomainService;
+    private digitalTextService: DigitalTextService;
     private CurrentSession = SessionLocator.SelectedSession;
     public customizationEditComponent: DigitalPortalCustomizationMainComponent;
     public LabelsItemsSource: ObservableCollection;
 
     constructor(private _entityListService: EntityListService) {
         super();
-        this.myService = new GeneralDomainService();
+        this.digitalTextService = new DigitalTextService();
         this.LabelsItemsSource = new ObservableCollection([]);
     }
 
@@ -36,33 +37,37 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
     set SelectedObjectTableItem(value: CodeNameClass) {
         if (this.selectedObjectTableItem != value) {
             this.selectedObjectTableItem = value;
+            this.BuildItemsSource();
         }
     }
 
     private FillObjectTablesFiltersList() {
         this.ObjectTablesFilterList = [];
         var objectTbaleName = "Shipment";
-        var objectTableId = window.ObjectTables.filter(d => d.Name === objectTbaleName)[0];
-        this.ObjectTablesFilterList.push(new CodeNameClass("Shipments", objectTableId));
+        var objectTable = window.ObjectTables.filter(d => d.Name === objectTbaleName)[0];
+        this.ObjectTablesFilterList.push(new CodeNameClass("Shipments", objectTable.Id));
 
         objectTbaleName = "ARInvoice";
-        objectTableId = window.ObjectTables.filter(d => d.Name === objectTbaleName)[0];
-        this.ObjectTablesFilterList.push(new CodeNameClass("Invoices", objectTableId));
+        objectTable = window.ObjectTables.filter(d => d.Name === objectTbaleName)[0];
+        this.ObjectTablesFilterList.push(new CodeNameClass("Invoices", objectTable.Id));
 
         objectTbaleName = "Quote";
-        objectTableId = window.ObjectTables.filter(d => d.Name === objectTbaleName)[0];
-        this.ObjectTablesFilterList.push(new CodeNameClass("Quotes", objectTableId));
+        objectTable = window.ObjectTables.filter(d => d.Name === objectTbaleName)[0];
+        this.ObjectTablesFilterList.push(new CodeNameClass("Quotes", objectTable.Id));
 
-        objectTbaleName = "General";
-        objectTableId = window.ObjectTables.filter(d => d.Name === objectTbaleName)[0];
         this.ObjectTablesFilterList.push(new CodeNameClass("General", null));
         this.selectedObjectTableItem = this.ObjectTablesFilterList[0];
     }
 
     BuildItemsSource(searchText: string = null) {
         var labelsList: CustomizationLabelItem[] = [];
-
-        this.LabelsItemsSource.InsertCollection(labelsList);
+        var objectTableId = this.SelectedObjectTableItem.Name;
+        this.digitalTextService.GetTextCodesByFilters(null, objectTableId).subscribe((myResult) => {
+            if (!myResult.HasError) {
+                labelsList = myResult.Result;
+                this.LabelsItemsSource.InsertCollection(labelsList);
+            }
+        });
     }
 
     private searchText: string = null;
@@ -70,6 +75,7 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
     public set SearchText(value: string) {
         if (this.searchText != value) {
             this.searchText = value;
+            this.BuildItemsSource(value);
         }
     }
 
