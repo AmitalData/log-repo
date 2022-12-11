@@ -75,13 +75,13 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.SetAdvanceSettingItems();
         this.SetTimeOverTimeValue();
         this.SetUIForOperator();
-
+        this.SetAdvanceSettingVisibleForTimeOverTime();
     }
     SetUIProperties() {
         this.UIProperties.SetValidity("MaximumGrouping", this.ObjectTableName, true, "");
 
         if (this.MaximumGrouping < 1 || this.MaximumGrouping > 50) {
-            this.UIProperties.SetValidity("MaximumGrouping", this.ObjectTableName, false, "Maximum Grouping must be greater than 1 and less than 50");
+            this.UIProperties.SetValidity("MaximumGrouping", this.ObjectTableName, false, "Maximum Grouping must be Greater Than 1 and Less Than 50");
         }
 
         this.UIProperties.SetEnabled("ComparisonPeriod", this.ObjectTableName, this.TimeOverTime);
@@ -92,7 +92,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.UIProperties.SetValidity("ComparisonPeriod", this.ObjectTableName, true, "");
 
         if (this.ComparisonPeriod < 0) {
-            this.UIProperties.SetValidity("ComparisonPeriod", this.ObjectTableName, false, "Comparison Period must be greater than 0");
+            this.UIProperties.SetValidity("ComparisonPeriod", this.ObjectTableName, false, "Comparison Period must be Greater Than 0");
         }
     }
 
@@ -207,7 +207,6 @@ export class AddEditWidgetComponent extends BaseComponent {
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget Entity Change ", Message: "Changed To" + this.EntityPM.EntityId, DashboardId: this.DashboardPM?.Id });
         }
         this.TimeOverTime = false;
-        this.ComparisonPeriod = 0;
         this.SetTimeOverTimeValue();
     }
 
@@ -223,7 +222,7 @@ export class AddEditWidgetComponent extends BaseComponent {
             this.SetMaximumGrouping();
             this.SetAdvanceSettingItems();
             this.SetTimeOverTimeDefaultValue();
-            this.SetTimeOverTimeValue();
+            this.SetTimeOverTimeValue();            
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget Type Change ", Message: "Changed To" + this.EntityPM.TypeCode, DashboardId: this.DashboardPM?.Id });
             this.isAdvancedSettingLinkVisible = true;
         }
@@ -235,7 +234,15 @@ export class AddEditWidgetComponent extends BaseComponent {
         }
     }
 
+    private SetAdvanceSettingVisibleForTimeOverTime(){
+        if(this.TimeOverTime){
+            this.isAdvancedSettingVisible = true;
+            this.isAdvancedSettingForKPI = true;
+        }
+    }
+
     private SetTimeOverTimeValue() {
+        
         if (this.TypeCode != "kpi" || !this.TimeOverTime) {
             this.ComparisonOperator = null;
             this.ComparisonPeriod = null;
@@ -296,6 +303,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         if (!this.isMaximumGroupingVisible) {
             this.MaximumGrouping = null;
         }
+        
     }
 
     get GroupById() { return this.EntityPM.GroupById; }
