@@ -34,6 +34,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string SearchFields { get; set; }
         [Column("Inactive")]
 	    public bool Inactive { get; set; }
+        [Column("ActiveInExport")]
+	    public bool ActiveInExport { get; set; }
     }
 }
 	 
