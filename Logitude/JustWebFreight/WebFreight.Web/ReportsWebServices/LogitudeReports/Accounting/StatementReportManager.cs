@@ -666,7 +666,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                     IQueryable<ARInvoice> iQueryable_ARInvoice = aRInvoiceRepository.GetUnpaidAndDraftARInvoices(tenant);
                                     IQueryable<ARPayment> iQueryable_ARPayment = aRPaymentRepository.GetOpenedARPayments(tenant);
 
+                                    List <ARInvoice> tt = iQueryable_ARInvoice.ToList();
+
+
+
                                     iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => !d.IsConstituentInvoice);
+                                    tt = iQueryable_ARInvoice.ToList();
 
                                     if (!includeDraftInvoices)
                                     {
@@ -715,7 +720,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
                                         }
                                     }
-                                
+
+                                    tt = iQueryable_ARInvoice.ToList();
+
                                     list_ARInvoices = this.BuildList_ARInvoice(iQueryable_ARInvoice);
                                     list_ARPayments = this.BuildList_ARPayment(iQueryable_ARPayment);
                                     break;
