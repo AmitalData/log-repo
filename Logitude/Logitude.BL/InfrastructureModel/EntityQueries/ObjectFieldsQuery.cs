@@ -3135,6 +3135,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         ObjectTableId = a.ObjectTableId , 
                         IsCustom = a.IsCustom,
                         FieldName = a.FieldName,
+                        LookUpTableId = a.LookUpTableId,
                         
                     });
         }

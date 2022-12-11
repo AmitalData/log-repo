@@ -78,18 +78,15 @@ namespace WebFreight.Web.Stimulsoft
                             {
                                 logo.ValueObject = null;
                             }
-
-                            List<StiBusinessObjectData> businessObjects = GetStiBusinessObjectDatas(documentTypeTemplatePM);
-
-                            report.RegBusinessObject(businessObjects);
-                            report.Dictionary.SynchronizeBusinessObjects(businessObjects.Count());
-
-                            //var ss = report.SaveToByteArray();
-                            //using (var stream = File.Create(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "hhhhh.mrt")))
-                            //{
-                            //    stream.Write(ss, 0, ss.Length);
-                            //}
                         }
+
+                        List<StiBusinessObjectData> stiBusinessObjects = new StiBusinessObjectDataService().Get(documentTypeTemplatePM);
+                        if (stiBusinessObjects.Count > 0)
+                        {
+                            report.RegBusinessObject(stiBusinessObjects);
+                            report.Dictionary.SynchronizeBusinessObjects(stiBusinessObjects.Count());
+                        }
+
                     }
                     #endregion
 
@@ -144,73 +141,7 @@ namespace WebFreight.Web.Stimulsoft
             }
         }
 
-        private List<StiBusinessObjectData> GetStiBusinessObjectDatas(DocumentTypeTemplatePM documentTypeTemplatePM)
-        {
-            List<StiBusinessObjectData> businessObjects = new List<StiBusinessObjectData>();
-            Type type = null;
-            string category = string.Empty;
-            switch (documentTypeTemplatePM.DocumentTypeCode)
-            {
-                case "EXCU":
-                case "SELE":
-                case "TML":
-                case "740PP":
-                case "740":
-                case "AVISC":
-                    {
-                        type = typeof(AWBDataProvider);
-                        category = "AWB";
-                        businessObjects.Add(new StiBusinessObjectData("ShipmentPM", "ShipmentPMDataProvider", "ShipmentPMDataProvider", typeof(ShipmentPM)));
-                        break;
-                    }
-                case "714":
-                case "714PP":
-                    {
-                        type = typeof(AWBDataProvider);
-                        category = "HAWB";
-                        break;
-                    }
-                default:
-                    {
-                        type = typeof(AWBDataProvider);
-                        category = "AWB";
-                        break;
 
-                    }
-
-            }
-
-            var documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs()
-            {
-                DocumentTypeCode = documentTypeTemplatePM.DocumentTypeCode,
-                Tenant = documentTypeTemplatePM.Tenant,
-                Type = type,
-                ObjectTableId = documentTypeTemplatePM.ObjectTableId,
-            }).Create();
-
-            businessObjects.Add(new StiBusinessObjectData(category, documentDataProvider.Name, documentDataProvider.Name, documentDataProvider.Type));
-            return businessObjects;
-
-
-        }
-
-        private static List<StiBusinessObjectData> NewMethod(int tenant, DocumentTypeTemplatePM documentTypeTemplatePM)
-        {
-            var documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs(){DocumentTypeCode = documentTypeTemplatePM.DocumentTypeCode,Tenant = tenant,Type = typeof(AWBDataProvider),ObjectTableId = documentTypeTemplatePM.ObjectTableId,
-            }).Create();
-            List<StiBusinessObjectData> businessObjects = new List<StiBusinessObjectData>
-                            {
-                                new StiBusinessObjectData("AWBDataProvider", documentDataProvider.Name,documentDataProvider.Name , documentDataProvider.Type)
-                            };
-            return businessObjects;
-        }
-
-        //protected void StiMobileDesigner1_SaveReport(object sender, StiMobileDesigner.StiSaveReportEventArgs e)
-        //{
-
-
-
-        //}
         public bool ByteArrayToFile(string fileName, byte[] byteArray)
         {
             try

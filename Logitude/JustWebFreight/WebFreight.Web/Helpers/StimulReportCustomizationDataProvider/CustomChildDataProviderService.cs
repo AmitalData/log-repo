@@ -2,8 +2,7 @@
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Server.Infrastructure.DataContracts;
-using System;
+using Simplog.Server.Infrastructure.DataContracts;using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,78 +16,78 @@ namespace WebFreight.Web.Helpers.StimulReportCustomizationDataProvider
         private List<Field> fields;
         private DocumentDataProviderArgs documentDataProviderArgs;
         private CustomFieldResolver customFieldResolver;
-        public CustomChildDataProviderService(List<Field> fields, DocumentDataProviderArgs documentDataProviderArgs)
+        private List<CustomChildEntity> customChildEntities;
+        public CustomChildDataProviderService(List<Field> fields, DocumentDataProviderArgs documentDataProviderArgs , string parentObjectTableName)
         {
             this.documentDataProviderArgs = documentDataProviderArgs;
             this.fields = fields;
             customFieldResolver = new CustomFieldResolver();
-
+            customChildEntities = new CustomChildEntityService(new CustomChildEntityArgs() { ParentEntityId = documentDataProviderArgs.EntityId, ParentObjectTableName = parentObjectTableName, Tenant = documentDataProviderArgs.DocumentTypeTemplatePM.Tenant }).BuildCustomChildEntities();
         }
 
         public void Set(object dataProvider)
         {
-            var customChildEntityService = new CustomChildEntityService(new CustomChildEntityArgs() { ParentEntityId = documentDataProviderArgs.EntityId, ParentObjectTableName = "Shipment", Tenant = documentDataProviderArgs.Tenant });
-            var customChildEntities = customChildEntityService.BuildCustomChildEntities();
-
-            foreach (Field field in fields.Where(d => d.IsCustom && d.IsList).ToList())
+            foreach (Field field in fields.Where(d => d.IsCustom && d.IsChild && d.IsList).ToList())
             {
-                BuildCustomChildEntity(field, customChildEntities.Where(d => d.Name == field.Code).FirstOrDefault());
-
+                SetFieldValue(dataProvider , field.Name , GetCustomChildObjects(dataProvider ,field));
             }
         }
 
-        private void BuildCustomChildEntity(Field field, CustomChildEntity customChildEntity)
+        private IList GetCustomChildObjects(object dataProvider, Field field)
         {
-            if (customChildEntity == null || customChildEntity.Values == null || customChildEntity.Values.Count() == 0) return;
-            var customChildEntities = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(field.AdditinalDetails.Type));
-            var customChildProperties = field.AdditinalDetails.Type.GetProperties().ToDictionary(e => e.Name, e => e);
-            var customChildObjectProperties = customChildEntity.Values[0].GetType().GetProperties().ToDictionary(e => e.Name, e => e);
-
+            CustomChildEntity customChildEntity = customChildEntities.Where(d => d.Name == field.Code).FirstOrDefault();
+            if (customChildEntity == null || customChildEntity.Values == null || customChildEntity.Values.Count() == 0) return null;
+            var customChildObjects = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(field.AdditinalDetails.Type));
             foreach (CustomChildObjectPM customChildObjectPM in customChildEntity.Values)
             {
-                customChildEntities.Add(GetNewInStanceFromCustomChildEntity(
-                        new CustomChildDataProviderArgs() { Field = field,
-                        CustomChildProperties = customChildProperties,
-                        CustomChildObjectProperties = customChildObjectProperties,
-                        CustomChildObjectPM = customChildObjectPM }
-                    ));
+                customChildObjects.Add(GetNewInStanceFromCustomChildObject(field.AdditinalDetails, customChildObjectPM));
             }
+            return customChildObjects;
+
         }
 
-        private object GetNewInStanceFromCustomChildEntity(CustomChildDataProviderArgs customChildDataProviderArgs)
+        private object GetNewInStanceFromCustomChildObject(AdditionalDetails additionalDetails, CustomChildObjectPM customChildObjectPM)
         {
-            var customChildEntity = Activator.CreateInstance(customChildDataProviderArgs.Field.AdditinalDetails.Type);
-
-            foreach (var customChildField in customChildDataProviderArgs.Field.AdditinalDetails.Fields)
+            var customChildObject = Activator.CreateInstance(additionalDetails.Type);
+            foreach (var field in additionalDetails.Fields)
             {
-                MapCustomChildEntityFields(customChildDataProviderArgs, customChildEntity, customChildField);
+                SetFieldValue(customChildObject, field.Name, GetFieldValue(customChildObjectPM, field));
             }
-            return customChildEntity;
+            return customChildObject;
         }
 
-        private void MapCustomChildEntityFields(CustomChildDataProviderArgs customChildDataProviderArgs, object customChildEntity, Field customChildField)
+
+        private void SetFieldValue(object entity , string fieldName , object fieldValue)
         {
-            var customChildProperty = customChildDataProviderArgs.CustomChildProperties.Where(d => d.Key == customChildField.Code).Select(d => d.Value).FirstOrDefault();
-            var customChildObjectProperty = customChildDataProviderArgs.CustomChildObjectProperties.Where(d => d.Key == customChildField.Code).Select(d => d.Value).FirstOrDefault();
-            var customFieldValue = customChildObjectProperty.GetValue(customChildDataProviderArgs.CustomChildObjectPM);
-            if (customFieldValue != null && customFieldValue.GetType() == typeof(CustomFieldClass))
-            {
-                customFieldValue = (customFieldValue as CustomFieldClass)?.Value;
-            }
-            string resolveCustomFieldValue = customFieldResolver.GetFieldValue2(customFieldValue, new ObjectField() { LookUpTableId = customChildField.LookUpTableId, Tenant = customChildField.Tenant, DataTypeCode = customChildField.DataTypeCode }, documentDataProviderArgs.Tenant);
-            customChildProperty.SetValue(customChildEntity, customFieldResolver.SetFieldDataType(customChildField.DataTypeCode, resolveCustomFieldValue));
+            PropertyInfo propertyInfo = entity.GetType().GetProperty(fieldName);
+            if (propertyInfo == null) return;
+            propertyInfo.SetValue(entity, fieldValue);
         }
+
+        public object GetFieldValue(object entity,  Field field)
+        {
+            PropertyInfo propertyInfo = entity.GetType().GetProperty(field.Code);
+            if (propertyInfo == null) return null;
+            var fieldValue = propertyInfo.GetValue(entity);
+
+            if (field.IsCustom && fieldValue != null && fieldValue.GetType() == typeof(CustomFieldClass))
+            {
+                fieldValue = (fieldValue as CustomFieldClass)?.Value;
+            }
+
+            if (field.IsCustom || field.DataTypeCode == "LookUp" && field.DataTypeCode == "PickList")
+            {
+                fieldValue = customFieldResolver.GetFieldValue2(fieldValue, new ObjectField() { LookUpTableId = field.LookUpTableId, Tenant = field.Tenant, DataTypeCode = field.DataTypeCode }, documentDataProviderArgs.DocumentTypeTemplatePM.Tenant);
+            }
+
+            if (field.IsCustom && fieldValue != null)
+            {
+                fieldValue = customFieldResolver.SetFieldDataType(field.DataTypeCode, fieldValue.ToString());
+            }
+
+            return fieldValue;
+        }
+    
     }
 
-    public class CustomChildDataProviderArgs
-    {
-      public Dictionary<string, PropertyInfo> CustomChildProperties { get; set; }
-        public Dictionary<string, PropertyInfo> CustomChildObjectProperties { get; set; }
-        public CustomChildObjectPM CustomChildObjectPM { get; set; }
-        public object CustomChildEntity { get; set; }
-        public Field Field { get; set; }
-
-        public Field CustomChildField { get; set; }
-
-    }
 }

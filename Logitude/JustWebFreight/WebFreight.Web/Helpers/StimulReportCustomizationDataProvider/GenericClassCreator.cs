@@ -100,6 +100,9 @@ namespace WebFreight.Web.Helpers.StimulReportCustomizationDataProvider
         public string LookUpTableId { get; set; }
         public int Tenant { get; set; }
 
+        public bool IsChild { get; set; }
+
+        
         public AdditionalDetails AdditinalDetails { get; set; }
 
     }

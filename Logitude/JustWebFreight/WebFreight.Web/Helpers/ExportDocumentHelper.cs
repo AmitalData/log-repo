@@ -465,7 +465,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         XmlSerializer serializer = new XmlSerializer(typeof(AWBDataProvider));
                         AWBDataProvider awbDataProvider = (AWBDataProvider)serializer.Deserialize(memorystream);
                         BaseDataProviderService.FillBaseVariableFields(awbDataProvider, tenant);
-                        DocumentDataProvider documentDataProvider  = new DocumentDataProviderGreator(new DocumentDataProviderArgs() {DocumentTypeCode = defaulttemplate.DocumentTypeCode,Tenant = defaulttemplate.Tenant,Type = awbDataProvider.GetType(),ObjectTableId = defaulttemplate.ObjectTableId,DataProvider = awbDataProvider}).Create(true);
+                        DocumentDataProvider documentDataProvider  = new DocumentDataProviderGreator(new DocumentDataProviderArgs() {DocumentTypeTemplatePM = defaulttemplate,  EntityId = entityId , DataProvider = awbDataProvider}).Create(true);
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "AWB", Name = "AWBDataProvider", BusinessObjectValue = documentDataProvider.BusinessObjectValue };
 
@@ -1408,21 +1408,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
             return report;
         }
 
-        private static DocumentDataProvider CreateDocumentDataProvider(DocumentTypeTemplatePM defaulttemplate, string entityId, AWBDataProvider awbDataProvider)
-        {
-            return new DocumentDataProviderGreator(new DocumentDataProviderArgs()
-            {
-                DocumentTypeCode = defaulttemplate.DocumentTypeCode,
-                Tenant = defaulttemplate.Tenant,
-                Type = awbDataProvider.GetType(),
-                ObjectTableId = defaulttemplate.ObjectTableId,
-                DataProvider = awbDataProvider,
-                EntityId = entityId,
-
-            }).Create(true);
-        }
-
-
+ 
         public string getBetween(string strSource, string strStart, string strEnd)
         {
             int Start, End;
@@ -1739,6 +1725,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
         public StiReport LoadandRender(DocumentTypeTemplatePM defaulttemplate, StiBusinessObject currentBusinessObject, int tenant, StiBusinessObject otherstiBusinessObject = null)
         {
             StiReport report = new StiReport();
+
             if (otherstiBusinessObject != null)
             {
                 RegBusinessObject(report, otherstiBusinessObject);
@@ -1827,9 +1814,11 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
             }
             new StimulsoftReportFontSizeService().Run(report , defaulttemplate.DocumentOutId , tenant);
             report.AutoLocalizeReportOnRun = true;
-            theT1 = System.DateTime.Now.Ticks;
-            report.Render(true);
 
+            theT1 = System.DateTime.Now.Ticks;
+            //report.Dictionary.SynchronizeBusinessObjects(report.Dictionary.BusinessObjects.Count);
+            report.Render(false);
+            
             theT2 = System.DateTime.Now.Ticks;
 
             return report;

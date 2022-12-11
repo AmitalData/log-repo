@@ -15,13 +15,13 @@ namespace WebFreight.Web.Helpers.StimulReportCustomizationDataProvider
     {
         private List<Field> fields;
         private DocumentDataProviderArgs documentDataProviderArgs;
-        private ObjectTable objectTable;
-        ObjectTableRepository objectTableRepository;
+        public ObjectTable objectTable;
+        private ObjectTableRepository objectTableRepository;
         private int tenant;
         public FieldDataProviderService(DocumentDataProviderArgs documentDataProviderArgs)
         {
             this.documentDataProviderArgs = documentDataProviderArgs;
-            tenant = this.documentDataProviderArgs.Tenant;
+            tenant = this.documentDataProviderArgs.DocumentTypeTemplatePM.Tenant;
             objectTableRepository = new ObjectTableRepository(tenant);
 
             objectTable = GetObjectTable();
@@ -32,7 +32,7 @@ namespace WebFreight.Web.Helpers.StimulReportCustomizationDataProvider
         {
             GetStanderFields();
             GetCustomEntityFields();
-            GetCustomFields();
+            //GetCustomFields();
 
             return fields;
         }
@@ -67,18 +67,18 @@ namespace WebFreight.Web.Helpers.StimulReportCustomizationDataProvider
             if (objectFields.Count() <= 0) return;
             foreach (ObjectFieldList objectField in objectFields)
             {
-                fields.Add(new Field() { Name = AddCustomPrefixDisplyName(objectField.FullNameTextCodeDefaultText), Code = objectField.FieldName, Type = GetFieldDataType(objectField.DataTypeCode), DataTypeCode = objectField.DataTypeCode, IsCustom = true });
+                fields.Add(new Field() { Name = AddCustomPrefixDisplyName(objectField.FullNameTextCodeDefaultText), Code = objectField.FieldName, Type = GetFieldDataType(objectField.DataTypeCode), DataTypeCode = objectField.DataTypeCode, IsCustom = objectField.IsCustom , LookUpTableId = objectField.LookUpTableId });
             }
         }
 
         private void AddCustomEntityField(ObjectTable objectTable)
         {
-            Field customEntityField = new Field() { Name = AddCustomPrefixDisplyName(objectTable.Name.Split('.')[2]), Code = objectTable.Name  ,IsList = true,IsCustom =true, AdditinalDetails = new AdditionalDetails() { Fields = new List<Field>() } };
+            Field customEntityField = new Field() {IsChild = true, Name = AddCustomPrefixDisplyName(objectTable.Name.Split('.')[2]), Code = objectTable.Name  ,IsList = true,IsCustom =true, AdditinalDetails = new AdditionalDetails() { Fields = new List<Field>() } };
             List<ObjectFieldList> objectFields = new ObjectFieldQuery(objectTable.Tenant).GetObjectFields().Where(d => d.ObjectTableId == objectTable.Id && d.Tenant == objectTable.Tenant).ToList();
             if (objectFields.Count() == 0) return;
             foreach (ObjectFieldList objectField in objectFields)
             {
-                customEntityField.AdditinalDetails.Fields.Add(new Field() { Name = AddCustomPrefixDisplyName(objectField.FullNameTextCodeDefaultText), Code = objectField.FieldName, Type =GetFieldDataType(objectField.DataTypeCode) , DataTypeCode = objectField.DataTypeCode , IsCustom =true });
+                customEntityField.AdditinalDetails.Fields.Add(new Field() { Name = AddCustomPrefixDisplyName(objectField.FullNameTextCodeDefaultText), Code = objectField.FieldName, Type =GetFieldDataType(objectField.DataTypeCode) , DataTypeCode = objectField.DataTypeCode , IsCustom = objectField.IsCustom , LookUpTableId = objectField.LookUpTableId , Tenant = objectField.Tenant });
             }
             customEntityField.AdditinalDetails.Type = GenericClassCreator.Create(customEntityField.Name, customEntityField.AdditinalDetails.Fields);
             customEntityField.Type = typeof(List<>).MakeGenericType(customEntityField.AdditinalDetails.Type);
@@ -139,7 +139,7 @@ namespace WebFreight.Web.Helpers.StimulReportCustomizationDataProvider
 
         public ObjectTable GetObjectTable()
         {
-            var objectTableId =string.IsNullOrEmpty(documentDataProviderArgs.ObjectTableId )? documentDataProviderArgs.ObjectTableId : new DocumentTypeRepository(tenant).GetObjectTableIdByDocumentCode(documentDataProviderArgs.DocumentTypeCode, tenant);
+            var objectTableId =!string.IsNullOrEmpty(documentDataProviderArgs.DocumentTypeTemplatePM.ObjectTableId )? documentDataProviderArgs.DocumentTypeTemplatePM.ObjectTableId : new DocumentTypeRepository(tenant).GetObjectTableIdByDocumentCode(documentDataProviderArgs.DocumentTypeTemplatePM.DocumentTypeCode, tenant);
             if (string.IsNullOrEmpty(objectTableId)) return null;
            return objectTableRepository.GetSingleObjectTable(objectTableId, tenant, true);
         }
