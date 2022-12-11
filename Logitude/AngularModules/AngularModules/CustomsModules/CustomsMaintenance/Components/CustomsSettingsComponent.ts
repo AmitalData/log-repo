@@ -121,7 +121,7 @@ export class CustomsSettingsComponent
         });
 
     }
-   
+    
 
     ValidScreen() {
         if (!this.IsConnectedToUniFreight) {
@@ -272,9 +272,14 @@ export class CustomsSettingsComponent
     set LastRunningDCAWS(value: any) { this._LastRunningDCAWS =  value ; }
 
 
-    
+    get SuppressIIGMessageFromDate() { return this.entityPM != null ? this.entityPM.SuppressIIGMessageFromDate : null; }
+    set SuppressIIGMessageFromDate(value) { this.entityPM.SuppressIIGMessageFromDate = value; }
 
-    
+
+
+    get SuppressIIGMessageToDate() { return this.entityPM != null ? this.entityPM.SuppressIIGMessageToDate : null; }
+    set SuppressIIGMessageToDate(value) { this.entityPM.SuppressIIGMessageToDate = value; }
+
     //#endregion
 
     ShowRestartServiceScript(){
@@ -291,6 +296,7 @@ export class CustomsSettingsComponent
         logitudeWindow.Show('./InfrastructureModules/InfrastructureCommunications/Components/Communications/LogFieldComponent');
     }
 
+  
     CancelButtonClicked() {
         SessionLocator.SelectedSession.CloseCurrentWindow();
     }
@@ -302,6 +308,21 @@ export class CustomsSettingsComponent
             return;
         }
         if (AppTool.IsNullOrEmpty(this.entityPM.QtyFeedbackInPendingMessage)) this.entityPM.QtyFeedbackInPendingMessage = 100;
+        
+        this.ValidationErrorsList = [];
+        if (this.SuppressIIGMessageFromDate && this.SuppressIIGMessageToDate) {
+            
+
+            if (new Date(this.SuppressIIGMessageFromDate) >= new Date(this.SuppressIIGMessageToDate)) {
+                this.ValidationErrorsList.push("המסרים למכס מושבתים -מתאריך חייב להיות גדול מעד תאריך");
+            }
+        } else if ((this.SuppressIIGMessageFromDate || this.SuppressIIGMessageToDate)) {///קיים אחד לפחות
+            this.ValidationErrorsList.push("המסרים למכס מושבתים -מתאריך חייב להיות גדול מעד תאריך");
+        }
+        if (this.ValidationErrorsList.length > 0) {
+            return
+        }
+
 
         //let msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         //List < ValidationResult > errors = new List<ValidationResult>();
