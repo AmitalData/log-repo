@@ -1,7 +1,10 @@
 ﻿using Logitude.Infrastructure.BL.EntityQueryServices;
 using Logitude.SystemLogs;
+using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web;
@@ -14,21 +17,44 @@ namespace WebFreight.Web.Controllers.DigitalPortal
     public class DigitalTextCodeController : ApiController
     {
         [HttpGet]
-        [Route("DigitalText/GetTextCodesByFilters")]
+        [Route("DigitalTextCode/GetTextCodesByFilters")]
         public HttpResponseMessage GetTextCodesByFilters(string cardId, string objectTableId = null)
         {
             int tenant = 0;
             string email = "";
             try
             {
-                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
-                tenant = authToken.Tenant;
-                email = authToken.Email;
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
+                //var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                //tenant = authToken.Tenant;
+                //email = authToken.Email;
+                //SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                //SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
                 var textCodeQuery = new DigitalTextCodeQuery();
-                var codes = textCodeQuery.GetDigitalTextCodesQuery(tenant, objectTableId);
-                return Request.CreateResponse(HttpStatusCode.OK, codes);
+
+                var defaultTextCode = textCodeQuery.GetDigitalTextCodesQuery(0, objectTableId);
+
+                var defaultCodesObject = JsonConvert.DeserializeObject<List<DigitalTextCodeObject>>(defaultTextCode.Labels);
+
+                var customCodesObject = new List<DigitalTextCodeObject>();
+
+                if (tenant != 0 && textCodeQuery.CheckTenantTranslation(tenant, objectTableId))
+                {
+                    var customTextCodes = textCodeQuery.GetDigitalTextCodesQuery(tenant, objectTableId);
+
+                    customCodesObject = JsonConvert.DeserializeObject<List<DigitalTextCodeObject>>(defaultTextCode.Labels);
+                }
+
+                foreach (var item in customCodesObject)
+                {
+                    var temp = defaultCodesObject.FirstOrDefault(a => a.Code.Equals(item.Code));
+
+                    if (temp != null)
+                    {
+                        temp.DisplayText = item.DisplayText;
+                    }
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, defaultCodesObject);
             }
             catch (AutenticationException ex)
             {

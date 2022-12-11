@@ -20,5 +20,13 @@ namespace Logitude.Infrastructure.Data.Repsitories
                                       && (string.IsNullOrEmpty(objectTableId)
                                           || a.ObjectTableId.Equals(objectTableId)));
         }
+        
+        public bool CheckTenantTranslation(int tenant, string objectTableId = "")
+        {
+            return context.DigitalTextCodes
+                          .Any(a => a.Tenant == tenant
+                                    && (string.IsNullOrEmpty(objectTableId)
+                                          || a.ObjectTableId.Equals(objectTableId)));
+        }
     }
 }
