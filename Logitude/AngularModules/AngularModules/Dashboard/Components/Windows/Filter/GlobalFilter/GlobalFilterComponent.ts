@@ -17,6 +17,7 @@ export class GlobalFilterComponent implements OnInit {
     public DatasetFilters: GlobalFilterItem[];
     public FilterTypes: CodeNameClass[] = [];
     public CommonFilterFields: CodeNameClass[] = [];
+    public Reset : boolean = null;
 
     constructor() {
         this.CommonFilters = [];

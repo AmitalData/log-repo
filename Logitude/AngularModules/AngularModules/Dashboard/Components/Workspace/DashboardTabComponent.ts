@@ -410,9 +410,9 @@ export class DashboardTabComponent implements AfterViewInit {
 
     ApplyFilters(filters: string) {
         // this.DashboardDataBinding.onApplyGlobalFilters.next(filters);
-        this.GlobalFilters =  filters;
+        this.GlobalFilters =  filters ?? "[]";
         for (const item of this.reactWidgetsLayout.lg) {
-            item.GlobalFilters = filters;
+            item.GlobalFilters = this.GlobalFilters;
             this.DashboardDataBinding.onEditWidget.next(item);
         }
     }
