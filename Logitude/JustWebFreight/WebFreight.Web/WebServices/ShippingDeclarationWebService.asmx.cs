@@ -2079,6 +2079,7 @@ namespace WebFreight.Web.WebServices
                     myDataProvider.DeliveryDriverName = myDelivery.Driver;
                     myDataProvider.DeliveryTruckNumber = myDelivery.TruckNumber;
                     myDataProvider.DeliveryTrailerNumber = myDelivery.TrailerNumber;
+                    myDataProvider.DeliveryETD_DateTime = myDelivery.ETD != null ? myDelivery.ETD : null;
 
                     myDataProvider.DeliveryTo = myServicHelper.GetToDeliveryName(shipment, myDelivery, false);
 
