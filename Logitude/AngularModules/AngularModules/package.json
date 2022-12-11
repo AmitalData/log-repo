@@ -52,6 +52,7 @@
     "logitude-workflow": "latest",
     "mochawesome-report-generator": "^5.1.0",
     "ng-zorro-antd": "^9.3.0",
+    "pretty-print-json": "^1.3.1",
     "primereact": "^8.3.0",
     "quill": "^1.3.7",
     "react": "^17.0.2",

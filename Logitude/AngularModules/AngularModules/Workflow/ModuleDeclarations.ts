@@ -40,6 +40,8 @@ import { ShowEditableVariablesTreeItemPipe } from "./Pipes/ShowEditableVariables
 import { WorkflowVersionComponent } from './Components/WorkflowVersion/WorkflowVersionComponent';
 import { CreateWorkflowVersionComponent } from './Components/WorkflowVersion/CreateWorkflowVersionComponent';
 import { WorkFlowShortTitleComponent } from './Components/ShortTitles/WorkFlowShortTitleComponent';
+import { IsObjectTypePipe } from "./Pipes/IsObjectTypePipe";
+import { WorkflowInstanceVariableObject } from "./Components/WorkflowInstance/WorkflowInstanceVariableObject"
 
 export const Components = [
     WorkflowBuilderComponent,
@@ -70,6 +72,7 @@ export const Components = [
     WorkflowVersionComponent,
     CreateWorkflowVersionComponent,
     WorkFlowShortTitleComponent,
+    WorkflowInstanceVariableObject,
 ];
 
 export const Pipes = [
@@ -87,6 +90,7 @@ export const Pipes = [
     EntityLabelPipe,
     ConditionDisabledPipe,
     ShowEditableVariablesTreeItemPipe,
+    IsObjectTypePipe,
 ];
 
 export class ModuleDeclarations {
@@ -121,6 +125,7 @@ export class ModuleDeclarations {
             case "WorkflowVersionComponent": { result = WorkflowVersionComponent; break; }
             case "CreateWorkflowVersionComponent": { result = CreateWorkflowVersionComponent; break; }
             case "WorkFlowShortTitleComponent": { result = WorkFlowShortTitleComponent; break; }
+            case "WorkflowInstanceVariableObject": { result = WorkflowInstanceVariableObject; break; }
         }
         return result;
     }
