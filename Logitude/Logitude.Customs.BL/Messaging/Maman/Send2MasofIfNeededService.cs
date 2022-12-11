@@ -20,11 +20,11 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
         [ThreadStatic]
         public static bool SuppressSend=false;
-        public void Send2Masof(DeclarationPM drityEntityPM,bool pHaveChange, DeclarationPM dbPM,bool forceSend=false)
+         public void Send2Masof(DeclarationPM drityEntityPM,bool pHaveChange, DeclarationPM dbPM,bool forceSend=false)
         {
             try
             {
-                if (SuppressSend==true)
+                if (SuppressSend == true)
                 {
                     return;
                 }
@@ -95,8 +95,9 @@ namespace Logitude.Customs.BL.Messaging.Maman
                         {
                             dataHaveChangeSendIt = true;
                         }
+                        bool forceDueEcomUpsert = !string.IsNullOrWhiteSpace(drityEntityPM?.MyEcomInsert?.MyDeclarationCourierStatusPM?.DeclarationId);
 
-                        if(forceSend)
+                        if (forceSend || forceDueEcomUpsert)
                         {
                             dataHaveChangeSendIt = true;
 
