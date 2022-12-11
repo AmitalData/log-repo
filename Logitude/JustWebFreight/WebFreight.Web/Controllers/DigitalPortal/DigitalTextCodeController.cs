@@ -24,11 +24,11 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             string email = "";
             try
             {
-                //var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
-                //tenant = authToken.Tenant;
-                //email = authToken.Email;
-                //SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                //SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                tenant = authToken.Tenant;
+                email = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
                 var textCodeQuery = new DigitalTextCodeQuery();
 
                 var defaultTextCode = textCodeQuery.GetDigitalTextCodesQuery(0, objectTableId);
