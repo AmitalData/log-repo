@@ -45,13 +45,15 @@ namespace WebFreight.Web.ContainerTracking
             MapEmptyPickup();
             MapPOL();
             MapPOD();
-            MapPreCarriage();
-            MapOnCarriage();
+            MapPreCarriageLocation();
+            MapOnCarriageLocation();
             MapGate();
             MapEmptyReturn();
             MapCarrierRelease();
             MapCustomsRelease();
             MapTransshipments();
+            MapPreCarriageDates();
+            MapOnCarriageDates();
         }
         private void MapArrivedField()
         {
@@ -130,13 +132,13 @@ namespace WebFreight.Web.ContainerTracking
             MapMilestoneDateField(VizionMilestoneDescriptionCodes.DischargedFromVesselAtDestinationPort, ref containerUpdatedFields.EstimatedPODDischarge, true);
             MapMilestoneDateField(VizionMilestoneDescriptionCodes.DischargedFromVesselAtDestinationPort, ref containerUpdatedFields.ActualPODDischarge);
         }
-        private void MapPreCarriage()
+        private void MapPreCarriageLocation()
         {
             if (!IsDifferentPort(visionContainerStatus?.payload?.inland_origin, visionContainerStatus?.payload?.origin_port))
                 return;
             containerUpdatedFields.VisionPreCarriage = visionContainerStatus?.payload?.inland_origin;
         }
-        private void MapOnCarriage()
+        private void MapOnCarriageLocation()
         {
             if (!IsDifferentPort(visionContainerStatus?.payload?.inland_destination, visionContainerStatus?.payload?.destination_port))
                 return;
@@ -243,6 +245,18 @@ namespace WebFreight.Web.ContainerTracking
             }
         }
 
+        private void MapPreCarriageDates()
+        {
+            MapCarrierMilestoneDateField(VizionMilestoneDescriptionCodes.VesselDeparted, ref containerUpdatedFields.EstimatedOriginPickup, true);
+            MapCarrierMilestoneDateField(VizionMilestoneDescriptionCodes.VesselDeparted, ref containerUpdatedFields.ActualOriginPickup);
+        }
+
+        private void MapOnCarriageDates()
+        {
+            MapCarrierMilestoneDateField(VizionMilestoneDescriptionCodes.VesselArrived, ref containerUpdatedFields.EstimatedLIFArrival, true);
+            MapCarrierMilestoneDateField(VizionMilestoneDescriptionCodes.VesselArrived, ref containerUpdatedFields.ActualLIFArrival);
+        }
+
         private bool IsDifferentPort(Location location, Location mainLocation)
         {
             if (mainLocation == null)
@@ -284,6 +298,16 @@ namespace WebFreight.Web.ContainerTracking
             if (!IsMilestoneSentWithinResponse(descriptionCode))
                 return;
             var plannedMilistone = MilestonesDictinoary[descriptionCode].FirstOrDefault(e => e.planned == isPland);
+            if (plannedMilistone != null)
+            {
+                date = plannedMilistone.timestamp;
+            }
+        }
+        private void MapCarrierMilestoneDateField(string descriptionCode, ref DateTime? date, bool isPland = false)
+        {
+            if (!IsMilestoneSentWithinResponse(descriptionCode))
+                return;
+            var plannedMilistone = MilestonesDictinoary[descriptionCode].Where(d => d.source == "carrier").FirstOrDefault(e => e.planned == isPland);
             if (plannedMilistone != null)
             {
                 date = plannedMilistone.timestamp;
@@ -372,6 +396,7 @@ namespace WebFreight.Web.ContainerTracking
         public static string VesselDepartureFromTransshipmentPort = "Vessel departure from transshipment port";
         public static string VesselDeparted = "Vessel departed";
         public static string DischargedFromVesselAtTransshipmentPort = "Discharged from vessel at transshipment port";
-        public static string DischargedTransshipment = "Discharged transshipment";       
+        public static string DischargedTransshipment = "Discharged transshipment";
+        
     }
 }
