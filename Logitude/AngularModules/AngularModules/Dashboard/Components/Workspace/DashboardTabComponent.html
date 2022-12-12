@@ -107,7 +107,7 @@
         <GlobalFilter [Dashboard]="SelectedDashboard" (ApplyFilters)="ApplyFilters($event)"></GlobalFilter>
     </div>
 
-    <div [hidden]="IsEmptyDashboardVisible" class="Dashboard-body">
+    <div [hidden]="IsEmptyDashboardVisible" class="Custom-layout-body">
         <custom-layout [Show]="Show" (onReactChangeLayouts)="onReactChangeLayouts($event)"
             (openEditWidget)="openEditWidget($event)" [IsEditLayout]="IsEditLayoutModeActive"
             [DashboardDataBinding]="DashboardDataBinding" [SelectedDashboard]="SelectedDashboard"></custom-layout>

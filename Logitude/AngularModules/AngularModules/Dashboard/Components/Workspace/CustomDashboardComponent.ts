@@ -62,7 +62,6 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, O
         widgetUpdated: new Subject(),
         onAddWidget: new Subject(),
         onEditWidget: new Subject(),
-        onApplyGlobalFilters: new Subject(),
     }
 
     ngOnInit(): void {
