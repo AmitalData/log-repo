@@ -94,11 +94,8 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
             this.ModifiedLables.ObjectTableId = this.SelectedObjectTableItem.Name;
             this.digitalTextService.UpdateDigitalTextCodes(this.ModifiedLables).subscribe((myResult) => {
                 if (!myResult.HasError) {
-                    if (!this.customizationEditComponent.IsDirty && this.customizationEditComponent.IsSaveAndClose) {
-                        this.customizationEditComponent.CurrentSession.CloseCurrentWindow();
-                        this.customizationEditComponent.IsSaveAndClose = false;
-                        this.customizationEditComponent.IsDirty = false;
-                    }
+                    this.customizationEditComponent.CurrentSession.CloseCurrentWindow();
+                    this.customizationEditComponent.IsDirty = false;
                 }
             });
         }
