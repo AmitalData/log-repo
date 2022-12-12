@@ -1,0 +1,100 @@
+
+<table>
+    <tr>
+        <td>
+            <table>
+
+                <tr style="height: 1px;">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width: 250px;">
+                                    <ComboBox style="width:250px;float:left;" [WaterMark]="'Select entity to show fields'" (SelectedItemChanged)="SelectedObjectTableItem = $event" [ItemsSource]="ObjectTablesFilterList" [SelectedItem]="SelectedObjectTableItem" [Binding]="'Code'"></ComboBox>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr style="height: 5px;">
+                    <td></td>
+                </tr>
+
+                <tr style="height: 1px;">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width: 250px;">
+                                    <SearchBox (TextChanged)="SearchTextChanged($event)" [SearchText]="SearchText"></SearchBox>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr style="height: 5px;">
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div class="MediaFill">
+                            <logitude-edit-grid [UseVirtuallization]="true" GridWidth="100%" GridHeight="100%" [ItemSource]="LabelsItemsSource">
+                                <!-- Code -->
+                                <log-column [width]="'215'" [header]="'Code'" [Alignment]="'left'">
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate [Alignment]="'left'">
+                                            <div style="width: 100%; text-align: left;" class="TextTrimming">
+                                                {{item.Code}}
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
+
+                                <!-- Default Text -->
+                                <log-column [width]="'250'" [header]="'Default Text'" [Alignment]="'left'">
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate [Alignment]="'left'">
+                                            <div style="width: 100%; text-align: left;" class="TextTrimming">
+                                                <label *ngIf="!SearchText">{{item.DisplayText}}</label>
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
+
+                                <!-- Display Label -->
+                                <log-column [width]="'250'" [header]="'Display Label'" [Alignment]="'left'">
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate [Alignment]="'left'">
+                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;" class="TextTrimming">
+                                                <table>
+                                                    <tr>
+                                                        <td>{{item.DisplayLabel}}</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox (LostFocus)="item.UpdateModifiedLables($event)" [FocusOnMe]="'true'" [ObjectFieldName]="'DisplayLabel'" [Text]="item.DisplayLabel" [DataContext]="item.DataContext" [NoObjectField]="true" [HideColumns]="true"></LogTextBox>
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
+
+                            </logitude-edit-grid>
+                        </div>
+
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

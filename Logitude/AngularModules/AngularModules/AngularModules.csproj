@@ -390,6 +390,11 @@
     <Content Include="InvoiceModules\ARPayment\Components\Other\ARPaymentMultiChequesComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Accounting\PerVendorReportFilterComponent.html" />
     <Content Include="SharedLogistics\Components\CargoTrackingMilestonesPermissiosComponent.html" />
+    <Content Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationChageLabelsComponent.html" />
+    <Content Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationMainComponent.html" />
+    <Content Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationScreenLayoutComponent.html" />
+    <Content Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationShowHideFieldsComponent.html" />
+    <Content Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationTranslateLabelsComponent.html" />
     <Content Include="SharedLogistics\Components\SharedLogisticsDigitalPortalComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityPackageComponent.html" />
@@ -2169,6 +2174,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\ScreenPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\ScreenSectionPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\TeamPMService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\WebServices\DigitalTextService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\WebServices\PrivateLabelsBrandingDataService.ts" />
     <TypeScriptCompile Include="Infrastructure\Utilities\PackageAmountCalculator.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\BusinessProcessDomainService.ts" />
@@ -4820,6 +4826,11 @@
     <TypeScriptCompile Include="Report\DataContracts\SchedulerDetails.ts" />
     <TypeScriptCompile Include="Report\Services\BIReportDocumentTypeTemplateService.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\CargoTrackingMilestonesPermissiosComponent.ts" />
+    <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationChageLabelsComponent.ts" />
+    <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationMainComponent.ts" />
+    <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationScreenLayoutComponent.ts" />
+    <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationShowHideFieldsComponent.ts" />
+    <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationTranslateLabelsComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\SharedLogisticsDigitalPortalComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\SharedLogisticsMoneyPermissiosComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\SharedLogisticsPartnersPermissiosComponent.ts" />

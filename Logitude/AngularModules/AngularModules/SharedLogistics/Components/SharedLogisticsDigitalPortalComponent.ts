@@ -81,6 +81,7 @@ export class SharedLogisticsDigitalPortalComponent implements OnInit {
     public IsShowAgentStatisticsArea: boolean = false;
     public ValidationWarningsMessage: string = null;
     public IsValidationWarningsVisible: boolean = false;
+    public IsCustomerCareUser = false;
 
     constructor(public _sharedLogisticsService: SharedLogisticsService) {
         this.InitalizeServices();
@@ -92,11 +93,16 @@ export class SharedLogisticsDigitalPortalComponent implements OnInit {
         }
     }
 
+    SetIsCustomerCareUser() {
+        this.IsCustomerCareUser = SessionLocator?.LoggedUserPM?.IsCustomerCare;
+    }
+
     ngOnInit() {
         this.SetVisibility();
         this.SetTitles();
         this.LoadData();
         this.ValidateDomainSettings();
+        this.SetIsCustomerCareUser();
     }
 
     private ValidateDomainSettings() {
@@ -139,10 +145,6 @@ export class SharedLogisticsDigitalPortalComponent implements OnInit {
 
     GetInviteToolTipMessage() {
         return  "";
-    }
-
-    public get IsCargoTracking(): boolean {
-        return this.SharedTitleType == "CargoTracking";
     }
 
     public get IsShowActivatedMobileArea(): boolean {
@@ -349,6 +351,14 @@ export class SharedLogisticsDigitalPortalComponent implements OnInit {
         logWindow.Height = 520;
         logWindow.Title = "Money Permissions";
         logWindow.Show("./SharedLogistics/Components/SharedLogisticsMoneyPermissiosComponent");
+    }
+
+    CustomizationLinkClick() {
+        var logWindow = new LogitudeWindow();
+        logWindow.IsFillScreen = true;
+        logWindow.IsShowCloseButton = false;
+        logWindow.Title = "Customization ";
+        logWindow.Show('./SharedLogistics/Components/DigitalPortal/DigitalPortalCustomizationMainComponent');
     }
 
     PartnersPermissionsLinkClick() {

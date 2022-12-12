@@ -98,6 +98,7 @@
     <None Include="DBScripts\20220728_DeleteSCGTogglesCodes.sxml" />
     <None Include="DBScripts\20220619_DeletePLETogglesCodes.sxml" />
     <None Include="DBScripts\20220208_DeleteBCFTogglesCodes.sxml" />
+    <None Include="DBScripts\DigitalTextCodes.sxml" />
     <None Include="DBTables\BatchTaskExecution.dxml" />
     <None Include="DBTables\BatchTaskExecutionStatus.dxml" />
     <None Include="DBTables\BIFoldersPermission.dxml" />
@@ -107,6 +108,7 @@
     <None Include="DBTables\BIReportsType.dxml" />
     <None Include="DBTables\BusinessProcessQueue.dxml" />
     <None Include="DBTables\BusinessRole.dxml" />
+    <None Include="DBTables\DigitalTextCode.dxml" />
     <None Include="DBTables\ElasticIndexerWaterMarks.dxml" />
     <None Include="DBTables\FeatureToggle.dxml" />
     <None Include="DBTables\LastRunDetail.dxml" />
@@ -128,6 +130,7 @@
     <None Include="EntityFiles\BIReportsType.lxml" />
     <None Include="EntityFiles\BusinessProcessQueue.lxml" />
     <None Include="EntityFiles\BusinessRole.lxml" />
+    <None Include="EntityFiles\DigitalTextCode.lxml" />
     <None Include="EntityFiles\FeatureToggle.lxml" />
     <None Include="EntityFiles\LastRunDetail.lxml" />
     <None Include="EntityFiles\LBPTeamMember.lxml" />

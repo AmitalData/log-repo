@@ -84,6 +84,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		BIReportsTypeUpdateClass  BIReportsTypeUpdateClass = new BIReportsTypeUpdateClass();
 		BusinessProcessQueueUpdateClass  BusinessProcessQueueUpdateClass = new BusinessProcessQueueUpdateClass();
 		BusinessRoleUpdateClass  BusinessRoleUpdateClass = new BusinessRoleUpdateClass();
+		DigitalTextCodeUpdateClass  DigitalTextCodeUpdateClass = new DigitalTextCodeUpdateClass();
 		FeatureToggleUpdateClass  FeatureToggleUpdateClass = new FeatureToggleUpdateClass();
 		LastRunDetailUpdateClass  LastRunDetailUpdateClass = new LastRunDetailUpdateClass();
 		LBPTeamMemberUpdateClass  LBPTeamMemberUpdateClass = new LBPTeamMemberUpdateClass();
@@ -257,6 +258,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 			TablesHashStrings.Add("BIReportsType",  BIReportsTypeUpdateClass.HashString);
 			TablesHashStrings.Add("BusinessProcessQueue",  BusinessProcessQueueUpdateClass.HashString);
 			TablesHashStrings.Add("BusinessRole",  BusinessRoleUpdateClass.HashString);
+			TablesHashStrings.Add("DigitalTextCode",  DigitalTextCodeUpdateClass.HashString);
 			TablesHashStrings.Add("FeatureToggle",  FeatureToggleUpdateClass.HashString);
 			TablesHashStrings.Add("LastRunDetail",  LastRunDetailUpdateClass.HashString);
 			TablesHashStrings.Add("LBPTeamMember",  LBPTeamMemberUpdateClass.HashString);
@@ -608,6 +610,39 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
+			if(MetadataUpdateUtility.IsChangedMetadataTable("DigitalTextCode", ObjectTables, DigitalTextCodeUpdateClass.HashString))
+			{
+				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+				{				
+					MetadataUpdateUtility.DeleteAllTableMetadata("DigitalTextCode");
+					DigitalTextCodeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					List<ObjectField> addedFields = new List<ObjectField>();
+					List<TextCode> addedTextCodes = new List<TextCode>();
+					DigitalTextCodeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository, addedFields, addedTextCodes);
+					SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+					SqlBulkInsert.BulkInsert("ObjectFields", addedFields);					
+					//this.ObjectContext.TextCodes.AddRange(addedTextCodes);
+					//this.ObjectContext.ObjectFields.AddRange(addedFields);
+					//this.ObjectContext.SaveChanges();
+					DigitalTextCodeUpdateClass.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters,tenantQueryGroups);
+					//this.ObjectContext.SaveChanges();
+					DigitalTextCodeUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+					//this.ObjectContext.SaveChanges();
+					DigitalTextCodeUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+					//this.ObjectContext.SaveChanges();
+					DigitalTextCodeUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+					//this.ObjectContext.SaveChanges();
+					DigitalTextCodeUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					//this.ObjectContext.SaveChanges();
+					DigitalTextCodeUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					//this.ObjectContext.SaveChanges();
+					DigitalTextCodeUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					scope.Complete();
+				}
+			}
+			
 			if(MetadataUpdateUtility.IsChangedMetadataTable("FeatureToggle", ObjectTables, FeatureToggleUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -902,6 +937,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   BusinessRoleUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
+	   	   DigitalTextCodeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+		
 	   	   FeatureToggleUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
 	   	   LastRunDetailUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
@@ -941,6 +978,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   //BusinessProcessQueueUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
 	   	   //BusinessRoleUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository);
+	
+	   	   //DigitalTextCodeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository);
+	
+	   	   //IndexerWaterMarkUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
 	   	   //FeatureToggleUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
@@ -983,6 +1024,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   BusinessRoleUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups);
 	
+	   	   DigitalTextCodeUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups);
+		
 	   	   FeatureToggleUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups);
 	
 	   	   LastRunDetailUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups);
@@ -1024,6 +1067,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   BusinessRoleUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
+	   	   DigitalTextCodeUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
+		
 	   	   FeatureToggleUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
 	   	   LastRunDetailUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
@@ -1064,6 +1109,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   BusinessProcessQueueUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
 	   	   BusinessRoleUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
+	
+	   	   DigitalTextCodeUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
 	   	   FeatureToggleUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
@@ -1106,6 +1153,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   BusinessRoleUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
 	
+	   	   DigitalTextCodeUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
+		
 	   	   FeatureToggleUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
 	
 	   	   LastRunDetailUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
@@ -1149,6 +1198,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   IndexerWaterMarkUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
+	   	   DigitalTextCodeUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+		
 	   	   FeatureToggleUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   LastRunDetailUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
@@ -1191,6 +1242,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   IndexerWaterMarkUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
+	   	   DigitalTextCodeUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+		
 	   	   FeatureToggleUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   LastRunDetailUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
@@ -1231,6 +1284,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   BusinessRoleUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
+	   	   DigitalTextCodeUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
+		
 	   	   FeatureToggleUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
 	   	   LastRunDetailUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
@@ -1261,6 +1316,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   
 	   	   BIReportsTypeUpdateClass.FillBIReportsType();
 	
+	   
+	   
 	   
 	   
 	   

@@ -173,7 +173,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 var dashboardSummary = new DigitalDashboardSummary();
                 var currentDateTime = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant).Date;
-                var currentWeek = currentDateTime.AddDays(7).Date;
+                var currentWeek = currentDateTime.AddDays(30).Date;
                 newFilters.Tenant = authToken.Tenant;
                 var shipmentQuery = new ShipmentQuery(authToken.Tenant);
                 var shipments = shipmentQuery.GetByFilters(newFilters);

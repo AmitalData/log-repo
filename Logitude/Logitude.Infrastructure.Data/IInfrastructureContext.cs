@@ -28,6 +28,8 @@ namespace Logitude.Infrastructure.Data
 		 IDbSet<BusinessProcessQueue> BusinessProcessQueues { get; }
 		 IDbSet<BusinessRole> BusinessRoles { get; }
 		 IDbSet<IndexerWaterMark> IndexerWaterMarks { get; }
+		 IDbSet<DigitalTextCode> DigitalTextCodes { get; }
+		 IDbSet<IndexerWaterMark> IndexerWaterMarks { get; }
 		 IDbSet<FeatureToggle> FeatureToggles { get; }
 		 IDbSet<LastRunDetail> LastRunDetails { get; }
 		 IDbSet<LBPTeamMember> LBPTeamMembers { get; }
@@ -42,4 +44,4 @@ namespace Logitude.Infrastructure.Data
          int SaveChanges();
 
     }
-}
+}

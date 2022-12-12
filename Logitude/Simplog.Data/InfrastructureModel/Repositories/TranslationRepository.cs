@@ -78,7 +78,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             return translations;
         }
         
-        public Dictionary<string, string> GetDigitalTranslationsByTenant(int tenant, string objectTableName, string lang)
+        public Dictionary<string, string> GetDigitalTranslationsByTenant(int tenant, string objectTableName, string lang = "")
         {
             var translationCodes = context.Translations
                                           .Where(a => a.Tenant == tenant

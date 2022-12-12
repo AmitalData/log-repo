@@ -87,6 +87,7 @@ namespace Logitude.Infrastructure.Data
             modelBuilder.Configurations.Add(new BusinessRoleMap());
 	
             modelBuilder.Configurations.Add(new IndexerWaterMarkMap());
+            modelBuilder.Configurations.Add(new DigitalTextCodeMap());
 	
             modelBuilder.Configurations.Add(new FeatureToggleMap());
 	
@@ -443,6 +444,12 @@ namespace Logitude.Infrastructure.Data
 	 
 	 }
 	
+	 public IDbSet<DigitalTextCode> DigitalTextCodes 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<IndexerWaterMark> IndexerWaterMarks 
 	 {
 	      get; set;
@@ -500,4 +507,4 @@ namespace Logitude.Infrastructure.Data
  }
 
 
-}
+}
