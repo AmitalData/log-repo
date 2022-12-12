@@ -224,7 +224,6 @@
     <Compile Include="Repsitories\DigitalFieldSecurityRepository.cs" />
     <Compile Include="Repsitories\DigitalProfileRepository.cs" />
     <Compile Include="Repsitories\DigitalTextCodeRepository.cs" />
-    <Compile Include="Repsitories\ElasticIndexerWaterMarkRepository.cs" />
     <Compile Include="Repsitories\BusinessRoleRepository.cs" />
     <Compile Include="Repsitories\FeatureToggleRepository.cs" />
     <Compile Include="Repsitories\Generated\AuditLogRepository.Generated.cs" />
