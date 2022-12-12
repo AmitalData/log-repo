@@ -15,6 +15,7 @@ namespace CommunicationWorkerRole
     public class UpdateContainerStatusWorkerRole : WorkerEntryPoint
     {
         private DbQueueService queueService;
+        private AnalyzeQueueRepository analyzeQueueRepository;
         public override bool OnStart()
         {
             ThreadId = Guid.NewGuid().ToString();
@@ -50,12 +51,13 @@ namespace CommunicationWorkerRole
 
         private void ExecuteQueue()
         {
-            AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
+            analyzeQueueRepository = new AnalyzeQueueRepository();
             AnalyzeQueue analyzeQueue = analyzeQueueRepository.GetOpenAnalyzeQueue("GeneralContainerTrackingReceiver");
             LastActivity = DateTime.UtcNow;
 
             if (analyzeQueue != null)
             {
+                SetAnalyzeQueueStatusToInProgress(analyzeQueue);
                 ContainerTrackingGeneralAnalyzer analyzer = new ContainerTrackingGeneralAnalyzer(ContainerStatusSourceValues.Vizion, analyzeQueue, analyzeQueueRepository);
                 analyzer.Run();
                 LogDoneItemInMemory();
@@ -66,5 +68,12 @@ namespace CommunicationWorkerRole
             }
         }
 
+        private void SetAnalyzeQueueStatusToInProgress(AnalyzeQueue analyzeQueue)
+        {
+            string inProgressStatusCode = "I";
+            analyzeQueue.Status = inProgressStatusCode;
+            analyzeQueueRepository.Update(analyzeQueue);
+            analyzeQueueRepository.SubmitChanges();
+        }
     }
 }
