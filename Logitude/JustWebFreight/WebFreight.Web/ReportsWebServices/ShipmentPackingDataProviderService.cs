@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityPMs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
@@ -118,8 +119,8 @@ namespace WebFreight.Web.ReportsWebServices
         {
             return shipmentReceivables.Sum(shipmentReceivable =>
             {
-                if (shipmentReceivable.TotalAmount == null) return 0;
-                return shipmentReceivable.TotalAmount;
+                if (shipmentReceivable.AmountInProfitCurrency == null) return 0;
+                return shipmentReceivable.AmountInProfitCurrency;
             });
         }
 
@@ -127,6 +128,63 @@ namespace WebFreight.Web.ReportsWebServices
         {
             if (number == null) return "";
             return String.Format("{0:#,0.00}", number.Value);
+        }
+
+        public string GetDestinationPortCountryName(MapDestinationPortCountryNameParameters mapDestinationPortCountryNameParameters)
+        {
+            Country country = mapDestinationPortCountryNameParameters.CountryRepository.GetSingleCountryByIdAndTenant(mapDestinationPortCountryNameParameters.CountryId,
+                mapDestinationPortCountryNameParameters.Tenant, true);
+            if (country != null)
+            {
+                return country.EnglishName;
+            }
+
+            return "";
+        }
+
+        public DestinationPortDetails GetDestinationPortDetails(ShipmentPM shipment, Port mainCarriageToPort)
+        {
+            if (shipment.Transshipment3ToPortId != null)
+            {
+                return new DestinationPortDetails()
+                {
+                    Name = shipment.Transshipment3ToPortName,
+                    CountryName = shipment.Transshipment3ToPortCountryName
+                };
+            }
+            
+            if (shipment.Transshipment2ToPortId != null)
+            {
+                return new DestinationPortDetails()
+                {
+                    Name = shipment.Transshipment2ToPortName,
+                    CountryName = shipment.Transshipment2ToPortCountryName
+                };
+            }
+            
+            if (shipment.Transshipment1ToPortId != null)
+            {
+                return new DestinationPortDetails()
+                {
+                    Name = shipment.Transshipment1ToPortName,
+                    CountryName = shipment.Transshipment1ToPortCountryName
+                };
+            }
+            
+            if (mainCarriageToPort != null)
+            {
+                return new DestinationPortDetails()
+                {
+                    Name = mainCarriageToPort.EnglishName,
+                    CountryName = mainCarriageToPort.CountryName
+                };
+            }
+
+            return new DestinationPortDetails()
+            {
+                Name = "",
+                CountryName = ""
+            };
         }
     }
 }
