@@ -624,6 +624,8 @@ namespace Logitude.BL.Helpers
                         return doubleValue;
                     }
                 case "boolean":
+                case "Boolean":
+
                     {
                         return bool.Parse(value);
                     }
