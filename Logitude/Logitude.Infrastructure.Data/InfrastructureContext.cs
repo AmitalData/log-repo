@@ -86,8 +86,13 @@ namespace Logitude.Infrastructure.Data
 	
             modelBuilder.Configurations.Add(new BusinessRoleMap());
 	
-            modelBuilder.Configurations.Add(new IndexerWaterMarkMap());
+            modelBuilder.Configurations.Add(new DigitalFieldSecurityMap());
+	
+            modelBuilder.Configurations.Add(new DigitalProfileMap());
+	
             modelBuilder.Configurations.Add(new DigitalTextCodeMap());
+	
+            modelBuilder.Configurations.Add(new IndexerWaterMarkMap());
 	
             modelBuilder.Configurations.Add(new FeatureToggleMap());
 	
@@ -444,6 +449,18 @@ namespace Logitude.Infrastructure.Data
 	 
 	 }
 	
+	 public IDbSet<DigitalFieldSecurity> DigitalFieldSecurities 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<DigitalProfile> DigitalProfiles 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<DigitalTextCode> DigitalTextCodes 
 	 {
 	      get; set;
@@ -507,4 +524,4 @@ namespace Logitude.Infrastructure.Data
  }
 
 
-}
+}
