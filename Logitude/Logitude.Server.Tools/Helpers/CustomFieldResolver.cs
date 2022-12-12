@@ -16,7 +16,7 @@ namespace Logitude.BL.Helpers
         Object lockMe = new Object();
         Dictionary<string, object> definedObjects = new Dictionary<string, object>();
         static CultureInfo en = new CultureInfo("en-US");
-
+        bool UsingParallelMechanisim;
         public void SetFieldValue(CustomFieldResolverArgs customFieldResolverArgs)
         {
             List<ObjectField> customObjectFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName(customFieldResolverArgs.ObjectTableName, customFieldResolverArgs.Tenant).ToList();
@@ -55,7 +55,21 @@ namespace Logitude.BL.Helpers
 
         public void SetCustomFieldsValues(string objectTableName, int tenant, List<object> listQuery)
         {
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            const string resolveCustomFieldsValuesUsingParallelMechanisimFeatureToggleCode = "XUP";
+            if(FeatureToggleHelper.HasFeatureToggle(resolveCustomFieldsValuesUsingParallelMechanisimFeatureToggleCode, tenant))
+            {
+                SetCustomFieldsValuesUsingParallelMechanisim(objectTableName, tenant, listQuery);
+                return;
+            }
+            SetCustomFieldsValuesWithoutUsingParallelMechanisim(objectTableName, tenant, listQuery);
+        }
+
+        private static void SetCustomFieldsValuesUsingParallelMechanisim(string objectTableName, int tenant, List<object> listQuery)
+        {
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver
+            {
+                UsingParallelMechanisim = true
+            };
             List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName(objectTableName, tenant).ToList();
 
             string loggedUserEmail = AuthenticationUtil.AuthenticatedUserEmail;
@@ -72,6 +86,25 @@ namespace Logitude.BL.Helpers
                     });
                 }
             });
+        }
+
+        private static void SetCustomFieldsValuesWithoutUsingParallelMechanisim(string objectTableName, int tenant, List<object> listQuery)
+        {
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName(objectTableName, tenant).ToList();
+
+            foreach (ObjectField field in customFields)
+            {
+                foreach (object list in listQuery)
+                {
+                    if (list != null)
+                    {
+                        PropertyInfo propInfo = list.GetType().GetProperty(field.FieldName);
+                        object newValue = customFieldResolver.GetFieldValue(list, field, tenant);
+                        propInfo.SetValue(list, newValue, null);
+                    }
+                }
+            }
         }
 
         public void SetDataProviderCustomFieldsValues(string objectTableName, int tenant, Object entity, Object provider, string propertyIdientifier = null)
@@ -169,66 +202,25 @@ namespace Logitude.BL.Helpers
                             insideEntityType = blAssembly.GetType(insideTypePath);
                         }
 
-                        object insideEntityRepository = null;
-                        lock (lockMe)
+                        LookUpFieldValueGetterArgs lookUpFieldValueGetterArgs = new LookUpFieldValueGetterArgs {
+                            ObjectField = objectField,
+                            Tenant = tenant,
+                            ExternalAPICall = externalAPICall,
+                            ResultValue = resultValue,
+                            Value = value,
+                            InsideTypePath = insideTypePath,
+                            InsideEntityType = insideEntityType
+                        };
+                        if (UsingParallelMechanisim)
                         {
-                            if (insideEntityType != null)
+                            lock (lockMe)
                             {
-                                if (definedObjects.Keys.Contains(insideTypePath))
-                                {
-                                    insideEntityRepository = definedObjects[insideTypePath];
-                                }
-
-                                if (insideEntityRepository == null)
-                                {
-                                    insideEntityRepository = Activator.CreateInstance(insideEntityType, tenant);
-
-                                    definedObjects.Add(insideTypePath, insideEntityRepository);
-                                }
-                                MethodInfo insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetCustomSinglePM");
-                                if (insideMethodInfo == null)
-                                {
-                                    insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetSinglePM");
-                                }
-                                if (insideMethodInfo == null)
-                                {
-                                    insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetSingle");
-                                }
-                                object insideEntity = null;
-
-                                if (insideMethodInfo != null)
-                                {
-                                    object[] parameters = GetMethodParameters(tenant, value, insideMethodInfo);
-
-                                    insideEntity = insideMethodInfo.Invoke(insideEntityRepository, parameters);
-
-                                    if (insideEntity != null)
-                                    {
-                                        ObjectTable lookupTable = ObjectTableRepository.GetSingleObjectTableById(objectField.LookUpTableId, objectField.Tenant);
-                                        string lookupProperty = lookupTable.LookUp2 != null ? lookupTable.LookUp2 : lookupTable.LookUp1;
-                                        if (externalAPICall)
-                                        {
-                                            lookupProperty = "Code";
-                                        }
-
-                                        PropertyInfo insidePropertyPathPi = insideEntity.GetType().GetProperty(lookupProperty);
-                                        if (insidePropertyPathPi != null)
-                                        {
-                                            object insideValue = insidePropertyPathPi.GetValue(insideEntity, null);
-                                            if (insideValue != null)
-                                            {
-                                                if (insideValue is DateTime)
-                                                {
-                                                    DateTime date = (DateTime)insideValue;
-                                                    insideValue = date.ToShortDateString();
-                                                }
-                                            }
-
-                                            resultValue = (insideValue != null ? insideValue.ToString() : null);
-                                        }
-                                    }
-                                }
+                                resultValue = GetLookUpFieldValue(lookUpFieldValueGetterArgs);
                             }
+                        }
+                        else
+                        {
+                            resultValue = GetLookUpFieldValue(lookUpFieldValueGetterArgs);
                         }
                     }
 
@@ -260,6 +252,79 @@ namespace Logitude.BL.Helpers
             if (resultValue == "")
             {
                 resultValue = null;
+            }
+
+            return resultValue;
+        }
+
+        private string GetLookUpFieldValue(LookUpFieldValueGetterArgs lookUpFieldValueGetterArgs)
+        {
+            //Encapsulate that logic here
+            ObjectField objectField = lookUpFieldValueGetterArgs.ObjectField;
+            int tenant = lookUpFieldValueGetterArgs.Tenant;
+            bool externalAPICall = lookUpFieldValueGetterArgs.ExternalAPICall;
+            string resultValue = lookUpFieldValueGetterArgs.ResultValue;
+            object value = lookUpFieldValueGetterArgs.Value;
+            string insideTypePath = lookUpFieldValueGetterArgs.InsideTypePath;
+            Type insideEntityType = lookUpFieldValueGetterArgs.InsideEntityType;
+
+            object insideEntityRepository = null;
+            if (insideEntityType != null)
+            {
+                if (definedObjects.Keys.Contains(insideTypePath))
+                {
+                    insideEntityRepository = definedObjects[insideTypePath];
+                }
+
+                if (insideEntityRepository == null)
+                {
+                    insideEntityRepository = Activator.CreateInstance(insideEntityType, tenant);
+
+                    definedObjects.Add(insideTypePath, insideEntityRepository);
+                }
+                MethodInfo insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetCustomSinglePM");
+                if (insideMethodInfo == null)
+                {
+                    insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetSinglePM");
+                }
+                if (insideMethodInfo == null)
+                {
+                    insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetSingle");
+                }
+                object insideEntity = null;
+
+                if (insideMethodInfo != null)
+                {
+                    object[] parameters = GetMethodParameters(tenant, value, insideMethodInfo);
+
+                    insideEntity = insideMethodInfo.Invoke(insideEntityRepository, parameters);
+
+                    if (insideEntity != null)
+                    {
+                        ObjectTable lookupTable = ObjectTableRepository.GetSingleObjectTableById(objectField.LookUpTableId, objectField.Tenant);
+                        string lookupProperty = lookupTable.LookUp2 != null ? lookupTable.LookUp2 : lookupTable.LookUp1;
+                        if (externalAPICall)
+                        {
+                            lookupProperty = "Code";
+                        }
+
+                        PropertyInfo insidePropertyPathPi = insideEntity.GetType().GetProperty(lookupProperty);
+                        if (insidePropertyPathPi != null)
+                        {
+                            object insideValue = insidePropertyPathPi.GetValue(insideEntity, null);
+                            if (insideValue != null)
+                            {
+                                if (insideValue is DateTime)
+                                {
+                                    DateTime date = (DateTime)insideValue;
+                                    insideValue = date.ToShortDateString();
+                                }
+                            }
+
+                            return (insideValue != null ? insideValue.ToString() : null);
+                        }
+                    }
+                }
             }
 
             return resultValue;
@@ -593,5 +658,16 @@ namespace Logitude.BL.Helpers
         public string FieldCode { get; set; }
         public string FieldValue { get; set; }
         public int Tenant { get; set; }
+    }
+
+    public class LookUpFieldValueGetterArgs
+    {
+        public ObjectField ObjectField { get; set; }
+        public int Tenant { get; set; }
+        public bool ExternalAPICall { get; set; }
+        public string ResultValue { get; set; }
+        public object Value { get; set; }
+        public string InsideTypePath { get; set; }
+        public Type InsideEntityType { get; set; }
     }
 }

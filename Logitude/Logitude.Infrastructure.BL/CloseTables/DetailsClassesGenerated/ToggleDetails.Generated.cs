@@ -764,6 +764,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "SPB,Separate Per Branch in Counters", 
                 Description = "Separate Per Branch in Counters", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "XUP", 
+                Name = "Export To Excel Using Parallel", 
+                SearchFields = "XUP,Export To Excel Using Parallel", 
+                Description = "Export To Excel Using Parallel", 
+			});
 			
             return all;
        }
