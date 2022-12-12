@@ -116,6 +116,7 @@
     <None Include="DBTables\Team.dxml" />
     <None Include="DBTables\TeamMemberBusinessRole.dxml" />
     <None Include="DBTables\Toggle.dxml" />
+    <None Include="EntityFiles\AuditLog.lxml" />
     <None Include="EntityFiles\BatchTaskExecution.lxml" />
     <None Include="EntityFiles\BatchTaskExecutionStatus.lxml" />
     <None Include="EntityFiles\BIFoldersPermission.lxml" />

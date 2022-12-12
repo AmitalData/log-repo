@@ -65,6 +65,7 @@
     <Compile Include="CloseTables\EnumGenerated\BatchTaskExecutionStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\BIReportsTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\ToggleStruct.Generated.cs" />
+    <Compile Include="EntityDataMappings\AuditLogDataMapping.cs" />
     <Compile Include="EntityDataMappings\BatchTaskExecutionDataMapping.cs" />
     <Compile Include="EntityDataMappings\BatchTaskExecutionStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\BIFoldersPermissionDataMapping.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="EntityDataMappings\BusinessProcessQueueDataMapping.cs" />
     <Compile Include="EntityDataMappings\BusinessRoleDataMapping.cs" />
     <Compile Include="EntityDataMappings\FeatureToggleDataMapping.cs" />
+    <Compile Include="EntityDataMappings\Generated\AuditLogDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\BatchTaskExecutionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\BatchTaskExecutionStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\BIFoldersPermissionDataMapping.Generated.cs" />
@@ -99,6 +101,7 @@
     <Compile Include="EntityDataMappings\TeamDataMapping.cs" />
     <Compile Include="EntityDataMappings\TeamMemberBusinessRoleDataMapping.cs" />
     <Compile Include="EntityDataMappings\ToggleDataMapping.cs" />
+    <Compile Include="EntityPMs\Generated\AuditLogPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\BatchTaskExecutionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\BatchTaskExecutionStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\BIFoldersPermissionPM.Generated.cs" />
@@ -119,6 +122,7 @@
     <Compile Include="EntityQueryServices\BIFoldersPermissionQueryService.cs" />
     <Compile Include="EntityQueryServices\BIReportQueryService.cs" />
     <Compile Include="EntityQueryServices\BIReportsExecutionLogQueryService.cs" />
+    <Compile Include="EntityQueryServices\Generated\AuditLogQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\BatchTaskExecutionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\BatchTaskExecutionStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\BIFoldersPermissionQueryService.Generated.cs" />
@@ -142,6 +146,7 @@
     <Compile Include="EntityQueryServices\TeamQueryService.cs" />
     <Compile Include="EntityUpdateServices\BatchTaskExecutionUpdateService.cs" />
     <Compile Include="EntityUpdateServices\BIReportFolderUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Generated\AuditLogUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\BIFoldersPermissionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\LastRunDetailUpdateService.cs" />
     <Compile Include="EntityUpdateServices\BIReportUpdateService.cs" />

@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomFilters\TeamCustomFilter.cs" />
+    <Compile Include="EntityKeys\AuditLogKeys.cs" />
     <Compile Include="EntityKeys\BatchTaskExecutionKeys.cs" />
     <Compile Include="EntityKeys\BatchTaskExecutionStatusKeys.cs" />
     <Compile Include="EntityKeys\BIFoldersPermissionKeys.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="EntityKeys\TeamKeys.cs" />
     <Compile Include="EntityKeys\TeamMemberBusinessRoleKeys.cs" />
     <Compile Include="EntityKeys\ToggleKeys.cs" />
+    <Compile Include="EntityListQueryServices\AuditLogListQueryService.cs" />
     <Compile Include="EntityListQueryServices\BatchTaskExecutionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\BatchTaskExecutionStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\BIFoldersPermissionListQueryService.cs" />
@@ -105,6 +107,7 @@
     <Compile Include="EntityListQueryServices\BusinessProcessQueueListQueryService.cs" />
     <Compile Include="EntityListQueryServices\BusinessRoleListQueryService.cs" />
     <Compile Include="EntityListQueryServices\FeatureToggleListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\Generated\AuditLogListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BatchTaskExecutionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BatchTaskExecutionStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BIFoldersPermissionListQueryService.Generated.cs" />
@@ -129,6 +132,7 @@
     <Compile Include="EntityListQueryServices\TeamListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TeamMemberBusinessRoleListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ToggleListQueryService.cs" />
+    <Compile Include="EntityLists\Generated\AuditLogList.Generated.cs" />
     <Compile Include="EntityLists\Generated\BatchTaskExecutionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\BatchTaskExecutionStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\BIFoldersPermissionList.Generated.cs" />
@@ -146,6 +150,7 @@
     <Compile Include="EntityLists\Generated\TeamList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TeamMemberBusinessRoleList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ToggleList.Generated.cs" />
+    <Compile Include="EntityMapping\AuditLogMap.cs" />
     <Compile Include="EntityMapping\IndexerWaterMarkMap.cs" />
     <Compile Include="EntityMapping\BatchTaskExecutionMap.cs" />
     <Compile Include="EntityMapping\BatchTaskExecutionStatusMap.cs" />
@@ -164,6 +169,7 @@
     <Compile Include="EntityMapping\TeamMap.cs" />
     <Compile Include="EntityMapping\TeamMemberBusinessRoleMap.cs" />
     <Compile Include="EntityMapping\ToggleMap.cs" />
+    <Compile Include="EntityPOCOs\AuditLog.cs" />
     <Compile Include="EntityPOCOs\BatchTaskExecution.cs" />
     <Compile Include="EntityPOCOs\BatchTaskExecutionStatus.cs" />
     <Compile Include="EntityPOCOs\BIFoldersPermission.cs" />
@@ -185,8 +191,10 @@
     <Compile Include="ExtendedServices\AvailableForSchedulingBIReportService.cs" />
     <Compile Include="IInfrastructureContext.cs" />
     <Compile Include="InfrastructureContext.cs" />
+    <Compile Include="Models\AuditLog\FieldChange.cs" />
     <Compile Include="Models\BIReportsFilterArguments.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repsitories\AuditLogRepository.cs" />
     <Compile Include="Repsitories\BatchTaskExecutionRepository.cs" />
     <Compile Include="Repsitories\BatchTaskExecutionStatusRepository.cs" />
     <Compile Include="Repsitories\BIFoldersPermissionRepository.cs" />
@@ -198,6 +206,7 @@
     <Compile Include="Repsitories\ElasticIndexerWaterMarkRepository.cs" />
     <Compile Include="Repsitories\BusinessRoleRepository.cs" />
     <Compile Include="Repsitories\FeatureToggleRepository.cs" />
+    <Compile Include="Repsitories\Generated\AuditLogRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\BatchTaskExecutionRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\BatchTaskExecutionStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\BIFoldersPermissionRepository.Generated.cs" />
