@@ -90,7 +90,6 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
     }
 
     Save() {
-
         if (this.IsModifiedLables) {
             this.ModifiedLables.ObjectTableId = this.SelectedObjectTableItem.Name;
             this.digitalTextService.UpdateDigitalTextCodes(this.ModifiedLables).subscribe((myResult) => {
@@ -98,6 +97,7 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
                     if (!this.customizationEditComponent.IsDirty && this.customizationEditComponent.IsSaveAndClose) {
                         this.customizationEditComponent.CurrentSession.CloseCurrentWindow();
                         this.customizationEditComponent.IsSaveAndClose = false;
+                        this.customizationEditComponent.IsDirty = false;
                     }
                 }
             });
@@ -105,9 +105,12 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
     }
 }
 
-export class CustomizationLabelItem {
+export class CustomizationLabelItem extends BaseComponent {
+
+    public DataContext: CustomizationLabelItem = this;
 
     constructor(public father: DigitalPortalCustomizationChageLabelsComponent, item) {
+        super();
         this.Code = item.Code;
         this.DisplayText = item.DisplayText;
         this.DisplayLabel = item.DisplayLabel;
@@ -131,6 +134,8 @@ export class CustomizationLabelItem {
     }
 
     UpdateModifiedLables(newValue) {
+        this.father.IsModifiedLables = true;
+        this.father.customizationEditComponent.IsDirty = true;
         var newLabel = new DigitalTextCodeObject();
         newLabel.Code = this.Code;
         newLabel.DisplayText = newValue;
