@@ -191,15 +191,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         [Route("DigitalTextCode/GetDigitalTextCodesObjetTables")]
         public HttpResponseMessage GetDigitalTextCodesObjetTables()
         {
-            int tenant = 0;
             string email = "";
             try
             {
-                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
-                tenant = authToken.Tenant;
-                email = authToken.Email;
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                var textCodeQuery = new DigitalTextCodeQueryService(tenant);
+                var textCodeQuery = new DigitalTextCodeQueryService(0);
                 var objectTables = textCodeQuery.GetDigitalTextCodesObjetTables(0);
                 return Request.CreateResponse(HttpStatusCode.OK, objectTables);
             }
@@ -209,7 +204,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {0}", "", null);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
