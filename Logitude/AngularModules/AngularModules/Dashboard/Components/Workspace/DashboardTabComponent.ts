@@ -80,7 +80,6 @@ export class DashboardTabComponent implements AfterViewInit {
         widgetUpdated: new Subject(),
         onAddWidget: new Subject(),
         onEditWidget: new Subject(),
-        onApplyGlobalFilters: new Subject(),
     }
 
     private hasChanges: boolean = false;

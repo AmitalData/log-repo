@@ -27,6 +27,15 @@
     flex: none;
     font-style: normal;
     top: -10px;
+    position: relative;
+}
+
+.Custom-layout-body {
+    height: 100%;
+    margin: 0;
+    font-family: Manrope;
+    flex: none;
+    font-style: normal;
 }
 
 .DashboardTab .DashboardTabHead li:not(.DashboardTabSelected):hover {
