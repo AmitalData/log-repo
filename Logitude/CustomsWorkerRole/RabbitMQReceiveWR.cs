@@ -33,7 +33,10 @@ namespace CustomsWorkerRole
         //QueueClient _QueueClient;
 
         //private AnalyzeResultModel _AnalyzeResultModel;
+        public RabbitMQReceiveWR():base()
+        {
 
+        }
         public override void Run()
         {
 
@@ -171,11 +174,12 @@ namespace CustomsWorkerRole
                                 return;
 
                             string messageId = "";
+                            string message = "";
                             try
                             {
                                 lastworkAt = DateTime.Now;
                                 var body = ea.Body.ToArray();
-                                var message = Encoding.UTF8.GetString(body);
+                                message = Encoding.UTF8.GetString(body);
                                 messageId = ea.BasicProperties.MessageId;
                                 Logger.LogMe("RUN", false, RabbitMQLogFILE);
                                 Logger.LogMe("START  Exec : " + messageId, false, RabbitMQLogFILE);
@@ -204,8 +208,9 @@ namespace CustomsWorkerRole
                                 {
                                     Exec(customRabbitMQQueue, myQueueDetails, analyzeQueueRepository, messageId, currTenant, message, out log, out success);
                                 }
-                                catch (Exception)
+                                catch (Exception ex)
                                 {
+                                    Logger.LogMe (ex.ToString() + Environment.NewLine  + "message:" +  message, true, RabbitMQLogFILE +"_Exec");
                                     success = false;
                                     // throw;
                                 }
@@ -232,8 +237,8 @@ namespace CustomsWorkerRole
 
                             catch (Exception ex)
                             {
-
-                                Logger.LogMe(ex.Message, false, RabbitMQLogFILE);
+                                Logger.LogMe(ex.ToString() + Environment.NewLine + "message:" + message, true, RabbitMQLogFILE + "_Outer");
+                                //Logger.LogMe(ex.Message, false, RabbitMQLogFILE);
 
 
                             }
