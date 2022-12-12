@@ -55,7 +55,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                     if (temp != null)
                     {
-                        temp.DisplayText = item.DisplayText;
+                        temp.DefaultText = item.DisplayText;
                     }
                 }
 
