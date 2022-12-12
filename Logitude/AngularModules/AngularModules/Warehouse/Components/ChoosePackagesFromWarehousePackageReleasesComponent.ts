@@ -46,7 +46,7 @@ export class ChoosePackagesFromWarehousePackageReleasesComponent extends BaseCom
 
     constructor() {
         super();
-        this.UIProperties.SetEnabled("CustomerId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("CustomerId", this.ObjectTableName, true);
         this.warehouseReleasePMExtendedService = new WarehouseReleasePMExtendedService();
     }
 
