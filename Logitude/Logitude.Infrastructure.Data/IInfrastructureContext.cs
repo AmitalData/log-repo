@@ -29,7 +29,6 @@ namespace Logitude.Infrastructure.Data
 		 IDbSet<BusinessRole> BusinessRoles { get; }
 		 IDbSet<IndexerWaterMark> IndexerWaterMarks { get; }
 		 IDbSet<DigitalTextCode> DigitalTextCodes { get; }
-		 IDbSet<IndexerWaterMark> IndexerWaterMarks { get; }
 		 IDbSet<FeatureToggle> FeatureToggles { get; }
 		 IDbSet<LastRunDetail> LastRunDetails { get; }
 		 IDbSet<LBPTeamMember> LBPTeamMembers { get; }
