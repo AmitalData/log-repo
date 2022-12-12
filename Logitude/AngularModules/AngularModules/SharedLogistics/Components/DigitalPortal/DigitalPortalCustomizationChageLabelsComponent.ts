@@ -93,10 +93,9 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
         if (this.IsModifiedLables) {
             this.ModifiedLables.ObjectTableId = this.SelectedObjectTableItem.Name;
             this.digitalTextService.UpdateDigitalTextCodes(this.ModifiedLables).subscribe((myResult) => {
-                if (!myResult.HasError) {
-                    this.customizationEditComponent.CurrentSession.CloseCurrentWindow();
-                    this.customizationEditComponent.IsDirty = false;
-                }
+                this.customizationEditComponent.CurrentSession.CloseCurrentWindow();
+                this.customizationEditComponent.IsDirty = false;
+
             });
         }
     }
@@ -110,7 +109,7 @@ export class CustomizationLabelItem extends BaseComponent {
         super();
         this.code = item.Code;
         this.displayText = item.DisplayText;
-        this.displayLabel = item.DisplayLabel;
+        this.displayLable = item.DisplayLable;
     }
 
     private displayText = "";
@@ -121,11 +120,11 @@ export class CustomizationLabelItem extends BaseComponent {
         }
     }
 
-    private displayLabel = "";
-    get DisplayLabel() { return this.displayLabel; }
-    set DisplayLabel(value) {
-        if (value != this.displayLabel) {
-            this.displayLabel = value;
+    private displayLable = "";
+    get DisplayLable() { return this.displayLable; }
+    set DisplayLable(value) {
+        if (value != this.displayLable) {
+            this.displayLable = value;
         }
     }
 
