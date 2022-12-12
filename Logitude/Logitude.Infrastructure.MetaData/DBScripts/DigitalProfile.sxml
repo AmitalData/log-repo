@@ -1,0 +1,17 @@
+﻿<Script DBType="Main" Module="Infrastructure">
+  <Sql Version="1">
+      <![CDATA[	  
+      declare @NewEntityId as varchar(15)
+ 	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT, 'DigitalProfiles'
+
+	  INSERT INTO DigitalProfiles (Id, Tenant, CreateDate, UpdateDate,  Name) 
+	  values (@NewEntityId, 0, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, 'Customer')
+
+	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT, 'DigitalProfiles'
+
+	  INSERT INTO DigitalProfiles (Id, Tenant, CreateDate, UpdateDate,  Name) 
+	  values (@NewEntityId, 0, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, 'Agent')
+
+      ]]>       
+  </Sql>
+</Script>
