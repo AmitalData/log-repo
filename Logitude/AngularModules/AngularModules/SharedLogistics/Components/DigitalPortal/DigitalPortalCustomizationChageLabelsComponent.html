@@ -77,12 +77,12 @@
                                             <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;" class="TextTrimming">
                                                 <table>
                                                     <tr>
-                                                        <td>{{item.DisplayLabel}}</td>
+                                                        <td>{{item.DisplayLable}}</td>
                                                     </tr>
                                                 </table>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogTextBox (LostFocus)="item.UpdateModifiedLables($event)" [FocusOnMe]="'true'" [ObjectFieldName]="'DisplayLabel'" [Text]="item.DisplayLabel" [DataContext]="item.DataContext" [NoObjectField]="true" [HideColumns]="true"></LogTextBox>
+                                                <LogTextBox (LostFocus)="item.UpdateModifiedLables($event)" [FocusOnMe]="'true'" [ObjectFieldName]="'DisplayLable'" [Text]="item.DisplayLable" [DataContext]="item.DataContext" [NoObjectField]="true" [HideColumns]="true"></LogTextBox>
                                             </div>
                                         </log-cell-template>
                                     </ng-template>
