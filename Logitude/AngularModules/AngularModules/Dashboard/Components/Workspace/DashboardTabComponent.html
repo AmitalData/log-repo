@@ -108,7 +108,7 @@
     </div>
 
     <div [hidden]="IsEmptyDashboardVisible" class="Custom-layout-body">
-        <custom-layout [Show]="Show" (onReactChangeLayouts)="onReactChangeLayouts($event)"
+        <custom-layout (onReactChangeLayouts)="onReactChangeLayouts($event)"
             (openEditWidget)="openEditWidget($event)" [IsEditLayout]="IsEditLayoutModeActive"
             [DashboardDataBinding]="DashboardDataBinding" [SelectedDashboard]="SelectedDashboard"></custom-layout>
     </div>
