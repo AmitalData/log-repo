@@ -21,10 +21,22 @@ export class DashboardDropDownComponent implements OnInit {
     }
 
     public DisplayItemsSource: any[] = [];
-    public IsOpen: boolean = false;
     public SearchText: string;
     public DisplayText: string;
     public SkeletonCount = Array(10).fill(0).map((x, i) => i);
+
+    private isOpen: boolean = false;
+    get IsOpen(): boolean {
+        return this.isOpen;
+    }
+    set IsOpen(value: boolean) {
+        if (value == this.isOpen) return;
+        this.isOpen = value;
+        if (!value) {
+            this.SearchText = null;
+            this.onSearchChange(null);
+        }
+    }
 
     constructor(private eRef: ElementRef) {
 
@@ -58,7 +70,10 @@ export class DashboardDropDownComponent implements OnInit {
 
     public onSearchChange(text: string) {
         if (!this.ItemsSource) return;
-        if (!text) this.DisplayItemsSource = JSON.parse(JSON.stringify(this.ItemsSource));
+        if (!text) {
+            this.DisplayItemsSource = JSON.parse(JSON.stringify(this.ItemsSource));
+            return;
+        }
 
         this.DisplayItemsSource = JSON.parse(JSON.stringify(this.ItemsSource.filter(item => {
             if (!this.DisplayMemberPath) return item.toLowerCase().includes(text.toLowerCase());
