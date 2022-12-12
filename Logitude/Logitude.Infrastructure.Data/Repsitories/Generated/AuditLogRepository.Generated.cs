@@ -12,67 +12,68 @@ using Simplog.Server.Infrastructure;
 
 namespace Logitude.Infrastructure.Data.Repsitories
 {
-   public partial class ToggleRepository:IRepository<Toggle>
+   public partial class AuditLogRepository:IRepository<AuditLog>
    {
    
         private IInfrastructureContext currentContext;
-        public ToggleRepository(int tenant)
+        public AuditLogRepository(int tenant)
         {
             currentContext = InfrastructureContext.GetContext(tenant);
         }
 
-        public ToggleRepository(IInfrastructureContext context)
+        public AuditLogRepository(IInfrastructureContext context)
         {
             currentContext = context;
         }
 
 		 
 		
-		public  Toggle GetSingle(string code)
+		public  AuditLog GetSingle(string id, int tenant)
         {
-            return (from a in context.Toggles
-                    where a.Code == code 
+            return (from a in context.AuditLogs
+                    where a.Id == id && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
-        public IQueryable<Toggle> GetAll()
+        public IQueryable<AuditLog> GetAll(int tenant)
         {
-            return from a in context.Toggles  
+            return from a in context.AuditLogs  
+                   where a.Tenant == tenant
                    select a;
         }
 				 
-        public Toggle GetSingle(EntityKeyFields entityKeys)
+        public AuditLog GetSingle(EntityKeyFields entityKeys)
         {
-            ToggleKeys keys = entityKeys as ToggleKeys;
-            return (from a in context.Toggles
-                    where a.Code == keys.Code
+            AuditLogKeys keys = entityKeys as AuditLogKeys;
+            return (from a in context.AuditLogs
+                    where a.Id == keys.Id
                     select a).FirstOrDefault();
         }
 		 		                 
         partial void onAdd();//Partial Methods Definition in Generated
-        public void Add(Toggle entity)
+        public void Add(AuditLog entity)
         {
             onAdd();
-            context.Toggles.Add(entity);
+            context.AuditLogs.Add(entity);
         }
 
-        public void Remove(Toggle entity)
+        public void Remove(AuditLog entity)
         {
-            context.Toggles.Attach(entity);
-            context.Toggles.Remove(entity);
+            context.AuditLogs.Attach(entity);
+            context.AuditLogs.Remove(entity);
         }
 
         partial void onUpdate();//Partial Methods Definition in Generated
-        public void Update(Toggle entity)
+        public void Update(AuditLog entity)
         {
             onUpdate();
-            context.Toggles.Attach(entity);
+            context.AuditLogs.Attach(entity);
             context.SetAsModified(entity);
         }
 
-        public List<Toggle> All()
+        public List<AuditLog> All()
         {
-            return context.Toggles.ToList();
+            return context.AuditLogs.ToList();
         }
 
         private IInfrastructureContext context

@@ -66,6 +66,8 @@ namespace Logitude.Infrastructure.Data
             Database.SetInitializer<InfrastructureContext>(null);
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 			
+            modelBuilder.Configurations.Add(new AuditLogMap());
+	
             modelBuilder.Configurations.Add(new BatchTaskExecutionMap());
 	
             modelBuilder.Configurations.Add(new BatchTaskExecutionStatusMap());
@@ -83,6 +85,8 @@ namespace Logitude.Infrastructure.Data
             modelBuilder.Configurations.Add(new BusinessProcessQueueMap());
 	
             modelBuilder.Configurations.Add(new BusinessRoleMap());
+	
+            modelBuilder.Configurations.Add(new IndexerWaterMarkMap());
 	
             modelBuilder.Configurations.Add(new FeatureToggleMap());
 	
@@ -345,7 +349,6 @@ namespace Logitude.Infrastructure.Data
 			modelBuilder.Configurations.Add(new AWBDescriptionOfGoodsMap());
 			modelBuilder.Configurations.Add(new LogitudeMessagesTransmissionLogMap());
 			modelBuilder.Configurations.Add(new CustomsShipperMap());
-            modelBuilder.Configurations.Add(new IndexerWaterMarkMap());
 			#endregion
 
             base.OnModelCreating(modelBuilder);
@@ -380,6 +383,12 @@ namespace Logitude.Infrastructure.Data
 		}
  
 
+	 public IDbSet<AuditLog> AuditLogs 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<BatchTaskExecution> BatchTaskExecutions 
 	 {
 	      get; set;
@@ -434,6 +443,12 @@ namespace Logitude.Infrastructure.Data
 	 
 	 }
 	
+	 public IDbSet<IndexerWaterMark> IndexerWaterMarks 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<FeatureToggle> FeatureToggles 
 	 {
 	      get; set;
@@ -481,14 +496,8 @@ namespace Logitude.Infrastructure.Data
 	      get; set;
 	 
 	 }
-
-        public IDbSet<IndexerWaterMark> IndexerWaterMarks
-        {
-            get; set;
-
-        }
-
-    }
+	  
+ }
 
 
 }

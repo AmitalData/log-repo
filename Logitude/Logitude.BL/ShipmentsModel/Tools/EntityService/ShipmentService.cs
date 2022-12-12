@@ -23,6 +23,8 @@ using Logitude.BookingLib.Data.EntityPOCOs;
 using Logitude.BookingLib.Data.Repositories;
 using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.Data.Models.AuditLog;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.CToolWorkflows;
@@ -34,6 +36,7 @@ using Logitude.SystemLogs;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.Data.Repositories;
 using Microsoft.Practices.Unity;
+using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -57,6 +60,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Transactions;
 using System.Web;
+using Logitude.Infrastructure.Data.Repsitories;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {
@@ -117,14 +121,23 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private ComputingPartnerTranslationRepository computingPartnerTranslationRepository;
         public ShipmentDocsField ShipmentDocsFieldFromWorkerRole;
         public bool isFromEventTrace;
+
+        private List<FieldChange> FieldChanges = new List<FieldChange>();
+        private AuditLogRepository AuditLogRepository;
+
         public ShipmentService(int tenant)
         {
+            FieldChanges = new List<FieldChange>();
+
             this.objectContext = ShipmentsContext.GetContext(tenant);
             this.myCommonContext = CommonDataContext.GetContext(tenant);
             this.myAddressRepository = new AddressRepository(this.myCommonContext);
         }
         public ShipmentService(IShipmentsContext objectContext, ShipmentPM entityPM, string serviceContextUser)
         {
+            FieldChanges = new List<FieldChange>();
+            AuditLogRepository = new AuditLogRepository(tenant);
+
             UpdateByEmail = serviceContextUser;
             this.initializer = new ShipmentServiceInitializer(objectContext, entityPM, serviceContextUser);
             this.initializer.Initialize();
@@ -322,11 +335,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 RunAutomation("OnCreate");
 
-                ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, entityPM.ShipmentPackages, objectContext);
+                ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, entityPM.ShipmentPackages, objectContext, FieldChanges);
                 this.ComputeAgentComputed(entityPM, entityPoco);
                 this.ComputeETAAndETDHouseFields();
 
                 new ShipmentAnalyticRepository(objectContext).AddFromShipment(entityPoco, entityMasterData);
+
                 entityRepository.Add(entityPoco);
                 entityRepository.SubmitChanges();
 
@@ -391,6 +405,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     Tenant = entityPM.Tenant,
                     Type = QueueMessagesTypes.Create
                 }.Produce();
+
+                if (entityPM != null && FeatureToggleHelper.HasFeatureToggle("ADL", entityPM.Tenant))
+                {
+                    AddAuditLogChanges(entityPoco, FieldChanges);
+                    AuditLogRepository.SubmitChanges();
+                }
 
                 scope.Complete();
 
@@ -578,8 +598,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     shipmentPocoCopy = CloneObjectService.Clone(entityPoco);
                     shipmentPMCopy = CloneObjectService.Clone(entityPM);
-                    ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, myPackagesList, objectContext);
+                    ShipmentMapping.MapEntity(entityPM, entityPoco, entityMasterData, isNewEntity, myPackagesList, objectContext, FieldChanges);
                     this.ComputeAgentComputed(entityPM, entityPoco);
+
                     entityRepository.Update(entityPoco);
                     entityRepository.SubmitChanges();
                     shipmentAdditionalCloudDataRepository.SubmitChanges();
@@ -653,9 +674,33 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     Type = QueueMessagesTypes.Update
                 }.Produce();
 
+                if (entityPM != null && FeatureToggleHelper.HasFeatureToggle("ADL", entityPM.Tenant))
+                {
+                    AddAuditLogChanges(entityPoco, FieldChanges);
+                    AuditLogRepository.SubmitChanges();
+                }
+
                 scope.Complete();
                 #endregion
             }
+        }
+
+        private void AddAuditLogChanges(Shipment entityPoco, List<FieldChange> fieldChanges)
+        {
+            ObjectTableRepository objecttableRepository = new ObjectTableRepository(entityPoco.Tenant);
+            ObjectTable objecttable = objecttableRepository.GetObjectTableByName("Shipment", 0, true);
+            AuditLog auditLog = new AuditLog()
+            {
+                Id = IdCounter.GetNumber("AuditLog", entityPoco.Tenant).ToString(),
+                Tenant = entityPoco.Tenant,
+                UpdateDate = entityPoco.LastUpdateDate,
+                UpdatedByUserId = entityPoco.UpdatedByUserId,
+                EntityId = entityPoco.Id,
+                ObjectTableId = objecttable.Id,
+                ChangesJson = JsonConvert.SerializeObject(FieldChanges)
+            };
+
+            AuditLogRepository.Add(auditLog);
         }
 
         private void RunAutomationThatDependencyOnLastEntityUpdate()
