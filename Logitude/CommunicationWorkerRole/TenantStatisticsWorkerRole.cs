@@ -179,11 +179,11 @@ namespace CommunicationWorkerRole
                 {
                     if (tenantManagement.ShipmentLastDate == null)
                     {
-                        tenantManagement.ShipmentLastDate = shipments.Max(s => s.CreateDateTime);
+                        tenantManagement.ShipmentLastDate = shipments.Max(s => (DateTime?)s.CreateDateTime);
                     }
                     else
                     {
-                        tenantManagement.ShipmentLastDate = shipments.Where(d => d.CreateDateTime >= tenantManagement.ShipmentLastDate).Max(s => s.CreateDateTime);
+                        tenantManagement.ShipmentLastDate = shipments.Where(d => d.CreateDateTime >= tenantManagement.ShipmentLastDate).Max(s => (DateTime?)s.CreateDateTime);
                     }
 
                     if (tenantManagement.LastFHLSentDate == null)
@@ -236,11 +236,11 @@ namespace CommunicationWorkerRole
                 {
                     if (tenantManagement.QuoteLastDate == null)
                     {
-                        tenantManagement.QuoteLastDate = quotes.Max(s => s.OpenDate);
+                        tenantManagement.QuoteLastDate = quotes.Max(s => (DateTime?)s.OpenDate);
                     }
                     else
                     {
-                        tenantManagement.QuoteLastDate = (DateTime?)quotes.Where(d => d.OpenDate >= tenantManagement.QuoteLastDate).Max(s => s.OpenDate);
+                        tenantManagement.QuoteLastDate = (DateTime?)quotes.Where(d => d.OpenDate >= tenantManagement.QuoteLastDate).Max(s => (DateTime?)s.OpenDate);
                     }
 
                     tenantManagement.QuoteTotalLastWeek = quotes.Where(s => s.OpenDate >= lastweek).Count();
@@ -309,11 +309,11 @@ namespace CommunicationWorkerRole
                 {
                     if (tenantManagement.ActivityLastDate == null)
                     {
-                        tenantManagement.ActivityLastDate = myActivities.Max(s => s.CreateDate);
+                        tenantManagement.ActivityLastDate = myActivities.Max(s => (DateTime?)s.CreateDate);
                     }
                     else
                     {
-                        tenantManagement.ActivityLastDate = myActivities.Where(d => d.CreateDate >= tenantManagement.ActivityLastDate).Max(s => s.CreateDate);
+                        tenantManagement.ActivityLastDate = myActivities.Where(d => d.CreateDate >= tenantManagement.ActivityLastDate).Max(s => (DateTime?)s.CreateDate);
                     }
 
                     tenantManagement.ActivityTotalLastWeek = myActivities.Where(s => s.CreateDate >= lastweek).Count();
@@ -356,12 +356,12 @@ namespace CommunicationWorkerRole
                     {
                         if (tenantManagement.FSRLastSentDate == null)
                         {
-                            tenantManagement.FSRLastSentDate = myCommunicationLogs.Where(d => d.Subject == "FSR").Max(s => s.CreateDate);
+                            tenantManagement.FSRLastSentDate = myCommunicationLogs.Where(d => d.Subject == "FSR").Max(s => (DateTime?)s.CreateDate);
                         }
 
                         else
                         {
-                            tenantManagement.FSRLastSentDate = myCommunicationLogs.Where(d => d.Subject == "FSR" && d.CreateDate >= tenantManagement.FSRLastSentDate).Max(s => s.CreateDate);
+                            tenantManagement.FSRLastSentDate = myCommunicationLogs.Where(d => d.Subject == "FSR" && d.CreateDate >= tenantManagement.FSRLastSentDate).Max(s => (DateTime?)s.CreateDate);
                         }
                     }
 
@@ -369,12 +369,12 @@ namespace CommunicationWorkerRole
                     {
                         if (tenantManagement.FSULastReceivedDate == null)
                         {
-                            tenantManagement.FSULastReceivedDate = myCommunicationLogs.Where(d => d.Subject == "FSU").Max(s => s.CreateDate);
+                            tenantManagement.FSULastReceivedDate = myCommunicationLogs.Where(d => d.Subject == "FSU").Max(s => (DateTime?)s.CreateDate);
                         }
 
                         else
                         {
-                            tenantManagement.FSULastReceivedDate = myCommunicationLogs.Where(d => d.Subject == "FSU" && d.CreateDate >= tenantManagement.FSULastReceivedDate).Max(s => s.CreateDate);
+                            tenantManagement.FSULastReceivedDate = myCommunicationLogs.Where(d => d.Subject == "FSU" && d.CreateDate >= tenantManagement.FSULastReceivedDate).Max(s => (DateTime?)s.CreateDate);
                         }
                     }
 
@@ -382,19 +382,19 @@ namespace CommunicationWorkerRole
                     {
                         if (tenantManagement.FSALastReceivedDate == null)
                         {
-                            tenantManagement.FSALastReceivedDate = myCommunicationLogs.Where(d => d.Subject == "FSA").Max(s => s.CreateDate);
+                            tenantManagement.FSALastReceivedDate = myCommunicationLogs.Where(d => d.Subject == "FSA").Max(s => (DateTime?)s.CreateDate);
                         }
 
                         else
                         {
-                            tenantManagement.FSALastReceivedDate = myCommunicationLogs.Where(d => d.Subject == "FSA" && d.CreateDate >= tenantManagement.FSALastReceivedDate).Max(s => s.CreateDate);
+                            tenantManagement.FSALastReceivedDate = myCommunicationLogs.Where(d => d.Subject == "FSA" && d.CreateDate >= tenantManagement.FSALastReceivedDate).Max(s => (DateTime?)s.CreateDate);
                         }
                     }
                 }
 
                 if (tariffs.Count() > 0)
                 {
-                    tenantManagement.LastTariffUpdateDate = tariffs.Max(s => s.UpdateDate);
+                    tenantManagement.LastTariffUpdateDate = tariffs.Max(s => (DateTime?)s.UpdateDate);
                     tenantManagement.LastTariffUsageDate = tariffs.Max(s => s.LastUsedDate);
                     tenantManagement.LastWeekCreatedTariffs = tariffs.Where(s => s.CreateDate >= lastweek).Count();
                     tenantManagement.LastMonthCreatedTariffs = tariffs.Where(s => s.CreateDate >= lastmonth).Count();
@@ -416,11 +416,11 @@ namespace CommunicationWorkerRole
                             {
                                 if (tenantManagement.MobileLastDate == null)
                                 {
-                                    tenantManagement.MobileLastDate = MobilecontactActivityLogs.Max(s => s.LogDateTime);
+                                    tenantManagement.MobileLastDate = MobilecontactActivityLogs.Max(s => (DateTime?)s.LogDateTime);
                                 }
                                 else
                                 {
-                                    tenantManagement.MobileLastDate = MobilecontactActivityLogs.Where(d => d.LogDateTime >= tenantManagement.MobileLastDate).Max(s => s.LogDateTime);
+                                    tenantManagement.MobileLastDate = MobilecontactActivityLogs.Where(d => d.LogDateTime >= tenantManagement.MobileLastDate).Max(s => (DateTime?)s.LogDateTime);
                                 }
 
                                 tenantManagement.MobileTotalLastWeek = MobilecontactActivityLogs.Where(s => s.LogDateTime >= lastweek).Count();
@@ -431,11 +431,11 @@ namespace CommunicationWorkerRole
                             {
                                 if (tenantManagement.ShardLogisticLastDate == null)
                                 {
-                                    tenantManagement.ShardLogisticLastDate = ShardcontactActivityLogs.Max(s => s.LogDateTime);
+                                    tenantManagement.ShardLogisticLastDate = ShardcontactActivityLogs.Max(s => (DateTime?)s.LogDateTime);
                                 }
                                 else
                                 {
-                                    tenantManagement.ShardLogisticLastDate = ShardcontactActivityLogs.Where(d => d.LogDateTime >= tenantManagement.ShardLogisticLastDate).Max(s => s.LogDateTime);
+                                    tenantManagement.ShardLogisticLastDate = ShardcontactActivityLogs.Where(d => d.LogDateTime >= tenantManagement.ShardLogisticLastDate).Max(s => (DateTime?)s.LogDateTime);
                                 }
 
                                 tenantManagement.ShardLogisticTotalLastWeek = ShardcontactActivityLogs.Where(s => s.LogDateTime >= lastweek).Count();
