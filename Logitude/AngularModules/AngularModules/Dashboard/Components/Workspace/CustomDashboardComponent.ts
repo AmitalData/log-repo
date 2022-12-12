@@ -14,7 +14,6 @@ import { DashboardListService } from '../../../DashboardModule/Services/Standard
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { DashboardList } from '../../../DashboardModule/EntityLists/DashboardList';
 import { LocationDirective } from '../../../Infrastructure/Utilities/LocationDirective';
-import { DashboardPMExtendedService } from '../../../DashboardModule/Services/ExtendedPMs/DashboardPMExtendedService';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { DashboardPMService } from '../../../DashboardModule/Services/StandardPMs/DashboardPMService';
 
@@ -29,32 +28,23 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, O
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
     public DataContext = this;
-
     public DashboardsTabs: DashboardTab[] = [];
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
-
-
     public HasChanges: boolean = false;
     public IsEditLayoutModeActive: boolean = false;
     public SavedDashboard: DashboardPM = null;
-
     @Output() SaveDashboardCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() EditLayoutChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
     public dashbaordCount = -1;
     public ItemsSource: DashboardList[] = [];
     public DashboardDropdownLoading: boolean = true;
-
     private loadedDashboards: DashboardList[] = [];
-
-    private dashboardExtendedService: DashboardPMExtendedService;
     private DashboardListService: DashboardListService;
 
     constructor() {
         super();
-        this.dashboardExtendedService = new DashboardPMExtendedService();
         this.DashboardListService = new DashboardListService();
     }
-
 
     DashboardDataBinding: DashboardDataBinding = {
         isOnEditLayout: new Subject(),
@@ -134,8 +124,12 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, O
     }
 
     SelectFirstDashboard() {
-        if (!this.SelectedDashboard && this.DashboardsTabs && this.DashboardsTabs.length > 0)
-            this.SelectedDashboard = this.DashboardsTabs[0]?.Dashboard;
+        if (this.DashboardsTabs && this.DashboardsTabs.length > 0) {
+            if (this.isSelectedDashboardDeleted || !this.SelectedDashboard) {
+                this.isSelectedDashboardDeleted = false;
+                this.SelectedDashboard = this.DashboardsTabs[0]?.Dashboard;
+            }
+        }
     }
 
     private selectedDashboard: DashboardList;
@@ -289,20 +283,14 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, O
         this.SelectedTabItem.Name = dashboard.Name;
     }
 
+    private isSelectedDashboardDeleted: boolean = false;
     public RefreshTabsAfterDelete(deletedDashboardId: string) {
         var deletedTab: DashboardTab = this.DashboardsTabs.find(d => d.Dashboard.Id == deletedDashboardId);
         if (deletedTab) {
-            var index = this.DashboardsTabs.indexOf(deletedTab);
-            if (index != -1) {
-                this.DashboardsTabs.splice(index, 1);
-                this.BuildTabs();
-
-                //this.selectedDashboardId = this.DashboardsTabs[0]?.DashboardId;
-                //this.SelectionChanged(this.DashboardsTabs[0]);
-            }
+            this.isSelectedDashboardDeleted = true;
+            this.LoadDefaultDashboards(300);
         }
     }
-
 }
 
 class DashboardTab {
