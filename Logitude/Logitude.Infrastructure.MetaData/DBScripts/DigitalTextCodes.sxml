@@ -1,12 +1,15 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="2">
+  <Sql Version="3">
     <![CDATA[	  
 	
       declare @NewEntityId as varchar(15)
  	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCodes'
 
+	  declare @generalObjectTableId as varchar(15)
+	  set @generalObjectTableId = (select Id from ObjectTables where [Name] = 'General' and Tenant = 0 )
+
 	  INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate,  Labels) 
-	  values (@NewEntityId, 0, null, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP,
+	  values (@NewEntityId, 0, @generalObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP,
 	  '[{
 		"Code": "Dashboard.G.Dashboard",
 		"DisplayText": "Dashboard"
