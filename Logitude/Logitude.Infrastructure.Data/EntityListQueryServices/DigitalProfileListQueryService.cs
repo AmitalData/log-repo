@@ -43,13 +43,11 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
         {
 			throw new NotImplementedException();
 		}
-				private IQueryable<DigitalProfile> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<DigitalProfile> iQueryable, int tenant)
+
+		private IQueryable<DigitalProfile> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<DigitalProfile> iQueryable, int tenant)
         {
 			return iQueryable;
-		}
-		
-			}
-
-
+		}		
+	}
 }
 	

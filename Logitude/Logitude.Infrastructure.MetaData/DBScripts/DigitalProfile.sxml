@@ -1,17 +1,1718 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="1">
+  <Sql Version="6">
       <![CDATA[	  
       declare @NewEntityId as varchar(15)
  	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT, 'DigitalProfiles'
-
 	  INSERT INTO DigitalProfiles (Id, Tenant, CreateDate, UpdateDate,  Name) 
 	  values (@NewEntityId, 0, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, 'Customer')
-
 	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT, 'DigitalProfiles'
-
 	  INSERT INTO DigitalProfiles (Id, Tenant, CreateDate, UpdateDate,  Name) 
 	  values (@NewEntityId, 0, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, 'Agent')
+	  declare @newDigitalFieldEntityId as varchar(15)
+ 	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurities'
 
+	  declare @generalObjectTableId as varchar(15)
+	  set @generalObjectTableId = (select Id from ObjectTables where [Name] = 'General' and Tenant = 0 )
+
+	  declare @customerProfileId as varchar(15)
+	  set @customerProfileId = (select Id from DigitalProfiles where [Name] = 'Customer' and Tenant = 0 )
+
+	  INSERT INTO DigitalFieldSecurities (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, DefaultSettings) 
+	  values (@newDigitalFieldEntityId, 0, @generalObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @customerProfileId, 
+	  '[{
+			"Field": "Dashboard.G.Dashboard"
+		},
+		{
+			"Field": "Dashboard.G.ShipmentsToArriveWithinOneWeek"
+		},
+		{
+			"Field": "General.G.NoDataDefaultMSG"
+		},
+		{
+			"Field": "Dashboard.G.InvoiceDueDateWithinOneWeek"
+		},
+		{
+			"Field": "General.O.Filters"
+		},
+		{
+			"Field": "Dashboard.G.TotalShipmentByStatus"
+		},
+		{
+			"Field": "Dashboard.G.TotalInvoiceByStatus"
+		},
+		{
+			"Field": "Tab.G.GeneralSearch"
+		},
+		{
+			"Field": "Tab.G.Reports"
+		},
+		{
+			"Field": "Tab.G.Quotes"
+		},
+		{
+			"Field": "Tab.G.Shipment"
+		},
+		{
+			"Field": "Tab.G.Invoice"
+		},
+		{
+			"Field": "Tab.G.Dashboard"
+		},
+		{
+			"Field": "General.B.DownloadExcel"
+		},
+		{
+			"Field": "Tab.G.HelpCenter"
+		},
+		{
+			"Field": "Shipment.G.RefreshMSG"
+		},
+		{
+			"Field": "Shipment.G.RefreshBtn"
+		},
+		{
+			"Field": "Shipment.G.ShowLoginMsg"
+		},
+		{
+			"Field": "Shipment.G.LoginHereBtn"
+		},
+		{
+			"Field": "Shipment.G.SessionExpired"
+		},
+		{
+			"Field": "Shipment.G.LoginAgainMsg"
+		},
+		{
+			"Field": "General.G.LoginBtn"
+		},
+		{
+			"Field": "General.O.Settings"
+		},
+		{
+			"Field": "Contact.G.GeneralInformation"
+		},
+		{
+			"Field": "Contact.G.PersonalInformation"
+		},
+		{
+			"Field": "Contact.G.PersonalInformationFullName"
+		},
+		{
+			"Field": "General.G.Description"
+		},
+		{
+			"Field": "Contact.F.Position"
+		},
+		{
+			"Field": "Contact.G.PersonalInformationDateOfBirth"
+		},
+		{
+			"Field": "General.G.TimeZone"
+		},
+		{
+			"Field": "Contact.O.Contacts"
+		},
+		{
+			"Field": "Contact.F.BusinessPhone"
+		},
+		{
+			"Field": "Contact.F.Mobile"
+		},
+		{
+			"Field": "Contact.G.Password"
+		},
+		{
+			"Field": "Contact.G.ConfirmPassword"
+		},
+		{
+			"Field": "Contact.O.CurrentPassword"
+		},
+		{
+			"Field": "Contact.G.EnterNewPassword"
+		},
+		{
+			"Field": "General.G.Download"
+		},
+		{
+			"Field": "Contact.G.NewPassword"
+		},
+		{
+			"Field": "Contact.G.ReTypePassword"
+		},
+		{
+			"Field": "General.B.Cancel"
+		},
+		{
+			"Field": "Contact.G.SaveChangesBtn"
+		},
+		{
+			"Field": "Contact.G.ChangePassword"
+		},
+		{
+			"Field": "Contact.G.LogoutBtn"
+		},
+		{
+			"Field": "Contact.G.ConfirmLogoutBtn"
+		},
+		{
+			"Field": "Contact.G.ConfirmLogoutMsg"
+		},
+		{
+			"Field": "General.B.Confirm"
+		},
+		{
+			"Field": "General.G.PasswordChange"
+		},
+		{
+			"Field": "General.G.CreatePassword"
+		},
+		{
+			"Field": "General.G.ConfirmPassword"
+		},
+		{
+			"Field": "General.G.PasswordInfo1"
+		},
+		{
+			"Field": "General.G.PasswordInfo2"
+		},
+		{
+			"Field": "General.G.PasswordInfo3"
+		},
+		{
+			"Field": "General.G.PasswordInfo4"
+		},
+		{
+			"Field": "General.G.LoginMsg"
+		},
+		{
+			"Field": "Contact.F.Email"
+		},
+		{
+			"Field": "Contact.F.Password"
+		},
+		{
+			"Field": "General.G.EmailPlaceholder"
+		},
+		{
+			"Field": "General.G.PasswordPlaceholder"
+		},
+		{
+			"Field": "General.G.ResetPassword"
+		},
+		{
+			"Field": "General.G.ForgetPasswordMsg"
+		},
+		{
+			"Field": "Contact.F.E-mail"
+		},
+		{
+			"Field": "General.G.ForgetPasswwordTroubleLogging"
+		},
+		{
+			"Field": "General.G.CopiedToClipboard"
+		},
+		{
+			"Field": "General.G.DownloadExcel"
+		},
+		{
+			"Field": "General.G.ApplyFilter"
+		},
+		{
+			"Field": "General.G.EditFilters"
+		},
+		{
+			"Field": "General.G.MultiShipments"
+		},
+		{
+			"Field": "General.G.NoMatchingResultsFound"
+		},
+		{
+			"Field": "General.G.OnlineViewLoginDirective"
+		},
+		{
+			"Field": "General.G.InformationAvailablilityMsg"
+		},
+		{
+			"Field": "General.O.LastLogin"
+		},
+		{
+			"Field": "General.G.PackageType"
+		},
+		{
+			"Field": "General.O.NoteText"
+		},
+		{
+			"Field": "General.G.SaveChangesMsg"
+		},
+		{
+			"Field": "General.G.PasswordIssueMsg"
+		},
+		{
+			"Field": "Contact.G.PositionValidationMsg"
+		},
+		{
+			"Field": "Contact.G.FullNameValidationMsg"
+		},
+		{
+			"Field": "General.G.CurrentPasswordValidationMsg"
+		},
+		{
+			"Field": "General.G.NewPasswordValidationMsg"
+		},
+		{
+			"Field": "General.G.NewPasswordValidationErrorMsg"
+		},
+		{
+			"Field": "General.G.ConfirmNewPasswordValidationErrorMsg"
+		},
+		{
+			"Field": "General.G.VerificationCode"
+		},
+		{
+			"Field": "General.G.ForgotPasswordMsg"
+		},
+		{
+			"Field": "General.G.CapatchPlaceholder"
+		},
+		{
+			"Field": "General.G.SubmitBtn"
+		},
+		{
+			"Field": "General.G.SaveBtn"
+		},
+		{
+			"Field": "General.G.ClearFilter"
+		},
+		{
+			"Field": "General.G.DownloadAll"
+		}]');
+
+ 	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurities'
+
+	  declare @shipmentObjectTableId as varchar(15)
+	  set @shipmentObjectTableId = (select Id from ObjectTables where [Name] = 'Shipment' and Tenant = 0 )
+
+	  INSERT INTO DigitalFieldSecurities (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, DefaultSettings) 
+	  values (@newDigitalFieldEntityId, 0, @shipmentObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @customerProfileId, 
+		'[{
+			"Field": "Shipment.Q.AllShipments"
+		},
+		{
+			"Field": "Shipment.G.All"
+		},
+		{
+			"Field": "Shipment.G.Inprogress"
+		},
+		{
+			"Field": "Shipment.G.TransportMode"
+		},
+		{
+			"Field": "Shipment.G.ShipmentStatus"
+		},
+		{
+			"Field": "Shipment.G.MyPartner"
+		},
+		{
+			"Field": "Shipment.F.From"
+		},
+		{
+			"Field": "Shipment.G.FinalDestination"
+		},
+		{
+			"Field": "Shipment.G.CreateDate"
+		},
+		{
+			"Field": "Shipment.G.ETADate"
+		},
+		{
+			"Field": "Shipment.G.SearchPartner"
+		},
+		{
+			"Field": "Shipment.G.SearchFrom"
+		},
+		{
+			"Field": "Shipment.G.SearchDestination"
+		},
+		{
+			"Field": "Shipment.G.SearchPlaceholder"
+		},
+		{
+			"Field": "Shipment.G.SortBy"
+		},
+		{
+			"Field": "General.G.SearchMinNumberOfChars"
+		},
+		{
+			"Field": "Shipment.G.References"
+		},
+		{
+			"Field": "Shipment.O.Overview.MAWB"
+		},
+		{
+			"Field": "Shipment.G.Notes"
+		},
+		{
+			"Field": "Shipment.G.DescriptionOfGoods"
+		},
+		{
+			"Field": "Shipment.G.StatusUpdated"
+		},
+		{
+			"Field": "Shipment.F.ConsigneeName"
+		},
+		{
+			"Field": "Shipment.F.ShipperName"
+		},
+		{
+			"Field": "Shipment.G.OBL"
+		},
+		{
+			"Field": "Shipment.G.CMR/RWB#"
+		},
+		{
+			"Field": "Shipment.G.Archive"
+		},
+		{
+			"Field": "Shipment.G.Archived"
+		},
+		{
+			"Field": "Shipment.G.Unarchive"
+		},
+		{
+			"Field": "Shipment.G.GeneralInformation"
+		},
+		{
+			"Field": "Shipment.G.FinalDestinationNoResultMsg"
+		},
+		{
+			"Field": "Shipment.F.House"
+		},
+		{
+			"Field": "Shipment.G.Houses"
+		},
+		{
+			"Field": "Shipment.O.Master"
+		},
+		{
+			"Field": "Shipment.G.Invoiced"
+		},
+		{
+			"Field": "Shipment.F.IncotermCode"
+		},
+		{
+			"Field": "Shipment.F.AccountManagerUserName"
+		},
+		{
+			"Field": "Shipment.F.SalesmanUserName"
+		},
+		{
+			"Field": "Shipment.G.ShipmentLevel"
+		},
+		{
+			"Field": "Shipment.G.EquipmentInformation"
+		},
+		{
+			"Field": "Shipment.G.TotalInformation"
+		},
+		{
+			"Field": "Shipment.F.NumberOfPackages"
+		},
+		{
+			"Field": "Shipment.G.Volume"
+		},
+		{
+			"Field": "Shipment.G.GrossWeight"
+		},
+		{
+			"Field": "Shipment.G.DangerousGoods"
+		},
+		{
+			"Field": "Shipment.G.Customer"
+		},
+		{
+			"Field": "Shipment.G.ChWeight"
+		},
+		{
+			"Field": "Shipment.G.PackagesInformation"
+		},
+		{
+			"Field": "Shipment.G.ContainerType"
+		},
+		{
+			"Field": "Shipment.G.ContainerNumber"
+		},
+		{
+			"Field": "Shipment.G.CarrierLastStatusName"
+		},
+		{
+			"Field": "Shipment.F.Reference"
+		},
+		{
+			"Field": "Shipment.G.SealNumber"
+		},
+		{
+			"Field": "Shipment.F.NumberOfContainers"
+		},
+		{
+			"Field": "Shipment.G.PackagesEmptyResultMsg"
+		},
+		{
+			"Field": "Shipment.F.Routing"
+		},
+		{
+			"Field": "Shipment.G.MainRouteInformation"
+		},
+		{
+			"Field": "Shipment.G.PreCarrigeInformation"
+		},
+		{
+			"Field": "Shipment.G.MainCarrigeInformation"
+		},
+		{
+			"Field": "Shipment.G.Transshipment1Information"
+		},
+		{
+			"Field": "Shipment.G.Transshipment2Information"
+		},
+		{
+			"Field": "Shipment.G.Transshipment3Information"
+		},
+		{
+			"Field": "Shipment.G.OnCarrigeInformation"
+		},
+		{
+			"Field": "Shipment.G.PortOfLoading"
+		},
+		{
+			"Field": "Shipment.G.GatewayDestinationLable"
+		},
+		{
+			"Field": "Shipment.G.TransitTime"
+		},
+		{
+			"Field": "Shipment.F.To"
+		},
+		{
+			"Field": "Shipment.F.FlightDate"
+		},
+		{
+			"Field": "Shipment.O.Routings.ATD"
+		},
+		{
+			"Field": "Shipment.O.Routings.ETD"
+		},
+		{
+			"Field": "Shipment.O.Routings.Carrier"
+		},
+		{
+			"Field": "Shipment.O.Routings.CarrierNo"
+		},
+		{
+			"Field": "Shipment.O.Routings.Airline"
+		},
+		{
+			"Field": "Shipment.G.FlightNumber"
+		},
+		{
+			"Field": "Shipment.G.VesselName"
+		},
+		{
+			"Field": "Shipment.G.Document"
+		},
+		{
+			"Field": "Shipment.G.Documents"
+		},
+		{
+			"Field": "Shipment.G.DocumentsFileName"
+		},
+		{
+			"Field": "Shipment.G.DocumentType"
+		},
+		{
+			"Field": "Shipment.G.Date"
+		},
+		{
+			"Field": "Shipment.G.Upload"
+		},
+		{
+			"Field": "Shipment.G.ViewDocument"
+		},
+		{
+			"Field": "Shipment.G.InvoicesLable"
+		},
+		{
+			"Field": "ARInvoice.G.InvoiceNumber"
+		},
+		{
+			"Field": "ARInvoice.G.InvoiceType"
+		},
+		{
+			"Field": "ARInvoice.G.TotalAmount"
+		},
+		{
+			"Field": "ARInvoice.G.OpenAmount"
+		},
+		{
+			"Field": "ARInvoice.G.DueDate"
+		},
+		{
+			"Field": "Shipment.F.ViewConsolidation"
+		},
+		{
+			"Field": "Shipment.G.View"
+		},
+		{
+			"Field": "Shipment.TH.Partners"
+		},
+		{
+			"Field": "Shipment.G.Address1"
+		},
+		{
+			"Field": "Shipment.G.Address2"
+		},
+		{
+			"Field": "General.G.Contact"
+		},
+		{
+			"Field": "General.G.PhoneNumber"
+		},
+		{
+			"Field": "Shipment.G.Reference1"
+		},
+		{
+			"Field": "Shipment.G.Reference2"
+		},
+		{
+			"Field": "Shipment.G.Qty"
+		},
+		{
+			"Field": "Shipment.F.AgentName"
+		},
+		{
+			"Field": "Shipment.F.IssuingCarrierAgentId"
+		},
+		{
+			"Field": "Shipment.O.Overview.ShipperNotExporter"
+		},
+		{
+			"Field": "Shipment.O.Overview.ConsigneeNotImporter"
+		},
+		{
+			"Field": "Shipment.F.Notify1Id"
+		},
+		{
+			"Field": "Shipment.F.Notify2Id"
+		},
+		{
+			"Field": "Shipment.O.Overview.CustomAgentExport"
+		},
+		{
+			"Field": "Shipment.O.Overview.CustomAgentImport"
+		},
+		{
+			"Field": "Shipment.F.CustomClearancePointId"
+		},
+		{
+			"Field": "Shipment.F.ReleasingAgentId"
+		},
+		{
+			"Field": "Shipment.F.ColoaderId"
+		},
+		{
+			"Field": "Shipment.F.FreightForwarderId"
+		},
+		{
+			"Field": "Shipment.F.TruckerId"
+		},
+		{
+			"Field": "Shipment.F.ConsolidatorName"
+		},
+		{
+			"Field": "Shipment.TH.Events"
+		},
+		{
+			"Field": "Shipment.G.EventDate"
+		},
+		{
+			"Field": "Shipment.G.EventTime"
+		},
+		{
+			"Field": "EventType.F.EnglishName"
+		},
+		{
+			"Field": "Shipment.O.Routings.WarehouseLegRemarks"
+		},
+		{
+			"Field": "Shipment.G.Timeline"
+		},
+		{
+			"Field": "Shipment.G.NoResult"
+		},
+		{
+			"Field": "General.G.DownloadData"
+		},
+		{
+			"Field": "General.G.DownloadDataMSG"
+		},
+		{
+			"Field": "Shipment.G.UploadDocuments"
+		},
+		{
+			"Field": "Shipment.G.CancelButton"
+		},
+		{
+			"Field": "Shipment.G.SearchDefaultMSG"
+		},
+		{
+			"Field": "Shipment.G.UploadingDocumentHeaderMsg"
+		},
+		{
+			"Field": "General.G.DownloadDataSuccessMSG"
+		},
+		{
+			"Field": "General.G.DownloadDataSuccessMSG2"
+		},
+		{
+			"Field": "General.G.DownloadDataPreparing"
+		},
+		{
+			"Field": "Shipment.G.ATD"
+		},
+		{
+			"Field": "Shipment.G.Airline"
+		},
+		{
+			"Field": "Shipment.G.Shippingline"
+		},
+		{
+			"Field": "Shipment.G.ContainersLines"
+		}]');
+		
+	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurities'
+
+	  declare @invocieObjectTableId as varchar(15)
+	  set @invocieObjectTableId = (select Id from ObjectTables where [Name] = 'ARInvoice' and Tenant = 0)
+
+	  INSERT INTO DigitalFieldSecurities (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, DefaultSettings) 
+	  values (@newDigitalFieldEntityId, 0, @invocieObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @customerProfileId, 
+		'[
+	{
+		"Field": "ARInvoice.G.Invoicing"
+	},
+	{
+		"Field": "ARInvoice.F.StatusName"
+	},
+	{
+		"Field": "ARInvoice.G.CreateDate"
+	},
+	{
+		"Field": "ARInvoice.G.DueDate"
+	},
+	{
+		"Field": "ARInvoice.G.TotalAmount"
+	},
+	{
+		"Field": "ARInvoice.G.TotalAmount2"
+	},
+	{
+		"Field": "ARInvoice.G.OpenAmount"
+	},
+	{
+		"Field": "ARInvoice.G.AllTime"
+	},
+	{
+		"Field": "ARInvoice.G.SearchPlaceholder"
+	},
+	{
+		"Field": "ARInvoice.G.SortBy"
+	},
+	{
+		"Field": "ARInvoice.G.All"
+	},
+	{
+		"Field": "ARInvoice.G.Unpaid"
+	},
+	{
+		"Field": "ARInvoice.G.MyReference"
+	},
+	{
+		"Field": "ARInvoice.G.YourReference"
+	},
+	{
+		"Field": "ARInvoice.G.Created"
+	},
+	{
+		"Field": "ARInvoice.G.GeneralInformation"
+	},
+	{
+		"Field": "ARInvoice.G.ReferenceNumber"
+	},
+	{
+		"Field": "ARInvoice.G.AmountDue"
+	},
+	{
+		"Field": "ARInvoice.G.PaymentTerm"
+	},
+	{
+		"Field": "ARInvoice.G.InvoiceDate"
+	},
+	{
+		"Field": "ARInvoice.G.PrintNotes"
+	},
+	{
+		"Field": "ARInvoice.G.InvoiceDetails"
+	},
+	{
+		"Field": "ARInvoice.TH.Details"
+	},
+	{
+		"Field": "ARInvoice.F.Description"
+	},
+	{
+		"Field": "ARInvoiceLine.F.MeasurementId"
+	},
+	{
+		"Field": "ARInvoiceLine.F.Quantity"
+	},
+	{
+		"Field": "ARInvoiceLine.F.UnitPrice"
+	},
+	{
+		"Field": "ARInvoiceLine.F.Amount"
+	},
+	{
+		"Field": "ARInvoiceLine.F.VatTypeId"
+	},
+	{
+		"Field": "ARInvoice.G.Totals"
+	},
+	{
+		"Field": "ARInvoice.G.Subtotal"
+	},
+	{
+		"Field": "ARInvoice.G.Total"
+	},
+	{
+		"Field": "Accounting.General.O.Payments"
+	},
+	{
+		"Field": "ARInvoice.G.Number"
+	},
+	{
+		"Field": "ARInvoice.G.Type"
+	},
+	{
+		"Field": "ARInvoice.F.Reference"
+	},
+	{
+		"Field": "ARPayment.F.AmountInPaymentCurrency"
+	},
+	{
+		"Field": "ARInvoice.F.AmountPaid"
+	},
+	{
+		"Field": "ARInvoice.G.OpenAmount2"
+	},
+	{
+		"Field": "ARInvoice.G.InvoiceAmount"
+	},
+	{
+		"Field": "ARInvoice.G.InvoiceAmountPaid"
+	},
+	{
+		"Field": "ARInvoice.G.InvoiceAmountDue"
+	},
+	{
+		"Field": "ARInvoice.G.ConstituentInvoices"
+	},
+	{
+		"Field": "ARInvoice.G.ShipmentReference"
+	},
+	{
+		"Field": "ARInvoice.G.MasterNo"
+	},
+	{
+		"Field": "ARInvoice.G.HouseNo"
+	},
+	{
+		"Field": "ARInvoice.G.ShipmentNo"
+	},
+	{
+		"Field": "ARInvoice.O.VATListLable"
+	},
+	{
+		"Field": "General.G.Download"
+	},
+	{
+		"Field": "General.G.NoDataDefaultMSG"
+	},
+	{
+		"Field": "ARInvoice.G.NoInvoiceMSG"
+	},
+	{
+		"Field": "General.G.DownloadData"
+	},
+	{
+		"Field": "General.G.DownloadDataMSG"
+	},
+	{
+		"Field": "General.G.DownloadDataSuccessMSG"
+	},
+	{
+		"Field": "General.G.DownloadDataPreparing"
+	},
+	{
+		"Field": "General.G.ReferenceNo"
+	}]');
+
+ 	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurities'
+
+	  set @generalObjectTableId = (select Id from ObjectTables where [Name] = 'General' and Tenant = 0 )
+
+	  declare @agentProfileId as varchar(15)
+	  set @agentProfileId = (select Id from DigitalProfiles where [Name] = 'Agent' and Tenant = 0 )
+
+	  INSERT INTO DigitalFieldSecurities (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, DefaultSettings) 
+	  values (@newDigitalFieldEntityId, 0, @generalObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @agentProfileId, 
+	  '[{
+			"Field": "Dashboard.G.Dashboard"
+		},
+		{
+			"Field": "Dashboard.G.ShipmentsToArriveWithinOneWeek"
+		},
+		{
+			"Field": "General.G.NoDataDefaultMSG"
+		},
+		{
+			"Field": "Dashboard.G.InvoiceDueDateWithinOneWeek"
+		},
+		{
+			"Field": "General.O.Filters"
+		},
+		{
+			"Field": "Dashboard.G.TotalShipmentByStatus"
+		},
+		{
+			"Field": "Dashboard.G.TotalInvoiceByStatus"
+		},
+		{
+			"Field": "Tab.G.GeneralSearch"
+		},
+		{
+			"Field": "Tab.G.Reports"
+		},
+		{
+			"Field": "Tab.G.Quotes"
+		},
+		{
+			"Field": "Tab.G.Shipment"
+		},
+		{
+			"Field": "Tab.G.Invoice"
+		},
+		{
+			"Field": "Tab.G.Dashboard"
+		},
+		{
+			"Field": "General.B.DownloadExcel"
+		},
+		{
+			"Field": "Tab.G.HelpCenter"
+		},
+		{
+			"Field": "Shipment.G.RefreshMSG"
+		},
+		{
+			"Field": "Shipment.G.RefreshBtn"
+		},
+		{
+			"Field": "Shipment.G.ShowLoginMsg"
+		},
+		{
+			"Field": "Shipment.G.LoginHereBtn"
+		},
+		{
+			"Field": "Shipment.G.SessionExpired"
+		},
+		{
+			"Field": "Shipment.G.LoginAgainMsg"
+		},
+		{
+			"Field": "General.G.LoginBtn"
+		},
+		{
+			"Field": "General.O.Settings"
+		},
+		{
+			"Field": "Contact.G.GeneralInformation"
+		},
+		{
+			"Field": "Contact.G.PersonalInformation"
+		},
+		{
+			"Field": "Contact.G.PersonalInformationFullName"
+		},
+		{
+			"Field": "General.G.Description"
+		},
+		{
+			"Field": "Contact.F.Position"
+		},
+		{
+			"Field": "Contact.G.PersonalInformationDateOfBirth"
+		},
+		{
+			"Field": "General.G.TimeZone"
+		},
+		{
+			"Field": "Contact.O.Contacts"
+		},
+		{
+			"Field": "Contact.F.BusinessPhone"
+		},
+		{
+			"Field": "Contact.F.Mobile"
+		},
+		{
+			"Field": "Contact.G.Password"
+		},
+		{
+			"Field": "Contact.G.ConfirmPassword"
+		},
+		{
+			"Field": "Contact.O.CurrentPassword"
+		},
+		{
+			"Field": "Contact.G.EnterNewPassword"
+		},
+		{
+			"Field": "General.G.Download"
+		},
+		{
+			"Field": "Contact.G.NewPassword"
+		},
+		{
+			"Field": "Contact.G.ReTypePassword"
+		},
+		{
+			"Field": "General.B.Cancel"
+		},
+		{
+			"Field": "Contact.G.SaveChangesBtn"
+		},
+		{
+			"Field": "Contact.G.ChangePassword"
+		},
+		{
+			"Field": "Contact.G.LogoutBtn"
+		},
+		{
+			"Field": "Contact.G.ConfirmLogoutBtn"
+		},
+		{
+			"Field": "Contact.G.ConfirmLogoutMsg"
+		},
+		{
+			"Field": "General.B.Confirm"
+		},
+		{
+			"Field": "General.G.PasswordChange"
+		},
+		{
+			"Field": "General.G.CreatePassword"
+		},
+		{
+			"Field": "General.G.ConfirmPassword"
+		},
+		{
+			"Field": "General.G.PasswordInfo1"
+		},
+		{
+			"Field": "General.G.PasswordInfo2"
+		},
+		{
+			"Field": "General.G.PasswordInfo3"
+		},
+		{
+			"Field": "General.G.PasswordInfo4"
+		},
+		{
+			"Field": "General.G.LoginMsg"
+		},
+		{
+			"Field": "Contact.F.Email"
+		},
+		{
+			"Field": "Contact.F.Password"
+		},
+		{
+			"Field": "General.G.EmailPlaceholder"
+		},
+		{
+			"Field": "General.G.PasswordPlaceholder"
+		},
+		{
+			"Field": "General.G.ResetPassword"
+		},
+		{
+			"Field": "General.G.ForgetPasswordMsg"
+		},
+		{
+			"Field": "Contact.F.E-mail"
+		},
+		{
+			"Field": "General.G.ForgetPasswwordTroubleLogging"
+		},
+		{
+			"Field": "General.G.CopiedToClipboard"
+		},
+		{
+			"Field": "General.G.DownloadExcel"
+		},
+		{
+			"Field": "General.G.ApplyFilter"
+		},
+		{
+			"Field": "General.G.EditFilters"
+		},
+		{
+			"Field": "General.G.MultiShipments"
+		},
+		{
+			"Field": "General.G.NoMatchingResultsFound"
+		},
+		{
+			"Field": "General.G.OnlineViewLoginDirective"
+		},
+		{
+			"Field": "General.G.InformationAvailablilityMsg"
+		},
+		{
+			"Field": "General.O.LastLogin"
+		},
+		{
+			"Field": "General.G.PackageType"
+		},
+		{
+			"Field": "General.O.NoteText"
+		},
+		{
+			"Field": "General.G.SaveChangesMsg"
+		},
+		{
+			"Field": "General.G.PasswordIssueMsg"
+		},
+		{
+			"Field": "Contact.G.PositionValidationMsg"
+		},
+		{
+			"Field": "Contact.G.FullNameValidationMsg"
+		},
+		{
+			"Field": "General.G.CurrentPasswordValidationMsg"
+		},
+		{
+			"Field": "General.G.NewPasswordValidationMsg"
+		},
+		{
+			"Field": "General.G.NewPasswordValidationErrorMsg"
+		},
+		{
+			"Field": "General.G.ConfirmNewPasswordValidationErrorMsg"
+		},
+		{
+			"Field": "General.G.VerificationCode"
+		},
+		{
+			"Field": "General.G.ForgotPasswordMsg"
+		},
+		{
+			"Field": "General.G.CapatchPlaceholder"
+		},
+		{
+			"Field": "General.G.SubmitBtn"
+		},
+		{
+			"Field": "General.G.SaveBtn"
+		},
+		{
+			"Field": "General.G.ClearFilter"
+		},
+		{
+			"Field": "General.G.DownloadAll"
+		}]')
+
+ 	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurities'
+	  set @shipmentObjectTableId = (select Id from ObjectTables where [Name] = 'Shipment' and Tenant = 0 )
+	  INSERT INTO DigitalFieldSecurities (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, DefaultSettings) 
+	  values (@newDigitalFieldEntityId, 0, @shipmentObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @agentProfileId, 
+		'[{
+			"Field": "Shipment.Q.AllShipments"
+		},
+		{
+			"Field": "Shipment.G.All"
+		},
+		{
+			"Field": "Shipment.G.Inprogress"
+		},
+		{
+			"Field": "Shipment.G.TransportMode"
+		},
+		{
+			"Field": "Shipment.G.ShipmentStatus"
+		},
+		{
+			"Field": "Shipment.G.MyPartner"
+		},
+		{
+			"Field": "Shipment.F.From"
+		},
+		{
+			"Field": "Shipment.G.FinalDestination"
+		},
+		{
+			"Field": "Shipment.G.CreateDate"
+		},
+		{
+			"Field": "Shipment.G.ETADate"
+		},
+		{
+			"Field": "Shipment.G.SearchPartner"
+		},
+		{
+			"Field": "Shipment.G.SearchFrom"
+		},
+		{
+			"Field": "Shipment.G.SearchDestination"
+		},
+		{
+			"Field": "Shipment.G.SearchPlaceholder"
+		},
+		{
+			"Field": "Shipment.G.SortBy"
+		},
+		{
+			"Field": "General.G.SearchMinNumberOfChars"
+		},
+		{
+			"Field": "Shipment.G.References"
+		},
+		{
+			"Field": "Shipment.O.Overview.MAWB"
+		},
+		{
+			"Field": "Shipment.G.Notes"
+		},
+		{
+			"Field": "Shipment.G.DescriptionOfGoods"
+		},
+		{
+			"Field": "Shipment.G.StatusUpdated"
+		},
+		{
+			"Field": "Shipment.F.ConsigneeName"
+		},
+		{
+			"Field": "Shipment.F.ShipperName"
+		},
+		{
+			"Field": "Shipment.G.OBL"
+		},
+		{
+			"Field": "Shipment.G.CMR/RWB#"
+		},
+		{
+			"Field": "Shipment.G.Archive"
+		},
+		{
+			"Field": "Shipment.G.Archived"
+		},
+		{
+			"Field": "Shipment.G.Unarchive"
+		},
+		{
+			"Field": "Shipment.G.GeneralInformation"
+		},
+		{
+			"Field": "Shipment.G.FinalDestinationNoResultMsg"
+		},
+		{
+			"Field": "Shipment.F.House"
+		},
+		{
+			"Field": "Shipment.G.Houses"
+		},
+		{
+			"Field": "Shipment.O.Master"
+		},
+		{
+			"Field": "Shipment.G.Invoiced"
+		},
+		{
+			"Field": "Shipment.F.IncotermCode"
+		},
+		{
+			"Field": "Shipment.F.AccountManagerUserName"
+		},
+		{
+			"Field": "Shipment.F.SalesmanUserName"
+		},
+		{
+			"Field": "Shipment.G.ShipmentLevel"
+		},
+		{
+			"Field": "Shipment.G.EquipmentInformation"
+		},
+		{
+			"Field": "Shipment.G.TotalInformation"
+		},
+		{
+			"Field": "Shipment.F.NumberOfPackages"
+		},
+		{
+			"Field": "Shipment.G.Volume"
+		},
+		{
+			"Field": "Shipment.G.GrossWeight"
+		},
+		{
+			"Field": "Shipment.G.DangerousGoods"
+		},
+		{
+			"Field": "Shipment.G.Customer"
+		},
+		{
+			"Field": "Shipment.G.ChWeight"
+		},
+		{
+			"Field": "Shipment.G.PackagesInformation"
+		},
+		{
+			"Field": "Shipment.G.ContainerType"
+		},
+		{
+			"Field": "Shipment.G.ContainerNumber"
+		},
+		{
+			"Field": "Shipment.G.CarrierLastStatusName"
+		},
+		{
+			"Field": "Shipment.F.Reference"
+		},
+		{
+			"Field": "Shipment.G.SealNumber"
+		},
+		{
+			"Field": "Shipment.F.NumberOfContainers"
+		},
+		{
+			"Field": "Shipment.G.PackagesEmptyResultMsg"
+		},
+		{
+			"Field": "Shipment.F.Routing"
+		},
+		{
+			"Field": "Shipment.G.MainRouteInformation"
+		},
+		{
+			"Field": "Shipment.G.PreCarrigeInformation"
+		},
+		{
+			"Field": "Shipment.G.MainCarrigeInformation"
+		},
+		{
+			"Field": "Shipment.G.Transshipment1Information"
+		},
+		{
+			"Field": "Shipment.G.Transshipment2Information"
+		},
+		{
+			"Field": "Shipment.G.Transshipment3Information"
+		},
+		{
+			"Field": "Shipment.G.OnCarrigeInformation"
+		},
+		{
+			"Field": "Shipment.G.PortOfLoading"
+		},
+		{
+			"Field": "Shipment.G.GatewayDestinationLable"
+		},
+		{
+			"Field": "Shipment.G.TransitTime"
+		},
+		{
+			"Field": "Shipment.F.To"
+		},
+		{
+			"Field": "Shipment.F.FlightDate"
+		},
+		{
+			"Field": "Shipment.O.Routings.ATD"
+		},
+		{
+			"Field": "Shipment.O.Routings.ETD"
+		},
+		{
+			"Field": "Shipment.O.Routings.Carrier"
+		},
+		{
+			"Field": "Shipment.O.Routings.CarrierNo"
+		},
+		{
+			"Field": "Shipment.O.Routings.Airline"
+		},
+		{
+			"Field": "Shipment.G.FlightNumber"
+		},
+		{
+			"Field": "Shipment.G.VesselName"
+		},
+		{
+			"Field": "Shipment.G.Document"
+		},
+		{
+			"Field": "Shipment.G.Documents"
+		},
+		{
+			"Field": "Shipment.G.DocumentsFileName"
+		},
+		{
+			"Field": "Shipment.G.DocumentType"
+		},
+		{
+			"Field": "Shipment.G.Date"
+		},
+		{
+			"Field": "Shipment.G.Upload"
+		},
+		{
+			"Field": "Shipment.G.ViewDocument"
+		},
+		{
+			"Field": "Shipment.G.InvoicesLable"
+		},
+		{
+			"Field": "ARInvoice.G.InvoiceNumber"
+		},
+		{
+			"Field": "ARInvoice.G.InvoiceType"
+		},
+		{
+			"Field": "ARInvoice.G.TotalAmount"
+		},
+		{
+			"Field": "ARInvoice.G.OpenAmount"
+		},
+		{
+			"Field": "ARInvoice.G.DueDate"
+		},
+		{
+			"Field": "Shipment.F.ViewConsolidation"
+		},
+		{
+			"Field": "Shipment.G.View"
+		},
+		{
+			"Field": "Shipment.TH.Partners"
+		},
+		{
+			"Field": "Shipment.G.Address1"
+		},
+		{
+			"Field": "Shipment.G.Address2"
+		},
+		{
+			"Field": "General.G.Contact"
+		},
+		{
+			"Field": "General.G.PhoneNumber"
+		},
+		{
+			"Field": "Shipment.G.Reference1"
+		},
+		{
+			"Field": "Shipment.G.Reference2"
+		},
+		{
+			"Field": "Shipment.G.Qty"
+		},
+		{
+			"Field": "Shipment.F.AgentName"
+		},
+		{
+			"Field": "Shipment.F.IssuingCarrierAgentId"
+		},
+		{
+			"Field": "Shipment.O.Overview.ShipperNotExporter"
+		},
+		{
+			"Field": "Shipment.O.Overview.ConsigneeNotImporter"
+		},
+		{
+			"Field": "Shipment.F.Notify1Id"
+		},
+		{
+			"Field": "Shipment.F.Notify2Id"
+		},
+		{
+			"Field": "Shipment.O.Overview.CustomAgentExport"
+		},
+		{
+			"Field": "Shipment.O.Overview.CustomAgentImport"
+		},
+		{
+			"Field": "Shipment.F.CustomClearancePointId"
+		},
+		{
+			"Field": "Shipment.F.ReleasingAgentId"
+		},
+		{
+			"Field": "Shipment.F.ColoaderId"
+		},
+		{
+			"Field": "Shipment.F.FreightForwarderId"
+		},
+		{
+			"Field": "Shipment.F.TruckerId"
+		},
+		{
+			"Field": "Shipment.F.ConsolidatorName"
+		},
+		{
+			"Field": "Shipment.TH.Events"
+		},
+		{
+			"Field": "Shipment.G.EventDate"
+		},
+		{
+			"Field": "Shipment.G.EventTime"
+		},
+		{
+			"Field": "EventType.F.EnglishName"
+		},
+		{
+			"Field": "Shipment.O.Routings.WarehouseLegRemarks"
+		},
+		{
+			"Field": "Shipment.G.Timeline"
+		},
+		{
+			"Field": "Shipment.G.NoResult"
+		},
+		{
+			"Field": "General.G.DownloadData"
+		},
+		{
+			"Field": "General.G.DownloadDataMSG"
+		},
+		{
+			"Field": "Shipment.G.UploadDocuments"
+		},
+		{
+			"Field": "Shipment.G.CancelButton"
+		},
+		{
+			"Field": "Shipment.G.SearchDefaultMSG"
+		},
+		{
+			"Field": "Shipment.G.UploadingDocumentHeaderMsg"
+		},
+		{
+			"Field": "General.G.DownloadDataSuccessMSG"
+		},
+		{
+			"Field": "General.G.DownloadDataSuccessMSG2"
+		},
+		{
+			"Field": "General.G.DownloadDataPreparing"
+		},
+		{
+			"Field": "Shipment.G.ATD"
+		},
+		{
+			"Field": "Shipment.G.Airline"
+		},
+		{
+			"Field": "Shipment.G.Shippingline"
+		},
+		{
+			"Field": "Shipment.G.ContainersLines"
+		}]');
+		
+	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurities'
+	  set @invocieObjectTableId = (select Id from ObjectTables where [Name] = 'ARInvoice' and Tenant = 0)
+
+	  INSERT INTO DigitalFieldSecurities (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, DefaultSettings) 
+	  values (@newDigitalFieldEntityId, 0, @invocieObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @agentProfileId, 
+		'[{
+				"Field": "ARInvoice.G.Invoicing"
+			},
+			{
+				"Field": "ARInvoice.F.StatusName"
+			},
+			{
+				"Field": "ARInvoice.G.CreateDate"
+			},
+			{
+				"Field": "ARInvoice.G.DueDate"
+			},
+			{
+				"Field": "ARInvoice.G.TotalAmount"
+			},
+			{
+				"Field": "ARInvoice.G.TotalAmount2"
+			},
+			{
+				"Field": "ARInvoice.G.OpenAmount"
+			},
+			{
+				"Field": "ARInvoice.G.AllTime"
+			},
+			{
+				"Field": "ARInvoice.G.SearchPlaceholder"
+			},
+			{
+				"Field": "ARInvoice.G.SortBy"
+			},
+			{
+				"Field": "ARInvoice.G.All"
+			},
+			{
+				"Field": "ARInvoice.G.Unpaid"
+			},
+			{
+				"Field": "ARInvoice.G.MyReference"
+			},
+			{
+				"Field": "ARInvoice.G.YourReference"
+			},
+			{
+				"Field": "ARInvoice.G.Created"
+			},
+			{
+				"Field": "ARInvoice.G.GeneralInformation"
+			},
+			{
+				"Field": "ARInvoice.G.ReferenceNumber"
+			},
+			{
+				"Field": "ARInvoice.G.AmountDue"
+			},
+			{
+				"Field": "ARInvoice.G.PaymentTerm"
+			},
+			{
+				"Field": "ARInvoice.G.InvoiceDate"
+			},
+			{
+				"Field": "ARInvoice.G.PrintNotes"
+			},
+			{
+				"Field": "ARInvoice.G.InvoiceDetails"
+			},
+			{
+				"Field": "ARInvoice.TH.Details"
+			},
+			{
+				"Field": "ARInvoice.F.Description"
+			},
+			{
+				"Field": "ARInvoiceLine.F.MeasurementId"
+			},
+			{
+				"Field": "ARInvoiceLine.F.Quantity"
+			},
+			{
+				"Field": "ARInvoiceLine.F.UnitPrice"
+			},
+			{
+				"Field": "ARInvoiceLine.F.Amount"
+			},
+			{
+				"Field": "ARInvoiceLine.F.VatTypeId"
+			},
+			{
+				"Field": "ARInvoice.G.Totals"
+			},
+			{
+				"Field": "ARInvoice.G.Subtotal"
+			},
+			{
+				"Field": "ARInvoice.G.Total"
+			},
+			{
+				"Field": "Accounting.General.O.Payments"
+			},
+			{
+				"Field": "ARInvoice.G.Number"
+			},
+			{
+				"Field": "ARInvoice.G.Type"
+			},
+			{
+				"Field": "ARInvoice.F.Reference"
+			},
+			{
+				"Field": "ARPayment.F.AmountInPaymentCurrency"
+			},
+			{
+				"Field": "ARInvoice.F.AmountPaid"
+			},
+			{
+				"Field": "ARInvoice.G.OpenAmount2"
+			},
+			{
+				"Field": "ARInvoice.G.InvoiceAmount"
+			},
+			{
+				"Field": "ARInvoice.G.InvoiceAmountPaid"
+			},
+			{
+				"Field": "ARInvoice.G.InvoiceAmountDue"
+			},
+			{
+				"Field": "ARInvoice.G.ConstituentInvoices"
+			},
+			{
+				"Field": "ARInvoice.G.ShipmentReference"
+			},
+			{
+				"Field": "ARInvoice.G.MasterNo"
+			},
+			{
+				"Field": "ARInvoice.G.HouseNo"
+			},
+			{
+				"Field": "ARInvoice.G.ShipmentNo"
+			},
+			{
+				"Field": "ARInvoice.O.VATListLable"
+			},
+			{
+				"Field": "General.G.Download"
+			},
+			{
+				"Field": "General.G.NoDataDefaultMSG"
+			},
+			{
+				"Field": "ARInvoice.G.NoInvoiceMSG"
+			},
+			{
+				"Field": "General.G.DownloadData"
+			},
+			{
+				"Field": "General.G.DownloadDataMSG"
+			},
+			{
+				"Field": "General.G.DownloadDataSuccessMSG"
+			},
+			{
+				"Field": "General.G.DownloadDataPreparing"
+			},
+			{
+				"Field": "General.G.ReferenceNo"
+			}]');
       ]]>       
   </Sql>
 </Script>

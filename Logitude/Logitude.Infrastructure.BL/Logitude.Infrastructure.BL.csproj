@@ -131,6 +131,8 @@
     <Compile Include="EntityQueryServices\BIFoldersPermissionQueryService.cs" />
     <Compile Include="EntityQueryServices\BIReportQueryService.cs" />
     <Compile Include="EntityQueryServices\BIReportsExecutionLogQueryService.cs" />
+    <Compile Include="EntityQueryServices\DigitalFieldSecurityQueryService.cs" />
+    <Compile Include="EntityQueryServices\DigitalProfileQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\AuditLogQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\DigitalTextCodeQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\BatchTaskExecutionQueryService.Generated.cs" />

@@ -1,6 +1,5 @@
 ﻿using Logitude.Infrastructure.BL.EntityQueryServices;
 using Logitude.Infrastructure.Data.EntityLists;
-using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.SystemLogs;
 using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -12,7 +11,6 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
-using WebFreight.Web.Controllers.DigitalPortal.Helpers;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 
@@ -20,6 +18,63 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 {
     public class DigitalTextCodeController : ApiController
     {
+        [HttpGet]
+        [Route("DigitalTextCode/GetFeildPermissionByFilters")]
+        public HttpResponseMessage GetFeildPermissionByFilters(string cardId, string objectTableId, string profileId)
+        {
+            int tenant = 0;
+            string email = "";
+            try
+            {
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                tenant = authToken.Tenant;
+                email = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
+
+                var digitalFieldSecurityQuery = new DigitalFieldSecurityQueryService(tenant);
+                var defaultTextCode = digitalFieldSecurityQuery.GetDigitalFieldSecurityQuery(0, objectTableId, profileId);
+                var defaultCodesObject = JsonConvert.DeserializeObject<List<DigitalFeildSecurityObject>>(defaultTextCode.DefaultSettings);
+                var customCodesObject = new List<DigitalFeildSecurityObject>();
+
+                if (tenant != 0)
+                {
+                    var customTextCodes = digitalFieldSecurityQuery.GetDigitalFieldSecurityQuery(tenant, objectTableId, profileId);
+
+                    if (customTextCodes != null)
+                    {
+                        customCodesObject = JsonConvert.DeserializeObject<List<DigitalFeildSecurityObject>>(customTextCodes.DefaultSettings);
+                    }
+
+                    foreach (var item in customCodesObject)
+                    {
+                        var temp = defaultCodesObject.FirstOrDefault(a => a.Field.Equals(item.Field));
+
+                        if (temp != null)
+                        {
+                            temp.HasPersmission = true;
+                        }
+                    }
+                }
+
+                if (!customCodesObject.Any())
+                {
+                    defaultCodesObject.ForEach(a => a.HasPersmission = true);
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, defaultCodesObject);
+            }
+            catch (AutenticationException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         [HttpGet]
         [Route("DigitalTextCode/GetTextCodesByFilters")]
         public HttpResponseMessage GetTextCodesByFilters(string cardId, string objectTableId)
@@ -93,7 +148,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 if (customTextCodes != null)
                 {
-                    var customCodesMappedObject = JsonConvert.DeserializeObject<List<DigitalTextCodeObject>>(customTextCodes.Labels);
+                    var customCodesMappedObject = JsonConvert.DeserializeObject<List<DigitalTextCodeUpdateObject>>(customTextCodes.Labels);
 
                     foreach (var item in digitalTextCodeUpdateModel.Lables)
                     {
@@ -185,7 +240,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
 
         [HttpGet]
         [Route("DigitalTextCode/GetDigitalTextCodesObjetTables")]

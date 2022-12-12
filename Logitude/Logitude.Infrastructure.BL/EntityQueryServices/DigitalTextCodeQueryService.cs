@@ -1,13 +1,9 @@
 ﻿using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Infrastructure.Data;
-using Logitude.Infrastructure.Data.EntityKeys;
 using Logitude.Infrastructure.Data.EntityLists;
-using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.Data.Repsitories;
-using Logitude.Server.Tools;
 using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.DataContracts.Models;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -19,7 +15,6 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
         public DigitalTextCodeList GetDigitalTextCodesQuery(int tenant, string objectTableId)
         {
             DigitalTextCodeRepository digitalTextCodeRepository = new DigitalTextCodeRepository(tenant);
-
             var defaultTextCode = digitalTextCodeRepository.GetDigitalTextCodes(tenant, objectTableId)
                                                             .Select(x => new DigitalTextCodeList
                                                             {
@@ -36,23 +31,16 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
 
         public List<DigitalTextCodeList> GetDigitalTextCodesObjetTables(int tenant)
         {
-            var objetTables = context.DigitalTextCodes.Include("ObjectTable")
-                                                      .Where(a => a.Tenant == tenant)
-                                                      .Select(a =>
-                                                        new DigitalTextCodeList()
-                                                        {
-                                                            ObjectTableId = a.ObjectTableId,
-                                                            ObjectTableName = a.ObjectTable.Name,
-                                                        }).ToList();
-
+            var objetTables = context.DigitalTextCodes
+                                     .Include("ObjectTable")
+                                     .Where(a => a.Tenant == tenant)
+                                     .Select(a => new DigitalTextCodeList
+                                     {
+                                         ObjectTableId = a.ObjectTableId,
+                                         ObjectTableName = a.ObjectTable.Name,
+                                     })
+                                     .ToList();
             return objetTables;
-        }
-
-
-        public bool CheckTenantTranslation(int tenant, string objectTableId = "")
-        {
-            DigitalTextCodeRepository digitalTextCodeRepository = new DigitalTextCodeRepository(tenant);
-            return digitalTextCodeRepository.CheckTenantTranslation(tenant, objectTableId);
         }
                 
         public void UpdateDigitalTextCodes(DigitalTextCodeList digitalTextCodeList)
