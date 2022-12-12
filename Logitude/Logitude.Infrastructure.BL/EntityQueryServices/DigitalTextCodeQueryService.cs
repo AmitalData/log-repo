@@ -38,7 +38,7 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
             DigitalTextCodeRepository digitalTextCodeRepository = new DigitalTextCodeRepository(tenant);
             return digitalTextCodeRepository.CheckTenantTranslation(tenant, objectTableId);
         }
-        
+                
         public void UpdateDigitalTextCodes(DigitalTextCodeList digitalTextCodeList)
         {
             if (string.IsNullOrEmpty(digitalTextCodeList.Id))

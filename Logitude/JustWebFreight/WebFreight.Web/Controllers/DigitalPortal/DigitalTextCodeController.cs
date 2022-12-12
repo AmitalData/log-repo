@@ -1,5 +1,6 @@
 ﻿using Logitude.Infrastructure.BL.EntityQueryServices;
 using Logitude.Infrastructure.Data.EntityLists;
+using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.SystemLogs;
 using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -11,6 +12,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using WebFreight.Web.Controllers.DigitalPortal.Helpers;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 
@@ -39,7 +41,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 var customCodesObject = new List<DigitalTextCodeObject>();
 
-                if (tenant != 0 && textCodeQuery.CheckTenantTranslation(tenant, objectTableId))
+                if (tenant != 0)
                 {
                     var customTextCodes = textCodeQuery.GetDigitalTextCodesQuery(tenant, objectTableId);
 
@@ -135,5 +137,53 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+
+        [HttpGet]
+        [Route("DigitalTextCode/GetTranslationCodes")]
+        public HttpResponseMessage GetTranslationCodes(int tenant, string objectTableId)
+        {
+            try
+            {
+                var textCodeQuery = new DigitalTextCodeQuery();
+                var defaultTextCodes = textCodeQuery.GetDigitalTextCodesQuery(0, objectTableId);
+                var textCodes = textCodeQuery.GetDigitalTextCodesQuery(tenant, objectTableId);
+                var defaultCodesObject = JsonConvert.DeserializeObject<List<DigitalTextCodeObject>>(defaultTextCodes.Labels);
+
+                var defaultCodesObjectDictionary = defaultCodesObject.ToDictionary(a => a.Code, x => x.DisplayText);
+
+                var customCodesObject = new List<DigitalTextCodeObject>();
+
+                if (tenant != 0)
+                {
+                    var customTextCodes = textCodeQuery.GetDigitalTextCodesQuery(tenant, objectTableId);
+
+                    if (customTextCodes != null)
+                    {
+                        customCodesObject = JsonConvert.DeserializeObject<List<DigitalTextCodeObject>>(customTextCodes.Labels);
+                    }
+
+                    foreach (var item in customCodesObject)
+                    {
+                        if (defaultCodesObjectDictionary.ContainsKey(item.Code))
+                        {
+                            defaultCodesObjectDictionary[item.Code] = item.DisplayText;
+                        }
+                    }
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, defaultCodesObjectDictionary);
+            }
+            catch (AutenticationException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", $"Digital portal {tenant}", "", null);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
     }
 }
