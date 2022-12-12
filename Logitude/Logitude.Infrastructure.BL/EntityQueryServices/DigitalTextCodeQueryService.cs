@@ -9,11 +9,12 @@ using Logitude.Server.Tools;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts.Models;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
 namespace Logitude.Infrastructure.BL.EntityQueryServices
 {
-    public partial class DigitalTextCodeQuery
+    public partial class DigitalTextCodeQueryService
     {
         public DigitalTextCodeList GetDigitalTextCodesQuery(int tenant, string objectTableId)
         {
@@ -32,6 +33,21 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                                                             .FirstOrDefault();
             return defaultTextCode;
         }
+
+        public List<DigitalTextCodeList> GetDigitalTextCodesObjetTables(int tenant)
+        {
+            var objetTables = context.DigitalTextCodes.Include("ObjectTable")
+                                                      .Where(a => a.Tenant == tenant)
+                                                      .Select(a =>
+                                                        new DigitalTextCodeList()
+                                                        {
+                                                            ObjectTableId = a.ObjectTableId,
+                                                            ObjectTableName = a.ObjectTable.Name,
+                                                        }).ToList();
+
+            return objetTables;
+        }
+
 
         public bool CheckTenantTranslation(int tenant, string objectTableId = "")
         {

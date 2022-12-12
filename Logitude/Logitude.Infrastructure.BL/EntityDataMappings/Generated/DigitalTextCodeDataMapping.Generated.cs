@@ -39,7 +39,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         CreateDate, 
 	         UpdateDate, 
 	         ObjectTableId, 
-	         Labels,
+	         Labels, 
+	         ObjectTableName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

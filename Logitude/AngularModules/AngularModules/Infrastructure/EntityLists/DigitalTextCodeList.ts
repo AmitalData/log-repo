@@ -14,6 +14,7 @@ export class DigitalTextCodeList {
 	UpdateDate: Date;
 	ObjectTableId: string;
 	Labels: string;
+	ObjectTableName: string;
 	
 }
  

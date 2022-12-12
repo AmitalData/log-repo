@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
-import { GeneralDomainService } from '../../../Infrastructure/Services/GeneralDomainService';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
 import { DigitalPortalCustomizationMainComponent } from './DigitalPortalCustomizationMainComponent';
 import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
-import { DigitalTextService } from '../../../Infrastructure/Services/WebServices/DigitalTextService'
-import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { DigitalTextService, DigitalTextCodeUpdateModel, DigitalTextCodeObject } from '../../../Infrastructure/Services/WebServices/DigitalTextService'
 declare var window: any;
 
 @Component({
@@ -19,16 +17,20 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
     private CurrentSession = SessionLocator.SelectedSession;
     public customizationEditComponent: DigitalPortalCustomizationMainComponent;
     public LabelsItemsSource: ObservableCollection;
+    public ModifiedLables: DigitalTextCodeUpdateModel;
+    public IsModifiedLables = false;
 
     constructor(private _entityListService: EntityListService) {
         super();
         this.digitalTextService = new DigitalTextService();
         this.LabelsItemsSource = new ObservableCollection([]);
+        this.ModifiedLables = new DigitalTextCodeUpdateModel();
+        this.ModifiedLables.Lables = [];
+        this.IsModifiedLables = false;
     }
 
     SetWindowArgs(args: any) {
         this.FillObjectTablesFiltersList();
-        this.BuildItemsSource();
     }
 
     public ObjectTablesFilterList: CodeNameClass[];
@@ -43,20 +45,17 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
 
     private FillObjectTablesFiltersList() {
         this.ObjectTablesFilterList = [];
-        var objectTbaleName = "Shipment";
-        var objectTable = window.ObjectTables.filter(d => d.Name === objectTbaleName)[0];
-        this.ObjectTablesFilterList.push(new CodeNameClass("Shipments", objectTable.Id));
+        this.digitalTextService.GetDigitalTextCodesObjetTables().subscribe((myResult) => {
+            if (!myResult.HasError) {
+                var objectTables = myResult.Result;
+                objectTables.forEach(item => {
+                    this.ObjectTablesFilterList.push(new CodeNameClass(item.ObjectTableName, item.ObjectTableId));
+                });
 
-        objectTbaleName = "ARInvoice";
-        objectTable = window.ObjectTables.filter(d => d.Name === objectTbaleName)[0];
-        this.ObjectTablesFilterList.push(new CodeNameClass("Invoices", objectTable.Id));
-
-        objectTbaleName = "Quote";
-        objectTable = window.ObjectTables.filter(d => d.Name === objectTbaleName)[0];
-        this.ObjectTablesFilterList.push(new CodeNameClass("Quotes", objectTable.Id));
-
-        this.ObjectTablesFilterList.push(new CodeNameClass("General", null));
-        this.selectedObjectTableItem = this.ObjectTablesFilterList[0];
+                this.selectedObjectTableItem = this.ObjectTablesFilterList[0];
+                this.BuildItemsSource();
+            }
+        });
     }
 
     BuildItemsSource(searchText: string = null) {
@@ -64,7 +63,9 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
         var objectTableId = this.SelectedObjectTableItem.Name;
         this.digitalTextService.GetTextCodesByFilters(null, objectTableId).subscribe((myResult) => {
             if (!myResult.HasError) {
-                labelsList = myResult.Result;
+                myResult.Result.forEach(item => {
+                    labelsList.push(new CustomizationLabelItem(this, item));
+                });
                 this.LabelsItemsSource.InsertCollection(labelsList);
             }
         });
@@ -89,30 +90,61 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
     }
 
     Save() {
-        if (!this.customizationEditComponent.IsDirty && this.customizationEditComponent.IsSaveAndClose) {
-            this.customizationEditComponent.CurrentSession.CloseCurrentWindow();
-            this.customizationEditComponent.IsSaveAndClose = false;
+
+        if (this.IsModifiedLables) {
+            this.ModifiedLables.ObjectTableId = this.SelectedObjectTableItem.Name;
+            this.digitalTextService.UpdateDigitalTextCodes(this.ModifiedLables).subscribe((myResult) => {
+                if (!myResult.HasError) {
+                    if (!this.customizationEditComponent.IsDirty && this.customizationEditComponent.IsSaveAndClose) {
+                        this.customizationEditComponent.CurrentSession.CloseCurrentWindow();
+                        this.customizationEditComponent.IsSaveAndClose = false;
+                    }
+                }
+            });
         }
     }
 }
 
 export class CustomizationLabelItem {
-    constructor() {
-        
+
+    constructor(public father: DigitalPortalCustomizationChageLabelsComponent, item) {
+        this.Code = item.Code;
+        this.DisplayText = item.DisplayText;
+        this.DisplayLabel = item.DisplayLabel;
     }
 
     private defaultText = "";
-    get DefaultText() { return this.defaultText; }
+    get DisplayText() { return this.defaultText; }
+    set DisplayText(value) {
+        if (value != this.defaultText) {
+            this.defaultText = value;
+        }
+    }
 
     private displayLabel = "";
     get DisplayLabel() { return this.displayLabel; }
     set DisplayLabel(value) {
-        if (value != this.displayLabel)
+        if (value != this.displayLabel) {
             this.displayLabel = value;
+            this.UpdateModifiedLables(value);
+        }
+    }
+
+    UpdateModifiedLables(newValue) {
+        var newLabel = new DigitalTextCodeObject();
+        newLabel.DisplayLable = newValue;
+        newLabel.Code = this.Code;
+        newLabel.DisplayText = this.DisplayText;
+        this.father.ModifiedLables.Lables.push(newLabel);
     }
 
     private code: string = "";
     get Code() {
         return this.code;
+    }
+    set Code(value) {
+        if (value != this.code) {
+            this.code = value;
+        }
     }
 }

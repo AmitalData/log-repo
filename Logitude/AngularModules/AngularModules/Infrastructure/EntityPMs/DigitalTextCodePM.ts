@@ -54,6 +54,11 @@ export class DigitalTextCodePM {
     public set Labels(newValue: string) { if (this.labels != newValue) { this.labels = newValue; this.MarkAsDirty("Labels"); } }
        
 	 
+    private objectTableName: string;
+    public get ObjectTableName() { return this.objectTableName; }
+    public set ObjectTableName(newValue: string) { if (this.objectTableName != newValue) { this.objectTableName = newValue; this.MarkAsDirty("ObjectTableName"); } }
+       
+	 
 
     public OldEntityPM: DigitalTextCodePM;
 		

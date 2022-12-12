@@ -31,7 +31,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 email = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
-                var textCodeQuery = new DigitalTextCodeQuery();
+                var textCodeQuery = new DigitalTextCodeQueryService(tenant);
 
                 var defaultTextCode = textCodeQuery.GetDigitalTextCodesQuery(0, objectTableId);
 
@@ -83,9 +83,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
                 tenant = authToken.Tenant;
                 email = authToken.Email;
+                digitalTextCodeUpdateModel.Tenant = tenant;
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, digitalTextCodeUpdateModel.CardId);
-                var textCodeQuery = new DigitalTextCodeQuery();
+                var textCodeQuery = new DigitalTextCodeQueryService(tenant);
                 var customTextCodes = textCodeQuery.GetDigitalTextCodesQuery(digitalTextCodeUpdateModel.Tenant, digitalTextCodeUpdateModel.ObjectTableId);
 
                 if (customTextCodes != null)
@@ -135,5 +136,33 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        [HttpGet]
+        [Route("DigitalTextCode/GetDigitalTextCodesObjetTables")]
+        public HttpResponseMessage GetDigitalTextCodesObjetTables()
+        {
+            int tenant = 0;
+            string email = "";
+            try
+            {
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                tenant = authToken.Tenant;
+                email = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                var textCodeQuery = new DigitalTextCodeQueryService(tenant);
+                var objectTables = textCodeQuery.GetDigitalTextCodesObjetTables(0);
+                return Request.CreateResponse(HttpStatusCode.OK, objectTables);
+            }
+            catch (AutenticationException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
     }
 }
