@@ -132,9 +132,8 @@ export class CustomizationLabelItem {
 
     UpdateModifiedLables(newValue) {
         var newLabel = new DigitalTextCodeObject();
-        newLabel.DisplayLable = newValue;
         newLabel.Code = this.Code;
-        newLabel.DisplayText = this.DisplayText;
+        newLabel.DisplayText = newValue;
         this.father.ModifiedLables.Lables.push(newLabel);
     }
 
