@@ -189,11 +189,37 @@ namespace Logitude.DashboardModule.BL.DataProviders
                 groupByField = _EntityFields[_Widget.GroupById];
                 if (!columns.Any(x => x.FieldCode == groupByField.FieldCode)) columns.Insert(0, groupByField);
             }
-
-            return $@"select {BuildAnalyticTableFieldsSelectQuery(columns)}
+            var queryString = $@"select {BuildAnalyticTableFieldsSelectQuery(columns)}
                      From ({resultQueryable.ToQueryStringWithParameter()}) as data 
                      {BuildQueryJoins(columns)}
                      {BuildQueryStatment(groupByField, widgetPartArguments.GroupByValue)} ";
+
+            if (_Widget.TypeCode == "kpi" && _Widget.TimeOverTime)
+            {
+                return queryString + CheckComparisonOperator();
+            }
+
+            return queryString;
+
+            
+        }
+        private string CheckComparisonOperator()
+        {
+            if (_Widget.ComparisonOperator == "Between")
+            {
+                return $@" where data.{GeteComparsionDate()} Between '{_Widget.FromDate.Value}' AND '{_Widget.ToDate.Value}'";
+            }
+            return $@" where data.{GeteComparsionDate()} Between dateadd ({_Widget.ComparisonDateGroup}, {-_Widget.ComparisonPeriod}, cast(getDate() as DateTime)) AND cast(getDate() as DateTime)";
+        }
+
+        private string GeteComparsionDate()
+        {
+            if (_Entity.TableName == "ShipmentAnalytics") return "CreateDateTime";
+            if (_Entity.TableName == "QuoteAnalytics") return "OpenDate";
+            if (_Entity.TableName == "APInvoiceAnalytics") return "CreateDate";
+            if (_Entity.TableName == "ARInvoiceAnalytics") return "CreateDate";
+            if (_Entity.TableName == "OpportunityAnalytics") return "CreateDate";
+            return "";
         }
 
         private string BuildQueryStatment(AnalyticsFactsFieldsMetaData groupBy, string groupByValue)

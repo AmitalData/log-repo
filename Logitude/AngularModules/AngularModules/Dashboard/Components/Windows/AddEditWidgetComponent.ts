@@ -245,6 +245,8 @@ export class AddEditWidgetComponent extends BaseComponent {
             this.ComparisonOperator = null;
             this.ComparisonPeriod = null;
             this.ComparisonDateGroup = null;
+            this.FromDate = null;
+            this.ToDate = null;
             this.Increase = null;
             return;
         }
