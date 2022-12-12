@@ -742,8 +742,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         foreach (AWBLabelsDataProvider aWBLabelsDataProvider in awblabelsdataprovider)
                         {
                             BaseDataProviderService.FillBaseVariableFields(aWBLabelsDataProvider, tenant);
-                            var documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() { DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = aWBLabelsDataProvider }).Create(true);
-                            documentDataProviders.Add(documentDataProvider.BusinessObjectValue);
+                            documentDataProviders.Add(new DocumentDataProviderGreator(new DocumentDataProviderArgs() { DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = aWBLabelsDataProvider }).Create(true));
                         }
 
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "AWB Labels", Name = "AWBLabelsDataProvider", BusinessObjectValue = documentDataProviders };
