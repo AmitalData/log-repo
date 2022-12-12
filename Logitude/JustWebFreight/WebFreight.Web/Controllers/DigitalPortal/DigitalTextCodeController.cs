@@ -20,7 +20,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
     {
         [HttpGet]
         [Route("DigitalTextCode/GetTextCodesByFilters")]
-        public HttpResponseMessage GetTextCodesByFilters(string cardId, string objectTableId = null)
+        public HttpResponseMessage GetTextCodesByFilters(string cardId, string objectTableId)
         {
             int tenant = 0;
             string email = "";

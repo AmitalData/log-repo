@@ -13,20 +13,18 @@ namespace Logitude.Infrastructure.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-        public IQueryable<DigitalTextCode> GetDigitalTextCodes(int tenant, string objectTableId = "")
+        public IQueryable<DigitalTextCode> GetDigitalTextCodes(int tenant, string objectTableId)
         {
             return context.DigitalTextCodes
-                          .Where(a => (a.Tenant == tenant)
-                                      && (string.IsNullOrEmpty(objectTableId)
-                                          || a.ObjectTableId.Equals(objectTableId)));
+                          .Where(a => a.Tenant == tenant
+                                      && a.ObjectTableId.Equals(objectTableId));
         }
         
-        public bool CheckTenantTranslation(int tenant, string objectTableId = "")
+        public bool CheckTenantTranslation(int tenant, string objectTableId)
         {
             return context.DigitalTextCodes
                           .Any(a => a.Tenant == tenant
-                                    && (string.IsNullOrEmpty(objectTableId)
-                                          || a.ObjectTableId.Equals(objectTableId)));
+                                    && a.ObjectTableId.Equals(objectTableId));
         }
     }
 }

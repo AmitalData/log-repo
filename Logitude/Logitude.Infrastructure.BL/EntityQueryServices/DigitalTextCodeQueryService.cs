@@ -15,7 +15,7 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
 {
     public partial class DigitalTextCodeQuery
     {
-        public DigitalTextCodeList GetDigitalTextCodesQuery(int tenant, string objectTableId = "")
+        public DigitalTextCodeList GetDigitalTextCodesQuery(int tenant, string objectTableId)
         {
             DigitalTextCodeRepository digitalTextCodeRepository = new DigitalTextCodeRepository(tenant);
 
