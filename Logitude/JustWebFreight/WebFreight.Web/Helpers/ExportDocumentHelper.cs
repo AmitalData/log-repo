@@ -54,6 +54,7 @@ using WebFreight.Web.AccountingModel.Reports.Interest;
 using Simplog.Data.Helpers;
 using Logitude.BL.DataContracts;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using WebFreight.Web.Helpers.StimulReportCustomizationDataProvider;
 
 namespace WebFreight.Web.Helpers
 {
@@ -464,10 +465,9 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         XmlSerializer serializer = new XmlSerializer(typeof(AWBDataProvider));
                         AWBDataProvider awbDataProvider = (AWBDataProvider)serializer.Deserialize(memorystream);
                         BaseDataProviderService.FillBaseVariableFields(awbDataProvider, tenant);
-
+                        DocumentDataProvider documentDataProvider  = new DocumentDataProviderGreator(new DocumentDataProviderArgs() {DocumentTypeTemplatePM = defaulttemplate,  EntityId = entityId , DataProvider = awbDataProvider}).Create(true);
                         theT2 = System.DateTime.Now.Ticks;
-                        //AzureLog.SaveLogsInStorage("Data provider :" + Convert.ToString((t2 - t1) / TimeSpan.TicksPerMillisecond), "P", tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "");
-                        StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "AWB", Name = "AWBDataProvider", BusinessObjectValue = awbDataProvider };
+                        StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "AWB", Name = "AWBDataProvider", BusinessObjectValue = documentDataProvider.BusinessObjectValue };
 
                         //-----------
                         ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
@@ -1409,6 +1409,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
             return report;
         }
 
+ 
         public string getBetween(string strSource, string strStart, string strEnd)
         {
             int Start, End;
@@ -1725,6 +1726,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
         public StiReport LoadandRender(DocumentTypeTemplatePM defaulttemplate, StiBusinessObject currentBusinessObject, int tenant, StiBusinessObject otherstiBusinessObject = null)
         {
             StiReport report = new StiReport();
+
             if (otherstiBusinessObject != null)
             {
                 RegBusinessObject(report, otherstiBusinessObject);
@@ -1813,9 +1815,11 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
             }
             new StimulsoftReportFontSizeService().Run(report , defaulttemplate.DocumentOutId , tenant);
             report.AutoLocalizeReportOnRun = true;
-            theT1 = System.DateTime.Now.Ticks;
-            report.Render(false);
 
+            theT1 = System.DateTime.Now.Ticks;
+            //report.Dictionary.SynchronizeBusinessObjects(report.Dictionary.BusinessObjects.Count);
+            report.Render(false);
+            
             theT2 = System.DateTime.Now.Ticks;
 
             return report;

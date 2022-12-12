@@ -59,7 +59,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                
+                SecurityUtility.CheckContactFeature("WorkFlowInstanceVariable", "READ", authToken.Tenant);
+	                
                 IWorkflowContext MyContext = WorkflowContext.GetContext(authToken.Tenant);
                 WorkFlowInstanceVariableQueryService workFlowInstanceVariableQuery = new WorkFlowInstanceVariableQueryService(MyContext);
 				workFlowInstanceVariableQuery.InitializeSettings();
@@ -91,7 +92,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    
+                        SecurityUtility.CheckContactFeature("WorkFlowInstanceVariable", "NEW", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("WorkFlowInstanceVariable", entityPM.Tenant, authToken.Tenant);
+	                    
                         IWorkflowContext MyContext = WorkflowContext.GetContext(entityPM.Tenant);
                         WorkFlowInstanceVariableUpdateService service = new WorkFlowInstanceVariableUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
@@ -137,7 +140,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
+                        SecurityUtility.CheckContactFeature("WorkFlowInstanceVariable", "UPDATE", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("WorkFlowInstanceVariable", entityPM.Tenant, authToken.Tenant);
+	
                         IWorkflowContext MyContext = WorkflowContext.GetContext(entityPM.Tenant);
                         WorkFlowInstanceVariableUpdateService service = new WorkFlowInstanceVariableUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
 						service.InitializeEntityPM(entityPM);

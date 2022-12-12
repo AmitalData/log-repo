@@ -151,6 +151,8 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentNumber { get; set; }
         public string ShipmentDirection { get; set; }
         public string ContainersNumbersArray { get; set; }
+
+        public string ProjectNumber { get; set; }
     }
 
     public class StatmentAging

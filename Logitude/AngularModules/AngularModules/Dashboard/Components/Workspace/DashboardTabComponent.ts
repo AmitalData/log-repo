@@ -35,6 +35,8 @@ export class DashboardTabComponent implements AfterViewInit {
     public CloneDashboardLayout: WidgetPM[];
     public Show: boolean = false;
     public FatherComponent: CustomDashboardComponent;
+    public GlobalFilters: string;
+
     constructor() {
         this.dashboardPMService = new DashboardPMService();
     }
@@ -185,6 +187,7 @@ export class DashboardTabComponent implements AfterViewInit {
     RefreshLayoutClicked() {
         MixPanelLocator.PostDashboardAction({ ActionName: "Refresh Click", DashboardId: this.SelectedDashboard?.Id });
         for (const item of this.reactWidgetsLayout.lg) {
+            item.GlobalFilters = this.GlobalFilters;
             this.DashboardDataBinding.onEditWidget.next(item);
         }
     }
@@ -352,6 +355,7 @@ export class DashboardTabComponent implements AfterViewInit {
     AddWidgetToReactLayout(myWidget: WidgetPM) {
         var reactWidget = DashboardMapping.GetReactWidget(myWidget);
         this.reactWidgetsLayout.lg.push(reactWidget);
+        reactWidget.GlobalFilters = this.GlobalFilters;
         this.DashboardDataBinding.onAddWidget.next(reactWidget);
     }
 
@@ -394,11 +398,21 @@ export class DashboardTabComponent implements AfterViewInit {
         logitudeWindow.ComponentLoaded.subscribe(comp => {
             logitudeWindow.WindowClosed.subscribe(s => {
                 if (s) {
-
-                    this.DashboardDataBinding.onEditWidget.next(DashboardMapping.GetReactWidget(comp.EntityPM));
+                    var widget = DashboardMapping.GetReactWidget(comp.EntityPM);
+                    widget.GlobalFilters = this.GlobalFilters;
+                    this.DashboardDataBinding.onEditWidget.next(widget);
                     this.HasChanges = true;
                 }
             });
         });
+    }
+
+    ApplyFilters(filters: string) {
+        // this.DashboardDataBinding.onApplyGlobalFilters.next(filters);
+        this.GlobalFilters =  filters ?? "[]";
+        for (const item of this.reactWidgetsLayout.lg) {
+            item.GlobalFilters = this.GlobalFilters;
+            this.DashboardDataBinding.onEditWidget.next(item);
+        }
     }
 }

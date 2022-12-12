@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -12,6 +13,7 @@ namespace Logitude.BL.Helpers
 {
     public class CustomFieldResolver
     {
+        Object lockMe = new Object();
         Dictionary<string, object> definedObjects = new Dictionary<string, object>();
         static CultureInfo en = new CultureInfo("en-US");
 
@@ -56,20 +58,18 @@ namespace Logitude.BL.Helpers
             CustomFieldResolver customFieldResolver = new CustomFieldResolver();
             List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName(objectTableName, tenant).ToList();
 
-            foreach (ObjectField field in customFields)
+            Parallel.ForEach(listQuery, list =>
             {
-                foreach (object list in listQuery)
+                if (list != null)
                 {
-                    if (list != null)
+                    Parallel.ForEach(customFields, field =>
                     {
                         PropertyInfo propInfo = list.GetType().GetProperty(field.FieldName);
-
                         object newValue = customFieldResolver.GetFieldValue(list, field, tenant);
-
                         propInfo.SetValue(list, newValue, null);
-                    }
+                    });
                 }
-            }
+            });
         }
 
         public void SetDataProviderCustomFieldsValues(string objectTableName, int tenant, Object entity, Object provider, string propertyIdientifier = null)
@@ -168,60 +168,62 @@ namespace Logitude.BL.Helpers
                         }
 
                         object insideEntityRepository = null;
-
-                        if (insideEntityType != null)
+                        lock (lockMe)
                         {
-                            if (definedObjects.Keys.Contains(insideTypePath))
+                            if (insideEntityType != null)
                             {
-                                insideEntityRepository = definedObjects[insideTypePath];
-                            }
-
-                            if (insideEntityRepository == null)
-                            {
-                                insideEntityRepository = Activator.CreateInstance(insideEntityType, tenant);
-
-                                definedObjects.Add(insideTypePath, insideEntityRepository);
-                            }
-                            MethodInfo insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetCustomSinglePM");
-                            if (insideMethodInfo == null)
-                            {
-                                insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetSinglePM");
-                            }
-                            if (insideMethodInfo == null)
-                            {
-                                insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetSingle");
-                            }
-                            object insideEntity = null;
-
-                            if (insideMethodInfo != null)
-                            {
-                                object[] parameters = GetMethodParameters(tenant, value, insideMethodInfo);
-
-                                insideEntity = insideMethodInfo.Invoke(insideEntityRepository, parameters);
-
-                                if (insideEntity != null)
+                                if (definedObjects.Keys.Contains(insideTypePath))
                                 {
-                                    ObjectTable lookupTable = ObjectTableRepository.GetSingleObjectTableById(objectField.LookUpTableId, objectField.Tenant);
-                                    string lookupProperty = lookupTable.LookUp2 != null ? lookupTable.LookUp2 : lookupTable.LookUp1;
-                                    if (externalAPICall)
-                                    {
-                                        lookupProperty = "Code";
-                                    }
+                                    insideEntityRepository = definedObjects[insideTypePath];
+                                }
 
-                                    PropertyInfo insidePropertyPathPi = insideEntity.GetType().GetProperty(lookupProperty);
-                                    if (insidePropertyPathPi != null)
+                                if (insideEntityRepository == null)
+                                {
+                                    insideEntityRepository = Activator.CreateInstance(insideEntityType, tenant);
+
+                                    definedObjects.Add(insideTypePath, insideEntityRepository);
+                                }
+                                MethodInfo insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetCustomSinglePM");
+                                if (insideMethodInfo == null)
+                                {
+                                    insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetSinglePM");
+                                }
+                                if (insideMethodInfo == null)
+                                {
+                                    insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetSingle");
+                                }
+                                object insideEntity = null;
+
+                                if (insideMethodInfo != null)
+                                {
+                                    object[] parameters = GetMethodParameters(tenant, value, insideMethodInfo);
+
+                                    insideEntity = insideMethodInfo.Invoke(insideEntityRepository, parameters);
+
+                                    if (insideEntity != null)
                                     {
-                                        object insideValue = insidePropertyPathPi.GetValue(insideEntity, null);
-                                        if (insideValue != null)
+                                        ObjectTable lookupTable = ObjectTableRepository.GetSingleObjectTableById(objectField.LookUpTableId, objectField.Tenant);
+                                        string lookupProperty = lookupTable.LookUp2 != null ? lookupTable.LookUp2 : lookupTable.LookUp1;
+                                        if (externalAPICall)
                                         {
-                                            if (insideValue is DateTime)
-                                            {
-                                                DateTime date = (DateTime)insideValue;
-                                                insideValue = date.ToShortDateString();
-                                            }
+                                            lookupProperty = "Code";
                                         }
 
-                                        resultValue = (insideValue != null ? insideValue.ToString() : null);
+                                        PropertyInfo insidePropertyPathPi = insideEntity.GetType().GetProperty(lookupProperty);
+                                        if (insidePropertyPathPi != null)
+                                        {
+                                            object insideValue = insidePropertyPathPi.GetValue(insideEntity, null);
+                                            if (insideValue != null)
+                                            {
+                                                if (insideValue is DateTime)
+                                                {
+                                                    DateTime date = (DateTime)insideValue;
+                                                    insideValue = date.ToShortDateString();
+                                                }
+                                            }
+
+                                            resultValue = (insideValue != null ? insideValue.ToString() : null);
+                                        }
                                     }
                                 }
                             }
@@ -574,10 +576,66 @@ namespace Logitude.BL.Helpers
             return resultValue;
         }
 
+        public object SetFieldDataType(string dataType, string value)
+        {
 
+            if (String.IsNullOrEmpty(value.ToString()))
+            {
+                return null;
+            }
+            switch (dataType)
+            {
+                case "Text":
+                case "nText":
+                case "LookUp":
+                case "PickList":
+                    {
+                        return value.ToString();
+                    }
 
+                case "DateTime":
+                case "Date":
+                    {
+                        return  Convert.ToDateTime(value);
+                    }
 
+                case "Decimal":
+                case "UnsDecimal":
+                    {
+                        decimal decimalValue = 0;
+                        decimal.TryParse(value.ToString(), out decimalValue);
+                        
+                        return decimalValue;
+                    }
+             
+                case "Integer":
+                case "UnsInteger":
+                    {
+                        int intValue = 0;
+                        int.TryParse(value.ToString(), out intValue);
+                        return intValue;
+                    }
+                
+                case "Double":
+                case "SigDouble":
+                    {
+                        double doubleValue = 0;
+                        double.TryParse(value.ToString(), out doubleValue);
+                        return doubleValue;
+                    }
+                case "boolean":
+                    {
+                        return bool.Parse(value);
+                    }
+                default:
+                    {
+                        return (value != null ? value.ToString() : null);
+                    }
+            }
 
+            return null;
+
+        }
 
 
     }

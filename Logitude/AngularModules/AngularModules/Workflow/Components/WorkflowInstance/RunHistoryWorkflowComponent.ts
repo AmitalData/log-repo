@@ -9,6 +9,7 @@ import { ObjectFieldPM } from 'Infrastructure/EntityPMs/ObjectFieldPM';
 import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
 import { ObjectFieldPMExtendedService } from 'Infrastructure/Services/ExtendedPMs/ObjectFieldPMExtendedService';
 import { AppTool } from 'Infrastructure/Tools';
+import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { WorkFlowPM } from 'Workflow/EntityPMs/WorkFlowPM';
 import { ApiQueryFiltersBuilder } from 'Workflow/Models/ApiQueryFiltersBuilder';
@@ -64,7 +65,7 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
     private Listen() {
         if (this.entityArgs.EditComponent) {
             this.TabSelectedEvent = this.entityArgs.EditComponent.TabSelected.subscribe((tabCode: string) => {
-                if(tabCode == "WFRH"){
+                if (tabCode == "WFRH") {
                     this.LoadData()
                 }
             });
@@ -202,11 +203,12 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
     }
 
     onRowSelected($event: { rowData: { Id: any; }; }) {
+        let isVariableHasPermission = FeatureLocator.HasFeaturePermession("WorkFlowInstance", "WorkFlowInstance.ShowVariables")
         if ($event != null) {
             var logWindow = new LogitudeWindow();
             logWindow.Width = 960;
-            logWindow.Height = 570;
-            logWindow.Title = "Instance Activities";
+            logWindow.Height = isVariableHasPermission ? 690 : 570;
+            logWindow.Title = "Instance Activities" + (isVariableHasPermission ? " And Variables" : '');
             logWindow.IsShowCloseButton = true
             var windowArgs: any = {};
             windowArgs.EntityId = $event.rowData.Id;

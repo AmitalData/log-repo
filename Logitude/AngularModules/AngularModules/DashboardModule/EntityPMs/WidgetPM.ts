@@ -172,6 +172,11 @@ export class WidgetPM {
     public set ToDate(newValue: Date) { if (this.toDate != newValue) { this.toDate = newValue; this.MarkAsDirty("ToDate"); } }
        
 	 
+    private globalFilters: string;
+    public get GlobalFilters() { return this.globalFilters; }
+    public set GlobalFilters(newValue: string) { if (this.globalFilters != newValue) { this.globalFilters = newValue; this.MarkAsDirty("GlobalFilters"); } }
+       
+	 
 
     public OldEntityPM: WidgetPM;
 	

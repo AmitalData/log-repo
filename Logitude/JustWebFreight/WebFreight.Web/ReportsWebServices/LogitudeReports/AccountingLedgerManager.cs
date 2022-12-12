@@ -640,6 +640,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         accountingLedgerRecord.ShipperReference1 = shipment.ShipperReference1;
                         accountingLedgerRecord.ShipperReference2 = shipment.ShipperReference2;
                         accountingLedgerRecord.ShipmentNumber = shipment.ShipmentNumber;
+                        accountingLedgerRecord.ProjectNumber = shipment.ProjectNumber;
                     }
                 }
 
@@ -746,6 +747,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         accountingLedgerRecord.ShipperReference1 = shipment.ShipperReference1;
                         accountingLedgerRecord.ShipperReference2 = shipment.ShipperReference2;
                         accountingLedgerRecord.ShipmentNumber = shipment.ShipmentNumber;
+                        accountingLedgerRecord.ProjectNumber = shipment.ProjectNumber;
                     }
                 }
 
@@ -1093,7 +1095,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         currencyRecord.MasterNumber = ledger.MasterNumber;
                         currencyRecord.HouseNumber = ledger.HouseNumber;
                         currencyRecord.Description = ledger.Description;
-
+                        currencyRecord.ProjectNumber = ledger.ProjectNumber;
                         customerRecord.AccountingLedgerList.Add(currencyRecord);
                     }
                 }

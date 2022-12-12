@@ -3118,5 +3118,31 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
             return Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);
         }
+
+
+
+        public IQueryable<ObjectFieldList> GetObjectFields()
+        {
+            return (from a in repository.context.ObjectFields.Include("FullNameTextCode")
+                    select new ObjectFieldList()
+                    {
+                        Id = a.Id,
+                        Tenant = a.Tenant,
+                        FieldCode = a.FieldCode,
+                        FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : "",
+                        DataTypeCode = a.DataTypeCode , 
+                        DisplayOnly = a.DisplayOnly,
+                        ObjectTableId = a.ObjectTableId , 
+                        IsCustom = a.IsCustom,
+                        FieldName = a.FieldName,
+                        LookUpTableId = a.LookUpTableId,
+                        
+                    });
+        }
+
+
+
+
+
     }
 }

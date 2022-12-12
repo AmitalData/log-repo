@@ -237,6 +237,8 @@ namespace WebFreight.Web.ReportsWebServices
 
                     provider.DestinationPortName = dischargePortName;
                 }
+
+                //provider.DestinationPortCountryName = new PortQuery().GetPortPMsByNameOrCode(null, provider.DestinationPortName, tenant).First().CountryId;
                 #endregion
 
                 PackageTypeRepository packageTypeRepository = new PackageTypeRepository(tenant);
@@ -244,7 +246,7 @@ namespace WebFreight.Web.ReportsWebServices
                 ShipmentPackageItemRepository shipmentPackageItemRepository = new ShipmentPackageItemRepository(tenant);
 
                 List<ShipmentPackage> shipmentPackages = shipmentPackageRepository.GetShipmentPackagesForShipmentTenant(shipmentId, tenant).ToList();
-                double? totalAmountOfPackageItems = null;
+                double? totalAmountOfPackageItems = 0;
                 if (shipmentPackages.Count > 0)
                 {
                     provider.ShipmentPackages = new List<ShipmentPackageProvider>();

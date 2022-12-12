@@ -61,8 +61,8 @@ export class DashboardDropDownComponent implements OnInit {
         if (!text) this.DisplayItemsSource = JSON.parse(JSON.stringify(this.ItemsSource));
 
         this.DisplayItemsSource = JSON.parse(JSON.stringify(this.ItemsSource.filter(item => {
-            if (!this.DisplayMemberPath) return item.toLowerCase().includes(text);
-            return item[this.DisplayMemberPath].toLowerCase().includes(text);
+            if (!this.DisplayMemberPath) return item.toLowerCase().includes(text.toLowerCase());
+            return item[this.DisplayMemberPath].toLowerCase().includes(text.toLowerCase());
         })));
     }
 }

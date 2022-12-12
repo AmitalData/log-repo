@@ -27,6 +27,15 @@
     flex: none;
     font-style: normal;
     top: -10px;
+    position: relative;
+}
+
+.Custom-layout-body {
+    height: 100%;
+    margin: 0;
+    font-family: Manrope;
+    flex: none;
+    font-style: normal;
 }
 
 .DashboardTab .DashboardTabHead li:not(.DashboardTabSelected):hover {
@@ -177,4 +186,16 @@
 
 .Dashboard-create-button:hover {
     cursor: pointer;
+}
+
+.dl-flobal-filter-container {
+    background: #FFFADC;
+    border: 1px solid #BABABA;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    width: calc(100%-2px);
+    height: 150px;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
 }

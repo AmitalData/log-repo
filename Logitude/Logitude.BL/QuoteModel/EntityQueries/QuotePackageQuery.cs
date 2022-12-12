@@ -5,6 +5,7 @@ using System.Web;
 using Simplog.Data.QuoteModel.Repositories;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Simplog.Server.Infrastructure.Helpers;
+using Logitude.Server.Tools.CustomFields;
 
 namespace Logitude.BL.QuoteModel.EntityQueries
 {
@@ -40,6 +41,15 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                 VolumetricWeight = a.VolumetricWeight,
                                             }).FirstOrDefault();
 
+            new ChildEntitiesCustomFieldService().Set(new ChildEntitiesCustomFieldArgs()
+            {
+                Tenant = tenant,
+                EntityId = quotePackages.QuoteId,
+                ObjectTableName = "Quote",
+                ChildObjectTableName = "QuotePackage",
+                ChildEntityId = quotePackages?.Id,
+                ChildEntities = new List<object>() { quotePackages }.ToList()
+            });
             return quotePackages;
         }
 
@@ -120,6 +130,15 @@ namespace Logitude.BL.QuoteModel.EntityQueries
 
                 item.Dimensions = myDimensions;
             }
+
+            new ChildEntitiesCustomFieldService().Set(new ChildEntitiesCustomFieldArgs()
+            {
+                Tenant = tenant,
+                EntityId = quoteId,
+                ObjectTableName = "Quote",
+                ChildObjectTableName = "QuotePackage",
+                ChildEntities = myResult.Cast<object>().ToList()
+            });
 
             return myResult;
         }

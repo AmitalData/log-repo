@@ -1,5 +1,5 @@
 <div style="height: 100%;" class="Dashboard-body">
-    <div class="FormFieldRow">
+    <div class="FormFieldRow" style="height: 23px;margin-top: 8px;margin-bottom: 6px;">
         <table>
             <tr style="height:22px;">
                 <td style="width: 1px; font-size: 18px; color: #292D30; font-weight: 600; line-height: 120%;">
@@ -18,9 +18,6 @@
                         (SelectedItemChanged)="SelectedDashboard = $event"
                         [Loading]="DashboardDropdownLoading">
                     </dashboard-dropdown>
-                    <!-- <LogLov 
-                            [SelectedValue]="SelectedDashboardId">
-                    </LogLov> -->
                 </td>
 
                 <td class="Table-cell10" *ngIf="dashbaordCount > 0">
@@ -39,8 +36,6 @@
             </tr>
         </table>
     </div>
-
-    <div style="height:10px;" *ngIf="dashbaordCount > 0"></div>
 
     <div class="DashboardTab">
         <div class="DashboardTabHead">

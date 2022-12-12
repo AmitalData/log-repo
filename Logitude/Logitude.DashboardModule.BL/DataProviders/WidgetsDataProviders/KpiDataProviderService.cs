@@ -125,7 +125,7 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
                 var diffTowDates = (_Widget.ToDate).Value.Subtract(_Widget.FromDate.Value).TotalDays;
                 var diffTowDatesInt = Convert.ToInt32(diffTowDates);
          
-                return queryString + $@" where data.{GeteComparsionDate()} Between dateadd(Day, {-diffTowDatesInt}, cast(getDate() as DateTime)) AND '{_Widget.FromDate}'";
+                return queryString + $@" where data.{GeteComparsionDate()} Between (Dateadd(Day, DateDiff(Day, cast('{_Widget.ToDate}' as DateTime), cast('{_Widget.FromDate}' as DateTime)), cast('{_Widget.FromDate}' as DateTime))) AND cast('{_Widget.FromDate}' as DateTime)";
             }
             return queryString + $@" where data.{GeteComparsionDate()} Between dateadd ({_Widget.ComparisonDateGroup}, {-2 * _Widget.ComparisonPeriod}, cast(getDate() as DateTime))
                              AND dateadd ({_Widget.ComparisonDateGroup}, {-_Widget.ComparisonPeriod}, cast(getDate() as DateTime))";
@@ -144,7 +144,7 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             {
                 return $@" where data.{GeteComparsionDate()} Between dateadd ({_Widget.ComparisonDateGroup}, {-_Widget.ComparisonPeriod}, cast(getDate() as DateTime)) AND cast(getDate() as DateTime)";
             }
-            return $@" where data.{GeteComparsionDate()} Between '{_Widget.FromDate}' AND '{_Widget.ToDate}'";
+            return $@" where data.{GeteComparsionDate()} Between '{_Widget.FromDate.Value}' AND '{_Widget.ToDate.Value}'";
         }
 
         private string GeteComparsionDate()

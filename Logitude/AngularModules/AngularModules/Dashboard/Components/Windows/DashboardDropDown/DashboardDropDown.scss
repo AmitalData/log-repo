@@ -33,13 +33,13 @@ $border-color: #ddd;
 .db-drop-arrow-up {
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
-    border-bottom: 4px solid #A4A4A4;
+    border-bottom: 4px solid #292D30;
 }
 
 .db-drop-arrow-down {
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
-    border-top: 4px solid #A4A4A4;
+    border-top: 4px solid #292D30;
 }
 
 .db-drop-selected-text {
@@ -101,7 +101,7 @@ $border-color: #ddd;
     order: 0;
     align-self: stretch;
     flex-grow: 0;
-    margin-bottom: 4px;
+    margin-bottom: 0px;
 }
 
 .db-dropdown-search-container {
