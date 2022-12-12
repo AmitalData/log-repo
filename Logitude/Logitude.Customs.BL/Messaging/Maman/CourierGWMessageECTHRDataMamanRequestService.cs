@@ -177,14 +177,16 @@ namespace Logitude.Customs.BL.Messaging.Maman
             string MamanSuspendedCode = "";
             var courierPendingReasonRepository = new CourierPendingReasonRepository(myDeclarationPM.Tenant);
             var courierPendingListWithMamanSuspendedCode = courierPendingReasonRepository.GetPendingReasonsWithMamanSuspendedCode(myDeclarationPM.Tenant);
+            var arrPendings = declarationCourierStatus.CourierPendingReasonList.Split(',');
+
             if (!string.IsNullOrEmpty(declarationCourierStatus.CourierPendingReasonList))
             {
-                var pendingCounted=courierPendingListWithMamanSuspendedCode.Where(x => declarationCourierStatus.CourierPendingReasonList.Contains(x.Code)).Count();   //MamanSuspendedCode=declarationPendingWithMamanSuspendCode = declarationCourierStatus.CourierPendingReasonList;
-                if(pendingCounted == 1)
+                var pendingCounted = courierPendingListWithMamanSuspendedCode.Where(x => arrPendings.Contains(x.Code)).Count();   //MamanSuspendedCode=declarationPendingWithMamanSuspendCode = declarationCourierStatus.CourierPendingReasonList;
+                if (pendingCounted == 1)
                 {
-                    MamanSuspendedCode= courierPendingListWithMamanSuspendedCode.Where(x => declarationCourierStatus.CourierPendingReasonList.Contains(x.Code)).FirstOrDefault().MamanSuspendedCode;
+                    MamanSuspendedCode = courierPendingListWithMamanSuspendedCode.Where(x => arrPendings.Contains(x.Code)).FirstOrDefault().MamanSuspendedCode;
                 }
-                if(pendingCounted > 1)
+                if (pendingCounted > 1)
                 {
                     MamanSuspendedCode = "9999";
                 }
