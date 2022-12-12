@@ -68,7 +68,7 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
     Save() {
         if (this.IsModifiedLables) {
             this.ModifiedLables.ObjectTableId = this.SelectedObjectTableItem.Name;
-            this.customizationEditComponent.CurrentSession.CloseCurrentWindow();
+            //this.customizationEditComponent.CurrentSession.CloseCurrentWindow();
             this.customizationEditComponent.IsDirty = false;
         }
     }
