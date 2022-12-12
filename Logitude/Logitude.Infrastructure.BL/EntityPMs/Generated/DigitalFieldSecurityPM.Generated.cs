@@ -181,6 +181,29 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
+	  private string profileName ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ProfileName  
+	   {
+	    
+	     get
+		{
+		   return profileName;
+		 }
+		 set
+		 {
+		   if(profileName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProfileName",OldValue=profileName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   profileName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

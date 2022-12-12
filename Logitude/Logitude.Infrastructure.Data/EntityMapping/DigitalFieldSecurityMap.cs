@@ -33,18 +33,7 @@ namespace Logitude.Infrastructure.Data.EntityMapping
 
             this.Property(t => t.ObjectTableId).HasColumnName("ObjectTableId").HasMaxLength(15).IsUnicode(false);
 
-            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms == "oracle")
-            {
-              this.Property(t => t.DefaultSettings).HasMaxLength(2000);
-			}
-            else
-            {
-              this.Property(t => t.DefaultSettings).HasMaxLength(4000);
-			}
-
-
-            this.Property(t => t.DefaultSettings).HasColumnName("DefaultSettings").IsUnicode(true);
+            this.Property(t => t.DefaultSettings).HasColumnName("DefaultSettings").IsRequired().IsMaxLength().IsUnicode(true);
 
             this.Property(t => t.ProfileId).HasColumnName("ProfileId").HasMaxLength(15).IsUnicode(false);
         }

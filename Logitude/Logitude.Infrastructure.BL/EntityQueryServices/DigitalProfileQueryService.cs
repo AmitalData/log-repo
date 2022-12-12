@@ -1,12 +1,13 @@
 ﻿using Logitude.Infrastructure.Data.EntityLists;
 using Logitude.Infrastructure.Data.Repsitories;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Logitude.Infrastructure.BL.EntityQueryServices
 {
     public partial class DigitalProfileQueryService
     {
-        public DigitalProfileList GetDigitalProfileQuery(int tenant, string profileName)
+        public List<DigitalProfileList> GetDigitalProfileQuery(int tenant, string profileName = "")
         {
             DigitalProfileRepository digitalProfileRepository = new DigitalProfileRepository(tenant);
             var digitalProfileList = digitalProfileRepository.GetDigitalProfiles(tenant, profileName)
@@ -18,7 +19,7 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                                                                  CreateDate = x.CreateDate,
                                                                  UpdateDate = x.UpdateDate
                                                              })
-                                                             .FirstOrDefault();
+                                                             .ToList();
             return digitalProfileList;
         }
     }

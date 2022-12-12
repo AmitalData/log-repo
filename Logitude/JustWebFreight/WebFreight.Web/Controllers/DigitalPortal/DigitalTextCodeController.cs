@@ -19,6 +19,33 @@ namespace WebFreight.Web.Controllers.DigitalPortal
     public class DigitalTextCodeController : ApiController
     {
         [HttpGet]
+        [Route("DigitalTextCode/GetDigitalProfileName")]
+        public HttpResponseMessage GetDigitalProfileName()
+        {
+            string email = "";
+            int tenant = 0;
+            try
+            {
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                tenant = authToken.Tenant;
+                email = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                var textCodeQuery = new DigitalProfileQueryService(tenant);
+                var digitalProfiles = textCodeQuery.GetDigitalProfileQuery(tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, digitalProfiles);
+            }
+            catch (AutenticationException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {0}", "", null);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        [HttpGet]
         [Route("DigitalTextCode/GetFeildPermissionByFilters")]
         public HttpResponseMessage GetFeildPermissionByFilters(string cardId, string objectTableId, string profileId)
         {
@@ -261,7 +288,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {0}", "", null);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-        }
-
+        }      
     }
 }

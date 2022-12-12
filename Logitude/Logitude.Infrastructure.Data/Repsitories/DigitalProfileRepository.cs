@@ -21,11 +21,12 @@ namespace Logitude.Infrastructure.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-        public IQueryable<DigitalProfile> GetDigitalProfiles(int tenant, string profileName)
+        public IQueryable<DigitalProfile> GetDigitalProfiles(int tenant, string profileName = "")
         {
             return context.DigitalProfiles
                           .Where(a => a.Tenant == tenant
-                                      && a.Name.Equals(profileName));
+                                      && (string.IsNullOrEmpty(profileName) 
+                                           || a.Name.Equals(profileName)));
         }
    }
 }

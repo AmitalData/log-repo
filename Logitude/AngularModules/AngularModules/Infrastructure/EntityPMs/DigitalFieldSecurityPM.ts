@@ -59,6 +59,11 @@ export class DigitalFieldSecurityPM {
     public set ProfileId(newValue: string) { if (this.profileId != newValue) { this.profileId = newValue; this.MarkAsDirty("ProfileId"); } }
        
 	 
+    private profileName: string;
+    public get ProfileName() { return this.profileName; }
+    public set ProfileName(newValue: string) { if (this.profileName != newValue) { this.profileName = newValue; this.MarkAsDirty("ProfileName"); } }
+       
+	 
 
     public OldEntityPM: DigitalFieldSecurityPM;
 		

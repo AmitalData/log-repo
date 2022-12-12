@@ -15,6 +15,7 @@ export class DigitalFieldSecurityList {
 	ObjectTableId: string;
 	DefaultSettings: string;
 	ProfileId: string;
+	ProfileName: string;
 	
 }
  

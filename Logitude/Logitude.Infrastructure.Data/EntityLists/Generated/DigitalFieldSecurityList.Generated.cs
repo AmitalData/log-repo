@@ -28,6 +28,8 @@ namespace Logitude.Infrastructure.Data.EntityLists
        public string DefaultSettings  { get; set; }
        [DataMember]
        public string ProfileId  { get; set; }
+       [DataMember]
+       public string ProfileName  { get; set; }
    }
 
 }
