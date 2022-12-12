@@ -111,16 +111,16 @@ export class CustomizationLabelItem extends BaseComponent {
 
     constructor(public father: DigitalPortalCustomizationChageLabelsComponent, item) {
         super();
-        this.Code = item.Code;
-        this.DisplayText = item.DisplayText;
-        this.DisplayLabel = item.DisplayLabel;
+        this.code = item.Code;
+        this.displayText = item.DisplayText;
+        this.displayLabel = item.DisplayLabel;
     }
 
-    private defaultText = "";
-    get DisplayText() { return this.defaultText; }
+    private displayText = "";
+    get DisplayText() { return this.displayText; }
     set DisplayText(value) {
-        if (value != this.defaultText) {
-            this.defaultText = value;
+        if (value != this.displayText) {
+            this.displayText = value;
         }
     }
 
@@ -129,11 +129,10 @@ export class CustomizationLabelItem extends BaseComponent {
     set DisplayLabel(value) {
         if (value != this.displayLabel) {
             this.displayLabel = value;
-            this.UpdateModifiedLables(value);
         }
     }
 
-    UpdateModifiedLables(newValue) {
+    public UpdateModifiedLables(newValue) {
         this.father.IsModifiedLables = true;
         this.father.customizationEditComponent.IsDirty = true;
         var newLabel = new DigitalTextCodeObject();

@@ -82,7 +82,7 @@
                                                 </table>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'DisplayLabel'" [Text]="item.DisplayLabel" [DataContext]="item.DataContext" [NoObjectField]="true" [HideColumns]="true"></LogTextBox>
+                                                <LogTextBox (LostFocus)="item.UpdateModifiedLables($event)" [FocusOnMe]="'true'" [ObjectFieldName]="'DisplayLabel'" [Text]="item.DisplayLabel" [DataContext]="item.DataContext" [NoObjectField]="true" [HideColumns]="true"></LogTextBox>
                                             </div>
                                         </log-cell-template>
                                     </ng-template>
