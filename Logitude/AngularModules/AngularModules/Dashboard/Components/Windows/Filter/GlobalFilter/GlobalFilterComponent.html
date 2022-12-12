@@ -7,7 +7,7 @@
                     <td style="left:10px;">Common Filters</td>
                 </tr>
 
-                <tr class="FormFieldRow" style="height:28px;" *ngFor="let item of CommonFilters">
+                <tr class="FormFieldRow" style="height:28px;" *ngFor="let item of CommonFilters; let i = index">
                     <td>
                         <table>
                             <tr>
@@ -61,7 +61,7 @@
                                 </td>
 
                                 <td>
-                                    <GlobalFilterValue [(FilterItem)]="item"></GlobalFilterValue>
+                                    <GlobalFilterValue [(FilterItem)]="CommonFilters[i]" ></GlobalFilterValue>
                                 </td>
 
                                 <td>
@@ -76,7 +76,7 @@
                     <td style="left:10px;">Dataset Filters</td>
                 </tr>
 
-                <tr class="FormFieldRow" style="height:28px;" *ngFor="let item of DatasetFilters">
+                <tr class="FormFieldRow" style="height:28px;" *ngFor="let item of DatasetFilters; let i = index">
                     <td>
                         <table>
                             <tr>
@@ -152,7 +152,7 @@
                                 </td>
 
                                 <td>
-                                    <GlobalFilterValue [(FilterItem)]="item"></GlobalFilterValue>
+                                    <GlobalFilterValue [(FilterItem)]="DatasetFilters[i]"></GlobalFilterValue>
                                 </td>
 
                                 <td>

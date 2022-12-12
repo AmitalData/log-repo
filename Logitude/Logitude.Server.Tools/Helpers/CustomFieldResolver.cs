@@ -58,12 +58,14 @@ namespace Logitude.BL.Helpers
             CustomFieldResolver customFieldResolver = new CustomFieldResolver();
             List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName(objectTableName, tenant).ToList();
 
+            string loggedUserEmail = AuthenticationUtil.AuthenticatedUserEmail;
             Parallel.ForEach(listQuery, list =>
             {
                 if (list != null)
                 {
                     Parallel.ForEach(customFields, field =>
                     {
+                        AuthenticationUtil.AuthenticatedUserEmail = loggedUserEmail;
                         PropertyInfo propInfo = list.GetType().GetProperty(field.FieldName);
                         object newValue = customFieldResolver.GetFieldValue(list, field, tenant);
                         propInfo.SetValue(list, newValue, null);
@@ -624,6 +626,8 @@ namespace Logitude.BL.Helpers
                         return doubleValue;
                     }
                 case "boolean":
+                case "Boolean":
+
                     {
                         return bool.Parse(value);
                     }

@@ -38,7 +38,7 @@ namespace WebFreight.Web.Helpers.StimulReportCustomizationDataProvider
             CustomChildEntity customChildEntity = customChildEntities.Where(d => d.Name == field.Code).FirstOrDefault();
             if (customChildEntity == null || customChildEntity.Values == null || customChildEntity.Values.Count() == 0) return null;
             var customChildObjects = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(field.AdditinalDetails.Type));
-            foreach (CustomChildObjectPM customChildObjectPM in customChildEntity.Values)
+            foreach (CustomChildObjectPM customChildObjectPM in customChildEntity.Values.OrderBy(d=>d.CreateDate).ToList())
             {
                 customChildObjects.Add(GetNewInStanceFromCustomChildObject(field.AdditinalDetails, customChildObjectPM));
             }
@@ -75,7 +75,7 @@ namespace WebFreight.Web.Helpers.StimulReportCustomizationDataProvider
                 fieldValue = (fieldValue as CustomFieldClass)?.Value;
             }
 
-            if (field.IsCustom || field.DataTypeCode == "LookUp" && field.DataTypeCode == "PickList")
+            if (field.IsCustom || field.DataTypeCode == "LookUp" ||  field.DataTypeCode == "PickList")
             {
                 fieldValue = customFieldResolver.GetFieldValue2(fieldValue, new ObjectField() { LookUpTableId = field.LookUpTableId, Tenant = field.Tenant, DataTypeCode = field.DataTypeCode }, documentDataProviderArgs.DocumentTypeTemplatePM.Tenant);
             }

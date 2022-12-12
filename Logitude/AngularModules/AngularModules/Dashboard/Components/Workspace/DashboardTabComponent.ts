@@ -21,7 +21,7 @@ import { CustomDashboardComponent } from './CustomDashboardComponent';
     selector: 'DashboardTabComponent',
 })
 
-export class DashboardTabComponent implements AfterViewInit {
+export class DashboardTabComponent {
     public SelectedDashboardId: string = null;
     public OpenEditLayout: boolean = false;
     public SelectedDashboardName: string = null;
@@ -33,16 +33,11 @@ export class DashboardTabComponent implements AfterViewInit {
     public newWidgetWidth = 3;
     public newWidgetHeight = 5;
     public CloneDashboardLayout: WidgetPM[];
-    public Show: boolean = false;
     public FatherComponent: CustomDashboardComponent;
     public GlobalFilters: string;
 
     constructor() {
         this.dashboardPMService = new DashboardPMService();
-    }
-
-    ngAfterViewInit(): void {
-        this.Show = true;
     }
 
     Intialize(args: any) {
