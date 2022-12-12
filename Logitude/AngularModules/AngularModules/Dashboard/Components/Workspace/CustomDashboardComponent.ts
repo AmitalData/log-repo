@@ -25,7 +25,7 @@ import { DashboardPMService } from '../../../DashboardModule/Services/StandardPM
     encapsulation: ViewEncapsulation.None,
 })
 
-export class CustomDashboardComponent extends BaseComponent implements OnInit, OnDestroy {
+export class CustomDashboardComponent extends BaseComponent implements OnDestroy {
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
     public DataContext = this;
@@ -53,6 +53,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, O
         super();
         this.dashboardExtendedService = new DashboardPMExtendedService();
         this.DashboardListService = new DashboardListService();
+        this.GetData();
     }
 
 
@@ -64,15 +65,15 @@ export class CustomDashboardComponent extends BaseComponent implements OnInit, O
         onEditWidget: new Subject(),
     }
 
-    ngOnInit(): void {
-        this.CurrentSession.StartBusyIndicatorLoading();
+    GetData() {
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
         this._entityResourceService.getEntityResourceByTableName("Dashboard").subscribe((res1: any) => {
             this._entityResourceService.getEntityResourceByTableName("Widget").subscribe((res2: any) => {
                 this._entityResourceService.getEntityResourceByTableName("WidgetMeasure").subscribe((res2: any) => {
                     this._entityResourceService.getEntityResourceByTableName("AnalyticsFactsMetaData").subscribe((res3: any) => {
                         this._entityResourceService.getEntityResourceByTableName("AnalyticsFactsFieldsMetaData").subscribe((res4: any) => {
                             setTimeout(e => {
-                                this.CurrentSession.StopBusyIndicator();
+                                SessionLocator.SelectedSession.StopBusyIndicator();
                                 this.LoadDefaultDashboards(300);
                             }, 70);
                         });

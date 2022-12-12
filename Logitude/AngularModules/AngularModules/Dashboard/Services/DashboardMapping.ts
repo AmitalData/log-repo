@@ -46,7 +46,7 @@ export class DashboardMapping {
         }
 
         if (myWidget.TypeCode == "kpi") {
-            myWidget.Layout.minH = 2;
+            myWidget.Layout.minH = myWidget.TimeOverTime ? 3 : 2;
             myWidget.Layout.minW = 2;
         }
         return myWidget;
