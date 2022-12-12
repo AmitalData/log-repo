@@ -146,7 +146,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         {
             try
             {
-                var textCodeQuery = new DigitalTextCodeQuery();
+                var textCodeQuery = new DigitalTextCodeQueryService(tenant);
                 var defaultTextCodes = textCodeQuery.GetDigitalTextCodesQuery(0, objectTableId);
                 var textCodes = textCodeQuery.GetDigitalTextCodesQuery(tenant, objectTableId);
                 var defaultCodesObject = JsonConvert.DeserializeObject<List<DigitalTextCodeObject>>(defaultTextCodes.Labels);
