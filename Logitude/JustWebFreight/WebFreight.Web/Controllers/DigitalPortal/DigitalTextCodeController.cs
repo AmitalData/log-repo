@@ -106,22 +106,29 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             string email = "";
             try
             {
-                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
-                tenant = authToken.Tenant;
-                email = authToken.Email;
-                digitalFeildSecurityObjectModel.Tenant = tenant;
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, digitalFeildSecurityObjectModel.CardId);
+                //var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                //tenant = authToken.Tenant;
+                //email = authToken.Email;
+                //digitalFeildSecurityObjectModel.Tenant = tenant;
+                //SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                //SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, digitalFeildSecurityObjectModel.CardId);
                 var digitalFieldSecurityQuery = new DigitalFieldSecurityQueryService(tenant);
                 var customDigitalFieldSecurity = digitalFieldSecurityQuery.GetDigitalFieldSecurityQuery(digitalFeildSecurityObjectModel.Tenant, digitalFeildSecurityObjectModel.ObjectTableId, digitalFeildSecurityObjectModel.ProfileId);
 
                 if (customDigitalFieldSecurity != null)
                 {
-                    var customDigitalFieldSecurityMappedObject = JsonConvert.DeserializeObject<List<DigitalFeildSecurityUpdateModel>>(customDigitalFieldSecurity.DefaultSettings);
+                    var existingDigitalFieldSecurityMappedObject = JsonConvert.DeserializeObject<List<DigitalFeildSecurityUpdateModel>>(customDigitalFieldSecurity.DefaultSettings);
+
+                    var diff = existingDigitalFieldSecurityMappedObject.Except(digitalFeildSecurityObjectModel.DefaultSettings).ToList();
+
+                    foreach (var item in diff)
+                    {
+                        existingDigitalFieldSecurityMappedObject.Remove(item);
+                    }
 
                     foreach (var item in digitalFeildSecurityObjectModel.DefaultSettings)
                     {
-                        var existingKey = customDigitalFieldSecurityMappedObject.FirstOrDefault(a => a.Field.Equals(item.Field));
+                        var existingKey = existingDigitalFieldSecurityMappedObject.FirstOrDefault(a => a.Field.Equals(item.Field));
 
                         if (existingKey != null)
                         {
@@ -129,11 +136,11 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         }
                         else
                         {
-                            customDigitalFieldSecurityMappedObject.Add(item);
+                            existingDigitalFieldSecurityMappedObject.Add(item);
                         }
                     }
 
-                    customDigitalFieldSecurity.DefaultSettings = JsonConvert.SerializeObject(customDigitalFieldSecurityMappedObject);
+                    customDigitalFieldSecurity.DefaultSettings = JsonConvert.SerializeObject(existingDigitalFieldSecurityMappedObject);
                     customDigitalFieldSecurity.UpdateDate = DateTime.UtcNow;
                 }
                 else
@@ -144,7 +151,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         Tenant = digitalFeildSecurityObjectModel.Tenant,
                         DefaultSettings = JsonConvert.SerializeObject(digitalFeildSecurityObjectModel.DefaultSettings),
                         CreateDate = DateTime.UtcNow,
-                        UpdateDate = DateTime.UtcNow
+                        UpdateDate = DateTime.UtcNow,
+                        ProfileId = digitalFeildSecurityObjectModel.ProfileId
                     };
                 }
 
@@ -242,13 +250,20 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     {
                         var existingKey = customCodesMappedObject.FirstOrDefault(a => a.Code.Equals(item.Code));
 
-                        if (existingKey != null)
+                        if (string.IsNullOrWhiteSpace(item.DisplayText))
                         {
-                            existingKey.DisplayText = item.DisplayText;
+                            customCodesMappedObject.Remove(item);
                         }
                         else
                         {
-                            customCodesMappedObject.Add(item);
+                            if (existingKey != null)
+                            {
+                                existingKey.DisplayText = item.DisplayText;
+                            }
+                            else
+                            {
+                                customCodesMappedObject.Add(item);
+                            }
                         }
                     }
 
