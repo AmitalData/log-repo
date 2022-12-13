@@ -186,6 +186,22 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
         this.setRequiredCargoKey();
         this.setPlaceholderForCargoKey()
+        this.initConsignmentsRule();
+    }
+
+
+    async initConsignmentsRule() {
+        if(!this.entityPM.ExportFileNo) return;
+
+        const consignmentDeclartion: ConsignmentDeclartions = await this.getDeclarationsandConsignment();
+        if (consignmentDeclartion.Declarations.length !== 1) return;
+
+        const consignment: ConsignmentPM = consignmentDeclartion.Consignments.find(x=> x.ManifestNumber == this.CargoIdentifierKey1);
+        if(!consignment) return;
+
+        this.consignments = consignmentDeclartion.Consignments;
+        this.consignmentSelected = consignment
+        this.setDisabledConsignmentFields();
     }
 
 
@@ -333,6 +349,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     onBlurExportFileNo() {
         if(this.entityPM.ExportFileNo !== this.exportFileNoCurrentValue){
             this.consignments = [];
+            this.setDisabledConsignmentFields();
 
             if (this.entityPM.ExportFileNo)
                 this.syncDeclaration()
