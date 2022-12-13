@@ -135,6 +135,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private int? order ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? Order  
+	   {
+	    
+	     get
+		{
+		   return order;
+		 }
+		 set
+		 {
+		   if(order != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Order",OldValue=order,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   order=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
