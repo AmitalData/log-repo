@@ -249,6 +249,7 @@ export class ExtReconcileAdjustBankFeeComponent extends BaseComponent implements
     _SelectedLedgerTransactionIdList: [];
     _BankAccountPMId: string;
     TotalDifference:number;
+    OrignalDifference:number;
     TotalDifferenceCurrency:  string;
     SetWindowArgs(winArgs) {
         //logitudeWindow.WindowArgs = { "ExtPageSelectedLine": this.ExtPageSelectedLines[0], "LedgerTransactionIdList": LedgerTransactionIdList, "BankAccountPMId": this.BankAccountPM.Id };
@@ -256,6 +257,7 @@ export class ExtReconcileAdjustBankFeeComponent extends BaseComponent implements
         this._BankAccountPMId = winArgs.BankAccountPMId;
         
         this.TotalDifference = winArgs.TotalDifference;
+        this.OrignalDifference = winArgs.OrignalDifference;
         this.TotalDifferenceCurrency = winArgs.TotalDifferenceCurrency;
 
         this._SelectedReconcileExternalPageLinePMList = winArgs.ReconcileExternalPageLinePMList;
