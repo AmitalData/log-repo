@@ -1266,8 +1266,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 .Where(rec =>
                    ///rec.Tenant == tenant &&
                    //rec.CreateDateTime.Value > lst30 &&
-                   rec.UpdateDateTime.Value > lst30 &&
-                    rec.UserNotes == "LoadTest");
+                   rec.UpdateDateTime.Value > lst30 
+                   );
             if (keys != null)
             {
                 q = q.Where(rec => keys.Contains(rec.Id));

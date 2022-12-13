@@ -1404,6 +1404,17 @@ export class MaintenanceComponent {
                     logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/Maintenance/CustomsDocumentsDefinitionComponent');
                     break;
                 }
+
+                case "LOTE": {
+                    var logitudeWindow = new LogitudeWindow();
+                    logitudeWindow.Title = TextCodeTranslator.Translate("General.MC.Customs.DocumentsDefinition");
+                    logitudeWindow.ShowCloseButton = true;
+                    logitudeWindow.Height = 650;
+                    logitudeWindow.Width = 800;
+
+                    logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/Maintenance/LoadTestComponent');
+                    break;
+                }
                 case "MTRC":
                     {
                         let test = true;
