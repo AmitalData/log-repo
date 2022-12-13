@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Simplog.Server.Infrastructure.DataContracts.Models
 {
@@ -13,6 +9,5 @@ namespace Simplog.Server.Infrastructure.DataContracts.Models
         public string CardId { get; set; }
         public int Tenant { get; set; }
         public List<DigitalFeildSecurityUpdateModel> DefaultSettings { get; set; }
-
     }
 }
