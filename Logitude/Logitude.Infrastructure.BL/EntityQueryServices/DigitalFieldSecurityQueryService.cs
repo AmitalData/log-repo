@@ -73,13 +73,13 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
         {
             var objetTables = context.DigitalFieldSecurities
                                      .Include("ObjectTable")
-                                     .Where(a => a.Tenant == tenant)
+                                     .Where(a => a.Tenant == tenant).GroupBy(a => a.ObjectTable)
                                      .Select(a => new DigitalFieldSecurityList
                                      {
-                                         ObjectTableId = a.ObjectTableId,
-                                         ObjectTableName = a.ObjectTable.Name,
-                                     })
-                                     .ToList();
+                                         ObjectTableId = a.Key.Id,
+                                         ObjectTableName = a.Key.Name,
+                                     }).ToList();
+                                    
             return objetTables;
         }
 

@@ -83,12 +83,14 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
     }
 
     BuildItemsSource() {
-        var profilesList: [];
+        var profilesList: ProfileFieldsItem[] = [];
         var objectTableId = this.SelectedObjectTableItem.Name;
         var profileId = this.SelectedProfileItem.Code;
         this.digitalTextService.GetFeildPermissionByFilters(null, objectTableId, profileId).subscribe((myResult) => {
             if (!myResult.HasError) {
-                profilesList = myResult.Result;
+                myResult.Result.forEach(item => {
+                    profilesList.push(new ProfileFieldsItem(this, item));
+                });
                 this.FieldsItemsSource.InsertCollection(profilesList);
             }
         });
