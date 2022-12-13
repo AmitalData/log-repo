@@ -67,15 +67,15 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     if (customTextCodes != null)
                     {
                         customCodesObject = JsonConvert.DeserializeObject<List<DigitalFeildSecurityObject>>(customTextCodes.DefaultSettings);
-                    }
 
-                    foreach (var item in customCodesObject)
-                    {
-                        var temp = defaultCodesObject.FirstOrDefault(a => a.Field.Equals(item.Field));
-
-                        if (temp != null)
+                        foreach (var item in customCodesObject)
                         {
-                            temp.HasPersmission = true;
+                            var temp = defaultCodesObject.FirstOrDefault(a => a.Field.Equals(item.Field));
+
+                            if (temp != null)
+                            {
+                                temp.HasPersmission = true;
+                            }
                         }
                     }
                 }

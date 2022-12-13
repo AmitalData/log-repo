@@ -34,7 +34,7 @@
                         <div class="MediaFill">
                             <logitude-edit-grid [UseVirtuallization]="true" GridWidth="100%" GridHeight="100%" [ItemSource]="FieldsItemsSource">
                                 <!-- Field Name -->
-                                <log-column [width]="'215'" [header]="'Field Name'" [Alignment]="'left'">
+                                <log-column [width]="'300'" [header]="'Field Name'" [Alignment]="'left'">
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate [Alignment]="'left'">
                                             <div style="width: 100%; text-align: left;" class="TextTrimming">
@@ -46,7 +46,7 @@
 
 
                                 <!-- Has permission -->
-                                <log-column [width]="'250'" [header]="'Has Permission'" [Alignment]="'left'">
+                                <log-column [width]="'200'" [header]="'Has Permission'" [Alignment]="'left'">
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate [Alignment]="'left'">
                                             <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;" class="TextTrimming">
@@ -58,6 +58,7 @@
                                                 <table>
                                                     <tr>
                                                         <td style="width: 20px;">
+                                                            <!--<input type="checkbox" [(ngModel)]="item.HasPersmission" (click)="item.HasPersmissionClicked(item)" (blur)="OnLostFocus()" />-->
                                                             <LogCheckBox [ObjectFieldName]="'HasPersmission'" [Checked]="item.HasPersmission" [NoObjectField]="true" [DataContext]="item.DataContext" [HideColumns]="true"></LogCheckBox>
                                                         </td>
                                                     </tr>

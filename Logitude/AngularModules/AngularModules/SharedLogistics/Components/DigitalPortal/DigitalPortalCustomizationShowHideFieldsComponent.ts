@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output} from '@angular/core';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { DigitalPortalCustomizationMainComponent } from './DigitalPortalCustomizationMainComponent';
 import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
@@ -18,6 +18,7 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
     public FieldsItemsSource: ObservableCollection;
     public ModifiedLables: DigitalFeildSecurityObjectModel;
     public IsModifiedLables = false;
+    @Output() LostFocus: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     constructor() {
         super();
@@ -100,6 +101,10 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
         this.CurrentSession.CloseCurrentWindow();
     }
 
+    Cancel() {
+
+    }
+
     Save() {
         if (this.IsModifiedLables) {
             this.CurrentSession.StartBusyIndicatorLoading();
@@ -112,6 +117,11 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
             });
         }
     }
+
+    OnLostFocus() {
+        this.LostFocus.emit(true);
+    }
+
 }
 
 export class ProfileFieldsItem extends BaseComponent {
@@ -150,4 +160,9 @@ export class ProfileFieldsItem extends BaseComponent {
         newLabel.Field = this.Field;
         this.father.ModifiedLables.Lables.push(newLabel);
     }
+
+    HasPersmissionClicked(item) {
+        this.HasPersmission = !item.HasPersmission;
+    }
+
 }

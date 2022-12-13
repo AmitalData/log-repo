@@ -98,6 +98,10 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
             });
         }
     }
+
+    Cancel() {
+
+    }
 }
 
 export class CustomizationLabelItem extends BaseComponent {
