@@ -152,6 +152,11 @@ export class LoadTestComponent
         this._current = 0;
         this.DoIt();
     }
+
+    OkAsyncButtonClicked() {
+        this._current = 0;
+        this.DoItAsync();
+    }
     CanStartAgain: boolean=true;
     DoIt_old() {
         this._current = this._current + 1;
@@ -175,7 +180,7 @@ export class LoadTestComponent
         }
     }
 
-    DoIt() {
+    DoItAsync() {
         this._current = this._current + 1;
         this.CanStartAgain = false;
         for (this._current < this.Max; this._current++;) {
@@ -199,6 +204,32 @@ export class LoadTestComponent
             this._current = 0;
             }
         }
+    }
+
+
+    DoIt() {
+        this._current = this._current + 1;
+        this.CanStartAgain = false;
+ 
+            this._CustomLoadTest = new CustomLoadTest(this.Consignee, this.CustomerId, this.CopyFromDecId, this.COM_ID, this);
+
+            this._CustomLoadTest.OnLogChange
+                .subscribe((logIt) => {
+                    this.LogProccess = logIt;
+                });
+            this._CustomLoadTest.OnFinish
+                .subscribe(() => {
+                    this.DoIt();
+                });
+           this._CustomLoadTest.StartExport(this._current);
+
+
+            if (this._current == this.Max) {
+                this.CanStartAgain = true;
+                this.LogProccess = ("Finish !!!!!!!!!!!!!!!!!!!!!!!");
+                this._current = 0;
+            }
+        
     }
 }
 
@@ -248,8 +279,7 @@ export class CustomLoadTest {
         this._SendDeclarationCounter = 0;
         this.LogMe("strat");
 
-        debugger;
-        this.EntityPM = new DeclarationPM();
+         this.EntityPM = new DeclarationPM();
         this.EntityPM.Tenant = SessionLocator.Tenant;
         this.EntityPM.Direction = "E";
         this.EntityPM.DeclarationTypeCode = "2";

@@ -83,13 +83,16 @@ namespace AmitalCustomsWindowsService.Tester.CustomMessage
 
         private void _buttonLoadDoc50_Click(object sender, EventArgs e)
         {
-            _list = _LoadTestService.GetCustomsDocumentLoadTestTop(50);
+            button1_Click(sender, e);
 
-            _listViewDocs.Items.Clear();
-            foreach (var item in _list)
-            {
-                _listViewDocs.Items.Add(item);
-            } 
+
+            //_list = _LoadTestService.GetCustomsDocumentLoadTestTop(50);
+
+            //_listViewDocs.Items.Clear();
+            //foreach (var item in _list)
+            //{
+            //    _listViewDocs.Items.Add(item);
+            //} 
         }
 
         private void _StressWebcheckBox_CheckedChanged(object sender, EventArgs e)
