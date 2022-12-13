@@ -344,13 +344,15 @@ export class DeclarationValidator {
                 }
             }
             else {
-
-                if (this._DeclarationPM.DeclarationConstraints.find(dc => dc.ConstraintStatusCode == "5")) {
-                    var errorMessage = "Customs.General.O.HappinessConstraints";
-                    if (!AppTool.IsNullOrEmpty(errorMessage)) {
-                        this.ValidationErrorMessageCodes.push(errorMessage);
+                if (this._DeclarationPM.Direction == 'E') {
+                    if (this._DeclarationPM.DeclarationConstraints.find(dc => dc.ConstraintStatusCode == "5")) {
+                        var errorMessage = "Customs.General.O.HappinessConstraints";
+                        if (!AppTool.IsNullOrEmpty(errorMessage)) {
+                            this.ValidationErrorMessageCodes.push(errorMessage);
+                        }
                     }
                 }
+      
                 
             }
 
