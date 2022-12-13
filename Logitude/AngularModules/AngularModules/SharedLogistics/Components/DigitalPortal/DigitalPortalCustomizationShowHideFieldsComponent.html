@@ -55,7 +55,13 @@
                                                 </div>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogCheckBox [ObjectFieldName]="'HasPersmission'" [Checked]="item.HasPersmission" [NoObjectField]="true" [DataContext]="item.DataContext" [HideColumns]="true"></LogCheckBox>
+                                                <table>
+                                                    <tr>
+                                                        <td style="width: 20px;">
+                                                            <LogCheckBox [ObjectFieldName]="'HasPersmission'" [Checked]="item.HasPersmission" [NoObjectField]="true" [DataContext]="item.DataContext" [HideColumns]="true"></LogCheckBox>
+                                                        </td>
+                                                    </tr>
+                                                </table>
                                             </div>
                                         </log-cell-template>
                                     </ng-template>
