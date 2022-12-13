@@ -35,7 +35,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     public IsAddNewMeasureVisible: boolean = true;
     public DateGroupCodes = ['Day', 'Month', 'Year', 'Quarter'];
     public SortByCodes = [];
-    public PeriodOperators = ['After', 'Before', 'Previous', 'Current', 'Next', 'Between'];
+    public PeriodOperators = ['Previous', 'Between'];
     public SortByDirections = [{ name: 'Ascending', code: 'asc' }, { name: 'Descending', code: 'desc' }];
     public IncreaseDecreases = ['Positive', 'Negative'];
     public GroupByQueryFilters: ApiQueryFilters;
@@ -252,7 +252,6 @@ export class AddEditWidgetComponent extends BaseComponent {
         }
 
         this.Increase = this.Increase ? this.Increase : "Postive";
-        //this.selectedIncDecItem = this.IncreaseDecreases.filter(d => d.code == this.Increase ? this.Increase : "positive")[0];
         
     }
 
@@ -380,15 +379,23 @@ export class AddEditWidgetComponent extends BaseComponent {
             this.EntityPM.ComparisonOperator = value;            
             
             this.SetUIForOperator();
+            this.SetOperatorDefault();
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget Comparison Period Value Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
         }
     }
-    SetUIForOperator() {
+    private SetUIForOperator() {
         this.IsBetweenDatesVisible = false;
 
         if (this.ComparisonOperator == "Between") {
             this.IsBetweenDatesVisible = true;
         }
+    }
+
+    private SetOperatorDefault(){
+        this.ComparisonPeriod = null;
+        this.ComparisonDateGroup = null;
+        this.FromDate = null;
+        this.ToDate = null;
     }
     get ComparisonPeriod() { return this.EntityPM.ComparisonPeriod; }
     set ComparisonPeriod(value: number) {
