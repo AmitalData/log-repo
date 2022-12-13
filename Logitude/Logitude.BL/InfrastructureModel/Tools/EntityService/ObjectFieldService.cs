@@ -62,7 +62,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             }
                     
             textCodeRepository = new TextCodeRepository(ObjectContext);
-            objectTableRepository = new ObjectTableRepository(ObjectContext);
+            objectTableRepository = new ObjectTableRepository(ObjectContext); 
             objectFieldValidationRepository = new ObjectFieldValidationRepository(ObjectContext);
             string objectTableName = objectTableRepository.GetSingleObjectTable(theEntityPm.ObjectTableId, tenant, false).Name;
             string tenantListName = "tabletenantobjectfields" + objectTableName.ToLower() + tenant;
