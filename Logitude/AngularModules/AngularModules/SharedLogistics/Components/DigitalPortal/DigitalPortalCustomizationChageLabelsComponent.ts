@@ -95,6 +95,9 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
                 //this.customizationEditComponent.CurrentSession.CloseCurrentWindow();
                 this.customizationEditComponent.IsDirty = false;
                 this.CurrentSession.StopBusyIndicator();
+                if (this.customizationEditComponent.NewSelectedMenu) {
+                    this.customizationEditComponent.SelectedMenu = this.customizationEditComponent.NewSelectedMenu;
+                }
             });
         }
     }
