@@ -102,12 +102,13 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
 
     Save() {
         if (this.IsModifiedLables) {
+            this.CurrentSession.StartBusyIndicatorLoading();
             this.ModifiedLables.ObjectTableId = this.SelectedObjectTableItem.Name;
             this.ModifiedLables.ProfileId = this.SelectedProfileItem.Code;
             this.digitalTextService.UpdateFeildPermission(this.ModifiedLables).subscribe((myResult) => {
                 //this.customizationEditComponent.CurrentSession.CloseCurrentWindow();
                 this.customizationEditComponent.IsDirty = false;
-
+                this.CurrentSession.StopBusyIndicator();
             });
         }
     }
