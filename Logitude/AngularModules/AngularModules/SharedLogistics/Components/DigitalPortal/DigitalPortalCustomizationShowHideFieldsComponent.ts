@@ -110,9 +110,18 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
 
     Save() {
         if (this.IsModifiedLables) {
+
             this.CurrentSession.StartBusyIndicatorLoading();
             this.ModifiedLables.ObjectTableId = this.SelectedObjectTableItem.Name;
             this.ModifiedLables.ProfileId = this.SelectedProfileItem.Code;
+            var hasHasPersmissionList = this.FieldsItemsSource.Collection.filter(a => a.HasPersmission);
+
+            hasHasPersmissionList.forEach(item => {
+                var newLabel = new DigitalFeildSecurityUpdateModel();
+                newLabel.Field = item.Field;
+                this.ModifiedLables.DefaultSettings.push(newLabel);
+            });
+            
             this.digitalTextService.UpdateFeildPermission(this.ModifiedLables).subscribe((myResult) => {
                 //this.customizationEditComponent.CurrentSession.CloseCurrentWindow();
                 this.customizationEditComponent.IsDirty = false;
@@ -159,9 +168,6 @@ export class ProfileFieldsItem extends BaseComponent {
     public UpdateModifiedLables(newValue) {
         this.father.IsModifiedLables = true;
         this.father.customizationEditComponent.IsDirty = true;
-        var newLabel = new DigitalFeildSecurityUpdateModel();
-        newLabel.Field = this.Field;
-        this.father.ModifiedLables.DefaultSettings.push(newLabel);
     }
 
     HasPersmissionClicked(item) {
