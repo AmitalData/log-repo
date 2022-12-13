@@ -780,7 +780,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         {
             try
             {
-                new ShipmentAnalyticRepository(shipmentsContext).UpdateFromShipment(entity);
+                //new ShipmentAnalyticRepository(shipmentsContext).UpdateFromShipment(entity);
                 context.Shipments.Attach(entity);
             }
             catch { }
