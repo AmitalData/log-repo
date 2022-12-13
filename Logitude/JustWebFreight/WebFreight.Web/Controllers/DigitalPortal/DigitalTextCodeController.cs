@@ -106,12 +106,12 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             string email = "";
             try
             {
-                //var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
-                //tenant = authToken.Tenant;
-                //email = authToken.Email;
-                //digitalFeildSecurityObjectModel.Tenant = tenant;
-                //SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                //SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, digitalFeildSecurityObjectModel.CardId);
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                tenant = authToken.Tenant;
+                email = authToken.Email;
+                digitalFeildSecurityObjectModel.Tenant = tenant;
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, digitalFeildSecurityObjectModel.CardId);
                 var digitalFieldSecurityQuery = new DigitalFieldSecurityQueryService(tenant);
                 var customDigitalFieldSecurity = digitalFieldSecurityQuery.GetDigitalFieldSecurityQuery(digitalFeildSecurityObjectModel.Tenant, digitalFeildSecurityObjectModel.ObjectTableId, digitalFeildSecurityObjectModel.ProfileId);
 
