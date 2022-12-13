@@ -100,7 +100,10 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
     }
 
     Cancel() {
-
+        this.customizationEditComponent.IsDirty = false;
+        if (this.customizationEditComponent.NewSelectedMenu) {
+            this.customizationEditComponent.SelectedMenu = this.customizationEditComponent.NewSelectedMenu;
+        }
     }
 }
 

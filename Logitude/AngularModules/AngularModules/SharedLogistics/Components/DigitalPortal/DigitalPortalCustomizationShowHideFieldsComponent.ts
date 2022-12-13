@@ -25,7 +25,7 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
         this.digitalTextService = new DigitalTextService();
         this.FieldsItemsSource = new ObservableCollection([]);
         this.ModifiedLables = new DigitalFeildSecurityObjectModel();
-        this.ModifiedLables.Lables = [];
+        this.ModifiedLables.DefaultSettings = [];
         this.IsModifiedLables = false;
     }
 
@@ -102,7 +102,10 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
     }
 
     Cancel() {
-
+        this.customizationEditComponent.IsDirty = false;
+        if (this.customizationEditComponent.NewSelectedMenu) {
+            this.customizationEditComponent.SelectedMenu = this.customizationEditComponent.NewSelectedMenu;
+        }
     }
 
     Save() {
@@ -158,7 +161,7 @@ export class ProfileFieldsItem extends BaseComponent {
         this.father.customizationEditComponent.IsDirty = true;
         var newLabel = new DigitalFeildSecurityUpdateModel();
         newLabel.Field = this.Field;
-        this.father.ModifiedLables.Lables.push(newLabel);
+        this.father.ModifiedLables.DefaultSettings.push(newLabel);
     }
 
     HasPersmissionClicked(item) {

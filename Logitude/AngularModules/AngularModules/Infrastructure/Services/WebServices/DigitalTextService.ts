@@ -126,7 +126,7 @@ export class DigitalFeildSecurityObjectModel {
     public ObjectTableId: string;
     public CardId: string;
     public ProfileId: string;
-    public Lables: DigitalFeildSecurityUpdateModel[];
+    public DefaultSettings: DigitalFeildSecurityUpdateModel[];
 }
 
 export class DigitalFeildSecurityUpdateModel {
