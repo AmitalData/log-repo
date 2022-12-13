@@ -111,9 +111,9 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
     }
 }
 
-export class CustomizationLabelItem extends BaseComponent {
+export class ProfileFieldsItem extends BaseComponent {
 
-    public DataContext: CustomizationLabelItem = this;
+    public DataContext: ProfileFieldsItem = this;
 
     constructor(public father: DigitalPortalCustomizationShowHideFieldsComponent, item) {
         super();
