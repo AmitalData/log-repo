@@ -54,7 +54,7 @@ namespace Logitude.Customs.BL.TraceEvents
                 TotalSum = ifCurrecyEquals ? myDeclaration?.SupplierInvoices.Sum(s => s.InvoiceAmount).ToString() : null,
                 currecy = ifCurrecyEquals ? myDeclaration?.SupplierInvoices[0]?.InvoiceCurrencyTypeCode : null,
                 totalNisSum = myDeclaration?.SupplierInvoices.Sum(s => s.SupplierInvoiceItems.Sum(si => si.ItemFOBAmountNIS)).ToString(),
-                totalFreightSum = myDeclaration?.SupplierInvoices.Sum(s => s.TotalFreightInFreightCurrency).ToString(),
+                totalFreightSum = myDeclaration?.SupplierInvoices.Sum(s => s.SupplierInvoiceModifications.Sum(d=>d.TypeCode=="104" && d.CurrencyTypeCode==s.InvoiceCurrencyTypeCode? d.Amount: 0)).ToString(),
                 totalPackages = myDeclaration?.SupplierInvoices.Sum(s => s.SupplierInvoiceItems.Sum(si => si.PackageQuantity)).ToString(),
                 loadingDateTime = myDeclaration?.LoadingDateTime.ToString(),
                 direction = myDeclaration?.Direction,
