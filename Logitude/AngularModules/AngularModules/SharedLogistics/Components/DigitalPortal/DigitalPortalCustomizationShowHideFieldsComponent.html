@@ -52,7 +52,11 @@
                                             <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;" class="TextTrimming">
                                                 <table>
                                                     <tr>
-                                                        <td>{{item.HasPersmission}}</td>
+                                                        <td>
+                                                            <div style="width:120px">
+                                                                <img class="CenterCenter" style="width:20px;height:20px" *ngIf="item.HasPersmission" src="./Images/Icons/MiniGreenTick.png" />
+                                                            </div>
+                                                        </td>
                                                     </tr>
                                                 </table>
                                             </div>
