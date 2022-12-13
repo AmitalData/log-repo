@@ -12,7 +12,7 @@ namespace Simplog.Server.Infrastructure.DataContracts.Models
         public string ProfileId { get; set; }
         public string CardId { get; set; }
         public int Tenant { get; set; }
-        public List<DigitalFeildSecurityUpdateModel> DefaultSetting { get; set; }
+        public List<DigitalFeildSecurityUpdateModel> DefaultSettings { get; set; }
 
     }
 }

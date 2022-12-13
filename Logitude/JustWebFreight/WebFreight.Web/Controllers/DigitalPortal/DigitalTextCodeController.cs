@@ -123,7 +123,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 {
                     var customDigitalFieldSecurityMappedObject = JsonConvert.DeserializeObject<List<DigitalFeildSecurityUpdateModel>>(customDigitalFieldSecurity.DefaultSettings);
 
-                    foreach (var item in digitalFeildSecurityObjectModel.DefaultSetting)
+                    foreach (var item in digitalFeildSecurityObjectModel.DefaultSettings)
                     {
                         var existingKey = customDigitalFieldSecurityMappedObject.FirstOrDefault(a => a.Field.Equals(item.Field));
 
@@ -146,7 +146,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     {
                         ObjectTableId = digitalFeildSecurityObjectModel.ObjectTableId,
                         Tenant = digitalFeildSecurityObjectModel.Tenant,
-                        DefaultSettings = JsonConvert.SerializeObject(digitalFeildSecurityObjectModel.DefaultSetting),
+                        DefaultSettings = JsonConvert.SerializeObject(digitalFeildSecurityObjectModel.DefaultSettings),
                         CreateDate = DateTime.UtcNow,
                         UpdateDate = DateTime.UtcNow
                     };
