@@ -26,6 +26,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public bool Inactive  { get; set; }
        [DataMember]
        public string CodeFilter  { get; set; }
+       [DataMember]
+       public int? Order  { get; set; }
    }
 
 }

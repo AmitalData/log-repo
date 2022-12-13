@@ -14,6 +14,7 @@ export class ChartOfAccountsTypeList {
 	SearchFields: string;
 	Inactive: boolean;
 	CodeFilter: string;
+	Order: number;
 	
 }
  

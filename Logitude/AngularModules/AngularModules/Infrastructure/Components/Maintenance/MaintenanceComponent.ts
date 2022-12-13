@@ -617,6 +617,15 @@ export class MaintenanceComponent {
                 item.ObjectTableName = "Full Accounting Setting";
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
+
+            if (FeatureLocator.HasFeaturePermession("General", "General.Features.ChartOfAccountsTypesOrder")) {
+                var item = new MenusTablePM();
+                item.CategoryTypeCode = "ACC";
+                item.Icon = "Settings"
+                item.Code = "COATO";
+                item.ObjectTableName = "Chart Of Accounts Types Order";
+                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+            }
             //if (FeatureLocator.HasFeaturePermession("General", "General.Features.YearTransfer")) {
             //    var item = new MenusTablePM();
             //    item.CategoryTypeCode = "ACC";
@@ -1084,6 +1093,16 @@ export class MaintenanceComponent {
                         logitudeWindow.Height = 550;
                         logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.O.FullAccountingSettings"); // "Full Accounting Settings";
                         logitudeWindow.Show('./Accounting/Components/Maintenance/FullAccountingSettingsComponent');
+                    });
+                    break;
+                }
+                case "COATO": {
+                    this._entityResourceService.getEntityResourceByTableName("ChartOfAccountsType", 0).subscribe((response:any) => {
+                        var logitudeWindow = new LogitudeWindow();
+                        logitudeWindow.Width = 500;
+                        logitudeWindow.Height = 400;
+                        logitudeWindow.Title = 'Chart Of Accounts Types Order';//TextCodeTranslator.Translate("Accounting.General.O.ChartOfAccountsTypesOrder");
+                        logitudeWindow.Show('./Accounting/Components/Maintenance/ChartOfAccountsTypesOrderComponent');
                     });
                     break;
                 }
@@ -1907,7 +1926,7 @@ class MaintenanceMenuItem {
 
 
 
-        if (this.CategoryTypeCode == "PRS" || this.CategoryTypeCode == "CMS" || this.CategoryTypeCode == "MNG" || this.Code == "FACS" || this.Code == "ACYT") {
+        if (this.CategoryTypeCode == "PRS" || this.CategoryTypeCode == "CMS" || this.CategoryTypeCode == "MNG" || this.Code == "FACS" || this.Code == "COATO" || this.Code == "ACYT") {
             switch (this.Code) {
                 case "SIGN": { myResult = "Set Signature Settings"; break; }
                 case "CHPA": { myResult = "Change Password"; break; }
@@ -1927,6 +1946,7 @@ class MaintenanceMenuItem {
                 case "MNGT": { myResult = "Error Logs"; break; }
                 case "APLG": { myResult = "API Logs"; break; }
                 case "FACS": { myResult = "Define your accounting settings"; break; }
+                case "COATO": { myResult = "Define your Chart Of Accounts Types Order"; break; }
                 //case "ACPD": { myResult = "Define your accounting periods"; break; }
                 case "ACYT": { myResult = "Year Transfer"; break; }
 
