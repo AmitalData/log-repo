@@ -5,6 +5,7 @@ using Logitude.Infrastructure.Data.EntityLists;
 using Logitude.Infrastructure.Data.Repsitories;
 using Simplog.Server.Infrastructure;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
 namespace Logitude.Infrastructure.BL.EntityQueryServices
@@ -66,6 +67,20 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                 entityPm.ChangeSetOp = ChangeSetOperation.Update;
                 service.Update(entityPm, true);
             }
+        }
+
+        public List<DigitalFieldSecurityList> GetDigitalProfilesObjetTables(int tenant)
+        {
+            var objetTables = context.DigitalFieldSecurities
+                                     .Include("ObjectTable")
+                                     .Where(a => a.Tenant == tenant)
+                                     .Select(a => new DigitalFieldSecurityList
+                                     {
+                                         ObjectTableId = a.ObjectTableId,
+                                         ObjectTableName = a.ObjectTable.Name,
+                                     })
+                                     .ToList();
+            return objetTables;
         }
 
     }

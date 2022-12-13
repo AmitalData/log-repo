@@ -7,6 +7,12 @@
                     <td>
                         <table>
                             <tr>
+                                <td style="width: 180px;">
+                                    <ComboBox style="width:250px;float:left;" [WaterMark]="'Select Profile'" (SelectedItemChanged)="SelectedProfileItem = $event" [ItemsSource]="DigitalProfileFilterList" [SelectedItem]="SelectedProfileItem" [Binding]="'Name'"></ComboBox>
+                                </td>
+                                <td style="width: 5px;">
+                                    <div></div>
+                                </td>
                                 <td style="width: 250px;">
                                     <ComboBox style="width:250px;float:left;" [WaterMark]="'Select entity to show fields'" (SelectedItemChanged)="SelectedObjectTableItem = $event" [ItemsSource]="ObjectTablesFilterList" [SelectedItem]="SelectedObjectTableItem" [Binding]="'Code'"></ComboBox>
                                 </td>
@@ -46,12 +52,12 @@
                                             <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;" class="TextTrimming">
                                                 <table>
                                                     <tr>
-                                                        <td>{{item.HasPermission}}</td>
+                                                        <td>{{item.HasPersmission}}</td>
                                                     </tr>
                                                 </table>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogCheckBox [ObjectFieldName]="'HasPermission'" [Checked]="item.HasPermission" [NoObjectField]="true" [DataContext]="item.DataContext"  [HideColumns]="true"></LogCheckBox>
+                                                <LogCheckBox [ObjectFieldName]="'HasPersmission'" [Checked]="item.HasPersmission" [NoObjectField]="true" [DataContext]="item.DataContext"  [HideColumns]="true"></LogCheckBox>
                                             </div>
                                         </log-cell-template>
                                     </ng-template>

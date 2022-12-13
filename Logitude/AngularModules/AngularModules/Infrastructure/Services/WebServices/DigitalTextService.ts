@@ -14,11 +14,53 @@ export class DigitalTextService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/DigitalTextCode';
     }
 
+    public GetDigitalProfileName() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetDigitalProfileName?', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myResult;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    public GetDigitalProfilesObjetTables() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetDigitalProfilesObjetTables?', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myResult;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
     public GetDigitalTextCodesObjetTables() {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return defer(() => {
             return this._http.get(this._apiUrl + '/GetDigitalTextCodesObjetTables?', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myResult;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    public GetFeildPermissionByFilters(cardId: string, objectTableId: string, profileId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetFeildPermissionByFilters?cardId=' + cardId + "&objectTableId=" + objectTableId + "&profileId=" + profileId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -54,6 +96,18 @@ export class DigitalTextService {
         });
     }
 
+    UpdateFeildPermission(labels: DigitalFeildSecurityObjectModel) {
+        return defer(() => {
+            return this._http.post(this._apiUrl, JSON.stringify(labels), ServiceHelper.GetHttpFullHeaders())
+                .pipe(
+                    map((response: any) => {
+                        return response.body;
+                    }),
+                    catchError(ServiceHelper.HandleServiceError));
+
+        });
+    }
+
 }
 
 export class DigitalTextCodeUpdateModel {
@@ -66,4 +120,15 @@ export class DigitalTextCodeObject {
     public DisplayLable: string;
     public DisplayText: string;
     public Code: string;
+}
+
+export class DigitalFeildSecurityObjectModel {
+    public ObjectTableId: string;
+    public CardId: string;
+    public ProfileId: string;
+    public Lables: DigitalFeildSecurityUpdateModel[];
+}
+
+export class DigitalFeildSecurityUpdateModel {
+    public Field: string;
 }
