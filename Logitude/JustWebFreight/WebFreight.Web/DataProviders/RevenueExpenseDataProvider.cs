@@ -72,6 +72,7 @@ namespace WebFreight.Web.DataProviders
         public string ChartofAccountLocalName { get; set; }
         public string ChartofAccountTypeCode { get; set; }
         public string ChartofAccountTypeLocalName { get; set; }
+        public int? ChartOfAccountTypeOrder { get; set; }
         public string CurrencyCode { get; set; }
 
 

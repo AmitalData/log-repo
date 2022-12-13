@@ -30,6 +30,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                         Inactive = a.Inactive,
                                                         SearchFields = a.SearchFields,
                                                         CodeFilter = a.Code,
+                                                        Order = a.Order
                                                     });
             return query;
 		}

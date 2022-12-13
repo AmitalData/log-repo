@@ -11960,6 +11960,7 @@ namespace WebFreight.Web.ReportsWebServices
                             ChartofAccountCode = item.ChartOfAcountCode1,
                             ChartofAccountLocalName = item.ChartOfAcountName1,
                             ChartofAccountTypeCode = item.ChartOfAcountType,
+                            ChartOfAccountTypeOrder = chartOfAccountTypes.FirstOrDefault(x => x.Code == item.ChartOfAcountType)?.Order,
                             ChartofAccountTypeLocalName = item.ChartOfAcountType != null ? chartOfAccountTypes.Where(d => d.Code == item.ChartOfAcountType).FirstOrDefault().LocalName : null,
                             CurrencyCode = item.CurrencyId != null ? currencies.Where(d => d.Id == item.CurrencyId).FirstOrDefault().Code : "Multi",
 

@@ -42,7 +42,7 @@
 </style>
 
 
-<table *ngIf="IsVisible">
+<table>
 
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -53,161 +53,104 @@
     <tr>
         <td>
             <table class="FixedTable">
-
-                <!-- Language -->
                 <tr class="FormFieldRow">
-                    <td style="width: 130px;">
+                    <td style="width: 150px;">
                         <label> Revenues: </label>
                     </td>
-
-                    <td style="width:150px">
-                        <ComboBox style="width:150px;" [ItemsSource]="ChartOfAccountsTypesOrders" (SelectedItemChanged)="LanguageSelectedChange($event)" [SelectedItem]="LanguageSelectedItem" [Binding]="'Description'"></ComboBox>
+                    <td style="width:100px">
+                        <ComboBox style="width:100px;" [ItemsSource]="ChartOfAccountsTypesOrders" (SelectedItemChanged)="RevenuesSelectedChange($event)" 
+                        [SelectedItem]="RevenuesSelectedItem"
+                        ></ComboBox>
                     </td>
-
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
-
-                <!-- Time Zone -->
-                <tr class="FormFieldRow">
-                    <td>
-                        <label> Time Zone: </label>
-                    </td>
-
-                    <td>
-                        <ComboBox [IsDisabled]="IsHitTestVisible" style="width:150px;" [ItemsSource]="TimeZonesList" (SelectedItemChanged)="TimeZoneSelectedItem = $event" [SelectedItem]="TimeZoneSelectedItem" [Binding]="'TimeZoneName'" attr.data-cy="{{'ComboBox_TimeZone'}}"></ComboBox>
-                    </td>
-
-                    <td style="padding-left: 5px;">
-                        <label style="color:gray;font-family:Arial;"> All the dates in the system are related to the time zone.</label>
-                    </td>
-                </tr>
-
-                <!-- Date TimeFormat -->
-                <tr class="FormFieldRow">
-                    <td>
-                        <label>Date Time Format: </label>
-                    </td>
-
-                    <td>
-                        <ComboBox [IsDisabled]="IsHitTestVisible" style="width:200px;" [ItemsSource]="DateTimeFormatsList" [SelectedItem]="DateTimeFormatSelectedItem" (SelectedItemChanged)="DateTimeFormatSelectedChange($event)" [Binding]="'DisplayName'" attr.data-cy="{{'ComboBox_DateTimeFormat'}}"></ComboBox>
-                    </td>
-
                     <td>
                         <div></div>
                     </td>
                 </tr>
 
                 <tr class="FormFieldRow">
-                    <td>
-                        <label>Number Format: </label>
+                    <td style="width: 150px;">
+                        <label> Expenses: </label>
                     </td>
-
-                    <td colspan="2">
-                        <table>
-                            <tr>
-                                <td style="width:187px">
-                                    <LogLov [ObjectFieldName]="'NumberFormatCode'"
-                                            [ObjectTableName]="ObjectTableName"
-                                            [DataContext]="DataContext"
-                                            [LookUpTableName]="'NumberFormat'"
-                                            [HideColumns]="false"> 
-                                    </LogLov>
-                                </td>
-                                <td>
-
-                                </td>
-                            </tr>
-                        </table>
-                      
+                    <td style="width:100px">
+                        <ComboBox style="width:100px;" [ItemsSource]="ChartOfAccountsTypesOrders" (SelectedItemChanged)="ExpensesSelectedChange($event)" 
+                        [SelectedItem]="ExpensesSelectedItem"
+                        ></ComboBox>
+                    </td>
+                    <td>
+                        <div></div>
                     </td>
                 </tr>
 
-                <!-- DayLight Settings -->
                 <tr class="FormFieldRow">
-                    <td colspan="2">
-                        <table>
-                            <tr>
-                                <td width="16px">
-                                    <LogCheckBox [ObjectFieldName]="'ShowDayLightSettings'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
-                                </td>
-
-                                <td style="padding-left: 5px;">
-                                    <label style="font-size:12px;color:#1B90CB;"> Daylight Settings </label>
-                                </td>
-                            </tr>
-                        </table>
+                    <td style="width: 150px;">
+                        <label> Customers: </label>
                     </td>
-
+                    <td style="width:100px">
+                        <ComboBox style="width:100px;" [ItemsSource]="ChartOfAccountsTypesOrders" (SelectedItemChanged)="CustomersSelectedChange($event)" 
+                        [SelectedItem]="CustomersSelectedItem"
+                        ></ComboBox>
+                    </td>
                     <td>
                         <div></div>
                     </td>
                 </tr>
 
-                <tr *ngIf="ShowDayLightSettings">
-                    <td colspan="2">
-                        <table>
-                            <tr>
-                                <td width="20px"></td>
-
-                                <td>
-                                    <table>
-                                        <!-- DayLight Start Date -->
-                                        <tr class="FormFieldRow">
-                                            <td style="width: 130px;">
-                                                <label> DayLight Start Date: </label>
-                                            </td>
-
-                                            <td>
-                                                <LogDatePicker [ObjectFieldName]="'DayLightStartDate'" [ObjectTableName]="ObjectTableName" [InputType]="'date'" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
-                                            </td>
-                                        </tr>
-
-                                        <!-- DayLight End Date -->
-                                        <tr class="FormFieldRow">
-                                            <td>
-                                                <label> DayLight End Date: </label>
-                                            </td>
-
-                                            <td>
-                                                <LogDatePicker [ObjectFieldName]="'DayLightEndDate'" [ObjectTableName]="ObjectTableName" [InputType]="'date'" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
-                                            </td>
-                                        </tr>
-
-                                        <!-- DayLight Offset  -->
-                                        <tr class="FormFieldRow">
-                                            <td>
-                                                <label> DayLight Offset: </label>
-                                            </td>
-
-                                            <td>
-                                                <LogTextBox [ObjectFieldName]="'DayLightOffset'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                                            </td>
-                                        </tr>
-
-
-
-
-                                        <tr>
-                                            <td colspan="2">
-                                                <div></div>
-                                            </td>
-                                        </tr>
-
-                                    </table>
-                                </td>
-
-                            </tr>
-                        </table>
+                <tr class="FormFieldRow">
+                    <td style="width: 150px;">
+                        <label> Vendors: </label>
                     </td>
-
+                    <td style="width:100px">
+                        <ComboBox style="width:100px;" [ItemsSource]="ChartOfAccountsTypesOrders" (SelectedItemChanged)="VendorsSelectedChange($event)" 
+                        [SelectedItem]="VendorsSelectedItem"
+                        ></ComboBox>
+                    </td>
                     <td>
                         <div></div>
                     </td>
-
                 </tr>
 
+                <tr class="FormFieldRow">
+                    <td style="width: 150px;">
+                        <label> Banks: </label>
+                    </td>
+                    <td style="width:100px">
+                        <ComboBox style="width:100px;" [ItemsSource]="ChartOfAccountsTypesOrders" (SelectedItemChanged)="BanksSelectedChange($event)" 
+                        [SelectedItem]="BanksSelectedItem"
+                        ></ComboBox>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr class="FormFieldRow">
+                    <td style="width: 150px;">
+                        <label> Works: </label>
+                    </td>
+                    <td style="width:100px">
+                        <ComboBox style="width:100px;" [ItemsSource]="ChartOfAccountsTypesOrders" (SelectedItemChanged)="WorksSelectedChange($event)" 
+                        [SelectedItem]="WorksSelectedItem"
+                        ></ComboBox>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr class="FormFieldRow">
+                    <td style="width: 150px;">
+                        <label> Debtors And Creditors: </label>
+                    </td>
+                    <td style="width:100px">
+                        <ComboBox style="width:100px;" [ItemsSource]="ChartOfAccountsTypesOrders" (SelectedItemChanged)="DebtorsAndCreditorsSelectedChange($event)" 
+                        [SelectedItem]="DebtorsAndCreditorsSelectedItem"
+                        ></ComboBox>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+                
                 <tr>
                     <td colspan="3">
                         <div> </div>

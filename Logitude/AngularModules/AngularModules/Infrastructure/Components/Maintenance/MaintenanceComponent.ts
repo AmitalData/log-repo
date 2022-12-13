@@ -1099,9 +1099,9 @@ export class MaintenanceComponent {
                 case "COATO": {
                     this._entityResourceService.getEntityResourceByTableName("ChartOfAccountsType", 0).subscribe((response:any) => {
                         var logitudeWindow = new LogitudeWindow();
-                        logitudeWindow.Width = 900;
-                        logitudeWindow.Height = 550;
-                        logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.ChartOfAccountsTypesOrder");
+                        logitudeWindow.Width = 500;
+                        logitudeWindow.Height = 400;
+                        logitudeWindow.Title = 'Chart Of Accounts Types Order';//TextCodeTranslator.Translate("Accounting.General.O.ChartOfAccountsTypesOrder");
                         logitudeWindow.Show('./Accounting/Components/Maintenance/ChartOfAccountsTypesOrderComponent');
                     });
                     break;
