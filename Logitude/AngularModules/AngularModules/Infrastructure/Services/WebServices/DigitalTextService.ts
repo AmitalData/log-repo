@@ -86,10 +86,10 @@ export class DigitalTextService {
 
     UpdateDigitalTextCodes(labels: DigitalTextCodeUpdateModel) {
         return defer(() => {
-            return this._http.post(this._apiUrl + "/UpdateDigitalTextCodes", JSON.stringify(labels), ServiceHelper.GetHttpHeaders())
+            return this._http.post(this._apiUrl + "/UpdateTextCodes", JSON.stringify(labels), ServiceHelper.GetHttpHeaders())
                 .pipe(
                     map((response: any) => {
-                        return response.body;
+                        
                     }),
                     catchError(ServiceHelper.HandleServiceError));
 
@@ -102,7 +102,7 @@ export class DigitalTextService {
             return this._http.post(this._apiUrl + "/UpdateFeildPermission", JSON.stringify(labels), ServiceHelper.GetHttpHeaders())
                 .pipe(
                     map((response: any) => {
-                        return response.body;
+                       
                     }),
                     catchError(ServiceHelper.HandleServiceError));
 
