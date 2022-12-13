@@ -552,8 +552,8 @@ namespace CustomsWorkerRole.Test
                 {
                     try
                     {
-                        var messService = new Logitude.CustomsMessaging.MessagingServices.DF_MSG10000_ImportDeclarationMessagingService();
-                        var responseData = messService.SendSheet(requestParams);
+                        var messService = new Logitude.CustomsMessaging.MessagingServices.DF_NG_2751_MSG10000_ExportDeclarationMessagingService();
+                        var responseData = messService.Send(requestParams);
                         scope.Complete();
                         _DoOneDeclartionAt = DateTime.Now;
                         Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("Queue:SendSheet(requestParams)" + item.Id.ToString() + ":" + requestParams.RequestVIA.ToString());
@@ -591,7 +591,7 @@ namespace CustomsWorkerRole.Test
 
         private MethodEnum GetMethodEnum(string customFileNo)
         {
-
+            return MethodEnum.ByWorkerRole;
             if (!String.IsNullOrWhiteSpace(_MyUserId))
             {
                 if (_My1stDeclarationPM != null && _My1stDeclarationPM.CustomFileNo == customFileNo)
