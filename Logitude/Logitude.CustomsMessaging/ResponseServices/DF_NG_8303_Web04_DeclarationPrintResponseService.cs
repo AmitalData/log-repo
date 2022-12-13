@@ -135,7 +135,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             )
                         {
                             var myDeclarationId = myDeclarationQueryService.GetIdByDeclarationNumber(declarationPrintAnswerItem.DeclarationPrintDetails.DeclarationID, requestParams.Tenant);
-                            _MyDeclarationPM = myDeclarationQueryService.GetSingle(myDeclarationId, false, false);
+                            _MyDeclarationPM = myDeclarationQueryService.GetSingle(myDeclarationId, true, false);
                             if (_MyDeclarationPM == null)
                             {
                                 var declarationPrintDetails = new DeclarationPrintM();
