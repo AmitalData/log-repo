@@ -26,10 +26,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             int tenant = 0;
             try
             {
-                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
-                tenant = authToken.Tenant;
-                email = authToken.Email;
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 var textCodeQuery = new DigitalProfileQueryService(tenant);
                 var digitalProfiles = textCodeQuery.GetDigitalProfileQuery(tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, digitalProfiles);
@@ -352,6 +348,28 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {0}", "", null);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-        }      
+        }
+
+        [HttpGet]
+        [Route("DigitalTextCode/GetDigitalProfilesObjetTables")]
+        public HttpResponseMessage GetDigitalProfilesObjetTables()
+        {
+            string email = "";
+            try
+            {
+                var digitalFieldSecurityQuery = new DigitalFieldSecurityQueryService(0);
+                var objectTables = digitalFieldSecurityQuery.GetDigitalProfilesObjetTables(0);
+                return Request.CreateResponse(HttpStatusCode.OK, objectTables);
+            }
+            catch (AutenticationException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {0}", "", null);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }
