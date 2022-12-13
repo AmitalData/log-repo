@@ -50,16 +50,12 @@
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate [Alignment]="'left'">
                                             <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;" class="TextTrimming">
-                                                <table>
-                                                    <tr>
-                                                        <td>
-                                                            <img class="CenterCenter" style="width:20px;height:20px" *ngIf="item.HasPersmission" src="./Images/Icons/MiniGreenTick.png" />
-                                                        </td>
-                                                    </tr>
-                                                </table>
+                                                <div style="width:50px">
+                                                    <img  *ngIf="item.HasPersmission" style="width: 20px; height: 20px; text-align: left;" src="./Images/Icons/MiniGreenTick.png" />
+                                                </div>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogCheckBox [ObjectFieldName]="'HasPersmission'" [Checked]="item.HasPersmission" [NoObjectField]="true" [DataContext]="item.DataContext"  [HideColumns]="true"></LogCheckBox>
+                                                <LogCheckBox [ObjectFieldName]="'HasPersmission'" [Checked]="item.HasPersmission" [NoObjectField]="true" [DataContext]="item.DataContext" [HideColumns]="true"></LogCheckBox>
                                             </div>
                                         </log-cell-template>
                                     </ng-template>
