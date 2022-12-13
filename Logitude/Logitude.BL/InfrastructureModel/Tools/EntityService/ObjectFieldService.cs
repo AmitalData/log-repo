@@ -83,7 +83,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                     bool exists = entityRepository.GetSingleObjectFieldByCode(theEntityPm.Code, theEntityPm.ObjectTableId, theEntityPm.Tenant) != null ? true : false;
                     if(exists)
                         throw new ApplicationException("An Object Field with the same code already exists");
-                }
+                } 
                 else
                 {
                     throw new ApplicationException("Code Field is required");
