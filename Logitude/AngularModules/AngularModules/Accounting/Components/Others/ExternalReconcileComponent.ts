@@ -544,6 +544,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
                             "BankAccountPMId": this.BankAccountPM.Id,
                             TotalDifference: this.totalDifference,
                             TotalDifferenceCurrency: this.openAmountCurrency,
+                            OrignalDifference: this.orignalDifference
                          };
 
                         logitudeWindow.Show('./Accounting/Components/Others/ExtReconcileAdjustBankFeeComponent');
@@ -936,6 +937,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         this.accountTransactionsTotal = total;
         var def = (this.extPageTransactionsTotal + this.accountTransactionsTotal)
         this.totalDifference = def < 0 ? def * -1 : def;
+        this.orignalDifference = def;
     }
 
     ReloadScreen() {
@@ -1173,6 +1175,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     accountTransactionsTotal: number = 0;
     extPageTransactionsTotal: number = 0;
     totalDifference: number = 0;
+    orignalDifference: number = 0;
     CalculateExtPageTotals() {
         this.extPageTransactionsTotal = 0;
         var total = 0;
@@ -1186,6 +1189,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         this.extPageTransactionsTotal = total;
         var def = (this.extPageTransactionsTotal + this.accountTransactionsTotal)
         this.totalDifference = def < 0 ? def * -1 : def;
+        this.orignalDifference = def;
     }
     //#endregion
 
