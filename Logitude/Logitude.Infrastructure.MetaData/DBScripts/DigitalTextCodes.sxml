@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="7">
+  <Sql Version="8">
     <![CDATA[	  
 	
       declare @NewEntityId as varchar(15)
@@ -52,11 +52,11 @@
 		},
 		{
 			"Code": "Tab.G.Shipment",
-			"DisplayText": "Shipment"
+			"DisplayText": "Shipments"
 		},
 		{
 			"Code": "Tab.G.Invoice",
-			"DisplayText": "Invoice"
+			"DisplayText": "Invoicing"
 		},
 		{
 			"Code": "Tab.G.Dashboard",

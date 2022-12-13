@@ -1,6 +1,5 @@
 ﻿using Logitude.Infrastructure.BL.EntityQueryServices;
 using Logitude.Infrastructure.Data.EntityLists;
-using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.SystemLogs;
 using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -12,7 +11,6 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
-using WebFreight.Web.Controllers.DigitalPortal.Helpers;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 
@@ -20,6 +18,159 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 {
     public class DigitalTextCodeController : ApiController
     {
+        [HttpGet]
+        [Route("DigitalTextCode/GetDigitalProfileName")]
+        public HttpResponseMessage GetDigitalProfileName()
+        {
+            string email = "";
+            int tenant = 0;
+            try
+            {
+                var textCodeQuery = new DigitalProfileQueryService(tenant);
+                var digitalProfiles = textCodeQuery.GetDigitalProfileQuery(tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, digitalProfiles);
+            }
+            catch (AutenticationException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {0}", "", null);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        [HttpGet]
+        [Route("DigitalTextCode/GetFeildPermissionByFilters")]
+        public HttpResponseMessage GetFeildPermissionByFilters(string cardId, string objectTableId, string profileId)
+        {
+            int tenant = 0;
+            string email = "";
+            try
+            {
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                tenant = authToken.Tenant;
+                email = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
+
+                var digitalFieldSecurityQuery = new DigitalFieldSecurityQueryService(tenant);
+                var defaultTextCode = digitalFieldSecurityQuery.GetDigitalFieldSecurityQuery(0, objectTableId, profileId);
+                var defaultCodesObject = JsonConvert.DeserializeObject<List<DigitalFeildSecurityObject>>(defaultTextCode.DefaultSettings);
+                var customCodesObject = new List<DigitalFeildSecurityObject>();
+
+                if (tenant != 0)
+                {
+                    var customTextCodes = digitalFieldSecurityQuery.GetDigitalFieldSecurityQuery(tenant, objectTableId, profileId);
+
+                    if (customTextCodes != null)
+                    {
+                        customCodesObject = JsonConvert.DeserializeObject<List<DigitalFeildSecurityObject>>(customTextCodes.DefaultSettings);
+
+                        foreach (var item in customCodesObject)
+                        {
+                            var temp = defaultCodesObject.FirstOrDefault(a => a.Field.Equals(item.Field));
+
+                            if (temp != null)
+                            {
+                                temp.HasPersmission = true;
+                            }
+                        }
+                    }
+                }
+
+                if (!customCodesObject.Any())
+                {
+                    defaultCodesObject.ForEach(a => a.HasPersmission = true);
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, defaultCodesObject);
+            }
+            catch (AutenticationException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        [HttpPost]
+        [Route("DigitalTextCode/UpdateFeildPermission")]
+        public HttpResponseMessage UpdateFeildPermission(DigitalFeildSecurityObjectModel digitalFeildSecurityObjectModel)
+        {
+            int tenant = 0;
+            string email = "";
+            try
+            {
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                tenant = authToken.Tenant;
+                email = authToken.Email;
+                digitalFeildSecurityObjectModel.Tenant = tenant;
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, digitalFeildSecurityObjectModel.CardId);
+                var digitalFieldSecurityQuery = new DigitalFieldSecurityQueryService(tenant);
+                var customDigitalFieldSecurity = digitalFieldSecurityQuery.GetDigitalFieldSecurityQuery(digitalFeildSecurityObjectModel.Tenant, digitalFeildSecurityObjectModel.ObjectTableId, digitalFeildSecurityObjectModel.ProfileId);
+
+                if (customDigitalFieldSecurity != null)
+                {
+                    var existingDigitalFieldSecurityMappedObject = JsonConvert.DeserializeObject<List<DigitalFeildSecurityUpdateModel>>(customDigitalFieldSecurity.DefaultSettings);
+
+                    var diff = existingDigitalFieldSecurityMappedObject.Except(digitalFeildSecurityObjectModel.DefaultSettings).ToList();
+
+                    foreach (var item in diff)
+                    {
+                        existingDigitalFieldSecurityMappedObject.Remove(item);
+                    }
+
+                    foreach (var item in digitalFeildSecurityObjectModel.DefaultSettings)
+                    {
+                        var existingKey = existingDigitalFieldSecurityMappedObject.FirstOrDefault(a => a.Field.Equals(item.Field));
+
+                        if (existingKey != null)
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            existingDigitalFieldSecurityMappedObject.Add(item);
+                        }
+                    }
+
+                    customDigitalFieldSecurity.DefaultSettings = JsonConvert.SerializeObject(existingDigitalFieldSecurityMappedObject);
+                    customDigitalFieldSecurity.UpdateDate = DateTime.UtcNow;
+                }
+                else
+                {
+                    customDigitalFieldSecurity = new DigitalFieldSecurityList
+                    {
+                        ObjectTableId = digitalFeildSecurityObjectModel.ObjectTableId,
+                        Tenant = digitalFeildSecurityObjectModel.Tenant,
+                        DefaultSettings = JsonConvert.SerializeObject(digitalFeildSecurityObjectModel.DefaultSettings),
+                        CreateDate = DateTime.UtcNow,
+                        UpdateDate = DateTime.UtcNow,
+                        ProfileId = digitalFeildSecurityObjectModel.ProfileId
+                    };
+                }
+
+                digitalFieldSecurityQuery.UpdateDigitalFieldSecurity(customDigitalFieldSecurity);
+
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (AutenticationException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         [HttpGet]
         [Route("DigitalTextCode/GetTextCodesByFilters")]
         public HttpResponseMessage GetTextCodesByFilters(string cardId, string objectTableId)
@@ -93,19 +244,26 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 if (customTextCodes != null)
                 {
-                    var customCodesMappedObject = JsonConvert.DeserializeObject<List<DigitalTextCodeObject>>(customTextCodes.Labels);
+                    var customCodesMappedObject = JsonConvert.DeserializeObject<List<DigitalTextCodeUpdateObject>>(customTextCodes.Labels);
 
                     foreach (var item in digitalTextCodeUpdateModel.Lables)
                     {
                         var existingKey = customCodesMappedObject.FirstOrDefault(a => a.Code.Equals(item.Code));
 
-                        if (existingKey != null)
+                        if (string.IsNullOrWhiteSpace(item.DisplayText))
                         {
-                            existingKey.DisplayText = item.DisplayText;
+                            customCodesMappedObject.Remove(item);
                         }
                         else
                         {
-                            customCodesMappedObject.Add(item);
+                            if (existingKey != null)
+                            {
+                                existingKey.DisplayText = item.DisplayText;
+                            }
+                            else
+                            {
+                                customCodesMappedObject.Add(item);
+                            }
                         }
                     }
 
@@ -138,7 +296,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
 
         [HttpGet]
         [Route("DigitalTextCode/GetTranslationCodes")]
@@ -186,7 +343,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             }
         }
 
-
         [HttpGet]
         [Route("DigitalTextCode/GetDigitalTextCodesObjetTables")]
         public HttpResponseMessage GetDigitalTextCodesObjetTables()
@@ -209,5 +365,26 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             }
         }
 
+        [HttpGet]
+        [Route("DigitalTextCode/GetDigitalProfilesObjetTables")]
+        public HttpResponseMessage GetDigitalProfilesObjetTables()
+        {
+            string email = "";
+            try
+            {
+                var digitalFieldSecurityQuery = new DigitalFieldSecurityQueryService(0);
+                var objectTables = digitalFieldSecurityQuery.GetDigitalProfilesObjetTables(0);
+                return Request.CreateResponse(HttpStatusCode.OK, objectTables);
+            }
+            catch (AutenticationException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {0}", "", null);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }

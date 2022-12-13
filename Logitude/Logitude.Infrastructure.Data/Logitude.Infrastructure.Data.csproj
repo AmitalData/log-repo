@@ -88,6 +88,8 @@
     <Compile Include="EntityKeys\BIReportsTypeKeys.cs" />
     <Compile Include="EntityKeys\BusinessProcessQueueKeys.cs" />
     <Compile Include="EntityKeys\BusinessRoleKeys.cs" />
+    <Compile Include="EntityKeys\DigitalFieldSecurityKeys.cs" />
+    <Compile Include="EntityKeys\DigitalProfileKeys.cs" />
     <Compile Include="EntityKeys\DigitalTextCodeKeys.cs" />
     <Compile Include="EntityKeys\FeatureToggleKeys.cs" />
     <Compile Include="EntityKeys\LastRunDetailKeys.cs" />
@@ -107,6 +109,8 @@
     <Compile Include="EntityListQueryServices\BIReportsTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\BusinessProcessQueueListQueryService.cs" />
     <Compile Include="EntityListQueryServices\BusinessRoleListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\DigitalFieldSecurityListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\DigitalProfileListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DigitalTextCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\FeatureToggleListQueryService.cs" />
     <Compile Include="EntityListQueryServices\Generated\AuditLogListQueryService.Generated.cs" />
@@ -119,6 +123,8 @@
     <Compile Include="EntityListQueryServices\Generated\BIReportsTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BusinessProcessQueueListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BusinessRoleListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\DigitalFieldSecurityListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\DigitalProfileListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DigitalTextCodeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\FeatureToggleListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\LastRunDetailListQueryService.Generated.cs" />
@@ -145,6 +151,8 @@
     <Compile Include="EntityLists\Generated\BIReportsTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\BusinessProcessQueueList.Generated.cs" />
     <Compile Include="EntityLists\Generated\BusinessRoleList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\DigitalFieldSecurityList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\DigitalProfileList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DigitalTextCodeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\FeatureToggleList.Generated.cs" />
     <Compile Include="EntityLists\Generated\LastRunDetailList.Generated.cs" />
@@ -155,6 +163,8 @@
     <Compile Include="EntityLists\Generated\TeamMemberBusinessRoleList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ToggleList.Generated.cs" />
     <Compile Include="EntityMapping\AuditLogMap.cs" />
+    <Compile Include="EntityMapping\DigitalFieldSecurityMap.cs" />
+    <Compile Include="EntityMapping\DigitalProfileMap.cs" />
     <Compile Include="EntityMapping\DigitalTextCodeMap.cs" />
     <Compile Include="EntityMapping\IndexerWaterMarkMap.cs" />
     <Compile Include="EntityMapping\BatchTaskExecutionMap.cs" />
@@ -184,6 +194,8 @@
     <Compile Include="EntityPOCOs\BIReportsType.cs" />
     <Compile Include="EntityPOCOs\BusinessProcessQueue.cs" />
     <Compile Include="EntityPOCOs\BusinessRole.cs" />
+    <Compile Include="EntityPOCOs\DigitalFieldSecurity.cs" />
+    <Compile Include="EntityPOCOs\DigitalProfile.cs" />
     <Compile Include="EntityPOCOs\DigitalTextCode.cs" />
     <Compile Include="EntityPOCOs\FeatureToggle.cs" />
     <Compile Include="EntityPOCOs\IndexerWaterMark.cs" />
@@ -209,8 +221,9 @@
     <Compile Include="Repsitories\BIReportsExecutionLogRepository.cs" />
     <Compile Include="Repsitories\BIReportsTypeRepository.cs" />
     <Compile Include="Repsitories\BusinessProcessQueueRepository.cs" />
+    <Compile Include="Repsitories\DigitalFieldSecurityRepository.cs" />
+    <Compile Include="Repsitories\DigitalProfileRepository.cs" />
     <Compile Include="Repsitories\DigitalTextCodeRepository.cs" />
-    <Compile Include="Repsitories\ElasticIndexerWaterMarkRepository.cs" />
     <Compile Include="Repsitories\BusinessRoleRepository.cs" />
     <Compile Include="Repsitories\FeatureToggleRepository.cs" />
     <Compile Include="Repsitories\Generated\AuditLogRepository.Generated.cs" />
@@ -223,6 +236,8 @@
     <Compile Include="Repsitories\Generated\BIReportsTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\BusinessProcessQueueRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\BusinessRoleRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\DigitalFieldSecurityRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\DigitalProfileRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DigitalTextCodeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\FeatureToggleRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\LastRunDetailRepository.Generated.cs" />

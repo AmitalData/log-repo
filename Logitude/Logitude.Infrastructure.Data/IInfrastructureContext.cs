@@ -27,7 +27,8 @@ namespace Logitude.Infrastructure.Data
 		 IDbSet<BIReportsType> BIReportsTypes { get; }
 		 IDbSet<BusinessProcessQueue> BusinessProcessQueues { get; }
 		 IDbSet<BusinessRole> BusinessRoles { get; }
-		 IDbSet<IndexerWaterMark> IndexerWaterMarks { get; }
+		 IDbSet<DigitalFieldSecurity> DigitalFieldSecurities { get; }
+		 IDbSet<DigitalProfile> DigitalProfiles { get; }
 		 IDbSet<DigitalTextCode> DigitalTextCodes { get; }
 		 IDbSet<FeatureToggle> FeatureToggles { get; }
 		 IDbSet<LastRunDetail> LastRunDetails { get; }
@@ -43,4 +44,4 @@ namespace Logitude.Infrastructure.Data
          int SaveChanges();
 
     }
-}
+}

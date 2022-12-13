@@ -49,9 +49,9 @@
                         <div class="MediaFill">
                             <logitude-edit-grid [UseVirtuallization]="true" GridWidth="100%" GridHeight="100%" [ItemSource]="LabelsItemsSource">
                                 <!-- Code -->
-                                <log-column [width]="'215'" [header]="'Code'" [Alignment]="'left'">
+                                <log-column  [width]="'215'" [header]="'Code'" [Alignment]="'left'">
                                     <ng-template let-item>
-                                        <log-cell-template #logcelltemplate [Alignment]="'left'">
+                                        <log-cell-template #logcelltemplate [Alignment]="'left'" [IsEnabled]="false">
                                             <div style="width: 100%; text-align: left;" class="TextTrimming">
                                                 {{item.Code}}
                                             </div>
@@ -62,7 +62,7 @@
                                 <!-- Default Text -->
                                 <log-column [width]="'250'" [header]="'Default Text'" [Alignment]="'left'">
                                     <ng-template let-item>
-                                        <log-cell-template #logcelltemplate [Alignment]="'left'">
+                                        <log-cell-template #logcelltemplate [Alignment]="'left'" [IsEnabled]="false">
                                             <div style="width: 100%; text-align: left;" class="TextTrimming">
                                                 <label *ngIf="!SearchText">{{item.DisplayText}}</label>
                                             </div>
@@ -77,7 +77,7 @@
                                             <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;" class="TextTrimming">
                                                 <table>
                                                     <tr>
-                                                        <td>{{item.DisplayLable}}</td>
+                                                        <td>{{item.DisplayLable}}</td> 
                                                     </tr>
                                                 </table>
                                             </div>

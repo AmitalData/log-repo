@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Simplog.Server.Infrastructure.DataContracts.Models
 {
-    public class DigitalTextCodeUpdateModel
+    public class DigitalTextCodeResponseModel
     {
         public string ObjectTableId { get; set; }
         public string CardId { get; set; }

@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
 import { DigitalPortalCustomizationMainComponent } from './DigitalPortalCustomizationMainComponent';
 import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
 import { DigitalTextService, DigitalTextCodeUpdateModel, DigitalTextCodeObject } from '../../../Infrastructure/Services/WebServices/DigitalTextService'
-declare var window: any;
 
 @Component({
     templateUrl: './DigitalPortalCustomizationChageLabelsComponent.html',
@@ -20,7 +18,7 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
     public ModifiedLables: DigitalTextCodeUpdateModel;
     public IsModifiedLables = false;
 
-    constructor(private _entityListService: EntityListService) {
+    constructor() {
         super();
         this.digitalTextService = new DigitalTextService();
         this.LabelsItemsSource = new ObservableCollection([]);
@@ -91,12 +89,20 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
 
     Save() {
         if (this.IsModifiedLables) {
+            this.CurrentSession.StartBusyIndicatorLoading();
             this.ModifiedLables.ObjectTableId = this.SelectedObjectTableItem.Name;
             this.digitalTextService.UpdateDigitalTextCodes(this.ModifiedLables).subscribe((myResult) => {
-                this.customizationEditComponent.CurrentSession.CloseCurrentWindow();
+                //this.customizationEditComponent.CurrentSession.CloseCurrentWindow();
                 this.customizationEditComponent.IsDirty = false;
-
+                this.CurrentSession.StopBusyIndicator();
             });
+        }
+    }
+
+    Cancel() {
+        this.customizationEditComponent.IsDirty = false;
+        if (this.customizationEditComponent.NewSelectedMenu) {
+            this.customizationEditComponent.SelectedMenu = this.customizationEditComponent.NewSelectedMenu;
         }
     }
 }

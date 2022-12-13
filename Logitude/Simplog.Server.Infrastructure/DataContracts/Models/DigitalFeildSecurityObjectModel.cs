@@ -2,11 +2,12 @@
 
 namespace Simplog.Server.Infrastructure.DataContracts.Models
 {
-    public class DigitalTextCodeUpdateModel
+    public class DigitalFeildSecurityObjectModel
     {
         public string ObjectTableId { get; set; }
+        public string ProfileId { get; set; }
         public string CardId { get; set; }
         public int Tenant { get; set; }
-        public List<DigitalTextCodeUpdateObject> Lables { get; set; }
+        public List<DigitalFeildSecurityUpdateModel> DefaultSettings { get; set; }
     }
 }
