@@ -1084,6 +1084,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
 
                     break;
 
+                case "CARICOM":
                 case "PALI":
                     {
                         theT1 = System.DateTime.Now.Ticks;
