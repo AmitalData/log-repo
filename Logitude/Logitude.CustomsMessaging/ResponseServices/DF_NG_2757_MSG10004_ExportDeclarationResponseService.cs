@@ -559,6 +559,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if(_MyDeclarationPM.Direction=="E")
                     AmitalInsertToQueueService.insertToQueue(_MyDeclarationPM);
                 _MyDeclarationPM.IsExportClosed = true;
+                _MyDeclarationPM.IsClose = true;
             }
 
             if (customResponse.Response.Declaration.DMExtensions.ExpenseLoadingFactorDetails != null)

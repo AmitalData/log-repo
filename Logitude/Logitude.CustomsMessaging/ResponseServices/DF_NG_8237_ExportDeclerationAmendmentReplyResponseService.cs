@@ -314,7 +314,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                             else
                                             {
                                                 if (customResponse.Response != null && customResponse.Response.Status != null && customResponse.Response.Status[0].NameCode.Value == "36")
+                                                {
                                                     _MyDeclarationPM.IsExportClosed = true;
+                                                    _MyDeclarationPM.IsClose = true;
+                                                }
+                                                    
                                                 MyResponseData.IsExportCloseApprove = true;
                                             }
                                             break;

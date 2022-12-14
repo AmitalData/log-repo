@@ -209,7 +209,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         Consignments = GetConsignments(declaration, tenant, null, context),
                     };
                 declarationPM.DeclarationNumber = customResponse.Response.Declaration.ID.Value;             
-                declarationPM.IsExportClosed = customResponse.Response.Status[0].NameCode.Value=="36"?true:false;             
+                declarationPM.IsExportClosed = customResponse.Response.Status[0].NameCode.Value=="36"?true:false;
+                declarationPM.IsClose = customResponse.Response.Status[0].NameCode.Value=="36"?true:false;
+                
                 declarationPM.AgentRoleCode = "A";     
                 declarationPM.TotalTax = Math.Round(declaration.DMExtensions.CustomsValueComponent.TaxAssessedAmount.Value, 2);
                 // declarationPM.TaxationDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
