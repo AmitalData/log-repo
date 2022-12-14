@@ -7,11 +7,13 @@ using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -135,7 +137,7 @@ namespace Logitude.BL.DataContracts
                 return false;
             }
         }
- 
+
         public static void CreateShipmentQueue(string shipmentId, int tenant)
         {
             try
@@ -147,14 +149,15 @@ namespace Logitude.BL.DataContracts
                 var entityPM = ShipmentQuery.GetSinglePMWithoutComposition(shipmentId, tenant);
                 if (entityPM != null && tenantPM != null)
                 {
-                    if (!tenantPM.IsDocumentsArchive && !entityPM.IsCancelled && tenantPM.CustomerTenantShareCustomsFile)
+                    //Duplicated Logic Should Be Replaced --
+                    if (!tenantPM.IsDocumentsArchive && !entityPM.IsCancelled && IsImportShipmentsAllowedForLogBox(tenantPM, entityPM) && IsLogBoxQueueEnabled(entityPM, tenantPM.Id))
                     {
                         CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
                         CustomerTenantAccessInfo customerTenantAccessInfo = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, entityPM.CustomerId);
-                         
+
                         PrivateLabelShipmentService privateLabelShipmentService = new PrivateLabelShipmentService(tenantPM, entityPM, customerTenantAccessInfo);
 
-                        if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && privateLabelShipmentService.IsCustomsShipmentsAllowedForLogBox() &&  IsImportShipmentsAllowedForLogBox(tenantPM, entityPM))
+                        if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && customerTenantAccessInfo.CustomerTenant != 0 && privateLabelShipmentService.IsShipmentsAllowedForLogBox())
                         {
                             var ImporterTenant = customerTenantAccessInfo.CustomerTenant;
                             IQueueService queueservice = new DbQueueService();
@@ -181,7 +184,18 @@ namespace Logitude.BL.DataContracts
             }
         }
 
-      
+        //Duplicated Logic Should Be Replaced --
+        private static bool IsLogBoxQueueEnabled(ShipmentPM entityPM, int tenant)
+        {
+            if (string.IsNullOrEmpty(entityPM.CustomerShipmentNumber) && entityPM.CustomerTenantNumber != null) return true;
+
+            CustomerRepository customerRepository = new CustomerRepository(tenant);
+            Customer customer = customerRepository.GetSingleCustomer(entityPM.CustomerId, tenant, true);
+            if (customer != null && (customer.LogBoxActivated || customer.IsPrivateLabelCustomer)) return true;
+
+            return false;
+        }
+
         public static void UpdateCustomConnectToShipment(string shipmentId, int tenant)
         {
             string strConnString = GetConnection(tenant);
