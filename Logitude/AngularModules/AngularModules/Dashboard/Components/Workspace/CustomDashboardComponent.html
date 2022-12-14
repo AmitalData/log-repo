@@ -39,7 +39,7 @@
 
     <div class="DashboardTab">
         <div class="DashboardTabHead">
-            <ul>
+            <ul style="display: flex;">
                 <li *ngFor="let item of DashboardsTabs" [class.DashboardTabSelected]="item.Dashboard.Id == SelectedDashboard?.Id" (click)="TabSelectionChanged(item)">
                     <div class="DashboardInnerTab TextTrimming" [class.InnerTabSelected]="item.Dashboard.Id == SelectedDashboard?.Id">
                         {{item.Name}}

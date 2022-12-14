@@ -214,7 +214,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnDestroy
         if (dashboardTab) {
             if (dashboard.Id != this.SelectedDashboard.Id) this.SelectedDashboard = dashboard;
             return;
-      }
+        }
         this.selectedDashboardsFromLOV.push(dashboard);
         this.selectedDashboardsFromLOV.reverse();
         this.BuildTabs();
