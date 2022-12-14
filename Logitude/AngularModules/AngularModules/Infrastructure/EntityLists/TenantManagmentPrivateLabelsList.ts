@@ -33,5 +33,6 @@ export class TenantManagmentPrivateLabelsList {
 		QueryFiltersHighlightColor: string;
 		CreateShipmentsWithoutDocs: boolean;
 		CreateOShipmentsWithoutDocs: boolean;
-        FilingInboxDomain: string;
+		FilingInboxDomain: string;
+	    Distributor: string
 }
