@@ -15,7 +15,6 @@ import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryF
 import { DashboardList } from '../../../DashboardModule/EntityLists/DashboardList';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { DashboardPMService } from '../../../DashboardModule/Services/StandardPMs/DashboardPMService';
-import { DashboardTabComponent } from './DashboardTabComponent';
 
 @Component({
     templateUrl: 'CustomDashboardComponent.html',
@@ -25,8 +24,6 @@ import { DashboardTabComponent } from './DashboardTabComponent';
 })
 
 export class CustomDashboardComponent extends BaseComponent implements OnDestroy {
-    @ViewChild(DashboardTabComponent) child: DashboardTabComponent;
-
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
     public DataContext = this;
