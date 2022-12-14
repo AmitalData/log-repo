@@ -252,7 +252,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                         if (string.IsNullOrWhiteSpace(item.DisplayText))
                         {
-                            customCodesMappedObject.Remove(item);
+                            customCodesMappedObject.RemoveAll(a=>a.Code == item.Code);
                         }
                         else
                         {

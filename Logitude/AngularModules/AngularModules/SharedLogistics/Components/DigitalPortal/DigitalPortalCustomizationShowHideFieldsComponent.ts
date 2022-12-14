@@ -84,6 +84,7 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
     }
 
     BuildItemsSource() {
+        this.FieldsItemsSource = new ObservableCollection([]);
         var profilesList: ProfileFieldsItem[] = [];
         var objectTableId = this.SelectedObjectTableItem.Name;
         var profileId = this.SelectedProfileItem.Code;
@@ -125,6 +126,7 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
             this.digitalTextService.UpdateFeildPermission(this.ModifiedLables).subscribe((myResult) => {
                 //this.customizationEditComponent.CurrentSession.CloseCurrentWindow();
                 this.customizationEditComponent.IsDirty = false;
+                this.ModifiedLables = new DigitalFeildSecurityObjectModel();
                 this.CurrentSession.StopBusyIndicator();
                 if (this.customizationEditComponent.NewSelectedMenu) {
                     this.customizationEditComponent.SelectedMenu = this.customizationEditComponent.NewSelectedMenu;

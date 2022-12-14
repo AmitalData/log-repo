@@ -57,6 +57,7 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
     }
 
     BuildItemsSource(searchText: string = null) {
+        this.LabelsItemsSource = new ObservableCollection([]);
         var labelsList: CustomizationLabelItem[] = [];
         var objectTableId = this.SelectedObjectTableItem.Name;
         this.digitalTextService.GetTextCodesByFilters(null, objectTableId).subscribe((myResult) => {
@@ -94,6 +95,7 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
             this.digitalTextService.UpdateDigitalTextCodes(this.ModifiedLables).subscribe((myResult) => {
                 //this.customizationEditComponent.CurrentSession.CloseCurrentWindow();
                 this.customizationEditComponent.IsDirty = false;
+                this.ModifiedLables = new DigitalTextCodeUpdateModel();
                 this.CurrentSession.StopBusyIndicator();
                 if (this.customizationEditComponent.NewSelectedMenu) {
                     this.customizationEditComponent.SelectedMenu = this.customizationEditComponent.NewSelectedMenu;
@@ -138,8 +140,17 @@ export class CustomizationLabelItem extends BaseComponent {
     }
 
     public UpdateModifiedLables(newValue) {
+
+        if (this.father.ModifiedLables.Lables == null) this.father.ModifiedLables.Lables = [];
+
         this.father.IsModifiedLables = true;
         this.father.customizationEditComponent.IsDirty = true;
+        var label = this.father.ModifiedLables?.Lables?.filter(d => d.Code == this.Code)[0];
+        var index = this.father.ModifiedLables?.Lables?.indexOf(label);
+        if (index != null && index != -1) {
+            this.father.ModifiedLables.Lables.splice(index, 1);
+        }
+
         var newLabel = new DigitalTextCodeObject();
         newLabel.Code = this.Code;
         newLabel.DisplayText = newValue;
