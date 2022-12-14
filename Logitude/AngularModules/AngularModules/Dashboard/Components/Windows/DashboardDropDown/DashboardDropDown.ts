@@ -15,7 +15,7 @@ export class DashboardDropDownComponent implements OnInit {
     private itemsSource: any[];
     get ItemsSource() { return this.itemsSource; }
     @Input() set ItemsSource(value: any[]) {
-        if (this.itemsSource == value) return;
+        if (this.itemsSource == value || !value) return;
         this.itemsSource = value;
         this.DisplayItemsSource = JSON.parse(JSON.stringify(this.ItemsSource));
     }
@@ -32,10 +32,13 @@ export class DashboardDropDownComponent implements OnInit {
     set IsOpen(value: boolean) {
         if (value == this.isOpen) return;
         this.isOpen = value;
-        if (!value) {
-            this.SearchText = null;
-            this.onSearchChange(null);
+        if (value) {
+            if (!this.ItemsSource) return;
+            this.DisplayItemsSource = JSON.parse(JSON.stringify(this.ItemsSource));
+            return;
         }
+        this.SearchText = null;
+        this.onSearchChange(null);
     }
 
     constructor(private eRef: ElementRef) {

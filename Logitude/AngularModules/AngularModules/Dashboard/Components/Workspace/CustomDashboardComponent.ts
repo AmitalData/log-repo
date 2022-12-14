@@ -186,7 +186,6 @@ export class CustomDashboardComponent extends BaseComponent implements OnDestroy
         });
     }
 
-    public SelectedTabItem: DashboardTab;
     TabSelectionChanged(clickdTab: DashboardTab) {
         if (!clickdTab) return;
         this.ChangeDashboard(clickdTab.Dashboard, false);
@@ -251,10 +250,6 @@ export class CustomDashboardComponent extends BaseComponent implements OnDestroy
         });
     }
 
-    public RefereshTabAfterEdit(dashboard: DashboardPM) {
-        this.SelectedTabItem.Name = dashboard.Name;
-    }
-
     private isSelectedDashboardDeleted: boolean = false;
     public RefreshTabsAfterDelete(deletedDashboardId: string) {
         var deletedTab: DashboardTab = this.DashboardsTabs.find(d => d.Dashboard.Id == deletedDashboardId);
@@ -263,14 +258,26 @@ export class CustomDashboardComponent extends BaseComponent implements OnDestroy
             this.LoadDefaultDashboards(300);
         }
     }
+
+    public DashboardChanged(dashboard: DashboardPM) {
+        this.DashboardEntity = dashboard;
+        this.ItemsSource?.forEach(item => { this.UpdateDashboardListItem(item, dashboard) });
+        this.loadedDashboards?.forEach(item => { this.UpdateDashboardListItem(item, dashboard) });
+        this.selectedDashboardsFromLOV?.forEach(item => { this.UpdateDashboardListItem(item, dashboard) });
+        this.DashboardsTabs?.forEach(item => { this.UpdateDashboardListItem(item.Dashboard, dashboard) });
+    }
+    UpdateDashboardListItem(oldDashboard: DashboardList, newDashboard: DashboardPM) {
+        if (oldDashboard.Id != newDashboard.Id) return;
+        oldDashboard.Name = newDashboard.Name
+    }
 }
 
 class DashboardTab {
     public Dashboard: DashboardList;
-    public Name: string;
-
+    get Name(): string {
+        return this.Dashboard.Name;
+    }
     constructor(dashboard: DashboardList) {
         this.Dashboard = dashboard;
-        this.Name = dashboard.Name;
     }
 }

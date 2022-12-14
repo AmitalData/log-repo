@@ -24,8 +24,10 @@ export class DashboardTabComponent implements OnInit {
     @Input() DashboardId: string;
     @Input() OpenEditLayout: boolean = false;
     @Output() DashboardDeleted = new EventEmitter<string>();
+    @Output() DashboardChanged = new EventEmitter<DashboardPM>();
     @Output() TabHasChanges = new EventEmitter<boolean>();
     @Output() DashboardEntity = new EventEmitter<DashboardPM>();
+
 
     public SelectedDashboardName: string = null;
     public SelectedDashboard: DashboardPM;
@@ -178,7 +180,7 @@ export class DashboardTabComponent implements OnInit {
                     }
                     else {
                         this.SelectedDashboardName = this.SelectedDashboard.Name;
-                        this.DashboardEntity.emit(this.SelectedDashboard);
+                        this.DashboardChanged.emit(this.SelectedDashboard);
                     }
                 }
             });
