@@ -44,30 +44,20 @@
                                     </ng-template>
                                 </log-column>
 
-
                                 <!-- Has permission -->
-                                <log-column [width]="'200'" [header]="'Has Permission'" [Alignment]="'left'">
+                                <log-column [width]="'150'" [header]="'Has Permission'" [Editable]="true" [Alignment]="'left'">
                                     <ng-template let-item>
-                                        <log-cell-template #logcelltemplate [Alignment]="'left'">
-                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;" class="TextTrimming">
-                                                <div style="width:50px">
-                                                    <img  *ngIf="item.HasPersmission" style="width: 20px; height: 20px; text-align: left;" src="./Images/Icons/MiniGreenTick.png" />
-                                                </div>
-                                            </div>
-                                            <div *ngIf="logcelltemplate.IsEditMode">
-                                                <table>
-                                                    <tr>
-                                                        <td style="width: 20px;">
-                                                            <!--<input type="checkbox" [(ngModel)]="item.HasPersmission" (click)="item.HasPersmissionClicked(item)" (blur)="OnLostFocus()" />-->
-                                                            <LogCheckBox [ObjectFieldName]="'HasPersmission'" [Checked]="item.HasPersmission" [NoObjectField]="true" [DataContext]="item.DataContext" [HideColumns]="true"></LogCheckBox>
-                                                        </td>
-                                                    </tr>
-                                                </table>
+                                        <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                            <div style="padding-top: 1px; width: 18px; height:20px;float:left;vertical-align:central">
+                                                <LogCheckBox [Checked]="item.HasPersmission"[NoObjectField]="true"
+                                                             [ObjectFieldName]="'HasPersmission'" [DataContext]="item.DataContext" [HideColumns]="true"></LogCheckBox>
                                             </div>
                                         </log-cell-template>
                                     </ng-template>
+
                                 </log-column>
 
+                            
                             </logitude-edit-grid>
                         </div>
 
