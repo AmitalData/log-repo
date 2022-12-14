@@ -46,6 +46,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     public isAdvancedSettingForKPI: boolean = false;
     public isAdvancedSettingForChart: boolean = false;
     public IsBetweenDatesVisible: boolean = false;
+    
 
     constructor() {
         super();
@@ -252,8 +253,20 @@ export class AddEditWidgetComponent extends BaseComponent {
         }
 
         this.Increase = this.Increase ? this.Increase : "Postive";
-        //this.selectedIncDecItem = this.IncreaseDecreases.filter(d => d.code == this.Increase ? this.Increase : "positive")[0];
         
+    }
+    SetUIForOperator() {
+        this.IsBetweenDatesVisible = false;
+
+        if (this.ComparisonOperator == "Between") {
+            this.IsBetweenDatesVisible = true;
+        }
+    }
+
+    private SetMeasureFieldEnable(){
+        if(!this.SecondaryGroupById){
+            this.IsAddNewMeasureVisible = false;
+        }
     }
 
     private isAdvancedSettingVisible: boolean = false;
@@ -262,6 +275,14 @@ export class AddEditWidgetComponent extends BaseComponent {
         if (this.isAdvancedSettingVisible != value) {
             this.isAdvancedSettingVisible = value;
             this.SetAdvanceSettingItems();
+        }
+    }
+    private isSecondaryGroupChoosen: boolean = false;
+    get IsSecondaryGroupChoosen() { return this.IsSecondaryGroupChoosen; }
+    set IsSecondaryGroupChoosen(value: boolean) {
+        if (this.IsSecondaryGroupChoosen != value) {
+            this.IsSecondaryGroupChoosen = value;
+            
         }
     }
 
@@ -295,6 +316,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         if (!this.isGroupByVisible) {
             this.GroupById = null;
             this.DateGroupCode = null;
+            this.SecondaryGroupById = null;
         }
         if (!this.isSortByVisible) {
             this.SortBy = null;
@@ -310,6 +332,20 @@ export class AddEditWidgetComponent extends BaseComponent {
     set GroupById(value: string) {
         if (this.EntityPM.GroupById != value) {
             this.EntityPM.GroupById = value;
+        }
+    }
+
+    get SecondaryGroupById() { return this.EntityPM.SecondaryGroupById; }
+    set SecondaryGroupById(value: string) {
+        if (this.EntityPM.SecondaryGroupById != value) {
+            this.EntityPM.SecondaryGroupById = value;
+        }
+    }
+
+    get SecondaryDateGroupCode() { return this.EntityPM.SecondaryDateGroupCode; }
+    set SecondaryDateGroupCode(value: string) {
+        if (this.EntityPM.SecondaryDateGroupCode != value) {
+            this.EntityPM.SecondaryDateGroupCode = value;
         }
     }
 
@@ -383,13 +419,7 @@ export class AddEditWidgetComponent extends BaseComponent {
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget Comparison Period Value Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
         }
     }
-    SetUIForOperator() {
-        this.IsBetweenDatesVisible = false;
-
-        if (this.ComparisonOperator == "Between") {
-            this.IsBetweenDatesVisible = true;
-        }
-    }
+   
     get ComparisonPeriod() { return this.EntityPM.ComparisonPeriod; }
     set ComparisonPeriod(value: number) {
         if (this.EntityPM.ComparisonPeriod != value) {
@@ -453,6 +483,25 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.SetDefaultSortByField();
         this.FirstTime = false;
         MixPanelLocator.PostDashboardAction({ ActionName: "Widget Group Change", Message: "Changed To " + this.selectedGroupField?.DisplayName, DashboardId: this.DashboardPM?.Id });
+
+    }
+
+    public selectedSecondaryGroupField: AnalyticsFactsFieldsMetaDataList = null;
+    get SelectedSecondaryGroupField() { return this.selectedSecondaryGroupField; }
+    set SelectedSecondaryGroupField(value: AnalyticsFactsFieldsMetaDataList) {
+        if (this.selectedSecondaryGroupField?.Id == value?.Id) {
+            this.FirstTime = false;
+            return;
+        }
+        this.selectedSecondaryGroupField = value;
+        if (this.FirstTime) {
+            this.FirstTime = false;
+            return;
+        }
+        this.EntityPM.SecondaryDateGroupCode = (value?.DataTypeCode == 'DateTime' || value?.DataTypeCode == 'Date') ? this.DateGroupCodes[0] : null;
+        this.SetDefaultSortByField();
+        this.FirstTime = false;
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Secondary Group Change", Message: "Changed To " + this.selectedSecondaryGroupField?.DisplayName, DashboardId: this.DashboardPM?.Id });
 
     }
 

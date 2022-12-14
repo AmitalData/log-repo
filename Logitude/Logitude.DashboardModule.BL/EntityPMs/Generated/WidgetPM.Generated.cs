@@ -584,6 +584,52 @@ namespace Logitude.DashboardModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private string secondaryGroupById ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SecondaryGroupById  
+	   {
+	    
+	     get
+		{
+		   return secondaryGroupById;
+		 }
+		 set
+		 {
+		   if(secondaryGroupById != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SecondaryGroupById",OldValue=secondaryGroupById,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   secondaryGroupById=value;
+		   }
+			
+		 }
+	   }
+	  private string secondaryDateGroupCode ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SecondaryDateGroupCode  
+	   {
+	    
+	     get
+		{
+		   return secondaryDateGroupCode;
+		 }
+		 set
+		 {
+		   if(secondaryDateGroupCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SecondaryDateGroupCode",OldValue=secondaryDateGroupCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   secondaryDateGroupCode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
