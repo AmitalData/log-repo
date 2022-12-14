@@ -60,6 +60,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
    
     SetUIProperty() {
 
+        this.UIProperties.SetWarning("FinalCargoTypeCode", this.ObjectTableName, true);
         this.UIProperties.SetWarning("LoadingDateTime", this.ObjectTableName, true);
         this.UIProperties.SetEnabled("FinalShipCode", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("Smp", this.ObjectTableName, false);
@@ -289,7 +290,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     get FinalCargoTypeCode() { 
 
       return this.EntityPM ? this.EntityPM.FinalCargoTypeCode : null; }
-    set FinalCargoTypeCode(value: string) {        
+    set FinalCargoTypeCode(value: string) {   
         
         if (this.EntityPM.FinalCargoTypeCode != value) {
             this.EntityPM.FinalCargoTypeCode = value;
@@ -307,8 +308,8 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         return this.EntityPM ? this.EntityPM.FinalManifestNumber : null;
     }
 
-    set FinalManifestNumber(value: string) {        
-
+    set FinalManifestNumber(value: string) {
+        
          if (this.EntityPM.FinalManifestNumber != value) {
             this.EntityPM.FinalManifestNumber = value;
             this.EntityPM.IsDirty = true;
@@ -357,7 +358,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     }
     SendButtonClicked(event: CustomSendOptionsArgs) {
         if (AppTool.IsNullOrEmpty(this.EntityPM.LoadingDateTime)) {
-            var msg = " שדה תםריך טעינה שדה חובה";
+            var msg = " שדה תאריך טעינה שדה חובה";
             this.ValidationErrors.push(msg);
             this.FillValidationErrors("Errors");
         }
