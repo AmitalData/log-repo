@@ -357,11 +357,21 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         this.entityArgs.SkipCtor = false;
     }
     SendButtonClicked(event: CustomSendOptionsArgs) {
-        if (AppTool.IsNullOrEmpty(this.EntityPM.LoadingDateTime)) {
+        if (AppTool.IsNullOrEmpty(this.EntityPM.LoadingDateTime) || (AppTool.IsNullOrEmpty(this.EntityPM.FinalCargoTypeCode)))
+        { 
+            if(AppTool.IsNullOrEmpty(this.EntityPM.LoadingDateTime)){
             var msg = " שדה תאריך טעינה שדה חובה";
             this.ValidationErrors.push(msg);
+            }
+
+            if(AppTool.IsNullOrEmpty(this.EntityPM.FinalCargoTypeCode)){
+                var msg = " שדה סוג מזהה מטען שדה חובה";
+                this.ValidationErrors.push(msg);
+                
+            }
             this.FillValidationErrors("Errors");
         }
+
         else {
             if (this.EntityPM.IsDirty) {
                 if (this.IsNew) {
