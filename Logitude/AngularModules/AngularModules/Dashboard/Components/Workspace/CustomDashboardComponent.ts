@@ -25,8 +25,6 @@ import { DashboardTabComponent } from './DashboardTabComponent';
 })
 
 export class CustomDashboardComponent extends BaseComponent implements OnDestroy {
-    @Output() SaveDashboardCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
-    @Output() EditLayoutChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
     @ViewChild(DashboardTabComponent) child: DashboardTabComponent;
 
     private _entityResourceService: EntityResourceService = new EntityResourceService();
@@ -244,7 +242,6 @@ export class CustomDashboardComponent extends BaseComponent implements OnDestroy
         dashboardPMService.update(this.DashboardEntity).subscribe((myResponse: ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();
             if (!myResponse.HasError) return;
-            this.SaveDashboardCompleted.emit(true);
             this.HasChanges = false;
             this.SelectedDashboard = clickedDashboard;
         });
