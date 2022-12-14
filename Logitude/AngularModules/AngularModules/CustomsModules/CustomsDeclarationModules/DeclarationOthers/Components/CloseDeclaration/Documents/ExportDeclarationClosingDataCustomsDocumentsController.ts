@@ -44,7 +44,23 @@ export class ExportDeclarationClosingDataCustomsDocumentsController implements I
             customsDocumentsTicketViewModels.forEach((ticket) => {
                 this.originalCustomsDocumentTicketViewModel.push(ticket);
             });
-            if (this.declarationPM.Direction == 'E' && this.declarationPM.TransportModeId == 'O') {
+
+            var _419exists = this.originalCustomsDocumentTicketViewModel.filter(d => d.DocumentTypeCode == '419')[0];
+            if (!_419exists) {
+                var entityParams: RelatedEntityParams = new RelatedEntityParams()
+                entityParams.ParentEntityCode = 'ExportDeclarationClosingData';
+                entityParams.ParentEntityId = this.declarationPM.Id;
+                var otherModelTicket: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "419");
+                var metaData: { [Code: string]: any; } = {};
+                var otherModelTicketViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(otherModelTicket, null, true,
+                    this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this);
+                otherModelTicketViewModel.SetCustomDocumentMetaData(metaData);
+                this.generatedCustomsDocumentTicketViewModel.push(otherModelTicketViewModel);
+                this.originalCustomsDocumentTicketViewModel.push(otherModelTicketViewModel);
+            }
+
+
+            /*if (this.declarationPM.Direction == 'E' && this.declarationPM.TransportModeId == 'O') {
                 var _707exists = this.originalCustomsDocumentTicketViewModel.filter(d => d.DocumentTypeCode == '707')[0];
                 if (!_707exists) {
                     var entityParams: RelatedEntityParams = new RelatedEntityParams()
@@ -111,7 +127,7 @@ export class ExportDeclarationClosingDataCustomsDocumentsController implements I
                         entityParams.ParentEntityId = this.declarationPM.Id;
                         var otherModelTicket: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "705");
                         var metaData: { [Code: string]: any; } = {};
-                        var otherModelTicketViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(otherModelTicket, null, true,
+                        /*var otherModelTicketViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(otherModelTicket, null, true,
                             this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this);
                         otherModelTicketViewModel.SetCustomDocumentMetaData(metaData);
                         this.generatedCustomsDocumentTicketViewModel.push(otherModelTicketViewModel);
@@ -132,7 +148,7 @@ export class ExportDeclarationClosingDataCustomsDocumentsController implements I
                         this.originalCustomsDocumentTicketViewModel.push(otherModelTicketViewModel);
                     }
                 }
-            }
+            }*/
 
 
             return of(this.generatedCustomsDocumentTicketViewModel);

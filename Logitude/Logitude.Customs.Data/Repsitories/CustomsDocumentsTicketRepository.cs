@@ -110,10 +110,10 @@ namespace Logitude.Customs.Data.Repsitories
             }
             else
             {
-
-                iqurable = from a in context.CustomsDocumentPointers
-                           where a.ParentEntityId == entityId && a.Tenant == tenant && a.ParentEntityCode == parentEntityCode
-                           select a;
+                
+                    iqurable = from a in context.CustomsDocumentPointers
+                               where a.ParentEntityId == entityId && a.Tenant == tenant && a.ParentEntityCode == parentEntityCode
+                               select a;
             }
 
             var sw = Stopwatch.StartNew();
@@ -170,6 +170,30 @@ FROM ( SELECT DISTINCT
             {
                 ticketIds.Add(s.CustomsDocumentsTicketId);
             }
+
+            if (parentEntityCode == "ExportDeclarationClosingData")
+            {
+                var iqurable2 = from a in context.CustomsDocumentPointers
+                                where a.ParentEntityId == entityId && a.Tenant == tenant && a.ParentEntityCode == "Declaration"
+                                select a;
+
+                var qGroupby2 = (from a in iqurable2
+                                 group a by a.CustomsDocumentsTicketId into gr
+                                 select new { CustomsDocumentsTicketId = gr.Key });
+                var customsDocumentPointers2 = qGroupby2.ToList();
+                List<string> ticketIds2 = new List<string>();
+
+                foreach (var s in customsDocumentPointers2)
+                {
+                    ticketIds2.Add(s.CustomsDocumentsTicketId);
+                }
+
+                List<CustomsDocumentsTicket> tickets2 = (from a in context.CustomsDocumentsTickets
+                                                        where ticketIds.Contains(a.Id) || (ticketIds2.Contains(a.Id) && a.DocumentTypeCode == "419")
+                                                        select a).ToList();
+                return tickets2;
+            }
+
             List<CustomsDocumentsTicket> tickets = (from a in context.CustomsDocumentsTickets
                                                     where ticketIds.Contains(a.Id)
                                                     select a).ToList();
