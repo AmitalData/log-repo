@@ -32,6 +32,7 @@ namespace WebFreight.Web.DataProviders
         public string HouseNumber { get; set; }
         public string DescriptionOfGoods { get; set; }
         public string DestinationPortCountryName { get; set; }
+        public string CarrierType { get; set; }
         public List<ShipmentPackageProvider> ShipmentPackages { get; set; }
     }
 
