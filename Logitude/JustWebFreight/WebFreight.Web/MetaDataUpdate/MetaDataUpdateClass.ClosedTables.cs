@@ -44,23 +44,32 @@ namespace WebFreight.Web.MetaDataUpdate
         public void UpgradeClosedTablesForTenantZero()
         {
             isUpdate = true;
-            List<GlobalDB> dbList = null;
-            using (TransactionScope scop = TransactionFactory.GetNewTransaction(new TimeSpan(0, 5, 0)))//new TransactionScope(TransactionScopeOption.RequiresNew, new TimeSpan(0, 5, 0)))
-            {
-                GlobalDBRepository globalDbRep = new GlobalDBRepository();
-                dbList = globalDbRep.GetGlobalDBs().ToList();
-                scop.Complete();
-            }
 
-            foreach (GlobalDB db in dbList)
+            string enviroment = ConfigurationManager.AppSettings.Get("ENVIROMENT");
+
+            if (enviroment == "azure app service")
+                LoadBaseTablesForConnection(ConfigurationManager.AppSettings.Get("SystemMainStr"));
+
+            else
             {
-                if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+                List<GlobalDB> dbList = null;
+                using (TransactionScope scop = TransactionFactory.GetNewTransaction(new TimeSpan(0, 5, 0)))//new TransactionScope(TransactionScopeOption.RequiresNew, new TimeSpan(0, 5, 0)))
                 {
-                    LoadBaseTablesForConnection_oracle(db.DBConnection);
+                    GlobalDBRepository globalDbRep = new GlobalDBRepository();
+                    dbList = globalDbRep.GetGlobalDBs().ToList();
+                    scop.Complete();
                 }
-                else
+
+                foreach (GlobalDB db in dbList)
                 {
-                    LoadBaseTablesForConnection(db.DBConnection);
+                    if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+                    {
+                        LoadBaseTablesForConnection_oracle(db.DBConnection);
+                    }
+                    else
+                    {
+                        LoadBaseTablesForConnection(db.DBConnection);
+                    }
                 }
             }
         }
