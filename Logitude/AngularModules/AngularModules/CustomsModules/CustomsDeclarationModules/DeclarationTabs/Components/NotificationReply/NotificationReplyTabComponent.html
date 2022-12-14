@@ -62,9 +62,10 @@
                     </tr>
 
                     <tr class="FormFieldRow" style="text-align:center; " *ngIf="!MessageBorderVisibility">
-                        <td>
-                            <table>
-                                <tr class="FormFieldRow" *ngFor="let notificationsGroupItem of NotificationsGroupsList">
+                        <td >
+                            <table *ngFor="let notificationsGroupItem of NotificationsGroupsList">
+                                <tr class="FormFieldRow"  *ngIf="notificationsGroupItem.entityPM.NotificationDefinitionCode?.includes('5101')">
+
                                     <td>
                                         <table>
                                             <!-- Notifications Groups List (By CreateDate) -->

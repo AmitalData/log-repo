@@ -858,6 +858,7 @@ namespace Logitude.Customs.Def.ClosedTable
             poco.LocalName = this.LocalName;
             poco.AssigneeNotificationTypeCode = this.AssigneeNotificationTypeCode;
             poco.SearchFields = GetSearchFields(this);
+            poco.ActiveInExport = this.ActiveInExport;
 
         }
 
