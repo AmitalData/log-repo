@@ -1788,6 +1788,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                 itemPM.BuyerCountryName = this.EntityPM.BuyerCountryName;
                 itemPM.BuyerRoleCode = this.EntityPM.BuyerRoleCode; 
                 itemPM.BuyerRoleName = this.EntityPM.BuyerRoleName;
+                itemPM.DutyRegimeProtocolCode = this.EntityPM.DutyRegimeProtocolCode; 
             }
         itemPM.DeclarationId = this.declarationPM.Id;
         itemPM.IsValueForCustomsOnly = this.EntityPM.IsValueForCustomsOnly;//this.declarationPM.IsValueForCustomsOnly;
