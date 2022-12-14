@@ -6,8 +6,6 @@ using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
-using System.Configuration;
-
 namespace Simplog.Global.Data.GlobalModel.Repositories
 {
     public class GlobalDBRepository:IRepository<GlobalDB>
@@ -50,13 +48,9 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
 
         public GlobalDB GetSingleGlobalDB(string id)
         {
-            string enviroment = ConfigurationManager.AppSettings.Get("ENVIROMENT");
-            if (enviroment == "azure app service")
-                return GetGlobalDbFromEnviroment();
-
             return (from a in context.GlobalDBs
-                where a.Id == id
-                select a).FirstOrDefault();
+                    where a.Id == id
+                    select a).FirstOrDefault();
         }
 
         public static GlobalDB GetGlobalDBById(string id)
@@ -64,23 +58,20 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
 
             string name = "TenantDB" + id;
             GlobalDB db = null;
-            string enviroment = ConfigurationManager.AppSettings.Get("ENVIROMENT");
+
+
 
             if (HttpContext.Current != null)
             {
                 if (CacheManager.CacheWrapper.Get(name) == null)
                 {
+                    IGlobalContext context = GlobalContext.GetContext();
+                    
 
-                    if (enviroment == "azure app service")
-                        db = GetGlobalDbFromEnviroment();
+                    db = (from a in context.GlobalDBs
+                          where a.Id == id
+                          select a).FirstOrDefault();
 
-                    else
-                    {
-                        IGlobalContext context = GlobalContext.GetContext();
-                        db = (from a in context.GlobalDBs
-                              where a.Id == id
-                              select a).FirstOrDefault();
-                    }
                     CacheManager.CacheWrapper.Insert(name, db, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                     //}
                 }
@@ -92,16 +83,13 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
 
             else
             {
-                if (enviroment == "azure app service")
-                    db = GetGlobalDbFromEnviroment();
+                IGlobalContext context = GlobalContext.GetContext();
 
-                else
-                {
-                    IGlobalContext context = GlobalContext.GetContext();
-                    db = (from a in context.GlobalDBs
-                          where a.Id == id
-                          select a).FirstOrDefault();
-                }
+               
+
+                db = (from a in context.GlobalDBs
+                      where a.Id == id
+                      select a).FirstOrDefault();
             }
 
 
@@ -113,15 +101,25 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
         {
             string name = "TenantDB" + tenant;
             GlobalDB db = null;
-            string enviroment = ConfigurationManager.AppSettings.Get("ENVIROMENT");
+
+         
 
             if (true) //HttpContext.Current != null)
             {
                 if (CacheManager.CacheWrapper.Get(name) == null)
                 {
-                    db = enviroment == "azure app service"? GetGlobalDbFromEnviroment(): GetByGlobalTenant(tenant);
+                    IGlobalContext context = GlobalContext.GetContext();
+                    //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                    //{
+                        GlobalTenant globaltenant = (from a in context.GlobalTenants
+                                                     where a.Id == tenant
+                                                     select a).FirstOrDefault();
 
-                    CacheManager.CacheWrapper.Insert(name, db, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                        db = (from a in context.GlobalDBs
+                              where a.Id == globaltenant.GlobalDBId
+                              select a).FirstOrDefault();
+
+                        CacheManager.CacheWrapper.Insert(name, db, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                     //}
                 }
                 else
@@ -132,26 +130,23 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
 
             else
             {
-                db = enviroment == "azure app service" ? GetGlobalDbFromEnviroment() : GetByGlobalTenant(tenant);
+                IGlobalContext context = GlobalContext.GetContext();
+
+                GlobalTenant globaltenant = (from a in context.GlobalTenants
+                                             where a.Id == tenant
+                                             select a).FirstOrDefault();
+
+                db = (from a in context.GlobalDBs
+                      where a.Id == globaltenant.GlobalDBId
+                      select a).FirstOrDefault();
             }
 
+
+
             return db;
         }
 
-        private static GlobalDB GetByGlobalTenant(int tenant)
-        {
-            GlobalDB db;
-            IGlobalContext context = GlobalContext.GetContext();
 
-            GlobalTenant globaltenant = (from a in context.GlobalTenants
-                                         where a.Id == tenant
-                                         select a).FirstOrDefault();
-
-            db = (from a in context.GlobalDBs
-                  where a.Id == globaltenant.GlobalDBId
-                  select a).FirstOrDefault();
-            return db;
-        }
 
         public int GetDataBasesCount()
         {
@@ -211,20 +206,6 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
         public GlobalDB GetSingle(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
             throw new NotImplementedException();
-        }
-
-        private static GlobalDB GetGlobalDbFromEnviroment()
-        {
-            return new GlobalDB()
-            {
-                Id = "0",
-                DBConnection = ConfigurationManager.AppSettings.Get("SystemMainStr"),
-                IsUpgrading = false,
-                IsActive = true,
-                SharedDWConnection = null,
-                SecondaryAzureDBConnection = null,
-                IsBlocking = false
-            };
         }
     }
 }

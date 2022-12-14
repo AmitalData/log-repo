@@ -22,7 +22,6 @@ using WebFreight.Web.MetaDataUpdate.AddClasses;
 using WebFreight.Web.MetaDataUpdate.DetailClasses;
 using Logitude.Server.Tools.Counters;
 using Simplog.Server.Infrastructure.Helpers;
-using System.Configuration;
 
 namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 {
@@ -67,24 +66,17 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
         {
             isUpdate = true;
 
-            string enviroment = ConfigurationManager.AppSettings.Get("ENVIROMENT");
-            if (enviroment == "azure app service")
-                LoadBaseTablesForConnection(ConfigurationManager.AppSettings.Get("SystemMainStr"));
-
-            else
+            List<GlobalDB> dbList = null;
+            using (TransactionScope scop = TransactionFactory.GetNewTransaction(new TimeSpan(0, 5, 0)))//new TransactionScope(TransactionScopeOption.RequiresNew, new TimeSpan(0, 5, 0)))
             {
-                List<GlobalDB> dbList = null;
-                using (TransactionScope scop = TransactionFactory.GetNewTransaction(new TimeSpan(0, 5, 0)))//new TransactionScope(TransactionScopeOption.RequiresNew, new TimeSpan(0, 5, 0)))
-                {
-                    GlobalDBRepository globalDbRep = new GlobalDBRepository();
-                    dbList = globalDbRep.GetGlobalDBs().ToList();
-                    scop.Complete();
-                }
+                GlobalDBRepository globalDbRep = new GlobalDBRepository();
+                dbList = globalDbRep.GetGlobalDBs().ToList();
+                scop.Complete();
+            }
 
-                foreach (GlobalDB db in dbList)
-                {
-                    LoadBaseTablesForConnection(db.DBConnection);
-                }
+            foreach (GlobalDB db in dbList)
+            {
+                LoadBaseTablesForConnection(db.DBConnection);
             }
         }
 
