@@ -140,11 +140,14 @@ export class CustomizationLabelItem extends BaseComponent {
     }
 
     public UpdateModifiedLables(newValue) {
+
+        if (this.father.ModifiedLables.Lables == null) this.father.ModifiedLables.Lables = [];
+
         this.father.IsModifiedLables = true;
         this.father.customizationEditComponent.IsDirty = true;
         var label = this.father.ModifiedLables?.Lables?.filter(d => d.Code == this.Code)[0];
         var index = this.father.ModifiedLables?.Lables?.indexOf(label);
-        if (index != -1) {
+        if (index != null && index != -1) {
             this.father.ModifiedLables.Lables.splice(index, 1);
         }
 
