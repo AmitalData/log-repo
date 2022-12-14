@@ -125,7 +125,7 @@ export class ConsigmentTabContentComponent
                     messageWindow.Width = 250;
                     messageWindow.Height = 150;
                     messageWindow.RTL = true;
-                    messageWindow.Show("לם נמצםה הצהרה");
+                    messageWindow.Show("לא נמצאה הצהרה");
                 }
             }
         });
@@ -729,7 +729,7 @@ export class ConsigmentTabContentComponent
                 case '1':
                     {
                         this.ManifestNumberPlaceholder = "הזן שנת טיסה";
-                        this.SecondCargoIDPlaceholder = "הזן שט”מ רםשי";
+                        this.SecondCargoIDPlaceholder = "הזן שט”מ ראשי";
                         this.ThirdCargoIdPlaceholder = "הזן שט”מ פנימי";
                         break;
                     }
@@ -742,7 +742,7 @@ export class ConsigmentTabContentComponent
                     }
                 case '8':
                     {
-                        this.ManifestNumberPlaceholder = "הזן הצהרת םחסנה";
+                        this.ManifestNumberPlaceholder = "הזן הצהרת אחסנה";
                         this.SecondCargoIDPlaceholder = " ";
                         this.ThirdCargoIdPlaceholder = " ";
                         break;
@@ -758,7 +758,7 @@ export class ConsigmentTabContentComponent
                     {
                         this.ManifestNumberPlaceholder = "הזן ש.מ בלדר";
                         this.SecondCargoIDPlaceholder = "הזן ח.פ בלדר";
-                        this.ThirdCargoIdPlaceholder = "הזן תםריך הקמה";
+                        this.ThirdCargoIdPlaceholder = "הזן תאריך הקמה";
                         break;
                     }
                 case '20':
@@ -877,7 +877,7 @@ export class ConsigmentTabContentComponent
             messageWindow.Width = 250;
             messageWindow.Height = 150;
             messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-            messageWindow.Show("ההצהרה נעולה. לם ניתן למחוק נתוני סידורי במטען");
+            messageWindow.Show("ההצהרה נעולה. לא ניתן למחוק נתוני סידורי במטען");
             return;
         }
 

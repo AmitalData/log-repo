@@ -44,8 +44,8 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     public IsNew: boolean = false;
     private exportDeclarationClosingWebService: ExportDeclarationClosingWebService = new ExportDeclarationClosingWebService();
-    public ActualSailingDate: string = "תםריך הפלגה בפועל";
-    public ActualTakeOffDate: string = "תםריך המרםה בפועל";
+    public ActualSailingDate: string = "תאריך הפלגה בפועל";
+    public ActualTakeOffDate: string = "תאריך המראה בפועל";
 
     ManifestNumberPlaceholder: string = '';
     SecondCargoIdPlaceholder: string = '';
@@ -357,7 +357,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     }
     SendButtonClicked(event: CustomSendOptionsArgs) {
         if (AppTool.IsNullOrEmpty(this.EntityPM.LoadingDateTime)) {
-            var msg = " שדה תםריך טעינה שדה חובה";
+            var msg = " שדה תאריך טעינה שדה חובה";
             this.ValidationErrors.push(msg);
             this.FillValidationErrors("Errors");
         }
