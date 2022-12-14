@@ -33,7 +33,7 @@ namespace Simplog.Server.Infrastructure.Azure
                     else
                     {
                         string dProtocol = @"http://";
-                        if (LogitudeSettings.IsCostomsDeploy)
+                        if (LogitudeSettings.IsCostomsDeploy || LogitudeSettings.StorageAccountName.Equals("amitalexporttest", StringComparison.OrdinalIgnoreCase))
                         {
                             dProtocol = @"httpS://";
                         }
@@ -285,7 +285,7 @@ namespace Simplog.Server.Infrastructure.Azure
 
              
             CloudBlobContainer blobContainer = BlobClient.GetContainerReference(containername);
-            if (!LogitudeSettings.IsCostomsDeploy)
+            //if (!LogitudeSettings.IsCostomsDeploy)//TASK 166155
             {
                 blobContainer.CreateIfNotExists();
             }
