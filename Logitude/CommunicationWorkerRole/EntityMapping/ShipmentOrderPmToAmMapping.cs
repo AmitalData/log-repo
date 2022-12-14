@@ -49,6 +49,7 @@ namespace CommunicationWorkerRole.EntityMapping
             shipmentOrderAM.Shipper = GetShipper(shipper);
             shipmentOrderAM.ShipperName = shipper?.EnglishName;
             shipmentOrderAM.Incoterm = GetIncoterm(shipmentOrder);
+            shipmentOrderAM.IsCancelled = shipmentOrder.IsCancelled;
 
             return shipmentOrderAM;
         }
