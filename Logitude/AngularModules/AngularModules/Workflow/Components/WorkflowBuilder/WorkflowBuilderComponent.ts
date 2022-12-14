@@ -330,9 +330,25 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         propertiesWindow.Height = openPropertiesEventObject.nodeType == "declareVariableNode" ? 320 : 850;
         propertiesWindow.Width = 985;
         propertiesWindow.RTL = false;
-        propertiesWindow.Title = ("Configure " + openPropertiesEventObject.nodeLabel);
+        propertiesWindow.Title = this.getPropertiesWindowTitle(openPropertiesEventObject.nodeLabel);
         propertiesWindow.WindowArgs = propertiesWindowArgs;
         return propertiesWindow;
+    }
+
+    getPropertiesWindowTitle(nodeLabel: string) {
+        let title = "Configure";
+
+        if (nodeLabel) {
+            switch (nodeLabel) {
+                case "Append Item": { title = title + " Append to Collection"; break; }
+                case "Delete Item": { title = title + " Delete from Collection"; break; }
+                default: { title = title + " " + nodeLabel; break; }
+            }
+        } else {
+            title = title + " Element";
+        }
+
+        return title;
     }
 
     buildEditWindow() {
@@ -524,7 +540,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         this.SetWorkflowDetails(data)
     }
 
-    SetWorkflowDetails(data){
+    SetWorkflowDetails(data) {
         let version: WorkFlowVersionPM = data;
         this.EntityPM.WorkFlowVersionStatusCode = version.StatusCode;
         this.EntityPM.WorkFlowVersionNumber = version.VersionNumber;

@@ -25,17 +25,20 @@
         width: 320px;
     }
 
-    .table-container {
-        overflow: auto;
-        height: 515px;
-    }
-
     .label {
         font-weight: bold;
     }
 
     .table-row-cell-label {
         padding-bottom: 6px;
+    }
+
+    .help-text-container {
+        padding-top: 20px;
+    }
+
+    .help-text-label {
+        padding-left: 4px;
     }
 </style>
 
@@ -53,7 +56,6 @@
         </td>
     </tr>
 
-    <!-- Name -->
     <tr class="table-row">
         <td class="table-row-cell">
             <div>
@@ -63,7 +65,7 @@
             <div class="table-row-cell-block name-container">
                 <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [DataContext]="DataContext" [Text]="Name"
                     [NoValidation]="true" [HideColumns]="true" [ObjectFieldName]="'Name'"
-                    (ValueChanged)="updateName($event)" [DataCy]="'name'">
+                    (ValueChanged)="updateName($event)" [DataCy]="'delete-item-name'">
                 </LogTextBox>
             </div>
         </td>
@@ -75,26 +77,29 @@
         </td>
     </tr>
 
-    <!-- variable values -->
     <tr class="table-row">
         <td class="table-row-cell-label">
             <div class="table-row-cell-block">
-                <div class="label">Set Variable Values</div>
+                <div class="label">Select Record to Delete</div>
             </div>
         </td>
     </tr>
 
     <tr class="table-row">
-        <td>
-            <div class="table-container">
-
-                <SetValues *ngIf="SetValues && SetValues.length > 0" [(SetValues)]="SetValues"
-                    (IsValidSetValuesChange)="updateIsValidSetValues($event)" [FlowObject]="FlowObject"
-                    [FlowObjectFields]="FlowObjectFields" [CurrentNodeId]="CurrentNodeId">
-                </SetValues>
-
+        <td class="table-row-cell">
+            <div>
+                <LogLabel [NoObjectField]="true" [Text]="'Record'" [ObjectFieldName]="'Record'"
+                    [DataContext]="DataContext"></LogLabel>
             </div>
-
+            <div class="table-row-cell-block">
+                <TreeSelect [Items]="FlowVariablesTreeItems" [Width]="'300px'" [Value]="Record"
+                    (ValueChanged)="updateRecord($event)">
+                </TreeSelect>
+            </div>
+            <div class="table-row-cell-block help-text-container">
+                <img src="./Images/Help.png" />
+                <span class="help-text-label">Make sure that each record has an ID. Otherwise the flow cannot find the record to delete, and it will fail.</span>
+            </div>
         </td>
     </tr>
 
@@ -108,8 +113,8 @@
         <td>
 
             <FooterButtons [SaveButtonLabel]="'Ok'" (SaveButtonClicked)="saveButtonClicked()"
-                (CancelButtonClicked)="cancelButtonClicked()" [SaveButtonDataCy]="'set-value-properties-save-button'"
-                [CancelButtonDataCy]="'set-value-properties-cancel-button'">
+                (CancelButtonClicked)="cancelButtonClicked()" [SaveButtonDataCy]="'delete-item-properties-save-button'"
+                [CancelButtonDataCy]="'delete-item-properties-cancel-button'">
             </FooterButtons>
 
         </td>

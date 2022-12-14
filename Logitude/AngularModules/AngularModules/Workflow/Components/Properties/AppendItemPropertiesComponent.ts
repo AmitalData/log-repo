@@ -3,17 +3,16 @@ import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/Base
 import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
-import { ConditionOperations } from "Workflow/Constants/ConditionOperations";
 import { SingleEditableEntitiesTreeList } from "Workflow/Models/SingleEditableEntitiesTreeList";
-import { Condition } from "Workflow/Models/Condition";
 import { ObjectTables } from "Workflow/Models/ObjectTables";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
+import { SetValue } from "Workflow/Models/SetValue";
 
 @Component({
-    templateUrl: "./CollectionFilterPropertiesComponent.html"
+    templateUrl: "./AppendItemPropertiesComponent.html"
 })
 
-export class CollectionFilterPropertiesComponent extends BaseComponent {
+export class AppendItemPropertiesComponent extends BaseComponent {
 
     public DataContext: any = this;
 
@@ -28,10 +27,11 @@ export class CollectionFilterPropertiesComponent extends BaseComponent {
     public Entity: string = null;
     public EntityId: string = null;
     public Collection: string;
-    public CollectionFilters: Condition[];
-    public CollectionFiltersOperation: string;
-    public IsValidConditions: boolean = true;
+    public SetValues: SetValue[];
+    public IsValidSetValues: boolean = true;
     public ValidationErrorsList: string[];
+
+    public ExcludedEntities: string[] = ["Container"];
 
     public CurrentSession = SessionLocator.SelectedSession;
 
@@ -52,25 +52,23 @@ export class CollectionFilterPropertiesComponent extends BaseComponent {
         this.Collection = this.Data["collection"] || null;
         this.Entity = this.Data["entity"] || null;
 
-        this.CollectionFilters = this.Data["collectionFilters"] || [];
-        this.CollectionFiltersOperation = this.Data["collectionFiltersOperation"] || ConditionOperations.And;
+        this.SetValues = this.Data["setValues"] || [];
 
-        this.initializeCollectionFilters();
+        this.initializeSetValues();
 
         this.EntityId = ObjectTables.getIdByName(this.Entity);
 
         this.setUIProperties();
     }
 
-    initializeCollectionFilters(reset: boolean = false) {
+    initializeSetValues(reset: boolean = false) {
         if (reset) {
-            this.CollectionFilters = [];
-            this.CollectionFiltersOperation = ConditionOperations.And;
+            this.SetValues = [];
         }
-        if (this.CollectionFilters.length === 0) {
-            let condition = new Condition();
-            this.CollectionFilters.push(condition);
-            this.IsValidConditions = false;
+        if (this.SetValues.length === 0) {
+            let setValue = new SetValue();
+            this.SetValues.push(setValue);
+            this.IsValidSetValues = false;
         }
     }
 
@@ -98,14 +96,14 @@ export class CollectionFilterPropertiesComponent extends BaseComponent {
         this.Data["entity"] = collectionEntity;
 
         if (isCollectionChanged) {
-            this.initializeCollectionFilters(true);
+            this.initializeSetValues(true);
         }
 
         this.setUIProperties();
     }
 
-    setIsValidConditions(isValidConditions: boolean) {
-        this.IsValidConditions = isValidConditions;
+    setIsValidSetValues(isValidSetValues: boolean) {
+        this.IsValidSetValues = isValidSetValues;
     }
 
     setUIProperties() {
@@ -120,21 +118,21 @@ export class CollectionFilterPropertiesComponent extends BaseComponent {
     saveButtonClicked() {
         this.ValidationErrorsList = [];
         let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
-        if (notValidUIProperties.length === 0 && this.IsValidConditions) {
-            this.setConditionsData();
+        if (notValidUIProperties.length === 0 && this.IsValidSetValues) {
+            this.setSetValuesData();
             //console.log(this.Data);
             this.CurrentSession.CurrentWindow.Close(this.Data);
         } else {
             let validationErrors = notValidUIProperties.map(t => { return t.ValidationError; });
             this.ValidationErrorsList = validationErrors;
 
-            if (!this.IsValidConditions)
-                this.ValidationErrorsList.push("Invalid Conditions");
+            if (!this.IsValidSetValues) {
+                this.ValidationErrorsList.push("Invalid Set Values");
+            }
         }
     }
 
-    setConditionsData() {
-        this.Data["collectionFilters"] = this.CollectionFilters;
-        this.Data["collectionFiltersOperation"] = this.CollectionFilters.length === 0 ? null : this.CollectionFiltersOperation;
+    setSetValuesData() {
+        this.Data["setValues"] = this.SetValues;
     }
 }

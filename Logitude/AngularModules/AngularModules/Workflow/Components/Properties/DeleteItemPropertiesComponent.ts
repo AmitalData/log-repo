@@ -3,14 +3,14 @@ import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/Base
 import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
-import { RecordsTreeList } from "Workflow/Models/RecordsTreeList";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
+import { FlowVariablesTreeList } from "Workflow/Models/FlowVariablesTreeList";
 
 @Component({
-    templateUrl: "./UpdateRecordPropertiesComponent.html"
+    templateUrl: "./DeleteItemPropertiesComponent.html"
 })
 
-export class UpdateRecordPropertiesComponent extends BaseComponent {
+export class DeleteItemPropertiesComponent extends BaseComponent {
 
     public DataContext: any = this;
 
@@ -18,7 +18,7 @@ export class UpdateRecordPropertiesComponent extends BaseComponent {
     public CurrentNodeId: string;
     public FlowObjectFields: ObjectFieldList[];
 
-    public RecordsTreeItems: TreeSelectItem[];
+    public FlowVariablesTreeItems: TreeSelectItem[];
 
     public Data: any;
     public Name: string = null;
@@ -36,7 +36,7 @@ export class UpdateRecordPropertiesComponent extends BaseComponent {
 
     ngOnInit() {
         this.initialize();
-        this.initializeRecordsTreeItems();
+        this.initializeFlowVariablesTreeItems();
     }
 
     initialize() {
@@ -46,8 +46,14 @@ export class UpdateRecordPropertiesComponent extends BaseComponent {
         this.setUIProperties();
     }
 
-    initializeRecordsTreeItems() {
-        this.RecordsTreeItems = new RecordsTreeList(this.FlowObject, this.CurrentNodeId).Items;
+    initializeFlowVariablesTreeItems() {
+        let showVariables = {
+            ShowRecordsVariables: true,
+            ShowDeclaredVariables: true,
+            ShowRecordsCollectionVariables: false,
+            ShowDeclaredCollectionVariables: false
+        };
+        this.FlowVariablesTreeItems = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId, showVariables, true).Items;
     }
 
     updateName(name: string) {
@@ -58,8 +64,8 @@ export class UpdateRecordPropertiesComponent extends BaseComponent {
     }
 
     updateRecord(record: string) {
-        this.Record = record || null;
-        this.Data["record"] = record || null;
+        this.Record = record;
+        this.Data["record"] = record;
 
         this.setUIProperties();
     }
