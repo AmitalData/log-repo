@@ -363,7 +363,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         if (AppTool.IsNullOrEmpty(this.EntityPM.LoadingDateTime) || (AppTool.IsNullOrEmpty(this.EntityPM.FinalCargoTypeCode)))
         { 
             if(AppTool.IsNullOrEmpty(this.EntityPM.LoadingDateTime)){
-            var msg = " שדה תאריך טעינה שדה חובה";
+            var msg = " שדה תםריך טעינה שדה חובה";
             this.ValidationErrors.push(msg);
             }
 
