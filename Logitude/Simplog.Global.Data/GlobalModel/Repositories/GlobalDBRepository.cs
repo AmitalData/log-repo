@@ -140,7 +140,20 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
             return db;
         }
 
+        private static GlobalDB GetByGlobalTenant(int tenant)
+        {
+            GlobalDB db;
+            IGlobalContext context = GlobalContext.GetContext();
 
+            GlobalTenant globaltenant = (from a in context.GlobalTenants
+                                         where a.Id == tenant
+                                         select a).FirstOrDefault();
+
+            db = (from a in context.GlobalDBs
+                  where a.Id == globaltenant.GlobalDBId
+                  select a).FirstOrDefault();
+            return db;
+        }
 
         public int GetDataBasesCount()
         {
