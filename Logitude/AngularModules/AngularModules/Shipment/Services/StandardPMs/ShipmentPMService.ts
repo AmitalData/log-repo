@@ -36,8 +36,7 @@ import { CommodityPackagePM } from '../../EntityPMs/CommodityPackagePM';
 import { ShipmentProductItemPM } from '../../EntityPMs/ShipmentProductItemPM';
 import { ShipmentUnassignedFieldPM } from '../../EntityPMs/ShipmentUnassignedFieldPM';
 import { CustomChildObjectPMService } from '../../../Infrastructure/Services/ExtendedPMs/CustomChildObjectPMService';
-import { CloneEntityPM } from 'Infrastructure/Helpers/SafeCloneDeep';
-import { compare } from 'fast-json-patch';
+import { JsonPatchBuilder } from 'Infrastructure/Helpers/JsonPatchBuilder';
 
 @Injectable()
 
@@ -414,12 +413,9 @@ export class ShipmentPMService {
                 if(oldEntityPM) {
                     var mappedEntityPM: ShipmentPM = this.MapJsonToEntityPM(entityPM, false);
 
-                    var clonedOldEntityPM = CloneEntityPM(oldEntityPM);
-                    var clonedEntityPM = CloneEntityPM(mappedEntityPM);
-                    var shipmentPatch = compare(clonedOldEntityPM, clonedEntityPM);
-                    console.log(shipmentPatch);
+                    var shipmentPatch = new JsonPatchBuilder(oldEntityPM, mappedEntityPM).build();
 
-                    var shipmentPatchString = JSON.stringify(shipmentPatch);
+                    var shipmentPatchString = shipmentPatch ? JSON.stringify(shipmentPatch) : null;
                     var patchRequestUrl = this._apiUrl + "?id=" + mappedEntityPM.Id;
 
                     httpRequest = this._http.patch(patchRequestUrl, shipmentPatchString, ServiceHelper.GetHttpHeaders());
