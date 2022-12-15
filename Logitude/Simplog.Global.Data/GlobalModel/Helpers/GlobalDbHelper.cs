@@ -31,8 +31,13 @@ namespace Simplog.Global.Data.GlobalModel.Helpers
                                                      select a).FirstOrDefault();
 
 //#if ORACLE_DB
-                        string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");                        
-                        if (dbms == "oracle")
+                        string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+                        string enviroment = ConfigurationManager.AppSettings.Get("ENVIROMENT");
+
+                        if (enviroment == "azure app service")
+                            currentDb = GetGlobalDbFromEnviroment();
+
+                        else if (dbms == "oracle")
                         {
                             if (globaltenant == null)
                             {
