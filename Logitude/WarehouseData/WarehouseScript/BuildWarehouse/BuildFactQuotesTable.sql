@@ -85,6 +85,7 @@
    declare @ShipmentSubType as int
    declare @ShipperNotExporter as int
    declare @ConsigneeNotImporter as int
+   declare @IsCancelled as bit
 
 	DECLARE QuotesCursor CURSOR READ_ONLY
 	FOR
@@ -100,7 +101,7 @@
 	dw_QuoteComputedFields.ConnectedToShipment, dw_QuoteComputedFields.ConnectedToTicket, dw_QuoteComputedFields.ToLocation, dw_QuoteComputedFields.FromLocation, 
 	dw_QuoteComputedFields.DeliveryTo, dw_QuoteComputedFields.PickupFrom, dw_QuoteComputedFields.EstimatedPayablesInSales, dw_QuoteComputedFields.EstimatedPayablesInLocal, 
 	dw_QuoteComputedFields.EstimatedReceivablesInLocal, dw_QuoteComputedFields.EstimatedReceivablesInSales, dw_Quotes.EstimateProfit, LocalCurrency.Id_Number, dw_QuoteComputedFields.MarkupPercentage, dw_Quotes.SalesmanUserId,dw_Quotes.BusinessUnitId,
-	shipperNotExporterPartners.Id_Number,consigneeNotImporterPartners.Id_Number,NewDIM_ShipmentSubTypes.Id_Number
+	shipperNotExporterPartners.Id_Number,consigneeNotImporterPartners.Id_Number,NewDIM_ShipmentSubTypes.Id_Number,dw_Quotes.IsCancelled
 
 
 
@@ -151,7 +152,7 @@
 	 , @ExpirationDate ,@IsAutomaticallyClosed ,@IncludePickUp ,@IncludeDelivery ,@StageDueDate ,@IsQuoteDataExternal ,@IsQuoteDocumentExternal,@AutomaticallyCloseDate , @FromCountry, @ToCountry  , @ShipperPartnerType ,@ConsigneePartnerType , @CursorCustomFieldsVariable ,  @CustomerPartnerType
 	 , @ConnectedToShipment, @ConnectedToTicket, @ToLocation, @FromLocation,@DeliveryTo, @PickupFrom, @EstimatedPayablesInSales
 	 , @EstimatedPayablesInLocal, @EstimatedReceivablesInLocal, @EstimatedReceivablesInSales, @EstimateProfit,  @LocalCurrency,  @MarkupPercentage, @SalesmanUserId , @BusinessUnitId,@ShipperNotExporter,@ConsigneeNotImporter
-	 , @ShipmentSubType
+	 , @ShipmentSubType,@IsCancelled
 
 
 	WHILE @@FETCH_STATUS = 0
@@ -181,7 +182,7 @@
 	   [CustomFieldNamesVariable], [Connected To Shipment], [Connected To Ticket],[To Location], [From Location],
 	   [Delivery To], [Pickup From], [Estimated Payables in Sales Currency], [Estimated Payables in Local Currency],
 	   [Estimated Receivables in Local Currency], [Estimated Receivables in Sales Currency], [Estimated Profit in Sales Currency], [Local Currency],[Spot Rates Markup] , [Salesman User Id] , [Business Unit Id],
-	   [Shipper Not Exporter],[Consignee Not Importer] ,[Shipment Sub Type])
+	   [Shipper Not Exporter],[Consignee Not Importer] ,[Shipment Sub Type],[Is Cancelled])
 	   
 	   
       values(@Id  , @SourceTenant, @ParentTenant ,@Direction , @TransportMode , @Type,@Department ,@Branch,@QuoteNumber
@@ -193,7 +194,7 @@
 	  , @FromCountry , @ToCountry ,@IsPotentialShipper ,  @IsPotentialConsignee , @IsPotentialCustomer,[CustomFieldValuesVariable],
 	   @ConnectedToShipment, @ConnectedToTicket, @ToLocation, @FromLocation,@DeliveryTo, @PickupFrom, @EstimatedPayablesInSales
 	 , @EstimatedPayablesInLocal, @EstimatedReceivablesInLocal, @EstimatedReceivablesInSales, @EstimateProfit,  @LocalCurrency, @MarkupPercentage , @SalesmanUserId , @BusinessUnitId, @ShipperNotExporter,
-	 @ConsigneeNotImporter,@ShipmentSubType
+	 @ConsigneeNotImporter,@ShipmentSubType,@IsCancelled
 	 )
 
 
@@ -222,7 +223,7 @@ END CATCH
 	, @SaleCurrency ,@Subject , @GrossWeightInKG ,@ChargeableWeightInKG ,@VolumeInCBM ,@NumberOfPackages ,@NumberOfContainers
 	 , @ExpirationDate ,@IsAutomaticallyClosed ,@IncludePickUp ,@IncludeDelivery ,@StageDueDate ,@IsQuoteDataExternal ,@IsQuoteDocumentExternal,@AutomaticallyCloseDate,@FromCountry , @ToCountry  , @ShipperPartnerType,@ConsigneePartnerType , @CursorCustomFieldsVariable , @CustomerPartnerType
 	 ,@ConnectedToShipment, @ConnectedToTicket, @ToLocation, @FromLocation,@DeliveryTo, @PickupFrom, @EstimatedPayablesInSales
-	 , @EstimatedPayablesInLocal, @EstimatedReceivablesInLocal, @EstimatedReceivablesInSales, @EstimateProfit, @LocalCurrency , @MarkupPercentage, @SalesmanUserId , @BusinessUnitId, @ShipperNotExporter,@ConsigneeNotImporter , @ShipmentSubType
+	 , @EstimatedPayablesInLocal, @EstimatedReceivablesInLocal, @EstimatedReceivablesInSales, @EstimateProfit, @LocalCurrency , @MarkupPercentage, @SalesmanUserId , @BusinessUnitId, @ShipperNotExporter,@ConsigneeNotImporter , @ShipmentSubType,@IsCancelled
 		End
 	CLOSE QuotesCursor
 	DEALLOCATE QuotesCursor
