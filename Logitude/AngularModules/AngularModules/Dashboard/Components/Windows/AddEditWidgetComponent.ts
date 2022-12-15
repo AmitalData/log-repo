@@ -86,13 +86,7 @@ export class AddEditWidgetComponent extends BaseComponent {
 
         
     }
-    SetUIProprtiesForComparisonPeriod(){
-        this.UIProperties.SetValidity("ComparisonPeriod", this.ObjectTableName, true, "");
-
-        if (this.ComparisonPeriod < 0) {
-            this.UIProperties.SetValidity("ComparisonPeriod", this.ObjectTableName, false, "Comparison Period must be Greater Than 0");
-        }
-    }
+    
 
     BuildQueryFilters() {
         this.GroupByQueryFilters = new ApiQueryFilters();
@@ -379,11 +373,10 @@ export class AddEditWidgetComponent extends BaseComponent {
             this.EntityPM.ComparisonOperator = value;            
             
             this.SetUIForOperator();
-            this.SetOperatorDefault();
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget Comparison Period Value Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
         }
     }
-    private SetUIForOperator() {
+    SetUIForOperator() {
         this.IsBetweenDatesVisible = false;
 
         if (this.ComparisonOperator == "Between") {
@@ -391,18 +384,12 @@ export class AddEditWidgetComponent extends BaseComponent {
         }
     }
 
-    private SetOperatorDefault(){
-        this.ComparisonPeriod = null;
-        this.ComparisonDateGroup = null;
-        this.FromDate = null;
-        this.ToDate = null;
-    }
+    
     get ComparisonPeriod() { return this.EntityPM.ComparisonPeriod; }
     set ComparisonPeriod(value: number) {
         if (this.EntityPM.ComparisonPeriod != value) {
             this.EntityPM.ComparisonPeriod = value;
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget Comparison Period Value Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
-            this.SetUIProprtiesForComparisonPeriod();
         }
     }
     get ComparisonDateGroup() { return this.EntityPM.ComparisonDateGroup; }
