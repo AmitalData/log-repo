@@ -336,19 +336,15 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     }
 
     getPropertiesWindowTitle(nodeLabel: string) {
-        let title = "Configure";
-
-        if (nodeLabel) {
-            switch (nodeLabel) {
-                case "Append Item": { title = title + " Append to Collection"; break; }
-                case "Delete Item": { title = title + " Delete from Collection"; break; }
-                default: { title = title + " " + nodeLabel; break; }
-            }
-        } else {
-            title = title + " Element";
+        let subTitle = "Configure";
+        switch (nodeLabel) {
+            case "Append Item":
+                return subTitle + " Append to Collection";
+            case "Delete Item":
+                return subTitle + " Delete from Collection";
+            default:
+                return nodeLabel ? (subTitle + " " + nodeLabel) : (subTitle + " Element");
         }
-
-        return title;
     }
 
     buildEditWindow() {
