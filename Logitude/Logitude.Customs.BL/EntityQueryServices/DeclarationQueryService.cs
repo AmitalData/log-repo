@@ -357,12 +357,18 @@ namespace Logitude.Customs.BL.EntityQueryServices
         public DeclarationPM GetDeclarationByfunctionalReferenceID( string functionalReferenceID,string agentFileReferenceID,  int tenant)
         {
              if (String.IsNullOrWhiteSpace(functionalReferenceID)) return null;
+            var declaration = repository.GetDeclarationByFunctionalReferenceIDagentFileReferenceID(functionalReferenceID, agentFileReferenceID, tenant);
 
-            var declaration = repository.GetDeclarationByFunctionalReferenceID(functionalReferenceID, agentFileReferenceID, tenant);
             DeclarationPM declarationPM = new DeclarationPM();
             DeclarationDataMapping mapping = new DeclarationDataMapping();
-            if (declaration == null) return null;
-
+            if (declaration == null)
+            {
+                var declarations = repository.GetDeclarationByFunctionalReferenceID(functionalReferenceID, tenant);
+                if (declarations.Count() == 1)
+                    declaration = declarations[0];
+                else
+                    return null;
+            }
             mapping.CustomPOCOToPM(declarationPM, declaration);
             mapping.POCOToPM(declarationPM, declaration);
 
