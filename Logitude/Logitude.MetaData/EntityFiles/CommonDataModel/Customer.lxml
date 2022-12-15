@@ -11,6 +11,7 @@
   HasCustomFilter="true"
   HasCustomFields="true"
   AvailableInCustomization="true"
+  SupportSubEntity="false"
   HasHelper="true"
   HasShortTitle="true"
   HasFiltersMenu="false"
@@ -19671,10 +19672,10 @@
         IsPackagable="false" />
       <MenuItem
         EventCode="&quot;LoginToOnlineVisability&quot;"
-        DefaultText="&quot;Login to Online Visability&quot;"
+        DefaultText="&quot;Login to Online Visibility&quot;"
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="12"
-        LocalDefaultText="&quot;Login to Online Visability&quot;"
+        LocalDefaultText="&quot;Login to Online Visibility&quot;"
         IsPackagable="true" />
     </MenuButton>
   </MenuButtons>

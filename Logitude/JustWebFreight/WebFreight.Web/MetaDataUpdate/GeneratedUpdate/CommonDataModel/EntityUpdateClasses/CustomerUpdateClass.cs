@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CustomerUpdateClass
    {  		
-		public const string HashString = "25aeb0285697fd7360465a1d3ef9742e";
+		public const string HashString = "b01c2e1be1a5f21afbcf3b76c694a0fe";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -101,6 +101,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasCustomFilter =  true,
 			      				    HasCustomFields =  true,
 			      				    AvailableInCustomization =  true,
+			      				    SupportSubEntity =  false,
 			      				    HasHelper =  true,
 			      				    HasShortTitle =  true,
 			      				    HasFiltersMenu =  false,
@@ -16382,7 +16383,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
              			   Feature CustomerFeature_MB54 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NOTMYCUSTOMER", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.SetNotMyCustomer", NameTextCodeDefaultText = "Set as Not My Customer", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
              			   Feature CustomerFeature_MB55 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QUESTIONNAIREANSWERS", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.ViewQuestionnaireAnswers", NameTextCodeDefaultText = "View Questionnaire Answers", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
              			   Feature CustomerFeature_MB56 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Disconnect", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.DisconnectGLAccount", NameTextCodeDefaultText = "Disconnect GLAccount", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
-             			   Feature CustomerFeature_MB57 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LoginToOnlineVisability", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.LogintoOnlineVisability", NameTextCodeDefaultText = "Login to Online Visability", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
+             			   Feature CustomerFeature_MB57 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LoginToOnlineVisability", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.LogintoOnlineVisibility", NameTextCodeDefaultText = "Login to Online Visibility", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomerObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -16659,8 +16660,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						EventCode = "LoginToOnlineVisability",
 						Index = 12, 
 						IsActive = true,
-						LabelTextCodeCode = "Customer.B.LogintoOnlineVisability",
-						LabelTextCodeDefaultText = "Login to Online Visability",
+						LabelTextCodeCode = "Customer.B.LogintoOnlineVisibility",
+						LabelTextCodeDefaultText = "Login to Online Visibility",
 						Tenant = 0,
 						MenuButtonGroupId = CustomerMenuButtonGroup.Id,
 						ParentMenuButtonId = CustomerMenuButton5.Id,
@@ -16668,7 +16669,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						MenuButtonType = "menuitem",
 						FeatureId=  CustomerFeature_MB57.Id,
 						Style = null,
-						LocalDefaultText = "Login to Online Visability",
+						LocalDefaultText = "Login to Online Visibility",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  CustomerFeature_MB57.FeatureUniqeCode,
