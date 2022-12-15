@@ -30,13 +30,9 @@ namespace Simplog.Global.Data.GlobalModel.Helpers
                                                      where a.Id == tenant
                                                      select a).FirstOrDefault();
 
+//#if ORACLE_DB
                         string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");                        
-
-                        string enviroment = ConfigurationManager.AppSettings.Get("ENVIROMENT");
-                        if(enviroment == "azure app service")
-                            currentDb = GetGlobalDbFromEnviroment();
-
-                        else if (dbms == "oracle")
+                        if (dbms == "oracle")
                         {
                             if (globaltenant == null)
                             {
@@ -178,11 +174,12 @@ namespace Simplog.Global.Data.GlobalModel.Helpers
                         else
                         {
                             IGlobalContext context = GlobalContext.GetContext();
+
+
                             db = (from a in context.GlobalDBs
                                   where a.Id == id
                                   select a).FirstOrDefault();
                         }
-
                         CacheManager.CacheWrapper.Insert(name, GetGlobalDbWithoutProxy(db), null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                     }
                     //}
@@ -204,6 +201,9 @@ namespace Simplog.Global.Data.GlobalModel.Helpers
                     else
                     {
                         IGlobalContext context = GlobalContext.GetContext();
+
+
+
                         db = (from a in context.GlobalDBs
                               where a.Id == id
                               select a).FirstOrDefault();
@@ -220,12 +220,13 @@ namespace Simplog.Global.Data.GlobalModel.Helpers
         {
 
             string name = "TenantDB," + "GetSingleGlobalDB";
-
+            
             GlobalDB db = null;
-            db = CacheManager.GetOrInsertNewObject<GlobalDB>(name, () =>
+            db  =CacheManager.GetOrInsertNewObject<GlobalDB>(name, () =>
             {
                 GlobalDB db1stAndOnly1;
                 string enviroment = ConfigurationManager.AppSettings.Get("ENVIROMENT");
+
                 if (enviroment == "azure app service")
                     db1stAndOnly1 = GetGlobalDbFromEnviroment();
 
@@ -233,12 +234,13 @@ namespace Simplog.Global.Data.GlobalModel.Helpers
                 {
                     IGlobalContext context = GlobalContext.GetContext();
 
-                    db1stAndOnly1 = (from a in context.GlobalDBs
-                                     select a).Single();
-                }
 
+                    db1stAndOnly1 = (from a in context.GlobalDBs
+                                         select a).Single();
+                }
                 return db1stAndOnly1;
-            }, true);
+
+            }, true); 
 
 
             return db;
@@ -260,7 +262,6 @@ namespace Simplog.Global.Data.GlobalModel.Helpers
 
                         //#if ORACLE_DB
                         string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-
                         string enviroment = ConfigurationManager.AppSettings.Get("ENVIROMENT");
                         if (enviroment == "azure app service")
                             currentDb = GetGlobalDbFromEnviroment();
@@ -325,22 +326,23 @@ namespace Simplog.Global.Data.GlobalModel.Helpers
                             currentDb = (from a in globalcontext.GlobalDBs
                                          where a.Id == globaltenant.GlobalDBId
                                          select a).FirstOrDefault();
+                      
                         }
                         else
                         {
                             string dbtenant = tenant.ToString();
                             currentDb = (from a in globalcontext.GlobalDBs
                                          where a.Id == dbtenant
-                                         select a).FirstOrDefault();
+                                       select a).FirstOrDefault();
+                             }
+                         }
+
+                        if (currentDb != null && CacheManager.CacheWrapper != null) //Itzik 
+                        {
+                            CacheManager.CacheWrapper.Insert(name, GetGlobalDbWithoutProxy(currentDb), null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                         }
                     }
-
-                    if (currentDb != null && CacheManager.CacheWrapper != null) //Itzik 
-                    {
-                        CacheManager.CacheWrapper.Insert(name, GetGlobalDbWithoutProxy(currentDb), null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                    }
                 }
-            }
             currentDb.DBConnection = DbContextBaseUtil.GetConnectionStringWithAmitalNetRole(currentDb.DBConnection);
             return currentDb;
         }

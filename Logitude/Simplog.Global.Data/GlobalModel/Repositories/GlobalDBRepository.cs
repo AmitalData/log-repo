@@ -7,7 +7,6 @@ using Simplog.Global.Data.GlobalModel;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 using System.Configuration;
-
 namespace Simplog.Global.Data.GlobalModel.Repositories
 {
     public class GlobalDBRepository:IRepository<GlobalDB>
@@ -55,8 +54,8 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
                 return GetGlobalDbFromEnviroment();
 
             return (from a in context.GlobalDBs
-                where a.Id == id
-                select a).FirstOrDefault();
+                    where a.Id == id
+                    select a).FirstOrDefault();
         }
 
         public static GlobalDB GetGlobalDBById(string id)
@@ -70,17 +69,19 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
             {
                 if (CacheManager.CacheWrapper.Get(name) == null)
                 {
-
                     if (enviroment == "azure app service")
                         db = GetGlobalDbFromEnviroment();
 
                     else
                     {
                         IGlobalContext context = GlobalContext.GetContext();
+
+
                         db = (from a in context.GlobalDBs
                               where a.Id == id
                               select a).FirstOrDefault();
                     }
+
                     CacheManager.CacheWrapper.Insert(name, db, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                     //}
                 }
@@ -98,6 +99,7 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
                 else
                 {
                     IGlobalContext context = GlobalContext.GetContext();
+
                     db = (from a in context.GlobalDBs
                           where a.Id == id
                           select a).FirstOrDefault();
@@ -119,7 +121,7 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
             {
                 if (CacheManager.CacheWrapper.Get(name) == null)
                 {
-                    db = enviroment == "azure app service"? GetGlobalDbFromEnviroment(): GetByGlobalTenant(tenant);
+                    db = enviroment == "azure app service" ? GetGlobalDbFromEnviroment() : GetByGlobalTenant(tenant);                    
 
                     CacheManager.CacheWrapper.Insert(name, db, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                     //}
@@ -138,20 +140,7 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
             return db;
         }
 
-        private static GlobalDB GetByGlobalTenant(int tenant)
-        {
-            GlobalDB db;
-            IGlobalContext context = GlobalContext.GetContext();
 
-            GlobalTenant globaltenant = (from a in context.GlobalTenants
-                                         where a.Id == tenant
-                                         select a).FirstOrDefault();
-
-            db = (from a in context.GlobalDBs
-                  where a.Id == globaltenant.GlobalDBId
-                  select a).FirstOrDefault();
-            return db;
-        }
 
         public int GetDataBasesCount()
         {
