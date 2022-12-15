@@ -9,7 +9,7 @@ export class ShowEditableVariablesTreeItemPipe implements PipeTransform {
 
     transform(_arg: any) {
         return (item: TreeSelectItem) => {
-            if (item.data && item.data.isReadOnlyVariable) {
+            if (item.data && item.data["isReadOnlyVariable"]) {
                 return false;
             }
             return true;

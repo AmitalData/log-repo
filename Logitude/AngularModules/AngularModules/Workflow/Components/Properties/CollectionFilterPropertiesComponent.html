@@ -29,6 +29,14 @@
         overflow: auto;
         height: 515px;
     }
+
+    .label {
+        font-weight: bold;
+    }
+
+    .table-row-cell-label {
+        padding-bottom: 6px;
+    }
 </style>
 
 <table>
@@ -73,7 +81,7 @@
                     [DataContext]="DataContext"></LogLabel>
             </div>
             <div class="table-row-cell-block">
-                <TreeSelect [Items]="CollectionFilterEntitiesTreeItems" [Width]="'300px'" [Value]="Collection"
+                <TreeSelect [Items]="SingleEditableEntitiesTreeItems" [Width]="'300px'" [Value]="Collection"
                     (ValueChanged)="updateCollection($event)" [IsReturnedTreeSelectItem]="true">
                 </TreeSelect>
             </div>
@@ -87,16 +95,16 @@
     </tr>
 
     <tr *ngIf="Collection" class="table-row">
-        <td class="table-row-cell">
+        <td class="table-row-cell-label">
             <div class="table-row-cell-block">
-                <div>Collection Filters</div>
+                <div class="label">Collection Filters</div>
             </div>
         </td>
     </tr>
 
     <tr *ngIf="Collection" class="table-row">
-        <td>
-            <div class="table-container">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block table-container">
 
                 <Conditions *ngIf="CollectionFilters && CollectionFilters.length > 0" [EntityId]="EntityId"
                     [ShowChangedOperator]="false" [AtLeastOneCondition]="true"

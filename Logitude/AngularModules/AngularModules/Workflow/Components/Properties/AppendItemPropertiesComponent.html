@@ -53,7 +53,6 @@
         </td>
     </tr>
 
-    <!-- Name -->
     <tr class="table-row">
         <td class="table-row-cell">
             <div>
@@ -63,7 +62,7 @@
             <div class="table-row-cell-block name-container">
                 <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [DataContext]="DataContext" [Text]="Name"
                     [NoValidation]="true" [HideColumns]="true" [ObjectFieldName]="'Name'"
-                    (ValueChanged)="updateName($event)" [DataCy]="'name'">
+                    (ValueChanged)="updateName($event)" [DataCy]="'append-item-name'">
                 </LogTextBox>
             </div>
         </td>
@@ -75,22 +74,50 @@
         </td>
     </tr>
 
-    <!-- variable values -->
     <tr class="table-row">
         <td class="table-row-cell-label">
             <div class="table-row-cell-block">
-                <div class="label">Set Variable Values</div>
+                <div class="label">Append record to this Collection</div>
             </div>
         </td>
     </tr>
 
     <tr class="table-row">
-        <td>
+        <td class="table-row-cell">
+            <div>
+                <LogLabel [NoObjectField]="true" [Text]="'Collection'" [ObjectFieldName]="'Collection'"
+                    [DataContext]="DataContext"></LogLabel>
+            </div>
+            <div class="table-row-cell-block">
+                <TreeSelect [Items]="SingleEditableEntitiesTreeItems" [Width]="'300px'" [Value]="Collection"
+                    [ShowItem]="ExcludedEntities | ShowEntitiesTreeItemPipe : false"
+                    (ValueChanged)="updateCollection($event)" [IsReturnedTreeSelectItem]="true">
+                </TreeSelect>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr *ngIf="EntityId" class="table-row">
+        <td class="table-row-cell-label">
+            <div class="table-row-cell-block">
+                <div class="label">Set Fields Values of {{Entity | EntityLabelPipe}}</div>
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="EntityId" class="table-row">
+        <td class="table-row-cell">
             <div class="table-container">
 
-                <SetValues *ngIf="SetValues && SetValues.length > 0" [(SetValues)]="SetValues"
-                    (IsValidSetValuesChange)="updateIsValidSetValues($event)" [FlowObject]="FlowObject"
-                    [FlowObjectFields]="FlowObjectFields" [CurrentNodeId]="CurrentNodeId">
+                <SetValues *ngIf="SetValues && SetValues.length > 0" [(SetValues)]="SetValues" [IsEntityField]="true"
+                    [EntityId]="EntityId" (IsValidSetValuesChange)="setIsValidSetValues($event)"
+                    [FlowObject]="FlowObject" [FlowObjectFields]="FlowObjectFields" [CurrentNodeId]="CurrentNodeId">
                 </SetValues>
 
             </div>
@@ -108,8 +135,8 @@
         <td>
 
             <FooterButtons [SaveButtonLabel]="'Ok'" (SaveButtonClicked)="saveButtonClicked()"
-                (CancelButtonClicked)="cancelButtonClicked()" [SaveButtonDataCy]="'set-value-properties-save-button'"
-                [CancelButtonDataCy]="'set-value-properties-cancel-button'">
+                (CancelButtonClicked)="cancelButtonClicked()" [SaveButtonDataCy]="'append-item-properties-save-button'"
+                [CancelButtonDataCy]="'append-item-properties-cancel-button'">
             </FooterButtons>
 
         </td>

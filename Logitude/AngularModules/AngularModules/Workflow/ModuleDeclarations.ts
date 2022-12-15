@@ -42,7 +42,9 @@ import { WorkflowVersionComponent } from './Components/WorkflowVersion/WorkflowV
 import { CreateWorkflowVersionComponent } from './Components/WorkflowVersion/CreateWorkflowVersionComponent';
 import { WorkFlowShortTitleComponent } from './Components/ShortTitles/WorkFlowShortTitleComponent';
 import { IsObjectTypePipe } from "./Pipes/IsObjectTypePipe";
-import { WorkflowInstanceVariableObject } from "./Components/WorkflowInstance/WorkflowInstanceVariableObject"
+import { WorkflowInstanceVariableObject } from "./Components/WorkflowInstance/WorkflowInstanceVariableObject";
+import { AppendItemPropertiesComponent } from './Components/Properties/AppendItemPropertiesComponent';
+import { DeleteItemPropertiesComponent } from './Components/Properties/DeleteItemPropertiesComponent';
 
 export const Components = [
     WorkflowBuilderComponent,
@@ -55,6 +57,9 @@ export const Components = [
     UpdateRecordPropertiesComponent,
     GetRecordPropertiesComponent,
     SendEmailPropertiesComponent,
+    CollectionFilterPropertiesComponent,
+    AppendItemPropertiesComponent,
+    DeleteItemPropertiesComponent,
     FieldTemplateComponent,
     CreateWorkflowComponent,
     EditWorkflowComponent,
@@ -69,7 +74,6 @@ export const Components = [
     DeleteNodeWarningComponent,
     ExpressionComponent,
     ExpressionBuilderComponent,
-    CollectionFilterPropertiesComponent,
     WorkflowVersionComponent,
     CreateWorkflowVersionComponent,
     WorkFlowShortTitleComponent,
@@ -109,6 +113,9 @@ export class ModuleDeclarations {
             case "UpdateRecordPropertiesComponent": { result = UpdateRecordPropertiesComponent; break; }
             case "GetRecordPropertiesComponent": { result = GetRecordPropertiesComponent; break; }
             case "SendEmailPropertiesComponent": { result = SendEmailPropertiesComponent; break; }
+            case "CollectionFilterPropertiesComponent": { result = CollectionFilterPropertiesComponent; break; }
+            case "AppendItemPropertiesComponent": { result = AppendItemPropertiesComponent; break; }
+            case "DeleteItemPropertiesComponent": { result = DeleteItemPropertiesComponent; break; }
             case "FieldTemplateComponent": { result = FieldTemplateComponent; break; }
             case "CreateWorkflowComponent": { result = CreateWorkflowComponent; break; }
             case "EditWorkflowComponent": { result = EditWorkflowComponent; break; }
@@ -123,7 +130,6 @@ export class ModuleDeclarations {
             case "DeleteNodeWarningComponent": { result = DeleteNodeWarningComponent; break; }
             case "ExpressionComponent": { result = ExpressionComponent; break; }
             case "ExpressionBuilderComponent": { result = ExpressionBuilderComponent; break; }
-            case "CollectionFilterPropertiesComponent": { result = CollectionFilterPropertiesComponent; break; }
             case "WorkflowVersionComponent": { result = WorkflowVersionComponent; break; }
             case "CreateWorkflowVersionComponent": { result = CreateWorkflowVersionComponent; break; }
             case "WorkFlowShortTitleComponent": { result = WorkFlowShortTitleComponent; break; }

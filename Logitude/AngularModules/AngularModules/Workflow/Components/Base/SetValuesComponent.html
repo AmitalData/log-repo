@@ -21,7 +21,6 @@
 
     .set-value-container {
         margin-bottom: 10px;
-        margin-top: 10px;
     }
 
     .set-value-row {
@@ -100,7 +99,7 @@
     }
 </style>
 
-<ul class="set-value-container">
+<ul>
     <li *ngFor="let setValue of SetValues; let setValueIndex = index;  let isLastSetValue = last ; let isFirstSetValue = first"
         class="set-value-container">
         <div class="set-value-row" [ngStyle]="{'height': isFirstSetValue ? '40px' : '25px'}">
