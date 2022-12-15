@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { DashboardPM } from '../../../DashboardModule/EntityPMs/DashboardPM';
 import { WidgetPM } from '../../../DashboardModule/EntityPMs/WidgetPM';
 import { ReactWidgetPM } from 'logitude-dashboard-library/dist/types/widget';
@@ -14,16 +14,21 @@ import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { DashboardAnalyticsService } from '../../../DashboardModule/Services/DashboardAnalyticsService';
-import { CustomDashboardComponent } from './CustomDashboardComponent';
 
 @Component({
     templateUrl: 'DashboardTabComponent.html',
-    selector: 'DashboardTabComponent',
+    selector: 'dashboard-tab',
 })
 
-export class DashboardTabComponent {
-    public SelectedDashboardId: string = null;
-    public OpenEditLayout: boolean = false;
+export class DashboardTabComponent implements OnInit {
+    @Input() DashboardId: string;
+    @Input() OpenEditLayout: boolean = false;
+    @Output() DashboardDeleted = new EventEmitter<string>();
+    @Output() DashboardChanged = new EventEmitter<DashboardPM>();
+    @Output() TabHasChanges = new EventEmitter<boolean>();
+    @Output() DashboardEntity = new EventEmitter<DashboardPM>();
+
+
     public SelectedDashboardName: string = null;
     public SelectedDashboard: DashboardPM;
     private dashboardPMService: DashboardPMService;
@@ -33,41 +38,16 @@ export class DashboardTabComponent {
     public newWidgetWidth = 3;
     public newWidgetHeight = 5;
     public CloneDashboardLayout: WidgetPM[];
-    public FatherComponent: CustomDashboardComponent;
     public GlobalFilters: string;
 
     constructor() {
         this.dashboardPMService = new DashboardPMService();
     }
 
-    Intialize(args: any) {
-        this.SelectedDashboardId = args['SelectedDashboardId'];
-        this.OpenEditLayout = args['OpenEditLayout'];
-        this.FatherComponent = args['FatherComponent'];
-        this.Listen();
+    ngOnInit(): void {
         this.LoadSelectedDashboard();
     }
 
-    private Listen() {
-        if (this.FatherComponent != null) {
-            this.FatherComponent.SaveDashboardCompleted.subscribe((isSaveSuccess: boolean) => {
-                if (isSaveSuccess) {
-                    this.SelectedDashboard = this.FatherComponent.SavedDashboard;
-                    this.applyWDashboard();
-                    this.ResetFlags();
-                    this.FatherComponent.NavigateToSelectedTab();
-                }
-            });
-
-            this.FatherComponent.EditLayoutChanged.subscribe((isSuccess: boolean) => {
-                if (isSuccess) {
-                    this.applyWDashboard();
-                    this.ResetFlags();
-                    this.FatherComponent.NavigateToSelectedTab();
-                }
-            });
-        }
-    }
 
     DashboardDataBinding: DashboardDataBinding = {
         isOnEditLayout: new Subject(),
@@ -82,10 +62,9 @@ export class DashboardTabComponent {
     set HasChanges(value: boolean) {
         if (this.hasChanges != value) {
             this.hasChanges = value;
-
+            this.TabHasChanges.emit(value);
             if (this.IsEditLayoutModeActive) {
-                this.FatherComponent.HasChanges = value;
-                this.FatherComponent.SavedDashboard = this.SelectedDashboard;
+                this.DashboardEntity.emit(this.SelectedDashboard);
             }
         }
     }
@@ -95,15 +74,14 @@ export class DashboardTabComponent {
     set IsEditLayoutModeActive(value: boolean) {
         if (this.isEditLayoutModeActive != value) {
             this.isEditLayoutModeActive = value;
-            this.FatherComponent.IsEditLayoutModeActive = value;
         }
     }
 
     public IsEditDashboardButtonVisible: boolean = false;
-    public IsEditLayoutButtonVisible: boolean = !this.IsEditLayoutModeActive && !AppTool.IsNullOrEmpty(this.SelectedDashboardId);
+    public IsEditLayoutButtonVisible: boolean = !this.IsEditLayoutModeActive && !AppTool.IsNullOrEmpty(this.DashboardId);
 
     private LoadSelectedDashboard() {
-        this.dashboardPMService.get(this.SelectedDashboardId).subscribe((myResponse: ServiceResponse) => {
+        this.dashboardPMService.get(this.DashboardId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.SelectedDashboard = myResponse.Result;
                 this.IsEditLayoutButtonVisible = !this.IsEditLayoutModeActive && this.SelectedDashboard && this.SelectedDashboard.CreatedByUserId == SessionLocator.LoggedUserId;
@@ -130,13 +108,13 @@ export class DashboardTabComponent {
     }
 
     applyWDashboard() {
-        this.SelectedDashboardId = this.SelectedDashboard.Id;
+        this.DashboardId = this.SelectedDashboard.Id;
         this.SelectedDashboardName = this.SelectedDashboard.Name;
         this.reactWidgetsLayout = this.BindReactWidgets(this.SelectedDashboard.Widgets);
         this.DashboardDataBinding.onGetLayouts.next(DashboardMapping.deepClone(this.reactWidgetsLayout));
-
         if (this.OpenEditLayout) this.EditLayoutClicked();
     }
+
     private BindReactWidgets(widgets: WidgetPM[]) {
         var reactWidgets: ReactWidgetPM[] = [];
 
@@ -198,12 +176,11 @@ export class DashboardTabComponent {
             logitudeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     if (s == "OK_delete") {
-                        this.FatherComponent.RefreshTabsAfterDelete(this.SelectedDashboard?.Id);
+                        this.DashboardDeleted.emit(this.SelectedDashboard?.Id);
                     }
-
                     else {
                         this.SelectedDashboardName = this.SelectedDashboard.Name;
-                        this.FatherComponent.RefereshTabAfterEdit(this.SelectedDashboard);
+                        this.DashboardChanged.emit(this.SelectedDashboard);
                     }
                 }
             });
@@ -218,7 +195,7 @@ export class DashboardTabComponent {
         this.dashboardPMService.update(this.SelectedDashboard).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.SelectedDashboard = myResponse.Result;
-                this.SelectedDashboardId = this.SelectedDashboard?.Id;
+                this.DashboardId = this.SelectedDashboard?.Id;
                 this.SelectedDashboardName = this.SelectedDashboard?.Name;
                 this.applyWDashboard();
                 this.ResetFlags();
@@ -229,11 +206,11 @@ export class DashboardTabComponent {
     }
 
     private ResetFlags() {
-        this.IsEditLayoutButtonVisible = !AppTool.IsNullOrEmpty(this.SelectedDashboardId) && this.SelectedDashboard.CreatedByUserId == SessionLocator.LoggedUserId;
+        this.IsEditLayoutButtonVisible = !AppTool.IsNullOrEmpty(this.DashboardId) && this.SelectedDashboard.CreatedByUserId == SessionLocator.LoggedUserId;
         this.IsEditDashboardButtonVisible = false;
         this.IsEditLayoutModeActive = false;
         this.HasChanges = false;
-        this.FatherComponent.HasChanges = false;
+        this.TabHasChanges.emit(false);
     }
 
     AddWidgetClicked() {
@@ -404,7 +381,7 @@ export class DashboardTabComponent {
 
     ApplyFilters(filters: string) {
         // this.DashboardDataBinding.onApplyGlobalFilters.next(filters);
-        this.GlobalFilters =  filters ?? "[]";
+        this.GlobalFilters = filters ?? "[]";
         for (const item of this.reactWidgetsLayout.lg) {
             item.GlobalFilters = this.GlobalFilters;
             this.DashboardDataBinding.onEditWidget.next(item);

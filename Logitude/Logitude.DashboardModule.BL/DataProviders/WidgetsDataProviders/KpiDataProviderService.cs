@@ -68,7 +68,7 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
 
         private string GetUnit()
         {
-            if (!measureField.HasUnit || string.IsNullOrEmpty(measureField.Unit)) return null;
+            if (measureField == null || !measureField.HasUnit || string.IsNullOrEmpty(measureField.Unit)) return null;
             string genericUnitCode = GetGenericUnitCode();
             if (string.IsNullOrEmpty(genericUnitCode)) return measureField.Unit;
             return GetUnitByCode(genericUnitCode);

@@ -61,12 +61,12 @@
     height: 100%;
     width: 100%;
     text-align: left;
-    padding-left: 10px;
+    padding-left: 8px;
     padding-right: 10px;
-    max-width: 150px;
-    min-width: 100px;
     font-size: 11px;
-    /*font-weight:500;*/
+    flex-basis: 100%;
+    max-width: 155px;
+    width: 157px;
 }
 
 .DashboardTab .DashboardTabHead li:not(.DashboardTabSelected) {
