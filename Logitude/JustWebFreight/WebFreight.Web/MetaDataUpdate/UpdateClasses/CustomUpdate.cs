@@ -16580,7 +16580,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
         {
             string enviroment = ConfigurationManager.AppSettings.Get("ENVIROMENT");
             if (enviroment == "azure app service")
-                LoadBaseTablesForConnection(ConfigurationManager.AppSettings.Get("SystemMainStr"));
+                LoadBaseTablesForConnection(ConfigurationManager.ConnectionStrings["SystemMainStr"].ConnectionString);
 
             else
             {
@@ -16600,7 +16600,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             string enviroment = ConfigurationManager.AppSettings.Get("ENVIROMENT");
             if (enviroment == "azure app service")
-                LoadBaseTablesForConnection(ConfigurationManager.AppSettings.Get("SystemMainStr"));
+                LoadBaseTablesForConnection(ConfigurationManager.ConnectionStrings["SystemMainStr"].ConnectionString);
 
             else
             {

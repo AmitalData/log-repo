@@ -41,14 +41,15 @@ namespace WebFreight.Web.MetaDataUpdate
                 LoadBaseTablesForConnection(db.DBConnection);
             }
         }
+
         public void UpgradeClosedTablesForTenantZero()
         {
             isUpdate = true;
 
-            string enviroment = ConfigurationManager.AppSettings.Get("ENVIROMENT");
+            string enviroment = ConfigurationManager.AppSettings.Get(1);
 
             if (enviroment == "azure app service")
-                LoadBaseTablesForConnection(ConfigurationManager.AppSettings.Get("SystemMainStr"));
+                LoadBaseTablesForConnection(ConfigurationManager.ConnectionStrings["SystemMainStr"].ConnectionString);
 
             else
             {

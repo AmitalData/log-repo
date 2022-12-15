@@ -1419,9 +1419,10 @@ namespace WebFreight.Web.MetaDataUpdate
             updateClass.LoadObjectTableRulesANDFieldsValidations();
         }
         private static void ForCourier()
-        {
-            string dBConnection = GlobalDbHelper.GetGlobalDB(0).DBConnection;            
-            var commonDataContext = new CommonDataContext(DatabaseInitializer.GetConnection(dBConnection));
+        {            
+            var db = GlobalDbHelper.GetGlobalDB(0);
+            var commonDataContext = new CommonDataContext(DatabaseInitializer.GetConnection(db.DBConnection));
+
             MetaDataUpdateClass.CustomsInterfaces(commonDataContext);//courier 
         }
 
