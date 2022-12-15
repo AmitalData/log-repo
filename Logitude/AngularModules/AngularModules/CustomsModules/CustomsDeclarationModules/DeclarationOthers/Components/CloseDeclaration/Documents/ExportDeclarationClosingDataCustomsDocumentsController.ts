@@ -44,28 +44,14 @@ export class ExportDeclarationClosingDataCustomsDocumentsController implements I
             customsDocumentsTicketViewModels.forEach((ticket) => {
                 this.originalCustomsDocumentTicketViewModel.push(ticket);
             });
-            if (this.declarationPM.Direction == 'E' && this.declarationPM.TransportModeId == 'O') {
-                var _707exists = this.originalCustomsDocumentTicketViewModel.filter(d => d.DocumentTypeCode == '707')[0];
-                if (!_707exists) {
+
+            if (this.declarationPM.Direction == 'E' && this.declarationPM.TransportModeId == "A") {
+                var _419exists = this.originalCustomsDocumentTicketViewModel.filter(d => d.DocumentTypeCode == '419')[0];
+                if (!_419exists) {
                     var entityParams: RelatedEntityParams = new RelatedEntityParams()
                     entityParams.ParentEntityCode = 'ExportDeclarationClosingData';
                     entityParams.ParentEntityId = this.declarationPM.Id;
-                    var otherModelTicket: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "707");
-                    var metaData: { [Code: string]: any; } = {};
-                    var otherModelTicketViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(otherModelTicket, null, true,
-                        this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this);
-                   otherModelTicketViewModel.SetCustomDocumentMetaData(metaData);
-                    this.generatedCustomsDocumentTicketViewModel.push(otherModelTicketViewModel);
-                    this.originalCustomsDocumentTicketViewModel.push(otherModelTicketViewModel);
-                }
-            }
-            else {
-                var _704exists = this.originalCustomsDocumentTicketViewModel.filter(d => d.DocumentTypeCode == '704')[0];
-                if (!_704exists) {
-                    var entityParams: RelatedEntityParams = new RelatedEntityParams()
-                    entityParams.ParentEntityCode = 'ExportDeclarationClosingData';
-                    entityParams.ParentEntityId = this.declarationPM.Id;
-                    var otherModelTicket: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "704");
+                    var otherModelTicket: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "419");
                     var metaData: { [Code: string]: any; } = {};
                     var otherModelTicketViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(otherModelTicket, null, true,
                         this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this);
@@ -73,28 +59,18 @@ export class ExportDeclarationClosingDataCustomsDocumentsController implements I
                     this.generatedCustomsDocumentTicketViewModel.push(otherModelTicketViewModel);
                     this.originalCustomsDocumentTicketViewModel.push(otherModelTicketViewModel);
                 }
+            }
+            else {
 
-                if (this.declarationPM.TransportModeId == "A") {
-                    var _700exists = this.originalCustomsDocumentTicketViewModel.filter(d => d.DocumentTypeCode == '700')[0];
-                    if (!_700exists) {
+
+
+                if (this.declarationPM.Direction == 'E' && this.declarationPM.TransportModeId == 'O') {
+                    var _707exists = this.originalCustomsDocumentTicketViewModel.filter(d => d.DocumentTypeCode == '707')[0];
+                    if (!_707exists) {
                         var entityParams: RelatedEntityParams = new RelatedEntityParams()
                         entityParams.ParentEntityCode = 'ExportDeclarationClosingData';
                         entityParams.ParentEntityId = this.declarationPM.Id;
-                        var otherModelTicket: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "700");
-                        var metaData: { [Code: string]: any; } = {};
-                        var otherModelTicketViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(otherModelTicket, null, true,
-                            this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this);
-                        otherModelTicketViewModel.SetCustomDocumentMetaData(metaData);
-                        this.generatedCustomsDocumentTicketViewModel.push(otherModelTicketViewModel);
-                        this.originalCustomsDocumentTicketViewModel.push(otherModelTicketViewModel);
-                    }
-
-                    var _703exists = this.originalCustomsDocumentTicketViewModel.filter(d => d.DocumentTypeCode == '703')[0];
-                    if (!_703exists) {
-                        var entityParams: RelatedEntityParams = new RelatedEntityParams()
-                        entityParams.ParentEntityCode = 'ExportDeclarationClosingData';
-                        entityParams.ParentEntityId = this.declarationPM.Id;
-                        var otherModelTicket: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "703");
+                        var otherModelTicket: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "707");
                         var metaData: { [Code: string]: any; } = {};
                         var otherModelTicketViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(otherModelTicket, null, true,
                             this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this);
@@ -103,13 +79,13 @@ export class ExportDeclarationClosingDataCustomsDocumentsController implements I
                         this.originalCustomsDocumentTicketViewModel.push(otherModelTicketViewModel);
                     }
                 }
-                if (this.declarationPM.TransportModeId == "O") {
-                    var _705exists = this.originalCustomsDocumentTicketViewModel.filter(d => d.DocumentTypeCode == '705')[0];
-                    if (!_705exists) {
+                else {
+                    var _704exists = this.originalCustomsDocumentTicketViewModel.filter(d => d.DocumentTypeCode == '704')[0];
+                    if (!_704exists) {
                         var entityParams: RelatedEntityParams = new RelatedEntityParams()
                         entityParams.ParentEntityCode = 'ExportDeclarationClosingData';
                         entityParams.ParentEntityId = this.declarationPM.Id;
-                        var otherModelTicket: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "705");
+                        var otherModelTicket: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "704");
                         var metaData: { [Code: string]: any; } = {};
                         var otherModelTicketViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(otherModelTicket, null, true,
                             this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this);
@@ -118,22 +94,66 @@ export class ExportDeclarationClosingDataCustomsDocumentsController implements I
                         this.originalCustomsDocumentTicketViewModel.push(otherModelTicketViewModel);
                     }
 
-                    var _706exists = this.originalCustomsDocumentTicketViewModel.filter(d => d.DocumentTypeCode == '706')[0];
-                    if (!_706exists) {
-                        var entityParams: RelatedEntityParams = new RelatedEntityParams()
-                        entityParams.ParentEntityCode = 'ExportDeclarationClosingData';
-                        entityParams.ParentEntityId = this.declarationPM.Id;
-                        var otherModelTicket: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "706");
-                        var metaData: { [Code: string]: any; } = {};
-                        var otherModelTicketViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(otherModelTicket, null, true,
-                            this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this);
-                        otherModelTicketViewModel.SetCustomDocumentMetaData(metaData);
-                        this.generatedCustomsDocumentTicketViewModel.push(otherModelTicketViewModel);
-                        this.originalCustomsDocumentTicketViewModel.push(otherModelTicketViewModel);
+                    if (this.declarationPM.TransportModeId == "A") {
+                        var _700exists = this.originalCustomsDocumentTicketViewModel.filter(d => d.DocumentTypeCode == '700')[0];
+                        if (!_700exists) {
+                            var entityParams: RelatedEntityParams = new RelatedEntityParams()
+                            entityParams.ParentEntityCode = 'ExportDeclarationClosingData';
+                            entityParams.ParentEntityId = this.declarationPM.Id;
+                            var otherModelTicket: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "700");
+                            var metaData: { [Code: string]: any; } = {};
+                            var otherModelTicketViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(otherModelTicket, null, true,
+                                this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this);
+                            otherModelTicketViewModel.SetCustomDocumentMetaData(metaData);
+                            this.generatedCustomsDocumentTicketViewModel.push(otherModelTicketViewModel);
+                            this.originalCustomsDocumentTicketViewModel.push(otherModelTicketViewModel);
+                        }
+
+                        var _703exists = this.originalCustomsDocumentTicketViewModel.filter(d => d.DocumentTypeCode == '703')[0];
+                        if (!_703exists) {
+                            var entityParams: RelatedEntityParams = new RelatedEntityParams()
+                            entityParams.ParentEntityCode = 'ExportDeclarationClosingData';
+                            entityParams.ParentEntityId = this.declarationPM.Id;
+                            var otherModelTicket: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "703");
+                            var metaData: { [Code: string]: any; } = {};
+                            var otherModelTicketViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(otherModelTicket, null, true,
+                                this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this);
+                            otherModelTicketViewModel.SetCustomDocumentMetaData(metaData);
+                            this.generatedCustomsDocumentTicketViewModel.push(otherModelTicketViewModel);
+                            this.originalCustomsDocumentTicketViewModel.push(otherModelTicketViewModel);
+                        }
+                    }
+                    if (this.declarationPM.TransportModeId == "O") {
+                        var _705exists = this.originalCustomsDocumentTicketViewModel.filter(d => d.DocumentTypeCode == '705')[0];
+                        if (!_705exists) {
+                            var entityParams: RelatedEntityParams = new RelatedEntityParams()
+                            entityParams.ParentEntityCode = 'ExportDeclarationClosingData';
+                            entityParams.ParentEntityId = this.declarationPM.Id;
+                            var otherModelTicket: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "705");
+                            var metaData: { [Code: string]: any; } = {};
+                            var otherModelTicketViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(otherModelTicket, null, true,
+                                this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this);
+                            otherModelTicketViewModel.SetCustomDocumentMetaData(metaData);
+                            this.generatedCustomsDocumentTicketViewModel.push(otherModelTicketViewModel);
+                            this.originalCustomsDocumentTicketViewModel.push(otherModelTicketViewModel);
+                        }
+
+                        var _706exists = this.originalCustomsDocumentTicketViewModel.filter(d => d.DocumentTypeCode == '706')[0];
+                        if (!_706exists) {
+                            var entityParams: RelatedEntityParams = new RelatedEntityParams()
+                            entityParams.ParentEntityCode = 'ExportDeclarationClosingData';
+                            entityParams.ParentEntityId = this.declarationPM.Id;
+                            var otherModelTicket: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "706");
+                            var metaData: { [Code: string]: any; } = {};
+                            var otherModelTicketViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(otherModelTicket, null, true,
+                                this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this);
+                            otherModelTicketViewModel.SetCustomDocumentMetaData(metaData);
+                            this.generatedCustomsDocumentTicketViewModel.push(otherModelTicketViewModel);
+                            this.originalCustomsDocumentTicketViewModel.push(otherModelTicketViewModel);
+                        }
                     }
                 }
             }
-
 
             return of(this.generatedCustomsDocumentTicketViewModel);
         });
