@@ -73,6 +73,13 @@ namespace Logitude.DashboardModule.Data.EntityPOCOs
 	    public DateTime? FromDate { get; set; }
         [Column("ToDate")]
 	    public DateTime? ToDate { get; set; }
+        [ForeignKey("SecondaryGroupFieldsMetaData")]
+        [Column("SecondaryGroupById")]
+	    public string SecondaryGroupById { get; set; }
+	      
+        public virtual AnalyticsFactsFieldsMetaData SecondaryGroupFieldsMetaData { get; set; }
+        [Column("SecondaryDateGroupCode")]
+	    public string SecondaryDateGroupCode { get; set; }
     }
 }
 	 

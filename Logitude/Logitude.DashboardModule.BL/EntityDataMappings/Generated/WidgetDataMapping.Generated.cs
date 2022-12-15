@@ -42,7 +42,9 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         ComparisonOperator, 
 	         ComparisonDateGroup, 
 	         FromDate, 
-	         ToDate,
+	         ToDate, 
+	         SecondaryGroupById, 
+	         SecondaryDateGroupCode,
 	      }
 
 
@@ -71,7 +73,9 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         ComparisonDateGroup, 
 	         FromDate, 
 	         ToDate, 
-	         GlobalFilters,
+	         GlobalFilters, 
+	         SecondaryGroupById, 
+	         SecondaryDateGroupCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -178,6 +182,16 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToDate))
             {
 				entityPOCO.ToDate = entityPM.ToDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SecondaryGroupById))
+            {
+				entityPOCO.SecondaryGroupById = entityPM.SecondaryGroupById;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SecondaryDateGroupCode))
+            {
+				entityPOCO.SecondaryDateGroupCode = entityPM.SecondaryDateGroupCode;
 			}
 			}
 
@@ -289,6 +303,16 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 					entityPM.ToDate = entityPOCO.ToDate;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SecondaryGroupById))
+            {
+					entityPM.SecondaryGroupById = entityPOCO.SecondaryGroupById;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SecondaryDateGroupCode))
+            {
+					entityPM.SecondaryDateGroupCode = entityPOCO.SecondaryDateGroupCode;
+            }
+
 		}
 
 		public void PMToOldPM(WidgetPM entityPM, WidgetPM oldEntityPM)
@@ -393,6 +417,16 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToDate))
             {
                 oldEntityPM.ToDate = entityPM.ToDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SecondaryGroupById))
+            {
+                oldEntityPM.SecondaryGroupById = entityPM.SecondaryGroupById;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SecondaryDateGroupCode))
+            {
+                oldEntityPM.SecondaryDateGroupCode = entityPM.SecondaryDateGroupCode;
             }
 			
 		}

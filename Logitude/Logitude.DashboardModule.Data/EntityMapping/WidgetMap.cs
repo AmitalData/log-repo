@@ -64,6 +64,10 @@ namespace Logitude.DashboardModule.Data.EntityMapping
             this.Property(t => t.FromDate).HasColumnName("FromDate");
 
             this.Property(t => t.ToDate).HasColumnName("ToDate");
+
+            this.Property(t => t.SecondaryGroupById).HasColumnName("SecondaryGroupById").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.SecondaryDateGroupCode).HasColumnName("SecondaryDateGroupCode").HasMaxLength(17).IsUnicode(false);
         }
     }
 }
