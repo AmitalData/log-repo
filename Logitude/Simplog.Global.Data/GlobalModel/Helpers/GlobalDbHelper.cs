@@ -134,7 +134,7 @@ namespace Simplog.Global.Data.GlobalModel.Helpers
             return new GlobalDB()
             {
                 Id = "0",
-                DBConnection = ConfigurationManager.AppSettings.Get("SystemMainStr"),
+                DBConnection = ConfigurationManager.ConnectionStrings["SystemMainStr"].ConnectionString,
                 IsUpgrading = false,
                 IsActive = true,
                 SharedDWConnection = null,
