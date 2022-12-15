@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 
 export class DigitalPortalCustomizationScreenLayoutComponent {
 
-    public ScreensC: Array<ScreenItem> = [];
+   
     constructor() {
 
     }
