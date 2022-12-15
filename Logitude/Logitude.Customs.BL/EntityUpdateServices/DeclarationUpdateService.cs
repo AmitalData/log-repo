@@ -414,25 +414,27 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
 
                 ClientQueryService clientQueryService = new ClientQueryService(entityPM.Tenant);
-                if (!string.IsNullOrEmpty(entityPM.ImporterCode))
+                if (!string.IsNullOrEmpty(entityPM.ImporterId))
+                {
+                    ClientPM client = clientQueryService.GetSingle(entityPM.ImporterId, false, true);
+                    if (client != null)
+                    {
+                        entityPM.ImporterId = client.Id;
+                      
+                    }
+                    else
+                    {
+                        entityPM.ImporterId = null;
+                    }
+                }
+                
+                 else if (!string.IsNullOrEmpty(entityPM.ImporterCode))
                 {
                     ClientPM client = clientQueryService.GetClientByCode(entityPM.ImporterCode, entityPM.Tenant);
                     if (client != null)
                     {
                         entityPM.ImporterId = client.Id;
-                        //  entityPM.ImporterTypeCode = "1";
-                        //if (!string.IsNullOrWhiteSpace(client.PassportNumber) && !string.IsNullOrWhiteSpace(client.PassportCountryCode))
-                        //{
-                        //    if (client.PassportTypeCode == "1")
-                        //    {
-                        //        entityPM.ImporterTypeCode = "2";
-                        //    }
-                        //    else
-                        //    {
-                        //        entityPM.ImporterTypeCode = "3";
-                        //    }
-                        //    entityPM.ImporterPassCountryCode = client.PassportCountryCode;
-                        //}
+                   
                     }
                     else
                     {
@@ -1222,8 +1224,25 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                 }
             }
+            if (entityPM.ImporterId != null)
+            {
+                ClientQueryService clientQueryService = new ClientQueryService(entityPM.Tenant);
+                ClientPM client = clientQueryService.GetSingle(entityPM.ImporterId,false, true);
+                if (client != null)
+                {
 
-            if (entityPM.ImporterCode != null)
+                    entityPM.CalculatedImporterName = client.FullName;
+                    FacilitationTypeQueryService FacilitationTypeQueryService = new FacilitationTypeQueryService(entityPM.Tenant);
+                    FacilitationTypePM FacilitationType = FacilitationTypeQueryService.GetSingle(client.FacilitationTypeCode, false, true);
+                    entityPM.FacilityTypeName = FacilitationType != null ? FacilitationType.LocalName : null;
+                }
+
+                else
+                {
+                    entityPM.FacilityTypeName = null;
+                }
+            }
+            else if (entityPM.ImporterCode != null)
             {
                 ClientQueryService clientQueryService = new ClientQueryService(entityPM.Tenant);
                 ClientPM client = clientQueryService.GetClientByCode(entityPM.ImporterCode, entityPM.Tenant);
