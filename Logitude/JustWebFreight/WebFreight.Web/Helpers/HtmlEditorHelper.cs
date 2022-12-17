@@ -4482,11 +4482,11 @@ namespace WebFreight.Web.Helpers
             {
                 decimal db = 0;
                 decimal.TryParse(value, out db);
-                if (digitsAfterPoint == 3)
+                result = db.ToString("#,##0.");
+                if (field.DigitsAfterPoint > 0)
                 {
-                    result = db.ToString("#,##0." + new string('0', 3));
+                    result = db.ToString("#,##0." + new string('0', field.DigitsAfterPoint));
                 }
-                else result = db.ToString("N");
             }
             else result = value;
 
