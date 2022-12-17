@@ -37,6 +37,7 @@ namespace WebFreight.Web.AccountingModel.DomainServices
         {
             CustomCargoTrackingShipmentList customCargoTrackingShipmentList = new CustomCargoTrackingShipmentList();
             customCargoTrackingShipmentList.ShipmentNumber = cargoTrackingShipmentList.ShipmentNumber;
+            customCargoTrackingShipmentList.IncotermName = cargoTrackingShipmentList.IncotermName;
             customCargoTrackingShipmentList.TransportModeId = cargoTrackingShipmentList.TransportModeId;
             customCargoTrackingShipmentList.CustomerReference = cargoTrackingShipmentList.CustomerReference;
             customCargoTrackingShipmentList.DirectionId = cargoTrackingShipmentList.DirectionId;

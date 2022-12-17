@@ -357,7 +357,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
                 AddForwardingShipmentsDocsToCustomsShipment(documentsFilingPM, forwardingShipmentDocumentsFiling);
             }
 
-            if (cargoShipmentPM.ConnectedOrders.Any()) {
+            if (cargoShipmentPM.ConnectedOrders!= null && cargoShipmentPM.ConnectedOrders.Any()) {
                 foreach (var order in cargoShipmentPM.ConnectedOrders)
                 {
                     List<DocumentsFilingPM> orderShipmentDocumentsFiling = documentsFilingQuery
