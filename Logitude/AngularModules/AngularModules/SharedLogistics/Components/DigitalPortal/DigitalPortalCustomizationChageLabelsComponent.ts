@@ -118,9 +118,18 @@ export class CustomizationLabelItem extends BaseComponent {
 
     constructor(public father: DigitalPortalCustomizationChageLabelsComponent, item) {
         super();
-        this.code = item.Code;
+        this.textCode = item.TextCode;
+        this.defaultText = item.DefaultText;
         this.displayText = item.DisplayText;
-        this.displayLable = item.DisplayLable;
+        this.fieldCode = item.FieldCode;
+    }
+
+    private defaultText = "";
+    get DefaultText() { return this.defaultText; }
+    set DefaultText(value) {
+        if (value != this.defaultText) {
+            this.defaultText = value;
+        }
     }
 
     private displayText = "";
@@ -130,40 +139,47 @@ export class CustomizationLabelItem extends BaseComponent {
             this.displayText = value;
         }
     }
-
-    private displayLable = "";
-    get DisplayLable() { return this.displayLable; }
-    set DisplayLable(value) {
-        if (value != this.displayLable) {
-            this.displayLable = value;
+    
+    private fieldCode = "";
+    get FieldCode() { return this.fieldCode; }
+    set FieldCode(value) 
+    {
+        if (value != this.fieldCode) 
+        {
+            this.fieldCode = value;
         }
     }
 
     public UpdateModifiedLables(newValue) {
 
-        if (this.father.ModifiedLables.Lables == null) this.father.ModifiedLables.Lables = [];
+        if (this.father.ModifiedLables.Lables == null) 
+        {
+            this.father.ModifiedLables.Lables = [];
+        }
 
         this.father.IsModifiedLables = true;
         this.father.customizationEditComponent.IsDirty = true;
-        var label = this.father.ModifiedLables?.Lables?.filter(d => d.Code == this.Code)[0];
+        var label = this.father.ModifiedLables?.Lables?.filter(d => d.TextCode == this.textCode)[0];
         var index = this.father.ModifiedLables?.Lables?.indexOf(label);
         if (index != null && index != -1) {
             this.father.ModifiedLables.Lables.splice(index, 1);
         }
 
         var newLabel = new DigitalTextCodeObject();
-        newLabel.Code = this.Code;
-        newLabel.DisplayText = newValue;
+        newLabel.TextCode = this.textCode;
+        newLabel.FieldCode = this.fieldCode;
+        newLabel.DefaultText = newValue;
         this.father.ModifiedLables.Lables.push(newLabel);
     }
 
-    private code: string = "";
-    get Code() {
-        return this.code;
+    private textCode: string = "";
+    get TextCode() {
+        return this.textCode;
     }
-    set Code(value) {
-        if (value != this.code) {
-            this.code = value;
+
+    set TextCode(value) {
+        if (value != this.textCode) {
+            this.textCode = value;
         }
     }
 }

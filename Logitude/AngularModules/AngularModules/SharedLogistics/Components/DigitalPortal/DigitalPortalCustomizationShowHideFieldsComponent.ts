@@ -119,7 +119,7 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
 
             hasHasPersmissionList.forEach(item => {
                 var newLabel = new DigitalFeildSecurityUpdateModel();
-                newLabel.Field = item.Field;
+                newLabel.FieldCode = item.FieldCode;
                 this.ModifiedLables.DefaultSettings.push(newLabel);
             });
             
@@ -148,16 +148,16 @@ export class ProfileFieldsItem extends BaseComponent {
     constructor(public father: DigitalPortalCustomizationShowHideFieldsComponent, item) {
         super();
         this.hasPersmission = item.HasPersmission;
-        this.field = item.Field;
+        this.fieldCode = item.FieldCode;
     }
 
-    private field: string = "";
-    get Field() {
-        return this.field;
+    private fieldCode: string = "";
+    get FieldCode() {
+        return this.fieldCode;
     }
-    set Field(value) {
-        if (value != this.field) {
-            this.field = value;
+    set FieldCode(value) {
+        if (value != this.fieldCode) {
+            this.fieldCode = value;
         }
     }
 
