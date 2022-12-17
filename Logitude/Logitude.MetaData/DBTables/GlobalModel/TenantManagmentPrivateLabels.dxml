@@ -202,4 +202,11 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="Distributor"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

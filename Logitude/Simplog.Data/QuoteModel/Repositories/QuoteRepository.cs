@@ -159,7 +159,7 @@ namespace Simplog.Data.QuoteModel.Repositories
 
         public void Add(Quote entity)
         {
-            AddFromQuote(entity);
+            //AddFromQuote(entity);
             context.Quotes.Add(entity);
         }
 
@@ -173,7 +173,7 @@ namespace Simplog.Data.QuoteModel.Repositories
         {
             try
             {
-                UpdateFromQuote(entity);
+                //UpdateFromQuote(entity);
                 context.Quotes.Attach(entity);
             }
             catch { }

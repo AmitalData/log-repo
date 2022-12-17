@@ -18,6 +18,7 @@ import { DocumentTypeTemplatePMExtendedService } from 'Common/Services/ExtendedP
 import { DocumentTypeTemplatePM } from 'Common/EntityPMs/DocumentTypeTemplatePM';
 import { GeneralEmailSender } from '../../Infrastructure/Helpers/GeneralEmailSender';
 import { AppTool } from '../../Infrastructure/Tools';
+import { ServiceHelper } from '../../Infrastructure/Utilities/ServiceHelper';
 
 @Component({
 
@@ -36,6 +37,7 @@ export class InviteCustomersComponent implements OnInit, OnDestroy {
     CustomerName: string;
     CustomerCode: string;
     InvitationStatus: string;
+    IsLoginToOnlineVisibility: boolean = false;
 
     DocumentTypeTemplates: DocumentTypeTemplatePM[];
     CanChangeTemplate: boolean = false;
@@ -253,6 +255,9 @@ export class InviteCustomersComponent implements OnInit, OnDestroy {
 
     }
 
+    LoginToOnlineVisibility() {
+        window.open(`https://${SessionLocator.TenantManagementJS.CustomerURL}/online-visibility?securitykey=${ServiceHelper.GetLoggedUserToken()}&cid=${this.CurrentEntity.Id}&ctype=${this.CurrentEntity.PartnerTypeId}`, "_blank");
+    }
 
     EditUserButtoClick(item: CustomerLineViewModel) {
 
@@ -284,9 +289,9 @@ export class InviteCustomersComponent implements OnInit, OnDestroy {
         this.CustomerCode = this.CurrentEntity.Code;
         this.InvitationStatus = this.CurrentEntity.SharedLogisticsInvitationStatusName;
         this.IsDigitalPortal = args.IsDigitalPortal;
+        this.IsLoginToOnlineVisibility = this.IsDigitalPortal && this.CurrentEntity.CustomerStatusCode !== "ACT";
+
         this.LoadData();
     }
-
-
 
 }

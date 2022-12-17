@@ -849,7 +849,15 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
                  this.UIProperties.SetRequired("HybridPartnerId", this.ObjectTableName, true);                 
              }
          }
-     }
+    }
+
+    get Distributor() {
+        return this.EntityPM.Distributor;
+    }
+    set Distributor(value: string) {
+        if (value == this.EntityPM.Distributor) return;
+        this.EntityPM.Distributor = value;
+    }
 
      get ReceiveAllStatuses() {
          return this.EntityPM.ReceiveAllStatuses;

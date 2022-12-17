@@ -2415,6 +2415,9 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_QuotesShipmentSubTypeNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_QuotesShipmentSubTypeNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection,UseUnitSelection) Values(@Fact_QuotesShipmentSubTypeNewId,0,'Fact_Quotes','[Shipment Sub Type]','Shipment Sub Type','Dimension','false',0,0,'DIM_ShipmentSubTypes','false','false','true','General','false','false','false','Quote.ShipmentSubTypeId','false','false','false')  
+declare @Fact_QuotesIsCancelledNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_QuotesIsCancelledNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom,OriginalObjectFieldCode,DontDisplayInView,IsMultipleSelection,UseUnitSelection) Values(@Fact_QuotesIsCancelledNewId,0,'Fact_Quotes','[Is Cancelled]','Is Cancelled','Boolean','false',0,0,'false','false','true','General','false','false','false','Quote.IsCancelled','false','false','false')  
 ------------------------------------------------------------------------------------
 declare @Fact_ShipmentsNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ShipmentsNewId OUTPUT,'DWObjectTable' 

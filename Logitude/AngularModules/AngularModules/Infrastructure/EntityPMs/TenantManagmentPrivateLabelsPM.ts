@@ -162,6 +162,11 @@ export class TenantManagmentPrivateLabelsPM {
     private filingInboxDomain: string;
     public get FilingInboxDomain() { return this.filingInboxDomain; }
     public set FilingInboxDomain(newValue: string) { if (this.filingInboxDomain != newValue) { this.filingInboxDomain = newValue; this.MarkAsDirty("FilingInboxDomain"); } }
+       
+    private distributor: string;
+    public get Distributor() { return this.distributor; }
+    public set Distributor(newValue: string) { if (this.distributor != newValue) { this.distributor = newValue; this.MarkAsDirty("Distributor"); } }
+
 
     public OldEntityPM: TenantManagmentPrivateLabelsPM;
 		

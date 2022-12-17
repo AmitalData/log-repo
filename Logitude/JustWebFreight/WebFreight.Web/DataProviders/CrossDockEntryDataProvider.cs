@@ -77,6 +77,7 @@ namespace WebFreight.Web.DataProviders
         public string GrossWeightInLB { get; set; }
         public double? VolumeInCBM { get; set; }
         public double? VolumeInCBF { get; set; }
+
         public string ConsigneeReference1 { get; set; }
         public string ConsigneeReference2 { get; set; }
         public string TruckerReference { get; set; }

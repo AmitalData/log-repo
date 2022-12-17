@@ -177,6 +177,16 @@ export class WidgetPM {
     public set GlobalFilters(newValue: string) { if (this.globalFilters != newValue) { this.globalFilters = newValue; this.MarkAsDirty("GlobalFilters"); } }
        
 	 
+    private secondaryGroupById: string;
+    public get SecondaryGroupById() { return this.secondaryGroupById; }
+    public set SecondaryGroupById(newValue: string) { if (this.secondaryGroupById != newValue) { this.secondaryGroupById = newValue; this.MarkAsDirty("SecondaryGroupById"); } }
+       
+	 
+    private secondaryDateGroupCode: string;
+    public get SecondaryDateGroupCode() { return this.secondaryDateGroupCode; }
+    public set SecondaryDateGroupCode(newValue: string) { if (this.secondaryDateGroupCode != newValue) { this.secondaryDateGroupCode = newValue; this.MarkAsDirty("SecondaryDateGroupCode"); } }
+       
+	 
 
     public OldEntityPM: WidgetPM;
 	

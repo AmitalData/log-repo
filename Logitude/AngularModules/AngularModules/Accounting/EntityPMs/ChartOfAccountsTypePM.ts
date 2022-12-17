@@ -49,6 +49,11 @@ export class ChartOfAccountsTypePM {
     public set Inactive(newValue: boolean) { if (this.inactive != newValue) { this.inactive = newValue; this.MarkAsDirty("Inactive"); } }
        
 	 
+    private order: number;
+    public get Order() { return this.order; }
+    public set Order(newValue: number) { if (this.order != newValue) { this.order = newValue; this.MarkAsDirty("Order"); } }
+       
+	 
 
     public OldEntityPM: ChartOfAccountsTypePM;
 		

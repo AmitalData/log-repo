@@ -1056,7 +1056,7 @@
                             <div style="color: #00b1e9;font-weight: bold;">
                                 {{'ReconcileExternalPage.O.Difference' | TextCodeTranslationPipe}}
                             </div>
-                            <div style="font-size: 15px;color:#0f9776;" [class.red]="totalDifference!=0">
+                            <div style="font-size: 15px;color:#0f9776;" [class.red]="orignalDifference<0">
                                 {{totalDifference | NumbersPipe: 'N2'}} {{ openAmountCurrency }}
                             </div>
                         </td>

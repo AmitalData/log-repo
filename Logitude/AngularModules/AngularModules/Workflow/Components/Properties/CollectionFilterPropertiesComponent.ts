@@ -4,7 +4,7 @@ import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { ConditionOperations } from "Workflow/Constants/ConditionOperations";
-import { CollectionFilterEntitiesTreeList } from "Workflow/Models/CollectionFilterEntitiesTreeList";
+import { SingleEditableEntitiesTreeList } from "Workflow/Models/SingleEditableEntitiesTreeList";
 import { Condition } from "Workflow/Models/Condition";
 import { ObjectTables } from "Workflow/Models/ObjectTables";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
@@ -21,7 +21,7 @@ export class CollectionFilterPropertiesComponent extends BaseComponent {
     public CurrentNodeId: string;
     public FlowObjectFields: ObjectFieldList[];
 
-    public CollectionFilterEntitiesTreeItems: TreeSelectItem[];
+    public SingleEditableEntitiesTreeItems: TreeSelectItem[];
 
     public Data: any;
     public Name: string = null;
@@ -44,7 +44,7 @@ export class CollectionFilterPropertiesComponent extends BaseComponent {
 
     ngOnInit() {
         this.initialize();
-        this.initializeCollectionFilterEntitiesTree();
+        this.initializeSingleEditableEntitiesTree();
     }
 
     initialize() {
@@ -74,8 +74,8 @@ export class CollectionFilterPropertiesComponent extends BaseComponent {
         }
     }
 
-    initializeCollectionFilterEntitiesTree() {
-        this.CollectionFilterEntitiesTreeItems = new CollectionFilterEntitiesTreeList(this.FlowObject, this.CurrentNodeId).Items;
+    initializeSingleEditableEntitiesTree() {
+        this.SingleEditableEntitiesTreeItems = new SingleEditableEntitiesTreeList(this.FlowObject, this.CurrentNodeId).Items;
     }
 
     updateName(name: string) {

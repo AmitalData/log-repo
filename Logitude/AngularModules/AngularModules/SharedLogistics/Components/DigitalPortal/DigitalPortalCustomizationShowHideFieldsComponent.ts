@@ -25,7 +25,7 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
         this.digitalTextService = new DigitalTextService();
         this.FieldsItemsSource = new ObservableCollection([]);
         this.ModifiedLables = new DigitalFeildSecurityObjectModel();
-        this.ModifiedLables.Lables = [];
+        this.ModifiedLables.DefaultSettings = [];
         this.IsModifiedLables = false;
     }
 
@@ -84,6 +84,7 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
     }
 
     BuildItemsSource() {
+        this.FieldsItemsSource = new ObservableCollection([]);
         var profilesList: ProfileFieldsItem[] = [];
         var objectTableId = this.SelectedObjectTableItem.Name;
         var profileId = this.SelectedProfileItem.Code;
@@ -102,18 +103,34 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
     }
 
     Cancel() {
-
+        this.customizationEditComponent.IsDirty = false;
+        if (this.customizationEditComponent.NewSelectedMenu) {
+            this.customizationEditComponent.SelectedMenu = this.customizationEditComponent.NewSelectedMenu;
+        }
     }
 
     Save() {
         if (this.IsModifiedLables) {
+
             this.CurrentSession.StartBusyIndicatorLoading();
             this.ModifiedLables.ObjectTableId = this.SelectedObjectTableItem.Name;
             this.ModifiedLables.ProfileId = this.SelectedProfileItem.Code;
+            var hasHasPersmissionList = this.FieldsItemsSource.Collection.filter(a => a.HasPersmission);
+
+            hasHasPersmissionList.forEach(item => {
+                var newLabel = new DigitalFeildSecurityUpdateModel();
+                newLabel.Field = item.Field;
+                this.ModifiedLables.DefaultSettings.push(newLabel);
+            });
+            
             this.digitalTextService.UpdateFeildPermission(this.ModifiedLables).subscribe((myResult) => {
                 //this.customizationEditComponent.CurrentSession.CloseCurrentWindow();
                 this.customizationEditComponent.IsDirty = false;
+                this.ModifiedLables = new DigitalFeildSecurityObjectModel();
                 this.CurrentSession.StopBusyIndicator();
+                if (this.customizationEditComponent.NewSelectedMenu) {
+                    this.customizationEditComponent.SelectedMenu = this.customizationEditComponent.NewSelectedMenu;
+                }
             });
         }
     }
@@ -156,9 +173,6 @@ export class ProfileFieldsItem extends BaseComponent {
     public UpdateModifiedLables(newValue) {
         this.father.IsModifiedLables = true;
         this.father.customizationEditComponent.IsDirty = true;
-        var newLabel = new DigitalFeildSecurityUpdateModel();
-        newLabel.Field = this.Field;
-        this.father.ModifiedLables.Lables.push(newLabel);
     }
 
     HasPersmissionClicked(item) {

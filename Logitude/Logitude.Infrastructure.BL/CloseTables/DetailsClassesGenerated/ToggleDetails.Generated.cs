@@ -780,6 +780,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "ADL, Audit Log", 
                 Description = "Audit Logs", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "XUP", 
+                Name = "Export To Excel Using Parallel", 
+                SearchFields = "XUP,Export To Excel Using Parallel", 
+                Description = "Export To Excel Using Parallel", 
+			});
 			
             return all;
        }

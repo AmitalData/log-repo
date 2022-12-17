@@ -332,6 +332,28 @@
 
                                                 </tr>
 
+                                                <!-- Distributor -->
+                                                <tr class="FormFieldRow">
+
+                                                    <td style="width:130px">
+                                                        <LogLabel [Text]="'Distributor'" [ObjectFieldName]="'Distributor'" [ObjectTableName]="ObjectTableName"
+                                                                  [DataContext]="DataContext"></LogLabel>
+                                                    </td>
+                                                    <td style="width:380px;">
+                                                        <LogLov [ObjectFieldName]="'Distributor'"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [SelectedValue]="Distributor"
+                                                                [DataContext]="DataContext"
+                                                                [DisplayMemberPath]="'EnglishName'"
+                                                                [LookUpTableName]="'Distributor'"
+                                                                [HideColumns]="true">
+                                                        </LogLov>
+                                                    </td>
+
+                                                    <td></td>
+
+                                                </tr>
+
                                                 <!-- Receive All Statuses -->
                                                 <tr class="FormFieldRow">
                                                     <td>

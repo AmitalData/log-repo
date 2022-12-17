@@ -7,8 +7,11 @@ import { Component } from '@angular/core';
 
 export class DigitalPortalCustomizationScreenLayoutComponent {
 
+   
     constructor() {
 
     }
+
+
 
 }

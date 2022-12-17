@@ -99,8 +99,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTablePlural =  "Generals",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
-			      				    AvailableInCustomization =  false,
-			      				    SupportSubEntity =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -690,6 +688,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 		   Feature GeneralFeature_Customization_CreateSubObjects = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customization.CreateSubObjects", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.Customization.CreateSubObjects", NameTextCodeDefaultText = @"Create Sub Object in Customization" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
 		   Feature GeneralFeature_Customization_CreateObjects = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customization.CreateObjects", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.Customization.CreateObjects", NameTextCodeDefaultText = @"Create Custom object in Customization " }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
+
+		   Feature GeneralFeature_General_Features_ChartOfAccountsTypesOrder = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "General.Features.ChartOfAccountsTypesOrder", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.General.Features.ChartOfAccountsTypesOrder", NameTextCodeDefaultText = @"Chart Of Accounts Types Order" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
 
    
@@ -2705,6 +2705,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  		   TextCode GeneralTextCode_GeneralGDownloadAll = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.DownloadAll", DefaultText = "Download all",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMCCustomizationCustomization = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Customization.Customization", DefaultText = "Customization",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_AccountingGeneralOChartOfAccountsTypesOrder = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.ChartOfAccountsTypesOrder", DefaultText = "Chart Of Accounts Types Order",LocalDefaultText = @"Chart Of Accounts Types Order", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
 
    
 	    

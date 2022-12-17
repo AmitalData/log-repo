@@ -77,7 +77,7 @@ export class UpdateRecordPropertiesComponent extends BaseComponent {
         this.ValidationErrorsList = [];
         let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
         if (notValidUIProperties.length === 0) {
-            console.log(this.Data);
+            //console.log(this.Data);
             this.CurrentSession.CurrentWindow.Close(this.Data);
         } else {
             let validationErrors = notValidUIProperties.map(t => { return t.ValidationError; });

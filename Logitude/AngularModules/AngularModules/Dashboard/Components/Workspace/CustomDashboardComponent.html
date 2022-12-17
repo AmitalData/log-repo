@@ -15,7 +15,7 @@
                         [DisplayMemberPath]="'Name'" 
                         [SelectedItem]="SelectedDashboard" 
                         [ItemsSource]="ItemsSource" 
-                        (SelectedItemChanged)="SelectedDashboard = $event"
+                        (SelectedItemChanged)="DropDwonSelectionChanged($event)"
                         [Loading]="DashboardDropdownLoading">
                     </dashboard-dropdown>
                 </td>
@@ -39,20 +39,27 @@
 
     <div class="DashboardTab">
         <div class="DashboardTabHead">
-            <ul>
-                <li *ngFor="let item of DashboardsTabs" [class.DashboardTabSelected]="item.IsSelected" (click)="SelectionChanged(item, true)">
-                    <div class="DashboardInnerTab TextTrimming" [class.InnerTabSelected]="item.IsSelected">
+            <ul style="display: flex;">
+                <li *ngFor="let item of DashboardsTabs" [class.DashboardTabSelected]="item.Dashboard.Id == SelectedDashboard?.Id" (click)="TabSelectionChanged(item)">
+                    <div class="DashboardInnerTab TextTrimming" [class.InnerTabSelected]="item.Dashboard.Id == SelectedDashboard?.Id">
                         {{item.Name}}
                     </div>
                 </li>
             </ul>
         </div>
 
-        <div class="DashboardTabBody" [ngStyle]="{'top': dashbaordCount > 0 ? '19px': '0'}">
-            <div *ngIf="dashbaordCount > 0">
-                <div class="MediaFillAbsolute" *ngFor="let item of DashboardsTabs;" [hidden]="!item.IsSelected">
-                    <div LocationDirective Code="DashboardTabLocation" ItemCode="{{item.Dashboard.Id}}"></div>
-                </div>
+
+
+        <div class="DashboardTabBody" [ngStyle]="{'top': dashbaordCount > 0 ? '19px': '0'}">           
+            <div *ngIf="dashbaordCount > 0 && SelectedDashboard && ShowDashboardTab" style="height: 100%;">
+                <dashboard-tab
+                    [DashboardId]="SelectedDashboard.Id" 
+                    [OpenEditLayout]="OpenEditLayout" 
+                    (DashboardDeleted)="RefreshTabsAfterDelete($event)"
+                    (DashboardChanged)="DashboardChanged($event)"
+                    (TabHasChanges)="HasChanges = $event"
+                    (DashboardEntity)="DashboardEntity = $event">
+                </dashboard-tab>
             </div>
         </div>
 
