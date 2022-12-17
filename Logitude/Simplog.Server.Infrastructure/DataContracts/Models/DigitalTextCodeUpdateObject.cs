@@ -2,7 +2,7 @@
 {
     public class DigitalTextCodeUpdateObject
     {
-        public string DisplayText { get; set; }
-        public string Code { get; set; }
+        public string DefaultText { get; set; }
+        public string TextCode { get; set; }
     }
 }

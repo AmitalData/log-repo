@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="7">
+  <Sql Version="8">
       <![CDATA[	  
       declare @NewEntityId as varchar(15)
  	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT, 'DigitalProfiles'
@@ -20,271 +20,28 @@
 	  INSERT INTO DigitalFieldSecurities (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, DefaultSettings) 
 	  values (@newDigitalFieldEntityId, 0, @generalObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @customerProfileId, 
 	  '[{
-			"Field": "Dashboard.G.Dashboard"
+			"FieldCode": "Contact.Birthday"
 		},
 		{
-			"Field": "Dashboard.G.ShipmentsToArriveWithinOneWeek"
+			"FieldCode": "Tenant.TimeZoneOffset"
 		},
 		{
-			"Field": "General.G.NoDataDefaultMSG"
+			"FieldCode": "Contact.BusinessPhone"
 		},
 		{
-			"Field": "Dashboard.G.InvoiceDueDateWithinOneWeek"
+			"FieldCode": "Contact.Mobile"
 		},
 		{
-			"Field": "General.O.Filters"
+			"FieldCode": "Contact.Password"
 		},
 		{
-			"Field": "Dashboard.G.TotalShipmentByStatus"
+			"FieldCode": "Contact.Email"
 		},
 		{
-			"Field": "Dashboard.G.TotalInvoiceByStatus"
-		},
-		{
-			"Field": "Tab.G.GeneralSearch"
-		},
-		{
-			"Field": "Tab.G.Reports"
-		},
-		{
-			"Field": "Tab.G.Quotes"
-		},
-		{
-			"Field": "Tab.G.Shipment"
-		},
-		{
-			"Field": "Tab.G.Invoice"
-		},
-		{
-			"Field": "Tab.G.Dashboard"
-		},
-		{
-			"Field": "General.B.DownloadExcel"
-		},
-		{
-			"Field": "Tab.G.HelpCenter"
-		},
-		{
-			"Field": "Shipment.G.RefreshMSG"
-		},
-		{
-			"Field": "Shipment.G.RefreshBtn"
-		},
-		{
-			"Field": "Shipment.G.ShowLoginMsg"
-		},
-		{
-			"Field": "Shipment.G.LoginHereBtn"
-		},
-		{
-			"Field": "Shipment.G.SessionExpired"
-		},
-		{
-			"Field": "Shipment.G.LoginAgainMsg"
-		},
-		{
-			"Field": "General.G.LoginBtn"
-		},
-		{
-			"Field": "General.O.Settings"
-		},
-		{
-			"Field": "Contact.G.GeneralInformation"
-		},
-		{
-			"Field": "Contact.G.PersonalInformation"
-		},
-		{
-			"Field": "Contact.G.PersonalInformationFullName"
-		},
-		{
-			"Field": "General.G.Description"
-		},
-		{
-			"Field": "Contact.F.Position"
-		},
-		{
-			"Field": "Contact.G.PersonalInformationDateOfBirth"
-		},
-		{
-			"Field": "General.G.TimeZone"
-		},
-		{
-			"Field": "Contact.O.Contacts"
-		},
-		{
-			"Field": "Contact.F.BusinessPhone"
-		},
-		{
-			"Field": "Contact.F.Mobile"
-		},
-		{
-			"Field": "Contact.G.Password"
-		},
-		{
-			"Field": "Contact.G.ConfirmPassword"
-		},
-		{
-			"Field": "Contact.O.CurrentPassword"
-		},
-		{
-			"Field": "Contact.G.EnterNewPassword"
-		},
-		{
-			"Field": "General.G.Download"
-		},
-		{
-			"Field": "Contact.G.NewPassword"
-		},
-		{
-			"Field": "Contact.G.ReTypePassword"
-		},
-		{
-			"Field": "General.B.Cancel"
-		},
-		{
-			"Field": "Contact.G.SaveChangesBtn"
-		},
-		{
-			"Field": "Contact.G.ChangePassword"
-		},
-		{
-			"Field": "Contact.G.LogoutBtn"
-		},
-		{
-			"Field": "Contact.G.ConfirmLogoutBtn"
-		},
-		{
-			"Field": "Contact.G.ConfirmLogoutMsg"
-		},
-		{
-			"Field": "General.B.Confirm"
-		},
-		{
-			"Field": "General.G.PasswordChange"
-		},
-		{
-			"Field": "General.G.CreatePassword"
-		},
-		{
-			"Field": "General.G.ConfirmPassword"
-		},
-		{
-			"Field": "General.G.PasswordInfo1"
-		},
-		{
-			"Field": "General.G.PasswordInfo2"
-		},
-		{
-			"Field": "General.G.PasswordInfo3"
-		},
-		{
-			"Field": "General.G.PasswordInfo4"
-		},
-		{
-			"Field": "General.G.LoginMsg"
-		},
-		{
-			"Field": "Contact.F.Email"
-		},
-		{
-			"Field": "Contact.F.Password"
-		},
-		{
-			"Field": "General.G.EmailPlaceholder"
-		},
-		{
-			"Field": "General.G.PasswordPlaceholder"
-		},
-		{
-			"Field": "General.G.ResetPassword"
-		},
-		{
-			"Field": "General.G.ForgetPasswordMsg"
-		},
-		{
-			"Field": "Contact.F.E-mail"
-		},
-		{
-			"Field": "General.G.ForgetPasswwordTroubleLogging"
-		},
-		{
-			"Field": "General.G.CopiedToClipboard"
-		},
-		{
-			"Field": "General.G.DownloadExcel"
-		},
-		{
-			"Field": "General.G.ApplyFilter"
-		},
-		{
-			"Field": "General.G.EditFilters"
-		},
-		{
-			"Field": "General.G.MultiShipments"
-		},
-		{
-			"Field": "General.G.NoMatchingResultsFound"
-		},
-		{
-			"Field": "General.G.OnlineViewLoginDirective"
-		},
-		{
-			"Field": "General.G.InformationAvailablilityMsg"
-		},
-		{
-			"Field": "General.O.LastLogin"
-		},
-		{
-			"Field": "General.G.PackageType"
-		},
-		{
-			"Field": "General.O.NoteText"
-		},
-		{
-			"Field": "General.G.SaveChangesMsg"
-		},
-		{
-			"Field": "General.G.PasswordIssueMsg"
-		},
-		{
-			"Field": "Contact.G.PositionValidationMsg"
-		},
-		{
-			"Field": "Contact.G.FullNameValidationMsg"
-		},
-		{
-			"Field": "General.G.CurrentPasswordValidationMsg"
-		},
-		{
-			"Field": "General.G.NewPasswordValidationMsg"
-		},
-		{
-			"Field": "General.G.NewPasswordValidationErrorMsg"
-		},
-		{
-			"Field": "General.G.ConfirmNewPasswordValidationErrorMsg"
-		},
-		{
-			"Field": "General.G.VerificationCode"
-		},
-		{
-			"Field": "General.G.ForgotPasswordMsg"
-		},
-		{
-			"Field": "General.G.CapatchPlaceholder"
-		},
-		{
-			"Field": "General.G.SubmitBtn"
-		},
-		{
-			"Field": "General.G.SaveBtn"
-		},
-		{
-			"Field": "General.G.ClearFilter"
-		},
+			"FieldCode": "Contact.Email"
+		},		
 		{
-			"Field": "General.G.DownloadAll"
+			"FieldCode": "Contact.LastLoginDate"
 		}]');
 
  	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
@@ -294,398 +51,132 @@
 
 	  INSERT INTO DigitalFieldSecurities (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, DefaultSettings) 
 	  values (@newDigitalFieldEntityId, 0, @shipmentObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @customerProfileId, 
-		'[{
-			"Field": "Shipment.Q.AllShipments"
+		'		[{
+			"FieldCode": "Shipment.TransportModeId"
 		},
 		{
-			"Field": "Shipment.G.All"
+			"FieldCode": "Shipment.StatusName"
 		},
 		{
-			"Field": "Shipment.G.Inprogress"
+			"FieldCode": "Shipment.CreateDateTime"
 		},
 		{
-			"Field": "Shipment.G.TransportMode"
-		},
-		{
-			"Field": "Shipment.G.ShipmentStatus"
-		},
-		{
-			"Field": "Shipment.G.MyPartner"
-		},
-		{
-			"Field": "Shipment.F.From"
-		},
-		{
-			"Field": "Shipment.G.FinalDestination"
-		},
-		{
-			"Field": "Shipment.G.CreateDate"
-		},
-		{
-			"Field": "Shipment.G.ETADate"
-		},
-		{
-			"Field": "Shipment.G.SearchPartner"
-		},
-		{
-			"Field": "Shipment.G.SearchFrom"
-		},
-		{
-			"Field": "Shipment.G.SearchDestination"
-		},
-		{
-			"Field": "Shipment.G.SearchPlaceholder"
-		},
-		{
-			"Field": "Shipment.G.SortBy"
-		},
-		{
-			"Field": "General.G.SearchMinNumberOfChars"
-		},
-		{
-			"Field": "Shipment.G.References"
-		},
-		{
-			"Field": "Shipment.O.Overview.MAWB"
-		},
-		{
-			"Field": "Shipment.G.Notes"
-		},
-		{
-			"Field": "Shipment.G.DescriptionOfGoods"
-		},
-		{
-			"Field": "Shipment.G.StatusUpdated"
-		},
-		{
-			"Field": "Shipment.F.ConsigneeName"
-		},
-		{
-			"Field": "Shipment.F.ShipperName"
-		},
-		{
-			"Field": "Shipment.G.OBL"
-		},
-		{
-			"Field": "Shipment.G.CMR/RWB#"
-		},
-		{
-			"Field": "Shipment.G.Archive"
-		},
-		{
-			"Field": "Shipment.G.Archived"
-		},
-		{
-			"Field": "Shipment.G.Unarchive"
-		},
-		{
-			"Field": "Shipment.G.GeneralInformation"
-		},
-		{
-			"Field": "Shipment.G.FinalDestinationNoResultMsg"
-		},
-		{
-			"Field": "Shipment.F.House"
-		},
-		{
-			"Field": "Shipment.G.Houses"
-		},
-		{
-			"Field": "Shipment.O.Master"
-		},
-		{
-			"Field": "Shipment.G.Invoiced"
-		},
-		{
-			"Field": "Shipment.F.IncotermCode"
-		},
-		{
-			"Field": "Shipment.F.AccountManagerUserName"
-		},
-		{
-			"Field": "Shipment.F.SalesmanUserName"
-		},
-		{
-			"Field": "Shipment.G.ShipmentLevel"
-		},
-		{
-			"Field": "Shipment.G.EquipmentInformation"
-		},
-		{
-			"Field": "Shipment.G.TotalInformation"
-		},
-		{
-			"Field": "Shipment.F.NumberOfPackages"
-		},
-		{
-			"Field": "Shipment.G.Volume"
-		},
-		{
-			"Field": "Shipment.G.GrossWeight"
-		},
-		{
-			"Field": "Shipment.G.DangerousGoods"
-		},
-		{
-			"Field": "Shipment.G.Customer"
-		},
-		{
-			"Field": "Shipment.G.ChWeight"
-		},
-		{
-			"Field": "Shipment.G.PackagesInformation"
-		},
-		{
-			"Field": "Shipment.G.ContainerType"
-		},
-		{
-			"Field": "Shipment.G.ContainerNumber"
-		},
-		{
-			"Field": "Shipment.G.CarrierLastStatusName"
-		},
-		{
-			"Field": "Shipment.F.Reference"
-		},
-		{
-			"Field": "Shipment.G.SealNumber"
-		},
-		{
-			"Field": "Shipment.F.NumberOfContainers"
-		},
-		{
-			"Field": "Shipment.G.PackagesEmptyResultMsg"
-		},
-		{
-			"Field": "Shipment.F.Routing"
-		},
-		{
-			"Field": "Shipment.G.MainRouteInformation"
-		},
-		{
-			"Field": "Shipment.G.PreCarrigeInformation"
-		},
-		{
-			"Field": "Shipment.G.MainCarrigeInformation"
-		},
-		{
-			"Field": "Shipment.G.Transshipment1Information"
-		},
-		{
-			"Field": "Shipment.G.Transshipment2Information"
-		},
-		{
-			"Field": "Shipment.G.Transshipment3Information"
-		},
-		{
-			"Field": "Shipment.G.OnCarrigeInformation"
-		},
-		{
-			"Field": "Shipment.G.PortOfLoading"
-		},
-		{
-			"Field": "Shipment.G.GatewayDestinationLable"
-		},
-		{
-			"Field": "Shipment.G.TransitTime"
-		},
-		{
-			"Field": "Shipment.F.To"
-		},
-		{
-			"Field": "Shipment.F.FlightDate"
-		},
-		{
-			"Field": "Shipment.O.Routings.ATD"
-		},
-		{
-			"Field": "Shipment.O.Routings.ETD"
-		},
-		{
-			"Field": "Shipment.O.Routings.Carrier"
-		},
-		{
-			"Field": "Shipment.O.Routings.CarrierNo"
-		},
-		{
-			"Field": "Shipment.O.Routings.Airline"
-		},
-		{
-			"Field": "Shipment.G.FlightNumber"
-		},
-		{
-			"Field": "Shipment.G.VesselName"
-		},
-		{
-			"Field": "Shipment.G.Document"
-		},
-		{
-			"Field": "Shipment.G.Documents"
-		},
-		{
-			"Field": "Shipment.G.DocumentsFileName"
-		},
-		{
-			"Field": "Shipment.G.DocumentType"
-		},
-		{
-			"Field": "Shipment.G.Date"
-		},
-		{
-			"Field": "Shipment.G.Upload"
-		},
-		{
-			"Field": "Shipment.G.ViewDocument"
-		},
-		{
-			"Field": "Shipment.G.InvoicesLable"
-		},
-		{
-			"Field": "ARInvoice.G.InvoiceNumber"
-		},
-		{
-			"Field": "ARInvoice.G.InvoiceType"
-		},
-		{
-			"Field": "ARInvoice.G.TotalAmount"
-		},
-		{
-			"Field": "ARInvoice.G.OpenAmount"
-		},
-		{
-			"Field": "ARInvoice.G.DueDate"
-		},
-		{
-			"Field": "Shipment.F.ViewConsolidation"
-		},
-		{
-			"Field": "Shipment.G.View"
-		},
-		{
-			"Field": "Shipment.TH.Partners"
-		},
-		{
-			"Field": "Shipment.G.Address1"
-		},
-		{
-			"Field": "Shipment.G.Address2"
-		},
-		{
-			"Field": "General.G.Contact"
-		},
+			"FieldCode": "Shipment.MainCarriageETA"
+		},		
 		{
-			"Field": "General.G.PhoneNumber"
+			"FieldCode": "Shipment.Notes"
 		},
 		{
-			"Field": "Shipment.G.Reference1"
+			"FieldCode": "Shipment.DescriptionOfGoods"
 		},
 		{
-			"Field": "Shipment.G.Reference2"
+			"FieldCode": "Shipment.StatusDate"
 		},
 		{
-			"Field": "Shipment.G.Qty"
+			"FieldCode": "Shipment.ConsigneeName"
 		},
 		{
-			"Field": "Shipment.F.AgentName"
+			"FieldCode": "Shipment.ShipperName"
 		},
 		{
-			"Field": "Shipment.F.IssuingCarrierAgentId"
+			"FieldCode": "Shipment.IsFullInvoiced"
 		},
 		{
-			"Field": "Shipment.O.Overview.ShipperNotExporter"
+			"FieldCode": "Shipment.IncotermCode"
 		},
 		{
-			"Field": "Shipment.O.Overview.ConsigneeNotImporter"
+			"FieldCode": "Shipment.AccountManagerUserName"
 		},
 		{
-			"Field": "Shipment.F.Notify1Id"
+			"FieldCode": "Shipment.SalesmanUserName"
 		},
 		{
-			"Field": "Shipment.F.Notify2Id"
+			"FieldCode": "Shipment.ShipmentLevelName"
 		},
 		{
-			"Field": "Shipment.O.Overview.CustomAgentExport"
+			"FieldCode": "Shipment.NumberOfPackages"
 		},
 		{
-			"Field": "Shipment.O.Overview.CustomAgentImport"
+			"FieldCode": "Shipment.Volume"
 		},
 		{
-			"Field": "Shipment.F.CustomClearancePointId"
+			"FieldCode": "Shipment.GrossWeight"
 		},
+		
 		{
-			"Field": "Shipment.F.ReleasingAgentId"
+			"FieldCode": "Shipment.CustomerName"
 		},
 		{
-			"Field": "Shipment.F.ColoaderId"
+			"FieldCode" : "Shipment.ChargeableWeight"
 		},
 		{
-			"Field": "Shipment.F.FreightForwarderId"
+			"FieldCode" : "Shipment.ContainerNumber"
 		},
 		{
-			"Field": "Shipment.F.TruckerId"
+			"FieldCode" : "Shipment.CarrierLastStatusName"
 		},
 		{
-			"Field": "Shipment.F.ConsolidatorName"
+			"FieldCode" : "Shipment.Reference"
 		},
 		{
-			"Field": "Shipment.TH.Events"
+			"FieldCode" : "Shipment.NumberOfContainers"
 		},
 		{
-			"Field": "Shipment.G.EventDate"
+			"FieldCode" : "Shipment.Routing"
 		},
 		{
-			"Field": "Shipment.G.EventTime"
+			"FieldCode" : "Shipment.To"
 		},
 		{
-			"Field": "EventType.F.EnglishName"
+			"FieldCode" : "Shipment.FlightDate"
 		},
 		{
-			"Field": "Shipment.O.Routings.WarehouseLegRemarks"
+			"FieldCode" : "Shipment.CarrierNumber"
 		},
 		{
-			"Field": "Shipment.G.Timeline"
+			"FieldCode" : "Shipment.CustomerReference1"
 		},
 		{
-			"Field": "Shipment.G.NoResult"
+			"FieldCode" : "Shipment.CustomerReference2"
 		},
 		{
-			"Field": "General.G.DownloadData"
+			"FieldCode" : "Shipment.AgentName"
 		},
 		{
-			"Field": "General.G.DownloadDataMSG"
+			"FieldCode" : "Shipment.IssuingCarrierAgentId"
 		},
 		{
-			"Field": "Shipment.G.UploadDocuments"
+			"FieldCode" : "Shipment.Notify1Id"
 		},
 		{
-			"Field": "Shipment.G.CancelButton"
+			"FieldCode" : "Shipment.Notify2Id"
 		},
 		{
-			"Field": "Shipment.G.SearchDefaultMSG"
+			"FieldCode" : "Shipment.CustomClearancePointId"
 		},
 		{
-			"Field": "Shipment.G.UploadingDocumentHeaderMsg"
+			"FieldCode" : "Shipment.ReleasingAgentId"
 		},
 		{
-			"Field": "General.G.DownloadDataSuccessMSG"
+			"FieldCode" : "Shipment.ColoaderId"
 		},
 		{
-			"Field": "General.G.DownloadDataSuccessMSG2"
+			"FieldCode" : "Shipment.FreightForwarderId"
 		},
 		{
-			"Field": "General.G.DownloadDataPreparing"
+			"FieldCode" : "Shipment.TruckerId"
 		},
 		{
-			"Field": "Shipment.G.ATD"
+			"FieldCode" : "Shipment.ConsolidatorName"
 		},
 		{
-			"Field": "Shipment.G.Airline"
+			"FieldCode" : "Shipment.Events"
 		},
 		{
-			"Field": "Shipment.G.Shippingline"
+			"FieldCode" : "Shipment.WarehouseLegRemarks"
 		},
 		{
-			"Field": "Shipment.G.ContainersLines"
+			"FieldCode" : "Shipment.MainCarriageATD"
 		}]');
 		
 	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
@@ -695,175 +186,84 @@
 
 	  INSERT INTO DigitalFieldSecurities (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, DefaultSettings) 
 	  values (@newDigitalFieldEntityId, 0, @invocieObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @customerProfileId, 
-		'[
-	{
-		"Field": "ARInvoice.G.Invoicing"
-	},
-	{
-		"Field": "ARInvoice.F.StatusName"
-	},
-	{
-		"Field": "ARInvoice.G.CreateDate"
-	},
-	{
-		"Field": "ARInvoice.G.DueDate"
-	},
-	{
-		"Field": "ARInvoice.G.TotalAmount"
-	},
-	{
-		"Field": "ARInvoice.G.TotalAmount2"
-	},
-	{
-		"Field": "ARInvoice.G.OpenAmount"
-	},
-	{
-		"Field": "ARInvoice.G.AllTime"
-	},
-	{
-		"Field": "ARInvoice.G.SearchPlaceholder"
-	},
-	{
-		"Field": "ARInvoice.G.SortBy"
-	},
-	{
-		"Field": "ARInvoice.G.All"
-	},
-	{
-		"Field": "ARInvoice.G.Unpaid"
-	},
-	{
-		"Field": "ARInvoice.G.MyReference"
-	},
-	{
-		"Field": "ARInvoice.G.YourReference"
-	},
-	{
-		"Field": "ARInvoice.G.Created"
-	},
-	{
-		"Field": "ARInvoice.G.GeneralInformation"
-	},
-	{
-		"Field": "ARInvoice.G.ReferenceNumber"
-	},
-	{
-		"Field": "ARInvoice.G.AmountDue"
-	},
-	{
-		"Field": "ARInvoice.G.PaymentTerm"
-	},
-	{
-		"Field": "ARInvoice.G.InvoiceDate"
-	},
-	{
-		"Field": "ARInvoice.G.PrintNotes"
-	},
-	{
-		"Field": "ARInvoice.G.InvoiceDetails"
-	},
-	{
-		"Field": "ARInvoice.TH.Details"
-	},
-	{
-		"Field": "ARInvoice.F.Description"
-	},
-	{
-		"Field": "ARInvoiceLine.F.MeasurementId"
-	},
-	{
-		"Field": "ARInvoiceLine.F.Quantity"
-	},
-	{
-		"Field": "ARInvoiceLine.F.UnitPrice"
-	},
-	{
-		"Field": "ARInvoiceLine.F.Amount"
-	},
-	{
-		"Field": "ARInvoiceLine.F.VatTypeId"
-	},
-	{
-		"Field": "ARInvoice.G.Totals"
-	},
-	{
-		"Field": "ARInvoice.G.Subtotal"
-	},
-	{
-		"Field": "ARInvoice.G.Total"
-	},
-	{
-		"Field": "Accounting.General.O.Payments"
-	},
-	{
-		"Field": "ARInvoice.G.Number"
-	},
-	{
-		"Field": "ARInvoice.G.Type"
-	},
-	{
-		"Field": "ARInvoice.F.Reference"
-	},
-	{
-		"Field": "ARPayment.F.AmountInPaymentCurrency"
-	},
-	{
-		"Field": "ARInvoice.F.AmountPaid"
-	},
-	{
-		"Field": "ARInvoice.G.OpenAmount2"
-	},
-	{
-		"Field": "ARInvoice.G.InvoiceAmount"
-	},
-	{
-		"Field": "ARInvoice.G.InvoiceAmountPaid"
-	},
-	{
-		"Field": "ARInvoice.G.InvoiceAmountDue"
-	},
-	{
-		"Field": "ARInvoice.G.ConstituentInvoices"
-	},
-	{
-		"Field": "ARInvoice.G.ShipmentReference"
-	},
-	{
-		"Field": "ARInvoice.G.MasterNo"
-	},
-	{
-		"Field": "ARInvoice.G.HouseNo"
-	},
-	{
-		"Field": "ARInvoice.G.ShipmentNo"
-	},
-	{
-		"Field": "ARInvoice.O.VATListLable"
-	},
-	{
-		"Field": "General.G.Download"
-	},
-	{
-		"Field": "General.G.NoDataDefaultMSG"
-	},
-	{
-		"Field": "ARInvoice.G.NoInvoiceMSG"
-	},
-	{
-		"Field": "General.G.DownloadData"
-	},
-	{
-		"Field": "General.G.DownloadDataMSG"
-	},
-	{
-		"Field": "General.G.DownloadDataSuccessMSG"
-	},
-	{
-		"Field": "General.G.DownloadDataPreparing"
-	},
-	{
-		"Field": "General.G.ReferenceNo"
-	}]');
+		'			[{
+				"FieldCode": "ARInvoice.StatusName" 
+			},
+			{
+				"FieldCode": "ARInvoice.CreateDate"
+			},
+			{
+				"FieldCode": "ARInvoice.DueDate"
+			},
+			{
+				"FieldCode": "ARInvoice.AmountInInvoiceCurrency"
+			},
+			{
+				"FieldCode": "ARInvoice.CustomerRef"
+			},
+			{
+				"FieldCode": "ARInvoice.InvoiceDate"
+			},
+			{
+				"FieldCode": "ARInvoice.MainEntityReference"
+			},
+			{
+				"FieldCode": "ARInvoice.ShipmentsNumbers"
+			},
+			{
+				"FieldCode": "ARInvoice.AmountDue"
+			},
+			{
+				"FieldCode": "ARInvoice.PaymentTermName"
+			},
+			{
+				"FieldCode": "ARInvoice.InvoiceDate"
+			},
+			{
+				"FieldCode": "ARInvoice.PrintNotes"
+			},
+			{
+				"FieldCode": "ARInvoice.Description"
+			},
+			{
+				"FieldCode": "ARInvoice.InvoiceNumber"
+			},
+			{
+				"FieldCode": "ARInvoice.AmountPaid"
+			},
+			{
+				"FieldCode": "ARInvoice.AmountDue"
+			},
+			{
+				"FieldCode": "ARInvoice.AmountInInvoiceCurrency"
+			},
+			{
+				"FieldCode": "ARInvoice.AmountInInvoiceCurrency"
+			},
+			{
+				"FieldCode": "ARInvoice.ShipmentsNumbers"
+			},
+			{
+				"FieldCode": "ARInvoice.MasterNumber"
+			},
+			{
+				"FieldCode": "ARInvoice.HouseNumber"
+			},
+			{
+				"FieldCode": "ARInvoice.MainEntityReference"
+			},
+			{
+				"FieldCode": "ARInvoice.TotalVATs"
+			},
+			{
+				"FieldCode": "ARInvoice.MainEntityReference"
+			},
+			{
+				"FieldCode": "ARInvoice.Description"
+			},
+			{
+				"FieldCode": "ARInvoice.ShipmentsNumbers"
+			}]');
 
  	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
 
@@ -875,669 +275,160 @@
 	  INSERT INTO DigitalFieldSecurities (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, DefaultSettings) 
 	  values (@newDigitalFieldEntityId, 0, @generalObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @agentProfileId, 
 	  '[{
-			"Field": "Dashboard.G.Dashboard"
+			"FieldCode": "Contact.Birthday"
 		},
 		{
-			"Field": "Dashboard.G.ShipmentsToArriveWithinOneWeek"
+			"FieldCode": "Tenant.TimeZoneOffset"
 		},
 		{
-			"Field": "General.G.NoDataDefaultMSG"
+			"FieldCode": "Contact.BusinessPhone"
 		},
 		{
-			"Field": "Dashboard.G.InvoiceDueDateWithinOneWeek"
+			"FieldCode": "Contact.Mobile"
 		},
 		{
-			"Field": "General.O.Filters"
+			"FieldCode": "Contact.Password"
 		},
 		{
-			"Field": "Dashboard.G.TotalShipmentByStatus"
+			"FieldCode": "Contact.Email"
 		},
 		{
-			"Field": "Dashboard.G.TotalInvoiceByStatus"
-		},
-		{
-			"Field": "Tab.G.GeneralSearch"
-		},
-		{
-			"Field": "Tab.G.Reports"
-		},
-		{
-			"Field": "Tab.G.Quotes"
-		},
-		{
-			"Field": "Tab.G.Shipment"
-		},
-		{
-			"Field": "Tab.G.Invoice"
-		},
-		{
-			"Field": "Tab.G.Dashboard"
-		},
-		{
-			"Field": "General.B.DownloadExcel"
-		},
-		{
-			"Field": "Tab.G.HelpCenter"
-		},
-		{
-			"Field": "Shipment.G.RefreshMSG"
-		},
-		{
-			"Field": "Shipment.G.RefreshBtn"
-		},
-		{
-			"Field": "Shipment.G.ShowLoginMsg"
-		},
-		{
-			"Field": "Shipment.G.LoginHereBtn"
-		},
-		{
-			"Field": "Shipment.G.SessionExpired"
-		},
-		{
-			"Field": "Shipment.G.LoginAgainMsg"
-		},
-		{
-			"Field": "General.G.LoginBtn"
-		},
-		{
-			"Field": "General.O.Settings"
-		},
-		{
-			"Field": "Contact.G.GeneralInformation"
-		},
-		{
-			"Field": "Contact.G.PersonalInformation"
-		},
-		{
-			"Field": "Contact.G.PersonalInformationFullName"
-		},
-		{
-			"Field": "General.G.Description"
-		},
-		{
-			"Field": "Contact.F.Position"
-		},
-		{
-			"Field": "Contact.G.PersonalInformationDateOfBirth"
-		},
-		{
-			"Field": "General.G.TimeZone"
-		},
-		{
-			"Field": "Contact.O.Contacts"
-		},
-		{
-			"Field": "Contact.F.BusinessPhone"
-		},
-		{
-			"Field": "Contact.F.Mobile"
-		},
-		{
-			"Field": "Contact.G.Password"
-		},
-		{
-			"Field": "Contact.G.ConfirmPassword"
-		},
-		{
-			"Field": "Contact.O.CurrentPassword"
-		},
-		{
-			"Field": "Contact.G.EnterNewPassword"
-		},
-		{
-			"Field": "General.G.Download"
-		},
-		{
-			"Field": "Contact.G.NewPassword"
-		},
-		{
-			"Field": "Contact.G.ReTypePassword"
-		},
-		{
-			"Field": "General.B.Cancel"
-		},
-		{
-			"Field": "Contact.G.SaveChangesBtn"
-		},
-		{
-			"Field": "Contact.G.ChangePassword"
-		},
-		{
-			"Field": "Contact.G.LogoutBtn"
-		},
-		{
-			"Field": "Contact.G.ConfirmLogoutBtn"
-		},
-		{
-			"Field": "Contact.G.ConfirmLogoutMsg"
-		},
-		{
-			"Field": "General.B.Confirm"
-		},
-		{
-			"Field": "General.G.PasswordChange"
-		},
-		{
-			"Field": "General.G.CreatePassword"
-		},
-		{
-			"Field": "General.G.ConfirmPassword"
-		},
-		{
-			"Field": "General.G.PasswordInfo1"
-		},
-		{
-			"Field": "General.G.PasswordInfo2"
-		},
-		{
-			"Field": "General.G.PasswordInfo3"
-		},
-		{
-			"Field": "General.G.PasswordInfo4"
-		},
-		{
-			"Field": "General.G.LoginMsg"
-		},
-		{
-			"Field": "Contact.F.Email"
-		},
-		{
-			"Field": "Contact.F.Password"
-		},
-		{
-			"Field": "General.G.EmailPlaceholder"
-		},
-		{
-			"Field": "General.G.PasswordPlaceholder"
-		},
-		{
-			"Field": "General.G.ResetPassword"
-		},
-		{
-			"Field": "General.G.ForgetPasswordMsg"
-		},
-		{
-			"Field": "Contact.F.E-mail"
-		},
-		{
-			"Field": "General.G.ForgetPasswwordTroubleLogging"
-		},
-		{
-			"Field": "General.G.CopiedToClipboard"
-		},
-		{
-			"Field": "General.G.DownloadExcel"
-		},
-		{
-			"Field": "General.G.ApplyFilter"
-		},
-		{
-			"Field": "General.G.EditFilters"
-		},
-		{
-			"Field": "General.G.MultiShipments"
-		},
-		{
-			"Field": "General.G.NoMatchingResultsFound"
-		},
-		{
-			"Field": "General.G.OnlineViewLoginDirective"
-		},
-		{
-			"Field": "General.G.InformationAvailablilityMsg"
-		},
-		{
-			"Field": "General.O.LastLogin"
-		},
-		{
-			"Field": "General.G.PackageType"
-		},
-		{
-			"Field": "General.O.NoteText"
-		},
-		{
-			"Field": "General.G.SaveChangesMsg"
-		},
-		{
-			"Field": "General.G.PasswordIssueMsg"
-		},
-		{
-			"Field": "Contact.G.PositionValidationMsg"
-		},
-		{
-			"Field": "Contact.G.FullNameValidationMsg"
-		},
-		{
-			"Field": "General.G.CurrentPasswordValidationMsg"
-		},
-		{
-			"Field": "General.G.NewPasswordValidationMsg"
-		},
-		{
-			"Field": "General.G.NewPasswordValidationErrorMsg"
-		},
-		{
-			"Field": "General.G.ConfirmNewPasswordValidationErrorMsg"
-		},
-		{
-			"Field": "General.G.VerificationCode"
-		},
-		{
-			"Field": "General.G.ForgotPasswordMsg"
-		},
-		{
-			"Field": "General.G.CapatchPlaceholder"
-		},
-		{
-			"Field": "General.G.SubmitBtn"
-		},
-		{
-			"Field": "General.G.SaveBtn"
-		},
-		{
-			"Field": "General.G.ClearFilter"
-		},
+			"FieldCode": "Contact.Email"
+		},		
 		{
-			"Field": "General.G.DownloadAll"
+			"FieldCode": "Contact.LastLoginDate"
 		}]')
 
  	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
 	  set @shipmentObjectTableId = (select Id from ObjectTables where [Name] = 'Shipment' and Tenant = 0 )
 	  INSERT INTO DigitalFieldSecurities (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, DefaultSettings) 
 	  values (@newDigitalFieldEntityId, 0, @shipmentObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @agentProfileId, 
-		'[{
-			"Field": "Shipment.Q.AllShipments"
+		'		[{
+			"FieldCode": "Shipment.TransportModeId"
 		},
 		{
-			"Field": "Shipment.G.All"
+			"FieldCode": "Shipment.StatusName"
 		},
 		{
-			"Field": "Shipment.G.Inprogress"
+			"FieldCode": "Shipment.CreateDateTime"
 		},
 		{
-			"Field": "Shipment.G.TransportMode"
-		},
-		{
-			"Field": "Shipment.G.ShipmentStatus"
-		},
-		{
-			"Field": "Shipment.G.MyPartner"
-		},
-		{
-			"Field": "Shipment.F.From"
-		},
-		{
-			"Field": "Shipment.G.FinalDestination"
-		},
-		{
-			"Field": "Shipment.G.CreateDate"
-		},
-		{
-			"Field": "Shipment.G.ETADate"
-		},
-		{
-			"Field": "Shipment.G.SearchPartner"
-		},
-		{
-			"Field": "Shipment.G.SearchFrom"
-		},
-		{
-			"Field": "Shipment.G.SearchDestination"
-		},
-		{
-			"Field": "Shipment.G.SearchPlaceholder"
-		},
-		{
-			"Field": "Shipment.G.SortBy"
-		},
-		{
-			"Field": "General.G.SearchMinNumberOfChars"
-		},
-		{
-			"Field": "Shipment.G.References"
-		},
-		{
-			"Field": "Shipment.O.Overview.MAWB"
-		},
-		{
-			"Field": "Shipment.G.Notes"
-		},
-		{
-			"Field": "Shipment.G.DescriptionOfGoods"
-		},
-		{
-			"Field": "Shipment.G.StatusUpdated"
-		},
-		{
-			"Field": "Shipment.F.ConsigneeName"
-		},
-		{
-			"Field": "Shipment.F.ShipperName"
-		},
-		{
-			"Field": "Shipment.G.OBL"
-		},
-		{
-			"Field": "Shipment.G.CMR/RWB#"
-		},
-		{
-			"Field": "Shipment.G.Archive"
-		},
-		{
-			"Field": "Shipment.G.Archived"
-		},
-		{
-			"Field": "Shipment.G.Unarchive"
-		},
-		{
-			"Field": "Shipment.G.GeneralInformation"
-		},
-		{
-			"Field": "Shipment.G.FinalDestinationNoResultMsg"
-		},
-		{
-			"Field": "Shipment.F.House"
-		},
-		{
-			"Field": "Shipment.G.Houses"
-		},
-		{
-			"Field": "Shipment.O.Master"
-		},
-		{
-			"Field": "Shipment.G.Invoiced"
-		},
-		{
-			"Field": "Shipment.F.IncotermCode"
-		},
-		{
-			"Field": "Shipment.F.AccountManagerUserName"
-		},
-		{
-			"Field": "Shipment.F.SalesmanUserName"
-		},
-		{
-			"Field": "Shipment.G.ShipmentLevel"
-		},
-		{
-			"Field": "Shipment.G.EquipmentInformation"
-		},
-		{
-			"Field": "Shipment.G.TotalInformation"
-		},
-		{
-			"Field": "Shipment.F.NumberOfPackages"
-		},
-		{
-			"Field": "Shipment.G.Volume"
-		},
-		{
-			"Field": "Shipment.G.GrossWeight"
-		},
-		{
-			"Field": "Shipment.G.DangerousGoods"
-		},
-		{
-			"Field": "Shipment.G.Customer"
-		},
-		{
-			"Field": "Shipment.G.ChWeight"
-		},
-		{
-			"Field": "Shipment.G.PackagesInformation"
-		},
-		{
-			"Field": "Shipment.G.ContainerType"
-		},
-		{
-			"Field": "Shipment.G.ContainerNumber"
-		},
-		{
-			"Field": "Shipment.G.CarrierLastStatusName"
-		},
-		{
-			"Field": "Shipment.F.Reference"
-		},
-		{
-			"Field": "Shipment.G.SealNumber"
-		},
-		{
-			"Field": "Shipment.F.NumberOfContainers"
-		},
-		{
-			"Field": "Shipment.G.PackagesEmptyResultMsg"
-		},
-		{
-			"Field": "Shipment.F.Routing"
-		},
-		{
-			"Field": "Shipment.G.MainRouteInformation"
-		},
-		{
-			"Field": "Shipment.G.PreCarrigeInformation"
-		},
-		{
-			"Field": "Shipment.G.MainCarrigeInformation"
-		},
-		{
-			"Field": "Shipment.G.Transshipment1Information"
-		},
-		{
-			"Field": "Shipment.G.Transshipment2Information"
-		},
-		{
-			"Field": "Shipment.G.Transshipment3Information"
-		},
-		{
-			"Field": "Shipment.G.OnCarrigeInformation"
-		},
-		{
-			"Field": "Shipment.G.PortOfLoading"
-		},
-		{
-			"Field": "Shipment.G.GatewayDestinationLable"
-		},
-		{
-			"Field": "Shipment.G.TransitTime"
-		},
-		{
-			"Field": "Shipment.F.To"
-		},
-		{
-			"Field": "Shipment.F.FlightDate"
-		},
-		{
-			"Field": "Shipment.O.Routings.ATD"
-		},
-		{
-			"Field": "Shipment.O.Routings.ETD"
-		},
-		{
-			"Field": "Shipment.O.Routings.Carrier"
-		},
-		{
-			"Field": "Shipment.O.Routings.CarrierNo"
-		},
-		{
-			"Field": "Shipment.O.Routings.Airline"
-		},
-		{
-			"Field": "Shipment.G.FlightNumber"
-		},
-		{
-			"Field": "Shipment.G.VesselName"
-		},
-		{
-			"Field": "Shipment.G.Document"
-		},
-		{
-			"Field": "Shipment.G.Documents"
-		},
-		{
-			"Field": "Shipment.G.DocumentsFileName"
-		},
-		{
-			"Field": "Shipment.G.DocumentType"
-		},
-		{
-			"Field": "Shipment.G.Date"
-		},
-		{
-			"Field": "Shipment.G.Upload"
-		},
-		{
-			"Field": "Shipment.G.ViewDocument"
-		},
-		{
-			"Field": "Shipment.G.InvoicesLable"
-		},
-		{
-			"Field": "ARInvoice.G.InvoiceNumber"
-		},
-		{
-			"Field": "ARInvoice.G.InvoiceType"
-		},
-		{
-			"Field": "ARInvoice.G.TotalAmount"
-		},
-		{
-			"Field": "ARInvoice.G.OpenAmount"
-		},
-		{
-			"Field": "ARInvoice.G.DueDate"
-		},
-		{
-			"Field": "Shipment.F.ViewConsolidation"
-		},
-		{
-			"Field": "Shipment.G.View"
-		},
-		{
-			"Field": "Shipment.TH.Partners"
-		},
-		{
-			"Field": "Shipment.G.Address1"
-		},
-		{
-			"Field": "Shipment.G.Address2"
-		},
-		{
-			"Field": "General.G.Contact"
-		},
+			"FieldCode": "Shipment.MainCarriageETA"
+		},		
 		{
-			"Field": "General.G.PhoneNumber"
+			"FieldCode": "Shipment.Notes"
 		},
 		{
-			"Field": "Shipment.G.Reference1"
+			"FieldCode": "Shipment.DescriptionOfGoods"
 		},
 		{
-			"Field": "Shipment.G.Reference2"
+			"FieldCode": "Shipment.StatusDate"
 		},
 		{
-			"Field": "Shipment.G.Qty"
+			"FieldCode": "Shipment.ConsigneeName"
 		},
 		{
-			"Field": "Shipment.F.AgentName"
+			"FieldCode": "Shipment.ShipperName"
 		},
 		{
-			"Field": "Shipment.F.IssuingCarrierAgentId"
+			"FieldCode": "Shipment.IsFullInvoiced"
 		},
 		{
-			"Field": "Shipment.O.Overview.ShipperNotExporter"
+			"FieldCode": "Shipment.IncotermCode"
 		},
 		{
-			"Field": "Shipment.O.Overview.ConsigneeNotImporter"
+			"FieldCode": "Shipment.AccountManagerUserName"
 		},
 		{
-			"Field": "Shipment.F.Notify1Id"
+			"FieldCode": "Shipment.SalesmanUserName"
 		},
 		{
-			"Field": "Shipment.F.Notify2Id"
+			"FieldCode": "Shipment.ShipmentLevelName"
 		},
 		{
-			"Field": "Shipment.O.Overview.CustomAgentExport"
+			"FieldCode": "Shipment.NumberOfPackages"
 		},
 		{
-			"Field": "Shipment.O.Overview.CustomAgentImport"
+			"FieldCode": "Shipment.Volume"
 		},
 		{
-			"Field": "Shipment.F.CustomClearancePointId"
+			"FieldCode": "Shipment.GrossWeight"
 		},
+		
 		{
-			"Field": "Shipment.F.ReleasingAgentId"
+			"FieldCode": "Shipment.CustomerName"
 		},
 		{
-			"Field": "Shipment.F.ColoaderId"
+			"FieldCode" : "Shipment.ChargeableWeight"
 		},
 		{
-			"Field": "Shipment.F.FreightForwarderId"
+			"FieldCode" : "Shipment.ContainerNumber"
 		},
 		{
-			"Field": "Shipment.F.TruckerId"
+			"FieldCode" : "Shipment.CarrierLastStatusName"
 		},
 		{
-			"Field": "Shipment.F.ConsolidatorName"
+			"FieldCode" : "Shipment.Reference"
 		},
 		{
-			"Field": "Shipment.TH.Events"
+			"FieldCode" : "Shipment.NumberOfContainers"
 		},
 		{
-			"Field": "Shipment.G.EventDate"
+			"FieldCode" : "Shipment.Routing"
 		},
 		{
-			"Field": "Shipment.G.EventTime"
+			"FieldCode" : "Shipment.To"
 		},
 		{
-			"Field": "EventType.F.EnglishName"
+			"FieldCode" : "Shipment.FlightDate"
 		},
 		{
-			"Field": "Shipment.O.Routings.WarehouseLegRemarks"
+			"FieldCode" : "Shipment.CarrierNumber"
 		},
 		{
-			"Field": "Shipment.G.Timeline"
+			"FieldCode" : "Shipment.CustomerReference1"
 		},
 		{
-			"Field": "Shipment.G.NoResult"
+			"FieldCode" : "Shipment.CustomerReference2"
 		},
 		{
-			"Field": "General.G.DownloadData"
+			"FieldCode" : "Shipment.AgentName"
 		},
 		{
-			"Field": "General.G.DownloadDataMSG"
+			"FieldCode" : "Shipment.IssuingCarrierAgentId"
 		},
 		{
-			"Field": "Shipment.G.UploadDocuments"
+			"FieldCode" : "Shipment.Notify1Id"
 		},
 		{
-			"Field": "Shipment.G.CancelButton"
+			"FieldCode" : "Shipment.Notify2Id"
 		},
 		{
-			"Field": "Shipment.G.SearchDefaultMSG"
+			"FieldCode" : "Shipment.CustomClearancePointId"
 		},
 		{
-			"Field": "Shipment.G.UploadingDocumentHeaderMsg"
+			"FieldCode" : "Shipment.ReleasingAgentId"
 		},
 		{
-			"Field": "General.G.DownloadDataSuccessMSG"
+			"FieldCode" : "Shipment.ColoaderId"
 		},
 		{
-			"Field": "General.G.DownloadDataSuccessMSG2"
+			"FieldCode" : "Shipment.FreightForwarderId"
 		},
 		{
-			"Field": "General.G.DownloadDataPreparing"
+			"FieldCode" : "Shipment.TruckerId"
 		},
 		{
-			"Field": "Shipment.G.ATD"
+			"FieldCode" : "Shipment.ConsolidatorName"
 		},
 		{
-			"Field": "Shipment.G.Airline"
+			"FieldCode" : "Shipment.Events"
 		},
 		{
-			"Field": "Shipment.G.Shippingline"
+			"FieldCode" : "Shipment.WarehouseLegRemarks"
 		},
 		{
-			"Field": "Shipment.G.ContainersLines"
+			"FieldCode" : "Shipment.MainCarriageATD"
 		}]');
 		
 	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
@@ -1545,173 +436,83 @@
 
 	  INSERT INTO DigitalFieldSecurities (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, DefaultSettings) 
 	  values (@newDigitalFieldEntityId, 0, @invocieObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @agentProfileId, 
-		'[{
-				"Field": "ARInvoice.G.Invoicing"
+		'			[{
+				"FieldCode": "ARInvoice.StatusName" 
 			},
 			{
-				"Field": "ARInvoice.F.StatusName"
+				"FieldCode": "ARInvoice.CreateDate"
 			},
 			{
-				"Field": "ARInvoice.G.CreateDate"
+				"FieldCode": "ARInvoice.DueDate"
 			},
 			{
-				"Field": "ARInvoice.G.DueDate"
+				"FieldCode": "ARInvoice.AmountInInvoiceCurrency"
 			},
 			{
-				"Field": "ARInvoice.G.TotalAmount"
+				"FieldCode": "ARInvoice.CustomerRef"
 			},
 			{
-				"Field": "ARInvoice.G.TotalAmount2"
+				"FieldCode": "ARInvoice.InvoiceDate"
 			},
 			{
-				"Field": "ARInvoice.G.OpenAmount"
+				"FieldCode": "ARInvoice.MainEntityReference"
 			},
 			{
-				"Field": "ARInvoice.G.AllTime"
+				"FieldCode": "ARInvoice.ShipmentsNumbers"
 			},
 			{
-				"Field": "ARInvoice.G.SearchPlaceholder"
+				"FieldCode": "ARInvoice.AmountDue"
 			},
 			{
-				"Field": "ARInvoice.G.SortBy"
+				"FieldCode": "ARInvoice.PaymentTermName"
 			},
 			{
-				"Field": "ARInvoice.G.All"
+				"FieldCode": "ARInvoice.InvoiceDate"
 			},
 			{
-				"Field": "ARInvoice.G.Unpaid"
+				"FieldCode": "ARInvoice.PrintNotes"
 			},
 			{
-				"Field": "ARInvoice.G.MyReference"
+				"FieldCode": "ARInvoice.Description"
 			},
 			{
-				"Field": "ARInvoice.G.YourReference"
+				"FieldCode": "ARInvoice.InvoiceNumber"
 			},
 			{
-				"Field": "ARInvoice.G.Created"
+				"FieldCode": "ARInvoice.AmountPaid"
 			},
 			{
-				"Field": "ARInvoice.G.GeneralInformation"
+				"FieldCode": "ARInvoice.AmountDue"
 			},
 			{
-				"Field": "ARInvoice.G.ReferenceNumber"
+				"FieldCode": "ARInvoice.AmountInInvoiceCurrency"
 			},
 			{
-				"Field": "ARInvoice.G.AmountDue"
+				"FieldCode": "ARInvoice.AmountInInvoiceCurrency"
 			},
 			{
-				"Field": "ARInvoice.G.PaymentTerm"
+				"FieldCode": "ARInvoice.ShipmentsNumbers"
 			},
 			{
-				"Field": "ARInvoice.G.InvoiceDate"
+				"FieldCode": "ARInvoice.MasterNumber"
 			},
 			{
-				"Field": "ARInvoice.G.PrintNotes"
+				"FieldCode": "ARInvoice.HouseNumber"
 			},
 			{
-				"Field": "ARInvoice.G.InvoiceDetails"
+				"FieldCode": "ARInvoice.MainEntityReference"
 			},
 			{
-				"Field": "ARInvoice.TH.Details"
+				"FieldCode": "ARInvoice.TotalVATs"
 			},
 			{
-				"Field": "ARInvoice.F.Description"
+				"FieldCode": "ARInvoice.MainEntityReference"
 			},
 			{
-				"Field": "ARInvoiceLine.F.MeasurementId"
+				"FieldCode": "ARInvoice.Description"
 			},
 			{
-				"Field": "ARInvoiceLine.F.Quantity"
-			},
-			{
-				"Field": "ARInvoiceLine.F.UnitPrice"
-			},
-			{
-				"Field": "ARInvoiceLine.F.Amount"
-			},
-			{
-				"Field": "ARInvoiceLine.F.VatTypeId"
-			},
-			{
-				"Field": "ARInvoice.G.Totals"
-			},
-			{
-				"Field": "ARInvoice.G.Subtotal"
-			},
-			{
-				"Field": "ARInvoice.G.Total"
-			},
-			{
-				"Field": "Accounting.General.O.Payments"
-			},
-			{
-				"Field": "ARInvoice.G.Number"
-			},
-			{
-				"Field": "ARInvoice.G.Type"
-			},
-			{
-				"Field": "ARInvoice.F.Reference"
-			},
-			{
-				"Field": "ARPayment.F.AmountInPaymentCurrency"
-			},
-			{
-				"Field": "ARInvoice.F.AmountPaid"
-			},
-			{
-				"Field": "ARInvoice.G.OpenAmount2"
-			},
-			{
-				"Field": "ARInvoice.G.InvoiceAmount"
-			},
-			{
-				"Field": "ARInvoice.G.InvoiceAmountPaid"
-			},
-			{
-				"Field": "ARInvoice.G.InvoiceAmountDue"
-			},
-			{
-				"Field": "ARInvoice.G.ConstituentInvoices"
-			},
-			{
-				"Field": "ARInvoice.G.ShipmentReference"
-			},
-			{
-				"Field": "ARInvoice.G.MasterNo"
-			},
-			{
-				"Field": "ARInvoice.G.HouseNo"
-			},
-			{
-				"Field": "ARInvoice.G.ShipmentNo"
-			},
-			{
-				"Field": "ARInvoice.O.VATListLable"
-			},
-			{
-				"Field": "General.G.Download"
-			},
-			{
-				"Field": "General.G.NoDataDefaultMSG"
-			},
-			{
-				"Field": "ARInvoice.G.NoInvoiceMSG"
-			},
-			{
-				"Field": "General.G.DownloadData"
-			},
-			{
-				"Field": "General.G.DownloadDataMSG"
-			},
-			{
-				"Field": "General.G.DownloadDataSuccessMSG"
-			},
-			{
-				"Field": "General.G.DownloadDataPreparing"
-			},
-			{
-				"Field": "General.G.ReferenceNo"
+				"FieldCode": "ARInvoice.ShipmentsNumbers"
 			}]');
       ]]>       
   </Sql>
