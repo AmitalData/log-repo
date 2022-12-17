@@ -2110,5 +2110,6 @@ namespace Simplog.Data.InfrastructureModel
 
         public DbSet<ObjectField> ObjectFieldsDbSet => throw new NotImplementedException();
         public IDbSet<CustomChildObject> CustomChildObjects => throw new NotImplementedException();
+        public IDbSet<DataCustomObject> DataCustomObjects => throw new NotImplementedException();
     }
 }

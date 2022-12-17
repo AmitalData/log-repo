@@ -373,6 +373,7 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new ScreenSectionMap());
             modelBuilder.Configurations.Add(new TabModificationMap());
             modelBuilder.Configurations.Add(new CustomChildObjectMap());
+            modelBuilder.Configurations.Add(new DataCustomObjectMap());
 
 
 
@@ -868,6 +869,11 @@ namespace Simplog.Data.InfrastructureModel
             set;
         }
 
+        public IDbSet<DataCustomObject> DataCustomObjects
+        {
+            get;
+            set;
+        }
 
         public void SetAsModified(object entity)
         {
