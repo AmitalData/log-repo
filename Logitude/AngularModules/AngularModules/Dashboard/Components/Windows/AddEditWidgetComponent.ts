@@ -46,6 +46,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     public isAdvancedSettingForKPI: boolean = false;
     public isAdvancedSettingForChart: boolean = false;
     public IsBetweenDatesVisible: boolean = false;
+    public IsSecondaryGroupEnable: boolean = true;
     
 
     constructor() {
@@ -70,6 +71,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.GetFilters();
         this.BuildQueryFilters();
         this.InitView();
+        this.CheckEnableForSecondaryGroupByAndScondaryMeasere();
         this.SetUIProperties();
         this.SetAdvanceSettingItems();
         this.SetTimeOverTimeValue();
@@ -84,8 +86,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         }
 
         this.UIProperties.SetEnabled("ComparisonPeriod", this.ObjectTableName, this.TimeOverTime);
-
-        
+       
     }
     SetUIProprtiesForComparisonPeriod(){
         this.UIProperties.SetValidity("ComparisonPeriod", this.ObjectTableName, true, "");
@@ -260,14 +261,30 @@ export class AddEditWidgetComponent extends BaseComponent {
 
         if (this.ComparisonOperator == "Between") {
             this.IsBetweenDatesVisible = true;
+            
         }
     }
 
-    private SetMeasureFieldEnable(){
-        if(!this.SecondaryGroupById){
-            this.IsAddNewMeasureVisible = false;
-        }
+    private CheckEnableForSecondaryGroupByAndScondaryMeasere(){
+        if(this.WidgetMeasuresList.length > 1)
+            this.SetSecondaryGroupingFieldDisabled();
+        
+        this.UIProperties.SetEnabled("SecondaryGroupById", this.ObjectTableName, this.IsSecondaryGroupEnable);
+        
+
     }
+    
+    private SetSecondaryGroupingFieldDisabled(){
+            this.SecondaryGroupById = null;
+            this.SecondaryDateGroupCode = null;
+            this.IsSecondaryGroupEnable = false;
+        
+    }
+    SetSecondaryGroupEnabled(){
+        this.IsSecondaryGroupEnable = true;
+        this.UIProperties.SetEnabled("SecondaryGroupById", this.ObjectTableName , this.IsSecondaryGroupEnable);
+    }
+
 
     private isAdvancedSettingVisible: boolean = false;
     get IsAdvancedSettingVisible() { return this.isAdvancedSettingVisible; }
@@ -277,14 +294,7 @@ export class AddEditWidgetComponent extends BaseComponent {
             this.SetAdvanceSettingItems();
         }
     }
-    private isSecondaryGroupChoosen: boolean = false;
-    get IsSecondaryGroupChoosen() { return this.IsSecondaryGroupChoosen; }
-    set IsSecondaryGroupChoosen(value: boolean) {
-        if (this.IsSecondaryGroupChoosen != value) {
-            this.IsSecondaryGroupChoosen = value;
-            
-        }
-    }
+    
 
     public SetAdvanceSettingItems() {
         if (!AppTool.IsNullOrEmpty(this.TypeCode) && this.TypeCode == "kpi" && this.IsAdvancedSettingVisible) {
@@ -317,6 +327,7 @@ export class AddEditWidgetComponent extends BaseComponent {
             this.GroupById = null;
             this.DateGroupCode = null;
             this.SecondaryGroupById = null;
+            this.SecondaryDateGroupCode = null;
         }
         if (!this.isSortByVisible) {
             this.SortBy = null;
@@ -340,6 +351,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         if (this.EntityPM.SecondaryGroupById != value) {
             this.EntityPM.SecondaryGroupById = value;
         }
+        
     }
 
     get SecondaryDateGroupCode() { return this.EntityPM.SecondaryDateGroupCode; }
@@ -693,6 +705,8 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.myCloner.AddField('Increase');
         this.myCloner.AddField('FromDate');
         this.myCloner.AddField('ToDate');
+        this.myCloner.AddField('SecondaryGroupById');
+        this.myCloner.AddField('SecondaryDateGroupCode');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DashboardPM);
 
@@ -720,6 +734,8 @@ export class AddEditWidgetComponent extends BaseComponent {
 
         MixPanelLocator.PostDashboardAction({ ActionName: "Widget Measure Add Click", DashboardId: this.DashboardPM?.Id });
         this.CheckMeasureAddVisiblity();
+        //this.SetSecondaryGroupingFieldDisabled();
+        this.CheckEnableForSecondaryGroupByAndScondaryMeasere();
     }
 }
 
@@ -797,6 +813,7 @@ export class WidgetMeasureItem extends BaseComponent {
 
         MixPanelLocator.PostDashboardAction({ ActionName: "Widget Measure Delete Click", DashboardId: this.DashboardPM?.Id });
         this.fatherComponent.CheckMeasureAddVisiblity();
+        this.fatherComponent.SetSecondaryGroupEnabled();
     }
 
 }
