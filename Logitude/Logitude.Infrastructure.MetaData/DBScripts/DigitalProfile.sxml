@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="8">
+  <Sql Version="9">
       <![CDATA[	  
       declare @NewEntityId as varchar(15)
  	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT, 'DigitalProfiles'
@@ -51,7 +51,7 @@
 
 	  INSERT INTO DigitalFieldSecurities (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, DefaultSettings) 
 	  values (@newDigitalFieldEntityId, 0, @shipmentObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @customerProfileId, 
-		'		[{
+		'[{
 			"FieldCode": "Shipment.TransportModeId"
 		},
 		{
@@ -186,7 +186,7 @@
 
 	  INSERT INTO DigitalFieldSecurities (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, DefaultSettings) 
 	  values (@newDigitalFieldEntityId, 0, @invocieObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @customerProfileId, 
-		'			[{
+		'[{
 				"FieldCode": "ARInvoice.StatusName" 
 			},
 			{
@@ -303,7 +303,7 @@
 	  set @shipmentObjectTableId = (select Id from ObjectTables where [Name] = 'Shipment' and Tenant = 0 )
 	  INSERT INTO DigitalFieldSecurities (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, DefaultSettings) 
 	  values (@newDigitalFieldEntityId, 0, @shipmentObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @agentProfileId, 
-		'		[{
+		'[{
 			"FieldCode": "Shipment.TransportModeId"
 		},
 		{
@@ -436,7 +436,7 @@
 
 	  INSERT INTO DigitalFieldSecurities (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, DefaultSettings) 
 	  values (@newDigitalFieldEntityId, 0, @invocieObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @agentProfileId, 
-		'			[{
+		'[{
 				"FieldCode": "ARInvoice.StatusName" 
 			},
 			{
