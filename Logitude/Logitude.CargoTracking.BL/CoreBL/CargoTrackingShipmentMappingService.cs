@@ -38,8 +38,8 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             BuildShipmentRoute();
             FillShipmentPackages();
             FillCustomsData();
-            FillDocumentsFilings();
             FillConnectedOrders();
+            FillDocumentsFilings();
             BuildPartnerCards();
             BuildShipmentMilstones(milestoneDictionary);
             SetMilestonesStatus();
@@ -349,13 +349,28 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(cargoShipmentPM.Tenant);
 
             List<DocumentsFilingPM> documentsFilingPM = documentsFilingQuery.GetInputDocumentsFilingPMsByEntityId(cargoShipmentPM.EntityId, cargoShipmentPM.Tenant);
-
+            
             if (!string.IsNullOrWhiteSpace(cargoShipmentPM.ForwardingShipmentHeaderId))
             {
                 List<DocumentsFilingPM> forwardingShipmentDocumentsFiling = documentsFilingQuery
                     .GetInputDocumentsFilingPMsByEntityId(cargoShipmentPM.ForwardingShipmentHeaderId, cargoShipmentPM.Tenant);
                 AddForwardingShipmentsDocsToCustomsShipment(documentsFilingPM, forwardingShipmentDocumentsFiling);
             }
+
+            if (cargoShipmentPM.ConnectedOrders.Any()) {
+                foreach (var order in cargoShipmentPM.ConnectedOrders)
+                {
+                    List<DocumentsFilingPM> orderShipmentDocumentsFiling = documentsFilingQuery
+                                        .GetInputDocumentsFilingPMsByEntityId(order.Id, cargoShipmentPM.Tenant);
+
+                    if (orderShipmentDocumentsFiling.Any())
+                    {
+                        documentsFilingPM.AddRange(orderShipmentDocumentsFiling);
+                    }
+                }
+                
+            }
+
             return documentsFilingPM;
         }
 
