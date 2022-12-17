@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="12">
+  <Sql Version="13">
     <![CDATA[	
       declare @NewEntityId as varchar(15)
  	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCodes'
@@ -17,6 +17,21 @@
 		{
 			"TextCode": "General.G.NoDataDefaultMSG",
 			"DefaultText": "You do not have any information here All information will be displayed here, when it will be added by the forwarder",
+			"FieldCode": ""
+		},
+		{
+			"TextCode": "Dashboard.G.AirLabel",
+			"DefaultText": "Air",
+			"FieldCode": ""
+		},
+		{
+			"TextCode": "Dashboard.G.OceanLabel",
+			"DefaultText": "Ocean",
+			"FieldCode": ""
+		},
+		{
+			"TextCode": "Dashboard.G.InlandLabel",
+			"DefaultText": "Inland",
 			"FieldCode": ""
 		},
 		{
