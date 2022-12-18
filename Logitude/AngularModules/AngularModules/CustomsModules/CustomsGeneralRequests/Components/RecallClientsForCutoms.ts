@@ -101,7 +101,7 @@ export class RecallClientsForCutoms
         messageWindow.Show(message);
     }
 
-    public SendRecallMessageToServer() {
+    public SendRecallMessageToServer(isForCardsTable: boolean = false) {
         this.ProgressBarPercentText = "0%";
 
         this.filterImageParameter = new ImageParameter();
@@ -114,7 +114,7 @@ export class RecallClientsForCutoms
         myCustomMessageProgressHelper.BasicResponse = true;
         myCustomMessageProgressHelper.StartProgress(this.filterImageParameter.Key, 5, true);
 
-        this._ClientMessagesService.PutRecallClientsForCutomsRequest(this.filterImageParameter).subscribe((myServiceResponse: ServiceResponse) => {
+        this._ClientMessagesService.PutRecallClientsForCutomsRequest(this.filterImageParameter, isForCardsTable).subscribe((myServiceResponse: ServiceResponse) => {
             console.log("[Send] Response/PutRecallClientsForCutomsRequest : ", myServiceResponse.Result);
             var response = myServiceResponse.Result;
 
