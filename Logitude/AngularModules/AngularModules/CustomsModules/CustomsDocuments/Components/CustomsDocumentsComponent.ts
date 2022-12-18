@@ -251,7 +251,7 @@ export class CustomsDocumentsComponent
         var custDocsMetadataWebService: CustDocMetaDataValuesWebService = new CustDocMetaDataValuesWebService();
         //******Getting customs documents ticket for the entity*****//
         // this.DisplayOnlyCheck();
-        custDocsTicketWebService.GetCustomsDocumentsTicketsByEntityIdAndChilds(this.EntityPM.Id, null, null, null, this.ParentEntityCode).subscribe((response: ServiceResponse) => {
+        custDocsTicketWebService.GetCustomsDocumentsTicketsByEntityIdAndChilds(this.EntityPM.Id, null, null, null, this.ParentEntityCode, this.EntityPM.TransportModeId == "A").subscribe((response: ServiceResponse) => {
             this.CustomsDocumentsTickets = response.Result;
             var customsDocTickets: string = "";
             var tickets = this.CustomsDocumentsTickets.filter(d => !AppTool.IsNullOrEmpty(d.DocumentTypeCode));
