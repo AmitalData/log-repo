@@ -379,6 +379,25 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         }).ToList();
             return cardPMs;
         }
+
+        public List<CardPM> GetAllLocalCards(int tenant)
+        {
+            List<CardPM> cardPMs =
+             (
+                  from rec in repository.context.Cards
+                  where !string.IsNullOrEmpty(rec.VatNumber) && rec.Tenant == tenant
+                  select new CardPM()
+                  {
+                      Id = rec.Id,
+                      Tenant = rec.Tenant,
+                      EnglishName = rec.EnglishName,
+                      Code = rec.Code,
+                      VatNumber = rec.VatNumber,
+                      PartnerTypeId = rec.PartnerTypeId
+
+                  }).ToList();
+            return cardPMs;
+        }
         public CardPM GetSinglePMByCode(string code, int tenant)
         {
             var cardId = repository.GetCardIdByCode(code,tenant);

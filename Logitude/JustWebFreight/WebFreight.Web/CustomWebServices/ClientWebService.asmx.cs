@@ -15,6 +15,7 @@ using Logitude.Customs.Data;
 using UnifreightIIG.Common.VendorAddCommunicationDeviceServiceReference;
 using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 
 namespace WebFreight.Web.CustomWebServices
 {
@@ -227,42 +228,80 @@ namespace WebFreight.Web.CustomWebServices
 
         [WebMethod]
         //        public string RecallClientsForCutomsRequest(string guidId, int tenant, string clientsList)
-        public string RecallClientsForCutomsRequest(string guidId, int tenant)
+        public string RecallClientsForCutomsRequest(string guidId, int tenant, bool isForCardsTable)
         {
-            ClientQueryService clientQueryService = new ClientQueryService(tenant);
-            var clientsList = clientQueryService.GetAllLocalClients(tenant);
-
-            if (clientsList.Count == 0)
+            if (isForCardsTable)
             {
-                return "Client List Is Empty (Count==0)";
-            }
-
-            string clientCode = "";
-            for (int i = 0; i < clientsList.Count; i++)
-            {
-                clientCode = clientsList[i].Code;
-                string mess = string.Format(
-                    "בניית תקשורת עדכון נתוני יבואנים  {2} ( {0}/{1} ) "
-                    , (i + 1), (clientsList.Count), clientCode);
-                ClientProgressBarIndicatorService.UpsertClientProgressBarIndicatorCurrentStage(guidId, mess);
-
-                var clientSearchByCustomsAgentMessagingService = new CL_MSG101_GetCustomerByEntityCustomerIdentificationMassagingService();
-                var req = new ClientSearchRequestParams()
+                CardQueryService clientQueryService = new CardQueryService(tenant);
+                var cardsList = clientQueryService.GetAllLocalCards(tenant);
+                if (cardsList.Count == 0)
                 {
-                    Tenant = tenant,
-                    ExternalId = clientCode,
-                    RequestVIA = SendRequestVIA.WebServiceBatch
-                };
-                var test = false;
-                if (test)
-                {
-                    req.RequestVIA = SendRequestVIA.WebServiceInteractive;
-                    req.SuppressSplitWR = true;
+                    return "Card List Is Empty (Count==0)";
                 }
-                clientSearchByCustomsAgentMessagingService.Send(req);
-            }
+                string clientCode = "";
+                for (int i = 0; i < cardsList.Count; i++)
+                {
+                    clientCode = cardsList[i].VatNumber;
+                    string mess = string.Format(
+                        "בניית תקשורת עדכון נתוני יבואנים  {2} ( {0}/{1} ) "
+                        , (i + 1), (cardsList.Count), clientCode);
+                    ClientProgressBarIndicatorService.UpsertClientProgressBarIndicatorCurrentStage(guidId, mess);
 
-            return "עידכון כל הלקוחות  ( " + clientsList.Count.ToString() + " ) ימשיך ברקע";
+                    var clientSearchByCustomsAgentMessagingService = new CL_MSG101_GetCustomerByEntityCustomerIdentificationMassagingService();
+                    var req = new ClientSearchRequestParams()
+                    {
+                        Tenant = tenant,
+                        ExternalId = clientCode,
+                        RequestVIA = SendRequestVIA.WebServiceBatch
+                    };
+                    var test = false;
+                    if (test)
+                    {
+                        req.RequestVIA = SendRequestVIA.WebServiceInteractive;
+                        req.SuppressSplitWR = true;
+                    }
+                    clientSearchByCustomsAgentMessagingService.Send(req);
+                }
+
+                return "עידכון כל הלקוחות  ( " + cardsList.Count.ToString() + " ) ימשיך ברקע";
+            }
+            else
+            {
+                ClientQueryService clientQueryService = new ClientQueryService(tenant);
+                var clientsList = clientQueryService.GetAllLocalClients(tenant);
+
+                if (clientsList.Count == 0)
+                {
+                    return "Client List Is Empty (Count==0)";
+                }
+
+                string clientCode = "";
+                for (int i = 0; i < clientsList.Count; i++)
+                {
+                    clientCode = clientsList[i].Code;
+                    string mess = string.Format(
+                        "בניית תקשורת עדכון נתוני יבואנים  {2} ( {0}/{1} ) "
+                        , (i + 1), (clientsList.Count), clientCode);
+                    ClientProgressBarIndicatorService.UpsertClientProgressBarIndicatorCurrentStage(guidId, mess);
+
+                    var clientSearchByCustomsAgentMessagingService = new CL_MSG101_GetCustomerByEntityCustomerIdentificationMassagingService();
+                    var req = new ClientSearchRequestParams()
+                    {
+                        Tenant = tenant,
+                        ExternalId = clientCode,
+                        RequestVIA = SendRequestVIA.WebServiceBatch
+                    };
+                    var test = false;
+                    if (test)
+                    {
+                        req.RequestVIA = SendRequestVIA.WebServiceInteractive;
+                        req.SuppressSplitWR = true;
+                    }
+                    clientSearchByCustomsAgentMessagingService.Send(req);
+                }
+
+                return "עידכון כל הלקוחות  ( " + clientsList.Count.ToString() + " ) ימשיך ברקע";
+            }
         }
 
         [WebMethod]

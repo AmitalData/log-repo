@@ -499,6 +499,16 @@ export class MaintenanceComponent {
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
                 });
             }
+            this._entityResourceService.getEntityResourceByTableName("Customs.Client", 0).subscribe((response: any) => {
+                var item = new MenusTablePM();
+                item.CategoryTypeCode = "CSM";
+                item.Icon = "Table"
+                item.Code = "SAC";
+                item.TranslatedName = "שליפת לקוח ברצף"
+                item.ObjectTableName = "Customs.Client";
+                item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.Client")[0].Id
+                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+            });
         }
         if (window.ObjectTables.filter(d => d.Name == "Customs.CustomsRequiredField")[0] != null) {
             this._entityResourceService.getEntityResourceByTableName("Customs.CustomsRequiredField", 0).subscribe((response: any) => {
@@ -1536,6 +1546,40 @@ export class MaintenanceComponent {
                                 SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
                                     service.SendRecallMessageConcurrencyGuidToServer();
                                 });                   
+                            }
+                        });
+                        break;
+                    }
+                case "SAC":
+                    {
+                        let LoggedUserPMCode = SessionLocator.LoggedUserPM.Code || "";
+                        LoggedUserPMCode = LoggedUserPMCode.toLowerCase();
+                        let allowed = false;
+                        allowed = (LoggedUserPMCode == "amital" || LoggedUserPMCode.startsWith("amital.") || SessionLocator.LoggedUserPM.IsCustomerCare);
+
+                        if (!allowed) {
+                            let messageWindow = new MessageWindow()
+                            messageWindow.Show("Logged User Is not Customer Care ");
+                            return;
+                        }
+                        let msg = "האם לבצע שליפה של כל הלקוחות במערכת?"
+                        let confirmWindow = new ConfirmWindow();
+                        confirmWindow.Title = "שליפת לקוח ברצף";
+                        confirmWindow.Width = 350;
+                        confirmWindow.Height = 200;
+                        confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                        confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
+                        confirmWindow.ShowNoButton
+                        confirmWindow.Show(msg);
+                        confirmWindow.WindowClosed.subscribe((event: any) => {
+                            if (confirmWindow.Yes) {
+
+                                var servicelink = './Customs/CustomsGeneralRequests/Components/RecallClientsForCutoms';
+
+
+                                SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
+                                    service.SendRecallMessageToServer(true);
+                                });
                             }
                         });
                         break;
