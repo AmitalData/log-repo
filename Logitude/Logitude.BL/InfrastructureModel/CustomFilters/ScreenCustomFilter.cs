@@ -47,14 +47,7 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                     }
                     else if (item.FieldName == "ObjectTableId")
                     {
-                        string fieldValue = item.FieldValue as string;
-
-                        if (!string.IsNullOrEmpty(fieldValue))
-                        {
-                            queryableData = queryableData.Where(s => s.ObjectTableId == fieldValue
-                                                                  && !s.Inactive
-                                                                  && s.Tenant == Tenant);
-                        }
+                        queryableData = FilterDataByObjectTableId(queryableData, item);
                     }
                 }
             }
@@ -62,6 +55,19 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
             return queryableData;
         }
 
-       
+        private IQueryable<Screen> FilterDataByObjectTableId(IQueryable<Screen> queryableData, QueryFilterItem item)
+        {
+            string fieldValue = item.FieldValue as string;
+
+            if (!string.IsNullOrEmpty(fieldValue))
+            {
+                queryableData = queryableData.Where(s => s.ObjectTableId == fieldValue
+                                                      && !s.Inactive
+                                                      && s.Tenant == Tenant);
+            }
+
+            return queryableData;
+        }
+
     }
 }
