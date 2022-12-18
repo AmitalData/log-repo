@@ -43,7 +43,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.IsExportActivated = entityPM.IsExportActivated;
             entityPOCO.CreateShipmentsWithoutDocs = entityPM.CreateShipmentsWithoutDocs;
             entityPOCO.CreateOShipmentsWithoutDocs = entityPM.CreateOShipmentsWithoutDocs;
-            entityPOCO.Distributor = entityPM.Distributor;
+            entityPOCO.DistributorCode = entityPM.DistributorCode;
         }
     }
 }

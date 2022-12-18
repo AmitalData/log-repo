@@ -34,5 +34,6 @@ export class TenantManagmentPrivateLabelsList {
 		CreateShipmentsWithoutDocs: boolean;
 		CreateOShipmentsWithoutDocs: boolean;
 		FilingInboxDomain: string;
-	    Distributor: string
+		DistributorCode: string;
+	
 }
