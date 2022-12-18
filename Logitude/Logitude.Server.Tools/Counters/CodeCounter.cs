@@ -84,7 +84,7 @@ namespace Logitude.Server.Tools.Counters
                             var myTenants = new List<int>() { 1, 42, 2889 };
                             if (tenant < 3000)//myTenants.Contains(tenant))
                             {
-                                cmd = new SqlCommand("dbo.usp_GetNextTableCodeValueWithSnapShot", cn);
+                                //cmd = new SqlCommand("dbo.usp_GetNextTableCodeValueWithSnapShot", cn);
                             }
                             cmd.CommandType = CommandType.StoredProcedure;
 
