@@ -62,7 +62,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              CreateShipmentsWithoutDocs = a.CreateShipmentsWithoutDocs,
                                              CreateOShipmentsWithoutDocs = a.CreateOShipmentsWithoutDocs,
                                              FilingInboxDomain = a.FilingInboxDomain,
-                                             Distributor = a.Distributor
+                                             DistributorCode = a.DistributorCode
                                              }).FirstOrDefault();
 
             return entity;
@@ -100,7 +100,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                          CreateShipmentsWithoutDocs = a.CreateShipmentsWithoutDocs,
                                                          CreateOShipmentsWithoutDocs = a.CreateOShipmentsWithoutDocs,
                                                          FilingInboxDomain = a.FilingInboxDomain,
-                                                         Distributor = a.Distributor
+                                                         DistributorCode = a.DistributorCode
                                                      }).FirstOrDefault();
 
             return entity;
@@ -138,7 +138,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                            CreateShipmentsWithoutDocs = a.CreateShipmentsWithoutDocs,
                                                            CreateOShipmentsWithoutDocs = a.CreateOShipmentsWithoutDocs,
                                                            FilingInboxDomain = a.FilingInboxDomain,
-                                                           Distributor = a.Distributor
+                                                           DistributorCode = a.DistributorCode
                                                        }).FirstOrDefault();
 
             return entity;
@@ -175,7 +175,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         CreateShipmentsWithoutDocs = a.CreateShipmentsWithoutDocs,
                         CreateOShipmentsWithoutDocs = a.CreateOShipmentsWithoutDocs,
                         FilingInboxDomain = a.FilingInboxDomain,
-                        Distributor = a.Distributor
+                        DistributorCode = a.DistributorCode
                     });
         }
 
@@ -212,7 +212,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         CreateShipmentsWithoutDocs = a.CreateShipmentsWithoutDocs,
                         CreateOShipmentsWithoutDocs = a.CreateOShipmentsWithoutDocs,
                         FilingInboxDomain = a.FilingInboxDomain,
-                        Distributor = a.Distributor
+                        DistributorCode = a.DistributorCode
                     });
         }
 
@@ -248,7 +248,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         CreateShipmentsWithoutDocs = a.CreateShipmentsWithoutDocs,
                         CreateOShipmentsWithoutDocs = a.CreateOShipmentsWithoutDocs,
                         FilingInboxDomain = a.FilingInboxDomain,
-                        Distributor = a.Distributor
+                        DistributorCode = a.DistributorCode
                     });
         }
 
@@ -285,7 +285,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        CreateShipmentsWithoutDocs = a.CreateShipmentsWithoutDocs,
                        CreateOShipmentsWithoutDocs = a.CreateOShipmentsWithoutDocs,
                        FilingInboxDomain = a.FilingInboxDomain,
-                       Distributor = a.Distributor
+                       DistributorCode = a.DistributorCode
                    };
 
         }

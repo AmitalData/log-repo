@@ -20,7 +20,7 @@
   </Column>
   <Column
     Name="HybridPartnerId"
-    Type="nvarchar"
+    Type="varchar"
     Size="15">
     <Constraints
       Nullable="false" />
@@ -203,7 +203,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="Distributor"
+    Name="DistributorCode"
+    OldNames="Distributor"
     Type="varchar"
     Size="15">
     <Constraints

@@ -566,6 +566,7 @@ namespace WebFreight.Web.InfrastructureModel
             {
                 TenantManagementRepository tenantrep = new TenantManagementRepository();
                 tenantManagement = tenantrep.GetSingleTenantManagement(tenant);
+                UpdateTenantManagement(logboxSignUpService, tenantManagement, tenantrep);
                 scope.Complete();
             }
 
@@ -761,6 +762,15 @@ namespace WebFreight.Web.InfrastructureModel
             
             signUpInfo.Tenant = tenant;
             return password;
+        }
+
+        private static void UpdateTenantManagement(LogboxSignUpService logboxSignUpService, TenantManagement tenantManagement, TenantManagementRepository tenantManagementRepository)
+        {
+            TenantManagmentPrivateLabels selectedTenantManagmentPrivateLabel = logboxSignUpService.GetSelectedTenantManagmentPrivateLabels();
+            if (selectedTenantManagmentPrivateLabel == null) return;
+            tenantManagement.DistributorCode = selectedTenantManagmentPrivateLabel.DistributorCode;
+            tenantManagementRepository.Update(tenantManagement);
+            tenantManagementRepository.SubmitChanges();
         }
 
         private static void AddShipmentSubTypes(int tenant, ShipmentSubTypeRepository shipmentSubTypeRepository, List<ShipmentSubType> tenantZeroShipmentSubTypes)

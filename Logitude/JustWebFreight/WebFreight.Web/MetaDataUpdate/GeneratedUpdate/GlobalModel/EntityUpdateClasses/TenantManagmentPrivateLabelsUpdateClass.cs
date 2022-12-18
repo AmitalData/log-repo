@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 {
    public class TenantManagmentPrivateLabelsUpdateClass
    {  		
-		public const string HashString = "4bcaf716f5ff99a2d91baf33bfa123d9";
+		public const string HashString = "8e99a4009bc88f398409397577a8b596";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -284,7 +284,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					 
 					 						FieldName =  "HybridPartnerId",
 					  						ObjectTableName =  "TenantManagmentPrivateLabels",
-					  						FieldsDataType =  "nText",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "HybridPartner",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  true,
@@ -1950,7 +1951,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "Distributor",
+					 						FieldName =  "DistributorCode",
 					  						ObjectTableName =  "TenantManagmentPrivateLabels",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Distributor",
@@ -1971,8 +1972,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "Distributor",
-					  						ListPropertyPath =  "Distributor",
+					  						PMPropertyPath =  "DistributorCode",
+					  						ListPropertyPath =  "DistributorCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1989,9 +1991,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Distributor",
+					  						FullFieldLable =  "DistributorCode",
 					  						DefaultText =  "Distributor",
-					  						ListFieldLable =  "DistributorListLable",
+					  						ListFieldLable =  "DistributorCodeListLable",
 					  						ListLableDefaultText =  "Distributor",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,

@@ -20,6 +20,7 @@ import { HybridPartnerPM } from '../../../../Common/EntityPMs/HybridPartnerPM';
 import { getLocaleDateTimeFormat } from '@angular/common';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
+import { TenantManagmentPrivateLabelsListService } from '../../../../Infrastructure/Services/StandardLists/TenantManagmentPrivateLabelsListService';
 
 declare var UploadLogoFile, HideImage, SetImage, ArrayBufferToBase64: any;
 declare var querySelection, StringToBase64, resultToUnitArray: any;
@@ -71,13 +72,15 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
     TermsofUseSelectedViewModel: TermsofUsePMViewModel;
     private termsofUseService: TermsofUseService = new TermsofUseService(); 
     private entityResourceService: EntityResourceService = new EntityResourceService();
+    private tenantManagmentPrivateLabelsListService: TenantManagmentPrivateLabelsListService = new TenantManagmentPrivateLabelsListService();
     IsVisibile: boolean;
     public EntityId: number;
     public hybridPartner: HybridPartnerPM;
     public ParentTenant: number;
 
     public TermsOfUsePM: TermsofUsePM;
-     
+    public AllActiveTenantManagementPrivateLabels: any[] = [];
+
     VersionDocumentId: string = Guid.NewRandomString();
 
 
@@ -99,11 +102,28 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
 
     ngOnInit() {
         this.SelectedTabCode = "TMM";
-        this.UIProperties.SetRequired("HybridPartnerId", this.ObjectTableName, true); 
+        this.UIProperties.SetRequired("HybridPartnerId", this.ObjectTableName, true);
+        this.StartLoadingData();
         this.GetTermsOfUse();
  
     }
 
+    StartLoadingData() {
+        this.CurrentSession.StartBusyIndicator("Loading...");
+        this.tenantManagmentPrivateLabelsListService.getAll().subscribe((serviceResult: any) => {
+            if (serviceResult.HasError || !serviceResult.Result) {
+                this.HandleServiceResultError(serviceResult);
+                return;
+            }
+            this.AllActiveTenantManagementPrivateLabels = serviceResult.Result.filter(tenantManagementPrivateLabel => !tenantManagementPrivateLabel.InActive);
+            this.GetTermsOfUse();
+        });
+    }
+
+    private HandleServiceResultError(serviceResult: any) {
+        this.ValidationErrorsList = serviceResult.ErrorsArray;
+        this.CurrentSession.StopBusyIndicator();
+    }
 
     // Upload Terms Of Use
     OpenUpLoadTemplateFile() {
@@ -216,7 +236,8 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
             }
                 else {
                     this.HandleServiceError(serviceResponse)
-                }
+            }
+            this.CurrentSession.StopBusyIndicator();
             });
     }
 
@@ -851,12 +872,12 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
          }
     }
 
-    get Distributor() {
-        return this.EntityPM.Distributor;
+    get DistributorCode() {
+        return this.EntityPM.DistributorCode;
     }
-    set Distributor(value: string) {
-        if (value == this.EntityPM.Distributor) return;
-        this.EntityPM.Distributor = value;
+    set DistributorCode(value: string) {
+        if (value == this.EntityPM.DistributorCode) return;
+        this.EntityPM.DistributorCode = value;
     }
 
      get ReceiveAllStatuses() {
@@ -991,9 +1012,7 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
         this.ValidationErrorsList = [];
         var errors: string[] = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
-        if (this.HybridPartnerId == null || this.HybridPartnerId == "") {
-            errors.push("Hybrid Partner Field is Required");
-        }
+        this.ValidateSelectedHybridPartner(errors);
         this.ValidateDirectionsOptions(errors);
 
         this.ValidateColors(errors);
@@ -1034,6 +1053,18 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
     }
 
     private myCloner: Cloner;
+
+    private ValidateSelectedHybridPartner(errors: string[]) {
+        if (this.HybridPartnerId == null || this.HybridPartnerId == "") {
+            errors.push("Hybrid Partner Field is Required");
+            return;
+        }
+        if (!this.AllActiveTenantManagementPrivateLabels) return;
+        if (this.AllActiveTenantManagementPrivateLabels.some(tenantManagementPrivateLabel => tenantManagementPrivateLabel.HybridPartnerId == this.HybridPartnerId && tenantManagementPrivateLabel.Id != this.EntityPM.Id)) {
+            errors.push("This hybrid partner is used in another private label");
+            return;
+        }
+    }
 
     private ValidateDirectionsOptions(errors: string[]) {
         if (!this.IsCustomsActivated && !this.IsExportActivated) {

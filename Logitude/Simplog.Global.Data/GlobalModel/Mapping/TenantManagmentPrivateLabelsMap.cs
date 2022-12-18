@@ -30,7 +30,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.MainTabHighlightColor).HasMaxLength(100);
             this.Property(t => t.QueryFiltersHighlightColor).HasMaxLength(100);
             this.Property(t => t.FilingInboxDomain).HasMaxLength(100).IsUnicode(false);
-            this.Property(t => t.Distributor).HasMaxLength(15).IsUnicode(true);
+            this.Property(t => t.DistributorCode).HasMaxLength(15).IsUnicode(true);
 
             this.ToTable("TenantManagmentPrivateLabels");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -61,7 +61,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.CreateShipmentsWithoutDocs).HasColumnName("CreateShipmentsWithoutDocs");
             this.Property(t => t.CreateOShipmentsWithoutDocs).HasColumnName("CreateOShipmentsWithoutDocs");
             this.Property(t => t.FilingInboxDomain).HasColumnName("FilingInboxDomain");
-            this.Property(t => t.Distributor).HasColumnName("Distributor");
+            this.Property(t => t.DistributorCode).HasColumnName("DistributorCode");
             //this.HasRequired(t => t.GlobalTenant).WithOptional(t => t.TenantManagement);
             //this.HasOptional(t => t.MainLogoId).WithMany().HasForeignKey(d => d.LogoId);
         }
