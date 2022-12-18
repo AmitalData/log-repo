@@ -5439,7 +5439,10 @@ namespace WebFreight.Web.Helpers
 
                                 string resultValue = GetEntityFieldValue(theEntity, propertyName, theEntityObjectFields, tenant);
                                 string shipmentLevelCode = GetEntityPropertyValue(theEntity, "ShipmentLevelCode");
-                                bool enableSharedLogisticsMessageLink = CurrentTenant != null && ((CurrentTenant.SharedLogisticsMessageLink) || (CurrentTenant.SharedLogisMasterMessageLink && shipmentLevelCode == "C"));
+                                var masterShipmentType = "C";
+                                bool enableSharedLogisticsMessageLink = CurrentTenant != null && CurrentTenant.SharedLogisticsMessageLink && shipmentLevelCode != masterShipmentType;
+                                bool enableSharedLogisMasterMessageLink = CurrentTenant != null && (CurrentTenant.SharedLogisMasterMessageLink && shipmentLevelCode == masterShipmentType);
+
                                 if ((propertyName == "SecurityKey" || (propertyName == "ShipmentNumber" && ObjectTableName == "Shipment")) && CurrentTenant != null && enableSharedLogisticsMessageLink)
                                 {
                                     if (propertyName == "SecurityKey")
@@ -5447,18 +5450,27 @@ namespace WebFreight.Web.Helpers
                                         this.securityKey = resultValue;
                                         shipmentNumbersNodesHtml.Add(node);
                                         node.InnerHtml = node.InnerHtml.Replace("[" + propertyName + "]", "");
-
                                     }
                                     else
                                     {
                                         this.securityKey = GetEntityFieldValue(theEntity, "SecurityKey", theEntityObjectFields, tenant);
-                                        // node.Attributes["Text"].Value = node.Attributes["Text"].Value.Replace("[" + propertyName + "]", resultValue + " ");
-
                                         node.InnerHtml = node.InnerHtml.Replace("[" + propertyName + "]", resultValue + " ");
+                                        shipmentNumbersNodesHtml.Add(node);
+                                    }
+                                }
 
-
-
-                                        //this.securityKeyNode = node;
+                                else if ((propertyName == "SecurityKey" || (propertyName == "ShipmentNumber" && ObjectTableName == "Shipment")) && CurrentTenant != null && enableSharedLogisMasterMessageLink)
+                                {
+                                    if (propertyName == "SecurityKey")
+                                    {
+                                        this.securityKey = resultValue;
+                                        shipmentNumbersNodesHtml.Add(node);
+                                        node.InnerHtml = node.InnerHtml.Replace("[" + propertyName + "]", "");
+                                    }
+                                    else
+                                    {
+                                        this.securityKey = GetEntityFieldValue(theEntity, "SecurityKey", theEntityObjectFields, tenant);
+                                        node.InnerHtml = node.InnerHtml.Replace("[" + propertyName + "]", resultValue + " ");
                                         shipmentNumbersNodesHtml.Add(node);
                                     }
                                 }

@@ -14,12 +14,29 @@
 
                 <tr style="height:20px;">
                     <td colspan="5">
-                        <span style="float: left;font-size:11px;color:gray">
-                            This Customer Invitations screen enables you to select and invite your customers. Once invited, they will be able to view their own shipments.
-                        </span>
-                        <span style="float: right;">
-                            <button [attr.data-cy]="'New Contact'"   style="width:80px" class="Button" (click)="NewContactButtonClick()">New Contact</button>
-                        </span>
+                        <table>
+                            <tr>
+                                <td style="float: left;font-size:11px;color:gray">
+                                    <span style="float: left;font-size:11px;color:gray">
+                                        This Customer Invitations screen enables you to select and invite your customers. Once invited, they will be able to view their own shipments.
+                                    </span>
+                                </td>
+
+                                <td *ngIf="IsDigitalPortal" style="width: 140px;float: right">
+                                    <span style="float: right;margin-right:3px;">
+                                        <button [attr.data-cy]="'Login To Online Visibility'" [disabled]="IsLoginToOnlineVisibility" style="width:140px" class="Button" (click)="LoginToOnlineVisibility()">Login To Online Visibility</button>
+                                    </span>
+                                </td>
+                                <td colspan="3">
+                                    <div></div>
+                                </td>
+                                <td style="width: 80px;float: right">
+                                    <span>
+                                        <button [attr.data-cy]="'New Contact'" style="width:80px" class="Button" (click)="NewContactButtonClick()">New Contact</button>
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
                     </td>
                 </tr>
 
