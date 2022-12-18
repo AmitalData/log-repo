@@ -26,7 +26,7 @@ export class LighteningScreenComponent extends BaseComponent implements OnInit
     public ScreenLayoutComponent: ScreenLayoutComponent;
     public lighteningScreenWidth: string;
     private screenLayoutwidth = 650;
-    private SectionWidth = "750";
+    public SectionWidth = "750";
     private CurrentSession = SessionLocator.SelectedSession;
     constructor()
     {
