@@ -35,7 +35,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     public IsAddNewMeasureVisible: boolean = true;
     public DateGroupCodes = ['Day', 'Month', 'Year', 'Quarter'];
     public SortByCodes = [];
-    public PeriodOperators = ['After', 'Before', 'Previous', 'Current', 'Next', 'Between'];
+    public PeriodOperators = ['Previous', 'Between'];
     public SortByDirections = [{ name: 'Ascending', code: 'asc' }, { name: 'Descending', code: 'desc' }];
     public IncreaseDecreases = ['Positive', 'Negative'];
     public GroupByQueryFilters: ApiQueryFilters;
@@ -87,13 +87,7 @@ export class AddEditWidgetComponent extends BaseComponent {
 
         
     }
-    SetUIProprtiesForComparisonPeriod(){
-        this.UIProperties.SetValidity("ComparisonPeriod", this.ObjectTableName, true, "");
-
-        if (this.ComparisonPeriod < 0) {
-            this.UIProperties.SetValidity("ComparisonPeriod", this.ObjectTableName, false, "Comparison Period must be Greater Than 0");
-        }
-    }
+    
 
     BuildQueryFilters() {
         this.GroupByQueryFilters = new ApiQueryFilters();
@@ -254,7 +248,7 @@ export class AddEditWidgetComponent extends BaseComponent {
 
         this.Increase = this.Increase ? this.Increase : "Postive";
         
-    }
+
     SetUIForOperator() {
         this.IsBetweenDatesVisible = false;
 
@@ -267,6 +261,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         if(!this.SecondaryGroupById){
             this.IsAddNewMeasureVisible = false;
         }
+
     }
 
     private isAdvancedSettingVisible: boolean = false;
@@ -419,13 +414,12 @@ export class AddEditWidgetComponent extends BaseComponent {
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget Comparison Period Value Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
         }
     }
-   
+
     get ComparisonPeriod() { return this.EntityPM.ComparisonPeriod; }
     set ComparisonPeriod(value: number) {
         if (this.EntityPM.ComparisonPeriod != value) {
             this.EntityPM.ComparisonPeriod = value;
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget Comparison Period Value Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
-            this.SetUIProprtiesForComparisonPeriod();
         }
     }
     get ComparisonDateGroup() { return this.EntityPM.ComparisonDateGroup; }
