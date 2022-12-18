@@ -45,12 +45,29 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                                                                   && s.Tenant == Tenant);
                         }
                     }
+                    else if (item.FieldName == "ObjectTableId")
+                    {
+                        queryableData = FilterDataByObjectTableId(queryableData, item);
+                    }
                 }
             }
 
             return queryableData;
         }
 
-       
+        private IQueryable<Screen> FilterDataByObjectTableId(IQueryable<Screen> queryableData, QueryFilterItem item)
+        {
+            string fieldValue = item.FieldValue as string;
+
+            if (!string.IsNullOrEmpty(fieldValue))
+            {
+                queryableData = queryableData.Where(s => s.ObjectTableId == fieldValue
+                                                      && !s.Inactive
+                                                      && s.Tenant == Tenant);
+            }
+
+            return queryableData;
+        }
+
     }
 }

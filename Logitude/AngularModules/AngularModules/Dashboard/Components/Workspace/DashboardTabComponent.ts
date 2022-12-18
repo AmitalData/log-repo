@@ -21,7 +21,7 @@ import { DashboardAnalyticsService } from '../../../DashboardModule/Services/Das
 })
 
 export class DashboardTabComponent implements OnInit {
-    @Input() DashboardId: string;
+    @Input() DashboardId: string = null;
     @Input() OpenEditLayout: boolean = false;
     @Output() DashboardDeleted = new EventEmitter<string>();
     @Output() DashboardChanged = new EventEmitter<DashboardPM>();
@@ -60,13 +60,14 @@ export class DashboardTabComponent implements OnInit {
     private hasChanges: boolean = false;
     get HasChanges() { return this.hasChanges; }
     set HasChanges(value: boolean) {
-        if (this.hasChanges != value) {
-            this.hasChanges = value;
-            this.TabHasChanges.emit(value);
-            if (this.IsEditLayoutModeActive) {
-                this.DashboardEntity.emit(this.SelectedDashboard);
-            }
+        if (this.hasChanges == value) return;
+        this.hasChanges = value;     
+        if (this.IsEditLayoutModeActive) {
+            this.DashboardEntity.emit(this.SelectedDashboard);
         }
+
+        if(!this.IsEditLayoutModeActive && value) return;
+        this.TabHasChanges.emit(value); 
     }
 
     private isEditLayoutModeActive: boolean = false;

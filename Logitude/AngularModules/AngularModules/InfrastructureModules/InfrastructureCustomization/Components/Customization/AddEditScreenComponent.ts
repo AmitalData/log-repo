@@ -24,6 +24,7 @@ export class AddEditScreenComponent extends BaseComponent {
     IsNew: boolean = true;
     private numberOfRows: number =1;
     private numberOfColumns: number = 3;
+    private numberOfColumnsSubEntities: number = 2;
     private CurrentSession = SessionLocator.SelectedSession;
     public IsEditMode: boolean = false;
     public IsSubEntity: boolean;
@@ -59,19 +60,14 @@ export class AddEditScreenComponent extends BaseComponent {
 
         this.SetObjectTableFields(this.EntityPM);
         this.IsEditMode = args.Screen != null;
-        this.FilterScreenTypes();
         this.SetScreenType();
     }
 
-    FilterScreenTypes() {
-        if (!this.IsSubEntity || !this.IsCustomObjectTable) return;
-        this.ScreenTypes = this.ScreenTypes.filter(screenType => screenType.Code != "LIGHTENING");
-    }
     GetNewScreenInstance() {
         var screen = new ScreenPM();
         screen.Tenant = SessionLocator.Tenant;
         screen.NumberOfRows = this.numberOfRows;
-        screen.NumberOfColumns = this.numberOfColumns;
+        screen.NumberOfColumns = this.IsSubEntity ? this.numberOfColumnsSubEntities : this.numberOfColumns;
         return screen;
     }
 

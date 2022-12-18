@@ -571,6 +571,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             screen.NumberOfColumns = args.Columns;
             screen.SortedByFieldCode = args.SortedByFieldCode;
             screen.SortedType = args.SortedType;
+            screen.RelatedScreenCode = args.RelatedScreenCode;
             myRepo.context.Screens.Attach(screen);
             myRepo.context.SetAsModified(screen);
             myRepo.context.SaveChanges();

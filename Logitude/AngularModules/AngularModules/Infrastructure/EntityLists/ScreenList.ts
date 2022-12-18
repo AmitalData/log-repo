@@ -19,5 +19,5 @@ export class ScreenList {
 		Type: string;
 		SearchFields: string;
 		ChildScreenGrid: string;
-	
+        RelatedScreenCode: string;
 }
