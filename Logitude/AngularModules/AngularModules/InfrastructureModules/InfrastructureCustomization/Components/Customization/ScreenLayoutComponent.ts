@@ -509,6 +509,10 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
 
         if (myitem) {
             let objectField = this.GetObjectField(myitem);
+            if (objectField && !objectField.IsCustom && objectField.DisplayOnly && this.IsSubEntity) {//&& is not summery section
+                this.ShowMessageWindow(TextCodeTranslator.Translate(objectField.FullNameTextCodeCode) + " field can be added in the summary section only","Message");
+                return;
+            }
             objectFieldId = objectField.Id;
             myitem = objectField;
 

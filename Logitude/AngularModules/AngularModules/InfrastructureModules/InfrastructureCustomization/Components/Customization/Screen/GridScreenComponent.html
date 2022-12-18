@@ -156,7 +156,7 @@
                                     <table>
                                         <tr>
                                             <td style="width:10px;"></td>
-                                            <td style="width:70px;">
+                                            <td style="width:80px;">
                                                 Sorted By:
                                             </td>
                                             <td style="width:200px;">
@@ -167,7 +167,32 @@
                                             <td style="width:10px;"></td>
                                             <td style="width:150px;">
                                                 <ComboBox (SelectedItemChanged)="SortedTypeChanged($event)"
-                                                          [SelectedItem]="SelectedScreen.SortedType" [ItemsSource]="SortedTypes"></ComboBox>
+                                                          [SelectedItem]="SelectedSortedType" [ItemsSource]="SortedTypes"></ComboBox>
+                                            </td>
+                                            <td><div></div></td>
+                                        </tr>
+                                        <tr style="height:5px;">
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width:10px;"></td>
+                                            <td style="width:80px;">
+                                                New Screen:
+                                            </td>
+                                            <td style="width:200px;">
+                                                <LogLov (SelectedItemChanged)="NewScreensSelectionChanged($event)"
+                                                        [ObjectFieldName]="'SelectedNewScreenId'"
+                                                        [ObjectTableName]="'Screen'"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Screen'"
+                                                        [NoValidation]="true"
+                                                        [IsFreeText]="true"
+                                                        [SelectedValue]="SelectedNewScreenId"
+                                                        [HideColumns]="true"
+                                                        [HideLastColumn]="true"
+                                                        [DisplayMemberPath]="'Name'"
+                                                        [QueryFilterItems]="NewScreenFilterItems">
+                                                </LogLov>
                                             </td>
                                             <td><div></div></td>
                                         </tr>

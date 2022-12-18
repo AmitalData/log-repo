@@ -28,6 +28,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string SortedByFieldCode { get; set; }
         public string SortedType { get; set; }
         public string SearchFields { get; set; }
+        public string RelatedScreenCode { get; set; }
 
         //[Include]
         //[Association("ObjectTableScreen", "ObjectTableId", "Id",IsForeignKey=true)]
