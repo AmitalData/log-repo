@@ -45,7 +45,7 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                                                                   && s.Tenant == Tenant);
                         }
                     }
-                    else if (item.FieldName == "ObjectTableIdFilter")
+                    else if (item.FieldName == "ObjectTableId")
                     {
                         string fieldValue = item.FieldValue as string;
 

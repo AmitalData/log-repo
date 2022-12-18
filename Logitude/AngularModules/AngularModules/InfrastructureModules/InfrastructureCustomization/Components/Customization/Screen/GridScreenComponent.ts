@@ -64,7 +64,7 @@ export class GridScreenComponent extends BaseComponent implements OnInit, AfterV
     InitLOVFilters() {
 
         this.NewScreenFilterItems = new ApiQueryFilters();
-        this.NewScreenFilterItems.addAdditionalFilter("ObjectTableIdFilter", this.SelectedScreen.ObjectTableId, null, null, "Equals", true, false, false, "string");
+        this.NewScreenFilterItems.addAdditionalFilter("ObjectTableId", this.SelectedScreen.ObjectTableId, null, null, "Equals", true, false, false, "string");
         this.NewScreenFilterItems.Tenant = SessionLocator.Tenant;
 
     }

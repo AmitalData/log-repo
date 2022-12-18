@@ -31,7 +31,6 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string SearchFields { get; set; }
         public string ChildScreenGrid { get; set; }
         public string RelatedScreenCode { get; set; }
-        public string ObjectTableIdFilter { get; set; }
         [Include]
         [Association("ScreenScreenField", "Id", "ScreenId")]
         public virtual List<ScreenFieldPM> ScreenFields { get; set; }
