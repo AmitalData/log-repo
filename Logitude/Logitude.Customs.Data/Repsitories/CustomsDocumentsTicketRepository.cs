@@ -84,7 +84,7 @@ namespace Logitude.Customs.Data.Repsitories
         }*/
 
 
-        public List<CustomsDocumentsTicket> GetCustomsDocumentsTicketPMsByEntityIdAndChilds(string entityId, string entity1ChildId, string entity2ChildId, string entity3ChildId, int tenant, string parentEntityCode)
+        public List<CustomsDocumentsTicket> GetCustomsDocumentsTicketPMsByEntityIdAndChilds(string entityId, string entity1ChildId, string entity2ChildId, string entity3ChildId, int tenant, string parentEntityCode, bool isAir)
         {
             IQueryable<CustomsDocumentPointer> iqurable = null;
 
@@ -171,7 +171,7 @@ FROM ( SELECT DISTINCT
                 ticketIds.Add(s.CustomsDocumentsTicketId);
             }
 
-            if (parentEntityCode == "ExportDeclarationClosingData")
+            if (parentEntityCode == "ExportDeclarationClosingData" && isAir)
             {
                 var iqurable2 = from a in context.CustomsDocumentPointers
                                 where a.ParentEntityId == entityId && a.Tenant == tenant && a.ParentEntityCode == "Declaration"
