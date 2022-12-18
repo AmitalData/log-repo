@@ -218,7 +218,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Agent Notification",
                 LocalName = "הודעה לסוכן",
                 AssigneeNotificationTypeCode = "I",
-                ActiveInExport = false,
+                ActiveInExport = true,
 
             });
 
@@ -238,7 +238,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Correspondence to Cargo Split Rejected",
                 LocalName = "התכתבות דחיית פיצול מטען",
                 AssigneeNotificationTypeCode = "I",
-                ActiveInExport = false,
+                ActiveInExport = true,
 
             });
 
@@ -248,7 +248,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Correspondence to legality ransom",
                 LocalName = "התכתבות כופר חוקיות",
                 AssigneeNotificationTypeCode = "I",
-                ActiveInExport = false,
+                ActiveInExport = true,
             });
 
             all.Add(new NotificationDefinitionDetails() // moran 28.4.19 - Task 51282 
@@ -257,7 +257,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Correspondence to request for document",
                 LocalName = "התכתבות לדרישת מסמך",
                 AssigneeNotificationTypeCode = "I",
-                ActiveInExport = false,
+                ActiveInExport = true,
             });
 
             all.Add(new NotificationDefinitionDetails() // mirit 25.8.19 - Task 55928 
@@ -266,7 +266,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Collateral Demand",
                 LocalName = "עמידה/אי עמידה בדרישה לבטוחה",
                 AssigneeNotificationTypeCode = "I",
-                ActiveInExport = false,
+                ActiveInExport = true,
             });
 
             //all.Add(new NotificationDefinitionDetails() // Mirit 22.04.15 - Task 12713 //delete Task 20106
@@ -283,7 +283,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Agent Notification - Docs Inspection",
                 LocalName = "הודעה לסוכן - בקרת מסמכים",
                 AssigneeNotificationTypeCode = "I",
-                ActiveInExport = false,
+                ActiveInExport = true,
             });
 
             all.Add(new NotificationDefinitionDetails() // Mirit 10.05.15 - Task 13106 
@@ -292,7 +292,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Agent Notification - Check",
                 LocalName = "הודעה לסוכן - תור בחינה",
                 AssigneeNotificationTypeCode = "I",
-                ActiveInExport = false,
+                ActiveInExport = true,
 
             });
 
@@ -302,7 +302,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Agent Notification - Check",
                 LocalName = "הודעה לסוכן - תור בחינת רשות",
                 AssigneeNotificationTypeCode = "I",
-                ActiveInExport = false,
+                ActiveInExport = true,
 
             });
 
@@ -312,7 +312,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Storage Request created",
                 LocalName = "נוצרה בקשת אחסנה",
                 AssigneeNotificationTypeCode = "I",
-                ActiveInExport = false,
+                ActiveInExport = true,
 
             });
 
@@ -322,7 +322,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Storage Request cancelled",
                 LocalName = "בוטלה בקשת אחסנה",
                 AssigneeNotificationTypeCode = "I",
-                ActiveInExport = false,
+                ActiveInExport = true,
 
             });
 
@@ -332,7 +332,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Storage Request updated",
                 LocalName = "עודכנה בקשת אחסנה",
                 AssigneeNotificationTypeCode = "I",
-                ActiveInExport = false,
+                ActiveInExport = true,
 
             });
 
@@ -342,7 +342,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Agent Notification - Security Check",
                 LocalName = "הודעה לסוכן - בדיקה בטחונית",
                 AssigneeNotificationTypeCode = "I",
-                ActiveInExport = false,
+                ActiveInExport = true,
 
             });
 
@@ -352,7 +352,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Agent Notification - BOL",
                 LocalName = "הודעה לסוכן - התקבל מסר שטר מטען מאסטר",
                 AssigneeNotificationTypeCode = "I",
-                ActiveInExport = false,
+                ActiveInExport = true,
 
             });
 
@@ -362,7 +362,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Agent Notification - Load/Unload",
                 LocalName = "הודעה לסוכן - אישור פריקה/טעינה",
                 AssigneeNotificationTypeCode = "I",
-                ActiveInExport = false,
+                ActiveInExport = true,
 
             });
 
