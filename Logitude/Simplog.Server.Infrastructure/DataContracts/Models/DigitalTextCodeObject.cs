@@ -2,8 +2,9 @@
 {
     public class DigitalTextCodeObject
     {
-        public string DisplayLable { get; set; }
         public string DisplayText { get; set; }
-        public string Code { get; set; }
+        public string DefaultText { get; set; }
+        public string TextCode { get; set; }
+        public string FieldCode { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 {
     public class DigitalFeildSecurityObject
     {
-        public string Field { get; set; }
+        public string FieldCode { get; set; }
 
         public bool HasPersmission { get; set; }
     }
