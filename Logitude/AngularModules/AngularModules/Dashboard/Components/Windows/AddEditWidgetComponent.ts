@@ -86,6 +86,7 @@ export class AddEditWidgetComponent extends BaseComponent {
 
         
     }
+    
     SetUIProprtiesForComparisonPeriod(){
         this.UIProperties.SetValidity("ComparisonPeriod", this.ObjectTableName, true, "");
 

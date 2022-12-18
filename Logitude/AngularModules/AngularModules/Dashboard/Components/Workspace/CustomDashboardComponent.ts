@@ -221,6 +221,10 @@ export class CustomDashboardComponent extends BaseComponent implements OnDestroy
                 MixPanelLocator.PostDashboardAction({ ActionName: "Confirm Window No Click", DashboardId: this.SelectedDashboard?.Id });
                 this.NavigateToSelectedTab();
             }
+            else if (confirmWindow.Cancel){
+                MixPanelLocator.PostDashboardAction({ ActionName: "Confirm Window Cancel Click", DashboardId: this.SelectedDashboard?.Id });
+                //this.NavigateToSelectedTab();
+            }
         });
     }
 
