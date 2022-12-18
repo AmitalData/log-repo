@@ -5439,8 +5439,9 @@ namespace WebFreight.Web.Helpers
 
                                 string resultValue = GetEntityFieldValue(theEntity, propertyName, theEntityObjectFields, tenant);
                                 string shipmentLevelCode = GetEntityPropertyValue(theEntity, "ShipmentLevelCode");
-                                bool enableSharedLogisticsMessageLink = CurrentTenant != null && CurrentTenant.SharedLogisticsMessageLink && shipmentLevelCode != "C";
-                                bool enableSharedLogisMasterMessageLink = CurrentTenant != null && (CurrentTenant.SharedLogisMasterMessageLink && shipmentLevelCode == "C");
+                                var masterShipmentType = "C";
+                                bool enableSharedLogisticsMessageLink = CurrentTenant != null && CurrentTenant.SharedLogisticsMessageLink && shipmentLevelCode != masterShipmentType;
+                                bool enableSharedLogisMasterMessageLink = CurrentTenant != null && (CurrentTenant.SharedLogisMasterMessageLink && shipmentLevelCode == masterShipmentType);
 
                                 if ((propertyName == "SecurityKey" || (propertyName == "ShipmentNumber" && ObjectTableName == "Shipment")) && CurrentTenant != null && enableSharedLogisticsMessageLink)
                                 {
