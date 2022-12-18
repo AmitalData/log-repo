@@ -1199,6 +1199,7 @@ namespace WebFreight.Web.ReportsWebServices
                 id = customerItem.FieldValue.ToString();
                 customer = CardRepository.GetSingleCard(id, tenant, true);
                 dataProvider.CustomerName = customer.EnglishName;
+                dataProvider.CustomerCode = customer.Code;
 
                 myFilterdCustomerAddress = addressRep.GetMainAddressByCardId(id, tenant);
                 if (myFilterdCustomerAddress != null)
@@ -1209,9 +1210,7 @@ namespace WebFreight.Web.ReportsWebServices
             else
             {
                 dataProvider.CustomerName = "All";
-            }
-
-        
+            }        
 
             dataProvider.InvoicesByPartnerList = new List<InvoicesByPartnerDataProvider.InvoicesByPartner>();
 
