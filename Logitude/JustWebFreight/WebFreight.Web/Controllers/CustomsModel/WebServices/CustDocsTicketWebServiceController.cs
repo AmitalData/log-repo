@@ -37,7 +37,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
     public class CustDocsTicketWebServiceController : ApiController
     {
-        public HttpResponseMessage GetCustomsDocumentsTicketsByEntityIdAndChilds(string entityId, string childEntityId1, string childEntityId2, string childEntityId3, string parentEntityCode)
+        public HttpResponseMessage GetCustomsDocumentsTicketsByEntityIdAndChilds(string entityId, string childEntityId1, string childEntityId2, string childEntityId3, string parentEntityCode, bool isAir)
         {
             try
             {
@@ -59,7 +59,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
 
                 CustomsDocumentsTicketQueryService customsDocumentsTicketQuery = new CustomsDocumentsTicketQueryService(authToken.Tenant);
-                List<CustomsDocumentsTicketPM> customsDocumentsTickets = customsDocumentsTicketQuery.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(entityId, childEntityId1, childEntityId2, childEntityId3, authToken.Tenant, parentEntityCode);
+                List<CustomsDocumentsTicketPM> customsDocumentsTickets = customsDocumentsTicketQuery.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(entityId, childEntityId1, childEntityId2, childEntityId3, authToken.Tenant, parentEntityCode, isAir);
 
                 return Request.CreateResponse(HttpStatusCode.OK, customsDocumentsTickets);
             }
