@@ -162,13 +162,13 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                  }
                 catch (Exception ex )
                 {
-                    log = ex.Message + ex.StackTrace;
+                    log = ex.Message + Environment.NewLine + message + Environment.NewLine + ex.StackTrace;
                     _AnalyzeResultModel = _AnalyzeResultModel ?? new AnalyzeResultModel();
                     _AnalyzeResultModel.MyCommStatusEnum = CommStatusEnum.W;
                     _AnalyzeResultModel.ErrorMessage = log;
 
                     success = false;
-                     throw new Exception(log);
+                    throw new Exception(log);
                 }
 
 

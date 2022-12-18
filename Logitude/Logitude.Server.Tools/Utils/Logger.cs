@@ -204,7 +204,7 @@ namespace Logitude.Server.Tools.Utils
                         for (int i = 0; i < files.Length; i++)
                         {
                             fi = new FileInfo(files[i]);
-                            if (fi.LastWriteTime < DateTime.Today.AddDays(-3))
+                            if (fi.LastWriteTime < DateTime.Today.AddDays(-7))
                             {
                                 fi.Delete();
                             }

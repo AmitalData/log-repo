@@ -177,10 +177,11 @@ namespace Logitude.Customs.BL.Messaging.Maman
             string MamanSuspendedCode = "";
             var courierPendingReasonRepository = new CourierPendingReasonRepository(myDeclarationPM.Tenant);
             var courierPendingListWithMamanSuspendedCode = courierPendingReasonRepository.GetPendingReasonsWithMamanSuspendedCode(myDeclarationPM.Tenant);
-            var arrPendings = declarationCourierStatus.CourierPendingReasonList.Split(',');
 
             if (!string.IsNullOrEmpty(declarationCourierStatus.CourierPendingReasonList))
             {
+                var arrPendings = declarationCourierStatus.CourierPendingReasonList.Split(',');
+
                 var pendingCounted = courierPendingListWithMamanSuspendedCode.Where(x => arrPendings.Contains(x.Code)).Count();   //MamanSuspendedCode=declarationPendingWithMamanSuspendCode = declarationCourierStatus.CourierPendingReasonList;
                 if (pendingCounted == 1)
                 {
