@@ -28,7 +28,11 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
 
             foreach (AddressPM itemPM in entityPM.Addresses)
             {
-                AddressValidating.Validate(itemPM);
+                var err = AddressValidating.ValidateVendorOrCustomerAddress(itemPM);
+                if (err == "This city doesn't exist in cities table")
+                {
+                    itemPM.City = null;
+                }
             }
 
             if (entityPM.IsCustomer && !entityPM.IsLogBox)// to allow batches for logbox
