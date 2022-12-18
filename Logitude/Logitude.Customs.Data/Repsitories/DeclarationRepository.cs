@@ -1128,7 +1128,7 @@ namespace Logitude.Customs.Data.Repsitories
                var q2 = q1.Where(x => x.Count() >= 1 && x.Any(u => (ck1.Any(g=>g.Key.Contains(u.CargoTypeCode?.ToLower() + u.ManifestNumber?.ToLower() + u.SecondCargoID?.ToLower() + u.ThirdCargoID?.ToLower())))));
                
                //äåñôú äîëìä çãùä
-               var q3 = q1.Where(x => x.Count() > 1 && !(x.Any(u => (ck1.Any(g => g.Key.Contains(u.CargoTypeCode?.ToLower() + u.ManifestNumber?.ToLower() + u.SecondCargoID?.ToLower() + u.ThirdCargoID?.ToLower()))))));
+               var q3 = q1.Where(x => x.Count() >= 1 && !(x.Any(u => (ck1.Any(g => g.Key.Contains(u.CargoTypeCode?.ToLower() + u.ManifestNumber?.ToLower() + u.SecondCargoID?.ToLower() + u.ThirdCargoID?.ToLower()))))));
                
                var q4 = q2.SelectMany(x => x.Select(cont => new ContainerizationUniqueConsignment
                  {
