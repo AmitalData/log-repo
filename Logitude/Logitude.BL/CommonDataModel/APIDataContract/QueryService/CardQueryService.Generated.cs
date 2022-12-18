@@ -277,6 +277,12 @@ using Simplog.Data.CommonDataModel;
                 throw ex;
             } 
         }
-		 
-   }
+
+		public List<CardPM> GetAllLocalCards(int tenant)
+		{
+			List<CardPM> clientsPMList = query.GetAllLocalCards(tenant);
+			return clientsPMList;
+		}
+
+	}
 }
