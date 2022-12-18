@@ -21,6 +21,8 @@ using WebFreight.Web.Controllers.DigitalPortal.Models;
 using System.Data.Entity;
 using WebFreight.Web.Controllers.DigitalPortal.Helpers;
 using Logitude.SystemLogs;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -28,7 +30,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
     {
         [HttpGet]
         [Route("DigitalShipment/GetSingle")]
-        public HttpResponseMessage GetSingle(string id, string cardId)
+        public HttpResponseMessage GetSingle(string id, string cardId, string profileId = "1-5")
         {
             int tenant = 0;
             string email = "";
@@ -54,7 +56,27 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 {
                     shipmentPM.TimeLineData = shipmentQuery.MapVerticalTimeLine(shipmentPM);
                     PerformanceLogger.AddServerExecutionTimeHeader(logKey);
-                    return Request.CreateResponse(HttpStatusCode.OK, shipmentPM);
+
+                    var shipmentPMJson = JsonConvert.SerializeObject(shipmentPM);
+
+                    var dynamicObjectValeus = JsonConvert.DeserializeObject<object>(shipmentPMJson) as dynamic;
+                    var helper = new DigitalFieldSecuritesHelper();
+                    var blockedFieldSecurites = helper.GitDigitalSecuritesFeilds("1-4", profileId, tenant)
+                                                      .Where(a => !a.HasPersmission)
+                                                      .Select(a => a.FieldCode)
+                                                      .ToList();
+
+                    var temp = (JObject)JsonConvert.DeserializeObject(shipmentPMJson);
+                    
+                    temp.Descendants()
+                     .OfType<JProperty>()
+                     .Where(attr => blockedFieldSecurites.Contains("Shipment." + attr.Name))
+                     .ToList() // you should call ToList because you're about to changing the result, which is not possible if it is IEnumerable
+                     .ForEach(attr => attr.Remove()); // removing unwanted attributes
+
+                    var json = JsonConvert.SerializeObject(temp);
+
+                    return Request.CreateResponse(HttpStatusCode.OK, json);
                 }
 
                 throw new AutenticationException("Sorry! you are not authorized to read data!");

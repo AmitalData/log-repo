@@ -1,6 +1,8 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
   <Sql Version="13">
     <![CDATA[	
+	  delete from DigitalTextCodes where id != ''
+
       declare @NewEntityId as varchar(15)
  	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCodes'
 
@@ -558,11 +560,6 @@
 			"TextCode": "General.G.DownloadData",
 			"DefaultText": "Download data",
 			"FieldCode" : ""
-		},
-		{
-			"TextCode": "General.G.Download",
-			"DefaultText": "Download",
-			"FieldCode": ""
 		}]');
 
 	  declare @shipmentObjectTableId as varchar(15)

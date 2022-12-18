@@ -737,6 +737,7 @@
     <Compile Include="Controllers\AccountingModel\ChartOfAccountsTypesExtendedController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalActivityController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalCustomizationController.cs" />
+    <Compile Include="Controllers\DigitalPortal\Helpers\DigitalFieldSecuritesHelper.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\AuditLogViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\DigitalFieldSecurityViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\DigitalProfileViewsController.Generated.cs" />
