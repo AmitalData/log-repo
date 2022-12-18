@@ -26,17 +26,18 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         public DataCustomObjectRepository()
         { }
 
-        public List<DataCustomObject> GetById(string id, int tenant)
+        public DataCustomObject GetSingleDataCustomObject(string id, int tenant)
         {
             return (from a in context.DataCustomObjects
-                    where a.Tenant == tenant && a.Id == id 
-                    select a).ToList();
+                    where a.Tenant == tenant && a.Id == id
+                    select a).FirstOrDefault();
         }
-        public DataCustomObject GetByObjectTableId(string id, int tenant, string objectTableId)
+
+        public List<DataCustomObject> GetByObjectTableId(string id, int tenant, string objectTableId)
         {
             return (from a in context.DataCustomObjects
                     where a.Tenant == tenant && a.Id == id && a.ObjectTableId == objectTableId
-                    select a).FirstOrDefault();
+                    select a).ToList();
         }
 
         public DataCustomObjectRepository(int tenant)

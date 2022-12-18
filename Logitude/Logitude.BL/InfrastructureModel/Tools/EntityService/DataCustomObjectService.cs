@@ -56,7 +56,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.Poco = new DataCustomObject();
             DataCustomObjectMapping.MapEntity(dataCustomObjectPM, Poco, isNewEntity);
             entityRepository.Add(Poco);
-            this.isChange = true;
+            entityRepository.SubmitChanges();
         }
 
         public void Update(DataCustomObjectPM dataCustomObjectPM)
@@ -65,34 +65,18 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.entityPM = dataCustomObjectPM;
             this.entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
             this.entityPM.UpdatedBy = this.loggedContact != null ? this.loggedContact.Id : this.entityPM.UpdatedBy;
-            this.Poco = entityRepository.GetByObjectTableId(dataCustomObjectPM.Id, dataCustomObjectPM.Tenant, dataCustomObjectPM.ObjectTableId);
+            this.Poco = entityRepository.GetSingleDataCustomObject(dataCustomObjectPM.Id, dataCustomObjectPM.Tenant);
             if (this.Poco == null) return;
             DataCustomObjectMapping.MapEntity(dataCustomObjectPM, Poco, isNewEntity);
             entityRepository.Update(Poco);
-            this.isChange = true;
+            entityRepository.SubmitChanges();
         }
 
         public void Delete(DataCustomObjectPM dataCustomObjectPM)
         {
-            this.Poco = entityRepository.GetByObjectTableId(dataCustomObjectPM.Id, dataCustomObjectPM.Tenant, dataCustomObjectPM.ObjectTableId);
+            this.Poco = entityRepository.GetSingleDataCustomObject(dataCustomObjectPM.Id, dataCustomObjectPM.Tenant);
             if (this.Poco == null) return;
             entityRepository.Remove(Poco);
-            this.isChange = true;
-        }
-
-        public void Updates(List<DataCustomObjectPM> dataCustomObjects)
-        {
-            dataCustomObjects.ForEach((dataCustomObject) =>
-            {
-                switch (dataCustomObject.ChangeSetOp)
-                {
-                    case ChangeSetOperation.Insert: { Create(dataCustomObject); break; }
-                    case ChangeSetOperation.Update: { Update(dataCustomObject); break; }
-                    case ChangeSetOperation.Delete: { Delete(dataCustomObject); break; }
-                    default: { break; }
-                }
-            });
-            if (!this.isChange) return;
             entityRepository.SubmitChanges();
         }
 

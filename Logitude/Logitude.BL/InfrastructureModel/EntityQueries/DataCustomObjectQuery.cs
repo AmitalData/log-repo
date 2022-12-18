@@ -1,4 +1,5 @@
-﻿using Logitude.BL.InfrastructureModel.EntityPMs;
+﻿using Logitude.BL.InfrastructureModel.EntityLists;
+using Logitude.BL.InfrastructureModel.EntityPMs;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
@@ -24,10 +25,21 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             objectTables = new List<ObjectTable>();
             this.tenant = tenant;
         }
-
-        public List<DataCustomObjectPM> GetById(string id, int tenant)
+        public DataCustomObjectQuery(DataCustomObjectRepository customObjectrepository)
         {
-            List<DataCustomObject> dataCustomObjects = repository.GetById(id, tenant);
+            repository = customObjectrepository;
+            objectTables = new List<ObjectTable>();
+        }
+        public DataCustomObjectPM GetSinglePM(string id, int tenant)
+        {
+            DataCustomObject dataCustomObject = repository.GetSingleDataCustomObject(id, tenant);
+            DataCustomObjectPM result = MapDataCustomObjectToDataCustomObjectPM(dataCustomObject, new DataCustomObjectPM());
+            return result;
+        }
+
+        public List<DataCustomObjectPM> GetByObjectTableId(string id, int tenant, string objectTableId)
+        {
+            List<DataCustomObject> dataCustomObjects = repository.GetByObjectTableId(id, tenant, objectTableId);
             List<DataCustomObjectPM> results = new List<DataCustomObjectPM>();
             foreach (DataCustomObject dataCustomObject in dataCustomObjects)
             {
@@ -36,10 +48,21 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return results;
         }
 
-        public DataCustomObjectPM GetByObjectTableId(string id, int tenant, string objectTableId)
+        public IQueryable<DataCustomObjectList> GetIQueryableEntityList(IQueryable<DataCustomObject> iQueryable)
         {
-            DataCustomObject dataCustomObject = repository.GetByObjectTableId(id, tenant, objectTableId);
-            DataCustomObjectPM result = MapDataCustomObjectToDataCustomObjectPM(dataCustomObject, new DataCustomObjectPM());
+            IQueryable<DataCustomObjectList>
+                result = from a in iQueryable
+                         select new DataCustomObjectList()
+                         {
+                             Tenant = a.Tenant,
+                             IsCancelled = a.IsCancelled,
+                             StatusId = a.StatusId,
+                             CreatedBy = a.CreatedBy,
+                             CreateDate = a.CreateDate,
+                             UpdatedBy = a.UpdatedBy,
+                             UpdateDate = a.UpdateDate
+                         };
+
             return result;
         }
 
