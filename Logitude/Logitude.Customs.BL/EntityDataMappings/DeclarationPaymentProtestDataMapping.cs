@@ -51,6 +51,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 if (invoiceItem != null)
                 {
                     entityPM.InvoiceItemClassificationCode = invoiceItem.ClassificationCode;
+                    entityPM.GoodsItemLineNumber = invoiceItem.LineNumber;
                 }
             }
         }
