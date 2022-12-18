@@ -55,12 +55,6 @@ namespace Logitude.Workflow.Data.EntityListQueryServices
 
 											  UpdatedByUserName = a.UpdatedByUser != null ? a.UpdatedByUser.Contact != null ? a.UpdatedByUser.Contact.EnglishName : null : null,
 
-											  WorkFlowActiveVersionId = a.WorkFlowActiveVersionId,
-
-											  WorkFlowVersionStatusCode = a.WorkFlowVersionStatusCode,
-
-											  WorkFlowVersionStatusName = a.VersionStatus != null ? a.VersionStatus.Name : null
-
 											});
             return query;
 		}

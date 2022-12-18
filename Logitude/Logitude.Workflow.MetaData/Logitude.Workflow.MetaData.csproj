@@ -60,6 +60,7 @@
     </None>
     <None Include="DBScripts\0_PrepareWorkflows.sxml" />
     <None Include="DBScripts\DeleteExpressions.sxml" />
+    <None Include="DBScripts\PrepareWorkflowStatuses.sxml" />
     <None Include="DBScripts\ReplaceWorkflowsJsonEntityNameKeyWithEntityKey.sxml" />
     <None Include="DBScripts\FillWorkflowsTriggerField.sxml" />
     <None Include="DBScripts\SetWorkflowVersionStatusCode.sxml" />

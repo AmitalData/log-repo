@@ -319,6 +319,52 @@ namespace Logitude.Workflow.BL.EntityPMs
 			
 		 }
 	   }
+	  private string entity ;
+	  	  
+       
+	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Entity  
+	   {
+	    
+	     get
+		{
+		   return entity;
+		 }
+		 set
+		 {
+		   if(entity != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Entity",OldValue=entity,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   entity=value;
+		   }
+			
+		 }
+	   }
+	  private string trigger ;
+	  	  
+       
+	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Trigger  
+	   {
+	    
+	     get
+		{
+		   return trigger;
+		 }
+		 set
+		 {
+		   if(trigger != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Trigger",OldValue=trigger,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   trigger=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

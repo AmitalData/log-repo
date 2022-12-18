@@ -1,7 +1,8 @@
 
 using Logitude.Server.Tools; 
 using Logitude.Workflow.Data.EntityPOCOs;
-using Logitude.Workflow.BL.EntityPMs; 
+using Logitude.Workflow.BL.EntityPMs;
+using Logitude.Workflow.BL.EntityQueryServices;
 
 namespace Logitude.Workflow.BL.EntityDataMappings
 {
@@ -10,15 +11,28 @@ namespace Logitude.Workflow.BL.EntityDataMappings
         public void CustomPMToPOCO(WorkFlowPM entityPM, WorkFlow entityPOCO)
         {
             entityPOCO.Id = entityPM.Id;
-            CustomMappedPOCOProperties.Add(POCOPropertyNames.SearchFields);
 
             entityPM.SearchFields = entityPM.Name;
             entityPOCO.SearchFields = entityPM.Name;
+            CustomMappedPOCOProperties.Add(POCOPropertyNames.SearchFields);
+
+
+            entityPOCO.FlowJson = entityPOCO.FlowJson;
+            CustomMappedPOCOProperties.Add(POCOPropertyNames.FlowJson);
+
+            entityPOCO.Entity = entityPOCO.Entity;
+            CustomMappedPOCOProperties.Add(POCOPropertyNames.Entity);
+
+            entityPOCO.Trigger = entityPOCO.Trigger;
+            CustomMappedPOCOProperties.Add(POCOPropertyNames.Trigger);
         }
 
         public void CustomPOCOToPM(WorkFlowPM entityPM, WorkFlow entityPOCO)
         {
-            //throw new NotImplementedException();
+            WorkFlowVersionQueryService workFlowVersionQueryService = new WorkFlowVersionQueryService(entityPOCO.Tenant);
+            var WorkflowVersions = workFlowVersionQueryService.GetAllWorkflowVersions(entityPOCO.Id, entityPOCO.Tenant);
+
+            entityPM.WorkFlowVersions = WorkflowVersions;
         }
 
         //private void BuildSearchFields(WorkFlowPM entityPM, WorkFlow entityPOCO)
