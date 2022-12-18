@@ -61,6 +61,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                    SortedByFieldCode = a.SortedByFieldCode,
                                    SortedType = a.SortedType,
                                    SearchFields = a.SearchFields,
+                                   RelatedScreenCode = a.RelatedScreenCode
                                }).ToList();
 
 
@@ -112,6 +113,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                       SortedByFieldCode = a.SortedByFieldCode,
                                       SortedType = a.SortedType,
                                       SearchFields = a.SearchFields,
+                                      RelatedScreenCode = a.RelatedScreenCode
                                   }).ToList();
 
             }
@@ -143,6 +145,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         SortedByFieldCode = a.SortedByFieldCode,
                         SortedType = a.SortedType,
                         SearchFields = a.SearchFields,
+                        RelatedScreenCode = a.RelatedScreenCode
                     }).FirstOrDefault();
 
         }
@@ -170,6 +173,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         SortedByFieldCode = a.SortedByFieldCode,
                         SortedType = a.SortedType,
                         SearchFields = a.SearchFields,
+                        RelatedScreenCode = a.RelatedScreenCode
                     }).ToList();
         }
 
@@ -189,6 +193,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      Tenant = a.Tenant,
                                                      Type = a.Type,
                                                      SearchFields = a.SearchFields,
+                                                     RelatedScreenCode = a.RelatedScreenCode
                                                  };
             return result;
         }

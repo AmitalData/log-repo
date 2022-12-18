@@ -6,6 +6,8 @@ import { BaseComponent } from '../../../../../Infrastructure/Components/Logitude
 import { ScreenLayoutComponent } from '../ScreenLayoutComponent';
 import { ObjectFieldPM } from '../../../../../Infrastructure/EntityPMs/ObjectFieldPM';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { AppTool } from '../../../../../Infrastructure/Tools';
+import { ApiQueryFilters } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
 @Component({
     selector: 'GridScreenComponent',
     templateUrl: './GridScreenComponent.html',
@@ -19,8 +21,12 @@ export class GridScreenComponent extends BaseComponent implements OnInit, AfterV
     private CurrentSession = SessionLocator.SelectedSession;
     public SortedTypes: string[] = [];
     public SelectedSortedByField: ObjectFieldPM;
+    public SelectedSortedType: string;
     public SearchFieldsId: string;
     public AllFields: any[] = [];
+    public DataContext = this;
+    private relatedNewScreens: any[] = [];
+    NewScreenFilterItems: ApiQueryFilters;
     @Output() onSelectedDataLoadedEvent = new EventEmitter();
     @Output() onUnSelectedDataLoadedEvent = new EventEmitter();
     @Output() onDataSourceChangedEvent = new EventEmitter();
@@ -55,7 +61,13 @@ export class GridScreenComponent extends BaseComponent implements OnInit, AfterV
 
         return "GridSearchFields_" + this.CurrentSession.GetNewId("GridSearchFields");
     }
+    InitLOVFilters() {
 
+        this.NewScreenFilterItems = new ApiQueryFilters();
+        this.NewScreenFilterItems.addAdditionalFilter("ObjectTableIdFilter", this.SelectedScreen.ObjectTableId, null, null, "Equals", true, false, false, "string");
+        this.NewScreenFilterItems.Tenant = SessionLocator.Tenant;
+
+    }
     ngOnInit(): void
     {
        
@@ -81,11 +93,14 @@ export class GridScreenComponent extends BaseComponent implements OnInit, AfterV
     FixedUnSelectedFields: ObjectFieldPM[];
 
     SortedTypeChanged(selectedSortType) {
+        if (this.SelectedSortedType == selectedSortType) return;
+        this.SelectedSortedType = selectedSortType;
         this.SelectedScreen.SortedType = selectedSortType;
         this.ScreenLayoutComponent.Modified = true;
     }
 
     SortedByField(selectedSortByObjectField) {
+        if (this.SelectedSortedByField == selectedSortByObjectField) return;
         this.SelectedSortedByField = selectedSortByObjectField;
         this.SelectedScreen.SortedByFieldCode = selectedSortByObjectField?.FieldCode;
         this.ScreenLayoutComponent.Modified = true;
@@ -99,9 +114,16 @@ export class GridScreenComponent extends BaseComponent implements OnInit, AfterV
         this.FixedUnSelectedFields = this.UnSelectedFields;
         this.FillSelectedFields();
         this.SetSelectedSortedByField();
+        this.SetSelectedSortedType();
+        this.InitLOVFilters();
+        this.FillRelatedNewScreens();
+        this.SetSelectedNewScreen();
         this.CurrentSession.StopBusyIndicator();
     }
 
+    FillRelatedNewScreens() {
+        this.relatedNewScreens = window.Screens.filter(screen => screen.ObjectTableId == this.SelectedScreen.ObjectTableId && !screen.Inactive && screen.Tenant == SessionLocator.Tenant);
+    }
     FillSelectedFields() {
         this.ScreenLayoutComponent.GridScreenSelectedFields = [];
         this.ScreenLayoutComponent.currentScreenFields = this.ScreenLayoutComponent.currentScreenFields.sort((a, b) => { return (a.Column === b.Column) ? 0 : (a.Column < b.Column) ? -1 : 1 });
@@ -120,9 +142,57 @@ export class GridScreenComponent extends BaseComponent implements OnInit, AfterV
 
     SetSelectedSortedByField() {
         let selectedSortedByField = this.AllFields.filter(field => field.FieldCode == this.SelectedScreen.SortedByFieldCode);
-        if (!selectedSortedByField) return;
-        if (!selectedSortedByField[0]) return;
+        if (!selectedSortedByField) {
+            this.SetDefaultSelectedSortedByField();
+            return;
+        }
+        if (!selectedSortedByField[0]) {
+            this.SetDefaultSelectedSortedByField();
+            return;
+        }
         this.SelectedSortedByField = selectedSortedByField[0];
+    }
+    SetDefaultSelectedSortedByField() {
+        let defaultSelectedFieldName = "CreateDate";
+        let defaultSelectedSortedByField = this.AllFields.filter(field => field.FieldName == defaultSelectedFieldName);
+        if (!defaultSelectedSortedByField) return;
+        if (!defaultSelectedSortedByField[0]) return;
+        this.SelectedSortedByField = defaultSelectedSortedByField[0];
+    }
+    SetSelectedSortedType() {
+        let selectedSortedType = this.SortedTypes.filter(sortedType => sortedType == this.SelectedScreen.SortedType);
+        if (!selectedSortedType) {
+            this.SetDefaultSelectedSortedType();
+            return;
+        }
+        if (!selectedSortedType[0]) {
+            this.SetDefaultSelectedSortedType();
+            return;
+        }
+        this.SelectedSortedType = selectedSortedType[0];
+    }
+    SetDefaultSelectedSortedType() {
+        let defaultSelectedSortedType = this.SortedTypes.filter(sortedType => sortedType == "Descending");
+        if (!defaultSelectedSortedType) return;
+        if (!defaultSelectedSortedType[0]) return;
+        this.SelectedSortedType = defaultSelectedSortedType[0];
+    }
+
+    public SelectedNewScreenId: string;
+    SetSelectedNewScreen() {
+        if (this.SelectedScreen.RelatedScreenCode != null ) {
+            this.SelectedNewScreenId = this.relatedNewScreens.filter(screen => screen.Code == this.SelectedScreen.RelatedScreenCode)[0]?.Id;
+            return;
+        }
+        this.SelectedNewScreenId = this.SelectedScreen.Id;
+        this.SelectedScreen.RelatedScreenCode = this.SelectedScreen.Code;
+        this.ScreenLayoutComponent.Modified = true;
+    }
+    NewScreensSelectionChanged(selectedNewScreen: any) {
+        if (!selectedNewScreen) return;
+        if (this.SelectedScreen.RelatedScreenCode == selectedNewScreen.Code) return;
+        this.SelectedScreen.RelatedScreenCode = selectedNewScreen ? selectedNewScreen.Code : "";
+        this.ScreenLayoutComponent.Modified = true;
     }
 
     private isbtnAddDisabled: boolean = true;

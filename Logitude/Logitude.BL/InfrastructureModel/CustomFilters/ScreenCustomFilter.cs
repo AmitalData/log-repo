@@ -45,6 +45,17 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                                                                   && s.Tenant == Tenant);
                         }
                     }
+                    else if (item.FieldName == "ObjectTableIdFilter")
+                    {
+                        string fieldValue = item.FieldValue as string;
+
+                        if (!string.IsNullOrEmpty(fieldValue))
+                        {
+                            queryableData = queryableData.Where(s => s.ObjectTableId == fieldValue
+                                                                  && !s.Inactive
+                                                                  && s.Tenant == Tenant);
+                        }
+                    }
                 }
             }
 
