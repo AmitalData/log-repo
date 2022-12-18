@@ -46,6 +46,12 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="ActiveInExport"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="AssigneeNotificationTypeCode"
     ReferencedTable="AssigneeNotificationTypes"
