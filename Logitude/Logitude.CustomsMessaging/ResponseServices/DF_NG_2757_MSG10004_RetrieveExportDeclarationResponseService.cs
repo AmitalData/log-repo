@@ -530,7 +530,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         DeclarationExportRecipientPM recipientPM = new DeclarationExportRecipientPM();
                         recipientPM.Tenant = tenant;
                         recipientPM.RecipientName = declarationBuyerDetails.Name;
-                        recipientPM.RecipientAddress = declarationBuyerDetails.Address;
+                        recipientPM.RecipientAddress = declarationBuyerDetails.Address.Trim();
                         recipientPM.RecipientIssueCountryCode = GetValueCodeType(declarationBuyerDetails.IssueLocation);
                         recipientPM.ChangeSetOp = ChangeSetOperation.Insert;
                         recipientPMs.Add(recipientPM);
