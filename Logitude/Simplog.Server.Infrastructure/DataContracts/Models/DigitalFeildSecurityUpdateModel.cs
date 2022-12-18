@@ -2,6 +2,6 @@
 {
     public class DigitalFeildSecurityUpdateModel
     {
-        public string Field { get; set; }
+        public string FieldCode { get; set; }
     }
 }

@@ -138,6 +138,7 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             return !_Widget.TimeOverTime ? queryString : queryString + CreateBetweenQuery();
         }
 
+
         private string CreateBetweenQuery()
         {
             if (_Widget.ComparisonOperator != "Between")

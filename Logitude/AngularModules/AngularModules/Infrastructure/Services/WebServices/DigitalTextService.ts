@@ -117,9 +117,10 @@ export class DigitalTextCodeUpdateModel {
 }
 
 export class DigitalTextCodeObject {
-    public DisplayLable: string;
     public DisplayText: string;
-    public Code: string;
+    public DefaultText: string;
+    public TextCode: string;
+    public FieldCode: string;
 }
 
 export class DigitalFeildSecurityObjectModel {
@@ -130,5 +131,5 @@ export class DigitalFeildSecurityObjectModel {
 }
 
 export class DigitalFeildSecurityUpdateModel {
-    public Field: string;
+    public FieldCode: string;
 }

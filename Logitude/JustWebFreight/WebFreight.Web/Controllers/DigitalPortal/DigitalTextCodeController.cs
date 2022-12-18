@@ -70,7 +70,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                         foreach (var item in customCodesObject)
                         {
-                            var temp = defaultCodesObject.FirstOrDefault(a => a.Field.Equals(item.Field));
+                            var temp = defaultCodesObject.FirstOrDefault(a => a.FieldCode.Equals(item.FieldCode));
 
                             if (temp != null)
                             {
@@ -128,7 +128,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                     foreach (var item in digitalFeildSecurityObjectModel.DefaultSettings)
                     {
-                        var existingKey = existingDigitalFieldSecurityMappedObject.FirstOrDefault(a => a.Field.Equals(item.Field));
+                        var existingKey = existingDigitalFieldSecurityMappedObject.FirstOrDefault(a => a.FieldCode.Equals(item.FieldCode));
 
                         if (existingKey != null)
                         {
@@ -204,11 +204,11 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 foreach (var item in customCodesObject)
                 {
-                    var temp = defaultCodesObject.FirstOrDefault(a => a.Code.Equals(item.Code));
+                    var temp = defaultCodesObject.FirstOrDefault(a => a.TextCode.Equals(item.TextCode));
 
                     if (temp != null)
                     {
-                        temp.DisplayLable = item.DisplayText;
+                        temp.DisplayText = item.DefaultText;
                     }
                 }
 
@@ -248,17 +248,17 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                     foreach (var item in digitalTextCodeUpdateModel.Lables)
                     {
-                        var existingKey = customCodesMappedObject.FirstOrDefault(a => a.Code.Equals(item.Code));
+                        var existingKey = customCodesMappedObject.FirstOrDefault(a => a.TextCode.Equals(item.TextCode));
 
-                        if (string.IsNullOrWhiteSpace(item.DisplayText))
+                        if (string.IsNullOrWhiteSpace(item.DefaultText))
                         {
-                            customCodesMappedObject.RemoveAll(a=>a.Code == item.Code);
+                            customCodesMappedObject.RemoveAll(a=>a.TextCode == item.TextCode);
                         }
                         else
                         {
                             if (existingKey != null)
                             {
-                                existingKey.DisplayText = item.DisplayText;
+                                existingKey.DefaultText = item.DefaultText;
                             }
                             else
                             {
@@ -308,7 +308,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var textCodes = textCodeQuery.GetDigitalTextCodesQuery(tenant, objectTableId);
                 var defaultCodesObject = JsonConvert.DeserializeObject<List<DigitalTextCodeObject>>(defaultTextCodes.Labels);
 
-                var defaultCodesObjectDictionary = defaultCodesObject.ToDictionary(a => a.Code, x => x.DisplayText);
+                var defaultCodesObjectDictionary = defaultCodesObject.ToDictionary(a => a.TextCode, x => x.DefaultText);
 
                 var customCodesObject = new List<DigitalTextCodeObject>();
 
@@ -323,9 +323,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                     foreach (var item in customCodesObject)
                     {
-                        if (defaultCodesObjectDictionary.ContainsKey(item.Code))
+                        if (defaultCodesObjectDictionary.ContainsKey(item.TextCode))
                         {
-                            defaultCodesObjectDictionary[item.Code] = item.DisplayText;
+                            defaultCodesObjectDictionary[item.TextCode] = item.DefaultText;
                         }
                     }
                 }

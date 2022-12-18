@@ -174,6 +174,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                ChargeableWeightInKG = shipment.ChargeableWeightInKG,
                                                                ChargeableWeight = shipment.ChargeableWeight,
                                                                ChargeableWeightUnitCode = shipment.ChargeableWeightUnitCode,
+                                                               IncotermName = shipment.IncotermName
 
                                                            });
             return query;
