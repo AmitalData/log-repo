@@ -46,7 +46,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     public isAdvancedSettingForKPI: boolean = false;
     public isAdvancedSettingForChart: boolean = false;
     public IsBetweenDatesVisible: boolean = false;
-    
+
 
     constructor() {
         super();
@@ -85,9 +85,9 @@ export class AddEditWidgetComponent extends BaseComponent {
 
         this.UIProperties.SetEnabled("ComparisonPeriod", this.ObjectTableName, this.TimeOverTime);
 
-        
+
     }
-    
+
 
     BuildQueryFilters() {
         this.GroupByQueryFilters = new ApiQueryFilters();
@@ -203,7 +203,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.SetTimeOverTimeValue();
     }
 
-    
+
 
     get TypeCode() { return this.EntityPM.TypeCode; }
     set TypeCode(value: string) {
@@ -215,27 +215,27 @@ export class AddEditWidgetComponent extends BaseComponent {
             this.SetMaximumGrouping();
             this.SetAdvanceSettingItems();
             this.SetTimeOverTimeDefaultValue();
-            this.SetTimeOverTimeValue();            
+            this.SetTimeOverTimeValue();
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget Type Change ", Message: "Changed To" + this.EntityPM.TypeCode, DashboardId: this.DashboardPM?.Id });
             this.isAdvancedSettingLinkVisible = true;
         }
     }
 
-    private SetTimeOverTimeDefaultValue(){
-        if (this.TypeCode != "kpi"){
+    private SetTimeOverTimeDefaultValue() {
+        if (this.TypeCode != "kpi") {
             this.TimeOverTime = false;
         }
     }
 
-    private SetAdvanceSettingVisibleForTimeOverTime(){
-        if(this.TimeOverTime){
+    private SetAdvanceSettingVisibleForTimeOverTime() {
+        if (this.TimeOverTime) {
             this.isAdvancedSettingVisible = true;
             this.isAdvancedSettingForKPI = true;
         }
     }
 
     private SetTimeOverTimeValue() {
-        
+
         if (this.TypeCode != "kpi" || !this.TimeOverTime) {
             this.ComparisonOperator = null;
             this.ComparisonPeriod = null;
@@ -247,21 +247,13 @@ export class AddEditWidgetComponent extends BaseComponent {
         }
 
         this.Increase = this.Increase ? this.Increase : "Postive";
-        
+    }
 
     SetUIForOperator() {
         this.IsBetweenDatesVisible = false;
-
         if (this.ComparisonOperator == "Between") {
             this.IsBetweenDatesVisible = true;
         }
-    }
-
-    private SetMeasureFieldEnable(){
-        if(!this.SecondaryGroupById){
-            this.IsAddNewMeasureVisible = false;
-        }
-
     }
 
     private isAdvancedSettingVisible: boolean = false;
@@ -277,7 +269,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     set IsSecondaryGroupChoosen(value: boolean) {
         if (this.IsSecondaryGroupChoosen != value) {
             this.IsSecondaryGroupChoosen = value;
-            
+
         }
     }
 
@@ -301,7 +293,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         else
             this.MaximumGrouping = null;
     }
-   
+
 
     InitView() {
         this.isGroupByVisible = this.TypeCode != "kpi";
@@ -320,7 +312,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         if (!this.isMaximumGroupingVisible) {
             this.MaximumGrouping = null;
         }
-        
+
     }
 
     get GroupById() { return this.EntityPM.GroupById; }
@@ -408,8 +400,8 @@ export class AddEditWidgetComponent extends BaseComponent {
     get ComparisonOperator() { return this.EntityPM.ComparisonOperator; }
     set ComparisonOperator(value: string) {
         if (this.EntityPM.ComparisonOperator != value) {
-            this.EntityPM.ComparisonOperator = value;            
-            
+            this.EntityPM.ComparisonOperator = value;
+
             this.SetUIForOperator();
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget Comparison Period Value Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
         }
@@ -436,7 +428,7 @@ export class AddEditWidgetComponent extends BaseComponent {
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget Increase Decrease Value Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
         }
     }
-   
+
 
     get FromDate() { return this.EntityPM.FromDate; }
     set FromDate(value: Date) {
@@ -459,7 +451,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     public GetSelectedSortDirection() {
         return this.SortByDirections.find(x => x.code == this.SortDirection);
     }
-   
+
 
     public selectedGroupField: AnalyticsFactsFieldsMetaDataList = null;
     get SelectedGroupField() { return this.selectedGroupField; }
@@ -528,9 +520,9 @@ export class AddEditWidgetComponent extends BaseComponent {
         if (errors.length != 0) return;
 
         this.SetFiltersString();
-        
+
         this.WidgetMeasuresList.forEach(item => {
-            
+
             if (item.IsNew && this.EntityPM.WidgetMeasures.indexOf(item.EntityPM) == -1) {
                 item.IsNew = false;
                 this.DataContext.EntityPM.AddWidgetMeasure(item.EntityPM);
@@ -565,13 +557,13 @@ export class AddEditWidgetComponent extends BaseComponent {
             errors.push("Sort By Direction Field is Required");
         }
 
-        this.ValidateTimeOverTime(errors);        
+        this.ValidateTimeOverTime(errors);
         this.ValidateMeasures(errors);
         this.ValidateSort(errors);
         if (this.RootFilter && this.RootFilter.QueryFilterItems && this.RootFilter.QueryFilterItems.length != 0) this.ValidateFilters(errors, this.RootFilter);
     }
     private ValidateTimeOverTime(errors: string[]) {
-    
+
         if (this.TypeCode != "kpi") return;
         if (!this.TimeOverTime) return;
 
@@ -596,7 +588,7 @@ export class AddEditWidgetComponent extends BaseComponent {
                 if (!this.ComparisonPeriod) {
                     errors.push("Comparison Period Field is Required");
                 }
-                if(this.ComparisonPeriod && this.ComparisonPeriod < 1){
+                if (this.ComparisonPeriod && this.ComparisonPeriod < 1) {
                     errors.push("Comparison Period should be Graeter than 0");
                 }
                 if (!this.ComparisonDateGroup) {
@@ -604,7 +596,7 @@ export class AddEditWidgetComponent extends BaseComponent {
                 }
             }
         }
-        
+
         if (!this.Increase) {
             errors.push("Increase Field is Required");
         }
