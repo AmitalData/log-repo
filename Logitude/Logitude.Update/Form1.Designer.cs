@@ -271,6 +271,7 @@
             this.label15 = new System.Windows.Forms.Label();
             this.StopCreateContainer = new System.Windows.Forms.Button();
             this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.deleteContactsButton = new System.Windows.Forms.Button();
             this.UploadContactsList = new System.Windows.Forms.ListView();
             this.uploadContactsLabel = new System.Windows.Forms.Label();
             this.uploadContactstextBox = new System.Windows.Forms.TextBox();
@@ -284,16 +285,18 @@
             this.getContainersListView = new System.Windows.Forms.ListView();
             this.getContainersButton = new System.Windows.Forms.Button();
             this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.logsLabel = new System.Windows.Forms.Label();
+            this.excelListView = new System.Windows.Forms.ListView();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.portsStatesLabel = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
             this.portsStatesTenantTextBox = new System.Windows.Forms.TextBox();
             this.updatePortsStatesButton = new System.Windows.Forms.Button();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.OITimer = new System.Windows.Forms.Timer(this.components);
-            this.portsStatesLabel = new System.Windows.Forms.Label();
-            this.excelListView = new System.Windows.Forms.ListView();
-            this.logsLabel = new System.Windows.Forms.Label();
+            this.updateAllUSTenantsCheckBox = new System.Windows.Forms.CheckBox();
+            this.label28 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -2995,6 +2998,7 @@
             // 
             // tabPage6
             // 
+            this.tabPage6.Controls.Add(this.deleteContactsButton);
             this.tabPage6.Controls.Add(this.UploadContactsList);
             this.tabPage6.Controls.Add(this.uploadContactsLabel);
             this.tabPage6.Controls.Add(this.uploadContactstextBox);
@@ -3006,6 +3010,16 @@
             this.tabPage6.TabIndex = 5;
             this.tabPage6.Text = "Upload Contacts";
             this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // deleteContactsButton
+            // 
+            this.deleteContactsButton.Location = new System.Drawing.Point(131, 22);
+            this.deleteContactsButton.Name = "deleteContactsButton";
+            this.deleteContactsButton.Size = new System.Drawing.Size(111, 23);
+            this.deleteContactsButton.TabIndex = 124;
+            this.deleteContactsButton.Text = "Delete";
+            this.deleteContactsButton.UseVisualStyleBackColor = true;
+            this.deleteContactsButton.Click += new System.EventHandler(this.deleteContactsButton_Click);
             // 
             // UploadContactsList
             // 
@@ -3020,7 +3034,7 @@
             // uploadContactsLabel
             // 
             this.uploadContactsLabel.AutoSize = true;
-            this.uploadContactsLabel.Location = new System.Drawing.Point(226, 27);
+            this.uploadContactsLabel.Location = new System.Drawing.Point(226, 54);
             this.uploadContactsLabel.Name = "uploadContactsLabel";
             this.uploadContactsLabel.Size = new System.Drawing.Size(16, 13);
             this.uploadContactsLabel.TabIndex = 122;
@@ -3046,9 +3060,9 @@
             // 
             this.uploadContactsButton.Location = new System.Drawing.Point(25, 22);
             this.uploadContactsButton.Name = "uploadContactsButton";
-            this.uploadContactsButton.Size = new System.Drawing.Size(181, 23);
+            this.uploadContactsButton.Size = new System.Drawing.Size(100, 23);
             this.uploadContactsButton.TabIndex = 118;
-            this.uploadContactsButton.Text = "Upload Contacts";
+            this.uploadContactsButton.Text = "Upload";
             this.uploadContactsButton.UseVisualStyleBackColor = true;
             this.uploadContactsButton.Click += new System.EventHandler(this.uploadContactsButton_Click);
             // 
@@ -3135,23 +3149,51 @@
             this.tabPage8.Text = "Excel Updates";
             this.tabPage8.UseVisualStyleBackColor = true;
             // 
+            // logsLabel
+            // 
+            this.logsLabel.AutoSize = true;
+            this.logsLabel.Location = new System.Drawing.Point(19, 151);
+            this.logsLabel.Name = "logsLabel";
+            this.logsLabel.Size = new System.Drawing.Size(0, 13);
+            this.logsLabel.TabIndex = 2;
+            // 
+            // excelListView
+            // 
+            this.excelListView.HideSelection = false;
+            this.excelListView.Location = new System.Drawing.Point(19, 170);
+            this.excelListView.Name = "excelListView";
+            this.excelListView.Size = new System.Drawing.Size(971, 456);
+            this.excelListView.TabIndex = 1;
+            this.excelListView.UseCompatibleStateImageBehavior = false;
+            // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.label28);
+            this.groupBox5.Controls.Add(this.updateAllUSTenantsCheckBox);
             this.groupBox5.Controls.Add(this.portsStatesLabel);
             this.groupBox5.Controls.Add(this.label27);
             this.groupBox5.Controls.Add(this.portsStatesTenantTextBox);
             this.groupBox5.Controls.Add(this.updatePortsStatesButton);
             this.groupBox5.Location = new System.Drawing.Point(19, 15);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(226, 106);
+            this.groupBox5.Size = new System.Drawing.Size(259, 133);
             this.groupBox5.TabIndex = 0;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Update Ports States";
             // 
+            // portsStatesLabel
+            // 
+            this.portsStatesLabel.AutoSize = true;
+            this.portsStatesLabel.Location = new System.Drawing.Point(105, 96);
+            this.portsStatesLabel.Name = "portsStatesLabel";
+            this.portsStatesLabel.Size = new System.Drawing.Size(16, 13);
+            this.portsStatesLabel.TabIndex = 3;
+            this.portsStatesLabel.Text = "...";
+            // 
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(7, 31);
+            this.label27.Location = new System.Drawing.Point(7, 66);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(41, 13);
             this.label27.TabIndex = 2;
@@ -3159,14 +3201,14 @@
             // 
             // portsStatesTenantTextBox
             // 
-            this.portsStatesTenantTextBox.Location = new System.Drawing.Point(54, 25);
+            this.portsStatesTenantTextBox.Location = new System.Drawing.Point(72, 63);
             this.portsStatesTenantTextBox.Name = "portsStatesTenantTextBox";
-            this.portsStatesTenantTextBox.Size = new System.Drawing.Size(157, 20);
+            this.portsStatesTenantTextBox.Size = new System.Drawing.Size(139, 20);
             this.portsStatesTenantTextBox.TabIndex = 1;
             // 
             // updatePortsStatesButton
             // 
-            this.updatePortsStatesButton.Location = new System.Drawing.Point(6, 62);
+            this.updatePortsStatesButton.Location = new System.Drawing.Point(6, 89);
             this.updatePortsStatesButton.Name = "updatePortsStatesButton";
             this.updatePortsStatesButton.Size = new System.Drawing.Size(93, 27);
             this.updatePortsStatesButton.TabIndex = 0;
@@ -3185,31 +3227,24 @@
             this.OITimer.Interval = 1000;
             this.OITimer.Tick += new System.EventHandler(this.OITimer_Tick);
             // 
-            // portsStatesLabel
+            // updateAllUSTenantsCheckBox
             // 
-            this.portsStatesLabel.AutoSize = true;
-            this.portsStatesLabel.Location = new System.Drawing.Point(105, 69);
-            this.portsStatesLabel.Name = "portsStatesLabel";
-            this.portsStatesLabel.Size = new System.Drawing.Size(16, 13);
-            this.portsStatesLabel.TabIndex = 3;
-            this.portsStatesLabel.Text = "...";
+            this.updateAllUSTenantsCheckBox.AutoSize = true;
+            this.updateAllUSTenantsCheckBox.Location = new System.Drawing.Point(72, 30);
+            this.updateAllUSTenantsCheckBox.Name = "updateAllUSTenantsCheckBox";
+            this.updateAllUSTenantsCheckBox.Size = new System.Drawing.Size(15, 14);
+            this.updateAllUSTenantsCheckBox.TabIndex = 4;
+            this.updateAllUSTenantsCheckBox.UseVisualStyleBackColor = true;
+            this.updateAllUSTenantsCheckBox.CheckedChanged += new System.EventHandler(this.updateAllUSTenantsCheckBox_CheckedChanged);
             // 
-            // excelListView
+            // label28
             // 
-            this.excelListView.HideSelection = false;
-            this.excelListView.Location = new System.Drawing.Point(19, 170);
-            this.excelListView.Name = "excelListView";
-            this.excelListView.Size = new System.Drawing.Size(971, 456);
-            this.excelListView.TabIndex = 1;
-            this.excelListView.UseCompatibleStateImageBehavior = false;
-            // 
-            // logsLabel
-            // 
-            this.logsLabel.AutoSize = true;
-            this.logsLabel.Location = new System.Drawing.Point(19, 151);
-            this.logsLabel.Name = "logsLabel";
-            this.logsLabel.Size = new System.Drawing.Size(0, 13);
-            this.logsLabel.TabIndex = 2;
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(7, 30);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(56, 13);
+            this.label28.TabIndex = 5;
+            this.label28.Text = "Update All";
             // 
             // Form1
             // 
@@ -3545,6 +3580,9 @@
         private System.Windows.Forms.Label portsStatesLabel;
         private System.Windows.Forms.Label logsLabel;
         private System.Windows.Forms.ListView excelListView;
+        private System.Windows.Forms.Button deleteContactsButton;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.CheckBox updateAllUSTenantsCheckBox;
     }
 }
 
