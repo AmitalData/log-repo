@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="10">
+  <Sql Version="11">
       <![CDATA[	  
 	  delete from DigitalFieldSecurities where id != ''
 	  delete from DigitalProfiles where id != ''
@@ -67,7 +67,7 @@
 			"FieldCode": "Shipment.MainCarriageETA"
 		},		
 		{
-			"FieldCode": "Shipment.CustomerNote"
+			"FieldCode": "Shipment.NotesSharedWithCustomer"
 		},
 		{
 			"FieldCode": "Shipment.DescriptionOfGoods"
@@ -319,7 +319,7 @@
 			"FieldCode": "Shipment.MainCarriageETA"
 		},		
 		{
-			"FieldCode": "Shipment.CustomerNote"
+			"FieldCode": "Shipment.NotesSharedWithCustomer"
 		},
 		{
 			"FieldCode": "Shipment.DescriptionOfGoods"
