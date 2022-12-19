@@ -152,7 +152,7 @@ export class DataCustomObjectPMService {
          
         if (!entityPM) {
             
-            entityPM = new DataCustomObjectPM(entityPM.ObjectTableId);
+            entityPM = new DataCustomObjectPM("DataCustomObject");
 			entityPM.DisableMarkAsDirty = true;
         }
 
