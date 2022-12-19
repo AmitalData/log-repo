@@ -249,7 +249,7 @@
     InActive="false"
     DisplayLongName="false"
     FullFieldLable="&quot;ShipmentId&quot;"
-    DefaultText="&quot;Shipment&quot;"
+    DefaultText="&quot;ShipmentId&quot;"
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="Shipment"
