@@ -1,9 +1,7 @@
 ﻿<Script DBType="Main" Module="Invoice" TargetTableName="ARInvoices">
-	<Sql Version="1">
-    <![CDATA[
-			update [Logitude2-5_Main].[dbo].[ARInvoices]
-set [TotalExamptFortaxReport] = [TotalAmountForTaxReport] - [TotaVatableAmountForTaxReport]
-
+	<Sql Version="2">
+		<![CDATA[
+	update ARInvoices set [TotalExamptFortaxReport] = [TotalAmountForTaxReport] - [TotaVatableAmountForTaxReport]
     ]]>
-  </Sql>
+	</Sql>
 </Script>
