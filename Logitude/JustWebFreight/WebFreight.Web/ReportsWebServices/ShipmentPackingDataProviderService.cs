@@ -50,6 +50,25 @@ namespace WebFreight.Web.ReportsWebServices
             provider.VolumeInCBM = General.ComputeVolumeInSelectedUnit(shipment.Volume, shipment.VolumeUnitCode, VolumeCBMUnitCode);
             provider.VolumeInCBF = General.ComputeVolumeInSelectedUnit(shipment.Volume, shipment.VolumeUnitCode, VolumeCBFUnitCode);
         }
+        public void MapCarrierType(ShipmentPackingDataProvider provider, ShipmentPM shipment)
+        {
+            if (shipment == null || string.IsNullOrEmpty(shipment.TransportModeName)) return;
+            if (shipment.TransportModeName == "Ocean")
+            {
+                provider.CarrierType = "Vessel";
+                return;
+            }
+            if (shipment.TransportModeName == "Air")
+            {
+                provider.CarrierType = "Air";
+                return;
+            }
+            if (shipment.TransportModeName == "Inland")
+            {
+                provider.CarrierType = "Truck";
+                return;
+            }
+        }
         public void MapTotalFields(MapTotalFieldsParameters mapTotalFieldsParameters)
         {
             List<string> freightChargesTypesIds = GetFreightChargesIdsByTenant(mapTotalFieldsParameters.Tenant);

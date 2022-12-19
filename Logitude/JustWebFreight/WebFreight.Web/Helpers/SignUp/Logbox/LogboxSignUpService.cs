@@ -10,6 +10,11 @@ using System.Linq;
 using System.Web;
 using WebFreight.Web.InfrastructureModel;
 using WebFreight.Web.Helpers.SignUp.Logbox;
+using System.Transactions;
+using Simplog.Server.Infrastructure.Helpers;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel;
 
 namespace WebFreight.Web.Helpers.SignUp
 {
@@ -18,6 +23,7 @@ namespace WebFreight.Web.Helpers.SignUp
         private SignUpInfoClass signUpInfoClass;
         private int tenant;
         private ICommonDataContext commonContext;
+        private TenantManagmentPrivateLabels selectedTenantManagmentPrivateLabel;
         public LogboxSignUpService(SignUpInfoClass signUpInfo, int Tenant)
         {
             signUpInfoClass = signUpInfo;
@@ -43,6 +49,33 @@ namespace WebFreight.Web.Helpers.SignUp
             LogboxSignUpCurrencyService logboxSignUpCurrencyService = new LogboxSignUpCurrencyService(commonContext, tenant);
             logboxSignUpCurrencyService.AddLocalAndProfitCurrency();
             logboxSignUpCurrencyService.UpdateNewTenant(signUpInfoClass, tenantAddress, tenant);
+            UpdateGlobalTenants();
+        }
+
+        private void UpdateGlobalTenants()
+        {
+            HybridPartnerQuery hybridPartnerQuery = new HybridPartnerQuery(tenant);
+            HybridPartnerPM selectedHybridPartner = hybridPartnerQuery.GetSinglePMByPartnerTenant(signUpInfoClass.Tenant);
+            if (selectedHybridPartner == null) return;
+
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                TenantManagmentPrivateLabelsRepository tenantManagmentPrivateLabelsRepository = new TenantManagmentPrivateLabelsRepository(GlobalContext.GetContext());
+                selectedTenantManagmentPrivateLabel = tenantManagmentPrivateLabelsRepository.GetSingleTenantManagmentPrivateLabelsByHybridPartnerId(selectedHybridPartner.Id);
+
+                GlobalTenantRepository globalTenantRepository = new GlobalTenantRepository();
+                GlobalTenant globalTenant = globalTenantRepository.GetGlobalTenantsByTenant(tenant);
+                globalTenant.PrivateLabelId = selectedTenantManagmentPrivateLabel.Id;
+
+                globalTenantRepository.Update(globalTenant);
+                globalTenantRepository.SubmitChanges();
+                scope.Complete();
+            }
+        }
+
+        public TenantManagmentPrivateLabels GetSelectedTenantManagmentPrivateLabels()
+        {
+            return selectedTenantManagmentPrivateLabel;
         }
     }
 }

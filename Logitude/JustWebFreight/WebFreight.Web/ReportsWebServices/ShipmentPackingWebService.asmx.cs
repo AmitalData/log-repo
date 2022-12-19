@@ -75,6 +75,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                 shipmentPackingService.MapWeightDetails(provider, shipment);
                 shipmentPackingService.MapVolumeDetails(provider, shipment);
+                shipmentPackingService.MapCarrierType(provider, shipment);
                 provider.CustomerReference1 = shipment.CustomerReference1;
                 provider.CustomerReference2 = shipment.CustomerReference2;
                 provider.HouseNumber = shipment.House;

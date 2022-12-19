@@ -35,6 +35,7 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public bool CreateShipmentsWithoutDocs { get; set; }
         public bool CreateOShipmentsWithoutDocs { get; set; }
         public string FilingInboxDomain { get; set; }
+        public string DistributorCode { get; set; }
 
     }
 }
