@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Procedure
+  DBType="Main"
+  Name="usp_GetNextTableNumberValueSupportBranchCounterCodeWithSnapshot"
+  Schema="dbo"
+  Module="Infrastructure">
+  <SqlScript>
+	  <![CDATA[
+
+CREATE PROCEDURE [dbo].[usp_GetNextTableNumberValueSupportBranchCounterCodeWithSnapshot]
+(
+  @pLastValue INT OUTPUT,
+  @pTenant    INT,
+  @pCounterId    NVARCHAR(40),
+  @pPrefix    NVARCHAR(15),
+  @pStartNumber    INT,
+  @pBranchCounterCode NVARCHAR(5)
+)
+AS
+SET TRANSACTION ISOLATION LEVEL SNAPSHOT
+DECLARE @ID AS VARCHAR(15)
+DECLARE @COUNTER AS INT
+SET @COUNTER = @pStartNumber
+
+DECLARE @Current AS INT   
+
+IF @pBranchCounterCode IS NOT NULL AND @pPrefix IS NOT NULL 
+BEGIN
+
+    IF NOT EXISTS (SELECT CounterId
+         FROM CounterStats with (UPDLOCK ROWLOCK) WHERE CounterId = @pCounterId and Prefix = @pPrefix and BranchCounterCode = @pBranchCounterCode and Tenant =  @pTenant)
+    BEGIN
+	  SET @COUNTER = @pStartNumber
+	  INSERT INTO CounterStats (Tenant,CounterId,Prefix,BranchCounterCode,LastValue) VALUES( @pTenant, @pCounterId, @pPrefix, @pBranchCounterCode, @pStartNumber )
+      SET @Current = @pStartNumber
+	END
+
+	ELSE 
+	BEGIN
+	  -----
+      SET @ID = (select Id from CounterStats where CounterId = @pCounterId and Prefix = @pPrefix and BranchCounterCode = @pBranchCounterCode and Tenant =  @pTenant)
+      -----        
+      SET @Current = (SELECT  LastValue
+         FROM CounterStats with (UPDLOCK ROWLOCK) WHERE Id = @ID)
+
+	  SET @Current = @Current + 1
+
+	  UPDATE CounterStats
+		 SET LastValue = @Current
+		 WHERE Id = @ID
+	END
+
+END
+
+ELSE
+IF @pBranchCounterCode IS NOT NULL
+BEGIN
+
+    IF NOT EXISTS (SELECT CounterId
+         FROM CounterStats with (UPDLOCK ROWLOCK) WHERE CounterId = @pCounterId and BranchCounterCode = @pBranchCounterCode and Tenant =  @pTenant and Prefix is null)
+    BEGIN
+	  SET @COUNTER = @pStartNumber
+	  INSERT INTO CounterStats (Tenant,CounterId,Prefix,BranchCounterCode,LastValue) VALUES( @pTenant, @pCounterId, @pPrefix, @pBranchCounterCode, @pStartNumber )
+      SET @Current = @pStartNumber
+	END
+
+	ELSE 
+	BEGIN
+	  -----
+      SET @ID = (select Id from CounterStats where CounterId = @pCounterId and BranchCounterCode = @pBranchCounterCode and Tenant =  @pTenant and Prefix is null)
+      ----- 
+      SET @Current = (SELECT  LastValue
+         FROM CounterStats with (UPDLOCK ROWLOCK) WHERE Id = @ID)
+
+	  SET @Current = @Current + 1
+
+	  UPDATE CounterStats
+		 SET LastValue = @Current
+		 WHERE Id = @ID
+	END
+
+END
+
+ELSE
+IF @pPrefix IS NOT NULL
+BEGIN
+
+    IF NOT EXISTS (SELECT CounterId
+         FROM CounterStats with (UPDLOCK ROWLOCK) WHERE CounterId = @pCounterId and Prefix = @pPrefix and Tenant =  @pTenant and BranchCounterCode is null)
+    BEGIN
+	  SET @COUNTER = @pStartNumber
+	  INSERT INTO CounterStats (Tenant,CounterId,Prefix,BranchCounterCode,LastValue) VALUES( @pTenant, @pCounterId, @pPrefix, @pBranchCounterCode, @pStartNumber )
+      SET @Current = @pStartNumber
+	END
+
+	ELSE 
+	BEGIN
+	  -----
+      SET @ID = (select Id from CounterStats where CounterId = @pCounterId and Prefix = @pPrefix and Tenant =  @pTenant and BranchCounterCode is null)
+      ----- 
+      SET @Current = (SELECT  LastValue
+         FROM CounterStats with (UPDLOCK ROWLOCK) WHERE Id = @ID)
+
+	  SET @Current = @Current + 1
+
+	  UPDATE CounterStats
+		 SET LastValue = @Current
+		 WHERE Id = @ID
+	END
+
+END
+ 
+
+ELSE
+BEGIN
+
+   IF NOT EXISTS (SELECT CounterId
+         FROM CounterStats with (UPDLOCK ROWLOCK) WHERE CounterId = @pCounterId and Tenant =  @pTenant and BranchCounterCode is null and Prefix is null)
+    BEGIN
+	  SET @COUNTER = @pStartNumber
+	  INSERT INTO CounterStats (Tenant,CounterId,Prefix,BranchCounterCode,LastValue) VALUES( @pTenant, @pCounterId, @pPrefix, @pBranchCounterCode, @pStartNumber)
+      SET @Current = @pStartNumber
+	END
+
+	ELSE 
+	BEGIN
+	  -----
+      SET @ID = (select Id from CounterStats where CounterId = @pCounterId  and Tenant =  @pTenant and BranchCounterCode is null and Prefix is null)
+      ----- 
+      SET @Current = (SELECT  LastValue
+         FROM CounterStats with (UPDLOCK ROWLOCK) WHERE Id = @ID)
+
+	  SET @Current = @Current + 1
+
+	  UPDATE CounterStats
+		 SET LastValue = @Current
+		 WHERE Id = @ID
+	END
+ 
+END
+ 
+SET @pLastValue = @Current
+]]></SqlScript>
+  <OracleScript>
+</OracleScript>
+</Procedure>
