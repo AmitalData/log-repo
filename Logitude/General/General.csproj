@@ -252,7 +252,6 @@
     <Content Include="2020.R2\05\Day 13 [Abed] FixCardsCountryThatConnectedToTenantZeroFromOtherTenant.sql" />
     <Content Include="Accounting\2015 - 8\day 10 [alex] unique constraint in JournalActionTypes.sql" />
     <Content Include="2019.R2\06 - 2019\Day 24 [Rabaia] DalayWithReturnStatusToZeroSP.sql" />
-    <Content Include="Accounting\2022.R5\UpdateTotalExamptForTaxReport.sql" />
     <Content Include="Customs2019\to execute problem of chronological dates.sql" />
     <Content Include="Customs2020\1modify customs required fields.sql" />
     <Content Include="Customs2020\1modify screen name oracle.sql" />
