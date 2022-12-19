@@ -122,6 +122,7 @@ import { ReferenceInputTypeListService } from '../../Customs/Services/StandardLi
 import { LogisticsReferenceTypeListService } from '../../Customs/Services/StandardLists/LogisticsReferenceTypeListService';
 import { CancelRequestRejectReasonTypeListService } from '../../Customs/Services/StandardLists/CancelRequestRejectReasonTypeListService';
 import { BuyerRoleTypeListService } from '../../Customs/Services/StandardLists/BuyerRoleTypeListService';
+import { CurrencyTypeTenantListService } from 'Customs/Services/StandardLists/CurrencyTypeTenantListService';
 
 
 
@@ -258,7 +259,8 @@ export class CachedDataManagerServices {
             case "TariffProductListService": { myResult = new TariffProductListService(); break; }
             case "ShipmentSubTypeListService": { myResult = new ShipmentSubTypeListService(); break; }
             case "HorseListService": { myResult = new HorseListService(); break; }
-
+            case "CurrencyTypeTenantListService": { myResult = new CurrencyTypeTenantListService(); break; }
+            
             default: {
 
                 if (ObjectsLocator.GlobalSetting && ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") {

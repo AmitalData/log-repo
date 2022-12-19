@@ -134,8 +134,9 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     TooltipCar: string;
     TooltipEdit: string;
     SumDifference: number = 0;
-
-
+    ConUNF = true;
+    PratMehesUNF = []; 
+ 
     old_currency;
     old_amount;
     old_vendor;
@@ -3128,7 +3129,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             this.OnSelectedItemChanged(Item);
         }
     }
-    OnSelectedItemChanged(selectedRow: SupplierInvoiceItemLine) {
+    OnSelectedItemChanged(selectedRow: SupplierInvoiceItemLine) {        
         console.log("OnSelectedItemChanged > ", selectedRow);
         selectedRow.entityPM.DocumentFilingId = this.DocumentFilingId;
 
@@ -3166,8 +3167,62 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         }
 
     }
+   
+   
+    onChange(item,$event) {
+              
+      var result=$event.target.value.split(','); 
+
+      item.ItemDescription = result[1];
+      item.ClassificationCode = result[0];
+     
+      this.ConUNF=true;      
+    }
+    OnfocusItemDescription(){
+      
+       
+
+        if (!AmitalGatewayUtil.Instance.AmitalBrowserInUse||this.declarationPM.IsConnectedToUnifreight) return;
+        if(this.PratMehesUNF.length != 0) { this.ConUNF=false; return; }
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+
+        let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
+            .subscribe(
+                (mess: UnifreightMessageM) => {
+                    var IsMatchUnifreightCallbackCommand = (
+                        mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
+                        mess.LogitudeEntityNumber == this.EntityPM.DeclarationId &&
+                        mess.LogitudeViewModel == "SupplierInvoiceGeneralTabComponent.ts-CustomExportPratMehesList");
+                    if (IsMatchUnifreightCallbackCommand) {
+                        sub.unsubscribe();
+                        SessionLocator.SelectedSession.StopBusyIndicator();
+                        let PratMehesList = UnifreightMessageM.GetStringValue(mess, "PratMehesList"); 
+                       
+                            PratMehesList.split(';').forEach(item=> {
+                                const keyValue = item.split('~');
+                                this.PratMehesUNF.push( [keyValue[0],keyValue[1]]) 
+                  
+                            })
+                        
+                         this.ConUNF=false;
+                    }
+                }
+            );
 
 
+        var unifreightMessageM =
+            AmitalGatewayUtil.Instance.
+                DeclarationMessaging.GetMessage(this.declarationPM.CustomFileNo, this.EntityPM.DeclarationId, "SupplierInvoiceGeneralTabComponent.ts-CustomExportPratMehesList", "BFIFILE");
+
+        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+            "AmitalGatewayUtil.CustomExportPratMehesList",
+            "BFIHMAIN.LogitudeTask",
+            "CustomExportPratMehesList",
+            unifreightMessageM,
+            "רשימת פרטי המכס");
+
+
+    }
 
     //#endregion
 }
@@ -3885,7 +3940,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         }
 
         this.ClassificationCode = newValue;
-        classificationTextBox.TextValue = newValue;
+            classificationTextBox.TextValue = newValue;
 
         if (this.valid) {
             SessionLocator.SustainFocusOnCell = false;
@@ -3941,7 +3996,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             // element.focus();
             SessionLocator.SustainFocusOnCell = true;
             this.CurrentSession.SessionEvent.emit({ FocusNow: true, OuterDivId: logCellTemplate.OuterDivId, LogTextBoxId: classificationTextBox.InputId });
-
+                                  
         }
         if (this.Parent.IsChecked) {
 
