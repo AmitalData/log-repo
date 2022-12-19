@@ -1057,34 +1057,33 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
                             if (this.Filters.AdditionalFilters.filter(a => a.FieldName == filter.FieldName).length > 0) {
                                 this.Filters.AdditionalFilters = this.Filters.AdditionalFilters.filter(a => a.FieldName != filter.FieldName);
                             }
-                            res.Filters = new ApiQueryFilters();
                         });
                     }
-                    else {
-                        if (res.Filters.SortBy) {
-                            this.sortingCol = res.Filters.SortBy;
-                            this.dataSource.sortingCol = res.Filters.SortBy;
+
+                    if (res.Filters.SortBy) {
+                        this.sortingCol = res.Filters.SortBy;
+                        this.dataSource.sortingCol = res.Filters.SortBy;
+                    }
+                    if (res.Filters.SortDirection) {
+                        this.sortingDir = res.Filters.SortDirection;
+                        this.dataSource.sortingDir = res.Filters.SortDirection;
+                    }
+                    res.Filters.AdditionalFilters.forEach((filter, key) => {
+                        if (this.Filters && filter.IgnoreFilter) {
+                            this.Filters.AdditionalFilters = this.Filters.AdditionalFilters.filter(a => a.FieldName != filter.FieldName);
                         }
-                        if (res.Filters.SortDirection) {
-                            this.sortingDir = res.Filters.SortDirection;
-                            this.dataSource.sortingDir = res.Filters.SortDirection;
-                        }
-                        res.Filters.AdditionalFilters.forEach((filter, key) => {
-                            if (this.Filters && filter.IgnoreFilter) {
+                        else {
+                            if (this.Filters == null) {
+                                this.Filters = new ApiQueryFilters();
+                            }
+                            if (this.Filters.AdditionalFilters.filter(a => a.FieldName == filter.FieldName).length > 0) {
                                 this.Filters.AdditionalFilters = this.Filters.AdditionalFilters.filter(a => a.FieldName != filter.FieldName);
                             }
-                            else {
-                                if (this.Filters == null) {
-                                    this.Filters = new ApiQueryFilters();
-                                }
-                                if (this.Filters.AdditionalFilters.filter(a => a.FieldName == filter.FieldName).length > 0) {
-                                    this.Filters.AdditionalFilters = this.Filters.AdditionalFilters.filter(a => a.FieldName != filter.FieldName);
-                                }
-                                this.Filters.AdditionalFilters.push(filter);
-                                //this.Filters.addAdditionalFilter(filter.FieldName, filter.FieldValue, filter.FieldValue2, null, filter.Operator, false, filter.DisplayInList, false, filter.FieldDataType);
-                            }
-                        });
-                    }
+                            this.Filters.AdditionalFilters.push(filter);
+                            //this.Filters.addAdditionalFilter(filter.FieldName, filter.FieldValue, filter.FieldValue2, null, filter.Operator, false, filter.DisplayInList, false, filter.FieldDataType);
+                        }
+                    });
+
                     this.MenuHeaderchanged.emit(res.Filters);
                 }
                 //console.log("MenuHeaderchangeevent");
