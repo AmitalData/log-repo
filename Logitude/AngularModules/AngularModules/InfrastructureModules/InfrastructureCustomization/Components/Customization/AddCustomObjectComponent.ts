@@ -8,6 +8,7 @@ import { SubEntitiesComponent } from './SubEntitiesComponent';
 import { ObjectFieldPMExtendedService } from '../../../../Infrastructure/Services/ExtendedPMs/ObjectFieldPMExtendedService';
 import { CachedDataManager } from '../../../../Infrastructure/Utilities/CachedDataManager';
 import { AppTool } from '../../../../Infrastructure/Tools';
+import { CustomizationMainComponent } from './CustomizationMainComponent';
 
 const valdationMessageOfDisplayLabelSingular = 'Please fill the Display Label (Singular)';
 const valdationMessageOfDisplayLabelPlural = 'Please fill the Display Label (Plural)';
@@ -16,10 +17,10 @@ declare var window: any;
 
 @Component({
 
-    templateUrl: './AddSubEntityComponent.html',
+    templateUrl: './AddCustomObjectComponent.html',
 })
 
-export class AddSubEntityComponent extends BaseComponent {
+export class AddCustomObjectComponent extends BaseComponent {
 
     private CurrentSession = SessionLocator.SelectedSession;
 
@@ -31,7 +32,9 @@ export class AddSubEntityComponent extends BaseComponent {
     private objectTablePMService: ObjectTablePMService;
     private objectFieldPMExtendedService: ObjectFieldPMExtendedService;
     private customizationSubEntitiesComponent: SubEntitiesComponent;
+    private customizationMainComponent: CustomizationMainComponent;
     private objectTableName: string;
+    public IsSubObject: boolean= true;
     constructor() {
         super();
         this.objectTablePMService = new ObjectTablePMService();
@@ -42,9 +45,11 @@ export class AddSubEntityComponent extends BaseComponent {
     }
 
     SetWindowArgs(args: any) {
+        this.IsSubObject = args['IsSubObject'];
+        this.customizationMainComponent = args['CustomizationMainComponent'];
         this.customizationSubEntitiesComponent = args['CustomizationSubEntitiesComponent'];
-        this.parentObjectTableId = this.customizationSubEntitiesComponent.ObjectTableId;
-        this.parentObjectTable = window.ObjectTables.filter((table: any) => table.Id === this.parentObjectTableId)[0];;
+        this.parentObjectTableId = this.customizationSubEntitiesComponent?.ObjectTableId;
+        this.parentObjectTable = this.parentObjectTableId? window.ObjectTables.filter((table: any) => table.Id === this.parentObjectTableId)[0]:null;
     }
 
     private displayLabelSingular: string;
