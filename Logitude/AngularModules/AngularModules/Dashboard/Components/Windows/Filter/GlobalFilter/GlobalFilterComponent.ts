@@ -40,7 +40,7 @@ export class GlobalFilterComponent implements OnInit {
         this.CommonFilterFields = [];
 
         this.CommonFilterFields.push(new CodeNameClass("CreateDate", "Create Date", "Date"));
-        this.CommonFilterFields.push(new CodeNameClass("Number", "Number", "String"));
+        this.CommonFilterFields.push(new CodeNameClass("Number", "Number", "Text"));
     }
     private BuildGlobalFilters() {
         this.Dashboard.DashboardGlobalFilters.sort((a, b) => { return a.LineNumber - b.LineNumber }).forEach(item => {

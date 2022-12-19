@@ -80,7 +80,7 @@ export class AddEditDashboardComponent extends BaseComponent {
         this.CommonFilterFields = [];
 
         this.CommonFilterFields.push(new CodeNameClass("CreateDate", "Create Date", "Date"));
-        this.CommonFilterFields.push(new CodeNameClass("Number", "Number", "String"));
+        this.CommonFilterFields.push(new CodeNameClass("Number", "Number", "Text"));
     }
 
     private BuildGlobalFilters() {
