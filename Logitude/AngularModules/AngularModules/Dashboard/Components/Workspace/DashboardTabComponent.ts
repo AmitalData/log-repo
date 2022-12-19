@@ -85,7 +85,9 @@ export class DashboardTabComponent implements OnInit {
         this.dashboardPMService.get(this.DashboardId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.SelectedDashboard = myResponse.Result;
-                this.IsEditLayoutButtonVisible = !this.IsEditLayoutModeActive && this.SelectedDashboard && this.SelectedDashboard.CreatedByUserId == SessionLocator.LoggedUserId;
+                this.IsEditLayoutButtonVisible = !this.IsEditLayoutModeActive
+                    && this.SelectedDashboard
+                    && (this.SelectedDashboard.CreatedByUserId == SessionLocator.LoggedUserId || SessionLocator.LoggedUserPM.IsCustomerCare);
 
                 if (this.SelectedDashboard) {
                     this.applyWDashboard();
@@ -105,7 +107,10 @@ export class DashboardTabComponent implements OnInit {
     }
 
     get IsPermissionMessageVisible() {
-        return !this.IsEditLayoutModeActive && this.SelectedDashboard && this.SelectedDashboard.CreatedByUserId != SessionLocator.LoggedUserId;
+        return !this.IsEditLayoutModeActive
+            && this.SelectedDashboard
+            && this.SelectedDashboard.CreatedByUserId != SessionLocator.LoggedUserId
+            && !SessionLocator.LoggedUserPM.IsCustomerCare;
     }
 
     applyWDashboard() {
@@ -207,7 +212,9 @@ export class DashboardTabComponent implements OnInit {
     }
 
     private ResetFlags() {
-        this.IsEditLayoutButtonVisible = !AppTool.IsNullOrEmpty(this.DashboardId) && this.SelectedDashboard.CreatedByUserId == SessionLocator.LoggedUserId;
+        this.IsEditLayoutButtonVisible = !AppTool.IsNullOrEmpty(this.DashboardId)
+            && (this.SelectedDashboard.CreatedByUserId == SessionLocator.LoggedUserId || SessionLocator.LoggedUserPM.IsCustomerCare);
+
         this.IsEditDashboardButtonVisible = false;
         this.IsEditLayoutModeActive = false;
         this.HasChanges = false;
@@ -222,6 +229,7 @@ export class DashboardTabComponent implements OnInit {
         myWidget.EndPosition = `${3},${5}`;
 
         var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 800;
         logitudeWindow.Title = "Add Widget";
         logitudeWindow.WindowArgs = { EntityPM: myWidget, IsNew: true, DashboardPM: this.SelectedDashboard };
         logitudeWindow.Show('./Dashboard/Components/Windows/AddEditWidgetComponent');
@@ -336,7 +344,7 @@ export class DashboardTabComponent implements OnInit {
         MixPanelLocator.PostDashboardAction({ ActionName: "Edit Layout Clicked", DashboardId: this.SelectedDashboard?.Id });
         this.HasChanges = false;
         this.IsEditLayoutButtonVisible = false;
-        this.IsEditDashboardButtonVisible = this.SelectedDashboard.CreatedByUserId == SessionLocator.LoggedUserId;
+        this.IsEditDashboardButtonVisible = this.SelectedDashboard.CreatedByUserId == SessionLocator.LoggedUserId || SessionLocator.LoggedUserPM.IsCustomerCare;
         this.IsEditLayoutModeActive = true;
         this.IsGlobalFiltersOpened = false;
         var cloneWidgets: WidgetPM[] = [];
@@ -365,6 +373,7 @@ export class DashboardTabComponent implements OnInit {
         var myWidget: WidgetPM = this.SelectedDashboard.Widgets.find(d => d.Key == widget.key);
         myWidget.Key = widget.key;
         var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 800;
         logitudeWindow.Title = "Edit Widget";
         logitudeWindow.WindowArgs = { EntityPM: myWidget, IsNew: false, DashboardPM: this.SelectedDashboard };
         logitudeWindow.Show('./Dashboard/Components/Windows/AddEditWidgetComponent');

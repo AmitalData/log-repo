@@ -89,6 +89,16 @@ export class WorkFlowVersionPM {
     public set FlowJson(newValue: string) { if (this.flowJson != newValue) { this.flowJson = newValue; this.MarkAsDirty("FlowJson"); } }
        
 	 
+    private entity: string;
+    public get Entity() { return this.entity; }
+    public set Entity(newValue: string) { if (this.entity != newValue) { this.entity = newValue; this.MarkAsDirty("Entity"); } }
+       
+	 
+    private trigger: string;
+    public get Trigger() { return this.trigger; }
+    public set Trigger(newValue: string) { if (this.trigger != newValue) { this.trigger = newValue; this.MarkAsDirty("Trigger"); } }
+       
+	 
 
     public OldEntityPM: WorkFlowVersionPM;
 		

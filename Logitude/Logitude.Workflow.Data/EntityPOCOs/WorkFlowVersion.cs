@@ -47,7 +47,7 @@ namespace Logitude.Workflow.Data.EntityPOCOs
         [Column("StatusCode")]
 	    public string StatusCode { get; set; }
 	      
-        public virtual WorkFlowVersionStatus Status { get; set; }
+        public virtual WorkFlowStatus Status { get; set; }
         [ForeignKey("WorkFlow")]
         [Column("WorkflowId")]
 	    public string WorkflowId { get; set; }
@@ -55,6 +55,10 @@ namespace Logitude.Workflow.Data.EntityPOCOs
         public virtual WorkFlow WorkFlow { get; set; }
         [Column("FlowJson")]
 	    public string FlowJson { get; set; }
+        [Column("Entity")]
+	    public string Entity { get; set; }
+        [Column("Trigger")]
+	    public string Trigger { get; set; }
     }
 }
 	 

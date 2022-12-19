@@ -21,6 +21,7 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 
 import {WorkFlowPM} from '../../EntityPMs/WorkFlowPM';
 
+import {WorkFlowVersionPM} from '../../EntityPMs/WorkFlowVersionPM';
 
 @Injectable()
 
@@ -182,12 +183,22 @@ export class WorkFlowPMService {
                  
             }
 			
+               this.MapWorkFlowVersions(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
 		if (mapParent) {
                 entityPM.OldEntityPM = this.clone(entityPM);
-
+			   			   
+            entityPM.OldEntityPM.WorkFlowVersions = [];
+            for (var item in entityPM.WorkFlowVersions) {
+            var myWorkFlowVersionPM = entityPM.WorkFlowVersions[item];
+            var newWorkFlowVersionPM: WorkFlowVersionPM = this.clone(myWorkFlowVersionPM);
+						
+							 
+            entityPM.OldEntityPM.WorkFlowVersions.push(newWorkFlowVersionPM);
+            }
+			   
 		}
         else {
 
@@ -199,6 +210,32 @@ export class WorkFlowPMService {
         return entityPM;
     }
 
+    MapWorkFlowVersions(entityPM: WorkFlowPM, jsonPM: any, mapParent: boolean = true) {
+
+        entityPM.WorkFlowVersions = new Array<WorkFlowVersionPM>();
+        for (var item in jsonPM.WorkFlowVersions) {
+
+            var jItem = jsonPM.WorkFlowVersions[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newWorkFlowVersionPM: WorkFlowVersionPM;
+            newWorkFlowVersionPM = new WorkFlowVersionPM();
+		    newWorkFlowVersionPM.DisableMarkAsDirty = true;                
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+			
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newWorkFlowVersionPM[pmProperty] = jItem[pmProperty];
+            }
+			newWorkFlowVersionPM.DisableMarkAsDirty = false;
+            newWorkFlowVersionPM.IsDirty = false;
+            entityPM.WorkFlowVersions.push(newWorkFlowVersionPM);
+        }
+    }
 
 	  public clone(jsonPM: any) {
         var entityPM: any;

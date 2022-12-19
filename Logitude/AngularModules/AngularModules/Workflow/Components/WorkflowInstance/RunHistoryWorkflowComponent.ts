@@ -57,7 +57,7 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
 
     ngOnInit() {
         this.BuildColumns();
-        this.InitializeVersionIds();
+        this.SetDataSource();
         this.BuildQueryColumns();
         this.GetStartTimeObjectFields();
     }
@@ -82,19 +82,6 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
 
     RefreshButtonClicked() {
         this.LoadData();
-    }
-
-    InitializeVersionIds() {
-        var versionservice: WorkFlowVersionService = new WorkFlowVersionService();
-        versionservice.GetVersionIds(this.EntityPM.Id)
-            .subscribe((serviceResponse: ServiceResponse) => {
-                if (serviceResponse.Result) {
-                    var result: string[] = serviceResponse.Result;
-                    this.VersionIds = result;
-
-                    this.SetDataSource();
-                }
-            });
     }
 
     GetStartTimeObjectFields() {
@@ -135,9 +122,10 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
 
     getRows(skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
         this.CurrentSession.StartBusyIndicatorLoading();
+        var versionsIdList = this.EntityPM.WorkFlowVersions.map(v => v.Id);
 
         let businessKeyFilterValue = !AppTool.IsNullOrEmpty(this.SearchText) ? (AppTool.IsNullOrEmpty(this.SearchText.trim()) ? null : this.SearchText) : null;
-        this.Filters = ApiQueryFiltersBuilder.getWorkflowInstancesByVersionApiQueryFilters(this.VersionIds, businessKeyFilterValue);
+        this.Filters = ApiQueryFiltersBuilder.getWorkflowInstancesByVersionApiQueryFilters(versionsIdList, businessKeyFilterValue);
 
         if (this.IsDateFilter) {
             this.Filters.addAdditionalFilter(this.StartTimeObjectfield.FieldName, this.FilterValue1, this.FilterValue2, null, this.FilterOperator, false, false, false, this.StartTimeObjectfield.dataTypeCode)

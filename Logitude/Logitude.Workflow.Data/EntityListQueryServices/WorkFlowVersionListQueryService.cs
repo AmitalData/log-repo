@@ -49,7 +49,11 @@ namespace Logitude.Workflow.Data.EntityListQueryServices
 
 											  WorkflowId = a.WorkflowId,
 
-											  FlowJson = a.FlowJson
+											  FlowJson = a.FlowJson,
+
+											 Trigger = a.Trigger,
+
+											 Entity = a.Entity
 
 											});
             return query;

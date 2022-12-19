@@ -10,6 +10,7 @@
   HasCustomFilter="false"
   HasCustomFields="false"
   AvailableInCustomization="false"
+  SupportSubEntity="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -40,7 +41,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Widget Type&quot;"
-  Code="&quot;a3b4&quot;"
+  Code="&quot;f8a2&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -345,6 +346,10 @@
       Code="&quot;kpi&quot;"
       Name="&quot;KPI&quot;"
       SearchFields="&quot;Kpi&quot;" />
+    <Record
+      Code="&quot;column&quot;"
+      Name="&quot;Column&quot;"
+      SearchFields="&quot;Column&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

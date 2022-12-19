@@ -54,6 +54,47 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
             }
         }
 
+        public static string ValidateVendorOrCustomerAddress(AddressPM entityPM)
+        {
+            ValidateAddressType(entityPM);
+
+            CountryRepository countryRepository = new CountryRepository(entityPM.Tenant);
+            Country myCountry = countryRepository.GetSingleCountry(entityPM.CountryId, entityPM.Tenant);
+
+            if (myCountry != null)
+            {
+                if (myCountry.IsStateRequired)
+                {
+                    if (string.IsNullOrEmpty(entityPM.StateId))
+                    {
+                        throw new ApplicationException("State is Required");
+                    }
+                }
+
+                if (myCountry.HasCitiesList && !entityPM.IsHybrid)
+                {
+                    if (!string.IsNullOrEmpty(entityPM.City))
+                    {
+                        entityPM.City = entityPM.City.Trim();
+
+                        CountryCityRepository citiesRepository = new CountryCityRepository(entityPM.Tenant);
+                        IQueryable<CountryCity> allCities = citiesRepository.GetCountryCitiesByCountry(myCountry.Id, myCountry.Tenant);
+
+                        bool isCityExists = CheckIsCityExists(entityPM.City, allCities);
+
+                        if (!isCityExists)
+                        {
+                            return "This city doesn't exist in cities table";
+                        }
+                    }
+                }
+
+                ValidatePostalCode(entityPM, myCountry);
+
+            }
+            return null;
+        }
+
         private static void ValidatePostalCode(AddressPM addressPM, Country country)
         {
             if (country.Code != "MX" || string.IsNullOrEmpty(addressPM.ZipCode))

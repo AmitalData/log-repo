@@ -33,7 +33,8 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
 
     public ReactFlowInstance: any = null;
     public EntityPM: WorkFlowPM = null;
-    public WorkflowId: string;
+    public ValidVersion: WorkFlowVersionPM = null;
+    public CurrentVersionId: string = null;
     public WorkflowEntity: string = null;
     public BusyIndicatorText: string = null;
     public ShowBusyIndicator: boolean = false;
@@ -56,14 +57,14 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     public WorkFlowVersionPMService: WorkFlowVersionPMService = new WorkFlowVersionPMService();
 
     private CurrentSession = SessionLocator.SelectedSession;
+    private TabSelectedEvent: any = null;
 
     @Output() BackCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
-        this.WorkflowId = this.entityArgs.EntityPM.Id
-        this.loadWorkflow();
+        this.setValidVersion(this.getValidVersion())
         this.Listen()
     }
 
@@ -72,33 +73,75 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
 
     ngOnDestroy() {
         ReactDOM.unmountComponentAtNode(this.containerRef.nativeElement);
+        AppTool.KillEventEmitter(this.TabSelectedEvent);
     }
 
     private Listen() {
+        //tab changed || clicked version row
+        if (this.entityArgs.EditComponent) {
+            this.TabSelectedEvent = this.entityArgs.EditComponent.TabSelected.subscribe((tabCode: string) => {
+                if (tabCode == "WFFB") {
+                    var clickedRowId = this.entityArgs.EditComponentArgument?.ClickedVersionRow!
+                    if (clickedRowId && this.CurrentVersionId != clickedRowId) {
+                        var version = this.EntityPM.WorkFlowVersions.find(e => e.Id == clickedRowId);
+                        ReactDOM.unmountComponentAtNode(this.containerRef.nativeElement);
+                        this.setValidVersion(version);
+                    } else {
+                        ReactDOM.unmountComponentAtNode(this.containerRef.nativeElement);
+                        this.setValidVersion(null)
+                    }
+                }
+            });
+        }
+
         if (this.entityArgs.EditComponent) {
             this.entityArgs.EntityArgEventEmitter.subscribe(
                 theMessage => {
-                    if (theMessage == "workflowEdited") {
-                        this.SetButtonStates();
+                    if (theMessage == "WorkflowVersionsUpdated") {
+                        this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, ClickedVersionRow: null }
+                        this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, HasChanges: false }
+                        ReactDOM.unmountComponentAtNode(this.containerRef.nativeElement);
+                        this.setValidVersion(null)
                     }
                 }
             );
         }
     }
 
-    loadWorkflow() {
-        if (this.EntityPM) {
-            this.startBusyIndicator("Loading ...");
-            this.WorkFlowPMService.get(this.WorkflowId).subscribe((serviceResponse: ServiceResponse) => { this.handleGetWorkflowResponse(); });
+    setValidVersion(version: WorkFlowVersionPM | null) {
+        if (version) {
+            this.ValidVersion = version;
+            this.setCurrentDisplayedVersion(version.Id)
+            this.loadWorkflow(false);
+        } else {
+            this.loadWorkflow(true);
         }
     }
 
-    handleGetWorkflowResponse() {
+    setCurrentDisplayedVersion(versionId: string) {
+        this.CurrentVersionId = versionId
+        this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, CurrentDisplayedVersionId: versionId }
+    }
+
+    loadWorkflow(setVersion: boolean) {
+        if (this.EntityPM) {
+            this.startBusyIndicator("Loading ...");
+            this.WorkFlowPMService.get(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) => { this.handleGetWorkflowResponse(serviceResponse, setVersion); });
+        }
+    }
+
+    handleGetWorkflowResponse(serviceResponse: ServiceResponse, setVersion: boolean) {
+        this.EntityPM.WorkFlowVersions = serviceResponse.Result.WorkFlowVersions
+        if (setVersion) {
+            this.ValidVersion = this.getValidVersion();
+            this.setCurrentDisplayedVersion(this.ValidVersion.Id)
+        }
         this.WorkflowName = this.EntityPM.Name;
-        this.WorkflowEntity = this.EntityPM.Entity;
+        this.WorkflowEntity = this.ValidVersion.Entity;
         this.renderReactFlowModeler();
         this.loadObjectFields();
-        this.SetButtonStates();
+        this.entityArgs.SendMessage("RefreshWorkflowShortTitle");
+        this.entityArgs.SendMessage("RefreshWorkflowButtons");
     }
 
     renderReactFlowModeler() {
@@ -142,34 +185,14 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         }
     }
 
-    public SetButtonStates() {
-        this.IsSaveDisabled = true
-        this.IsActivateDisabled = true;
-        this.IsSaveAsDisabled = true;
-        if ((!this.isWorkflowHasVersion()) || (this.isDraftVersion() && this.isWorkflowHasChanges())) {
-            this.IsSaveDisabled = false
-        }
-        if (!this.isDraftVersion() && ((!this.isWorkflowHasVersion()) || this.isActiveVersion || this.isInactiveVersion())) {
-            this.IsSaveAsDisabled = false
-        }
-        if (this.isWorkflowHasVersion() && !this.isWorkflowHasChanges()) {
-            if (this.isActiveVersion()) {
-                this.IsActivateDisabled = false
-                this.ActivateButtonTitle = "Deactivate";
-            } else if (this.isDraftVersion() || this.isInactiveVersion()) {
-                this.IsActivateDisabled = false
-                this.ActivateButtonTitle = "Activate";
-            }
-        }
-        if (this.IsSaveDisabled) {
-            this.EntityPM.IsDirty = false
-            this.HasChanges = false
-        }
-    }
-
     flowChangedEvent(event: any) {
         if (event && event.status === "success") {
-            this.HasChanges = true;
+            var version = this.EntityPM.WorkFlowVersions.find(v => v.Id == this.CurrentVersionId)
+            if (version.StatusCode != "ACVE") {
+                this.HasChanges = true;
+                this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, HasChanges: true }
+                this.entityArgs.SendMessage("RefreshWorkflowButtons");
+            }
         } else {
             let messageWindow: MessageWindow = new MessageWindow();
             messageWindow.Show(event.message ? event.message : "Error");
@@ -178,9 +201,21 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
 
     flowObjectChangedEvent(flowObject: any) {
         if (flowObject) {
-            this.setWorkflow(flowObject)
-            this.SetButtonStates();
-            this.entityArgs.SendMessage("workflowBuilderEdited");
+            if (this.HasChanges) {
+                this.setWorkflowVersion(flowObject)
+            }
+        }
+    }
+
+    setWorkflowVersion(flowObject: any) {
+        if (flowObject) {
+            var version = this.EntityPM.WorkFlowVersions.find(v => v.Id == this.CurrentVersionId)
+            if (version.StatusCode != "ACVE") {
+                let startNode = FlowReader.getStartNode(flowObject);
+                version.Entity = startNode ? (startNode.data["entity"] || null) : null;
+                version.Trigger = startNode ? (startNode.data["trigger"] || null) : null;
+                version.FlowJson = JSON.stringify(flowObject);
+            }
         }
     }
 
@@ -347,20 +382,6 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         }
     }
 
-    buildEditWindow() {
-        let editWindow = new LogitudeWindow();
-        let editWindowArgs: any = {
-            EntityId: this.EntityPM.Id,
-            IsNewEntity: false
-        };
-        editWindow.Width = 960;
-        editWindow.Height = 570;
-        editWindow.RTL = false;
-        editWindow.Title = "Edit Workflow";
-        editWindow.WindowArgs = editWindowArgs;
-        return editWindow;
-    }
-
     handlePropertiesWindowClosed(data: any, nodeType: string) {
         if (data) {
             document.dispatchEvent(new CustomEvent(this.ReturnPropertiesDataEventKey, { detail: data }));
@@ -381,37 +402,6 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         }
     }
 
-    backButtonClicked() {
-        if (this.HasChanges) {
-            this.confirmSaveWorkflow();
-        }
-        else {
-            this.goBack(false);
-        }
-    }
-
-    confirmSaveWorkflow() {
-        let confirmWindow = new ConfirmWindow();
-        confirmWindow.Width = 450;
-        confirmWindow.Height = 200;
-        confirmWindow.ShowCancelButton = true;
-        confirmWindow.Title = "Unsaved Changes";
-        confirmWindow.YesButtonText = "Save";
-        confirmWindow.NoButtonText = "Don't Save";
-        confirmWindow.CancelButtonText = "Cancel";
-        confirmWindow.Show("This workflow has unsaved changes. Do you want to save it ?");
-        confirmWindow.WindowClosed.subscribe(() => { this.handleConfirmWindowClosed(confirmWindow); });
-    }
-
-    handleConfirmWindowClosed(confirmWindow: ConfirmWindow) {
-        if (confirmWindow.Yes) {
-            this.saveWorkflow(true);
-        }
-        else if (confirmWindow.No) {
-            this.goBack(false);
-        }
-    }
-
     goBack(backCompleted: boolean = true) {
         if (this.ComponentRef) {
             this.BackCompleted.emit(backCompleted);
@@ -419,163 +409,24 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         }
     }
 
-    editWorkflowClicked() {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-            .then(cmpRef => {
-                cmpRef.instance.ComponentRef = cmpRef;
-                cmpRef.instance.Run({ EntityPM: this.EntityPM, ObjectTableName: "WorkFlow", BackButtonLabel: 'WorkFlows' });
-
-                let isEditComponentSaved = false;
-                cmpRef.instance.BackCompleted.subscribe(bk => {
-                    if (!isEditComponentSaved) {
-                        this.WorkFlowPMService.get(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) => {
-                            if (!serviceResponse.HasError) {
-                                this.WorkflowName = serviceResponse.Result ? serviceResponse.Result.Name : "";
-                                this.EntityPM = serviceResponse.Result
-                            }
-                        });
-                    }
-                });
-
-                cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                    if (isSaveSuccess) {
-                        isEditComponentSaved = true;
-                        this.WorkFlowPMService.get(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) => {
-                            if (!serviceResponse.HasError) {
-                                this.WorkflowName = serviceResponse.Result ? serviceResponse.Result.Name : "";
-                            }
-                        });
-                    }
-                });
-            });
-    }
-
-    //Actions
-    saveWorkflow(backAfterSave: boolean = false) {
-        let flowObject = this.getCurrentFlowObject();
-        if (flowObject) {
-            let startNode = FlowReader.getStartNode(flowObject);
-            this.EntityPM.Entity = startNode ? (startNode.data["entity"] || null) : null;
-            this.EntityPM.Trigger = startNode ? (startNode.data["trigger"] || null) : null;
-            this.EntityPM.FlowJson = JSON.stringify(flowObject);
-            this.startBusyIndicator("Saving ...");
-            this.WorkFlowPMService.update(this.EntityPM).subscribe((serviceResponse: ServiceResponse) => { this.handleUpdateWorkflowResponse(serviceResponse, backAfterSave); });
-        }
-    }
-
-    setWorkflow(flowObject: any) {
-        if (flowObject) {
-            let startNode = FlowReader.getStartNode(flowObject);
-            this.EntityPM.Entity = startNode ? (startNode.data["entity"] || null) : null;
-            this.EntityPM.Trigger = startNode ? (startNode.data["trigger"] || null) : null;
-            this.EntityPM.FlowJson = JSON.stringify(flowObject);
-        }
-    }
-
-    saveAsWorkflow() {
-        let propertiesComponentPath = "./Workflow/Components/WorkflowBuilder/CreateWorkflowVersionComponent";
-        let propertiesWindow = new LogitudeWindow();
-        let propertiesWindowArgs: any = {
-            WorkflowId: this.EntityPM.Id,
-            FlowJson: this.EntityPM.FlowJson
-        };
-        propertiesWindow.Height = 340;
-        propertiesWindow.Width = 985;
-        propertiesWindow.RTL = false;
-        propertiesWindow.Title = "Save New Verison";
-        propertiesWindow.WindowArgs = propertiesWindowArgs;
-
-        propertiesWindow.Show(propertiesComponentPath);
-        propertiesWindow.WindowClosed.subscribe((data: any) => { this.handleVersionPropertiesWindowClosed(data); });
-    }
-
-    ActivateVersion() {
-        this.startBusyIndicator("Saving ...");
-        this.WorkFlowVersionPMService.get(this.EntityPM.WorkFlowActiveVersionId).subscribe((response) => {
-            if (!response.HasError) {
-                let clickedVersion: WorkFlowVersionPM = response.Result;
-                let isActivate: boolean = clickedVersion.StatusCode == "INVE" || clickedVersion.StatusCode == "DRFT"
-                clickedVersion.StatusCode = isActivate ? "ACVE" : "INVE"
-                this.WorkFlowVersionPMService.update(clickedVersion).subscribe((serviceResponse: ServiceResponse) => {
-                    if (serviceResponse != null && !serviceResponse.HasError) {
-                        this.handleActivateWorkflowResponse(serviceResponse.Result)
-                        this.stopBusyIndicator();
-                    } else {
-                        this.stopBusyIndicator();
-                    }
-                });
-            } else {
-                this.stopBusyIndicator();
-            }
-        });
-    }
-
-    handleUpdateWorkflowResponse(serviceResponse: ServiceResponse, backAfterSave: boolean) {
-        if (!serviceResponse.HasError) {
-            this.handleSaveWorkflowResponse(serviceResponse.Result);
-            this.stopBusyIndicator();
-            // if (backAfterSave) {
-            //     this.goBack();
-            // }
-        }
-    }
-
-    handleSaveWorkflowResponse(workflowPM: WorkFlowPM) {
-        this.EntityPM = workflowPM;
-        this.WorkflowId = workflowPM.Id;
-        this.HasChanges = false;
-        this.SetButtonStates()
-        this.entityArgs.SendMessage("workflowBuilderEdited");
-    }
-
-    handleVersionPropertiesWindowClosed(data) {
-        this.SetWorkflowDetails(data)
-    }
-
-    handleActivateWorkflowResponse(data) {
-        this.SetWorkflowDetails(data)
-    }
-
-    SetWorkflowDetails(data) {
-        let version: WorkFlowVersionPM = data;
-        this.EntityPM.WorkFlowVersionStatusCode = version.StatusCode;
-        this.EntityPM.WorkFlowVersionNumber = version.VersionNumber;
-        this.EntityPM.WorkFlowActiveVersionId = version.Id;
-        this.HasChanges = false;
-        this.EntityPM.IsDirty = false;
-        this.SetButtonStates()
-        this.entityArgs.SendMessage("workflowBuilderEdited");
-    }
 
     getCurrentFlowObject() {
         return this.ReactFlowInstance ? this.ReactFlowInstance.toObject() : null;
     }
 
     getEntityFlowObject() {
-        return this.EntityPM.FlowJson && this.EntityPM.FlowJson !== "" ? JSON.parse(this.EntityPM.FlowJson) : null;
+        return this.ValidVersion.FlowJson && this.ValidVersion.FlowJson !== "" ? JSON.parse(this.ValidVersion.FlowJson) : null;
     }
 
-
-    //flags
-    isWorkflowHasVersion() {
-        return this.EntityPM.WorkFlowActiveVersionId != null
-    }
-
-    isWorkflowHasChanges() {
-        // return this.entityArgs.EntityPM.IsDirty
-        return this.EntityPM.IsDirty
-    }
-
-    isDraftVersion() {
-        return this.EntityPM.WorkFlowVersionStatusCode == "DRFT"
-    }
-
-    isActiveVersion() {
-        return this.EntityPM.WorkFlowVersionStatusCode == "ACVE"
-    }
-
-    isInactiveVersion() {
-        return this.EntityPM.WorkFlowVersionStatusCode == "INVE"
+    getValidVersion() {
+        var versions = this.EntityPM.WorkFlowVersions.sort((a, b) => a.VersionNumber < b.VersionNumber ? 1 : -1);
+        var activeVersion = versions.find(e => e.StatusCode == "ACVE");
+        var newestVersion = versions[0];
+        if (activeVersion) {
+            return activeVersion
+        } else {
+            return newestVersion
+        }
     }
 
     startBusyIndicator(message: string) {

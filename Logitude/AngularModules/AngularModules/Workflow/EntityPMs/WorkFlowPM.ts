@@ -7,6 +7,7 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+import {WorkFlowVersionPM} from './WorkFlowVersionPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -114,26 +115,20 @@ export class WorkFlowPM {
     public set Trigger(newValue: string) { if (this.trigger != newValue) { this.trigger = newValue; this.MarkAsDirty("Trigger"); } }
        
 	 
-    private workFlowActiveVersionId: string;
-    public get WorkFlowActiveVersionId() { return this.workFlowActiveVersionId; }
-    public set WorkFlowActiveVersionId(newValue: string) { if (this.workFlowActiveVersionId != newValue) { this.workFlowActiveVersionId = newValue; this.MarkAsDirty("WorkFlowActiveVersionId"); } }
-       
-	 
-    private workFlowVersionStatusCode: string;
-    public get WorkFlowVersionStatusCode() { return this.workFlowVersionStatusCode; }
-    public set WorkFlowVersionStatusCode(newValue: string) { if (this.workFlowVersionStatusCode != newValue) { this.workFlowVersionStatusCode = newValue; this.MarkAsDirty("WorkFlowVersionStatusCode"); } }
-       
-	 
-    private workFlowVersionStatusName: string;
-    public get WorkFlowVersionStatusName() { return this.workFlowVersionStatusName; }
-    public set WorkFlowVersionStatusName(newValue: string) { if (this.workFlowVersionStatusName != newValue) { this.workFlowVersionStatusName = newValue; this.MarkAsDirty("WorkFlowVersionStatusName"); } }
-       
-	 
-    private workFlowVersionNumber: number;
-    public get WorkFlowVersionNumber() { return this.workFlowVersionNumber; }
-    public set WorkFlowVersionNumber(newValue: number) { if (this.workFlowVersionNumber != newValue) { this.workFlowVersionNumber = newValue; this.MarkAsDirty("WorkFlowVersionNumber"); } }
-       
-	 
+     
+	private workFlowVersions: WorkFlowVersionPM[];
+    get  WorkFlowVersions() {
+        if (this.workFlowVersions == null) {
+            this.workFlowVersions = [];
+        }
+
+        return this.workFlowVersions;
+    }
+    set  WorkFlowVersions(newValue: WorkFlowVersionPM[]) {
+        if (this.workFlowVersions != newValue) {
+            this.workFlowVersions = newValue;
+        }
+    }
 
     public OldEntityPM: WorkFlowPM;
 		

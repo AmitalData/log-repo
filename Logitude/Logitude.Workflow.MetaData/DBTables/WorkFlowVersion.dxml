@@ -85,6 +85,20 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="Entity"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Trigger"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
@@ -97,7 +111,7 @@
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="StatusCode"
-    ReferencedTable="WorkFlowVersionStatuses"
+    ReferencedTable="WorkFlowStatuses"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Relation

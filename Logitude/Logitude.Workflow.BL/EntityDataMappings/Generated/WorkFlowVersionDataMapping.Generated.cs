@@ -33,7 +33,9 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 	         Description, 
 	         StatusCode, 
 	         WorkflowId, 
-	         FlowJson,
+	         FlowJson, 
+	         Entity, 
+	         Trigger,
 	      }
 
 
@@ -52,7 +54,9 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 	         StatusName, 
 	         StatusCode, 
 	         WorkflowId, 
-	         FlowJson,
+	         FlowJson, 
+	         Entity, 
+	         Trigger,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -114,6 +118,16 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FlowJson))
             {
 				entityPOCO.FlowJson = entityPM.FlowJson;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Entity))
+            {
+				entityPOCO.Entity = entityPM.Entity;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Trigger))
+            {
+				entityPOCO.Trigger = entityPM.Trigger;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -182,6 +196,16 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 					entityPM.FlowJson = entityPOCO.FlowJson;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Entity))
+            {
+					entityPM.Entity = entityPOCO.Entity;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Trigger))
+            {
+					entityPM.Trigger = entityPOCO.Trigger;
+            }
+
 		}
 
 		public void PMToOldPM(WorkFlowVersionPM entityPM, WorkFlowVersionPM oldEntityPM)
@@ -241,6 +265,16 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FlowJson))
             {
                 oldEntityPM.FlowJson = entityPM.FlowJson;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Entity))
+            {
+                oldEntityPM.Entity = entityPM.Entity;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Trigger))
+            {
+                oldEntityPM.Trigger = entityPM.Trigger;
             }
 			
 		}
