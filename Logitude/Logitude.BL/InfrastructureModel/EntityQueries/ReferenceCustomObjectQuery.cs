@@ -37,7 +37,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return result;
         }
 
-        public List<ReferenceCustomObjectPM> GetByObjectTableId(string id, int tenant, string objectTableId)
+        public List<ReferenceCustomObjectPM> GetByObjectTableId(int tenant, string objectTableId)
         {
             List<ReferenceCustomObject> referenceCustomObjects = repository.GetByObjectTableId(tenant, objectTableId);
             List<ReferenceCustomObjectPM> results = new List<ReferenceCustomObjectPM>();
