@@ -29,7 +29,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         ObjectTableId, 
 	         ScreenCode, 
 	         Name, 
-	         Content,
+	         Content, 
+	         DraftContent,
 	      }
 
 
@@ -43,7 +44,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         ObjectTableId, 
 	         ScreenCode, 
 	         Name, 
-	         Content,
+	         Content, 
+	         DraftContent,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -85,6 +87,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Content))
             {
 				entityPOCO.Content = entityPM.Content;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DraftContent))
+            {
+				entityPOCO.DraftContent = entityPM.DraftContent;
 			}
 			}
 
@@ -131,6 +138,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 					entityPM.Content = entityPOCO.Content;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DraftContent))
+            {
+					entityPM.DraftContent = entityPOCO.DraftContent;
+            }
+
 		}
 
 		public void PMToOldPM(DigitalPortalScreenPM entityPM, DigitalPortalScreenPM oldEntityPM)
@@ -172,6 +184,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
                 oldEntityPM.Content = entityPM.Content;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DraftContent))
+            {
+                oldEntityPM.DraftContent = entityPM.DraftContent;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(DigitalPortalScreenPM entityPM)
@@ -192,6 +209,10 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.Content)) //T4 find type == nText 
             {
                 entityPM.Content = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Content));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.DraftContent)) //T4 find type == nText 
+            {
+                entityPM.DraftContent = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.DraftContent));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

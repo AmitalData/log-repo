@@ -38,6 +38,8 @@ namespace Logitude.Infrastructure.Data.EntityPOCOs
 	    public string Name { get; set; }
         [Column("Content")]
 	    public string Content { get; set; }
+        [Column("DraftContent")]
+	    public string DraftContent { get; set; }
     }
 }
 	 

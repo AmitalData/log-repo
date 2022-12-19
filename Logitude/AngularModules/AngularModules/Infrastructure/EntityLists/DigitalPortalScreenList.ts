@@ -16,6 +16,7 @@ export class DigitalPortalScreenList {
 	ScreenCode: string;
 	Name: string;
 	Content: string;
+	DraftContent: string;
 	
 }
  

@@ -64,6 +64,11 @@ export class DigitalPortalScreenPM {
     public set Content(newValue: string) { if (this.content != newValue) { this.content = newValue; this.MarkAsDirty("Content"); } }
        
 	 
+    private draftContent: string;
+    public get DraftContent() { return this.draftContent; }
+    public set DraftContent(newValue: string) { if (this.draftContent != newValue) { this.draftContent = newValue; this.MarkAsDirty("DraftContent"); } }
+       
+	 
 
     public OldEntityPM: DigitalPortalScreenPM;
 		

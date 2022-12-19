@@ -30,6 +30,8 @@ namespace Logitude.Infrastructure.Data.EntityLists
        public string Name  { get; set; }
        [DataMember]
        public string Content  { get; set; }
+       [DataMember]
+       public string DraftContent  { get; set; }
    }
 
 }
