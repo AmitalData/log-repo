@@ -85,6 +85,7 @@ export class AddEditWidgetComponent extends BaseComponent {
 
         this.UIProperties.SetEnabled("ComparisonPeriod", this.ObjectTableName, this.TimeOverTime);
     }
+    
 
 
     BuildQueryFilters() {

@@ -44,15 +44,12 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
 
         private int GetRatio<T>(object value, WidgetMeasurePM widgetMeasureField, IQueryable<T> query)
         {
-            var comparsionValue = 0;
+            
             object comparsionObject = BuildKpiChartComparsionValue<T>(widgetMeasureField, query);
-
-            if (comparsionObject != null && comparsionObject != DBNull.Value)
-            {
-                comparsionValue = Convert.ToInt32(comparsionObject);
-            }
+            var comparsionValue = Convert.ToInt32(comparsionObject == null || comparsionObject == System.DBNull.Value ? 0 : comparsionObject);
+          
             if (comparsionValue == 0) return 1;
-            int diffValue = (Convert.ToInt32(value ?? 0) - comparsionValue);
+            int diffValue = (Convert.ToInt32(value == null || value == System.DBNull.Value ? 0 : value) - comparsionValue);
             int ratio =  Convert.ToInt32(((double)diffValue / Math.Abs(comparsionValue)) * 100);
             return ratio;
         }
@@ -62,8 +59,6 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             object comparisonValue = BuildKpiChartComparsionValue<T>(widgetMeasureField, query);
             if (comparisonValue == null || comparisonValue == System.DBNull.Value) return 0;
             return String.Format("{0:n0}", comparisonValue);
-
-
         }
 
         private string GetUnit()
