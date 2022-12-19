@@ -23,7 +23,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
             var globalFilters = BuildQueryFilterItems();
             if (globalFilters == null || globalFilters.Count == 0) return widget.Filters;
 
-            var widgetFilters = Newtonsoft.Json.JsonConvert.DeserializeObject<QueryFilterItem>(widget.Filters);
+            QueryFilterItem widgetFilters = widget.Filters != null ? Newtonsoft.Json.JsonConvert.DeserializeObject<QueryFilterItem>(widget.Filters) : null;
             if (widgetFilters == null)
             {
                 return Newtonsoft.Json.JsonConvert.SerializeObject(new QueryFilterItem
