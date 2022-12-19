@@ -464,11 +464,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
             return courierMasterPMList;
         }
-        public List<dynamic> GetAllCourierMasterForLastmileReport(DateTime? hatraFromDate, DateTime? hatraToDate, DateTime? lastMileFromDate, DateTime? LastMileToDate, string airline, string trucker, string courierHawb, int tenant)
+        public List<CourierForReport> GetAllCourierMasterForLastmileReport(DateTime? hatraFromDate, DateTime? hatraToDate, DateTime? lastMileFromDate, DateTime? LastMileToDate, string airline, string trucker, string courierHawb, int tenant)
         {
             CourierMasterRepository courierMasterRepository = new CourierMasterRepository(context);
             List<CourierMasterPM> courierMasterPMList = new List<CourierMasterPM>();
-            var LastmileReportData = courierMasterRepository.GetAllCourierMasterForLastmileReport(hatraFromDate, hatraToDate, lastMileFromDate, LastMileToDate, airline, trucker, courierHawb,tenant);
+            List< CourierForReport> LastmileReportData = courierMasterRepository.GetAllCourierMasterForLastmileReport(hatraFromDate, hatraToDate, lastMileFromDate, LastMileToDate, airline, trucker, courierHawb,tenant);
             return LastmileReportData;
         }
 

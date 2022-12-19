@@ -79,31 +79,30 @@ namespace Logitude.Customs.Data.Repsitories
             }
             return query.ToList();
         }
-        public List<dynamic> GetAllCourierMasterForLastmileReport(DateTime? hatraFromDate, DateTime? hatraToDate, DateTime? lastMileFromDate, DateTime? LastMileToDate, string airline, string trucker, string mawb, int tenant)
+        public List<CourierForReport> GetAllCourierMasterForLastmileReport(DateTime? hatraFromDate, DateTime? hatraToDate, DateTime? lastMileFromDate, DateTime? LastMileToDate, string airline, string trucker, string mawb, int tenant)
         {
             var query = (from cd in context.CourierDeclarations
                          join c in context.CourierMasters on cd.CourierMasterId equals c.Id
                          join s in context.DeclarationCourierStatuses on cd.DeclarationId equals s.DeclarationId
                          join d in context.Declarations on cd.DeclarationId equals d.Id
                          where cd.Tenant == tenant
-                         select new
-                         {
-                             LastMileDate = s.Delivered ? s.LastMileStatusDate : null,
-                             CourierHAWB = d.CourierHAWB,
-                             Mawb=c.MAWB,
-                             IntegratorCode = c.IntegratorCode,
-                             IntegratorName = c.Card != null ? c.Card.LocalName : null,
-                             Airline = c.AirlineId,
-                             TruckerName = s.Trucker.Card.LocalName,
-                             TruckerId = s.TruckerId,
-                             LastMileServiceType = s.LastMileServiceType,
-                             LastMileStatusName = s.LastMileStatusName,
-                             LastMileStatusDate = s.LastMileStatusDate,
-                             EstimatedArrivalDate = c.EstimatedArrivalDate,
-                             HatraDate = d.HatraDate,
-                             TerminalReleaseDate = s.TerminalReleaseDate
+                         select new CourierForReport(
+                                      s.Delivered ? s.LastMileStatusDate : null,
+                                      d.CourierHAWB,
+                                      c.MAWB,
+                                      c.IntegratorCode,
+                                      c.Card != null ? c.Card.LocalName : null,
+                                      c.AirlineId,
+                                      s.Trucker.Card.LocalName,
+                                      s.TruckerId,
+                                      s.LastMileServiceType,
+                                      s.LastMileStatusName,
+                                      s.LastMileStatusDate,
+                                      c.EstimatedArrivalDate,
+                                      d.HatraDate,
+                                      s.TerminalReleaseDate
 
-                         });
+                         ));
 
 
             if (hatraFromDate.HasValue)
@@ -128,7 +127,7 @@ namespace Logitude.Customs.Data.Repsitories
                 query = query.Where(x => x.TruckerId == trucker);
             }
             query.OrderBy(x => x.IntegratorCode).ThenBy(x => x.TruckerId).ThenBy(x => x.LastMileServiceType);
-            return query.ToList<dynamic>();
+            return query.ToList<CourierForReport>();
         }
         public int CounNoOfCourierHawbwWithoutHatara(string couriermasterid, int tenant)
         {
@@ -148,4 +147,40 @@ namespace Logitude.Customs.Data.Repsitories
         }
     }
 
+    public  class CourierForReport
+    {
+        public DateTime? LastMileDate { get; }
+        public string CourierHAWB { get; }
+        public string Mawb { get; }
+        public string IntegratorCode { get; }
+        public string IntegratorName { get; }
+        public string Airline { get; }
+        public string TruckerName { get; }
+        public string TruckerId { get; }
+        public string LastMileServiceType { get; }
+        public string LastMileStatusName { get; }
+        public DateTime? LastMileStatusDate { get; }
+        public DateTime? EstimatedArrivalDate { get; }
+        public DateTime? HatraDate { get; }
+        public DateTime? TerminalReleaseDate { get; }
+
+        public CourierForReport(DateTime? lastMileDate, string courierHAWB, string mawb, string integratorCode, string integratorName, string airline, string truckerName, string truckerId, string lastMileServiceType, string lastMileStatusName, DateTime? lastMileStatusDate, DateTime? estimatedArrivalDate, DateTime? hatraDate, DateTime? terminalReleaseDate)
+        {
+            LastMileDate = lastMileDate;
+            CourierHAWB = courierHAWB;
+            Mawb = mawb;
+            IntegratorCode = integratorCode;
+            IntegratorName = integratorName;
+            Airline = airline;
+            TruckerName = truckerName;
+            TruckerId = truckerId;
+            LastMileServiceType = lastMileServiceType;
+            LastMileStatusName = lastMileStatusName;
+            LastMileStatusDate = lastMileStatusDate;
+            EstimatedArrivalDate = estimatedArrivalDate;
+            HatraDate = hatraDate;
+            TerminalReleaseDate = terminalReleaseDate;
+        }
+
+    }
 }

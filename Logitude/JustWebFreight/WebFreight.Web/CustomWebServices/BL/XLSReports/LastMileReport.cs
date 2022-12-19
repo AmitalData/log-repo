@@ -1,5 +1,6 @@
 ﻿using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data;
+using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
 using System;
 using System.Collections.Generic;
@@ -32,22 +33,22 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSReports
             lastMileFrom = this.TryParse(lastMileFromDate);
             lastMileTo = this.TryParse(LastMileToDate);
             var lastMileReportDataList = new List<LastMileReportData>();
-            var OpenCourierMasters = courierMasterQueryService.GetAllCourierMasterForLastmileReport(hatraFrom, hatraTo, lastMileFrom, lastMileTo, airline, trucker, mawb, tenant);
+            List<CourierForReport> OpenCourierMasters = courierMasterQueryService.GetAllCourierMasterForLastmileReport(hatraFrom, hatraTo, lastMileFrom, lastMileTo, airline, trucker, mawb, tenant); 
             var qs = new DeclarationCourierStatusQueryService(context);
             int MawbCountr = 0;
             foreach (var item in OpenCourierMasters)
             {
                 var lastMileReportData = new LastMileReportData();
-                lastMileReportData.IntegratorName = item.GetType().GetProperty("IntegratorName").GetValue(item, null);
-                lastMileReportData.CourierHawb= item.GetType().GetProperty("CourierHAWB").GetValue(item, null);
-                lastMileReportData.LastMileServiceType = item.GetType().GetProperty("LastMileServiceType").GetValue(item, null);
-                lastMileReportData.Trucker = item.GetType().GetProperty("TruckerName").GetValue(item, null);
-                lastMileReportData.LastMileStatusName = item.GetType().GetProperty("LastMileStatusName").GetValue(item, null);
-                lastMileReportData.TerminalReleaseDate = item.GetType().GetProperty("TerminalReleaseDate").GetValue(item, null);
-                lastMileReportData.HatraDate = item.GetType().GetProperty("HatraDate").GetValue(item, null);
-                lastMileReportData.EstimatedArrivalDate = item.GetType().GetProperty("EstimatedArrivalDate").GetValue(item, null);
-                lastMileReportData.LastMileStatusDate = item.GetType().GetProperty("LastMileStatusDate").GetValue(item, null);
-                if (lastMileReportDataList.Find(x => x.CourierHawb == item.GetType().GetProperty("CourierHAWB").GetValue(item, null)) == null)
+                lastMileReportData.IntegratorName = item.IntegratorName;
+                lastMileReportData.CourierHawb= item.CourierHAWB;
+                lastMileReportData.LastMileServiceType = item.LastMileServiceType;
+                lastMileReportData.Trucker = item.TruckerName;
+                lastMileReportData.LastMileStatusName = item.LastMileStatusName;
+                lastMileReportData.TerminalReleaseDate = item.TerminalReleaseDate;
+                lastMileReportData.HatraDate = item.HatraDate;
+                lastMileReportData.EstimatedArrivalDate = item.EstimatedArrivalDate;
+                lastMileReportData.LastMileStatusDate = item.LastMileStatusDate;
+                if (lastMileReportDataList.Find(x => x.CourierHawb == item.CourierHAWB) == null)
                 {
                     MawbCountr++;
                 }
