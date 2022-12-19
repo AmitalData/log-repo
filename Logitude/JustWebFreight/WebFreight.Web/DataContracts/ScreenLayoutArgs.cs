@@ -20,5 +20,6 @@ namespace WebFreight.Web.DataContracts
         public int Columns { get; set; }
         public string SortedByFieldCode { get; set; }
         public string SortedType { get; set; }
+        public string RelatedScreenCode { get; set; }
     }
 }

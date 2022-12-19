@@ -11,7 +11,7 @@
         <div style="margin-bottom: 40px; width: 100% " *ngFor="let screenSection of ScreenSections">
 
             <table style="width:100%;">
-                <tr *ngIf="screenSection.Type != 'Grid' && screenSection.Title && screenSection.ScreenColumns && screenSection.ScreenColumns.length > 0">
+                <tr *ngIf="ShowSectionName(screenSection)">
                     <td class="section-title">{{screenSection.Title}}</td>
                 </tr>
                 <tr *ngIf="screenSection.Type != 'Grid'" style="height:100%">

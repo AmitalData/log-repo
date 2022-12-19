@@ -754,6 +754,7 @@
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowOpportunityController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowShipmentPayableController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowShipmentReceivableController.cs" />
+    <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowShipmentStoragePricingController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowUserController.cs" />
     <Content Include="css\asp.css" />
     <Content Include="css\fonts\DejaVu\LICENSE.txt" />
@@ -2981,7 +2982,6 @@
     <Compile Include="Helpers\ImporterShipmentOrderDocuments\ShipmentOrderDocumentAmMapping.cs" />
     <Compile Include="Helpers\ImporterShipmentOrders\ImporterShipmentOrdersService.cs" />
     <Compile Include="Helpers\ImporterShipmentOrders\ShipmentOrderAmToShipmentMapping.cs" />
-    <Compile Include="Helpers\JsonPatchApplier.cs" />
     <Compile Include="Helpers\MixPanel\AuthenticationMixPanelService.cs" />
     <Compile Include="Helpers\MixPanel\events\DashboardActionsEvent.cs" />
     <Compile Include="Helpers\MixPanel\events\LogBoxActionsEvent.cs" />

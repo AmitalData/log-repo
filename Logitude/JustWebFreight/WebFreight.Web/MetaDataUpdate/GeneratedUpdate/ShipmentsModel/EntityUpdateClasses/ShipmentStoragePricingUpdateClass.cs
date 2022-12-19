@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentStoragePricingUpdateClass
    {  		
-		public const string HashString = "ed94e27106a7fcf4dc3abbe63ee2aabf";
+		public const string HashString = "ed94e27106a7fcf4dc3abbe63asaaabf";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -191,7 +191,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						ListLableDefaultText =  "Id",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
-					  						NoMetaDataField =  true,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  true,
 					  						IncludeInSearchField =  false,
@@ -307,7 +307,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ShipmentId",
-					  						DefaultText =  "Shipment",
+					  						DefaultText =  "ShipmentId",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "Shipment",
 					  						NavigationPropertyName =  "Shipment",

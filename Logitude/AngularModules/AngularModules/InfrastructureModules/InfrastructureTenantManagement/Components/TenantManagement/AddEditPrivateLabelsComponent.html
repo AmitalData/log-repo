@@ -323,6 +323,7 @@
                                                                 [SelectedValue]="HybridPartnerId"
                                                                 [DataContext]="DataContext"
                                                                 [DisplayMemberPath]="'Name'"
+                                                                [RunToggleMode]="true"
                                                                 [LookUpTableName]="'HybridPartner'"
                                                                 [HideColumns]="true">
                                                         </LogLov>
@@ -336,13 +337,13 @@
                                                 <tr class="FormFieldRow">
 
                                                     <td style="width:130px">
-                                                        <LogLabel [Text]="'Distributor'" [ObjectFieldName]="'Distributor'" [ObjectTableName]="ObjectTableName"
+                                                        <LogLabel [Text]="'Distributor'" [ObjectFieldName]="'DistributorCode'" [ObjectTableName]="ObjectTableName"
                                                                   [DataContext]="DataContext"></LogLabel>
                                                     </td>
                                                     <td style="width:380px;">
-                                                        <LogLov [ObjectFieldName]="'Distributor'"
+                                                        <LogLov [ObjectFieldName]="'DistributorCode'"
                                                                 [ObjectTableName]="ObjectTableName"
-                                                                [SelectedValue]="Distributor"
+                                                                [SelectedValue]="DistributorCode"
                                                                 [DataContext]="DataContext"
                                                                 [DisplayMemberPath]="'EnglishName'"
                                                                 [LookUpTableName]="'Distributor'"

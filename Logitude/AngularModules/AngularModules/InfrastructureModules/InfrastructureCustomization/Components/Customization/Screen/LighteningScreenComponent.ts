@@ -26,12 +26,12 @@ export class LighteningScreenComponent extends BaseComponent implements OnInit
     public ScreenLayoutComponent: ScreenLayoutComponent;
     public lighteningScreenWidth: string;
     private screenLayoutwidth = 650;
+    public SectionWidth = "750";
     private CurrentSession = SessionLocator.SelectedSession;
     constructor()
     {
         super();
         this.lighteningScreenWidth = (window.innerWidth - this.screenLayoutwidth) + "px";
-
     }
 
     ngOnInit(): void
@@ -52,7 +52,7 @@ export class LighteningScreenComponent extends BaseComponent implements OnInit
     Run(screenLayoutComponent: ScreenLayoutComponent)
     {
         this.ScreenLayoutComponent = screenLayoutComponent;
-
+        this.SectionWidth = this.ScreenLayoutComponent.SelectedItem.ScreenPM.NumberOfColumns * 250 +"px";
     }
 
     public OnSectionScreenNameChange() {

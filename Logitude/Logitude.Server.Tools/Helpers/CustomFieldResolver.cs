@@ -399,8 +399,9 @@ namespace Logitude.BL.Helpers
                             }
 
                             decimal.TryParse(customField, out d);
+                            string result = GetFormatedDecimalVlue(field, d);
 
-                            return d.ToString();
+                            return result;
                         }
 
                     case "Integer":
@@ -455,7 +456,15 @@ namespace Logitude.BL.Helpers
             return null;
         }
 
+        private static string GetFormatedDecimalVlue(ObjectField field, decimal d)
+        {
+            if (field.DigitsAfterPoint > 0)
+            {
+                return d.ToString("#,##0." + new string('0', field.DigitsAfterPoint));
+            }
 
+            return d.ToString("#,##0.");
+        }
 
         public string GetFieldValue2(object value, ObjectField objectField, int tenant)
         {
