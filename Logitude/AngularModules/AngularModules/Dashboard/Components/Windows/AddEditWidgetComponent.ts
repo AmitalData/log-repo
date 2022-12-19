@@ -84,18 +84,18 @@ export class AddEditWidgetComponent extends BaseComponent {
         }
 
         this.UIProperties.SetEnabled("ComparisonPeriod", this.ObjectTableName, this.TimeOverTime);
+
+        this.UIProperties.SetEnabled("GroupById", this.ObjectTableName, !AppTool.IsNullOrEmpty(this.EntityId));
+        this.UIProperties.SetEnabled("SecondaryGroupById", this.ObjectTableName, !AppTool.IsNullOrEmpty(this.EntityId));
+        this.WidgetMeasuresList.forEach(item => {
+            item.SetUIProperties();
+        });
     }
     
-
-
     BuildQueryFilters() {
         this.GroupByQueryFilters = new ApiQueryFilters();
         this.GroupByQueryFilters.addAdditionalFilter("DataTypeCode", "PickList,LookUp,DateTime,Date", null, null, "InList", false, true, false, "string", false, true, true);
     }
-
-
-
-
 
     GetFilters() {
         if (!this.EntityPM.Filters) return;
@@ -200,9 +200,8 @@ export class AddEditWidgetComponent extends BaseComponent {
         }
         this.TimeOverTime = false;
         this.SetTimeOverTimeValue();
+        this.SetUIProperties();
     }
-
-
 
     get TypeCode() { return this.EntityPM.TypeCode; }
     set TypeCode(value: string) {
@@ -745,6 +744,11 @@ export class WidgetMeasureItem extends BaseComponent {
         this.IsNew = isNew;
         this.DashboardPM = fatherComponent?.DashboardPM;
         this.FilterMeasureFields();
+    }
+
+    SetUIProperties() {        
+        this.UIProperties.SetEnabled("MeasureCode", this.ObjectTableName, !AppTool.IsNullOrEmpty(this.fatherComponent.EntityId));
+        this.UIProperties.SetEnabled("MeasureFieldId", this.ObjectTableName, !AppTool.IsNullOrEmpty(this.fatherComponent.EntityId));
     }
 
     public CheckMeasureDeleteVisiblity() {
