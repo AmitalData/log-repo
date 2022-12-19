@@ -1159,18 +1159,28 @@
                                             </div>
                                         </log-cell-template>
                                     </ng-template>
-
+                                    
 
                                 </log-column>
+
+
                                 <log-column [header]="'Customs.SupplierInvoiceItem.F.ClassificationCode' | TextCodeTranslationPipe" [binding]="'ClassificationCode'" [width]="'120'" [Editable]="true" [Alignment]="'right'">
                                     <ng-template let-item>
-                                        <log-cell-template (CellClicked)="onCellSelected($event,item)" #logcelltemplate [RIndex]="item.rowIndex">
+                                        <log-cell-template (CellClicked)="onCellSelected($event,item);OnfocusItemDescription();" #logcelltemplate [RIndex]="item.rowIndex">
                                             <div class="TextTrimming" style="text-align:right;width:120px" *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.ClassificationCode}}</span>
                                                 <span style="font-size:10px">{{item.QunatityTypeCode}}</span>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogTextBoxV2 #ClassificationTextBox [ObjectFieldName]="'ClassificationCode'" [DataContext]="item" [FocusOnMe]="true" [InputType]="'integertext'"
+                                                <select *ngIf="!ConUNF" style="height:22px;width: 117px;"
+                                                name="PratMehes" 
+                                                id="PratMehes" 
+                                                class="form-control;"
+                                                [(ngModel)]="selectValue"
+                                                (change)="onChange(item,$event);">
+                                                <option *ngFor="let Pratitem of PratMehesUNF;"  [value]="Pratitem">{{Pratitem[0]}}</option>
+                                              </select>
+                                                <LogTextBoxV2 *ngIf="ConUNF" #ClassificationTextBox [ObjectFieldName]="'ClassificationCode'" [DataContext]="item" [FocusOnMe]="true" [InputType]="'integertext'"
                                                               [Text]="item.ClassificationCode" [ObjectTableName]="'Customs.SupplierInvoiceItem'" [HideColumns]="true"
                                                               (LostFocus)="item.OnClassificationLostFocus(logcelltemplate,ClassificationTextBox)" [DebounceTime]="1" (KeyUp)="item.ClassificationKeyUp($event,logcelltemplate,ClassificationTextBox)"></LogTextBoxV2>
 
