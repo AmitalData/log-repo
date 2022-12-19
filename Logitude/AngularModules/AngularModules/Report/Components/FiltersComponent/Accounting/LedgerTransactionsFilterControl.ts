@@ -169,7 +169,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
             this.ToDate = AppTool.IsNullOrEmpty(this.ToDate) ? new Date() : this.ToDate;
             const today = new Date();
             const lastmonth = today.setMonth(today.getMonth() - 1);
-            this.FromDate =new Date(lastmonth);
+            this.FromDate = AppTool.IsNullOrEmpty(this.FromDate) ? new Date(lastmonth) : this.FromDate;
         }
     }
 
