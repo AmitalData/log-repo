@@ -15,6 +15,7 @@ import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryF
 import { DashboardList } from '../../../DashboardModule/EntityLists/DashboardList';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { DashboardPMService } from '../../../DashboardModule/Services/StandardPMs/DashboardPMService';
+import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
     templateUrl: 'CustomDashboardComponent.html',
@@ -216,25 +217,26 @@ export class CustomDashboardComponent extends BaseComponent implements OnDestroy
     }
 
     private ConfirmSave(clickedDashboard: DashboardList) {
-        var confirmWindow: ConfirmWindow = new ConfirmWindow();
-        confirmWindow.Title = "Confirm";
-        confirmWindow.Show("This Dashboard has unsaved changes do you want to save it?");
-        confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes) {
-                this.SaveDashboard(clickedDashboard);
-                MixPanelLocator.PostDashboardAction({ ActionName: "Confirm Window Yes Click", DashboardId: this.SelectedDashboard?.Id });
-            }
-
-            else if (confirmWindow.No) {
-                MixPanelLocator.PostDashboardAction({ ActionName: "Confirm Window No Click", DashboardId: this.SelectedDashboard?.Id });
-                this.HasChanges = false;
-                this.SelectedDashboard = clickedDashboard;
-            }
-            else if (confirmWindow.Cancel){
-                MixPanelLocator.PostDashboardAction({ ActionName: "Confirm Window Cancel Click", DashboardId: this.SelectedDashboard?.Id });
-                //this.NavigateToSelectedTab();
-            }
-        });
+        var confirmWindow = new ConfirmWindow();
+                confirmWindow.Width = 450;
+                confirmWindow.Height = 190;
+                confirmWindow.ShowCancelButton = true;
+                confirmWindow.NoButtonText = "Don't Save";
+                confirmWindow.YesButtonText = "Save ";
+                confirmWindow.CancelButtonText = "Cancel";
+                confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
+                confirmWindow.Show("This Dashboard has unsaved changes. Do you want to save it?");
+                confirmWindow.WindowClosed.subscribe((event: any) => {
+                    if (confirmWindow.Yes) {
+                        MixPanelLocator.PostDashboardAction({ ActionName: "Confirm Window Yes Click", DashboardId: this.SelectedDashboard?.Id });
+                        this.SaveDashboard(clickedDashboard);
+                    }
+                    else if (confirmWindow.No) {
+                        MixPanelLocator.PostDashboardAction({ ActionName: "Confirm Window No Click", DashboardId: this.SelectedDashboard?.Id });
+                        this.HasChanges = false;
+                        this.SelectedDashboard = clickedDashboard;
+                    } 
+                });
     }
 
     SaveDashboard(clickedDashboard: DashboardList) {
@@ -242,9 +244,9 @@ export class CustomDashboardComponent extends BaseComponent implements OnDestroy
         this.CurrentSession.StartBusyIndicatorSaving();
         dashboardPMService.update(this.DashboardEntity).subscribe((myResponse: ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();
-            if (!myResponse.HasError) return;
+            if (myResponse.HasError) return;
             this.HasChanges = false;
-            this.SelectedDashboard = clickedDashboard;
+            this.ChangeDashboard(clickedDashboard, false);
         });
     }
 
