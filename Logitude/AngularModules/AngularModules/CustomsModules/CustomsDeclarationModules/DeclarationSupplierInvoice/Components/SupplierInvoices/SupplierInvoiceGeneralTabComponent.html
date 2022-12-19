@@ -1172,8 +1172,7 @@
                                                 <select *ngIf="!ConUNF" style="height:22px;width: 117px;"
                                                 name="PratMehes" 
                                                 id="PratMehes" 
-                                                class="form-control;"
-                                                [(ngModel)]="selectValue"
+                                                class="form-control;"              
                                                 (change)="onChange(item,$event);">
                                                 <option *ngFor="let Pratitem of PratMehesUNF;"  [value]="Pratitem">{{Pratitem[0]}}</option>
                                               </select>
