@@ -169,7 +169,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
             this.ToDate = AppTool.IsNullOrEmpty(this.ToDate) ? new Date() : this.ToDate;
             const today = new Date();
             const lastmonth = today.setMonth(today.getMonth() - 1);
-            this.FromDate = AppTool.IsNullOrEmpty(this.FromDate) ? new Date(lastmonth) : this.FromDate;
+            this.FromDate =new Date(lastmonth);
         }
     }
 
@@ -804,6 +804,11 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     set AttachedGLAccountCheckBox(value: boolean)
     {
         if (this.attachedGLAccountCheckBox != value) {
+            if (value == false) {
+                const today = new Date();
+                const lastmonth = today.setFullYear(2000, 0, 1);
+                this.FromDate = new Date(lastmonth);
+            }
             this.attachedGLAccountCheckBox = value;
 
         }
