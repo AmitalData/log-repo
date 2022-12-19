@@ -89,7 +89,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     agentFileReferenceID = "";
 
 
-                var declaration = myDeclarationQueryService.GetDeclarationByfunctionalReferenceID(functionalReferenceID, agentFileReferenceID, requestParams.Tenant);
+                var declaration = myDeclarationQueryService.GetDeclarationByfunctionalReferenceID(functionalReferenceID, requestParams.Tenant);
 
                 _MyDeclarationPM = declaration;
                 if (declaration != null)
