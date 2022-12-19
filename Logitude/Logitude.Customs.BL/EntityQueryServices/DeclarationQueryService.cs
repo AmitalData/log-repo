@@ -364,7 +364,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             if (declaration == null)
             {
                 var declarations = repository.GetDeclarationByFunctionalReferenceID(functionalReferenceID, tenant);
-                if (declarations.Count() == 1)
+                if (declarations!=null && declarations.Count() == 1)
                     declaration = declarations[0];
                 else
                     return null;
