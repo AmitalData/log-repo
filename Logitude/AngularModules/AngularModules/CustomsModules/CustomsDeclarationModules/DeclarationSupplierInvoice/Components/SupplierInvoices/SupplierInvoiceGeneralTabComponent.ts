@@ -3222,7 +3222,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             "BFIHMAIN.LogitudeTask",
             "CustomExportApprovalToInsurance",
             unifreightMessageM,
-            "×”×�×� ×�×¤×©×¨×™ ×œ×¤×ª×•×— ×ª×™×§ ×‘×™×˜×•×—");
+            "האם אפשרי לפתוח תיק ביטוח");
 
     }
 
@@ -3237,7 +3237,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             confirm.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
             confirm.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
             confirm.Width = 400;
-            confirm.Show(`×”×œ×§×•×— ×ž×•×’×“×¨ ×œ×‘×™×¦×•×¢ ×‘×™×˜×•×— ×�×•×˜×•×ž×˜×™, ×”×�×� ×œ×‘×˜×— ?`);           
+            confirm.Show(`הלקוח מוגדר לביצוע ביטוח אוטומטי, האם לבטח ?`);           
             confirm.WindowClosed.subscribe((event: any) => {
 
                 if (confirm.Yes == true) {
@@ -3260,7 +3260,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                                     let InvoiceNumber = ""; InvoiceNumber = UnifreightMessageM.GetStringValue(mess, "InvoiceNumber");
 
                                     let confirmWindow = new ConfirmWindow();
-                                    confirmWindow.Title = "×™×¦×™×¨×ª ×‘×™×˜×•×—";
+                                    confirmWindow.Title = "יצירת ביטוח";
                                     confirmWindow.Width = 350;
                                     confirmWindow.Height = 200;
                                     confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
@@ -3278,11 +3278,11 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                                       })
                                     }
                                     else if (!AppTool.IsNullOrEmpty(InvoiceNumber)) {
-                                        confirmWindow.Show(`× ×¤×ª×—×” ×ª×•×¡×¤×ª ×‘×™×˜×•×— ×ž×¡' ` + InvoiceNumber + ` , ×™×© ×œ×”×©×œ×™×ž×” ×‘×ª×”×œ×™×š ×™×“× ×™ ×‘×™×•× ×™×¤×¨×™×™×˜`);
+                                        confirmWindow.Show(`נפתחה תוספת ביטוח מס' ` + InvoiceNumber + ` , יש להשלימה בתהליך ידני ביוניפרייט`);
 
                                     }
                                     else {
-                                        confirmWindow.Show(`×ª×”×œ×™×š ×¤×ª×™×—×ª ×ª×•×¡×¤×ª ×‘×™×˜×•×— ×�×•×˜×•×ž×˜×™ × ×›×©×œ`);
+                                        confirmWindow.Show(`תהליך פתיחת תוספת ביטוח אוטומטי נכשל`);
 
                                     }
                                 }
@@ -3308,7 +3308,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                         "BFIHMAIN.LogitudeTask",
                         "CustomExportActivateInsurance",
                         unifreightMessageM,
-                        "×ž×‘×¦×¢ ×¤×ª×™×—×ª ×ª×™×§ ×‘×™×˜×•×—");
+                        "מבצע פתיחת תיק ביטוח");
 
                 }
 
@@ -3370,7 +3370,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             "BFIHMAIN.LogitudeTask",
             "CustomExportPratMehesList",
             unifreightMessageM,
-            "×¨×©×™×ž×ª ×¤×¨×˜×™ ×”×ž×›×¡");
+            "רשימת פרטי המכס");
 
 
     }
