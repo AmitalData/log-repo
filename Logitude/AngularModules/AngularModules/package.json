@@ -48,7 +48,7 @@
     "ag-grid-enterprise": "^20.0.0",
     "collaboration-tool-tasks-list": "^11.2.19",
     "fast-json-patch": "^3.1.1",
-    "logitude-dashboard-library": "^1.4.5",
+    "logitude-dashboard-library": "^1.4.6",
     "logitude-workflow": "latest",
     "mochawesome-report-generator": "^5.1.0",
     "ng-zorro-antd": "^9.3.0",
