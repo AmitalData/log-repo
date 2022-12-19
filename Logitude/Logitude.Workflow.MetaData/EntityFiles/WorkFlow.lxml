@@ -1480,7 +1480,7 @@
       <QueryColumn
         QueryCode="&quot;All Workflows&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;WorkFlowVersionStatusName&quot;"
+        ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="350" />
       <QueryColumn
         QueryCode="&quot;All Workflows&quot;"
@@ -1593,19 +1593,19 @@
       DefaultText="&quot;Save Draft&quot;"
       MenuButtonType="&quot;button&quot;"
       IndexOrder="0"
-      IsPackagable="false" />
+      IsPackagable="true" />
     <MenuButton
       EventCode="&quot;NewVersion&quot;"
       DefaultText="&quot;New Version&quot;"
       MenuButtonType="&quot;button&quot;"
       IndexOrder="0"
-      IsPackagable="false" />
+      IsPackagable="true" />
     <MenuButton
       EventCode="&quot;Activate&quot;"
       DefaultText="&quot;Activate&quot;"
       MenuButtonType="&quot;button&quot;"
       IndexOrder="0"
-      IsPackagable="false" />
+      IsPackagable="true" />
   </MenuButtons>
   <DataContracts />
   <AdditionalTextCodes />

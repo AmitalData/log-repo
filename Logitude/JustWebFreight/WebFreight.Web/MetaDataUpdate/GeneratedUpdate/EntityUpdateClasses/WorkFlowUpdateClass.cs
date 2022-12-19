@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class WorkFlowUpdateClass
    {  		
-		public const string HashString = "de2b82f729fa2460ea6f201eafa2500f";
+		public const string HashString = "dc26a982fe03cc35e5fd7085c857b587";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1363,7 +1363,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn AllWorkflowsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllWorkflowsQuery.Id,QueryCode = AllWorkflowsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "WorkFlow.OwnerName" , ColumnWidth = 350 }, addedQueryColumns);
 
-			 QueryColumn AllWorkflowsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllWorkflowsQuery.Id,QueryCode = AllWorkflowsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "WorkFlow.WorkFlowVersionStatusName" , ColumnWidth = 350 }, addedQueryColumns);
+			 QueryColumn AllWorkflowsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllWorkflowsQuery.Id,QueryCode = AllWorkflowsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "WorkFlow.StatusName" , ColumnWidth = 350 }, addedQueryColumns);
 
 			 QueryColumn AllWorkflowsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllWorkflowsQuery.Id,QueryCode = AllWorkflowsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "WorkFlow.UpdateDate" , ColumnWidth = 350 }, addedQueryColumns);
 
@@ -1491,15 +1491,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable WorkFlowObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "WorkFlow" && d.Tenant == 0).FirstOrDefault();       
     
-			   Feature WorkFlowFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SaveDraft", ObjectTableId = WorkFlowObjectTable.Id, Tenant = 0, NameTextCodeCode = "WorkFlow.Features.SaveDraft", NameTextCodeDefaultText = "Save Draft", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WorkFlowObjectTable);
+			   Feature WorkFlowFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SaveDraft", ObjectTableId = WorkFlowObjectTable.Id, Tenant = 0, NameTextCodeCode = "WorkFlow.Features.SaveDraft", NameTextCodeDefaultText = "Save Draft", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WorkFlowObjectTable);
 
       
     
-			   Feature WorkFlowFeature_MB1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NewVersion", ObjectTableId = WorkFlowObjectTable.Id, Tenant = 0, NameTextCodeCode = "WorkFlow.Features.NewVersion", NameTextCodeDefaultText = "New Version", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WorkFlowObjectTable);
+			   Feature WorkFlowFeature_MB1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NewVersion", ObjectTableId = WorkFlowObjectTable.Id, Tenant = 0, NameTextCodeCode = "WorkFlow.Features.NewVersion", NameTextCodeDefaultText = "New Version", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WorkFlowObjectTable);
 
       
     
-			   Feature WorkFlowFeature_MB2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Activate", ObjectTableId = WorkFlowObjectTable.Id, Tenant = 0, NameTextCodeCode = "WorkFlow.Features.Activate", NameTextCodeDefaultText = "Activate", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WorkFlowObjectTable);
+			   Feature WorkFlowFeature_MB2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Activate", ObjectTableId = WorkFlowObjectTable.Id, Tenant = 0, NameTextCodeCode = "WorkFlow.Features.Activate", NameTextCodeDefaultText = "Activate", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WorkFlowObjectTable);
 
  
 

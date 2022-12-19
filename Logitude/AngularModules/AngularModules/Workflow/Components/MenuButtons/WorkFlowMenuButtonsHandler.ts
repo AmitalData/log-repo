@@ -143,7 +143,12 @@ export class WorkFlowMenuButtonsHandler {
     }
 
     handleCreateNewVersionResponse(data: WorkFlowVersionPM) {
-        this.entityArgs.SendMessage("WorkflowVersionsUpdated");
+        if (data) {
+            // if (this.entityArgs.SelectedTabCode != "WFFB") {
+            //     this.CurrentSession.CurrentEditComponent.SetSelectedTabByCode("WFFB");
+            // }
+            this.entityArgs.SendMessage("WorkflowVersionsUpdated");
+        }
     }
 
     ActivateDeactiveVersion() {
@@ -165,6 +170,9 @@ export class WorkFlowMenuButtonsHandler {
     }
 
     handleActivateWorkflowResponse(data: WorkFlowVersionPM) {
+        // if (this.entityArgs.SelectedTabCode != "WFFB") {
+        //     this.CurrentSession.CurrentEditComponent.SetSelectedTabByCode("WFFB");
+        // }
         this.entityArgs.SendMessage("WorkflowVersionsUpdated");
     }
 
