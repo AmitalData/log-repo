@@ -120,7 +120,7 @@ namespace CommunicationWorkerRole
                                 entityReference = response.MessageValues.ContainsKey("EntityReference") ? response.MessageValues["EntityReference"]?.ToString() : null;
                                 entityId = response.MessageValues["EntityId"];
                                 executedImmediately = response.MessageValues["ExecutedImmediately"] != null ? bool.Parse(response.MessageValues["ExecutedImmediately"].ToString()) : false;
-                                cameFromCallBack = response.MessageValues["CameFromCallBack"] != null ? bool.Parse(response.MessageValues["CameFromCallBack"].ToString()) : false;
+                                cameFromCallBack = response.MessageValues.ContainsKey("CameFromCallBack") ? response.MessageValues["CameFromCallBack"] != null ? bool.Parse(response.MessageValues["CameFromCallBack"].ToString()) : false : false;
                                 ExtraDetails = response.MessageValues.ContainsKey("ExtraDetails") ? response.MessageValues["ExtraDetails"] : "";
                                 string tenant = response.MessageValues["Tenant"].ToString();
 
