@@ -603,13 +603,13 @@ export class QuoteFiltersMenuComponent extends BaseComponent {
     }
 
     ClearFilters() {
-        //if (this.apiQueryFilters.AdditionalFilters.length > 0) {
-        //    this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "TransportModeId" && a.FieldName != "DirectionId");
-        //    this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: true });
-        //}
-        this.RemoveFilters("CreatedByUserId");
-        this.RemoveFilters("SalesmanUserId");
-        this.RemoveFilters("BusinessUnitId");
+        if (this.apiQueryFilters.AdditionalFilters.length > 0) {
+            this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "TransportModeId" && a.FieldName != "DirectionId");
+            this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: true });
+        }
+        //this.RemoveFilters("CreatedByUserId");
+        //this.RemoveFilters("SalesmanUserId");
+        //this.RemoveFilters("BusinessUnitId");
     }
 
     RemoveFilters(fieldName) {
