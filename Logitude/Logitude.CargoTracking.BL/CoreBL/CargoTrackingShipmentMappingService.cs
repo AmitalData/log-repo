@@ -137,6 +137,11 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         private List<DocumentsFilingPM> GetDistinctDocuments(List<DocumentsFilingPM> documentsFilingPM)
         {
             List<DocumentsFilingPM> distinctDocuments = new List<DocumentsFilingPM>();
+
+            foreach (var doc in documentsFilingPM)
+            {
+                doc.DocumentTypeCode = doc.DocumentTypeCode.StartsWith("SO") ? doc.DocumentTypeCode.Remove(0, 2) : doc.DocumentTypeCode;
+            }
             foreach (var document in documentsFilingPM)
             {
                 if (!distinctDocuments.Any(x => x.DocumentTypeCode == document.DocumentTypeCode && x.CalculatedFileName == document.CalculatedFileName
