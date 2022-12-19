@@ -4,7 +4,7 @@
   ObjectTableName="&quot;DataCustomObject&quot;"
   IsNew="true"
   DBTableName="&quot;DataCustomObjects&quot;"
-  DBTableOldNames="CustomChildObjects,DataCustomObjects"
+  DBTableOldNames="DataCustomObjects"
   ObjectTableSingular="&quot;Data Custom Object&quot;"
   ObjectTablePlural="&quot;Data Custom Objects&quot;"
   HasCustomFilter="false"

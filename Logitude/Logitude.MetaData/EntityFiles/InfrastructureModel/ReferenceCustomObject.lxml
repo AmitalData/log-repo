@@ -4,7 +4,7 @@
   ObjectTableName="&quot;ReferenceCustomObject&quot;"
   IsNew="true"
   DBTableName="&quot;ReferenceCustomObjects&quot;"
-  DBTableOldNames="CustomChildObjects,ReferenceCustomObjects"
+  DBTableOldNames="ReferenceCustomObjects"
   ObjectTableSingular="&quot;Reference Custom Object&quot;"
   ObjectTablePlural="&quot;Reference Custom Objects&quot;"
   HasCustomFilter="false"
