@@ -354,11 +354,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return repository.GetMinDeclarationByDeclarationNumber(declarationNumber, tenant);
         }
 
-        public DeclarationPM GetDeclarationByfunctionalReferenceID( string functionalReferenceID,string agentFileReferenceID,  int tenant)
+        public DeclarationPM GetDeclarationByfunctionalReferenceID( string functionalReferenceID,  int tenant)
         {
              if (String.IsNullOrWhiteSpace(functionalReferenceID)) return null;
 
-            var declaration = repository.GetDeclarationByFunctionalReferenceID(functionalReferenceID, agentFileReferenceID, tenant);
+            var declaration = repository.GetDeclarationByFunctionalReferenceID(functionalReferenceID, tenant);
             DeclarationPM declarationPM = new DeclarationPM();
             DeclarationDataMapping mapping = new DeclarationDataMapping();
             if (declaration == null) return null;
