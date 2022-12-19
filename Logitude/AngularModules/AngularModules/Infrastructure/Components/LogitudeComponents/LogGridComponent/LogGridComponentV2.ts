@@ -1051,6 +1051,15 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
         if (this.MenuHeaderchangeevent) {
             this.MenuHeaderSub = this.MenuHeaderchangeevent.subscribe((res) => {
                 if (res.Filters != null) {
+
+                    if (res.RemoveFilter) {
+                        res.Filters.AdditionalFilters.forEach((filter, key) => {
+                            if (this.Filters.AdditionalFilters.filter(a => a.FieldName == filter.FieldName).length > 0) {
+                                this.Filters.AdditionalFilters = this.Filters.AdditionalFilters.filter(a => a.FieldName != filter.FieldName);
+                            }
+                        });
+                    }
+
                     if (res.Filters.SortBy) {
                         this.sortingCol = res.Filters.SortBy;
                         this.dataSource.sortingCol = res.Filters.SortBy;
@@ -1074,6 +1083,7 @@ export class LogGridComponentV2 implements OnInit, AfterViewInit, OnChanges, OnD
                             //this.Filters.addAdditionalFilter(filter.FieldName, filter.FieldValue, filter.FieldValue2, null, filter.Operator, false, filter.DisplayInList, false, filter.FieldDataType);
                         }
                     });
+
                     this.MenuHeaderchanged.emit(res.Filters);
                 }
                 //console.log("MenuHeaderchangeevent");
