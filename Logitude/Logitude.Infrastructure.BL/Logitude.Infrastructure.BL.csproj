@@ -76,6 +76,8 @@
     <Compile Include="EntityDataMappings\BusinessProcessQueueDataMapping.cs" />
     <Compile Include="EntityDataMappings\BusinessRoleDataMapping.cs" />
     <Compile Include="EntityDataMappings\DigitalFieldSecurityDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DigitalPortalScreenDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DigitalPreDefinedComponentDataMapping.cs" />
     <Compile Include="EntityDataMappings\DigitalProfileDataMapping.cs" />
     <Compile Include="EntityDataMappings\DigitalTextCodeDataMapping.cs" />
     <Compile Include="EntityDataMappings\FeatureToggleDataMapping.cs" />
@@ -90,6 +92,8 @@
     <Compile Include="EntityDataMappings\Generated\BusinessProcessQueueDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\BusinessRoleDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DigitalFieldSecurityDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DigitalPortalScreenDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DigitalPreDefinedComponentDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DigitalProfileDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DigitalTextCodeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\FeatureToggleDataMapping.Generated.cs" />
@@ -118,6 +122,8 @@
     <Compile Include="EntityPMs\Generated\BusinessProcessQueuePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\BusinessRolePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DigitalFieldSecurityPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DigitalPortalScreenPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DigitalPreDefinedComponentPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DigitalProfilePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DigitalTextCodePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\FeatureTogglePM.Generated.cs" />
@@ -145,6 +151,8 @@
     <Compile Include="EntityQueryServices\Generated\BusinessProcessQueueQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\BusinessRoleQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DigitalFieldSecurityQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DigitalPortalScreenQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DigitalPreDefinedComponentQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DigitalProfileQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DigitalTextCodeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\FeatureToggleQueryService.Generated.cs" />
@@ -164,6 +172,8 @@
     <Compile Include="EntityUpdateServices\Generated\AuditLogUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\BIFoldersPermissionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DigitalFieldSecurityUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\DigitalPortalScreenUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\DigitalPreDefinedComponentUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DigitalProfileUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DigitalTextCodeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\LastRunDetailUpdateService.cs" />

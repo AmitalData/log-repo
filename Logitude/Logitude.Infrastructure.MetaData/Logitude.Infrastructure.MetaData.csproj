@@ -112,7 +112,6 @@
     <None Include="DBTables\DigitalFieldSecurity.dxml" />
     <None Include="DBTables\DigitalProfile.dxml" />
     <None Include="DBTables\DigitalTextCode.dxml" />
-    <None Include="DBTables\ElasticIndexerWaterMarks.dxml" />
     <None Include="DBTables\FeatureToggle.dxml" />
     <None Include="DBTables\LastRunDetail.dxml" />
     <None Include="DBTables\LBPTeamMember.dxml" />
@@ -134,6 +133,8 @@
     <None Include="EntityFiles\BusinessProcessQueue.lxml" />
     <None Include="EntityFiles\BusinessRole.lxml" />
     <None Include="EntityFiles\DigitalFieldSecurity.lxml" />
+    <None Include="EntityFiles\DigitalPortalScreen.lxml" />
+    <None Include="EntityFiles\DigitalPreDefinedComponent.lxml" />
     <None Include="EntityFiles\DigitalProfile.lxml" />
     <None Include="EntityFiles\DigitalTextCode.lxml" />
     <None Include="EntityFiles\FeatureToggle.lxml" />
@@ -143,7 +144,6 @@
     <None Include="EntityFiles\SharedLogisticsSetting.lxml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="EntityFiles\ElasticIndexerWaterMarks.lxml" />
     <None Include="EntityFiles\Team.lxml" />
     <None Include="EntityFiles\TeamMemberBusinessRole.lxml" />
     <None Include="EntityFiles\Toggle.lxml" />

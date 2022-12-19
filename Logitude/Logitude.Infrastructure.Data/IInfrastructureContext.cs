@@ -28,6 +28,8 @@ namespace Logitude.Infrastructure.Data
 		 IDbSet<BusinessProcessQueue> BusinessProcessQueues { get; }
 		 IDbSet<BusinessRole> BusinessRoles { get; }
 		 IDbSet<DigitalFieldSecurity> DigitalFieldSecurities { get; }
+		 IDbSet<DigitalPortalScreen> DigitalPortalScreens { get; }
+		 IDbSet<DigitalPreDefinedComponent> DigitalPreDefinedComponents { get; }
 		 IDbSet<DigitalProfile> DigitalProfiles { get; }
 		 IDbSet<DigitalTextCode> DigitalTextCodes { get; }
 		 IDbSet<FeatureToggle> FeatureToggles { get; }
