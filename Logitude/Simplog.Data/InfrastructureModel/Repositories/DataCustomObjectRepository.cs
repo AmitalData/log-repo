@@ -33,10 +33,10 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     select a).FirstOrDefault();
         }
 
-        public List<DataCustomObject> GetByObjectTableId(string id, int tenant, string objectTableId)
+        public List<DataCustomObject> GetByObjectTableId(int tenant, string objectTableId)
         {
             return (from a in context.DataCustomObjects
-                    where a.Tenant == tenant && a.Id == id && a.ObjectTableId == objectTableId
+                    where a.Tenant == tenant && a.ObjectTableId == objectTableId
                     select a).ToList();
         }
 

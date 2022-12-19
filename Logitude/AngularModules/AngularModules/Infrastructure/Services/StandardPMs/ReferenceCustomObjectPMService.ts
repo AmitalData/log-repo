@@ -152,12 +152,12 @@ export class ReferenceCustomObjectPMService {
          
         if (!entityPM) {
             
-            entityPM = new ReferenceCustomObjectPM();
+            entityPM = new ReferenceCustomObjectPM("ReferenceCustomObject");
 			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
-        for (var i = 1; i < 11; i++) {
+        for (var i = 1; i < 51; i++) {
             customFields.push("Field" + i);
         }
             var jsonPMKeys = Object.keys(jsonPM);
@@ -220,7 +220,7 @@ export class ReferenceCustomObjectPMService {
 
 	  public GetNewEntityPM() {		 
 		    var entityPM: ReferenceCustomObjectPM;
-			entityPM = new ReferenceCustomObjectPM();
+            entityPM = new ReferenceCustomObjectPM("ReferenceCustomObject");
 			entityPM.Tenant = InfraSettings.TenantPM.Id;
 			return entityPM;
     }

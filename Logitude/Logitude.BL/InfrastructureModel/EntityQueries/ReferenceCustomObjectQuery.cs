@@ -39,7 +39,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         public List<ReferenceCustomObjectPM> GetByObjectTableId(string id, int tenant, string objectTableId)
         {
-            List<ReferenceCustomObject> referenceCustomObjects = repository.GetByObjectTableId(id, tenant, objectTableId);
+            List<ReferenceCustomObject> referenceCustomObjects = repository.GetByObjectTableId(tenant, objectTableId);
             List<ReferenceCustomObjectPM> results = new List<ReferenceCustomObjectPM>();
             foreach (ReferenceCustomObject referenceCustomObject in referenceCustomObjects)
             {
