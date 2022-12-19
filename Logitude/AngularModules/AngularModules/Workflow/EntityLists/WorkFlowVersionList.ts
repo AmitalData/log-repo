@@ -21,6 +21,8 @@ export class WorkFlowVersionList {
 	StatusCode: string;
 	WorkflowId: string;
 	FlowJson: string;
+	Entity: string;
+	Trigger: string;
 	
 }
  

@@ -434,99 +434,37 @@ namespace Logitude.Workflow.BL.EntityPMs
 			
 		 }
 	   }
-	  private string workFlowActiveVersionId ;
-	  	  
-       
-	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
+
+	   private List<WorkFlowVersionPM> workFlowVersions;
+	 
 	   [DataMember]
-       public string WorkFlowActiveVersionId  
+	   public virtual List<WorkFlowVersionPM> WorkFlowVersions  
 	   {
-	    
-	     get
-		{
-		   return workFlowActiveVersionId;
-		 }
-		 set
-		 {
-		   if(workFlowActiveVersionId != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="WorkFlowActiveVersionId",OldValue=workFlowActiveVersionId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   workFlowActiveVersionId=value;
-		   }
-			
-		 }
-	   }
-	  private string workFlowVersionStatusCode ;
-	  	  
-       
-	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string WorkFlowVersionStatusCode  
+	        get
+             {
+                 if (workFlowVersions == null)
+                 {
+                     workFlowVersions = new List<WorkFlowVersionPM>();
+                 }
+                 return workFlowVersions;
+              }
+             set { workFlowVersions = value; }
+	    }
+		   
+	   private List<WorkFlowVersionPM>  deletedWorkFlowVersions;
+	   public virtual List<WorkFlowVersionPM> DeletedWorkFlowVersions  
 	   {
-	    
-	     get
-		{
-		   return workFlowVersionStatusCode;
-		 }
-		 set
-		 {
-		   if(workFlowVersionStatusCode != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="WorkFlowVersionStatusCode",OldValue=workFlowVersionStatusCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   workFlowVersionStatusCode=value;
-		   }
-			
-		 }
-	   }
-	  private string workFlowVersionStatusName ;
-	  	  
-       
-	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string WorkFlowVersionStatusName  
-	   {
-	    
-	     get
-		{
-		   return workFlowVersionStatusName;
-		 }
-		 set
-		 {
-		   if(workFlowVersionStatusName != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="WorkFlowVersionStatusName",OldValue=workFlowVersionStatusName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   workFlowVersionStatusName=value;
-		   }
-			
-		 }
-	   }
-	  private int? workFlowVersionNumber ;
-	  	  
-       
-	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int? WorkFlowVersionNumber  
-	   {
-	    
-	     get
-		{
-		   return workFlowVersionNumber;
-		 }
-		 set
-		 {
-		   if(workFlowVersionNumber != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="WorkFlowVersionNumber",OldValue=workFlowVersionNumber,NewValue=value,PropertyType="int?"};
-		    NotifyPropertyChanged(values);
-		   workFlowVersionNumber=value;
-		   }
-			
-		 }
-	   }
-   }
+	        get
+             {
+                 if ( deletedWorkFlowVersions == null)
+                 {
+                      deletedWorkFlowVersions = new List<WorkFlowVersionPM>();
+                 }
+                 return  deletedWorkFlowVersions;
+              }
+             set {  deletedWorkFlowVersions = value; }
+	    }
+	     }
    
 }
 	 

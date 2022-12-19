@@ -40,6 +40,10 @@ namespace Logitude.Workflow.Data.EntityLists
        public string WorkflowId  { get; set; }
        [DataMember]
        public string FlowJson  { get; set; }
+       [DataMember]
+       public string Entity  { get; set; }
+       [DataMember]
+       public string Trigger  { get; set; }
    }
 
 }

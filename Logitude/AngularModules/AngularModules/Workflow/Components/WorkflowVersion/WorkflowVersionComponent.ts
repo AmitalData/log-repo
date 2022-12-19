@@ -53,6 +53,16 @@ export class WorkflowVersionComponent extends BaseComponent {
                 }
             });
         }
+
+        if (this.entityArgs.EditComponent) {
+            this.entityArgs.EntityArgEventEmitter.subscribe(
+                theMessage => {
+                    if (theMessage == "WorkflowVersionsUpdated") {
+                        this.LoadData()
+                    }
+                }
+            );
+        }
     }
 
     ngOnDestroy() {
@@ -136,58 +146,9 @@ export class WorkflowVersionComponent extends BaseComponent {
     onRowSelected($event) {
         this.ClickedVersion = $event.rowData
         this.HasChanges = true;
-        this.openVersionFlowBuilder()
+        this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, ClickedVersionRow: $event.rowData.Id }
+        this.CurrentSession.CurrentEditComponent.SetSelectedTabByCode("WFFB");
     }
-
-    openVersionFlowBuilder() {
-        let clickedVersion: WorkFlowVersionPM = this.ClickedVersion;
-        this.EntityPM.FlowJson = clickedVersion.FlowJson;
-        this.EntityPM.WorkFlowActiveVersionId = clickedVersion.Id;
-        this.EntityPM.WorkFlowVersionStatusCode = clickedVersion.StatusCode;
-        this.EntityPM.WorkFlowVersionNumber = clickedVersion.VersionNumber;
-        this.EntityPM.IsDirty = false;
-        this.entityArgs.EditComponentArgument = {...this.entityArgs.EditComponentArgument,VersionNumber:clickedVersion.VersionNumber}
-        
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-            .then(cmpRef => {
-                cmpRef.instance.ComponentRef = cmpRef;
-                cmpRef.instance.Run({ EntityId: this.EntityPM.Id, EntityPM: this.EntityPM, ObjectTableName: 'WorkFlow', BackButtonLabel: "WorkFlows" });
-
-                cmpRef.instance.BackCompleted.subscribe(() => {
-                    this.LoadData();
-                });
-            });
-    }
-
-    activateVersion() {
-        this.startBusyIndicator("Saving ...");
-        let clickedVersion: WorkFlowVersionPM = this.ClickedVersion
-        let isActivate: boolean = clickedVersion.StatusCode == "INVE"
-        if (clickedVersion && clickedVersion.StatusCode) {
-            var workflow: WorkFlowPM = this.EntityPM
-            workflow.FlowJson = isActivate ? clickedVersion.FlowJson : null
-            this.WorkFlowPMService.update(workflow).subscribe((serviceResponse: ServiceResponse) => {
-                if (serviceResponse != null && !serviceResponse.HasError) {
-                    clickedVersion.StatusCode = isActivate ? "ACVE" : "INVE"
-                    this.WorkFlowVersionPMService.update(clickedVersion).subscribe((serviceResponse: ServiceResponse) => {
-                        if (serviceResponse != null && !serviceResponse.HasError) {
-                            this.stopBusyIndicator();
-                            this.LoadData();
-                            console.log("update version")
-                        } else {
-                            this.stopBusyIndicator();
-                        }
-                    });
-                } else {
-                    this.stopBusyIndicator();
-                }
-            });
-        } else {
-            this.stopBusyIndicator();
-        }
-        this.HasChanges = false;
-    }
-
 
     startBusyIndicator(message: string) {
         this.BusyIndicatorText = message;

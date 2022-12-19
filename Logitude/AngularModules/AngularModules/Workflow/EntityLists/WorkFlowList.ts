@@ -26,10 +26,6 @@ export class WorkFlowList {
 	FlowJson: string;
 	Entity: string;
 	Trigger: string;
-	WorkFlowActiveVersionId: string;
-	WorkFlowVersionStatusCode: string;
-	WorkFlowVersionStatusName: string;
-	WorkFlowVersionNumber: number;
 	
 }
  
