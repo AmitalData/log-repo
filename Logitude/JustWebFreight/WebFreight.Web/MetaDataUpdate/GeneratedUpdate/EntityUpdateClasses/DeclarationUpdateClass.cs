@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "aa3f63d404055e63db9417b6055479e3";
+		public const string HashString = "036b4cdceff778675b4d5c54fa0172ba";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -17371,6 +17371,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature DeclarationFeature_MultiUpdateClassificationCodeWindow = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MultiUpdateClassificationCodeWindow", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.MultiUpdateClassificationCodeWindow", NameTextCodeDefaultText = @"הצגת כפתור עדכון קוד תהליך/הנחה פטור" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
 		   Feature DeclarationFeature_IIGEXPORTIMPORTDECLARATION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IIGEXPORTIMPORTDECLARATION", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.IIGEXPORTIMPORTDECLARATION", NameTextCodeDefaultText = @"Export & Import IIG Tenant" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
+
 		   Feature DeclarationFeature_EntryExit = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EntryExit", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.EntryExit", NameTextCodeDefaultText = @"יציאה ממסוף / נמל" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
    
