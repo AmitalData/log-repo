@@ -11,6 +11,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using WebFreight.Web.Controllers.DigitalPortal.Helpers;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 
@@ -55,37 +56,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
 
-                var digitalFieldSecurityQuery = new DigitalFieldSecurityQueryService(tenant);
-                var defaultTextCode = digitalFieldSecurityQuery.GetDigitalFieldSecurityQuery(0, objectTableId, profileId);
-                var defaultCodesObject = JsonConvert.DeserializeObject<List<DigitalFeildSecurityObject>>(defaultTextCode.DefaultSettings);
-                var customCodesObject = new List<DigitalFeildSecurityObject>();
+                var helper = new DigitalFieldSecuritesHelper();
+                var defaultDigitalFieldSecurity = helper.GitDigitalSecuritesFeilds(objectTableId, profileId, tenant);
 
-                if (tenant != 0)
-                {
-                    var customTextCodes = digitalFieldSecurityQuery.GetDigitalFieldSecurityQuery(tenant, objectTableId, profileId);
-
-                    if (customTextCodes != null)
-                    {
-                        customCodesObject = JsonConvert.DeserializeObject<List<DigitalFeildSecurityObject>>(customTextCodes.DefaultSettings);
-
-                        foreach (var item in customCodesObject)
-                        {
-                            var temp = defaultCodesObject.FirstOrDefault(a => a.FieldCode.Equals(item.FieldCode));
-
-                            if (temp != null)
-                            {
-                                temp.HasPersmission = true;
-                            }
-                        }
-                    }
-                }
-
-                if (!customCodesObject.Any())
-                {
-                    defaultCodesObject.ForEach(a => a.HasPersmission = true);
-                }
-
-                return Request.CreateResponse(HttpStatusCode.OK, defaultCodesObject);
+                return Request.CreateResponse(HttpStatusCode.OK, defaultDigitalFieldSecurity);
             }
             catch (AutenticationException ex)
             {
