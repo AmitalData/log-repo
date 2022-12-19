@@ -55,6 +55,13 @@ namespace Logitude.DashboardModule.BL
                 Name = "KPI", 
                 SearchFields = "Kpi", 
 			});
+			 
+            all.Add(new WidgetTypeDetails()
+            {    
+                Code = "column", 
+                Name = "Column", 
+                SearchFields = "Column", 
+			});
 			
             return all;
        }
