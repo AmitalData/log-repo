@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Logitude.BL.InfrastructureModel.EntityLists
 {
-    public class DataCustomObjectList : CustomFieldList
+    public class ReferenceCustomObjectList : CustomFieldList
     {
         public string Id { get; set; }
         public int Tenant { get; set; }
@@ -12,7 +12,6 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public string UpdatedBy { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
-        public bool IsCancelled { get; set; }
-        public string StatusId { get; set; }
+        public bool InActive { get; set; }
     }
 }

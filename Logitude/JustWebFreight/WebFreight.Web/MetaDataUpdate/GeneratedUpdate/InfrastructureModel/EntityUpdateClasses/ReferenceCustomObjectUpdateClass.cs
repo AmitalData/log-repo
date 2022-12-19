@@ -83,20 +83,20 @@ using Logitude.DashboardModule.BL;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.EntityUpdateClasses
 {
-   public class DataCustomObjectUpdateClass
+   public class ReferenceCustomObjectUpdateClass
    {  		
-		public const string HashString = "3b1d070bbfb1487e9b24f1a30b582bc8";
+		public const string HashString = "075a11b81173bfd39724d9cef1fe3f14";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    ObjectTableName =  "DataCustomObject",
+	             				    ObjectTableName =  "ReferenceCustomObject",
 			      				    IsNew =  true,
-			      				    DBTableName =  "DataCustomObjects",
-			      				    ObjectTableSingular =  "Data Custom Object",
-			      				    ObjectTablePlural =  "Data Custom Objects",
+			      				    DBTableName =  "ReferenceCustomObjects",
+			      				    ObjectTableSingular =  "Reference Custom Object",
+			      				    ObjectTablePlural =  "Reference Custom Objects",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    AvailableInCustomization =  false,
@@ -122,12 +122,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    IsSaveButtonVisible =  false,
 			      				    IsComposition =  false,
 			      				    EnableSecurity =  false,
-			      				    AllowCustomFields =  true,
+			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
-			      				    ObjectTableTypeCode =  "MD",
+			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  50,
-			      				    DefaultText =  "Data Custom Object",
-			      				    Code =  "1833",
+			      				    DefaultText =  "Reference Custom Object",
+			      				    Code =  "c4a3",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Infrastructure",
@@ -139,7 +139,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
-			      				    HashString =  DataCustomObjectUpdateClass.HashString,
+			      				    HashString =  ReferenceCustomObjectUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -151,7 +151,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Id",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  15,
@@ -210,7 +210,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Tenant",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  0,
@@ -269,7 +269,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "ObjectTableId",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  15,
@@ -281,7 +281,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  15,
-					  						DisplayInList =  true,
+					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						MultiLine =  false,
@@ -309,7 +309,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DefaultText =  "Object Table Id",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
-					  						NoMetaDataField =  false,
+					  						NoMetaDataField =  true,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -328,7 +328,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "CreatedBy",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
 					  						MinLength =  0,
@@ -391,7 +391,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "UpdatedBy",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
 					  						MinLength =  0,
@@ -454,7 +454,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field1",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -482,7 +482,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -517,7 +517,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field2",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -545,7 +545,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -580,7 +580,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field3",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -608,7 +608,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -643,7 +643,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field4",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -671,7 +671,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -706,7 +706,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field5",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -734,7 +734,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -769,7 +769,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field6",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -797,7 +797,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -832,7 +832,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field7",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -860,7 +860,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -895,7 +895,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field8",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -923,7 +923,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -958,7 +958,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field9",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -986,7 +986,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -1021,7 +1021,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field10",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -1049,7 +1049,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -1084,7 +1084,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field11",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -1112,7 +1112,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -1147,7 +1147,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field12",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -1175,7 +1175,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -1210,7 +1210,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field13",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -1238,7 +1238,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -1273,7 +1273,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field14",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -1301,7 +1301,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -1336,7 +1336,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field15",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -1364,7 +1364,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -1399,7 +1399,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field16",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -1427,7 +1427,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -1462,7 +1462,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field17",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -1490,7 +1490,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -1525,7 +1525,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field18",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -1553,7 +1553,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -1588,7 +1588,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field19",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -1616,7 +1616,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -1651,7 +1651,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field20",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -1679,7 +1679,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -1714,7 +1714,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field21",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -1742,7 +1742,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -1777,7 +1777,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field22",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -1805,7 +1805,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -1840,7 +1840,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field23",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -1868,7 +1868,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -1903,7 +1903,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field24",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -1931,7 +1931,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -1966,7 +1966,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field25",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -1994,7 +1994,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -2029,7 +2029,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field26",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -2057,7 +2057,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -2092,7 +2092,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field27",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -2120,7 +2120,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -2155,7 +2155,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field28",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -2183,7 +2183,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -2218,7 +2218,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field29",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -2246,7 +2246,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -2281,7 +2281,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field30",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -2309,7 +2309,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -2344,7 +2344,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field31",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -2372,7 +2372,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -2407,7 +2407,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field32",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -2435,7 +2435,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -2470,7 +2470,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field33",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -2498,7 +2498,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -2533,7 +2533,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field34",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -2561,7 +2561,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -2596,7 +2596,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field35",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -2624,7 +2624,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -2659,7 +2659,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field36",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -2687,7 +2687,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -2722,7 +2722,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field37",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -2750,7 +2750,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -2785,7 +2785,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field38",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -2813,7 +2813,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -2848,7 +2848,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field39",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -2876,7 +2876,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -2911,7 +2911,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field40",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -2939,7 +2939,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -2974,7 +2974,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field41",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -3002,7 +3002,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -3037,7 +3037,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field42",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -3065,7 +3065,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -3100,7 +3100,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field43",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -3128,7 +3128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -3163,7 +3163,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field44",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -3191,7 +3191,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -3226,7 +3226,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field45",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -3254,7 +3254,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -3289,7 +3289,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field46",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -3317,7 +3317,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -3352,7 +3352,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field47",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -3380,7 +3380,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -3415,7 +3415,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field48",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -3443,7 +3443,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -3478,7 +3478,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field49",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -3506,7 +3506,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -3541,7 +3541,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "Field50",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  2000,
@@ -3569,7 +3569,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -3604,7 +3604,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "CreateDate",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
 					  						MaxLength =  0,
@@ -3633,7 +3633,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -3667,7 +3667,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "UpdateDate",
-					  						ObjectTableName =  "DataCustomObject",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
 					  						MaxLength =  0,
@@ -3696,7 +3696,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -3729,28 +3729,28 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "IsCancelled",
-					  						ObjectTableName =  "DataCustomObject",
+					 						FieldName =  "InActive",
+					  						ObjectTableName =  "ReferenceCustomObject",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
 					  						MaxLength =  0,
-					  						IsRequired =  false,
+					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
+					  						SystemRequired =  true,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  true,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "IsCancelled",
-					  						ListPropertyPath =  "IsCancelled",
+					  						PMPropertyPath =  "InActive",
+					  						ListPropertyPath =  "InActive",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -3759,7 +3759,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
+					  						ValidForQuerySection1 =  "ReferenceCustomObject",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -3768,81 +3768,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "IsCancelled",
-					  						DefaultText =  "Is Cancelled",
+					  						FullFieldLable =  "InActive",
+					  						DefaultText =  "InActive",
+					  						ListFieldLable =  "InActiveListLable",
+					  						ListLableDefaultText =  "InActive",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  true,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "StatusId",
-					  						ObjectTableName =  "DataCustomObject",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "EntityStatus",
-					  						MinLength =  0,
-					  						MaxLength =  15,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						IsListFilter =  false,
-					  						Operator =  "Equals",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "StatusId",
-					  						ListPropertyPath =  "StatusId",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DataCustomObject",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  true,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "StatusId",
-					  						DefaultText =  "Status",
-					  						ShortFieldLable =  "StatusId",
-					  						ShortFieldLableDefaultText =  "Custom Object Status",
-					  						IsForeignKey =  true,
-					  						ForeignEntity =  "EntityStatus",
-					  						NavigationPropertyName =  "EntityStatus",
-					  						IsMaxLength =  false,
-					  						NoMetaDataField =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  true,
+					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
@@ -3861,15 +3797,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
-		   ObjectTable DataCustomObjectObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DataCustomObject" && d.Tenant == 0).FirstOrDefault();
-		   //List<ObjectField> DataCustomObjectObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "DataCustomObject").ToList();
+		   ObjectTable ReferenceCustomObjectObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ReferenceCustomObject" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> ReferenceCustomObjectObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ReferenceCustomObject").ToList();
 		       
 	      
 
-	         Screen DataCustomObjectChildEntitiesCustomFieldHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "DataCustomObject.HeaderScreen", Name = "ChildEntitiesCustomFieldHeaderScreen", ObjectTableId = DataCustomObjectObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen ReferenceCustomObjectChildEntitiesCustomFieldHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ReferenceCustomObject.HeaderScreen", Name = "ChildEntitiesCustomFieldHeaderScreen", ObjectTableId = ReferenceCustomObjectObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
-		    DataCustomObjectObjectTable.HeaderScreenId = DataCustomObjectChildEntitiesCustomFieldHeaderScreenScreen0.Id;
-		    DataCustomObjectObjectTable.HeaderScreenCode = DataCustomObjectChildEntitiesCustomFieldHeaderScreenScreen0.Code;
+		    ReferenceCustomObjectObjectTable.HeaderScreenId = ReferenceCustomObjectChildEntitiesCustomFieldHeaderScreenScreen0.Id;
+		    ReferenceCustomObjectObjectTable.HeaderScreenCode = ReferenceCustomObjectChildEntitiesCustomFieldHeaderScreenScreen0.Code;
 
 	   		  
 
@@ -3881,14 +3817,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
-		   ObjectTable DataCustomObjectObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DataCustomObject" && d.Tenant == 0).FirstOrDefault(); 
+		   ObjectTable ReferenceCustomObjectObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ReferenceCustomObject" && d.Tenant == 0).FirstOrDefault(); 
    
 	    
 		}
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
-			ObjectTable DataCustomObjectObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DataCustomObject" && d.Tenant == 0).FirstOrDefault(); 
+			ObjectTable ReferenceCustomObjectObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ReferenceCustomObject" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CREV",
@@ -3902,7 +3838,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = DataCustomObjectObjectTable.Id,
+                ObjectTableId = ReferenceCustomObjectObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -3920,7 +3856,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = DataCustomObjectObjectTable.Id,
+                ObjectTableId = ReferenceCustomObjectObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 

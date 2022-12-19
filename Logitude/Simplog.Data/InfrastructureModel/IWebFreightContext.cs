@@ -120,6 +120,7 @@ namespace Simplog.Data.InfrastructureModel
         IDbSet<TabModification> TabsModifications { get; }
         IDbSet<CustomChildObject> CustomChildObjects { get; }
         IDbSet<DataCustomObject> DataCustomObjects { get; }
+        IDbSet<ReferenceCustomObject> ReferenceCustomObjects { get; }
         void SetAsModified(object entity);
         void DetectChanges();
         int SaveChanges();

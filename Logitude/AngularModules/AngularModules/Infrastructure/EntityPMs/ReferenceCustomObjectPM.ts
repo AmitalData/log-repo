@@ -14,7 +14,9 @@ import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
-export class DataCustomObjectPM {
+
+export class ReferenceCustomObjectPM {
+
     @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
     public ObjectTableName: string;
     public UIProperties: UIProperties;
@@ -23,53 +25,51 @@ export class DataCustomObjectPM {
         this.UIProperties = new UIProperties(this);
         this.IsDirty = false;
     }
-
-
+    
     private id: string;
     public get Id() { return this.id; }
     public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
-
-
+       
+	 
     private tenant: number;
     public get Tenant() { return this.tenant; }
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
-
-
+       
+	 
     private objectTableId: string;
     public get ObjectTableId() { return this.objectTableId; }
     public set ObjectTableId(newValue: string) { if (this.objectTableId != newValue) { this.objectTableId = newValue; this.MarkAsDirty("ObjectTableId"); } }
-
-
+       
+	 
     private createdBy: string;
     public get CreatedBy() { return this.createdBy; }
     public set CreatedBy(newValue: string) { if (this.createdBy != newValue) { this.createdBy = newValue; this.MarkAsDirty("CreatedBy"); } }
-
-
+       
+	 
     private updatedBy: string;
     public get UpdatedBy() { return this.updatedBy; }
     public set UpdatedBy(newValue: string) { if (this.updatedBy != newValue) { this.updatedBy = newValue; this.MarkAsDirty("UpdatedBy"); } }
-
-
+       
+	 
     private createDate: Date;
     public get CreateDate() { return this.createDate; }
     public set CreateDate(newValue: Date) { if (this.createDate != newValue) { this.createDate = newValue; this.MarkAsDirty("CreateDate"); } }
-
-
+       
+	 
     private updateDate: Date;
     public get UpdateDate() { return this.updateDate; }
     public set UpdateDate(newValue: Date) { if (this.updateDate != newValue) { this.updateDate = newValue; this.MarkAsDirty("UpdateDate"); } }
-
-
-    private isCancelled: boolean;
-    public get IsCancelled() { return this.isCancelled; }
-    public set IsCancelled(newValue: boolean) { if (this.isCancelled != newValue) { this.isCancelled = newValue; this.MarkAsDirty("IsCancelled"); } }
-
-
-    private statusId: string;
-    public get StatusId() { return this.statusId; }
-    public set StatusId(newValue: string) { if (this.statusId != newValue) { this.statusId = newValue; this.MarkAsDirty("StatusId"); } }
-
-
+       
+	 
+    private inActive: boolean;
+    public get InActive() { return this.inActive; }
+    public set InActive(newValue: boolean) { if (this.inActive != newValue) { this.inActive = newValue; this.MarkAsDirty("InActive"); } }
+       
+	 
+    private changeSetOp: string;
+    public get ChangeSetOp() { return this.changeSetOp; }
+    public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
+       
     private field1: CustomFieldClass;
     public get Field1() { if (!this.field1) { this.field1 = new CustomFieldClass(null, "Field1", this.ObjectTableName); } return this.field1; }
     public set Field1(newValue: CustomFieldClass) { this.field1 = newValue; this.MarkAsDirty("Field1"); }
@@ -318,31 +318,25 @@ export class DataCustomObjectPM {
     private field50: CustomFieldClass;
     public get Field50() { if (!this.field50) { this.field50 = new CustomFieldClass(null, "Field50", this.ObjectTableName); } return this.field50; }
     public set Field50(newValue: CustomFieldClass) { this.field50 = newValue; this.MarkAsDirty("Field50"); }
-  
-
-    private changeSetOp: string;
-    public get ChangeSetOp() { return this.changeSetOp; }
-    public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
 
 
-
-    public OldEntityPM: DataCustomObjectPM;
+    public OldEntityPM: ReferenceCustomObjectPM;
 		
     public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-        if(!this.DisableMarkAsDirty)
-        {
+       if(!this.DisableMarkAsDirty)
+       {
             this.IsDirty = true;
-
+		  	
             if (propertyName != null) {
                 this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-                ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "DataCustomObject");
-
+                ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ReferenceCustomObject");
+           
             }
-        }
+	   }
     }
-    private MyClone: DataCustomObjectPM;
+    private MyClone: ReferenceCustomObjectPM;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);

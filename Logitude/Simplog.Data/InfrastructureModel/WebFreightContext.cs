@@ -374,7 +374,7 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new TabModificationMap());
             modelBuilder.Configurations.Add(new CustomChildObjectMap());
             modelBuilder.Configurations.Add(new DataCustomObjectMap());
-
+            modelBuilder.Configurations.Add(new ReferenceCustomObjectMap());
 
 
 
@@ -869,12 +869,6 @@ namespace Simplog.Data.InfrastructureModel
             set;
         }
 
-        public IDbSet<DataCustomObject> DataCustomObjects
-        {
-            get;
-            set;
-        }
-
         public void SetAsModified(object entity)
         {
             this.Entry(entity).State = EntityState.Modified;
@@ -1070,6 +1064,17 @@ namespace Simplog.Data.InfrastructureModel
         }
 
         public IDbSet<TabModification> TabsModifications
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<DataCustomObject> DataCustomObjects
+        {
+            get;
+            set;
+        }
+        public IDbSet<ReferenceCustomObject> ReferenceCustomObjects
         {
             get;
             set;

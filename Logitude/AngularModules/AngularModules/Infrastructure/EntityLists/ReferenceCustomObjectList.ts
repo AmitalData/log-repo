@@ -8,7 +8,7 @@
 
 import { CustomFieldList } from "./CustomFieldList";
 
-export class DataCustomObjectList extends CustomFieldList{
+export class ReferenceCustomObjectList extends CustomFieldList{
    		Id: string;
         Tenant: number;
         ObjectTableId: string;
@@ -16,7 +16,6 @@ export class DataCustomObjectList extends CustomFieldList{
 		UpdatedBy: string;
 		CreateDate: Date;
 		UpdateDate: Date;
-		IsCancelled: boolean;
-		StatusId: string;
+		InActive: boolean;
 	
 }
