@@ -220,7 +220,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             FieldChange.Add(entityPoco.CustomConnectToShipment, entityPM.CustomConnectToShipment, nameof(entityPM.CustomConnectToShipment), fieldChanges);
             entityPoco.CustomConnectToShipment = entityPM.CustomConnectToShipment;
 
-            MapConcurrencyFields(entityPM, entityPoco, entityMasterData, myPackagesList.Count, isNewEntity);
+            MapConcurrencyFields(entityPM, entityPoco, entityMasterData, myPackagesList.Count, isNewEntity, fieldChanges);
             MapMasterData(entityPM, entityPoco, entityMasterData, isNewEntity, fieldChanges);
             MapRoutings(entityPM, entityPoco, entityMasterData, isNewEntity, fieldChanges);
             MapPartners(entityPM, entityPoco, isNewEntity, fieldChanges);
