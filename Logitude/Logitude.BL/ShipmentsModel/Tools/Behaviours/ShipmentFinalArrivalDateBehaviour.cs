@@ -35,7 +35,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
             EntityMasterData = new ShipmentMasterData();
             List<ShipmentPackagePM> myPackagesList = entityPM.ShipmentPackages.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
 
-            ShipmentMapping.MapConcurrencyFields(entityPM, new Shipment(), EntityMasterData, myPackagesList.Count, isNewEntity, false);
+            ShipmentMapping.MapConcurrencyFields(entityPM, new Shipment(), EntityMasterData, myPackagesList.Count, isNewEntity,new List<Infrastructure.Data.Models.AuditLog.FieldChange>(), false);
         }
 
         public void Handle()

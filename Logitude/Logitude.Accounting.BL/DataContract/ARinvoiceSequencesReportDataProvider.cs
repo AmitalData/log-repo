@@ -105,13 +105,21 @@ namespace Logitude.Accounting.BL.DataContract
 
         public List<string> GetARInvoiceNumber()
         {
+            Int64 dummy;
+            List<string> invoicesNumbers = new List<string>();
+            var list = (from a in invoiceContext.ARInvoices
+                        where (EntityFunctions.TruncateTime(a.CreateDate) >= startDate.Date && EntityFunctions.TruncateTime(a.CreateDate) <= endDate.Date)
+                        select a   
+                        ).ToList();
+            List<string> invoiceNumbersContainOnlyNumbers = list.Where(a => a.Tenant == Tenant && Int64.TryParse(a.InvoiceNumber, out dummy) == true).OrderBy(
+                                                            a => Convert.ToInt64(a.InvoiceNumber)).Select(x => x.InvoiceNumber).ToList();
 
-            List<string> arInvoices = (from a in invoiceContext.ARInvoices
-                                                    where (EntityFunctions.TruncateTime(a.CreateDate) >= startDate.Date && EntityFunctions.TruncateTime(a.CreateDate) <= endDate.Date)
-                                                    && a.Tenant == Tenant
-                                                    orderby a.CreateDate ascending
-                                                    select a.InvoiceNumber).ToList();
-            return arInvoices;
+
+            List<string> invoiceNumbersContainCharacters = list.Where(a => a.Tenant == Tenant && Int64.TryParse(a.InvoiceNumber, out dummy) == false).OrderBy(
+                                                            a => a.InvoiceNumber).Select(x => x.InvoiceNumber).ToList();
+            invoicesNumbers.AddRange(invoiceNumbersContainOnlyNumbers);
+            invoicesNumbers.AddRange(invoiceNumbersContainCharacters);
+            return invoicesNumbers;
         }
 
 
