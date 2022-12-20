@@ -25,7 +25,12 @@ export class WorkFlowShortTitleComponent {
                 theMessage => {
                     if (theMessage == "RefreshWorkflowShortTitle") {
                         var clickedRowId = this.entityArgs.EditComponentArgument?.ClickedVersionRow!
-                        if (clickedRowId && clickedRowId != this.ValidVersion.Id) {
+                        var updatedVersionId = this.entityArgs.EditComponentArgument?.UpdatedVersion!
+                        if (updatedVersionId) {
+                            var version = this.EntityPM.WorkFlowVersions.find(e => e.Id == updatedVersionId);
+                            this.ValidVersion = version;
+                        }
+                        else if (clickedRowId) {
                             var version = this.EntityPM.WorkFlowVersions.find(e => e.Id == clickedRowId);
                             this.ValidVersion = version;
                         } else {
