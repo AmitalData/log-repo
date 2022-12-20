@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { DigitalPortalScreenList } from "../../../infrastructure/entitylists/digitalportalscreenlist"
 import { DigitalCustomizationService } from '../../../Infrastructure/Services/WebServices/DigitalCustomizationService';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     templateUrl: './DigitalPortalCustomizationScreenLayoutComponent.html',
@@ -29,13 +30,22 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         }
     }
 
-
     AddPredefinedComponentClicked() {
 
     }
 
     AddFieldCodesClicked() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 500;
+        logWindow.Height = 600;
+        logWindow.Title = "Insert Field";
+        logWindow.Show('./SharedLogistics/Components/DigitalPortal/AddDigitalFieldCodeComponent');
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            if ($event) {
 
+                
+            }
+        });
     }
 
     RestoreDefaultLayoutClicked() {
@@ -43,6 +53,10 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
     }
 
     PublichChangesClicked() {
+
+    }
+
+    PreviewChangesClicked() {
 
     }
 }
