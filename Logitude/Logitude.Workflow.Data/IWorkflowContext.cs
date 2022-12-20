@@ -19,6 +19,8 @@ namespace Logitude.Workflow.Data
    
        	 IDbSet<Expression> Expressions { get; }
 		 IDbSet<ExpressionCategory> ExpressionCategories { get; }
+		 IDbSet<Operator> Operators { get; }
+		 IDbSet<OperatorCategory> OperatorCategories { get; }
 		 IDbSet<WorkFlow> WorkFlows { get; }
 		 IDbSet<WorkFlowInstance> WorkFlowInstances { get; }
 		 IDbSet<WorkFlowInstanceActivity> WorkFlowInstanceActivities { get; }

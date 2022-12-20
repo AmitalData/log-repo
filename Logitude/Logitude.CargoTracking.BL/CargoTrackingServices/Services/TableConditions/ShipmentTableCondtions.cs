@@ -121,7 +121,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             "min(CarrierCard.EnglishName) as CarrierEnglishName, " +
             "min(CarrierCard.LocalName) as CarrierLocalName ";
 
-            var incotermField = "min(Inco.Name) as IncotermName ";
+            var incotermField = "min(Inco.Code) as IncotermName ";
 
             var groupSelect = "Min(P.Id) as ForwardingIdForCustom";
 
@@ -212,7 +212,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 					Mas.MainCarriageFromPortId,
                     ConsigneeCard.LocalName,
                     ShipperCard.LocalName,
-                    Inco.Name";
+                    Inco.Code";
 
 
             string sqlQuery = string.Join(Environment.NewLine, " SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED ", selectScript, fromScript, joinScript, whereScript, groupByScript);
@@ -336,7 +336,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             "min(CarrierCard.EnglishName) as CarrierEnglishName, " +
             "min(CarrierCard.LocalName) as CarrierLocalName ";
 
-            var incotermField = "min(Inco.Name) as IncotermName ";
+            var incotermField = "min(Inco.Code) as IncotermName ";
 
             var selectScript = $"Select {updatedShipmentFields} , {shipmentComputedFields} , {shipmentMasterFields} , {forwardingShipmentFields} , {shipmentAdditionalDataFields} , {shipmentOrderFields}, {carrierCardFields}, {incotermField} ";
 
@@ -430,7 +430,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 					Mas.MainCarriageFromPortId,
                     ShipperCard.LocalName,
                     ConsigneeCard.LocalName,
-                    Inco.Name";
+                    Inco.Code";
 
 
             string sqlQuery = " SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED " + selectScript + fromScript + joinScript + whereScript + groupByScript;
@@ -520,7 +520,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 "PickupEstimatedDateTime as PickupEstimationDate," +
                 "OnHandNumber as FromWarehouseNotes," +
                 "OnHandDate as FromWarehouseDate," +
-                "Inco.Name as IncotermName";
+                "Inco.Code as IncotermName";
             
 
              var selectScript = $"SELECT {shipmentOrderFields} , {cargoTrackingShipmentDefaultFields} ";

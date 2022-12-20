@@ -35,12 +35,16 @@
     }
 
     .expression-tree {
-        width: 360px;
-        margin-left: 10px;
+        width: 350px;
     }
 
     .variables-tree {
-        width: 220px;
+        width: 180px;
+        margin-left: 10px;
+    }
+
+    .operators-tree {
+        width: 180px;
         margin-left: 10px;
     }
 
@@ -105,13 +109,13 @@
                         </div>
                         <div class="expression-tree">
                             <TreeSelect *ngIf="ExpressionCategoryChanged" [Items]="ExpressionsTreeItems"
-                                [Width]="'360px'" [SetSelectedValue]="false" [IsReturnedTreeSelectItem]="true"
+                                [Width]="'350px'" [SetSelectedValue]="false" [IsReturnedTreeSelectItem]="true"
                                 [AllowClear]="false" [DisplayTitle]="false" [ShowExpand]="false"
                                 [Template]="expressionsTreeSelectTemplate" (ValueChanged)="updateExpression($event)"
                                 [ShowItem]="ExpressionCategory.Code | ShowExpressionTreeItemPipe">
                             </TreeSelect>
                             <TreeSelect *ngIf="!ExpressionCategoryChanged" [Items]="ExpressionsTreeItems"
-                                [Width]="'360px'" [SetSelectedValue]="false" [IsReturnedTreeSelectItem]="true"
+                                [Width]="'350px'" [SetSelectedValue]="false" [IsReturnedTreeSelectItem]="true"
                                 [AllowClear]="false" [DisplayTitle]="false" [ShowExpand]="false"
                                 [Template]="expressionsTreeSelectTemplate" (ValueChanged)="updateExpression($event)"
                                 [ShowItem]="ExpressionCategory.Code | ShowExpressionTreeItemPipe">
@@ -124,8 +128,15 @@
                             </ng-template>
                         </div>
                         <div *ngIf="FlowVariablesTreeItems" class="variables-tree">
-                            <TreeSelect [Items]="FlowVariablesTreeItems" [Width]="'220px'" [SetSelectedValue]="false"
+                            <TreeSelect [Items]="FlowVariablesTreeItems" [Width]="'180px'" [SetSelectedValue]="false"
                                 (ValueChanged)="selectVariable($event)" [AllowClear]="false" [DisplayTitle]="false">
+                            </TreeSelect>
+                        </div>
+
+                        <div *ngIf="OperatorsTreeItems" class="operators-tree">
+                            <TreeSelect [Items]="OperatorsTreeItems" [Width]="'180px'" [SetSelectedValue]="false"
+                                (ValueChanged)="selectOperator($event)" [AllowClear]="false" [DisplayTitle]="false"
+                                [IsReturnedTreeSelectItem]="true">
                             </TreeSelect>
                         </div>
                     </div>

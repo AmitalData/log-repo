@@ -35,11 +35,11 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
             return digitalPortalScreens;
         }
         
-        public DigitalPortalScreenList GetDigitalPortalScreenQuery(int tenant, string objectTableId, string screenCode = "")
+        public List<DigitalPortalScreenList> GetDigitalPortalScreenNamesQuery(int tenant)
         {
             var digitalPortalScreenRepository = new DigitalPortalScreenRepository(tenant);
 
-            var digitalPortalScreens = digitalPortalScreenRepository.GetDigitalPortalScreens(tenant, objectTableId, screenCode)
+            var digitalPortalScreens = digitalPortalScreenRepository.GetDigitalPortalScreenNames(tenant)
                                                                     .Select(x => new DigitalPortalScreenList
                                                                     {
                                                                         Id = x.Id,
@@ -47,15 +47,13 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                                                                         Name = x.Name,
                                                                         CreateDate = x.CreateDate,
                                                                         UpdateDate = x.UpdateDate,
-                                                                        Content = x.Content,
-                                                                        DraftContent = x.DraftContent,
                                                                         ScreenCode = x.ScreenCode,
                                                                         ObjectTableId = x.ObjectTableId
                                                                     })
-                                                                    .FirstOrDefault(a => a.Tenant == tenant);
+                                                                    .ToList();
             return digitalPortalScreens;
         }
-
+        
         public void UpdateDigitalPortalScreen(DigitalPortalScreenList digitalPortalScreenUpdateObject)
         {
             if (string.IsNullOrEmpty(digitalPortalScreenUpdateObject.Id))

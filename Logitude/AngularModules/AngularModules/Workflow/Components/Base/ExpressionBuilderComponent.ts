@@ -4,13 +4,18 @@ import { ServiceResponse } from "Infrastructure/DataContracts/ServiceResponse";
 import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { ExpressionList } from "Workflow/EntityLists/ExpressionList";
+import { OperatorCategoryList } from "Workflow/EntityLists/OperatorCategoryList";
+import { OperatorList } from "Workflow/EntityLists/OperatorList";
 import { ExpressionsTreeList } from "Workflow/Models/ExpressionsTreeList";
 import { FlowVariablesTreeList } from "Workflow/Models/FlowVariablesTreeList";
 import { ListItem } from "Workflow/Models/ListItem";
+import { OperatorsTreeList } from "Workflow/Models/OperatorsTreeList";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 import { ExpressionValue } from "Workflow/Models/Types";
 import { ExpressionCategoryListService } from "Workflow/Services/StandardLists/ExpressionCategoryListService";
 import { ExpressionListService } from "Workflow/Services/StandardLists/ExpressionListService";
+import { OperatorCategoryListService } from "Workflow/Services/StandardLists/OperatorCategoryListService";
+import { OperatorListService } from "Workflow/Services/StandardLists/OperatorListService";
 
 @Component({
     templateUrl: "./ExpressionBuilderComponent.html"
@@ -33,6 +38,10 @@ export class ExpressionBuilderComponent extends BaseComponent {
     public ExpressionCategories: ListItem[];
     public DefaultExpressionCategory = new ListItem("ALL", "All Functions");
     public ExpressionCategory: ListItem = this.DefaultExpressionCategory;
+
+    public Operators: OperatorList[];
+    public OperatorCategories: OperatorCategoryList[];
+    public OperatorsTreeItems: TreeSelectItem[];
 
     public FlowVariablesTreeList: FlowVariablesTreeList;
     public FlowVariablesTreeItems: TreeSelectItem[];
@@ -60,6 +69,7 @@ export class ExpressionBuilderComponent extends BaseComponent {
     ngOnInit() {
         this.initializeExpressionCategories();
         this.initializeExpressions();
+        this.initializeOperators();
         this.initializeFlowVariablesTree();
     }
 
@@ -79,6 +89,22 @@ export class ExpressionBuilderComponent extends BaseComponent {
         expressionListService.getAll().subscribe((serviceResponse: ServiceResponse) => {
             if (!serviceResponse.HasError) {
                 this.ExpressionsTreeItems = new ExpressionsTreeList(serviceResponse.Result).Items;
+            }
+        });
+    }
+
+    initializeOperators() {
+        let operatorListService = new OperatorListService();
+        let operatorCategoryListService = new OperatorCategoryListService();
+        operatorCategoryListService.getAll().subscribe((serviceResponse: ServiceResponse) => {
+            if (!serviceResponse.HasError) {
+                this.OperatorCategories = serviceResponse.Result
+                operatorListService.getAll().subscribe((serviceResponse: ServiceResponse) => {
+                    if (!serviceResponse.HasError) {
+                        this.Operators = serviceResponse.Result
+                        this.OperatorsTreeItems = new OperatorsTreeList(this.OperatorCategories,this.Operators).Items;
+                    }
+                });
             }
         });
     }
@@ -130,6 +156,24 @@ export class ExpressionBuilderComponent extends BaseComponent {
             return event.target.selectionStart !== this.CursorStartPoint && event.target.selectionEnd !== this.CursorEndPoint;
         }
         return false;
+    }
+
+    selectOperator(operator: any) {
+        if(operator.data){
+            this.setOperatorInExpression(operator.data.Sign)
+        }
+    }
+
+    setOperatorInExpression(operatorSign: string) {
+        if (operatorSign) {
+            let currentExpression = this.ExpressionValue.expression;
+            if (currentExpression) {
+                let newExpression = currentExpression.slice(0, this.CursorStartPoint) + operatorSign + currentExpression.slice(this.CursorEndPoint);
+                this.updateExpressionValue(newExpression);
+            } else {
+                this.updateExpressionValue(operatorSign);
+            }
+        }
     }
 
     selectVariable(variable: string) {

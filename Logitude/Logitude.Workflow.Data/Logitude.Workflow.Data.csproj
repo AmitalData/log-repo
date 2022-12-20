@@ -72,6 +72,8 @@
   <ItemGroup>
     <Compile Include="EntityKeys\ExpressionCategoryKeys.cs" />
     <Compile Include="EntityKeys\ExpressionKeys.cs" />
+    <Compile Include="EntityKeys\OperatorCategoryKeys.cs" />
+    <Compile Include="EntityKeys\OperatorKeys.cs" />
     <Compile Include="EntityKeys\WorkFlowInstanceActivityKeys.cs" />
     <Compile Include="EntityKeys\WorkFlowInstanceActivityStatusKeys.cs" />
     <Compile Include="EntityKeys\WorkFlowInstanceKeys.cs" />
@@ -85,6 +87,8 @@
     <Compile Include="EntityListQueryServices\ExpressionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\Generated\ExpressionCategoryListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ExpressionListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\OperatorCategoryListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\OperatorListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\WorkFlowInstanceActivityListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\WorkFlowInstanceActivityStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\WorkFlowInstanceListQueryService.Generated.cs" />
@@ -94,6 +98,8 @@
     <Compile Include="EntityListQueryServices\Generated\WorkFlowStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\WorkFlowVersionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\WorkFlowVersionStatusListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\OperatorCategoryListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\OperatorListQueryService.cs" />
     <Compile Include="EntityListQueryServices\WorkFlowInstanceActivityListQueryService.cs" />
     <Compile Include="EntityListQueryServices\WorkFlowInstanceActivityStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\WorkFlowInstanceListQueryService.cs" />
@@ -105,6 +111,8 @@
     <Compile Include="EntityListQueryServices\WorkFlowVersionStatusListQueryService.cs" />
     <Compile Include="EntityLists\Generated\ExpressionCategoryList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ExpressionList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\OperatorCategoryList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\OperatorList.Generated.cs" />
     <Compile Include="EntityLists\Generated\WorkFlowInstanceActivityList.Generated.cs" />
     <Compile Include="EntityLists\Generated\WorkFlowInstanceActivityStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\WorkFlowInstanceList.Generated.cs" />
@@ -116,6 +124,8 @@
     <Compile Include="EntityLists\Generated\WorkFlowVersionStatusList.Generated.cs" />
     <Compile Include="EntityMapping\ExpressionCategoryMap.cs" />
     <Compile Include="EntityMapping\ExpressionMap.cs" />
+    <Compile Include="EntityMapping\OperatorCategoryMap.cs" />
+    <Compile Include="EntityMapping\OperatorMap.cs" />
     <Compile Include="EntityMapping\WorkFlowInstanceActivityMap.cs" />
     <Compile Include="EntityMapping\WorkFlowInstanceActivityStatusMap.cs" />
     <Compile Include="EntityMapping\WorkFlowInstanceMap.cs" />
@@ -127,6 +137,8 @@
     <Compile Include="EntityMapping\WorkFlowVersionStatusMap.cs" />
     <Compile Include="EntityPOCOs\Expression.cs" />
     <Compile Include="EntityPOCOs\ExpressionCategory.cs" />
+    <Compile Include="EntityPOCOs\Operator.cs" />
+    <Compile Include="EntityPOCOs\OperatorCategory.cs" />
     <Compile Include="EntityPOCOs\WorkFlow.cs" />
     <Compile Include="EntityPOCOs\WorkFlowInstance.cs" />
     <Compile Include="EntityPOCOs\WorkFlowInstanceActivity.cs" />
@@ -142,6 +154,8 @@
     <Compile Include="Repositories\ExpressionRepository.cs" />
     <Compile Include="Repositories\Generated\ExpressionCategoryRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\ExpressionRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\OperatorCategoryRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\OperatorRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\WorkFlowInstanceActivityRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\WorkFlowInstanceActivityStatusRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\WorkFlowInstanceRepository.Generated.cs" />
@@ -151,6 +165,8 @@
     <Compile Include="Repositories\Generated\WorkFlowStatusRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\WorkFlowVersionRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\WorkFlowVersionStatusRepository.Generated.cs" />
+    <Compile Include="Repositories\OperatorCategoryRepository.cs" />
+    <Compile Include="Repositories\OperatorRepository.cs" />
     <Compile Include="Repositories\WorkFlowInstanceActivityRepository.cs" />
     <Compile Include="Repositories\WorkFlowInstanceActivityStatusRepository.cs" />
     <Compile Include="Repositories\WorkFlowInstanceRepository.cs" />
