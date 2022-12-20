@@ -19,8 +19,31 @@ namespace WebFreight.Web.Controllers.DigitalPortal
     public class DigitalCustomizationController : ApiController
     {
         [HttpGet]
-        [Route("DigitalCustomization/GetDigitalPortalScreen")]
-        public HttpResponseMessage GetDigitalPortalScreen(string cardId, string objectTableId, string screenCode)
+        [Route("DigitalCustomization/GetDigitalPortalScreenNames")]
+        public HttpResponseMessage GetDigitalPortalScreenNames()
+        {
+            int tenant = 0;
+            string email = "";
+            try
+            {
+                var screenQueryService = new DigitalPortalScreenQueryService(tenant);
+                var digitalPortalScreens = screenQueryService.GetDigitalPortalScreenNamesQuery(tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, digitalPortalScreens);
+            }
+            catch (AutenticationException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        [HttpGet]
+        [Route("DigitalCustomization/GetDigitalPortalScreens")]
+        public HttpResponseMessage GetDigitalPortalScreens(string objectTableId, string screenCode = "")
         {
             int tenant = 0;
             string email = "";
@@ -30,11 +53,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 tenant = authToken.Tenant;
                 email = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
                 var screenQueryService = new DigitalPortalScreenQueryService(tenant);
-                var digitalPortalScreen = screenQueryService.GetDigitalPortalScreensQuery(tenant, objectTableId, screenCode)
-                                                            .FirstOrDefault();
-                return Request.CreateResponse(HttpStatusCode.OK, digitalPortalScreen);
+                var digitalPortalScreens = screenQueryService.GetDigitalPortalScreensQuery(tenant, objectTableId, screenCode);
+                return Request.CreateResponse(HttpStatusCode.OK, digitalPortalScreens);
             }
             catch (AutenticationException ex)
             {
@@ -49,17 +70,15 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         [HttpGet]
         [Route("DigitalCustomization/GetDigitalPreDefinedComponents")]
-        public HttpResponseMessage GetDigitalPreDefinedComponents(string cardId, string objectTableId, string name = "")
+        public HttpResponseMessage GetDigitalPreDefinedComponents(string objectTableId, string name = "")
         {
             int tenant = 0;
             string email = "";
             try
             {
                 var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
-                tenant = authToken.Tenant;
                 email = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
                 var preDefinedComponentQueryService = new DigitalPreDefinedComponentQueryService(tenant);
                 var digitalPreDefinedComponents = preDefinedComponentQueryService.GetDigitalPreDefinedComponentQuery(tenant, objectTableId, name);
                 return Request.CreateResponse(HttpStatusCode.OK, digitalPreDefinedComponents);
@@ -76,8 +95,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         }
 
         [HttpPost]
-        [Route("DigitalTextCode/UpdateTextCodes")]
-        public HttpResponseMessage UpdatePortalScreen(string CardId, DigitalPortalScreenUpdateModel digitalTextCodeUpdateModel)
+        [Route("DigitalTextCode/UpdateDigitalPortalScreen")]
+        public HttpResponseMessage UpdateDigitalPortalScreen(DigitalPortalScreenUpdateModel digitalTextCodeUpdateModel)
         {
             int tenant = 0;
             string email = "";
@@ -88,45 +107,24 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 email = authToken.Email;
                 digitalTextCodeUpdateModel.Tenant = tenant;
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, CardId);
                 var digitalPreDefinedComponentQueryService = new DigitalPortalScreenQueryService(tenant);
 
-                var tenantDigitalPortalScreen = digitalPreDefinedComponentQueryService.GetDigitalPortalScreenQuery(tenant, digitalTextCodeUpdateModel.ObjectTableId, digitalTextCodeUpdateModel.ScreenCode);
-
-                DigitalPortalScreenList digitalPortalScreen = null;
+                var tenantDigitalPortalScreen = digitalPreDefinedComponentQueryService.GetDigitalPortalScreensQuery(tenant, digitalTextCodeUpdateModel.ObjectTableId, digitalTextCodeUpdateModel.ScreenCode)
+                                                                                      .FirstOrDefault();
 
                 if (tenantDigitalPortalScreen == null)
                 {
-                    if (digitalTextCodeUpdateModel.IsDraft)
+                    tenantDigitalPortalScreen = new DigitalPortalScreenList
                     {
-                        digitalPortalScreen = new DigitalPortalScreenList
-                        {
-                            Name = digitalTextCodeUpdateModel.Name,
-                            Content = "",
-                            DraftContent = digitalTextCodeUpdateModel.DraftContent,
-                            Tenant = tenant,
-                            ScreenCode = digitalTextCodeUpdateModel.ScreenCode,
-                            ObjectTableId = digitalTextCodeUpdateModel.ObjectTableId,
-                            CreateDate = DateTime.UtcNow,
-                            UpdateDate = DateTime.UtcNow
-                        };
-                    }
-                    else
-                    {
-                        digitalPortalScreen = new DigitalPortalScreenList
-                        {
-                            Name = digitalTextCodeUpdateModel.Name,
-                            Content = digitalTextCodeUpdateModel.Content,
-                            DraftContent = digitalTextCodeUpdateModel.DraftContent,
-                            Tenant = tenant,
-                            ScreenCode = digitalTextCodeUpdateModel.ScreenCode,
-                            ObjectTableId = digitalTextCodeUpdateModel.ObjectTableId,
-                            CreateDate = DateTime.UtcNow,
-                            UpdateDate = DateTime.UtcNow
-                        };
-                    }
-
-                    digitalPreDefinedComponentQueryService.UpdateDigitalPortalScreen(digitalPortalScreen);
+                        Name = digitalTextCodeUpdateModel.Name,
+                        Content = digitalTextCodeUpdateModel.IsDraft ? "" : digitalTextCodeUpdateModel.Content,
+                        DraftContent = digitalTextCodeUpdateModel.DraftContent,
+                        Tenant = tenant,
+                        ScreenCode = digitalTextCodeUpdateModel.ScreenCode,
+                        ObjectTableId = digitalTextCodeUpdateModel.ObjectTableId,
+                        CreateDate = DateTime.UtcNow,
+                        UpdateDate = DateTime.UtcNow
+                    };
                 }
                 else
                 {
@@ -143,6 +141,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     }
                 }
 
+                digitalPreDefinedComponentQueryService.UpdateDigitalPortalScreen(tenantDigitalPortalScreen);
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (AutenticationException ex)

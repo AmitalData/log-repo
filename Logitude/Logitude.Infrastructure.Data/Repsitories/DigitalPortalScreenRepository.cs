@@ -19,7 +19,13 @@ namespace Logitude.Infrastructure.Data.Repsitories
             return context.DigitalPortalScreens
                           .Where(a => (a.Tenant == tenant || a.Tenant == 0)
                                       && a.ObjectTableId.Equals(objectTableId)
-                                      && a.ScreenCode.Equals(screenCode));
+                                      && (string.IsNullOrEmpty(screenCode) || a.ScreenCode.Equals(screenCode)));
+        }
+        
+        public IQueryable<DigitalPortalScreen> GetDigitalPortalScreenNames(int tenant)
+        {
+            return context.DigitalPortalScreens
+                          .Where(a => a.Tenant == tenant);
         }
 
 
