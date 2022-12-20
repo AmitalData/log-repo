@@ -14,8 +14,16 @@ namespace Logitude.Infrastructure.Data.Repsitories
 {
    public partial class DigitalPortalScreenRepository:IRepository<DigitalPortalScreen>
    {
-        
-		public List<DigitalPortalScreen> GetMulti(EntityKeyFields entityKeys)
+        public IQueryable<DigitalPortalScreen> GetDigitalPortalScreens(int tenant, string objectTableId, string screenCode)
+        {
+            return context.DigitalPortalScreens
+                          .Where(a => a.Tenant == tenant
+                                      && a.ObjectTableId.Equals(objectTableId)
+                                      && a.ScreenCode.Equals(screenCode));
+        }
+
+
+        public List<DigitalPortalScreen> GetMulti(EntityKeyFields entityKeys)
         {
             
 			throw new NotImplementedException();

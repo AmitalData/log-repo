@@ -75,7 +75,7 @@ namespace WebFreight.Web.Controllers.WorkflowModel.Extended.FlowEntities
                 shipmentsQuery = shipmentsQuery.Skip(0);
                 shipmentsQuery = shipmentsQuery.Take(apiQueryTreeFilters.PageSize);
 
-               var shipments = shipmentsQuery.Select("new { " + apiQueryTreeFilters.ReturnedColumns + " }").ToDynamicList();
+                var shipments = shipmentsQuery.Select("new { " + apiQueryTreeFilters.ReturnedColumns + " }").ToDynamicList();
 
                 ServiceResponse response = new ServiceResponse();
                 response.Result = shipments;
