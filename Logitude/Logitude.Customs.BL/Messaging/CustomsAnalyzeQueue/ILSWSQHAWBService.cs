@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -22,7 +23,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
         protected override AnalyzeResultModel AnalyzeData(string communicationsData)
         {
-            CourierSWSHAWBResponse mySWSHAWBResponse = GetSWSHAWBResponse(communicationsData);
+            var mySWSHAWBResponseList = GetSWSHAWBResponse(communicationsData);
 
             var res = new AnalyzeResultModel()
             {
@@ -31,7 +32,10 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             try
             {
                 var courierECSWSTHRMessageResponseService = new CourierECSWSTHRMessageResponseService();
-                res=courierECSWSTHRMessageResponseService.AnalyzeQResponse(_CommunicationLog.Tenant, mySWSHAWBResponse,res);
+                foreach (var mySWSHAWBResponse in mySWSHAWBResponseList)
+                {
+                    res = courierECSWSTHRMessageResponseService.AnalyzeQResponse(_CommunicationLog.Tenant, mySWSHAWBResponse, res);
+                }
 
             }
             catch (Exception eee)
@@ -45,7 +49,6 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
         }
         private static XElement GetXElement(XElement myXElementSTBMessage, string field)
         {
-
             XElement ele = myXElementSTBMessage.Element(field);
             if (ele == null)
             {
@@ -55,21 +58,26 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             return ele;
         }
 
-        private static CourierSWSHAWBResponse GetSWSHAWBResponse(string communicationsData)
+        private static List<CourierSWSHAWBResponse> GetSWSHAWBResponse(string communicationsData)
         {
 
-
-            var mySWSHAWBResponse = new CourierSWSHAWBResponse();
+            var listSWSHAWBMessage = new List<CourierSWSHAWBResponse>();
             var myXElementSWSHAWBResponse = XElement.Parse(communicationsData);
-
-            mySWSHAWBResponse.CourierCompanyVat = (string)GetXElement(myXElementSWSHAWBResponse, "CourierCompanyVat");
-            mySWSHAWBResponse.CourierHawbNumber = (string)GetXElement(myXElementSWSHAWBResponse, "CourierHawbNumber");
-            mySWSHAWBResponse.StatusCode = (string)GetXElement(myXElementSWSHAWBResponse, "StatusCode");
-            mySWSHAWBResponse.ErrorCode = (string)GetXElement(myXElementSWSHAWBResponse, "ErrorCode");
-            mySWSHAWBResponse.ErrorDescription = (string)GetXElement(myXElementSWSHAWBResponse, "ErrorDescription");
-
-
-            return mySWSHAWBResponse;
+            if(myXElementSWSHAWBResponse != null)
+            {
+                var ids = myXElementSWSHAWBResponse.Elements("CourierHawbFeedback");
+                foreach (var item in ids)
+                {
+                    var mySWSHAWBResponse = new CourierSWSHAWBResponse();
+                    mySWSHAWBResponse.CourierCompanyVat = (string)GetXElement(item, "CourierCompanyVat");
+                    mySWSHAWBResponse.CourierHawbNumber = (string)GetXElement(item, "CourierHawbNumber");
+                    mySWSHAWBResponse.StatusCode = (string)GetXElement(item, "StatusCode");
+                    mySWSHAWBResponse.ErrorCode = (string)GetXElement(item, "ErrorCode");
+                    mySWSHAWBResponse.ErrorDescription = (string)GetXElement(item, "ErrorDescription");
+                    listSWSHAWBMessage.Add(mySWSHAWBResponse);
+                }
+            }
+            return listSWSHAWBMessage;
         }
     }
 }
