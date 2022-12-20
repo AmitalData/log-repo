@@ -62,7 +62,7 @@ export class DigitalPortalCustomizationMainComponent {
         myResult.push(args);
 
         args = new CustomizationMainMenuItem();
-        args.TextCode = "Show/Hide Fields";
+        args.TextCode = "Fields Permissions";
         args.Code = "ShowHideFields";
         args.ComponentPath = "./SharedLogistics/Components/DigitalPortal/DigitalPortalCustomizationShowHideFieldsComponent";
         myResult.push(args);
