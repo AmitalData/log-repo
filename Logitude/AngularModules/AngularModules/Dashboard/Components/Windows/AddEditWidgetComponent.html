@@ -88,6 +88,7 @@
                                             <LogLabel [ObjectFieldName]="'GroupById'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
                                         <td>
+
                                             <LogLov [ObjectFieldName]="'GroupById'"
                                                     [SelectedValue]="GroupById"
                                                     [ObjectTableName]="ObjectTableName"
@@ -102,29 +103,34 @@
                                             </LogLov>
                                         </td>
                                         <td>
-                                            <div></div>
+                                            <div>
+                                                <IconButton *ngIf="IsAddNewGroupVisible" [Left]="3" [Name]="'Add'" [IsSmall]="true" [IsEnabled]="WidgetMeasuresList.length === 1" (click)="AddNewGroupByClicked()"></IconButton>
+                                            </div>
                                         </td>
                                     </tr>
-                                    <tr class="FormFieldRow" *ngIf="isGroupByVisible">
+
+                                    <tr class="FormFieldRow" *ngIf="IsSecondaryGroupByVisible">
                                         <td>
-                                            <LogLabel [ObjectFieldName]="'SecondaryGroupById'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            <div></div>
                                         </td>
                                         <td>
                                             <LogLov [ObjectFieldName]="'SecondaryGroupById'"
-                                                    [SelectedValue]="SecondaryGroupById"
-                                                    [ObjectTableName]="ObjectTableName"
-                                                    [DataContext]="DataContext"
-                                                    [LookUpTableName]="'AnalyticsFactsFieldsMetaData'"
-                                                    [DependencyFilter2Value]="true"
-                                                    [DependencyFilter3Value]="EntityId"
-                                                    [HideColumns]="true"
-                                                    [DisplayMemberPath]="'DisplayName'"
-                                                    (SelectedItemChanged)="SelectedSecondaryGroupField = $event"
-                                                    [QueryFilterItems]="GroupByQueryFilters">
+                                                [SelectedValue]="SecondaryGroupById"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'AnalyticsFactsFieldsMetaData'"
+                                                [DependencyFilter2Value]="true"
+                                                [DependencyFilter3Value]="EntityId"
+                                                [HideColumns]="true"
+                                                [DisplayMemberPath]="'DisplayName'"
+                                                (SelectedItemChanged)="SelectedSecondaryGroupField = $event"
+                                                [QueryFilterItems]="GroupByQueryFilters">
                                             </LogLov>
                                         </td>
                                         <td>
-                                            <div></div>
+                                            <div>
+                                                <IconButton *ngIf="IsDeleteGroupByVisible" [Left]="3" [Name]="'Minus'" [IsSmall]="true" (click)="DeleteGroupByClicked()"></IconButton>
+                                            </div>
                                         </td>
                                     </tr>
 
@@ -143,7 +149,7 @@
                                         </td>
                                     </tr>
 
-                                    <tr class="FormFieldRow" *ngIf="SelectedSecondaryGroupField && (SelectedSecondaryGroupField.DataTypeCode == 'DateTime' || SelectedSecondaryGroupField.DataTypeCode == 'Date')">
+                                    <tr class="FormFieldRow" *ngIf="SecondaryGroupById && SelectedSecondaryGroupField && (SelectedSecondaryGroupField.DataTypeCode == 'DateTime' || SelectedSecondaryGroupField.DataTypeCode == 'Date')">
                                         <td>
                                             <LogLabel [Text]="'Secondary Date Group Type'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
@@ -196,7 +202,7 @@
                                         </td>
                                         <td>
                                             <div>
-                                                <IconButton *ngIf="IsAddNewMeasureVisible" [Left]="3" [Name]="'Add'" [IsSmall]="true" [IsEnabled]="!SelectedSecondaryGroupField" (click)="AddNewMeasureClicked()"></IconButton>
+                                                <IconButton *ngIf="IsAddNewMeasureVisible" [Left]="3" [Name]="'Add'" [IsSmall]="true" [IsEnabled]="!IsSecondaryGroupByVisible" (click)="AddNewMeasureClicked()"></IconButton>
                                                 <IconButton *ngIf="item.IsDeleteMeasureVisible" [Left]="3" [Name]="'Minus'" [IsSmall]="true" (click)="item.DeleteMeasureClicked()"></IconButton>
                                             </div>
                                         </td>
