@@ -34,6 +34,14 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.RabbitUserName).HasColumnName("RabbitUserName").HasMaxLength(100).IsUnicode(false);
 
             this.Property(t => t.RabbitPassword).HasColumnName("RabbitPassword").HasMaxLength(100).IsUnicode(false);
+
+            this.Property(t => t.HSMSignProcess).HasColumnName("HSMSignProcess").HasMaxLength(40).IsUnicode(false);
+
+            this.Property(t => t.HSMToken).HasColumnName("HSMToken").HasMaxLength(1024).IsUnicode(false);
+
+            this.Property(t => t.HSMActiveCertUrl).HasColumnName("HSMActiveCertUrl").HasMaxLength(1024).IsUnicode(false);
+
+            this.Property(t => t.HSMSignServiceUrl).HasColumnName("HSMSignServiceUrl").HasMaxLength(1024).IsUnicode(false);
         }
     }
 }

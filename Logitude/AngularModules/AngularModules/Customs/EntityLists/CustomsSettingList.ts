@@ -32,6 +32,8 @@ export class CustomsSettingList {
 	AutoFillAccountType: boolean;
 	AutoUnitMeasurement: boolean;
 	CompanyType: string;
+	HSMCompanyId: string;
+	HSMToken: string;
 	
 }
  

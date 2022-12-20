@@ -14,6 +14,7 @@ export class CustomsEnvironmentSettingList {
 	RabbitHost: string;
 	RabbitUserName: string;
 	RabbitPassword: string;
+	HSMSignProcess: string;
 	
 }
  

@@ -32,6 +32,14 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string RabbitUserName { get; set; }
         [Column("RabbitPassword")]
 	    public string RabbitPassword { get; set; }
+        [Column("HSMSignProcess")]
+	    public string HSMSignProcess { get; set; }
+        [Column("HSMToken")]
+	    public string HSMToken { get; set; }
+        [Column("HSMActiveCertUrl")]
+	    public string HSMActiveCertUrl { get; set; }
+        [Column("HSMSignServiceUrl")]
+	    public string HSMSignServiceUrl { get; set; }
     }
 }
 	 

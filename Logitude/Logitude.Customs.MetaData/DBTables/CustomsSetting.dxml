@@ -178,6 +178,7 @@
     <Constraints
       Nullable="true" />
   </Column>
+
   <Column
     Name="SuppressIIGMessageFromDate"
     Type="datetime">
@@ -190,6 +191,22 @@
     <Constraints
       Nullable="true" />
   </Column>
+
+  <Column
+    Name="HSMCompanyId"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="HSMToken"
+    Type="varchar"
+    Size="1024">
+    <Constraints
+      Nullable="true" />
+  </Column>
+
   <Relation
     ForeignKeyColumn="DefaultNotificationAssignee"
     ReferencedTable="Users"

@@ -54,6 +54,26 @@ export class CustomsEnvironmentSettingPM {
     public set RabbitPassword(newValue: string) { if (this.rabbitPassword != newValue) { this.rabbitPassword = newValue; this.MarkAsDirty("RabbitPassword"); } }
        
 	 
+    private hSMSignProcess: string;
+    public get HSMSignProcess() { return this.hSMSignProcess; }
+    public set HSMSignProcess(newValue: string) { if (this.hSMSignProcess != newValue) { this.hSMSignProcess = newValue; this.MarkAsDirty("HSMSignProcess"); } }
+       
+	 
+    private hSMToken: string;
+    public get HSMToken() { return this.hSMToken; }
+    public set HSMToken(newValue: string) { if (this.hSMToken != newValue) { this.hSMToken = newValue; this.MarkAsDirty("HSMToken"); } }
+       
+	 
+    private hSMActiveCertUrl: string;
+    public get HSMActiveCertUrl() { return this.hSMActiveCertUrl; }
+    public set HSMActiveCertUrl(newValue: string) { if (this.hSMActiveCertUrl != newValue) { this.hSMActiveCertUrl = newValue; this.MarkAsDirty("HSMActiveCertUrl"); } }
+       
+	 
+    private hSMSignServiceUrl: string;
+    public get HSMSignServiceUrl() { return this.hSMSignServiceUrl; }
+    public set HSMSignServiceUrl(newValue: string) { if (this.hSMSignServiceUrl != newValue) { this.hSMSignServiceUrl = newValue; this.MarkAsDirty("HSMSignServiceUrl"); } }
+       
+	 
 
     public OldEntityPM: CustomsEnvironmentSettingPM;
 		

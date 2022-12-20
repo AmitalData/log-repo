@@ -28,6 +28,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string RabbitUserName  { get; set; }
        [DataMember]
        public string RabbitPassword  { get; set; }
+       [DataMember]
+       public string HSMSignProcess  { get; set; }
    }
 
 }
