@@ -682,7 +682,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     EntityId = entityPM.Id,
                     AuditLogId = auditLog.Id,
                     Tenant = entityPM.Tenant,
-                    Type = QueueMessagesTypes.Create
+                    Type = QueueMessagesTypes.Update
                 }.Produce();
 
                 scope.Complete();
