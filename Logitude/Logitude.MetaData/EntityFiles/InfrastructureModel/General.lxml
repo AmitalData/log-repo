@@ -9,8 +9,6 @@
   ObjectTablePlural="&quot;Generals&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
-  AvailableInCustomization="false"
-  SupportSubEntity="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -37,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;ae8f&quot;"
+  Code="&quot;3cf0&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -53,7 +51,6 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
-  TenantZeroData="false"
   Code1="&quot;6f7b&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -5477,6 +5474,18 @@
       DefaultText="&quot;Done&quot;"
       TextCodeTypeCode="&quot;G&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.ChartOfAccountsTypesOrder&quot;"
+      DefaultText="&quot;Chart Of Accounts Types Order&quot;"
+      LocalDefaultText="&quot;Chart Of Accounts Types Order&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.ChangeMadeToConnectedAccounts&quot;"
+      DefaultText="&quot;A change was made in the connected accounts. The connected accounts must be returned to their state as it was when the original journal was prodiced. Line &quot;"
+      LocalDefaultText="&quot;בוצע שינוי בחיבור החשבונות. יש להחזיר את חיבור החשבונות למצבם כפי שהיה בעת רישום פקודת היומן המקורית. שורה &quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -7713,23 +7722,10 @@
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
     <Feature
-      Code="&quot;AddCustomChildEntity&quot;"
-      FeatureTypeCode="&quot;OTH&quot;"
-      FeatureTextCodeCode="&quot;General.Features.AddCustomChildEntity&quot;"
-      FeatureDefaultText="&quot;Add Custom Child Entity&quot;"
-      IsPackagable="true"
-      IsOld="false"
-      IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
-    <Feature
       Code="&quot;SupportUnitMeasurements&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
       FeatureTextCodeCode="&quot;General.Features.SupportUnitMeasurements&quot;"
       FeatureDefaultText="&quot;Support Select Unit of Measurements&quot;"
-      Code="&quot;CLASSICDASHBOARD&quot;"
-      FeatureTypeCode="&quot;MENU&quot;"
-      FeatureTextCodeCode="&quot;General.Features.CLASSICDASHBOARD&quot;"
-      FeatureDefaultText="&quot;Classic Dashboard&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
@@ -7757,6 +7753,15 @@
       FeatureTypeCode="&quot;OTH&quot;"
       FeatureTextCodeCode="&quot;General.Features.Customization.CreateObjects&quot;"
       FeatureDefaultText="&quot;Create Custom object in Customization &quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;General.Features.ChartOfAccountsTypesOrder&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.General.Features.ChartOfAccountsTypesOrder&quot;"
+      FeatureDefaultText="&quot;Chart Of Accounts Types Order&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

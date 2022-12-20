@@ -62,7 +62,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             }
                     
             textCodeRepository = new TextCodeRepository(ObjectContext);
-            objectTableRepository = new ObjectTableRepository(ObjectContext);
+            objectTableRepository = new ObjectTableRepository(ObjectContext); 
             objectFieldValidationRepository = new ObjectFieldValidationRepository(ObjectContext);
             string objectTableName = objectTableRepository.GetSingleObjectTable(theEntityPm.ObjectTableId, tenant, false).Name;
             string tenantListName = "tabletenantobjectfields" + objectTableName.ToLower() + tenant;
@@ -83,7 +83,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                     bool exists = entityRepository.GetSingleObjectFieldByCode(theEntityPm.Code, theEntityPm.ObjectTableId, theEntityPm.Tenant) != null ? true : false;
                     if(exists)
                         throw new ApplicationException("An Object Field with the same code already exists");
-                }
+                } 
                 else
                 {
                     throw new ApplicationException("Code Field is required");

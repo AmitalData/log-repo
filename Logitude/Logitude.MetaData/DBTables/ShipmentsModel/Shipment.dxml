@@ -3705,6 +3705,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsINTTRAFROB"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"

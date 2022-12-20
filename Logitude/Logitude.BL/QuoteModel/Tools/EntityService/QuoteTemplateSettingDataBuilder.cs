@@ -58,17 +58,21 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             AddNewPricesFieldSettingToPricesTableSettings("ShowRegionalTAXPackages", "ISREGIONALTAXPACKAGES", sectionType);
             AddNewPricesFieldSettingToPricesTableSettings("ShowVATTypePackages", "VATTYPEPACKAGES", sectionType);
             AddNewPricesFieldSettingToPricesTableSettings("ShowVATPercentagePackages", "VATPERCENTAGEPACKAGES", sectionType);
-        }
+            AddNewPricesFieldSettingToPricesTableSettings("ShowSaleIncludingVATPackages", "SALEAMOUNTInCLUDINGVATPACKAGES", sectionType);
+            AddNewPricesFieldSettingToPricesTableSettings("ShowLocalSaleIncludingVATPackages", "SALELOCALAMOUNTInCLUDINGVATPACKAGES", sectionType);
+    }
 
         private void AddNewPricesFieldSettingToPricesTableSettings(string fieldDBName, string fieldCode, string sectionType)
         {
             List<PricesFieldSettings> pricesTableSettings = GetPricesPackagesListSettingsBySectionType(sectionType);
             PropertyInfo propInfo = quoteTemplateSetting.GetType().GetProperty(fieldDBName);
+
             if (propInfo == null)
             {
                 propInfo = (quoteTemplateSetting.GetType().GetProperty("QuoteTemplateSettingData") != null) ? quoteTemplateSetting.GetType().GetProperty("QuoteTemplateSettingData").GetType().GetProperty(fieldDBName) : new QuoteTemplateSettingData().GetType().GetProperty(fieldDBName);
             }
-                pricesTableSettings.Add(new PricesFieldSettings()
+
+            pricesTableSettings.Add(new PricesFieldSettings()
             {
                 Name = fieldDBName,
                 Code = fieldCode,
@@ -106,6 +110,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             AddNewPricesFieldSettingToPricesTableSettings("ShowRegionalTAXContainers", "ISREGIONALTAXCONTAINERS", sectionType);
             AddNewPricesFieldSettingToPricesTableSettings("ShowVATTypeContainers", "VATTYPECONTAINERS", sectionType);
             AddNewPricesFieldSettingToPricesTableSettings("ShowVATPercentageContainers", "VATPERCENTAGECONTAINERS", sectionType);
+            AddNewPricesFieldSettingToPricesTableSettings("ShowSaleIncludingVATContainers", "SALEAMOUNTInCLUDINGVATCONTAINERS", sectionType);
+            AddNewPricesFieldSettingToPricesTableSettings("ShowLocalSaleIncludingVATContainers", "SALELOCALAMOUNTInCLUDINGVATCONTAINERS", sectionType);
         }
 
 

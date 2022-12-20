@@ -229,7 +229,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         this.UIProperties.SetEnabled("WarehouseLegActualReleaseDate", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("WarehouseLegReference", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("TerminalAvailable", this.ObjectTableName, isEditingEnabled);
-        this.UIProperties.SetRequired("WarehouseLegWarehouseId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.WarehouseLeg2WarehouseId) ? true : false);
+        this.UIProperties.SetRequired("WarehouseLegWarehouseId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.WarehouseLegWarehouseId) ? true : false);
         this.UIProperties.SetEnabled("WarehouseLeg2WarehouseId", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("WarehouseLeg2AddressId", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("WarehouseLeg2TerminalCode", this.ObjectTableName, isEditingEnabled);

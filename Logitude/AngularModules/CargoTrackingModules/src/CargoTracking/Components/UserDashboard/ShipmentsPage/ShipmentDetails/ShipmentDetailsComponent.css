@@ -408,7 +408,7 @@ h1 {
         }
 
     #overview-data-cards {
-        height: 435px;
+        /* height: 435px; */
     }
 
     .data-cards > div {

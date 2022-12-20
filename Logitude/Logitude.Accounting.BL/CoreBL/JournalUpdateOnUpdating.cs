@@ -202,7 +202,11 @@ namespace Logitude.Accounting.BL
                 if (journalPM.JournalLines.Any(jl => jl.ChangeSetOp != ChangeSetOperation.None))
                 {
                     var jl1 = journalPM.JournalLines.First(jl => jl.ChangeSetOp != ChangeSetOperation.None);
-                    throw new ApplicationException($"BLException :Approved Journal Can Only Change To Voided Property (Change JournalLines fix credrit or debit) line={jl1.Line} ");
+                    //    throw new ApplicationException($"BLException :Approved Journal Can Only Change To Voided Property (Change JournalLines fix credrit or debit) line={jl1.Line} ");
+                    bool useLocal = true;
+                    string msg = TranslateTextsClassTranslate("Accounting.O.ChangeMadeToConnectedAccounts", 0, useLocal);
+                    if (String.IsNullOrEmpty(msg)) msg = "A change was made in the connected accounts. The connected accounts must be returned to their state as it was when the original journal was prodiced. Line ";
+                    throw new ApplicationException($"{msg}{jl1.Line} ");
                 }
 
             }

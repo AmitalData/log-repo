@@ -301,8 +301,6 @@ namespace WebFreight.Web.CRMModel.DomainServices
                         opportunity.LastActivitySubject = entity.Subject;
                         opportunity.LastCompletedActivityTypeCode = entity.ActivityTypeCode;
                         opportunity.LastCompletedActivityDate = entity.CompleteDate;
-                        opportunityRepository.Update(opportunity);
-                        opportunityRepository.SubmitChanges();
 
                         //Next activity
                         IQueryable<Activity> iQueryableActivities = activityRepository.GetActivitiesByOpportunityId(entity.OpportunityId, tenant);

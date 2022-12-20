@@ -176,19 +176,6 @@ export class CustomerMenuButtonsHandler {
                                 break;
                             }
 
-                        case "LoginToOnlineVisability":
-                            {
-                                if (this.EntityPM.CustomerStatusCode !== "ACT" || !this.TenantPM.IsDigitalPortalAccessActivated)
-                                {
-                                    button.IsDisabled = true;
-                                }
-                                else
-                                {
-                                    button.IsDisabled = false;
-                                }
-                                break;
-                            }
-
                         case "ReActivateCustomer":
                             {
                                 if (this.TenantPM.IsHybrid && (this.EntityPM.CustomerStatusCode == "ACT" || this.EntityPM.CustomerStatusCode == "WAC")) {
@@ -391,11 +378,6 @@ export class CustomerMenuButtonsHandler {
                 this.DisconnectGLAccount();
                 break;
             }
-
-            case "LoginToOnlineVisability": {
-                this.RedirctToDigital();
-                break;
-            }
         }
     }
 
@@ -428,11 +410,6 @@ export class CustomerMenuButtonsHandler {
     SetAsPotential()
     {
        this.IsCustomerConnectedToEntities();    
-    }
-
-    private RedirctToDigital()
-    {
-        window.open(`https://${SessionLocator.TenantManagementJS.CustomerURL}/online-visibility?securitykey=${ServiceHelper.GetLoggedUserToken()}&cid=${this.EntityPM.Id}&ctype=${this.EntityPM.PartnerTypeId}`, "_blank");
     }
 
     private isCustomerConnectedToEntities: boolean = false;

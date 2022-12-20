@@ -6,7 +6,7 @@ Feature: Create Country, Edit, inactivate or activate it from Maintenance
     Scenario: Add CountryCode with lenght more than 2
         Given the user logged in and navigate to "Countries" in maintenance menu
         When add "123" as country code
-        Then a validation message with "Code Field must be less than 2" error should appear
+        Then a validation message with "Code Field length must be less than 2" error should appear
 
     Scenario: Add Country
         Given a country with the following details

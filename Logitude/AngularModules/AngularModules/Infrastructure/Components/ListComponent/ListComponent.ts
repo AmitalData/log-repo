@@ -2034,7 +2034,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                     windowArgs.CurrentEntity = entityList;
                                     windowArgs.IsCargoTrackingMenuClicked = this.listArgs.IsCargoTrackingMenuClicked;
                                     var logWindow = new LogitudeWindow();
-                                    logWindow.Width = 960;
+                                    logWindow.Width = 1100;
                                     logWindow.Height = 570;
                                     logWindow.Title = this.ObjectTableName == "Card" ? "Invite Partners" : "Invite Customers";
                                     logWindow.WindowArgs = windowArgs;

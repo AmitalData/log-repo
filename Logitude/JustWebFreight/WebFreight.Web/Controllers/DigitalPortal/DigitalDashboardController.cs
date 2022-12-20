@@ -110,7 +110,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, newFilters.CardId);
                 newFilters.Tenant = authToken.Tenant;
                 var shipmentQuery = new ShipmentQuery(authToken.Tenant);
-                var shipments = shipmentQuery.GetByFilters(newFilters).Where(r => !string.IsNullOrEmpty(r.StatusCode)).ToList();
+                var shipments = shipmentQuery.GetByFilters(newFilters).Where(r => !string.IsNullOrEmpty(r.StatusCode));
                 var res = GetDigitalStatusesWithCount(shipments, authToken.Tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, res);
@@ -141,8 +141,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, newFilters.CardId);
                 newFilters.Tenant = authToken.Tenant;
                 var shipmentQuery = new ShipmentQuery(authToken.Tenant);
-                var shipments = shipmentQuery.GetByFilters(newFilters).Where(r => !string.IsNullOrEmpty(r.StatusCode)).ToList();
-                var res = GetDigitalStatusesWeightWithCount(shipments, authToken.Tenant);
+                var shipmentsQuery = shipmentQuery.GetByFilters(newFilters).Where(r => !string.IsNullOrEmpty(r.StatusCode));
+                var res = GetDigitalStatusesWeightWithCount(shipmentsQuery, authToken.Tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, res);
             }
@@ -210,17 +210,17 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
 
             var currentMonthInvocies = res.Where(a => a.DueDate.Value.Month == todayDate.Month)
-                              .GroupBy(a => a.DueDate.Value.Month)
-                              .ToDictionary(t => t.Key,
-                                                 t => new
-                                                 {
-                                                     PartiallyPaidCount = t.Where(a => a.PaidStatus == "Partially Paid").Count(),
-                                                     OverDueCount = t.Where(a => a.DueDate < todayDate).Count()
-                                                 });
+                                          .GroupBy(a => a.DueDate.Value.Month)
+                                          .ToDictionary(x => x.Key,
+                                                             t => new
+                                                             {
+                                                                 PartiallyPaidCount = t.Where(a => a.PaidStatus == "Partially Paid").Count(),
+                                                                 OverDueCount = t.Where(a => a.DueDate < todayDate).Count()
+                                                             });
 
             var lastMonthInvocies = res.Where(a => a.DueDate.Value.Month == todayDate.AddMonths(-1).Month)
                                        .GroupBy(a => a.DueDate.Value.Month)
-                                       .ToDictionary(t => t.Key,
+                                       .ToDictionary(x => x.Key,
                                                           t => new
                                                           {
                                                               PartiallyPaidCount = t.Where(a => a.PaidStatus == "Partially Paid").Count(),
@@ -229,7 +229,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
             var last2MonthInvocies = res.Where(a => a.DueDate.Value.Month == todayDate.AddMonths(-2).Month)
                                         .GroupBy(a => a.DueDate.Value.Month)
-                                        .ToDictionary(t => t.Key,
+                                        .ToDictionary(x => x.Key,
                                                            t => new
                                                            {
                                                                PartiallyPaidCount = t.Where(a => a.PaidStatus == "Partially Paid").Count(),
@@ -238,7 +238,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
             var lessThan2MonthInvocies = res.Where(a => a.DueDate.Value.Month < todayDate.AddMonths(-2).Month)
                                             .GroupBy(a => a.DueDate.Value.Month)
-                                            .ToDictionary(t => t.Key,
+                                            .ToDictionary(x => x.Key,
                                                                t => new
                                                                {
                                                                    PartiallyPaidCount = t.Where(a => a.PaidStatus == "Partially Paid").Count(),
@@ -265,14 +265,23 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             return response;
         }
 
-        private Dictionary<string, object> GetDigitalStatusesWithCount(List<DigitalShipmentList> shipments, int tenant)
+        private Dictionary<string, object> GetDigitalStatusesWithCount(IQueryable<DigitalShipmentList> shipments, int tenant)
         {
             var shipmentsGroupedByStatus = new Dictionary<string, object>();
             var entityStatusQuery = new EntityStatusQuery(tenant);
             var blockedStatus = new List<string> { "PSDL", "PODR" };
-            var allStatuses = entityStatusQuery.GetEntityStatusPMsByTenant(tenant).ToList();
-            var allDigitalEntityStatus = allStatuses.Where(a => a.IsDigitalPortal && !blockedStatus.Contains(a.Code)).ToList();
-            var digitalEntityStatusCodes = allStatuses.Where(a => a.IsDigitalPortal && !blockedStatus.Contains(a.Code)).Select(a => a.Code).ToList();
+            var allStatuses = entityStatusQuery.GetEntityStatusPMsByTenant(tenant)
+                                               .ToList();
+
+            var allDigitalEntityStatus = allStatuses.Where(a => a.IsDigitalPortal
+                                                                && !blockedStatus.Contains(a.Code))
+                                                    .ToList();
+
+            var digitalEntityStatusCodes = allStatuses.Where(a => a.IsDigitalPortal 
+                                                                  && !blockedStatus.Contains(a.Code))
+                                                      .Select(a => a.Code)
+                                                      .ToList();
+
             var allStatusesCodes = allStatuses.Select(a => a.Code);
             var othersStatuses = allStatusesCodes.Except(digitalEntityStatusCodes).ToList();
 
@@ -282,19 +291,23 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 shipmentsGroupedByStatus.Add(GetDigitalStatusName(item.Code, item.DisplayName), new { Count = count, Statuses = item.Id });
             });
 
-            var others = shipments.Where(r => othersStatuses.Contains(r.StatusCode));
-            var othersStatusesIds = string.Join(",", others.Select(x => x.Id));
-            shipmentsGroupedByStatus.Add("Others", new { Count = others.Count(), Statuses = othersStatusesIds });
+            var others = shipments.Where(r => othersStatuses.Contains(r.StatusCode))
+                                  .Select(a => a.Id)
+                                  .ToList();
 
+            var othersStatusesIds = string.Join(",", others);
+            shipmentsGroupedByStatus.Add("Others", new { Count = others.Count(), Statuses = othersStatusesIds });
             return shipmentsGroupedByStatus;
         }
 
-        private Dictionary<string, object> GetDigitalStatusesWeightWithCount(List<DigitalShipmentList> shipments, int tenant)
+        private Dictionary<string, object> GetDigitalStatusesWeightWithCount(IQueryable<DigitalShipmentList> shipments, int tenant)
         {
             var shipmentsGroupedByStatus = new Dictionary<string, object>();
             var entityStatusQuery = new EntityStatusQuery(tenant);
 
             var blockedStatus = new List<string> { "PSDL", "PODR" };
+
+            var count = shipments.Count(a => a.TransportModeId == "I" && a.StatusCode == "SHOR");
 
             var allStatuses = entityStatusQuery.GetEntityStatusPMsByTenant(tenant)
                                                .Where(a => !blockedStatus.Contains(a.Code) 
@@ -307,31 +320,34 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                                })
                                                .ToList();
 
+            if (!allStatuses.Any())
+            {
+                return new Dictionary<string, object>
+                {
+                    { "Origin", 0 },
+                    { "InTransit", 0 },
+                    { "dataAtDestination", 0 }
+                };
+            }
+
+            var allowedStatusCode = allStatuses.Select(a => a.Code).ToList();
+
             var departedCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SDEP").StatusWeight;
-
-            var digitalStatusesOrigin = allStatuses.Where(a => a.StatusWeight < departedCodeWeight)
-                                                   .Select(a => a.Code)
-                                                   .ToList();  //new List<string> { "SHOR", "SHP2" };
-
-            var dataOrigin = shipments.Where(r => digitalStatusesOrigin.Contains(r.StatusCode))
-                                .GroupBy(a => a.TransportModeId)
-                                .ToDictionary(x => x.Key, y => y.Count());
 
             var arrivedAtDestinationCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SARR").StatusWeight;
 
-            var digitalStatusesInTransit = allStatuses.Where(a => a.StatusWeight >= departedCodeWeight && a.StatusWeight < arrivedAtDestinationCodeWeight)
-                                                      .Select(a => a.Code)
-                                                      .ToList(); //new List<string> { "SDEP" };
-            var dataInTransit = allStatuses.Where(a => a.StatusWeight >= departedCodeWeight 
-                                                       && a.StatusWeight < arrivedAtDestinationCodeWeight)
-                                           .Select(a => a.Code)
-                                           .ToList();
+            var dataOrigin = shipments.Where(r => r.StatusWeight < departedCodeWeight && allowedStatusCode.Contains(r.StatusCode))
+                                      .GroupBy(a => a.TransportModeId)
+                                      .ToDictionary(x => x.Key, y => y.Count());
 
-            var digitalStatusesAtDestination = allStatuses.Where(a => a.StatusWeight >= arrivedAtDestinationCodeWeight)
-                                                          .Select(a => a.Code)
-                                                          .ToList(); //new List<string> { "SARR", "SDL2", "SDLY"};
+            var dataInTransit = shipments.Where(r => r.StatusWeight >= departedCodeWeight
+                                                     && r.StatusWeight < arrivedAtDestinationCodeWeight
+                                                     && allowedStatusCode.Contains(r.StatusCode))
+                                         .GroupBy(a => a.TransportModeId)
+                                         .ToDictionary(x => x.Key, y => y.Count());
 
-            var dataAtDestination = shipments.Where(r => digitalStatusesInTransit.Contains(r.StatusCode))
+            var dataAtDestination = shipments.Where(r => r.StatusWeight >= arrivedAtDestinationCodeWeight
+                                                         && allowedStatusCode.Contains(r.StatusCode))
                                              .GroupBy(a => a.TransportModeId)
                                              .ToDictionary(x => x.Key, y => y.Count());
 

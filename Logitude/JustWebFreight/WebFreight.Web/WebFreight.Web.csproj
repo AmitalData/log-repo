@@ -734,6 +734,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\AccountingModel\ChartOfAccountsTypesExtendedController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalActivityController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalCustomizationController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\ScreenViewsController.Generated.cs" />
@@ -6410,6 +6411,9 @@
     <Compile Include="ReportsWebServices\SATInvoiceProfact40DataProviderMappingFields.cs" />
     <Compile Include="ReportsWebServices\ShipmentPackingWebService.asmx.cs">
       <DependentUpon>ShipmentPackingWebService.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ReportsWebServices\ShipmentPackingDataProviderService.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="RequestParams\GetQuickbooksTablesRequestParams.Shared.cs" />

@@ -192,7 +192,7 @@ namespace WebFreight.Web.ContainerTracking
                     manager.SetShipment(shipment);
                     MapContainersExternalData(container);
                     manager.Update(IsUpdateContainerAllowed(container), IsUpdateShipmentAllowed(shipment));
-                    analyz = true;
+                    analyz = IsUpdateContainerAllowed(container);
                 }
 
                 SetComunicationLogDone(comunicationLog, analyz);
@@ -680,27 +680,27 @@ namespace WebFreight.Web.ContainerTracking
         public DateTime? EventDate;
         public string TrackingSource;
 
-        public ContainerTransshipment LoadedTransshipment; 
-        public ContainerTransshipment VesselArrived;
-        public ContainerTransshipment VesselDeparted;
-        public ContainerTransshipment DischargedTransshipment;
+        public MilestoneData LoadedTransshipment; 
+        public MilestoneData VesselArrived;
+        public MilestoneData VesselDeparted;
+        public MilestoneData DischargedTransshipment;
         
 
         public Location VisionPreCarriage { get; set; }
         public Location VisionOnCarriage { get; set; }
     }
 
-    public class ContainerTransshipment
+    public class MilestoneData
     {
         public string Key;
-        public List<ContainerTransshipmentUpdatedFields> TransshipmentMilestones;
-        public ContainerTransshipment(string key)
+        public List<MilestoneDataUpdatedFields> MilestoneFields;
+        public MilestoneData(string key)
         {
             this.Key = key;
-            this.TransshipmentMilestones = new List<ContainerTransshipmentUpdatedFields>();
+            this.MilestoneFields = new List<MilestoneDataUpdatedFields>();
         }
     }
-    public class ContainerTransshipmentUpdatedFields
+    public class MilestoneDataUpdatedFields
     {
         public string Location;
         public string Vessel;

@@ -5,7 +5,7 @@ Feature: Department Create, Search and Edit from Maintenance
     Scenario: Add Department Code with lenght more than 10
         Given the user logged in and open "Departments" in maintenance menu
         When add "01234567891" as department code
-        Then a validation message with "Code Field must be less than 10" error should appear
+        Then a validation message with "Code Field length must be less than 10" error should appear
 
     Scenario: Create new Department
         Given a department with the following details

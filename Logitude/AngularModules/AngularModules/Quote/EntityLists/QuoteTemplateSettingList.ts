@@ -188,5 +188,9 @@ export class QuoteTemplateSettingList {
 		PageNumberingTextDesignId: string;
 		ShowRegionalTAXPackages: boolean;
 		ShowRegionalTAXContainers: boolean;
+		ShowSaleIncludingVATContainers: boolean;
+		ShowSaleIncludingVATPackages: boolean;
+		ShowLocalSaleIncludingVATContainers: boolean;
+		ShowLocalSaleIncludingVATPackages: boolean;
 	
 }
