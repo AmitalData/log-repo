@@ -3075,7 +3075,7 @@ decSupplierInvoiceItem.CounterKey, decSupplierInvoiceItem.LineNumber, this._Dirt
             CCUCRREQPM cCUCRREQPM = new CCUCRREQPM();
             cCUCRREQPM.ChangeSetOp = ChangeSetOperation.Insert;
 
-            if (decSupplierInvioceItemsCertificates.CertificateNumber.Length > 20)
+            if (decSupplierInvioceItemsCertificates.CertificateNumber !=null && decSupplierInvioceItemsCertificates.CertificateNumber.Length > 20)
                 cCUCRREQPM.CERTIFICATENO = decSupplierInvioceItemsCertificates.CertificateNumber.Substring(0, 20);
             else
                 cCUCRREQPM.CERTIFICATENO = decSupplierInvioceItemsCertificates.CertificateNumber;
