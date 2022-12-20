@@ -65,15 +65,28 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             var myXElementSWSHAWBResponse = XElement.Parse(communicationsData);
             if(myXElementSWSHAWBResponse != null)
             {
-                var ids = myXElementSWSHAWBResponse.Elements("CourierHawbFeedback");
-                foreach (var item in ids)
+                var ArrayOfSWSHAWBResponse = myXElementSWSHAWBResponse.Elements("CourierHawbFeedback");
+                if (ArrayOfSWSHAWBResponse != null)
+                {
+                    foreach (var item in ArrayOfSWSHAWBResponse)
+                    {
+                        var mySWSHAWBResponse = new CourierSWSHAWBResponse();
+                        mySWSHAWBResponse.CourierCompanyVat = (string)GetXElement(item, "CourierCompanyVat");
+                        mySWSHAWBResponse.CourierHawbNumber = (string)GetXElement(item, "CourierHawbNumber");
+                        mySWSHAWBResponse.StatusCode = (string)GetXElement(item, "StatusCode");
+                        mySWSHAWBResponse.ErrorCode = (string)GetXElement(item, "ErrorCode");
+                        mySWSHAWBResponse.ErrorDescription = (string)GetXElement(item, "ErrorDescription");
+                        listSWSHAWBMessage.Add(mySWSHAWBResponse);
+                    }
+                }
+                else
                 {
                     var mySWSHAWBResponse = new CourierSWSHAWBResponse();
-                    mySWSHAWBResponse.CourierCompanyVat = (string)GetXElement(item, "CourierCompanyVat");
-                    mySWSHAWBResponse.CourierHawbNumber = (string)GetXElement(item, "CourierHawbNumber");
-                    mySWSHAWBResponse.StatusCode = (string)GetXElement(item, "StatusCode");
-                    mySWSHAWBResponse.ErrorCode = (string)GetXElement(item, "ErrorCode");
-                    mySWSHAWBResponse.ErrorDescription = (string)GetXElement(item, "ErrorDescription");
+                    mySWSHAWBResponse.CourierCompanyVat = (string)GetXElement(myXElementSWSHAWBResponse, "CourierCompanyVat");
+                    mySWSHAWBResponse.CourierHawbNumber = (string)GetXElement(myXElementSWSHAWBResponse, "CourierHawbNumber");
+                    mySWSHAWBResponse.StatusCode = (string)GetXElement(myXElementSWSHAWBResponse, "StatusCode");
+                    mySWSHAWBResponse.ErrorCode = (string)GetXElement(myXElementSWSHAWBResponse, "ErrorCode");
+                    mySWSHAWBResponse.ErrorDescription = (string)GetXElement(myXElementSWSHAWBResponse, "ErrorDescription");
                     listSWSHAWBMessage.Add(mySWSHAWBResponse);
                 }
             }
