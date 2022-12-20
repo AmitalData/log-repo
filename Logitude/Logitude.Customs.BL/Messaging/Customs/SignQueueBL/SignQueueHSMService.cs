@@ -13,24 +13,17 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
     public class SignQueueHSMService
     {
 
-        public const string HSMActiveCertificates_URL = @"https://customs.amital.co.il/api/SignHSMGetActiveCertificates";
-        public const string HSMAzureToken = @"9edYig7zg_b2mBV-72DaOKVMlqtJp-xovFY0k5uBNSRtAzFuY2xcGA==";
-        public const string HSMsignprocess = "MehesExport";
+        //public const string HSMActiveCertificates_URL = @"https://customs.amital.co.il/api/SignHSMGetActiveCertificates";
+        //public const string HSMAzureToken = @"9edYig7zg_b2mBV-72DaOKVMlqtJp-xovFY0k5uBNSRtAzFuY2xcGA==";
+        //public const string HSMsignprocess = "MehesExport";
 
-        public const string TENATcompanyid = "101";
-        public const string TENATtoken = "c6f85591-6e4e-4203-95ef-628b826577b8";
+        //public const string TENATcompanyid = "101";
+        //public const string TENATtoken = "c6f85591-6e4e-4203-95ef-628b826577b8";
 
         public bool IsHSMSign_IsOn(int tenant)
         {
-            bool fromEnvSetting = !string.IsNullOrEmpty(HSMActiveCertificates_URL) &&
-                !string.IsNullOrEmpty(HSMAzureToken) &&
-                !string.IsNullOrEmpty(HSMsignprocess)
-
-                ;
-            bool fromTenantSetting =
-                !string.IsNullOrEmpty(TENATcompanyid) &&
-                !string.IsNullOrEmpty(TENATtoken);
-            return fromEnvSetting && fromTenantSetting;
+            CustomsSettingQueryService settingService = new CustomsSettingQueryService(tenant);
+            return settingService.IsHSMSign_IsOn(tenant);
         }
 
         
@@ -40,21 +33,21 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
 
             var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(tenant);
             var environmentSettingPM =customsEnvironmentSettingQueryService.GetEnvironmentSettingPM();
-            CustomsSettingQueryService settingService = new CustomsSettingQueryService(tenant);
-            var setting = settingService.GetSettingByTenantN(tenant);
+            var settingService = new CustomsSettingQueryService(tenant);
+            var tenantSetting = settingService.GetSettingByTenantN(tenant);
 
 
             var hSMActiveSignCardService = new HSMActiveSignCardService();
             var res = hSMActiveSignCardService.GetActiveCertificates(
                 tenant,
-                HSMActiveCertificates_URL,
-                HSMAzureToken,
+                environmentSettingPM.HSMActiveCertUrl,//@"https://customs.amital.co.il/api/SignHSMGetActiveCertificates";
+                environmentSettingPM.HSMToken,//@@"9edYig7zg_b2mBV-72DaOKVMlqtJp-xovFY0k5uBNSRtAzFuY2xcGA==";
       new HSMActiveSignCardParams()
       {
-          companyid = "101",
-          token = "c6f85591-6e4e-4203-95ef-628b826577b8",
-          signprocess = HSMsignprocess,
-          companyBN = setting.CustomsAgentId, //"550221105"
+          companyid = tenantSetting.HSMCompanyId,// "101",
+          token = tenantSetting.HSMToken,// "c6f85591-6e4e-4203-95ef-628b826577b8",
+          signprocess = environmentSettingPM.HSMSignProcess,
+          companyBN = tenantSetting.CustomsAgentId, //"550221105"
 
       },
        fromCache
@@ -74,10 +67,10 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
              */
             if (DateTime.Now> new DateTime(2022,12,30))
             {
-                var badCert= res.FirstOrDefault(r => r.companyBN != setting.CustomsAgentId);
+                var badCert= res.FirstOrDefault(r => r.companyBN != tenantSetting.CustomsAgentId);
                 if (badCert!=null)
                 {
-                    throw new Exception($"GetHSMAllCertificates- found  r.companyBN ({badCert.companyBN}) != setting.CustomsAgentId {setting.CustomsAgentId}");
+                    throw new Exception($"GetHSMAllCertificates- found  r.companyBN ({badCert.companyBN}) != setting.CustomsAgentId {tenantSetting.CustomsAgentId}");
                 }
             }
 

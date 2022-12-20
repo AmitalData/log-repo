@@ -139,6 +139,28 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return pm;
         }
 
+
+        public bool IsHSMSign_IsOn(int tenant)
+        {
+            var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(tenant);
+            var environmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM();
+            
+            var setting = this.GetSettingByTenantN(tenant);
+
+
+            bool fromEnvSetting =
+                !string.IsNullOrEmpty(environmentSettingPM.HSMActiveCertUrl) &&
+                !string.IsNullOrEmpty(environmentSettingPM.HSMSignServiceUrl) &&
+                !string.IsNullOrEmpty(environmentSettingPM.HSMToken) &&
+                !string.IsNullOrEmpty(environmentSettingPM.HSMSignProcess)
+
+                ;
+            bool fromTenantSetting =
+                !string.IsNullOrEmpty(setting.HSMCompanyId) &&
+                !string.IsNullOrEmpty(setting.HSMToken);
+            return fromEnvSetting && fromTenantSetting;
+        }
+
         public CustomsSettingPM GetSingleByTenant(int tenant)
         {
             var poco = repository.GetSettingByTenant(tenant);
