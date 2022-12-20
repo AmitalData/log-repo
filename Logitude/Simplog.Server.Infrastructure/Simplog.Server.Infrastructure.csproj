@@ -185,6 +185,7 @@
     <Compile Include="DataContracts\Models\DigitalFeildSecurityObject.cs" />
     <Compile Include="DataContracts\Models\DigitalFeildSecurityObjectModel.cs" />
     <Compile Include="DataContracts\Models\DigitalFeildSecurityUpdateModel.cs" />
+    <Compile Include="DataContracts\Models\DigitalPortalScreenUpdateModel.cs" />
     <Compile Include="DataContracts\Models\DigitalTextCodeObject.cs" />
     <Compile Include="DataContracts\Models\DigitalTextCodeResponseModel.cs" />
     <Compile Include="DataContracts\Models\DigitalTextCodeUpdateModel.cs" />
