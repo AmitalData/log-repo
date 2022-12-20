@@ -181,7 +181,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     public CheckGroupAddVisiblity() {
         var isAddVisible: boolean = true;
 
-        if (this.EntityPM.TypeCode == "donut" || this.EntityPM.TypeCode == "pie" || this.EntityPM.TypeCode == "kpi") {
+        if (this.EntityPM.TypeCode == "donut" || this.EntityPM.TypeCode == "pie" || this.EntityPM.TypeCode == "kpi" || this.EntityPM.TypeCode == "line") {
             isAddVisible = false;
             if (this.SecondaryGroupById) this.SecondaryGroupById = null;
             if (this.SecondaryDateGroupCode) this.SecondaryDateGroupCode = null;
