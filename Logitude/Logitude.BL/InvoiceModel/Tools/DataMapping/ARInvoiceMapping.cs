@@ -199,7 +199,6 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.BankAccountLiteId = entityPM.BankAccountLiteId;
             entity.IsMultiCurrency = entityPM.IsMultiCurrency;
             entity.TotalAmountForTaxReport = entityPM.TotalAmountForTaxReport;
-            entity.TotalExamptFortaxReport = entityPM.TotalAmountForTaxReport - entity.TotaVatableAmountForTaxReport;
             entity.TotalVAT = entityPM.TotalVAT;
             entity.TotaVatableAmountForTaxReport = entityPM.TotaVatableAmountForTaxReport;
             entity.IsFullAccounting = entityPM.IsFullAccounting;
@@ -216,6 +215,13 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entityPM.SetReTransfer = false;
             entityPM.SetCancelDraft = false;
             entityPM.SetReSendQBO = false;
+
+            if (entityPM.TotalAmountForTaxReport == null)
+                entityPM.TotalAmountForTaxReport = 0;
+            if (entityPM.TotaVatableAmountForTaxReport == null)
+                entityPM.TotaVatableAmountForTaxReport = 0;
+
+            entity.TotalExamptFortaxReport = entityPM.TotalAmountForTaxReport - entityPM.TotaVatableAmountForTaxReport;
 
             string transferError = entityPM.TransferError;
 

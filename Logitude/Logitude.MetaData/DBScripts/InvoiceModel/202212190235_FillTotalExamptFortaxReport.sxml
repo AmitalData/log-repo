@@ -1,7 +1,0 @@
-﻿<Script DBType="Main" Module="Invoice" TargetTableName="ARInvoices">
-	<Sql Version="2">
-		<![CDATA[
-	update ARInvoices set [TotalExamptFortaxReport] = [TotalAmountForTaxReport] - [TotaVatableAmountForTaxReport]
-    ]]>
-	</Sql>
-</Script>
