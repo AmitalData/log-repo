@@ -170,8 +170,17 @@ export class CustomizationMainComponent {
         logWindow.Show('./InfrastructureCustomization/Components/Customization/CustomizationEditComponent');
     }
 
-    NewCustomEntityClicked() {
-
+    NewCustomObjectClicked() {
+        var window = new LogitudeWindow();
+        window.Width = 600;
+        window.Height = 400;
+        window.Title = "New Custom Object";
+        window.WindowArgs = {
+            CustomizationSubEntitiesComponent: null,
+            CustomizationMainComponent: this,
+            IsSubObject: false
+        };
+        window.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/AddCustomObjectComponent');
     }
 
     CloseClicked() {

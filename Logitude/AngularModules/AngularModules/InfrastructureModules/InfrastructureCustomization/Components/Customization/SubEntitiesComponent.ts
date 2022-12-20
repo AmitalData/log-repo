@@ -92,6 +92,7 @@ export class SubEntitiesComponent {
         window.Title = newTabWindowTitle;
         window.WindowArgs = {
             CustomizationSubEntitiesComponent: this,
+            CustomizationMainComponent: null,
             IsSubObject: true
         };
         window.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/AddCustomObjectComponent');
