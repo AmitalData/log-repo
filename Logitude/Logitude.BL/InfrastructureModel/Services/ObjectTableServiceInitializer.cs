@@ -31,7 +31,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         {
             this.entityPM.AvailableInCustomization = true;
             this.entityPM.IsComposition = true;
-            this.entityPM.ObjectTableTypeCode = "BR";
             this.entityPM.HasCustomFields = true;
             this.entityPM.MaxNumberOfCustomFields = 50;
             this.entityPM.AllowCustomFields = true;

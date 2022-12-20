@@ -28,7 +28,7 @@
                                                 <div *ngIf="!DisplayLabelSingular" style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
                                             </td>
                                             <td class="TextTrimming" style="text-align: left; vertical-align:middle;">
-                                                <label class="Label" [style.color]="DisplayLabelSingular ? '#6E7172':'red'" style="color:#6E7172">Display Label (Singular):</label>
+                                                <label class="Label" [style.color] ="DisplayLabelSingular ? '#6E7172':'red'" style="color:#6E7172">Display Label (Singular):</label>
                                             </td>
                                         </tr>
                                     </table>
@@ -73,15 +73,16 @@
                                 <td style="height:10px"></td>
                             </tr>
                             <tr *ngIf="!IsSubObject">
-                                <td style="height: 50px; width: 140px;">
+                                <td style="height: 22px; width: 140px;">
                                     <label style="padding-left:10px;color: rgb(110, 113, 114);">
                                         Type:
                                     </label>
                                 </td>
                                 <td style="width:10px"></td>
-                                <td style="height: 50px; width: 250px; ">
+                                <td style="height: 22px; width: 250px; ">
                                     <div style="width: 250px; display:flex">
-                                        <ComboBox [SelectedItem]="ObjectTableType" [ItemsSource]="ObjectTableTypes"
+                                        <ComboBox (SelectedItemChanged)="ObjectTableType=$event"
+                                                  [SelectedItem]="ObjectTableType" [ItemsSource]="ObjectTableTypes"
                                                   [Binding]="'Record'" [MaxHeight]="'100'" style="width:212px; margin-right:6px"></ComboBox>
                                         <HelpIcon style="width:18px; height:18px;" [HideHeader]="true" [Text]="TypeHelpText"></HelpIcon>
                                     </div>

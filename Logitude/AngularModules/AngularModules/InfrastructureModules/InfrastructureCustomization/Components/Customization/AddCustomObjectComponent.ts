@@ -152,6 +152,7 @@ export class AddCustomObjectComponent extends BaseComponent {
         this.objectTablePM.DefaultTextPlural = this.DisplayLabelPlural;
         this.objectTablePM.Description = this.Description;
         this.objectTablePM.ObjectTableTypeCode = this.objectTableTypeCode;
+        this.objectTablePM.SupportSubEntity = this.IsSubObject ? false : true;
 
         this.objectTablePMService.insert(this.objectTablePM).subscribe((response: ServiceResponse) => {
 
@@ -161,7 +162,9 @@ export class AddCustomObjectComponent extends BaseComponent {
             response.Result.IsNew = true;
             window.ObjectTables.push(response.Result);
             this.GetObjectFields();
-            this.customizationSubEntitiesComponent.ApplyChanges(response.Result);
+            if (this.IsSubObject) this.customizationSubEntitiesComponent.ApplyChanges(response.Result);
+            else this.customizationMainComponent.ApplyChanges();
+            
             this.CurrentSession.CloseCurrentWindow();
 
         });
