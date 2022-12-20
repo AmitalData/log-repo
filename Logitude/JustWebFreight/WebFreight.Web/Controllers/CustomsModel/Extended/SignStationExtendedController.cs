@@ -49,12 +49,12 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 //List<SignStationList> entityLists = GetAllStation(searchfields, tenant);
 
-                List<SignStationList> entityLists /*= GetAllStation(searchfields, tenant)*/;
+                List<MySignStationList> entityLists /*= GetAllStation(searchfields, tenant)*/;
                 //if (!CustomsSettingQueryService.GetSettingByTenant(tenant).IsConnectedToUniFreight)
                 if (SignQueueHybridDbService.IsCloudExport(tenant))
                 {
-                    var dbSignQueueService = new SignQueueHybridDbService();
-                    entityLists = dbSignQueueService.GetAllStation(searchfields, tenant);
+                    entityLists = GetSignStationDBHSM(searchfields, tenant);
+
                 }
                 else
                 {
@@ -82,6 +82,23 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
+        private static List<MySignStationList> GetSignStationDBHSM(string searchfields, int tenant)
+        {
+            List<MySignStationList> entityLists;
+            var dbSignQueueService = new SignQueueHybridDbService();
+            entityLists = dbSignQueueService.GetAllStation(searchfields, tenant);
+            var signQueueHSMService = new SignQueueHSMService();
+            if (signQueueHSMService.IsHSMSign_IsOn(tenant))
+            {
+                var hsmCertList = signQueueHSMService.GetHSMAllCertificates(tenant, false);
+
+                entityLists = entityLists ?? new List<MySignStationList>();
+                hsmCertList = hsmCertList ?? new List<MySignStationList>();
+                entityLists = hsmCertList.Union(entityLists).ToList();
+            }
+
+            return entityLists;
+        }
 
         public HttpResponseMessage GetSignStations(int skip, int take, string sortingCol, string sortingDir, string searchfields, string FilterByStatus)
         {
@@ -94,12 +111,13 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
                 //List<SignStationList> entityLists = GetAllStation(searchfields, tenant);
-                List<SignStationList> entityLists /*= GetAllStation(searchfields, tenant)*/;
+                List<MySignStationList> entityLists = new List<MySignStationList>(); /*= GetAllStation(searchfields, tenant)*/;
                 //if (!CustomsSettingQueryService.GetSettingByTenant(tenant).IsConnectedToUniFreight)
                 if (SignQueueHybridDbService.IsCloudExport(tenant))
                 {
-                    var dbSignQueueService = new SignQueueHybridDbService();
-                    entityLists = dbSignQueueService.GetAllStation(searchfields, tenant);
+                    //var dbSignQueueService = new SignQueueHybridDbService();
+                    //entityLists = dbSignQueueService.GetAllStation(searchfields, tenant);
+                    entityLists = GetSignStationDBHSM(searchfields, tenant);
                 }
                 else
                 {
@@ -137,16 +155,16 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-        private static List<SignStationList> GetAllStation(string searchfields, int tenant)
+        private static List<MySignStationList> GetAllStation(string searchfields, int tenant)
         {
-            var entityLists = new List<SignStationList>();
+            var entityLists = new List<MySignStationList>();
             List<SubscribeSignServer> mySubscribeSignServerList = SignQueue.Instance.GetCopyOfMySubscribeSignServerList(tenant);
 
 
             mySubscribeSignServerList.ForEach(
                 s =>
                 {
-                    entityLists.Add(new SignStationList()
+                    entityLists.Add(new MySignStationList()
                     {
                         PersonId = s.MySignCertificateClass.PersonId,
                         SignerName = s.MySignCertificateClass.SignerName,
@@ -183,7 +201,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                     }
                     else
                     {
-                        entityLists.Add(new SignStationList()
+                        entityLists.Add(new MySignStationList()
                         {
                             MachineName = stsRow.MachineName,
                             CustomsAgentId = stsRow.MySignCertificateClass.CustomsAgentId,
@@ -226,13 +244,13 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             return entityLists;
         }
 
-        List<SignStationList> GetList(int skip, int take, string sortingCol, string sortingDir, List<SignStationList> entityLists)
+        List<MySignStationList> GetList(int skip, int take, string sortingCol, string sortingDir, List<MySignStationList> entityLists)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
 
-            IQueryable<SignStationList> query2 = entityLists.AsQueryable(); ;
+            IQueryable<MySignStationList> query2 = entityLists.AsQueryable(); ;
             if (!String.IsNullOrWhiteSpace(sortingDir))
             {
                 QueryOperations queryOperations = new QueryOperations() { SortByColumnName = sortingCol, SortDirectin = sortingDir };
@@ -243,16 +261,16 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                     case "IsPersonalSignOn":
                     case "IsCompanySignOn":
                         {
-                            query2 = sortClass.GetSorterQuery<SignStationList, bool>(queryOperations, query2);
+                            query2 = sortClass.GetSorterQuery<MySignStationList, bool>(queryOperations, query2);
                         }
                         break;
                     case "LastSignAt":
                         {
-                            query2 = sortClass.GetSorterQuery<SignStationList, DateTime>(queryOperations, query2);
+                            query2 = sortClass.GetSorterQuery<MySignStationList, DateTime>(queryOperations, query2);
                         }
                         break;
                     default:
-                        query2 = sortClass.GetSorterQuery<SignStationList, string>(queryOperations, query2);
+                        query2 = sortClass.GetSorterQuery<MySignStationList, string>(queryOperations, query2);
                         break;
                 }
             }
