@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="Operators"
+  Schema="dbo"
+  DBType="Main"
+  Module="WorkFlow">
+  <Column
+    Name="Code"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Name"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Sign"
+    Type="nvarchar"
+    Size="3">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CategoryCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="CategoryCode"
+    ReferencedTable="OperatorCategories"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
+</Table>

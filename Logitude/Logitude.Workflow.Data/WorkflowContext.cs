@@ -72,6 +72,10 @@ namespace Logitude.Workflow.Data
 	
             modelBuilder.Configurations.Add(new ExpressionCategoryMap());
 	
+            modelBuilder.Configurations.Add(new OperatorMap());
+	
+            modelBuilder.Configurations.Add(new OperatorCategoryMap());
+	
             modelBuilder.Configurations.Add(new WorkFlowMap());
 	
             modelBuilder.Configurations.Add(new WorkFlowInstanceMap());
@@ -380,6 +384,18 @@ namespace Logitude.Workflow.Data
 	 }
 	
 	 public IDbSet<ExpressionCategory> ExpressionCategories 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<Operator> Operators 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<OperatorCategory> OperatorCategories 
 	 {
 	      get; set;
 	 
