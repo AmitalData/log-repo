@@ -687,6 +687,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string hSMCompanyId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string HSMCompanyId  
+	   {
+	    
+	     get
+		{
+		   return hSMCompanyId;
+		 }
+		 set
+		 {
+		   if(hSMCompanyId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HSMCompanyId",OldValue=hSMCompanyId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   hSMCompanyId=value;
+		   }
+			
+		 }
+	   }
+	  private string hSMToken ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string HSMToken  
+	   {
+	    
+	     get
+		{
+		   return hSMToken;
+		 }
+		 set
+		 {
+		   if(hSMToken != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HSMToken",OldValue=hSMToken,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   hSMToken=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -62,6 +62,10 @@ namespace Logitude.Customs.Data.EntityLists
        public bool AutoUnitMeasurement  { get; set; }
        [DataMember]
        public string CompanyType  { get; set; }
+       [DataMember]
+       public string HSMCompanyId  { get; set; }
+       [DataMember]
+       public string HSMToken  { get; set; }
    }
 
 }

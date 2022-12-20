@@ -27,7 +27,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         UseRabbitMQ, 
 	         RabbitHost, 
 	         RabbitUserName, 
-	         RabbitPassword,
+	         RabbitPassword, 
+	         HSMSignProcess, 
+	         HSMToken, 
+	         HSMActiveCertUrl, 
+	         HSMSignServiceUrl,
 	      }
 
 
@@ -39,7 +43,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         UseRabbitMQ, 
 	         RabbitHost, 
 	         RabbitUserName, 
-	         RabbitPassword,
+	         RabbitPassword, 
+	         HSMSignProcess, 
+	         HSMToken, 
+	         HSMActiveCertUrl, 
+	         HSMSignServiceUrl,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -66,6 +74,26 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RabbitPassword))
             {
 				entityPOCO.RabbitPassword = entityPM.RabbitPassword;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSMSignProcess))
+            {
+				entityPOCO.HSMSignProcess = entityPM.HSMSignProcess;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSMToken))
+            {
+				entityPOCO.HSMToken = entityPM.HSMToken;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSMActiveCertUrl))
+            {
+				entityPOCO.HSMActiveCertUrl = entityPM.HSMActiveCertUrl;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSMSignServiceUrl))
+            {
+				entityPOCO.HSMSignServiceUrl = entityPM.HSMSignServiceUrl;
 			}
 			}
 
@@ -102,6 +130,26 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.RabbitPassword = entityPOCO.RabbitPassword;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.HSMSignProcess))
+            {
+					entityPM.HSMSignProcess = entityPOCO.HSMSignProcess;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.HSMToken))
+            {
+					entityPM.HSMToken = entityPOCO.HSMToken;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.HSMActiveCertUrl))
+            {
+					entityPM.HSMActiveCertUrl = entityPOCO.HSMActiveCertUrl;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.HSMSignServiceUrl))
+            {
+					entityPM.HSMSignServiceUrl = entityPOCO.HSMSignServiceUrl;
+            }
+
 		}
 
 		public void PMToOldPM(CustomsEnvironmentSettingPM entityPM, CustomsEnvironmentSettingPM oldEntityPM)
@@ -126,6 +174,26 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RabbitPassword))
             {
                 oldEntityPM.RabbitPassword = entityPM.RabbitPassword;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSMSignProcess))
+            {
+                oldEntityPM.HSMSignProcess = entityPM.HSMSignProcess;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSMToken))
+            {
+                oldEntityPM.HSMToken = entityPM.HSMToken;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSMActiveCertUrl))
+            {
+                oldEntityPM.HSMActiveCertUrl = entityPM.HSMActiveCertUrl;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSMSignServiceUrl))
+            {
+                oldEntityPM.HSMSignServiceUrl = entityPM.HSMSignServiceUrl;
             }
 			
 		}

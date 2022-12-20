@@ -77,6 +77,10 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public DateTime? LastRunningDCAWS { get; set; }
         [Column("LastNumOfMessagesDCAWS")]
 	    public int? LastNumOfMessagesDCAWS { get; set; }
+        [Column("HSMCompanyId")]
+	    public string HSMCompanyId { get; set; }
+        [Column("HSMToken")]
+	    public string HSMToken { get; set; }
     }
 }
 	 
