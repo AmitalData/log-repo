@@ -1,4 +1,5 @@
-﻿using Logitude.Server.Tools.Helpers;
+﻿using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Server.Tools.Helpers;
 using Logitude.SystemLogs;
 using Newtonsoft.Json;
 using System;
@@ -152,14 +153,20 @@ var BytesToSign = anaO.PasiveSignGetBytesToSign(exportReqSignData.Tenant, correl
             string customsAgentId,
             byte[] signBytes)
         {
-           var res= this.SignFile(
-                 @"https://customs.amital.co.il/api/SignHSM",
-                 @"9edYig7zg_b2mBV-72DaOKVMlqtJp-xovFY0k5uBNSRtAzFuY2xcGA==",
+            var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(tenant);
+            var environmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM();
+            var settingService = new CustomsSettingQueryService(tenant);
+            var tenantSetting = settingService.GetSettingByTenantN(tenant);
+
+
+            var res = this.SignFile(
+                 environmentSettingPM.HSMSignServiceUrl,//  @"https://customs.amital.co.il/api/SignHSM",
+                 environmentSettingPM.HSMToken,// @"9edYig7zg_b2mBV-72DaOKVMlqtJp-xovFY0k5uBNSRtAzFuY2xcGA==",
                  new HSMSignFileService.HSMSignFileParams
                  {
-                     companyid = "101",
-                     token = "c6f85591-6e4e-4203-95ef-628b826577b8",
-                     signprocess = "MehesExport",
+                     companyid = tenantSetting.HSMCompanyId,// "101",
+                     token = tenantSetting.HSMToken,//  "c6f85591-6e4e-4203-95ef-628b826577b8",
+                     signprocess = environmentSettingPM.HSMSignProcess,// "MehesExport",
                      id = signByPersonalId ,//"308623615",
                      companypersonal = companypersonal, // P OR C  
                      filename = $"{customsRequestsSheetId}.xml",
