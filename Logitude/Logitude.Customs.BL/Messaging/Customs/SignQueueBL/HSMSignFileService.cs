@@ -88,7 +88,7 @@ var BytesToSign = anaO.PasiveSignGetBytesToSign(exportReqSignData.Tenant, correl
                         //task.Result.EnsureSuccessStatusCode();
                         //if (task.Result.IsSuccessStatusCode)//Result.StatusCode == System.Net.HttpStatusCode.OK)
                         responseString = task.Result.Content.ReadAsStringAsync().Result;
-                        //LogMessagingUtilWR.Instance.AppendLine(responseString);
+                        Debug.WriteLine(responseString);
                         switch (task.Result.StatusCode)
                         {
 

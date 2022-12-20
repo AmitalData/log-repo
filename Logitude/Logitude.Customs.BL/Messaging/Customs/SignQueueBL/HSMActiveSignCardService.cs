@@ -57,6 +57,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
                     LogMessagingUtil.Instance.AppendLine($"Took:{stopwatch.Elapsed}");
                     LogMessagingUtil.Instance.AppendLine(result?.Result?.StatusCode.ToString());
                     //LogMessagingUtil.Instance.AppendLine(responseString);
+                    Debug.WriteLine(responseString);
                     switch (result.Result.StatusCode)
                     {
                       
