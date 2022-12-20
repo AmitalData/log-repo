@@ -58,7 +58,7 @@ import { VendorChargesAnalysisFilterComponent } from './Components/FiltersCompon
 import { AutomationTestReportFilterComponent } from './Components/FilterReportComponent/AutomationTestReportFilterComponent';
 import { ExternalReconciliationLinesReportFilterControl } from './Components/FilterReportComponent/ExternalReconciliationLinesReportFilterControl';
 import { PerVendorReportFilterComponent } from './Components/FiltersComponent/Accounting/PerVendorReportFilterComponent';
-
+import { ARinvoiceSequencesReportFilterComponent } from './Components/FiltersComponent/Accounting/ARinvoiceSequencesReportFilterComponent';
 // Quotes
 import {QuotesFilterComponent} from './Components/FilterReportComponent/QuotesFilterComponent';
 import {RacingQuotesComponent} from './Components/FiltersComponent/CRM/RacingQuotesComponent';
@@ -178,6 +178,7 @@ export const Components =
         ExcelReportTemplateComponent,
         DataProviderFieldsNestedList,
         PerVendorReportFilterComponent,
+        ARinvoiceSequencesReportFilterComponent,
         SpotRateQuoteReportFilterComponent
 
     ];
@@ -266,6 +267,7 @@ export class ModuleDeclarations {
             case "LogitudeCRMReportFilterComponent": { myResult = LogitudeCRMReportFilterComponent; break; }
             case "ExcelReportTemplateComponent": { myResult = ExcelReportTemplateComponent; break; }
             case "PerVendorReportFilterComponent": { myResult = PerVendorReportFilterComponent; break; }
+            case "ARinvoiceSequencesReportFilterComponent": { myResult = ARinvoiceSequencesReportFilterComponent; break; }
             case "SpotRateQuoteReportFilterComponent": { myResult = SpotRateQuoteReportFilterComponent; break; }
 
         }

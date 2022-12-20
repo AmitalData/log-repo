@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ReportUpdateClass
    {  		
-		public const string HashString = "a2a7ed8da8fa3d9c261b482096919eb8";
+		public const string HashString = "0a22923b1ceb08cd914730c2fc2e96d5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1947,6 +1947,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 		   Feature ReportFeature_PerVendorReport = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PerVendorReport", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.PerVendorReport", NameTextCodeDefaultText = @"856 Per Vendor Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ReportObjectTable);
 
 		   Feature ReportFeature_SRQR = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SRQR", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.SRQR", NameTextCodeDefaultText = @"Spot Rate Quote Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ReportObjectTable);
+
+		   Feature ReportFeature_ARinvoiceSequences = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARinvoiceSequences", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.ARinvoiceSequences", NameTextCodeDefaultText = @"ARinvoice sequences" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ReportObjectTable);
 
    
 	    
