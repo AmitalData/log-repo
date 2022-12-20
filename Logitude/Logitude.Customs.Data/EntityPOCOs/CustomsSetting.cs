@@ -81,6 +81,10 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public DateTime? SuppressIIGMessageFromDate { get; set; }
         [Column("SuppressIIGMessageToDate")]
 	    public DateTime? SuppressIIGMessageToDate { get; set; }
+        [Column("HSMCompanyId")]
+	    public string HSMCompanyId { get; set; }
+        [Column("HSMToken")]
+	    public string HSMToken { get; set; }
     }
 }
 	 

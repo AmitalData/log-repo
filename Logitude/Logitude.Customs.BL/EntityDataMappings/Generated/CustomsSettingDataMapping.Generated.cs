@@ -49,7 +49,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         LastRunningDCAWS, 
 	         LastNumOfMessagesDCAWS, 
 	         SuppressIIGMessageFromDate, 
-	         SuppressIIGMessageToDate,
+	         SuppressIIGMessageToDate, 
+	         HSMCompanyId, 
+	         HSMToken,
 	      }
 
 
@@ -86,7 +88,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         LastNumOfMessagesDCAWS, 
 	         ServiceScript, 
 	         SuppressIIGMessageFromDate, 
-	         SuppressIIGMessageToDate,
+	         SuppressIIGMessageToDate, 
+	         HSMCompanyId, 
+	         HSMToken,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -228,6 +232,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SuppressIIGMessageToDate))
             {
 				entityPOCO.SuppressIIGMessageToDate = entityPM.SuppressIIGMessageToDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSMCompanyId))
+            {
+				entityPOCO.HSMCompanyId = entityPM.HSMCompanyId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSMToken))
+            {
+				entityPOCO.HSMToken = entityPM.HSMToken;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -376,6 +390,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.SuppressIIGMessageToDate = entityPOCO.SuppressIIGMessageToDate;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.HSMCompanyId))
+            {
+					entityPM.HSMCompanyId = entityPOCO.HSMCompanyId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.HSMToken))
+            {
+					entityPM.HSMToken = entityPOCO.HSMToken;
+            }
+
 		}
 
 		public void PMToOldPM(CustomsSettingPM entityPM, CustomsSettingPM oldEntityPM)
@@ -515,6 +539,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SuppressIIGMessageToDate))
             {
                 oldEntityPM.SuppressIIGMessageToDate = entityPM.SuppressIIGMessageToDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSMCompanyId))
+            {
+                oldEntityPM.HSMCompanyId = entityPM.HSMCompanyId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSMToken))
+            {
+                oldEntityPM.HSMToken = entityPM.HSMToken;
             }
 			
 		}

@@ -179,6 +179,16 @@ export class CustomsSettingPM {
     public set SuppressIIGMessageToDate(newValue: Date) { if (this.suppressIIGMessageToDate != newValue) { this.suppressIIGMessageToDate = newValue; this.MarkAsDirty("SuppressIIGMessageToDate"); } }
        
 	 
+    private hSMCompanyId: string;
+    public get HSMCompanyId() { return this.hSMCompanyId; }
+    public set HSMCompanyId(newValue: string) { if (this.hSMCompanyId != newValue) { this.hSMCompanyId = newValue; this.MarkAsDirty("HSMCompanyId"); } }
+       
+	 
+    private hSMToken: string;
+    public get HSMToken() { return this.hSMToken; }
+    public set HSMToken(newValue: string) { if (this.hSMToken != newValue) { this.hSMToken = newValue; this.MarkAsDirty("HSMToken"); } }
+       
+	 
 
     public OldEntityPM: CustomsSettingPM;
 		
