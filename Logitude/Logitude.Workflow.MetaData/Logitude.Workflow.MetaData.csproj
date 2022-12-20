@@ -63,9 +63,10 @@
     <None Include="DBScripts\PrepareWorkflowStatuses.sxml" />
     <None Include="DBScripts\ReplaceWorkflowsJsonEntityNameKeyWithEntityKey.sxml" />
     <None Include="DBScripts\FillWorkflowsTriggerField.sxml" />
-    <None Include="DBScripts\SetWorkflowVersionStatusCode.sxml" />
     <None Include="DBTables\Expression.dxml" />
     <None Include="DBTables\ExpressionCategory.dxml" />
+    <None Include="DBTables\Operator.dxml" />
+    <None Include="DBTables\OperatorCategory.dxml" />
     <None Include="DBTables\WorkFlow.dxml" />
     <None Include="DBTables\WorkFlowInstance.dxml" />
     <None Include="DBTables\WorkFlowInstanceActivity.dxml" />
@@ -77,6 +78,8 @@
     <None Include="DBTables\WorkFlowVersionStatus.dxml" />
     <None Include="EntityFiles\Expression.lxml" />
     <None Include="EntityFiles\ExpressionCategory.lxml" />
+    <None Include="EntityFiles\Operator.lxml" />
+    <None Include="EntityFiles\OperatorCategory.lxml" />
     <None Include="EntityFiles\WorkFlow.lxml" />
     <None Include="EntityFiles\WorkFlowInstance.lxml" />
     <None Include="EntityFiles\WorkFlowInstanceActivity.lxml" />

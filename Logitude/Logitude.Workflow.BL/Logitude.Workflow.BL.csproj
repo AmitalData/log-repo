@@ -62,6 +62,8 @@
   <ItemGroup>
     <Compile Include="CloseTables\DetailsClassesGenerated\ExpressionCategoryDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ExpressionDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\OperatorCategoryDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\OperatorDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\WorkFlowInstanceActivityStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\WorkFlowInstanceStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\WorkFlowStatusDetails.Generated.cs" />
@@ -70,6 +72,8 @@
     <Compile Include="EntityDataMappings\ExpressionDataMapping.cs" />
     <Compile Include="EntityDataMappings\Generated\ExpressionCategoryDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ExpressionDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\OperatorCategoryDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\OperatorDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\WorkFlowDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\WorkFlowInstanceActivityDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\WorkFlowInstanceActivityStatusDataMapping.Generated.cs" />
@@ -79,6 +83,8 @@
     <Compile Include="EntityDataMappings\Generated\WorkFlowStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\WorkFlowVersionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\WorkFlowVersionStatusDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\OperatorCategoryDataMapping.cs" />
+    <Compile Include="EntityDataMappings\OperatorDataMapping.cs" />
     <Compile Include="EntityDataMappings\WorkFlowDataMapping.cs" />
     <Compile Include="EntityDataMappings\WorkFlowInstanceActivityDataMapping.cs" />
     <Compile Include="EntityDataMappings\WorkFlowInstanceActivityStatusDataMapping.cs" />
@@ -90,6 +96,8 @@
     <Compile Include="EntityDataMappings\WorkFlowVersionStatusDataMapping.cs" />
     <Compile Include="EntityPMs\Generated\ExpressionCategoryPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExpressionPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\OperatorCategoryPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\OperatorPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\WorkFlowInstanceActivityPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\WorkFlowInstanceActivityStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\WorkFlowInstancePM.Generated.cs" />
@@ -101,6 +109,8 @@
     <Compile Include="EntityPMs\Generated\WorkFlowVersionStatusPM.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ExpressionCategoryQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ExpressionQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\OperatorCategoryQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\OperatorQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\WorkFlowInstanceActivityQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\WorkFlowInstanceActivityStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\WorkFlowInstanceQueryService.Generated.cs" />
@@ -113,6 +123,8 @@
     <Compile Include="EntityQueryServices\WorkFlowVersionQueryService.cs" />
     <Compile Include="EntityUpdateServices\Generated\ExpressionCategoryUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ExpressionUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\OperatorCategoryUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\OperatorUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\WorkFlowInstanceActivityStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\WorkFlowInstanceActivityUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\WorkFlowInstanceStatusUpdateService.Generated.cs" />
