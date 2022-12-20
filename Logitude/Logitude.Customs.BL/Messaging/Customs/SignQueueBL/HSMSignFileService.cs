@@ -80,15 +80,15 @@ var BytesToSign = anaO.PasiveSignGetBytesToSign(exportReqSignData.Tenant, correl
                            azureServiceToken //"9edYig7zg_b2mBV-72DaOKVMlqtJp-xovFY0k5uBNSRtAzFuY2xcGA=="
                            );
                     string output = "";
-                    LogMessagingUtilWR.Instance.AppendLine(signHSM_Url);
+                    LogMessagingUtil.Instance.AppendLine(signHSM_Url);
                     using (var task = client.PostAsync(signHSM_Url, content))
                     {
                         task.Wait();
-                        LogMessagingUtilWR.Instance.AppendLine($"Took:{stopwatch.Elapsed}");
+                        LogMessagingUtil.Instance.AppendLine($"Took:{stopwatch.Elapsed}");
                         //task.Result.EnsureSuccessStatusCode();
                         //if (task.Result.IsSuccessStatusCode)//Result.StatusCode == System.Net.HttpStatusCode.OK)
                         responseString = task.Result.Content.ReadAsStringAsync().Result;
-                        LogMessagingUtilWR.Instance.AppendLine(signHSM_Url);
+                        Debug.WriteLine(responseString);
                         switch (task.Result.StatusCode)
                         {
 
@@ -149,6 +149,7 @@ var BytesToSign = anaO.PasiveSignGetBytesToSign(exportReqSignData.Tenant, correl
             String customsRequestsSheetId, 
             string signByPersonalId, 
             string companypersonal, // P OR C 
+            string customsAgentId,
             byte[] signBytes)
         {
            var res= this.SignFile(
@@ -162,7 +163,8 @@ var BytesToSign = anaO.PasiveSignGetBytesToSign(exportReqSignData.Tenant, correl
                      id = signByPersonalId ,//"308623615",
                      companypersonal = companypersonal, // P OR C  
                      filename = $"{customsRequestsSheetId}.xml",
-                     reference = customsRequestsSheetId
+                     reference = customsRequestsSheetId,
+                     companyBN = customsAgentId, //"550221105"
 
                  },
                  signBytes //UTF8Encoding.UTF8.GetBytes(xml)
@@ -181,7 +183,9 @@ var BytesToSign = anaO.PasiveSignGetBytesToSign(exportReqSignData.Tenant, correl
             public string filename { get; set; }
 
             public string reference { get; set; }
+            public string companyBN { get; set; }
             
+
         }
         
     public class HSMSignFileResponse

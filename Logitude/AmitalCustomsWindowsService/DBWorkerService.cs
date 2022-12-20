@@ -244,6 +244,7 @@ namespace AmitalCustomsWindowsService
             ///listOfWorkerEntryPoint.Add(new FTPToAnalyzeQueueWR());
             listOfWorkerEntryPoint.Add(new CustomsAnalyzeQueueWR());
             listOfWorkerEntryPoint.Add(new RabbitMQReceiveWR());
+            listOfWorkerEntryPoint.Add(new CustomsHSMSignWR());
 
             bool testCustomsSchedularWR = false;
             if (testCustomsSchedularWR)
@@ -273,7 +274,7 @@ namespace AmitalCustomsWindowsService
             bool test = false;
             if (test)
             {
-                BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName != "CustomsCommandGetCustomRequestWR").ToList();
+                BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName == "CustomsHSMSignWR").ToList();
             }
 
 
