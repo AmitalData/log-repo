@@ -14,8 +14,16 @@ namespace Logitude.Infrastructure.Data.Repsitories
 {
    public partial class DigitalPreDefinedComponentRepository:IRepository<DigitalPreDefinedComponent>
    {
-        
-		public List<DigitalPreDefinedComponent> GetMulti(EntityKeyFields entityKeys)
+
+        public IQueryable<DigitalPreDefinedComponent> GetDigitalPreDefinedComponents(int tenant, string objectTableId, string name)
+        {
+            return context.DigitalPreDefinedComponents
+                          .Where(a => (a.Tenant == tenant || a.Tenant == 0)
+                                      && a.ObjectTableId.Equals(objectTableId)
+                                      && (string.IsNullOrEmpty(name) || a.Name.Equals(name)));
+        }
+
+        public List<DigitalPreDefinedComponent> GetMulti(EntityKeyFields entityKeys)
         {
             
 			throw new NotImplementedException();
