@@ -13,9 +13,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.Customs.BL.Messaging.Customs
+namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
 {
-    public class CloudExportDbSignQueueService
+    public class SignQueueHybridDbService
     {
 
         const int LastAccessedInMin = 5;
@@ -104,7 +104,8 @@ namespace Logitude.Customs.BL.Messaging.Customs
                     VersionByFeatures = r.VersionByFeatures,
                     Status = r.Status,
                     LastSignAt = r.LastAccessedAt,
-                    IsOk = r.Status.Equals("ok")
+                    IsOk = r.Status.Equals("ok"),
+                    
 
 
                 };
@@ -115,41 +116,64 @@ namespace Logitude.Customs.BL.Messaging.Customs
             );
             return entityLists;
         }
-        public string GetAvailableSignServer(int tenant, SignQueueByType SignatureBy, string personId)
+        public (string signCertificate, SignMethodByQueueEnum dSignMethodByQueue) GetAvailableSignServer(int tenant, SignQueueByType SignatureBy, string personId)
         {
-
+            
             SignStation availableSignServer = null;
             var repo = new SignStationRepository(tenant);
             string customsAgentId = SignQueue.GetCustomsAgentIdFromTenant(tenant);
 
-            switch (SignatureBy)
+            List<SignStation> hSMAllCertificates = new List<SignStation>();
+            var hSMSignService = new SignQueueHSMService();
+            if (hSMSignService.IsHSMSign_IsOn(tenant))
+            {
+                hSMAllCertificates = hSMSignService.GetHSMAllCertificates(tenant);
+            }
+                switch (SignatureBy)
             {
 
                 case SignQueueByType.SignQueueByCustomsAgentId:
 
-
+                    availableSignServer = hSMAllCertificates.FirstOrDefault(r => r.IsCompanySignOn);
+                    if (availableSignServer != null)
+                    {
+                        return (availableSignServer.SignCertificate, SignMethodByQueueEnum.HSMSignQueue);
+                    }
+                     
                     availableSignServer = repo.GetAvailableSignServerByCustomsAgentId(customsAgentId, LastAccessedInMin);
 
 
                     break;
                 case SignQueueByType.SignQueueByPersonId:
+
+                    
                     if (String.IsNullOrWhiteSpace(personId))
                     {
-                        return null;
+                        var defaultSignServer = hSMAllCertificates.FirstOrDefault(r => r.IsPersonalDefault);
+                        if (defaultSignServer != null)
+                        {
+                            return (defaultSignServer.SignCertificate, SignMethodByQueueEnum.HSMSignQueue);
+                        }
+                        return (null, SignMethodByQueueEnum.None);
+                    }
+                    var hsmSignServer = hSMAllCertificates.FirstOrDefault(r => r.PersonId == personId);
+                    if (hsmSignServer != null)
+                    {
+                        return (hsmSignServer.SignCertificate, SignMethodByQueueEnum.HSMSignQueue);
                     }
 
                     availableSignServer = repo.GetSingle(customsAgentId, personId);
                     if (availableSignServer == null)
                     {
-                        return null;
+                        return (null, SignMethodByQueueEnum.None); ;
                     }
                     if (!availableSignServer.IsPersonalSignOn)
                     {
-                        return null;
+                        return (null, SignMethodByQueueEnum.None); ;
                     }
                     if (DateTime.Now.Subtract(availableSignServer.LastAccessedAt) > TimeSpan.FromMinutes(LastAccessedInMin))
                     {
-                        return null;
+                        return (null, SignMethodByQueueEnum.None); ;
                     }
                     break;
                 default:
@@ -159,9 +183,9 @@ namespace Logitude.Customs.BL.Messaging.Customs
 
             if (availableSignServer == null)
             {
-                return null;
+                return (null, SignMethodByQueueEnum.None); 
             }
-            return availableSignServer.SignCertificate;
+            return (availableSignServer.SignCertificate, SignMethodByQueueEnum.HybridDbSignQueue);
         }
 
         public static bool IsCloudExport(int tenant)
