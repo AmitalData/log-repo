@@ -118,6 +118,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 isFromImporter = FromImporter;
 
+                var consigmentPackagesOrg = new ConsignmentPackageRepository(context).GetImportConsignmentPackagesByDeclariotnID(declaration.ID.Value); 
+
                 List<SupplierInvoicePM> invoicePMs = new List<SupplierInvoicePM>(); ;
                 DeclarationPM declarationPM;
 
@@ -134,7 +136,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         IsAmendment = true,
                         ExportDeclarationOfficeCode = GetValueIDType(declaration.ExportDeclarationOfficeID),
                         DeclarationTypeCode = GetValueCodeType(declaration.TypeCode),
-                        Consignments = GetConsignments(declaration, tenant, null, context, declarationOrg?.Consignments),
+                        Consignments = GetConsignments(declaration, tenant, null, context, declarationOrg?.Consignments, consigmentPackagesOrg),
                     };
                     declarationPM.IsExportClosed = declarationOrg.IsExportClosed;
                     declarationPM.ExportDeclarationOfficeCode = GetValueIDType(declaration.ExportDeclarationOfficeID);
@@ -211,7 +213,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     declarationPM.IsConnectedToUnifreight = false;
                     declarationPM.AmendmentDontDisplayInList = false;
                     declarationPM.IsAmendment = true;
-                    declarationPM.Consignments = GetConsignments(declaration, tenant, declarationPM, context,null);
+                    declarationPM.Consignments = GetConsignments(declaration, tenant, declarationPM, context,null, consigmentPackagesOrg);
 
                     declarationPM.ChangeSetOp = ChangeSetOperation.Update;
 
@@ -646,7 +648,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return recipientPMs;
         }
 
-        private List<ConsignmentPM> GetConsignments(Declaration declaration, int tenant, DeclarationPM declarationPM, ICustomContext context,List<ConsignmentPM> consignments)
+        private List<ConsignmentPM> GetConsignments(Declaration declaration, int tenant, DeclarationPM declarationPM, ICustomContext context, List<ConsignmentPM> consignments, List<Logitude.Customs.Data.EntityPOCOs.ConsignmentPackage> consigmentPackagesOrg)
         {
             if (declaration.GoodsShipment == null || declaration.GoodsShipment.Count() == 0) return null;
             if ((declaration.GoodsShipment[0].ExportConsignment == null && declaration.GoodsShipment[0].ImportConsignment == null) ||
@@ -850,7 +852,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         consignment.DMExtensions.RegisteredFacility[0].DMExtensions?.PackagesMeasure != null
                         )
                     {
-                        consignmentPM.ConsignmentPackages = GetConsignmentPackagesImport(consignment.DMExtensions.RegisteredFacility[0].DMExtensions.PackagesMeasure, declaration, tenant);
+                        consignmentPM.ConsignmentPackages = GetConsignmentPackagesImport(consignment.DMExtensions.RegisteredFacility[0].DMExtensions.PackagesMeasure, declaration, tenant, consigmentPackagesOrg);
                     }
 
                     consignmentPMs.Add(consignmentPM);
@@ -859,12 +861,23 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return consignmentPMs;
         }
 
-        private List<ConsignmentPackagePM> GetConsignmentPackagesImport(DeclarationGoodsShipmentImportConsignmentDMExtensionsRegisteredFacilityDMExtensionsPackagesMeasure[] packagesMeasures, Declaration declaration, int tenant)
+        private List<ConsignmentPackagePM> GetConsignmentPackagesImport(DeclarationGoodsShipmentImportConsignmentDMExtensionsRegisteredFacilityDMExtensionsPackagesMeasure[] packagesMeasures, Declaration declaration, int tenant, List<Logitude.Customs.Data.EntityPOCOs.ConsignmentPackage> consigmentPackagesOrg)
         {
             List<ConsignmentPackagePM> consignmentPackagePMs = new List<ConsignmentPackagePM>();
+            
             foreach (var packagesMeasure in packagesMeasures)
             {
                 ConsignmentPackagePM consignmentPackagePM = new ConsignmentPackagePM();
+
+                var packagesMeasuresOrg = consigmentPackagesOrg.Find(cp => cp.LineNumber == packagesMeasure.SequenceNumeric);
+                if (packagesMeasuresOrg == null)
+                    LogMessagingUtil.Instance.AppendLine($" Error: packagesMeasure not found, packagesMeasure lineNumber: {packagesMeasure.SequenceNumeric}, len list consignment: {consignmentPackagePMs.Count} ");
+                else
+                {
+                    consignmentPackagePM.PackageMeasureQualifierCode = packagesMeasuresOrg.PackageMeasureQualifierCode;
+                    consigmentPackagesOrg.Remove(packagesMeasuresOrg);
+                }
+
                 consignmentPackagePM.ChangeSetOp = ChangeSetOperation.Insert;
                 //consignmentPackagePM.PackageMeasureQualifierCode = GetValueCodeType(packagesMeasure.PackageMeasureQualifier);
                 consignmentPackagePM.PackageQuantityTypeCode = packagesMeasure.TotalPackageQuantity.unitCode.ToString();
