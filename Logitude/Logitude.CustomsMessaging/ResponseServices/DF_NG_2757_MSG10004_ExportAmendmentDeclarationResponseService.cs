@@ -749,7 +749,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 if (consignment.DMExtensions.PackagesMeasure != null)
                 {
-                    consignmentPM.ConsignmentPackages = GetConsignmentPackages(consignment.DMExtensions.PackagesMeasure, declaration, tenant);
+                    consignmentPM.ConsignmentPackages = GetConsignmentPackagesExport(consignment.DMExtensions.PackagesMeasure, declaration, tenant);
                 }
 
                 consignmentPMs.Add(consignmentPM);
@@ -844,10 +844,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             }
                         }
                     }
-                    //if (consignment.DMExtensions.PackagesMeasure != null)
-                    //{
-                    //    consignmentPM.ConsignmentPackages = GetConsignmentPackages(consignment.DMExtensions.PackagesMeasure, declaration, tenant);
-                    //}
+
+                    if (consignment?.DMExtensions?.RegisteredFacility != null &&
+                        consignment.DMExtensions.RegisteredFacility.Length > 0 &&
+                        consignment.DMExtensions.RegisteredFacility[0].DMExtensions?.PackagesMeasure != null
+                        )
+                    {
+                        consignmentPM.ConsignmentPackages = GetConsignmentPackagesImport(consignment.DMExtensions.RegisteredFacility[0].DMExtensions.PackagesMeasure, declaration, tenant);
+                    }
 
                     consignmentPMs.Add(consignmentPM);
                 }
@@ -855,7 +859,30 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return consignmentPMs;
         }
 
-        private List<ConsignmentPackagePM> GetConsignmentPackages(DeclarationGoodsShipmentExportConsignmentDMExtensionsPackagesMeasure[] packagesMeasures, Declaration declaration, int tenant)
+        private List<ConsignmentPackagePM> GetConsignmentPackagesImport(DeclarationGoodsShipmentImportConsignmentDMExtensionsRegisteredFacilityDMExtensionsPackagesMeasure[] packagesMeasures, Declaration declaration, int tenant)
+        {
+            List<ConsignmentPackagePM> consignmentPackagePMs = new List<ConsignmentPackagePM>();
+            foreach (var packagesMeasure in packagesMeasures)
+            {
+                ConsignmentPackagePM consignmentPackagePM = new ConsignmentPackagePM();
+                consignmentPackagePM.ChangeSetOp = ChangeSetOperation.Insert;
+                //consignmentPackagePM.PackageMeasureQualifierCode = GetValueCodeType(packagesMeasure.PackageMeasureQualifier);
+                consignmentPackagePM.PackageQuantityTypeCode = packagesMeasure.TotalPackageQuantity.unitCode.ToString();
+                consignmentPackagePM.PackageQuantity = Convert.ToInt32(packagesMeasure.TotalPackageQuantity.Value);
+                if (packagesMeasure.GrossMassMeasure != null)
+                {
+                    consignmentPackagePM.GrossMassMeasureTypeCode = packagesMeasure.GrossMassMeasure.unitCode.ToString();
+                    consignmentPackagePM.GrossMassMeasure = packagesMeasure.GrossMassMeasure.Value;
+                }
+                consignmentPackagePM.PackageTypeCode = GetValueCodeType(packagesMeasure.TypeCode);
+                consignmentPackagePM.MarksNumbers = GetValueTextType(packagesMeasure.MarksNumbers);
+                consignmentPackagePM.Tenant = tenant;
+                consignmentPackagePMs.Add(consignmentPackagePM);
+            }
+            return consignmentPackagePMs;
+        }
+
+        private List<ConsignmentPackagePM> GetConsignmentPackagesExport(DeclarationGoodsShipmentExportConsignmentDMExtensionsPackagesMeasure[] packagesMeasures, Declaration declaration, int tenant)
         {
             List<ConsignmentPackagePM> consignmentPackagePMs = new List<ConsignmentPackagePM>();
             foreach (var packagesMeasure in packagesMeasures)
