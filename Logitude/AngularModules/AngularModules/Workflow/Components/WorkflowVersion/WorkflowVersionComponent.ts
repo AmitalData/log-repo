@@ -146,6 +146,7 @@ export class WorkflowVersionComponent extends BaseComponent {
     onRowSelected($event) {
         this.ClickedVersion = $event.rowData
         this.HasChanges = true;
+        this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, UpdatedVersion: null }
         this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, ClickedVersionRow: $event.rowData.Id }
         this.CurrentSession.CurrentEditComponent.SetSelectedTabByCode("WFFB");
     }

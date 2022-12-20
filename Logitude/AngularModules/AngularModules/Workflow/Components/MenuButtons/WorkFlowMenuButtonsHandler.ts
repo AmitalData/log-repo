@@ -44,7 +44,7 @@ export class WorkFlowMenuButtonsHandler {
     }
 
     public SetButtonStates(menuButtons) {
-        var HasChanges: boolean = this.entityArgs.EditComponentArgument?.HasChanges
+        var HasChanges: boolean = this.entityArgs.EditComponentArgument?.HasChanges ? true : false
         var CurrentDisplayedVersionId = this.entityArgs.EditComponentArgument?.CurrentDisplayedVersionId
         var version = this.EntityPM.WorkFlowVersions.find(v => v.Id == CurrentDisplayedVersionId);
 
@@ -144,10 +144,9 @@ export class WorkFlowMenuButtonsHandler {
 
     handleCreateNewVersionResponse(data: WorkFlowVersionPM) {
         if (data) {
-            // if (this.entityArgs.SelectedTabCode != "WFFB") {
-            //     this.CurrentSession.CurrentEditComponent.SetSelectedTabByCode("WFFB");
-            // }
-            this.entityArgs.SendMessage("WorkflowVersionsUpdated");
+            this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, UpdatedVersion: data.Id }
+        this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, ClickedVersionRow: null }
+        this.entityArgs.SendMessage("WorkflowVersionsUpdated");
         }
     }
 
@@ -170,9 +169,8 @@ export class WorkFlowMenuButtonsHandler {
     }
 
     handleActivateWorkflowResponse(data: WorkFlowVersionPM) {
-        // if (this.entityArgs.SelectedTabCode != "WFFB") {
-        //     this.CurrentSession.CurrentEditComponent.SetSelectedTabByCode("WFFB");
-        // }
+        this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, UpdatedVersion: data.Id }
+        this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, ClickedVersionRow: null }
         this.entityArgs.SendMessage("WorkflowVersionsUpdated");
     }
 

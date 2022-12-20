@@ -64,7 +64,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
-        this.setValidVersion(this.getValidVersion())
+        this.setVersion(this.getValidVersion())
         this.Listen()
     }
 
@@ -77,18 +77,21 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     }
 
     private Listen() {
-        //tab changed || clicked version row
         if (this.entityArgs.EditComponent) {
             this.TabSelectedEvent = this.entityArgs.EditComponent.TabSelected.subscribe((tabCode: string) => {
                 if (tabCode == "WFFB") {
                     var clickedRowId = this.entityArgs.EditComponentArgument?.ClickedVersionRow!
-                    if (clickedRowId && this.CurrentVersionId != clickedRowId) {
+                    var updatedVersionId = this.entityArgs.EditComponentArgument?.UpdatedVersion!
+                    if (updatedVersionId) {
+                        var version = this.EntityPM.WorkFlowVersions.find(e => e.Id == updatedVersionId);
+                        this.DisplayGivenVersion(version);
+                    }
+                    else if (clickedRowId) {
                         var version = this.EntityPM.WorkFlowVersions.find(e => e.Id == clickedRowId);
-                        ReactDOM.unmountComponentAtNode(this.containerRef.nativeElement);
-                        this.setValidVersion(version);
+                        this.DisplayGivenVersion(version);
                     } else {
                         ReactDOM.unmountComponentAtNode(this.containerRef.nativeElement);
-                        this.setValidVersion(null)
+                        this.loadWorkflow(true);
                     }
                 }
             });
@@ -98,50 +101,75 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
             this.entityArgs.EntityArgEventEmitter.subscribe(
                 theMessage => {
                     if (theMessage == "WorkflowVersionsUpdated") {
-                        this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, ClickedVersionRow: null }
                         this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, HasChanges: false }
-                        ReactDOM.unmountComponentAtNode(this.containerRef.nativeElement);
-                        this.setValidVersion(null)
+                        this.loadWorkflowForUpdatedVersion();
                     }
                 }
             );
         }
     }
 
-    setValidVersion(version: WorkFlowVersionPM | null) {
+    setVersion(version: WorkFlowVersionPM | null) {
         if (version) {
             this.ValidVersion = version;
             this.setCurrentDisplayedVersion(version.Id)
             this.loadWorkflow(false);
-        } else {
-            this.loadWorkflow(true);
         }
     }
 
-    setCurrentDisplayedVersion(versionId: string) {
-        this.CurrentVersionId = versionId
-        this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, CurrentDisplayedVersionId: versionId }
-    }
-
-    loadWorkflow(setVersion: boolean) {
+    loadWorkflow(resetWorkflow: boolean) {
         if (this.EntityPM) {
-            this.startBusyIndicator("Loading ...");
-            this.WorkFlowPMService.get(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) => { this.handleGetWorkflowResponse(serviceResponse, setVersion); });
+            this.WorkFlowPMService.get(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) => { this.handleGetWorkflowResponse(serviceResponse, resetWorkflow); });
         }
     }
 
-    handleGetWorkflowResponse(serviceResponse: ServiceResponse, setVersion: boolean) {
+    handleGetWorkflowResponse(serviceResponse: ServiceResponse, resetWorkflow: boolean) {
         this.EntityPM.WorkFlowVersions = serviceResponse.Result.WorkFlowVersions
-        if (setVersion) {
+        if (resetWorkflow) {
             this.ValidVersion = this.getValidVersion();
             this.setCurrentDisplayedVersion(this.ValidVersion.Id)
         }
+        this.handleRenderReactWorkflow();
+    }
+
+    DisplayGivenVersion(version: WorkFlowVersionPM) {
+        if (version) {
+            this.ValidVersion = version;
+            this.setCurrentDisplayedVersion(version.Id)
+
+            ReactDOM.unmountComponentAtNode(this.containerRef.nativeElement);
+
+            this.handleRenderReactWorkflow();
+        }
+    }
+
+    handleRenderReactWorkflow() {
+        this.startBusyIndicator("Loading ...");
         this.WorkflowName = this.EntityPM.Name;
         this.WorkflowEntity = this.ValidVersion.Entity;
         this.renderReactFlowModeler();
         this.loadObjectFields();
         this.entityArgs.SendMessage("RefreshWorkflowShortTitle");
         this.entityArgs.SendMessage("RefreshWorkflowButtons");
+    }
+
+    loadWorkflowForUpdatedVersion() {
+        if (this.EntityPM) {
+            this.startBusyIndicator("Loading ...");
+            this.WorkFlowPMService.get(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) => { this.handleWorkflowForUpdatedVersion(serviceResponse); });
+        }
+    }
+
+    handleWorkflowForUpdatedVersion(serviceResponse: ServiceResponse) {
+        this.EntityPM.WorkFlowVersions = serviceResponse.Result.WorkFlowVersions
+        var updatedVersion = this.entityArgs.EditComponentArgument?.UpdatedVersion!
+        var version = this.EntityPM.WorkFlowVersions.find(e => e.Id == updatedVersion);
+        this.DisplayGivenVersion(version);
+    }
+
+    setCurrentDisplayedVersion(versionId: string) {
+        this.CurrentVersionId = versionId
+        this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, CurrentDisplayedVersionId: versionId }
     }
 
     renderReactFlowModeler() {
