@@ -61,6 +61,7 @@ using System.Text.RegularExpressions;
 using System.Transactions;
 using System.Web;
 using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.BL.Security;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {
@@ -398,19 +399,21 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 RunAutomationThatDependencyOnLastEntityUpdate();
 
+                AuditLog auditLog = AddAuditLogChanges(entityPoco);
+                if (entityPM != null && (FeatureToggleHelper.HasFeatureToggle("ADL", entityPM.Tenant) ||
+                                         SecurityUtility.CheckFeature("WorkFlow", "Module", entityPM.Tenant)))
+                {
+                    AuditLogRepository.SubmitChanges();
+                }
+
                 new WorkflowEntityQueueMessage()
                 {
                     Entity = WorkflowEntities.Shipment,
                     EntityId = entityPM.Id,
+                    AuditLogId = auditLog.Id,
                     Tenant = entityPM.Tenant,
                     Type = QueueMessagesTypes.Create
                 }.Produce();
-
-                if (entityPM != null && FeatureToggleHelper.HasFeatureToggle("ADL", entityPM.Tenant))
-                {
-                    AddAuditLogChanges(entityPoco, FieldChanges);
-                    AuditLogRepository.SubmitChanges();
-                }
 
                 scope.Complete();
 
@@ -666,26 +669,28 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     EntityChangesMessageProducer.ProduceShipmentUpdateMessage(shipmentPocoCopy, shipmentPMCopy);
                 }
 
+                AuditLog auditLog = AddAuditLogChanges(entityPoco);
+                if (entityPM != null && (FeatureToggleHelper.HasFeatureToggle("ADL", entityPM.Tenant) || 
+                                         SecurityUtility.CheckFeature("WorkFlow", "Module", entityPM.Tenant)))
+                {
+                    AuditLogRepository.SubmitChanges();
+                }
+
                 new WorkflowEntityQueueMessage()
                 {
                     Entity = WorkflowEntities.Shipment,
                     EntityId = entityPM.Id,
+                    AuditLogId = auditLog.Id,
                     Tenant = entityPM.Tenant,
-                    Type = QueueMessagesTypes.Update
+                    Type = QueueMessagesTypes.Create
                 }.Produce();
-
-                if (entityPM != null && FeatureToggleHelper.HasFeatureToggle("ADL", entityPM.Tenant))
-                {
-                    AddAuditLogChanges(entityPoco, FieldChanges);
-                    AuditLogRepository.SubmitChanges();
-                }
 
                 scope.Complete();
                 #endregion
             }
         }
 
-        private void AddAuditLogChanges(Shipment entityPoco, List<FieldChange> fieldChanges)
+        private AuditLog AddAuditLogChanges(Shipment entityPoco)
         {
             ObjectTableRepository objecttableRepository = new ObjectTableRepository(entityPoco.Tenant);
             ObjectTable objecttable = objecttableRepository.GetObjectTableByName("Shipment", 0, true);
@@ -701,6 +706,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             };
 
             AuditLogRepository.Add(auditLog);
+
+            return auditLog;
         }
 
         private void RunAutomationThatDependencyOnLastEntityUpdate()
