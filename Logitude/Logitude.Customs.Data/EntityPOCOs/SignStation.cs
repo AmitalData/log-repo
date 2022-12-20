@@ -43,11 +43,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("LastAccessedAt")]
 	    public DateTime LastAccessedAt { get; set; }
 
-        [Column("IsPersonalDefault")]
-        public bool IsPersonalDefault { get; set; }
+        //[Column("IsPersonalDefault")]
+        //public bool IsPersonalDefault { get; set; }
 
-        [Column("SignMethodByQueue")]
-        public string SignMethodByQueue { get; set; }
+        //[Column("SignMethodByQueue")]
+        //public string SignMethodByQueue { get; set; }
 
         
     }

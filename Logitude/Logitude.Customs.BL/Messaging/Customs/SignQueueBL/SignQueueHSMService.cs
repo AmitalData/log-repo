@@ -35,7 +35,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
 
         
 
-        public List<SignStation> GetHSMAllCertificates(int tenant)
+        public List<MySignStationList> GetHSMAllCertificates(int tenant,bool fromCache=true)
         {
 
             var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(tenant);
@@ -57,11 +57,11 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
           companyBN = setting.CustomsAgentId, //"550221105"
 
       },
-      true
+       fromCache
     );
             if (res == null)
             {
-                return new List<SignStation>();
+                return new List<MySignStationList>();
             }
             /*
              *  {
@@ -80,15 +80,22 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
                     throw new Exception($"GetHSMAllCertificates- found  r.companyBN ({badCert.companyBN}) != setting.CustomsAgentId {setting.CustomsAgentId}");
                 }
             }
-            
+
 
             var list = res.Select(r =>
-            new SignStation()
+            new MySignStationList()
             {
                 CustomsAgentId = r.companyBN,
                 LastAccessedAt = DateTime.Now,
                 MachineName = "HSM",
+                SignerName = r.userName,
+                LastSignAt = DateTime.Now,
+                IsOk = true,
+                VersionByFeatures = r?.companyPersonal.Contains("D")==true ?"PDefault" :"HSM" ,
+                MachineUser = "HSM",
+                Status = "OK",
                 PersonId = r.id,
+
                 IsCompanySignOn = r?.companyPersonal.Contains("C") == true,
                 IsPersonalSignOn = r?.companyPersonal.Contains("P") == true,
                 SignCertificate = $"C=IL, T=Manager, OU=XXXXX Ltd, O=05-{r.companyBN}, SERIALNUMBER=01-{r.id}, G={r.userName}, SN=NAME{r.id}, CN=FN{r.userName} ID_{r.id},MachineName=HSM,UserName={r.userName},VER=1.HSM,STS=OK",
@@ -96,7 +103,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
                 SignMethodByQueue = SignMethodByQueueEnum.HSMSignQueue.ToString(),
 
 
-            }).ToList(); ;
+            }).ToList();
             return list;
         }
 

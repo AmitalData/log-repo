@@ -78,38 +78,38 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
             }
         }
 
-        public List<SignStationList> GetAllStation(string searchfields, int tenant)
+        public List<MySignStationList> GetAllStation(string searchfields, int tenant)
         {
             var repo = new SignStationRepository(tenant);
             string customsAgentId = SignQueue.GetCustomsAgentIdFromTenant(tenant);
             var res = repo.GetAllAvailable(customsAgentId, LastAccessedInMin);
 
-            var entityLists = new List<SignStationList>();
+            var entityLists = new List<MySignStationList>();
             res.ForEach(r =>
             {
-                var MySignCertificateClass = SignCertificateClass.Get(r.SignCertificate);
-                var my = new SignStationList()
-                {
-                    PersonId = MySignCertificateClass.PersonId,
-                    SignerName = MySignCertificateClass.SignerName,
+                //var MySignCertificateClass = SignCertificateClass.Get(r.SignCertificate);
+                //var my = new MySignStationList()
+                //{
+                //    PersonId = MySignCertificateClass.PersonId,
+                //    SignerName = MySignCertificateClass.SignerName,
 
-                    MachineName = MySignCertificateClass.MachineName,
-                    MachineUser = MySignCertificateClass.UserName,
+                //    MachineName = MySignCertificateClass.MachineName,
+                //    MachineUser = MySignCertificateClass.UserName,
 
-                    CustomsAgentId = MySignCertificateClass.CustomsAgentId,
+                //    CustomsAgentId = MySignCertificateClass.CustomsAgentId,
 
 
-                    IsCompanySignOn = r.IsCompanySignOn,
-                    IsPersonalSignOn = r.IsPersonalSignOn,
-                    VersionByFeatures = r.VersionByFeatures,
-                    Status = r.Status,
-                    LastSignAt = r.LastAccessedAt,
-                    IsOk = r.Status.Equals("ok"),
+                //    IsCompanySignOn = r.IsCompanySignOn,
+                //    IsPersonalSignOn = r.IsPersonalSignOn,
+                //    VersionByFeatures = r.VersionByFeatures,
+                //    Status = r.Status,
+                //    LastSignAt = r.LastAccessedAt,
+                //    IsOk = r.Status.Equals("ok"),
                     
 
 
-                };
-
+                //};
+                var my = r.ToMySignStationList();
                 entityLists.Add(my);
 
             }
@@ -119,11 +119,11 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
         public (string signCertificate, SignMethodByQueueEnum dSignMethodByQueue) GetAvailableSignServer(int tenant, SignQueueByType SignatureBy, string personId)
         {
             
-            SignStation availableSignServer = null;
+            MySignStationList availableSignServer = null;
             var repo = new SignStationRepository(tenant);
             string customsAgentId = SignQueue.GetCustomsAgentIdFromTenant(tenant);
 
-            List<SignStation> hSMAllCertificates = new List<SignStation>();
+            var hSMAllCertificates = new List<MySignStationList>();
             var hSMSignService = new SignQueueHSMService();
             if (hSMSignService.IsHSMSign_IsOn(tenant))
             {
@@ -140,7 +140,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
                         return (availableSignServer.SignCertificate, SignMethodByQueueEnum.HSMSignQueue);
                     }
                      
-                    availableSignServer = repo.GetAvailableSignServerByCustomsAgentId(customsAgentId, LastAccessedInMin);
+                    availableSignServer = repo.GetAvailableSignServerByCustomsAgentId(customsAgentId, LastAccessedInMin).ToMySignStationList();
 
 
                     break;
@@ -162,7 +162,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
                         return (hsmSignServer.SignCertificate, SignMethodByQueueEnum.HSMSignQueue);
                     }
 
-                    availableSignServer = repo.GetSingle(customsAgentId, personId);
+                    availableSignServer = repo.GetSingle(customsAgentId, personId).ToMySignStationList();
                     if (availableSignServer == null)
                     {
                         return (null, SignMethodByQueueEnum.None); ;
@@ -193,7 +193,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
             return (!CustomsSettingQueryService.GetSettingByTenant(tenant).IsConnectedToUniFreight);
         }
     }
-    public class SignStationList
+    public class MySignStationList
     {
         public string PersonId { get; set; }
         public string SignerName { get; set; }
@@ -207,5 +207,52 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
         public DateTime? LastSignAt { get; set; }
         public bool? IsOk { get; set; }
         public string VersionByFeatures { get; set; }
+        public bool IsPersonalDefault { get; set; }
+        public string SignMethodByQueue { get; set; } //= SignMethodByQueueEnum.None.ToString(),
+        public string SignCertificate { get; set; }
+
+        public DateTime LastAccessedAt { get; set; }
+
+
+
+
     }
+
+
+    public static class SignStation_Ext
+    {
+        public static MySignStationList ToMySignStationList(this SignStation signStation
+            )
+        {
+            if (signStation == null) return null; ;
+
+            var MySignCertificateClass = SignCertificateClass.Get(signStation.SignCertificate);
+
+            
+            var my = new MySignStationList()
+            {
+                PersonId = signStation.PersonId,
+                SignerName = MySignCertificateClass.SignerName,
+
+                MachineName = signStation.MachineName,
+                MachineUser = signStation.UserName,
+
+                CustomsAgentId = signStation.CustomsAgentId,
+
+
+                IsCompanySignOn = signStation.IsCompanySignOn,
+                IsPersonalSignOn = signStation.IsPersonalSignOn,
+                VersionByFeatures = signStation.VersionByFeatures,
+                Status = signStation.Status,
+                LastSignAt = signStation.LastAccessedAt,
+                IsOk = signStation.Status.Equals("ok"),
+
+
+
+            };
+            return my;
+            
+        }
+    }
+
 }
