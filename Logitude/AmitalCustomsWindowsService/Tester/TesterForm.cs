@@ -60,6 +60,7 @@ namespace AmitalCustomsWindowsService.Tester
             _CBWorkerRole.Items.Add("CustomsAnalyzeQueueWR");
             _CBWorkerRole.Items.Add("CustomsSchedularWR");
             _CBWorkerRole.Items.Add("RabbitMQReceiveWR");
+            _CBWorkerRole.Items.Add("CustomsHSMSignWR");
 
             Debug.WriteLine("Env:");
             Debug.WriteLine(LogitudeSettings.LogitudeURL);
@@ -266,7 +267,14 @@ namespace AmitalCustomsWindowsService.Tester
                 10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
                     { ServiceStarted = true, };
                     break;
-                    
+
+                case "CustomsHSMSignWR":
+                    {
+                        d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsHSMSignWR>(
+                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
+                        { ServiceStarted = true, };
+                    }
+                    break;
                 default:
                     return;
             }
@@ -316,6 +324,8 @@ namespace AmitalCustomsWindowsService.Tester
         bool _MultiThreard = false;
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            clsTester.HSMSignTests();
+            return;
             clsTester.Check_UserWcfService(GetTenant());
             return;
 

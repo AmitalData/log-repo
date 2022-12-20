@@ -1,6 +1,7 @@
 ﻿
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.Messaging.Customs;
+using Logitude.Customs.BL.Messaging.Customs.SignQueueBL;
 using Logitude.CustomsMessaging.Common.Gen;
 using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.Server.Tools;
@@ -185,7 +186,7 @@ namespace WebFreight.Web.WcfApi
                 try
                 {
 
-                    var dbSignQueueService = new CloudExportDbSignQueueService();
+                    var dbSignQueueService = new SignQueueHybridDbService();
                     dbSignQueueService.UpsertSignStation(exportReqSignData.CurrentSignCertificate, exportReqSignData.isPersonalSignOn, exportReqSignData.isCompanySignOn);
 
 

@@ -24,6 +24,7 @@ using Unifreight.Data.AmitalModel;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
+using Logitude.Customs.BL.Messaging.Customs.SignQueueBL;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -50,9 +51,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 List<SignStationList> entityLists /*= GetAllStation(searchfields, tenant)*/;
                 //if (!CustomsSettingQueryService.GetSettingByTenant(tenant).IsConnectedToUniFreight)
-                if (CloudExportDbSignQueueService.IsCloudExport(tenant))
+                if (SignQueueHybridDbService.IsCloudExport(tenant))
                 {
-                    var dbSignQueueService = new CloudExportDbSignQueueService();
+                    var dbSignQueueService = new SignQueueHybridDbService();
                     entityLists = dbSignQueueService.GetAllStation(searchfields, tenant);
                 }
                 else
@@ -95,9 +96,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 //List<SignStationList> entityLists = GetAllStation(searchfields, tenant);
                 List<SignStationList> entityLists /*= GetAllStation(searchfields, tenant)*/;
                 //if (!CustomsSettingQueryService.GetSettingByTenant(tenant).IsConnectedToUniFreight)
-                if (CloudExportDbSignQueueService.IsCloudExport(tenant))
+                if (SignQueueHybridDbService.IsCloudExport(tenant))
                 {
-                    var dbSignQueueService = new CloudExportDbSignQueueService();
+                    var dbSignQueueService = new SignQueueHybridDbService();
                     entityLists = dbSignQueueService.GetAllStation(searchfields, tenant);
                 }
                 else

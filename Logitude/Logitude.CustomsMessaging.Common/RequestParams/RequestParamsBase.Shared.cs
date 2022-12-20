@@ -87,6 +87,10 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
         public bool SplitterModeLetCreateMyType { get; set; }
 
         public bool AvoidSign { get; set; }
+
+        public string SignMethodByQueue { get; set; }
+        public string SignByPersonalId { get; set; }
+        public string SignQueueByCompanyOrPersonal { get; set; }
         
     }
 
