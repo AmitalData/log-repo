@@ -48,15 +48,15 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
     {new StringContent(serializedhSMActiveSignCardParams),"request"},
     
 };
-                    LogMessagingUtilWR.Instance.AppendLine(signHSMGetActiveCertificates_Url);
+                    LogMessagingUtil.Instance.AppendLine(signHSMGetActiveCertificates_Url);
                     var result = client.PostAsync(signHSMGetActiveCertificates_Url, formContent);// "application/json");
                     result.Wait();
 
                     responseString = result.Result.Content.ReadAsStringAsync().Result;
                     
-                    LogMessagingUtilWR.Instance.AppendLine($"Took:{stopwatch.Elapsed}");
-                    LogMessagingUtilWR.Instance.AppendLine(result?.Result?.StatusCode.ToString());
-                    LogMessagingUtilWR.Instance.AppendLine(responseString);
+                    LogMessagingUtil.Instance.AppendLine($"Took:{stopwatch.Elapsed}");
+                    LogMessagingUtil.Instance.AppendLine(result?.Result?.StatusCode.ToString());
+                    //LogMessagingUtil.Instance.AppendLine(responseString);
                     switch (result.Result.StatusCode)
                     {
                       
@@ -153,7 +153,11 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
     {
         public string companyid { get; set; }
         public string token { get; set; }
-        public string signprocess { get; set; }    
+        public string signprocess { get; set; }
+        public string companyBN { get; set; }    
+        
+
+
     }
     
     public class Cert

@@ -33,63 +33,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
             return fromEnvSetting && fromTenantSetting;
         }
 
-        string GetAvailableSignServer(int tenant, SignQueueByType SignatureBy, string personId, string customsAgentId)
-        {
-            int LastAccessedInMin = -1000000000;//HSM aleays on !!
-
-            SignStation availableSignServer = null;// GetSignStation();
-            const string TSTPersonId = "308623615";
-            var TST_SignStation = new SignStation()
-            {
-                SignCertificate = $"C=IL, T=Manager, OU=Peltransport Ltd, O=05-{customsAgentId}, SERIALNUMBER=01-{TSTPersonId}, G=David, SN=Michaeli, CN=David Michaeli ID_{TSTPersonId},MachineName=DAVID-M-PC,UserName=davidm,VER=1.23,STS=OK",
-
-                CustomsAgentId = customsAgentId,
-                PersonId = TSTPersonId,
-                LastAccessedAt = DateTime.Now
-            };
-
-            switch (SignatureBy)
-            {
-
-                case SignQueueByType.SignQueueByCustomsAgentId:
-
-
-                    availableSignServer = TST_SignStation;//repo.GetAvailableSignServerByCustomsAgentId(customsAgentId, LastAccessedInMin);
-
-
-                    break;
-                case SignQueueByType.SignQueueByPersonId:
-                    if (String.IsNullOrWhiteSpace(personId))
-                    {
-                        return null;
-                    }
-
-                    availableSignServer = //repo.GetSingle(customsAgentId, personId);
-                        TST_SignStation;
-                    if (availableSignServer == null)
-                    {
-                        return null;
-                    }
-                    if (!availableSignServer.IsPersonalSignOn)
-                    {
-                        return null;
-                    }
-                    if (DateTime.Now.Subtract(availableSignServer.LastAccessedAt) > TimeSpan.FromMinutes(LastAccessedInMin))
-                    {
-                        return null;
-                    }
-                    break;
-                default:
-                    throw new Exception("GetAvailableSignServer() while SignatureBy Not P/C");
-                    break;
-            }
-
-            if (availableSignServer == null)
-            {
-                return null;
-            }
-            return availableSignServer.SignCertificate;
-        }
+        
 
         public List<SignStation> GetHSMAllCertificates(int tenant)
         {
@@ -109,7 +53,9 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
       {
           companyid = "101",
           token = "c6f85591-6e4e-4203-95ef-628b826577b8",
-          signprocess = HSMsignprocess
+          signprocess = HSMsignprocess,
+          companyBN = setting.CustomsAgentId, //"550221105"
+
       },
       true
     );

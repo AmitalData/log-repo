@@ -927,7 +927,8 @@ namespace CustomsWorkerRole.Test
                   {
                       companyid = "101",
                       token = "c6f85591-6e4e-4203-95ef-628b826577b8",
-                      signprocess = "MehesExport"
+                      signprocess = "MehesExport",
+                      companyBN = "550221105"
                   }
                 );
             var hSMSignFileService = new HSMSignFileService();
@@ -942,7 +943,8 @@ namespace CustomsWorkerRole.Test
                      id = "308623615",
                      signprocess = "MehesExport",
                      companypersonal = "PC",
-                     filename = "AAI-222552-1.xml"
+                     filename = "AAI-222552-1.xml",
+                     companyBN = "550221105"
                  },
                  UTF8Encoding.UTF8.GetBytes(xml)
                 );
