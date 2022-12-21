@@ -498,8 +498,8 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
         return screen && screen.Type == 'Grid';
     }
 
-    onMyDrop(event: DragEvent, screenRowDetails: ScreenRowDetails, column: number, sectionNumber: number = null) {
-        let screenRows = this.screenLayoutService.GetScreenRows(sectionNumber);
+    onMyDrop(event: DragEvent, screenRowDetails: ScreenRowDetails, column: number, section: ScreenSectionPM = null) {
+        let screenRows = this.screenLayoutService.GetScreenRows(section.Number);
         this.Modified = true;
         let objectFieldId = event.dataTransfer.getData("Id");
         let fieldCode = event.dataTransfer.getData("FieldCode");
@@ -509,7 +509,7 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
 
         if (myitem) {
             let objectField = this.GetObjectField(myitem);
-            if (objectField && !objectField.IsCustom && objectField.DisplayOnly && this.IsSubEntity) {//&& is not summery section
+            if (objectField && !objectField.IsCustom && objectField.DisplayOnly && this.IsSubEntity && section.Type != "Summary") {
                 this.ShowMessageWindow(TextCodeTranslator.Translate(objectField.FullNameTextCodeCode) + " field can be added in the summary section only","Message");
                 return;
             }
@@ -540,7 +540,7 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
                 screenField.Row = position;
                 screenField.DataTypeCode = myitem.DataTypeCode;
                 screenField.ObjectFieldCode = myitem.FieldCode;
-                if (this.IsMuiltSectionScreen) screenField.SectionNumber = sectionNumber
+                if (this.IsMuiltSectionScreen) screenField.SectionNumber = section.Number
                 rows.ScreenFieldPMs.splice(position, 0, screenField);
                 rows.ObjectFieldPMs.splice(position, 0, myitem);
 
@@ -551,7 +551,7 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
 
             this.screenLayoutService.ChangeScreenFieldPosition
                 ({
-                    SectionNumber: sectionNumber,
+                    SectionNumber: section.Number,
                     ObjectFieldId: objectFieldId,
                     FieldCode: fieldCode,
                     Rows: screenRows.filter(a => a.ColumnIndex == screenRowDetails.ColumnIndex)[0],
@@ -750,7 +750,10 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
             this.ShowAddNewGridScreenSectionComponent(screenSection);
             return;
         }
-
+        if (sectionType == "Summary") {
+            screenSection.Type = "Summary";
+            screenSection.Name = "Summary";
+        }
         var sectionScreen: SectionScreenItem = new SectionScreenItem(screenSection);
         this.ShowAddNewStandardScreenSectionComponent(screenSection, sectionScreen);
     }
@@ -766,7 +769,14 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
         this.SectionScreens.push(sectionScreen);
         this.Modified = true;
     }
-
+    IsEnabledAddingSummarySection(): boolean {
+        for (var i = 0; i < this.SectionScreens.length; i++)
+        {
+            if (this.SectionScreens[i].Section.Type == 'Summary' && this.SectionScreens[i].Section.Inactive == false)
+                return false;
+        }
+        return true;
+    }
     private BuildStandardScreenSectionRows(screenSection: ScreenSectionPM) {
         this.ScreenRows = [];
         for (var i = 0; i < this.SelectedItem.ScreenPM.NumberOfColumns; i++) {
@@ -919,6 +929,7 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
             }
     }
     Cancel() {
+        this.IsEnabledAddingSummarySection();
         this.ValidationErrorsList = [];
         this.GetFields();
         this.customizationEditComponent.IsDirty = false;
