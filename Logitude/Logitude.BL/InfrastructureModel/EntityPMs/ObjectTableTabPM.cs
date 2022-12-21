@@ -33,7 +33,10 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
 
         public bool HasTabModification { get; set; }
         public bool HideTabNameInScreen { get; set; }
+        public bool CreateDefaultTextCode { get; set; }
+        public string TabNameTextCodeType { get; set; }
 
+        
 
     }
 }

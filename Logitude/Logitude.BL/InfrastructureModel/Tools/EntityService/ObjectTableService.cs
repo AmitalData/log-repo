@@ -14,6 +14,7 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.Validating;
 using Logitude.BL.InfrastructureModel.Tools.TraceEvents;
 using Logitude.BL.InfrastructureModel.Tools.DataMapping;
+using Logitude.BL.InfrastructureModel.Services;
 
 namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 {
@@ -57,8 +58,9 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             ObjectTableTracing.Trace(theEntityPm, Poco, isNewEntity);
             ObjectTableMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Add(Poco);
+            new CustomObjectDefaultMetaDataService(this.entityPM, this.ObjectContext).Run();
             this.ObjectContext.SaveChanges();
-
+            
         }
 
         public void Update(ObjectTablePM theEntityPm)

@@ -9,10 +9,12 @@ import { ObjectFieldPMExtendedService } from '../../../../Infrastructure/Service
 import { CachedDataManager } from '../../../../Infrastructure/Utilities/CachedDataManager';
 import { AppTool } from '../../../../Infrastructure/Tools';
 import { CustomizationMainComponent } from './CustomizationMainComponent';
+import { LoginService } from '../../../../Infrastructure/Services/LoginService';
 
 const valdationMessageOfDisplayLabelSingular = 'Please fill the Display Label (Singular)';
 const valdationMessageOfDisplayLabelPlural = 'Please fill the Display Label (Plural)';
-const valdationMessageOfDuplicateTableName = 'Another sub object with same Display Label(Singular) is already exist';
+const validationMessageOfDuplicateCustomSubObjectTableName = 'Another sub object with same Display Label(Singular) is already exist';
+const validationMessageOfDuplicateCustomObjectTableName = 'Another custom object with same Display Label(Singular) is already exist';
 declare var window: any;
 
 @Component({
@@ -37,13 +39,15 @@ export class AddCustomObjectComponent extends BaseComponent {
     public IsSubObject: boolean = true;
     public ObjectTableTypes: object[] = [];
     public TypeHelpText: string;
-    constructor() {
+    
+    constructor(private loginService: LoginService) {
         super();
         this.objectTablePMService = new ObjectTablePMService();
         this.objectFieldPMExtendedService = new ObjectFieldPMExtendedService();
         this.objectTablePM = new ObjectTablePM();
         this.UIProperties.SetRequired("DisplayLabelSingular", "ObjectTable", true);
         this.UIProperties.SetRequired("DisplayLabelPlural", "ObjectTable", true);
+        this.loginService.CurrentTenant = SessionLocator.Tenant;
     }
 
     SetWindowArgs(args: any) {
@@ -74,8 +78,14 @@ export class AddCustomObjectComponent extends BaseComponent {
     set DisplayLabelSingular(newValue: string) {
         if (this.displayLabelSingular != newValue) {
             this.displayLabelSingular = newValue;
-            this.objectTableName = AppTool.IsNullOrEmpty(newValue) ? "" : this.IsSubObject ? this.parentObjectTable.Name + "." + SessionLocator.Tenant + "." + newValue.replace(/\s/g, "") : newValue.replace(/\s/g, "");
+            this.objectTableName = this.GetObjectTableName(newValue);
         }
+    }
+
+    private GetObjectTableName(newValue: string): string {
+        if (AppTool.IsNullOrEmpty(newValue)) return "";
+        if (this.IsSubObject) return this.parentObjectTable.Name + "." + SessionLocator.Tenant + "." + newValue.replace(/\s/g, "");
+        return "CustomObject." + SessionLocator.Tenant + "." + newValue.replace(/\s/g, "");
     }
 
     private displayLabelPlural: string;
@@ -125,7 +135,8 @@ export class AddCustomObjectComponent extends BaseComponent {
             errors.push(valdationMessageOfDisplayLabelPlural);
 
         if (this.IsNotValidTableName()) {
-            errors.push(valdationMessageOfDuplicateTableName);
+            let validationMessage = this.IsSubObject ? validationMessageOfDuplicateCustomSubObjectTableName : validationMessageOfDuplicateCustomObjectTableName;
+            errors.push(validationMessage);
         }
 
         if (errors.length > 0)
@@ -133,6 +144,7 @@ export class AddCustomObjectComponent extends BaseComponent {
 
         this.CurrentSession.StartBusyIndicator("Saving ...");
         this.MapCustomObjectTableFields();
+        this.CreateObjectTable();
 
     }
 
@@ -154,22 +166,25 @@ export class AddCustomObjectComponent extends BaseComponent {
         this.objectTablePM.ObjectTableTypeCode = this.objectTableTypeCode;
         this.objectTablePM.SupportSubEntity = this.IsSubObject ? false : true;
 
+       
+    }
+    CreateObjectTable() {
         this.objectTablePMService.insert(this.objectTablePM).subscribe((response: ServiceResponse) => {
-
             if (response.HasError) return;
-
+            this.LoadData(response.Result);
             this.CurrentSession.StopBusyIndicator();
-            response.Result.IsNew = true;
-            window.ObjectTables.push(response.Result);
-            this.GetObjectFields();
-            if (this.IsSubObject) this.customizationSubEntitiesComponent.ApplyChanges(response.Result);
-            else this.customizationMainComponent.ApplyChanges();
-            
             this.CurrentSession.CloseCurrentWindow();
-
         });
     }
 
+    LoadData(objectTable: ObjectTablePM) {
+        window.ObjectTables.push(objectTable);
+        this.GetObjectFields();
+        this.GetScreens();
+        this.GetTabs();
+        if (this.IsSubObject) this.customizationSubEntitiesComponent.AddObjectTable(objectTable);
+        else this.customizationMainComponent.RefreshObjectTables();
+    }
     GetObjectFields() {
         this.objectFieldPMExtendedService.GetObjectFieldsByObjectTable(this.objectTablePM.Name).subscribe((response: any) => {
             if (!response) return;
@@ -186,6 +201,17 @@ export class AddCustomObjectComponent extends BaseComponent {
             })
         });
     }
+    GetScreens() {
+        this.loginService.GetScreens().subscribe((screens: any) => {
+            window.Screens = screens;
+        });
+    }
+    GetTabs() { 
+        this.loginService.GetObjectTableTabs().subscribe((tabs: any) => {
+            window.ObjectTableTabs = tabs;
+        });
+    }
+
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
