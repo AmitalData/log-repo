@@ -225,7 +225,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnDestroy
                 confirmWindow.YesButtonText = "Save ";
                 confirmWindow.CancelButtonText = "Cancel";
                 confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
-                confirmWindow.Show("This Dashboard has unsaved changes. Do you want to save it?");
+                confirmWindow.Show("This Dashboard has unsaved changes do you want to save it?");
                 confirmWindow.WindowClosed.subscribe((event: any) => {
                     if (confirmWindow.Yes) {
                         MixPanelLocator.PostDashboardAction({ ActionName: "Confirm Window Yes Click", DashboardId: this.SelectedDashboard?.Id });
