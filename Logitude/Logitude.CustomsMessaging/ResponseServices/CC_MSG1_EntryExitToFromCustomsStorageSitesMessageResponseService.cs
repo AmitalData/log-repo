@@ -105,8 +105,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 DeliverySiteTypeQueryService deliverySiteTypeQueryService = new DeliverySiteTypeQueryService(Tanent);
                 var deliverySiteType = deliverySiteTypeQueryService.GetSingle(customResponse.ReportingDetails.exitEntrySiteNumber, false, true);
                 var storageSite = deliverySiteType?.LocalName;
+                
                 var commentsStorageSite = storageSite != null ? ", שם אתר: " + storageSite + " " : "";
                 var commentsContainerNumber = customResponse.ReportingDetails.containerNumber != null ? ", מכולה: " + customResponse.ReportingDetails.containerNumber : "";
+                var commentsExpectedArrivalSiteNumber = customResponse.ReportingDetails.expectedArrivalSiteNumber != null ? ", אתר הגעה צפוי: " + customResponse.ReportingDetails.expectedArrivalSiteNumber : "";
+                var commentsDriverName = customResponse.TransferDetails.driverName != null ? ", שם נהג: " + customResponse.TransferDetails.driverName : "";
+                var commentsDriverIdentityNumber = customResponse.TransferDetails.driverIdentityNumber != null ? ", ת.ז נהג: " + customResponse.TransferDetails.driverIdentityNumber : "";
+                var commentsVehicleNumber = customResponse.TransferDetails.vehicleNumber != null ? ", מספר משאית: " + customResponse.TransferDetails.vehicleNumber : "";
+
 
 
                 //var declarationQueryService = new DeclarationQueryService(dbContext);
@@ -133,7 +139,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         status_DateTime = customResponse.General.entryExitDateTime != null ? customResponse.General.entryExitDateTime : DateTime.Now  ,
                         //status_place = "FRA",
                         //status_save = "no_fail",
-                        comments = commentsStorageSite + commentsContainerNumber,
+                        comments = commentsStorageSite + commentsContainerNumber + commentsExpectedArrivalSiteNumber + commentsDriverName + commentsDriverIdentityNumber + commentsVehicleNumber,
                         //מספ]ר מכולה  + אתר אחסון לשלוף מטבלת מכס , לקחת מהקאש
                     }
                 };
