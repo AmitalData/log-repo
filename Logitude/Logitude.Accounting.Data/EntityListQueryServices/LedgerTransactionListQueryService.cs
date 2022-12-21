@@ -804,11 +804,21 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 rec.IsLocalAmountCreditPos = rec.LocalAmountCredit != 0;
                 rec.CalculatedLocalAmount = rec.LocalAmountCredit != 0 ? rec.LocalAmountCredit : rec.LocalAmountDebit;
                 //rec.LocalAmountCredit = rec.LocalAmountCredit != 0 ? rec.LocalAmountCredit : rec.LocalAmountDebit;
-                rec.IsCumulativeLocalAmountPos = rec.CumulativeLocalAmount < 0;
+
+                if (IsFromExcelGenerator)
+                {
+                    rec.IsCumulativeLocalAmountPos = rec.CumulativeLocalAmount != 0;
+                    rec.IsCumulativeForeignAmountPos = rec.CumulativeForeignAmount != 0;
+                }
+                else
+                {
+                    rec.IsCumulativeLocalAmountPos = rec.CumulativeLocalAmount < 0;
+                    rec.IsCumulativeForeignAmountPos = rec.CumulativeForeignAmount < 0;
+                }
+
                 rec.IsForeignAmountCreditPos = rec.ForeignAmountCredit != 0;
                 rec.CalculatedForeignAmount = rec.ForeignAmountCredit != 0 ? rec.ForeignAmountCredit : rec.ForeignAmountDebit;
                 //rec.ForeignAmountCredit = rec.ForeignAmountCredit != 0 ? rec.ForeignAmountCredit : rec.ForeignAmountDebit;
-                rec.IsCumulativeForeignAmountPos = rec.CumulativeForeignAmount < 0;
                 rec.IsOriginalAmountPos = rec.OpenAmount < 0;
                 rec.IsForeignAmountPos = rec.ForeignAmountCredit != 0;
                 rec.ForeignAmountCreditWithSign = rec.CalculatedForeignAmount + " " + rec.CurrencySign;
