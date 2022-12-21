@@ -82,7 +82,7 @@
                     <log-column [width]="'155'" [header]="'StartTime'" [SortFieldName]="'StartTime'">
                         <ng-template let-item>
                             <log-cell-template #logcelltemplate [IsEditMode]="false">
-                                {{ item.StartTime | DateTimePipe:'SD' }}
+                                {{ item.StartTime | DateTimePipe:'DT' }}
                             </log-cell-template>
                         </ng-template>
                     </log-column>
