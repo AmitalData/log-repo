@@ -1,5 +1,6 @@
 import { compare, Operation } from 'fast-json-patch';
-import { CloneEntityPM, CloneObject } from './SafeCloneDeep';
+import { CloneDeep } from './LodashClone';
+//import { CloneEntityPM, CloneObject } from './SafeCloneDeep';
 
 export class JsonPatchBuilder {
     private LeftObject: any;
@@ -15,7 +16,11 @@ export class JsonPatchBuilder {
         "UIProperties",
         "UIProperty",
         "PropertyChanged",
-        "tEU"
+        "tEU",
+
+        "isNotValid",
+        "UniqueKey",
+        "$id"
     ];
 
     constructor(leftObject: any, rightObject: any) {
@@ -30,8 +35,10 @@ export class JsonPatchBuilder {
 
     public build() {
         if (this.LeftObject && this.RightObject) {
-            let clonedLeftObject = CloneEntityPM(this.LeftObject);
-            let clonedRightObject = CloneEntityPM(this.RightObject);
+            // let clonedLeftObject = CloneEntityPM(this.LeftObject);
+            // let clonedRightObject = CloneEntityPM(this.RightObject);
+            let clonedLeftObject = CloneDeep(this.LeftObject);
+            let clonedRightObject = CloneDeep(this.RightObject);
             let patch = compare(clonedLeftObject, clonedRightObject);
             let cleanedPatch = this.cleanPatch(patch);
             let modifiedPatch = this.modifyAddToListOperations(cleanedPatch);
@@ -87,7 +94,8 @@ export class JsonPatchBuilder {
     private buildPatchTestOperations(patch: Operation[]) {
         if (patch && patch.length > 0) {
             let testOperations: Operation[] = [];
-            let clonedPatch: Operation[] = CloneObject(patch);
+            //let clonedPatch: Operation[] = CloneObject(patch);
+            let clonedPatch: Operation[] = CloneDeep(patch);
             clonedPatch.forEach((operation: Operation) => {
                 let pathIndexRegex = /\/(\d+)/;
                 if (operation.path && pathIndexRegex.test(operation.path)) {

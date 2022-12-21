@@ -27,7 +27,8 @@ import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator'
 import { HeaderScreenDataResult } from '../../Interface/IHeaderScreenService';
 import { TableTabService } from 'Infrastructure/Services/ExtendedPMs/TableTabService';
 import { ObjectTableTabPM } from 'Infrastructure/EntityPMs/ObjectTableTabPM';
-import { CloneEntityPM } from 'Infrastructure/Helpers/SafeCloneDeep';
+import { CloneDeep } from 'Infrastructure/Helpers/LodashClone';
+//import { CloneEntityPM } from 'Infrastructure/Helpers/SafeCloneDeep';
 
 
 const InterestTransactionTabCode = 'GLIT';
@@ -286,7 +287,8 @@ export class EditComponent implements OnDestroy {
     private SetEntityPMAfterLoadIt(result)
     {
         this.EntityPM = result;
-        this.ClonedEntityPM = CloneEntityPM(this.EntityPM);
+        //this.ClonedEntityPM = CloneEntityPM(this.EntityPM);
+        this.ClonedEntityPM = CloneDeep(this.EntityPM);
 
         if (this.EntityFields) {
             this.EntityFields.forEach(itemField =>
@@ -1595,7 +1597,8 @@ export class EditComponent implements OnDestroy {
                             }
                         }
 
-                        this.ClonedEntityPM = CloneEntityPM(this.EntityPM);
+                        //this.ClonedEntityPM = CloneEntityPM(this.EntityPM);
+                        this.ClonedEntityPM = CloneDeep(this.EntityPM);
 
                     }, error => {
                         this.OnSavingFailed();
