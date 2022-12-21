@@ -929,8 +929,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 entityPM.HasException = entityAM.HasException;
             }
 
-            HandleRemoveExceptionDetails(entityAM, entityPM);
-
             if (entityAM.CustomsClearanceDate != null && entityAM.IsImporterApprovalRequired && entityPM.ApproveDateTime == null && string.IsNullOrEmpty(entityPM.ApprovedBy))
             {
                 entityPM.ApprovedBy = "System";
@@ -1034,6 +1032,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 return Responce;
             }
 
+
+            HandleRemoveExceptionDetails(entityAM, entityPM);
 
             //if (!string.IsNullOrEmpty(entityAM.StatusId))
             //{
@@ -1259,28 +1259,29 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
 
         private static void HandleRemoveExceptionDetails(ShipmentAM entityAM, ShipmentPM entityPM)
         {
+            EntityStatus shipmentStatus = EntityStatusRepository.GetSingleEntityStatus(entityPM.StatusId, entityPM.Tenant, true);
             if (entityPM.CustomsClearanceDate == null && entityAM.CustomsClearanceDate != null && entityAM.HasException == true && entityPM.DirectionId != "E")
             {
                 RemoveExceptionDetails(entityPM, "Customs Clearance");
             }
-            else if (entityPM.DirectionId == "E" && entityAM.HasException && entityAM.StatusCode == "ARR")
+            else if (entityPM.DirectionId == "E" && entityAM.HasException && shipmentStatus != null && shipmentStatus.Code == "ARR")
             {
                 RemoveExceptionDetails(entityPM, "Shipment Already arrived");
             }
-            else if (entityPM.DirectionId == "E" && entityAM.HasException)
+            else if (entityPM.DirectionId == "E" && entityAM.HasException && shipmentStatus != null)
             {
-                HandleRemoveExceptionDetailsByEntityStatusWeight(entityAM, entityPM);
+                HandleRemoveExceptionDetailsByEntityStatusWeight(entityPM, shipmentStatus);
             }
         }
 
-        private static void HandleRemoveExceptionDetailsByEntityStatusWeight(ShipmentAM entityAM, ShipmentPM entityPM)
+        private static void HandleRemoveExceptionDetailsByEntityStatusWeight(ShipmentPM entityPM, EntityStatus newShipmentStatus)
         {
-            EntityStatus shipmentStatus = EntityStatusRepository.GetSingleEntityStatusByCode(entityPM.StatusCode, entityPM.Tenant, true);
-            EntityStatus arrivedStatus = EntityStatusRepository.GetSingleEntityStatusByCode(entityAM.StatusCode, entityPM.Tenant, true);
-            if (shipmentStatus == null || arrivedStatus == null) return;
-            int shipmentStatusWeight = shipmentStatus.StatusLocalWeight != null ? (int)shipmentStatus.StatusLocalWeight : shipmentStatus.StatusWeight;
-            int arrivedStatusWeight = arrivedStatus.StatusLocalWeight != null ? (int)arrivedStatus.StatusLocalWeight : arrivedStatus.StatusWeight;
-            if (shipmentStatusWeight < arrivedStatusWeight) return;
+            EntityStatus oldShipmentStatus = EntityStatusRepository.GetSingleEntityStatusByCode(entityPM.StatusCode, entityPM.Tenant, true);
+            if (oldShipmentStatus == null || newShipmentStatus == null) return;
+            int oldShipmentStatusWeight = oldShipmentStatus.StatusLocalWeight != null ? (int)oldShipmentStatus.StatusLocalWeight : oldShipmentStatus.StatusWeight;
+            int newShipmentStatusWeight = newShipmentStatus.StatusLocalWeight != null ? (int)newShipmentStatus.StatusLocalWeight : newShipmentStatus.StatusWeight;
+            if (newShipmentStatusWeight <= oldShipmentStatusWeight) return;
+
             RemoveExceptionDetails(entityPM, "Shipment Already arrived");
         }
 
