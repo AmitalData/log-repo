@@ -187,6 +187,7 @@ export class AddEditWidgetComponent extends BaseComponent {
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget Entity Change ", Message: "Changed To" + this.EntityPM.EntityId, DashboardId: this.DashboardPM?.Id });
         }
     }
+    
 
     get TypeCode() { return this.EntityPM.TypeCode; }
     set TypeCode(value: string) {
