@@ -546,7 +546,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.InvoiceAmountDueInInvoiceCurrency = invoice.AmountDue;
                                 myRecord.AccountedReceivablesInInvoiceCurrency = this.ComputeAccountedReceivablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
                                 myRecord.AccountedPayablesInInvoiceCurrency = this.ComputeAccountedPayablesInInvoiceCurrency(invoice.Id, invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate, item.PayableId);
-
+                                myRecord.PaidDate = invoice.PaidDate;
+                                
                                 ShipmentPickUpDelivery myLastDelivery = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == myShipment.Id && d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
                                 myRecord.CountryOfDestination = this.ComputeCountryOfDistination(myShipment, myLastDelivery);
 
@@ -711,6 +712,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.InvoiceAmountDueInInvoiceCurrency = invoice.AmountDue;
                                 myRecord.AccountedReceivablesInInvoiceCurrency = this.ComputeAccountedReceivablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
                                 myRecord.AccountedPayablesInInvoiceCurrency = this.ComputeAccountedPayablesInInvoiceCurrency(invoice.Id, invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
+                                myRecord.PaidDate = invoice.PaidDate;
 
                                 ShipmentPickUpDelivery myLastDelivery = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == myShipment.Id && d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
                                 myRecord.CountryOfDestination = this.ComputeCountryOfDistination(myShipment, myLastDelivery);
