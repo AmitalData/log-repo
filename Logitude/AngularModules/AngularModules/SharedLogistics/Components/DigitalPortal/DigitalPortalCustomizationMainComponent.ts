@@ -24,7 +24,7 @@ export class DigitalPortalCustomizationMainComponent {
     public ObjectTableId: string = null;
     public IsCustomFieldsMenue: boolean = false;
     public IsObjectTableFilterEnabled: boolean;
-
+    public IsSaveButtonVisible: boolean = true;
     public MainMenuItems: Array<CustomizationMainMenuItem>;
     public MainMenuWidth: number = 145;
     LayoutDirection: string = 'ltr';
@@ -139,6 +139,13 @@ export class DigitalPortalCustomizationMainComponent {
 
         if (myLocation != null && this.SelectedMenu.Page && this.SelectedMenu.Page.IsChange) {
             myLocation.viewContainerRef.clear();
+        }
+
+        if (this.SelectedMenu.Code == "ScreenLayout") {
+            this.IsSaveButtonVisible = false;
+        }
+        else {
+            this.IsSaveButtonVisible = true;
         }
 
         SessionLocator.DynamicLoader.Load(this.SelectedMenu.ComponentPath, myLocation.viewContainerRef)

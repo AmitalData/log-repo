@@ -1,10 +1,5 @@
 <table>
-    <tr style="height: 1px;">
-        <td>
-            <SearchBox (TextChanged)="SearchText = $event"></SearchBox>
-        </td>
-    </tr>
-
+    
     <tr style="height: 5px;">
         <td>
             <div></div>
@@ -14,13 +9,13 @@
     <tr style="vertical-align:top;">
         <td>
             <div class="MediaFill">
-                <logitude-edit-grid [IsReadOnly]="true" [LastDefaultSpace]="0" GridWidth="100%" GridHeight="100%" [ItemSource]="LabelsItemsSource" (SelectedItemChanged)="Selecting($event)" [SelectedRow]="SelectedDigitalFieldCode">
-                    <!-- FieldCode -->
-                    <log-column [width]="'250'" [header]="'Code'" [Alignment]="'left'">
+                <logitude-edit-grid  [IsReadOnly]="true" [LastDefaultSpace]="0" GridWidth="100%" GridHeight="100%" [ItemSource]="PreDefinedItemsSource" (SelectedItemChanged)="Selecting($event)" [SelectedRow]="SelectedDigitalFieldCode">
+                    <!-- Name -->
+                    <log-column [width]="'250'" [header]="'Name'" [Alignment]="'left'">
                         <ng-template let-item>
                             <log-cell-template #logcelltemplate [Alignment]="'left'">
-                                <div style="width: 100%; text-align: left;" class="TextTrimming">
-                                    {{item.FieldCode}}
+                                <div style="text-align: left;" class="TextTrimming">
+                                    {{item.Name}}
                                 </div>
                             </log-cell-template>
                         </ng-template>
@@ -44,9 +39,8 @@
                         <div></div>
                     </td>
                     <td style="width: 100px;">
-                        <button id="{{'CloseBtn' | IdGeneratorPipe}}" class="Button" (click)="AddFieldCodeClicked()">Add Field Code</button>
+                        <button id="{{'CloseBtn' | IdGeneratorPipe}}" class="Button" (click)="AddFieldCodeClicked()">Add PreDefined Component</button>
                     </td>
-
                 </tr>
             </table>
         </td>

@@ -98,7 +98,7 @@
                                 </td>
 
                                 <!-- Save -->
-                                <td style="width: 57px;">
+                                <td *ngIf="IsSaveButtonVisible" style="width: 57px;">
                                     <button id="{{ 'SaveBtn' | IdGeneratorPipe}}" *ngIf="!IsDirty" class="Button" (click)="OkButtonClicked()">
                                         <img class="LeftCenter" style="margin-left: 2px;" src="./Images/Buttons/Save.png" />
                                         <span style="line-height: 19px; margin-left: 17px;">Save</span>
