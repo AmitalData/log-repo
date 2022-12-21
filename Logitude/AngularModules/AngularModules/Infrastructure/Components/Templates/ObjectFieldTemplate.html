@@ -70,7 +70,7 @@
                             <div class="MediaFillRelative" *ngIf="CustomField">
                                 <div class="MediaFillRelative" *ngIf="IsHeaderScreenTemplate">
                                     <div class="TextTrimming" *ngIf="DataTypeCode == 'Integer'" [style.textAlign]="NumberFieldTextAlign" [style.padding-right]="NumberFieldRightPadding"> {{CustomField['ResolvedValue']}}</div>
-                                    <div class="TextTrimming" *ngIf="DataTypeCode == 'Decimal' || DataTypeCode == 'Double'" [style.textAlign]="NumberFieldTextAlign" [style.padding-right]="NumberFieldRightPadding">{{CustomField['ResolvedValue'] | NumbersPipe:'N3'}}</div>
+                                    <div class="TextTrimming" *ngIf="DataTypeCode == 'Decimal' || DataTypeCode == 'Double'" [style.textAlign]="NumberFieldTextAlign" [style.padding-right]="NumberFieldRightPadding">{{CustomField['ResolvedValue'] | NumbersPipe:DigitsAfterPoints}}</div>
                                     <div class="TextTrimming" *ngIf="DataTypeCode == 'Date' || DataTypeCode == 'DateTime'" [style.textAlign]="TextAlign">{{CustomField['ResolvedValue'] | DateTimeToDatePipe}}</div>
                                     <div class="TextTrimming" *ngIf="DataTypeCode == 'PickList'" [style.textAlign]="TextAlign">{{CustomField['ResolvedValue']}}</div>
 
