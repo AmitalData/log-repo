@@ -29,7 +29,7 @@
                         <table>
                             <tr>
                                 <td style="width: 250px;">
-                                    <SearchBox  [SearchText]="SearchText"></SearchBox>
+                                    <SearchBox (TextChanged)="SearchText = $event"></SearchBox>
                                 </td>
 
                                 <td>
