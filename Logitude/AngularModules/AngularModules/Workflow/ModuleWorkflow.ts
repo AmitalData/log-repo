@@ -5,8 +5,11 @@ import { ModuleProviders } from './ModuleProviders';
 
 import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
 
+import { FormsModule } from '@angular/forms';
+import { MentionModule } from 'angular-mentions';
+
 @NgModule({
-    imports: [InfrastructureModule, NzTreeSelectModule],
+    imports: [InfrastructureModule, NzTreeSelectModule, FormsModule, MentionModule],
     declarations: [...Components, ...Pipes],
     entryComponents: [...Components],
 })

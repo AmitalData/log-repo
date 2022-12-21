@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { MentionConfig } from "angular-mentions";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
 import { ServiceResponse } from "Infrastructure/DataContracts/ServiceResponse";
 import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
@@ -51,6 +52,9 @@ export class ExpressionBuilderComponent extends BaseComponent {
 
     public IsSaving: boolean = false;
 
+    public IsSuggestionsPanelOpened: boolean = false;
+    public SuggestionsConfig: MentionConfig;
+
     constructor() {
         super();
     }
@@ -67,10 +71,33 @@ export class ExpressionBuilderComponent extends BaseComponent {
     }
 
     ngOnInit() {
+        this.initializeSuggestionsConfig();
         this.initializeExpressionCategories();
         this.initializeExpressions();
         this.initializeOperators();
         this.initializeFlowVariablesTree();
+    }
+
+    initializeSuggestionsConfig() {
+        this.SuggestionsConfig = {
+            mentions: Array.from("abcdefghijklmnopqrstuvwxyz").map(triggerChar => {
+                return {
+                    triggerChar: triggerChar,
+                    items: [],
+                    labelKey: "code",
+                    disableSort: true,
+                    allowSpace: true,
+                    mentionSelect: (mentionItem: any) => {
+                        return mentionItem.value;
+                    },
+                    mentionFilter: (filterTerm: string, mentionItems: any) => {
+                        let startsWithFilterTerm = (filterTerm && !filterTerm.startsWith(triggerChar) ? triggerChar : "") + (filterTerm ? filterTerm : "");
+                        let filteredMentionItems = mentionItems.filter((i: any) => i.name.toString().toLowerCase().startsWith(startsWithFilterTerm.toLowerCase()));
+                        return filteredMentionItems;
+                    }
+                };
+            })
+        };
     }
 
     initializeExpressionCategories() {
@@ -89,7 +116,28 @@ export class ExpressionBuilderComponent extends BaseComponent {
         expressionListService.getAll().subscribe((serviceResponse: ServiceResponse) => {
             if (!serviceResponse.HasError) {
                 this.ExpressionsTreeItems = new ExpressionsTreeList(serviceResponse.Result).Items;
+                this.addExpressionsToSuggestionsConfig(this.ExpressionsTreeItems);
             }
+        });
+    }
+
+    addExpressionsToSuggestionsConfig(expressionsTreeItems: TreeSelectItem[]) {
+        this.SuggestionsConfig.mentions.forEach(m => {
+            let items = expressionsTreeItems
+                .filter(i => i.selectable && !i.disabled && i.title.toString().toLowerCase().startsWith(m.triggerChar))
+                .map(i => {
+                    let type = "function";
+                    let functionName = i.data.Name || "";
+                    let functionFullName = functionName + (i.data.Body || "");
+                    return {
+                        code: type + "_" + i.key,
+                        name: functionName,
+                        label: functionFullName,
+                        value: functionFullName,
+                        type: type
+                    };
+                });
+            m.items = m.items.concat(items);
         });
     }
 
@@ -101,11 +149,31 @@ export class ExpressionBuilderComponent extends BaseComponent {
                 this.OperatorCategories = serviceResponse.Result
                 operatorListService.getAll().subscribe((serviceResponse: ServiceResponse) => {
                     if (!serviceResponse.HasError) {
-                        this.Operators = serviceResponse.Result
-                        this.OperatorsTreeItems = new OperatorsTreeList(this.OperatorCategories,this.Operators).Items;
+                        this.Operators = serviceResponse.Result;
+                        let operatorsTreeList = new OperatorsTreeList(this.OperatorCategories, this.Operators);
+                        this.OperatorsTreeItems = operatorsTreeList.Items;
+                        this.addOperatorsToSuggestionsConfig(operatorsTreeList.ItemsList);
                     }
                 });
             }
+        });
+    }
+
+    addOperatorsToSuggestionsConfig(operatorsTreeItems: TreeSelectItem[]) {
+        this.SuggestionsConfig.mentions.forEach(m => {
+            let items = operatorsTreeItems
+                .filter(i => i.selectable && !i.disabled && i.data.Name && i.data.Name.toString().toLowerCase().startsWith(m.triggerChar))
+                .map(i => {
+                    let type = "operator";
+                    return {
+                        code: type + "_" + i.key,
+                        name: i.data.Name,
+                        label: i.data.Name,
+                        value: i.data.Sign,
+                        type: type
+                    };
+                });
+            m.items = m.items.concat(items);
         });
     }
 
@@ -118,6 +186,25 @@ export class ExpressionBuilderComponent extends BaseComponent {
         };
         this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId, showVariables);
         this.FlowVariablesTreeItems = this.FlowVariablesTreeList.Items;
+        this.addFlowVariablesToSuggestionsConfig(this.FlowVariablesTreeList.ItemsList);
+    }
+
+    addFlowVariablesToSuggestionsConfig(flowVariablesTreeItems: TreeSelectItem[]) {
+        this.SuggestionsConfig.mentions.forEach(m => {
+            let items = flowVariablesTreeItems
+                .filter(i => i.selectable && !i.disabled && i.title.toString().toLowerCase().startsWith(m.triggerChar))
+                .map(i => {
+                    let type = "variable";
+                    return {
+                        code: type + "_" + i.key,
+                        name: i.title,
+                        label: i.key.indexOf("_") === -1 ? i.title : (i.key.split("_")[0] + " - " + i.title),
+                        value: "{" + i.key + "}",
+                        type: type
+                    };
+                });
+            m.items = items.concat(m.items);
+        });
     }
 
     updateExpressionCategory(expressionCategory: ListItem) {
@@ -159,7 +246,7 @@ export class ExpressionBuilderComponent extends BaseComponent {
     }
 
     selectOperator(operator: any) {
-        if(operator.data){
+        if (operator.data) {
             this.setOperatorInExpression(operator.data.Sign)
         }
     }
@@ -194,12 +281,48 @@ export class ExpressionBuilderComponent extends BaseComponent {
     }
 
     updateExpressionValue(expression: string) {
+        this.setIsSuggestionsPanelOpened();
+        this.handleMentionListElementStyle();
+
         if (expression && expression !== "") {
             this.ExpressionValue.expression = expression;
         } else {
             this.ExpressionValue.expression = null;
         }
         this.ExpressionValue.variables = [];
+    }
+
+    setIsSuggestionsPanelOpened() {
+        let mentionMenuElement = document.querySelector(".mention-menu");
+        if (mentionMenuElement) {
+            if (mentionMenuElement.getAttribute("hidden") === "") {
+                this.IsSuggestionsPanelOpened = false;
+            } else {
+                this.IsSuggestionsPanelOpened = true;
+            }
+        } else {
+            this.IsSuggestionsPanelOpened = false;
+        }
+    }
+
+    handleMentionListElementStyle() {
+        setTimeout(() => {
+            let mentionListElement = document.querySelector<HTMLElement>("mention-list");
+            if (mentionListElement) {
+                let left = Number(mentionListElement.style.left.replace("px", ""));
+                let top = Number(mentionListElement.style.top.replace("px", ""));
+                if (left > 570) {
+                    mentionListElement.style.left = "570px";
+                }
+                if (top > 85) {
+                    mentionListElement.style.top = "85px";
+                }
+            }
+        }, 50);
+    }
+
+    setIsSuggestionsPanelOpenedAsClosed() {
+        this.IsSuggestionsPanelOpened = false;
     }
 
     checkExpressionSyntax() {
