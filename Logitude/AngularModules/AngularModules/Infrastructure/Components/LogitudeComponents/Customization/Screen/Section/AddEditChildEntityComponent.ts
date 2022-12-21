@@ -200,10 +200,10 @@ export class AddEditChildEntityComponent extends BaseComponent implements OnInit
         }
         this.FatherComponent.LoadData();
     }
-    private ResetChangedCustomFields(i: number) {
-        let oldCustomFieldValue = this.GetCustomChildObjectCustomFieldClass(this.cloneCustomChildObjectPM, i);
-        if (this.EntityPM['Field' + i].Value != oldCustomFieldValue.Value) {
-            this.EntityPM['Field' + i] = oldCustomFieldValue;
+    private ResetChangedCustomFields(CustomFieldIndex: number) {
+        let oldCustomFieldValue = this.GetCustomChildObjectCustomFieldClass(this.cloneCustomChildObjectPM, CustomFieldIndex);
+        if (this.EntityPM['Field' + CustomFieldIndex].Value != oldCustomFieldValue.Value) {
+            this.EntityPM['Field' + CustomFieldIndex] = oldCustomFieldValue;
             this.EntityPM.IsDirty = false;
         }
     }
