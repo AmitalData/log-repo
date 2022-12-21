@@ -40,7 +40,7 @@ namespace Logitude.Customs.Data.Repsitories
             return (from a in context.ConsignmentPackages
                     where a.DeclarationId == declarationId && a.PackageMeasureQualifierCode == code
                     select a).ToList();
-        }        
+        }
     }
 
 }
