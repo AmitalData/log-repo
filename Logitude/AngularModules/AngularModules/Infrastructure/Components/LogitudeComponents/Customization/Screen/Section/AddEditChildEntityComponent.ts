@@ -196,16 +196,17 @@ export class AddEditChildEntityComponent extends BaseComponent implements OnInit
     {
         for (let i = 1; i < this.numberOfCustomChildObjectCustomFields+1; i++)
         {
-            let oldCustomFieldValue = this.GetCustomChildObjectCustomFieldClass(this.cloneCustomChildObjectPM, i);
-            if( this.EntityPM['Field' + i].Value != oldCustomFieldValue.Value)
-            {
-                this.EntityPM['Field' + i] = oldCustomFieldValue;
-                this.EntityPM.IsDirty= false;
-            }
+            this.ResetChangedCustomFields(i);
         }
         this.FatherComponent.LoadData();
     }
-
+    private ResetChangedCustomFields(i: number) {
+        let oldCustomFieldValue = this.GetCustomChildObjectCustomFieldClass(this.cloneCustomChildObjectPM, i);
+        if (this.EntityPM['Field' + i].Value != oldCustomFieldValue.Value) {
+            this.EntityPM['Field' + i] = oldCustomFieldValue;
+            this.EntityPM.IsDirty = false;
+        }
+    }
     private GetCustomChildObjectCustomFieldClass(cloneEntityPM: CustomChildObjectPM, index: number) {
         let customFieldClass = cloneEntityPM['Field' + index];
         if (!customFieldClass) {

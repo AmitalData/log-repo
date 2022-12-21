@@ -751,8 +751,7 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
             return;
         }
         if (sectionType == "Summary") {
-            screenSection.Type = "Summary";
-            screenSection.Name = "Summary";
+            screenSection.Type = screenSection.Name = "Summary";
         }
         var sectionScreen: SectionScreenItem = new SectionScreenItem(screenSection);
         this.ShowAddNewStandardScreenSectionComponent(screenSection, sectionScreen);
@@ -770,11 +769,8 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
         this.Modified = true;
     }
     IsEnabledAddingSummarySection(): boolean {
-        for (var i = 0; i < this.SectionScreens.length; i++)
-        {
-            if (this.SectionScreens[i].Section.Type == 'Summary' && this.SectionScreens[i].Section.Inactive == false)
-                return false;
-        }
+        let summarySectionScreen = this.SectionScreens.filter(s => s.Section.Type == 'Summary' && s.Section.Inactive == false)[0];
+        if (summarySectionScreen) return false;
         return true;
     }
     private BuildStandardScreenSectionRows(screenSection: ScreenSectionPM) {
