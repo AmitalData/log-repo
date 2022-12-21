@@ -23,7 +23,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
             var myCommunicationLog = myCommunicationLogRepository.GetSingleCommunicationLog(pm.RequestComminicationId, tenant);
             if (append)
             {
-                string myExceptionMessage = exceptionMessage + myCommunicationLog.ExceptionMessage;
+                string myExceptionMessage = exceptionMessage +"-LstErr:" + myCommunicationLog.ExceptionMessage;
                 
                 myCommunicationLog.ExceptionMessage = myExceptionMessage.Substring(0, Math.Min(7999, myExceptionMessage.Length));
             }

@@ -1,8 +1,12 @@
 ﻿using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.Customs.BL.Messaging.Customs.PerformanceLogger;
 using Logitude.Customs.BL.Messaging.Customs.SignQueueBL;
+using Logitude.Customs.Data;
+using Logitude.Customs.Data.EntityLists;
 using Logitude.Customs.Def.EntityPMs;
+using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.ExternalServices;
@@ -187,12 +191,31 @@ where not exists(select *
                         if (_CustomDBQueueMessage == null || String.IsNullOrWhiteSpace(_CustomDBQueueMessage.MessageId))
                         {
                             QueueThreadStateService.Upsert(QueueThreadStateService.GetWRKey(this.GetType().Name), "Sleep...");
+                            scope.Complete();
                             Thread.Sleep(TimeSpan.FromSeconds(CustomsWorkerRole.Utils.GenUtil.IfNoQueue_ServerWaitTimeInSec()));
                             break;
                         }
 
 
-                        ProccessHSMSign();
+                        int.TryParse(_CustomDBQueueMessage.Properties["Tenant"].ToString(), out _Tenant);
+
+                        string customsRequestsSheetId = null;
+                        string interfaceTypeCode = null;
+                        string signByPersonalId = null;
+                        string signQueueByCompanyOrPersonal = null;
+
+                        customsRequestsSheetId = _CustomDBQueueMessage.Properties["CorrelationId"].ToString();
+                        interfaceTypeCode = _CustomDBQueueMessage.Properties["InterfaceTypeCode"].ToString();
+                        signByPersonalId = _CustomDBQueueMessage.Properties["SignByPersonalId"].ToString();
+                        signQueueByCompanyOrPersonal = _CustomDBQueueMessage.Properties["SignQueueByCompanyOrPersonal"].ToString();
+
+                        ProccessHSMSign(
+                            customsRequestsSheetId,
+                            interfaceTypeCode
+                            //signByPersonalId,
+                            //signQueueByCompanyOrPersonal
+                            );
+
                         scope.Complete();
                     }
                 }
@@ -206,20 +229,19 @@ where not exists(select *
 
 
 
-        public void ProccessHSMSign()
+        public void ProccessHSMSign(
+            string customsRequestsSheetId ,
+            string interfaceTypeCode 
+            ///string signByPersonalId ,
+            //string signQueueByCompanyOrPersonal 
+            )
         {
 
             LogMessagingUtil.Instance.Clear();
 
 
-            int.TryParse(_CustomDBQueueMessage.Properties["Tenant"].ToString(), out _Tenant);
 
-            string customsRequestsSheetId = null;
-            string interfaceTypeCode = null;
-            string signByPersonalId = null;
-            string signQueueByCompanyOrPersonal = null;
-
-
+            RequestParamsBase dRequestParamsBase = null;
 
 
 
@@ -228,26 +250,17 @@ where not exists(select *
                 //{ "SignByPersonalId":"032443830","InterfaceTypeCode":"2751","Tenant":"6","CorrelationId":"2c799c10-d9b2-4da5-b872-9cfdb91cf727"}
 
 
-                customsRequestsSheetId = _CustomDBQueueMessage.Properties["CorrelationId"].ToString();
-                interfaceTypeCode = _CustomDBQueueMessage.Properties["InterfaceTypeCode"].ToString();
-                signByPersonalId = _CustomDBQueueMessage.Properties["SignByPersonalId"].ToString();
-                signQueueByCompanyOrPersonal = _CustomDBQueueMessage.Properties["SignQueueByCompanyOrPersonal"].ToString();
-
-
-                if (_CustomDBQueueMessage.MyQueueResponse.RetryNumber > MaxRetries)
-                {
-                    CustomsRequestsSheetDomainModelUtil.SetExceptionMessage(_Tenant, customsRequestsSheetId,
-                        $"Singing MaxRetries({MaxRetries}) Cancelling  CustomsRequestsSheet !!!",append:true);
-
-                    _CustomDbQueueService.Complete();
-                    return;
-                }
 
                 var anaO = ContainerAccessor.Container.Resolve<IMessagingServiceInterfaceType>(interfaceTypeCode);
+                CustomsSettingQueryService settingService = new CustomsSettingQueryService(_Tenant);
+                var setting = settingService.GetSettingByTenantN(_Tenant);
+                
+                var (bytesToSign, requestParamsBase) = anaO.PasiveSignGetBytesToSign(_Tenant, customsRequestsSheetId);
+                dRequestParamsBase = requestParamsBase;
 
                 SignQueueByType signQueueByType = SignQueueByType.None;
                 string companypersonal = "";
-                Enum.TryParse<SignQueueByType>(signQueueByCompanyOrPersonal, out signQueueByType);
+                Enum.TryParse<SignQueueByType>(requestParamsBase.SignQueueByCompanyOrPersonal, out signQueueByType);
                 switch (signQueueByType)
                 {
 
@@ -260,18 +273,14 @@ where not exists(select *
                         break;
                 }
 
-
-                CustomsSettingQueryService settingService = new CustomsSettingQueryService(_Tenant);
-                var setting = settingService.GetSettingByTenantN(_Tenant);
-                
-                var bytesToSign = anaO.PasiveSignGetBytesToSign(_Tenant, customsRequestsSheetId);
                 var hSMSignFileService = new HSMSignFileService();
 
-                LogMessagingUtil.Instance.AppendLine($"hSMSignFile({customsRequestsSheetId}, {signByPersonalId}, {companypersonal})");
+                LogMessagingUtil.Instance.AppendLine(
+                    $"hSMSignFile({customsRequestsSheetId}, {requestParamsBase.SignByPersonalId}, {companypersonal})");
                 byte[] signBytes = hSMSignFileService
                     .SignCustomsRequest(
-                    _Tenant, customsRequestsSheetId, 
-                    signByPersonalId, companypersonal,
+                    _Tenant, customsRequestsSheetId,
+                    requestParamsBase.SignByPersonalId, companypersonal,
                     setting.CustomsAgentId,bytesToSign);
 
                 MessagingServiceFactoryHelper.InitContainer();
@@ -300,21 +309,64 @@ where not exists(select *
             {
                 if (!string.IsNullOrWhiteSpace(customsRequestsSheetId))
                 {
-                    CustomsRequestsSheetDomainModelUtil.SetExceptionMessage(_Tenant, customsRequestsSheetId, ex.ToString());
+                    CRSSetException(customsRequestsSheetId, ex);
+
                 }
 
-                
-                Logger.LogMe($"hSMSignFile({_Tenant},{customsRequestsSheetId}, {signByPersonalId}, {signByPersonalId})" + ex.ToString(), true, "CustomsHSMSignWR");
+
+                Logger.LogMe($"hSMSignFile({_Tenant},{customsRequestsSheetId}, {dRequestParamsBase?. SignByPersonalId}, {dRequestParamsBase?.SignByPersonalId})" + ex.ToString(), true, "CustomsHSMSignWR");
                 ExceptionHandler.HandleException(ex, DateTime.Now, _Tenant, "", "ProccessHSMSign-MarkExportSignTaskAsDone", "", null);
 
 
             }
         }
 
+        private void CRSSetException(string customsRequestsSheetId, Exception ex)
+        {
+            try
+            {
+
+            
+            CustomsRequestsSheetDomainModelUtil.SetExceptionMessage(_Tenant, customsRequestsSheetId,
+            $"RetryNumber:{_CustomDBQueueMessage.MyQueueResponse.RetryNumber}-{ex.ToString()}");
+                if (_CustomDBQueueMessage.MyQueueResponse.RetryNumber >= MaxRetries)
+                {
+                    var myContext = CustomContext.GetContext(_Tenant);
+                    var customsRequestsSheetUpdateService = new CustomsRequestsSheetUpdateService(_Tenant);
+                    var list = new List<CustomsRequestsSheetList>() { new CustomsRequestsSheetList() { Id = customsRequestsSheetId } };
 
 
+                    customsRequestsSheetUpdateService.CancelRequests(list, _Tenant, myContext);
 
+                    _CustomDbQueueService.Complete();
 
+                }
+            }
+            catch (Exception)
+            {
+
+                Logger.LogMe($"hSMSignFile-SetExceptionMessage({_Tenant},{customsRequestsSheetId})" + ex.ToString(), true, "CustomsHSMSignWR");
+                ExceptionHandler.HandleException(ex, DateTime.Now, _Tenant, "", "ProccessHSMSign-SetExceptionMessage", "", null);
+
+            }
+        }
+
+        public void DebugStep(string customsRequestsSheetId, string interfaceTypeCode, int tenant, 
+            string signByPersonalId,
+            string signQueueByCompanyOrPersonal)
+        {
+            bool todo = DateTime.Now > new DateTime(2023, 1, 1);
+            if (todo)
+            {
+                throw new Exception("todo - fix it -take time ?!?!");
+            }
+            using (TransactionScope scope = TransactionFactory.GetTransaction())
+            {
+                _Tenant = tenant;
+                ProccessHSMSign(customsRequestsSheetId, interfaceTypeCode);
+                scope.Complete();
+            }
+        }
     }
 
 

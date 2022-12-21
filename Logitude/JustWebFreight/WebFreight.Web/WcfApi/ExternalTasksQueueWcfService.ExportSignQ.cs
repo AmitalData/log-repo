@@ -93,7 +93,7 @@ namespace WebFreight.Web.WcfApi
 
 
 
-                            var BytesToSign = anaO.PasiveSignGetBytesToSign(exportReqSignData.Tenant, correlationId /*CustomsRequestsSheetId*/);
+                            var (BytesToSign,reqParams) = anaO.PasiveSignGetBytesToSign(exportReqSignData.Tenant, correlationId /*CustomsRequestsSheetId*/);
                             stringBuilder.AppendLine($"PasiveSignGetBytesToSign()|Bytes2Sign:{BytesToSign.Length}");
                             return new ResponseExportSignTask()
                             {
@@ -143,10 +143,9 @@ namespace WebFreight.Web.WcfApi
                             }
 
 
-
-                            var BytesToSign = anaO.PasiveSignGetBytesToSign(exportReqSignData.Tenant, correlationId /*CustomsRequestsSheetId*/);
-                            stringBuilder.AppendLine($"PasiveSignGetBytesToSign()|Bytes2Sign:{BytesToSign.Length}");
-                            return new ResponseExportSignTask() { currTenant = exportReqSignData.Tenant, queueId = queueResponse.MessageId, CustomsRequestsSheetId = correlationId, InterfaceTypeCode = InterfaceTypeCode, ReceiveBytesToSign = BytesToSign };
+                            var myRes = anaO.PasiveSignGetBytesToSign(exportReqSignData.Tenant, correlationId /*CustomsRequestsSheetId*/);
+                            stringBuilder.AppendLine($"PasiveSignGetBytesToSign()|Bytes2Sign:{myRes.bytesToSign.Length}");
+                            return new ResponseExportSignTask() { currTenant = exportReqSignData.Tenant, queueId = queueResponse.MessageId, CustomsRequestsSheetId = correlationId, InterfaceTypeCode = InterfaceTypeCode, ReceiveBytesToSign = myRes.bytesToSign };
 
 
                         }
