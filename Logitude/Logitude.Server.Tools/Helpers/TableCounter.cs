@@ -174,7 +174,7 @@ namespace Logitude.Server.Tools.Helpers
                     //};
                     //if (newSPTenants.Where(a=>a == tenant).Count() > 0)
                     //{
-                    string procedureName = string.IsNullOrEmpty(branchCounterCode)   ? "dbo.usp_GetNextTableNumberValueWithSnapshot" : "dbo.usp_GetNextTableNumberValueSupportBranchCounterCodeWithSnapshot";
+                    string procedureName = string.IsNullOrEmpty(branchCounterCode)   ? "dbo.usp_GetNextTableNumberValueWithSnapshotView" : "dbo.usp_GetNextTableNumberValueSupportBranchCounterCodeWithSnapshot";
                     SqlCommand cmd = new SqlCommand(procedureName, cn);
                     //}
                     cmd.CommandType = CommandType.StoredProcedure;
