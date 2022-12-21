@@ -1,171 +1,172 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-	<Sql Version="1">
+	<Sql Version="8">
       <![CDATA[	  
 		delete from DigitalPortalScreens where id != ''
-		declare @shipmentObjectTableId as varchar(15)
-		set @shipmentObjectTableId = (select Id from ObjectTables where [Name] = 'Shipment' and Tenant = 0 )
+		
+		declare @shipmentObjectId as varchar(15)
+		set @shipmentObjectId = (select Id from ObjectTables where [Name] = 'Shipment' and Tenant = 0 )
 
- 		EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalPortalScreens'
+        declare @EntityId as varchar(15)
+ 		EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPortalScreens'
 
-		INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, Name, ScreenCode, Content, DraftContent) 
-	    values (@NewEntityId, 0, @shipmentObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Shipment list card item', 'SLCI', 
-		   '<div class='list-item-first-row'>
-               <div class='list-item-first-col'>
-                  <div class='p-d-flex p-ai-center p-jc-start'>
-                     <div class='transport-direction margin-top-3'>
-                        <LogElement icon-class='p-mr-1'dp-if='{DirectionId}===[I]'type='icon'icon='Import'></LogElement>
-                        <LogElement icon-class='p-mr-1'dp-if='{DirectionId}===[E]'type='icon'icon='Export'></LogElement>
-                        <LogElement icon-class='p-mr-1'dp-if='{DirectionId}===[D]'type='icon'icon='Domestic'></LogElement>
-                        <LogElement icon-class='p-mr-1'dp-if='{DirectionId}===[R]'type='icon'icon='Drop'></LogElement>
+		INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, Content, DraftContent) 
+	    values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Shipment list card item', 'SLCI', 
+ 		   '<div class=''list-item-first-row''>
+               <div class=''list-item-first-col''>
+                  <div class=''p-d-flex p-ai-center p-jc-start''>
+                     <div class=''transport-direction margin-top-3''>
+                        <LogElement icon-class=''p-mr-1''dp-if=''{DirectionId}===[I]''type=''icon''icon=''Import''></LogElement>
+                        <LogElement icon-class=''p-mr-1''dp-if=''{DirectionId}===[E]''type=''icon''icon=''Export''></LogElement>
+                        <LogElement icon-class=''p-mr-1''dp-if=''{DirectionId}===[D]''type=''icon''icon=''Domestic''></LogElement>
+                        <LogElement icon-class=''p-mr-1''dp-if=''{DirectionId}===[R]''type=''icon''icon=''Drop''></LogElement>
                      </div>
-                     <LogElement type='separator'></LogElement>
-                     <LogElement dp-if='{TransportModeId}===[A]'type='icon'icon='Air'></LogElement>
-                     <LogElement dp-if='{TransportModeId}===[O]'type='icon'icon='Ocean'></LogElement>
-                     <LogElement icon-class='p-ml-1' dp-if='{TransportModeId}===[I]'type='icon'icon='Inland'></LogElement>
-                     <div class='shipment-number-container p-d-flex p-ai-center p-jc-start'>
-                        <div class='shipment-type p-ml-1 dp-border-radius-4px dp-font-size-12 dp-color-black-3 dp-font-weight-400 p-p-1 dp-bg-color-gray-4 p-mr-1'>
-                           <LogElement type='badge'data-fields='shipment-type'></LogElement>
+                     <LogElement type=''separator''></LogElement>
+                     <LogElement dp-if=''{TransportModeId}===[A]''type=''icon''icon=''Air''></LogElement>
+                     <LogElement dp-if=''{TransportModeId}===[O]''type=''icon''icon=''Ocean''></LogElement>
+                     <LogElement icon-class=''p-ml-1'' dp-if=''{TransportModeId}===[I]''type=''icon''icon=''Inland''></LogElement>
+                     <div class=''shipment-number-container p-d-flex p-ai-center p-jc-start''>
+                        <div class=''shipment-type p-ml-1 dp-border-radius-4px dp-font-size-12 dp-color-black-3 dp-font-weight-400 p-p-1 dp-bg-color-gray-4 p-mr-1''>
+                           <LogElement type=''badge''data-fields=''shipment-type''></LogElement>
                         </div>
-                        <div class='shipment-number p-ml-1 dp-font-size-16 dp-font-weight-600 dp-color-black-3'>
-                           <span class='shipment-number-label dp-position-relative'>
-                              <LogElement type='entity-field-value'data-fields='ShipmentNumber'></LogElement>
+                        <div class=''shipment-number p-ml-1 dp-font-size-16 dp-font-weight-600 dp-color-black-3''>
+                           <span class=''shipment-number-label dp-position-relative''>
+                              <LogElement type=''entity-field-value''data-fields=''ShipmentNumber''></LogElement>
                            </span>
                         </div>
                      </div>
                   </div>
-                  <div class='p-mt-2 dp-font-weight-400 dp-font-size-14 p-mb-1 p-d-flex p-ai-start p-jc-start'>
-                     <FieldTemplate tooltip='true' data-label='References'data-fields='CustomerReference1,CustomerReference2'></FieldTemplate>
+                  <div class=''p-mt-2 dp-font-weight-400 dp-font-size-14 p-mb-1 p-d-flex p-ai-start p-jc-start''>
+                     <FieldTemplate tooltip=''true'' data-label=''References''data-fields=''CustomerReference1,CustomerReference2''></FieldTemplate>
                   </div>
-                  <Log-Container dp-if='{TransportModeId}===[A]'class='p-mt-2 dp-font-weight-400 dp-font-size-14 p-mb-1 p-d-flex p-ai-start p-jc-start'>
-                     <FieldTemplate dp-if='{TransportModeId}===[A]'data-label='MAWB'data-fields='LongMaster'></FieldTemplate>
-                     <FieldTemplate dp-if='{TransportModeId}===[O]'data-label='OBL'data-fields='LongMaster'></FieldTemplate>
-                     <FieldTemplate dp-if='{TransportModeId}===[I]'data-label='CMR/ RWB#/ PRO#'data-fields='LongMaster'></FieldTemplate>
+                  <Log-Container dp-if=''{TransportModeId}===[A]''class=''p-mt-2 dp-font-weight-400 dp-font-size-14 p-mb-1 p-d-flex p-ai-start p-jc-start''>
+                     <FieldTemplate dp-if=''{TransportModeId}===[A]''data-label=''MAWB''data-fields=''LongMaster''></FieldTemplate>
+                     <FieldTemplate dp-if=''{TransportModeId}===[O]''data-label=''OBL''data-fields=''LongMaster''></FieldTemplate>
+                     <FieldTemplate dp-if=''{TransportModeId}===[I]''data-label=''CMR/ RWB#/ PRO#''data-fields=''LongMaster''></FieldTemplate>
                   </Log-Container>
-                  <Log-Container dp-if='{TransportModeId}!==[A]'class='p-mt-2 dp-font-weight-400 dp-font-size-14 p-mb-1 p-d-flex p-ai-start p-jc-start'>
-                     <FieldTemplate dp-if='{TransportModeId}===[A]'data-label='MAWB'data-fields='Master'></FieldTemplate>
-                     <FieldTemplate dp-if='{TransportModeId}===[O]'data-label='OBL'data-fields='Master'></FieldTemplate>
-                     <FieldTemplate dp-if='{TransportModeId}===[I]'data-label='CMR/ RWB#/ PRO#'data-fields='Master'></FieldTemplate>
+                  <Log-Container dp-if=''{TransportModeId}!==[A]''class=''p-mt-2 dp-font-weight-400 dp-font-size-14 p-mb-1 p-d-flex p-ai-start p-jc-start''>
+                     <FieldTemplate dp-if=''{TransportModeId}===[A]''data-label=''MAWB''data-fields=''Master''></FieldTemplate>
+                     <FieldTemplate dp-if=''{TransportModeId}===[O]''data-label=''OBL''data-fields=''Master''></FieldTemplate>
+                     <FieldTemplate dp-if=''{TransportModeId}===[I]''data-label=''CMR/ RWB#/ PRO#''data-fields=''Master''></FieldTemplate>
                   </Log-Container>
-                  <div class='display-lg-flex-none p-mt-2 dp-font-weight-400 dp-font-size-14 p-mb-1 p-ai-start p-jc-start'>
-                     <FieldTemplate data-label='Customer'data-fields='CustomerName'></FieldTemplate>
+                  <div class=''display-lg-flex-none p-mt-2 dp-font-weight-400 dp-font-size-14 p-mb-1 p-ai-start p-jc-start''>
+                     <FieldTemplate data-label=''Customer''data-fields=''CustomerName''></FieldTemplate>
                   </div>
-                  <div class='display-lg-block padding-top-bottom-2 dp-font-weight-400 dp-font-size-14'>
-                     <FieldTemplate data-label='Status updated'data-fields='StatusDate' disable-copy='true' is-date-time='true'></FieldTemplate>
+                  <div class=''display-lg-block padding-top-bottom-2 dp-font-weight-400 dp-font-size-14''>
+                     <FieldTemplate data-label=''Status updated''data-fields=''StatusDate'' disable-copy=''true'' is-date-time=''true''></FieldTemplate>
                   </div>
-                  <div data-valid-only='true' data-fields='NotesSharedWithCustomer'class='p-mt-2 dp-font-weight-400 dp-font-size-14 p-mb-1 p-d-flex p-ai-start p-jc-start'>
-                     <FieldTemplate tooltip='true'data-label='Notes'data-fields='NotesSharedWithCustomer'></FieldTemplate>
+                  <div data-valid-only=''true'' data-fields=''NotesSharedWithCustomer''class=''p-mt-2 dp-font-weight-400 dp-font-size-14 p-mb-1 p-d-flex p-ai-start p-jc-start''>
+                     <FieldTemplate tooltip=''true''data-label=''Notes''data-fields=''NotesSharedWithCustomer''></FieldTemplate>
                   </div>
                </div>
-               <div class='list-item-timeline-container'>
+               <div class=''list-item-timeline-container''>
                   <ShipmentStatusInfoForTablet></ShipmentStatusInfoForTablet>
                   <HorizontalTimeline></HorizontalTimeline>
                </div>
-               <div class='list-item-third-col p-d-flex p-flex-column p-jc-end p-ai-end'>
+               <div class=''list-item-third-col p-d-flex p-flex-column p-jc-end p-ai-end''>
                   <ShipmentStatusInfo></ShipmentStatusInfo>
-                  <div class='dp-font-weight-400 dp-font-size-14 p-mb-0 p-d-flex p-ai-start p-jc-end'>
-                     <FieldTemplate container-classes='p-mr-0'data-label='Status updated'data-fields='StatusDate' disable-copy='true' is-date-time='true'></FieldTemplate>
+                  <div class=''dp-font-weight-400 dp-font-size-14 p-mb-0 p-d-flex p-ai-start p-jc-end''>
+                     <FieldTemplate container-classes=''p-mr-0''data-label=''Status updated''data-fields=''StatusDate'' disable-copy=''true'' is-date-time=''true''></FieldTemplate>
                   </div>
                </div>
             </div>
-            <div class='list-item-second-row p-d-flex p-ai-center p-jc-between p-flex-wrap p-mt-2 dp-font-weight-400 dp-font-size-14'>
-               <div class='white-space-nowrap w--100 display-lg-block dp-font-weight-400 dp-font-size-14 p-mb-2 display-flex p-ai-start p-jc-start'>
-                  <div class='p-mt-2 dp-font-weight-400 dp-font-size-14 p-mb-0 p-d-flex p-ai-start p-jc-start'>
-                     <FieldTemplate data-label='Customer'data-fields='CustomerName'></FieldTemplate>
+            <div class=''list-item-second-row p-d-flex p-ai-center p-jc-between p-flex-wrap p-mt-2 dp-font-weight-400 dp-font-size-14''>
+               <div class=''white-space-nowrap w--100 display-lg-block dp-font-weight-400 dp-font-size-14 p-mb-2 display-flex p-ai-start p-jc-start''>
+                  <div class=''p-mt-2 dp-font-weight-400 dp-font-size-14 p-mb-0 p-d-flex p-ai-start p-jc-start''>
+                     <FieldTemplate data-label=''Customer''data-fields=''CustomerName''></FieldTemplate>
                   </div>
                </div>
-               <div class='description-of-goods p-d-inline-flex p-ai-center p-jc-start'>
-                  <Log-Container class='dp-position-relative text-cut p-mt-1 dp-font-weight-400 dp-font-size-14 dp-color-gray-3 p-d-flex p-ai-start p-jc-start'>
-                     <LogElement type='entity-field-label'data-label='Description of goods'></LogElement>
+               <div class=''description-of-goods p-d-inline-flex p-ai-center p-jc-start''>
+                  <Log-Container class=''dp-position-relative text-cut p-mt-1 dp-font-weight-400 dp-font-size-14 dp-color-gray-3 p-d-flex p-ai-start p-jc-start''>
+                     <LogElement type=''entity-field-label''data-label=''Description of goods''></LogElement>
                      :
-                     <LogElement tooltip='true'type='entity-field-value'data-fields='DescriptionOfGoods'label-classes='p-ml-1'></LogElement>
+                     <LogElement tooltip=''true''type=''entity-field-value''data-fields=''DescriptionOfGoods''label-classes=''p-ml-1''></LogElement>
                   </Log-Container>
                </div>
-               <div class='consignee-shipper-info p-d-inline-flex p-ai-center p-jc-start'>
-                  <div class='text-cut p-mt-1 dp-font-weight-400 dp-font-size-14 p-d-flex p-ai-center p-jc-start'>
-                     <FieldTemplate dp-if='{DirectionId}!==[I]'data-label='Consignee'tooltip='true'data-fields='ConsigneeName'flag-field='ConsigneeCountryCode'></FieldTemplate>
-                     <FieldTemplate dp-if='{DirectionId}===[I]'data-label='Shipper'tooltip='true'data-fields='ShipperName'flag-field='ShipperCountryCode'></FieldTemplate>
+               <div class=''consignee-shipper-info p-d-inline-flex p-ai-center p-jc-start''>
+                  <div class=''text-cut p-mt-1 dp-font-weight-400 dp-font-size-14 p-d-flex p-ai-center p-jc-start''>
+                     <FieldTemplate dp-if=''{DirectionId}!==[I]''data-label=''Consignee''tooltip=''true''data-fields=''ConsigneeName''flag-field=''ConsigneeCountryCode''></FieldTemplate>
+                     <FieldTemplate dp-if=''{DirectionId}===[I]''data-label=''Shipper''tooltip=''true''data-fields=''ShipperName''flag-field=''ShipperCountryCode''></FieldTemplate>
                   </div>
                </div>
-            </div>',
-		    '<div class='list-item-first-row'>
-               <div class='list-item-first-col'>
-                  <div class='p-d-flex p-ai-center p-jc-start'>
-                     <div class='transport-direction margin-top-3'>
-                        <LogElement icon-class='p-mr-1'dp-if='{DirectionId}===[I]'type='icon'icon='Import'></LogElement>
-                        <LogElement icon-class='p-mr-1'dp-if='{DirectionId}===[E]'type='icon'icon='Export'></LogElement>
-                        <LogElement icon-class='p-mr-1'dp-if='{DirectionId}===[D]'type='icon'icon='Domestic'></LogElement>
-                        <LogElement icon-class='p-mr-1'dp-if='{DirectionId}===[R]'type='icon'icon='Drop'></LogElement>
+            </div>'
+			,'<div class=''list-item-first-row''>
+               <div class=''list-item-first-col''>
+                  <div class=''p-d-flex p-ai-center p-jc-start''>
+                     <div class=''transport-direction margin-top-3''>
+                        <LogElement icon-class=''p-mr-1''dp-if=''{DirectionId}===[I]''type=''icon''icon=''Import''></LogElement>
+                        <LogElement icon-class=''p-mr-1''dp-if=''{DirectionId}===[E]''type=''icon''icon=''Export''></LogElement>
+                        <LogElement icon-class=''p-mr-1''dp-if=''{DirectionId}===[D]''type=''icon''icon=''Domestic''></LogElement>
+                        <LogElement icon-class=''p-mr-1''dp-if=''{DirectionId}===[R]''type=''icon''icon=''Drop''></LogElement>
                      </div>
-                     <LogElement type='separator'></LogElement>
-                     <LogElement dp-if='{TransportModeId}===[A]'type='icon'icon='Air'></LogElement>
-                     <LogElement dp-if='{TransportModeId}===[O]'type='icon'icon='Ocean'></LogElement>
-                     <LogElement icon-class='p-ml-1' dp-if='{TransportModeId}===[I]'type='icon'icon='Inland'></LogElement>
-                     <div class='shipment-number-container p-d-flex p-ai-center p-jc-start'>
-                        <div class='shipment-type p-ml-1 dp-border-radius-4px dp-font-size-12 dp-color-black-3 dp-font-weight-400 p-p-1 dp-bg-color-gray-4 p-mr-1'>
-                           <LogElement type='badge'data-fields='shipment-type'></LogElement>
+                     <LogElement type=''separator''></LogElement>
+                     <LogElement dp-if=''{TransportModeId}===[A]''type=''icon''icon=''Air''></LogElement>
+                     <LogElement dp-if=''{TransportModeId}===[O]''type=''icon''icon=''Ocean''></LogElement>
+                     <LogElement icon-class=''p-ml-1'' dp-if=''{TransportModeId}===[I]''type=''icon''icon=''Inland''></LogElement>
+                     <div class=''shipment-number-container p-d-flex p-ai-center p-jc-start''>
+                        <div class=''shipment-type p-ml-1 dp-border-radius-4px dp-font-size-12 dp-color-black-3 dp-font-weight-400 p-p-1 dp-bg-color-gray-4 p-mr-1''>
+                           <LogElement type=''badge''data-fields=''shipment-type''></LogElement>
                         </div>
-                        <div class='shipment-number p-ml-1 dp-font-size-16 dp-font-weight-600 dp-color-black-3'>
-                           <span class='shipment-number-label dp-position-relative'>
-                              <LogElement type='entity-field-value'data-fields='ShipmentNumber'></LogElement>
+                        <div class=''shipment-number p-ml-1 dp-font-size-16 dp-font-weight-600 dp-color-black-3''>
+                           <span class=''shipment-number-label dp-position-relative''>
+                              <LogElement type=''entity-field-value''data-fields=''ShipmentNumber''></LogElement>
                            </span>
                         </div>
                      </div>
                   </div>
-                  <div class='p-mt-2 dp-font-weight-400 dp-font-size-14 p-mb-1 p-d-flex p-ai-start p-jc-start'>
-                     <FieldTemplate tooltip='true' data-label='References'data-fields='CustomerReference1,CustomerReference2'></FieldTemplate>
+                  <div class=''p-mt-2 dp-font-weight-400 dp-font-size-14 p-mb-1 p-d-flex p-ai-start p-jc-start''>
+                     <FieldTemplate tooltip=''true'' data-label=''References''data-fields=''CustomerReference1,CustomerReference2''></FieldTemplate>
                   </div>
-                  <Log-Container dp-if='{TransportModeId}===[A]'class='p-mt-2 dp-font-weight-400 dp-font-size-14 p-mb-1 p-d-flex p-ai-start p-jc-start'>
-                     <FieldTemplate dp-if='{TransportModeId}===[A]'data-label='MAWB'data-fields='LongMaster'></FieldTemplate>
-                     <FieldTemplate dp-if='{TransportModeId}===[O]'data-label='OBL'data-fields='LongMaster'></FieldTemplate>
-                     <FieldTemplate dp-if='{TransportModeId}===[I]'data-label='CMR/ RWB#/ PRO#'data-fields='LongMaster'></FieldTemplate>
+                  <Log-Container dp-if=''{TransportModeId}===[A]''class=''p-mt-2 dp-font-weight-400 dp-font-size-14 p-mb-1 p-d-flex p-ai-start p-jc-start''>
+                     <FieldTemplate dp-if=''{TransportModeId}===[A]''data-label=''MAWB''data-fields=''LongMaster''></FieldTemplate>
+                     <FieldTemplate dp-if=''{TransportModeId}===[O]''data-label=''OBL''data-fields=''LongMaster''></FieldTemplate>
+                     <FieldTemplate dp-if=''{TransportModeId}===[I]''data-label=''CMR/ RWB#/ PRO#''data-fields=''LongMaster''></FieldTemplate>
                   </Log-Container>
-                  <Log-Container dp-if='{TransportModeId}!==[A]'class='p-mt-2 dp-font-weight-400 dp-font-size-14 p-mb-1 p-d-flex p-ai-start p-jc-start'>
-                     <FieldTemplate dp-if='{TransportModeId}===[A]'data-label='MAWB'data-fields='Master'></FieldTemplate>
-                     <FieldTemplate dp-if='{TransportModeId}===[O]'data-label='OBL'data-fields='Master'></FieldTemplate>
-                     <FieldTemplate dp-if='{TransportModeId}===[I]'data-label='CMR/ RWB#/ PRO#'data-fields='Master'></FieldTemplate>
+                  <Log-Container dp-if=''{TransportModeId}!==[A]''class=''p-mt-2 dp-font-weight-400 dp-font-size-14 p-mb-1 p-d-flex p-ai-start p-jc-start''>
+                     <FieldTemplate dp-if=''{TransportModeId}===[A]''data-label=''MAWB''data-fields=''Master''></FieldTemplate>
+                     <FieldTemplate dp-if=''{TransportModeId}===[O]''data-label=''OBL''data-fields=''Master''></FieldTemplate>
+                     <FieldTemplate dp-if=''{TransportModeId}===[I]''data-label=''CMR/ RWB#/ PRO#''data-fields=''Master''></FieldTemplate>
                   </Log-Container>
-                  <div class='display-lg-flex-none p-mt-2 dp-font-weight-400 dp-font-size-14 p-mb-1 p-ai-start p-jc-start'>
-                     <FieldTemplate data-label='Customer'data-fields='CustomerName'></FieldTemplate>
+                  <div class=''display-lg-flex-none p-mt-2 dp-font-weight-400 dp-font-size-14 p-mb-1 p-ai-start p-jc-start''>
+                     <FieldTemplate data-label=''Customer''data-fields=''CustomerName''></FieldTemplate>
                   </div>
-                  <div class='display-lg-block padding-top-bottom-2 dp-font-weight-400 dp-font-size-14'>
-                     <FieldTemplate data-label='Status updated'data-fields='StatusDate' disable-copy='true' is-date-time='true'></FieldTemplate>
+                  <div class=''display-lg-block padding-top-bottom-2 dp-font-weight-400 dp-font-size-14''>
+                     <FieldTemplate data-label=''Status updated''data-fields=''StatusDate'' disable-copy=''true'' is-date-time=''true''></FieldTemplate>
                   </div>
-                  <div data-valid-only='true' data-fields='NotesSharedWithCustomer'class='p-mt-2 dp-font-weight-400 dp-font-size-14 p-mb-1 p-d-flex p-ai-start p-jc-start'>
-                     <FieldTemplate tooltip='true'data-label='Notes'data-fields='NotesSharedWithCustomer'></FieldTemplate>
+                  <div data-valid-only=''true'' data-fields=''NotesSharedWithCustomer''class=''p-mt-2 dp-font-weight-400 dp-font-size-14 p-mb-1 p-d-flex p-ai-start p-jc-start''>
+                     <FieldTemplate tooltip=''true''data-label=''Notes''data-fields=''NotesSharedWithCustomer''></FieldTemplate>
                   </div>
                </div>
-               <div class='list-item-timeline-container'>
+               <div class=''list-item-timeline-container''>
                   <ShipmentStatusInfoForTablet></ShipmentStatusInfoForTablet>
                   <HorizontalTimeline></HorizontalTimeline>
                </div>
-               <div class='list-item-third-col p-d-flex p-flex-column p-jc-end p-ai-end'>
+               <div class=''list-item-third-col p-d-flex p-flex-column p-jc-end p-ai-end''>
                   <ShipmentStatusInfo></ShipmentStatusInfo>
-                  <div class='dp-font-weight-400 dp-font-size-14 p-mb-0 p-d-flex p-ai-start p-jc-end'>
-                     <FieldTemplate container-classes='p-mr-0'data-label='Status updated'data-fields='StatusDate' disable-copy='true' is-date-time='true'></FieldTemplate>
+                  <div class=''dp-font-weight-400 dp-font-size-14 p-mb-0 p-d-flex p-ai-start p-jc-end''>
+                     <FieldTemplate container-classes=''p-mr-0''data-label=''Status updated''data-fields=''StatusDate'' disable-copy=''true'' is-date-time=''true''></FieldTemplate>
                   </div>
                </div>
             </div>
-            <div class='list-item-second-row p-d-flex p-ai-center p-jc-between p-flex-wrap p-mt-2 dp-font-weight-400 dp-font-size-14'>
-               <div class='white-space-nowrap w--100 display-lg-block dp-font-weight-400 dp-font-size-14 p-mb-2 display-flex p-ai-start p-jc-start'>
-                  <div class='p-mt-2 dp-font-weight-400 dp-font-size-14 p-mb-0 p-d-flex p-ai-start p-jc-start'>
-                     <FieldTemplate data-label='Customer'data-fields='CustomerName'></FieldTemplate>
+            <div class=''list-item-second-row p-d-flex p-ai-center p-jc-between p-flex-wrap p-mt-2 dp-font-weight-400 dp-font-size-14''>
+               <div class=''white-space-nowrap w--100 display-lg-block dp-font-weight-400 dp-font-size-14 p-mb-2 display-flex p-ai-start p-jc-start''>
+                  <div class=''p-mt-2 dp-font-weight-400 dp-font-size-14 p-mb-0 p-d-flex p-ai-start p-jc-start''>
+                     <FieldTemplate data-label=''Customer''data-fields=''CustomerName''></FieldTemplate>
                   </div>
                </div>
-               <div class='description-of-goods p-d-inline-flex p-ai-center p-jc-start'>
-                  <Log-Container class='dp-position-relative text-cut p-mt-1 dp-font-weight-400 dp-font-size-14 dp-color-gray-3 p-d-flex p-ai-start p-jc-start'>
-                     <LogElement type='entity-field-label'data-label='Description of goods'></LogElement>
+               <div class=''description-of-goods p-d-inline-flex p-ai-center p-jc-start''>
+                  <Log-Container class=''dp-position-relative text-cut p-mt-1 dp-font-weight-400 dp-font-size-14 dp-color-gray-3 p-d-flex p-ai-start p-jc-start''>
+                     <LogElement type=''entity-field-label''data-label=''Description of goods''></LogElement>
                      :
-                     <LogElement tooltip='true'type='entity-field-value'data-fields='DescriptionOfGoods'label-classes='p-ml-1'></LogElement>
+                     <LogElement tooltip=''true''type=''entity-field-value''data-fields=''DescriptionOfGoods''label-classes=''p-ml-1''></LogElement>
                   </Log-Container>
                </div>
-               <div class='consignee-shipper-info p-d-inline-flex p-ai-center p-jc-start'>
-                  <div class='text-cut p-mt-1 dp-font-weight-400 dp-font-size-14 p-d-flex p-ai-center p-jc-start'>
-                     <FieldTemplate dp-if='{DirectionId}!==[I]'data-label='Consignee'tooltip='true'data-fields='ConsigneeName'flag-field='ConsigneeCountryCode'></FieldTemplate>
-                     <FieldTemplate dp-if='{DirectionId}===[I]'data-label='Shipper'tooltip='true'data-fields='ShipperName'flag-field='ShipperCountryCode'></FieldTemplate>
+               <div class=''consignee-shipper-info p-d-inline-flex p-ai-center p-jc-start''>
+                  <div class=''text-cut p-mt-1 dp-font-weight-400 dp-font-size-14 p-d-flex p-ai-center p-jc-start''>
+                     <FieldTemplate dp-if=''{DirectionId}!==[I]''data-label=''Consignee''tooltip=''true''data-fields=''ConsigneeName''flag-field=''ConsigneeCountryCode''></FieldTemplate>
+                     <FieldTemplate dp-if=''{DirectionId}===[I]''data-label=''Shipper''tooltip=''true''data-fields=''ShipperName''flag-field=''ShipperCountryCode''></FieldTemplate>
                   </div>
                </div>
-            </div>')
-
+            </div>');
 	  ]]>
   </Sql>
 </Script>

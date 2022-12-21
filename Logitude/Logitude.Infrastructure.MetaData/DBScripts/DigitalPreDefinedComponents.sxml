@@ -1,37 +1,39 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-	<Sql Version="1">
+	<Sql Version="3">
       <![CDATA[	  
 		delete from DigitalPreDefinedComponents where id != ''
-		declare @shipmentObjectTableId as varchar(15)
-		set @shipmentObjectTableId = (select Id from ObjectTables where [Name] = 'Shipment' and Tenant = 0 )
- 		EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalPreDefinedComponents'
+		declare @shipmentObjectId as varchar(15)
+		set @shipmentObjectId = (select Id from ObjectTables where [Name] = 'Shipment' and Tenant = 0 )
+		
+		declare @EntityId as varchar(15)
+ 		EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPreDefinedComponents'
 	
-		INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, Name, Content) 
-	    values (@NewEntityId,
+		INSERT INTO DigitalPreDefinedComponents (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], Content) 
+	    values (@EntityId,
 				0,
-				@shipmentObjectTableId,
+				@shipmentObjectId,
 				CURRENT_TIMESTAMP,
 				CURRENT_TIMESTAMP,
 				'Shipment status component for tablet',
 				'<ShipmentStatusInfoForTablet></ShipmentStatusInfoForTablet>')
 
- 		EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalPreDefinedComponents'
+ 		EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPreDefinedComponents'
 	
-		INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, Name, Content) 
-	    values (@NewEntityId,
+		INSERT INTO DigitalPreDefinedComponents (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, Name, Content) 
+	    values (@EntityId,
 				0,
-				@shipmentObjectTableId,
+				@shipmentObjectId,
 				CURRENT_TIMESTAMP,
 				CURRENT_TIMESTAMP,
 				'Shipment horizontal timeline component',
 				'<HorizontalTimeline></HorizontalTimeline>');
 				
-	    EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalPreDefinedComponents'
+	    EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPreDefinedComponents'
 	
-		INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, Name, Content) 
-	    values (@NewEntityId,
+		INSERT INTO DigitalPreDefinedComponents (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, Name, Content) 
+	    values (@EntityId,
 				0,
-				@shipmentObjectTableId,
+				@shipmentObjectId,
 				CURRENT_TIMESTAMP,
 				CURRENT_TIMESTAMP,
 				'Shipment status info component',
