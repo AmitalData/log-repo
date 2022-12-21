@@ -339,8 +339,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 else
                 {
-                    LogMessagingUtil.Instance.AppendLine("NO LP2UB! " + "_PaymentOrderPM.PaymentProcessCode= "+ _PaymentOrderPM.PaymentProcessCode+ " _PaymentOrderPM.PaymentStatusCode= "+ _PaymentOrderPM.PaymentStatusCode);
+                    LogMessagingUtil.Instance.AppendLine("NO LP2UB! " + "_PaymentOrderPM.PaymentProcessCode= " + _PaymentOrderPM.PaymentProcessCode + " _PaymentOrderPM.PaymentStatusCode= " + _PaymentOrderPM.PaymentStatusCode);
                 }
+
+                if (_DeclarationPM.PaymentDate == null && customResponse.ResponseContentHeader.TransmitionDateTime != null)
+                {
+                    _DeclarationPM.PaymentDate = customResponse.ResponseContentHeader.TransmitionDateTime;
+                }
+
             }
             _PaymentOrderPM.CustomsRequestsSheetId = requestParams.CustomsRequestsSheetId;
             paymentOrderUpdateService.Update(_PaymentOrderPM, true);

@@ -373,7 +373,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                             RaiseStatus(declarationPM, "", myEventContextTagModel.EventCode);
                                             break;
                                         case "13":
-                                            if (declarationPM.PaymentDate.HasValue)
+                                            if (declarationPM.PaymentDate.HasValue && !declarationPM.HatraDate.HasValue)
                                             {
                                                 declarationPM.DeclarationStatusTypeCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;
                                                 declarationPM.PaymentDate = null;
