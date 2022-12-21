@@ -395,6 +395,8 @@
     <Content Include="InvoiceModules\ARPayment\Components\Other\ARPaymentMultiChequesComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Accounting\PerVendorReportFilterComponent.html" />
     <Content Include="SharedLogistics\Components\CargoTrackingMilestonesPermissiosComponent.html" />
+    <Content Include="SharedLogistics\Components\DigitalPortal\AddDigitalFieldCodeComponent.html" />
+    <Content Include="SharedLogistics\Components\DigitalPortal\AddDigitalPredefinedComponent.html" />
     <Content Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationChageLabelsComponent.html" />
     <Content Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationMainComponent.html" />
     <Content Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationScreenLayoutComponent.html" />
@@ -2102,6 +2104,9 @@
     <TypeScriptCompile Include="Infrastructure\EntityLists\CustomFieldList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\ReferenceCustomObjectList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\DataCustomObjectList.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityLists\DigitalPortalScreenList.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityLists\DigitalPreDefinedComponentList.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityLists\DigitalTextCodeList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWCategoriesList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWObjectFieldList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWObjectTableList.ts" />
@@ -2130,6 +2135,8 @@
     <TypeScriptCompile Include="Infrastructure\EntityPMs\BIReportPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\BIReportsTypePM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DataCustomObjectPM.ts" />
+
+    <TypeScriptCompile Include="Infrastructure\EntityPMs\DigitalTextCodePM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DWObjectFieldPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DWObjectTablePM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DWQueryColumnPM.ts" />
@@ -2177,6 +2184,9 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BatchTaskExecutionStatusListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BIReportsExecutionLogListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\DataCustomObjectListService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardLists\DigitalPortalScreenListService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardLists\DigitalPreDefinedComponentListService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardLists\DigitalTextCodeListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\HelpResourceListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\ImageLibraryListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\ReferenceCustomObjectListService.ts" />
@@ -2191,6 +2201,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\BusinessRolePMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\CounterDefinitionPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DataCustomObjectPMService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DigitalTextCodePMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DWQueryColumnPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DWQueryFilterPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\HelpResourcePMService.ts" />
@@ -2200,6 +2211,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\ScreenPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\ScreenSectionPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\TeamPMService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\WebServices\DigitalCustomizationService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\WebServices\DigitalTextService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\WebServices\PrivateLabelsBrandingDataService.ts" />
     <TypeScriptCompile Include="Infrastructure\Utilities\PackageAmountCalculator.ts" />
@@ -4852,6 +4864,8 @@
     <TypeScriptCompile Include="Report\DataContracts\SchedulerDetails.ts" />
     <TypeScriptCompile Include="Report\Services\BIReportDocumentTypeTemplateService.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\CargoTrackingMilestonesPermissiosComponent.ts" />
+    <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\AddDigitalFieldCodeComponent.ts" />
+    <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\AddDigitalPredefinedComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationChageLabelsComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationMainComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationScreenLayoutComponent.ts" />

@@ -24,7 +24,7 @@ export class DigitalPortalCustomizationMainComponent {
     public ObjectTableId: string = null;
     public IsCustomFieldsMenue: boolean = false;
     public IsObjectTableFilterEnabled: boolean;
-
+    public IsSaveButtonVisible: boolean = true;
     public MainMenuItems: Array<CustomizationMainMenuItem>;
     public MainMenuWidth: number = 145;
     LayoutDirection: string = 'ltr';
@@ -62,7 +62,7 @@ export class DigitalPortalCustomizationMainComponent {
         myResult.push(args);
 
         args = new CustomizationMainMenuItem();
-        args.TextCode = "Show/Hide Fields";
+        args.TextCode = "Fields Permissions";
         args.Code = "ShowHideFields";
         args.ComponentPath = "./SharedLogistics/Components/DigitalPortal/DigitalPortalCustomizationShowHideFieldsComponent";
         myResult.push(args);
@@ -128,6 +128,14 @@ export class DigitalPortalCustomizationMainComponent {
     }
 
     ChangeScreen() {
+
+        if (this.SelectedMenu.Code == "ScreenLayout") {
+            this.IsSaveButtonVisible = false;
+        }
+        else {
+            this.IsSaveButtonVisible = true;
+        }
+
         if (!this.SelectedMenu || !this.isLoaderReady) return;
 
         if (this.SelectedMenu.ComponentPath == null || (this.SelectedMenu.Page && !this.SelectedMenu.Page.IsChange)) return;

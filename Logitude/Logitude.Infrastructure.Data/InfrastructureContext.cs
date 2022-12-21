@@ -88,11 +88,13 @@ namespace Logitude.Infrastructure.Data
 	
             modelBuilder.Configurations.Add(new DigitalFieldSecurityMap());
 	
+            modelBuilder.Configurations.Add(new DigitalPortalScreenMap());
+	
+            modelBuilder.Configurations.Add(new DigitalPreDefinedComponentMap());
+	
             modelBuilder.Configurations.Add(new DigitalProfileMap());
 	
             modelBuilder.Configurations.Add(new DigitalTextCodeMap());
-	
-            modelBuilder.Configurations.Add(new IndexerWaterMarkMap());
 	
             modelBuilder.Configurations.Add(new FeatureToggleMap());
 	
@@ -455,6 +457,18 @@ namespace Logitude.Infrastructure.Data
 	 
 	 }
 	
+	 public IDbSet<DigitalPortalScreen> DigitalPortalScreens 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<DigitalPreDefinedComponent> DigitalPreDefinedComponents 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<DigitalProfile> DigitalProfiles 
 	 {
 	      get; set;
@@ -462,12 +476,6 @@ namespace Logitude.Infrastructure.Data
 	 }
 	
 	 public IDbSet<DigitalTextCode> DigitalTextCodes 
-	 {
-	      get; set;
-	 
-	 }
-	
-	 public IDbSet<IndexerWaterMark> IndexerWaterMarks 
 	 {
 	      get; set;
 	 

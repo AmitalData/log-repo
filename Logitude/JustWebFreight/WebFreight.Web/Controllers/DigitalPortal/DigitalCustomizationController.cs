@@ -1,13 +1,16 @@
-﻿using Logitude.SystemLogs;
+﻿using Logitude.Infrastructure.BL.EntityQueryServices;
+using Logitude.Infrastructure.Data.EntityLists;
+using Logitude.SystemLogs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure.DataContracts.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
-using WebFreight.Web.Controllers.DigitalPortal.Helpers;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 
@@ -16,38 +19,16 @@ namespace WebFreight.Web.Controllers.DigitalPortal
     public class DigitalCustomizationController : ApiController
     {
         [HttpGet]
-        [Route("DigitalCustomization/GetTranslationCodes")]
-        public HttpResponseMessage GetTranslationCodes(int tenant, string objectTableName)
+        [Route("DigitalCustomization/GetDigitalPortalScreenNames")]
+        public HttpResponseMessage GetDigitalPortalScreenNames()
         {
+            int tenant = 0;
+            string email = "";
             try
             {
-                var textCodeRepository = new TextCodeRepository(tenant);
-                var tenantRepo = new TenantRepository(tenant);
-                var translationRepo = new TranslationRepository(tenant);
-
-                var tenantLang = tenantRepo.GetSingleTenantWithOutIncluded(tenant);
-
-                var textCodes = textCodeRepository.GetDigitalTextCodesByTenantAndObjectTable(tenant, objectTableName);
-
-                var translationCodes = translationRepo.GetDigitalTranslationsByTenant(tenant, objectTableName, tenantLang.Language);
-
-                var data = new Dictionary<string, string>();
-
-                foreach (var item in textCodes)
-                {
-                    if (translationCodes.ContainsKey(item.Code))
-                    {
-                        var translatedKey = translationCodes[item.Code];
-
-                        data.Add(item.Code, translatedKey);
-                    }
-                    else
-                    {
-                        data.Add(item.Code, item.DefaultText);
-                    }
-                }
-
-                return Request.CreateResponse(HttpStatusCode.OK, data);
+                var screenQueryService = new DigitalPortalScreenQueryService(tenant);
+                var digitalPortalScreens = screenQueryService.GetDigitalPortalScreenNamesQuery(tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, digitalPortalScreens);
             }
             catch (AutenticationException ex)
             {
@@ -55,10 +36,170 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", $"Digital portal {tenant}", "", null);
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
 
+        [HttpGet]
+        [Route("DigitalCustomization/GetDigitalPortalScreens")]
+        public HttpResponseMessage GetDigitalPortalScreens(string objectTableId, string screenCode = "")
+        {
+            int tenant = 0;
+            string email = "";
+            try
+            {
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                tenant = authToken.Tenant;
+                email = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                var screenQueryService = new DigitalPortalScreenQueryService(tenant);
+                var digitalPortalScreens = screenQueryService.GetDigitalPortalScreensQuery(tenant, objectTableId, screenCode);
+
+                var data = digitalPortalScreens.FirstOrDefault(a => a.Tenant == tenant);
+
+                if (data != null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, data);
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, digitalPortalScreens.FirstOrDefault());
+            }
+            catch (AutenticationException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        [HttpGet]
+        [Route("DigitalCustomization/GetDigitalPreDefinedComponents")]
+        public HttpResponseMessage GetDigitalPreDefinedComponents(string objectTableId, string name = "")
+        {
+            int tenant = 0;
+            string email = "";
+            try
+            {
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                email = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                var preDefinedComponentQueryService = new DigitalPreDefinedComponentQueryService(tenant);
+                var digitalPreDefinedComponents = preDefinedComponentQueryService.GetDigitalPreDefinedComponentQuery(tenant, objectTableId, name);
+                return Request.CreateResponse(HttpStatusCode.OK, digitalPreDefinedComponents);
+            }
+            catch (AutenticationException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        [HttpPost]
+        [Route("DigitalCustomization/UpdateDigitalPortalScreen")]
+        public HttpResponseMessage UpdateDigitalPortalScreen(DigitalPortalScreenUpdateModel digitalPortalScreenUpdateModel)
+        {
+            int tenant = 0;
+            string email = "";
+            try
+            {
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                tenant = authToken.Tenant;
+                email = authToken.Email;
+                digitalPortalScreenUpdateModel.Tenant = tenant;
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                var digitalPreDefinedComponentQueryService = new DigitalPortalScreenQueryService(tenant);
+
+                var tenantDigitalPortalScreen = digitalPreDefinedComponentQueryService.GetDigitalPortalScreensQuery(tenant, digitalPortalScreenUpdateModel.ObjectTableId, digitalPortalScreenUpdateModel.ScreenCode)
+                                                                                      .FirstOrDefault(a => a.Tenant == tenant);
+
+                if (tenantDigitalPortalScreen == null)
+                {
+                    tenantDigitalPortalScreen = new DigitalPortalScreenList
+                    {
+                        Name = digitalPortalScreenUpdateModel.Name,
+                        Content = digitalPortalScreenUpdateModel.Content,
+                        DraftContent =  digitalPortalScreenUpdateModel.DraftContent,
+                        Tenant = tenant,
+                        ScreenCode = digitalPortalScreenUpdateModel.ScreenCode,
+                        ObjectTableId = digitalPortalScreenUpdateModel.ObjectTableId,
+                        CreateDate = DateTime.UtcNow,
+                        UpdateDate = DateTime.UtcNow
+                    };
+                }
+                else
+                {
+                    if (digitalPortalScreenUpdateModel.IsDraft)
+                    {
+                        tenantDigitalPortalScreen.DraftContent = digitalPortalScreenUpdateModel.DraftContent;
+                        tenantDigitalPortalScreen.UpdateDate = DateTime.UtcNow;
+                    }
+                    else
+                    {
+                        tenantDigitalPortalScreen.Content = digitalPortalScreenUpdateModel.Content;
+                        tenantDigitalPortalScreen.DraftContent = digitalPortalScreenUpdateModel.DraftContent;
+                        tenantDigitalPortalScreen.UpdateDate = DateTime.UtcNow;
+                    }
+                }
+
+                digitalPreDefinedComponentQueryService.UpdateDigitalPortalScreen(tenantDigitalPortalScreen);
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (AutenticationException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        [HttpGet]
+        [Route("DigitalCustomization/GetDefaultScreenLayout")]
+        public HttpResponseMessage GetDefaultScreenLayout(string objectTableId, string screenCode)
+        {
+            int tenant = 0;
+            string email = "";
+            try
+            {
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                tenant = authToken.Tenant;
+                email = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                var digitalPreDefinedComponentQueryService = new DigitalPortalScreenQueryService(tenant);
+
+                var allScreens = digitalPreDefinedComponentQueryService.GetDigitalPortalScreensQuery(tenant, objectTableId, screenCode);
+                var defaultDisgitalPortalScreen = allScreens.FirstOrDefault(a => a.Tenant == 0);
+                var tenantDigitalPortalScreen = allScreens.FirstOrDefault(a => a.Tenant == tenant);
+
+                if (tenantDigitalPortalScreen != null)
+                {
+                    tenantDigitalPortalScreen.Content = defaultDisgitalPortalScreen.Content;
+                    tenantDigitalPortalScreen.DraftContent = defaultDisgitalPortalScreen.DraftContent;
+                    tenantDigitalPortalScreen.UpdateDate = DateTime.UtcNow;
+                    digitalPreDefinedComponentQueryService.UpdateDigitalPortalScreen(tenantDigitalPortalScreen);
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, tenantDigitalPortalScreen);
+            }
+            catch (AutenticationException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }

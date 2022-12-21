@@ -58,8 +58,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                     var shipmentPMJson = JsonConvert.SerializeObject(shipmentPM);
-
-                    var dynamicObjectValeus = JsonConvert.DeserializeObject<object>(shipmentPMJson) as dynamic;
                     var helper = new DigitalFieldSecuritesHelper();
                     var blockedFieldSecurites = helper.GitDigitalSecuritesFeilds(objectTableId, profileId, tenant)
                                                       .Where(a => !a.HasPersmission)
@@ -70,9 +68,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     
                     temp.Descendants()
                      .OfType<JProperty>()
-                     .Where(attr => blockedFieldSecurites.Contains("Shipment." + attr.Name))
-                     .ToList() // you should call ToList because you're about to changing the result, which is not possible if it is IEnumerable
-                     .ForEach(attr => attr.Remove()); // removing unwanted attributes
+                     .Where(attr => blockedFieldSecurites.Contains($"Shipment.{attr.Name}"))
+                     .ToList()
+                     .ForEach(attr => attr.Remove());
 
                     var json = JsonConvert.SerializeObject(temp);
 
