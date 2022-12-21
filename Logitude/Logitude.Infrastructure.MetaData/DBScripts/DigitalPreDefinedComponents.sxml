@@ -1,0 +1,41 @@
+﻿<Script DBType="Main" Module="Infrastructure">
+	<Sql Version="1">
+      <![CDATA[	  
+		delete from DigitalPreDefinedComponents where id != ''
+		declare @shipmentObjectTableId as varchar(15)
+		set @shipmentObjectTableId = (select Id from ObjectTables where [Name] = 'Shipment' and Tenant = 0 )
+ 		EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalPreDefinedComponents'
+	
+		INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, Name, Content) 
+	    values (@NewEntityId,
+				0,
+				@shipmentObjectTableId,
+				CURRENT_TIMESTAMP,
+				CURRENT_TIMESTAMP,
+				'Shipment status component for tablet',
+				'<ShipmentStatusInfoForTablet></ShipmentStatusInfoForTablet>')
+
+ 		EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalPreDefinedComponents'
+	
+		INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, Name, Content) 
+	    values (@NewEntityId,
+				0,
+				@shipmentObjectTableId,
+				CURRENT_TIMESTAMP,
+				CURRENT_TIMESTAMP,
+				'Shipment horizontal timeline component',
+				'<HorizontalTimeline></HorizontalTimeline>');
+				
+	    EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalPreDefinedComponents'
+	
+		INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, Name, Content) 
+	    values (@NewEntityId,
+				0,
+				@shipmentObjectTableId,
+				CURRENT_TIMESTAMP,
+				CURRENT_TIMESTAMP,
+				'Shipment status info component',
+				'<ShipmentStatusInfo></ShipmentStatusInfo>');
+		]]>
+</Sql>
+</Script>
