@@ -91,9 +91,11 @@ export class SubEntitiesComponent {
         window.Height = defaultWindowHeight;
         window.Title = newTabWindowTitle;
         window.WindowArgs = {
-            CustomizationSubEntitiesComponent: this
+            CustomizationSubEntitiesComponent: this,
+            CustomizationMainComponent: null,
+            IsSubObject: true
         };
-        window.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/AddSubEntityComponent');
+        window.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/AddCustomObjectComponent');
     }
 
     ApplyChanges(objectTablePM: ObjectTablePM) {

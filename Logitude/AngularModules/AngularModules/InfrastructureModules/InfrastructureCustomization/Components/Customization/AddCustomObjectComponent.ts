@@ -8,6 +8,7 @@ import { SubEntitiesComponent } from './SubEntitiesComponent';
 import { ObjectFieldPMExtendedService } from '../../../../Infrastructure/Services/ExtendedPMs/ObjectFieldPMExtendedService';
 import { CachedDataManager } from '../../../../Infrastructure/Utilities/CachedDataManager';
 import { AppTool } from '../../../../Infrastructure/Tools';
+import { CustomizationMainComponent } from './CustomizationMainComponent';
 
 const valdationMessageOfDisplayLabelSingular = 'Please fill the Display Label (Singular)';
 const valdationMessageOfDisplayLabelPlural = 'Please fill the Display Label (Plural)';
@@ -16,10 +17,10 @@ declare var window: any;
 
 @Component({
 
-    templateUrl: './AddSubEntityComponent.html',
+    templateUrl: './AddCustomObjectComponent.html',
 })
 
-export class AddSubEntityComponent extends BaseComponent {
+export class AddCustomObjectComponent extends BaseComponent {
 
     private CurrentSession = SessionLocator.SelectedSession;
 
@@ -31,7 +32,11 @@ export class AddSubEntityComponent extends BaseComponent {
     private objectTablePMService: ObjectTablePMService;
     private objectFieldPMExtendedService: ObjectFieldPMExtendedService;
     private customizationSubEntitiesComponent: SubEntitiesComponent;
+    private customizationMainComponent: CustomizationMainComponent;
     private objectTableName: string;
+    public IsSubObject: boolean = true;
+    public ObjectTableTypes: object[] = [];
+    public TypeHelpText: string;
     constructor() {
         super();
         this.objectTablePMService = new ObjectTablePMService();
@@ -42,9 +47,26 @@ export class AddSubEntityComponent extends BaseComponent {
     }
 
     SetWindowArgs(args: any) {
+        this.IsSubObject = args['IsSubObject'];
+        this.customizationMainComponent = args['CustomizationMainComponent'];
         this.customizationSubEntitiesComponent = args['CustomizationSubEntitiesComponent'];
-        this.parentObjectTableId = this.customizationSubEntitiesComponent.ObjectTableId;
-        this.parentObjectTable = window.ObjectTables.filter((table: any) => table.Id === this.parentObjectTableId)[0];;
+        this.parentObjectTableId = this.customizationSubEntitiesComponent?.ObjectTableId;
+        this.parentObjectTable = this.parentObjectTableId ? window.ObjectTables.filter((table: any) => table.Id === this.parentObjectTableId)[0] : null;
+        this.FillObjectTableTypes();
+    }
+
+    private FillObjectTableTypes() {
+        if (this.IsSubObject) return;
+        this.ObjectTableTypes.push({
+            Record: "Buisness Record (Data)",
+            Code: "BR"
+        });
+        this.ObjectTableTypes.push({
+            Record: "Master Data (Reference)",
+            Code: "MD"
+        });
+        this.ObjectTableType = this.ObjectTableTypes[0];
+        this.SetTypeHelpText(this.ObjectTableType["Code"]);
     }
 
     private displayLabelSingular: string;
@@ -52,7 +74,7 @@ export class AddSubEntityComponent extends BaseComponent {
     set DisplayLabelSingular(newValue: string) {
         if (this.displayLabelSingular != newValue) {
             this.displayLabelSingular = newValue;
-            this.objectTableName = AppTool.IsNullOrEmpty(newValue) ? "" : this.parentObjectTable.Name + "." + SessionLocator.Tenant + "." + newValue.replace(/\s/g, "");
+            this.objectTableName = AppTool.IsNullOrEmpty(newValue) ? "" : this.IsSubObject ? this.parentObjectTable.Name + "." + SessionLocator.Tenant + "." + newValue.replace(/\s/g, "") : newValue.replace(/\s/g, "");
         }
     }
 
@@ -72,7 +94,27 @@ export class AddSubEntityComponent extends BaseComponent {
         }
     }
 
+    private objectTableTypeCode: string="BR";
+    private objectTableType: object;
+    get ObjectTableType() { return this.objectTableType; }
+    set ObjectTableType(newValue: object) {
+        if (this.objectTableType == newValue) return;
+        this.objectTableType = newValue;
+        this.objectTableTypeCode = newValue["Code"];
+        this.SetTypeHelpText(this.objectTableTypeCode);
+    }
 
+    SetTypeHelpText(objectTableTypeCode: string) {
+        if (AppTool.IsNullOrEmpty(objectTableTypeCode)) return;
+        if (objectTableTypeCode == "BR") {
+            this.TypeHelpText = "Using this Type your object will be considered as a main object";
+            return;
+        }
+        if (objectTableTypeCode == "MD") {
+            this.TypeHelpText = "Using this Type your object can be used as a reference in other objects";
+            return;
+        }
+    }
     SaveButtonClicked() {
         let errors = [];
 
@@ -109,6 +151,8 @@ export class AddSubEntityComponent extends BaseComponent {
         this.objectTablePM.DefaultText = this.DisplayLabelSingular;
         this.objectTablePM.DefaultTextPlural = this.DisplayLabelPlural;
         this.objectTablePM.Description = this.Description;
+        this.objectTablePM.ObjectTableTypeCode = this.objectTableTypeCode;
+        this.objectTablePM.SupportSubEntity = this.IsSubObject ? false : true;
 
         this.objectTablePMService.insert(this.objectTablePM).subscribe((response: ServiceResponse) => {
 
@@ -118,7 +162,9 @@ export class AddSubEntityComponent extends BaseComponent {
             response.Result.IsNew = true;
             window.ObjectTables.push(response.Result);
             this.GetObjectFields();
-            this.customizationSubEntitiesComponent.ApplyChanges(response.Result);
+            if (this.IsSubObject) this.customizationSubEntitiesComponent.ApplyChanges(response.Result);
+            else this.customizationMainComponent.ApplyChanges();
+            
             this.CurrentSession.CloseCurrentWindow();
 
         });
