@@ -146,10 +146,10 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
                     break;
                 case SignQueueByType.SignQueueByPersonId:
 
-                    
+                    var defaultSignServer = hSMAllCertificates.FirstOrDefault(r => r.IsPersonalDefault);
                     if (String.IsNullOrWhiteSpace(personId))
                     {
-                        var defaultSignServer = hSMAllCertificates.FirstOrDefault(r => r.IsPersonalDefault);
+                        
                         if (defaultSignServer != null)
                         {
                             return (defaultSignServer.SignCertificate, SignMethodByQueueEnum.HSMSignQueue);
@@ -163,16 +163,29 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
                     }
 
                     availableSignServer = repo.GetSingle(customsAgentId, personId).ToMySignStationList();
+
                     if (availableSignServer == null)
                     {
+                        if (defaultSignServer != null)
+                        {
+                            return (defaultSignServer.SignCertificate, SignMethodByQueueEnum.HSMSignQueue);
+                        }
                         return (null, SignMethodByQueueEnum.None); ;
                     }
                     if (!availableSignServer.IsPersonalSignOn)
                     {
+                        if (defaultSignServer != null)
+                        {
+                            return (defaultSignServer.SignCertificate, SignMethodByQueueEnum.HSMSignQueue);
+                        }
                         return (null, SignMethodByQueueEnum.None); ;
                     }
                     if (DateTime.Now.Subtract(availableSignServer.LastAccessedAt) > TimeSpan.FromMinutes(LastAccessedInMin))
                     {
+                        if (defaultSignServer != null)
+                        {
+                            return (defaultSignServer.SignCertificate, SignMethodByQueueEnum.HSMSignQueue);
+                        }
                         return (null, SignMethodByQueueEnum.None); ;
                     }
                     break;
