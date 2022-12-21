@@ -109,6 +109,7 @@ import { ScreenSectionListService } from './Services/StandardLists/ScreenSection
 import { ScreenListService } from './Services/StandardLists/ScreenListService';
 import { ScreenPMService } from './Services/StandardPMs/ScreenPMService';
 import { DigitalPortalScreenListService } from './Services/StandardLists/DigitalPortalScreenListService';
+import { DigitalPreDefinedComponentListService } from './Services/StandardLists/DigitalPreDefinedComponentListService';
 
 export class ModuleProviders {
 
@@ -223,6 +224,7 @@ export class ModuleProviders {
             case "ScreenListService": { myResult = new ScreenListService(); break; }
             case "ScreenPMService": { myResult = new ScreenPMService(); break; }
             case "DigitalPortalScreenListService": { myResult = new DigitalPortalScreenListService(); break; }
+            case "DigitalPreDefinedComponentListService": { myResult = new DigitalPreDefinedComponentListService(); break; }
         }
 
         return myResult;

@@ -163,9 +163,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             }
         }
 
-        [HttpPost]
-        [Route("DigitalCustomization/ResetToDefault")]
-        public HttpResponseMessage ResetToDefault(string objectTableId, string screenCode)
+        [HttpGet]
+        [Route("DigitalCustomization/GetDefaultScreenLayout")]
+        public HttpResponseMessage GetDefaultScreenLayout(string objectTableId, string screenCode)
         {
             int tenant = 0;
             string email = "";

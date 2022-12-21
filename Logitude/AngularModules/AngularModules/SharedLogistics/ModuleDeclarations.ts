@@ -28,6 +28,7 @@ import { DigitalPortalCustomizationTranslateLabelsComponent } from './Components
 import { DigitalPortalCustomizationShowHideFieldsComponent } from './Components/DigitalPortal/DigitalPortalCustomizationShowHideFieldsComponent';
 import { DigitalPortalCustomizationScreenLayoutComponent } from './Components/DigitalPortal/DigitalPortalCustomizationScreenLayoutComponent'; 
 import { AddDigitalFieldCodeComponent } from './Components/DigitalPortal/AddDigitalFieldCodeComponent';
+import { AddDigitalPredefinedComponent } from './Components/DigitalPortal/AddDigitalPredefinedComponent';
 
 export const ControlsComponents =
     [
@@ -74,6 +75,7 @@ export const Components =
         DigitalPortalCustomizationShowHideFieldsComponent,
         DigitalPortalCustomizationScreenLayoutComponent,
         AddDigitalFieldCodeComponent,
+        AddDigitalPredefinedComponent,
     ];
 
 export class ModuleDeclarations {
@@ -112,6 +114,7 @@ export class ModuleDeclarations {
             case "DigitalPortalCustomizationShowHideFieldsComponent": { myResult = DigitalPortalCustomizationShowHideFieldsComponent; break; }
             case "DigitalPortalCustomizationScreenLayoutComponent": { myResult = DigitalPortalCustomizationScreenLayoutComponent; break; }
             case "AddDigitalFieldCodeComponent": { myResult = AddDigitalFieldCodeComponent; break; }
+            case "AddDigitalPredefinedComponent": { myResult = AddDigitalPredefinedComponent; break; }
         }
 
         return myResult;
