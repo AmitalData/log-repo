@@ -34,6 +34,8 @@ namespace WebFreight.Web.Helpers.StimulReportCustomizationDataProvider
             var newDataProvider = Activator.CreateInstance(type);
             MapCurrentDataProviderValueToNewDataProvider(documentDataProviderArgs.DataProvider, newDataProvider, type);
             new CustomChildDataProviderService(fields, documentDataProviderArgs ,objectTable.Name).Set(newDataProvider);
+            new CustomFieldDataProviderService(fields, documentDataProviderArgs, objectTable.Name).Set(newDataProvider);
+
             return new DocumentDataProvider() { Type = type, Name = type.Name.Split('_')[0], BusinessObjectValue = newDataProvider };
         }
 
@@ -59,7 +61,7 @@ namespace WebFreight.Web.Helpers.StimulReportCustomizationDataProvider
         public object DataProvider { get; set; }
         public Type Type { get; set; }
         public string EntityId { get; set; }
-        public string EntityPM { get; set; }
+        public object EntityPM { get; set; }
         public DocumentTypeTemplatePM DocumentTypeTemplatePM { get; set; }
         public string Category { get; set; }
 

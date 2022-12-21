@@ -1,0 +1,9 @@
+Warning: Missing Index In DXML File OpportunityAnalytic.dxml, The Found Index On DB Is IX_OpportunityAnalytics_ColumnStore, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File APInvoiceAnalytic.dxml, The Found Index On DB Is IX_APInvoiceAnalytics_ColumnStore, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File ARInvoiceAnalytic.dxml, The Found Index On DB Is IX_ARInvoiceAnalytics_ColumnStore, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File QuoteAnalytic.dxml, The Found Index On DB Is IX_QuoteAnalytics_ColumnStore, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File Shipment.dxml, The Found Index On DB Is IX_ForwarderShipmentNumber, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File Shipment.dxml, The Found Index On DB Is IX_Shipments_Tenant_AgentSharedManifestRef, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File Shipment.dxml, The Found Index On DB Is IX_IsCancelled, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File Shipment.dxml, The Found Index On DB Is IX_Shipments_Tenant_IsCancelled_IsStandalonePickupDelivery_DirectionId_CustomConnectToShipment_CustomerId_ShipmentLevelCode, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File ShipmentAnalytic.dxml, The Found Index On DB Is IX_ShipmentAnalytics_ColumnStore, The Index Should Added To The DXML File
