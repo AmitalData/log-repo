@@ -5,6 +5,7 @@ import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameCla
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
 import { DigitalTextService, DigitalTextCodeUpdateModel, DigitalTextCodeObject } from '../../../Infrastructure/Services/WebServices/DigitalTextService'
+import { AppTool } from '../../../Infrastructure/Tools'; 
 
 @Component({
     templateUrl: './DigitalPortalCustomizationChageLabelsComponent.html',
@@ -56,13 +57,17 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
         });
     }
 
-    BuildItemsSource(searchText: string = null) {
+    BuildItemsSource() {
         this.LabelsItemsSource = new ObservableCollection([]);
         var labelsList: CustomizationLabelItem[] = [];
         var objectTableId = this.SelectedObjectTableItem.Name;
         this.digitalTextService.GetTextCodesByFilters(null, objectTableId).subscribe((myResult) => {
             if (!myResult.HasError) {
-                myResult.Result.forEach(item => {
+                var data = myResult.Result;
+                if (!AppTool.IsNullOrEmpty(this.SearchText)) {
+                    data = data.filter(f => f.FieldCode.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1 || f.DisplayText.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1 || f.DefaultText.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1);
+                }
+                data.forEach(item => {
                     labelsList.push(new CustomizationLabelItem(this, item));
                 });
                 this.LabelsItemsSource.InsertCollection(labelsList);
@@ -75,13 +80,8 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
     public set SearchText(value: string) {
         if (this.searchText != value) {
             this.searchText = value;
-            this.BuildItemsSource(value);
+            this.BuildItemsSource();
         }
-    }
-
-    SearchTextChanged(text: string) {
-        this.SearchText = text;
-        this.BuildItemsSource(text);
     }
 
     CloseClicked() {

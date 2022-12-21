@@ -27,7 +27,7 @@ export class AddDigitalPredefinedComponent {
         this.BuildItemsSource();
     }
 
-    BuildItemsSource(searchText: string = null) {
+    BuildItemsSource() {
         this.PreDefinedItemsSource = new ObservableCollection([]);
         this.digitalCustomizationService.GetDigitalPreDefinedComponents(this.ObjectTableId, "").subscribe((myResult) => {
             if (!myResult.HasError) {
