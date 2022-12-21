@@ -128,6 +128,14 @@ export class DigitalPortalCustomizationMainComponent {
     }
 
     ChangeScreen() {
+
+        if (this.SelectedMenu.Code == "ScreenLayout") {
+            this.IsSaveButtonVisible = false;
+        }
+        else {
+            this.IsSaveButtonVisible = true;
+        }
+
         if (!this.SelectedMenu || !this.isLoaderReady) return;
 
         if (this.SelectedMenu.ComponentPath == null || (this.SelectedMenu.Page && !this.SelectedMenu.Page.IsChange)) return;
@@ -139,13 +147,6 @@ export class DigitalPortalCustomizationMainComponent {
 
         if (myLocation != null && this.SelectedMenu.Page && this.SelectedMenu.Page.IsChange) {
             myLocation.viewContainerRef.clear();
-        }
-
-        if (this.SelectedMenu.Code == "ScreenLayout") {
-            this.IsSaveButtonVisible = false;
-        }
-        else {
-            this.IsSaveButtonVisible = true;
         }
 
         SessionLocator.DynamicLoader.Load(this.SelectedMenu.ComponentPath, myLocation.viewContainerRef)

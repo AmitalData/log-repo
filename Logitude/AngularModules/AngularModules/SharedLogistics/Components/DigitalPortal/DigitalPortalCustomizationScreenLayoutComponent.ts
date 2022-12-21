@@ -119,7 +119,7 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
             confirm.Width = 400;
             confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
             confirm.ShowNoButton = true;
-            confirm.Show("The changes will be reflected to the portal and customers will see the changes");
+            confirm.Show("By publishing the changes on the screen " + this.SelectedItem.Name + "  , the changes will be reflected and viewed by the customers, continue ? ");
             confirm.WindowClosed.subscribe((event: any) => {
                 if (confirm.Yes) {
                     confirm.Close();
