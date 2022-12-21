@@ -65,7 +65,10 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
             if (!myResult.HasError) {
                 var data = myResult.Result;
                 if (!AppTool.IsNullOrEmpty(this.SearchText)) {
-                    data = data.filter(f => f.FieldCode.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1 || f.DisplayText.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1 || f.DefaultText.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1);
+                    data = data.filter(f =>
+                        (!AppTool.IsNullOrEmpty(f.FieldCode) && f.FieldCode.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1) ||
+                        (!AppTool.IsNullOrEmpty(f.DisplayText) && f.DisplayText.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1 )||
+                        (!AppTool.IsNullOrEmpty(f.DefaultText) && f.DefaultText.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1));
                 }
                 data.forEach(item => {
                     labelsList.push(new CustomizationLabelItem(this, item));
