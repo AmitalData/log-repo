@@ -84,7 +84,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
                 SignerName = r.userName,
                 LastSignAt = DateTime.Now,
                 IsOk = true,
-                VersionByFeatures = r?.companyPersonal.Contains("D")==true ?"PDefault" :"HSM" ,
+                VersionByFeatures = r?.companyPersonal.Contains("D")==true ? "PersonalDefault" /*"Joker"*/ : "HSM" ,
                 MachineUser = "HSM",
                 Status = "OK",
                 PersonId = r.id,
