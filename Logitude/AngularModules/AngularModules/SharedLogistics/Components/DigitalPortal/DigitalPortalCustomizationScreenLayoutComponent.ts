@@ -5,6 +5,7 @@ import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
+import { Guid } from '../../../Infrastructure/Utilities/Guid';
 
 @Component({
     templateUrl: './DigitalPortalCustomizationScreenLayoutComponent.html',
@@ -17,6 +18,8 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
     public IsModified: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     ModifiedScreenData: DigitalPortalScreenUpdateModel;
+    TextAreaInputId: string = Guid.newGuid();
+    TextAreaInputCurrentPosition: number = 0;
 
     constructor() {
         this.Screens = [];
@@ -88,7 +91,8 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         logWindow.Show('./SharedLogistics/Components/DigitalPortal/AddDigitalPredefinedComponent');
         logWindow.WindowClosed.subscribe(($event: any) => {
             if ($event) {
-                this.HTMLEditor = $event + this.HTMLEditor;
+                this.attachValue($event);
+                //this.HTMLEditor = $event + this.HTMLEditor;
             }
         });
     }
@@ -105,8 +109,8 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         logWindow.WindowClosed.subscribe(($event: any) => {
             if ($event) {
                 var htmlField = "<containerComponent> <labelComponent fieldCode = \"" + $event + "\" ></fieldLabel> <fieldComponent fieldCode= \"" + $event + "\" ></fieldComponent> </containerComponent>";
-
-                this.HTMLEditor = htmlField + this.HTMLEditor;
+                this.attachValue(htmlField);
+                //this.HTMLEditor = htmlField + this.HTMLEditor;
             }
         });
     }
@@ -153,5 +157,15 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
 
     PreviewChangesClicked() {
 
+    }
+
+    blur(event) {
+        const start = event.target.selectionStart;
+        this.TextAreaInputCurrentPosition = start;
+    }
+
+    attachValue(selectedValue: string) {
+        let patchedValue = this.HTMLEditor.substr(0, this.TextAreaInputCurrentPosition) + selectedValue + this.HTMLEditor.substr(this.TextAreaInputCurrentPosition, this.HTMLEditor.length);
+        this.HTMLEditor = patchedValue;
     }
 }

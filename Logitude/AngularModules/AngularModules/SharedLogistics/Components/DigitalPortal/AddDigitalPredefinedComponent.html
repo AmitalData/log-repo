@@ -9,7 +9,7 @@
     <tr style="vertical-align:top;">
         <td>
             <div class="MediaFill">
-                <logitude-edit-grid  [IsReadOnly]="true" [LastDefaultSpace]="0" GridWidth="100%" GridHeight="100%" [ItemSource]="PreDefinedItemsSource" (SelectedItemChanged)="Selecting($event)" [SelectedRow]="SelectedDigitalFieldCode">
+                <logitude-edit-grid  [IsReadOnly]="true" [LastDefaultSpace]="0" GridWidth="100%" GridHeight="100%" [ItemSource]="PreDefinedItemsSource" (SelectedItemChanged)="Selecting($event)" [SelectedRow]="SelectedPredefined">
                     <!-- Name -->
                     <log-column [width]="'250'" [header]="'Name'" [Alignment]="'left'">
                         <ng-template let-item>
@@ -39,7 +39,7 @@
                         <div></div>
                     </td>
                     <td style="width: 100px;">
-                        <button id="{{'CloseBtn' | IdGeneratorPipe}}" class="Button" (click)="AddFieldCodeClicked()">Add PreDefined Component</button>
+                        <button id="{{'CloseBtn' | IdGeneratorPipe}}" class="Button" (click)="AddPredefinedComponentClicked()">Add PreDefined Component</button>
                     </td>
                 </tr>
             </table>

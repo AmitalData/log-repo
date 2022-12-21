@@ -90,12 +90,13 @@
                 <tr style="height: 500px; vertical-align: top;">
                     <td>
                         <div class="MediaFill">
-                            <textarea class="input shadow" style="padding: 3%; border-width: thick;font-size:13px;"
+                            <textarea [attr.id] = "TextAreaInputId" class="input shadow" style="padding: 3%; border-width: thick;font-size:13px;"
                                       [(ngModel)]="HTMLEditor"
                                       autocomplete="off"
                                       autocorrect="off"
                                       autocapitalize="off"
                                       spellcheck="false"
+                                      (blur)="blur($event)"
                                       placeholder="Your HTML text here ">
                             </textarea>
                         </div>
