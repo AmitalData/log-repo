@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Procedure
   DBType="Main"
-  Name="usp_GetNextTableNumberValueWithSnapshot"
+  Name="usp_GetNextTableNumberValueWithSnapshotView"
   Schema="dbo"
   Module="Infrastructure">
   <SqlScript>
 	  <![CDATA[
 
-CREATE PROCEDURE [dbo].[usp_GetNextTableNumberValueWithSnapshot]
+CREATE PROCEDURE [dbo].[usp_GetNextTableNumberValueWithSnapshotView]
 (
   @pLastValue INT OUTPUT,
   @pTenant    INT,
