@@ -89,6 +89,19 @@ namespace Logitude.Customs.Data.Repsitories
                   select rec
                   ).ToList();
         }
+
+        public List<Client> GetAllClientsPOAExpire(int tenant)
+        {
+            return (
+                  from rec in context.Clients
+                  join p in context.ClientsPoas on rec.Id equals p.ClientId
+                  where !string.IsNullOrEmpty(rec.Code) && rec.Tenant == tenant && rec.IsExportPoaActive == true 
+                  select rec
+                  ).ToList();
+            ////
+            //entityPM.ClientPoas.Any(x => x.PoaAuthorizationType == "200" && DateTime.Now >= x.StartDate && DateTime.Now <= x.EndDate && !InActiveStatues.Contains(x.PoaStatus) );
+            /////
+        }
     }
 
 }
