@@ -88,7 +88,7 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         logWindow.Show('./SharedLogistics/Components/DigitalPortal/AddDigitalPredefinedComponent');
         logWindow.WindowClosed.subscribe(($event: any) => {
             if ($event) {
-
+                this.HTMLEditor = $event + this.HTMLEditor;
             }
         });
     }
@@ -104,7 +104,9 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         logWindow.Show('./SharedLogistics/Components/DigitalPortal/AddDigitalFieldCodeComponent');
         logWindow.WindowClosed.subscribe(($event: any) => {
             if ($event) {
+                var htmlField = "<containerComponent> <labelComponent fieldCode = \"" + $event + "\" ></fieldLabel> <fieldComponent fieldCode= \"" + $event + "\" ></fieldComponent> </containerComponent>";
 
+                this.HTMLEditor = htmlField + this.HTMLEditor;
             }
         });
     }

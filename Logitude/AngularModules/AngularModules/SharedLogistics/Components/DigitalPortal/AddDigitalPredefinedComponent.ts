@@ -12,7 +12,7 @@ export class AddDigitalPredefinedComponent {
 
     public PreDefinedItemsSource: ObservableCollection;
     ObjectTableId: string;
-    SelectedDigitalFieldCode: DigitalPreDefinedComponentList;
+    SelectedPredefined: DigitalPreDefinedComponentList;
     digitalCustomizationService: DigitalCustomizationService;
     private CurrentSession = SessionLocator.SelectedSession;
 
@@ -38,12 +38,12 @@ export class AddDigitalPredefinedComponent {
     }
 
     Selecting(item) {
-        this.SelectedDigitalFieldCode = item;
+        this.SelectedPredefined = item;
     }
 
     AddPredefinedComponentClicked() {
-
-
+        var content = this.SelectedPredefined?.Content;
+        this.CurrentSession.CloseCurrentWindowEmit(content);
     }
 
     CloseButtonClicked() {

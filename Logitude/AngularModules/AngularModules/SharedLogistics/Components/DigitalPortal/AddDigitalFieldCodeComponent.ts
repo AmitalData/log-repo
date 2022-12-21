@@ -56,8 +56,8 @@ export class AddDigitalFieldCodeComponent {
     }
 
     AddFieldCodeClicked() {
-
-
+        var fieldcode = this.SelectedDigitalFieldCode?.FieldCode;
+        this.CurrentSession.CloseCurrentWindowEmit(fieldcode);
     }
 
     CloseButtonClicked() {
