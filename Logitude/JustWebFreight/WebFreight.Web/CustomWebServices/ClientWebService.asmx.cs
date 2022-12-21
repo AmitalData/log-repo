@@ -16,6 +16,7 @@ using UnifreightIIG.Common.VendorAddCommunicationDeviceServiceReference;
 using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+using Simplog.Data.CommonDataModel.Repositories;
 
 namespace WebFreight.Web.CustomWebServices
 {
@@ -246,12 +247,14 @@ namespace WebFreight.Web.CustomWebServices
                         "בניית תקשורת עדכון נתוני יבואנים  {2} ( {0}/{1} ) "
                         , (i + 1), (cardsList.Count), clientCode);
                     ClientProgressBarIndicatorService.UpsertClientProgressBarIndicatorCurrentStage(guidId, mess);
+                     var contactRepository = new ContactRepository(tenant);
 
                     var clientSearchByCustomsAgentMessagingService = new CL_MSG101_GetCustomerByEntityCustomerIdentificationMassagingService();
                     var req = new ClientSearchRequestParams()
                     {
                         Tenant = tenant,
                         ExternalId = clientCode,
+                        LoggingUserId = contactRepository.GetSingleContactByEmail("system@tenant" + tenant + ".com", tenant)?.Id,
                         RequestVIA = SendRequestVIA.WebServiceBatch
                     };
                     var test = false;
