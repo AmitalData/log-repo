@@ -45,7 +45,7 @@ namespace WebFreight.Web.CustomWebServices
                 var anaO = ContainerAccessor.Container.Resolve<IMessagingServiceInterfaceType>(InterfaceTypeCode);
 
                 //anaO.CurrentCustomsCommandWR = myCustomsCommandEnum;
-                Byte[] ReceiveBytesToSign = anaO.PasiveSignGetBytesToSign(currTenant.GetValueOrDefault(), CustomsRequestsSheetId);
+                var (ReceiveBytesToSign ,reqParams) = anaO.PasiveSignGetBytesToSign(currTenant.GetValueOrDefault(), CustomsRequestsSheetId);
                 return ReceiveBytesToSign;
             }
             catch (Exception)

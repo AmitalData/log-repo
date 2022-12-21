@@ -27,7 +27,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         
         
 
-        public byte[] PasiveSignGetBytesToSign(int tenant, string CustomsRequestsSheetId)
+        public (byte[], RequestParamsBase) PasiveSignGetBytesToSign(int tenant, string CustomsRequestsSheetId)
         {
 
             TRequestParams defaultRequestParamsFromCustomsResponse = null;
@@ -40,9 +40,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
             {
                 //throw "Not in the right step";
             }
+            var dRequestParams = _CustomsRequestsSheetService.GetRequestParams<TRequestParams>() as RequestParamsBase;
             var xmlSerilazeObject = _CustomsRequestsSheetService.GetCustomsRequestXml();
             var bytesSerilazeObject = UTF8Encoding.UTF8.GetBytes(xmlSerilazeObject);
-            return bytesSerilazeObject;
+            return (bytesSerilazeObject, dRequestParams);
         }
 
         

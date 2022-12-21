@@ -17,20 +17,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
     public class HSMSignFileService
     {
 
-        /*
-var BytesToSign = anaO.PasiveSignGetBytesToSign(exportReqSignData.Tenant, correlationId );
-                            stringBuilder.AppendLine($"PasiveSignGetBytesToSign()|Bytes2Sign:{BytesToSign.Length}");
-                            return new ResponseExportSignTask()
-        {
-            currTenant = exportReqSignData.Tenant,
-                                queueId = queueResponse.MessageId,
-                                CustomsRequestsSheetId = correlationId,
-                                InterfaceTypeCode = InterfaceTypeCode,
-                                ReceiveBytesToSign = BytesToSign
-                            };
-         */
-        //https://cihanasan.wordpress.com/2018/07/19/how-to-send-a-pdf-file-using-multipartformdatacontent-in-c/
-
+    
         public byte[] SignFile(
 
             string signHSM_Url,

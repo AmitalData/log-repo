@@ -22,7 +22,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
             string responseString = "";
             if (string.IsNullOrWhiteSpace(signHSMGetActiveCertificates_Url))
             {
-                throw new ArgumentNullException("signHSM_Url");
+                throw new ArgumentNullException("signHSMGetActiveCertificates_Url");
             }
             if (string.IsNullOrWhiteSpace(azureServiceToken))
             {
@@ -31,8 +31,9 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
             var stopwatch = Stopwatch.StartNew();
             try
             {
+                int timeOutInSec = 10;
                 using (var client = new HttpClient(
-                    //new WebRequestHandler { ReadWriteTimeout = 10 * 1000 }
+                    //new WebRequestHandler { ReadWriteTimeout = timeOutInSec * 1000 }
                     ))
                 {
                     

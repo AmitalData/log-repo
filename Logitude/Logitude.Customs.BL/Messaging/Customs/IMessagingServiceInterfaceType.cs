@@ -36,7 +36,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
             DCAFileModel selectedDCAFile,
             Logitude.CustomsMessaging.Common.DCAParams.DCAServerUploadStatus MyDCAServerUploadStatus);
             
-        byte[] PasiveSignGetBytesToSign(int tenant, string CustomsRequestsSheetId);
+        (byte[] bytesToSign , RequestParamsBase requestParamsBase) PasiveSignGetBytesToSign(int tenant, string CustomsRequestsSheetId);
         //bool CompleteResponseSignBytes(int tenant, string CustomsRequestsSheetId, Byte[] mySignBytes);
     }    
 }
