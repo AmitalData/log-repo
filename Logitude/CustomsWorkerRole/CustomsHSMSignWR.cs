@@ -289,8 +289,11 @@ where not exists(select *
                 mySendSheetSignModel.Tenant = _Tenant;
                 mySendSheetSignModel.CustomRequestSignedByteArryPasiveSign = signBytes;
                 mySendSheetSignModel.CurrentSignCertificateName = "CurrentSignCertificate";
-
-                mySendSheetSignModel.ExportTaskQueueId = _CustomDBQueueMessage.MessageId;
+                if (_CustomDBQueueMessage!=null)
+                {
+                    mySendSheetSignModel.ExportTaskQueueId = _CustomDBQueueMessage.MessageId;
+                }
+                
 
 
                 MessagingServiceFactoryHelper.InitContainer();
