@@ -106,6 +106,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(declarationPM.AmendmentOriginalDeclartation, requestParams.Tenant);
                     }
+
+                    if(declarationPM.IsCourierDeclaration && declarationPM.PaymentDate == null && customResponse.GeneralData.releaseDate != null)
+                    {
+                        declarationPM.PaymentDate = customResponse.GeneralData.releaseDate;
+                    }
+
                     switch (customResponse.GeneralData.ReleaseMessageCode)
                     {
                         case 1: // released
