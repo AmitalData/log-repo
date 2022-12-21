@@ -31,6 +31,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
 {
     public class CH_NG_190_MSG1_NoticeToClientResponseService : ResponseServiceBase<INF_MSG_GenericResponseData, CH_NG_190_MSG1_NoticeToClient, GenericRequestParams>
     {
+
+        private DeclarationPrintResponseData _SendDeclarationPrintResponse;
+
+
         public override void Update(CH_NG_190_MSG1_NoticeToClient customResponse, GenericRequestParams requestParams)
         {
             try
@@ -408,6 +412,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     this.MyRequestSheetParam.ObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                     this.MyRequestSheetParam.EntityId2 = declarationId;
                 }
+
+                if (myDeclarationPM.IsCourierDeclaration)
+                {
+                    SendDeclarationPrint(myDeclarationPM, requestParams);
+                }
+
             }
             catch (System.Exception ee)
             {
@@ -504,5 +514,43 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         }
 
+        public bool SendDeclarationPrint(DeclarationPM myDeclarationPM, GenericRequestParams requestParams)
+        {
+            LogMessagingUtil.Instance.AppendLine("SendDeclarationPrint");
+            string decNum = myDeclarationPM.DeclarationNumber;
+            var decNumList = new List<string>();
+            decNumList.Add(decNum);
+            DF_NG_8302_Web03_DeclarationPrintRequestParams searchParams = new DF_NG_8302_Web03_DeclarationPrintRequestParams()
+            {
+                LoggingEnabled = true,
+                CustomFileNo = myDeclarationPM.CustomFileNo,
+                DeclarationNumber = decNumList, //declarationPM.DeclarationNumber,
+                Tenant = myDeclarationPM.Tenant,
+                RequestName = "Declaration Print(190)",
+                ResponseName = "Declaration Print(190)",
+                LoggingEntityId = myDeclarationPM.Id,
+                RequestVIA = SendRequestVIA.WebServiceBatch,
+
+
+
+
+                LoggingUserId = requestParams.LoggingUserId,
+            };
+
+
+
+            var myRequestMessagingService = new DF_NG_8302_Web03_DeclarationPrintMessagingService();
+            var resData = myRequestMessagingService.Send(searchParams);
+            _SendDeclarationPrintResponse = resData;
+            if (!resData.Succeeded)
+            {
+                LogMessagingUtil.Instance.AppendLine("Declaration Print Request Failed " + resData.CustomsRequestsSheetId + ", Message: " + resData.UserMessage);
+                return false;
+            }
+            LogMessagingUtil.Instance.AppendLine("Declaration Print Request Succeeded " + resData.CustomsRequestsSheetId);
+            return true;
+        }
+
     }
+
 }
