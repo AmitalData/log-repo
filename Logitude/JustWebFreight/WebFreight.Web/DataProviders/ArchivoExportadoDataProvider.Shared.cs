@@ -65,6 +65,7 @@ namespace WebFreight.Web.DataProviders
         public string Origin { get; set; }
         public string Destination { get; set; }
         public double? ChargeableWeight { get; set; }
+        public DateTime? PaidDate { get; set; }
         public string ShipmentField1 { get; set; }
         public string ShipmentField2 { get; set; }
         public string ShipmentField3 { get; set; }
