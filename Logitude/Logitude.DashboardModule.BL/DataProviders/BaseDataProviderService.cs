@@ -310,6 +310,11 @@ namespace Logitude.DashboardModule.BL.DataProviders
             return $@"{field.JoinedTableName}{field.FieldCode}";
         }
 
+        internal static bool ObjectIsNull(object value)
+        {
+            return value == null || value == System.DBNull.Value;
+        }
+
     }
 
 }
