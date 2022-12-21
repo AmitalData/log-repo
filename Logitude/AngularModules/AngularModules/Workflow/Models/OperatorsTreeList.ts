@@ -7,14 +7,14 @@ export class OperatorsTreeList {
     private Operators: OperatorList[];
 
     public Items: TreeSelectItem[] = [];
-
+    public ItemsList: TreeSelectItem[] = [];
 
     constructor(operatorCategories: OperatorCategoryList[], operators: OperatorList[]) {
         this.initialize(operatorCategories, operators);
         this.initializeTreeItems();
     }
 
-    private initialize(operatorCategories, operators) {
+    private initialize(operatorCategories: OperatorCategoryList[], operators: OperatorList[]) {
         this.OperatorCategories = operatorCategories;
         this.Operators = operators;
     }
@@ -28,15 +28,17 @@ export class OperatorsTreeList {
             let childrenItems = this.getOperatorTreeSelectItemChildren(operatorCategory.Code);
             let treeSelectItem = new TreeSelectItem(operatorCategory.Code, operatorCategory.Name, false, false, false, false, childrenItems);
             this.Items.push(treeSelectItem);
+            this.ItemsList.push(treeSelectItem);
         })
     }
 
     private getOperatorTreeSelectItemChildren(operatoryCategoryCode: string) {
-        let OperatorTreeSelectItemChildren = [];
+        let operatorTreeSelectItemChildren = [];
         this.Operators.filter(o => o.CategoryCode == operatoryCategoryCode).forEach(operator => {
-            let treeSelectItem = new TreeSelectItem(operator.Code, operator.Sign + ' ' + operator.Name, true, true, false, false, [], operator);
-            OperatorTreeSelectItemChildren.push(treeSelectItem);
-        })
-        return OperatorTreeSelectItemChildren;
+            let treeSelectItem = new TreeSelectItem(operator.Code, operator.Sign + " " + operator.Name, true, true, false, false, [], operator);
+            operatorTreeSelectItemChildren.push(treeSelectItem);
+            this.ItemsList.push(treeSelectItem);
+        });
+        return operatorTreeSelectItemChildren;
     }
 }
