@@ -1236,8 +1236,10 @@ export class MetaDataViewModel extends BaseComponent {
         }
         if (MetaDataType.ValuesTable) {
             var currentClosedTable: CustomsClosedTableList = this.closedTables.filter(d => d.Id == MetaDataType.ValuesTable)[0];
+            if(currentClosedTable)
+            {
             var lookUpTable = window.ObjectTables.filter(d => d.Id === currentClosedTable.ObjectTableId)[0];
-            this.ValuesTableName = lookUpTable.Name;
+            this.ValuesTableName = lookUpTable.Name;}
         }
 
 

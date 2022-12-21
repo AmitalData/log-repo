@@ -1703,6 +1703,7 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
                             MetaDataTypeCode = GetMetaDataTypeCode(row),
                             Format = row.ItemArray[4].ToString(),
                             Mandatory = bool.Parse(row.ItemArray[6].ToString()),
+                            ValuesTable = row.ItemArray[8]?.ToString(),
                         };
                         //if (metadataRecord.MetaDataTypeCode == "87") //13419
                         //{
@@ -1724,6 +1725,10 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
                         }
                         metadataRecord.Format = row.ItemArray[4].ToString();
                         metadataRecord.Mandatory = bool.Parse(row.ItemArray[6].ToString());
+                        if (row.ItemArray[8] != null)
+                        {
+                            metadataRecord.ValuesTable = row.ItemArray[8].ToString();
+                        }
                         //if (metadataRecord.MetaDataTypeCode == "87") //13419
                         //{
                         //    metadataRecord.Mandatory = true;
