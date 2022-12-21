@@ -92,7 +92,6 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         logWindow.WindowClosed.subscribe(($event: any) => {
             if ($event) {
                 this.attachValue($event);
-                //this.HTMLEditor = $event + this.HTMLEditor;
             }
         });
     }
@@ -110,13 +109,20 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
             if ($event) {
                 var htmlField = "<containerComponent> <labelComponent fieldCode = \"" + $event + "\" ></fieldLabel> <fieldComponent fieldCode= \"" + $event + "\" ></fieldComponent> </containerComponent>";
                 this.attachValue(htmlField);
-                //this.HTMLEditor = htmlField + this.HTMLEditor;
             }
         });
     }
 
     RestoreDefaultLayoutClicked() {
-
+        var objectTableId = this.SelectedItem.ObjectTableId;
+        var screenCode = this.SelectedItem.ScreenCode;
+        this.digitalCustomizationService.GetDefaultScreenLayout(objectTableId, screenCode).subscribe((myResult) => {
+            if (!myResult.HasError) {
+                var screen = myResult.Result;
+                if (this.Screens != null)
+                    this.hTMLEditor = screen.Content;
+            }
+        });
     }
 
     PublichChangesClicked(isDraft) {
