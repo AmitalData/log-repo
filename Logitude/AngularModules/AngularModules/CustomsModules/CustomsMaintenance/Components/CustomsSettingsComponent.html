@@ -681,6 +681,67 @@
                 
             </td> </tr>
 
+            <!-- HSM -->
+            <tr class="FormFieldRow" >
+                <td colspan="4"  style="border: 1px solid rgb(59, 179, 226);  ">
+                    <table>
+                        <tr>
+                            <td class="tbl1Label" style="width: 90px; " >
+                                <LogLabel [NoObjectField]="true"
+                                          [ObjectFieldName]="'HSMCompanyId'"
+                                          [ObjectTableName]="ObjectTableName"
+                                          [DataContext]="DataContext"
+                                          [Text]="'קוד חברה HSM'"
+                                          >
+    
+                                </LogLabel>
+                            </td>
+                            <td class="tbl1Col0"></td>
+    
+                            <td class="tbl1Col1" style="width: 70px; ">
+    
+                                <LogTextBox [ObjectFieldName]="'HSMCompanyId'"
+                                            [InputType]="'text'"
+                                            [DataContext]="DataContext"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [HideColumns]="true"
+                                            [Text]="HSMCompanyId"></LogTextBox>
+    
+    
+                            </td>
+    
+                            
+                            <td></td>
+                            <td class="tbl1Label" style="width: 90px; ">
+                                <LogLabel [NoObjectField]="true"
+                                          [ObjectFieldName]="'HSMToken'"
+                                          [ObjectTableName]="ObjectTableName"
+                                          [DataContext]="DataContext"
+                                          
+                                          >
+    
+                                </LogLabel>
+                            </td>
+                            <td class="tbl1Col0"></td>
+    
+                            <td class="tbl1Col1">
+    
+                                <LogTextBox [ObjectFieldName]="'HSMToken'"
+                                            [InputType]="'text'"
+                                            [DataContext]="DataContext"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [HideColumns]="true"
+                                            [Text]="HSMToken"></LogTextBox>
+    
+    
+    
+                            
+                            <td></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+    
         <tr class="FormFieldRow">
             <td colspan="3"></td>
         </tr>
