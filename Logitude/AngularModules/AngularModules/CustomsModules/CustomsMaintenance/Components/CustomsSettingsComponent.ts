@@ -275,11 +275,6 @@ export class CustomsSettingsComponent
     
 
 
-    get SuppressIIGMessageToDate() { return this.entityPM != null ? this.entityPM.SuppressIIGMessageToDate : null; }
-    set SuppressIIGMessageToDate(value) { this.entityPM.SuppressIIGMessageToDate = value; }
-
-
-
     get HSMCompanyId() { return this.entityPM != null ? this.entityPM.HSMCompanyId : null; }
     set HSMCompanyId(value) { this.entityPM.HSMCompanyId = value; }
 
