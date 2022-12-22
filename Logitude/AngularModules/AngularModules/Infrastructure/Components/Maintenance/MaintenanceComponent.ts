@@ -16,6 +16,7 @@ import { DeclarationRemarksService } from '../../../Common/Services/ExtendedPMs/
 import { DeclarationRemarks } from '../../../Customs/EntityPMs/Extended/DeclarationRemarks';
 import { SessionInfo } from '../../Utilities/SessionInfo';
 import { AmitalGatewayUtil } from '../../Utilities/AmitalGatewayUtil';
+import { ObjectTablePM } from '../../EntityPMs/ObjectTablePM';
 //import {RecallClientsForCutoms} from '../../../Customs/Components/CustomsRequests/GeneralRequests/RecallClientsForCutoms';
 
 @Component({
@@ -47,6 +48,13 @@ export class MaintenanceComponent {
 
         }
     }
+    private CustomObjectTables: ObjectTablePM[] = window.ObjectTables.filter(obj => (obj.ParentObjectTableId == null) && (obj.IsCustom == true));
+    private IsCustomObjectsAdded(): boolean {
+        if (this.CustomObjectTables.length > 0)
+            return true;
+        return false;
+    }
+
     // Pages Menu
     public PagesMenu: Menu[];
     public SelectedMenu: Menu;
@@ -121,7 +129,10 @@ export class MaintenanceComponent {
 
         //check if want to connect to feature
         this.PagesMenu.push(new Menu("CUS", TextCodeTranslator.Translate("General.MC.Customization.Customization")));
-        
+
+        if (this.IsCustomObjectsAdded()) {
+            this.PagesMenu.push(new Menu("CSO", TextCodeTranslator.Translate("General.MC.CustomObjects.CustomObjects")));
+        }
     }
     
     // Maintenance Menu
@@ -182,6 +193,7 @@ export class MaintenanceComponent {
         this.BuildOtherMenus();
         this.BuildTransmissionsMenus();
         this.BuildCustomizationMenus();
+        this.BuildCustomObjectsMenus();
         this.PageChanged(this.PagesMenu[0]);
     }
 
@@ -869,6 +881,20 @@ export class MaintenanceComponent {
         item.Code = "TLMM";
         item.ObjectTableName = "Translate Label";
         this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+    }
+    private BuildCustomObjectsMenus() {
+        this.CustomObjectTables.forEach(objectTable =>
+            this.BuildSingleCustomObjectMenu(objectTable));
+    }
+    private BuildSingleCustomObjectMenu(objectTable: ObjectTablePM) {
+        let item = new MenusTablePM();
+        item.CategoryTypeCode = "CSO";
+        item.Icon = "list";
+        item.ObjectTableId = objectTable.Id;
+        item.ObjectTableName = objectTable.Name;
+        var maintenanceMenuItem = new MaintenanceMenuItem(item);
+        maintenanceMenuItem.DescriptionText = TextCodeTranslator.Translate(objectTable.DescriptionTextCodeCode);
+        this.AllMaintenanceMenu.push(maintenanceMenuItem);
     }
     // Commands
     PageChanged(item: Menu) {
