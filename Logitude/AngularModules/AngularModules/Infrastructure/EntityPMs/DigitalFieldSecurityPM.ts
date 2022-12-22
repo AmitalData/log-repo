@@ -64,6 +64,11 @@ export class DigitalFieldSecurityPM {
     public set ProfileName(newValue: string) { if (this.profileName != newValue) { this.profileName = newValue; this.MarkAsDirty("ProfileName"); } }
        
 	 
+    private objectTableName: string;
+    public get ObjectTableName() { return this.objectTableName; }
+    public set ObjectTableName(newValue: string) { if (this.objectTableName != newValue) { this.objectTableName = newValue; this.MarkAsDirty("ObjectTableName"); } }
+       
+	 
 
     public OldEntityPM: DigitalFieldSecurityPM;
 		

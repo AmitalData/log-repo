@@ -217,6 +217,7 @@
     <Compile Include="Helpers\ShipmentToShipmentAnalyticMapper.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\CustomChildObject.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\ChildEntitiesCustomField.cs" />
+    <Compile Include="InfrastructureModel\EntityPOCOs\DataCustomObject.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\QuoteChargesGroup.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\TariffCarrierTranslation.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\UnassignedEntity.cs" />
@@ -635,6 +636,7 @@
     <Compile Include="InfrastructureModel\EntityPOCOs\MultiEntityUpdateLog.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\QueryExportExecutionLog.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\EntityStatusType.cs" />
+    <Compile Include="InfrastructureModel\EntityPOCOs\ReferenceCustomObject.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\TabModification.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\ScreenSection.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\WorkerRoleName.cs" />
@@ -647,6 +649,7 @@
     <Compile Include="InfrastructureModel\EntityPOCOs\SharedUserQuery.cs" />
     <Compile Include="InfrastructureModel\Mapping\CustomChildObjectMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\ChildEntitiesCustomFieldMap.cs" />
+    <Compile Include="InfrastructureModel\Mapping\DataCustomObjectMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWObjectFieldCategoriesMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWObjectFieldMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWCategoriesMap.cs" />
@@ -657,6 +660,7 @@
     <Compile Include="InfrastructureModel\Mapping\MultiEntityUpdateLogMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\QueryExportExecutionLogMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\QuoteChargesGroupMap.cs" />
+    <Compile Include="InfrastructureModel\Mapping\ReferenceCustomObjectMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\TabModificationMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\ScreenSectionMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\WokerRoleNameMap.cs" />
@@ -666,6 +670,7 @@
     <Compile Include="InfrastructureModel\Mapping\SharedUserQueryMap.cs" />
     <Compile Include="InfrastructureModel\Repositories\CustomChildObjectRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\ChildEntitiesCustomFieldRepository.cs" />
+    <Compile Include="InfrastructureModel\Repositories\DataCustomObjectRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWObjectFieldCategoriesRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWQueryColumnRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWQueryFilterRepository.cs" />
@@ -677,6 +682,7 @@
     <Compile Include="InfrastructureModel\Repositories\MultiEntityUpdateLogRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\QueryExportExecutionLogRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\QuoteChargesGroupRepository.cs" />
+    <Compile Include="InfrastructureModel\Repositories\ReferenceCustomObjectRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\ScreenSectionRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\TabModificationRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\WorkerRoleNameRepository.cs" />

@@ -57,6 +57,7 @@ namespace Logitude.Accounting.BL.CoreBL
         const string ChequeARPaymentAccountingMethod = "CH";
         const string BankTransferARPaymentAccountingMethod = "BT";
         const string ARPaymentApprovedStatusCode = "AD";
+        const string ARPaymentClosedStatusCode = "CL";
         const string ARPaymentVoidedStatusCode = "VD";
         const string ReturnedToCustomer = "5";
         private const string CreditLineNotes = "החזרת שיק ללקוח";
@@ -136,12 +137,14 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     CancelInterestTrascntionsForChequeOrBankTranasfersARPayment(journalPM, aRPaymentPM, context);
                 }
-                if (aRPaymentPM.AccountingPaymentMethodCode == ChequeARPaymentAccountingMethod && aRPaymentPM.StatusCode == ARPaymentApprovedStatusCode)
+                if (aRPaymentPM.AccountingPaymentMethodCode == ChequeARPaymentAccountingMethod &&
+                    (aRPaymentPM.StatusCode == ARPaymentApprovedStatusCode || aRPaymentPM.StatusCode == ARPaymentClosedStatusCode))
                 {
                     CreateInterestTrascntionsForChequeARPayment(journalPM, aRPaymentPM, context);
                 }
 
-                if (aRPaymentPM.AccountingPaymentMethodCode == BankTransferARPaymentAccountingMethod && aRPaymentPM.StatusCode == ARPaymentApprovedStatusCode)
+                if (aRPaymentPM.AccountingPaymentMethodCode == BankTransferARPaymentAccountingMethod &&
+                    (aRPaymentPM.StatusCode == ARPaymentApprovedStatusCode || aRPaymentPM.StatusCode == ARPaymentClosedStatusCode))
                 {
                     CreateInterestTrascntionsForBankTransfersARPayment(journalPM, aRPaymentPM, context);
                 }

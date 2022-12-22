@@ -42,7 +42,7 @@
                                     </div>
                                 </td>
                                 <td></td>
-         
+
                             </tr>
                             <tr>
                                 <td style="height:10px"></td>
@@ -65,6 +65,26 @@
                                     <div style="width: 250px;">
                                         <LogTextBox [ObjectFieldName]="'DisplayLabelPlural'" [DataContext]="dataContext"
                                                     [Text]="DisplayLabelPlural"></LogTextBox>
+                                    </div>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr *ngIf="!IsSubObject">
+                                <td style="height:10px"></td>
+                            </tr>
+                            <tr *ngIf="!IsSubObject">
+                                <td style="height: 22px; width: 140px;">
+                                    <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                        Type:
+                                    </label>
+                                </td>
+                                <td style="width:10px"></td>
+                                <td style="height: 22px; width: 250px; ">
+                                    <div style="width: 250px; display:flex">
+                                        <ComboBox (SelectedItemChanged)="ObjectTableType=$event"
+                                                  [SelectedItem]="ObjectTableType" [ItemsSource]="ObjectTableTypes"
+                                                  [Binding]="'Record'" [MaxHeight]="'100'" style="width:212px; margin-right:6px"></ComboBox>
+                                        <HelpIcon style="width:18px; height:18px;" [HideHeader]="true" [Text]="TypeHelpText"></HelpIcon>
                                     </div>
                                 </td>
                                 <td></td>
@@ -92,7 +112,7 @@
                             <tr>
                                 <td></td>
                             </tr>
-                           
+
 
                         </table>
                     </td>

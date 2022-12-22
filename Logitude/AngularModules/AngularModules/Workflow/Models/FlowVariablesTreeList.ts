@@ -15,13 +15,13 @@ export class FlowVariablesTreeList {
     private ShowVariables: ShowVariables;
     private OnlyCurrentLoopItemVariables: boolean;
     private ItemKeySplitter: string = "_";
-    private ItemsList: TreeSelectItem[] = [];
 
     private TriggeringRecordPrefix: string = "triggeringrecord";
     private DeclaredVariablesPrefix: string = "declaredvariables";
     private LoopCurrentItemPrefix: string = "Current item from loop ";
 
     public Items: TreeSelectItem[] = [];
+    public ItemsList: TreeSelectItem[] = [];
 
     constructor(flowObjectFields: ObjectFieldList[], flowObject: any, currentNodeId: string, showVariables: ShowVariables, onlyCurrentLoopItemVariables: boolean = false) {
         this.initialize(flowObjectFields, flowObject, currentNodeId, showVariables, onlyCurrentLoopItemVariables);
@@ -193,7 +193,7 @@ export class FlowVariablesTreeList {
         if (!this.OnlyCurrentLoopItemVariables) {
             let triggeringRecordEntity = FlowReader.getStartNodeEntity(this.FlowObject);
             let triggeringRecordItemChildren = this.getObjectFieldsItems(this.TriggeringRecordPrefix, triggeringRecordEntity, null);
-            let triggeringRecordItem = new TreeSelectItem(this.TriggeringRecordPrefix, "Triggering record", false, false, false, false, triggeringRecordItemChildren);
+            let triggeringRecordItem = new TreeSelectItem(this.TriggeringRecordPrefix, "Triggering Record", false, false, false, false, triggeringRecordItemChildren);
             recordsVariablesItemChildren.push(triggeringRecordItem);
             this.ItemsList.push(triggeringRecordItem);
 

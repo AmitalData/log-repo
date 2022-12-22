@@ -8,18 +8,21 @@ import { SubEntitiesComponent } from './SubEntitiesComponent';
 import { ObjectFieldPMExtendedService } from '../../../../Infrastructure/Services/ExtendedPMs/ObjectFieldPMExtendedService';
 import { CachedDataManager } from '../../../../Infrastructure/Utilities/CachedDataManager';
 import { AppTool } from '../../../../Infrastructure/Tools';
+import { CustomizationMainComponent } from './CustomizationMainComponent';
+import { LoginService } from '../../../../Infrastructure/Services/LoginService';
 
 const valdationMessageOfDisplayLabelSingular = 'Please fill the Display Label (Singular)';
 const valdationMessageOfDisplayLabelPlural = 'Please fill the Display Label (Plural)';
-const valdationMessageOfDuplicateTableName = 'Another sub object with same Display Label(Singular) is already exist';
+const validationMessageOfDuplicateCustomSubObjectTableName = 'Another sub object with same Display Label(Singular) is already exist';
+const validationMessageOfDuplicateCustomObjectTableName = 'Another custom object with same Display Label(Singular) is already exist';
 declare var window: any;
 
 @Component({
 
-    templateUrl: './AddSubEntityComponent.html',
+    templateUrl: './AddCustomObjectComponent.html',
 })
 
-export class AddSubEntityComponent extends BaseComponent {
+export class AddCustomObjectComponent extends BaseComponent {
 
     private CurrentSession = SessionLocator.SelectedSession;
 
@@ -31,20 +34,43 @@ export class AddSubEntityComponent extends BaseComponent {
     private objectTablePMService: ObjectTablePMService;
     private objectFieldPMExtendedService: ObjectFieldPMExtendedService;
     private customizationSubEntitiesComponent: SubEntitiesComponent;
+    private customizationMainComponent: CustomizationMainComponent;
     private objectTableName: string;
-    constructor() {
+    public IsSubObject: boolean = true;
+    public ObjectTableTypes: object[] = [];
+    public TypeHelpText: string;
+    
+    constructor(private loginService: LoginService) {
         super();
         this.objectTablePMService = new ObjectTablePMService();
         this.objectFieldPMExtendedService = new ObjectFieldPMExtendedService();
         this.objectTablePM = new ObjectTablePM();
         this.UIProperties.SetRequired("DisplayLabelSingular", "ObjectTable", true);
         this.UIProperties.SetRequired("DisplayLabelPlural", "ObjectTable", true);
+        this.loginService.CurrentTenant = SessionLocator.Tenant;
     }
 
     SetWindowArgs(args: any) {
+        this.IsSubObject = args['IsSubObject'];
+        this.customizationMainComponent = args['CustomizationMainComponent'];
         this.customizationSubEntitiesComponent = args['CustomizationSubEntitiesComponent'];
-        this.parentObjectTableId = this.customizationSubEntitiesComponent.ObjectTableId;
-        this.parentObjectTable = window.ObjectTables.filter((table: any) => table.Id === this.parentObjectTableId)[0];;
+        this.parentObjectTableId = this.customizationSubEntitiesComponent?.ObjectTableId;
+        this.parentObjectTable = this.parentObjectTableId ? window.ObjectTables.filter((table: any) => table.Id === this.parentObjectTableId)[0] : null;
+        this.FillObjectTableTypes();
+    }
+
+    private FillObjectTableTypes() {
+        if (this.IsSubObject) return;
+        this.ObjectTableTypes.push({
+            Record: "Buisness Record (Data)",
+            Code: "BR"
+        });
+        this.ObjectTableTypes.push({
+            Record: "Master Data (Reference)",
+            Code: "MD"
+        });
+        this.ObjectTableType = this.ObjectTableTypes[0];
+        this.SetTypeHelpText(this.ObjectTableType["Code"]);
     }
 
     private displayLabelSingular: string;
@@ -52,8 +78,14 @@ export class AddSubEntityComponent extends BaseComponent {
     set DisplayLabelSingular(newValue: string) {
         if (this.displayLabelSingular != newValue) {
             this.displayLabelSingular = newValue;
-            this.objectTableName = AppTool.IsNullOrEmpty(newValue) ? "" : this.parentObjectTable.Name + "." + SessionLocator.Tenant + "." + newValue.replace(/\s/g, "");
+            this.objectTableName = this.GetObjectTableName(newValue);
         }
+    }
+
+    private GetObjectTableName(newValue: string): string {
+        if (AppTool.IsNullOrEmpty(newValue)) return "";
+        if (this.IsSubObject) return this.parentObjectTable.Name + "." + SessionLocator.Tenant + "." + newValue.replace(/\s/g, "");
+        return "CustomObject." + SessionLocator.Tenant + "." + newValue.replace(/\s/g, "");
     }
 
     private displayLabelPlural: string;
@@ -72,7 +104,27 @@ export class AddSubEntityComponent extends BaseComponent {
         }
     }
 
+    private objectTableTypeCode: string="BR";
+    private objectTableType: object;
+    get ObjectTableType() { return this.objectTableType; }
+    set ObjectTableType(newValue: object) {
+        if (this.objectTableType == newValue) return;
+        this.objectTableType = newValue;
+        this.objectTableTypeCode = newValue["Code"];
+        this.SetTypeHelpText(this.objectTableTypeCode);
+    }
 
+    SetTypeHelpText(objectTableTypeCode: string) {
+        if (AppTool.IsNullOrEmpty(objectTableTypeCode)) return;
+        if (objectTableTypeCode == "BR") {
+            this.TypeHelpText = "Using this Type your object will be considered as a main object";
+            return;
+        }
+        if (objectTableTypeCode == "MD") {
+            this.TypeHelpText = "Using this Type your object can be used as a reference in other objects";
+            return;
+        }
+    }
     SaveButtonClicked() {
         let errors = [];
 
@@ -83,7 +135,8 @@ export class AddSubEntityComponent extends BaseComponent {
             errors.push(valdationMessageOfDisplayLabelPlural);
 
         if (this.IsNotValidTableName()) {
-            errors.push(valdationMessageOfDuplicateTableName);
+            let validationMessage = this.IsSubObject ? validationMessageOfDuplicateCustomSubObjectTableName : validationMessageOfDuplicateCustomObjectTableName;
+            errors.push(validationMessage);
         }
 
         if (errors.length > 0)
@@ -91,6 +144,7 @@ export class AddSubEntityComponent extends BaseComponent {
 
         this.CurrentSession.StartBusyIndicator("Saving ...");
         this.MapCustomObjectTableFields();
+        this.CreateObjectTable();
 
     }
 
@@ -109,21 +163,28 @@ export class AddSubEntityComponent extends BaseComponent {
         this.objectTablePM.DefaultText = this.DisplayLabelSingular;
         this.objectTablePM.DefaultTextPlural = this.DisplayLabelPlural;
         this.objectTablePM.Description = this.Description;
+        this.objectTablePM.ObjectTableTypeCode = this.objectTableTypeCode;
+        this.objectTablePM.SupportSubEntity = this.IsSubObject ? false : true;
 
+       
+    }
+    CreateObjectTable() {
         this.objectTablePMService.insert(this.objectTablePM).subscribe((response: ServiceResponse) => {
-
             if (response.HasError) return;
-
+            this.LoadData(response.Result);
             this.CurrentSession.StopBusyIndicator();
-            response.Result.IsNew = true;
-            window.ObjectTables.push(response.Result);
-            this.GetObjectFields();
-            this.customizationSubEntitiesComponent.ApplyChanges(response.Result);
             this.CurrentSession.CloseCurrentWindow();
-
         });
     }
 
+    LoadData(objectTable: ObjectTablePM) {
+        window.ObjectTables.push(objectTable);
+        this.GetObjectFields();
+        this.GetScreens();
+        this.GetTabs();
+        if (this.IsSubObject) this.customizationSubEntitiesComponent.AddObjectTable(objectTable);
+        else this.customizationMainComponent.RefreshObjectTables();
+    }
     GetObjectFields() {
         this.objectFieldPMExtendedService.GetObjectFieldsByObjectTable(this.objectTablePM.Name).subscribe((response: any) => {
             if (!response) return;
@@ -140,6 +201,17 @@ export class AddSubEntityComponent extends BaseComponent {
             })
         });
     }
+    GetScreens() {
+        this.loginService.GetScreens().subscribe((screens: any) => {
+            window.Screens = screens;
+        });
+    }
+    GetTabs() { 
+        this.loginService.GetObjectTableTabs().subscribe((tabs: any) => {
+            window.ObjectTableTabs = tabs;
+        });
+    }
+
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }

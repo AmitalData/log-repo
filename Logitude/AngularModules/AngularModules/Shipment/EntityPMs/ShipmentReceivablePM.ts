@@ -104,6 +104,11 @@ export class ShipmentReceivablePM extends ChildEntitiesCustomFieldPM {
     public set CurrencyCode(newValue: string) { if (this.currencyCode != newValue) { this.currencyCode = newValue; this.MarkAsDirty("CurrencyCode"); } }
        
 	 
+    private currencyName: string;
+    public get CurrencyName() { return this.currencyName; }
+    public set CurrencyName(newValue: string) { if (this.currencyName != newValue) { this.currencyName = newValue; this.MarkAsDirty("CurrencyName"); } }
+       
+	 
     private quantity: number;
     public get Quantity() { return this.quantity; }
     public set Quantity(newValue: number) { if (this.quantity != newValue) { this.quantity = newValue; this.MarkAsDirty("Quantity"); } }

@@ -98,7 +98,7 @@ export class CustomizationMainComponent {
             myTablesItems = this.allTablesItems;
         }
 
-        var tablesList: ObjectTablePM[] = window.ObjectTables.filter(d => (d.IsMain && d.EnableSecurity && !d.IsClosed && !d.IsComposition) || d.Name == "Address" || (d.IsComposition && d.AllowCustomFields));
+        var tablesList: ObjectTablePM[] = window.ObjectTables.filter(d => (d.IsMain && d.EnableSecurity && !d.IsClosed && !d.IsComposition) || d.Name == "Address" || (d.IsComposition && d.AllowCustomFields) || (d.IsCustom && AppTool.IsNullOrEmpty(d.ParentObjectTableId)));
         var myData: FieldsTranslations[] = [];
 
         myTablesItems.forEach(field => {
@@ -119,8 +119,7 @@ export class CustomizationMainComponent {
     }
 
     HasEntityPermessions(objectTable) {
-        return FeatureLocator.HasEntityPermessions(objectTable.Name, "READ", false) && !objectTable.IsCustom;
-
+        return FeatureLocator.HasEntityPermessions(objectTable.Name, "READ", false) && objectTable.ParentObjectTableId == null;
     }
 
     ShowPackageMessage() {
@@ -147,6 +146,11 @@ export class CustomizationMainComponent {
 
         var table: ObjectTablePM = window.ObjectTables.filter(d => d.Id == this.selectedRow.ObjectTableID)[0];
         this.CurrentSession.StartBusyIndicator("Loading ...");
+        if (table.IsCustom) {
+            this.CurrentSession.StopBusyIndicator();
+            this.ShowCustomizationEditComponent(table.Id);
+            return;
+        }
         this._entityResourceService.getEntityResourceByTableName(table.Name).subscribe((response: any) => {
             if (!response.HasError) {
                 this.CurrentSession.StopBusyIndicator();
@@ -170,10 +174,21 @@ export class CustomizationMainComponent {
         logWindow.Show('./InfrastructureCustomization/Components/Customization/CustomizationEditComponent');
     }
 
-    NewCustomEntityClicked() {
-
+    NewCustomObjectClicked() {
+        var window = new LogitudeWindow();
+        window.Width = 600;
+        window.Height = 400;
+        window.Title = "New Custom Object";
+        window.WindowArgs = {
+            CustomizationSubEntitiesComponent: null,
+            CustomizationMainComponent: this,
+            IsSubObject: false
+        };
+        window.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/AddCustomObjectComponent');
     }
-
+    RefreshObjectTables() {
+        this.LoadTableTranslations();
+    }
     CloseClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }

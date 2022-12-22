@@ -14,7 +14,7 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
     public class KpiDataProviderService : BaseDataProviderService
     {
         private AnalyticsFactsFieldsMetaData measureField;
-        private TenantRepository tenantRepository;
+        private readonly TenantRepository tenantRepository;
 
         public KpiDataProviderService(WidgetPM widget, AnalyticsFactsMetaData entity) : base(widget, entity)
         {
@@ -32,33 +32,34 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             kpiChart.MeasureLabel = measureField?.DisplayName ?? widgetMeasureField.MeasureCode;
             kpiChart.Unit = GetUnit();
             kpiChart.Value = BuildKpiChartValue<T>(widgetMeasureField, query);
-            
+
             if (_Widget.TimeOverTime && (measureField?.DataTypeCode == null || measureField?.DataTypeCode == "Integer" || measureField?.DataTypeCode == "Decimal"))
             {
-                kpiChart.Ratio = GetRatio(kpiChart.Value, widgetMeasureField, query);
-                kpiChart.ComparisonValue = GetComparisonValue<T>(widgetMeasureField, query);
+                object comparsionObject = BuildKpiChartComparsionValue<T>(widgetMeasureField, query);
+                kpiChart.Ratio = GetRatio(kpiChart.Value, comparsionObject);
+                kpiChart.ComparisonValue = FormatComparisonValue(comparsionObject);
             }
-            kpiChart.Value = FormatKpiValue(kpiChart.Value, measureField?.DataTypeCode);            
+            kpiChart.Value = FormatKpiValue(kpiChart.Value, measureField?.DataTypeCode);
             return kpiChart;
         }
 
-        private int GetRatio<T>(object value, WidgetMeasurePM widgetMeasureField, IQueryable<T> query)
+        private int GetRatio(object valueObject, object comparsionObject)
         {
-            
-            object comparsionObject = BuildKpiChartComparsionValue<T>(widgetMeasureField, query);
-            var comparsionValue = Convert.ToInt32(comparsionObject == null || comparsionObject == System.DBNull.Value ? 0 : comparsionObject);
-          
-            if (comparsionValue == 0) return 1;
-            int diffValue = (Convert.ToInt32(value == null || value == System.DBNull.Value ? 0 : value) - comparsionValue);
-            int ratio =  Convert.ToInt32(((double)diffValue / Math.Abs(comparsionValue)) * 100);
+            var comparsionValue = Convert.ToInt32(ObjectIsNull(comparsionObject) ? 0 : comparsionObject);
+            var value = Convert.ToInt32(ObjectIsNull(valueObject) ? 0 : valueObject);
+
+            if (comparsionValue == 0 && value == 0) return 0;
+            if (comparsionValue == 0 && value != 0) return 100;
+         
+            int diffValue = (value - comparsionValue);
+            int ratio = Convert.ToInt32(((double)diffValue / Math.Abs(comparsionValue)) * 100);
             return ratio;
         }
 
-        private object GetComparisonValue<T>(WidgetMeasurePM widgetMeasureField, IQueryable<T> query)
+        private string FormatComparisonValue(object comparsionObject)
         {
-            object comparisonValue = BuildKpiChartComparsionValue<T>(widgetMeasureField, query);
-            if (comparisonValue == null || comparisonValue == System.DBNull.Value) return 0;
-            return String.Format("{0:n0}", comparisonValue);
+            if (ObjectIsNull(comparsionObject)) return "0";
+            return String.Format("{0:n0}", comparsionObject);
         }
 
         private string GetUnit()
@@ -86,7 +87,12 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
 
         private object FormatKpiValue(object value, string dataTypeCode)
         {
-            if (value == null || value == System.DBNull.Value) return 0;
+            if (ObjectIsNull(value))
+            {
+                if (dataTypeCode == "Date" || dataTypeCode == "DateTime") return null;
+                return "0";
+            }
+
             if (dataTypeCode == "Date" || dataTypeCode == "DateTime") return ((DateTime)value).ToString("yyyy-MM-dd");
             if (dataTypeCode == null || dataTypeCode == "Integer") return String.Format("{0:n0}", value);
             return String.Format("{0:n}", value);
@@ -119,7 +125,7 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             {
                 var diffTowDates = (_Widget.ToDate).Value.Subtract(_Widget.FromDate.Value).TotalDays;
                 var diffTowDatesInt = Convert.ToInt32(diffTowDates);
-         
+
                 return queryString + $@" where data.{GeteComparsionDate()} Between (Dateadd(Day, DateDiff(Day, cast('{_Widget.ToDate}' as DateTime), cast('{_Widget.FromDate}' as DateTime)), cast('{_Widget.FromDate}' as DateTime))) AND cast('{_Widget.FromDate}' as DateTime)";
             }
             return queryString + $@" where data.{GeteComparsionDate()} Between dateadd ({_Widget.ComparisonDateGroup}, {-2 * _Widget.ComparisonPeriod}, cast(getDate() as DateTime))

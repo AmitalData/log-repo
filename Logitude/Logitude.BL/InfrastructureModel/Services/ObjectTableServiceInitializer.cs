@@ -12,10 +12,11 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         private ObjectTablePM entityPM;
         private TextCodeRepository textCodeRepository;
         private ObjectTableDefaultFieldsService objectTableDefaultFieldsService;
-
+        private IWebFreightContext objectContext;
         public ObjectTableServiceInitializer(ObjectTablePM entityPM, IWebFreightContext objectContext)
         {
             this.entityPM = entityPM;
+            this.objectContext = objectContext;
             this.textCodeRepository = new TextCodeRepository(objectContext);
             this.objectTableDefaultFieldsService = new ObjectTableDefaultFieldsService(entityPM, objectContext);
         }
@@ -29,14 +30,40 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
         private void InitializeEntity()
         {
+            MapEntityName();
             this.entityPM.AvailableInCustomization = true;
-            this.entityPM.IsComposition = true;
-            this.entityPM.ObjectTableTypeCode = "BR";
             this.entityPM.HasCustomFields = true;
             this.entityPM.MaxNumberOfCustomFields = 50;
             this.entityPM.AllowCustomFields = true;
+            if ((entityPM.IsCustom && string.IsNullOrEmpty(entityPM.ParentObjectTableId))) return;
+            this.entityPM.IsComposition = true;
+        }
+        private void MapEntityName()
+        {
+            if (entityPM.IsCustom && !string.IsNullOrEmpty(entityPM.ParentObjectTableId))
+            {
+                MapCustomSubEntityName();
+                return;
+            }
+            if (entityPM.IsCustom && string.IsNullOrEmpty(entityPM.ParentObjectTableId))
+            {
+                MapCustomEntityName();
+                return;
+            }  
         }
 
+        private void MapCustomSubEntityName()
+        {
+            ObjectTableRepository entityRepository = new ObjectTableRepository(objectContext);
+            ObjectTable  parentObjectTable = entityRepository.GetSingleObjectTable(entityPM.ParentObjectTableId, entityPM.Tenant, false);
+            if (entityPM.Name.StartsWith(parentObjectTable.Name + "." + entityPM.Tenant + ".")) return;
+            entityPM.Name = parentObjectTable.Name + "." + entityPM.Tenant + "." + entityPM.Name;
+        }
+        private void MapCustomEntityName()
+        {
+            if (entityPM.Name.StartsWith("CustomObject." + entityPM.Tenant + ".")) return;
+            entityPM.Name = "CustomObject." + entityPM.Tenant + "." + entityPM.Name;
+        }
         private void InitializeTextCode()
         {
             CreateDefaultTextCode();

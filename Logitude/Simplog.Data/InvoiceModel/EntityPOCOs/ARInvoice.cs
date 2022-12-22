@@ -2,10 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.ServiceModel.DomainServices.Server;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Data.ShipmentsModel.EntityPOCOs;
 
 namespace Simplog.Data.InvoiceModel.EntityPOCOs
 {    
@@ -84,21 +82,15 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string SATXML { get; set;}
         public string SATAdditionalFieldsXML { get; set; }
         public string RelatedInvoice { get; set; }
-
         public string SalesmanUserId { get; set; }
-
         public string ExternalAccountingEntityId { get; set; }
-
         public bool Intercompany { get; set; }
-
         public bool IsMultiCurrency { get; set; }
-
         public Decimal? TotalAmountForTaxReport { get; set; }
         public Decimal? TotaVatableAmountForTaxReport { get; set; }
+        public Decimal? TotalExamptFortaxReport { get; set; }
         public Decimal TotalVAT { get; set; }
-
         public DateTime? SATApprovalDate { get; set; }
-
         public bool IsFullAccounting { get; set; }
 
         [ForeignKey("SalesmanUserId")]
@@ -109,7 +101,6 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string MetodoPagoCode { get; set; }
         [ForeignKey("MetodoPagoCode")]
         public virtual MetodoPago MetodoPago { get; set; }
-
         public string UsoCFDICode { get; set; }
 
         [ForeignKey("UsoCFDICode")]

@@ -171,6 +171,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.DangerousFlashPoint = shipment.DangerousFlashPoint;
                 myDataProvider.DangerousMaterialDescription = shipment.DangerousMaterialDescription;
                 myDataProvider.MainCarriageTruckNumber = shipment.MainCarriageCarrierNumber;
+                myDataProvider.AccountManager = shipment.AccountManagerUserName;
                 myDataProvider.TotalCollectReceivablesLocal = shipment.ShipmentReceivables.Where(d => d.PrepaidCollectId == "C").Sum(s => s.TotalAmountLocal);
                 myDataProvider.TotalPrepaidReceivablesLocal = shipment.ShipmentReceivables.Where(d => d.PrepaidCollectId == "P").Sum(s => s.TotalAmountLocal);
                 myDataProvider.TotalCollectReceivablesProfit = shipment.ShipmentReceivables.Where(d => d.PrepaidCollectId == "C").Sum(s => s.TotalAmount);
@@ -332,6 +333,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.ApprovedCargoReadyDate = shipment.ApprovedCargoReadyDate;
                 myDataProvider.PlannedCargoReadyDate = shipment.PlannedCargoReadyDate;
                 myDataProvider.Handler = this.GetHandlerUserName(shipment.HandlerUserId);
+                myDataProvider.AccountManager = shipment.AccountManagerUserName;
 
                 if (!string.IsNullOrEmpty(shipment.OBLTypeCode))
                 {

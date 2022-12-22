@@ -12,6 +12,8 @@ import { CustomChildEntity } from '../../../../../EntityPMs/CustomChildEntity';
 import { DateTool } from '../../../../../Tools';
 import { Validator } from '../../../../../Validators/Validator';
 import { CustomFieldClass } from '../../../../../DataContracts/CustomFieldClass';
+import { ApiQueryFilters } from '../../../../../DataContracts/ApiQueryFilters';
+import { ScreenSectionListService } from '../../../../../Services/StandardLists/ScreenSectionListService';
 declare var window;
 
 @Component({
@@ -30,7 +32,11 @@ export class AddEditChildEntityComponent extends BaseComponent implements OnInit
     public ParentObjectTableName: string;
     public FatherComponent: any;
     private numberOfCustomChildObjectCustomFields: number = 50; //FromTable: CustomFieldsCount
+    public IsSummarySectionAvailable:boolean = false;
+    public SummarySectionName: string;
     @ViewChild('GeneratedArea', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    @ViewChild('SummaryGeneratedArea', { read: ViewContainerRef, static: false }) summaryViewContainerRef: ViewContainerRef;
+    screenSectionService = new ScreenSectionListService();
 
     constructor(private entityArgs: EntityArgs) {
         super();
@@ -38,16 +44,27 @@ export class AddEditChildEntityComponent extends BaseComponent implements OnInit
 
     public LoadGeneratedArea() {
         if (!this.viewContainerRef) {
-            this.RunComponentTimer();
+            this.RunComponentTimer("GeneratedArea");
             return;
         }
+        this.LoadChildComponent(this.viewContainerRef);
+    }
 
-        this.LoadChildComponent();
+    IsSummaryGeneratedAreaLoaded: boolean = false;
+    public LoadSummaryGeneratedArea() {
+        if (this.IsSummaryGeneratedAreaLoaded) return;
+        this.Retries = 0;
+        if (!this.summaryViewContainerRef) {
+            this.RunComponentTimer("SummaryGeneratedArea");
+            return;
+        }
+        this.LoadChildComponent(this.summaryViewContainerRef);
+        this.IsSummaryGeneratedAreaLoaded = true;
     }
 
     private Retries: number = 0;
     private timerToken: any;
-    private RunComponentTimer() {
+    private RunComponentTimer(componentName: String) {
         this.Retries++;
 
         if (this.timerToken) {
@@ -55,16 +72,18 @@ export class AddEditChildEntityComponent extends BaseComponent implements OnInit
         }
 
         if (this.Retries < 20) {
-            this.timerToken = setTimeout(() => this.LoadGeneratedArea(), 1);
+            this.timerToken = componentName == "SummaryGeneratedArea" ? setTimeout(() => this.LoadSummaryGeneratedArea(), 1) : setTimeout(() => this.LoadGeneratedArea(), 1);
         }
     }
 
-    LoadChildComponent() {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
+    LoadChildComponent(viewContainerRef) {
+        SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.HideLastColumn = true;
                 cmpRef.instance.IsFromGrid = true;
+                cmpRef.instance.IsDisplaySummarySection = !(viewContainerRef == this.viewContainerRef);
                 cmpRef.instance.Run(this.EntityPM, this.Screen.ObjectTableName, this.Screen.Code);
+                if(viewContainerRef == this.viewContainerRef) this.LoadSummaryGeneratedArea();
             });
     }
 
@@ -87,8 +106,31 @@ export class AddEditChildEntityComponent extends BaseComponent implements OnInit
         this.SetEntityPM();
         this.Clone();
         this.LoadGeneratedArea();
+        this.SetSummarySectionAvailablity();
+    }
+    SetSummarySectionAvailablity() {
+        this.GetSummaryScreenSection()
+            .subscribe(response => {
+                if (response.HasError) return;
+                let screenSections = response.Result;
+                let summarySection = screenSections.filter(section => !section.InActive && section.Type == "Summary");
+                if (!summarySection) return;
+                if (!summarySection[0]) return;
+                this.IsSummarySectionAvailable = true;
+                this.SummarySectionName = summarySection[0].Name;
+            });
+        
     }
 
+    private GetSummaryScreenSection() {
+        const filters = new ApiQueryFilters();
+        filters.GetAll = true;
+        filters.PageSize = 1000;
+        filters.addAdditionalFilter("ScreenCode", this.Screen.Code, null, null, "Equals", false, false, false, "string");
+        filters.addAdditionalFilter("Type", "Summary", null, null, "Equals", false, false, false, "string");
+        filters.addAdditionalFilter("Inactive", false, null, null, "Equals", false, false, false, "Boolean");
+        return this.screenSectionService.getByFilters(filters)
+    }
     private SetEntityPM() {
         if (this.IsEditMode) return;
 
@@ -122,7 +164,10 @@ export class AddEditChildEntityComponent extends BaseComponent implements OnInit
         this.FatherComponent.LoadData();
         this.CurrentSession.CloseCurrentWindowEmit("OK");
     }
-
+    SaveChangesAndOpen() {
+        this.OkButtonClicked();
+        this.FatherComponent.AddChildEntityClicked();
+    }
     private AddCustomChildEntity() {
         if (this.ParentEntityPM.CustomChildEntities.filter(a => a.Name == this.ObjectTableName).length != 0) {
             return;
@@ -131,7 +176,7 @@ export class AddEditChildEntityComponent extends BaseComponent implements OnInit
         this.ParentEntityPM.CustomChildEntities.push(new CustomChildEntity(this.ParentEntityPM, this.ParentObjectTableName, this.ObjectTableName));
     }
 
-    CancelButtonClicked() {
+    CloseButtonClicked() {
         if (this.IsEditMode) {
             this.RejectChanges();
         }
@@ -147,13 +192,21 @@ export class AddEditChildEntityComponent extends BaseComponent implements OnInit
         }
     }
 
-    private RejectChanges() {
-        for (let i = 1; i < this.numberOfCustomChildObjectCustomFields+1; i++) {
-            this.EntityPM['Field' + i] = this.GetCustomChildObjectCustomFieldClass(this.cloneCustomChildObjectPM, i);
+    private RejectChanges()
+    {
+        for (let i = 1; i < this.numberOfCustomChildObjectCustomFields+1; i++)
+        {
+            this.ResetChangedCustomFields(i);
         }
         this.FatherComponent.LoadData();
     }
-
+    private ResetChangedCustomFields(CustomFieldIndex: number) {
+        let oldCustomFieldValue = this.GetCustomChildObjectCustomFieldClass(this.cloneCustomChildObjectPM, CustomFieldIndex);
+        if (this.EntityPM['Field' + CustomFieldIndex].Value != oldCustomFieldValue.Value) {
+            this.EntityPM['Field' + CustomFieldIndex] = oldCustomFieldValue;
+            this.EntityPM.IsDirty = false;
+        }
+    }
     private GetCustomChildObjectCustomFieldClass(cloneEntityPM: CustomChildObjectPM, index: number) {
         let customFieldClass = cloneEntityPM['Field' + index];
         if (!customFieldClass) {

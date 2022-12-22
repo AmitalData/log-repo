@@ -561,6 +561,7 @@ namespace WebFreight.Web.DataProviders
             public string BillToVatNumber { get; set; }
             public string InvoiceType { get; set; }
             public string InvoiceNumber { get; set; }
+            public Decimal? TotalAmountForTaxReport { get; set; }
             public string InternalNumber { get; set; }
             public string BillTo { get; set; }
             public string PartnerName { get; set; }
@@ -751,7 +752,7 @@ namespace WebFreight.Web.DataProviders
     public class ReportConstituentInvoiceLine
     {
         public string InvoiceId { get; set; }
-        public string InvoiceNumber { get; set; }
+        public string InvoiceNumber { get; set; }      
         public string CustomerRef { get; set; }
         public string InvoiceDate { get; set; }
         public string BillToName { get; set; }

@@ -1,3 +1,11 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools;
 using Logitude.Infrastructure.Data.EntityPOCOs;
@@ -6,10 +14,12 @@ using Logitude.Infrastructure.BL.EntityDataMappings;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityKeys;
 using Logitude.Infrastructure.Data;
+using Simplog.Server.Infrastructure;
 namespace Logitude.Infrastructure.BL.EntityQueryServices
-{
-    public partial class BIReportQueryService: EntityQueryService<BIReport,BIReportKeys,BIReportPM,object,BIReportKeys>
-    {
+{ 
+   public partial class BIReportQueryService: EntityQueryService<BIReport,BIReportKeys,BIReportPM,object,BIReportKeys>
+   {
+   
         BIReportRepository repository;
 		IInfrastructureContext  context;
         public BIReportQueryService(int tenant)
@@ -45,11 +55,15 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
 
+       
 	    protected override EntityKeyFields GetKeys(BIReport entityPOCO)
         {
             BIReportKeys entityKeys = new BIReportKeys() { Id = entityPOCO.Id,  };
             return entityKeys;
-        }	 
-    }
+        }
+     
+	 
+   }
+   
 }
 	 

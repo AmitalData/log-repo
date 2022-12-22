@@ -42,12 +42,12 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         {
             return new TextCodePM()
             {
-                Code = "ObjectTableTab.O." + tab.Code,
+                Code = !string.IsNullOrEmpty(objectTableTab.TabNameTextCodeCode) ? objectTableTab.TabNameTextCodeCode : "ObjectTableTab.O." + tab.Code ,
                 DefaultText = tab.Name,
                 DefaultTextPlural = tab.Name,
                 ObjectTableId = tab.ObjectTableId,
                 Tenant = tab.Tenant,
-                TextCodeTypeCode = "O",
+                TextCodeTypeCode = !string.IsNullOrEmpty(objectTableTab.TabNameTextCodeType) ? objectTableTab.TabNameTextCodeType: "O",
                 LocalDefaultText = tab.Name
             };
         }

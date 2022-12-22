@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentDigitalFieldUpdateClass
    {  		
-		public const string HashString = "86f46d245d72cc43c61c79c6183e3af8";
+		public const string HashString = "d1ccc86845c5c4712026bc60fd2f639d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,9 +126,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "ShipmentDigitalField",
-			      				    Code =  "060e",
+			      				    Code =  "f83e",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
+			      				    ClientModuleName =  "Shipment",
+			      				    ServerModuleName =  "Shipment",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
@@ -169,6 +171,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Id",
 					  						ListPropertyPath =  "Id",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -232,6 +235,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Tenant",
 					  						ListPropertyPath =  "Tenant",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -293,6 +297,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IsCustomerArchived",
 					  						ListPropertyPath =  "IsCustomerArchived",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -336,7 +341,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable ShipmentDigitalFieldObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ShipmentDigitalField" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> ShipmentDigitalFieldObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ShipmentDigitalField").ToList();
+		       
+	      
+
+	         Screen ShipmentDigitalFieldShipmentDigitalFieldHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ShipmentDigitalField.HeaderScreen", Name = "ShipmentDigitalFieldHeaderScreen", ObjectTableId = ShipmentDigitalFieldObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    ShipmentDigitalFieldObjectTable.HeaderScreenId = ShipmentDigitalFieldShipmentDigitalFieldHeaderScreenScreen0.Id;
+		    ShipmentDigitalFieldObjectTable.HeaderScreenCode = ShipmentDigitalFieldShipmentDigitalFieldHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 
