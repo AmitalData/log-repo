@@ -22,6 +22,7 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
     TextAreaInputId: string = Guid.newGuid();
     TextAreaInputCurrentPosition: number = 0;
     IsPreviewChanges: boolean = false;
+    CurrentTenantScreen: DigitalPortalScreenList;
 
     constructor() {
         this.Screens = [];
@@ -65,7 +66,8 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         this.digitalCustomizationService.GetDigitalPortalScreens(objectTableId, screenCode).subscribe((myResult) => {
             if (!myResult.HasError) {
                 var screen = myResult.Result;
-                if (this.Screens != null)
+                this.CurrentTenantScreen = screen;
+                if (screen != null)
                     this.hTMLEditor = screen.Content;
             }
         });
@@ -170,6 +172,7 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         else {
             this.IsModified = false;
             this.ModifiedScreenData.Content = this.HTMLEditor;
+            this.ModifiedScreenData.DraftContent = this.CurrentTenantScreen.DraftContent;
         }
 
         this.digitalCustomizationService.UpdateDigitalPortalScreen(this.ModifiedScreenData).subscribe((myResult) => {
