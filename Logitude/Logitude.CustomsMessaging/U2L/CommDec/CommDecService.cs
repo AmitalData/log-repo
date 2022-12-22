@@ -1213,6 +1213,9 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
         private void CheckMasterToUpdate(string MoreParams, string Curruser)
         {
+            DateTime stopLogAt = new DateTime(2023, 03, 29);
+
+            LogitudeSettings.HandleLogMe("start CheckMasterToUpdate " , false, "CheckMasterToUpdate", stopLogAt);
             string courier_id = null;
             if (!String.IsNullOrWhiteSpace(MoreParams))
             {
@@ -1221,6 +1224,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 AppendLogLine("MoreParams after Deserialize: " + unifreightListsParams);
                 courier_id = UnifreightListsUtil.GetValue(ref unifreightListsParams, "COURIER_ID");
                 AppendLogLine("courier id param: " + courier_id);
+                LogitudeSettings.HandleLogMe(" MoreParams: " + MoreParams + " courier id param: " + courier_id, false, "CheckMasterToUpdate", stopLogAt);
             }
 
             //Get CourierMaster
@@ -1232,10 +1236,12 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 if (_CourierMasterPM != null)
                 {
                     AppendLogLine("CourierMasterPM found for id: " + courier_id);
+                    LogitudeSettings.HandleLogMe(" CourierMasterPM found for id: " + courier_id, false, "CheckMasterToUpdate", stopLogAt);
                 }
                 else
                 {
                     AppendLogLine("CourierMasterPM not found for id: " + courier_id);
+                    LogitudeSettings.HandleLogMe(" CourierMasterPM not found for id: " + courier_id, false, "CheckMasterToUpdate", stopLogAt);
                 }
             }
             else
@@ -1243,11 +1249,13 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 AppendLogLine("CarrierPrefix: " + _LogitudeCommDecFile.CarrierPrefix);
                 var airlineId = TranslateAirline(_LogitudeCommDecFile.CarrierPrefix);
                 AppendLogLine("airlineId: " + airlineId);
+                LogitudeSettings.HandleLogMe(" CarrierPrefix: " + _LogitudeCommDecFile.CarrierPrefix + " airlineId: " + airlineId, false, "CheckMasterToUpdate", stopLogAt);
                 if (String.IsNullOrWhiteSpace(airlineId))
                 {
                     MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
                     MyGenericResponseObj.Message = "Airline Prefix " + _LogitudeCommDecFile.CarrierPrefix + " Doesn't exist";
                     AppendLogLine(MyGenericResponseObj.Message);
+                    LogitudeSettings.HandleLogMe(" Airline Prefix " + _LogitudeCommDecFile.CarrierPrefix + " Doesn't exist", false, "CheckMasterToUpdate", stopLogAt);
                 }
                 _CourierMasterPM = myCourierMasterQueryService.GetSingleByAirlineAWBs(airlineId, _LogitudeCommDecFile.HAWB, _LogitudeCommDecFile.MAWB, _tenant);
                 if (_CourierMasterPM == null && !String.IsNullOrWhiteSpace(_LogitudeCommDecFile.HAWB))
@@ -1257,10 +1265,12 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 if (_CourierMasterPM != null)
                 {
                     AppendLogLine("CourierMasterPM found for airlineId: " + airlineId + " HAWB: " + _LogitudeCommDecFile.HAWB + " MAWB: " + _LogitudeCommDecFile.MAWB);
+                    LogitudeSettings.HandleLogMe(" CourierMasterPM found for airlineId: " + airlineId + " HAWB: " + _LogitudeCommDecFile.HAWB + " MAWB: " + _LogitudeCommDecFile.MAWB, false, "CheckMasterToUpdate", stopLogAt);
                 }
                 else
                 {
                     AppendLogLine("CourierMasterPM not found for airlineId: " + airlineId + " HAWB: " + _LogitudeCommDecFile.HAWB + " MAWB: " + _LogitudeCommDecFile.MAWB);
+                    LogitudeSettings.HandleLogMe(" CourierMasterPM not found for airlineId: " + airlineId + " HAWB: " + _LogitudeCommDecFile.HAWB + " MAWB: " + _LogitudeCommDecFile.MAWB, false, "CheckMasterToUpdate", stopLogAt);
                 }
 
             }
@@ -1272,12 +1282,14 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 if (_CourierDeclarationPM == null)
                 {
                     AppendLogLine("CourierDeclarationPM not found for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id);
+                    LogitudeSettings.HandleLogMe(" CourierDeclarationPM not found for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id, false, "CheckMasterToUpdate", stopLogAt);
                     if (!this._MyDeclarationPM.HatraDate.HasValue)
                     {
                         CourierDeclarationPM _CourierDeclarationPMPMDiferentMaster = myCourierDeclarationQueryService.GetCourierDeclarationByDeclarationId(_MyDeclarationPM.Id, _tenant);
                         if (_CourierDeclarationPMPMDiferentMaster != null)
                         {
                             AppendLogLine("try to delete CourierDeclaration with Diferent Master (id: " + _CourierDeclarationPMPMDiferentMaster.CourierMasterId + "  found for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id);
+                            LogitudeSettings.HandleLogMe(" try to delete CourierDeclaration with Diferent Master (id: " + _CourierDeclarationPMPMDiferentMaster.CourierMasterId + "  found for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id, false, "CheckMasterToUpdate", stopLogAt);
                             _CourierDeclarationPMPMDiferentMaster.ChangeSetOp = ChangeSetOperation.Delete;
                             try
                             {
@@ -1306,10 +1318,12 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                                             concurrentKiller.LockOrCrashOnCommitDueUnique(GeneralKey, _CourierDeclarationPMPMDiferentMaster.Tenant);
                                             haveUCUDOInProgress = false;
                                             AppendLogLine("UCUDO:concurrentKiller: Ok");
+                                            LogitudeSettings.HandleLogMe(" UCUDO:concurrentKiller: Ok", false, "CheckMasterToUpdate", stopLogAt);
                                         }
                                         catch (Exception)
                                         {
                                             AppendLogLine("UCUDO:concurrentKiller:Have in the middle in the last 15 min- not open  UCUDO");
+                                            LogitudeSettings.HandleLogMe(" UCUDO:concurrentKiller:Have in the middle in the last 15 min- not open  UCUDO", false, "CheckMasterToUpdate", stopLogAt);
                                             haveUCUDOInProgress = true;
                                         }
 
@@ -1340,11 +1354,13 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                             {
                                 var FormatedException = ExceptionFormatUtil.GetFormated(ex);
                                 AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
+                                LogitudeSettings.HandleLogMe(" ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------", false, "CheckMasterToUpdate", stopLogAt);
                                 return;
                             }
                             catch (Exception e)
                             {
                                 AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
+                                LogitudeSettings.HandleLogMe(" ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------", false, "CheckMasterToUpdate", stopLogAt);
                                 return;
                             }
 
@@ -1382,11 +1398,13 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                                     {
                                         var FormatedException = ExceptionFormatUtil.GetFormated(ex);
                                         AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
+                                        LogitudeSettings.HandleLogMe(" ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------", false, "CheckMasterToUpdate", stopLogAt);
                                         return;
                                     }
                                     catch (Exception e)
                                     {
                                         AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
+                                        LogitudeSettings.HandleLogMe(" ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------", false, "CheckMasterToUpdate", stopLogAt);
                                         return;
                                     }
                                 }
@@ -1448,15 +1466,16 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
                                 {
 
-                                    DateTime stopLogAt = new DateTime(2021, 11, 01);
+                                    //DateTime stopLogAt = new DateTime(2021, 11, 01);
 
                                     string logData = "";
 
-                                    var loggedUser = AuthenticationUtil.ResolveUserIdentityName(_CourierDeclarationPM.Tenant);
+                                    //var loggedUser = AuthenticationUtil.ResolveUserIdentityName(_CourierDeclarationPM.Tenant);
 
                                     logData = $"_CourierDeclarationPM.DeclarationId={_CourierDeclarationPM.DeclarationId}, ChangeSetOp={_CourierDeclarationPM.ChangeSetOp}, decCourier.IsClosedForFollowUp={decCourier.IsClosedForFollowUp},OpenDeclarations ={courierMaster.OpenDeclarations}before update1";
 
-                                    LogitudeSettings.HandleLogMe("OpenDeclarations " + logData, false, "time", stopLogAt);
+                                    //LogitudeSettings.HandleLogMe("OpenDeclarations " + logData, false, "time", stopLogAt);
+                                    LogitudeSettings.HandleLogMe(logData, false, "CheckMasterToUpdate", stopLogAt);
 
                                     if (_IsNewDeclaration == true && courierMaster.IsOpen == false) courierMaster.IsOpen = true;
                                     courierMaster.OpenDeclarations += 1;
@@ -1473,6 +1492,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
                 }
                 AppendLogLine("try to update CourierDeclaration for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id);
+                LogitudeSettings.HandleLogMe(" try to update CourierDeclaration for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id, false, "CheckMasterToUpdate", stopLogAt);
                 try
                 {
                     if (!_MyDeclarationPM.HatraDate.HasValue)// ELISHIVA  + MORAN Task 156294: חסימת מעבר משלוחים בין טיסות בלדרות
@@ -1485,11 +1505,13 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 {
                     var FormatedException = ExceptionFormatUtil.GetFormated(ex);
                     AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
+                    LogitudeSettings.HandleLogMe(" ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------", false, "CheckMasterToUpdate", stopLogAt);
                     return;
                 }
                 catch (Exception e)
                 {
                     AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
+                    LogitudeSettings.HandleLogMe(" ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------", false, "CheckMasterToUpdate", stopLogAt);
                     return;
                 }
             }
