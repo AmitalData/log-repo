@@ -23,7 +23,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             currentContext = context;
         }
 
-        public int UpdateLOGITUDE_FILE(int tenant, long fileNo, string myLOGITUDE_FILE)
+        public int UpdateLOGITUDE_FILE_O(int tenant, long fileNo, string myLOGITUDE_FILE)
         {
 
 
@@ -48,6 +48,48 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             return res1.GetValueOrDefault();
 
         }
+
+
+        public int UpdateLOGITUDE_FILE(int tenant, long fileNo, string myLOGITUDE_FILE)
+        {
+
+
+            //https://www.devart.com/dotconnect/oracle/docs/Parameters.html
+            var openReaderSingleResult = new OpenReaderSingleResult(this.currentContext);
+            string UserId = openReaderSingleResult.GetSchemaUserId(tenant);
+            var res1 = openReaderSingleResult.ExecuteReaderSingleResult<int>(
+                //$"update  {UserId}.CFIFILEM set  LOGITUDE_FILE ='{myLOGITUDE_FILE}' where FILE_NO={fileNo}"
+                $"update  {UserId}.CFIFILEM set  LOGITUDE_FILE =:p1 where FILE_NO=:p2",
+                (cmd) =>
+                {
+                    //   new List<Devart.Data.Oracle.OracleParameter>() {
+                    //    new Devart.Data.Oracle.OracleParameter("p1", myLOGITUDE_FILE),
+                    //    new Devart.Data.Oracle.OracleParameter("p2",fileNo)
+                    //}
+                    var p1 = cmd.CreateParameter();
+                    p1.ParameterName = "p1"; p1.DbType = System.Data.DbType.String;
+                    p1.Value = myLOGITUDE_FILE;
+                    cmd.Parameters.Add(p1);
+                    var p2 = cmd.CreateParameter();
+                    p2.ParameterName = "p2"; p2.DbType = System.Data.DbType.Double;
+                    p2.Value = fileNo;
+                    cmd.Parameters.Add(p2);
+
+
+                }
+, //new List<object> {myLOGITUDE_FILE,fileNo },
+                (dataReader) =>
+                {
+                    Int32? val = null;
+                    val = dataReader.GetInt32(0);
+                    return val;
+
+                });
+            //logBoxDocuments = res1.GetValueOrDefault();
+            return res1.GetValueOrDefault();
+
+        }
+
         //public CFIFILEM GetSingle(string FILENO, long CUSTOMFILE)
         //{
         //    return (from a in context.CFIFILEMs
