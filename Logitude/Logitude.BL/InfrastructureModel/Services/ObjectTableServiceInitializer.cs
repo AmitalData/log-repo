@@ -67,7 +67,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         private void InitializeTextCode()
         {
             CreateDefaultTextCode();
-            CreateDescriptionTextCode();
+            TextCode descreptionTextCode = CreateDescriptionTextCode();
+            MapDescreptionTextCode(descreptionTextCode);
         }
 
         private void CreateDefaultTextCode()
@@ -84,17 +85,24 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             textCodeRepository.Add(textCode);
         }
 
-        private void CreateDescriptionTextCode()
+        private TextCode CreateDescriptionTextCode()
         {
             TextCode descriptionTextCode = new TextCode();
             descriptionTextCode.Id = IdCounter.GetNumber("TextCode", this.entityPM.Tenant).ToString();
             descriptionTextCode.ObjectTableId = this.entityPM.Id;
-            descriptionTextCode.Code = this.entityPM.Name + "Description";
+            descriptionTextCode.Code = this.entityPM.Name + ".Description";
             descriptionTextCode.DefaultText = this.entityPM.Description;
             descriptionTextCode.LocalDefaultText = this.entityPM.Description;
             descriptionTextCode.Tenant = this.entityPM.Tenant;
             descriptionTextCode.TextCodeTypeCode = "T";
             textCodeRepository.Add(descriptionTextCode);
+            return descriptionTextCode;
+        }
+        private void MapDescreptionTextCode (TextCode descreptionTextCode)
+        {
+            if (descreptionTextCode == null) return;
+            //entityPM.DescriptionTextCodeId = descreptionTextCode.Id;
+            entityPM.DescriptionTextCodeCode = descreptionTextCode.Code;
         }
 
     }
