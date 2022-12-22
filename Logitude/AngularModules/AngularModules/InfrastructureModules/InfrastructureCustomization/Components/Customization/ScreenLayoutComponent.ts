@@ -499,7 +499,7 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
     }
 
     onMyDrop(event: DragEvent, screenRowDetails: ScreenRowDetails, column: number, section: ScreenSectionPM = null) {
-        let screenRows = this.screenLayoutService.GetScreenRows(section.Number);
+        let screenRows = this.screenLayoutService.GetScreenRows(section?.Number);
         this.Modified = true;
         let objectFieldId = event.dataTransfer.getData("Id");
         let fieldCode = event.dataTransfer.getData("FieldCode");
