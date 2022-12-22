@@ -893,7 +893,7 @@ export class MaintenanceComponent {
         item.ObjectTableId = objectTable.Id;
         item.ObjectTableName = objectTable.Name;
         var maintenanceMenuItem = new MaintenanceMenuItem(item);
-        maintenanceMenuItem.DescriptionText = TextCodeTranslator.Translate(objectTable.DescriptionTextCodeCode);
+        maintenanceMenuItem.DescriptionText = objectTable.Description != null ? objectTable.Description : TextCodeTranslator.Translate(objectTable.DescriptionTextCodeCode);
         this.AllMaintenanceMenu.push(maintenanceMenuItem);
     }
     // Commands
