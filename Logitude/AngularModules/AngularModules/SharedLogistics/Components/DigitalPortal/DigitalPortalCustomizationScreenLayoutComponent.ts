@@ -149,11 +149,14 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         this.ModifiedScreenData.ObjectTableId = objectTableId;
         this.ModifiedScreenData.ScreenCode = screenCode;
         this.ModifiedScreenData.Name = name;
-        this.ModifiedScreenData.Content = this.HTMLEditor;
         this.ModifiedScreenData.IsDraft = isDraft;
         if (isDraft == true) {
             this.ModifiedScreenData.DraftContent = this.HTMLEditor;
         }
+        else {
+            this.ModifiedScreenData.Content = this.HTMLEditor;
+        }
+
         this.digitalCustomizationService.UpdateDigitalPortalScreen(this.ModifiedScreenData).subscribe((myResult) => {
             this.IsModified = false;
             this.ModifiedScreenData = new DigitalPortalScreenUpdateModel();
