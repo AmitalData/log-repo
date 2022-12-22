@@ -1,28 +1,37 @@
-
-import { Component, ViewChild, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef, OnInit, Injectable, HostListener } from '@angular/core';
-import { Router, ActivatedRoute, NavigationStart, NavigationEnd } from '@angular/router';
-import { FormBuilder } from '@angular/forms';
-import { CargoTrackingSearchService } from '../../../../Services/Others/CargoTrackingSearchService';
-import { CargoTrackingShipmentList } from '../../../../EntityLists/CargoTrackingShipmentList';
-import { SessionInfo } from '../../../../../Infrastructure/Utilities/SessionInfo';
-import { CdkScrollable, CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { ShipmentDataSource } from '../../../../DataContracts/CargoTrackingShipmentDataSource';
-import { CargoTrackingShipmentSearchInput, MoreFilter } from '../../../../DataContracts/CargoTrackingShipmentFilters';
-import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
-import { CargoTrackingPortService } from '../../../../Services/Others/CargoTrackingPortService';
-import { CargoTrackingShipmentService } from '../../../../Services/Others/CargoTrackingShipmentService';
-import { MessageWindowComponent } from '../../../../../Infrastructure/Components/MessageWindow/MessageWindowComponent';
-import { MatDialog } from '@angular/material/dialog';
-import { RootContext } from 'src/CargoTracking/Utilities/RootContext';
-import { CargoTrackingMilestoneService } from 'src/CargoTracking/Services/Others/CargoTrackingMilestoneService';
-import { MultipleSelectionComponent } from 'src/Infrastructure/Components/MultipleSelection/MultipleSelectionComponent';
-import { filter } from 'rxjs/operators';
-import { ShipmentDirections } from '../ShipmentDetails/ShipmentDetailsComponent';
-import { ReplaySubject } from 'rxjs';
-import { SharedService } from 'src/CargoTracking/Services/Others/SharedService';
-import { QueryColumnPM } from 'src/CargoTracking/Services/Others/QueryColumnPM';
-import { ApiQueryFilters } from 'src/CargoTracking/Services/Others/ApiQueryFilters';
-import { LogitudeGridExportToExcelService } from 'src/CargoTracking/Services/Others/LogitudeGridExportToExcelComponent';
+import {
+    Component,
+    ViewChild,
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    ElementRef,
+    OnInit,
+    Injectable,
+    HostListener
+} from '@angular/core';
+import {Router, ActivatedRoute, NavigationStart, NavigationEnd} from '@angular/router';
+import {FormBuilder} from '@angular/forms';
+import {CargoTrackingSearchService} from '../../../../Services/Others/CargoTrackingSearchService';
+import {CargoTrackingShipmentList} from '../../../../EntityLists/CargoTrackingShipmentList';
+import {SessionInfo} from '../../../../../Infrastructure/Utilities/SessionInfo';
+import {CdkScrollable, CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
+import {ShipmentDataSource} from '../../../../DataContracts/CargoTrackingShipmentDataSource';
+import {CargoTrackingShipmentSearchInput, MoreFilter} from '../../../../DataContracts/CargoTrackingShipmentFilters';
+import {CargoTrackingBrandingData} from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
+import {CargoTrackingPortService} from '../../../../Services/Others/CargoTrackingPortService';
+import {CargoTrackingShipmentService} from '../../../../Services/Others/CargoTrackingShipmentService';
+import {MessageWindowComponent} from '../../../../../Infrastructure/Components/MessageWindow/MessageWindowComponent';
+import {MatDialog} from '@angular/material/dialog';
+import {RootContext} from 'src/CargoTracking/Utilities/RootContext';
+import {CargoTrackingMilestoneService} from 'src/CargoTracking/Services/Others/CargoTrackingMilestoneService';
+import {MultipleSelectionComponent} from 'src/Infrastructure/Components/MultipleSelection/MultipleSelectionComponent';
+import {filter} from 'rxjs/operators';
+import {ShipmentDirections} from '../ShipmentDetails/ShipmentDetailsComponent';
+import {ReplaySubject} from 'rxjs';
+import {SharedService} from 'src/CargoTracking/Services/Others/SharedService';
+import {QueryColumnPM} from 'src/CargoTracking/Services/Others/QueryColumnPM';
+import {ApiQueryFilters} from 'src/CargoTracking/Services/Others/ApiQueryFilters';
+import {LogitudeGridExportToExcelService} from 'src/CargoTracking/Services/Others/LogitudeGridExportToExcelComponent';
 
 @Component({
     selector: 'ShipmentsListComponent',
@@ -82,12 +91,15 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     MasterOrHouseLabel: string = "";
     EntityType_Customs = "C";
     isMobileView: boolean;
+
     get tenant() {
         return CargoTrackingBrandingData.Tenant;
     }
+
     get enableExportToExcel() {
         return CargoTrackingBrandingData.EnableExportToExcel;
     }
+
     FiltersSelectedInvitedCustoms: any[] = [];
     ShipmentSearchInput: CargoTrackingShipmentSearchInput = new CargoTrackingShipmentSearchInput();
     MilestonesStatus: any[] = [];
@@ -96,17 +108,18 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     InvitedCustomers: any[] = [];
     InvitedCustomersDictionary: {} = {};
     MoreFilterMobileValue: MoreFilter = new MoreFilter();
+
     constructor(private router: Router,
-        private route: ActivatedRoute,
-        private formBuilder: FormBuilder,
-        private changeDetector: ChangeDetectorRef,
-        private cargoTrackingPortService: CargoTrackingPortService,
-        private cargoTrackingShipmentService: CargoTrackingShipmentService,
-        public dialog: MatDialog,
-        private searchService: CargoTrackingSearchService,
-        private milestonesService: CargoTrackingMilestoneService,
-        public sharedService: SharedService,
-        private logitudeGridExportToExcelService: LogitudeGridExportToExcelService) {
+                private route: ActivatedRoute,
+                private formBuilder: FormBuilder,
+                private changeDetector: ChangeDetectorRef,
+                private cargoTrackingPortService: CargoTrackingPortService,
+                private cargoTrackingShipmentService: CargoTrackingShipmentService,
+                public dialog: MatDialog,
+                private searchService: CargoTrackingSearchService,
+                private milestonesService: CargoTrackingMilestoneService,
+                public sharedService: SharedService,
+                private logitudeGridExportToExcelService: LogitudeGridExportToExcelService) {
         this.InitComponent();
         this.SetDefaultBackgroundColor();
 
@@ -124,17 +137,19 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.fillFeltersDictionary();
         this.setViews();
     }
-    OnRouteChanged(event){
-        if(event instanceof NavigationEnd) {
+
+    OnRouteChanged(event) {
+        if (event instanceof NavigationEnd) {
             this.RerenderVirtualScroll();
         }
     }
-    public ExportToExcelClick(){
+
+    public ExportToExcelClick() {
 
         this.buildFilterArgs();
         this.QueryColumns = [];
         this.buildQueryColumns();
-         this.logitudeGridExportToExcelService.ExportToExcelExcute("CargoTrackingShipment",this.filterAgrs,this.QueryColumns);
+        this.logitudeGridExportToExcelService.ExportToExcelExcute("CargoTrackingShipment", this.filterAgrs, this.QueryColumns);
     }
 
     private buildFilterArgs() {
@@ -151,7 +166,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
         if (this.ShipmentSearchInput.CustomersIds.length > 0) {
             this.filterAgrs.addAdditionalFilter("CustomersIds", this.ShipmentSearchInput.CustomersIds.join("_"), null, null, "Equals", false, false, false, "string");
-        }else if(this.InvitedCustomers.length > 0){
+        } else if (this.InvitedCustomers.length > 0) {
             this.filterAgrs.addAdditionalFilter("CustomersIds", this.InvitedCustomers.map(d => d.CardId).join("_"), null, null, "Equals", false, false, false, "string");
         }
         if (this.ShipmentSearchInput.MilestonesCodes.length > 0) {
@@ -167,35 +182,36 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         }
     }
 
-    private buildQueryColumns(){
-        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("ShipmentNumber",'Text', 'Shipment Number'));
-        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("CustomerReference",'Text', 'Reference No'));
-        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("TransportModeId",'Text', 'Transport Mode'));
-        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("DirectionId",'Text', 'Direction'));
-        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("House",'Text', 'House'));
-        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("Master",'Text', 'Master'));
-        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("Client",'Text', 'Client'));
-        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("ConsigneeName",'Text', 'Consignee'));
-        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("CurrentMilestoneDate",'DateTime', 'Current Milestone Date'));
-        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("CurrentMilestoneName",'Text', 'Current Milestone Name'));
-        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("FromPortName",'Text', 'From Port'));
-        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("ToPortName",'Text', 'To Port'));
-        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("ArrivalDate",'DateTime', 'ATA'));
-        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("ArrivalEstimationDate",'DateTime', 'ETA'));
-        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("DepartureDate",'DateTime', 'ATD'));
-        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("DepartureEstimationDate",'DateTime', 'ETD'));
-        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("GrossWeight",'Number', 'Weight'));
-        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("HasException",'Text', 'Has Exception'));
-        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("CurrentMilestoneExceptions",'Text', 'Exception Description'));
-        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("IsOrder",'Text', 'Is Order'));
-        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("NumberOfPackages",'Number', 'Quantity'));
-        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("IncotermName",'Text', 'Incoterm'));
+    private buildQueryColumns() {
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("ShipmentNumber", 'Text', 'Shipment Number'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("CustomerReference", 'Text', 'Reference No'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("TransportModeId", 'Text', 'Transport Mode'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("DirectionId", 'Text', 'Direction'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("House", 'Text', 'House'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("Master", 'Text', 'Master'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("Client", 'Text', 'Client'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("ConsigneeName", 'Text', 'Consignee'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("CurrentMilestoneDate", 'DateTime', 'Current Milestone Date'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("CurrentMilestoneName", 'Text', 'Current Milestone Name'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("FromPortName", 'Text', 'From Port'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("ToPortName", 'Text', 'To Port'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("ArrivalDate", 'DateTime', 'ATA'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("ArrivalEstimationDate", 'DateTime', 'ETA'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("DepartureDate", 'DateTime', 'ATD'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("DepartureEstimationDate", 'DateTime', 'ETD'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("GrossWeight", 'Number', 'Weight'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("HasException", 'Text', 'Has Exception'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("CurrentMilestoneExceptions", 'Text', 'Exception Description'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("IsOrder", 'Text', 'Is Order'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("NumberOfPackages", 'Number', 'Quantity'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("IncotermName", 'Text', 'Incoterm'));
     }
 
     private GetCompanyLoginsFromCache() {
         SessionInfo.LoggedUserCompanyLogins = JSON.parse(sessionStorage.getItem("LoggedUserCompanyLogins"));
         this.GetInvitedCustomers();
     }
+
     private GetInvitedCustomers() {
         this.InvitedCustomers = SessionInfo.LoggedUserCompanyLogins
             .filter(d => d.CardType == 'CS' && d.CardId != null && d.Tenant == this.tenant)
@@ -208,6 +224,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
             ));
         this.FillInvitedCustomersDictionary(this.InvitedCustomers);
     }
+
     FillInvitedCustomersDictionary(InvitedCustomers: any[]) {
         InvitedCustomers.forEach(element => {
             this.InvitedCustomersDictionary[element.CardId] = element;
@@ -239,11 +256,13 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
         });
     }
+
     ngAfterViewInit(): void {
         this.selectDefaultSortFields();
         this.SetShipmentsScrollPosition();
         this.LoadScreenData();
     }
+
     ShipmentTypeChangedHandler(code: string) {
         RootContext.ShipmentsScrollPosition = 0;
         if (this.ShipmentSearchInput.TransportModeCodes.includes(code)) {
@@ -257,6 +276,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.LoadScreenData();
 
     }
+
     ShipmentDirectionChangedHandler(code: string) {
         RootContext.ShipmentsScrollPosition = 0;
         if (this.ShipmentSearchInput.DirectionCodes.includes(code)) {
@@ -270,6 +290,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.LoadScreenData();
 
     }
+
     SelectionMoreFilterChangedHandler(event) {
         switch (event) {
             case MoreFilterCodes.EstimatedArrivalOnly:
@@ -292,6 +313,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         }
         this.LoadScreenData();
     }
+
     sortBySelectionChangedHandler(event) {
         switch (event) {
             case SortOptions.ASC:
@@ -324,8 +346,9 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
         }
         this.LoadScreenData();
-        this.showMobileSortMenu=false;
+        this.showMobileSortMenu = false;
     }
+
     DeselectTransportModeFilter(code) {
         RootContext.ShipmentsScrollPosition = 0;
         this.ShipmentSearchInput.TransportModeCodes = this.ShipmentSearchInput.TransportModeCodes.filter(e => e != code)
@@ -334,6 +357,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.LoadScreenData();
 
     }
+
     DeselectDirectionFilter(code) {
         RootContext.ShipmentsScrollPosition = 0;
         this.ShipmentSearchInput.DirectionCodes = this.ShipmentSearchInput.DirectionCodes.filter(e => e != code)
@@ -343,6 +367,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.LoadScreenData();
 
     }
+
     UnselectCustomer(customerId) {
         RootContext.ShipmentsScrollPosition = 0;
         this.InvitedCustomersDictionary[customerId].IsSelected = false;
@@ -356,18 +381,21 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.shipmentMoreFiltersMultipleSelection.DeselectFilter(MoreFilterCodes.ExceptionOnly);
         this.LoadScreenData();
     }
+
     ClearOrdersOnlyChanged(event) {
         RootContext.ShipmentsScrollPosition = 0;
         this.ShipmentSearchInput.OrdersOnly = this.MoreFilterMobileValue.OrdersOnly = event;
         this.shipmentMoreFiltersMultipleSelection.DeselectFilter(MoreFilterCodes.OrdersOnly);
         this.LoadScreenData();
     }
+
     ClearEstimatedArrivalOnlyChanged(event) {
         RootContext.ShipmentsScrollPosition = 0;
         this.ShipmentSearchInput.EstimatedArrivalOnly = this.MoreFilterMobileValue.EstimatedArrivalOnly = event;
         this.shipmentMoreFiltersMultipleSelection.DeselectFilter(MoreFilterCodes.EstimatedArrivalOnly);
         this.LoadScreenData();
     }
+
     ClearOperationalOpenedOnlyChanged(event) {
         RootContext.ShipmentsScrollPosition = 0;
         this.ShipmentSearchInput.OperationalOpenedOnly = this.MoreFilterMobileValue.OperationalOpenedOnly = event;
@@ -382,10 +410,12 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.LoadScreenData();
 
     }
+
     // Milestones filter
     OnMilestonesStatusFilterChanged(value, state) {
         state.IsSelected = value;
     }
+
     OnShipmentTypeFilterChanged(value, item: ToggleFilter) {
         item.IsSelected = value;
     }
@@ -393,6 +423,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     OnShipmentDirectionFilterChanged(value, item: ToggleFilter) {
         item.IsSelected = value;
     }
+
     private SetShipmentsScrollPosition() {
         const shipmentCardsContainer = document.getElementById("scrollArea");
         if (shipmentCardsContainer) {
@@ -491,10 +522,13 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         }
         return value;
     }
-    QuantityAndWeight:string;
-    public SetQuantityAndWeight(shipment: CargoTrackingShipmentList){
-        this.QuantityAndWeight = (shipment.NumberOfPackages? shipment.NumberOfPackages + ' Units ' :'' ) + (shipment.NumberOfPackages && shipment.GrossWeight? ' / ':'') +(shipment.GrossWeight?shipment.GrossWeight+' '+shipment.GrossWeightUnitCode:'');
+
+    QuantityAndWeight: string;
+
+    public SetQuantityAndWeight(shipment: CargoTrackingShipmentList) {
+        this.QuantityAndWeight = (shipment.NumberOfPackages ? shipment.NumberOfPackages + ' Units ' : '') + (shipment.NumberOfPackages && shipment.GrossWeight ? ' / ' : '') + (shipment.GrossWeight ? shipment.GrossWeight + ' ' + shipment.GrossWeightUnitCode : '');
     }
+
     private SetSupplierOrCleintValueByEntityType(shipment: CargoTrackingShipmentList, value: any) {
         if (shipment.EntityType == this.EntityType_Customs) {
             value = shipment.ShipperName;
@@ -506,17 +540,11 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
         if (shipment.ShipmentLevelCode == 'D') {
             this.ShipmenTypeForRouting = "Direct"
-        }
-
-        else if (shipment.ShipmentLevelCode == 'H') {
+        } else if (shipment.ShipmentLevelCode == 'H') {
             this.ShipmenTypeForRouting = "House"
-        }
-
-        else if (shipment.ShipmentTypeCode == "FCL") {
+        } else if (shipment.ShipmentTypeCode == "FCL") {
             this.ShipmenTypeForRouting = "FCL"
-        }
-
-        else if (shipment.ShipmentTypeCode == "LCL") {
+        } else if (shipment.ShipmentTypeCode == "LCL") {
             this.ShipmenTypeForRouting = "LCL"
         }
     }
@@ -528,7 +556,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     private InitComponent() {
         this.InitForm();
     }
-
 
 
     SetMoreReferenceText(reference: string) {
@@ -549,6 +576,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
                 this.FillMilestoneDictionary(milestones);
             });
     }
+
     FillMilestoneDictionary(milestones: any[]) {
         milestones.forEach(element => {
             this.MilestonesStatusDictionary[element.Code] = element
@@ -583,7 +611,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
 
 
-
     Search() {
         this.LoadScreenData();
     }
@@ -606,6 +633,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
 
     ShipmentsCounter: CargoTrackingShipmentsCounter = new CargoTrackingShipmentsCounter();
+
     LoadScreenData() {
         if (this.tenant) {
             this.ShipmentSearchInput.Tenant = this.tenant;
@@ -615,40 +643,26 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
             this.SetShipmentsScrollPosition();
         }
     }
-    references: string[];
-    private LoadShipments() {
-        if (this.ShipmentsDataSource)
-            this.ReloadShipments();
 
+    references: string[];
+
+    private LoadShipments() {
+        if (this.ShipmentsDataSource) {
+            this.ReloadShipments();
+        }
         else {
             this.InitiateShipmentDataSource();
         }
     }
 
-    private filterWithAllCustomersWhenCustomersNotSelected(){
-        let filter = Object.assign({}, this.ShipmentSearchInput);
-        filter.CustomersIds = filter.CustomersIds.length == 0 ? this.InvitedCustomers.map(d => d.CardId) : filter.CustomersIds;
-        return filter;
-    }
-
-    // private LoadShipmentsCounter() {
-    //     let filter = this.filterWithAllCustomersWhenCustomersNotSelected();
-    //     this.searchService.GetUserShipmentsCounter(filter).subscribe((counter: any) => {
-    //         this.ShipmentsCounter = counter;
-    //         this.BuildToggleFilters();
-    //         this.SetShipmentsScrollPosition();
-    //     });
-    // }
-
-
     private InitiateShipmentDataSource() {
-        let filter = this.filterWithAllCustomersWhenCustomersNotSelected();
-        this.ShipmentsDataSource = new ShipmentDataSource(this.changeDetector, this.searchService, filter, this);
+        const searchFilter = Object.assign({}, this.ShipmentSearchInput);
+        this.ShipmentsDataSource = new ShipmentDataSource(this.changeDetector, this.searchService, searchFilter, this);
     }
 
     private ReloadShipments() {
-        let filter = this.filterWithAllCustomersWhenCustomersNotSelected();
-        this.ShipmentsDataSource.ReloadData(filter);
+        const searchFilter = Object.assign({}, this.ShipmentSearchInput);
+        this.ShipmentsDataSource.ReloadData(searchFilter);
         this.ResetShipmentsScrollbarPosition();
     }
 
@@ -664,42 +678,44 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
 
     BuildShipmentReferences(shipment: CargoTrackingShipmentList) {
-        this.references = shipment.CustomerReference != null ? shipment.CustomerReference.split(',').filter(d=>d) : [];
+        this.references = shipment.CustomerReference != null ? shipment.CustomerReference.split(',').filter(d => d) : [];
         this.references = this.references.filter((el, i, a) => i === a.indexOf(el));
     }
 
 
     masterLabel = 'Master';
     houseLabel = 'House';
+
     SetMasterOrHouseLabel(shipment: CargoTrackingShipmentList) {
-        if(shipment.EntityType == ShipmentEntityTypes.Customs && shipment.ForwardingShipmentHeaderId && shipment.ForwardingShipmentLevelCode == ShipmentLevelCodes.House && shipment.ForwardingHouse){
+        if (shipment.EntityType == ShipmentEntityTypes.Customs && shipment.ForwardingShipmentHeaderId && shipment.ForwardingShipmentLevelCode == ShipmentLevelCodes.House && shipment.ForwardingHouse) {
             return this.houseLabel;
-        }else if(shipment.EntityType == ShipmentEntityTypes.Customs && shipment.ForwardingShipmentHeaderId && shipment.ForwardingShipmentLevelCode == ShipmentLevelCodes.Direct && shipment.ForwardingMaster){
+        } else if (shipment.EntityType == ShipmentEntityTypes.Customs && shipment.ForwardingShipmentHeaderId && shipment.ForwardingShipmentLevelCode == ShipmentLevelCodes.Direct && shipment.ForwardingMaster) {
             return this.masterLabel;
-        }else if(shipment.EntityType == ShipmentEntityTypes.Forwarding && shipment.ShipmentLevelCode == ShipmentLevelCodes.House && shipment.House){
+        } else if (shipment.EntityType == ShipmentEntityTypes.Forwarding && shipment.ShipmentLevelCode == ShipmentLevelCodes.House && shipment.House) {
             return this.houseLabel;
-        }else if(shipment.EntityType == ShipmentEntityTypes.Forwarding && shipment.ShipmentLevelCode == ShipmentLevelCodes.Direct && shipment.Master){
+        } else if (shipment.EntityType == ShipmentEntityTypes.Forwarding && shipment.ShipmentLevelCode == ShipmentLevelCodes.Direct && shipment.Master) {
             return this.masterLabel;
-        }else if(shipment.House ){
+        } else if (shipment.House) {
             return this.houseLabel;
-        }else if(shipment.Master ){
+        } else if (shipment.Master) {
             return this.masterLabel;
         }
         return null;
 
     }
+
     SetMasterOrHouseValue(shipment: CargoTrackingShipmentList) {
-        if(shipment.EntityType == ShipmentEntityTypes.Customs && shipment.ForwardingShipmentHeaderId && shipment.ForwardingShipmentLevelCode == ShipmentLevelCodes.House && shipment.ForwardingHouse){
+        if (shipment.EntityType == ShipmentEntityTypes.Customs && shipment.ForwardingShipmentHeaderId && shipment.ForwardingShipmentLevelCode == ShipmentLevelCodes.House && shipment.ForwardingHouse) {
             return shipment.ForwardingHouse;
-        }else if(shipment.EntityType == ShipmentEntityTypes.Customs && shipment.ForwardingShipmentHeaderId && shipment.ForwardingShipmentLevelCode == ShipmentLevelCodes.Direct && shipment.ForwardingMaster){
+        } else if (shipment.EntityType == ShipmentEntityTypes.Customs && shipment.ForwardingShipmentHeaderId && shipment.ForwardingShipmentLevelCode == ShipmentLevelCodes.Direct && shipment.ForwardingMaster) {
             return shipment.ForwardingMaster;
-        }else if(shipment.EntityType == ShipmentEntityTypes.Forwarding && shipment.ShipmentLevelCode == ShipmentLevelCodes.House && shipment.House){
+        } else if (shipment.EntityType == ShipmentEntityTypes.Forwarding && shipment.ShipmentLevelCode == ShipmentLevelCodes.House && shipment.House) {
             return shipment.House;
-        }else if(shipment.EntityType == ShipmentEntityTypes.Forwarding && shipment.ShipmentLevelCode == ShipmentLevelCodes.Direct && shipment.Master){
+        } else if (shipment.EntityType == ShipmentEntityTypes.Forwarding && shipment.ShipmentLevelCode == ShipmentLevelCodes.Direct && shipment.Master) {
             return shipment.Master;
-        }else if(shipment.House ){
+        } else if (shipment.House) {
             return shipment.House;
-        }else if(shipment.Master ){
+        } else if (shipment.Master) {
             return shipment.Master;
         }
 
@@ -710,26 +726,19 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
     SetEstimationORActualDate(shipment: CargoTrackingShipmentList) {
         if (shipment.ArrivalDate != null) {
-            this.TitleOfEstimationORActualDate = 'ATA'
+            this.TitleOfEstimationORActualDate = 'ATA';
             this.ValueOfEstimationORActualDate = shipment.ArrivalDate;
-        }
-
-        else if (shipment.ArrivalEstimationDate != null) {
-            this.TitleOfEstimationORActualDate = 'ETA'
+        } else if (shipment.ArrivalEstimationDate != null) {
+            this.TitleOfEstimationORActualDate = 'ETA';
             this.ValueOfEstimationORActualDate = shipment.ArrivalEstimationDate;
-        }
-
-        else if (shipment.DepartureDate != null) {
-            this.TitleOfEstimationORActualDate = 'ATD'
+        } else if (shipment.DepartureDate != null) {
+            this.TitleOfEstimationORActualDate = 'ATD';
             this.ValueOfEstimationORActualDate = shipment.DepartureDate;
-        }
-
-        else if (shipment.DepartureEstimationDate != null) {
-            this.TitleOfEstimationORActualDate = 'ETD'
+        } else if (shipment.DepartureEstimationDate != null) {
+            this.TitleOfEstimationORActualDate = 'ETD';
             this.ValueOfEstimationORActualDate = shipment.DepartureEstimationDate;
-        }
-        else {
-            this.TitleOfEstimationORActualDate = 'ATA'
+        } else {
+            this.TitleOfEstimationORActualDate = 'ATA';
             this.ValueOfEstimationORActualDate = null;
         }
     }
@@ -748,10 +757,10 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
 
     OpenReferencesMessageWindow(references: any[], isMobile: boolean) {
-        if(!references)
+        if (!references)
             return;
 
-        references = references.filter(d=>d).map(x => x.trim());
+        references = references.filter(d => d).map(x => x.trim());
         references = references.filter((el, i, a) => i === a.indexOf(el));
         this.dialog.open(MessageWindowComponent, {
             data: {
@@ -808,14 +817,15 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
 
     sortByOptions: ToggleFilter[] = [
-        new ToggleFilter(SortOptions.CMD, 'Current Status Date',null),
-        new ToggleFilter(SortOptions.ATA, 'ATA/ETA',null),
-        new ToggleFilter(SortOptions.ATD, 'ATD/ETD',null),
-        new ToggleFilter(SortOptions.ASC, 'Ascending',null),
-        new ToggleFilter(SortOptions.DESC, 'Descending',null),
+        new ToggleFilter(SortOptions.CMD, 'Current Status Date', null),
+        new ToggleFilter(SortOptions.ATA, 'ATA/ETA', null),
+        new ToggleFilter(SortOptions.ATD, 'ATD/ETD', null),
+        new ToggleFilter(SortOptions.ASC, 'Ascending', null),
+        new ToggleFilter(SortOptions.DESC, 'Descending', null),
     ];
     ShipmentDirectionFiltersDictionary: { [key: string]: ToggleFilter } = {};
     ShipmentShipmentTypeFiltersDictionary: { [key: string]: ToggleFilter } = {};
+
     fillFeltersDictionary() {
         this.ShipmentDirectionFilters.forEach(element => {
             this.ShipmentDirectionFiltersDictionary[element.Code] = element;
@@ -863,6 +873,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
             return this.ShipmentsCounter.Export;
         }
     }
+
     setCounterForMoreFiltersMultipleSelect(toggleFilter: ToggleFilter) {
         if (toggleFilter.Code == MoreFilterCodes.ExceptionOnly) {
             return this.ShipmentsCounter.HasException;
@@ -870,11 +881,10 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
             return this.ShipmentsCounter.OrdersOnly;
         } else if (toggleFilter.Code == MoreFilterCodes.EstimatedArrivalOnly) {
             return this.ShipmentsCounter.EstimatedArrivalOnly;
-        }else if (toggleFilter.Code == MoreFilterCodes.OperationalOpenedOnly) {
+        } else if (toggleFilter.Code == MoreFilterCodes.OperationalOpenedOnly) {
             return this.ShipmentsCounter.OperationalOpenedOnly;
         }
     }
-
 
 
     ClearFilters() {
@@ -894,6 +904,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.ShipmentSearchInput.OperationalOpenedOnly = this.MoreFilterMobileValue.OperationalOpenedOnly = false;
         this.LoadScreenData();
     }
+
     ClearAdvancedFilters() {
         this.InvitedCustomers.map(e => e.IsSelected = false);
         this.MilestonesStatus.map(e => e.IsSelected = false);
@@ -904,6 +915,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.MoreFilterMobileValue.OrdersOnly = false;
         this.MoreFilterMobileValue.OperationalOpenedOnly = false;
     }
+
     ApplyFilterButtonClicked() {
         this.sharedService.updateValue(false);
         this.ShipmentSearchInput.CustomersIds = this.InvitedCustomers.filter(e => e.IsSelected).map(d => d.CardId);
@@ -917,12 +929,14 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         RootContext.ShipmentsScrollPosition = 0;
         this.LoadScreenData();
     }
+
     MapMoreMobileFilter() {
         this.ShipmentSearchInput.EstimatedArrivalOnly = this.MoreFilterMobileValue.EstimatedArrivalOnly;
         this.ShipmentSearchInput.HasException = this.MoreFilterMobileValue.HasException;
         this.ShipmentSearchInput.OrdersOnly = this.MoreFilterMobileValue.OrdersOnly;
         this.ShipmentSearchInput.OperationalOpenedOnly = this.MoreFilterMobileValue.OperationalOpenedOnly;
     }
+
     CheckFiltersExists() {
         return this.ShipmentSearchInput.CustomersIds.length > 0
             || this.ShipmentSearchInput.DirectionCodes.length > 0
@@ -939,6 +953,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
 
     lastClickedShipment: any;
+
     ShipmentMoreButtonClicked(shipment: any, event: any) {
         event.preventDefault();
         event.stopPropagation();
@@ -946,6 +961,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.lastClickedShipment = shipment;
         this.showShipmentDetailsMenu = true;
     }
+
     ShipmentDetailsMenuClicked(buttonCode: string) {
 
         if (buttonCode == "set")
@@ -962,7 +978,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
 
 
-
     OpenAdvancedFiltersSidebar() {
         this.sharedService.updateValue(true);
     }
@@ -976,6 +991,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.ShowMobileSearch = true;
         this.FocusOnMobileSearchBox();
     }
+
     HideSearchPanel() {
         this.ShowMobileSearch = false;
         if (!this.ShipmentSearchInput.SearchText) {
@@ -986,6 +1002,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
             this.Search();
         }
     }
+
     ToggleSearchPanel() {
         this.ShowMobileSearch = !this.ShowMobileSearch;
 
@@ -1008,38 +1025,40 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         return result;
 
     }
+
     maxNumberOfCarachter = 15;
+
     @HostListener('window:resize', ['$event'])
     onResize(event) {
         this.setMaxNumberOfCarachter(event.srcElement.innerWidth);
         this.setViews();
     }
 
-    RerenderVirtualScroll(){
+    RerenderVirtualScroll() {
         this.virtualScroll.checkViewportSize();
     }
 
-    setViews()
-    {
-        if(this.IsWebView) {
+    setViews() {
+        if (this.IsWebView) {
             this.isMobileView = window.innerWidth <= 479;
-        }else{
+        } else {
             const isLandscapeView = window.innerWidth > window.innerHeight;
-            if(isLandscapeView){
+            if (isLandscapeView) {
                 this.isMobileView = window.innerHeight <= 479;
-            }else{
+            } else {
 
                 this.isMobileView = window.innerWidth <= 479;
             }
         }
     }
 
-    get IsWebView(){
+    get IsWebView() {
         if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
             return false;
         else
             return true;
     }
+
     setMaxNumberOfCarachter(width) {
         if (width <= 1024 && width > 768) {
             this.maxNumberOfCarachter = 10
@@ -1052,8 +1071,8 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
 
 
-    GetCustomerReferencesItems(shipment){
-        return shipment.CustomerReference?.split(',').filter(d=>d);
+    GetCustomerReferencesItems(shipment) {
+        return shipment.CustomerReference?.split(',').filter(d => d);
     }
 
 }
@@ -1065,37 +1084,40 @@ export class ToggleFilter {
         this.Count = count;
         this.IsSelected = false;
     }
+
     public IsSelected: boolean;
 
     private name: string;
+
     public get Name(): string {
         return this.name;
     }
+
     public set Name(v: string) {
         this.name = v;
     }
 
 
-
     private count: number = 0;
+
     public get Count(): number {
         return this.count;
     }
+
     public set Count(v: number) {
         this.count = v;
     }
 
 
     private code: string;
+
     public get Code(): string {
         return this.code;
     }
+
     public set Code(v: string) {
         this.code = v;
     }
-
-
-
 
 
 }
@@ -1153,12 +1175,14 @@ export enum ShipmentEntityTypes {
     Customs = 'C',
     Forwarding = 'F'
 }
+
 export enum MoreFilterCodes {
     ExceptionOnly = 'ExceptionOnly',
     OrdersOnly = 'OrdersOnly',
     EstimatedArrivalOnly = 'EstimatedArrivalOnly',
     OperationalOpenedOnly = 'OperationalOpenedOnly'
 }
+
 export enum ShipmentDirectionCodes {
     Import = 'I',
     Export = 'E',
@@ -1166,6 +1190,7 @@ export enum ShipmentDirectionCodes {
     CustomsImport = 'C'
 
 }
+
 export enum shipmentTypeCodes {
     Air = 'A',
     Ocean = 'O',
