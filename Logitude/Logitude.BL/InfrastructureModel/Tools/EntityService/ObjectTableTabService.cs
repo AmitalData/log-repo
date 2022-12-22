@@ -117,7 +117,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.entityPM.Id = IdCounter.GetNumber("ObjectTableTab", tenant).ToString();
             this.entityPM.Code = Guid.NewGuid().ToString().Substring(0, 4);
             this.entityPM.ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl";
-            if (this.entityPM.TabNameTextCodeCode == null) new ObjectTableTabTextCodeService(this.entityPM, this.ObjectContext, tenant).Create();
+            if (this.entityPM.TabNameTextCodeCode == null || this.entityPM.CreateDefaultTextCode) new ObjectTableTabTextCodeService(this.entityPM, this.ObjectContext, tenant).Create();
         }
 
         private void UpdateTextCode()
