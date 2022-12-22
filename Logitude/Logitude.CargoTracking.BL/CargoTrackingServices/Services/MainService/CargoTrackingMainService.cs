@@ -6,26 +6,18 @@ using Logitude.CargoTracking.BL.CargoTrackingServices.Services.QueueServices;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelper;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableLogic;
-using Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructure;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructure.Helper;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services.ValidateRecords;
-using Logitude.CargoTracking.Data;
-using Logitude.CargoTracking.Data.EntityListQueryServices;
-using Logitude.CargoTracking.Data.EntityLists;
-using Simplog.Data.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
-using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Xml;
+using Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableConditions;
 
 namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 {

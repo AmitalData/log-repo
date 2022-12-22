@@ -1,12 +1,9 @@
-﻿using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
-using Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelper;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
+using Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructure;
 
-namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructure
+namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableConditions
 {
     public static class ShipmentTableCondtions
     {
@@ -16,19 +13,53 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
         {
             string shipmentFields = !string.IsNullOrEmpty(cargoTrackingDataBaseArgs.BuildCargoArgs.Table.FieldsDBName) ? cargoTrackingDataBaseArgs.BuildCargoArgs.Table.FieldsDBName : "*";
             shipmentFields = " C." + shipmentFields.Replace(",", " ,C.");
-            string updatedShipmentFields = shipmentFields.Replace("C.ConsigneeName", 
+            string updatedShipmentFields = shipmentFields.Replace("C.ConsigneeName",
                 $@"(case 
                         when C.DirectionId = 'E' AND C.ConsigneeId IS NOT NULL AND ConsigneeCard.LocalName IS NOT NULL then ConsigneeCard.LocalName
                         when C.DirectionId = 'E' AND C.ConsigneeId IS NOT NULL then ConsigneeCard.EnglishName 
-                        when C.DirectionId = 'E' AND C.ConsigneeId IS NULL then C.ConsigneeName end) 
+                        when C.DirectionId = 'E' AND C.ConsigneeId IS NULL then C.ConsigneeName 
+
+                        when C.DirectionId = 'R' AND (
+                        left(C.ShipmentNumber, 2) = 'EF' COLLATE Latin1_General_CS_AS  OR
+                        left(C.ShipmentNumber, 2) = 'MF' COLLATE Latin1_General_CS_AS 
+                        ) AND C.ConsigneeId IS NOT NULL AND ConsigneeCard.LocalName IS NOT NULL then ConsigneeCard.LocalName
+
+                        when C.DirectionId = 'R' AND (
+                        left(C.ShipmentNumber, 2) = 'EF' COLLATE Latin1_General_CS_AS  OR
+                        left(C.ShipmentNumber, 2) = 'MF' COLLATE Latin1_General_CS_AS ) AND C.ConsigneeId IS NOT NULL then ConsigneeCard.EnglishName 
+
+                        when C.DirectionId = 'R' AND (
+                        left(C.ShipmentNumber, 2) = 'EF' COLLATE Latin1_General_CS_AS  OR
+                        left(C.ShipmentNumber, 2) = 'MF' COLLATE Latin1_General_CS_AS  ) AND C.ConsigneeId IS NULL then C.ConsigneeName 
+
+                        end) 
                 as ConsigneeName");
 
-            updatedShipmentFields = updatedShipmentFields.Replace("C.ShipperName", 
+            updatedShipmentFields = updatedShipmentFields.Replace("C.ShipperName",
                 $@"(case 
+
                         when (C.DirectionId = 'I' OR C.ShipmentLevelCode = 'A') AND C.ShipperId IS NOT NULL AND ShipperCard.LocalName IS NOT NULL then ShipperCard.LocalName 
                         when (C.DirectionId = 'I' OR C.ShipmentLevelCode = 'A') AND C.ShipperId IS NOT NULL then ShipperCard.EnglishName 
-                        when (C.DirectionId = 'I' OR C.ShipmentLevelCode = 'A') AND C.ShipperId IS NULL then C.ShipperName end) 
+                        when (C.DirectionId = 'I' OR C.ShipmentLevelCode = 'A') AND C.ShipperId IS NULL then C.ShipperName 
+
+                        when (C.DirectionId = 'R' AND (left(C.ShipmentNumber, 2) <> 'EF' COLLATE Latin1_General_CS_AS  AND
+                        left(C.ShipmentNumber, 2) <> 'MF' COLLATE Latin1_General_CS_AS 
+                        )) AND C.ShipperId IS NOT NULL AND ShipperCard.LocalName IS NOT NULL then ShipperCard.LocalName 
+
+                        when (C.DirectionId = 'R' AND (
+                        left(C.ShipmentNumber, 2) <> 'EF' COLLATE Latin1_General_CS_AS  AND
+                        left(C.ShipmentNumber, 2) <> 'MF' COLLATE Latin1_General_CS_AS 
+                        )) AND C.ShipperId IS NOT NULL then ShipperCard.EnglishName 
+
+                        when (C.DirectionId = 'R' AND (
+                        left(C.ShipmentNumber, 2) <> 'EF' COLLATE Latin1_General_CS_AS  AND
+                        left(C.ShipmentNumber, 2) <> 'MF' COLLATE Latin1_General_CS_AS 
+                        )) AND C.ShipperId IS NULL then C.ShipperName 
+                        
+                        end) 
                     as ShipperName");
+
+
             updatedShipmentFields = updatedShipmentFields.Replace("C.ToPortId", $@"(case 
                 when (C.MasterShipmentDataId is null)  then C.ToPortId 
                 when (C.MasterShipmentDataId is not null AND Mas.Transshipment3ToPortId is not null) then Mas.Transshipment3ToPortId
@@ -44,7 +75,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 "com.FinalDeliveryETD as FinalDeliveryETD,com.FinalDeliveryATD as FinalDeliveryATD" +
                 ",com.FirstPickupATD as FirstPickupATD";
 
-            var shipmentMasterFields =$@"
+            var shipmentMasterFields = $@"
                   Mas.Master as Master , 
                 (
                   case 
@@ -134,7 +165,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
             var joinScript = $"left  OUTER JOIN dbo.{table.DBTableName} P                   ON P.CustomFileId = C.Id " +
                              $"LEFT OUTER JOIN dbo.ShipmentComputedFields com ON com.Id = C.Id " +
-                             $"LEFT OUTER JOIN dbo.ShipmentMasterDatas Mas    ON Mas.Id = C.MasterShipmentDataId "+
+                             $"LEFT OUTER JOIN dbo.ShipmentMasterDatas Mas    ON Mas.Id = C.MasterShipmentDataId " +
                              $"LEFT OUTER JOIN dbo.ShipmentMasterDatas ForwardingMaster    ON ForwardingMaster.Id = P.MasterShipmentDataId " +
                              $"LEFT OUTER JOIN dbo.ShipmentComputedFields ForwardingComputed    ON ForwardingComputed.Id = P.Id " +
                              $"LEFT OUTER JOIN dbo.ShipmentAdditionalCloudDatas AdditionalData    ON AdditionalData.Id = C.Id " +
@@ -176,7 +207,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
 
 
-            
+
             var groupByScript =
                 $" GROUP BY {shipmentFields}" +
                 @", ConsigneeCard.EnglishName,
@@ -233,14 +264,52 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             string updatedShipmentFields = shipmentFields.Replace("P.ConsigneeName", $@"(case 
                     when P.DirectionId = 'E' AND P.ConsigneeId IS NOT NULL AND ConsigneeCard.LocalName IS NOT NULL then ConsigneeCard.LocalName 
                     when P.DirectionId = 'E' AND P.ConsigneeId IS NOT NULL then ConsigneeCard.EnglishName 
-                    when P.DirectionId = 'E' AND P.ConsigneeId IS NULL then P.ConsigneeName end)
+                    when P.DirectionId = 'E' AND P.ConsigneeId IS NULL then P.ConsigneeName 
+
+                    when P.DirectionId = 'R' AND (
+                    left(P.ShipmentNumber, 2) = 'EF' COLLATE Latin1_General_CS_AS  OR
+                    left(P.ShipmentNumber, 2) = 'MF' COLLATE Latin1_General_CS_AS 
+                    ) AND ConsigneeCard.LocalName IS NOT NULL then ConsigneeCard.LocalName 
+
+                    when P.DirectionId = 'R' AND (
+                    left(P.ShipmentNumber, 2) = 'EF' COLLATE Latin1_General_CS_AS  OR
+                    left(P.ShipmentNumber, 2) = 'MF' COLLATE Latin1_General_CS_AS 
+                    ) AND P.ConsigneeId IS NOT NULL then ConsigneeCard.EnglishName 
+
+                    when P.DirectionId = 'R' AND (
+                    left(P.ShipmentNumber, 2) = 'EF' COLLATE Latin1_General_CS_AS  OR
+                    left(P.ShipmentNumber, 2) = 'MF' COLLATE Latin1_General_CS_AS  
+                    ) AND P.ConsigneeId IS NULL then P.ConsigneeName 
+
+                end)
                 as ConsigneeName");
 
             updatedShipmentFields = updatedShipmentFields.Replace("P.ShipperName", $@"(case 
+
                 when (P.DirectionId = 'I' OR P.ShipmentLevelCode = 'A') AND P.ShipperId IS NOT NULL AND ShipperCard.LocalName IS NOT NULL then ShipperCard.LocalName 
                 when (P.DirectionId = 'I' OR P.ShipmentLevelCode = 'A') AND P.ShipperId IS NOT NULL then ShipperCard.EnglishName 
-                when (P.DirectionId = 'I' OR P.ShipmentLevelCode = 'A') AND P.ShipperId IS NULL then P.ShipperName end)
+                when (P.DirectionId = 'I' OR P.ShipmentLevelCode = 'A') AND P.ShipperId IS NULL then P.ShipperName
+
+                when (P.DirectionId = 'R' AND (
+                    left(P.ShipmentNumber, 2) <> 'EF' COLLATE Latin1_General_CS_AS  AND
+                    left(P.ShipmentNumber, 2) <> 'MF' COLLATE Latin1_General_CS_AS  
+                    )) AND P.ShipperId IS NOT NULL AND ShipperCard.LocalName IS NOT NULL then ShipperCard.LocalName 
+
+                when (P.DirectionId = 'R' AND (
+                    left(P.ShipmentNumber, 2) <> 'EF' COLLATE Latin1_General_CS_AS  AND
+                    left(P.ShipmentNumber, 2) <> 'MF' COLLATE Latin1_General_CS_AS 
+                    )) AND P.ShipperId IS NOT NULL then ShipperCard.EnglishName 
+
+                when (P.DirectionId = 'R' AND (
+                    left(P.ShipmentNumber, 2) <> 'EF' COLLATE Latin1_General_CS_AS  AND
+                    left(P.ShipmentNumber, 2) <> 'MF' COLLATE Latin1_General_CS_AS 
+                    )) AND P.ShipperId IS NULL then P.ShipperName
+
+end)
             as ShipperName");
+
+
+
             updatedShipmentFields = updatedShipmentFields.Replace("P.FromPortId", $@"(case 
                 when (P.MasterShipmentDataId is null)  then P.FromPortId 
                 when (P.MasterShipmentDataId is not null) then Mas.MainCarriageFromPortId 
@@ -262,7 +331,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 "com.FinalDeliveryETD as FinalDeliveryETD,com.FinalDeliveryATD as FinalDeliveryATD" +
                 ",com.FirstPickupATD as FirstPickupATD";
 
-            var shipmentMasterFields =$@"
+            var shipmentMasterFields = $@"
                   Mas.Master as Master ,
                 (
                   case 
@@ -329,7 +398,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
              "min(SHO.OrderNumber) as OrderShipmentNumber, " +
              "min(SHO.PoNumber) as OrderPoNumber, " +
              "min(SHO.BookingConfirmationNumber) as OrderBookingNumber, " +
-             "min(SHO.CustomerReferences) as OrderCustomerReference, "+
+             "min(SHO.CustomerReferences) as OrderCustomerReference, " +
              "min(SHO.Id) as OrderId ";
 
             var carrierCardFields =
@@ -364,7 +433,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             List<string> whereConditions = new List<string>();
 
             var notCustomShipment = $" P.ShipmentLevelCode <> 'A'";//P.Id NOT IN (SELECT C.Id FROM  dbo.{table.DBTableName } SH " +
-                                                   // $"JOIN  dbo.{table.DBTableName}  C  ON SH.CustomFileId = C.Id) ";
+                                                                   // $"JOIN  dbo.{table.DBTableName}  C  ON SH.CustomFileId = C.Id) ";
             whereConditions.Add(notCustomShipment);
 
 
@@ -388,10 +457,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 var createDateWithoutTime = "DATEADD(dd, DATEDIFF(dd, 0, P.CreateDateTime ), 0)";
                 string datePeriodCondition = $" {createDateWithoutTime} >= '{cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate.Value.Date.ToString("MM/dd/yyyy hh:mm:ss.fff tt")}' and" +
                                              $" {createDateWithoutTime} <= '{cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate.Value.Date.ToString("MM/dd/yyyy hh:mm:ss.fff tt")}'";
-                whereConditions.Add(datePeriodCondition );
+                whereConditions.Add(datePeriodCondition);
             }
 
-            var whereScript = " WHERE " +  string.Join(" AND ", whereConditions);
+            var whereScript = " WHERE " + string.Join(" AND ", whereConditions);
 
 
             // Group By
@@ -521,9 +590,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 "OnHandNumber as FromWarehouseNotes," +
                 "OnHandDate as FromWarehouseDate," +
                 "Inco.Code as IncotermName";
-            
 
-             var selectScript = $"SELECT {shipmentOrderFields} , {cargoTrackingShipmentDefaultFields} ";
+
+            var selectScript = $"SELECT {shipmentOrderFields} , {cargoTrackingShipmentDefaultFields} ";
 
             var fromScript = $@"FROM dbo.ShipmentOrders SHO 
                                 left join Cards ConsigneeCard on SHO.ConsigneeId = ConsigneeCard.id
