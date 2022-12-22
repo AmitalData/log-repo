@@ -4079,17 +4079,21 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             List<LedgerTransactionPM> autoCreditedInvoiceTransactions = GetAutoCreditedInvoiceTransactions(entityPM.Tenant, entityPM.AutoCreditByARInvoiceNumber);
 
-            BlockReconciledTransactoins(autoCreditedInvoiceTransactions);
+            BlockReconciledTransactoins(autoCreditedInvoiceTransactions, journal.Tenant);
 
             CreateJounalReconcileForEachTransaction(journal, autoCreditedInvoiceTransactions);
         }
 
-        private static void BlockReconciledTransactoins(List<LedgerTransactionPM> autoCreditedInvoiceTransactions)
+        private static void BlockReconciledTransactoins(List<LedgerTransactionPM> autoCreditedInvoiceTransactions, int tenant)
         {
             bool hasReconciledLedgers = autoCreditedInvoiceTransactions.Any(transaction => transaction.IsReconciled);
             if (hasReconciledLedgers)
             {
-                throw new ApplicationException(InvoiceAlreadyReconciledMessage);
+                bool showLocals = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
+                var msg = TextCodesTranslator.TranslateText("ARInvoice.O.InterestInvoiceReconciledAlready", tenant, showLocals);
+                if (String.IsNullOrEmpty(msg)) 
+                    msg = "The interest invoice made for this report has already been reconciled,\nIn order to cancel the report and the interest invoice, first cancel the reconciliation of the existing invoice.";
+                throw new ApplicationException(msg);
             }
         }
 
