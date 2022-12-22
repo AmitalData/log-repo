@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="16">
+  <Sql Version="17">
     <![CDATA[	
 	  delete from DigitalTextCodes where id != ''
 
@@ -580,6 +580,11 @@
 	  INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, Labels) 
 	  values (@NewEntityId, 0, @shipmentObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,
 	  '[{
+			"TextCode": "Shipment.F.ShipmentNumber",
+			"DefaultText": "Shipment number",
+			"FieldCode": "Shipment.ShipmentNumber" 
+		},
+		{
 			"TextCode": "Shipment.Q.AllShipments",
 			"DefaultText": "Shipments",
 			"FieldCode": "" 
