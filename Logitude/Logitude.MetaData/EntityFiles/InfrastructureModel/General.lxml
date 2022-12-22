@@ -4647,6 +4647,10 @@
       LocalDefaultText="&quot;בוצע שינוי בחיבור החשבונות. יש להחזיר את חיבור החשבונות למצבם כפי שהיה בעת רישום פקודת היומן המקורית. שורה &quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+      <TextCode Code="&quot;General.MC.CustomObjects.CustomObjects&quot;"
+                DefaultText="&quot;Custom Objects&quot;"
+                TextCodeTypeCode="&quot;MC&quot;"
+                IsSpellChecked="false" />
   </AdditionalTextCodes>
     <AdditionalFeatures>
         <Feature Code="&quot;DASHBOARD&quot;"
