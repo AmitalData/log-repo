@@ -21,6 +21,7 @@ export class CourierPendingReasonList {
 	MamanSuspendedCode: string;
 	SwissportSuspendedCode: string;
 	RequiresApproval: boolean;
+	RequiresPayment: boolean;
 	
 }
  
