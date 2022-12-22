@@ -3075,7 +3075,12 @@ decSupplierInvoiceItem.CounterKey, decSupplierInvoiceItem.LineNumber, this._Dirt
             CCUCRREQPM cCUCRREQPM = new CCUCRREQPM();
             cCUCRREQPM.ChangeSetOp = ChangeSetOperation.Insert;
 
-            cCUCRREQPM.CERTIFICATENO = decSupplierInvioceItemsCertificates.CertificateNumber;
+            if (decSupplierInvioceItemsCertificates.CertificateNumber !=null && decSupplierInvioceItemsCertificates.CertificateNumber.Length > 20)
+                cCUCRREQPM.CERTIFICATENO = decSupplierInvioceItemsCertificates.CertificateNumber.Substring(0, 20);
+            else
+                cCUCRREQPM.CERTIFICATENO = decSupplierInvioceItemsCertificates.CertificateNumber;
+
+
             if (!String.IsNullOrWhiteSpace(decSupplierInvioceItemsCertificates.ReqConfirmationTypeCode))
             {
                 //cCUCRREQPM.APPROVTYPE = reqConfirmationTypeCode.Substring(0, Math.Min(2, reqConfirmationTypeCode.Length)); //First 2 chars
