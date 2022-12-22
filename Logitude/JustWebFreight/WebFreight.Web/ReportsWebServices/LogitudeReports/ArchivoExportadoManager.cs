@@ -330,6 +330,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         myRecord.AccountedReceivablesInInvoiceCurrency = this.ComputeAccountedReceivablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
                         myRecord.AccountedPayablesInInvoiceCurrency = this.ComputeAccountedPayablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
                         myRecord.InvoiceStatusName = invoice.Status?.Name;
+                        myRecord.PaidDate = invoice.PaidDate;
 
                         Currency myCurrency = allCurrencies.Where(d => d.Id == invoice.InvoiceCurrencyId).FirstOrDefault();
                         if (myCurrency != null)
@@ -421,6 +422,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         myRecord.AccountedReceivablesInInvoiceCurrency = this.ComputeAccountedReceivablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
                         myRecord.AccountedPayablesInInvoiceCurrency = this.ComputeAccountedPayablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
                         myRecord.InvoiceStatusName = invoice.Status?.Name;
+                        myRecord.PaidDate = invoice.PaidDate;
 
                         Currency myCurrency = allCurrencies.Where(d => d.Id == invoice.InvoiceCurrencyId).FirstOrDefault();
                         if (myCurrency != null)
@@ -873,6 +875,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.AccountedReceivablesInInvoiceCurrency = this.ComputeAccountedReceivablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
                                 myRecord.AccountedPayablesInInvoiceCurrency = this.ComputeAccountedPayablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
                                 myRecord.InvoiceStatusName = invoice.Status?.Name;
+                                myRecord.PaidDate = invoice.PaidDate;
 
                                 if (myCurrency != null)
                                 {
@@ -1017,6 +1020,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.AccountedReceivablesInInvoiceCurrency = this.ComputeAccountedReceivablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
                                     myRecord.AccountedPayablesInInvoiceCurrency = this.ComputeAccountedPayablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
                                     myRecord.InvoiceStatusName = invoice.Status?.Name;
+                                    myRecord.PaidDate = invoice.PaidDate;
 
                                     if (myCurrency != null)
                                     {

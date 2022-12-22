@@ -116,7 +116,8 @@
     <None Include="DBOthers\InfrastructureModel\Procedures\DeleteOldAnalyzeQueues.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\DeleteOldContactActivityLogs.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\ResetFullTextSearchIndexChangeTracking.dxml" />
-    <None Include="DBOthers\InfrastructureModel\Procedures\usp_GetNextTableNumberValueWithSnapshot.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Procedures\usp_GetNextTableNumberValueSupportBranchCounterCodeWithSnapshot.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Procedures\usp_GetNextTableNumberValueWithSnapshotView.dxml" />
     <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdatePayablesData.dxml" />
     <None Include="DBOthers\ShipmentsModel\Views\DigitalShipmentDataView.dxml" />
     <None Include="DBScripts\CommonModel\202208160224_AddBinaryTypeToFieldDataTypes.sxml" />
@@ -136,6 +137,7 @@
     <None Include="DBScripts\InfrastructureModel\AddIdFieldToScreenSectionTable.sxml" />
     <None Include="DBScripts\InfrastructureModel\UpdateScreenSectionTable.sxml" />
     <None Include="DBScripts\InvoiceModel\202209061205_FillPaidStatusOfARInvoices.sxml" />
+    <None Include="DBScripts\InvoiceModel\202212201040_FillTotalExamptFortaxReport.sxml" />
     <None Include="DBScripts\QuoteModel\202209100331_FillQuoteClosingReasonNotes.sxml" />
     <None Include="DBScripts\QuoteModel\202218091107_FillMarkupCurrenciesOnQuoteCharges.sxml" />
     <None Include="DBScripts\ShipmentModel\202211010300_AddNewSpecialHandlingCode.sxml" />

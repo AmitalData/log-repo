@@ -61,7 +61,7 @@ namespace Logitude.Server.Tools.Helpers
             }
 
             string branchCounterCode = null;
-            if (counterDef.UsePerBranch && additionalParameters != null)
+            if (FeatureToggleHelper.HasFeatureToggle("SPB", tenant) && counterDef.UsePerBranch && additionalParameters != null)
             {
                 branchCounterCode = additionalParameters["[B]"];
             }
@@ -174,7 +174,8 @@ namespace Logitude.Server.Tools.Helpers
                     //};
                     //if (newSPTenants.Where(a=>a == tenant).Count() > 0)
                     //{
-                    SqlCommand cmd = new SqlCommand("dbo.usp_GetNextTableNumberValueWithSnapshot", cn);
+                    string procedureName = string.IsNullOrEmpty(branchCounterCode)   ? "dbo.usp_GetNextTableNumberValueWithSnapshotView" : "dbo.usp_GetNextTableNumberValueSupportBranchCounterCodeWithSnapshot";
+                    SqlCommand cmd = new SqlCommand(procedureName, cn);
                     //}
                     cmd.CommandType = CommandType.StoredProcedure;
 
@@ -183,14 +184,12 @@ namespace Logitude.Server.Tools.Helpers
                     SqlParameter tenantPar = new SqlParameter("@pTenant", SqlDbType.Int);
                     SqlParameter prefixPar = new SqlParameter("@pPrefix", SqlDbType.NVarChar);
                     SqlParameter startNumberPar = new SqlParameter("@pStartNumber", SqlDbType.Int);
-                    SqlParameter branchCounterCodePar = new SqlParameter("@pBranchCounterCode", SqlDbType.VarChar);
 
                     lastValuePar.Direction = ParameterDirection.Output;
                     counterIdPar.Direction = ParameterDirection.Input;
                     tenantPar.Direction = ParameterDirection.Input;
                     prefixPar.Direction = ParameterDirection.Input;
                     startNumberPar.Direction = ParameterDirection.Input;
-                    branchCounterCodePar.Direction = ParameterDirection.Input;
 
                     counterIdPar.Value = counter.Id;
                     tenantPar.Value = tenant;
@@ -206,22 +205,14 @@ namespace Logitude.Server.Tools.Helpers
                         prefixPar.Value = DBNull.Value;
                     }
 
-                    if (branchCounterCode != null)
-                    {
-                        branchCounterCodePar.Value = branchCounterCode;
-                    }
-                    else
-                    {
-                        branchCounterCodePar.Value = DBNull.Value;
-                    }
 
                     cmd.Parameters.Add(lastValuePar);
                     cmd.Parameters.Add(tenantPar);
                     cmd.Parameters.Add(prefixPar);
                     cmd.Parameters.Add(counterIdPar);
                     cmd.Parameters.Add(startNumberPar);
-                    cmd.Parameters.Add(branchCounterCodePar);
 
+                    AddbranchCounterCodeParameter(branchCounterCode, cmd);
 
                     cn.Open();
                     cmd.ExecuteNonQuery();
@@ -234,6 +225,22 @@ namespace Logitude.Server.Tools.Helpers
             }
 
             return counterLastNumberValue;
+        }
+
+        private static void AddbranchCounterCodeParameter(string branchCounterCode, SqlCommand cmd)
+        {
+            if (string.IsNullOrEmpty(branchCounterCode)) return;
+            SqlParameter branchCounterCodePar = new SqlParameter("@pBranchCounterCode", SqlDbType.VarChar);
+            branchCounterCodePar.Direction = ParameterDirection.Input;
+            if (branchCounterCode != null)
+            {
+                branchCounterCodePar.Value = branchCounterCode;
+            }
+            else
+            {
+                branchCounterCodePar.Value = DBNull.Value;
+            }
+            cmd.Parameters.Add(branchCounterCodePar);
         }
 
         private static string GetCounterLastNumberWithPrefixSuffix(Counter counter, CounterDefinition counterDef, int tenant, string counterLastNumberValue, Dictionary<string, string> additionalParameters)

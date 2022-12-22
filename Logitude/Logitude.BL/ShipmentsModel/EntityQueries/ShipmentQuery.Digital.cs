@@ -1822,11 +1822,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private void FillMainCarraigeFromVerticalTimeLine(VerticalTimeLineData VerticalTimeLineData, ShipmentPM shipment)
         {
+            bool isInlandDomesticShipment = (shipment.DirectionId == "D" && shipment.TransportModeId == "I");
             VerticalTimeLineData.MainCarriageFrom = new VerticalTimeLineStop()
             {
                 Title = shipment.TransportModeId == "A" ? "Gateway" : "Port of loading",
                 City = shipment.MainCarriageFromPortName,
-                CountryCode = shipment.MainCarriageFromPortCountryCode,
+                CountryCode = isInlandDomesticShipment ? shipment.FromPartnerCountryCode : shipment.MainCarriageFromPortCountryCode,
                 Date = shipment.MainCarriageATD != null ? shipment.MainCarriageATD : shipment.MainCarriageETD,
                 DateType = shipment.MainCarriageATD != null ? "Actual" : (shipment.MainCarriageETD != null ? "Estimated" : null),
                 ATDDate = shipment.MainCarriageATD != null ? shipment.MainCarriageATD : shipment.MainCarriageETD,
@@ -1965,11 +1966,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private void FillMainCarraigeToVerticalTimeLine(VerticalTimeLineData VerticalTimeLineData, ShipmentPM shipment)
         {
+            bool isInlandDomesticShipment = (shipment.DirectionId == "D" && shipment.TransportModeId == "I");
             VerticalTimeLineData.MainCarriageTo = new VerticalTimeLineStop()
             {
                 Title = shipment.TransportModeId == "A" ? "Destination" : "Discharge port",
                 City = shipment.MainCarriageFinalDestinationPortName,
-                CountryCode = shipment.MainCarriageFinalDestinationPortCountryCode,
+                CountryCode = isInlandDomesticShipment? shipment.ToPartnerCountryCode : shipment.MainCarriageFinalDestinationPortCountryCode,
                 ATADate = shipment.MainCarriageFinalDestinationATA != null ? shipment.MainCarriageFinalDestinationATA : shipment.MainCarriageFinalDestinationETA,
                 ATADateType = shipment.MainCarriageFinalDestinationATA != null ? "Actual" : (shipment.MainCarriageFinalDestinationETA != null ? "Estimated" : null),
                 Date = shipment.MainCarriageFinalDestinationATA != null ? shipment.MainCarriageFinalDestinationATA : shipment.MainCarriageFinalDestinationETA,
@@ -2222,6 +2224,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return newValue;
         }
+     
         #endregion Shipment Vertical TimeLine
 
         #region Transport & Subtypes 

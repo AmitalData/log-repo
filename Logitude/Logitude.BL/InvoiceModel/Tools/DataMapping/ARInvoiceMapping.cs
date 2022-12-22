@@ -3,17 +3,10 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
-using Simplog.Data.ShipmentsModel.Repositories;
 using System;
-using System.Collections.Generic;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.Helpers;
 using Logitude.BL.InvoiceModel.EntityPMs;
-using Logitude.BL.Security;
-using Logitude.BL.ShipmentsModel.EntityPMs;
-using Logitude.BL.ShipmentsModel.EntityQueries;
-using System.Linq;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
 using Logitude.Server.Tools;
@@ -222,6 +215,13 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entityPM.SetReTransfer = false;
             entityPM.SetCancelDraft = false;
             entityPM.SetReSendQBO = false;
+
+            if (entityPM.TotalAmountForTaxReport == null)
+                entityPM.TotalAmountForTaxReport = 0;
+            if (entityPM.TotaVatableAmountForTaxReport == null)
+                entityPM.TotaVatableAmountForTaxReport = 0;
+
+            entity.TotalExamptFortaxReport = entityPM.TotalAmountForTaxReport - entityPM.TotaVatableAmountForTaxReport;
 
             string transferError = entityPM.TransferError;
 
