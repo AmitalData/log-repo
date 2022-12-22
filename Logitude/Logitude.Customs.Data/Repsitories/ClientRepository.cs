@@ -92,12 +92,19 @@ namespace Logitude.Customs.Data.Repsitories
 
         public List<Client> GetAllClientsPOAExpire(int tenant)
         {
-            return (
-                  from rec in context.Clients
-                  join p in context.ClientsPoas on rec.Id equals p.ClientId
-                  where !string.IsNullOrEmpty(rec.Code) && rec.Tenant == tenant && rec.IsExportPoaActive == true 
-                  select rec
-                  ).ToList();
+
+            /*var q = from rec in context.Clients
+                    join p in context.ClientsPoas on rec.Id equals p.ClientId
+                    group p by p.ClientId into temp
+                    where !string.IsNullOrEmpty(temp..Code) && rec.Tenant == tenant && rec.IsExportPoaActive == true
+                    select temp.;*/
+
+            var q = from p in context.ClientsPoas
+                    group p by p.ClientId into temp
+                    join c in context.Clients on temp.Key equals c.Id 
+                    where !string.IsNullOrEmpty(c.Code) && c.Tenant == tenant && c.IsExportPoaActive == true
+                    select new { client = c, poaExpire = !temp.Any(x=> DateTime.Now <= x.EndDate.AddDays(30)) };
+            return q.Where(x => x.poaExpire).Select(y => y.client).ToList();
             ////
             //entityPM.ClientPoas.Any(x => x.PoaAuthorizationType == "200" && DateTime.Now >= x.StartDate && DateTime.Now <= x.EndDate && !InActiveStatues.Contains(x.PoaStatus) );
             /////

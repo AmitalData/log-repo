@@ -71,6 +71,13 @@ namespace Logitude.Customs.Def.ClosedTable
                 SearchFields = "CustomsDeleteCustomRequestSheet,CustomsDeleteCustomRequestSheet",
                 Description = "CustomsDeleteCustomRequestSheet",
             });
+            all.Add(new CustomsSchedulerProcedureDetails()
+            {
+                Code = "RetrievingPOAThatIsAboutToExpire",
+                Name = "RetrievingPOAThatIsAboutToExpire",
+                SearchFields = "RetrievingPOAThatIsAboutToExpire,RetrievingPOAThatIsAboutToExpire",
+                Description = "RetrievingPOAThatIsAboutToExpire",
+            });
             return all;
         }
             public void MapPoco(SchedulerProcedure newPoco)
