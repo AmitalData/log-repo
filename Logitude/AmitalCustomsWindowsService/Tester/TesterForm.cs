@@ -316,6 +316,18 @@ namespace AmitalCustomsWindowsService.Tester
         bool _MultiThreard = false;
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            try
+            {
+                clsTester.TestUpdateLOGITUDE_FILE();
+            }
+            catch (Exception EX)
+            {
+
+                ///throw;
+            }
+            
+            return;
+
             clsTester.Check_UserWcfService(GetTenant());
             return;
 
@@ -358,7 +370,7 @@ namespace AmitalCustomsWindowsService.Tester
             
             return;
             return;
-            clsTester.TestUpdateLOGITUDE_FILE();
+            
 
             //clsTester.GetListByCourierHAWB();
 

@@ -410,17 +410,18 @@ SELECT TOP 1000 [Id]
             //    OwnerUnifreightUserCode = FUOwnerUnifreightUserCode.SWISS
             //});
         }
-       
+
 
         public static void TestUpdateLOGITUDE_FILE()
         {
-            int tenant = 2;
+            int tenant = 3;
             var repo = new CFIFILEMRepository(tenant);
-            var res = repo.UpdateLOGITUDE_FILE(tenant,197, "1-3434");
+            var res = repo.UpdateLOGITUDE_FILE(tenant, 60714877, "xxxx");
             repo.SubmitChanges();
             //throw new NotImplementedException();
 
         }
+
 
         public static void GetListByCourierHAWB()
         {
