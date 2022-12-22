@@ -28,14 +28,32 @@
     font-style: normal;
     top: -10px;
     position: relative;
+    height: 100%;
+    flex-direction: column;
 }
 
-.Custom-layout-body {
+.custom-layout-container {
     height: 100%;
     margin: 0;
     font-family: Manrope;
     flex: none;
     font-style: normal;
+    flex: 1 1 auto;
+    overflow: auto;
+    margin-top: 2px;
+}
+
+.custom-layout-container::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.custom-layout-container::-webkit-scrollbar-track {
+    background: none;
+}
+
+.custom-layout-container::-webkit-scrollbar-thumb {
+    background: rgba(193, 193, 193, 1);
 }
 
 .DashboardTabHeadLi {
@@ -107,6 +125,7 @@
     width: 100%;
     height: 100%;
     position: relative;
+    height: calc(100% - 20px);
 }
 
 
@@ -194,4 +213,11 @@
     margin-top: 10px;
     margin-left: 10px;
     margin-right: 10px;
+    flex: 0 0 auto;
+}
+
+.dl-tab-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
