@@ -202,6 +202,6 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string PaymentReferences { get; set; }
         public string SATCancelReasonCode { get; set; }
         public string DigitalPortalSearchFields { get; set; }
-
+        public Decimal? TotalExamptFortaxReport { get; set; }
     }
 }
