@@ -1,5 +1,5 @@
 
-<div style="height: 100%;">
+<div class="dl-tab-container">
     <div>
         <table>
             <tr style="height:10px;">
@@ -104,11 +104,11 @@
         </table>
     </div>
 
-    <div *ngIf="IsGlobalFiltersOpened" class="dl-flobal-filter-container">
+    <div *ngIf="SelectedDashboard" [hidden]="!IsGlobalFiltersOpened" class="dl-flobal-filter-container">
         <GlobalFilter [Dashboard]="SelectedDashboard" (ApplyFilters)="ApplyFilters($event)"></GlobalFilter>
     </div>
 
-    <div [hidden]="IsEmptyDashboardVisible" class="Custom-layout-body">
+    <div [hidden]="IsEmptyDashboardVisible" class="custom-layout-container">
         <custom-layout (onReactChangeLayouts)="onReactChangeLayouts($event)"
                        (openEditWidget)="openEditWidget($event)" [IsEditLayout]="IsEditLayoutModeActive"
                        [DashboardDataBinding]="DashboardDataBinding" [SelectedDashboard]="SelectedDashboard"></custom-layout>

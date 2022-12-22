@@ -11,13 +11,13 @@ import { DashboardGlobalFilterPM } from 'DashboardModule/EntityPMs/DashboardGlob
 
 export class GlobalFilterComponent implements OnInit {
     @Input() public Dashboard: DashboardPM;
-    @Output() ApplyFilters = new EventEmitter<string>();
+    @Output() ApplyFilters = new EventEmitter<any[]>();
 
     public CommonFilters: GlobalFilterItem[];
     public DatasetFilters: GlobalFilterItem[];
     public FilterTypes: CodeNameClass[] = [];
     public CommonFilterFields: CodeNameClass[] = [];
-    public Reset : boolean = null;
+    public Reset: boolean = null;
 
     constructor() {
         this.CommonFilters = [];
@@ -76,7 +76,7 @@ export class GlobalFilterComponent implements OnInit {
         var filterItems = [];
         this.AddFilterItems(this.CommonFilters, filterItems, true);
         this.AddFilterItems(this.DatasetFilters, filterItems, false);
-        this.ApplyFilters.emit(JSON.stringify(filterItems));
+        this.ApplyFilters.emit(filterItems);
     }
 
     AddFilterItems(filters: GlobalFilterItem[], filterItems: any, isCommon: boolean = false): any {
@@ -100,10 +100,10 @@ export class GlobalFilterComponent implements OnInit {
         return {
             FieldId: element.DataSetFieldId,
             DataSetId: element.DataSetId,
-            FieldName: isCommon? element.CommonFilterField : element.EntityPM.FieldCode,
+            FieldName: isCommon ? element.CommonFilterField : element.EntityPM.FieldCode,
             IsCommon: isCommon,
             Operator: element.FilterOperator,
-            DateGroupCode : element.DateGroupCode,
+            DateGroupCode: element.DateGroupCode,
             FieldDataType: element.DataTypeCode,
             FieldValue: element.FieldValue,
             FieldValue2: element.FieldValue2,
