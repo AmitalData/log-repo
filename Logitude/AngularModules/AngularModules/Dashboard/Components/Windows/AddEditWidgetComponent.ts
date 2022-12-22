@@ -232,6 +232,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.SetTimeOverTimeValue();
         this.SetUIProperties();
     }
+    
 
     get TypeCode() { return this.EntityPM.TypeCode; }
     set TypeCode(value: string) {
