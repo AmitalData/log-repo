@@ -319,15 +319,6 @@ namespace AmitalCustomsWindowsService.Tester
         bool _MultiThreard = false;
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-            TestMaman();
-            return;
-
-
-
-            clsTester.HSMSignTests();
-            return;
-
             try
             {
                 clsTester.TestUpdateLOGITUDE_FILE();
@@ -337,8 +328,18 @@ namespace AmitalCustomsWindowsService.Tester
 
                 ///throw;
             }
-            
+
             return;
+
+            TestMaman();
+            return;
+
+
+
+            clsTester.HSMSignTests();
+            return;
+
+            
 
             clsTester.Check_UserWcfService(GetTenant());
             return;
