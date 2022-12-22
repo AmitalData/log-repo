@@ -85,7 +85,7 @@ namespace Logitude.Customs.Data.Repsitories
         {
             return (
                   from rec in context.Clients
-                  where !string.IsNullOrEmpty(rec.Code) && rec.Tenant == tenant && rec.ConcurrencyGUID != null
+                  where !string.IsNullOrEmpty(rec.Code) && rec.Tenant == tenant
                   select rec
                   ).ToList();
         }
