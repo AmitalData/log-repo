@@ -11,6 +11,7 @@ using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.Server.Tools.Helpers;
 using Newtonsoft.Json;
+using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
@@ -303,7 +304,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (declaration.Exporter != null)
                 {
                     SetImporters(ref declarationPM, declaration, tenant, context);
-                    declarationPM.CustomerId = declarationPM.ImporterId;
+
+                    var queryService = new CardQueryService(tenant);
+                    ICommonDataContext _CommonContext = CommonDataContext.GetContext(tenant);
+                    var cardRepository = new CardRepository(_CommonContext);
+                    var card = cardRepository.GetSingleCardByVatNumber(declaration.Exporter[0]?.ID?.Value, tenant);
+                   if(card != null) {
+
+                      declarationPM.CustomerId = card.Id;
+                   }
                 }
 
                 context = CustomContext.GetContext(tenant);
