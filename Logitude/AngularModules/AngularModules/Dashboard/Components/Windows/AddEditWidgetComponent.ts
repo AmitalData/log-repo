@@ -30,7 +30,6 @@ export class AddEditWidgetComponent extends BaseComponent {
     public ChartImageSrc: string;
     public WidgetMeasuresList: WidgetMeasureItem[];
     public WidgetMeasuresClone: WidgetMeasurePM[];
-    //public RootFilter: WidgetFilterItem;
     public RootFilter: WidgetFilterItem = new WidgetFilterItem(null, false, this.DashboardPM?.Id);
     public IsAddNewMeasureVisible: boolean = true;
     public DateGroupCodes = ['Day', 'Month', 'Year', 'Quarter'];
@@ -91,7 +90,7 @@ export class AddEditWidgetComponent extends BaseComponent {
             item.SetUIProperties();
         });
     }
-    
+
     BuildQueryFilters() {
         this.GroupByQueryFilters = new ApiQueryFilters();
         this.GroupByQueryFilters.addAdditionalFilter("DataTypeCode", "PickList,LookUp,DateTime,Date", null, null, "InList", false, true, false, "string", false, true, true);
@@ -233,46 +232,43 @@ export class AddEditWidgetComponent extends BaseComponent {
     }
 
     private SetTimeOverTimeValue() {
-
-        if (this.TypeCode != "kpi" || !this.TimeOverTime) {
-            this.ComparisonOperator = null;
-            this.ComparisonPeriod = null;
-            this.ComparisonDateGroup = null;
-            this.FromDate = null;
-            this.ToDate = null;
-            this.Increase = null;
+        if (this.TypeCode == "kpi" && this.TimeOverTime) {
+            this.Increase = this.Increase ? this.Increase : "Positive";
             return;
         }
-
-        this.Increase = this.Increase ? this.Increase : "Postive";
+        this.ComparisonOperator = null;
+        this.ComparisonPeriod = null;
+        this.ComparisonDateGroup = null;
+        this.FromDate = null;
+        this.ToDate = null;
+        this.Increase = null;
     }
 
     SetUIForOperator() {
         this.IsBetweenDatesVisible = false;
         if (this.ComparisonOperator == "Between") {
             this.IsBetweenDatesVisible = true;
-            
         }
     }
 
-    private CheckEnableForSecondaryGroupByAndScondaryMeasere(){
-        if(this.WidgetMeasuresList.length > 1)
+    private CheckEnableForSecondaryGroupByAndScondaryMeasere() {
+        if (this.WidgetMeasuresList.length > 1)
             this.SetSecondaryGroupingFieldDisabled();
-        
+
         this.UIProperties.SetEnabled("SecondaryGroupById", this.ObjectTableName, this.IsSecondaryGroupEnable);
-        
+
 
     }
-    
-    private SetSecondaryGroupingFieldDisabled(){
-            this.SecondaryGroupById = null;
-            this.SecondaryDateGroupCode = null;
-            this.IsSecondaryGroupEnable = false;
-        
+
+    private SetSecondaryGroupingFieldDisabled() {
+        this.SecondaryGroupById = null;
+        this.SecondaryDateGroupCode = null;
+        this.IsSecondaryGroupEnable = false;
+
     }
-    SetSecondaryGroupEnabled(){
+    SetSecondaryGroupEnabled() {
         this.IsSecondaryGroupEnable = true;
-        this.UIProperties.SetEnabled("SecondaryGroupById", this.ObjectTableName , this.IsSecondaryGroupEnable);
+        this.UIProperties.SetEnabled("SecondaryGroupById", this.ObjectTableName, this.IsSecondaryGroupEnable);
     }
 
     private isAdvancedSettingVisible: boolean = false;
@@ -283,7 +279,7 @@ export class AddEditWidgetComponent extends BaseComponent {
             this.SetAdvanceSettingItems();
         }
     }
-    
+
 
     public SetAdvanceSettingItems() {
         if (!AppTool.IsNullOrEmpty(this.TypeCode) && this.TypeCode == "kpi" && this.IsAdvancedSettingVisible) {
@@ -340,7 +336,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         if (this.EntityPM.SecondaryGroupById != value) {
             this.EntityPM.SecondaryGroupById = value;
         }
-        
+
     }
 
     get SecondaryDateGroupCode() { return this.EntityPM.SecondaryDateGroupCode; }
@@ -746,7 +742,7 @@ export class WidgetMeasureItem extends BaseComponent {
         this.FilterMeasureFields();
     }
 
-    SetUIProperties() {        
+    SetUIProperties() {
         this.UIProperties.SetEnabled("MeasureCode", this.ObjectTableName, !AppTool.IsNullOrEmpty(this.fatherComponent.EntityId));
         this.UIProperties.SetEnabled("MeasureFieldId", this.ObjectTableName, !AppTool.IsNullOrEmpty(this.fatherComponent.EntityId));
     }
