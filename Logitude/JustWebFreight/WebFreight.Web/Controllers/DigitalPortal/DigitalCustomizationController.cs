@@ -183,10 +183,14 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 if (tenantDigitalPortalScreen != null)
                 {
-                    tenantDigitalPortalScreen.Content = defaultDisgitalPortalScreen.Content;
+                    tenantDigitalPortalScreen.Content = tenantDigitalPortalScreen.Content;
                     tenantDigitalPortalScreen.DraftContent = defaultDisgitalPortalScreen.DraftContent;
                     tenantDigitalPortalScreen.UpdateDate = DateTime.UtcNow;
                     digitalPreDefinedComponentQueryService.UpdateDigitalPortalScreen(tenantDigitalPortalScreen);
+                }
+                else
+                {
+                    tenantDigitalPortalScreen = defaultDisgitalPortalScreen;
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, tenantDigitalPortalScreen);
