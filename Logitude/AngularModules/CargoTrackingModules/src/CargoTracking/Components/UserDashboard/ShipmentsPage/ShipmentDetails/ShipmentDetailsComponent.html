@@ -327,7 +327,7 @@
                     </button>
 
                     <!-- DocumentsPanel -->
-                    <button *ngIf="!IsOrderShipment" [class.active]="selectedNavButton=='DocumentsPanel'"
+                    <button [class.active]="selectedNavButton=='DocumentsPanel'"
                         (click)="PanelsNavigatorClicked('DocumentsPanel')">
                         Documents
                     </button>
@@ -356,24 +356,21 @@
                             <div class="title">po number</div>
                             <div class="description">{{cargoTrackingShipmentPM.ShipmentOrderPONumber}}</div>
                         </div>
-                        <div *ngIf="cargoTrackingShipmentPM.ForwardingMaster && !IsOrderShipment">
-                            <div class="title">Master</div>
-                            <div class="description">{{cargoTrackingShipmentPM?.ForwardingMaster}}</div>
-                        </div>
-                        <div *ngIf="cargoTrackingShipmentPM.ForwardingHouse  && !IsOrderShipment">
-                            <div class="title">House</div>
-                            <div class="description">{{cargoTrackingShipmentPM?.ForwardingHouse}}</div>
+                        <div *ngIf="SetMasterOrHouseLabel() != null">
+                            <div class="title">{{SetMasterOrHouseLabel()}}</div>
+                            <div class="description">{{SetMasterOrHouseValue()}}</div>
                         </div>
                         <div>
                             <div class="title">Incoterms</div>
                             <div class="description TextTrimming">
-                                <span *ngIf="cargoTrackingShipmentPM && cargoTrackingShipmentPM.IncotermName">
+                                <custom-label>{{cargoTrackingShipmentPM.IncotermName}}</custom-label>
+                                <!-- <span *ngIf="cargoTrackingShipmentPM && cargoTrackingShipmentPM.IncotermName">
                                     {{cargoTrackingShipmentPM.IncotermName}}
                                     <a *ngIf="cargoTrackingShipmentPM.IncotermName.length > 18"
                                         (click)="ShowMoreWindow(cargoTrackingShipmentPM.IncotermName)"
                                         style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show
                                         more</a>
-                                </span>
+                                </span> -->
                             </div>
                         </div>
 
@@ -633,22 +630,6 @@
                                 {{cargoTrackingShipmentPM?.SHOCarrierName}}
                             </div>
                         </div>
-                        <div
-                            *ngIf=" cargoTrackingShipmentPM.EntityType == 'O'  && cargoTrackingShipmentPM?.Master !=null && cargoTrackingShipmentPM?.Master.length > 0">
-                            <div class="title">Master </div>
-                            <div class="description">
-                                {{cargoTrackingShipmentPM?.Master}}
-                            </div>
-                        </div>
-                        <div
-                            *ngIf=" cargoTrackingShipmentPM.EntityType == 'O'  && cargoTrackingShipmentPM?.House !=null && cargoTrackingShipmentPM?.House.length > 0">
-                            <div class="title">house </div>
-                            <div class="description">
-                                {{cargoTrackingShipmentPM?.House}}
-                            </div>
-                        </div>
-
-
                     </div>
                 </div>
 
@@ -1040,7 +1021,7 @@
                                 <td style="width: 450px;"><custom-label [width]="300">
                                     {{item.CalculatedFileName}}</custom-label></td>
                                 <td style="width: 450px;">
-                                    <span [ngSwitch]="item.FileExtension">
+                                    <span [ngSwitch]="item.FileExtension.toLowerCase()">
                                         <img class="file-extension" *ngSwitchCase="'pdf'" src="./assets/images/FileIcons/File-pdf-48.png" />
                                         <img class="file-extension" *ngSwitchCase="'txt'" src="./assets/images/FileIcons/txt_48.png" />
                                         <img class="file-extension" *ngSwitchCase="'xls'" src="./assets/images/FileIcons/Microsoft-Office-Excel-48.png" />
@@ -1138,7 +1119,7 @@
                                         <custom-label>{{item.DocumentTypeName}}</custom-label>
                                         <br>
                                         <span style="color: gray;font-size: 13px;">
-                                            <custom-label [width]="180">{{item.CalculatedFileName}}</custom-label>
+                                            <custom-label [width]="180">"{{item.CalculatedFileName}}"</custom-label>
                                         </span>
                                         <br>
                                         <span style="color: gray;font-size: 13px;">

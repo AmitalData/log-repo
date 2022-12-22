@@ -171,6 +171,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.DangerousFlashPoint = shipment.DangerousFlashPoint;
                 myDataProvider.DangerousMaterialDescription = shipment.DangerousMaterialDescription;
                 myDataProvider.MainCarriageTruckNumber = shipment.MainCarriageCarrierNumber;
+                myDataProvider.AccountManager = shipment.AccountManagerUserName;
                 myDataProvider.TotalCollectReceivablesLocal = shipment.ShipmentReceivables.Where(d => d.PrepaidCollectId == "C").Sum(s => s.TotalAmountLocal);
                 myDataProvider.TotalPrepaidReceivablesLocal = shipment.ShipmentReceivables.Where(d => d.PrepaidCollectId == "P").Sum(s => s.TotalAmountLocal);
                 myDataProvider.TotalCollectReceivablesProfit = shipment.ShipmentReceivables.Where(d => d.PrepaidCollectId == "C").Sum(s => s.TotalAmount);
@@ -332,6 +333,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.ApprovedCargoReadyDate = shipment.ApprovedCargoReadyDate;
                 myDataProvider.PlannedCargoReadyDate = shipment.PlannedCargoReadyDate;
                 myDataProvider.Handler = this.GetHandlerUserName(shipment.HandlerUserId);
+                myDataProvider.AccountManager = shipment.AccountManagerUserName;
 
                 if (!string.IsNullOrEmpty(shipment.OBLTypeCode))
                 {
@@ -995,10 +997,12 @@ namespace WebFreight.Web.WebServices
                             }
 
                             myDataProvider.Broker = myDataProvider.Broker + Environment.NewLine + DataProviders.General.GetAddress(customAgentImportAddress);
+                            myDataProvider.BrokerAddressOnly = Environment.NewLine + DataProviders.General.GetAddress(customAgentImportAddress);
 
                             if (customAgentImportAddress.PhoneNumber != null || customAgentImportAddress.FaxNumber != null)
                             {
                                 myDataProvider.Broker = myDataProvider.Broker + Environment.NewLine + (customAgentImportAddress.PhoneNumber != null ? "Tel: " + customAgentImportAddress.PhoneNumber + " " : "") + (!string.IsNullOrEmpty(customAgentImportAddress.FaxNumber) ? "Fax: " + customAgentImportAddress.FaxNumber + " " : "");
+                                myDataProvider.BrokerPhone = customAgentImportAddress.PhoneNumber;
                             }
 
                             myDataProvider.CustomsAgentAddress = DataProviders.General.GetAddress(customAgentImportAddress);
@@ -1011,6 +1015,7 @@ namespace WebFreight.Web.WebServices
                         if (customAgentImportContact != null)
                         {
                             myDataProvider.BrokerEmail = customAgentImportContact.Email;
+                            myDataProvider.BrokerContactName = customAgentImportContact.EnglishName;
                             myDataProvider.CustomsAgentContactDetails = this.BuildContactDetails(customAgentImportContact);                            
                         }                        
                     }
@@ -2076,6 +2081,7 @@ namespace WebFreight.Web.WebServices
                     myDataProvider.DeliveryDriverName = myDelivery.Driver;
                     myDataProvider.DeliveryTruckNumber = myDelivery.TruckNumber;
                     myDataProvider.DeliveryTrailerNumber = myDelivery.TrailerNumber;
+                    myDataProvider.DeliveryETD_DateTime = myDelivery.ETD != null ? myDelivery.ETD : null;
 
                     myDataProvider.DeliveryTo = myServicHelper.GetToDeliveryName(shipment, myDelivery, false);
 
@@ -2256,7 +2262,7 @@ namespace WebFreight.Web.WebServices
                     #region
 
                     this.SetFromLocation_InlandDomestic(myDataProvider);
-                    this.SetToLocation_InlandDomestic(myDataProvider);                    
+                    this.SetToLocation_InlandDomestic(myDataProvider);
 
                     if (shipment.MainCarriageFromPartnerId != null)
                     {
@@ -2304,8 +2310,8 @@ namespace WebFreight.Web.WebServices
                     myDataProvider.ToLocation_Label = "";
                     myDataProvider.FromLocation_Label = "";
 
-                    if (!string.IsNullOrEmpty(myDataProvider.FromLocation))                    
-                        myDataProvider.FromLocation_Label = "Place of Loading";                   
+                    if (!string.IsNullOrEmpty(myDataProvider.FromLocation))
+                        myDataProvider.FromLocation_Label = "Place of Loading";
 
                     if (!string.IsNullOrEmpty(myDataProvider.ToLocation))                    
                         myDataProvider.ToLocation_Label = "Place of Discharge";                    

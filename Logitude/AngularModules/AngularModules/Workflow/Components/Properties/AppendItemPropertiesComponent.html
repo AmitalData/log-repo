@@ -1,0 +1,145 @@
+<style>
+    .table-row {
+        height: 1px;
+    }
+
+    .first-split-table-row {
+        height: 20px;
+    }
+
+    .table-row-cell {
+        padding-bottom: 10px;
+    }
+
+    .split-block {
+        border-bottom: 1px solid #6E6E6E;
+    }
+
+    .table-row-cell-block {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .name-container {
+        height: 30px;
+        width: 320px;
+    }
+
+    .table-container {
+        overflow: auto;
+        height: 515px;
+    }
+
+    .label {
+        font-weight: bold;
+    }
+
+    .table-row-cell-label {
+        padding-bottom: 6px;
+    }
+</style>
+
+<table>
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" class="table-row">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr class="first-split-table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div>
+                <LogLabel [NoObjectField]="true" [Text]="'Name'" [ObjectFieldName]="'Name'" [DataContext]="DataContext">
+                </LogLabel>
+            </div>
+            <div class="table-row-cell-block name-container">
+                <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [DataContext]="DataContext" [Text]="Name"
+                    [NoValidation]="true" [HideColumns]="true" [ObjectFieldName]="'Name'"
+                    (ValueChanged)="updateName($event)" [DataCy]="'append-item-name'">
+                </LogTextBox>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell-label">
+            <div class="table-row-cell-block">
+                <div class="label">Append record to this Collection</div>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div>
+                <LogLabel [NoObjectField]="true" [Text]="'Collection'" [ObjectFieldName]="'Collection'"
+                    [DataContext]="DataContext"></LogLabel>
+            </div>
+            <div class="table-row-cell-block">
+                <TreeSelect [Items]="SingleEditableEntitiesTreeItems" [Width]="'300px'" [Value]="Collection"
+                    [ShowItem]="ExcludedEntities | ShowEntitiesTreeItemPipe : false"
+                    (ValueChanged)="updateCollection($event)" [IsReturnedTreeSelectItem]="true">
+                </TreeSelect>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr *ngIf="EntityId" class="table-row">
+        <td class="table-row-cell-label">
+            <div class="table-row-cell-block">
+                <div class="label">Set Fields Values of {{Entity | EntityLabelPipe}}</div>
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="EntityId" class="table-row">
+        <td class="table-row-cell">
+            <div class="table-container">
+
+                <SetValues *ngIf="SetValues && SetValues.length > 0" [(SetValues)]="SetValues" [IsEntityField]="true"
+                    [EntityId]="EntityId" (IsValidSetValuesChange)="setIsValidSetValues($event)"
+                    [FlowObject]="FlowObject" [FlowObjectFields]="FlowObjectFields" [CurrentNodeId]="CurrentNodeId">
+                </SetValues>
+
+            </div>
+
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td>
+
+            <FooterButtons [SaveButtonLabel]="'Ok'" (SaveButtonClicked)="saveButtonClicked()"
+                (CancelButtonClicked)="cancelButtonClicked()" [SaveButtonDataCy]="'append-item-properties-save-button'"
+                [CancelButtonDataCy]="'append-item-properties-cancel-button'">
+            </FooterButtons>
+
+        </td>
+    </tr>
+
+</table>

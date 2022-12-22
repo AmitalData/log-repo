@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "e0e648906761ee4664f7315936d34626";
+		public const string HashString = "2dae27ca955a3db3a9c9e3a2edd356ca";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -99,8 +99,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTablePlural =  "Generals",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
-			      				    AvailableInCustomization =  false,
-			      				    SupportSubEntity =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -126,7 +124,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "7e2d",
+			      				    Code =  "5c5e",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -667,8 +665,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 		   Feature GeneralFeature_MultiPrint = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MultiPrint", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.MultiPrint", NameTextCodeDefaultText = @"Batch Print" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
-		   Feature GeneralFeature_CUSTOMDASH = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMDASH", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.CUSTOMDASH", NameTextCodeDefaultText = @"Custom Dashboard" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
-
 		   Feature GeneralFeature_CustomFieldsCustomization = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomFieldsCustomization", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.CustomFieldsCustomization", NameTextCodeDefaultText = @"Custom Fields Customization" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
 		   Feature GeneralFeature_StandardFieldsCustomization = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "StandardFieldsCustomization", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.StandardFieldsCustomization", NameTextCodeDefaultText = @"Standard Fields Customization" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
@@ -683,14 +679,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 		   Feature GeneralFeature_SubEntitiesCustomization = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SubEntitiesCustomization", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.SubEntitiesCustomization", NameTextCodeDefaultText = @"Sub Entities Customization" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
-		   Feature GeneralFeature_AddCustomChildEntity = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AddCustomChildEntity", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.AddCustomChildEntity", NameTextCodeDefaultText = @"Add Custom Child Entity" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
-		   Feature GeneralFeature_CLASSICDASHBOARD = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CLASSICDASHBOARD", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.CLASSICDASHBOARD", NameTextCodeDefaultText = @"Classic Dashboard" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
 		   Feature GeneralFeature_SupportUnitMeasurements = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SupportUnitMeasurements", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.SupportUnitMeasurements", NameTextCodeDefaultText = @"Support Select Unit of Measurements" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
+		   Feature GeneralFeature_CUSTOMDASHBOARD = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMDASHBOARD", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.CUSTOMDASHBOARD", NameTextCodeDefaultText = @"Custom Dashboard" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
+
+		   Feature GeneralFeature_Customization_CreateSubObjects = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customization.CreateSubObjects", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.Customization.CreateSubObjects", NameTextCodeDefaultText = @"Create Sub Object in Customization" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
+
+		   Feature GeneralFeature_Customization_CreateObjects = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customization.CreateObjects", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.Customization.CreateObjects", NameTextCodeDefaultText = @"Create Custom object in Customization " }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
+
+		   Feature GeneralFeature_General_Features_ChartOfAccountsTypesOrder = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "General.Features.ChartOfAccountsTypesOrder", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.General.Features.ChartOfAccountsTypesOrder", NameTextCodeDefaultText = @"Chart Of Accounts Types Order" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
+
    
 	    
+
 		}
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
@@ -755,7 +758,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_GeneralMHAccounting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Accounting", DefaultText = "Accounting",LocalDefaultText = @"הנה''ח", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_GeneralMHDashboard = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Dashboard", DefaultText = "Dashboard",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_GeneralMHDashboard = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Dashboard", DefaultText = "Custom Dashboard",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMHMaintenance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Maintenance", DefaultText = "Maintenance",LocalDefaultText = @"תחזוקת מערכת", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -2569,7 +2572,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_TabGInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tab.G.Invoice", DefaultText = "Invoicing",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_GeneralMHClassicDashboard = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.ClassicDashboard", DefaultText = "Classic Dashboard",LocalDefaultText = @"Classic Dashboard", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_GeneralMHClassicDashboard = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.ClassicDashboard", DefaultText = "Dashboard",LocalDefaultText = @"Dashboard", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralBDownloadExcel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.B.DownloadExcel", DefaultText = "Please enter 3 letters at least to start searching",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -2648,6 +2651,64 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  		   TextCode GeneralTextCode_GeneralGClearFilter = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.ClearFilter", DefaultText = "Clear filters",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralGDownloadDataSuccessMSG2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.DownloadDataSuccessMSG2", DefaultText = "Done",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralGCopiedToClipboard = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.CopiedToClipboard", DefaultText = "Copied to your clipboard",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralGDownloadExcel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.DownloadExcel", DefaultText = "Download Excel",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralGApplyFilter = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.ApplyFilter", DefaultText = "Apply filter",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralGEditFilters = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.EditFilters", DefaultText = "Edit filters",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralGViewModeLogoutMsg = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.ViewModeLogoutMsg", DefaultText = "Are you sure you want to logout from view mode?",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralGClosingViewMode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.ClosingViewMode", DefaultText = "Closing view mode",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralGCloseViewMode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.CloseViewMode", DefaultText = "Close view mode",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralGViewModeMsg = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.ViewModeMsg", DefaultText = "You are viewing digital portal as an Owner",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralGMultiShipments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.MultiShipments", DefaultText = "Multi shipments",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralGNoMatchingResultsFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.NoMatchingResultsFound", DefaultText = "No matching results found",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralGOnlineViewLoginDirective = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.OnlineViewLoginDirective", DefaultText = "Login now to view all information about events, documents and more",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralGInformationAvailablilityMsg = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.InformationAvailablilityMsg", DefaultText = "This information is only available to logged-in users",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralGSaveChangesMsg = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.SaveChangesMsg", DefaultText = "Your changes have been successfully saved!",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralGTimeZone = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.TimeZone", DefaultText = "Time Zone",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralGPasswordIssueMsg = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.PasswordIssueMsg", DefaultText = "The current password is wrong!",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ContactGPositionValidationMsg = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.G.PositionValidationMsg", DefaultText = "Position is required.",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_ContactGFullNameValidationMsg = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.G.FullNameValidationMsg", DefaultText = "Full name is required.",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralGCurrentPasswordValidationMsg = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.CurrentPasswordValidationMsg", DefaultText = "Current password is required.",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralGNewPasswordValidationMsg = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.NewPasswordValidationMsg", DefaultText = "New password is required.",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralGNewPasswordValidationErrorMsg = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.NewPasswordValidationErrorMsg", DefaultText = "New password doesn't meet the below conditions",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralGConfirmNewPasswordValidationErrorMsg = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.ConfirmNewPasswordValidationErrorMsg", DefaultText = "The passwords you entered do not match.",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralGVerificationCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.VerificationCode", DefaultText = "Verification code",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralGCapatchPlaceholder = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.CapatchPlaceholder", DefaultText = "Type the text you see",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralGForgotPasswordMsg = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.ForgotPasswordMsg", DefaultText = "Forgot your password?",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralGSubmitBtn = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.SubmitBtn", DefaultText = "Submit",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralGDownloadAll = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.DownloadAll", DefaultText = "Download all",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralMCCustomizationCustomization = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Customization.Customization", DefaultText = "Customization",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_AccountingGeneralOChartOfAccountsTypesOrder = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.ChartOfAccountsTypesOrder", DefaultText = "Chart Of Accounts Types Order",LocalDefaultText = @"Chart Of Accounts Types Order", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralMCCustomObjectsCustomObjects = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.CustomObjects.CustomObjects", DefaultText = "Custom Objects",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

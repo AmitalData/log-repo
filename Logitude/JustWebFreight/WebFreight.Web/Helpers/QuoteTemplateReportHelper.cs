@@ -2775,6 +2775,16 @@ namespace Logitude.BL.Helpers
                     allPackagesHeaderColumns.Add("ISREGIONALTAXPACKAGES", GetHeaderColumn("ISREGIONALTAXPACKAGES", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes));
                 }
 
+                if (setting.ShowSaleIncludingVATPackages)
+                {
+                    allPackagesHeaderColumns.Add("SALEAMOUNTInCLUDINGVATPACKAGES", GetHeaderColumn("SALEAMOUNTInCLUDINGVATPACKAGES", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes));
+                }
+
+                if (setting.ShowLocalSaleIncludingVATPackages)
+                {
+                    allPackagesHeaderColumns.Add("SALELOCALAMOUNTInCLUDINGVATPACKAGES", GetHeaderColumn("SALELOCALAMOUNTInCLUDINGVATPACKAGES", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes));
+                }
+
                 if (quotePM.IsChargesByVAT)
                 {
                     if (setting.ShowVATTypePackages)
@@ -2816,6 +2826,16 @@ namespace Logitude.BL.Helpers
                 if (setting.ShowUnitsContainers) {
                     allContainersHeaderColumns.Add("UNITSCONTAINERS", GetHeaderColumn("UNITSCONTAINERS", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes));
 
+                }
+
+                if (setting.ShowSaleIncludingVATContainers)
+                {
+                    allContainersHeaderColumns.Add("SALEAMOUNTInCLUDINGVATCONTAINERS", GetHeaderColumn("SALEAMOUNTInCLUDINGVATCONTAINERS", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes));
+                }
+
+                if (setting.ShowLocalSaleIncludingVATContainers)
+                {
+                    allContainersHeaderColumns.Add("SALELOCALAMOUNTInCLUDINGVATCONTAINERS", GetHeaderColumn("SALELOCALAMOUNTInCLUDINGVATCONTAINERS", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes));
                 }
 
                 if (setting.ShowMeasurementContainers)
@@ -3098,6 +3118,8 @@ namespace Logitude.BL.Helpers
 
                 if (quotePM.IsChargesByVAT && setting.ShowSaleCurrencyColumnPackages) TdCount += 2;
                 if (quotePM.IsChargesByVAT && setting.ShowLocalCurrencyColumnPackages) TdCount += 2;
+                if (setting.ShowLocalSaleIncludingVATPackages) ++TdCount;
+                if (setting.ShowSaleIncludingVATPackages) ++TdCount;
 
             }
             else if (sectionType == "PC" && setting.ShowPricesTableContainers)
@@ -3142,7 +3164,8 @@ namespace Logitude.BL.Helpers
 
                 if (quotePM.IsChargesByVAT && setting.ShowSaleCurrencyColumnContainers) TdCount += 2;
                 if (quotePM.IsChargesByVAT && setting.ShowLocalCurrencyColumnContainers) TdCount += 2;
-
+                if (setting.ShowLocalSaleIncludingVATContainers) ++TdCount;
+                if (setting.ShowSaleIncludingVATContainers) ++TdCount;
             }
         }
 
@@ -3452,6 +3475,19 @@ namespace Logitude.BL.Helpers
                         allTableRows.Add("SALEMINMAXPACKAGES", AddTableRows(new PricingTableRowDetailsArgs() { Value = text, RowDataType = "FieldPrice", QuoteTemplateSettingPM = setting, HeaderDesign = quoteTemplateTextDesignLines, TableDesign = quotetemplatetableDesignPM, PricingSectionType = pricingSectionType }));
 
                     }
+
+                    if (setting.ShowSaleIncludingVATPackages)
+                    {
+                        string value = GetNumberValueFormate(chargePM.SaleTotalAmountIncludingVAT);
+                        allTableRows.Add("SALEAMOUNTInCLUDINGVATPACKAGES", AddTableRows(new PricingTableRowDetailsArgs() { Value = value, RowDataType = "FieldPrice", QuoteTemplateSettingPM = setting, HeaderDesign = quoteTemplateTextDesignLines, TableDesign = quotetemplatetableDesignPM, PricingSectionType = pricingSectionType }));
+                    }
+
+                    if (setting.ShowLocalSaleIncludingVATPackages)
+                    {
+                        string value = GetNumberValueFormate(chargePM.SaleTotalAmountLocalIncludingVAT);
+                        allTableRows.Add("SALELOCALAMOUNTInCLUDINGVATPACKAGES", AddTableRows(new PricingTableRowDetailsArgs() { Value = value, RowDataType = "FieldPrice", QuoteTemplateSettingPM = setting, HeaderDesign = quoteTemplateTextDesignLines, TableDesign = quotetemplatetableDesignPM, PricingSectionType = pricingSectionType }));
+                    }
+
                     if (setting.ShowRegionalTAXPackages)
                     {
                         string isRegionalTax = chargePM.IsRegionalTax ? "Yes" : "No";
@@ -3681,6 +3717,27 @@ namespace Logitude.BL.Helpers
 
                     }
 
+                    if (setting.ShowSaleIncludingVATContainers)
+                    {
+                        row += 1;
+
+                        string localTotalAmount = GetNumberValueFormate(chargePM.SaleTotalAmountIncludingVAT);
+
+                        if (included) localTotalAmount = translateInclueLable;
+
+                        allTableRows.Add("SALEAMOUNTInCLUDINGVATCONTAINERS", AddTableRows(new PricingTableRowDetailsArgs() { Value = localTotalAmount, RowDataType = "FieldPrice", QuoteTemplateSettingPM = setting, HeaderDesign = quoteTemplateTextDesignLines, TableDesign = quotetemplatetableDesignPM, PricingSectionType = pricingSectionType }));
+                    }
+
+                    if (setting.ShowLocalSaleIncludingVATContainers)
+                    {
+                        row += 1;
+
+                        string localTotalAmount = GetNumberValueFormate(chargePM.SaleTotalAmountLocalIncludingVAT);
+
+                        if (included) localTotalAmount = translateInclueLable;
+
+                        allTableRows.Add("SALELOCALAMOUNTInCLUDINGVATCONTAINERS", AddTableRows(new PricingTableRowDetailsArgs() { Value = localTotalAmount, RowDataType = "FieldPrice", QuoteTemplateSettingPM = setting, HeaderDesign = quoteTemplateTextDesignLines, TableDesign = quotetemplatetableDesignPM, PricingSectionType = pricingSectionType }));
+                    }
 
                     if (setting.ShowChargeDescriptionContainers)
                     {

@@ -9,6 +9,7 @@ namespace Logitude.BL.Workfkow
         public int Tenant { get; set; }
         public string Entity { get; set; }
         public string EntityId { get; set; }
+        public string AuditLogId { get; set; }
         public string Type { get; set; }
 
         private const string QueueName = "WorkflowEntity";
@@ -33,6 +34,7 @@ namespace Logitude.BL.Workfkow
                 { "Tenant", Tenant.ToString()},
                 { "Entity", Entity },
                 { "EntityId", EntityId },
+                { "AuditLogId", AuditLogId },
                 { "Type", Type }
             };
 

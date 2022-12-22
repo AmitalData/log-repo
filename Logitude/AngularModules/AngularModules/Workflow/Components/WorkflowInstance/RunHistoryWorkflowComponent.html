@@ -15,7 +15,7 @@
     .count-row {
         vertical-align: middle;
         width: 50px;
-        padding-left: 5px;
+        padding: 0 5px;
     }
 
     .count-data {
@@ -49,59 +49,73 @@
         width: 200px;
         padding-right: 5px;
     }
+
+    .margin-5 {
+        margin-bottom: 5px;
+    }
 </style>
 
-<table class="table">
-    <tr *ngIf="DataSource" class="table-row">
-        <td>
-            <table>
-                <tr class="FormFieldRow">
-                    <td class="refresh-row">
-                        <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()" [DataCy]="'RunHistoryRefresh'">
-                        </IconButton>
-                    </td>
-                    <td class="count-row">
-                        <span class="Counter" class="count-data">Run({{DataSource.rowCount}})</span>
-                    </td>
-                    <td class="excel-row">
-                        <button class="excel-button Button" (click)="ExportToExcel()"><img class="CenterCenter"
-                                title="Export To Excel" src="./Images/Buttons/excelicon.png" /></button>
-                    </td>
-                    <td>
-                        <div></div>
-                    </td>
+<div class="MediaFillAbsolute workflow-builder-wrapper">
+    <div class="MarginAbsolute10">
+        <table>
+            <tr class="table-row">
+                <td>
+                    <table>
+                        <tr class="FormFieldRow">
+                            <td class="refresh-row">
+                                <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"
+                                    [DataCy]="'RunHistoryRefresh'">
+                                </IconButton>
+                            </td>
+                            <td class="count-row">
+                                <span class="Counter" class="count-data">Run({{DataSource.rowCount}})</span>
+                            </td>
+                            <td class="excel-row" [attr.data-cy]="'RunHistoryExport'">
+                                <button class="excel-button Button" (click)="ExportToExcel()"><img class="CenterCenter"
+                                        title="Export To Excel" src="./Images/Buttons/excelicon.png" /></button>
+                            </td>
+                            <td>
+                                <div></div>
+                            </td>
 
-                    <td class="filter-row">
-                        <div class="filter-container">
-                            <span class="filter-name">Start Time</span>
-                            <CustomDatePicker (SelectedItemChanged)="setDateFilter($event)"
-                                [QueryCode]="ObjectTableName" [ObjectField]="StartTimeObjectfield"></CustomDatePicker>
+                            <td class="filter-row">
+                                <div class="filter-container">
+                                    <span class="filter-name">Start Time</span>
+                                    <CustomDatePicker (SelectedItemChanged)="setDateFilter($event)"
+                                        [QueryCode]="ObjectTableName" [ObjectField]="StartTimeObjectfield"
+                                        [DataCy]="'RunHistoryDatePicker'"></CustomDatePicker>
+                                </div>
+                            </td>
+
+
+                            <td class="search-row">
+                                <SearchTextBox [ObjectTableName]="ObjectTableName" [PlaceHolder]="'Search key'"
+                                    (SearchTextChangeEvent)="TextChanged($event)" [DataCy]="'RunHistorySearchBox'">
+                                </SearchTextBox>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr class="table-row">
+                <td></td>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="MediaFill CurvedArea">
+                        <div *ngIf="DataSource" style="vertical-align:top;" class="GeneratedGridContainer">
+                            <logitude-grid-v2 GridWidth="100%" GridHeight="100%" [ObjectTable]="ObjectTableName"
+                                [dataSource]="DataSource" [columns]="columns" [autoLoad]="true"
+                                [IsCustomTemplate]="true" [QueryChangeEvent]="onQueryChangeEvent"
+                                [MenuHeaderchangeevent]="MenuHeaderchangeevent"
+                                (rowSelectedEvent)="onRowSelected($event)" [DataCy]="'HistoryRow'">
+                            </logitude-grid-v2>
                         </div>
-                    </td>
-
-
-                    <td class="search-row">
-                        <SearchTextBox [ObjectTableName]="ObjectTableName" [PlaceHolder]="'Search key'"
-                            (SearchTextChangeEvent)="TextChanged($event)" [DataCy]="'RunHistorySearchBox'">
-                        </SearchTextBox>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-    <tr>
-        <td style="vertical-align:top">
-            <div class="MediaFill">
-                <div *ngIf="DataSource" style="vertical-align:top;" class="GeneratedGridContainer">
-                    <logitude-grid-v2 GridWidth="100%" GridHeight="100%" [ObjectTable]="ObjectTableName"
-                        [dataSource]="DataSource" [columns]="columns" [autoLoad]="true" [IsCustomTemplate]="true"
-                        [QueryChangeEvent]="onQueryChangeEvent" [MenuHeaderchangeevent]="MenuHeaderchangeevent"
-                        (rowSelectedEvent)="onRowSelected($event)" [DataCy]="'HistoryRow'">
-                    </logitude-grid-v2>
-
-
-                </div>
-
-            </div>
-        </td>
-    </tr>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

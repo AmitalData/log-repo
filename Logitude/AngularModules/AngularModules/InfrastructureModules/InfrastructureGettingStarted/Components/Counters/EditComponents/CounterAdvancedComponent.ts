@@ -29,6 +29,7 @@ export class CounterAdvancedComponent extends BaseComponent {
     public ItemsSource: any[] = [];
     public HasAllTransportsFeature: boolean = false;
     public HasBranchCounterCodeFeature: boolean = false;
+    public HasSeparatePerBranchCounterCodeFeature: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
@@ -37,6 +38,7 @@ export class CounterAdvancedComponent extends BaseComponent {
             this.HasAllTransportsFeature = true;
         }
         this.HasBranchCounterCodeFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "BCC")[0] ? true : false;
+        this.HasSeparatePerBranchCounterCodeFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SPB")[0] ? true : false;
     }
 
     SetWindowArgs(args: any) {

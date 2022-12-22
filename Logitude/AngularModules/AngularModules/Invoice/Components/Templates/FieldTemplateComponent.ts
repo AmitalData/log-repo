@@ -28,6 +28,7 @@ export class FieldTemplateComponent extends BaseComponent {
     public DisplaySATFields: boolean = false;
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public NumberFieldRightPadding = "20px";
     constructor() {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");

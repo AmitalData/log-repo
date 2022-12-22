@@ -1,0 +1,195 @@
+
+<div class="MediaFillRelative">
+    <div class="ScrollViewer">
+        <div class="ScrollContent">
+            <table>
+                <tr style="height:28px;" class="Label BlueTitle">
+                    <td style="left:10px;">Common Filters</td>
+                </tr>
+
+                <tr class="FormFieldRow" style="height:28px;" *ngFor="let item of CommonFilters; let i = index">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:15px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:130px;">
+                                    <ComboBox [ItemsSource]="FilterTypes"
+                                              [SelectedItem]="item.SelectedFilterType"
+                                              [Binding]="'Name'"
+                                              (SelectedItemChanged)="item.SelectedFilterType = $event"
+                                              [IsDisabled]="true">
+                                    </ComboBox>
+                                </td>
+
+                                <td style="width:2px;">
+                                    <div></div>
+                                </td>
+
+                                <td *ngIf="item.SelectedFilterType" style="width:120px;">
+                                    <ComboBox [ItemsSource]="CommonFilterFields"
+                                              [SelectedItem]="item.SelectedCommonFilterField"
+                                              [Binding]="'Name'"
+                                              [WaterMark]="'Field'"
+                                              (SelectedItemChanged)="item.SelectedCommonFilterField = $event"
+                                              [IsDisabled]="true">
+                                    </ComboBox>
+                                </td>
+
+                                <td style="width:2px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:150px;">
+                                    <ComboBox [ItemsSource]="item.Operators"
+                                              [SelectedItem]="item.SelectedOperator"
+                                              [Binding]="'Name'"
+                                              [WaterMark]="'Operator'"
+                                              (SelectedItemChanged)="item.SelectedOperator = $event"
+                                              [IsDisabled]="true">
+                                    </ComboBox>
+                                </td>
+
+                                <td style="width:2px;">
+                                    <div></div>
+                                </td>
+                                
+                                <td style="width:2px;">
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <GlobalFilterValue [(FilterItem)]="CommonFilters[i]" ></GlobalFilterValue>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr style="height:28px;" class="Label BlueTitle">
+                    <td style="left:10px;">Dataset Filters</td>
+                </tr>
+
+                <tr class="FormFieldRow" style="height:28px;" *ngFor="let item of DatasetFilters; let i = index">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:15px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:130px;">
+                                    <ComboBox [ItemsSource]="FilterTypes"
+                                              [SelectedItem]="item.SelectedFilterType"
+                                              [Binding]="'Name'"
+                                              (SelectedItemChanged)="item.SelectedFilterType = $event"
+                                              [IsDisabled]="true">
+                                    </ComboBox>
+                                </td>
+
+                                <td style="width:2px;">
+                                    <div></div>
+                                </td>
+
+                                <td *ngIf="item.SelectedFilterType" style="width:120px;">
+                                    <LogLov [ObjectFieldName]="'DataSetId'"
+                                            [SelectedValue]="item.DataSetId"
+                                            [ObjectTableName]="item.ObjectTableName"
+                                            [DataContext]="item.DataContext"
+                                            [LookUpTableName]="'AnalyticsFactsMetaData'"
+                                            [HideColumns]="true"
+                                            [DisplayMemberPath]="'Name'"
+                                            [IgnoreFeatureCheck]="true"
+                                            [PlaceHolder]="'Dataset'">
+                                    </LogLov>
+                                </td>
+
+                                <td style="width:2px;">
+                                    <div></div>
+                                </td>
+
+                                <td *ngIf="item.SelectedFilterType" style="width:120px;">
+                                    <LogLov [SelectedValue]="item.DataSetFieldId"
+                                            [ObjectTableName]="item.ObjectTableName"
+                                            [DataContext]="item.DataContext"
+                                            [LookUpTableName]="'AnalyticsFactsFieldsMetaData'"
+                                            [DependencyFilter3Value]="item.DataSetId"
+                                            [HideColumns]="true"
+                                            [DisplayMemberPath]="'DisplayName'"
+                                            [NoValidation]="true"
+                                            [IsFreeText]="true"
+                                            [PlaceHolder]="'Field'"
+                                            [ObjectFieldName]="'DataSetFieldId'">
+                                    </LogLov>
+                                </td>
+
+                                <td style="width:2px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:150px;">
+                                    <ComboBox [ItemsSource]="item.Operators"
+                                              [SelectedItem]="item.SelectedOperator"
+                                              [Binding]="'Name'"
+                                              [WaterMark]="'Operator'"
+                                              (SelectedItemChanged)="item.SelectedOperator = $event"
+                                              [IsDisabled]="true">
+                                    </ComboBox>
+                                </td>
+
+                                <td style="width:2px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:2px;">
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <GlobalFilterValue [(FilterItem)]="DatasetFilters[i]"></GlobalFilterValue>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                    
+                    <td style="width: 185px;">
+                        <div style="padding: 10px;display: flex;">
+                            <div style="width: 87px">
+                                <!-- <p style="cursor: pointer;color: #3496F0;" (click)="ClearFiltersClick()">Clear Filters</p> -->
+                            </div>
+                            <div style="width: 87px">
+                                <button class="TabButton Button" (click)="ApplyFiltersClick()">
+                                    <img style="width: 12px; height: 13px;" src="./Images/GrayTick.png" />
+                                    Apply filters
+                                </button>
+                            </div>
+                   
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

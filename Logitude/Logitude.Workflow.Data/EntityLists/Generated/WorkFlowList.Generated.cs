@@ -50,8 +50,6 @@ namespace Logitude.Workflow.Data.EntityLists
        public string Entity  { get; set; }
        [DataMember]
        public string Trigger  { get; set; }
-       [DataMember]
-       public string WorkFlowActiveVersionId  { get; set; }
    }
 
 }

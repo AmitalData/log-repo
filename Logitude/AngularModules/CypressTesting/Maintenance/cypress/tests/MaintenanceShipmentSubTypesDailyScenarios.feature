@@ -5,7 +5,7 @@ Feature: Shipment Sub Type fake Create and Edit in Maintenance Module
     Scenario:Add Shipment Sub Type Code with lenght more than 6
         Given the user logged in and navigate to "Shipment Sub Types" in maintenance menu
         When add "123456" as shipment sub type code
-        Then a validation message with "Code Field must be less than 5" error should appear
+        Then a validation message with "Code Field length must be less than 5" error should appear
 
     Scenario: Create a new shipment sub type with already exists code
         Given a shipment sub type with the following details

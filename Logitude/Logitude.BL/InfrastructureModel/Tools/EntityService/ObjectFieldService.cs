@@ -62,7 +62,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             }
                     
             textCodeRepository = new TextCodeRepository(ObjectContext);
-            objectTableRepository = new ObjectTableRepository(ObjectContext);
+            objectTableRepository = new ObjectTableRepository(ObjectContext); 
             objectFieldValidationRepository = new ObjectFieldValidationRepository(ObjectContext);
             string objectTableName = objectTableRepository.GetSingleObjectTable(theEntityPm.ObjectTableId, tenant, false).Name;
             string tenantListName = "tabletenantobjectfields" + objectTableName.ToLower() + tenant;
@@ -83,7 +83,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                     bool exists = entityRepository.GetSingleObjectFieldByCode(theEntityPm.Code, theEntityPm.ObjectTableId, theEntityPm.Tenant) != null ? true : false;
                     if(exists)
                         throw new ApplicationException("An Object Field with the same code already exists");
-                }
+                } 
                 else
                 {
                     throw new ApplicationException("Code Field is required");
@@ -103,8 +103,12 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 {
                     count = list.Count;
                 }
+                if(ObjectTable.AllowCustomFields && ObjectTable.IsComposition && ObjectTable.MaxNumberOfCustomFields > 0)
+                {
+                    allowedCount = ObjectTable.MaxNumberOfCustomFields;
+                }
 
-                if(ObjectTable.Name == "Shipment" || ObjectTable.Name == "Quote" || ObjectTable.Name == "Opportunity" || ObjectTable.Name == "Container" || ObjectTable.IsCustom)
+                else if(ObjectTable.Name == "Shipment" || ObjectTable.Name == "Quote" || ObjectTable.Name == "Opportunity" || ObjectTable.Name == "Container" || ObjectTable.IsCustom)
                 {
                     allowedCount = ObjectTable.MaxNumberOfCustomFields;
                 }

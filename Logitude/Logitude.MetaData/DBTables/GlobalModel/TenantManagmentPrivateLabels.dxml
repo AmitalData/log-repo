@@ -20,7 +20,7 @@
   </Column>
   <Column
     Name="HybridPartnerId"
-    Type="nvarchar"
+    Type="varchar"
     Size="15">
     <Constraints
       Nullable="false" />
@@ -199,6 +199,14 @@
     Name="FilingInboxDomain"
     Type="varchar"
     Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DistributorCode"
+    OldNames="Distributor"
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>

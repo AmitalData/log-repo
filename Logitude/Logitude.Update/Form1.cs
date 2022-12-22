@@ -5825,7 +5825,19 @@ User/Pass",
             thread.Start();
         }
 
+        private bool isUploadContactsClicked = false;
+        private bool isDeleteContactsClicked = false;
         private void uploadContactsButton_Click(object sender, EventArgs e)
+        {
+            this.isUploadContactsClicked = true;
+            ReadContactsExcelFile();
+        }
+        private void deleteContactsButton_Click(object sender, EventArgs e)
+        {
+            this.isDeleteContactsClicked = true;
+            ReadContactsExcelFile();
+        }
+        private void ReadContactsExcelFile()
         {
             if (string.IsNullOrEmpty(uploadContactstextBox.Text))
                 MessageBox.Show("Please insert tenant");
@@ -5839,12 +5851,11 @@ User/Pass",
                 {
                     Stream stream = openFileDialog.OpenFile();
                     StreamReader streamReader = new StreamReader(stream);
-                    this.ReadExcelOfContacts(streamReader);
+                    this.ReadExcelLinesOfContacts(streamReader);
                 }
             }
         }
-
-        private void ReadExcelOfContacts(StreamReader streamReader)
+        private void ReadExcelLinesOfContacts(StreamReader streamReader)
         {
             List<ExcelContactItem> allContacts = new List<ExcelContactItem>();
 
@@ -5880,7 +5891,15 @@ User/Pass",
             }
 
             allContacts.Remove(allContacts[0]);
-            Thread thread = new Thread(() => this.UploadContacts(allContacts));
+
+            Thread thread = new Thread(() =>
+            {
+                if (isUploadContactsClicked)
+                    this.UploadContacts(allContacts);
+                else if (isDeleteContactsClicked)
+                    this.DeleteContacts(allContacts);
+            });
+
             thread.IsBackground = true;
             thread.Start();
         }
@@ -5889,22 +5908,7 @@ User/Pass",
         private int contactsCount = 0;
         private void UploadContacts(List<ExcelContactItem> allContacts)
         {
-            contactsCount = 0;
-            uploadContactFailItems = new List<UploadContactFailItem>();
-            UploadContactsList.Items.Clear();
-
-            UploadContactsList.View = View.Details;
-            UploadContactsList.GridLines = true;
-            UploadContactsList.FullRowSelect = true;
-
-            //Add column header
-            UploadContactsList.Columns.Add("Partner Name", 200);
-            UploadContactsList.Columns.Add("Email", 200);
-            UploadContactsList.Columns.Add("Error Message", 400);
-
-            SetControlPropertyValue(uploadContactsLabel, "Text", "Uploading...");
-            Stopwatch stopWatch = new Stopwatch();
-            stopWatch.Start();
+            Stopwatch stopWatch = this.InitializeProcesstingContacts();
 
             int tenant = Convert.ToInt32(uploadContactstextBox.Text);
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
@@ -5930,6 +5934,58 @@ User/Pass",
                     UploadContactsList.Items.Add(new ListViewItem(arr));
                 }
             }
+            isUploadContactsClicked = false;
+        }
+        private void DeleteContacts(List<ExcelContactItem> allContacts)
+        {
+            Stopwatch stopWatch = this.InitializeProcesstingContacts();
+
+            int tenant = Convert.ToInt32(uploadContactstextBox.Text);
+            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+            foreach (ExcelContactItem item in allContacts)
+            {
+                DeleteExistingContact(item, tenant, commonContext);
+            }
+            commonContext.SaveChanges();
+
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+            SetControlPropertyValue(uploadContactsLabel, "Text", "Done in " + ts.ToString());
+
+            if (uploadContactFailItems.Count > 0)
+            {
+                string[] arr = new string[3];
+                foreach (UploadContactFailItem item in uploadContactFailItems)
+                {
+                    arr[0] = item.PartnerName;
+                    arr[1] = item.Email;
+                    arr[2] = item.ErrorMessage;
+
+                    UploadContactsList.Items.Add(new ListViewItem(arr));
+                }
+            }
+            isDeleteContactsClicked = false;
+        }
+        private Stopwatch InitializeProcesstingContacts()
+        {
+            contactsCount = 0;
+            uploadContactFailItems = new List<UploadContactFailItem>();
+            UploadContactsList.Items.Clear();
+
+            UploadContactsList.View = View.Details;
+            UploadContactsList.GridLines = true;
+            UploadContactsList.FullRowSelect = true;
+
+            //Add column header
+            UploadContactsList.Columns.Add("Partner Name", 200);
+            UploadContactsList.Columns.Add("Email", 200);
+            UploadContactsList.Columns.Add("Error Message", 400);
+
+            SetControlPropertyValue(uploadContactsLabel, "Text", isUploadContactsClicked ? "Uploading..." : "Deleting...");
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
+            return stopWatch;
         }
 
         private void InsertNewContact(ExcelContactItem item, int tenant, ICommonDataContext commonContext)
@@ -5992,7 +6048,6 @@ User/Pass",
                 contactsCount = 0;
             }
         }
-
         private Contact CreateNewContactInstance(ExcelContactItem item, int tenant)
         {
             Contact newContact = new Contact();
@@ -6032,6 +6087,53 @@ User/Pass",
             TrimLength(mySearchFields, 1000);
             newContact.SearchFields = mySearchFields;
         }
+
+        private void DeleteExistingContact(ExcelContactItem item, int tenant, ICommonDataContext commonContext)
+        {
+            Contact contact = commonContext.Contacts.Where(d => d.Tenant == tenant && d.Email == item.Email).FirstOrDefault();
+
+            if (contact == null)
+            {
+                uploadContactFailItems.Add(new UploadContactFailItem()
+                {
+                    PartnerName = item.Email,
+                    ErrorMessage = "Contact not found"
+                });
+
+                return;
+            }
+
+            try
+            {
+                IQueryable<CardContact> cardContacts = commonContext.CardContacts.Where(d => d.Tenant == tenant && d.ContactId == contact.Id);
+                foreach (CardContact cardContact in cardContacts)
+                {
+                    commonContext.CardContacts.Remove(cardContact);
+                }
+
+                commonContext.Contacts.Remove(contact);
+
+                SetControlPropertyValue(uploadContactsLabel, "Text", isUploadContactsClicked ? "Uploading  " : "Deleting  " + contactsCount++.ToString());
+
+                if (contactsCount == 1000)
+                {
+                    commonContext.SaveChanges();
+                    contactsCount = 0;
+                }
+            }
+
+            catch (Exception ex)
+            {
+                uploadContactFailItems.Add(new UploadContactFailItem()
+                {
+                    PartnerName = item.Email,
+                    ErrorMessage = ex.Message
+                });
+            }
+        }
+        /// <summary>
+        /// end of contacts
+        /// </summary>
 
         private ContainerRepository containerRepository;
         private PortRepository portRepository;
@@ -6305,7 +6407,190 @@ User/Pass",
 
             return true;
         }
+
+        private void updateAllUSTenantsCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            portsStatesTenantTextBox.Enabled = !updateAllUSTenantsCheckBox.Checked;
+        }
+
+        private void updatePortsStatesButton_Click(object sender, EventArgs e)
+        {
+            if (!updateAllUSTenantsCheckBox.Checked && string.IsNullOrEmpty(portsStatesTenantTextBox.Text))
+            {
+                MessageBox.Show("Please insert tenant");
+                return;
+            }
+
+            this.UploadPortsStatesExcelFile();
+        }
+        private void UploadPortsStatesExcelFile()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Multiselect = false;
+            openFileDialog.Filter = "csv|*.csv";
+            if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                Stream stream = openFileDialog.OpenFile();
+                StreamReader streamReader = new StreamReader(stream);
+                this.UpdatePortsStatesMethod(streamReader);
+            }
+        }
+        private void UpdatePortsStatesMethod(StreamReader streamReader)
+        {
+            List<DataItem> AllDataLines = new List<DataItem>();
+
+            string line = "";
+            string[] lineParts = null;
+            while ((line = streamReader.ReadLine()) != null)
+            {
+                lineParts = line.Split(',');
+
+                if (lineParts.Count() >= 2)
+                {
+                    string portCombinedCode = this.GetText(lineParts, 0);
+                    string stateCode = this.GetText(lineParts, 1);
+
+                    if (!string.IsNullOrEmpty(portCombinedCode) && !string.IsNullOrEmpty(stateCode) && portCombinedCode != "LOCODE")
+                    {
+                        portCombinedCode = RemoveSpecialCharacters(portCombinedCode.ToUpper());
+                        stateCode = RemoveSpecialCharacters(stateCode.ToUpper());
+
+                        DataItem myDataItem = new DataItem();
+                        myDataItem.PortCombinedCode = portCombinedCode;
+                        myDataItem.StateCode = stateCode;
+                        AllDataLines.Add(myDataItem);
+                    }
+                }
+            }
+
+            List<DataItem> distinctItems = AllDataLines.GroupBy(p => new { p.PortCombinedCode, p.StateCode }).Select(g => g.Last()).ToList();
+            Thread thread = new Thread(() => this.RunUpdatePortsStates(distinctItems));
+            thread.IsBackground = true;
+            thread.Start();
+        }
+        private string RemoveSpecialCharacters(string myString)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in myString)
+            {
+                if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
+                {
+                    sb.Append(c);
+                }
+            }
+            return sb.ToString();
+        }
+        private void RunUpdatePortsStates(List<DataItem> allDataLines)
+        {
+            if (allDataLines.Count == 0)
+                return;
+
+            ICommonDataContext myCommonContext = CommonDataContext.GetContext(0);
+            logsLabel.Text = "Missed States";
+            excelListView.Items.Clear();
+            excelListView.Columns.Clear();
+            excelListView.View = View.Details;
+            excelListView.GridLines = true;
+            excelListView.FullRowSelect = true;
+            excelListView.Columns.Add("Port Code", 100);
+            excelListView.Columns.Add("State Code", 100);
+
+            if(updateAllUSTenantsCheckBox.Checked)
+            {
+                List<int> USTenantsIds = (from myTenant in myCommonContext.Tenants
+                                          join address in myCommonContext.Addresses
+                                          on myTenant.AddressId equals address.Id
+                                          join country in myCommonContext.Countries
+                                          on address.CountryId equals country.Id
+                                          where country.Code == "US"
+                                          select myTenant.Id).ToList();
+
+                foreach(int tenantId in USTenantsIds)
+                {
+                    StartUpdatingPortsStates(allDataLines, myCommonContext, tenantId);
+                }
+            }
+
+            else
+            {
+                StartUpdatingPortsStates(allDataLines, myCommonContext, Convert.ToInt32(portsStatesTenantTextBox.Text));
+            }
+        }
+        private void StartUpdatingPortsStates(List<DataItem> allDataLines, ICommonDataContext myCommonContext, int tenant)
+        {
+            List<DataItem> portsList = allDataLines.GroupBy(p => p.PortCombinedCode).Select(g => g.First()).ToList();
+            List<string> allPortsCodes = portsList.Select(a => a.PortCombinedCode).ToList();
+
+            List<DataItem> statesList = allDataLines.GroupBy(p => p.StateCode).Select(g => g.First()).ToList();
+            List<string> allStatesCodes = statesList.Select(a => a.StateCode).ToList();
+
+            SetControlPropertyValue(portsStatesLabel, "Text", "Updating...");
+
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
+
+            PortRepository portRepository = new PortRepository(myCommonContext);
+            StateRepository stateRepository = new StateRepository(myCommonContext);
+
+            List<Port> allPorts = (from d in myCommonContext.Ports
+                                   where d.Tenant == tenant
+                                   && allPortsCodes.Contains(d.CombinedCode)
+                                   select d).ToList();
+
+            List<State> allStates = (from d in myCommonContext.States
+                                     where d.Tenant == tenant
+                                     && allStatesCodes.Contains(d.Code)
+                                     select d).ToList();
+
+            var myCount = 0;
+            var count = 0;
+            var isUpdated = false;
+            string[] missedStatesArray = new string[2];
+            foreach (DataItem item in allDataLines)
+            {
+                count++;
+
+                State myState = allStates.Where(d => d.Code == item.StateCode).FirstOrDefault();
+                if (myState == null)
+                {
+                    missedStatesArray[0] = item.PortCombinedCode;
+                    missedStatesArray[1] = item.StateCode;
+                    excelListView.Items.Add(new ListViewItem(missedStatesArray));
+                }
+                else
+                {
+                    Port myPort = allPorts.Where(d => d.CombinedCode == item.PortCombinedCode && d.Tenant == tenant).FirstOrDefault();
+                    if (myPort != null && myPort.StateId == null)
+                    {
+                        isUpdated = true;
+                        myPort.StateCode = myState.Code;
+                        myPort.StateName = myState.EnglishName;
+                        myPort.StateId = myState.Id;
+                        portRepository.Update(myPort);
+                    }
+                }
+
+                if (myCount == 1000)
+                {
+                    if (isUpdated)
+                    {
+                        portRepository.SubmitChanges();
+                    }
+                    myCount = 0;
+                    isUpdated = false;
+                }
+
+                myCount++;
+            }
+
+            portRepository.SubmitChanges();
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+            SetControlPropertyValue(portsStatesLabel, "Text", "Done in " + ts.ToString());
+        }
     }
+
     public class TimeZoneExcelItem
     {
         public string Name { get; set; }
@@ -6317,7 +6602,6 @@ User/Pass",
         public int Tenant { get; set; }
         public string Mail { get; set; }
     }
-
     public class MyFeature
     {
 
@@ -6333,7 +6617,6 @@ User/Pass",
         public bool IsCoreFeature { get; set; }
 
     }
-
     public class HtmlStringParsingParams
     {
         public string Company { get; set; }
@@ -6344,7 +6627,6 @@ User/Pass",
         public string NumberOfBranches { get; set; }
         public string NumberOfUsers { get; set; }
     }
-
     public class DataItem
     {
         public string Id { get; set; }
@@ -6355,8 +6637,9 @@ User/Pass",
         public bool IsAir { get; set; }
         public bool IsOcean { get; set; }
         public bool IsInland { get; set; }
+        public string PortCombinedCode { get; set; }
+        public string StateCode { get; set; }
     }
-
     public class WarehouseItem
     {
         public string Id { get; set; }
@@ -6367,22 +6650,18 @@ User/Pass",
         public string State { get; set; }
         public string ZipCode { get; set; }
     }
-
     public class ComputingPartnerTranslationListData
     {
         public string OurCode { get; set; }
         public string PartnerCode { get; set; }
     }
-
     public class CityDataItem
     {
         public string CityCode { get; set; }
         public string CityName { get; set; }
         public string CountryCode { get; set; }
         public string StateCode { get; set; }
-
     }
-
     public class ExcelContactItem
     {
         public string PartnerName { get; set; }
@@ -6394,14 +6673,12 @@ User/Pass",
         public string Phone { get; set; }
         public string Mobile { get; set; }
     }
-
     public class UploadContactFailItem
     {
         public string PartnerName { get; set; }
         public string Email { get; set; }
         public string ErrorMessage { get; set; }
     }
-
     public class ExcelOI
     {
         public int? tenant { get; set; }

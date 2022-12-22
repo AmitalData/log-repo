@@ -39,6 +39,7 @@ export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
   public Direction: string = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
   public TextAlign = this.Direction == 'rtl' ? 'right' : 'left';
   public NumberFieldTextAlign: string = "right";
+  public NumberFieldRightPadding: string = "20px";
   public isRTL: boolean = false;
   private CurrentSession = SessionLocator.SelectedSession;
     @ViewChild(ChildDirective) Child: ChildDirective;
@@ -86,16 +87,16 @@ export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
             this.DataTypeCode = this.ObjectField.DataTypeCode;
             this.DigitsAfterPoints = "n" + this.ObjectField.DigitsAfterPoint;
 
-            if (this.ObjectField.DigitsAfterPoint == 0) {
-                switch (this.DataTypeCode) {
-                    case "Double":
-                    case "Decimal":
-                        {
-                            this.DigitsAfterPoints = "n2";
-                            break;
-                        }
-                }
-            }
+            //if (this.ObjectField.DigitsAfterPoint == 0) {
+            //    switch (this.DataTypeCode) {
+            //        case "Double":
+            //        case "Decimal":
+            //            {
+            //                this.DigitsAfterPoints = "n2";
+            //                break;
+            //            }
+            //    }
+            //}
 
             if (this.IsHeaderScreenTemplate) {
                 this.FieldName = this.ObjectField.PMPropertyPath;

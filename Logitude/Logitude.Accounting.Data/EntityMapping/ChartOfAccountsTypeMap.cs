@@ -32,6 +32,8 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(200).IsUnicode(true);
 
             this.Property(t => t.Inactive).HasColumnName("Inactive");
+
+            this.Property(t => t.Order).HasColumnName("Order");
         }
     }
 }

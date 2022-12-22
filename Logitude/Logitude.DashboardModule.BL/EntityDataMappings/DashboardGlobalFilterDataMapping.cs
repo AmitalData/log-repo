@@ -6,16 +6,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using Logitude.Server.Tools; 
+using Logitude.Server.Tools;
 using Logitude.DashboardModule.Data.EntityPOCOs;
-using Logitude.DashboardModule.BL.EntityPMs; 
+using Logitude.DashboardModule.BL.EntityPMs;
 using Logitude.DashboardModule.Data;
+using Logitude.DashboardModule.Data.Repositories;
 
 namespace Logitude.DashboardModule.BL.EntityDataMappings
 {
-   
-   public partial class DashboardGlobalFilterDataMapping: IMapping<DashboardGlobalFilterPM, DashboardGlobalFilter>
-   {
+
+    public partial class DashboardGlobalFilterDataMapping : IMapping<DashboardGlobalFilterPM, DashboardGlobalFilter>
+    {
 
         public void CustomPMToPOCO(DashboardGlobalFilterPM entityPM, DashboardGlobalFilter entityPOCO)
         {
@@ -29,10 +30,20 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 
         public void CustomPOCOToPM(DashboardGlobalFilterPM entityPM, DashboardGlobalFilter entityPOCO)
         {
-            //throw new NotImplementedException();
+            GetDataSetField(entityPM, entityPOCO);
         }
-   }
+
+        private static void GetDataSetField(DashboardGlobalFilterPM entityPM, DashboardGlobalFilter entityPOCO)
+        {
+            if (entityPOCO.DataSetFieldId == null) return;
+
+            var dataSetField = new AnalyticsFactsFieldsMetaDataRepository(entityPOCO.Tenant).GetSingle(entityPOCO.DataSetFieldId, 0);
+            if (dataSetField == null) return;
+
+            entityPM.JoinedTableName = dataSetField.JoinedTableName;
+            entityPM.FieldCode = dataSetField.FieldCode;
+        }
+    }
 
 
 }
-   

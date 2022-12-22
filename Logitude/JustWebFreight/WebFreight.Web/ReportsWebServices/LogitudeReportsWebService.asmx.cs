@@ -1199,6 +1199,7 @@ namespace WebFreight.Web.ReportsWebServices
                 id = customerItem.FieldValue.ToString();
                 customer = CardRepository.GetSingleCard(id, tenant, true);
                 dataProvider.CustomerName = customer.EnglishName;
+                dataProvider.CustomerCode = customer.Code;
 
                 myFilterdCustomerAddress = addressRep.GetMainAddressByCardId(id, tenant);
                 if (myFilterdCustomerAddress != null)
@@ -1209,9 +1210,7 @@ namespace WebFreight.Web.ReportsWebServices
             else
             {
                 dataProvider.CustomerName = "All";
-            }
-
-        
+            }        
 
             dataProvider.InvoicesByPartnerList = new List<InvoicesByPartnerDataProvider.InvoicesByPartner>();
 
@@ -1780,6 +1779,7 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicesRecored.InvoiceType = arInvoice.ARInvoiceTypeName;
                 invoicesRecored.InvoiceDate = arInvoice.InvoiceDate.Value;
                 invoicesRecored.InvoiceNumber = arInvoice.InvoiceNumber;
+                invoicesRecored.TotalAmountForTaxReport = arInvoice.TotalAmountForTaxReport;
                 invoicesRecored.BillTo = arInvoice.BillToName;
                 invoicesRecored.PartnerName = arInvoice.PartnerName;
                 invoicesRecored.OurRefNumber = arInvoice.MainEntityReference;
@@ -10417,7 +10417,9 @@ namespace WebFreight.Web.ReportsWebServices
                     myRecord.FullStatus = a.StatusName;
                     myRecord.FistPickupFromAddress = a.FirstPickupFullAddress;
                     myRecord.LastDeliveryToAddress = a.LastDeliveryFullAddress;
-
+                    myRecord.MainCarriageATD = a.MainCarriageATD;
+                    myRecord.ShipperReference1 = a.ShipperReference1;
+                    myRecord.ShipperReference2 = a.ShipperReference2;
                     if (!string.IsNullOrEmpty(a.StatusLocation))
                     {
                         myRecord.FullStatus = a.StatusName + "(" + a.StatusLocation + ")";
@@ -11107,7 +11109,7 @@ namespace WebFreight.Web.ReportsWebServices
         private RevenueExpenseDataProvider GetTrailBalanceDataProvider(byte[] xmlFilters, int tenant)
         {
             RevenueExpenseDataProvider totalData = new DataProviders.RevenueExpenseDataProvider();
-
+            List<ChartOfAccountsTypePM> chartOfAccountTypes = GetChartOfAccountTypes(tenant);
             #region Report Filters
 
             MemoryStream memorystream = new MemoryStream(xmlFilters);
@@ -11414,8 +11416,7 @@ namespace WebFreight.Web.ReportsWebServices
                             ForeignCredit = item.ForeignCredit != null ? item.ForeignCredit : 0,
                             ForeignDebit = item.ForeignDebit != null ? item.ForeignDebit : 0,
                             ForeignOpenBalance = item.ForeignOpenBalance != null ? item.ForeignOpenBalance : 0,
-
-
+                            ChartOfAccountTypeOrder = chartOfAccountTypes.FirstOrDefault(x => x.Code == item.ChartOfAcountType)?.Order,
                         };
 
                         var duplicated = totalData.ResultList.Where(d => d.Id == record.Id).FirstOrDefault();
@@ -11764,7 +11765,7 @@ namespace WebFreight.Web.ReportsWebServices
                                     ForeignCredit = item.ForeignCredit != null ? item.ForeignCredit : 0,
                                     ForeignDebit = item.ForeignDebit != null ? item.ForeignDebit : 0,
                                     ForeignOpenBalance = item.ForeignOpenBalance != null ? item.ForeignOpenBalance : 0,
-
+                                    ChartOfAccountTypeOrder = chartOfAccountTypes.FirstOrDefault(x => x.Code == item.ChartOfAcountType)?.Order,
                                     Error = true,
 
                                     Type = "ChartOfAccount"
@@ -11819,7 +11820,7 @@ namespace WebFreight.Web.ReportsWebServices
                             ForeignCredit = item.ForeignCredit != null ? item.ForeignCredit : 0,
                             ForeignDebit = item.ForeignDebit != null ? item.ForeignDebit : 0,
                             ForeignOpenBalance = item.ForeignOpenBalance != null ? item.ForeignOpenBalance : 0,
-
+                            ChartOfAccountTypeOrder = chartOfAccountTypes.FirstOrDefault(x => x.Code == item.ChartOfAcountType)?.Order,
                             Type = "ChartOfAccount"
                         };
 
@@ -11854,7 +11855,7 @@ namespace WebFreight.Web.ReportsWebServices
                                     ForeignCredit = item.ForeignCredit != null ? item.ForeignCredit : 0,
                                     ForeignDebit = item.ForeignDebit != null ? item.ForeignDebit : 0,
                                     ForeignOpenBalance = item.ForeignOpenBalance != null ? item.ForeignOpenBalance : 0,
-
+                                    ChartOfAccountTypeOrder = chartOfAccountType.Order,
                                     Error = true,
 
 
@@ -11926,7 +11927,6 @@ namespace WebFreight.Web.ReportsWebServices
 
 
                 List<CurrencyPM> currencies = GetCurrenciesByTenant(tenant);
-                List<ChartOfAccountsTypePM> chartOfAccountTypes = GetChartOfAccountTypes(tenant);
 
 
                 #region Fill Report Data
@@ -11958,6 +11958,7 @@ namespace WebFreight.Web.ReportsWebServices
                             ChartofAccountCode = item.ChartOfAcountCode1,
                             ChartofAccountLocalName = item.ChartOfAcountName1,
                             ChartofAccountTypeCode = item.ChartOfAcountType,
+                            ChartOfAccountTypeOrder = chartOfAccountTypes.FirstOrDefault(x => x.Code == item.ChartOfAcountType)?.Order,
                             ChartofAccountTypeLocalName = item.ChartOfAcountType != null ? chartOfAccountTypes.Where(d => d.Code == item.ChartOfAcountType).FirstOrDefault().LocalName : null,
                             CurrencyCode = item.CurrencyId != null ? currencies.Where(d => d.Id == item.CurrencyId).FirstOrDefault().Code : "Multi",
 

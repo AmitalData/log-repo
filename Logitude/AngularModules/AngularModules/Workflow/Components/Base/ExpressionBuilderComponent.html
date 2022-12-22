@@ -35,12 +35,17 @@
     }
 
     .expression-tree {
-        width: 360px;
-        margin-left: 10px;
+        width: 350px;
+        margin-left: 3px;
     }
 
     .variables-tree {
-        width: 220px;
+        width: 180px;
+        margin-left: 10px;
+    }
+
+    .operators-tree {
+        width: 180px;
         margin-left: 10px;
     }
 
@@ -51,6 +56,7 @@
         font-weight: bold !important;
         padding: 6px !important;
         border: 1px solid #AAAAAA !important;
+        line-height: 1.5em !important;
     }
 
     .item-container {
@@ -74,9 +80,18 @@
     .check-syntax-btn {
         width: 100px;
     }
+
+    .mention-item-icon {
+        height: 1.5em;
+        vertical-align: text-bottom;
+    }
+
+    .mention-item-label {
+        padding-left: 0.4em;
+    }
 </style>
 
-<table>
+<table *ngIf="FlowVariablesTreeItems && ExpressionCategories && ExpressionsTreeItems && OperatorsTreeItems">
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" class="table-row">
         <td>
             <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
@@ -94,8 +109,7 @@
             <div>
                 <div class="functions-header">
                     <div class="functions-label">Functions</div>
-                    <div *ngIf="ExpressionCategories && ExpressionsTreeItems && FlowVariablesTreeItems"
-                        class="functions-container">
+                    <div class="functions-container">
                         <div class="expression-category-dropdown">
                             <ComboBox [ItemsSource]="ExpressionCategories" [Binding]="'Name'"
                                 [SelectedItem]="ExpressionCategory"
@@ -105,13 +119,13 @@
                         </div>
                         <div class="expression-tree">
                             <TreeSelect *ngIf="ExpressionCategoryChanged" [Items]="ExpressionsTreeItems"
-                                [Width]="'360px'" [SetSelectedValue]="false" [IsReturnedTreeSelectItem]="true"
+                                [Width]="'350px'" [SetSelectedValue]="false" [IsReturnedTreeSelectItem]="true"
                                 [AllowClear]="false" [DisplayTitle]="false" [ShowExpand]="false"
                                 [Template]="expressionsTreeSelectTemplate" (ValueChanged)="updateExpression($event)"
                                 [ShowItem]="ExpressionCategory.Code | ShowExpressionTreeItemPipe">
                             </TreeSelect>
                             <TreeSelect *ngIf="!ExpressionCategoryChanged" [Items]="ExpressionsTreeItems"
-                                [Width]="'360px'" [SetSelectedValue]="false" [IsReturnedTreeSelectItem]="true"
+                                [Width]="'350px'" [SetSelectedValue]="false" [IsReturnedTreeSelectItem]="true"
                                 [AllowClear]="false" [DisplayTitle]="false" [ShowExpand]="false"
                                 [Template]="expressionsTreeSelectTemplate" (ValueChanged)="updateExpression($event)"
                                 [ShowItem]="ExpressionCategory.Code | ShowExpressionTreeItemPipe">
@@ -124,8 +138,15 @@
                             </ng-template>
                         </div>
                         <div *ngIf="FlowVariablesTreeItems" class="variables-tree">
-                            <TreeSelect [Items]="FlowVariablesTreeItems" [Width]="'220px'" [SetSelectedValue]="false"
+                            <TreeSelect [Items]="FlowVariablesTreeItems" [Width]="'180px'" [SetSelectedValue]="false"
                                 (ValueChanged)="selectVariable($event)" [AllowClear]="false" [DisplayTitle]="false">
+                            </TreeSelect>
+                        </div>
+
+                        <div class="operators-tree">
+                            <TreeSelect [Items]="OperatorsTreeItems" [Width]="'180px'" [SetSelectedValue]="false"
+                                (ValueChanged)="selectOperator($event)" [AllowClear]="false" [DisplayTitle]="false"
+                                [IsReturnedTreeSelectItem]="true">
                             </TreeSelect>
                         </div>
                     </div>
@@ -135,8 +156,15 @@
                         (click)="updateCursorPointer($event?.target?.selectionStart, $event?.target?.selectionEnd)"
                         (input)="updateExpressionValue($event.target.value)"
                         (keyup)="updateCursorPointerFromEvent($event)" autocorrect="off" autocapitalize="off"
-                        spellcheck="false">
+                        spellcheck="false" [mentionConfig]="IsSuggestionsPanelOpened ? {} : SuggestionsConfig"
+                        [mentionListTemplate]="mentionListTemplate" (closed)="setIsSuggestionsPanelOpenedAsClosed()">
                     </textarea>
+                    <ng-template #mentionListTemplate let-item="item">
+                        <img *ngIf="item.type === 'variable'" class="mention-item-icon" src="./Images/variable.png">
+                        <img *ngIf="item.type === 'function'" class="mention-item-icon" src="./Images/function.png">
+                        <img *ngIf="item.type === 'operator'" class="mention-item-icon" src="./Images/math.png">
+                        <span class="mention-item-label">{{item.label}}</span>
+                    </ng-template>
                 </div>
             </div>
         </td>

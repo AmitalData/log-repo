@@ -182,6 +182,14 @@
     <Compile Include="Contracts\UnifreightGatewayProxy.cs" />
     <Compile Include="DataContracts\Models\DigitalContactLastSettingInfo.cs" />
     <Compile Include="DataContracts\Models\DigitalDashboardSummary.cs" />
+    <Compile Include="DataContracts\Models\DigitalFeildSecurityObject.cs" />
+    <Compile Include="DataContracts\Models\DigitalFeildSecurityObjectModel.cs" />
+    <Compile Include="DataContracts\Models\DigitalFeildSecurityUpdateModel.cs" />
+    <Compile Include="DataContracts\Models\DigitalPortalScreenUpdateModel.cs" />
+    <Compile Include="DataContracts\Models\DigitalTextCodeObject.cs" />
+    <Compile Include="DataContracts\Models\DigitalTextCodeResponseModel.cs" />
+    <Compile Include="DataContracts\Models\DigitalTextCodeUpdateModel.cs" />
+    <Compile Include="DataContracts\Models\DigitalTextCodeUpdateObject.cs" />
     <Compile Include="DataContracts\Models\DigitalUploaderInfo.cs" />
     <Compile Include="DataContracts\Models\GeneralFilters.cs" />
     <Compile Include="DataContracts\Models\InvoicesCounter.cs" />

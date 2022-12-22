@@ -10,7 +10,7 @@
   HasCustomFilter="true"
   HasCustomFields="true"
   AvailableInCustomization="true"
-  SupportSubEntity="true"
+  SupportSubEntity="false"
   HasHelper="true"
   HasShortTitle="true"
   HasFiltersMenu="false"
@@ -20047,6 +20047,11 @@
     <TextCode
       Code="&quot;ARInvoice.G.NoInvoiceMSG&quot;"
       DefaultText="&quot;You don't have invoices yetInformation about invoices will be displayed here, when they will be added by the forwarder.&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.ReferenceNo&quot;"
+      DefaultText="&quot;Reference no&quot;"
       TextCodeTypeCode="&quot;G&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

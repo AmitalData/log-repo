@@ -1,0 +1,22 @@
+﻿<Script Pre="true"  DBType="Main" Module="Workflow">
+  <Sql Version="1">
+    <![CDATA[
+    
+    if((select count(*) from WorkFlowStatuses where Code = 'ACVE' ) = 0)
+    begin
+    INSERT INTO WorkFlowStatuses ([Code], [Name], [SearchFields]) VALUES (N'ACVE', N'Active', N'ACVE,Active,')
+    end;
+
+    if((select count(*) from WorkFlowStatuses where Code = 'INVE' ) = 0)
+    begin
+    INSERT INTO WorkFlowStatuses ([Code], [Name], [SearchFields]) VALUES (N'INVE', N'Inactive', N'INVE,Inactive,')
+    end;
+
+    if((select count(*) from WorkFlowStatuses where Code = 'DRFT' ) = 0)
+    begin
+    INSERT INTO WorkFlowStatuses ([Code], [Name], [SearchFields]) VALUES (N'DRFT', N'Draft', N'DRFT,Draft,')
+    end;
+    
+    ]]>
+  </Sql>
+</Script>

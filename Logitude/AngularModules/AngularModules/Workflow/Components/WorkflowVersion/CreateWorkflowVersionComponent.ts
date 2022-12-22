@@ -20,6 +20,8 @@ export class CreateWorkflowVersionComponent extends BaseComponent {
     public ObjectTableName: string = "WorkFlowVersion";
     public WorkflowId: string;
     public FlowJson: string;
+    public Entity: string;
+    public Trigger: string;
 
     public VersionDescription: string
 
@@ -36,6 +38,8 @@ export class CreateWorkflowVersionComponent extends BaseComponent {
     SetWindowArgs(args: any) {
         this.WorkflowId = args['WorkflowId'];
         this.FlowJson = args['FlowJson'];
+        this.Entity = args['Entity'];
+        this.Trigger = args['Trigger'];
     }
 
     ngOnInit() {
@@ -52,6 +56,8 @@ export class CreateWorkflowVersionComponent extends BaseComponent {
         this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
         this.EntityPM.WorkflowId = this.WorkflowId
         this.EntityPM.FlowJson = this.FlowJson;
+        this.EntityPM.Entity = this.Entity;
+        this.EntityPM.Trigger = this.Trigger;
     }
 
 
@@ -84,7 +90,7 @@ export class CreateWorkflowVersionComponent extends BaseComponent {
             if (serviceResponse) {
                 this.stopBusyIndicator();
                 if (!serviceResponse.HasError) {
-                    this.CurrentSession.CloseCurrentWindowEmit("ok");
+                    this.CurrentSession.CloseCurrentWindowEmit(serviceResponse.Result);
                 }
                 else {
                     this.ValidationErrorsList = serviceResponse.ErrorsArray;

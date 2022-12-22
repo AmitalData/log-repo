@@ -12,7 +12,8 @@ export class EntitiesTreeList {
         { Code: "Shipment", Name: "Shipment" },
         { Code: "Customer", Name: "Customer" },
         { Code: "User", Name: "User" },
-        { Code: "Opportunity", Name: "Opportunity" }
+        { Code: "Opportunity", Name: "Opportunity" },
+        { Code: "ShipmentStoragePricing", Name: "Storage Pricing" }
     ];
 
     private ChildEntities: ChildEntity[] = [

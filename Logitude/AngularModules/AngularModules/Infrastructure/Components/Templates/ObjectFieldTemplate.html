@@ -40,8 +40,8 @@
                         <div class="MediaFillRelative" *ngIf="IsAutoFormat">
 
                             <div class="MediaFillRelative" *ngIf="!CustomField">
-                                <div class="TextTrimming" *ngIf="DataTypeCode == 'Integer'" [style.textAlign]="NumberFieldTextAlign">{{FieldValue | NumbersPipe:'n0'}}</div>
-                                <div class="TextTrimming" *ngIf="DataTypeCode == 'Decimal' || DataTypeCode == 'Double'" [style.textAlign]="NumberFieldTextAlign">{{FieldValue | NumbersPipe:DigitsAfterPoints}}</div>
+                                <div class="TextTrimming" *ngIf="DataTypeCode == 'Integer'" [style.textAlign]="NumberFieldTextAlign" [style.padding-right]="NumberFieldRightPadding">{{FieldValue | NumbersPipe:'n0'}}</div>
+                                <div class="TextTrimming" *ngIf="DataTypeCode == 'Decimal' || DataTypeCode == 'Double'" [style.textAlign]="NumberFieldTextAlign" [style.padding-right]="NumberFieldRightPadding">{{FieldValue | NumbersPipe:DigitsAfterPoints}}</div>
                                 <div class="TextTrimming" *ngIf="DataTypeCode == 'Date' || DataTypeCode == 'DateTime'" [style.textAlign]="TextAlign">{{FieldValue | DateTimeToDatePipe}}</div>
                                 <div class="TextTrimming" *ngIf="DataTypeCode == 'PickList'" [style.textAlign]="TextAlign">{{FieldValue}}</div>
 
@@ -69,8 +69,8 @@
                             <!-- CustomField -->
                             <div class="MediaFillRelative" *ngIf="CustomField">
                                 <div class="MediaFillRelative" *ngIf="IsHeaderScreenTemplate">
-                                    <div class="TextTrimming" *ngIf="DataTypeCode == 'Integer'" [style.textAlign]="NumberFieldTextAlign">{{CustomField['ResolvedValue']}}</div>
-                                    <div class="TextTrimming" *ngIf="DataTypeCode == 'Decimal' || DataTypeCode == 'Double'" [style.textAlign]="NumberFieldTextAlign">{{CustomField['ResolvedValue'] | NumbersPipe:'N3'}}</div>
+                                    <div class="TextTrimming" *ngIf="DataTypeCode == 'Integer'" [style.textAlign]="NumberFieldTextAlign" [style.padding-right]="NumberFieldRightPadding"> {{CustomField['ResolvedValue']}}</div>
+                                    <div class="TextTrimming" *ngIf="DataTypeCode == 'Decimal' || DataTypeCode == 'Double'" [style.textAlign]="NumberFieldTextAlign" [style.padding-right]="NumberFieldRightPadding">{{CustomField['ResolvedValue'] | NumbersPipe:DigitsAfterPoints}}</div>
                                     <div class="TextTrimming" *ngIf="DataTypeCode == 'Date' || DataTypeCode == 'DateTime'" [style.textAlign]="TextAlign">{{CustomField['ResolvedValue'] | DateTimeToDatePipe}}</div>
                                     <div class="TextTrimming" *ngIf="DataTypeCode == 'PickList'" [style.textAlign]="TextAlign">{{CustomField['ResolvedValue']}}</div>
 
@@ -96,8 +96,8 @@
                                 </div>
 
                                 <div class="MediaFillRelative" *ngIf="!IsHeaderScreenTemplate">
-                                    <div class="TextTrimming" *ngIf="DataTypeCode == 'Integer'" [style.textAlign]="NumberFieldTextAlign">{{FieldValue}}</div>
-                                    <div class="TextTrimming" *ngIf="DataTypeCode == 'Decimal' || DataTypeCode == 'Double'" [style.textAlign]="NumberFieldTextAlign">{{FieldValue}}</div>
+                                    <div class="TextTrimming" *ngIf="DataTypeCode == 'Integer'" [style.textAlign]="NumberFieldTextAlign" [style.padding-right]="NumberFieldRightPadding">{{FieldValue}}</div>
+                                    <div class="TextTrimming" *ngIf="DataTypeCode == 'Decimal' || DataTypeCode == 'Double'" [style.textAlign]="NumberFieldTextAlign" [style.padding-right]="NumberFieldRightPadding">{{FieldValue}}</div>
                                     <div class="TextTrimming" *ngIf="DataTypeCode == 'Date' || DataTypeCode == 'DateTime'" [style.textAlign]="TextAlign">{{FieldValue}}</div>
                                     <div class="TextTrimming" *ngIf="DataTypeCode == 'PickList'" [style.textAlign]="TextAlign">{{FieldValue}}</div>
 

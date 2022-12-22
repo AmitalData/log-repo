@@ -37,18 +37,6 @@ export class CustomDashboardLayoutComponent implements AfterViewInit, OnDestroy 
 
     }
    
-    private _show: boolean = false;
-    @Input('Show') set Show(value) {       
-        if (value && !this._show) {
-            this.renderNewDashboard();
-        }
-
-        this._show = value;
-    }
-    get Show() {
-        return this._show;
-    }    
-
     private isEditLayout: boolean;
     get IsEditLayout() { return this.isEditLayout; }
     set IsEditLayout(value: boolean) {
@@ -76,9 +64,7 @@ export class CustomDashboardLayoutComponent implements AfterViewInit, OnDestroy 
     get DashboardDataBinding() { return this._DashboardDataBinding; }    
 
     ngAfterViewInit(): void {
-        if (this._show) {
-            this.renderNewDashboard();
-        }
+        this.renderNewDashboard();
     }
 
     ngOnDestroy() {

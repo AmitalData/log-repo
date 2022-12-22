@@ -7,6 +7,7 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+import {WorkFlowVersionPM} from './WorkFlowVersionPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -114,11 +115,20 @@ export class WorkFlowPM {
     public set Trigger(newValue: string) { if (this.trigger != newValue) { this.trigger = newValue; this.MarkAsDirty("Trigger"); } }
        
 	 
-    private workFlowActiveVersionId: string;
-    public get WorkFlowActiveVersionId() { return this.workFlowActiveVersionId; }
-    public set WorkFlowActiveVersionId(newValue: string) { if (this.workFlowActiveVersionId != newValue) { this.workFlowActiveVersionId = newValue; this.MarkAsDirty("WorkFlowActiveVersionId"); } }
-       
-	 
+     
+	private workFlowVersions: WorkFlowVersionPM[];
+    get  WorkFlowVersions() {
+        if (this.workFlowVersions == null) {
+            this.workFlowVersions = [];
+        }
+
+        return this.workFlowVersions;
+    }
+    set  WorkFlowVersions(newValue: WorkFlowVersionPM[]) {
+        if (this.workFlowVersions != newValue) {
+            this.workFlowVersions = newValue;
+        }
+    }
 
     public OldEntityPM: WorkFlowPM;
 		

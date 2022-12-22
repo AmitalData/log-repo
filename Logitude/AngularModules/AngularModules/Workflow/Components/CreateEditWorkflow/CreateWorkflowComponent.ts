@@ -109,16 +109,19 @@ export class CreateWorkflowComponent extends BaseComponent implements OnInit {
                 this.stopBusyIndicator();
                 if (!serviceResponse.HasError) {
                     this.CurrentSession.CloseCurrentWindowEmit("ok");
-
                     let newEntity = serviceResponse.Result;
-                    SessionLocator.DynamicLoader.Load("./Workflow/Components/WorkflowBuilder/WorkflowBuilderComponent", this.CurrentSession.SessionLocation.viewContainerRef)
-                        .then(cmpRef => {
-                            cmpRef.instance.ComponentRef = cmpRef;
-                            cmpRef.instance.Run({
-                                ObjectTableName: 'WorkFlow',
-                                EntityId: newEntity.Id
-                            });
-                        });
+
+                    this.WorkFlowPMService.get(newEntity.Id).subscribe((serviceResponse: ServiceResponse) => {
+                        if (!serviceResponse.HasError) {
+                            var entitypm: WorkFlowPM
+                            entitypm = serviceResponse.Result
+                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                                .then(cmpRef => {
+                                    cmpRef.instance.ComponentRef = cmpRef;
+                                    cmpRef.instance.Run({ EntityId: entitypm.Id, EntityPM: entitypm, ObjectTableName: 'WorkFlow', BackButtonLabel: "WorkFlows" });
+                                });
+                        }
+                    });
                 }
                 else {
                     this.ValidationErrorsList = serviceResponse.ErrorsArray;

@@ -434,30 +434,37 @@ namespace Logitude.Workflow.BL.EntityPMs
 			
 		 }
 	   }
-	  private string workFlowActiveVersionId ;
-	  	  
-       
-	   [CustomValidation(typeof(WorkflowValidationClass), "ValidateClass")]
+
+	   private List<WorkFlowVersionPM> workFlowVersions;
+	 
 	   [DataMember]
-       public string WorkFlowActiveVersionId  
+	   public virtual List<WorkFlowVersionPM> WorkFlowVersions  
 	   {
-	    
-	     get
-		{
-		   return workFlowActiveVersionId;
-		 }
-		 set
-		 {
-		   if(workFlowActiveVersionId != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="WorkFlowActiveVersionId",OldValue=workFlowActiveVersionId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   workFlowActiveVersionId=value;
-		   }
-			
-		 }
-	   }
-   }
+	        get
+             {
+                 if (workFlowVersions == null)
+                 {
+                     workFlowVersions = new List<WorkFlowVersionPM>();
+                 }
+                 return workFlowVersions;
+              }
+             set { workFlowVersions = value; }
+	    }
+		   
+	   private List<WorkFlowVersionPM>  deletedWorkFlowVersions;
+	   public virtual List<WorkFlowVersionPM> DeletedWorkFlowVersions  
+	   {
+	        get
+             {
+                 if ( deletedWorkFlowVersions == null)
+                 {
+                      deletedWorkFlowVersions = new List<WorkFlowVersionPM>();
+                 }
+                 return  deletedWorkFlowVersions;
+              }
+             set {  deletedWorkFlowVersions = value; }
+	    }
+	     }
    
 }
 	 

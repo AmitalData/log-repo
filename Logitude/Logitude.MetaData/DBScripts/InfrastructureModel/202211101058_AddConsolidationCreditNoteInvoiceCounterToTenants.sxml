@@ -1,5 +1,5 @@
-﻿<Script DBType="Main"  Module="Infrastructure">
-  <Sql Version="4">
+﻿<Script DBType="Main"  Module="Infrastructure" Env="Logitude,local,test,cloud">
+  <Sql Version="5">
     <![CDATA[
  
   
@@ -30,12 +30,14 @@ BEGIN
 				end
 
 				set @ARInvoiceCounterId = (select Id from Counters where Tenant = @Tenant and ObjectTableId = @InvoiceObjectTableId and Code = 'INVC')
-
+                if (@ARInvoiceCounterId is not null)
+				begin
 				if not exists (select * from CounterDefinitions where Tenant = @Tenant AND CounterId = @ARInvoiceCounterId AND Parameter1 = 'COD')
 				begin
 					EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'CounterDefinition'
 					insert into CounterDefinitions (Id, Tenant, Parameter1, StartNumber, CounterId, Prefix, UniquePerPrefix, InActive)
 					values (@NewEntityId, @Tenant, 'COD', 1000, @ARInvoiceCounterId, 'COD', 0, 1)
+				end
 				end
 
 			FETCH NEXT FROM TenantsCursor INTO @Tenant

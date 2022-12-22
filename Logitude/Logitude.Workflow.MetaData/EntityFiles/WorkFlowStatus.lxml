@@ -9,6 +9,8 @@
   ObjectTablePlural="&quot;WorkFlowStatuses&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
+  AvailableInCustomization="false"
+  SupportSubEntity="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -39,7 +41,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Workflow Status&quot;"
-  Code="&quot;ed66&quot;"
+  Code="&quot;12d6&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -57,6 +59,7 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;6c3d&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -88,6 +91,7 @@
     SystemMaxLength="4"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="true"
@@ -161,6 +165,7 @@
     SystemMaxLength="30"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="true"
@@ -234,6 +239,7 @@
     SystemMaxLength="1000"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -334,6 +340,14 @@
       Code="&quot;DRFT&quot;"
       Name="&quot;Draft&quot;"
       SearchFields="&quot;DRFT,Draft&quot;" />
+    <Record
+      Code="&quot;ACVE&quot;"
+      Name="&quot;Active&quot;"
+      SearchFields="&quot;ACVE,Active&quot;" />
+    <Record
+      Code="&quot;INVE&quot;"
+      Name="&quot;Inactive&quot;"
+      SearchFields="&quot;INVE,Inactive&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

@@ -103,7 +103,7 @@ export class WarehouseEntryStatusListService {
         for (var i in mykeys) {
 			var propName = mykeys[i];
 			var propValue = filters[propName];
-			var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters" || propName == "TreeFilters"  || propName == "ParentEntity");
+            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters" || propName == "TreeFilters" || propName == "ParentEntity");
 
             if (urlparameters != "?") {
                 urlparameters = urlparameters.concat('&');
@@ -118,7 +118,7 @@ export class WarehouseEntryStatusListService {
                 urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
             }
 
-			if (propName == "ParentEntity" && propValue) {
+            if (propName == "ParentEntity" && propValue) {
                 urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
             }
 

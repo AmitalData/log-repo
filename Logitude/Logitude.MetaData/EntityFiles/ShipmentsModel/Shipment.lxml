@@ -103584,6 +103584,75 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;d587a5cf-6396-460e-a9fa-7880f4cc2ddf&quot;"
+    FieldName="&quot;IsINTTRAFROB&quot;"
+    OldNames="IsINTTRAFROB"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;Shipment&quot;"
+    FieldsDataType="&quot;Boolean&quot;"
+    MinLength="0"
+    MaxLength="0"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    IsListFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;IsINTTRAFROB&quot;"
+    ListPropertyPath="&quot;IsINTTRAFROB&quot;"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;IsINTTRAFROB&quot;"
+    DefaultText="&quot;FROB&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <Query
     Code="&quot;Shipments&quot;"
     TextCode="&quot;Shipments&quot;"
@@ -116876,7 +116945,7 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Shipment.G.StatusUpdated&quot;"
-      DefaultText="&quot;Status Updated&quot;"
+      DefaultText="&quot;Status updated&quot;"
       TextCodeTypeCode="&quot;G&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -116886,12 +116955,12 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Shipment.G.SearchFrom&quot;"
-      DefaultText="&quot;Search From&quot;"
+      DefaultText="&quot;Search from&quot;"
       TextCodeTypeCode="&quot;G&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Shipment.G.SearchDestination&quot;"
-      DefaultText="&quot;Search Destination&quot;"
+      DefaultText="&quot;Search destination&quot;"
       TextCodeTypeCode="&quot;G&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -117115,11 +117184,6 @@
       TextCodeTypeCode="&quot;G&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Shipment.G.DownloadAll&quot;"
-      DefaultText="&quot;Download all&quot;"
-      TextCodeTypeCode="&quot;G&quot;"
-      IsSpellChecked="false" />
-    <TextCode
       Code="&quot;Shipment.G.ViewDocument&quot;"
       DefaultText="&quot;View document&quot;"
       TextCodeTypeCode="&quot;G&quot;"
@@ -117237,6 +117301,21 @@
     <TextCode
       Code="&quot;Shipment.G.Shippingline&quot;"
       DefaultText="&quot;Shipping line&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.DangerousGoods&quot;"
+      DefaultText="&quot;Dangerous goods&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.Customer&quot;"
+      DefaultText="&quot;Customer&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.ContainersLines&quot;"
+      DefaultText="&quot;Containers lines&quot;"
       TextCodeTypeCode="&quot;G&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

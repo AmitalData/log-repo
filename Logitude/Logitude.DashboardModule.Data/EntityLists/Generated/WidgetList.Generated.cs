@@ -22,6 +22,20 @@ namespace Logitude.DashboardModule.Data.EntityLists
        public string Title  { get; set; }
        [DataMember]
        public string Filters  { get; set; }
+       [DataMember]
+       public bool TimeOverTime  { get; set; }
+       [DataMember]
+       public int? ComparisonPeriod  { get; set; }
+       [DataMember]
+       public string Increase  { get; set; }
+       [DataMember]
+       public string ComparisonOperator  { get; set; }
+       [DataMember]
+       public string ComparisonDateGroup  { get; set; }
+       [DataMember]
+       public DateTime? FromDate  { get; set; }
+       [DataMember]
+       public DateTime? ToDate  { get; set; }
    }
 
 }

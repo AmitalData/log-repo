@@ -50,6 +50,24 @@ namespace Logitude.DashboardModule.Data.EntityMapping
             this.Property(t => t.SortBy).HasColumnName("SortBy");
 
             this.Property(t => t.SortDirection).HasColumnName("SortDirection").HasMaxLength(4).IsUnicode(false);
+
+            this.Property(t => t.TimeOverTime).HasColumnName("TimeOverTime");
+
+            this.Property(t => t.ComparisonPeriod).HasColumnName("ComparisonPeriod");
+
+            this.Property(t => t.Increase).HasColumnName("Increase").HasMaxLength(100).IsUnicode(false);
+
+            this.Property(t => t.ComparisonOperator).HasColumnName("ComparisonOperator").HasMaxLength(100).IsUnicode(false);
+
+            this.Property(t => t.ComparisonDateGroup).HasColumnName("ComparisonDateGroup").HasMaxLength(100).IsUnicode(false);
+
+            this.Property(t => t.FromDate).HasColumnName("FromDate");
+
+            this.Property(t => t.ToDate).HasColumnName("ToDate");
+
+            this.Property(t => t.SecondaryGroupById).HasColumnName("SecondaryGroupById").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.SecondaryDateGroupCode).HasColumnName("SecondaryDateGroupCode").HasMaxLength(17).IsUnicode(false);
         }
     }
 }

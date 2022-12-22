@@ -32,10 +32,11 @@ namespace WebFreight.Web.Helpers.SignUp.Logbox
         }
         public void UpdateNewTenant(SignUpInfoClass signUpInfoClass, AddressPM TenantAddress, int tenant)
         {
+            int requestTenant = signUpInfoClass.IsCreateLogboxTenantFromCloud ? tenant : signUpInfoClass.Tenant;
             TenantService service = new TenantService(commonContext, tenant);
             TenantQuery query = new TenantQuery(tenant);
 
-            var CrmCustomer = CardRepository.GetSingleCard(signUpInfoClass.CustomerId, tenant, false);
+            var CrmCustomer = CardRepository.GetSingleCard(signUpInfoClass.CustomerId, requestTenant, false);
 
             if (CrmCustomer == null)
             {

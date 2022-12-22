@@ -1,20 +1,22 @@
-import {DashboardComponent} from '../Dashboard/Components/Workspace/DashboardComponent';
-import {ActivityStatusDetailsComponent} from '../Dashboard/Components/Workspace/ActivityStatusDetailsComponent';
-import {AirLineDashboardComponent} from '../Dashboard/Components/Workspace/AirLineDashboardComponent';
+import { DashboardComponent } from '../Dashboard/Components/Workspace/DashboardComponent';
+import { ActivityStatusDetailsComponent } from '../Dashboard/Components/Workspace/ActivityStatusDetailsComponent';
+import { AirLineDashboardComponent } from '../Dashboard/Components/Workspace/AirLineDashboardComponent';
 import { AddEditDashboardComponent } from '../Dashboard/Components/Windows/AddEditDashboardComponent';
 import { AddEditWidgetComponent } from '../Dashboard/Components/Windows/AddEditWidgetComponent';
 import { CustomDashboardComponent } from '../Dashboard/Components/Workspace/CustomDashboardComponent';
-import { WidgetFilterComponent } from './Components/Windows/Filter/WidgetFilterComponent';
+import { WidgetFilterComponent } from './Components/Windows/Filter/WidgetFilter/WidgetFilterComponent';
 import { ChooseUsersComponent } from './Components/Windows/ChooseUsersComponent';
 import { ChooseUserCheckBoxComponent } from './Components/Windows/ChooseUserCheckBoxComponent';
 import { CustomDashboardLayoutComponent } from './Components/Workspace/CustomDashboardLayoutComponent';
-import { GlobalFilterComponent } from './Components/Windows/Filter/GlobalFilterComponent';
 import { DashboardTabComponent } from './Components/Workspace/DashboardTabComponent';
+import { DashboardDropDownComponent } from './Components/Windows/DashboardDropDown/DashboardDropDown';
+import { GlobalFilterComponent } from './Components/Windows/Filter/GlobalFilter/GlobalFilterComponent';
+import { GlobalFilterValueComponent } from './Components/Windows/Filter/GlobalFilter/GlobalFilterValueComponent';
 
 export const Components =
     [
         DashboardComponent,
-        ActivityStatusDetailsComponent,       
+        ActivityStatusDetailsComponent,
         AirLineDashboardComponent,
         AddEditDashboardComponent,
         AddEditWidgetComponent,
@@ -25,6 +27,13 @@ export const Components =
         CustomDashboardLayoutComponent,
         GlobalFilterComponent,
         DashboardTabComponent,
+        DashboardDropDownComponent,
+        GlobalFilterValueComponent
+    ];
+
+export const Directives =
+    [
+
     ];
 
 export class ModuleDeclarations {
@@ -45,6 +54,8 @@ export class ModuleDeclarations {
             case "CustomDashboardLayoutComponent": { myResult = CustomDashboardLayoutComponent; break; }
             case "GlobalFilterComponent": { myResult = GlobalFilterComponent; break; }
             case "DashboardTabComponent": { myResult = DashboardTabComponent; break; }
+            case "DashboardDropDownComponent": { myResult = DashboardDropDownComponent; break; }
+            case "GlobalFilterValueComponent": { myResult = GlobalFilterValueComponent; break; }
         }
 
         return myResult;

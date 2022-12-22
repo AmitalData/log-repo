@@ -47,7 +47,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
 
 
-        private List<CustomChildEntity> BuildCustomChildEntities()
+        public List<CustomChildEntity> BuildCustomChildEntities()
         {
             List<CustomChildEntity> customChildEntities = new List<CustomChildEntity>();
             var childObjectTables = new ObjectTableQuery(customChildEntityArgs.Tenant).GetObjectPMsByTenant(customChildEntityArgs.Tenant).Where(d=>d.IsCustom && d.ParentObjectTableId == parentObjectTableId).ToList();

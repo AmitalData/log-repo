@@ -16,11 +16,20 @@
         bottom: 0;
         margin: auto;
     }
+
+    .open-expression-builder-btn {
+        position: absolute;
+        width: 220px;
+        height: 22px;
+        z-index: 1;
+        cursor: pointer;
+    }
 </style>
 
 <tr>
     <td>
-        <div class="expression-element" [ngStyle]="{ 'width': Width }" (click)="openExpressionBuilder()">
+        <div class="open-expression-builder-btn" (click)="openExpressionBuilder()"></div>
+        <div class="expression-element" [ngStyle]="{ 'width': Width }">
             <input [disabled]="IsDisabled" class="expression-input" type="text" placeholder="Expression ..."
                 [(ngModel)]="ExpressionValue.expression" readonly />
             <img class="function-icon" src="./Images/function.png" />

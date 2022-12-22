@@ -44,8 +44,15 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
 
                 else
                 {
-                    entity.IssuedByUserId = loggedContactId;
-                    entity.CreatedByUserId = loggedContactId;
+                    if (!string.IsNullOrEmpty(entityPM.IssuedByUserId))
+                        entity.IssuedByUserId = entityPM.IssuedByUserId;
+                    else
+                        entity.IssuedByUserId = loggedContactId;
+
+                    if (!string.IsNullOrEmpty(entityPM.CreatedByUserId))
+                        entity.CreatedByUserId = entityPM.CreatedByUserId;
+                    else
+                        entity.CreatedByUserId = loggedContactId;
                 }
 
                 entity.CreateDate = entityPM.CreateDate;
@@ -57,9 +64,6 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 entity.IsConsolidationInvoice = entityPM.IsConsolidationInvoice;
                 entity.SATInvoiceStatusCode = entityPM.SATInvoiceStatusCode;
                 entity.SATTransferStatusCode = entityPM.SATTransferStatusCode;
-
-
-
             }
 
             entity.SATTransferStatusCode = entityPM.SATTransferStatusCode;

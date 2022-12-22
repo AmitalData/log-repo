@@ -17,7 +17,8 @@ namespace Logitude.Infrastructure.Data
     public interface IInfrastructureContext : IContext
     {
    
-       	 IDbSet<BatchTaskExecution> BatchTaskExecutions { get; }
+       	 IDbSet<AuditLog> AuditLogs { get; }
+		 IDbSet<BatchTaskExecution> BatchTaskExecutions { get; }
 		 IDbSet<BatchTaskExecutionStatus> BatchTaskExecutionStatus { get; }
 		 IDbSet<BIFoldersPermission> BIFoldersPermissions { get; }
 		 IDbSet<BIReport> BIReports { get; }
@@ -26,6 +27,11 @@ namespace Logitude.Infrastructure.Data
 		 IDbSet<BIReportsType> BIReportsTypes { get; }
 		 IDbSet<BusinessProcessQueue> BusinessProcessQueues { get; }
 		 IDbSet<BusinessRole> BusinessRoles { get; }
+		 IDbSet<DigitalFieldSecurity> DigitalFieldSecurities { get; }
+		 IDbSet<DigitalPortalScreen> DigitalPortalScreens { get; }
+		 IDbSet<DigitalPreDefinedComponent> DigitalPreDefinedComponents { get; }
+		 IDbSet<DigitalProfile> DigitalProfiles { get; }
+		 IDbSet<DigitalTextCode> DigitalTextCodes { get; }
 		 IDbSet<FeatureToggle> FeatureToggles { get; }
 		 IDbSet<LastRunDetail> LastRunDetails { get; }
 		 IDbSet<LBPTeamMember> LBPTeamMembers { get; }
@@ -35,7 +41,6 @@ namespace Logitude.Infrastructure.Data
 		 IDbSet<TeamMemberBusinessRole> TeamMemberBusinessRoles { get; }
 		 IDbSet<Toggle> Toggles { get; }
 	 
-         IDbSet<IndexerWaterMark> IndexerWaterMarks { get; }
          void SetAsModified(object entity);
          void DetectChanges();
          int SaveChanges();

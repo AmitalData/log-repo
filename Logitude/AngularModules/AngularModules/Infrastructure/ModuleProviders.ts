@@ -108,6 +108,8 @@ import { TableTabService } from './Services/ExtendedPMs/TableTabService';
 import { ScreenSectionListService } from './Services/StandardLists/ScreenSectionListService';
 import { ScreenListService } from './Services/StandardLists/ScreenListService';
 import { ScreenPMService } from './Services/StandardPMs/ScreenPMService';
+import { DigitalPortalScreenListService } from './Services/StandardLists/DigitalPortalScreenListService';
+import { DigitalPreDefinedComponentListService } from './Services/StandardLists/DigitalPreDefinedComponentListService';
 
 export class ModuleProviders {
 
@@ -221,6 +223,8 @@ export class ModuleProviders {
             case "ScreenSectionListService": { myResult = new ScreenSectionListService(); break; }
             case "ScreenListService": { myResult = new ScreenListService(); break; }
             case "ScreenPMService": { myResult = new ScreenPMService(); break; }
+            case "DigitalPortalScreenListService": { myResult = new DigitalPortalScreenListService(); break; }
+            case "DigitalPreDefinedComponentListService": { myResult = new DigitalPreDefinedComponentListService(); break; }
         }
 
         return myResult;

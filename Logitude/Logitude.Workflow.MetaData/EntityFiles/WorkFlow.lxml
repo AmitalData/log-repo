@@ -12,7 +12,7 @@
   AvailableInCustomization="false"
   SupportSubEntity="false"
   HasHelper="false"
-  HasShortTitle="false"
+  HasShortTitle="true"
   HasFiltersMenu="false"
   HasCustomValidator="false"
   IsEditable="false"
@@ -52,7 +52,7 @@
   NoDefaultFeatures="false"
   HasCompactSearch="false"
   ApplyDefaultValues="false"
-  HasMenuButtons="false"
+  HasMenuButtons="true"
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
@@ -1382,16 +1382,16 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <field
-    Id="&quot;ec87a37d-f81f-4b24-8903-b9ad89d276b6&quot;"
-    FieldName="&quot;WorkFlowActiveVersionId&quot;"
-    OldNames="WorkFlowVersionId,WorkFlowActiveVersionId"
+    Id="&quot;9ebb0258-65e1-4070-a556-04698cad7c69&quot;"
+    FieldName="&quot;WorkFlowVersions&quot;"
+    OldNames="WorkFlowVersions"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;WorkFlow&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;List&quot;"
     MinLength="0"
-    MaxLength="15"
+    MaxLength="0"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -1400,20 +1400,21 @@
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
-    SystemMaxLength="15"
+    SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="false"
     IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
-    PMPropertyPath="&quot;WorkFlowActiveVersionId&quot;"
-    ListPropertyPath="&quot;WorkFlowActiveVersionId&quot;"
+    PMPropertyPath="&quot;WorkFlowVersions&quot;"
+    ListPropertyPath="&quot;WorkFlowVersions&quot;"
     DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
     IsMulti="false"
+    MultiTableName="&quot;WorkFlowVersion&quot;"
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
@@ -1425,20 +1426,18 @@
     DisplayInDocumentReferences="false"
     InActive="false"
     DisplayLongName="false"
-    FullFieldLable="&quot;WorkFlowActiveVersionId&quot;"
-    DefaultText="&quot;WorkFlow Active Version&quot;"
-    IsNullable="true"
+    FullFieldLable="&quot;WorkFlowVersions&quot;"
+    DefaultText="&quot;WorkFlowVersions &quot;"
+    IsNullable="false"
     IsForeignKey="false"
-    ForeignEntity="&quot;&quot;"
     DontBuildRelationOnDB="false"
-    NavigationPropertyName="&quot;&quot;"
     IsPrimaryKey="false"
-    HasDataBaseField="true"
+    HasDataBaseField="false"
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
     NoMetaDataField="false"
-    GenerateInList="true"
+    GenerateInList="false"
     IsFixedLength="false"
     EnableAutoFill="false"
     IncludeInSearchField="false"
@@ -1497,7 +1496,7 @@
     <QueryFilters />
   </Query>
   <Screen
-    Name="&quot;WorkflowHeaderScreen&quot;"
+    Name="&quot;WorkFlowHeaderScreen&quot;"
     ObjectTableName="&quot;WorkFlow&quot;"
     IsReadOnly="true"
     IsHeaderScreen="true"
@@ -1505,6 +1504,19 @@
     NumberOfRows="1">
     <ScreenFields />
   </Screen>
+  <Tab
+    TabName="&quot;Flow Builder&quot;"
+    TabLocalName="&quot;Flow Builder&quot;"
+    ObjectTableName="&quot;WorkFlow&quot;"
+    Code="&quot;WFFB&quot;"
+    ControlPath="&quot;./Workflow/Components/WorkflowBuilder/WorkflowBuilderComponent&quot;"
+    TextCode="&quot;WorkFlow.TH.FlowBuilder&quot;"
+    IsPackagable="true"
+    IndexOrder="0"
+    HtmlComponentURL="&quot;./Workflow/Components/WorkflowBuilder/WorkflowBuilderComponent&quot;"
+    HtmlComponentName="&quot;WorkflowBuilderComponent&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <Tab
     TabName="&quot;General&quot;"
     TabLocalName="&quot;General&quot;"
@@ -1573,6 +1585,28 @@
       IsFollowUp="false" />
   </EventTypes>
   <Records />
+  <MenuButtons
+    MenuButtonGroupType="&quot;WorkFlowEdit&quot;"
+    MenuButtonGroupName="&quot;WorkFlowEditButtonsGroup&quot;">
+    <MenuButton
+      EventCode="&quot;SaveDraft&quot;"
+      DefaultText="&quot;Save Draft&quot;"
+      MenuButtonType="&quot;button&quot;"
+      IndexOrder="0"
+      IsPackagable="true" />
+    <MenuButton
+      EventCode="&quot;NewVersion&quot;"
+      DefaultText="&quot;New Version&quot;"
+      MenuButtonType="&quot;button&quot;"
+      IndexOrder="0"
+      IsPackagable="true" />
+    <MenuButton
+      EventCode="&quot;Activate&quot;"
+      DefaultText="&quot;Activate&quot;"
+      MenuButtonType="&quot;button&quot;"
+      IndexOrder="0"
+      IsPackagable="true" />
+  </MenuButtons>
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures>

@@ -145,6 +145,11 @@ namespace WebFreight.Web.ReportsWebServices
                 manifestDataProvider.TotalWeightInLBS = DataProviders.General.ComputeWeightInSelectedUnit(master.GrossWeight, master.GrossWeightUnitCode, "LB");
                 manifestDataProvider.TotalVolumeINCBM = DataProviders.General.ComputeVolumeInSelectedUnit(master.Volume, master.VolumeUnitCode, "CBM");
                 manifestDataProvider.TotalVolumeINCBF = DataProviders.General.ComputeVolumeInSelectedUnit(master.Volume, master.VolumeUnitCode, "CBF");
+                manifestDataProvider.MasterMAWBNumber = master.Master;
+                manifestDataProvider.Transshipment3VesselName = master.Transshipment3VesselName;
+                manifestDataProvider.Transshipment3VoyageNumber = master.Transshipment3CarrierNumber;
+
+
 
                 if (master.BranchId != null)
                 {

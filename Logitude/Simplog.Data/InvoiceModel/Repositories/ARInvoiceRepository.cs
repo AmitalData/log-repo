@@ -293,6 +293,12 @@ namespace Simplog.Data.InvoiceModel.Repositories
         {
             CardRepository cardRepository = new CardRepository(tenant);
             var cardBillToId =  cardRepository.GetBillToCardById(cardId, tenant);
+
+            if (cardBillToId == null)
+            {
+                return new List<string>();
+            }
+
             return cardBillToId;
         }
 
@@ -530,7 +536,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
         }
         public void Add(ARInvoice entity)
         {
-            AddFromARInvoice(entity);
+            //AddFromARInvoice(entity);
             context.ARInvoices.Add(entity);
         }
         public void AddFromARInvoice(ARInvoice entity)
@@ -574,7 +580,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
         {
             try
             {
-                UpdateFromARInvoice(entity);
+                //UpdateFromARInvoice(entity);
                 context.ARInvoices.Attach(entity);
             }
             catch { }

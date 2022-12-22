@@ -19,7 +19,6 @@ namespace WebFreight.Web.DataProviders
         public string CustomerName { get; set; }
         public string Currency { get; set; }
         public string Name { get; set; }
-
         public string TenantName { get; set; }
         public string Address1 { get; set; }
         public string Address2 { get; set; }
@@ -31,6 +30,7 @@ namespace WebFreight.Web.DataProviders
         public string TenantPhone { get; set; }
         public string TenantFax { get; set; }
         public string CustomerPhone { get; set; }
+        public string CustomerCode { get; set; }
 
         public List<InvoicesByPartner> InvoicesByPartnerList { get; set; }
 

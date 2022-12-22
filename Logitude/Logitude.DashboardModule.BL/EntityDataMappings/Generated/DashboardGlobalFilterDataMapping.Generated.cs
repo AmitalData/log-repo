@@ -47,7 +47,9 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         DataSetFieldId, 
 	         FilterOperator, 
 	         DataTypeCode, 
-	         LineNumber,
+	         LineNumber, 
+	         JoinedTableName, 
+	         FieldCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

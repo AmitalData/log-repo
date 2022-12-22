@@ -48,6 +48,7 @@ export class GridScreenLayoutService implements IScreenLayoutService {
         this.screenComponent.MyArgs.Columns = this.screenComponent.GridScreenSelectedFields.length;
         this.screenComponent.MyArgs.SortedByFieldCode = this.screenComponent.OldItem.ScreenPM.SortedByFieldCode;
         this.screenComponent.MyArgs.SortedType = this.screenComponent.OldItem.ScreenPM.SortedType;
+        this.screenComponent.MyArgs.RelatedScreenCode = this.screenComponent.OldItem.ScreenPM.RelatedScreenCode;
     }
 
     private ReladGridSections() {

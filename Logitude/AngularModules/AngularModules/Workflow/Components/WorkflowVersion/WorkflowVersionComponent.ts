@@ -33,21 +33,44 @@ export class WorkflowVersionComponent extends BaseComponent {
     public ShowBusyIndicator: boolean = false;
     public BusyIndicatorWidth: number = 200;
 
+    private TabSelectedEvent: any = null;
+
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
+        this.Listen();
     }
 
     ngOnInit() {
         this.BuildColumns();
     }
 
-    LoadData() {
-        this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
+    private Listen() {
+        if (this.entityArgs.EditComponent) {
+            this.TabSelectedEvent = this.entityArgs.EditComponent.TabSelected.subscribe((tabCode: string) => {
+                if (tabCode == "WFVR") {
+                    this.LoadData()
+                }
+            });
+        }
+
+        if (this.entityArgs.EditComponent) {
+            this.entityArgs.EntityArgEventEmitter.subscribe(
+                theMessage => {
+                    if (theMessage == "WorkflowVersionsUpdated") {
+                        this.LoadData()
+                    }
+                }
+            );
+        }
     }
 
-    RefreshButtonClicked() {
-        this.LoadData();
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.TabSelectedEvent);
+    }
+
+    LoadData() {
+        this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
     }
 
     DataSource = {
@@ -103,7 +126,7 @@ export class WorkflowVersionComponent extends BaseComponent {
             Display: "CreateDate",
             IsCustomTemplate: true,
             Styles: { width: '400px' },
-            AdditionalDataCustom : this.ObjectTableName,
+            AdditionalDataCustom: this.ObjectTableName,
             HtmlListComponentName: 'FieldTemplateComponent',
             HtmlListComponentUrl: './Workflow/Components/Templates/FieldTemplateComponent',
             ServerSideSortable: true
@@ -112,7 +135,7 @@ export class WorkflowVersionComponent extends BaseComponent {
             FieldName: 'StatusName',
             DataTypeCode: 'String',
             Display: "Status",
-            AdditionalDataCustom : this.ObjectTableName,
+            AdditionalDataCustom: this.ObjectTableName,
             HtmlListComponentName: 'FieldTemplateComponent',
             HtmlListComponentUrl: './Workflow/Components/Templates/FieldTemplateComponent',
             IsCustomTemplate: true,
@@ -123,37 +146,10 @@ export class WorkflowVersionComponent extends BaseComponent {
     onRowSelected($event) {
         this.ClickedVersion = $event.rowData
         this.HasChanges = true;
+        this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, UpdatedVersion: null }
+        this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, ClickedVersionRow: $event.rowData.Id }
+        this.CurrentSession.CurrentEditComponent.SetSelectedTabByCode("WFFB");
     }
-
-    activateVersion() {
-        this.startBusyIndicator("Saving ...");
-        let clickedVersion: WorkFlowVersionPM = this.ClickedVersion
-        let isActivate: boolean = clickedVersion.StatusCode == "INVE"
-        if (clickedVersion && clickedVersion.StatusCode) {
-            var workflow: WorkFlowPM = this.EntityPM
-            workflow.FlowJson = isActivate ? clickedVersion.FlowJson : null
-            this.WorkFlowPMService.update(workflow).subscribe((serviceResponse: ServiceResponse) => {
-                if (serviceResponse != null && !serviceResponse.HasError) {
-                    clickedVersion.StatusCode = isActivate ? "ACVE" : "INVE"
-                    this.WorkFlowVersionPMService.update(clickedVersion).subscribe((serviceResponse: ServiceResponse) => {
-                        if (serviceResponse != null && !serviceResponse.HasError) {
-                            this.stopBusyIndicator();
-                            this.LoadData();
-                            console.log("update version")
-                        } else {
-                            this.stopBusyIndicator();
-                        }
-                    });
-                } else {
-                    this.stopBusyIndicator();
-                }
-            });
-        } else {
-            this.stopBusyIndicator();
-        }
-        this.HasChanges = false;
-    }
-
 
     startBusyIndicator(message: string) {
         this.BusyIndicatorText = message;

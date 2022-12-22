@@ -41,11 +41,23 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
     }
 
     initialize() {
+        this.initializeDataType();
         this.initializeDateTimeCurrentValue();
-
         if (!this.IsIntegerNumberInput) {
             this.initializeLookupTable();
             this.initializePickListTable();
+        }
+    }
+
+    initializeDataType() {
+        if (this.DataType) {
+            this.DataType = this.DataType.replace("[]", "");
+        }
+    }
+
+    initializeDateTimeCurrentValue() {
+        if (this.isDateTimeObjectField() || this.isDataTypeDateTime()) {
+            this.setDateTimeCurrentValue();
         }
     }
 
@@ -58,12 +70,6 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
     initializePickListTable() {
         if (this.isPickListObjectField()) {
             this.setPickListTable();
-        }
-    }
-
-    initializeDateTimeCurrentValue() {
-        if (this.isDateTimeObjectField() || this.isDataTypeDateTime()) {
-            this.setDateTimeCurrentValue();
         }
     }
 

@@ -41,7 +41,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;WorkFlow Version Status&quot;"
-  Code="&quot;c811&quot;"
+  Code="&quot;036c&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -334,6 +334,10 @@
       Code="&quot;INVE&quot;"
       Name="&quot;Inactive&quot;"
       SearchFields="&quot;INVE,Inactive&quot;" />
+    <Record
+      Name="&quot;Draft&quot;"
+      SearchFields="&quot;Draft,DRFT&quot;"
+      Code="&quot;DRFT&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

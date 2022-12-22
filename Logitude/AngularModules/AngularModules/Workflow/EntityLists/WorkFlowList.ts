@@ -26,7 +26,6 @@ export class WorkFlowList {
 	FlowJson: string;
 	Entity: string;
 	Trigger: string;
-	WorkFlowActiveVersionId: string;
 	
 }
  

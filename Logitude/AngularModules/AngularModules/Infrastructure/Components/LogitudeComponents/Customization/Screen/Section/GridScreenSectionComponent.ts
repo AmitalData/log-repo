@@ -133,7 +133,7 @@ export class GridScreenSectionComponent extends BaseComponent implements OnInit,
         let logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = "Add " + this.ScreenSectionName;
         logitudeWindow.WindowArgs = this.GetWindowArgs();
-        logitudeWindow.Width = 600;
+        logitudeWindow.Width = 860;
         logitudeWindow.Height = 530;
         logitudeWindow.Show('./Infrastructure/Components/LogitudeComponents/Customization/Screen/Section/AddEditChildEntityComponent');
     }
@@ -144,7 +144,7 @@ export class GridScreenSectionComponent extends BaseComponent implements OnInit,
         logitudeWindow.WindowArgs = this.GetWindowArgs();
         logitudeWindow.WindowArgs.IsEditMode = true;
         logitudeWindow.WindowArgs.EntityPM = childEntity;
-        logitudeWindow.Width = 600;
+        logitudeWindow.Width = 860;
         logitudeWindow.Height = 530;
         logitudeWindow.Show('./Infrastructure/Components/LogitudeComponents/Customization/Screen/Section/AddEditChildEntityComponent');
     }
@@ -152,7 +152,8 @@ export class GridScreenSectionComponent extends BaseComponent implements OnInit,
     private GetWindowArgs() {
         let windowArgs: any = {};
         windowArgs.ParentEntityPM = this.ParentEntityPM;
-        windowArgs.Screen = this.Screen;
+        let screen = window.Screens.filter((screen: any) => screen.Code === this.Screen.RelatedScreenCode);
+        windowArgs.Screen = screen ? screen[0] : this.Screen;
         windowArgs.ObjectTableName = this.ScreenObjectTableName;
         windowArgs.ParentObjectTableName = this.ParentObjectTableName;
         windowArgs.FatherComponent = this;

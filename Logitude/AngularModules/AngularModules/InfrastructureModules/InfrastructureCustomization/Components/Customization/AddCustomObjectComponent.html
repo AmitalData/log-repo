@@ -1,0 +1,152 @@
+<style>
+    .Disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+</style>
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+        </td>
+    </tr>
+    <tr style="height:100%">
+        <td>
+            <table>
+
+                <tr style="height: 10px; display:table">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="height:10px"></td>
+                            </tr>
+                            <tr>
+                                <td style="height: 22px; width: 140px;">
+                                    <table style="table-layout: fixed;">
+                                        <tr>
+                                            <td style="width:10px; vertical-align: middle;">
+                                                <div *ngIf="!DisplayLabelSingular" style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+                                            </td>
+                                            <td class="TextTrimming" style="text-align: left; vertical-align:middle;">
+                                                <label class="Label" [style.color] ="DisplayLabelSingular ? '#6E7172':'red'" style="color:#6E7172">Display Label (Singular):</label>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+
+                                <td style="width:10px"></td>
+                                <td style="height: 22px; width: 250px; ">
+                                    <div style="width: 250px;">
+                                        <LogTextBox [ObjectFieldName]="'DisplayLabelSingular'" [DataContext]="dataContext"
+                                                    [Text]="DisplayLabelSingular"></LogTextBox>
+                                    </div>
+                                </td>
+                                <td></td>
+
+                            </tr>
+                            <tr>
+                                <td style="height:10px"></td>
+                            </tr>
+                            <tr>
+                                <td style="height: 22px; width: 140px;">
+                                    <table style="table-layout: fixed;">
+                                        <tr>
+                                            <td style="width:10px; vertical-align: middle;">
+                                                <div *ngIf="!DisplayLabelPlural" style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+                                            </td>
+                                            <td class="TextTrimming" style="text-align: left; vertical-align:middle;">
+                                                <label class="Label" [style.color]="DisplayLabelPlural ? '#6E7172':'red'" style="color:#6E7172">Display Label (Plural):</label>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td style="width:10px"></td>
+                                <td style="height: 22px; width: 250px; ">
+                                    <div style="width: 250px;">
+                                        <LogTextBox [ObjectFieldName]="'DisplayLabelPlural'" [DataContext]="dataContext"
+                                                    [Text]="DisplayLabelPlural"></LogTextBox>
+                                    </div>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr *ngIf="!IsSubObject">
+                                <td style="height:10px"></td>
+                            </tr>
+                            <tr *ngIf="!IsSubObject">
+                                <td style="height: 22px; width: 140px;">
+                                    <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                        Type:
+                                    </label>
+                                </td>
+                                <td style="width:10px"></td>
+                                <td style="height: 22px; width: 250px; ">
+                                    <div style="width: 250px; display:flex">
+                                        <ComboBox (SelectedItemChanged)="ObjectTableType=$event"
+                                                  [SelectedItem]="ObjectTableType" [ItemsSource]="ObjectTableTypes"
+                                                  [Binding]="'Record'" [MaxHeight]="'100'" style="width:212px; margin-right:6px"></ComboBox>
+                                        <HelpIcon style="width:18px; height:18px;" [HideHeader]="true" [Text]="TypeHelpText"></HelpIcon>
+                                    </div>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td style="height:10px"></td>
+                            </tr>
+                            <tr>
+                                <td style="height: 50px; width: 140px;">
+                                    <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                        Description:
+                                    </label>
+                                </td>
+                                <td style="width:10px"></td>
+                                <td style="height: 50px; width: 250px; ">
+                                    <div style="width: 250px;">
+                                        <LogTextBox [ObjectFieldName]="'Description'" [DataContext]="dataContext"
+                                                    [Text]="Description" [IsMultiline]="true"></LogTextBox>
+                                    </div>
+                                </td>
+                                <td></td>
+                            </tr>
+
+
+                            <tr>
+                                <td></td>
+                            </tr>
+
+
+                        </table>
+                    </td>
+
+                </tr>
+
+
+
+                <tr style="height: 32px;">
+                    <td style="vertical-align: bottom">
+                        <table style="height: 22px;">
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 57px;">
+                                    <div>
+                                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                                    </div>
+                                </td>
+
+                                <td style="width: 5px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 57px;">
+                                    <button class="RedButton" (click)="SaveButtonClicked()">Save</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

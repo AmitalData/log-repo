@@ -121,9 +121,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             "min(CarrierCard.EnglishName) as CarrierEnglishName, " +
             "min(CarrierCard.LocalName) as CarrierLocalName ";
 
+            var incotermField = "min(Inco.Code) as IncotermName ";
+
             var groupSelect = "Min(P.Id) as ForwardingIdForCustom";
 
-            var selectScript = $"SELECT {updatedShipmentFields}, {shipmentComputedFields}, {shipmentMasterFields}, {groupSelect} , {forwardingShipmentFields} , {shipmentAdditionalDataFields},{shipmentOrderFields}, {carrierCardFields}";
+            var selectScript = $"SELECT {updatedShipmentFields}, {shipmentComputedFields}, {shipmentMasterFields}, {groupSelect} , {forwardingShipmentFields} , {shipmentAdditionalDataFields},{shipmentOrderFields}, {carrierCardFields}, {incotermField}";
 
 
 
@@ -140,7 +142,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                              $"LEFT OUTER JOIN dbo.Cards CarrierCard    ON CarrierCard.Id = ShipmentDeliveries.CarrierId " +
                              $"LEFT OUTER JOIN dbo.Cards ConsigneeCard    ON ConsigneeCard.Id = C.ConsigneeId " +
                              $"LEFT OUTER JOIN dbo.ShipmentOrders SHO    ON P.Id = SHO.ShipmentId " +
-                             $"LEFT OUTER JOIN dbo.Cards ShipperCard    ON ShipperCard.Id = C.ShipperId";
+                             $"LEFT OUTER JOIN dbo.Cards ShipperCard    ON ShipperCard.Id = C.ShipperId " +
+                             $"LEFT OUTER JOIN dbo.Incoterms Inco    ON Inco.Id = C.IncotermId";
 
 
             List<string> whereConditions = new List<string>();
@@ -208,7 +211,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 					Mas.MainCarriageToPortId,
 					Mas.MainCarriageFromPortId,
                     ConsigneeCard.LocalName,
-                    ShipperCard.LocalName";
+                    ShipperCard.LocalName,
+                    Inco.Code";
 
 
             string sqlQuery = string.Join(Environment.NewLine, " SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED ", selectScript, fromScript, joinScript, whereScript, groupByScript);
@@ -332,7 +336,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             "min(CarrierCard.EnglishName) as CarrierEnglishName, " +
             "min(CarrierCard.LocalName) as CarrierLocalName ";
 
-            var selectScript = $"Select {updatedShipmentFields} , {shipmentComputedFields} , {shipmentMasterFields} , {forwardingShipmentFields} , {shipmentAdditionalDataFields} , {shipmentOrderFields}, {carrierCardFields} ";
+            var incotermField = "min(Inco.Code) as IncotermName ";
+
+            var selectScript = $"Select {updatedShipmentFields} , {shipmentComputedFields} , {shipmentMasterFields} , {forwardingShipmentFields} , {shipmentAdditionalDataFields} , {shipmentOrderFields}, {carrierCardFields}, {incotermField} ";
 
 
 
@@ -349,7 +355,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                             LEFT OUTER JOIN dbo.ShipmentPickUpDeliveries ShipmentDeliveries    ON ShipmentDeliveries.ShipmentId = P.Id
 							LEFT OUTER JOIN dbo.Cards CarrierCard    ON CarrierCard.Id = ShipmentDeliveries.CarrierId
 							LEFT OUTER JOIN dbo.Cards ConsigneeCard    ON ConsigneeCard.Id = P.ConsigneeId
-							LEFT OUTER JOIN dbo.Cards ShipperCard    ON ShipperCard.Id = P.ShipperId";
+							LEFT OUTER JOIN dbo.Cards ShipperCard    ON ShipperCard.Id = P.ShipperId
+                            LEFT OUTER JOIN dbo.Incoterms Inco    ON Inco.Id = P.IncotermId";
 
 
 
@@ -422,7 +429,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 					Mas.MainCarriageToPortId,
 					Mas.MainCarriageFromPortId,
                     ShipperCard.LocalName,
-                    ConsigneeCard.LocalName";
+                    ConsigneeCard.LocalName,
+                    Inco.Code";
 
 
             string sqlQuery = " SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED " + selectScript + fromScript + joinScript + whereScript + groupByScript;
@@ -511,15 +519,18 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 "PickupActualDateTime as PickupDate," +
                 "PickupEstimatedDateTime as PickupEstimationDate," +
                 "OnHandNumber as FromWarehouseNotes," +
-                "OnHandDate as FromWarehouseDate";
-
+                "OnHandDate as FromWarehouseDate," +
+                "Inco.Code as IncotermName";
+            
 
              var selectScript = $"SELECT {shipmentOrderFields} , {cargoTrackingShipmentDefaultFields} ";
 
             var fromScript = $@"FROM dbo.ShipmentOrders SHO 
                                 left join Cards ConsigneeCard on SHO.ConsigneeId = ConsigneeCard.id
                                 left join Cards ShipperCard on SHO.ShipperId = ShipperCard.id
+                                LEFT JOIN Incoterms Inco    ON SHO.IncotermId = Inco.Id
                                 ";
+
 
             List<string> whereConditions = new List<string>();
 

@@ -11,7 +11,7 @@
         <div style="margin-bottom: 40px; width: 100% " *ngFor="let screenSection of ScreenSections">
 
             <table style="width:100%;">
-                <tr *ngIf="screenSection.Type != 'Grid' && screenSection.Title && screenSection.ScreenColumns && screenSection.ScreenColumns.length > 0">
+                <tr *ngIf="ShowSectionName(screenSection)">
                     <td class="section-title">{{screenSection.Title}}</td>
                 </tr>
                 <tr *ngIf="screenSection.Type != 'Grid'" style="height:100%">
@@ -24,7 +24,16 @@
                                     <LogLabel *ngIf="objectField.FieldName == 'CustomField' && IsCustomerCare" [ObjectFieldName]="objectField.FieldName" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogLabel>
                                 </td>
 
-                                <td *ngIf="!objectField.MultiLine && !objectField.GeneratedComponentPath">
+                                <td *ngIf="(objectField.DisplayOnly && IsDisplaySummarySection)">
+                                    <div *ngIf="objectField.HasTemplate && (objectField.DataTypeCode == 'Date' || objectField.DataTypeCode == 'DateTime')" style="width: 100%;">
+                                        {{EntityPM[objectField.Code] | DateTimePipe:'DT'}}
+                                    </div>
+                                    <div *ngIf="(objectField.DataTypeCode != 'Date' && objectField.DataTypeCode != 'DateTime') || !objectField.HasTemplate" style="width: 100%; padding-bottom: 15px;">
+                                        <ObjectFieldTemplate [ObjectTable]="ObjectTable" [ObjectField]="objectField" [Entity]="EntityPM" [IsHeaderScreenTemplate]="true" style="width:100%;"></ObjectFieldTemplate>
+                                    </div>
+                                </td>
+
+                                <td *ngIf="!objectField.MultiLine && !objectField.GeneratedComponentPath  && !(objectField.DisplayOnly && IsDisplaySummarySection)">
                                     <div *ngIf="objectField.DataTypeCode == 'Boolean'">
                                         <LogCheckBox [ObjectFieldName]="objectField.FieldName" [ObjectTableName]="ObjectTableName" [Checked]="EntityPM[objectField.FieldName]" [DataContext]="EntityPM"
                                                      [HideColumns]="HideColumns">
@@ -69,7 +78,7 @@
                                         </table>
 
                                     </div>
-                                    
+
                                     <div *ngIf="((objectField.DataTypeCode == 'DateTime' && objectField.IsCustom == false) || objectField.DataTypeCode == 'Date')">
                                         <LogDatePicker [ObjectFieldName]="objectField.FieldName" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="EntityPM[objectField.FieldName]" [DataContext]="EntityPM" [HideColumns]="HideColumns"></LogDatePicker>
                                     </div>
@@ -98,7 +107,7 @@
 
                                 </td>
 
-                                <td *ngIf="objectField.MultiLine && !objectField.GeneratedComponentPath" colspan="2" style="height: 100px;">
+                                <td *ngIf="objectField.MultiLine && !objectField.GeneratedComponentPath && !(objectField.DisplayOnly && IsDisplaySummarySection)" colspan="2" style="height: 100px;">
                                     <div style="height: 20px; line-height: 20px;">
                                         <LogLabel [ObjectFieldName]="objectField.FieldName" [ObjectTableName]="ObjectTableName" [DataContext]="EntityPM"></LogLabel>
                                     </div>
@@ -112,7 +121,7 @@
                                     </div>
                                 </td>
 
-                                <td *ngIf="objectField.GeneratedComponentPath != undefined && objectField.GeneratedComponentPath != null">
+                                <td *ngIf="objectField.GeneratedComponentPath != undefined && objectField.GeneratedComponentPath != null && !(objectField.DisplayOnly && IsDisplaySummarySection)">
                                     <div>
                                         <ObjectFieldComponent [ObjectField]="objectField"
                                                               [ObjectTableName]="ObjectTableName"

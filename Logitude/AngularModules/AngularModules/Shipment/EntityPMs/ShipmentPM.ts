@@ -5456,6 +5456,10 @@ export class ShipmentPM {
     public get CustomChildEntities() { return this.customChildEntities; }
     public set CustomChildEntities(newValue: CustomChildEntity[]) { if (this.customChildEntities != newValue) { this.customChildEntities = newValue; this.MarkAsDirty("CustomChildEntities"); } }
 
+    private isINTTRAFROB: boolean;
+    public get IsINTTRAFROB() { return this.isINTTRAFROB; }
+    public set IsINTTRAFROB(newValue: boolean) { if (this.isINTTRAFROB != newValue) { this.isINTTRAFROB = newValue; this.MarkAsDirty("IsINTTRAFROB"); } }
+
 
     public OldEntityPM: ShipmentPM;
 

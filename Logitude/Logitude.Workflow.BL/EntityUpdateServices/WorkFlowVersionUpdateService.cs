@@ -1,14 +1,9 @@
 ﻿using Logitude.Server.Tools;
-using Logitude.Workflow.BL.EntityDataMappings;
 using Logitude.Workflow.BL.EntityPMs;
-using Logitude.Workflow.Data;
+using Logitude.Workflow.Data.EntityPOCOs;
 using Logitude.Workflow.Data.Repositories;
 using Simplog.Server.Infrastructure;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Logitude.Workflow.BL.EntityUpdateServices
 {
@@ -18,11 +13,8 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
         {
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
-                WorkFlowVersionRepository workFlowVersionRepository = new WorkFlowVersionRepository(entityPM.Tenant);
-
-                SetDefaultValues(entityPM, workFlowVersionRepository);
-                DeactiveVersionStatus(entityPM, workFlowVersionRepository);
-                UpdateWorkflowWithVersionId(entityPM);
+                SetWorkFlowVersionDefaultValues(entityPM);
+                HandleWorkFlowVersionCreateOrUpdate(entityPM);
             }
         }
 
@@ -30,44 +22,98 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
         {
             if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
-                WorkFlowVersionRepository workFlowVersionRepository = new WorkFlowVersionRepository(entityPM.Tenant);
-
-                DeactiveVersionStatus(entityPM, workFlowVersionRepository);
-                UpdateWorkflowWithVersionId(entityPM);
-
+                HandleWorkFlowVersionCreateOrUpdate(entityPM);
             }
         }
 
-      private static void SetDefaultValues(WorkFlowVersionPM entityPM, WorkFlowVersionRepository workFlowVersionRepository)
+        private static void SetWorkFlowVersionDefaultValues(WorkFlowVersionPM entityPM)
         {
+            WorkFlowVersionRepository workFlowVersionRepository = new WorkFlowVersionRepository(entityPM.Tenant);
             var workFlowVersions = workFlowVersionRepository.GetAllByWorkflowId(entityPM.Tenant, entityPM.WorkflowId).ToList();
             var versionNumber = workFlowVersions?.Count() == 0 ? 1 : workFlowVersions.LastOrDefault().VersionNumber + 1;
             entityPM.VersionNumber = versionNumber;
-            entityPM.StatusCode = "ACVE";
+            entityPM.StatusCode = "DRFT";
         }
 
-        private static void DeactiveVersionStatus(WorkFlowVersionPM entityPM, WorkFlowVersionRepository workFlowVersionRepository)
+        private static void HandleWorkFlowVersionCreateOrUpdate(WorkFlowVersionPM entityPM)
         {
-            var workFlowVersions = workFlowVersionRepository.GetAllVersionByStatus(entityPM.Tenant, entityPM.WorkflowId, "ACVE").ToList();
-            foreach (var version in workFlowVersions)
+            WorkFlowVersionRepository workFlowVersionRepository = new WorkFlowVersionRepository(entityPM.Tenant);
+
+            var workFlowVersions = workFlowVersionRepository.GetAllByWorkflowId(entityPM.Tenant, entityPM.WorkflowId).OrderByDescending(w => w.VersionNumber).ToList();
+
+            var activeWorkFlowVersions = workFlowVersions.Where(w => w.Id != entityPM.Id && w.StatusCode == "ACVE");
+
+            if (entityPM.StatusCode == "ACVE")
             {
-                if (version.Id != entityPM.Id)
+                foreach (var activeWorkFlowVersion in activeWorkFlowVersions)
                 {
-                    version.StatusCode = "INVE";
-                    workFlowVersionRepository.Update(version);
+                    activeWorkFlowVersion.StatusCode = "INVE";
+                    workFlowVersionRepository.Update(activeWorkFlowVersion);
                 }
+                workFlowVersionRepository.SubmitChanges();
+
+                UpdateWorkflow(entityPM);
             }
 
-            workFlowVersionRepository.SubmitChanges();
+
+            if (entityPM.StatusCode == "DRFT" || entityPM.StatusCode == "INVE")
+            {
+                if (activeWorkFlowVersions.Any())
+                {
+                    WorkFlowVersion workflow = activeWorkFlowVersions.FirstOrDefault();
+                    UpdateWorkflow(workflow);
+                }
+                else
+                {
+                    if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+                    {
+                        UpdateWorkflow(entityPM);
+                    }
+                    else
+                    {
+                        WorkFlowVersion workflow = workFlowVersions.FirstOrDefault();
+                        if(workflow.Id == entityPM.Id)
+                        {
+                            workflow.StatusCode = entityPM.StatusCode;
+                        }
+                        UpdateWorkflow(workflow);
+                    }
+                }
+            }
         }
 
-        private static void UpdateWorkflowWithVersionId(WorkFlowVersionPM entityPM)
+        private static void UpdateWorkflow(WorkFlowVersionPM workFlowVersionPM)
         {
-            WorkFlowRepository workFlowRepository = new WorkFlowRepository(entityPM.Tenant);
-            var workflow = workFlowRepository.GetSingle(entityPM.WorkflowId, entityPM.Tenant);
-            workflow.WorkFlowActiveVersionId = entityPM.Id;
-            workFlowRepository.Update(workflow);
-            workFlowRepository.SubmitChanges();
+            if (workFlowVersionPM != null)
+            {
+                WorkFlowRepository workFlowRepository = new WorkFlowRepository(workFlowVersionPM.Tenant);
+                var workflow = workFlowRepository.GetSingle(workFlowVersionPM.WorkflowId, workFlowVersionPM.Tenant);
+
+                workflow.StatusCode = workFlowVersionPM.StatusCode;
+                workflow.Entity = workFlowVersionPM.Entity;
+                workflow.Trigger = workFlowVersionPM.Trigger;
+                workflow.FlowJson = workFlowVersionPM.FlowJson;
+
+                workFlowRepository.Update(workflow);
+                workFlowRepository.SubmitChanges();
+            }
+        }
+
+        private static void UpdateWorkflow(WorkFlowVersion workFlowVersion)
+        {
+            if (workFlowVersion != null)
+            {
+                WorkFlowRepository workFlowRepository = new WorkFlowRepository(workFlowVersion.Tenant);
+                var workflow = workFlowRepository.GetSingle(workFlowVersion.WorkflowId, workFlowVersion.Tenant);
+
+                workflow.StatusCode = workFlowVersion.StatusCode;
+                workflow.Entity = workFlowVersion.Entity;
+                workflow.Trigger = workFlowVersion.Trigger;
+                workflow.FlowJson = workFlowVersion.FlowJson;
+
+                workFlowRepository.Update(workflow);
+                workFlowRepository.SubmitChanges();
+            }
         }
     }
 }

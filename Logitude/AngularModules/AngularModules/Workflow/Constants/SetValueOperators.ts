@@ -1,5 +1,8 @@
 export enum SetValueOperators {
     Equals = "Equals <constant>",
     EqualsField = "Equals <field>",
-    Expression = "Expression"
+    Expression = "Expression",
+    EqualsCollection = "Equals <collection>",
+    Add = "Add <constant>",
+    AddField = "Add <field>"
 }

@@ -87,7 +87,7 @@ namespace Logitude.WarehouseLib.Data.EntityMapping
 
             this.Property(t => t.TruckerId).HasColumnName("TruckerId").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.TruckerReference).HasColumnName("TruckerReference").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.TruckerReference).HasColumnName("TruckerReference").HasMaxLength(1000).IsUnicode(false);
 
             this.Property(t => t.ShipperId).HasColumnName("ShipperId").HasMaxLength(15).IsUnicode(false);
 

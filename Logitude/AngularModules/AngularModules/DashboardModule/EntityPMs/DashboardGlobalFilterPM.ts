@@ -77,6 +77,16 @@ export class DashboardGlobalFilterPM {
     public set LineNumber(newValue: number) { if (this.lineNumber != newValue) { this.lineNumber = newValue; this.MarkAsDirty("LineNumber"); } }
        
 	 
+    private joinedTableName: string;
+    public get JoinedTableName() { return this.joinedTableName; }
+    public set JoinedTableName(newValue: string) { if (this.joinedTableName != newValue) { this.joinedTableName = newValue; this.MarkAsDirty("JoinedTableName"); } }
+       
+	 
+    private fieldCode: string;
+    public get FieldCode() { return this.fieldCode; }
+    public set FieldCode(newValue: string) { if (this.fieldCode != newValue) { this.fieldCode = newValue; this.MarkAsDirty("FieldCode"); } }
+       
+	 
 
     public OldEntityPM: DashboardGlobalFilterPM;
 	

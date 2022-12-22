@@ -46,6 +46,8 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
     @Output() LoadCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
     screenSectionService = new ScreenSectionListService();
     private objectTableTab: any;
+    public IsDisplaySummarySection: boolean = false;
+    public ObjectTable: any;
     constructor(private entityArgs: EntityArgs) {
         super();
         this.IsCustomerCare = SessionLocator.LoggedUserPM.IsCustomerCare;
@@ -56,6 +58,7 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
         this.EntityPM = entityPM;
         this.ScreenCode = screenCode ? screenCode.replace("Customs.", "") : screenCode;
         this.ObjectTableName = objectTableName;
+        this.ObjectTable = window.ObjectTables.filter(table => table.Name == objectTableName)[0];
         this.ObjectTableId = window.ObjectTables.filter((x: any) => x.Name === this.ObjectTableName)[0].Id;
         this.IsNewEntityCall = isNewEntityCall;
         this.ShowTitle = showTitle;
@@ -102,6 +105,13 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
 
 
     BuildScreen(fireEmit: boolean = false) {
+        let selectedScreen = this.GetSelectedScreen();
+        let gridScreenTypeCode = "Grid";
+        if (this.IsFromGrid && selectedScreen && selectedScreen.Type != gridScreenTypeCode) {
+            this.BuildLighteningScreen(fireEmit, selectedScreen);
+            return;
+        }
+
         if (!this.objectTableTab || !this.objectTableTab.ScreenCode) {
             this.BuildClassicScreen(fireEmit);
             return;
@@ -110,6 +120,13 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
         this.BuildLighteningScreen(fireEmit);
     }
 
+
+    private GetSelectedScreen() {
+        if (this.EntityPM != null) {
+            return window.Screens.filter((x: any) => x.ObjectTableId === (!AppTool.IsNullOrEmpty(this.ChildObjectTableId) ? this.ChildObjectTableId : this.ObjectTableId) && x.Code.toLowerCase() == this.ScreenCode.toLowerCase())[0];
+        }
+        return null;
+    }
 
     private BuildClassicScreen(fireEmit: boolean = false) {
         if (this.EntityPM != null) {
@@ -194,19 +211,19 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
 
     private AddScreenField(myObjectFields: any, screenField: any, myScreenColumn: ScreenColumn) {
         var myObjectField = myObjectFields.filter((f: any) => f.FieldCode == screenField.ObjectFieldCode)[0];
-        if (myObjectField == null) return;
+        if (myObjectField == null || (!myObjectField.IsCustom && this.IsFromGrid && !this.IsDisplaySummarySection)) return;
 
         this.SetValidityForCommunicationLog(myObjectField);
 
         myScreenColumn.ObjectFields.push(myObjectField);
     }
 
-    private BuildLighteningScreen(fireEmit: boolean = false) {
+    private BuildLighteningScreen(fireEmit: boolean = false, lighteningScreen = null) {
 
         if (this.EntityPM == null || this.isViewEnited == false)
             return;
 
-        let screen:ScreenPM = window.Screens.filter((x: any) => x.Code === this.objectTableTab.ScreenCode)[0];
+        let screen: ScreenPM = this.objectTableTab ? window.Screens.filter((x: any) => x.Code === this.objectTableTab.ScreenCode)[0] : lighteningScreen;
         if (screen == null)
             return;
 
@@ -225,7 +242,8 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
             {
                 this.ScreenSections = [];
 
-                const sections: any[] = this.ReOrderScreenSections(response.Result);
+                let sections: any[] = this.ReOrderScreenSections(response.Result);
+                sections = this.IsDisplaySummarySection ? sections.filter(d => d.Type == "Summary") : sections.filter(d => d.Type != "Summary");
                 let childEntityResourcesArgs: ChildEntityResourcesArgs = new ChildEntityResourcesArgs();
                 childEntityResourcesArgs.Screen = screen;
                 childEntityResourcesArgs.Sections = sections;
@@ -333,8 +351,8 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
             if(!screenField)
                 continue;
 
-                const objectField = objectFields.filter((f: any) => f.FieldCode == screenField.ObjectFieldCode)[0];
-                if (!objectField)
+            const objectField = objectFields.filter((f: any) => f.FieldCode == screenField.ObjectFieldCode)[0];
+            if (!objectField || (!objectField.IsCustom && this.IsFromGrid && !this.IsDisplaySummarySection))
                     continue;
 
                 this.SetValidityForCommunicationLog(objectField);
@@ -401,6 +419,9 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
         return screenSections.sort((a, b) => {
             return (a.Number === b.Number) ? 0 : (a.Number < b.Number) ? -1 : 1
         });
+    }
+    public ShowSectionName(screenSection: any) {
+        return screenSection.Type != 'Grid' && screenSection.Title && screenSection.ScreenColumns && screenSection.ScreenColumns.length > 0 && !(this.ScreenSections && screenSection == this.ScreenSections[0] && this.IsFromGrid)
     }
 }
 

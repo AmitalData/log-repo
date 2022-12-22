@@ -5,7 +5,7 @@ Feature: Accounting Payment Method fake Create, Search and Edit from Maintenance
     Scenario: Add Accounting Payment Method Code with lenght more than 2
         Given the user logged in and open "Accounting Payment Methods" in maintenance menu
         When add "123" as accounting payment code
-        Then a validation message with "Code Field must be less than 2" error should appear
+        Then a validation message with "Code Field length must be less than 2" error should appear
 
     Scenario: Create new accounting payment method
         Given an accounting payment with the following details

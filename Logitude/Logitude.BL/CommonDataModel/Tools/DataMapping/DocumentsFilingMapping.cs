@@ -108,7 +108,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
 
             poco.Received = entityPM.Received;
             poco.ReceivedByUserId = entityPM.ReceivedByUserId;
-
+            poco.ReceivedByByContactId = entityPM.ReceivedByByContactId;
 
             poco.ReceivedDate = entityPM.ReceivedDate;
 
@@ -154,6 +154,11 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
                 return;
             }
             if (entityPM.IsHybrid)
+            {
+                poco.UpdatedByUserId = entityPM.UpdatedByUserId;
+                return;
+            }
+            if (!string.IsNullOrEmpty(entityPM.UpdatedByUserId))
             {
                 poco.UpdatedByUserId = entityPM.UpdatedByUserId;
                 return;

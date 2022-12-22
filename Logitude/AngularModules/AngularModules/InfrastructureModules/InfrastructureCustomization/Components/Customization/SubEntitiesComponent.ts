@@ -5,6 +5,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { ObjectTablePM } from '../../../../Infrastructure/EntityPMs/ObjectTablePM';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { FieldsTranslations, GeneralDomainService } from '../../../../Infrastructure/Services/GeneralDomainService';
+import { AppTool } from '../../../../Infrastructure/Tools';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { ObjectTables } from '../../../../Workflow/Models/ObjectTables';
@@ -26,12 +27,13 @@ export class SubEntitiesComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     public customizationEditComponent: CustomizationEditComponent;
     public ObjectTableId: string;
+    public ObjectTable: ObjectTablePM;
     public IsObjectTableFilterEnabled: boolean;
     private customizationObjectTableService: CustomizationObjectTableService;
     public SubEntitiesList: Array<ObjectTablePM>;
     private _entityResourceService: EntityResourceService;
     private textCodeTranslationPipe: TextCodeTranslationPipe;
-    public enableAddCustomChildEntity: boolean = false;
+    public IsEnabledCreatingSubCustomObjects: boolean = false;
     public SupportSubEntity: boolean = false;
     constructor() {
         this.customizationObjectTableService = new CustomizationObjectTableService();
@@ -42,9 +44,17 @@ export class SubEntitiesComponent {
     SetWindowArgs(args: any) {
         this.ObjectTableId = args['ObjectTableId'];
         this.IsObjectTableFilterEnabled = args['IsObjectTableFilterEnabled'];
-        this.enableAddCustomChildEntity = FeatureLocator.HasFeaturePermession("General", "AddCustomChildEntity");
-        this.SupportSubEntity = window.ObjectTables.filter(o => o.Id == this.ObjectTableId)[0].SupportSubEntity;
+        this.ObjectTable = window.ObjectTables.filter(o => o.Id == this.ObjectTableId)[0];
+        this.SupportSubEntity = this.ObjectTable.SupportSubEntity;
+        this.IsEnabledCreatingSubCustomObjects = this.GetCreatingCustomSubObjectPermission();
+        if (!this.IsEnabledCreatingSubCustomObjects) return;
         this.BuildSubEntitiesList();
+    }
+    GetCreatingCustomSubObjectPermission() {
+        let isCustomObjectTable = this.ObjectTable.IsCustom && AppTool.IsNullOrEmpty(this.ObjectTable.ParentObjectTableId);
+        let creatCustomSubObjectPermission = FeatureLocator.HasFeaturePermession("General", "Customization.CreateSubObjects");
+        if (isCustomObjectTable) return creatCustomSubObjectPermission && this.ObjectTable.ObjectTableTypeCode == "BR";
+        return creatCustomSubObjectPermission;
     }
     private BuildSubEntitiesList() {
         this.SubEntitiesList = this.customizationObjectTableService.GetChildsById(this.ObjectTableId);
@@ -91,12 +101,14 @@ export class SubEntitiesComponent {
         window.Height = defaultWindowHeight;
         window.Title = newTabWindowTitle;
         window.WindowArgs = {
-            CustomizationSubEntitiesComponent: this
+            CustomizationSubEntitiesComponent: this,
+            CustomizationMainComponent: null,
+            IsSubObject: true
         };
-        window.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/AddSubEntityComponent');
+        window.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/AddCustomObjectComponent');
     }
 
-    ApplyChanges(objectTablePM: ObjectTablePM) {
+    AddObjectTable(objectTablePM: ObjectTablePM) {
         this.SubEntitiesList.push(objectTablePM);
     }
 

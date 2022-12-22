@@ -5,7 +5,7 @@ export class SubEntitiesMainMenuItem extends CustomizationMainMenuItem {
 
     constructor(private customizationMainMenuArgs: any) {
         super("subEntities");
-        this.TextCode = "Sub Entities";
+        this.TextCode = "Sub Objects";
         this.Code = "SUBENTITIES";
         this.ComponentPath = "./InfrastructureModules/InfrastructureCustomization/Components/Customization/SubEntitiesComponent";
         this.screenArgs = this.BuildScreenArgs(customizationMainMenuArgs);

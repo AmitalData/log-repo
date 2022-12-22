@@ -101,6 +101,68 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="TimeOverTime"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ComparisonPeriod"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Increase"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ComparisonOperator"
+    OldNames="Operator"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ComparisonDateGroup"
+    OldNames="DateGroup"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FromDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ToDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SecondaryGroupById"
+    OldNames="SecondaryGroupBy"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SecondaryDateGroupCode"
+    Type="varchar"
+    Size="17">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="GroupById"
     ReferencedTable="AnalyticsFactsFieldsMetaDatas"
@@ -119,6 +181,11 @@
   <Relation
     ForeignKeyColumn="EntityId"
     ReferencedTable="AnalyticsFactsMetaDatas"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="SecondaryGroupById"
+    ReferencedTable="AnalyticsFactsFieldsMetaDatas"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

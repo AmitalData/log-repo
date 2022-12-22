@@ -16,6 +16,7 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.ShipmentsModel;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -47,10 +48,12 @@ namespace WebFreight.Web.ReportsWebServices
         private ShipmentPackingDataProvider BuildProvider(string shipmentId, int tenant)
         {
             ShipmentPackingDataProvider provider = new ShipmentPackingDataProvider();
+            ShipmentPackingDataProviderService shipmentPackingService = new ShipmentPackingDataProviderService();
 
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             AddressRepository addressRepository = new AddressRepository(commonContext);
             PortRepository portRepository = new PortRepository(commonContext);
+            CountryRepository countryRepository = new CountryRepository(commonContext);
 
             IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
             ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
@@ -69,6 +72,15 @@ namespace WebFreight.Web.ReportsWebServices
                 provider.FileNumber = string.IsNullOrEmpty(shipment.ShipmentNumber) ? "" : shipment.ShipmentNumber;
                 provider.TotalGrossWeight = shipment.GrossWeight;
                 provider.TotalNumberOfPackages = shipment.NumberOfPackages;
+
+                shipmentPackingService.MapWeightDetails(provider, shipment);
+                shipmentPackingService.MapVolumeDetails(provider, shipment);
+                shipmentPackingService.MapCarrierType(provider, shipment);
+                provider.CustomerReference1 = shipment.CustomerReference1;
+                provider.CustomerReference2 = shipment.CustomerReference2;
+                provider.HouseNumber = shipment.House;
+                provider.DescriptionOfGoods = shipment.DescriptionOfGoods;
+                provider.PortOfLading = shipment.MainCarriageFromPortName;
 
                 #region ShipmentMethod
                 string shipmentMethod = "";
@@ -161,6 +173,13 @@ namespace WebFreight.Web.ReportsWebServices
                                     if (myPartnerAddress != null)
                                     {
                                         provider.DestinationPortName = myPartnerAddress.City;
+                                        provider.DestinationPortCountryName = shipmentPackingService.GetDestinationPortCountryName(
+                                            new MapDestinationPortCountryNameParameters()
+                                            {
+                                                Tenant = myPartnerAddress.Tenant,
+                                                CountryRepository = countryRepository,
+                                                CountryId = myPartnerAddress.CountryId
+                                            });
                                     }
                                 }
 
@@ -175,7 +194,8 @@ namespace WebFreight.Web.ReportsWebServices
                                     if (myPort != null)
                                     {
                                         provider.DestinationPortName = myPort.EnglishName;
-                                    }
+                                        provider.DestinationPortCountryName = myPort.CountryName;
+                                    }  
                                 }
 
                                 break;
@@ -189,6 +209,14 @@ namespace WebFreight.Web.ReportsWebServices
                                     provider.DestinationPortName = myCity;
                                 }
 
+                                provider.DestinationPortCountryName = shipmentPackingService.GetDestinationPortCountryName(
+                                    new MapDestinationPortCountryNameParameters()
+                                    {
+                                        Tenant = myDelivery.Tenant,
+                                        CountryRepository = countryRepository,
+                                        CountryId = myDelivery.ToAddressCountryId
+                                    });
+                                
                                 break;
                             }
                     }
@@ -197,36 +225,23 @@ namespace WebFreight.Web.ReportsWebServices
                 else if (onForwardingToPort != null)
                 {
                     provider.DestinationPortName = onForwardingToPort.EnglishName;
+                    provider.DestinationPortCountryName = onForwardingToPort.CountryName;
                 }
 
                 else if (onCarriageToPort != null)
                 {
                     provider.DestinationPortName = onCarriageToPort.EnglishName;
+                    provider.DestinationPortCountryName = onCarriageToPort.CountryName;
                 }
 
                 else
                 {
-                    string dischargePortName = "";
+                    DestinationPortDetails destinationPortDetails = shipmentPackingService.GetDestinationPortDetails(shipment, mainCarriageToPort);
 
-                    if (shipment.Transshipment3ToPortId != null)
-                    {
-                        dischargePortName = shipment.Transshipment3ToPortName;
-                    }
-                    else if (shipment.Transshipment2ToPortId != null)
-                    {
-                        dischargePortName = shipment.Transshipment2ToPortName;
-                    }
-                    else if (shipment.Transshipment1ToPortId != null)
-                    {
-                        dischargePortName = shipment.Transshipment1ToPortName;
-                    }
-                    else if (mainCarriageToPort != null)
-                    {
-                        dischargePortName = mainCarriageToPort.EnglishName;
-                    }
-
-                    provider.DestinationPortName = dischargePortName;
+                    provider.DestinationPortName = destinationPortDetails.Name;
+                    provider.DestinationPortCountryName = destinationPortDetails.CountryName;
                 }
+
                 #endregion
 
                 PackageTypeRepository packageTypeRepository = new PackageTypeRepository(tenant);
@@ -234,7 +249,7 @@ namespace WebFreight.Web.ReportsWebServices
                 ShipmentPackageItemRepository shipmentPackageItemRepository = new ShipmentPackageItemRepository(tenant);
 
                 List<ShipmentPackage> shipmentPackages = shipmentPackageRepository.GetShipmentPackagesForShipmentTenant(shipmentId, tenant).ToList();
-
+                double? totalAmountOfPackageItems = 0;
                 if (shipmentPackages.Count > 0)
                 {
                     provider.ShipmentPackages = new List<ShipmentPackageProvider>();
@@ -248,6 +263,9 @@ namespace WebFreight.Web.ReportsWebServices
                             ShipmentPackageProvider shipmentPackageProvider = new ShipmentPackageProvider();
 
                             shipmentPackageProvider.PackageItems = new List<PackageItemProvider>();
+                            shipmentPackageProvider.PackageItemsDetails = new List<PackageItemProviderDetails>();
+                            shipmentPackageProvider.Quantity = shipmentPackage.Quantity + "";
+                            shipmentPackageProvider.PackageType = shipmentPackage.PackageType == null || string.IsNullOrEmpty(shipmentPackage.PackageType.EnglishName) ? "" : shipmentPackage.PackageType.EnglishName;
                             shipmentPackageProvider.Seal = string.IsNullOrEmpty(shipmentPackage.ShipperSeal) ? "" : shipmentPackage.ShipperSeal;
                             shipmentPackageProvider.ContainerNumber = string.IsNullOrEmpty(shipmentPackage.ContainerNumber) ? "" : shipmentPackage.ContainerNumber;
                             shipmentPackageProvider.GrossWeight = shipmentPackage.Weight;
@@ -307,6 +325,7 @@ namespace WebFreight.Web.ReportsWebServices
                             int i = 0;
                             foreach (ShipmentPackageItem item in shipmentPackageItems)
                             {
+                                shipmentPackageProvider.PackageItemsDetails.Add(shipmentPackingService.GetPackageItemDetails(item));
                                 for (int t = 0; t < item.Quantity; t++)
                                 {
                                     i += 1;
@@ -320,10 +339,22 @@ namespace WebFreight.Web.ReportsWebServices
                                 }
                             }
 
+                            totalAmountOfPackageItems += (double?) shipmentPackingService.GetTotalAmountOfPackageItems(shipmentPackageItems);
+
                             provider.ShipmentPackages.Add(shipmentPackageProvider);
                         }
                     }
+
                 }
+
+                MapTotalFieldsParameters mapTotalFieldsParameters = new MapTotalFieldsParameters()
+                {
+                    Tenant = tenant,
+                    ShipmentPackingDataProvider = provider,
+                    Shipment = shipment,
+                    TotalAmountOfPackageItems = totalAmountOfPackageItems
+                };
+                shipmentPackingService.MapTotalFields(mapTotalFieldsParameters); 
             }
 
             DocumentType currentdocumentType = commonContext.DocumentTypes.Where(doc => doc.Code == "PALI" && doc.Tenant == tenant).FirstOrDefault();
@@ -346,5 +377,26 @@ namespace WebFreight.Web.ReportsWebServices
 
             return provider;
         }
+
+    }
+
+    public class MapTotalFieldsParameters
+    {
+        public int Tenant;
+        public ShipmentPackingDataProvider ShipmentPackingDataProvider;
+        public ShipmentPM Shipment;
+        public double? TotalAmountOfPackageItems;
+    }
+    public class MapDestinationPortCountryNameParameters
+    {
+        public int Tenant;
+        public CountryRepository CountryRepository;
+        public string CountryId;
+    }
+
+    public class DestinationPortDetails
+    {
+        public string Name;
+        public string CountryName;
     }
 }

@@ -28,7 +28,7 @@ import { SubEntitiesComponent } from './Components/Customization/SubEntitiesComp
 import { AddEditGridScreenSectionComponent } from './Components/Customization/Screen/Section/AddEditGridScreenSectionComponent';
 import { GridScreenSectionPreviewComponent } from './Components/Customization/Screen/Section/GridScreenSectionPreviewComponent';
 import { GridScreenComponent } from './Components/Customization/Screen/GridScreenComponent';
-import { AddSubEntityComponent } from './Components/Customization/AddSubEntityComponent';
+import { AddCustomObjectComponent } from './Components/Customization/AddCustomObjectComponent';
 
 export const Components =
     [
@@ -61,7 +61,7 @@ export const Components =
         AddEditGridScreenSectionComponent,
         GridScreenSectionPreviewComponent,
         GridScreenComponent,
-        AddSubEntityComponent
+        AddCustomObjectComponent
     ];
 export const ControlsComponents =
     [
@@ -110,7 +110,7 @@ export class ModuleDeclarations {
             case "AddEditGridScreenSectionComponent": { myResult = AddEditGridScreenSectionComponent; break; }
             case "GridScreenSectionPreviewComponent": { myResult = GridScreenSectionPreviewComponent; break; }
             case "GridScreenComponent": { myResult = GridScreenComponent; break; }
-            case "AddSubEntityComponent": { myResult = AddSubEntityComponent; break; }
+            case "AddCustomObjectComponent": { myResult = AddCustomObjectComponent; break; }
         }
 
         return myResult;

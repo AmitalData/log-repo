@@ -89,7 +89,8 @@
             </div>
             <div class="table-row-cell-block collection-variables-list-container">
                 <TreeSelect [Items]="FlowVariablesTreeItems" [Width]="'300px'" [Value]="CollectionVariable"
-                    (ValueChanged)="updateCollectionVariable($event)" [DataCy]="'collection-variables-list'">
+                    [IsReturnedTreeSelectItem]="true" (ValueChanged)="updateCollectionVariable($event)"
+                    [DataCy]="'collection-variables-list'">
                 </TreeSelect>
             </div>
         </td>

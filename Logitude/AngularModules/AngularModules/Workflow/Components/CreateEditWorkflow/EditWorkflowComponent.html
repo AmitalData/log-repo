@@ -35,76 +35,100 @@
     .description-input-container {
         height: 65px;
     }
+
+    .button-container {
+        margin: 0px 2px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        width: 110px;
+        margin-bottom: 5px;
+        float: right;
+    }
 </style>
 
-<table *ngIf="EntityPM">
+<div class="MediaFillAbsolute workflow-builder-wrapper">
+    <div class="MarginAbsolute10">
+        <table *ngIf="EntityPM">
+            <tr class="table-row">
+                <td></td>
+            </tr>
 
-    <tr class="first-split-row">
-        <td>
-            <div></div>
-        </td>
-    </tr>
-
-    <tr>
-        <td>
-            <table>
-                <!-- Name -->
-                <tr class="FormFieldRow">
-                    <td style="width:110px;">
-                        <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                    </td>
-
-                    <td style="width:260px;">
-                        <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [DataCy]="'Workflow_Name'"></LogTextBox>
-                    </td>
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
-
-                <!-- Description -->
-                <tr class="FormFieldRow">
-                    <td style="vertical-align:top;">
-                        <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                    </td>
-
-                    <td colspan="2">
+            <tr>
+                <td>
+                    <div class="MediaFill CurvedArea">
                         <table>
-                            <tr>
-                                <td style="width:260px;height:85px;">
-                                    <div class="MediaFill">
-                                        <LogTextBox [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true" [HideColumns]="true" [DataCy]="'Workflow_Description'"></LogTextBox>
-                                    </div>
+                            <!-- Name -->
+                            <tr class="FormFieldRow">
+                                <td style="width:110px;">
+                                    <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext"></LogLabel>
                                 </td>
-                                <td><div></div></td>
+
+                                <td style="width:260px;">
+                                    <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name"
+                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                        [HideColumns]="true" [DataCy]="'Workflow_Name'">
+                                    </LogTextBox>
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
                             </tr>
+
+                            <!-- Description -->
+                            <tr class="FormFieldRow">
+                                <td style="vertical-align:top;">
+                                    <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td colspan="2">
+                                    <table>
+                                        <tr>
+                                            <td style="width:260px;height:85px;">
+                                                <div class="MediaFill">
+                                                    <LogTextBox [ObjectFieldName]="'Description'" [Text]="Description"
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                                        [IsMultiline]="true" [HideColumns]="true"
+                                                        [DataCy]="'Workflow_Description'">
+                                                    </LogTextBox>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <!-- Owner-->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'OwnerId'" [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogLov [ObjectFieldName]="'OwnerId'" [ObjectTableName]="ObjectTableName"
+                                        [SelectedValue]="OwnerId" [DataContext]="DataContext" [LookUpTableName]="'User'"
+                                        [HideColumns]="true" [DataCy]="'Workflow_Owner'"></LogLov>
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="3">
+                                    <div></div>
+                                </td>
+                            </tr>
+
                         </table>
-                    </td>
-                </tr>
-
-                <!-- Owner-->
-                <tr class="FormFieldRow">
-                    <td>
-                        <LogLabel [ObjectFieldName]="'OwnerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                    </td>
-                    <td>
-                        <LogLov [ObjectFieldName]="'OwnerId'" [ObjectTableName]="ObjectTableName" [SelectedValue]="OwnerId"
-                        [DataContext]="DataContext" [LookUpTableName]="'User'" [HideColumns]="true"
-                        [DataCy]="'Workflow_Owner'"></LogLov>
-                    </td>
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td colspan="3">
-                        <div></div>
-                    </td>
-                </tr>
-
-            </table>
-        </td>
-    </tr>
-
-</table>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

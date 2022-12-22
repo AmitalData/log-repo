@@ -889,5 +889,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return chargesTypeList;
         }
+
+        public List<string> GetChargesTypesIdsByChargeGroupCodeAndTenant(string chargeGroupCode, int tenant)
+        {
+            List<string> chargesTypesIds = (from a in repository.context.ChargesTypes
+                                            where a.ChargesGroupCode == chargeGroupCode && a.Tenant == tenant
+                                            select a.Id).ToList();
+
+            return chargesTypesIds;
+        }
     }
 }

@@ -1,20 +1,52 @@
+<style>
+    .table-row {
+        height: 1px;
+    }
+
+    .table-row-cell {
+        padding-bottom: 8px;
+    }
+
+    .table-row-cell-block {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .label-container {
+        font-weight: bold;
+    }
+
+    .split-block {
+        border-bottom: 1px solid #6E6E6E;
+        padding: 10px 0;
+    }
+</style>
 <table style="padding:10px">
     <tr style="height:1px">
         <td>
             <table>
                 <tr class="FormFieldRow">
                     <td style="width: 1px; padding-left: 5px;">
-                        <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()" [DataCy]="'SingleInstanceActivityListRefresh'"></IconButton>
+                        <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"
+                            [DataCy]="'SingleInstanceActivityListRefresh'"></IconButton>
                     </td>
                 </tr>
             </table>
         </td>
     </tr>
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+                <div class="label-container">Workflow Instance Activities</div>
+            </div>
+        </td>
+    </tr>
     <tr>
         <td style="vertical-align:top">
             <div class="MediaFill">
-                <logitude-edit-grid *ngIf="!IsLoading" GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource"
-                    (RowDataLoaded)="OnRowLoaded($event)" [EnableExpandCollapseAll]="'true'" [IsDarkHeader]="'true'">
+                <logitude-edit-grid *ngIf="!IsActivityLoading" GridWidth="100%" GridHeight="100%"
+                    [ItemSource]="ActivityItemsSource" (RowDataLoaded)="OnRowLoaded($event)"
+                    [EnableExpandCollapseAll]="'true'" [IsDarkHeader]="'true'">
 
                     <log-row-details>
                         <row-template>
@@ -50,13 +82,13 @@
                     <log-column [width]="'155'" [header]="'StartTime'" [SortFieldName]="'StartTime'">
                         <ng-template let-item>
                             <log-cell-template #logcelltemplate [IsEditMode]="false">
-                                {{ item.StartTime | DateTimePipe:'SD' }}
+                                {{ item.StartTime | DateTimePipe:'DT' }}
                             </log-cell-template>
                         </ng-template>
                     </log-column>
 
                     <!-- Duration -->
-                    <log-column [width]="'155'" [header]="'Duration'" [SortFieldName]="'Duration'">
+                    <log-column [width]="'110'" [header]="'Duration'" [SortFieldName]="'Duration'">
                         <ng-template let-item>
                             <log-cell-template #logcelltemplate [IsEditMode]="false">
                                 {{item.Duration}}
@@ -77,8 +109,8 @@
                         </ng-template>
                     </log-column>
 
-                      <!-- Result -->
-                      <log-column [width]="'210'" [header]="'Result'">
+                    <!-- Result -->
+                    <log-column [width]="'210'" [header]="'Result'">
                         <ng-template let-item>
                             <log-cell-template #logcelltemplate [IsEditMode]="false">
                                 {{item.Result}}
@@ -89,3 +121,61 @@
             </div>
         </td>
     </tr>
+
+    <tr *ngIf="IsVariablesHasPermission" class="table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr *ngIf="IsVariablesHasPermission" class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+                <div class="label-container">Workflow Instance Variabels</div>
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="IsVariablesHasPermission" class="Variables">
+        <td style="vertical-align:top">
+            <div class="MediaFill">
+                <logitude-edit-grid *ngIf="!IsVariableLoading" GridWidth="100%" GridHeight="100%"
+                    [ItemSource]="VariableItemsSource" [IsDarkHeader]="'true'">
+
+                    <!-- Name -->
+                    <log-column [width]="'180'" [header]="'Name'" [SortFieldName]="'Name'">
+                        <ng-template let-item>
+                            <log-cell-template #logcelltemplate [IsEditMode]="false">
+                                {{item.Name}}
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
+
+                    <!-- Value -->
+                    <log-column [width]="'155'" [header]="'Value'">
+                        <ng-template let-item>
+                            <log-cell-template #logcelltemplate [IsEditMode]="false">
+                                <div *ngIf="(item.Type | IsObjectTypePipe)">
+                                    <Hyperlink (click)="DisplayValueObject(item)" [FontSize]="12" [Text]="'Object'">
+                                    </Hyperlink>
+                                </div>
+                                <div *ngIf="!(item.Type | IsObjectTypePipe)">
+                                    {{item.Value}}
+                                </div>
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
+
+                    <!-- Type -->
+                    <log-column [width]="'155'" [header]="'Type'" [SortFieldName]="'Type'">
+                        <ng-template let-item>
+                            <log-cell-template #logcelltemplate [IsEditMode]="false">
+                                {{item.Type}}
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
+                </logitude-edit-grid>
+            </div>
+        </td>
+    </tr>
+</table>

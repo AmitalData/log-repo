@@ -9,6 +9,7 @@ import { ObjectFieldPM } from 'Infrastructure/EntityPMs/ObjectFieldPM';
 import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
 import { ObjectFieldPMExtendedService } from 'Infrastructure/Services/ExtendedPMs/ObjectFieldPMExtendedService';
 import { AppTool } from 'Infrastructure/Tools';
+import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { WorkFlowPM } from 'Workflow/EntityPMs/WorkFlowPM';
 import { ApiQueryFiltersBuilder } from 'Workflow/Models/ApiQueryFiltersBuilder';
@@ -44,19 +45,35 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
     public FilterValue2: any;
     public FilterOperator: string;
     public IsDateFilter: boolean;
+    private TabSelectedEvent: any = null;
 
     public LogitudeGridExportToExcelComponent: LogitudeGridExportToExcelComponent = new LogitudeGridExportToExcelComponent();
 
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
+        this.Listen();
     }
 
     ngOnInit() {
         this.BuildColumns();
-        this.InitializeVersionIds();
+        this.SetDataSource();
         this.BuildQueryColumns();
         this.GetStartTimeObjectFields();
+    }
+
+    private Listen() {
+        if (this.entityArgs.EditComponent) {
+            this.TabSelectedEvent = this.entityArgs.EditComponent.TabSelected.subscribe((tabCode: string) => {
+                if (tabCode == "WFRH") {
+                    this.LoadData()
+                }
+            });
+        }
+    }
+
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.TabSelectedEvent);
     }
 
     LoadData() {
@@ -65,19 +82,6 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
 
     RefreshButtonClicked() {
         this.LoadData();
-    }
-
-    InitializeVersionIds() {
-        var versionservice: WorkFlowVersionService = new WorkFlowVersionService();
-        versionservice.GetVersionIds(this.EntityPM.Id)
-            .subscribe((serviceResponse: ServiceResponse) => {
-                if (serviceResponse.Result) {
-                    var result: string[] = serviceResponse.Result;
-                    this.VersionIds = result;
-
-                    this.SetDataSource();
-                }
-            });
     }
 
     GetStartTimeObjectFields() {
@@ -118,9 +122,10 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
 
     getRows(skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
         this.CurrentSession.StartBusyIndicatorLoading();
+        var versionsIdList = this.EntityPM.WorkFlowVersions.map(v => v.Id);
 
         let businessKeyFilterValue = !AppTool.IsNullOrEmpty(this.SearchText) ? (AppTool.IsNullOrEmpty(this.SearchText.trim()) ? null : this.SearchText) : null;
-        this.Filters = ApiQueryFiltersBuilder.getWorkflowInstancesByVersionApiQueryFilters(this.VersionIds, businessKeyFilterValue);
+        this.Filters = ApiQueryFiltersBuilder.getWorkflowInstancesByVersionApiQueryFilters(versionsIdList, businessKeyFilterValue);
 
         if (this.IsDateFilter) {
             this.Filters.addAdditionalFilter(this.StartTimeObjectfield.FieldName, this.FilterValue1, this.FilterValue2, null, this.FilterOperator, false, false, false, this.StartTimeObjectfield.dataTypeCode)
@@ -186,11 +191,12 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
     }
 
     onRowSelected($event: { rowData: { Id: any; }; }) {
+        let isVariableHasPermission = FeatureLocator.HasFeaturePermession("WorkFlowInstance", "WorkFlowInstance.ShowVariables")
         if ($event != null) {
             var logWindow = new LogitudeWindow();
             logWindow.Width = 960;
-            logWindow.Height = 570;
-            logWindow.Title = "Instance Activities";
+            logWindow.Height = isVariableHasPermission ? 690 : 570;
+            logWindow.Title = "Instance Activities" + (isVariableHasPermission ? " And Variables" : '');
             logWindow.IsShowCloseButton = true
             var windowArgs: any = {};
             windowArgs.EntityId = $event.rowData.Id;

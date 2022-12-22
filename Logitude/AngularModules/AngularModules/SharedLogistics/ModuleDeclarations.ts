@@ -22,6 +22,13 @@ import { SharedInvoicesWorkspaceComponent } from './Components/Workspaces/Shared
 import { SharedShipmentsWorkspaceComponent } from './Components/Workspaces/SharedShipmentsWorkspaceComponent';
 import { TemplateTypeComponent } from './Components/TemplateTypeComponent';
 import { SharedLogisticsDigitalPortalComponent } from './Components/SharedLogisticsDigitalPortalComponent';
+import { DigitalPortalCustomizationMainComponent } from './Components/DigitalPortal/DigitalPortalCustomizationMainComponent';
+import { DigitalPortalCustomizationChageLabelsComponent } from './Components/DigitalPortal/DigitalPortalCustomizationChageLabelsComponent';
+import { DigitalPortalCustomizationTranslateLabelsComponent } from './Components/DigitalPortal/DigitalPortalCustomizationTranslateLabelsComponent';
+import { DigitalPortalCustomizationShowHideFieldsComponent } from './Components/DigitalPortal/DigitalPortalCustomizationShowHideFieldsComponent';
+import { DigitalPortalCustomizationScreenLayoutComponent } from './Components/DigitalPortal/DigitalPortalCustomizationScreenLayoutComponent'; 
+import { AddDigitalFieldCodeComponent } from './Components/DigitalPortal/AddDigitalFieldCodeComponent';
+import { AddDigitalPredefinedComponent } from './Components/DigitalPortal/AddDigitalPredefinedComponent';
 
 export const ControlsComponents =
     [
@@ -32,6 +39,7 @@ export const ControlsComponents =
         SharedLogisticsMoneyPermissiosComponent,
         SharedLogisticsPartnersPermissiosComponent,
         SharedLogisticsDigitalPortalComponent,
+
     ];
 
 
@@ -61,6 +69,13 @@ export const Components =
         SharedShipmentsWorkspaceComponent,
         TemplateTypeComponent,
         SharedLogisticsDigitalPortalComponent,
+        DigitalPortalCustomizationMainComponent,
+        DigitalPortalCustomizationChageLabelsComponent,
+        DigitalPortalCustomizationTranslateLabelsComponent,
+        DigitalPortalCustomizationShowHideFieldsComponent,
+        DigitalPortalCustomizationScreenLayoutComponent,
+        AddDigitalFieldCodeComponent,
+        AddDigitalPredefinedComponent,
     ];
 
 export class ModuleDeclarations {
@@ -93,6 +108,13 @@ export class ModuleDeclarations {
             case "SharedShipmentsWorkspaceComponent": { myResult = SharedShipmentsWorkspaceComponent; break; } 
             case "TemplateTypeComponent": { myResult = TemplateTypeComponent; break; }
             case "SharedLogisticsDigitalPortalComponent": { myResult = SharedLogisticsDigitalPortalComponent; break; }
+            case "DigitalPortalCustomizationMainComponent": { myResult = DigitalPortalCustomizationMainComponent; break; }
+            case "DigitalPortalCustomizationChageLabelsComponent": { myResult = DigitalPortalCustomizationChageLabelsComponent; break; }
+            case "DigitalPortalCustomizationTranslateLabelsComponent": { myResult = DigitalPortalCustomizationTranslateLabelsComponent; break; }
+            case "DigitalPortalCustomizationShowHideFieldsComponent": { myResult = DigitalPortalCustomizationShowHideFieldsComponent; break; }
+            case "DigitalPortalCustomizationScreenLayoutComponent": { myResult = DigitalPortalCustomizationScreenLayoutComponent; break; }
+            case "AddDigitalFieldCodeComponent": { myResult = AddDigitalFieldCodeComponent; break; }
+            case "AddDigitalPredefinedComponent": { myResult = AddDigitalPredefinedComponent; break; }
         }
 
         return myResult;

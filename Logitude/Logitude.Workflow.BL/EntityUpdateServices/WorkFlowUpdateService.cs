@@ -1,6 +1,9 @@
 ﻿using Logitude.Server.Tools;
+using Logitude.Server.Tools.Counters;
+using Logitude.Workflow.BL.EntityDataMappings;
 using Logitude.Workflow.BL.EntityPMs;
 using Logitude.Workflow.Data;
+using Logitude.Workflow.Data.EntityPOCOs;
 using Logitude.Workflow.Data.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
@@ -16,6 +19,7 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
                 ValidateWorkflowName(entityPM, true);
+                CreateNewVersion(entityPM);
             }
         }
 
@@ -24,7 +28,6 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
             if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
                 ValidateWorkflowName(entityPM, false);
-                CreateNewVersion(entityPM);
             }
         }
 
@@ -56,12 +59,9 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
 
         private void CreateNewVersion(WorkFlowPM entityPM)
         {
-            if (!IsFirstUpdate(entityPM))
+            var versionPOCO = new WorkFlowVersion()
             {
-                return;
-            }
-            var versionPM = new WorkFlowVersionPM()
-            {
+                Id = IdCounter.GetNumber("WorkFlowVersion", entityPM.Tenant),
                 Tenant = entityPM.Tenant,
                 CreateDate = entityPM.CreateDate,
                 UpdateDate = entityPM.UpdateDate,
@@ -70,27 +70,16 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
                 WorkflowId = entityPM.Id,
                 FlowJson = entityPM.FlowJson,
                 VersionNumber = 1,
-                StatusCode = "ACVE",
+                StatusCode = "DRFT",
                 Description = "First Create WorkFlow Version",
-                SearchFields = "First Create WorkFlow Version"
+                SearchFields = "First Create WorkFlow Version",
+                Entity = entityPM.Entity,
+                Trigger = entityPM.Trigger
             };
 
-            IWorkflowContext MyContext = WorkflowContext.GetContext(entityPM.Tenant);
-            WorkFlowVersionUpdateService service = new WorkFlowVersionUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-            versionPM.ChangeSetOp = ChangeSetOperation.Insert;
-            service.Update(versionPM, true);
-
-            if(versionPM.Id != null)
-            {
-                entityPM.WorkFlowActiveVersionId = versionPM.Id;
-            }
-        }
-
-        private bool IsFirstUpdate(WorkFlowPM entityPM)
-        {
-            WorkFlowVersionRepository workFlowVersionRepository = new WorkFlowVersionRepository(entityPM.Tenant);
-            var workFlowVersions = workFlowVersionRepository.GetAllByWorkflowId(entityPM.Tenant, entityPM.Id).ToList();
-            return workFlowVersions.Count() == 0;
+            IWorkflowContext context = MainContext as WorkflowContext;
+            WorkFlowVersionRepository workFlowVersionRepository = new WorkFlowVersionRepository(context);
+            workFlowVersionRepository.Add(versionPOCO);
         }
     }
 }

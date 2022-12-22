@@ -226,7 +226,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
      
         public void Add(APInvoice entity)
         {
-            AddFromAPInvoice(entity);
+            //AddFromAPInvoice(entity);
             context.APInvoices.Add(entity);
         }
         public void AddFromAPInvoice(APInvoice entity)
@@ -270,7 +270,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
         {
             try
             {
-                UpdateFromAPInvoice(entity);
+                //UpdateFromAPInvoice(entity);
                 context.APInvoices.Attach(entity);
             }
             catch { }

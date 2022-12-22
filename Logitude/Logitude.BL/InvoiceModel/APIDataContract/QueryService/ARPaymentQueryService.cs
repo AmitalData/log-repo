@@ -12,13 +12,57 @@ using System.Linq;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Text;
 using System.Threading.Tasks;
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+using Logitude.Server.Tools.Helpers;
+using User = Logitude.BL.CommonDataModel.APIDataContract.ApiV1.User;
 
 namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 {
     public partial class ARPaymentQueryService
     {
+
+        public ARPayment SetARPaymentSystemUser(ARPayment entity)
+        {
+            String systemUserId = "";
+            UserPM myCreatedByUserPM = null;
+            if (entity.CreatedByUser != null)
+            {
+                UserQuery query = new UserQuery(entity.Tenant);
+                myCreatedByUserPM = query.UserCustomDataMappingAndValidatin(entity.CreatedByUser, entity.Tenant);
+            }
+
+
+            
+            if (entity.CreatedByUser == null || myCreatedByUserPM == null)
+            {
+                systemUserId = AuthenticationUtil.ResolveSystemUserId(entity.Tenant);
+                if (!String.IsNullOrEmpty(systemUserId))
+                {
+                    entity.CreatedByUser = null;
+
+                    UserQueryService userQueryService = new UserQueryService(entity.Tenant);
+                    User systemUser = userQueryService.GetUserById(systemUserId, entity.Tenant);
+                    if (systemUser != null)
+                    {
+                        entity.CreatedByUser = new User();
+                        entity.CreatedByUser.Id = systemUser.Id;
+                        entity.CreatedByUser.EnglishName = systemUser.EnglishName;
+                        entity.CreatedByUser.ExternalCode = systemUser.ExternalCode;
+                        entity.CreatedByUser.LocalName = systemUser.LocalName;
+
+                    }
+                }
+            }
+
+
+            return entity;
+        }
+
         public ARPaymentPM SetARPaymentPMFields(ARPaymentPM entity)
         {
+
+
+
             CurrencyQuery currencyQuery = new CurrencyQuery(entity.Tenant);
             if (entity.LocalCurrencyCode != null)
             {

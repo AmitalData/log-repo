@@ -25,3 +25,4 @@
 @import url("_Resources/css/custom-ng-zorro-antd-styles.css");
 @import "~logitude-workflow/dist/index.css"; 
 @import "~ng-zorro-antd/tree-select/style/index.min.css"; 
+@import url("_Resources/css/pretty-print-json.css");

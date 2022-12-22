@@ -398,7 +398,7 @@ namespace WebFreight.Web.App_Code
                 {
                     LogPM.PartnerName = Partner.Name;
                 }
-                LogPM.Subject = "Insert Documents To Importer Tenant";
+                LogPM.Subject = "Update Documents From Forwarder Tenant";
                 if (IsNewLog)
                 {
                     apiLogsService.Create(LogPM);
@@ -753,6 +753,7 @@ namespace WebFreight.Web.App_Code
         private APIException MapEntityAMToEntityPM(DocumentsFilingAM EntityAM, DocumentsFilingPM EntityPM)
         {
             APIException Responce = new APIException();
+            EntityAM.ObjectTableName = EntityAM.ObjectTableName == "ShipmentOrder" ? "Shipment" : EntityAM.ObjectTableName;
             if (!string.IsNullOrEmpty(EntityAM.ObjectTableName))
             {
                 ObjectTableRepository objectTabelRepository = new ObjectTableRepository(EntityAM.ImporterTenant);

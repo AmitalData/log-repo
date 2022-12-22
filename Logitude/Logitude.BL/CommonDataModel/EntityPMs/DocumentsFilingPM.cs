@@ -173,5 +173,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool IsAgentSharedInMaster { get; set; }
 
         public bool FromCTool { get; set; }
+        public string ReceivedByByContactId { get; set; }
+        
     }
 }

@@ -983,6 +983,44 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
         });
     }
     
+    masterLabel = 'Master';
+    houseLabel = 'House';
+    SetMasterOrHouseLabel() {
+        if(this.cargoTrackingShipmentPM.EntityType == ShipmentEntityTypes.Customs && this.cargoTrackingShipmentPM.ForwardingShipmentHeaderId && this.cargoTrackingShipmentPM.ForwardingShipmentLevelCode == ShipmentLevelCodes.House && this.cargoTrackingShipmentPM.ForwardingHouse){
+            return this.houseLabel;
+        }else if(this.cargoTrackingShipmentPM.EntityType == ShipmentEntityTypes.Customs && this.cargoTrackingShipmentPM.ForwardingShipmentHeaderId && this.cargoTrackingShipmentPM.ForwardingShipmentLevelCode == ShipmentLevelCodes.Direct && this.cargoTrackingShipmentPM.ForwardingMaster){
+            return this.masterLabel;
+        }else if(this.cargoTrackingShipmentPM.EntityType == ShipmentEntityTypes.Forwarding && this.cargoTrackingShipmentPM.ShipmentLevelCode == ShipmentLevelCodes.House && this.cargoTrackingShipmentPM.House){
+            return this.houseLabel;
+        }else if(this.cargoTrackingShipmentPM.EntityType == ShipmentEntityTypes.Forwarding && this.cargoTrackingShipmentPM.ShipmentLevelCode == ShipmentLevelCodes.Direct && this.cargoTrackingShipmentPM.Master){
+            return this.masterLabel;
+        }else if(this.cargoTrackingShipmentPM.House ){
+            return this.houseLabel;
+        }else if(this.cargoTrackingShipmentPM.Master ){
+            return this.masterLabel;
+        }
+        return null;
+
+    }
+    SetMasterOrHouseValue() {
+        if(this.cargoTrackingShipmentPM.EntityType == ShipmentEntityTypes.Customs && this.cargoTrackingShipmentPM.ForwardingShipmentHeaderId && this.cargoTrackingShipmentPM.ForwardingShipmentLevelCode == ShipmentLevelCodes.House && this.cargoTrackingShipmentPM.ForwardingHouse){
+            return this.cargoTrackingShipmentPM.ForwardingHouse;
+        }else if(this.cargoTrackingShipmentPM.EntityType == ShipmentEntityTypes.Customs && this.cargoTrackingShipmentPM.ForwardingShipmentHeaderId && this.cargoTrackingShipmentPM.ForwardingShipmentLevelCode == ShipmentLevelCodes.Direct && this.cargoTrackingShipmentPM.ForwardingMaster){
+            return this.cargoTrackingShipmentPM.ForwardingMaster;
+        }else if(this.cargoTrackingShipmentPM.EntityType == ShipmentEntityTypes.Forwarding && this.cargoTrackingShipmentPM.ShipmentLevelCode == ShipmentLevelCodes.House && this.cargoTrackingShipmentPM.House){
+            return this.cargoTrackingShipmentPM.House;
+        }else if(this.cargoTrackingShipmentPM.EntityType == ShipmentEntityTypes.Forwarding && this.cargoTrackingShipmentPM.ShipmentLevelCode == ShipmentLevelCodes.Direct && this.cargoTrackingShipmentPM.Master){
+            return this.cargoTrackingShipmentPM.Master;
+        }else if(this.cargoTrackingShipmentPM.House ){
+            return this.cargoTrackingShipmentPM.House;
+        }else if(this.cargoTrackingShipmentPM.Master ){
+            return this.cargoTrackingShipmentPM.Master;
+        }
+
+        return null;
+
+    }
+    
     checkPartnerTypePermissionSharedAccess(partnerTypeName) : boolean{
         if(this.cargoTrackingShipmentPM.SharedLogisticsSetting) {
             switch (partnerTypeName) {
@@ -1029,7 +1067,7 @@ export class ShipmentDetailsComponent implements OnInit,AfterViewInit
                 case PartnerTypeNames.Trucker:
                     return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsPickDelivCarriesShared;
                 default:
-                    return true
+                    return false
             }
         }
         return true;
@@ -1131,4 +1169,16 @@ export enum PartnerTypeNames {
     shipper = 'shipper',        
     Carrier = 'Carrier',
     Trucker = 'Trucker'
+}
+
+export enum ShipmentEntityTypes {
+    Order = 'O',
+    Customs = 'C',
+    Forwarding = 'F'
+}
+
+export enum ShipmentLevelCodes {
+    House = 'H',
+    Direct = 'D',
+    Customs = 'A'
 }

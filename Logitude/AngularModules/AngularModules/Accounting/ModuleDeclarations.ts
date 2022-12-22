@@ -35,6 +35,7 @@ import {NewConnectedGLAccountComponent} from './Components/EditTabs/GLAccount/Ne
 import {NewPaymentChequeComponent} from './Components/NewEntity/NewPaymentChequeComponent';
 import {NewTaxWithholdingAssessingOfficeComponent} from './Components/Maintenance/NewTaxWithholdingAssessingOfficeComponent';
 import { FullAccountingSettingsComponent } from './Components/Maintenance/FullAccountingSettingsComponent';
+import { ChartOfAccountsTypesOrderComponent } from './Components/Maintenance/ChartOfAccountsTypesOrderComponent';
 import { FullAccountingAddControlComponent } from './Components/Maintenance/FullAccountingAddControlComponent';
 
 import {AccountingPeriodsComponent} from './Components/Maintenance/AccountingPeriodsComponent';
@@ -199,6 +200,7 @@ export const Components =
         NewCategory4Component,
         NewCategory5Component,
         FullAccountingSettingsComponent,
+        ChartOfAccountsTypesOrderComponent,
         FullAccountingAddControlComponent,
         AccountingPeriodsComponent,
         EditAccountingPeriodComponent,
@@ -370,6 +372,7 @@ export class ModuleDeclarations {
             case "NewCategory4Component": { myResult = NewCategory4Component; break; }
             case "NewCategory5Component": { myResult = NewCategory5Component; break; }
             case "FullAccountingSettingsComponent": { myResult = FullAccountingSettingsComponent; break; }
+            case "ChartOfAccountsTypesOrderComponent": { myResult = ChartOfAccountsTypesOrderComponent; break; }
             case "FullAccountingAddControlComponent": { myResult = FullAccountingAddControlComponent; break; }
             case "YearTransferComponent": { myResult = YearTransferComponent; break; }
             case "AccountingPeriodsComponent": { myResult = AccountingPeriodsComponent; break; }

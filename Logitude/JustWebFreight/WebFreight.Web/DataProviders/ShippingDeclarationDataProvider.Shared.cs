@@ -149,6 +149,9 @@ namespace WebFreight.Web.DataProviders
         public string Broker { get; set; }
         public string BrokerName { get; set; }
         public string BrokerEmail { get; set; }
+        public string BrokerAddressOnly { get; set; }
+        public string BrokerContactName { get; set; }
+        public string BrokerPhone { get; set; }
         public string HouseNumber { get; set; }
         public string LastFreeDate { get; set; }
         public string CarrierNumberLabel { get; set; }
@@ -603,5 +606,7 @@ namespace WebFreight.Web.DataProviders
         public double? TotalVolumeINCBF { get; set; }
         public string DestinationWarehouseLegTerminalName { get; set; }
         public string DestinationWarehouseLegTerminalAddress { get; set; }
+        public DateTime? DeliveryETD_DateTime { get; set; }
+        public string AccountManager { get; set; }
     }
 }

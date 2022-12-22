@@ -64,6 +64,10 @@ export class ScreenPM {
     public get SortedType() { return this.sortedType; }
     public set SortedType(newValue: string) { this.sortedType = newValue; }
 
+    private relatedScreenCode: string;
+    public get RelatedScreenCode() { return this.relatedScreenCode; }
+    public set RelatedScreenCode(newValue: string) { this.relatedScreenCode = newValue; }
+
     public OldEntityPM: ScreenPM;
 
     private isDirty: boolean;

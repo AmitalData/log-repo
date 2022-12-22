@@ -4,7 +4,7 @@ import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { ConditionOperations } from "Workflow/Constants/ConditionOperations";
-import { CollectionFilterEntitiesTreeList } from "Workflow/Models/CollectionFilterEntitiesTreeList";
+import { SingleEditableEntitiesTreeList } from "Workflow/Models/SingleEditableEntitiesTreeList";
 import { Condition } from "Workflow/Models/Condition";
 import { ObjectTables } from "Workflow/Models/ObjectTables";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
@@ -17,13 +17,11 @@ export class CollectionFilterPropertiesComponent extends BaseComponent {
 
     public DataContext: any = this;
 
-    public WorkflowEntity: string;
     public FlowObject: any;
     public CurrentNodeId: string;
     public FlowObjectFields: ObjectFieldList[];
 
-    public CollectionFilterEntitiesTreeList: CollectionFilterEntitiesTreeList;
-    public CollectionFilterEntitiesTreeItems: TreeSelectItem[];
+    public SingleEditableEntitiesTreeItems: TreeSelectItem[];
 
     public Data: any;
     public Name: string = null;
@@ -32,15 +30,13 @@ export class CollectionFilterPropertiesComponent extends BaseComponent {
     public Collection: string;
     public CollectionFilters: Condition[];
     public CollectionFiltersOperation: string;
-    public IsValidCollectionFilters: boolean = true;
+    public IsValidConditions: boolean = true;
     public ValidationErrorsList: string[];
-
 
     public CurrentSession = SessionLocator.SelectedSession;
 
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
-        this.WorkflowEntity = args.WorkflowEntity ? args.WorkflowEntity : null;
         this.FlowObject = args.FlowObject ? args.FlowObject : null;
         this.CurrentNodeId = args.CurrentNodeId ? args.CurrentNodeId : null;
         this.FlowObjectFields = args.FlowObjectFields ? args.FlowObjectFields : [];
@@ -48,7 +44,7 @@ export class CollectionFilterPropertiesComponent extends BaseComponent {
 
     ngOnInit() {
         this.initialize();
-        this.initializeCollectionFilterEntitiesTree();
+        this.initializeSingleEditableEntitiesTree();
     }
 
     initialize() {
@@ -59,22 +55,28 @@ export class CollectionFilterPropertiesComponent extends BaseComponent {
         this.CollectionFilters = this.Data["collectionFilters"] || [];
         this.CollectionFiltersOperation = this.Data["collectionFiltersOperation"] || ConditionOperations.And;
 
-        if (this.CollectionFilters.length == 0) {
-            this.IsValidCollectionFilters = false;
-            let condition = new Condition();
-            this.CollectionFilters.push(condition);
-        }
+        this.initializeCollectionFilters();
 
         this.EntityId = ObjectTables.getIdByName(this.Entity);
 
         this.setUIProperties();
     }
 
-    initializeCollectionFilterEntitiesTree() {
-        this.CollectionFilterEntitiesTreeList = new CollectionFilterEntitiesTreeList(this.FlowObject, this.CurrentNodeId);
-        this.CollectionFilterEntitiesTreeItems = this.CollectionFilterEntitiesTreeList.Items;
+    initializeCollectionFilters(reset: boolean = false) {
+        if (reset) {
+            this.CollectionFilters = [];
+            this.CollectionFiltersOperation = ConditionOperations.And;
+        }
+        if (this.CollectionFilters.length === 0) {
+            let condition = new Condition();
+            this.CollectionFilters.push(condition);
+            this.IsValidConditions = false;
+        }
     }
 
+    initializeSingleEditableEntitiesTree() {
+        this.SingleEditableEntitiesTreeItems = new SingleEditableEntitiesTreeList(this.FlowObject, this.CurrentNodeId).Items;
+    }
 
     updateName(name: string) {
         this.Data["name"] = name;
@@ -83,30 +85,27 @@ export class CollectionFilterPropertiesComponent extends BaseComponent {
         this.setUIProperties();
     }
 
-    updateCollection(event: any) {
-        let value = event.key
-        let entity = event.data["entity"]
-        let isCollectionChanged = this.Data["collection"] !== value;
+    updateCollection(collectionItem: TreeSelectItem) {
+        let collectionName = collectionItem ? collectionItem.key : null;
+        let collectionEntity = collectionItem ? collectionItem.data["entity"] : null;
+        let isCollectionChanged = this.Data["collection"] !== collectionName;
 
-        this.Collection = value
-        this.Entity  = entity
-        this.EntityId = ObjectTables.getIdByName(entity);
+        this.Collection = collectionName;
+        this.Entity = collectionEntity;
+        this.EntityId = ObjectTables.getIdByName(collectionEntity);
 
-        this.Data["collection"] = value
-        this.Data["entity"] = entity
+        this.Data["collection"] = collectionName;
+        this.Data["entity"] = collectionEntity;
 
         if (isCollectionChanged) {
-            let condition = new Condition();
-            this.CollectionFilters = []
-            this.CollectionFiltersOperation = ConditionOperations.And;
-            this.CollectionFilters.push(condition);
+            this.initializeCollectionFilters(true);
         }
 
         this.setUIProperties();
     }
 
-    UpdateIsValidCollectionFilters(isValidCollectionFilters: boolean) {
-        this.IsValidCollectionFilters = isValidCollectionFilters;
+    setIsValidConditions(isValidConditions: boolean) {
+        this.IsValidConditions = isValidConditions;
     }
 
     setUIProperties() {
@@ -121,15 +120,15 @@ export class CollectionFilterPropertiesComponent extends BaseComponent {
     saveButtonClicked() {
         this.ValidationErrorsList = [];
         let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
-        if (notValidUIProperties.length === 0 && this.IsValidCollectionFilters) {
+        if (notValidUIProperties.length === 0 && this.IsValidConditions) {
             this.setConditionsData();
-
+            //console.log(this.Data);
             this.CurrentSession.CurrentWindow.Close(this.Data);
         } else {
             let validationErrors = notValidUIProperties.map(t => { return t.ValidationError; });
             this.ValidationErrorsList = validationErrors;
 
-            if (!this.IsValidCollectionFilters)
+            if (!this.IsValidConditions)
                 this.ValidationErrorsList.push("Invalid Conditions");
         }
     }

@@ -11,7 +11,7 @@ Feature: Multi Vat Type Create, Search and Edit from Maintenance
     Scenario: Add Multi Vat Type Code with lenght more than 5
         Given the user open "VatTypes" in maintenance menu
         When add "123456" as multi vat type code
-        Then a validation message with "Code Field must be less than 5" error should appear
+        Then a validation message with "Code Field length must be less than 5" error should appear
 
     Scenario: Create new multi vat type
         And a multi vat type with the following details
