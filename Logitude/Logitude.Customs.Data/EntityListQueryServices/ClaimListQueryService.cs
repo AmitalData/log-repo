@@ -21,11 +21,29 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
     public partial class ClaimListQueryService
     {
+
         private IQueryable<ClaimList> GetIqueryableList(IQueryable<Claim> iQueryable)
         {
+
+            var q = from a in iQueryable
+                    join c in context.ClaimsRelatedEntities
+                    on a.Id equals c.ClaimId
+                    group c by c.ClaimId into g
+                    select new
+                    {
+                        Id = g.Key,
+                        Amount = g.Sum(x => x.ClaimAmount)
+
+                    };
+
+
             IQueryable<ClaimList> query = (from a in iQueryable.Include("ImporterTypeForClaim").Include("PassportType").Include("PassportCountryType").Include("ClaimSubmiterType").Include("BeneficiaryActivityType").Include("AccountCountry").Include("AccountCurrencyType").Include("AccountBranch")
                                            join d in context.Tapags.Include("CustomerCard").Include("ReferantUser")
                                            on a.Id equals d.Id
+                                           join c in q.DefaultIfEmpty()
+                                           on a.Id equals c.Id
+
+
 
                                            select new ClaimList()
                                            {
@@ -79,6 +97,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                ReferantName = d.ReferantUser.Contact.LocalName != null ? d.ReferantUser.Contact.LocalName : d.ReferantUser.Contact.EnglishName,
                                                CustomsBranchCode = d.CustomsBranchCode,
                                                CustomsBranchName = d.CustomsBranch != null ? d.CustomsBranch.LocalName : null,
+                                               ClaimAmount = (decimal)c.Amount
                                            });
 
             //Freelancer filtering
