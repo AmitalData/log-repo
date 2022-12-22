@@ -328,6 +328,18 @@ namespace AmitalCustomsWindowsService.Tester
             clsTester.HSMSignTests();
             return;
 
+            try
+            {
+                clsTester.TestUpdateLOGITUDE_FILE();
+            }
+            catch (Exception EX)
+            {
+
+                ///throw;
+            }
+            
+            return;
+
             clsTester.Check_UserWcfService(GetTenant());
             return;
 
@@ -370,7 +382,7 @@ namespace AmitalCustomsWindowsService.Tester
             
             return;
             return;
-            clsTester.TestUpdateLOGITUDE_FILE();
+            
 
             //clsTester.GetListByCourierHAWB();
 
