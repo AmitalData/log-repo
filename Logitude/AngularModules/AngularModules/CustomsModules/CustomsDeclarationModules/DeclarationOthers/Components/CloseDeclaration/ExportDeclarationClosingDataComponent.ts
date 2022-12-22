@@ -120,16 +120,17 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                     }
 
                 if (this.DecPM.Direction === 'E' && this.DecPM.TransportModeId === 'O') {
- 
+                 
+                    this.FinalShipCode=this.FinalShipCode??this.DecPM.Consignments.find(x=>x.ConsignmentType=="E").ShipCode;
                     if (this.FinalCargoTypeCode == null) {
-
+                        
                         this.FinalManifestNumber = this.FinalManifestNumber == null ? '' : this.FinalManifestNumber;
                         this.FinalSecondCargoId = this.FinalSecondCargoId == null ? '' : this.FinalSecondCargoId;
                         this.FinalThirdCargoId = this.FinalThirdCargoId == null ? '' : this.FinalThirdCargoId;
-
                         this.FinalCargoTypeCode = '37';
                                                           
                     }
+                   
                     else{
                         this.setIdentifiersPlaceHolders();
                     }
@@ -332,8 +333,10 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     }
 
     ViewDocumentsComponent() {
+       
         var windowArgs: any = {};
         windowArgs.EntityPM = this.DecPM;
+        windowArgs.ClosingData=this.EntityPM;
         //windowArgs.ObjectTableName = "Customs.DeclarationCancellation";
         windowArgs.ObjectTableName = "Customs.Declaration";// this.ObjectTableName;
         windowArgs.EntityParentPM = "ExportDeclarationClosingData";

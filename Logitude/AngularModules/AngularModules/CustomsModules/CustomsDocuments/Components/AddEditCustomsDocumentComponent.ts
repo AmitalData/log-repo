@@ -173,6 +173,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     private _CustomDocumentViewerService: CustomDocumentViewerService = new CustomDocumentViewerService();
     private customsSettingListService: CustomsSettingListService = new CustomsSettingListService;
     IsActionButtonsEnabled: boolean;
+    ClosingData:any;
     WindowArgs: any;
     private readonly customDocumentNewVersionService: CustomDocumentNewVersionService = new CustomDocumentNewVersionService();
 
@@ -209,6 +210,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
         this.iCustomsDocumentsController = windowArgs.iCustomsDocumentsController;
         this.IsCustomsDocumentInRequest = windowArgs.IsCustomsDocumentInRequest;
         this.EntityPM = windowArgs.EntityPM;
+        this.ClosingData=windowArgs.ClosingData;
         this.CheckEditEnabled(this.IsCustomsDocumentInRequest, !this.IsDisplayOnly);
         this.SelectedIndex = 0;
         this.FillConnectedToItems();
@@ -1123,6 +1125,14 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
             this.MetaDataViewModels.push(metaDataViewModel);
 
         });
+        if(this.EntityPM.Direction=="E" && this.EntityPM.transportModeId=="O" && docType.Code=="707"){
+            var FinalCargoTypeCode= this.MetaDataViewModels.find(x=>x.MetaDataType.MetaDataTypeCode=="99")   
+            var FinalManifestNumber= this.MetaDataViewModels.find(x=>x.MetaDataType.MetaDataTypeCode=="100") 
+            if(AppTool.IsNullOrEmpty(FinalCargoTypeCode.MetaDataValue.MetaDataValue))FinalCargoTypeCode.MetaDataValue.MetaDataValue=this.ClosingData.FinalCargoTypeCode;
+            if(AppTool.IsNullOrEmpty(FinalManifestNumber.MetaDataValue.MetaDataValue))FinalManifestNumber.MetaDataValue.MetaDataValue=this.ClosingData.FinalManifestNumber;
+
+        }
+        
     }
 
     GetRequiredFieldsErrors() {
