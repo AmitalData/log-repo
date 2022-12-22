@@ -22,7 +22,7 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
     TextAreaInputId: string = Guid.newGuid();
     TextAreaInputCurrentPosition: number = 0;
     IsPreviewChanges: boolean = false;
-
+    public editorOptions = {theme: '', language: 'html'};
     constructor() {
         this.Screens = [];
         this.ModifiedScreenData = new DigitalPortalScreenUpdateModel();
