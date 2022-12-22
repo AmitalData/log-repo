@@ -33,7 +33,7 @@ namespace WebFreight.Web.Helpers.StimulReportCustomizationDataProvider
 
         public void Set(object dataProvider)
         {
-
+            if (fields.Where(d => d.IsCustom && !d.IsChild && !d.IsList).ToList().Count() == 0) return ;
             var entityPM = this.documentDataProviderArgs.EntityPM;
             if(entityPM == null) entityPM = InjectionUtil.Instance.GetEntityByObjectTableNameAndEntityId(objectTableName, documentDataProviderArgs.EntityId, documentDataProviderArgs.DocumentTypeTemplatePM.Tenant);
             if (entityPM == null) return;
