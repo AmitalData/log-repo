@@ -410,13 +410,12 @@
 
                         <!-- Sender -->
                         <div class="column col-md-2 sender" style="width: 12%;">
-                            <div [attr.src]="SetTitileAndValueForSupplierOrClient(shipment)">
+                            <div [attr.src]="SetTitleAndValueForSupplierOrClient(shipment)">
                                 <div class="subtitle">{{SupplierOrClientTitle}}</div>
                                 <div class="value truncateText">
                                     <span (click)="$event.stopPropagation()"
                                         [matTooltip]=" SupplierOrClientValue?.length > maxNumberOfCarachter ? SupplierOrClientValue : ''">{{GetSlice(SupplierOrClientValue,maxNumberOfCarachter)}}</span>
                                 </div>
-
 
 
                                 <div class="subtitle hide-mobile" [attr.src]="SetShipmenTypeForRouting(shipment)">
@@ -451,8 +450,6 @@
                             </div>
                         </div>
                         <div class="column seperator"></div>
-
-
 
 
 
