@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="17">
+  <Sql Version="18">
     <![CDATA[	
 	  delete from DigitalTextCodes where id != ''
 
@@ -722,7 +722,7 @@
 		{
 			"TextCode": "Shipment.G.GeneralInformation",
 			"DefaultText": "General information",
-			"FieldCode": ""
+			"FieldCode": "Shipment.GeneralInformation"
 		},
 		{
 			"TextCode": "Shipment.G.FinalDestinationNoResultMsg",
@@ -732,16 +732,11 @@
 		{
 			"TextCode": "Shipment.F.House",
 			"DefaultText": "House",
-			"FieldCode": ""
+			"FieldCode": "Shipment.House"
 		},
 		{
 			"TextCode": "Shipment.G.Houses",
 			"DefaultText": "Houses",
-			"FieldCode": ""
-		},
-		{
-			"TextCode": "Shipment.O.Master",
-			"DefaultText": "Master",
 			"FieldCode": ""
 		},
 		{
@@ -1170,7 +1165,7 @@
 			"FieldCode" : ""
 		},
 		{
-			"TextCode": "Shipment.G.AllShipmentEmptyDefaultMSG",
+			"TextCode": "Shipment.G.AllShipmentEmptyDefaultParentMSG",
 			"DefaultText": "You don’t have any active shipments yet",
 			"FieldCode" : ""
 		},
@@ -1223,7 +1218,37 @@
 			"TextCode": "Shipment.G.ContainersLines",
 			"DefaultText": "Containers lines",
 			"FieldCode" : ""
-		}]');
+		},
+		{
+           "TextCode": "Shipment.G.DirectionId",
+           "DefaultText": "Direction id",
+           "FieldCode": "Shipment.DirectionId"
+       },
+	   {
+          "TextCode": "Shipment.G.ShipmentSubTypeName",
+          "DefaultText": "Shipment sub type name",
+          "FieldCode": "Shipment.ShipmentSubTypeName"
+       },
+	   {
+		   "TextCode": "Shipment.G.ShipmentTypeName",
+           "DefaultText": "Shipment type name",
+           "FieldCode": "Shipment.ShipmentTypeName" 
+	   },
+	   {
+           "TextCode": "Shipment.G.LongMaster",
+           "DefaultText": "Long master",
+           "FieldCode": "Shipment.LongMaster"
+       },
+	   {
+          "TextCode": "Shipment.O.Master",
+          "DefaultText": "Master",
+          "FieldCode": "Shipment.Master"
+       },
+	   {
+           "TextCode": "Shipment.F.IncotermName",
+           "DefaultText": "Incoterm",
+           "FieldCode": "Shipment.IncotermName"
+       }]');
 	  
 	declare @invocieObjectTableId as varchar(15)
 	set @invocieObjectTableId = (select Id from ObjectTables where [Name] = 'ARInvoice' and Tenant = 0)
