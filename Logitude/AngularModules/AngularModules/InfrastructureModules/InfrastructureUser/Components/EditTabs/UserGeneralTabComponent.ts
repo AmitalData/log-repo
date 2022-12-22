@@ -220,7 +220,7 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
         this.UIProperties.SetEnabled("Email", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("EnglishName", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("LocalName", this.ObjectTableName, isEditingEnabled);
-        this.UIProperties.SetEnabled("PersonalId", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("PersonalId", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("DepartmentId", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("BranchId", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("BusinessUnitId", this.ObjectTableName, isEditingEnabled);
