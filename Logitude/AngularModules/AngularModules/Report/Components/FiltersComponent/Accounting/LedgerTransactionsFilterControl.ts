@@ -804,8 +804,12 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     set AttachedGLAccountCheckBox(value: boolean)
     {
         if (this.attachedGLAccountCheckBox != value) {
+            const formday = new Date();
+            if (!value)   
+                this.FromDate = new Date(formday.setFullYear(2000, 0, 1));
+            else 
+                this.FromDate = new Date(formday.setMonth(formday.getMonth() - 1));
             this.attachedGLAccountCheckBox = value;
-
         }
     }
 
