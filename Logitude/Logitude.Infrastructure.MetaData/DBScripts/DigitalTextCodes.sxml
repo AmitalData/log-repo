@@ -1191,7 +1191,7 @@
 		},
 		{
 			"TextCode": "Shipment.G.DocumentsDefaultMSG",
-			"DefaultText": "Sorry, we couldn't find what you’re looking for, \n Please try another way.",
+			"DefaultText": "Sorry, we couldn''t find what you’re looking for, Please try another way.",
 			"FieldCode" : ""
 		},
 		{
@@ -1218,8 +1218,7 @@
 			"TextCode": "Shipment.G.ContainersLines",
 			"DefaultText": "Containers lines",
 			"FieldCode" : ""
-		}
-	]');
+		}]');
 	  
 	declare @invocieObjectTableId as varchar(15)
 	set @invocieObjectTableId = (select Id from ObjectTables where [Name] = 'ARInvoice' and Tenant = 0)
@@ -1459,7 +1458,7 @@
 			},
 			{
 				"TextCode": "ARInvoice.G.NoInvoiceParentMSG",
-				"DefaultText": "You don't have invoices yet",
+				"DefaultText": "You don''t have invoices yet",
 				"FieldCode": ""
 			},
 			{
