@@ -35,10 +35,12 @@ export class AddEditDashboardComponent extends BaseComponent {
     public CommonFilterFields: CodeNameClass[] = [];
     public GlobalFilters: GlobalFilterItem[];
     private maxFiltersLineNumber = 0;
+    public LoggedTenant: number = 0;
     constructor() {
         super();
         this.dashboardService = new DashboardPMService();
-        this.SessionIndex = this.CurrentSession.SessionIndex;        
+        this.SessionIndex = this.CurrentSession.SessionIndex;
+        this.LoggedTenant = SessionLocator.Tenant;
         this.GlobalFilters = [];
         this.BuildPermissionLevelsList();
         this.BuildFilterTypesList();
@@ -67,7 +69,7 @@ export class AddEditDashboardComponent extends BaseComponent {
         this.PermissionLevelsList.push(new CodeNameClass("SPF", "Specific Users"));
 
         if (this.isNew)
-            this.PermissionLevelCode = "ONM";
+            this.PermissionLevelCode = this.LoggedTenant == 0 ? "PUB" : "ONM";
     }
     private BuildFilterTypesList() {
         this.FilterTypes = [];
@@ -112,6 +114,20 @@ export class AddEditDashboardComponent extends BaseComponent {
         if (this.EntityPM.PermissionLevelCode != value) {
             this.EntityPM.PermissionLevelCode = value;
             MixPanelLocator.PostDashboardAction({ ActionName: "New Edit Dashboard permission change", DashboardId: this.EntityPM?.Id });
+        }
+    }
+
+    get LoadedAutomatically() { return this.EntityPM.LoadedAutomatically; }
+    set LoadedAutomatically(value: boolean) {
+        if (this.EntityPM.LoadedAutomatically != value) {
+            this.EntityPM.LoadedAutomatically = value;
+        }
+    }
+
+    get PredefinedOrder() { return this.EntityPM.PredefinedOrder; }
+    set PredefinedOrder(value: number) {
+        if (this.EntityPM.PredefinedOrder != value) {
+            this.EntityPM.PredefinedOrder = value;
         }
     }
 

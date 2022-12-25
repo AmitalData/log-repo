@@ -31,7 +31,9 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         SearchFields, 
 	         Name, 
 	         Description, 
-	         PermissionLevelCode,
+	         PermissionLevelCode, 
+	         LoadedAutomatically, 
+	         PredefinedOrder,
 	      }
 
 
@@ -47,7 +49,9 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         SearchFields, 
 	         Name, 
 	         Description, 
-	         PermissionLevelCode,
+	         PermissionLevelCode, 
+	         LoadedAutomatically, 
+	         PredefinedOrder,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -99,6 +103,16 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PermissionLevelCode))
             {
 				entityPOCO.PermissionLevelCode = entityPM.PermissionLevelCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LoadedAutomatically))
+            {
+				entityPOCO.LoadedAutomatically = entityPM.LoadedAutomatically;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PredefinedOrder))
+            {
+				entityPOCO.PredefinedOrder = entityPM.PredefinedOrder;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -157,6 +171,16 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 					entityPM.PermissionLevelCode = entityPOCO.PermissionLevelCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LoadedAutomatically))
+            {
+					entityPM.LoadedAutomatically = entityPOCO.LoadedAutomatically;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PredefinedOrder))
+            {
+					entityPM.PredefinedOrder = entityPOCO.PredefinedOrder;
+            }
+
 		}
 
 		public void PMToOldPM(DashboardPM entityPM, DashboardPM oldEntityPM)
@@ -206,6 +230,16 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PermissionLevelCode))
             {
                 oldEntityPM.PermissionLevelCode = entityPM.PermissionLevelCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LoadedAutomatically))
+            {
+                oldEntityPM.LoadedAutomatically = entityPM.LoadedAutomatically;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PredefinedOrder))
+            {
+                oldEntityPM.PredefinedOrder = entityPM.PredefinedOrder;
             }
 			
 		}

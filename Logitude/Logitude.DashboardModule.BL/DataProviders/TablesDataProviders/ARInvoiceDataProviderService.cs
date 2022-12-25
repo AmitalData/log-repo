@@ -13,27 +13,27 @@ namespace Logitude.DashboardModule.BL.DataProviders.TablesDataProviders
 {
     public class ARInvoiceDataProviderService : BaseTablesDataProvider
     {
-
-        public ARInvoiceDataProviderService(WidgetPM widget, AnalyticsFactsMetaData entity) : base(widget, entity)
+        private int tenant;
+        public ARInvoiceDataProviderService(WidgetPM widget, AnalyticsFactsMetaData entity, int tenant) : base(widget, entity, tenant)
         {
-
+            this.tenant = tenant;
         }
 
         public override List<SeriesMeasure> GetChartData()
         {
-            IInvoiceContext myContext = InvoiceContext.GetContext(_Widget.Tenant);
+            IInvoiceContext myContext = InvoiceContext.GetContext(tenant);
             var arInvoiceAnalyticIQueryable = myContext.ARInvoiceAnalytics.AsQueryable();
-            arInvoiceAnalyticIQueryable = arInvoiceAnalyticIQueryable.Where(e => e.Tenant == _Widget.Tenant);
+            arInvoiceAnalyticIQueryable = arInvoiceAnalyticIQueryable.Where(e => e.Tenant == tenant);
             var result = new ChartDataProviderService(_Widget, _Entity).GetData(arInvoiceAnalyticIQueryable);
             return result;
         }
 
         public override AnalyticData GeChartDataPart(WidgetArguments widgetPartArguments)
         {
-            IInvoiceContext myContext = InvoiceContext.GetContext(_Widget.Tenant);
+            IInvoiceContext myContext = InvoiceContext.GetContext(tenant);
             var arInvoiceAnalyticIQueryable = myContext.ARInvoiceAnalytics.AsQueryable();
 
-            arInvoiceAnalyticIQueryable = arInvoiceAnalyticIQueryable.Where(e => e.Tenant == _Widget.Tenant);
+            arInvoiceAnalyticIQueryable = arInvoiceAnalyticIQueryable.Where(e => e.Tenant == tenant);
             List<string> analyticTableFields = GetSelectFields();
             var result = new ChartDataProviderService(_Widget, _Entity).GetDataPart<ARInvoiceAnalytic>(arInvoiceAnalyticIQueryable, analyticTableFields, widgetPartArguments);
             return result;
@@ -49,11 +49,11 @@ namespace Logitude.DashboardModule.BL.DataProviders.TablesDataProviders
 
         public override KpiChart GetKpiData()
         {
-            IInvoiceContext myContext = InvoiceContext.GetContext(_Widget.Tenant);
+            IInvoiceContext myContext = InvoiceContext.GetContext(tenant);
             var arInvoiceAnalyticIQueryable = myContext.ARInvoiceAnalytics.AsQueryable();
 
-            arInvoiceAnalyticIQueryable = arInvoiceAnalyticIQueryable.Where(e => e.Tenant == _Widget.Tenant);
-            return new KpiDataProviderService(_Widget, _Entity).GetData(arInvoiceAnalyticIQueryable);
+            arInvoiceAnalyticIQueryable = arInvoiceAnalyticIQueryable.Where(e => e.Tenant == tenant);
+            return new KpiDataProviderService(_Widget, _Entity, tenant).GetData(arInvoiceAnalyticIQueryable);
         }
     }
 }

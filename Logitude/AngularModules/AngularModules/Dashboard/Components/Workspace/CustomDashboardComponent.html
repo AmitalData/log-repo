@@ -1,3 +1,4 @@
+
 <div style="height: 100%;" class="Dashboard-body">
     <div class="FormFieldRow" style="height: 23px;margin-top: 8px;margin-bottom: 6px;">
         <table>
@@ -6,17 +7,16 @@
                     Dashboards
                 </td>
 
-                <td *ngIf="dashbaordCount > 0">
+                <td *ngIf="dashbaordCount > 0 || UserPinnedDashboards">
                     <div></div>
                 </td>
 
-                <td style="width:200px; height:22px;" *ngIf="dashbaordCount > 0">
-                    <dashboard-dropdown 
-                        [DisplayMemberPath]="'Name'" 
-                        [SelectedItem]="SelectedDashboard" 
-                        [ItemsSource]="ItemsSource" 
-                        (SelectedItemChanged)="DropDwonSelectionChanged($event)"
-                        [Loading]="DashboardDropdownLoading">
+                <td style="width:200px; height:22px;" *ngIf="dashbaordCount > 0 || UserPinnedDashboards">
+                    <dashboard-dropdown [DisplayMemberPath]="'Name'"
+                                        [SelectedItem]="SelectedDashboard"
+                                        [ItemsSource]="ItemsSource"
+                                        (SelectedItemChanged)="DropDwonSelectionChanged($event)"
+                                        [Loading]="DashboardDropdownLoading">
                     </dashboard-dropdown>
                 </td>
 
@@ -26,12 +26,9 @@
 
                 <td style="width: 117px; height: 22px;" *ngIf="dashbaordCount > 0">
                     <button class="Dashboard-create-button" (click)="AddDashboardClicked()">
-                        <img style="width:10px; height: 10px; margin-right: 4px; color: #F3942F;"
-                                src="./Images/Buttons/add.orange.png" />
-                        <!-- <svg width="10" height="10" viewBox="0 0 5 5"style="display: inline-block; vertical-align: middle;">
-                            <path fill="#F3942F" d="M2 1 h1 v1 h1 v1 h-1 v1 h-1 v-1 h-1 v-1 h1 z" />
-                        </svg> -->
-                    Create dashboard</button>
+                        <img style="width:10px; height: 10px; margin-right: 4px; color: #F3942F;" src="./Images/Buttons/add.orange.png" />
+                        Create dashboard
+                    </button>
                 </td>
             </tr>
         </table>
@@ -41,24 +38,42 @@
 
         <div class="DashboardTabHead">
             <ul style="display: flex;">
-                <li *ngFor="let item of DashboardsTabs" class="DashboardTabHeadLi" [class.DashboardTabSelected]="item.Dashboard.Id == SelectedDashboard?.Id" (click)="TabSelectionChanged(item)">
-                    <div class="DashboardInnerTab">
-                        <p class="TextTrimming">{{item.Name}}</p>
+                <li *ngFor="let item of DashboardsTabs" class="DashboardTabHeadLi" [class.DashboardTabSelected]="item.Dashboard.Id == SelectedDashboard?.Id">
+                    <div class="DashboardInnerTab" (contextmenu)="item.onRightClick($event)">
+                        <table>
+                            <tr>
+                                <td (click)="TabSelectionChanged(item)" style="max-width:132px;" class="TextTrimming">{{item.Name}}</td>
+
+                                <td *ngIf="!item.IsPinned" style="width:8px; max-width:8px;">
+                                    <div></div>
+                                </td>
+
+                                <td *ngIf="!item.IsPinned" style="width:8px; min-width:8px; max-width:8px; cursor:pointer;" (click)="CloseDashboardTabClicked(item)">
+                                    <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
+                                        <path class="CloseDashboardTabBtn" opacity="0.8" d="M4 3.11125L7.11125 0L8 0.888749L4.88875 4L8 7.11125L7.11125 8L4 4.88875L0.888749 8L0 7.11125L3.11125 4L0 0.888749L0.888749 0L4 3.11125Z" />
+                                    </svg>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div [id]="item.DropdownId" *ngIf="item.IsTabMenuOpened" class="Dashboard-menu" [class.Dashboard-menu-oneRow]="pinnedDashboardsCount > 8">
+                        <button class="Dashboard-menu-button" *ngIf="!item.IsPinned && pinnedDashboardsCount <= 8" (click)="PinDashboardTabClicked(item)">Pin dashboard</button>
+                        <button class="Dashboard-menu-button" *ngIf="item.IsPinned" (click)="UnpinDashboardTabClicked(item)">Unpin dashboard</button>
+                        <button class="Dashboard-menu-button" (click)="CloseDashboardTabClicked(item)">Close dashboard</button>
                     </div>
                 </li>
             </ul>
         </div>
 
-
-        <div class="DashboardTabBody" [ngStyle]="{'top': dashbaordCount > 0 ? '19px': '0'}">           
+        <div class="DashboardTabBody" [ngStyle]="{'top': dashbaordCount > 0 ? '19px': '0'}">
             <div *ngIf="dashbaordCount > 0 && SelectedDashboard && ShowDashboardTab" style="height: 100%;">
-                <dashboard-tab
-                    [DashboardId]="SelectedDashboard.Id" 
-                    [OpenEditLayout]="OpenEditLayout" 
-                    (DashboardDeleted)="RefreshTabsAfterDelete($event)"
-                    (DashboardChanged)="DashboardChanged($event)"
-                    (TabHasChanges)="HasChanges = $event"
-                    (DashboardEntity)="DashboardEntity = $event">
+                <dashboard-tab [DashboardId]="SelectedDashboard.Id"
+                               [OpenEditLayout]="OpenEditLayout"
+                               (DashboardDeleted)="RefreshTabsAfterDelete($event)"
+                               (DashboardChanged)="DashboardChanged($event)"
+                               (TabHasChanges)="HasChanges = $event"
+                               (DashboardEntity)="DashboardEntity = $event">
                 </dashboard-tab>
             </div>
         </div>
@@ -68,7 +83,7 @@
 
                 <div class="dl-info-image-cotainer">
                     <img class="TopCenter" style="position: unset;width: 290px; height: 202px;"
-                        src="./Images/Charts/Empty-Dashboard3.png" />
+                         src="./Images/Charts/Empty-Dashboard3.png" />
                 </div>
 
                 <div style="margin-top: 20px;">
@@ -76,19 +91,23 @@
                         <p class="dl-info-header-text"> You don’t have any information here</p>
                     </div>
                     <div class="dl-info-center-div">
-                        <p class="dl-info-description-text">There are currently no dashboards.<br> It is time to add a new
-                            one</p>
+                        <p class="dl-info-description-text">
+                            There are currently no dashboards.
+                            <br> It is time to add a new
+                            one
+                        </p>
                     </div>
                 </div>
 
-                <td class="dl-info-center-div" style="margin-top: 12px;">
+                <div class="dl-info-center-div" style="margin-top: 12px;">
                     <button class="Button" (click)="AddDashboardClicked()">
                         <svg width="20" height="20" viewBox="0 0 5 5"
-                            style="display: inline-block; vertical-align: middle;">
+                             style="display: inline-block; vertical-align: middle;">
                             <path fill="#4D8ABB" d="M2 1 h1 v1 h1 v1 h-1 v1 h-1 v-1 h-1 v-1 h1 z" />
                         </svg>
-                        Add new dashboard</button>
-                </td>
+                        Add new dashboard
+                    </button>
+                </div>
 
             </div>
         </div>

@@ -27,8 +27,6 @@ export class DashboardTabComponent implements OnInit {
     @Output() DashboardChanged = new EventEmitter<DashboardPM>();
     @Output() TabHasChanges = new EventEmitter<boolean>();
     @Output() DashboardEntity = new EventEmitter<DashboardPM>();
-
-
     public SelectedDashboardName: string = null;
     public SelectedDashboard: DashboardPM;
     private dashboardPMService: DashboardPMService;
@@ -47,7 +45,6 @@ export class DashboardTabComponent implements OnInit {
     ngOnInit(): void {
         this.LoadSelectedDashboard();
     }
-
 
     DashboardDataBinding: DashboardDataBinding = {
         isOnEditLayout: new Subject(),
