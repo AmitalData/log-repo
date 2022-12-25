@@ -49,6 +49,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     public IsSecondaryGroupByVisible: boolean = false;
     public IsDeleteGroupByVisible: boolean = false;
     public MeasureRenderList = [];
+    public ImgWitdh: number = 0;
 
     constructor() {
         super();
@@ -66,6 +67,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         }
 
         this.ComputeChartImageSrc();
+        this.SetMeasureRenderList();
         this.BuildMeasures();
         this.CheckMeasureAddVisiblity();
         this.Clone();
@@ -113,21 +115,25 @@ export class AddEditWidgetComponent extends BaseComponent {
         switch (this.EntityPM.TypeCode) {
             case "pie": {
                 this.ChartImageSrc = "./Images/Charts/PieChart.png";
+                this.ImgWitdh = 100;
                 break;
             }
 
             case "bar": {
                 this.ChartImageSrc = "./Images/Charts/BarChart.png";
+                this.ImgWitdh = 150;
                 break;
             }
 
             case "line": {
                 this.ChartImageSrc = "./Images/Charts/LineChart.png";
+                this.ImgWitdh = 150;
                 break;
             }
 
             case "donut": {
                 this.ChartImageSrc = "./Images/Charts/DonutChart.png";
+                this.ImgWitdh = 100;
                 break;
             }
 
@@ -180,6 +186,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.BuildSortCodes();
         this.IsAddNewMeasureVisible = isAddVisible;
     }
+
     public CheckGroupAddVisiblity() {
         var isAddVisible: boolean = true;
 
@@ -257,13 +264,14 @@ export class AddEditWidgetComponent extends BaseComponent {
     SetMeasureRenderList() {
         switch (this.EntityPM.TypeCode) {
             case "column":
-                this.MeasureRenderList = [{ name: 'Show as Column', code: 'default' }, { name: 'Show as Column', code: 'line' }];
+                this.MeasureRenderList = [{ name: 'Show as Column', code: 'default' }, { name: 'Show as Line', code: 'line' }];
                 break;
             default:
                 this.MeasureRenderList = [];
                 break;
         }
-        if (this.WidgetMeasuresList && this.WidgetMeasuresList.length > 1) this.WidgetMeasuresList[1].RenderAs = "default";
+        if (this.WidgetMeasuresList && this.WidgetMeasuresList.length > 1)
+            this.SetDefaultRender(this.WidgetMeasuresList[1]);
     }
 
     private SetTimeOverTimeDefaultValue() {
@@ -746,28 +754,35 @@ export class AddEditWidgetComponent extends BaseComponent {
         newItem.Tenant = SessionInfo.LoggedUserTenant;
         newItem.WidgetId = this.EntityPM.Id;
         newItem.MeasureCode = "Sum";
-        newItem.RenderAs = "default";
         var newWidgetMeasureItem: WidgetMeasureItem = new WidgetMeasureItem(newItem, true, this);
+        this.SetDefaultRender(newWidgetMeasureItem);
         this.WidgetMeasuresList.push(newWidgetMeasureItem);
         newWidgetMeasureItem.CheckMeasureDeleteVisiblity();
 
         MixPanelLocator.PostDashboardAction({ ActionName: "Widget Measure Add Click", DashboardId: this.DashboardPM?.Id });
         this.CheckMeasureAddVisiblity();
-        //this.SetSecondaryGroupingFieldDisabled();
-        //this.CheckEnableForSecondaryGroupByAndScondaryMeasere();
+    }
+
+    private SetDefaultRender(widgetMeasureItem: WidgetMeasureItem) {
+        if (this.MeasureRenderList.length > 0) {
+            widgetMeasureItem.RenderAs = this.MeasureRenderList[0].code;
+        }
+        else {
+            widgetMeasureItem.RenderAs = null;
+        }
     }
 
     AddNewGroupByClicked() {
         this.IsSecondaryGroupByVisible = true;
         this.IsDeleteGroupByVisible = true;
+        this.IsAddNewGroupVisible = false;
     }
-    //public IsSecondaryDateGroupCodeVisible = true;
+
     DeleteGroupByClicked() {
         this.IsSecondaryGroupByVisible = false;
         this.IsAddNewGroupVisible = true;
         this.SecondaryGroupById = null;
         this.SecondaryDateGroupCode = null;
-
     }
 }
 
@@ -779,7 +794,11 @@ export class WidgetMeasureItem extends BaseComponent {
     public IsNew: boolean = false;
     public IsDeleteMeasureVisible: boolean = false;
     public FieldQueryFilters: ApiQueryFilters;
-    DashboardPM: DashboardPM;
+    public DashboardPM: DashboardPM;
+
+    public get DefaultRender() : any {
+        return this.fatherComponent?.MeasureRenderList?.find(x => x.code == this.RenderAs);
+    }
 
     constructor(entityPM: WidgetMeasurePM, isNew: boolean, public fatherComponent: AddEditWidgetComponent) {
         super();

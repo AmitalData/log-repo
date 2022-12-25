@@ -29,7 +29,7 @@
                 <ScrollViewer [IsTowSides]="true">
                     <table>
                         <tr style="height: 0;">
-                            <td style="width:400px; vertical-align:top;">
+                            <td style="width:370px; vertical-align:top;">
                                 <table style="display: table-cell;" cellspacing="0">
                                     <tr class="FormFieldRow">
                                         <td style="width:120px;">
@@ -102,11 +102,6 @@
                                                     [QueryFilterItems]="GroupByQueryFilters">
                                             </LogLov>
                                         </td>
-                                        <td>
-                                            <div>
-                                                <IconButton *ngIf="IsAddNewGroupVisible" [Left]="3" [Name]="'Add'" [IsSmall]="true" [IsEnabled]="WidgetMeasuresList.length === 1" (click)="AddNewGroupByClicked()"></IconButton>
-                                            </div>
-                                        </td>
                                     </tr>
 
                                     <tr class="FormFieldRow" *ngIf="IsSecondaryGroupByVisible">
@@ -126,12 +121,7 @@
                                                 (SelectedItemChanged)="SelectedSecondaryGroupField = $event"
                                                 [QueryFilterItems]="GroupByQueryFilters">
                                             </LogLov>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <IconButton *ngIf="IsDeleteGroupByVisible" [Left]="3" [Name]="'Minus'" [IsSmall]="true" (click)="DeleteGroupByClicked()"></IconButton>
-                                            </div>
-                                        </td>
+                                        </td>      
                                     </tr>
 
                                     <tr class="FormFieldRow" *ngIf="SelectedGroupField && (SelectedGroupField.DataTypeCode == 'DateTime' || SelectedGroupField.DataTypeCode == 'Date')">
@@ -196,23 +186,9 @@
                                                                 [QueryFilterItems]="item.FieldQueryFilters">
                                                         </LogLov>
                                                     </td>
-                                                    <td>
-                                                        <ComboBox *ngIf="item.ShowRenderList"
-                                                                  [ItemsSource]="MeasureRenderList"
-                                                                  [SelectedItem]="item.RenderAs"
-                                                                  [Binding]="'name'"
-                                                                  (SelectedItemChanged)="item.RenderAs = $event.code">
-                                                        </ComboBox>
-                                                    </td>
                                                 </tr>
                                             </table>
 
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <IconButton *ngIf="IsAddNewMeasureVisible" [Left]="3" [Name]="'Add'" [IsSmall]="true" [IsEnabled]="!IsSecondaryGroupByVisible" (click)="AddNewMeasureClicked()"></IconButton>
-                                                <IconButton *ngIf="item.IsDeleteMeasureVisible" [Left]="3" [Name]="'Minus'" [IsSmall]="true" (click)="item.DeleteMeasureClicked()"></IconButton>
-                                            </div>
                                         </td>
                                     </tr>
 
@@ -276,7 +252,48 @@
                             </td>
 
                             <td style="vertical-align:top">
-                                <img width="150" [attr.src]="ChartImageSrc" />
+                                <img width="ImgWitdh" height="96px" style="max-height: 96px;" [attr.src]="ChartImageSrc" />
+                                
+                                <table>      
+                                    <tr class="FormFieldRow" *ngIf="isGroupByVisible">
+                                        <td>
+                                            <div>
+                                                <IconButton *ngIf="IsAddNewGroupVisible" [Left]="3" [Name]="'Add'" [IsSmall]="true" [IsEnabled]="WidgetMeasuresList.length === 1" (click)="AddNewGroupByClicked()"></IconButton>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="FormFieldRow" *ngIf="IsSecondaryGroupByVisible">
+                                        <td>
+                                            <div>
+                                                <IconButton *ngIf="IsDeleteGroupByVisible" [Left]="3" [Name]="'Minus'" [IsSmall]="true" (click)="DeleteGroupByClicked()"></IconButton>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="FormFieldRow" *ngFor="let item of WidgetMeasuresList">
+                                        <td *ngIf="item.ShowRenderList" style="padding-left: 2px;width: 124px;">
+                                            <ComboBox
+                                                    [ItemsSource]="MeasureRenderList"
+                                                    [SelectedItem]="item.DefaultRender"
+                                                    [Binding]="'name'"
+                                                    (SelectedItemChanged)="item.RenderAs = $event.code">
+                                            </ComboBox>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <IconButton *ngIf="IsAddNewMeasureVisible" [Left]="3" [Name]="'Add'" [IsSmall]="true" [IsEnabled]="!IsSecondaryGroupByVisible" (click)="AddNewMeasureClicked()"></IconButton>
+                                                <IconButton *ngIf="item.IsDeleteMeasureVisible" [Left]="3" [Name]="'Minus'" [IsSmall]="true" (click)="item.DeleteMeasureClicked()"></IconButton>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
                             </td>
                         </tr>
 
