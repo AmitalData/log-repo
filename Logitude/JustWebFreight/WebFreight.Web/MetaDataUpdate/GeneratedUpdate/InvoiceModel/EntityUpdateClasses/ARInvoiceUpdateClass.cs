@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
-		public const string HashString = "57f99dce8d50f63f853d80b695b9d638";
+		public const string HashString = "fed136a4ecdc49a5b8448e348e02c99b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -13781,9 +13781,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TotalExamptFortaxReport",
-					  						DefaultText =  "Total Exampt Fortax Report",
+					  						DefaultText =  "Total Exampt For Tax Report",
 					  						ListFieldLable =  "TotalExamptFortaxReportListLable",
-					  						ListLableDefaultText =  "Total Exampt Fortax Report",
+					  						ListLableDefaultText =  "Total Exampt For Tax Report",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
