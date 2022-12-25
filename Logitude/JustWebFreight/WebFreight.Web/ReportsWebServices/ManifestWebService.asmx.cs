@@ -41,7 +41,7 @@ namespace WebFreight.Web.ReportsWebServices
     // [System.Web.Script.Services.ScriptService]
     public class ManifestWebService : System.Web.Services.WebService
     {
-        ShipmentPM master;
+        public ShipmentPM master;
         ShipmentPackageQuery packagesQuery;
         int tenant;
         ICommonDataContext commonContext;

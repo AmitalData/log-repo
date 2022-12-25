@@ -47,7 +47,7 @@ namespace WebFreight.Web.WebServices
         private IShipmentsContext shipmentsContext;
         private ICommonDataContext commonContext;
         private IWebFreightContext webfreightContext;
-        private ShipmentPM shipment;
+        public ShipmentPM shipment;
         private AddressRepository addressRepository;
         private ContactRepository contactRepository;
         private CountryRepository countryRepository;
