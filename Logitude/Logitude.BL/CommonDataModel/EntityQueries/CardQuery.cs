@@ -385,7 +385,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             List<CardPM> cardPMs =
              (
                   from rec in repository.context.Cards
-                  where !string.IsNullOrEmpty(rec.VatNumber) && rec.Tenant == tenant
+                  where !string.IsNullOrEmpty(rec.VatNumber) && rec.CountryCode == "IL" && rec.Tenant == tenant
                   select new CardPM()
                   {
                       Id = rec.Id,

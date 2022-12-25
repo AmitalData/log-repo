@@ -242,7 +242,7 @@ namespace WebFreight.Web.CustomWebServices
                 string clientCode = "";
                 for (int i = 0; i < cardsList.Count; i++)
                 {
-                    clientCode = cardsList[i].VatNumber;
+                    clientCode = cardsList[i].VatNumber.PadLeft(9,'0');
                     string mess = string.Format(
                         "בניית תקשורת עדכון נתוני יבואנים  {2} ( {0}/{1} ) "
                         , (i + 1), (cardsList.Count), clientCode);
