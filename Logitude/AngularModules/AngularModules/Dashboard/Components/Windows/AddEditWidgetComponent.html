@@ -196,6 +196,14 @@
                                                                 [QueryFilterItems]="item.FieldQueryFilters">
                                                         </LogLov>
                                                     </td>
+                                                    <td>
+                                                        <ComboBox *ngIf="item.ShowRenderList"
+                                                                  [ItemsSource]="MeasureRenderList"
+                                                                  [SelectedItem]="item.RenderAs"
+                                                                  [Binding]="'name'"
+                                                                  (SelectedItemChanged)="item.RenderAs = $event.code">
+                                                        </ComboBox>
+                                                    </td>
                                                 </tr>
                                             </table>
 
@@ -230,7 +238,6 @@
                                                                   [ItemsSource]="SortByDirections"
                                                                   [SelectedItem]="GetSelectedSortDirection()"
                                                                   [Binding]="'name'">
-                                                            >
                                                         </ComboBox>
                                                     </td>
                                                 </tr>

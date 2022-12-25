@@ -135,6 +135,29 @@ namespace Logitude.DashboardModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private string renderAs ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string RenderAs  
+	   {
+	    
+	     get
+		{
+		   return renderAs;
+		 }
+		 set
+		 {
+		   if(renderAs != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RenderAs",OldValue=renderAs,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   renderAs=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

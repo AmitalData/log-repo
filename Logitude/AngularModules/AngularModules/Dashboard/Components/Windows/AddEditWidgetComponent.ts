@@ -48,6 +48,8 @@ export class AddEditWidgetComponent extends BaseComponent {
     public IsAddNewGroupVisible: boolean = true;
     public IsSecondaryGroupByVisible: boolean = false;
     public IsDeleteGroupByVisible: boolean = false;
+    public MeasureRenderList = [];
+
     constructor() {
         super();
         this.WidgetMeasuresList = [];
@@ -78,6 +80,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.SetUIForOperator();
         this.SetAdvanceSettingVisibleForTimeOverTime();
     }
+
     SetUIProperties() {
         this.UIProperties.SetValidity("MaximumGrouping", this.ObjectTableName, true, "");
 
@@ -245,9 +248,22 @@ export class AddEditWidgetComponent extends BaseComponent {
             this.SetTimeOverTimeDefaultValue();
             this.SetTimeOverTimeValue();
             this.CheckGroupAddVisiblity();
+            this.SetMeasureRenderList();
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget Type Change ", Message: "Changed To" + this.EntityPM.TypeCode, DashboardId: this.DashboardPM?.Id });
             this.isAdvancedSettingLinkVisible = true;
         }
+    }
+
+    SetMeasureRenderList() {
+        switch (this.EntityPM.TypeCode) {
+            case "column":
+                this.MeasureRenderList = [{ name: 'Show as Column', code: 'default' }, { name: 'Show as Column', code: 'line' }];
+                break;
+            default:
+                this.MeasureRenderList = [];
+                break;
+        }
+        if (this.WidgetMeasuresList && this.WidgetMeasuresList.length > 1) this.WidgetMeasuresList[1].RenderAs = "default";
     }
 
     private SetTimeOverTimeDefaultValue() {
@@ -730,6 +746,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         newItem.Tenant = SessionInfo.LoggedUserTenant;
         newItem.WidgetId = this.EntityPM.Id;
         newItem.MeasureCode = "Sum";
+        newItem.RenderAs = "default";
         var newWidgetMeasureItem: WidgetMeasureItem = new WidgetMeasureItem(newItem, true, this);
         this.WidgetMeasuresList.push(newWidgetMeasureItem);
         newWidgetMeasureItem.CheckMeasureDeleteVisiblity();
@@ -783,6 +800,10 @@ export class WidgetMeasureItem extends BaseComponent {
         this.IsDeleteMeasureVisible = (index == 1);
     }
 
+    public get ShowRenderList(): boolean {
+        return this.fatherComponent.WidgetMeasuresList.indexOf(this) == 1 && this.Widget.TypeCode == "column";
+    }
+
     get MeasureFieldId() { return this.EntityPM.MeasureFieldId; }
     set MeasureFieldId(value: string) {
         if (this.EntityPM.MeasureFieldId != value) {
@@ -799,6 +820,13 @@ export class WidgetMeasureItem extends BaseComponent {
         this.EntityPM.MeasureCode = value;
         this.MeasureFieldId = null;
         this.FilterMeasureFields();
+    }
+
+    get RenderAs() { return this.EntityPM.RenderAs; }
+    set RenderAs(value: string) {
+        if (this.EntityPM.RenderAs == value) return;
+        this.EntityPM.RenderAs = value;
+        MixPanelLocator.PostDashboardAction({ ActionName: "Widget Measure Show as Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
     }
 
     FilterMeasureFields() {

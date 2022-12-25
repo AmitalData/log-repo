@@ -39,6 +39,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="RenderAs"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="WidgetId"
     ReferencedTable="Widgets"
