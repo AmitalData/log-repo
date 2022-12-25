@@ -1527,7 +1527,17 @@ export class MaintenanceComponent {
                     break;
                 }
                 case "SAL":
-                    {                      
+                    {
+                        let LoggedUserPMCode = SessionLocator.LoggedUserPM.Code || "";
+                        LoggedUserPMCode = LoggedUserPMCode.toLowerCase();
+                        let allowed = false;
+                        allowed = (LoggedUserPMCode == "amital" || LoggedUserPMCode.startsWith("amital.") || SessionLocator.LoggedUserPM.IsCustomerCare);
+
+                        if (!allowed) {
+                            let messageWindow = new MessageWindow()
+                            messageWindow.Show("Logged User Is not Customer Care ");
+                            return;
+                        }
                         let msg =TextCodeTranslator.Translate("Customs.Client.IsSelectAuthorizationLetters")
                         let confirmWindow = new ConfirmWindow();
                         confirmWindow.Title = TextCodeTranslator.Translate("General.MC.Customs.SelectAuthorizationLetters");
