@@ -166,4 +166,6 @@
     ReferencedTable="InterfaceManagements"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
+  <Index
+     Columns="Tenant,RequestStatusCode,RequestCreateDate" />
 </Table>
