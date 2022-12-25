@@ -23,6 +23,7 @@ using WebFreight.Web.Controllers.DigitalPortal.Helpers;
 using Logitude.SystemLogs;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Linq.Dynamic.Core;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -116,6 +117,51 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 entityLists = QueryableExtensions.Skip(entityLists, () => newFilters.PageIndex);
                 entityLists = QueryableExtensions.Take(entityLists, () => newFilters.PageSize);
+
+                var helper = new DigitalFieldSecuritesHelper();
+                var allowedFieldSecurites = helper.GitDigitalSecuritesFeilds("1-4", "1-9", tenant)
+                                                  .Where(a => a.HasPersmission)
+                                                  .Select(a => a.FieldCode.Replace("Shipment.", ""))
+                                                  .ToList();
+
+                var extraFields = new List<string> 
+                {
+                    "MainCarriageETD",
+                    "MainCarriageFinalDestinationATA",
+                    "MainCarriageFinalDestinationETA",
+                    "InlandDomesticFromTypeCode",
+                    "MainCarriageFromAddressId",
+                    "MainCarriageFromPortCode",
+                    "InlandDomesticFromCity",
+                    "InlandDomesticToTypeCode",
+                    "MainCarriageToAddressId",
+                    "MainCarriageToPortCode",
+                    "InlandDomesticToCity",
+                    "InlandDomesticFromCountryId",
+                    "InlandDomesticToCountryId",
+                    "MainCarriageFromCity",
+                    "FromPortName",
+                    "FromCountryCode",
+                    "Transshipment1ETA",
+                    "Transshipment1ATA",
+                    "Transshipment1ETD",
+                    "Transshipment1ATD",
+                    "Transshipment2ETA",
+                    "Transshipment2ATA",
+                    "Transshipment2ETD",
+                    "Transshipment2ATD",
+                    "Transshipment3ETA",
+                    "Transshipment3ATA",
+                    "Transshipment3ETD",
+                    "Transshipment3ATD",
+                    "MainCarriageToCity",
+                    "ToPortName",
+                    "ToCountryCode"
+                };
+
+                allowedFieldSecurites.AddRange(extraFields);
+
+                var shipments = entityLists.Select("new { " + allowedFieldSecurites + " }").ToDynamicList();
 
                 List<DigitalShipmentList> listQuery = entityLists.ToList();
 

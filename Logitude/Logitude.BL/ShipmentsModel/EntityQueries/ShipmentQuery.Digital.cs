@@ -1452,12 +1452,17 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private TimeLineData FillShipmnetTimeLineForShipment(DigitalShipmentList shipment)
         {
-            var shipmentPickUpDeliveries = (from a in repository.context.ShipmentPickUpDeliveries.Include("FromAddressCountry").Include("ToAddressCountry") where a.ShipmentId == shipment.Id select a);
-            TimeLineData timeLineData = new TimeLineData();
-            this.FillMainCarraigeFromTimeLine(timeLineData, shipment);
-            this.FillMainCarraigeToTimeLine(timeLineData, shipment);
-            this.FillPickUpTimeLine(timeLineData, shipmentPickUpDeliveries);
-            this.FillDeliveryTimeLine(timeLineData, shipmentPickUpDeliveries);
+            var shipmentPickUpDeliveries = repository.context
+                                                     .ShipmentPickUpDeliveries
+                                                     .Include("FromAddressCountry")
+                                                     .Include("ToAddressCountry")
+                                                     .Where(a => a.ShipmentId == shipment.Id);
+
+            var timeLineData = new TimeLineData();
+            FillMainCarraigeFromTimeLine(timeLineData, shipment);
+            FillMainCarraigeToTimeLine(timeLineData, shipment);
+            FillPickUpTimeLine(timeLineData, shipmentPickUpDeliveries);
+            FillDeliveryTimeLine(timeLineData, shipmentPickUpDeliveries);
             return timeLineData;
         }
 
@@ -1475,15 +1480,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private bool CheckIfViaPortsDatesFilled(DigitalShipmentList shipment)
         {
-            if (shipment.Transshipment1ETA != null || shipment.Transshipment1ATA != null || shipment.Transshipment1ETD != null || shipment.Transshipment1ATD != null)
+            if (shipment.Transshipment1ETA != null || shipment.Transshipment1ATA != null 
+                || shipment.Transshipment1ETD != null || shipment.Transshipment1ATD != null)
             {
                 return true;
             }
-            if (shipment.Transshipment2ETA != null || shipment.Transshipment2ATA != null || shipment.Transshipment2ETD != null || shipment.Transshipment2ATD != null)
+            if (shipment.Transshipment2ETA != null || shipment.Transshipment2ATA != null 
+                || shipment.Transshipment2ETD != null || shipment.Transshipment2ATD != null)
             {
                 return true;
             }
-            if (shipment.Transshipment3ETA != null || shipment.Transshipment3ATA != null || shipment.Transshipment3ETD != null || shipment.Transshipment3ATD != null)
+            if (shipment.Transshipment3ETA != null || shipment.Transshipment3ATA != null
+                 || shipment.Transshipment3ETD != null || shipment.Transshipment3ATD != null)
             {
                 return true;
             }
@@ -1505,7 +1513,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private void FillPickUpTimeLine(TimeLineData timeLineData, IQueryable<ShipmentPickUpDelivery> shipmentPickUpDeliveries)
         {
-            var firstPickup = shipmentPickUpDeliveries?.Where(d => d.PickUpDeliveryTypeCode == "PICK").OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
+            var firstPickup = shipmentPickUpDeliveries?.Where(d => d.PickUpDeliveryTypeCode == "PICK")
+                                                       .OrderBy(s => s.PickUpDeliveryNumber)
+                                                       .FirstOrDefault();
             if (firstPickup == null)
             {
                 return;
