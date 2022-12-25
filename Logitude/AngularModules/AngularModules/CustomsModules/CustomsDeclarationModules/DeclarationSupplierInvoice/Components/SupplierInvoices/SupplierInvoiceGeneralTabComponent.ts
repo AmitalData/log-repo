@@ -719,9 +719,9 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
         if (ExtraPayments160 == null) {
             paymentCounter += 1;
-            this.AddModification("160", paymentCounter, "הוצםות נוספות");
+            this.AddModification("160", paymentCounter, "הוצאות נוספות");
         } else {
-            ExtraPayments160.TypeName = "הוצםות נוספות"
+            ExtraPayments160.TypeName = "הוצאות נוספות"
             this.AdjustmentsList.Insert(new ModificationItemModel(ExtraPayments160, this, "160"));
         }
 
