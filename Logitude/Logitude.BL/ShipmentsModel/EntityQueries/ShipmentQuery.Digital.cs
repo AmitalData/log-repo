@@ -1664,7 +1664,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         #region Shipment Vertical TimeLine
 
-        public VerticalTimeLineData MapVerticalTimeLine(ShipmentPM shipment)
+        public VerticalTimeLineData MapVerticalTimeLine(ShipmentPM shipment, int tenant)
         {
             InitializeServices(tenant);
 

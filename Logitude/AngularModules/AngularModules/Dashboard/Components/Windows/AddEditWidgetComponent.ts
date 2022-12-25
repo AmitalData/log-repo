@@ -30,7 +30,6 @@ export class AddEditWidgetComponent extends BaseComponent {
     public ChartImageSrc: string;
     public WidgetMeasuresList: WidgetMeasureItem[];
     public WidgetMeasuresClone: WidgetMeasurePM[];
-    //public RootFilter: WidgetFilterItem;
     public RootFilter: WidgetFilterItem = new WidgetFilterItem(null, false, this.DashboardPM?.Id);
     public IsAddNewMeasureVisible: boolean = true;
     public DateGroupCodes = ['Day', 'Month', 'Year', 'Quarter'];
@@ -94,7 +93,7 @@ export class AddEditWidgetComponent extends BaseComponent {
             item.SetUIProperties();
         });
     }
-    
+
     BuildQueryFilters() {
         this.GroupByQueryFilters = new ApiQueryFilters();
         this.GroupByQueryFilters.addAdditionalFilter("DataTypeCode", "PickList,LookUp,DateTime,Date", null, null, "InList", false, true, false, "string", false, true, true);
@@ -156,10 +155,10 @@ export class AddEditWidgetComponent extends BaseComponent {
         });
     }
 
-    public BuildSecondaryGroup(){
-        if(this.SecondaryGroupById && !this.isNew){
+    public BuildSecondaryGroup() {
+        if (this.SecondaryGroupById && !this.isNew) {
             this.IsSecondaryGroupByVisible = true;
-            this.IsDeleteGroupByVisible = true; 
+            this.IsDeleteGroupByVisible = true;
         }
     }
 
@@ -232,7 +231,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.SetTimeOverTimeValue();
         this.SetUIProperties();
     }
-    
+
 
     get TypeCode() { return this.EntityPM.TypeCode; }
     set TypeCode(value: string) {
@@ -265,29 +264,24 @@ export class AddEditWidgetComponent extends BaseComponent {
     }
 
     private SetTimeOverTimeValue() {
-
-        if (this.TypeCode != "kpi" || !this.TimeOverTime) {
-            this.ComparisonOperator = null;
-            this.ComparisonPeriod = null;
-            this.ComparisonDateGroup = null;
-            this.FromDate = null;
-            this.ToDate = null;
-            this.Increase = null;
+        if (this.TypeCode == "kpi" && this.TimeOverTime) {
+            this.Increase = this.Increase ? this.Increase : "Positive";
             return;
         }
-
-        this.Increase = this.Increase ? this.Increase : "Postive";
+        this.ComparisonOperator = null;
+        this.ComparisonPeriod = null;
+        this.ComparisonDateGroup = null;
+        this.FromDate = null;
+        this.ToDate = null;
+        this.Increase = null;
     }
 
     SetUIForOperator() {
         this.IsBetweenDatesVisible = false;
         if (this.ComparisonOperator == "Between") {
             this.IsBetweenDatesVisible = true;
-            
         }
     }
-
-    
 
     private isAdvancedSettingVisible: boolean = false;
     get IsAdvancedSettingVisible() { return this.isAdvancedSettingVisible; }
@@ -297,7 +291,7 @@ export class AddEditWidgetComponent extends BaseComponent {
             this.SetAdvanceSettingItems();
         }
     }
-    
+
 
     public SetAdvanceSettingItems() {
         if (!AppTool.IsNullOrEmpty(this.TypeCode) && this.TypeCode == "kpi" && this.IsAdvancedSettingVisible) {
@@ -354,7 +348,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         if (this.EntityPM.SecondaryGroupById != value) {
             this.EntityPM.SecondaryGroupById = value;
         }
-        
+
     }
 
     get SecondaryDateGroupCode() { return this.EntityPM.SecondaryDateGroupCode; }
@@ -500,7 +494,7 @@ export class AddEditWidgetComponent extends BaseComponent {
 
     }
 
-    
+
 
     public selectedSecondaryGroupField: AnalyticsFactsFieldsMetaDataList = null;
     get SelectedSecondaryGroupField() { return this.selectedSecondaryGroupField; }
@@ -586,7 +580,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         if (this.isSortByVisible && !this.SortDirection) {
             errors.push("Sort By Direction Field is Required");
         }
-        if(this.IsSecondaryGroupByVisible && !this.SecondaryGroupById){
+        if (this.IsSecondaryGroupByVisible && !this.SecondaryGroupById) {
             errors.push("Secondary Group Field is Required");
         }
 
@@ -746,12 +740,12 @@ export class AddEditWidgetComponent extends BaseComponent {
         //this.CheckEnableForSecondaryGroupByAndScondaryMeasere();
     }
 
-    AddNewGroupByClicked(){
+    AddNewGroupByClicked() {
         this.IsSecondaryGroupByVisible = true;
         this.IsDeleteGroupByVisible = true;
     }
     //public IsSecondaryDateGroupCodeVisible = true;
-    DeleteGroupByClicked(){
+    DeleteGroupByClicked() {
         this.IsSecondaryGroupByVisible = false;
         this.IsAddNewGroupVisible = true;
         this.SecondaryGroupById = null;
@@ -779,7 +773,7 @@ export class WidgetMeasureItem extends BaseComponent {
         this.FilterMeasureFields();
     }
 
-    SetUIProperties() {        
+    SetUIProperties() {
         this.UIProperties.SetEnabled("MeasureCode", this.ObjectTableName, !AppTool.IsNullOrEmpty(this.fatherComponent.EntityId));
         this.UIProperties.SetEnabled("MeasureFieldId", this.ObjectTableName, !AppTool.IsNullOrEmpty(this.fatherComponent.EntityId));
     }
@@ -839,7 +833,7 @@ export class WidgetMeasureItem extends BaseComponent {
 
         MixPanelLocator.PostDashboardAction({ ActionName: "Widget Measure Delete Click", DashboardId: this.DashboardPM?.Id });
         this.fatherComponent.CheckMeasureAddVisiblity();
-       // this.fatherComponent.SetSecondaryGroupEnabled();
+        // this.fatherComponent.SetSecondaryGroupEnabled();
     }
 
 }
