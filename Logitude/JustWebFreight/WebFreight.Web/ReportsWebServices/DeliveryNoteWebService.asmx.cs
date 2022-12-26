@@ -41,7 +41,7 @@ namespace WebFreight.Web.ReportsWebServices
         private string entityObjectTableId;
         private string childEntityObjectTableId;
         private string childEntityTypeCode;
-        private ShipmentPM shipment;
+        public ShipmentPM shipment;
         private ShipmentPickUpDelivery childEntity;
         private DeliveryNoteDataProvider dataProvider;
         private IShipmentsContext shipmentsContext;

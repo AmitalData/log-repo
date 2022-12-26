@@ -30,7 +30,7 @@ namespace WebFreight.Web.ReportsWebServices
     // [System.Web.Script.Services.ScriptService]
     public class ShipmentPackingWebService : System.Web.Services.WebService
     {
-
+        public ShipmentPM shipment;
         [WebMethod]
         public byte[] GetShipmentPackingData(string shipmentId, int tenant)
         {
@@ -59,7 +59,7 @@ namespace WebFreight.Web.ReportsWebServices
             ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
             ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
 
-            ShipmentPM shipment = shipmentQuery.GetSinglePM(shipmentId, tenant);
+            shipment = shipmentQuery.GetSinglePM(shipmentId, tenant);
 
             if (shipment != null)
             {

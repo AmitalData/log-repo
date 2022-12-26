@@ -10,11 +10,13 @@ namespace Logitude.DashboardModule.BL.DataProviders
     {
         protected WidgetPM _Widget;
         protected AnalyticsFactsMetaData _Entity;
+        protected int _Tenant;
 
-        protected BaseTablesDataProvider(WidgetPM widget, AnalyticsFactsMetaData entity)
+        protected BaseTablesDataProvider(WidgetPM widget, AnalyticsFactsMetaData entity, int tenant)
         {
             this._Widget = widget;
             this._Entity = entity;
+            this._Tenant = tenant;
         }
 
         public abstract List<SeriesMeasure> GetChartData();

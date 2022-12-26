@@ -24,11 +24,12 @@ using WebFreight.Web.Helpers;
 {
     public class InterestPrintService
     {
+        public InterestReportPM InteerstReportPM;
         public InterestDataProvider LoadDataProvider(string entityId, int tenant)
         {
             InterestDataProvider InterestReportDP = new InterestDataProvider();
             InterestReportQueryService InterestReportQuery = new InterestReportQueryService(tenant);
-            InterestReportPM InteerstReportPM = InterestReportQuery.GetSingle(entityId, true, false);
+            InteerstReportPM = InterestReportQuery.GetSingle(entityId, true, false);
             InterestReportService interestReportService = new InterestReportService();
             List<InterestTransactionList> interestTransactionLists = interestReportService.GetAllInterestTransactionByDate(entityId, null, tenant, null).interestTransactionLists;
 

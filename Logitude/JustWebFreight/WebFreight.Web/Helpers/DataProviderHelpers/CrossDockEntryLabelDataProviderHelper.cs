@@ -20,6 +20,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
 {
     public class CrossDockEntryLabelDataProviderHelper
     {
+        public CrossDockEntryDataProviderHelper crossDockEntryDataProviderHelper;
         public byte[] LoadCrossDockEntryLabelDataProvider(string entityId, int tenant)
         {
             List<CrossDockEntryDataProvider> crossDocksEntryLabelsLists = GetCrossDockEntryLabelDataProvider(entityId, tenant);
@@ -36,7 +37,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
         private List<CrossDockEntryDataProvider> GetCrossDockEntryLabelDataProvider(string entityId, int tenant)
         {
             List<CrossDockEntryDataProvider> myResult = new List<CrossDockEntryDataProvider>();
-            CrossDockEntryDataProviderHelper crossDockEntryDataProviderHelper = new CrossDockEntryDataProviderHelper();
+            crossDockEntryDataProviderHelper = new CrossDockEntryDataProviderHelper();
             CrossDockEntryDataProvider crossDockEntryDataProvider = crossDockEntryDataProviderHelper.LoadCrossDockEntryDataProvider(entityId, tenant);
             if (!string.IsNullOrEmpty(crossDockEntryDataProvider.EntryNumber))
             {

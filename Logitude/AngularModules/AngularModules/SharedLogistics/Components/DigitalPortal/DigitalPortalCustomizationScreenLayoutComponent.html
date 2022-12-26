@@ -96,10 +96,10 @@
                                       autocorrect="off"
                                       autocapitalize="off"
                                       spellcheck="false"
-                                      (blur)="blur($event)"
+                                      (onDidBlurEditorText)="blur($event)"
                                       placeholder="Your HTML text here ">
                             </textarea> -->
-                            <ngx-monaco-editor [options]="editorOptions" [(ngModel)]="HTMLEditor" style="height: 100%"></ngx-monaco-editor>
+                            <ngx-monaco-editor [options]="editorOptions" [(ngModel)]="HTMLEditor" style="height: 100%" (onInit)="onInit($event)"></ngx-monaco-editor>
                         </div>
                     </td>
                 </tr>

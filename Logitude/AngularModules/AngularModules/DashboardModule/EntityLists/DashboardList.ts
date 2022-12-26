@@ -17,6 +17,7 @@ export class DashboardList {
 	SearchFields: string;
 	Name: string;
 	Description: string;
+	PermissionLevelCode: string;
 	
 }
  

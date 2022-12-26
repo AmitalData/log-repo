@@ -81,6 +81,8 @@ namespace Logitude.DashboardModule.Data
 	
             modelBuilder.Configurations.Add(new PermissionLevelMap());
 	
+            modelBuilder.Configurations.Add(new UserPinnedDashboardMap());
+	
             modelBuilder.Configurations.Add(new WidgetMap());
 	
             modelBuilder.Configurations.Add(new WidgetMeasureMap());
@@ -404,6 +406,12 @@ namespace Logitude.DashboardModule.Data
 	 }
 	
 	 public IDbSet<PermissionLevel> PermissionLevels 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<UserPinnedDashboard> UserPinnedDashboards 
 	 {
 	      get; set;
 	 
