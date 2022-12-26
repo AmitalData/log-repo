@@ -112,7 +112,7 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         logWindow.Show('./SharedLogistics/Components/DigitalPortal/AddDigitalFieldCodeComponent');
         logWindow.WindowClosed.subscribe(($event: any) => {
             if ($event) {
-                var htmlField = "<Log-Container>\n<LogElement type='entity-field-label'field-code= '" + $event + "' ></LogElement>\n:\n<LogElement type='entity-field-value'field-code='" + $event + "'></LogElement> \n</Log-Container>";
+                var htmlField = "<LogContainer>\n<LogLabel field-code='" + $event + "' ></LogLabel>\n:\n<LogField field-code='" + $event + "'></LogField> \n</LogContainer>";
                 this.attachValue(htmlField);
             }
         });
