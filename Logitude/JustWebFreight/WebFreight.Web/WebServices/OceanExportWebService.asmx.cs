@@ -45,7 +45,7 @@ namespace WebFreight.Web.WebServices
         private ICommonDataContext commonContext;
         private AddressRepository addressRepository;
         private ContactRepository contactRepository;
-
+        public ShipmentPM shipment;
         [WebMethod]
         public byte[] GetFBLData(string shipmentId, int tenant, string documentTypeCopyId)
         {
@@ -80,7 +80,7 @@ namespace WebFreight.Web.WebServices
             addressRepository = new AddressRepository(commonContext);
             contactRepository = new ContactRepository(commonContext);
 
-            ShipmentPM shipment = shipmentQuery.GetSinglePM(shipmentId, tenant);
+            shipment = shipmentQuery.GetSinglePM(shipmentId, tenant);
             Tenant tenantSettings = (from a in commonContext.Tenants.Include("Address").Include("Address.Country") where a.Id == tenant select a).FirstOrDefault();
             DocumentTypeCopy documenttypecopy = (from d in commonContext.DocumentTypeCopies where d.Id == documentTypeCopyId select d).FirstOrDefault();
 

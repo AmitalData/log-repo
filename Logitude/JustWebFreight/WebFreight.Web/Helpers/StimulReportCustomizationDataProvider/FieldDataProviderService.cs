@@ -32,7 +32,7 @@ namespace WebFreight.Web.Helpers.StimulReportCustomizationDataProvider
         {
             GetStanderFields();
             GetCustomEntityFields();
-            //GetCustomFields();
+            GetCustomFields();
 
             return fields;
         }
