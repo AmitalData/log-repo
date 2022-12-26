@@ -52,7 +52,7 @@ namespace WebFreight.Web.ReportsWebServices
         AddressRepository addressRepository;
         PortRepository portRepository;
         CardQuery cardQuery;
-        private ShipmentPM shipmentpm;
+        public ShipmentPM shipmentpm;
         private ShipmentRepository shipmentRepository;
         private WebServiceHelper servicHelper;
         [WebMethod]

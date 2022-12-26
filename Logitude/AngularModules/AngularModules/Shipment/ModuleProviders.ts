@@ -40,11 +40,7 @@ import { ContainerTrackingProviderListService } from './Services/StandardLists/C
 import { ContainerTrackingProviderPMService } from './Services/StandardPMs/ContainerTrackingProvidersPMService';
 import { ContainerStatusSourceListService } from './Services/StandardLists/ContainerStatusSourceListService';
 import { ContainerTrackingProviderMenuButtonsHandler } from './Components/MenuButtons/ContainerTrackingProviderMenuButtonsHandler';
-//import { ShipmentTabsService } from './MetaDataServices/TabsServices/ShipmentTabsService';
-//import { ShipmentHeaderScreenService } from './MetaDataServices/HeaderScreenServices/ShipmentHeaderScreenService';
-//import { ShipmentMenuButtonService } from './MetaDataServices/MenuButtonServices/ShipmentMenuButtonService';
-
-
+import { AWBAdditionalHandlingInfoPMService } from './Services/StandardPMs/AWBAdditionalHandlingInfoPMService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -93,17 +89,13 @@ export class ModuleProviders {
             case "ContainerListService": { myResult = new ContainerListService(); break; }
             case "ContainerPMService": { myResult = new ContainerPMService(); break; }
             case "ContainerTrackingProviderPMService": { myResult = new ContainerTrackingProviderPMService(); break; }
+            case "AWBAdditionalHandlingInfoPMService": { myResult = new AWBAdditionalHandlingInfoPMService(); break; }
 
             // Handler
             case "MessagingStockMenuButtonsHandler": { myResult = new MessagingStockMenuButtonsHandler(); break; }
             case "ShipmentMenuButtonsHandler": { myResult = new ShipmentMenuButtonsHandler(); break; }
             case "ContainerMenuButtonsHandler": { myResult = new ContainerMenuButtonsHandler(); break; }
-            case "ContainerTrackingProviderMenuButtonsHandler": { myResult = new ContainerTrackingProviderMenuButtonsHandler(); break; }
-            //case "ShipmentTabsService": { myResult = new ShipmentTabsService(); break; }
-            //case "ShipmentHeaderScreenService": { myResult = new ShipmentHeaderScreenService(); break; }
-            //case "ShipmentMenuButtonService": { myResult = new ShipmentMenuButtonService(); break; }
-
-                
+            case "ContainerTrackingProviderMenuButtonsHandler": { myResult = new ContainerTrackingProviderMenuButtonsHandler(); break; }                
         }
 
         return myResult;

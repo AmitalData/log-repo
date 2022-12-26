@@ -23,7 +23,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
     public class CrossDockEntryDataProviderHelper
     {
         CrossDockEntryDataProvider crossDockEntryDataProvider;
-        WarehouseEntryPM warehouseEntryPM;
+        public WarehouseEntryPM warehouseEntryPM;
         public byte[] LoadDataToCrossDockEntryDataProvider(string entityId, int tenant, string userId)
         {
             CrossDockEntryDataProvider dataprovider = LoadCrossDockEntryDataProvider(entityId, tenant, userId);

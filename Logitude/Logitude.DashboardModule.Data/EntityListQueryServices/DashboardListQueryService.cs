@@ -22,7 +22,7 @@ namespace Logitude.DashboardModule.Data.EntityListQueryServices
 
     public partial class DashboardListQueryService
     {
-        private IQueryable<DashboardList> GetIqueryableList(IQueryable<Dashboard> iQueryable)
+        public IQueryable<DashboardList> GetIqueryableList(IQueryable<Dashboard> iQueryable)
         {
             IQueryable<DashboardList> query = (from a in iQueryable
                                                select new DashboardList()

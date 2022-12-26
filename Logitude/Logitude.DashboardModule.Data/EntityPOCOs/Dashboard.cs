@@ -48,6 +48,10 @@ namespace Logitude.DashboardModule.Data.EntityPOCOs
 	    public string PermissionLevelCode { get; set; }
 	      
         public virtual PermissionLevel PermissionLevel { get; set; }
+        [Column("LoadedAutomatically")]
+	    public bool LoadedAutomatically { get; set; }
+        [Column("PredefinedOrder")]
+	    public int? PredefinedOrder { get; set; }
     }
 }
 	 

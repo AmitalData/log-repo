@@ -56,13 +56,13 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         {
             ObjectTableRepository entityRepository = new ObjectTableRepository(objectContext);
             ObjectTable  parentObjectTable = entityRepository.GetSingleObjectTable(entityPM.ParentObjectTableId, entityPM.Tenant, false);
-            if (entityPM.Name.StartsWith(parentObjectTable.Name + "." + entityPM.Tenant + ".")) return;
-            entityPM.Name = parentObjectTable.Name + "." + entityPM.Tenant + "." + entityPM.Name;
+            if (entityPM.Name.StartsWith(parentObjectTable.Id + "." + entityPM.Tenant + ".")) return;
+            entityPM.Name = parentObjectTable.Id + "." + entityPM.Tenant + "." + entityPM.Name;
         }
         private void MapCustomEntityName()
         {
-            if (entityPM.Name.StartsWith("CustomObject." + entityPM.Tenant + ".")) return;
-            entityPM.Name = "CustomObject." + entityPM.Tenant + "." + entityPM.Name;
+            if (entityPM.Name.StartsWith("C." + entityPM.Tenant + ".")) return;
+            entityPM.Name = "C." + entityPM.Tenant + "." + entityPM.Name;
         }
         private void InitializeTextCode()
         {

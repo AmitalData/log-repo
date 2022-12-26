@@ -179,7 +179,17 @@ export class DashboardPM {
         }
     }
     //public DashboardGlobalFilters: Array<DashboardGlobalFilterPM>= [];
- 
+     private loadedAutomatically: boolean;
+    public get LoadedAutomatically() { return this.loadedAutomatically; }
+    public set LoadedAutomatically(newValue: boolean) { if (this.loadedAutomatically != newValue) { this.loadedAutomatically = newValue; this.MarkAsDirty("LoadedAutomatically"); } }
+       
+	 
+    private predefinedOrder: number;
+    public get PredefinedOrder() { return this.predefinedOrder; }
+    public set PredefinedOrder(newValue: number) { if (this.predefinedOrder != newValue) { this.predefinedOrder = newValue; this.MarkAsDirty("PredefinedOrder"); } }
+       
+	 
+
     public OldEntityPM: DashboardPM;
 		
     public IsDirty: boolean;

@@ -28,7 +28,14 @@ namespace Logitude.DashboardModule.Data.Repositories
                     && dashboardsIds.Contains(a.Id)
                     select a);
         }
-    }
 
+        public IQueryable<Dashboard> GetAllByIdsList(List<string> dashboardsIds, int tenant)
+        {
+            return (from a in context.Dashboards
+                    where a.Tenant == tenant
+                    && dashboardsIds.Contains(a.Id)
+                    select a);
+        }
+    }
 }
    

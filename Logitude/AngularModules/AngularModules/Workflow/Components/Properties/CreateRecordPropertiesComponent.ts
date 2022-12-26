@@ -37,7 +37,7 @@ export class CreateRecordPropertiesComponent extends BaseComponent {
 
     public CurrentSession = SessionLocator.SelectedSession;
 
-    public ExcludedEntities: string[] = ["Customer", "User", "Shipment.ARInvoice", "Shipment.APInvoice"];
+    public ExcludedEntities: string[] = ["Customer", "User", "ShipmentStoragePricing", "Shipment.ARInvoice", "Shipment.APInvoice"];
 
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};

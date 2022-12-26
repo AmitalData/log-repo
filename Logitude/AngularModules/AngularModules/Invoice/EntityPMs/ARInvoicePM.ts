@@ -1172,6 +1172,11 @@ export class ARInvoicePM {
     public set TotalEquation(newValue: string) { if (this.totalEquation != newValue) { this.totalEquation = newValue; this.MarkAsDirty("TotalEquation"); } }
        
 	 
+    private isFromAutomation: boolean;
+    public get IsFromAutomation() { return this.isFromAutomation; }
+    public set IsFromAutomation(newValue: boolean) { if (this.isFromAutomation != newValue) { this.isFromAutomation = newValue; this.MarkAsDirty("IsFromAutomation"); } }
+       
+	 
 
     public OldEntityPM: ARInvoicePM;
 		

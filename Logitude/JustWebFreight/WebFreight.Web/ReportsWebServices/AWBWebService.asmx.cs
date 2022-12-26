@@ -46,7 +46,7 @@ namespace WebFreight.Web.ReportsWebServices
         private bool isRegulatedAgentActivated;
         private string contactEmail;
         private AWBDataProvider awbDp;
-        private ShipmentPM shipmentPM;
+        public ShipmentPM shipmentPM;
         private IShipmentsContext shipmentsContext;
         private ICommonDataContext commonContext;
         private AddressRepository addressRepository;

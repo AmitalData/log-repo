@@ -88,11 +88,13 @@
     <Compile Include="EntityDataMappings\Generated\DashboardSharedUserDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\MeasureTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PermissionLevelDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\UserPinnedDashboardDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\WidgetDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\WidgetMeasureDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\WidgetTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\MeasureTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\PermissionLevelDataMapping.cs" />
+    <Compile Include="EntityDataMappings\UserPinnedDashboardDataMapping.cs" />
     <Compile Include="EntityDataMappings\WidgetDataMapping.cs" />
     <Compile Include="EntityDataMappings\WidgetMeasureDataMapping.cs" />
     <Compile Include="EntityDataMappings\WidgetTypeDataMapping.cs" />
@@ -103,6 +105,7 @@
     <Compile Include="EntityPMs\Generated\DashboardSharedUserPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\MeasureTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PermissionLevelPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\UserPinnedDashboardPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\WidgetMeasurePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\WidgetPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\WidgetTypePM.Generated.cs" />
@@ -115,9 +118,11 @@
     <Compile Include="EntityQueryServices\Generated\DashboardSharedUserQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\MeasureTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\PermissionLevelQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\UserPinnedDashboardQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\WidgetMeasureQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\WidgetQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\WidgetTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\UserPinnedDashboardQueryService.cs" />
     <Compile Include="EntityQueryServices\WidgetQueryService.cs" />
     <Compile Include="EntityUpdateServices\DashboardGlobalFilterUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DashboardSharedUserUpdateService.cs" />
@@ -129,9 +134,11 @@
     <Compile Include="EntityUpdateServices\Generated\DashboardUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\MeasureTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\PermissionLevelUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\UserPinnedDashboardUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\WidgetMeasureUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\WidgetTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\WidgetUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\UserPinnedDashboardUpdateService.cs" />
     <Compile Include="EntityUpdateServices\WidgetMeasureUpdateService.cs" />
     <Compile Include="EntityUpdateServices\WidgetUpdateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

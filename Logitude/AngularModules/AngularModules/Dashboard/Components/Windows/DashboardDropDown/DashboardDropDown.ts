@@ -68,7 +68,8 @@ export class DashboardDropDownComponent implements OnInit {
     }
 
     public GetItemText(item: any) {
-        return this.DisplayMemberPath ? item[this.DisplayMemberPath] : item
+        if (item)
+            return this.DisplayMemberPath ? item[this.DisplayMemberPath] : item;
     }
 
     public onSearchChange(text: string) {
