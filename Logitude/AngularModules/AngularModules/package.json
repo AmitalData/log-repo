@@ -50,7 +50,7 @@
     "collaboration-tool-tasks-list": "^11.2.19",
     "fast-json-patch": "^3.1.1",
     "lodash.clonedeep": "^4.5.0",
-    "logitude-dashboard-library": "^1.4.14",
+    "logitude-dashboard-library": "^1.4.15",
     "logitude-workflow": "latest",
     "mochawesome-report-generator": "^5.1.0",
     "ng-zorro-antd": "^9.3.0",
