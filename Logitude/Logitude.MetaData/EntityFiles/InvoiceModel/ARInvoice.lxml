@@ -13169,7 +13169,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     IsListFilter="false"
     MultiLine="false"
@@ -13198,6 +13198,8 @@
     FullFieldLable="&quot;TotalVAT&quot;"
     DefaultText="&quot;Total VAT Amount&quot;"
     FullLocalDefaultText="&quot;סה''כ מע''מ לדוח מע''מ&quot;"
+    ListFieldLable="&quot;TotalVATListLable&quot;"
+    ListLableDefaultText="&quot;Total VAT Amount&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -16814,71 +16816,76 @@
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;TotalAmountForTaxReport&quot;"
+        ObjectFieldName="&quot;TotalVAT&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;TotaVatableAmountForTaxReport&quot;"
+        ObjectFieldName="&quot;TotalAmountForTaxReport&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
         IndexOrder="3"
-        ObjectFieldName="&quot;TotalExamptFortaxReport&quot;"
+        ObjectFieldName="&quot;TotaVatableAmountForTaxReport&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
         IndexOrder="4"
+        ObjectFieldName="&quot;TotalExamptFortaxReport&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;All Invoices&quot;"
+        IndexOrder="5"
         ObjectFieldName="&quot;Sent&quot;"
         ColumnWidth="30" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="5"
+        IndexOrder="6"
         ObjectFieldName="&quot;InvoiceNumber&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="6"
+        IndexOrder="7"
         ObjectFieldName="&quot;ARInvoiceTypeName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="7"
+        IndexOrder="8"
         ObjectFieldName="&quot;BillToName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="8"
+        IndexOrder="9"
         ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="9"
+        IndexOrder="10"
         ObjectFieldName="&quot;DueDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="10"
+        IndexOrder="11"
         ObjectFieldName="&quot;InvoiceCurrencyCode&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="11"
+        IndexOrder="12"
         ObjectFieldName="&quot;AmountInInvoiceCurrency&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="12"
+        IndexOrder="13"
         ObjectFieldName="&quot;AmountDue&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="13"
+        IndexOrder="14"
         ObjectFieldName="&quot;CreateDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="14"
+        IndexOrder="15"
         ObjectFieldName="&quot;CreatedByUserName&quot;"
         ColumnWidth="130" />
     </QueryColumns>
