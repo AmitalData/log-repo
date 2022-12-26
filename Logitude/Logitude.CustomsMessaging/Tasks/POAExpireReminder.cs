@@ -52,7 +52,7 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
 
                 newNotificationPM.NotificationDefinitionCode = "3730P";
                 newNotificationPM.AssigneToNotificationTypeCode = "A";
-                desc = "יפוי כח פג תוקף ללקוח ";
+                desc = "תוקף יפוי כח עומד לפוג ללקוח ";
                 newNotificationPM.Reference2Number = "";
                 newNotificationPM.CreateDate = DateTime.Now;
                 newNotificationPM.DueDate = DateTime.Now;

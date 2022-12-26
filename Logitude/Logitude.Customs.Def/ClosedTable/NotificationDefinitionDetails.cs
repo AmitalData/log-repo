@@ -848,6 +848,15 @@ namespace Logitude.Customs.Def.ClosedTable
                 ActiveInExport = false,
 
             });
+            all.Add(new NotificationDefinitionDetails()
+            {
+                Code = "3730P",
+                EnglishName = "POA Expire Reminder",
+                LocalName = "תוקף יפוי כח עומד לפוג",
+                AssigneeNotificationTypeCode = "A",
+                ActiveInExport = true,
+
+            });
             return all;
         }
 
