@@ -17,23 +17,24 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             get { return webFreightContext; }
         }
 
+        public DeploymentPackageRepository()
+        { }
+
         public DeploymentPackageRepository(IWebFreightContext context)
         {
             webFreightContext = context;
         }
 
-        public DeploymentPackageRepository()
-        { }
+        public DeploymentPackageRepository(int tenant)
+        {
+            webFreightContext = WebFreightContext.GetContext(tenant);
+        }
 
         public DeploymentPackage GetSingleDeploymentPackage(string id, int tenant)
         {
             return (from a in context.DeploymentPackages
                     where a.Tenant == tenant && a.Id == id
                     select a).FirstOrDefault();
-        }
-        public DeploymentPackageRepository(int tenant)
-        {
-            webFreightContext = WebFreightContext.GetContext(tenant);
         }
 
         public void Add(DeploymentPackage entity)
