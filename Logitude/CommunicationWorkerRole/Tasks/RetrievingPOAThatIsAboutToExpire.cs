@@ -35,6 +35,7 @@ namespace CommunicationWorkerRole.Tasks
             {
                 IPOAExpireReminder myIRetrievingPOAThatIsAboutToExpire = ContainerAccessor.Container.Resolve(typeof(IPOAExpireReminder), "POAExpireReminder", new ParameterOverride("", this._SeedDefaultTenant)) as IPOAExpireReminder;
                 myIRetrievingPOAThatIsAboutToExpire.StartRun(_TaskId, _SeedDefaultTenant);
+                LogMessagingUtil.Instance.AppendLine("End");
                     //StartRun(_TaskId, _SeedDefaultTenant);
             }
             catch (Exception e)

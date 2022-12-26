@@ -36,7 +36,7 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
 
         private void RunPerTenant(CustomsSettingPM t)
         {
-
+            LogMessagingUtil.Instance.AppendLine("tenant: " + t.Tenant);
 
             ICustomContext dbContext = CustomContext.GetContext(t.Tenant);
             string desc = "";
@@ -44,8 +44,12 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
             var notificationQueryService = new NotificationQueryService(dbContext);
             var clientQueryService = new ClientQueryService(t.Tenant);
             var clients = clientQueryService.GetAllClientsPOAExpire(t.Tenant);
+            LogMessagingUtil.Instance.AppendLine(clients.Count() + " clients found");
+
             foreach (var client in clients)
             {
+                LogMessagingUtil.Instance.AppendLine("notification for client: id=" + client.Id + "code=" + client.Code);
+
                 var newNotificationPM = new NotificationPM();
                 newNotificationPM.ChangeSetOp = ChangeSetOperation.Insert;
                 newNotificationPM.Tenant = t.Tenant;
