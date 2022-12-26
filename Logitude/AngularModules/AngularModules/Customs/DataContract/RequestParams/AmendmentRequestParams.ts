@@ -3,5 +3,5 @@
 export class AmendmentRequestParams extends GenericRequestParams {
 
     public IsExportClose: boolean;
- 
+    public IsTransShipment: boolean;
 }
