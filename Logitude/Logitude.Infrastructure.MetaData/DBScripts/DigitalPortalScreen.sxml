@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-	<Sql Version="10">
+	<Sql Version="12">
       <![CDATA[	  
 		delete from DigitalPortalScreens where id != ''
 		
@@ -7,6 +7,7 @@
 		set @shipmentObjectId = (select Id from ObjectTables where [Name] = 'Shipment' and Tenant = 0 )
 
         declare @EntityId as varchar(15)
+		
  		EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPortalScreens'
 
 		INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, Content, DraftContent) 

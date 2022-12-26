@@ -97,7 +97,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
                     "IsOperationalClosed",
                     "IsCustomerArchived",
                     "IsAccountingClosed",
-                    "ShipmentLevelCode"
+                    "ShipmentLevelCode",
+                    "StatusLocation",
+                    "StatusCode"
                 };
 
                 defaultDigitalFieldSecurity = defaultDigitalFieldSecurity.Where(a => !unfoundFeilds.Contains(a.FieldCode)).ToList();
