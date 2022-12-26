@@ -1385,7 +1385,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         List<object> documentDataProviders = new List<object>();
                         foreach (CrossDockEntryDataProvider crossDockEntryDataProvider in crossDockEntryDataProviderLists)
                         {
-                            var documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() { DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = crossDockEntryDataProvider }).Create(true);
+                            var documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() {EntityPM = crossDockEntryLabelDataProviderHelper.crossDockEntryDataProviderHelper.warehouseEntryPM,  DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = crossDockEntryDataProvider }).Create(true);
                             documentDataProviders.Add(documentDataProvider.BusinessObjectValue);
                         }
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "Cross Docks Entry Labels", Name = "CrossDockEntryDataProvider", BusinessObjectValue = documentDataProviders };
