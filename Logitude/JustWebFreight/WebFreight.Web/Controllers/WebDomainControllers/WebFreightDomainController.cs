@@ -385,13 +385,17 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 var recordSetParams = new RecordSet
                 {
                     TTL = 3600,
-                    ARecords = new List<ARecord>
+                    //ARecords = new List<ARecord>
+                    //{
+                    //    new ARecord(DNSIPAddress)
+                    //}
+                    CnameRecord = new CnameRecord()
                     {
-                        new ARecord(DNSIPAddress)
+                       Cname = "digital.logitudeworld.com"
                     }
                 };
 
-                var recordSet = dnsClient.RecordSets.CreateOrUpdateAsync(resourceGroupName, zoneName, customerURL, RecordType.A, recordSetParams).Result;
+                var recordSet = dnsClient.RecordSets.CreateOrUpdateAsync(resourceGroupName, zoneName, customerURL, RecordType.CNAME, recordSetParams).Result;
             }
             catch (Exception e)
             {
