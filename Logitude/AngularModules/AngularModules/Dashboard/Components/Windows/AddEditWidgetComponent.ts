@@ -127,6 +127,10 @@ export class AddEditWidgetComponent extends BaseComponent {
                 this.ChartImageSrc = "./Images/Charts/DonutChart.png";
                 break;
             }
+            case "column": {
+                this.ChartImageSrc = "./Images/Charts/ColumnChart.png";
+                break;
+            }
 
             case "kpi": {
                 this.ChartImageSrc = null;
