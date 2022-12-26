@@ -180,6 +180,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
    public class  AmendmentRequestParams: GenericRequestParams
     {
         public bool IsExportClose { get; set; }
+        public bool IsTransShipment { get; set; }
     }
 
 }

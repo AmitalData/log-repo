@@ -580,25 +580,15 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
 
         }
+
         public HttpResponseMessage PostSendDeclarationClosingAmendment(AmendmentRequestParams requestParamsData)
         {
             try
             {
-                //DF_NG_2751_MSG10000_ExportDeclarationRequestService _dF_MSG10000_ExportDeclarationRequestService = new DF_NG_2751_MSG10000_ExportDeclarationRequestService();
-                //var request = _dF_MSG10000_ExportDeclarationRequestService.GetRequest(requestParamsData);
-                //string error = "";
-                //DF_NG_2757_MSG10004_ExportAmendmentDeclarationResponseService dF_NG_2757_MSG10004_ExportFixedDeclarationResponseService = new DF_NG_2757_MSG10004_ExportAmendmentDeclarationResponseService();
-                //DeclarationPM declarationPM = dF_NG_2757_MSG10004_ExportFixedDeclarationResponseService.MapResponseToDeclaration(request.Declaration, requestParamsData.Tenant, true, requestParamsData.AppicationId, out error, user: requestParamsData.LoggingUserId, isCopy: Convert.ToBoolean(requestParamsData.LoggingEntityId2), isClose: true);
+                ExportDeclarationAmendmentResponseData responseData = requestParamsData.IsTransShipment ?
+                    new DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService().Send(requestParamsData) :
+                    new DF_MSG8235_ExportDeclarationAmendmentMessagingService().Send(requestParamsData);
 
-                //if (declarationPM == null)
-                //    return Request.CreateResponse(HttpStatusCode.BadRequest, error);
-
-                //requestParamsData.AppicationId = declarationPM.Id;
-                //requestParamsData.LoggingEntityId = declarationPM.Id;
-                ExportDeclarationAmendmentResponseData responseData;
-                //var messagingService = new DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService();
-                var messagingService = new DF_MSG8235_ExportDeclarationAmendmentMessagingService();
-                responseData = messagingService.Send(requestParamsData);
                 return Request.CreateResponse(HttpStatusCode.OK, responseData);
             }
             catch (Exception ex)

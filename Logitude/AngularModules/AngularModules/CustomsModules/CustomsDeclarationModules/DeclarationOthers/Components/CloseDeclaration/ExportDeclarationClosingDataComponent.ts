@@ -418,6 +418,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         searchParams.RequestVIA = event.RequestVIA;
         searchParams.ForcePersonalSign = event.ForcePersonalSign;
         searchParams.IsExportClose = true;
+        searchParams.IsTransShipment = this.DecPM.DeclarationTypeCode === '3';
         //searchParams.TestCase = event.TestCase;
         let myShowProgressBarParams: ShowProgressBarParams = null;
 
