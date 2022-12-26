@@ -877,7 +877,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
         if (this.isImporterClicked != true) {
             switch (type) {
                 case 'Importer': {
-                    this.EntityPM.ImporterId = "";
+                    this.EntityPM.ImporterId = null;
                     //this.CalculatedImporterName = "";
                     if (AppTool.IsNullOrEmpty(this.EntityPM.ImporterCode)) {
                         this.CalculatedImporterName = this.EntityPM.ImporterName;
@@ -885,12 +885,12 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
                     break;
                 }
                 case 'Transfer': {
-                    this.EntityPM.TransferImporterId = "";
+                    this.EntityPM.TransferImporterId = null;
                     this.CalculatedTransferImporterName = "";
                     break;
                 }
                 case 'Entitle': {
-                    this.EntityPM.EntitleImporterId = "";
+                    this.EntityPM.EntitleImporterId = null;
                     this.CalculatedEntitleImporterName = "";
                     this.CalculatedClient = null;
 
