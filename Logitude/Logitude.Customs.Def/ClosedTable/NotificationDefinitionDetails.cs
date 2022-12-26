@@ -857,6 +857,27 @@ namespace Logitude.Customs.Def.ClosedTable
                 ActiveInExport = true,
 
             });
+
+            all.Add(new NotificationDefinitionDetails()
+            {
+                Code = "2470S",
+                EnglishName = "Transshipment Approved",
+                LocalName = "אישור שטעון",
+                AssigneeNotificationTypeCode = "A",
+                ActiveInExport = true,
+
+            });
+
+            all.Add(new NotificationDefinitionDetails()
+            {
+                Code = "2470T",
+                EnglishName = "Transshipment Approved Canceled",
+                LocalName = "אישור שטעון בוטל",
+                AssigneeNotificationTypeCode = "A",
+                ActiveInExport = true,
+
+            });
+
             return all;
         }
 

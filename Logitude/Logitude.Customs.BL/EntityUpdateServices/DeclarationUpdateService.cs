@@ -1665,6 +1665,20 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 type = "A";
                 LogMessagingUtil.Instance.AppendLine("Declaration Changed By Customs Notification");
             }
+            else if (eventCode == "TAS")
+            {
+                notificationDefinitionCode = "2470S";
+                desc = "אישור שטעון" + declarationPM.DeclarationNumber;
+                type = "A";
+                LogMessagingUtil.Instance.AppendLine("Transshipment Approved");
+            }
+            else if (eventCode == "TAC")
+            {
+                notificationDefinitionCode = "2470T";
+                desc = "אישור שטעון בוטל" + declarationPM.DeclarationNumber;
+                type = "A";
+                LogMessagingUtil.Instance.AppendLine("Transshipment Approved Canceled");
+            }
             var notificationUpdateService = new NotificationUpdateService(this.MainContext as ICustomContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), declarationPM.Tenant);    //Yuval Chalup 17.11.2014 TASK-9089
             var notificationQueryService = new NotificationQueryService(this.MainContext as ICustomContext);  //Yuval Chalup 17.11.2014 TASK-9089
 
