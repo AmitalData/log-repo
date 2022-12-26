@@ -553,13 +553,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
             newNotificationPM.DueDate = DateTime.Now;
             newNotificationPM.AssigneToNotificationTypeCode = typeCode;
             
-            if(this._MyDeclarationPM.Direction == "E")
-                newNotificationPM.ResponseToMessage = responseToMessage;
-
             string customerId = null;
             string referentUserId = null;
             if (this._MyDeclarationPM != null)
             {
+                if (this._MyDeclarationPM.Direction == "E")
+                    newNotificationPM.ResponseToMessage = responseToMessage;
+
                 newNotificationPM.EntityId = this._MyDeclarationPM.Id;
                 newNotificationPM.ObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                 newNotificationPM.Reference1Number = this._MyDeclarationPM.CustomFileNo;
