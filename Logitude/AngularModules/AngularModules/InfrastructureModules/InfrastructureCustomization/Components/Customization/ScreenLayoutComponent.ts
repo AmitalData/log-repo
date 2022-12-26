@@ -71,6 +71,7 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
     public IsTabsCustomizationEnabled: boolean = false;
     public IsEnabledCreatingSubCustomObjects: boolean = false;
     public IsSubEntity: boolean = false;
+    public IsReferenceTypeCustomObject: boolean = false;
     public GridScreenSelectedFields: ObjectFieldPM[] = [];
     private screenLayoutService: IScreenLayoutService;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
@@ -141,6 +142,7 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
         this.IsTabsCustomizationEnabled = windowArgs.IsTabsCustomizationEnabled;
         this.ObjectTable = window.ObjectTables.filter(x => x.Id === this.ObjecttableId)[0];
         this.IsSubEntity = windowArgs.IsSubEntity || this.ObjectTable.IsComposition;
+        this.IsReferenceTypeCustomObject = this.ObjectTable.IsCustom && AppTool.IsNullOrEmpty(this.ObjectTable.ParentObjectTableId) && this.ObjectTable.ObjectTableTypeCode == "MD";
         this.FillTableScreensCollection();
     }
 
