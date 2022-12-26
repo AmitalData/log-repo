@@ -98,6 +98,8 @@
     <None Include="DBScripts\20220728_DeleteSCGTogglesCodes.sxml" />
     <None Include="DBScripts\20220619_DeletePLETogglesCodes.sxml" />
     <None Include="DBScripts\20220208_DeleteBCFTogglesCodes.sxml" />
+    <None Include="DBScripts\DigitalPortalScreen.sxml" />
+    <None Include="DBScripts\DigitalPreDefinedComponents.sxml" />
     <None Include="DBScripts\DigitalProfile.sxml" />
     <None Include="DBScripts\DigitalTextCodes.sxml" />
     <None Include="DBTables\BatchTaskExecution.dxml" />
