@@ -34,14 +34,23 @@ namespace WebFreight.Web.Controllers.DashboardModel.Extended
                 DashboardRepository dashboardRepository = new DashboardRepository(dashboardContext);
                 DashboardListQueryService dashboardListQuery = new DashboardListQueryService(dashboardContext);
 
-                IQueryable<Dashboard> dashboards = dashboardRepository.GetAll(authToken.Tenant);
-                dashboards = dashboardListQuery.ApplyCustomFilters(new QueryOperations(), dashboards, authToken.Tenant);
-                IQueryable<DashboardList> myDashboardLists = dashboardListQuery.GetIqueryableList(dashboards);
-
                 IQueryable<Dashboard> zeroDashboards = dashboardRepository.GetAll(0);
                 IQueryable<DashboardList> zeroDashboardLists = dashboardListQuery.GetIqueryableList(zeroDashboards);
+                IQueryable<DashboardList> dashboardLists = null;
 
-                IQueryable<DashboardList> dashboardLists = myDashboardLists.Concat(zeroDashboardLists);
+                if (authToken.Tenant != 0)
+                {
+                    IQueryable<Dashboard> dashboards = dashboardRepository.GetAll(authToken.Tenant);
+                    dashboards = dashboardListQuery.ApplyCustomFilters(new QueryOperations(), dashboards, authToken.Tenant);
+                    IQueryable<DashboardList> myDashboardLists = dashboardListQuery.GetIqueryableList(dashboards);
+                    dashboardLists = myDashboardLists.Concat(zeroDashboardLists);
+                }
+
+                else
+                {
+                    dashboardLists = zeroDashboardLists;
+                }
+
                 return Request.CreateResponse(HttpStatusCode.OK, dashboardLists);
             }
 
