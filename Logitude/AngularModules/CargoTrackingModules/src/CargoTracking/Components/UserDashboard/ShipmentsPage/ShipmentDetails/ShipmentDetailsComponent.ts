@@ -546,11 +546,7 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
                 break;
             }
         }
-
-        if (shipment.EntityType === this.EntityType_Customs) {
-            name = 'SHIPPER';
-        }
-
+        
         return name;
     }
 

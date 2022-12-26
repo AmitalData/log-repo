@@ -559,6 +559,22 @@ end)
                     when DirectionId = 'I' and ShipperCard.LocalName is not null then ShipperCard.LocalName
                     when DirectionId = 'I' and ShipperCard.EnglishName is not null then ShipperCard.EnglishName 
                     when DirectionId = 'I' and ShipperCard.EnglishName is null then CasualSupplierName  
+
+                    when  (DirectionId = 'R' AND (
+                        left(ShipmentNumber, 2) <> 'EF' COLLATE Latin1_General_CS_AS  AND
+                        left(ShipmentNumber, 2) <> 'MF' COLLATE Latin1_General_CS_AS 
+                        )) and ShipperCard.LocalName is not null then ShipperCard.LocalName
+
+                     when  (DirectionId = 'R' AND (
+                        left(ShipmentNumber, 2) <> 'EF' COLLATE Latin1_General_CS_AS  AND
+                        left(ShipmentNumber, 2) <> 'MF' COLLATE Latin1_General_CS_AS 
+                        )) and ShipperCard.EnglishName is not null then ShipperCard.EnglishName 
+
+                     when  (DirectionId = 'R' AND (
+                        left(ShipmentNumber, 2) <> 'EF' COLLATE Latin1_General_CS_AS  AND
+                        left(ShipmentNumber, 2) <> 'MF' COLLATE Latin1_General_CS_AS 
+                        ))and ShipperCard.EnglishName is null then CasualSupplierName 
+
                     end
                     )as ShipperName," +
                 " '' as MasterShipmentDataId," +
@@ -568,9 +584,26 @@ end)
                 " '' as CustomFileId," +
                 $@" (
                     case 
+
                     when DirectionId = 'E' and ConsigneeCard.LocalName is not null then ConsigneeCard.LocalName 
                     when DirectionId = 'E' and ConsigneeCard.EnglishName is not null then ConsigneeCard.EnglishName 
                     when DirectionId = 'E' and ConsigneeCard.EnglishName is null then CasualImporterName  
+
+                    when DirectionId = 'E'  AND (
+                        left(ShipmentNumber, 2) = 'EF' COLLATE Latin1_General_CS_AS  OR
+                        left(ShipmentNumber, 2) = 'MF' COLLATE Latin1_General_CS_AS 
+                    ) and ConsigneeCard.LocalName is not null then ConsigneeCard.LocalName 
+
+                    when DirectionId = 'E'  AND (
+                        left(ShipmentNumber, 2) = 'EF' COLLATE Latin1_General_CS_AS  OR
+                        left(ShipmentNumber, 2) = 'MF' COLLATE Latin1_General_CS_AS 
+                    ) and ConsigneeCard.EnglishName is not null then ConsigneeCard.EnglishName
+
+                    when DirectionId = 'E'  AND (
+                        left(ShipmentNumber, 2) = 'EF' COLLATE Latin1_General_CS_AS  OR
+                        left(ShipmentNumber, 2) = 'MF' COLLATE Latin1_General_CS_AS 
+                    ) and ConsigneeCard.EnglishName is null then CasualImporterName  
+
                     end
                     ) as ConsigneeName," +
                 " '' as CustomerReference3," +
