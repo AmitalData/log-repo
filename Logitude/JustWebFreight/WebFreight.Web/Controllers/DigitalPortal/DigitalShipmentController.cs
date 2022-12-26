@@ -119,55 +119,18 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 entityLists = QueryableExtensions.Take(entityLists, () => newFilters.PageSize);
 
                 var helper = new DigitalFieldSecuritesHelper();
-                var allowedFieldSecurites = helper.GitDigitalSecuritesFeilds("1-4", "1-9", tenant)
+                var allowedFieldSecurites = helper.GitDigitalSecuritesFeilds(newFilters.ObjectTableId, newFilters.ProfileId, tenant, false)
                                                   .Where(a => a.HasPersmission)
                                                   .Select(a => a.FieldCode.Replace("Shipment.", ""))
                                                   .ToList();
 
-                var extraFields = new List<string> 
-                {
-                    "MainCarriageETD",
-                    "MainCarriageFinalDestinationATA",
-                    "MainCarriageFinalDestinationETA",
-                    "InlandDomesticFromTypeCode",
-                    "MainCarriageFromAddressId",
-                    "MainCarriageFromPortCode",
-                    "InlandDomesticFromCity",
-                    "InlandDomesticToTypeCode",
-                    "MainCarriageToAddressId",
-                    "MainCarriageToPortCode",
-                    "InlandDomesticToCity",
-                    "InlandDomesticFromCountryId",
-                    "InlandDomesticToCountryId",
-                    "MainCarriageFromCity",
-                    "FromPortName",
-                    "FromCountryCode",
-                    "Transshipment1ETA",
-                    "Transshipment1ATA",
-                    "Transshipment1ETD",
-                    "Transshipment1ATD",
-                    "Transshipment2ETA",
-                    "Transshipment2ATA",
-                    "Transshipment2ETD",
-                    "Transshipment2ATD",
-                    "Transshipment3ETA",
-                    "Transshipment3ATA",
-                    "Transshipment3ETD",
-                    "Transshipment3ATD",
-                    "MainCarriageToCity",
-                    "ToPortName",
-                    "ToCountryCode"
-                };
+                var fields = string.Join(",", allowedFieldSecurites);
 
-                allowedFieldSecurites.AddRange(extraFields);
+                var shipments = entityLists.Select("new { " + fields + " }").ToDynamicList();
 
-                var shipments = entityLists.Select("new { " + allowedFieldSecurites + " }").ToDynamicList();
+                var res = shipmentQuery.BuildShipmentListWithTimeLine(shipments, authToken.Tenant);
 
-                List<DigitalShipmentList> listQuery = entityLists.ToList();
-
-                shipmentQuery.BuildShipmentListWithTimeLine(listQuery, authToken.Tenant);
-
-                response.Result = listQuery;
+                response.Result = res;
 
                 var reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 
