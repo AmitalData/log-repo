@@ -24,6 +24,7 @@ namespace Logitude.DashboardModule.Data
 		 IDbSet<DashboardSharedUser> DashboardSharedUsers { get; }
 		 IDbSet<MeasureType> MeasureTypes { get; }
 		 IDbSet<PermissionLevel> PermissionLevels { get; }
+		 IDbSet<UserPinnedDashboard> UserPinnedDashboards { get; }
 		 IDbSet<Widget> Widgets { get; }
 		 IDbSet<WidgetMeasure> WidgetMeasures { get; }
 		 IDbSet<WidgetType> WidgetTypes { get; }

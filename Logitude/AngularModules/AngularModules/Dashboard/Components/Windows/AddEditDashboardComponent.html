@@ -46,8 +46,8 @@
 
                                 <td>
                                     <table>
-                                        <tr class="FormFieldRow" style="height:80px;">
-                                            <td colspan="3">
+                                        <tr *ngIf="LoggedTenant != 0" class="FormFieldRow" style="height:80px;">
+                                            <td>
                                                 <div style="margin: 10px;">
                                                     <div style="font-size: 13px; color: #6E7172;">Access</div>
                                                     <div style="margin-top: 5px; margin-left:5px;">
@@ -63,6 +63,49 @@
                                                 </div>
                                             </td>
                                         </tr>
+
+                                        <tr *ngIf="LoggedTenant == 0" >
+                                            <td>
+                                                <table>
+                                                    <tr class="FormFieldRow">
+                                                        <td style="width:100px;">
+                                                            <LogLabel [Text]="'Auto Loaded'" [ObjectFieldName]="'LoadedAutomatically'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+                                                        <td style="width:100px;">
+                                                            <LogCheckBox [ObjectFieldName]="'LoadedAutomatically'" [Checked]="LoadedAutomatically" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                        </td>
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'PredefinedOrder'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+                                                        <td>
+                                                            <LogTextBox [ObjectFieldName]="'PredefinedOrder'"
+                                                                        [DataContext]="DataContext"
+                                                                        [ObjectTableName]="ObjectTableName"
+                                                                        [InputType]="'unsinteger'"
+                                                                        [HideColumns]="true"
+                                                                        [Text]="PredefinedOrder">
+                                                            </LogTextBox>
+                                                        </td>
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>                                            
+                                        </tr>
+
                                     </table>
                                 </td>
                             </tr>
