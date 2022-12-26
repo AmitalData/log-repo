@@ -18,6 +18,8 @@ import { DashboardPMService } from '../../../DashboardModule/Services/StandardPM
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { DashboardPMExtendedService, PinnedDashboard } from '../../../DashboardModule/Services/ExtendedPMs/DashboardPMExtendedService';
 import { UserPinnedDashboardPM } from '../../../DashboardModule/EntityPMs/UserPinnedDashboardPM';
+import { DashboardListExtendedService } from '../../../DashboardModule/Services/ExtendedLists/DashboardListExtendedService';
+import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
 
 @Component({
     templateUrl: 'CustomDashboardComponent.html',
@@ -42,6 +44,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnDestroy
     private dashboardPMEstendedService: DashboardPMExtendedService;
     public ComponentId: string = null;
     public ComponentContentId: string = null;
+    public SectionsItemsSource: CodeNameClass[];
     constructor(private eRef: ElementRef) {
         super();
         var idIndex = this.CurrentSession.GetNewId("Meu");
@@ -50,6 +53,14 @@ export class CustomDashboardComponent extends BaseComponent implements OnDestroy
         this.DashboardListService = new DashboardListService();
         this.dashboardPMEstendedService = new DashboardPMExtendedService();
         this.GetData();
+        this.BuildSectionsItemsSource();
+    }
+    BuildSectionsItemsSource() {
+        this.SectionsItemsSource = [];
+
+        this.SectionsItemsSource.push(new CodeNameClass("ONM", "My Dashboards"));
+        this.SectionsItemsSource.push(new CodeNameClass("SPF", "Shared Dashboards"));
+        this.SectionsItemsSource.push(new CodeNameClass("SYS" ,"System Dashboards"));
     }
 
     DashboardDataBinding: DashboardDataBinding = {
@@ -82,7 +93,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnDestroy
                         this._entityResourceService.getEntityResourceByTableName("AnalyticsFactsFieldsMetaData").subscribe((res4: any) => {
                             setTimeout(e => {
                                 this.CheckIsLoggedUserHasPinnedDashboards();
-                                this.LoadDefaultDashboards(300);
+                                this.LoadDashboardsForDropDown();
                             }, 70);
                         });
                     });
@@ -143,16 +154,13 @@ export class CustomDashboardComponent extends BaseComponent implements OnDestroy
         });
     }
 
-    private LoadDefaultDashboards(numberOfDashboard: number) {
-        var filters: ApiQueryFilters = new ApiQueryFilters();
-        filters.PageSize = numberOfDashboard;
-        filters.SortBy = "CreateDate";
-        filters.SortDirection = "Descending";
-
-        this.DashboardListService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
+    private LoadDashboardsForDropDown() {
+        var service: DashboardListExtendedService = new DashboardListExtendedService();
+        service.GetDashboardsForDropDown().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.ItemsSource = myResponse.Result ?? [];
                 this.DashboardDropdownLoading = false;
+
                 if (SessionLocator.Tenant == 0) {
                     this.loadedDashboards = myResponse.Result?.slice(0, this.TabsCount);
                     this.dashbaordCount = this.loadedDashboards.length;

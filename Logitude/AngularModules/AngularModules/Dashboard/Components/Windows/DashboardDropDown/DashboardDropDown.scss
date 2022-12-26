@@ -74,6 +74,22 @@ $border-color: #ddd;
     overflow: hidden;
 }
 
+.db-drop-Section-text {
+    font-family: 'Manrope';
+    font-style: normal;
+    font-weight: 500;
+    color: #454545;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    height: 16px;
+    font-size: 10px;
+    line-height: 16px;
+    color: #A4A4A4;
+}
+
 .db-drop-open-text {
     width: 25px;
     height: 16px;

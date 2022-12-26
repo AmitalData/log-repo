@@ -16,7 +16,8 @@
                                         [SelectedItem]="SelectedDashboard"
                                         [ItemsSource]="ItemsSource"
                                         (SelectedItemChanged)="DropDwonSelectionChanged($event)"
-                                        [Loading]="DashboardDropdownLoading">
+                                        [Loading]="DashboardDropdownLoading"
+                                        [SectionsItemsSource]="SectionsItemsSource">
                     </dashboard-dropdown>
                 </td>
 
