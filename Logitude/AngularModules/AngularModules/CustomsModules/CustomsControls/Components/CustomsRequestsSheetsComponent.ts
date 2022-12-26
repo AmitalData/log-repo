@@ -31,7 +31,7 @@ import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'CustomsRequestsSheetsComponent',
-
+    styleUrls: ['./CustomsRequestsSheetsComponent.scss'],
     templateUrl: './CustomsRequestsSheetsComponent.html',
     providers: [CustomsRequestsSheetExtendedListService]
 })
@@ -108,6 +108,8 @@ export class CustomsRequestsSheetsComponent
     CloseButtonVisibility: boolean;//?????
     selectStatusesHeight: string;
     //_stratSearch: boolean = true;
+    IncludingFuture: boolean = false;
+    
     public get AllCRSSChecked() { return this._AllCRSSChecked };
     public set AllCRSSChecked(value: boolean) {
         this._AllCRSSChecked = value;
