@@ -894,8 +894,6 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-
-
 	  private string closingJournalNumber ;
 	  	  
        

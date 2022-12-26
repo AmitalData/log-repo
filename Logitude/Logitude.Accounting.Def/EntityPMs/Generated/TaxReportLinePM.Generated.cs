@@ -735,6 +735,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private double? subTotalInLocalCurrency ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public double? SubTotalInLocalCurrency  
+	   {
+	    
+	     get
+		{
+		   return subTotalInLocalCurrency;
+		 }
+		 set
+		 {
+		   if(subTotalInLocalCurrency != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SubTotalInLocalCurrency",OldValue=subTotalInLocalCurrency,NewValue=value,PropertyType="double?"};
+		    NotifyPropertyChanged(values);
+		   subTotalInLocalCurrency=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

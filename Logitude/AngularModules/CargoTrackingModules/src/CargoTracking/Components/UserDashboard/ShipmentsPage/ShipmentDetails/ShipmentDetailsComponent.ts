@@ -111,12 +111,12 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
     MaxHeightForPartnersPanel: number = 600;
     MaxNumberOfCarachterForMobile: number = 15;
     MobileReferencesViewCount = 1;
-    WebReferencesViewCount = 3
+    WebReferencesViewCount = 3;
     PartnerCardTypesOfShipmentTransportMode = {
         'A': "AIRLINES",
         'I': "TRUCKER",
         'O': "SHIPPING LINES"
-    }
+    };
     EntityType_Customs = "C";
     _tenant;
     focusOnPanel;
@@ -272,11 +272,14 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
     }
 
     private BuildShipmentReferences() {
-        this.ShipmentReferences = this.cargoTrackingShipmentPM.CustomerReference ? this.cargoTrackingShipmentPM.CustomerReference.split(',').filter(d => d) : [];
-        this.ShipmentReferences = this.ShipmentReferences.map(function (el) {
+        this.ShipmentReferences = this.cargoTrackingShipmentPM.CustomerReference ?
+            this.cargoTrackingShipmentPM.CustomerReference.split(',').filter(d => d) : [];
+
+        this.ShipmentReferences = this.ShipmentReferences.map((el) => {
             return el.trim();
         });
-        if (this.cargoTrackingShipmentPM.EntityType == 'O') {
+
+        if (this.cargoTrackingShipmentPM.EntityType === 'O') {
             this.AddShipmentReferencesForOrderShipment();
         }
         this.ShipmentReferences = this.ShipmentReferences.filter((el, i, a) => i === a.indexOf(el));
@@ -546,7 +549,7 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
                 break;
             }
         }
-        
+
         return name;
     }
 

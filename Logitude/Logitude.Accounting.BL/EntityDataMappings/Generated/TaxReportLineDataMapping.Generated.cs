@@ -48,7 +48,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         JournalLineNumber, 
 	         PreviousReference, 
 	         VatAmountRound, 
-	         LedgerTransactionId,
+	         LedgerTransactionId, 
+	         SubTotalInLocalCurrency,
 	      }
 
 
@@ -85,7 +86,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         JournalLineNumber, 
 	         PreviousReference, 
 	         VatAmountRound, 
-	         LedgerTransactionId,
+	         LedgerTransactionId, 
+	         SubTotalInLocalCurrency,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -217,6 +219,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LedgerTransactionId))
             {
 				entityPOCO.LedgerTransactionId = entityPM.LedgerTransactionId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SubTotalInLocalCurrency))
+            {
+				entityPOCO.SubTotalInLocalCurrency = entityPM.SubTotalInLocalCurrency;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -360,6 +367,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.LedgerTransactionId = entityPOCO.LedgerTransactionId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SubTotalInLocalCurrency))
+            {
+					entityPM.SubTotalInLocalCurrency = entityPOCO.SubTotalInLocalCurrency;
+            }
+
 		}
 
 		public void PMToOldPM(TaxReportLinePM entityPM, TaxReportLinePM oldEntityPM)
@@ -489,6 +501,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LedgerTransactionId))
             {
                 oldEntityPM.LedgerTransactionId = entityPM.LedgerTransactionId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SubTotalInLocalCurrency))
+            {
+                oldEntityPM.SubTotalInLocalCurrency = entityPM.SubTotalInLocalCurrency;
             }
 			
 		}

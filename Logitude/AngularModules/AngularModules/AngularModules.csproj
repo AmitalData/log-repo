@@ -315,6 +315,7 @@
     <Content Include="Dashboard\Components\Windows\AddEditWidgetComponent.html" />
     <Content Include="Dashboard\Components\Windows\ChooseUserCheckBoxComponent.html" />
     <Content Include="Dashboard\Components\Windows\ChooseUsersComponent.html" />
+    <Content Include="Dashboard\Components\Windows\DashboardDropDown\DashboardDropDown.html" />
     <Content Include="Dashboard\Components\Windows\Filter\GlobalFilterComponent.html" />
     <Content Include="Dashboard\Components\Windows\Filter\WidgetFilterComponent.html" />
     <Content Include="Dashboard\Components\Workspace\CustomDashboardComponent.html" />
@@ -340,6 +341,7 @@
     <Content Include="Images\PrivateLabel\LogBoxLogo.png" />
     <Content Include="Images\PrivateLabel\Background.png" />
     <Content Include="Images\Update-Button.png" />
+    <Content Include="Images\x-grey.png" />
     <Content Include="InfrastructureModules\InfrastructureBIReport\Components\Workspaces\DWQueryBuilderBaseComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureCommunications\Components\ReportExecutionLog\ReportExecutionLogErrorComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureCommunications\Components\ReportExecutionLog\ReportExecutionLogMessageBodyComponent.html" />
@@ -1810,11 +1812,13 @@
     <TypeScriptCompile Include="cypress\TeamIslam\Report\Report.spec.ts" />
     <TypeScriptCompile Include="cypress\TeamIslam\ShimentView\ShipmentView.spec.ts" />
     <TypeScriptCompile Include="DashboardModule\Components\Workspace\DashboardLists\DashboardListComponent.ts" />
+    <TypeScriptCompile Include="DashboardModule\DataContracts\WidgetPartArguments.ts" />
     <TypeScriptCompile Include="DashboardModule\EntityLists\AnalyticsFactsFieldsMetaDataList.ts" />
     <TypeScriptCompile Include="DashboardModule\EntityLists\AnalyticsFactsMetaDataList.ts" />
     <TypeScriptCompile Include="DashboardModule\EntityLists\DashboardList.ts" />
     <TypeScriptCompile Include="DashboardModule\EntityLists\MeasureTypeList.ts" />
     <TypeScriptCompile Include="DashboardModule\EntityLists\PermissionLevelList.ts" />
+    <TypeScriptCompile Include="DashboardModule\EntityLists\UserPredefinedDashboardList.ts" />
     <TypeScriptCompile Include="DashboardModule\EntityLists\WidgetTypeList.ts" />
     <TypeScriptCompile Include="DashboardModule\EntityPMs\AnalyticsFactsFieldsMetaDataPM.ts" />
     <TypeScriptCompile Include="DashboardModule\EntityPMs\AnalyticsFactsMetaDataPM.ts" />
@@ -1823,12 +1827,15 @@
     <TypeScriptCompile Include="DashboardModule\EntityPMs\DashboardSharedUserPM.ts" />
     <TypeScriptCompile Include="DashboardModule\EntityPMs\MeasureTypePM.ts" />
     <TypeScriptCompile Include="DashboardModule\EntityPMs\PermissionLevelPM.ts" />
+    <TypeScriptCompile Include="DashboardModule\EntityPMs\UserPredefinedDashboardPM.ts" />
     <TypeScriptCompile Include="DashboardModule\EntityPMs\WidgetMeasurePM.ts" />
     <TypeScriptCompile Include="DashboardModule\EntityPMs\WidgetPM.ts" />
     <TypeScriptCompile Include="DashboardModule\EntityPMs\WidgetTypePM.ts" />
     <TypeScriptCompile Include="DashboardModule\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="DashboardModule\ModuleProviders.ts" />
     <TypeScriptCompile Include="DashboardModule\Module_DAASH.ts" />
+    <TypeScriptCompile Include="DashboardModule\Services\DashboardAnalyticsService.ts" />
+    <TypeScriptCompile Include="DashboardModule\Services\ExtendedLists\DashboardListExtendedService.ts" />
     <TypeScriptCompile Include="DashboardModule\Services\ExtendedPMs\AnalyticsFactsFieldsMetaDataExtendedService.ts" />
     <TypeScriptCompile Include="DashboardModule\Services\ExtendedPMs\DashboardPMExtendedService.ts" />
     <TypeScriptCompile Include="DashboardModule\Services\StandardLists\AnalyticsFactsFieldsMetaDataListService.ts" />
@@ -1836,14 +1843,17 @@
     <TypeScriptCompile Include="DashboardModule\Services\StandardLists\DashboardListService.ts" />
     <TypeScriptCompile Include="DashboardModule\Services\StandardLists\MeasureTypeListService.ts" />
     <TypeScriptCompile Include="DashboardModule\Services\StandardLists\PermissionLevelListService.ts" />
+    <TypeScriptCompile Include="DashboardModule\Services\StandardLists\UserPredefinedDashboardListService.ts" />
     <TypeScriptCompile Include="DashboardModule\Services\StandardLists\WidgetTypeListService.ts" />
     <TypeScriptCompile Include="DashboardModule\Services\StandardPMs\AnalyticsFactsFieldsMetaDataPMService.ts" />
     <TypeScriptCompile Include="DashboardModule\Services\StandardPMs\AnalyticsFactsMetaDataPMService.ts" />
     <TypeScriptCompile Include="DashboardModule\Services\StandardPMs\DashboardPMService.ts" />
+    <TypeScriptCompile Include="DashboardModule\Services\StandardPMs\UserPredefinedDashboardPMService.ts" />
     <TypeScriptCompile Include="Dashboard\Components\Windows\AddEditDashboardComponent.ts" />
     <TypeScriptCompile Include="Dashboard\Components\Windows\AddEditWidgetComponent.ts" />
     <TypeScriptCompile Include="Dashboard\Components\Windows\ChooseUserCheckBoxComponent.ts" />
     <TypeScriptCompile Include="Dashboard\Components\Windows\ChooseUsersComponent.ts" />
+    <TypeScriptCompile Include="Dashboard\Components\Windows\DashboardDropDown\DashboardDropDown.ts" />
     <TypeScriptCompile Include="Dashboard\Components\Windows\Filter\GlobalFilterComponent.ts" />
     <TypeScriptCompile Include="Dashboard\Components\Windows\Filter\WidgetFilterComponent.ts" />
     <TypeScriptCompile Include="Dashboard\Components\Windows\Filter\WidgetFilterItem.ts" />
@@ -8868,6 +8878,7 @@
     <Content Include="web.config" />
     <Content Include="DashboardModule\Components\Workspace\DashboardLists\DashboardListComponent.scss" />
     <Content Include="Dashboard\Components\Workspace\CustomDashboardCSS.scss" />
+    <Content Include="Dashboard\Components\Windows\DashboardDropDown\DashboardDropDown.scss" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

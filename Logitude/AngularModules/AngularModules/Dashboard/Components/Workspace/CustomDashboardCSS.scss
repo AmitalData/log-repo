@@ -28,14 +28,32 @@
     font-style: normal;
     top: -10px;
     position: relative;
+    height: 100%;
+    flex-direction: column;
 }
 
-.Custom-layout-body {
+.custom-layout-container {
     height: 100%;
     margin: 0;
     font-family: Manrope;
     flex: none;
     font-style: normal;
+    flex: 1 1 auto;
+    overflow: auto;
+    margin-top: 2px;
+}
+
+.custom-layout-container::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.custom-layout-container::-webkit-scrollbar-track {
+    background: none;
+}
+
+.custom-layout-container::-webkit-scrollbar-thumb {
+    background: rgba(193, 193, 193, 1);
 }
 
 .DashboardTabHeadLi {
@@ -107,8 +125,8 @@
     width: 100%;
     height: 100%;
     position: relative;
+    height: calc(100% - 20px);
 }
-
 
 .dl-info-card {
     margin: 12px;
@@ -194,4 +212,53 @@
     margin-top: 10px;
     margin-left: 10px;
     margin-right: 10px;
+    flex: 0 0 auto;
+}
+
+.dl-tab-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.CloseDashboardTabBtn {
+    fill: #A4A4A4;
+}
+
+.CloseDashboardTabBtn:hover {
+    fill: #292D30;
+}
+
+.Dashboard-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 4px 0px;
+    position: absolute;
+    width: 129px;
+    height: 56px;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.15);
+    z-index: 1;
+}
+
+Dashboard-menu-oneRow {
+    height: 28px;
+}
+
+.Dashboard-menu-button {
+    font-family: Manrope;
+    height: 24px;
+    top: 4px;
+    cursor: pointer;
+    text-align: left;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 16px;
+    color: #454545;
+    background: #FFFFFF;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
 }

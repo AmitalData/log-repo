@@ -235,7 +235,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         else if (recordsType === GetRecordTypes.Editable) {
             this.EnableAddConditions = false;
             this.ShowConditionsOperation = false;
-            this.ExcludedEntities = ["Customer", "User", "Opportunity"];
+            this.ExcludedEntities = ["Customer", "User", "Opportunity", "ShipmentStoragePricing"];
         }
     }
 

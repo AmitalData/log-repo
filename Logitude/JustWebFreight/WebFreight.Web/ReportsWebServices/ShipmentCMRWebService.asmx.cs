@@ -33,6 +33,7 @@ namespace WebFreight.Web.ReportsWebServices
     // [System.Web.Script.Services.ScriptService]
     public class ShipmentCMRWebService : System.Web.Services.WebService
     {
+        public ShipmentPM shipment;
         private ICommonDataContext commonContext;
         private WebServiceHelper servicHelper;
         [WebMethod]
@@ -60,7 +61,7 @@ namespace WebFreight.Web.ReportsWebServices
             IWebFreightContext context = WebFreightContext.GetContext(tenant);
             AddressRepository addressRepository = new AddressRepository(tenant);
 
-            ShipmentPM shipment = null;
+            shipment = null;
             shipment = shipmentQuery.GetSinglePM(entityId, tenant);
 
             Tenant tenantSettings = (from a in commonContext.Tenants

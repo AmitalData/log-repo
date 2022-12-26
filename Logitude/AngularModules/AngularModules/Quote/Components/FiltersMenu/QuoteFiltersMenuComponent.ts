@@ -582,20 +582,13 @@ export class QuoteFiltersMenuComponent extends BaseComponent {
 
         else {
             if (this.apiQueryFilters.AdditionalFilters.length > 0) {
-                this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "SalesmanUserId");
+                this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "SalesmanUserId" && a.FieldName != "BusinessUnitId");
                 this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "TransportModeId" && a.FieldName != "DirectionId").forEach(item => {
                     item.IgnoreFilter = true;
                 });
             }
 
             this.apiQueryFilters.addAdditionalFilter("SalesmanUserId", myOwnerId, null, null, "Equals", false, false, false, "string");
-            if (this.apiQueryFilters.AdditionalFilters.length > 0) {
-                this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "BusinessUnitId");
-                this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "TransportModeId" && a.FieldName != "DirectionId").forEach(item => {
-                    item.IgnoreFilter = true;
-                });
-            }
-
             this.apiQueryFilters.addAdditionalFilter("BusinessUnitId", myBusinessUnitId, null, null, "Equals", false, false, false, "string");
         }
 

@@ -120,12 +120,24 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var tenantDigitalPortalScreen = digitalPreDefinedComponentQueryService.GetDigitalPortalScreensQuery(tenant, digitalPortalScreenUpdateModel.ObjectTableId, digitalPortalScreenUpdateModel.ScreenCode)
                                                                                       .FirstOrDefault(a => a.Tenant == tenant);
 
+                DigitalPortalScreenList defaultTenantDigitalPortalScreen = null;
+
+                if (digitalPortalScreenUpdateModel.IsDraft && string.IsNullOrEmpty(digitalPortalScreenUpdateModel.Content))
+                {
+                     defaultTenantDigitalPortalScreen = digitalPreDefinedComponentQueryService.GetDigitalPortalScreensQuery(tenant, digitalPortalScreenUpdateModel.ObjectTableId, digitalPortalScreenUpdateModel.ScreenCode)
+                                                                      .FirstOrDefault(a => a.Tenant == 0);
+                }
+
+
                 if (tenantDigitalPortalScreen == null)
                 {
                     tenantDigitalPortalScreen = new DigitalPortalScreenList
                     {
                         Name = digitalPortalScreenUpdateModel.Name,
-                        Content = digitalPortalScreenUpdateModel.Content,
+                        Content = digitalPortalScreenUpdateModel.IsDraft  
+                                    && string.IsNullOrEmpty(digitalPortalScreenUpdateModel.Content) 
+                                 ? defaultTenantDigitalPortalScreen.Content 
+                                 : digitalPortalScreenUpdateModel.Content,
                         DraftContent =  digitalPortalScreenUpdateModel.DraftContent,
                         Tenant = tenant,
                         ScreenCode = digitalPortalScreenUpdateModel.ScreenCode,

@@ -25,6 +25,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
 {
     public class CrossDockReleaseDataProviderHelper
     {
+        public WarehouseReleasePM warehouseReleasePM;
         public byte[] LoadDataToCrossDockReleaseDataProvider(string entityId, int tenant)
         {
             CrossDockReleaseDataProvider dataprovider = LoadCrossDockReleaseDataProvider(entityId, tenant);
@@ -55,7 +56,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
         {
             CrossDockReleaseDataProvider dataProvider = new CrossDockReleaseDataProvider();
             WarehouseReleaseQueryService warehouseReleaseQueryService = new WarehouseReleaseQueryService(tenant);
-            WarehouseReleasePM warehouseReleasePM = warehouseReleaseQueryService.GetSingle(entityId, true, false);
+            warehouseReleasePM = warehouseReleaseQueryService.GetSingle(entityId, true, false);
 
             if (warehouseReleasePM != null)
             {

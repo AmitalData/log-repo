@@ -76,6 +76,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public decimal? VatAmountRound  { get; set; }
        [DataMember]
        public string LedgerTransactionId  { get; set; }
+       [DataMember]
+       public double? SubTotalInLocalCurrency  { get; set; }
    }
 
 }

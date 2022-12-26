@@ -25,6 +25,7 @@ namespace WebFreight.Web.AccountingModel.Reports.Journal
 {
     class JournalPrintService
     {
+        public JournalPM journalPM;
         public void BuildJournalReport(string entityId, int tenant, string documentOutId)
         {
             // 1 
@@ -84,7 +85,7 @@ namespace WebFreight.Web.AccountingModel.Reports.Journal
             CurrencyQuery currencyQuery = new CurrencyQuery(tenant);
             TenantQuery tenantQuery = new TenantQuery(tenant);
 
-            JournalPM journalPM = journalQuery.GetSingle(entityId, true, false);
+            journalPM = journalQuery.GetSingle(entityId, true, false);
    
             if(journalPM != null)
             {

@@ -15,20 +15,24 @@
             </div>
         </div>
         <div class="db-dropdown-scroll">
-            <ul role="listbox" aria-expanded="false">
-                <ng-container *ngIf="!Loading">
-                    <li *ngFor="let item of DisplayItemsSource" (click)="SelectItem(item)" [title]="GetItemText(item)">
-                        <p class="db-drop-item-text">{{ GetItemText(item) }}</p>
-                        <p class="db-drop-open-text">Open</p>
-                    </li>
-                </ng-container>
+            <div *ngFor="let sectionItem of SectionsItemsSource">
+                <p class="db-drop-section-text">{{sectionItem.Name}}</p>
 
-                <ng-container *ngIf="Loading">
-                    <li *ngFor="let item of SkeletonCount" style="cursor: default;pointer-events: none;">
-                        <p class="card__desc-text"></p>
-                    </li>
-                </ng-container>
-            </ul>
+                <ul role="listbox" aria-expanded="false">
+                    <ng-container *ngIf="!Loading">
+                        <li *ngFor="let item of GetSectionDisplayItemsSource(sectionItem.Code)" (click)="SelectItem(item)" [title]="GetItemText(item)">
+                            <p class="db-drop-item-text">{{ GetItemText(item) }}</p>
+                            <p class="db-drop-open-text">Open</p>
+                        </li>
+                    </ng-container>
+
+                    <ng-container *ngIf="Loading">
+                        <li *ngFor="let item of SkeletonCount" style="cursor: default;pointer-events: none;">
+                            <p class="card__desc-text"></p>
+                        </li>
+                    </ng-container>
+                </ul>
+            </div>            
         </div>
 
     </div>

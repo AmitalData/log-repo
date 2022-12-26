@@ -44,8 +44,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                       Branch = arpChequeLine.BankBranch,
                                                       ARPaymentId = arpChequeLine.PaymentId,
                                                       ARPaymentChequeId = arpChequeLine.Id,
-                                                      ChequeStatusCode = arpChequeLine.ARPaymentChequeStatus.Code,
-                                                      ChequeStatusName = arpChequeLine.ARPaymentChequeStatus.EnglishName,
+                                                      ChequeStatusCode = arpChequeLine.ARPaymentChequeStatus.Code,                                                     
+                                                      ChequeStatusName = showLocals ? arpChequeLine.ARPaymentChequeStatus.LocalName : arpChequeLine.ARPaymentChequeStatus.EnglishName,
                                                       SearchFields = arpChequeLine.ChequeNumber,
                                                       DepositId = dpLine.DepositId,
 

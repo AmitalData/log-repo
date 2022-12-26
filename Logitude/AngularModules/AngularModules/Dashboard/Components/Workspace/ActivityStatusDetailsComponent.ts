@@ -24,7 +24,6 @@ declare var  makeAmBarChart, makePieChart;
     selector: 'ActivityStatusDetails',
     templateUrl: './ActivityStatusDetailsComponent.html',
     encapsulation: ViewEncapsulation.None,
-
 })
 
 export class ActivityStatusDetailsComponent extends BaseComponent implements OnInit {
