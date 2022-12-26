@@ -36,10 +36,11 @@ namespace Logitude.DashboardModule.Data.EntityListQueryServices
                                                    SearchFields = a.SearchFields,
                                                    Name = a.Name,
                                                    Description = a.Description,
+                                                   PermissionLevelCode = a.PermissionLevelCode,
                                                });
             return query;
         }
-        private IQueryable<Dashboard> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<Dashboard> iQueryable, int tenant)
+        public IQueryable<Dashboard> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<Dashboard> iQueryable, int tenant)
         {
             DashboardSharedUserRepository dashboardSharedUserRepository = new DashboardSharedUserRepository(context);
             IQueryable<string> dashboardIds = iQueryable.Select(s => s.Id);

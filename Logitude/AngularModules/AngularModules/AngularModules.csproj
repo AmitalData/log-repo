@@ -1835,6 +1835,7 @@
     <TypeScriptCompile Include="DashboardModule\ModuleProviders.ts" />
     <TypeScriptCompile Include="DashboardModule\Module_DAASH.ts" />
     <TypeScriptCompile Include="DashboardModule\Services\DashboardAnalyticsService.ts" />
+    <TypeScriptCompile Include="DashboardModule\Services\ExtendedLists\DashboardListExtendedService.ts" />
     <TypeScriptCompile Include="DashboardModule\Services\ExtendedPMs\AnalyticsFactsFieldsMetaDataExtendedService.ts" />
     <TypeScriptCompile Include="DashboardModule\Services\ExtendedPMs\DashboardPMExtendedService.ts" />
     <TypeScriptCompile Include="DashboardModule\Services\StandardLists\AnalyticsFactsFieldsMetaDataListService.ts" />

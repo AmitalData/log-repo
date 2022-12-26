@@ -7,24 +7,25 @@
                     Dashboards
                 </td>
 
-                <td *ngIf="dashbaordCount > 0 || UserPinnedDashboards">
+                <td >
                     <div></div>
                 </td>
 
-                <td style="width:200px; height:22px;" *ngIf="dashbaordCount > 0 || UserPinnedDashboards">
+                <td style="width:200px; height:22px;" >
                     <dashboard-dropdown [DisplayMemberPath]="'Name'"
                                         [SelectedItem]="SelectedDashboard"
                                         [ItemsSource]="ItemsSource"
                                         (SelectedItemChanged)="DropDwonSelectionChanged($event)"
-                                        [Loading]="DashboardDropdownLoading">
+                                        [Loading]="DashboardDropdownLoading"
+                                        [SectionsItemsSource]="SectionsItemsSource">
                     </dashboard-dropdown>
                 </td>
 
-                <td class="Table-cell10" *ngIf="dashbaordCount > 0">
+                <td class="Table-cell10" >
                     <div></div>
                 </td>
 
-                <td style="width: 117px; height: 22px;" *ngIf="dashbaordCount > 0">
+                <td style="width: 117px; height: 22px;" >
                     <button class="Dashboard-create-button" (click)="AddDashboardClicked()">
                         <img style="width:10px; height: 10px; margin-right: 4px; color: #F3942F;" src="./Images/Buttons/add.orange.png" />
                         Create dashboard

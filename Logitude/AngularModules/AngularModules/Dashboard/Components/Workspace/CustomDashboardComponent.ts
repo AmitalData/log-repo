@@ -18,6 +18,8 @@ import { DashboardPMService } from '../../../DashboardModule/Services/StandardPM
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { DashboardPMExtendedService, PinnedDashboard } from '../../../DashboardModule/Services/ExtendedPMs/DashboardPMExtendedService';
 import { UserPinnedDashboardPM } from '../../../DashboardModule/EntityPMs/UserPinnedDashboardPM';
+import { DashboardListExtendedService } from '../../../DashboardModule/Services/ExtendedLists/DashboardListExtendedService';
+import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
 
 @Component({
     templateUrl: 'CustomDashboardComponent.html',
@@ -42,6 +44,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnDestroy
     private dashboardPMEstendedService: DashboardPMExtendedService;
     public ComponentId: string = null;
     public ComponentContentId: string = null;
+    public SectionsItemsSource: CodeNameClass[];
     constructor(private eRef: ElementRef) {
         super();
         var idIndex = this.CurrentSession.GetNewId("Meu");
@@ -50,6 +53,14 @@ export class CustomDashboardComponent extends BaseComponent implements OnDestroy
         this.DashboardListService = new DashboardListService();
         this.dashboardPMEstendedService = new DashboardPMExtendedService();
         this.GetData();
+        this.BuildSectionsItemsSource();
+    }
+    BuildSectionsItemsSource() {
+        this.SectionsItemsSource = [];
+
+        this.SectionsItemsSource.push(new CodeNameClass("ONM", "My Dashboards"));
+        this.SectionsItemsSource.push(new CodeNameClass("SPF", "Shared Dashboards"));
+        this.SectionsItemsSource.push(new CodeNameClass("SYS" ,"System Dashboards"));
     }
 
     DashboardDataBinding: DashboardDataBinding = {
@@ -82,7 +93,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnDestroy
                         this._entityResourceService.getEntityResourceByTableName("AnalyticsFactsFieldsMetaData").subscribe((res4: any) => {
                             setTimeout(e => {
                                 this.CheckIsLoggedUserHasPinnedDashboards();
-                                this.LoadDefaultDashboards(300);
+                                this.LoadDashboardsForDropDown();
                             }, 70);
                         });
                     });
@@ -130,9 +141,11 @@ export class CustomDashboardComponent extends BaseComponent implements OnDestroy
 
     pinnedDashboards: PinnedDashboard[] = [];
     pinnedDashboardsCount: number = 0;
+    isPinnedDashboardsList:boolean = false;
     private DrawPinnedDashboards(pinnedDashboardsJson: string) {
         this.pinnedDashboards = JSON.parse(pinnedDashboardsJson);
         this.pinnedDashboardsCount = this.pinnedDashboards.length;
+        this.isPinnedDashboardsList = true;
 
         this.dashboardPMEstendedService.GetPinnedDashboards(pinnedDashboardsJson).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
@@ -143,16 +156,13 @@ export class CustomDashboardComponent extends BaseComponent implements OnDestroy
         });
     }
 
-    private LoadDefaultDashboards(numberOfDashboard: number) {
-        var filters: ApiQueryFilters = new ApiQueryFilters();
-        filters.PageSize = numberOfDashboard;
-        filters.SortBy = "CreateDate";
-        filters.SortDirection = "Descending";
-
-        this.DashboardListService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
+    private LoadDashboardsForDropDown() {
+        var service: DashboardListExtendedService = new DashboardListExtendedService();
+        service.GetDashboardsForDropDown().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.ItemsSource = myResponse.Result ?? [];
                 this.DashboardDropdownLoading = false;
+
                 if (SessionLocator.Tenant == 0) {
                     this.loadedDashboards = myResponse.Result?.slice(0, this.TabsCount);
                     this.dashbaordCount = this.loadedDashboards.length;
@@ -187,17 +197,31 @@ export class CustomDashboardComponent extends BaseComponent implements OnDestroy
         }
 
         if (list.length < this.TabsCount) {
-            this.loadedDashboards.forEach(item => {
-                if (!list.find(d => d.Id == item.Id)) {
-                    if (index != this.TabsCount) {
-                        list.push(new DashboardTab(item, index, this));
-                        index++;
+            if (this.isPinnedDashboardsList) {
+                this.pinnedDashboards.forEach(pinnedItem => {
+                    if (!list.find(d => d.Id == pinnedItem.Id)) {
+                        if (index != this.TabsCount) {
+                            var pinnedDashboard: DashboardList = this.loadedDashboards.find(d => d.Id == pinnedItem.Id);
+                            list.push(new DashboardTab(pinnedDashboard, index, this));
+                            index++;
+                        }
                     }
-                }
-            });
+                });
+            }
+
+            else {
+                this.loadedDashboards.forEach(item => {
+                    if (!list.find(d => d.Id == item.Id)) {
+                        if (index != this.TabsCount) {
+                            list.push(new DashboardTab(item, index, this));
+                            index++;
+                        }
+                    }
+                });
+            }
         }
 
-        var pinList: DashboardTab[] = list.filter(d => d.IsPinned).sort(function (a, b) { return a.Order == b.Order ? 0 : a.Order < b.Order ? 1 : -1; });
+        var pinList: DashboardTab[] = list.filter(d => d.IsPinned).sort(function (a, b) { return a.Order == b.Order ? 0 : a.Order > b.Order ? 1 : -1; });
         var unpinList: DashboardTab[] = list.filter(d => !d.IsPinned).sort(d => d.Order);
 
         pinList.forEach((item) => {
@@ -217,25 +241,9 @@ export class CustomDashboardComponent extends BaseComponent implements OnDestroy
         if (this.DashboardsTabs && this.DashboardsTabs.length > 0) {
             if (this.isSelectedDashboardDeleted || !this.SelectedDashboard) {
                 this.isSelectedDashboardDeleted = false;
-                this.selectedDashboardTab = this.DashboardsTabs[0];
                 this.SelectedDashboard = this.DashboardsTabs[0]?.Dashboard;
             }
         }
-    }
-
-    ComputeTabOrder(tab: DashboardTab): number {
-        var order = 0;
-
-        if (tab.IsPinned) {
-            var nextPinOrder: number = ArrayTool.Max(this.pinnedDashboards, "Order");
-            order = nextPinOrder + 1;
-        }
-
-        else {
-
-        }
-
-        return order;
     }
 
     AddDashboardClicked() {
@@ -271,10 +279,8 @@ export class CustomDashboardComponent extends BaseComponent implements OnDestroy
         });
     }
 
-    private selectedDashboardTab: DashboardTab;
     TabSelectionChanged(clickdTab: DashboardTab) {
         if (!clickdTab) return;
-        this.selectedDashboardTab = clickdTab;
         this.ChangeDashboard(clickdTab.Dashboard, false);
     }
 
@@ -404,9 +410,15 @@ export class CustomDashboardComponent extends BaseComponent implements OnDestroy
     PinDashboardTabClicked(item: DashboardTab) {
         console.log("pin tab");
 
+        var tabIndex = this.selectedDashboardsFromLOV.indexOf(item.Dashboard);
+        if (tabIndex > -1) {
+            this.selectedDashboardsFromLOV.splice(tabIndex, 1);
+        }
+
         var pinnedDashboard: PinnedDashboard = new PinnedDashboard();
         pinnedDashboard.Id = item.Dashboard.Id;
         pinnedDashboard.IsPredefined = item.Dashboard.Tenant == 0;
+        pinnedDashboard.Order = ArrayTool.Max(this.pinnedDashboards, "Order");
 
         this.dashboardPMEstendedService.PinDashboard(pinnedDashboard).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
@@ -437,8 +449,19 @@ export class CustomDashboardComponent extends BaseComponent implements OnDestroy
 
     @HostListener('document:click', ['$event'])
     clickout(event) {
-        if (this.selectedDashboardTab) 
-            this.selectedDashboardTab.IsTabMenuOpened = false;        
+        if (event == this.SelectedDashboard?.Id) {
+            this.DashboardsTabs.filter(d => d.Id != event).forEach(item => {
+                if (item.IsTabMenuOpened)
+                    item.IsTabMenuOpened = false;
+            });
+        }
+
+        else {
+            this.DashboardsTabs.forEach(item => {
+                if (item.IsTabMenuOpened)
+                    item.IsTabMenuOpened = false;
+            });
+        }
     }
 }
 
@@ -480,6 +503,8 @@ class DashboardTab {
     onRightClick(event) {
         console.log("right cick");
         event.preventDefault();
+
+        this.fatherComponent.clickout(this.Id);
 
         if (this.IsTabMenuOpened) {
             this.IsTabMenuOpened = false;

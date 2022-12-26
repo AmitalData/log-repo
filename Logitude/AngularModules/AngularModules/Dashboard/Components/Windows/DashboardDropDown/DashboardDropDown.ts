@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, HostListener, ElementRef, Output, EventEmitter } from '@angular/core';
+import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 
 @Component({
     selector: "dashboard-dropdown",
@@ -20,6 +21,7 @@ export class DashboardDropDownComponent implements OnInit {
         this.DisplayItemsSource = JSON.parse(JSON.stringify(this.ItemsSource));
     }
 
+    @Input() public SectionsItemsSource: CodeNameClass[] = [];
     public DisplayItemsSource: any[] = [];
     public SearchText: string;
     public DisplayText: string;
@@ -83,5 +85,16 @@ export class DashboardDropDownComponent implements OnInit {
             if (!this.DisplayMemberPath) return item.toLowerCase().includes(text.toLowerCase());
             return item[this.DisplayMemberPath].toLowerCase().includes(text.toLowerCase());
         })));
+    }
+
+    GetSectionDisplayItemsSource(code: string): any[] {
+        var arr: any[] = [];
+        if (code == "SYS")
+            arr = this.DisplayItemsSource.filter(d => (d.Tenant != 0 && d.PermissionLevelCode == "PUB") || d.Tenant == 0);
+
+        else
+            arr = this.DisplayItemsSource.filter(d => d.Tenant != 0 && d.PermissionLevelCode == code);
+
+        return arr;
     }
 }

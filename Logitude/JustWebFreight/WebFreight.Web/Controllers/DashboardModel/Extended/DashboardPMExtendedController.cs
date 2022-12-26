@@ -188,7 +188,7 @@ namespace WebFreight.Web.Controllers.DashboardModel.Extended
                 List<PinnedDashboard> pinnedDashboards = JsonConvert.DeserializeObject<List<PinnedDashboard>>(pinnedDashboardsJson);
                 List<string> dashboardIds = pinnedDashboards.Select(d => d.Id).ToList();
 
-                IQueryable<Dashboard> pinnedDashboardsPOCO = dashboardRepository.GetAllByIdsList(dashboardIds, authToken.Tenant);
+                IQueryable<Dashboard> pinnedDashboardsPOCO = dashboardRepository.GetAllByIdsList(dashboardIds);
                 IQueryable<DashboardList> dashboards = dashboardListQueryService.GetIqueryableList(pinnedDashboardsPOCO);
                 return Request.CreateResponse(HttpStatusCode.OK, dashboards);
             }
