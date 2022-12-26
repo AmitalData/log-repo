@@ -277,12 +277,13 @@
                                                     [ItemsSource]="MeasureRenderList"
                                                     [SelectedItem]="item.DefaultRender"
                                                     [Binding]="'name'"
-                                                    (SelectedItemChanged)="item.RenderAs = $event.code">
+                                                    (SelectedItemChanged)="item.RenderAs = $event.code"
+                                                    [IsDisabled]="!EntityId">
                                             </ComboBox>
                                         </td>
                                         <td>
                                             <div>
-                                                <IconButton *ngIf="IsAddNewMeasureVisible" [Left]="3" [Name]="'Add'" [IsSmall]="true" [IsEnabled]="!IsSecondaryGroupByVisible" (click)="AddNewMeasureClicked()"></IconButton>
+                                                <IconButton *ngIf="IsAddNewMeasureVisible" [Left]="3" [Name]="'Add'" [IsSmall]="true" [IsEnabled]="!IsSecondaryGroupByVisible && EntityId" (click)="AddNewMeasureClicked()"></IconButton>
                                                 <IconButton *ngIf="item.IsDeleteMeasureVisible" [Left]="3" [Name]="'Minus'" [IsSmall]="true" (click)="item.DeleteMeasureClicked()"></IconButton>
                                             </div>
                                         </td>
