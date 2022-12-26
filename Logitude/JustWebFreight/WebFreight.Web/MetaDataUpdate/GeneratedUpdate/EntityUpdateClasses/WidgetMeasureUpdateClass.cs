@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class WidgetMeasureUpdateClass
    {  		
-		public const string HashString = "3680f5070bd09e1911bff9bdd8e43635";
+		public const string HashString = "691b145c5f21833b294924cca05eb6f8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -100,6 +100,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    AvailableInCustomization =  false,
+			      				    SupportSubEntity =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -126,7 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Widget Measure",
-			      				    Code =  "75c0",
+			      				    Code =  "2a4d",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "DashboardModule",
@@ -441,6 +442,64 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "AnalyticsFactsFieldsMetaData",
 					  						NavigationPropertyName =  "MeasureField",
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "RenderAs",
+					  						ObjectTableName =  "WidgetMeasure",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  100,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  100,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "RenderAs",
+					  						ListPropertyPath =  "RenderAs",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "RenderAs",
+					  						DefaultText =  "RenderAs",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,

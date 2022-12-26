@@ -78,4 +78,75 @@ export class DashboardPMExtendedService {
             }), catchError(ServiceHelper.HandleServiceError));
         });
     }
+
+    GetoggedUserPinnedDashboards(userId: string) {
+        var url = this._apiUrl + '/GetUserHasPinnedDashboards?userId=' + userId;
+
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
+                var myResponse: ServiceResponse = new ServiceResponse();
+                myResponse.Result = myResult;
+                return myResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    GetPredefinedDashboardsFromTenantZero() {
+        var url = this._apiUrl + '/GetPredefinedDashboardsFromTenantZero';
+
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
+                var myResponse: ServiceResponse = new ServiceResponse();
+                myResponse.Result = myResult;
+                return myResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    GetPinnedDashboards(pinnedDashboardsJson: string) {
+        var url = this._apiUrl + '/GetPinnedDashboards?pinnedDashboardsJson=' + pinnedDashboardsJson;
+
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
+                var myResponse: ServiceResponse = new ServiceResponse();
+                myResponse.Result = myResult;
+                return myResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    PinDashboard(pinnedDashboardTab: PinnedDashboard) {
+        var url = this._apiUrl + '/PostPinDashboard';
+
+        return defer(() => {
+            return this._http.post(url, JSON.stringify(pinnedDashboardTab), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                var myResponse = new ServiceResponse();
+                myResponse.Result = res;
+                return myResponse;
+
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    UnpinDashboard(userPinnedDashboardsId: string, dashboardId: string) {
+        var url = this._apiUrl + '/GetUnPinDashboard?userPinnedDashboardsId=' + userPinnedDashboardsId + '&dashboardId=' + dashboardId;
+
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
+                var myResponse: ServiceResponse = new ServiceResponse();
+                myResponse.Result = myResult;
+                return myResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+}
+
+export class PinnedDashboard {
+    public Id: string;
+    public Order: number;
+    public IsPredefined: boolean;
 }

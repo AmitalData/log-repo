@@ -26,6 +26,7 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
                 var seriesMeasure = new SeriesMeasure();
 
                 seriesMeasure.Name = GetSeriesName(measure);
+                seriesMeasure.RenderAs = measure.RenderAs;
                 seriesMeasure.MeasureFieldId = measure.MeasureFieldId;
                 seriesMeasure.SeriesMeasureVulues = GetSeriesMeasureVulues(query, measure);
                 seriesMeasures.Add(seriesMeasure);

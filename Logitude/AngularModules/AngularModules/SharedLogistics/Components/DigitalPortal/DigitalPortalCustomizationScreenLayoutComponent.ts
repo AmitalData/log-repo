@@ -23,6 +23,8 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
     TextAreaInputCurrentPosition: number = 0;
     IsPreviewChanges: boolean = false;
 
+    public editorOptions = {theme: '', language: 'html'};
+    CurrentTenantScreen: DigitalPortalScreenList;
     constructor() {
         this.Screens = [];
         this.ModifiedScreenData = new DigitalPortalScreenUpdateModel();
@@ -65,7 +67,8 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         this.digitalCustomizationService.GetDigitalPortalScreens(objectTableId, screenCode).subscribe((myResult) => {
             if (!myResult.HasError) {
                 var screen = myResult.Result;
-                if (this.Screens != null)
+                this.CurrentTenantScreen = screen;
+                if (screen != null)
                     this.hTMLEditor = screen.Content;
             }
         });
@@ -109,7 +112,7 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         logWindow.Show('./SharedLogistics/Components/DigitalPortal/AddDigitalFieldCodeComponent');
         logWindow.WindowClosed.subscribe(($event: any) => {
             if ($event) {
-                var htmlField = "<Log-Container>\n<LogElement type='entity-field-label'field-code= '" + $event + "' ></LogElement>\n:\n<LogElement type='entity-field-value'field-code='" + $event + "'></LogElement> \n</Log-Container>";
+                var htmlField = "<LogContainer>\n<LogLabel field-code='" + $event + "' ></LogLabel>\n:\n<LogField field-code='" + $event + "'></LogField> \n</LogContainer>";
                 this.attachValue(htmlField);
             }
         });
@@ -170,6 +173,7 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         else {
             this.IsModified = false;
             this.ModifiedScreenData.Content = this.HTMLEditor;
+            this.ModifiedScreenData.DraftContent = this.CurrentTenantScreen.DraftContent;
         }
 
         this.digitalCustomizationService.UpdateDigitalPortalScreen(this.ModifiedScreenData).subscribe((myResult) => {
@@ -195,9 +199,31 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         const start = event.target.selectionStart;
         this.TextAreaInputCurrentPosition = start;
     }
+    myRange : any;
+    myEditor : any;
+    onInit(editor) {
+        editor.onDidBlurEditorText(() => {
+            // const start = editor.getSelection().selectionStartColumn;//.target.selectionStart;
+            // var xx = editor;
+            //var line = editor.getPosition();
+            this.myEditor = editor;
+            this.myRange = editor.getSelection(); 
+        });
+        // editor.onDidChangeCursorPosition((event) => {
+        //     /* column | lineNumber */
+        //     const start = event.position.column;//.target.selectionStart;
+        //     this.TextAreaInputCurrentPosition = start;
+        //     //var xx = editor;
+        // });
+
+    }
 
     attachValue(selectedValue: string) {
-        let patchedValue = this.HTMLEditor.substr(0, this.TextAreaInputCurrentPosition) + selectedValue + this.HTMLEditor.substr(this.TextAreaInputCurrentPosition, this.HTMLEditor.length);
-        this.HTMLEditor = patchedValue;
+        // let patchedValue = this.HTMLEditor.substr(0, this.TextAreaInputCurrentPosition) + selectedValue + this.HTMLEditor.substr(this.TextAreaInputCurrentPosition, this.HTMLEditor.length);
+        // this.HTMLEditor = patchedValue;
+            var id = { major: 1, minor: 1 };
+            var text = selectedValue;
+            var op = { identifier: id, range: this.myRange, text: text, forceMoveMarkers: true };
+            this.myEditor.executeEdits("my-source", [op]);
     }
 }

@@ -23,7 +23,7 @@ namespace WebFreight.Web.CustomWebServices
     // [System.Web.Script.Services.ScriptService]
     public class DeclarationFormsWebService : System.Web.Services.WebService
     {
-
+        public DeclarationPM declarationPM;
         [WebMethod]
         public byte[] LoadDataToTzrufa(string declarationId, int tenant, string documentTypeCopyId)
         {
@@ -50,7 +50,7 @@ namespace WebFreight.Web.CustomWebServices
        
             DeclarationQueryService declarationQuery = new DeclarationQueryService(customsContext);
 
-            DeclarationPM declarationPM = declarationQuery.GetSingle(declarationId, false, false);
+            declarationPM = declarationQuery.GetSingle(declarationId, false, false);
         
 
             if (declarationPM != null)

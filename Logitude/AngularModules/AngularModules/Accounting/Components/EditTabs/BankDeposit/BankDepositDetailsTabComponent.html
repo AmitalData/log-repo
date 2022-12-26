@@ -674,11 +674,11 @@
 
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'"
                                                 [header]="'ARPaymentCheque.F.StatusCode' | TextCodeTranslationPipe" [width]="'100'"
-                                                [binding]="'StatusCode'" [SortFieldName]="IsLinesSelection? (showLocal? 'ARPChequeStatusName' :'ARPChequeStatusLocalName' ) : (showLocal? 'ChequeStatusName' : 'ChequeStatusLocalName')">
+                                                [binding]="'StatusCode'" [SortFieldName]="IsLinesSelection? (showLocals? 'ARPChequeStatusName' :'ARPChequeStatusLocalName' ) : (showLocals? 'ChequeStatusName' : 'ChequeStatusLocalName')">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IgnoreMods]="true">
                                                 <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                                    {{  IsLinesSelection ? (showLocal?item.ARPChequeStatusLocalName : item.ARPChequeStatusName ) : (showLocal?item.ChequeStatusLocalName : item.ChequeStatusName )  }}
+                                                    {{  IsLinesSelection ? (showLocals?item.ARPChequeStatusLocalName : item.ARPChequeStatusName ) : (showLocals?item.ChequeStatusLocalName : item.ChequeStatusName )  }}
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>

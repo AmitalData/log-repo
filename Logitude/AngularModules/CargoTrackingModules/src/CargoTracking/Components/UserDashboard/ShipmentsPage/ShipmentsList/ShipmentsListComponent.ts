@@ -679,6 +679,9 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
     BuildShipmentReferences(shipment: CargoTrackingShipmentList) {
         this.references = shipment.CustomerReference != null ? shipment.CustomerReference.split(',').filter(d => d) : [];
+        this.references = this.references.map((el) => {
+            return el.trim();
+        });
         this.references = this.references.filter((el, i, a) => i === a.indexOf(el));
     }
 

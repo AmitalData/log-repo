@@ -27,8 +27,6 @@ export class DashboardTabComponent implements OnInit {
     @Output() DashboardChanged = new EventEmitter<DashboardPM>();
     @Output() TabHasChanges = new EventEmitter<boolean>();
     @Output() DashboardEntity = new EventEmitter<DashboardPM>();
-
-
     public SelectedDashboardName: string = null;
     public SelectedDashboard: DashboardPM;
     private dashboardPMService: DashboardPMService;
@@ -38,7 +36,7 @@ export class DashboardTabComponent implements OnInit {
     public newWidgetWidth = 3;
     public newWidgetHeight = 5;
     public CloneDashboardLayout: WidgetPM[];
-    public GlobalFilters: string;
+    public GlobalFilters: any[];
 
     constructor() {
         this.dashboardPMService = new DashboardPMService();
@@ -47,7 +45,6 @@ export class DashboardTabComponent implements OnInit {
     ngOnInit(): void {
         this.LoadSelectedDashboard();
     }
-
 
     DashboardDataBinding: DashboardDataBinding = {
         isOnEditLayout: new Subject(),
@@ -61,13 +58,13 @@ export class DashboardTabComponent implements OnInit {
     get HasChanges() { return this.hasChanges; }
     set HasChanges(value: boolean) {
         if (this.hasChanges == value) return;
-        this.hasChanges = value;     
+        this.hasChanges = value;
         if (this.IsEditLayoutModeActive) {
             this.DashboardEntity.emit(this.SelectedDashboard);
         }
 
-        if(!this.IsEditLayoutModeActive && value) return;
-        this.TabHasChanges.emit(value); 
+        if (!this.IsEditLayoutModeActive && value) return;
+        this.TabHasChanges.emit(value);
     }
 
     private isEditLayoutModeActive: boolean = false;
@@ -166,7 +163,7 @@ export class DashboardTabComponent implements OnInit {
     RefreshLayoutClicked() {
         MixPanelLocator.PostDashboardAction({ ActionName: "Refresh Click", DashboardId: this.SelectedDashboard?.Id });
         for (const item of this.reactWidgetsLayout.lg) {
-            item.GlobalFilters = this.GlobalFilters;
+            item.GlobalFilters = this.GetWidgetGlobalFilters(item);
             this.DashboardDataBinding.onEditWidget.next(item);
         }
     }
@@ -194,7 +191,6 @@ export class DashboardTabComponent implements OnInit {
     }
 
     SaveDashboard(fromUI: boolean = false) {
-        //this.CheckDeletedWidgets(dashboard);
         if (fromUI) MixPanelLocator.PostDashboardAction({ ActionName: "Submit Dashboard Save Click", DashboardId: this.SelectedDashboard?.Id });
 
         this.CurrentSession.StartBusyIndicatorSaving();
@@ -336,7 +332,7 @@ export class DashboardTabComponent implements OnInit {
     AddWidgetToReactLayout(myWidget: WidgetPM) {
         var reactWidget = DashboardMapping.GetReactWidget(myWidget);
         this.reactWidgetsLayout.lg.push(reactWidget);
-        reactWidget.GlobalFilters = this.GlobalFilters;
+        reactWidget.GlobalFilters = this.GetWidgetGlobalFilters(reactWidget);
         this.DashboardDataBinding.onAddWidget.next(reactWidget);
     }
 
@@ -381,7 +377,7 @@ export class DashboardTabComponent implements OnInit {
             logitudeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     var widget = DashboardMapping.GetReactWidget(comp.EntityPM);
-                    widget.GlobalFilters = this.GlobalFilters;
+                    widget.GlobalFilters = this.GetWidgetGlobalFilters(widget);
                     this.DashboardDataBinding.onEditWidget.next(widget);
                     this.HasChanges = true;
                 }
@@ -389,12 +385,30 @@ export class DashboardTabComponent implements OnInit {
         });
     }
 
-    ApplyFilters(filters: string) {
-        // this.DashboardDataBinding.onApplyGlobalFilters.next(filters);
-        this.GlobalFilters = filters ?? "[]";
+    ApplyFilters(filters: any[]) {
+        this.GlobalFilters = filters;
         for (const item of this.reactWidgetsLayout.lg) {
-            item.GlobalFilters = this.GlobalFilters;
-            this.DashboardDataBinding.onEditWidget.next(item);
+            this.ApplyGlobalFilterToWidget(item);
         }
     }
+
+    private ApplyGlobalFilterToWidget(item: ReactWidgetPM) {
+        var widgetGlobalFilters = this.GetWidgetGlobalFilters(item);
+        if (item.GlobalFilters == widgetGlobalFilters) return;
+        item.GlobalFilters = widgetGlobalFilters;
+        this.DashboardDataBinding.onEditWidget.next(item);
+    }
+
+    GetWidgetGlobalFilters(widget: ReactWidgetPM): string {
+        if (!this.GlobalFilters || this.GlobalFilters.length == 0) return null;
+        var widgetFilters = [];
+        this.GlobalFilters.forEach(item => {
+            if ((item.IsCommon || item.DataSetId == widget.EntityId))
+                widgetFilters.push(item);
+        });
+        if (!widgetFilters || widgetFilters.length == 0) return null;
+        return JSON.stringify(widgetFilters);
+    }
+
 }
+

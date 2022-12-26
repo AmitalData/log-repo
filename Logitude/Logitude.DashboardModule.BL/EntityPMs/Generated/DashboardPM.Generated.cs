@@ -355,7 +355,53 @@ namespace Logitude.DashboardModule.BL.EntityPMs
               }
              set {  deletedDashboardGlobalFilters = value; }
 	    }
-	     }
+	  	  private bool loadedAutomatically ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool LoadedAutomatically  
+	   {
+	    
+	     get
+		{
+		   return loadedAutomatically;
+		 }
+		 set
+		 {
+		   if(loadedAutomatically != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LoadedAutomatically",OldValue=loadedAutomatically,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   loadedAutomatically=value;
+		   }
+			
+		 }
+	   }
+	  private int? predefinedOrder ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? PredefinedOrder  
+	   {
+	    
+	     get
+		{
+		   return predefinedOrder;
+		 }
+		 set
+		 {
+		   if(predefinedOrder != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PredefinedOrder",OldValue=predefinedOrder,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   predefinedOrder=value;
+		   }
+			
+		 }
+	   }
+   }
    
 }
 	 

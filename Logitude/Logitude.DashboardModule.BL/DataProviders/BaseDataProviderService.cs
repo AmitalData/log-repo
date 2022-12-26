@@ -83,12 +83,12 @@ namespace Logitude.DashboardModule.BL.DataProviders
             var month = int.Parse(v);
             return Months[month - 1];
         }
-
         protected string GetValueQuery(string measureCode, AnalyticsFactsFieldsMetaData measureField)
         {
-            if (measureCode != "Count") return $"CAST({measureCode}(IIF(data.{measureField.FieldCode} is null , '0' , data.{measureField.FieldCode})) AS DECIMAL(32,2))";
-            var key = "Id";
-            return $"CAST({measureCode}(data.{key}) AS DECIMAL(32, 2))";
+            if (measureCode == "Count") return $"CAST({measureCode}(data.Id) AS DECIMAL(32, 2))";
+            if (measureField.DataTypeCode == "Date" || measureField.DataTypeCode == "DateTime") return $"CAST({measureCode}(IIF(data.{measureField.FieldCode} is null , 0 , data.{measureField.FieldCode})) AS DECIMAL(32,2))";
+            //if (measureField.DataTypeCode == "Date" || measureField.DataTypeCode == "DateTime") return $"{measureCode}(data.{measureField.FieldCode})";
+            return $"CAST({measureCode}(IIF(data.{measureField.FieldCode} is null , '0' , data.{measureField.FieldCode})) AS DECIMAL(32,2))";
         }
 
         protected object CreateSortBy()

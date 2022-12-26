@@ -735,10 +735,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountingModel\ChartOfAccountsTypesExtendedController.cs" />
+    <Compile Include="Controllers\DashboardModel\Extended\DashboardListExtendedController.cs" />
+    <Compile Include="Controllers\DashboardModel\Generated\ListControllers\UserPinnedDashboardViewsController.Generated.cs" />
+    <Compile Include="Controllers\DashboardModel\Generated\PMControllers\UserPinnedDashboardController.Generated.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalActivityController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalCustomizationController.cs" />
     <Compile Include="Controllers\DigitalPortal\Helpers\DigitalFieldSecuritesHelper.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\AuditLogViewsController.Generated.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\DeploymentPackageViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\DigitalFieldSecurityViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\DigitalPreDefinedComponentViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\DigitalProfileViewsController.Generated.cs" />
@@ -746,6 +750,7 @@
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\AuditLogController.Generated.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalTextCodeController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\DigitalTextCodeViewsController.Generated.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\DeploymentPackageController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\DigitalFieldSecurityController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\DigitalPreDefinedComponentController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\DigitalProfileController.Generated.cs" />
@@ -756,6 +761,8 @@
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\DataCustomObjectController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\ReferenceCustomObjectController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\ScreenController.Generated.cs" />
+    <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\AWBAdditionalHandlingInfoViewsController.Generated.cs" />
+    <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\AWBAdditionalHandlingInfoController.Generated.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowCustomerController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowOpportunityController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowShipmentPayableController.cs" />
@@ -3016,6 +3023,7 @@
     <Compile Include="Helpers\SignUp\Logbox\LogboxSignUpService.cs" />
     <Compile Include="Helpers\SignUp\TruckerSignUpService.cs" />
     <Compile Include="Helpers\StimulReportCustomizationDataProvider\CustomChildDataProviderService.cs" />
+    <Compile Include="Helpers\StimulReportCustomizationDataProvider\CustomFieldDataProviderService.cs" />
     <Compile Include="Helpers\StimulReportCustomizationDataProvider\FieldDataProviderService.cs" />
     <Compile Include="Helpers\StimulReportCustomizationDataProvider\GenericClassCreator.cs" />
     <Compile Include="Helpers\StimulReportCustomizationDataProvider\GenericDataProviderGreator.cs" />
@@ -3595,6 +3603,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\UIMessageUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\UpdateCodeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\UserDefinedReportUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\UserPinnedDashboardUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\VatReportStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\WarehouseEntryPackagesReleaseUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\WarehouseEntryPackageUpdateClass.cs" />
@@ -3646,6 +3655,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\CustomChildObjectUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\CustomPickListUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DataCustomObjectUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DeploymentPackageUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DescriptionOfGoodsUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DirectionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DWCategoriesUpdateClass.cs" />

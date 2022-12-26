@@ -15,6 +15,7 @@ const valdationMessageOfDisplayLabelSingular = 'Please fill the Display Label (S
 const valdationMessageOfDisplayLabelPlural = 'Please fill the Display Label (Plural)';
 const validationMessageOfDuplicateCustomSubObjectTableName = 'Another sub object with same Display Label(Singular) is already exist';
 const validationMessageOfDuplicateCustomObjectTableName = 'Another custom object with same Display Label(Singular) is already exist';
+const validationMessageOfCustomObjectTableNameLength = 'Maximum Length of Display Label(Singular) is 40';
 declare var window: any;
 
 @Component({
@@ -84,8 +85,8 @@ export class AddCustomObjectComponent extends BaseComponent {
 
     private GetObjectTableName(newValue: string): string {
         if (AppTool.IsNullOrEmpty(newValue)) return "";
-        if (this.IsSubObject) return this.parentObjectTable.Name + "." + SessionLocator.Tenant + "." + newValue.replace(/\s/g, "");
-        return "CustomObject." + SessionLocator.Tenant + "." + newValue.replace(/\s/g, "");
+        if (this.IsSubObject) return this.parentObjectTableId + "." + SessionLocator.Tenant + "." + newValue.replace(/\s/g, "");
+        return "C." + SessionLocator.Tenant + "." + newValue.replace(/\s/g, "");
     }
 
     private displayLabelPlural: string;
@@ -139,6 +140,10 @@ export class AddCustomObjectComponent extends BaseComponent {
             errors.push(validationMessage);
         }
 
+        if (!this.ValidTableNameLength()) {
+            errors.push(validationMessageOfCustomObjectTableNameLength);
+        }
+
         if (errors.length > 0)
             return this.ValidationErrorsList = errors;
 
@@ -148,8 +153,11 @@ export class AddCustomObjectComponent extends BaseComponent {
 
     }
 
+    private ValidTableNameLength() {
+        return this.DisplayLabelSingular.replace(/\s/g, "").length < 40;
+    }
     private IsNotValidTableName() {
-        let objectTable = window.ObjectTables.filter(t => t.Name == this.objectTableName)[0];
+        let objectTable = window.ObjectTables.filter(t => t.Name.toLowerCase() == this.objectTableName.toLowerCase())[0];
         return !AppTool.IsNullOrEmpty(objectTable);
     }
 
@@ -171,7 +179,8 @@ export class AddCustomObjectComponent extends BaseComponent {
     CreateObjectTable() {
         this.objectTablePMService.insert(this.objectTablePM).subscribe((response: ServiceResponse) => {
             if (response.HasError) return;
-            this.LoadData(response.Result);
+            response.Result.IsNew = true;
+            this.LoadData(response.Result);      
             this.CurrentSession.StopBusyIndicator();
             this.CurrentSession.CloseCurrentWindow();
         });

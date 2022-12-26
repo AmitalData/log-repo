@@ -54,6 +54,7 @@ namespace WebFreight.Web.ReportsWebServices
     [ToolboxItem(false)]
     public class InvoiceWebService : WebService
     {
+        public ARInvoicePM invoicePM;
         private ARInvoiceStockQuery aRInvoiceStockQuery;
         private ARInvoiceStockLineRepository aRInvoiceStockLineRepository;
         private VatTypePercentageRepository vatTypePercentageRepository;
@@ -1444,7 +1445,7 @@ namespace WebFreight.Web.ReportsWebServices
                 #endregion
 
                 customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipment, invoicedataprovider);
-                ARInvoicePM invoicePM = invoiceQuery.GetSinglePM(currentInvoice.Id, currentInvoice.Tenant);
+                invoicePM = invoiceQuery.GetSinglePM(currentInvoice.Id, currentInvoice.Tenant);
 
                 customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, invoicePM, invoicedataprovider);
 
@@ -3214,8 +3215,8 @@ namespace WebFreight.Web.ReportsWebServices
 
                 #region CustomFieldResolver
                 ARInvoiceQuery invoiceQuery = new ARInvoiceQuery(invoiceRepository);
-                ARInvoicePM entityPM = invoiceQuery.GetSinglePM(invoiceId, tenant);
-                customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, entityPM, invoiceDataProvider);
+                invoicePM = invoiceQuery.GetSinglePM(invoiceId, tenant);
+                customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, invoicePM, invoiceDataProvider);
                 #endregion
 
                 #region PrintByUser
@@ -4161,14 +4162,14 @@ namespace WebFreight.Web.ReportsWebServices
                         else
                             invoiceDataProvider.SAT.TipoDeComprobante = "I";
 
-                        if (!string.IsNullOrEmpty(entityPM.MetodoPagoCode))
+                        if (!string.IsNullOrEmpty(invoicePM.MetodoPagoCode))
                         {
-                            invoiceDataProvider.SAT.MetodoPago = (entityPM.MetodoPagoCode == "PUE" ? "PUE Pago en una sola exhibición" : "PPD Pago en parcialidades o diferido");
+                            invoiceDataProvider.SAT.MetodoPago = (invoicePM.MetodoPagoCode == "PUE" ? "PUE Pago en una sola exhibición" : "PPD Pago en parcialidades o diferido");
                         }
 
-                        Card billToCard = GetBillToCard(entityPM);
-                        invoiceDataProvider.SAT.RegimenFiscalReceptor = GetRegimenFiscalReceptorName(entityPM.RegimenFiscalCode, billToCard.RegimenFiscalCode, entityPM.Tenant);
-                        invoiceDataProvider.SAT.RegimenFiscalReceptorCode = GetRegimenFiscalReceptorCode(entityPM.RegimenFiscalCode, billToCard.RegimenFiscalCode);
+                        Card billToCard = GetBillToCard(invoicePM);
+                        invoiceDataProvider.SAT.RegimenFiscalReceptor = GetRegimenFiscalReceptorName(invoicePM.RegimenFiscalCode, billToCard.RegimenFiscalCode, invoicePM.Tenant);
+                        invoiceDataProvider.SAT.RegimenFiscalReceptorCode = GetRegimenFiscalReceptorCode(invoicePM.RegimenFiscalCode, billToCard.RegimenFiscalCode);
                         invoiceDataProvider.SAT.BillToSATName = GetBillToSATName(billToCard);
                         invoiceDataProvider.SAT.SATForeignRFC = billToCard.SATForeignRFC;
                         invoiceDataProvider.SAT.FormadePago = entityPOCO.SATPaymentMethodCode;

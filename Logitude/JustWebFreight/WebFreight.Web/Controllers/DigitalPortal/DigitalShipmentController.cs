@@ -23,6 +23,7 @@ using WebFreight.Web.Controllers.DigitalPortal.Helpers;
 using Logitude.SystemLogs;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Linq.Dynamic.Core;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -54,7 +55,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 if (string.IsNullOrWhiteSpace(cardId) || cards.Contains(shipmentPM.CustomerId) || cards.Contains(shipmentPM.AgentId))
                 {
-                    shipmentPM.TimeLineData = shipmentQuery.MapVerticalTimeLine(shipmentPM);
+                    shipmentPM.TimeLineData = shipmentQuery.MapVerticalTimeLine(shipmentPM, tenant);
                     PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                     var shipmentPMJson = JsonConvert.SerializeObject(shipmentPM);
@@ -117,11 +118,19 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 entityLists = QueryableExtensions.Skip(entityLists, () => newFilters.PageIndex);
                 entityLists = QueryableExtensions.Take(entityLists, () => newFilters.PageSize);
 
-                List<DigitalShipmentList> listQuery = entityLists.ToList();
+                var helper = new DigitalFieldSecuritesHelper();
+                var allowedFieldSecurites = helper.GitDigitalSecuritesFeilds(newFilters.ObjectTableId, newFilters.ProfileId, tenant, false)
+                                                  .Where(a => a.HasPersmission)
+                                                  .Select(a => a.FieldCode.Replace("Shipment.", ""))
+                                                  .ToList();
 
-                shipmentQuery.BuildShipmentListWithTimeLine(listQuery, authToken.Tenant);
+                var fields = string.Join(",", allowedFieldSecurites);
 
-                response.Result = listQuery;
+                var shipments = entityLists.Select("new { " + fields + " }").ToDynamicList();
+
+                var res = shipmentQuery.BuildShipmentListWithTimeLine(shipments, authToken.Tenant);
+
+                response.Result = res;
 
                 var reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 

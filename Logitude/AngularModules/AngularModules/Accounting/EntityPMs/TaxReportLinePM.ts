@@ -179,6 +179,11 @@ export class TaxReportLinePM {
     public set LedgerTransactionId(newValue: string) { if (this.ledgerTransactionId != newValue) { this.ledgerTransactionId = newValue; this.MarkAsDirty("LedgerTransactionId"); } }
        
 	 
+    private subTotalInLocalCurrency: number;
+    public get SubTotalInLocalCurrency() { return this.subTotalInLocalCurrency; }
+    public set SubTotalInLocalCurrency(newValue: number) { if (this.subTotalInLocalCurrency != newValue) { this.subTotalInLocalCurrency = newValue; this.MarkAsDirty("SubTotalInLocalCurrency"); } }
+       
+	 
 
     public OldEntityPM: TaxReportLinePM;
 		

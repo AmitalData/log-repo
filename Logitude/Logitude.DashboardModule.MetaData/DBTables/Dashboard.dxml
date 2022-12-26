@@ -72,6 +72,18 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="LoadedAutomatically"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PredefinedOrder"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

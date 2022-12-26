@@ -90,15 +90,16 @@
                 <tr style="vertical-align: top;">
                     <td>
                         <div class="MediaFill">
-                            <textarea [attr.id] = "TextAreaInputId" class="language-html input shadow" style="padding: 5px; border-width: thick;font-size:14px;"
+                            <!-- <textarea [attr.id] = "TextAreaInputId" class="language-html input shadow" style="padding: 5px; border-width: thick;font-size:14px;"
                                       [(ngModel)]="HTMLEditor"
                                       autocomplete="off"
                                       autocorrect="off"
                                       autocapitalize="off"
                                       spellcheck="false"
-                                      (blur)="blur($event)"
+                                      (onDidBlurEditorText)="blur($event)"
                                       placeholder="Your HTML text here ">
-                            </textarea>
+                            </textarea> -->
+                            <ngx-monaco-editor [options]="editorOptions" [(ngModel)]="HTMLEditor" style="height: 100%" (onInit)="onInit($event)"></ngx-monaco-editor>
                         </div>
                     </td>
                 </tr>

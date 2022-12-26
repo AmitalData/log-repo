@@ -32,7 +32,7 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
 {
     public class PaymentChequePrintService
     {
-
+        public PaymentChequePM paymentChequePM;
         public void BuildPaymentChequeReport(string entityId, int tenant, string documentOutId)
         {
 
@@ -106,7 +106,7 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
             //   CurrencyQuery currencyQuery = new CurrencyQuery(tenant);
             TenantQuery tenantQuery = new TenantQuery(tenant);
             TenantPM tenantPM = TenantQuery.GetSingleTenantPM(tenant, false);
-            PaymentChequePM paymentChequePM = PaymentChequeQuery.GetSingle(entityId, true, false);
+            paymentChequePM = PaymentChequeQuery.GetSingle(entityId, true, false);
             BankCodePM bankCode = GetBankCodeByPayToGLAccount(paymentChequePM);
             if (bankCode != null) {
              

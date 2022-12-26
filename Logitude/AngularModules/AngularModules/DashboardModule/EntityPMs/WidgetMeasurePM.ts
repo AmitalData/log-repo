@@ -52,6 +52,11 @@ export class WidgetMeasurePM {
     public set MeasureFieldId(newValue: string) { if (this.measureFieldId != newValue) { this.measureFieldId = newValue; this.MarkAsDirty("MeasureFieldId"); } }
        
 	 
+    private renderAs: string;
+    public get RenderAs() { return this.renderAs; }
+    public set RenderAs(newValue: string) { if (this.renderAs != newValue) { this.renderAs = newValue; this.MarkAsDirty("RenderAs"); } }
+       
+	 
 
     public OldEntityPM: WidgetMeasurePM;
 	
