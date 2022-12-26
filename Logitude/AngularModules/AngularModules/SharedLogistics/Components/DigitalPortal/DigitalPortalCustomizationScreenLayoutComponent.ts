@@ -71,6 +71,7 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
         confirmWindow.Show("This Screen has unsaved changes. Do you want to save it?");
         confirmWindow.WindowClosed.subscribe((event: any) => {
+            this.IsModified = false;
             if (confirmWindow.Yes) {
                 this.PublichChangesClicked(false);
                 return;
