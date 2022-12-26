@@ -31,6 +31,8 @@ using Microsoft.Practices.Unity;
 using Logitude.Customs.BL.TraceEvents;
 using Simplog.Data.CommonDataModel;
 using System.Data.Entity;
+using Logitude.Customs.BL.NotificationBL;
+using Logitude.Customs.Data.EntityPOCOs;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -99,6 +101,28 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     if (statusDateTime == null)
                     {
                         statusDateTime = customResponse.RequestContentHeader.TransmitionDateTime;
+                    }
+
+                    if (declarationPM.Direction == "E")
+                    {
+
+                        declarationPM.ReleaseStatusTypeCode = customResponse.GeneralData?.ReleaseMessageCode.ToString();
+
+
+                        switch (declarationPM.ReleaseStatusTypeCode)
+                        {
+                            case "4":
+                                myEventContextTagModel.EventCode = "TAS";
+                                myEventContextTagModel.StatusDateTime = statusDateTime;
+                                break;
+                            case "8":
+                                myEventContextTagModel.EventCode = "TAC";
+                                myEventContextTagModel.StatusDateTime = statusDateTime;
+                                break;
+                        }
+
+
+                        
                     }
 
 
