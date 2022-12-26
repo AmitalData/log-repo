@@ -89,7 +89,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     agentFileReferenceID = "";
 
 
-                var declaration = myDeclarationQueryService.GetDeclarationByfunctionalReferenceID(functionalReferenceID, agentFileReferenceID, requestParams.Tenant);
+                var declaration = myDeclarationQueryService.GetDeclarationByfunctionalReferenceID(functionalReferenceID, requestParams.Tenant);
 
                 _MyDeclarationPM = declaration;
                 if (declaration != null)
@@ -314,7 +314,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                             else
                                             {
                                                 if (customResponse.Response != null && customResponse.Response.Status != null && customResponse.Response.Status[0].NameCode.Value == "36")
+                                                {
                                                     _MyDeclarationPM.IsExportClosed = true;
+                                                    _MyDeclarationPM.IsClose = true;
+                                                }
+                                                    
                                                 MyResponseData.IsExportCloseApprove = true;
                                             }
                                             break;

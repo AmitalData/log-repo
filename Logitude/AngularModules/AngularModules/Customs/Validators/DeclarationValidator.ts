@@ -336,23 +336,23 @@ export class DeclarationValidator {
     public ConstraintsInProgressCheck() {
         //Check if Declaration Paid and there waiting for constraint approval
         if (this._DeclarationPM != null) {
-            if (this._DeclarationPM.DeclarationStatusTypeCode == "11") {
+            if (this._DeclarationPM.DeclarationStatusTypeCode == "11" && this._DeclarationPM.Direction != "E") {
 
                 var errorMessage = "Customs.General.O.ConstraintsInProgress";
                 if (!AppTool.IsNullOrEmpty(errorMessage)) {
                     this.ValidationErrorMessageCodes.push(errorMessage);
                 }
             }
-            else {
+            // else {
 
-                if (this._DeclarationPM.DeclarationConstraints.find(dc => dc.ConstraintStatusCode == "5")) {
-                    var errorMessage = "Customs.General.O.HappinessConstraints";
-                    if (!AppTool.IsNullOrEmpty(errorMessage)) {
-                        this.ValidationErrorMessageCodes.push(errorMessage);
-                    }
-                }
+            //     if (this._DeclarationPM.DeclarationConstraints.find(dc => dc.ConstraintStatusCode == "5")) {
+            //         var errorMessage = "Customs.General.O.HappinessConstraints";
+            //         if (!AppTool.IsNullOrEmpty(errorMessage)) {
+            //             this.ValidationErrorMessageCodes.push(errorMessage);
+            //         }
+            //     }
                 
-            }
+            // }
 
 
 

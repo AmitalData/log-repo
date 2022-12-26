@@ -173,10 +173,11 @@ export class CargoSplitGeneralTabComponent
 
 
     IsExportDeclaration: boolean = false;
-    GetFileData() {        
+    GetFileData() {   
         if(this.Direction=="E")     {
             this.DirectionE = true;
             this.DirectionI = false;
+            this.IsExportDeclaration = true;
         }
         if (AppTool.IsNullOrEmpty(this.CustomFileNo)) return;
         this.CurrentSession.StartBusyIndicator("")
@@ -876,7 +877,7 @@ export class CargoSplitGeneralTabComponent
 
         }
     }
-    CustomFileNoTextChanged(searchtext) {       
+    CustomFileNoTextChanged(searchtext) {   
          
         if(this._LastFetchDeclarationList?.CustomFileNo == searchtext)
             return
@@ -1034,7 +1035,7 @@ export class CargoSplitGeneralTabComponent
             this.CargoTypeCode = pm.CargoTypeCode;
             this.ManifestNumber = pm.ManifestNumber;
             this.SecondCargoID = pm.SecondCargoID;
-            this.ThirdCargoID = pm.ThirdCargoID;
+            this.ThirdCargoID = pm.ThirdCargoID; 
 
             if(pm.ConsignmentPackages.length == 1 && !AppTool.IsNullOrEmpty(this.EntityPM.DecCargoSplitCons[0].DecCargoSplitConsItems) 
                     && this.EntityPM.DecCargoSplitCons[0].DecCargoSplitConsItems.length>0 && this.IsNewEntity && !this.IsFromDeclaration && this.IsExportDeclaration)
@@ -1342,7 +1343,7 @@ export class CargoSplitGeneralTabComponent
         Validator.TryValidateObject(this.EntityPM, "Customs.DeclarationCargoSplit", errors);
         
         if (this.EntityPM.DecCargoSplitCons == null || this.EntityPM.DecCargoSplitCons.length < 1) {
-            errors.push(TextCodeTranslator.Translate("חובה להזין נתונים לפחות ליבוםן םחד"));
+            errors.push(TextCodeTranslator.Translate("חובה להזין נתונים לפחות ליבואן אחד"));
         } else {
             this.Tabs.forEach((consignment) => {
                 Validator.TryValidateObject(consignment.EntityPM, "Customs.DecCargoSplitCon", errors);
@@ -1559,7 +1560,7 @@ export class CargoSplitGeneralTabComponent
         }
 
         if (this.Tabs == null || this.Tabs.length < 1) {
-            errors.push("חובה להזין נתונים לפחות ליבוםן םחד");
+            errors.push("חובה להזין נתונים לפחות ליבואן אחד");
         }
         for (let tab of this.Tabs) {
             if (AppTool.IsNullOrEmpty(tab.EntityPM.ImporterCode)) {

@@ -158,8 +158,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 .Where(rec =>
                     rec.Tenant == tenant &&
                    //rec.CreateDateTime.Value > lst30 &&
-                   rec.CustomRecievedDate.Value > lst30 &&
-                    rec.DocumentRemarks == "LoadTest");
+                   rec.CustomRecievedDate.Value > lst30  );
             if (keys != null)
             {
                 q = q.Where(rec => keys.Contains(rec.DocumentsFilingId));

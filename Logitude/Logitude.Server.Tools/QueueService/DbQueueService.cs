@@ -51,6 +51,7 @@ namespace Logitude.Server.Tools.QueueService
             QueueMessageMoreDetailsRepository messagesMoreDetailsRepository = new QueueMessageMoreDetailsRepository(Tenant);
             QueueDefinitionRepository queueDefRep = new QueueDefinitionRepository(tenant);
             QueueDefinition queueDefinition = GetQueueDefFromCache(queueCode, queueDefRep);
+            queueDefinition = queueDefinition ?? queueDefRep.GetSingleQueueDefinition(queueCode);//ensure
             if (queueDefinition == null)
             {
                 queueDefinition = new QueueDefinition() { Code = queueCode, Name = queueCode };

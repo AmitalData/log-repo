@@ -870,7 +870,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
             this.SendButtonEnabled = true;
         }
 
-        if (!AppTool.IsNullOrEmpty(entityPM.IsSubmitDeclaration)) {
+        if (entityPM.IsSubmitDeclaration==true) {
             this.IsDisplayOnly = true;
             this.OkButtonEnabled = false;
             this.SendButtonEnabled = false;
@@ -993,24 +993,24 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
 
             else if (declarationDisplayOnly2) {
                 
-                if(displayOnlyCheckResult.DisplayOnlyMessage=="אילוץ אושר")
-                {
-                    this.IsDisplayOnly = false;
-                    this.ErrorMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
+                // if(displayOnlyCheckResult.DisplayOnlyMessage=="אילוץ אושר")
+                // {
+                //     this.IsDisplayOnly = false;
+                //     this.ErrorMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
     
-                    this.IsDisplayOnly = false;
-                    this.OkButtonEnabled = true;
-                    this.SendButtonEnabled = true;
-                }
+                //     this.IsDisplayOnly = false;
+                //     this.OkButtonEnabled = true;
+                //     this.SendButtonEnabled = true;
+                // }
                
-                else{
+                // else{
                     this.IsDisplayOnly = true;
                     this.ErrorMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
     
                     this.IsDisplayOnly = true;
                     this.OkButtonEnabled = false;
                     this.SendButtonEnabled = false;
-                }
+                // }
                
             }
             else if (this.DeclarationPM.StorageStatusCode && !this.ErrorMessage) {

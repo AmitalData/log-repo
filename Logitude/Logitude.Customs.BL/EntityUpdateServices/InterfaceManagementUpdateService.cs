@@ -22,7 +22,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 ICustomContext context = MainContext as CustomContext;
                 InterfaceTenantDefinitionRepository definitionRep = new InterfaceTenantDefinitionRepository(context);
-                InterfaceTenantDefinition definition = definitionRep.GetSingleDefinitionByCode(entityPM.Code, entityPM.Tenant);
+                InterfaceTenantDefinition definition = definitionRep.GetSingleDefinitionByCode(entityPM.Code, entityPM.Tenant, getFromCache:false);
                 if (definition != null)
                 {
                     MapInterface2TenantDef(entityPM, definition);

@@ -83,7 +83,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             {
                 InterfaceManagement management = repository.GetSingleInterfaceManagement(new InterfaceManagementKeys() { Code = code });
                 InterfaceTenantDefinitionRepository definitionRepository = new InterfaceTenantDefinitionRepository(context);
-                InterfaceTenantDefinition definition = definitionRepository.GetSingleDefinitionByCode(code, tenant);
+                InterfaceTenantDefinition definition = definitionRepository.GetSingleDefinitionByCode(code, tenant, getFromCache: false);
                 if (management != null)
                 {
                     interfaceManagement = new InterfaceManagementPM()

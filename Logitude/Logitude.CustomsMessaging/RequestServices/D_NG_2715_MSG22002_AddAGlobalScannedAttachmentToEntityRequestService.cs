@@ -160,7 +160,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                         this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                         this.MyRequestSheetParam.EntityId1 = myDeclarationPM.Id;
 
-                        relatedEntity.entityType = 1055;
+                        relatedEntity.entityType = (myDeclarationPM.DeclarationTypeCode == "2") ? 11188 : ((myDeclarationPM.DeclarationTypeCode == "3") ? 10404 : 1055);
                         relatedEntity.entityIdKey1 = myDeclarationPM.DeclarationNumber;
                         if (customsDocumentPointerPM.Child1EntityCode == "SupplierInvoice" && customsDocumentPointerPM.Child1EntityId != null)
                         {

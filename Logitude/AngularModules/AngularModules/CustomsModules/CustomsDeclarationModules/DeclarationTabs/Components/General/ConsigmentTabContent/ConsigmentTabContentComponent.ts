@@ -78,7 +78,7 @@ export class ConsigmentTabContentComponent
     public ImportCargoTypeFilterItems: ApiQueryFilters;
     private CurrentSession = SessionLocator.SelectedSession;
 
-    public ConsignmentTypes: ConsignmentType[] = [{ Id: "E", Value: "יצום" }, { Id: "I", Value: "יבום" }];
+    public ConsignmentTypes: ConsignmentType[] = [{ Id: "E", Value: "יצוא" }, { Id: "I", Value: "יבוא" }];
     CargoIdKeyOrigin: { a: string, b: string, c: string } = { a: '', b: '', c: '' };
 
 
@@ -173,7 +173,7 @@ export class ConsigmentTabContentComponent
         windowArgs.declarationPM = this.declarationPM;
         windowArgs.IsDisplayOnly = this.IsDisplayOnly;
         //var windowTitle = TextCodeTranslator.Translate("Customs.ExportDeclarationDataQuery.F.ExportDeclarationData");
-        var windowTitle = "נתונים נוספים ליצום - חטיבת משגור";
+        var windowTitle = "נתונים נוספים ליצוא - חטיבת משגור";
 
         var logWindow = new LogitudeWindow();
         //windowArgs.Type = "Importer";

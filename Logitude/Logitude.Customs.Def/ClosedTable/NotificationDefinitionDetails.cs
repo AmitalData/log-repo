@@ -19,6 +19,7 @@ namespace Logitude.Customs.Def.ClosedTable
             this.EnglishName = notificationDefinition.EnglishName;
             this.LocalName = notificationDefinition.LocalName;
             this.AssigneeNotificationTypeCode = notificationDefinition.AssigneeNotificationTypeCode;
+            this.ActiveInExport = notificationDefinition.ActiveInExport;
 
         }
 
@@ -34,6 +35,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Payment Order Created",
                 LocalName = "הוראת תשלום נוצרה",
                 AssigneeNotificationTypeCode = "A",
+                ActiveInExport = true,
                 // IsCustomerView = true
 
             });
@@ -43,6 +45,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Payment Order Cancelled",
                 LocalName = "הוראת תשלום בוטלה",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = false,
                 //IsCustomerView = true
             });
             all.Add(new NotificationDefinitionDetails()
@@ -51,6 +54,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Payment Order Updated",
                 LocalName = "הוראת תשלום עודכנה",
                 AssigneeNotificationTypeCode = "A",
+                ActiveInExport = true,
                 //IsCustomerView = true
             });
             all.Add(new NotificationDefinitionDetails()
@@ -59,6 +63,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Payment Order Paid",
                 LocalName = "הוראת תשלום שולמה",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = false,
                 // IsCustomerView = true
             });
 
@@ -68,6 +73,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Declaration Release",
                 LocalName = "הצהרה הותרה",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = false,
                 //IsCustomerView = true
             });
 
@@ -77,6 +83,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Declaration Release Cancelation",
                 LocalName = "להצהרה בוטלה ההתרה",
                 AssigneeNotificationTypeCode = "A",
+                ActiveInExport = false,
                 //IsCustomerView = true
             });
 
@@ -86,6 +93,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Pre clearance",
                 LocalName = "הודעה מוקדמת לסוכן מכס",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = false,
                 //IsCustomerView = true
             });
 
@@ -95,6 +103,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Release When Arrived",
                 LocalName = "מאושר להתרה לאחר הגשת טובין",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = false,
                 //IsCustomerView = true
             });
 
@@ -104,6 +113,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Physical Checks Created",
                 LocalName = "בדיקה פיזית נוצרה",
                 AssigneeNotificationTypeCode = "A",
+                ActiveInExport = true,
                 //IsCustomerView = true
             });
 
@@ -113,6 +123,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Physical Checks Updated",
                 LocalName = "בדיקה פיזית עודכנה",
                 AssigneeNotificationTypeCode = "A",
+                ActiveInExport = true,
                 //IsCustomerView = true
             });
 
@@ -122,6 +133,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Physical Checks Ended",
                 LocalName = "בדיקה פיזית הסתיימה",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = false,
                 //IsCustomerView = true
             });
 
@@ -131,6 +143,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Physical Checks Cancelled",
                 LocalName = "בדיקה פיזית בוטלה",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = false,
                 //IsCustomerView = true
             });
 
@@ -140,6 +153,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Warehouse Approved Storage",
                 LocalName = "בקשת אחסנה אושרה",
                 AssigneeNotificationTypeCode = "A",
+                ActiveInExport = false,
             });
 
             all.Add(new NotificationDefinitionDetails() // Mirit 31/05/15 Task 13700
@@ -148,6 +162,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Warehouse Rejected Storage",
                 LocalName = "בקשת אחסנה נדחתה",
                 AssigneeNotificationTypeCode = "A",
+                ActiveInExport = false,
             });
 
             all.Add(new NotificationDefinitionDetails() // moran 15.9.14 - Task 7918 
@@ -156,6 +171,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Constraint Approved by Customs",
                 LocalName = "אילוץ אושר במכס",
                 AssigneeNotificationTypeCode = "A",
+                ActiveInExport = false,
             });
 
             all.Add(new NotificationDefinitionDetails() // moran 18.9.14 - Task 7918 
@@ -164,6 +180,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Constraint Declined by Customs",
                 LocalName = "אילוץ נדחה עʺי המכס",
                 AssigneeNotificationTypeCode = "A",
+                ActiveInExport = true,
             });
 
             all.Add(new NotificationDefinitionDetails() // moran 18.9.14 - Task 7918 
@@ -172,6 +189,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Constraint Conditional Approval",
                 LocalName = "אילוץ מאושר בתנאי",
                 AssigneeNotificationTypeCode = "A",
+                ActiveInExport = true,
             });
 
             all.Add(new NotificationDefinitionDetails() // moran 16.9.14 - Task 7995 
@@ -180,6 +198,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Document Request By Customs",
                 LocalName = "מסמך נדרש עʺי המכס",
                 AssigneeNotificationTypeCode = "A",
+                ActiveInExport = true,
+
             });
 
             all.Add(new NotificationDefinitionDetails() // moran 16.9.14 - Task 7995 
@@ -188,6 +208,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Delete Document",
                 LocalName = "ביטול דרישת מסמך",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = true,
+
             });
 
             all.Add(new NotificationDefinitionDetails() // moran 7.10.14 - Task 8066 
@@ -196,6 +218,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Agent Notification",
                 LocalName = "הודעה לסוכן",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = true,
+
             });
 
             all.Add(new NotificationDefinitionDetails() 
@@ -204,6 +228,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "נדרש תיקון להצהרה",
                 LocalName = "נדרש תיקון להצהרה",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = true,
+
             });
 
             all.Add(new NotificationDefinitionDetails() // moran 28.4.19 - Task 51282 
@@ -212,6 +238,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Correspondence to Cargo Split Rejected",
                 LocalName = "התכתבות דחיית פיצול מטען",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = true,
+
             });
 
             all.Add(new NotificationDefinitionDetails() // moran 28.4.19 - Task 51282 
@@ -220,6 +248,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Correspondence to legality ransom",
                 LocalName = "התכתבות כופר חוקיות",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = true,
             });
 
             all.Add(new NotificationDefinitionDetails() // moran 28.4.19 - Task 51282 
@@ -228,6 +257,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Correspondence to request for document",
                 LocalName = "התכתבות לדרישת מסמך",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = true,
             });
 
             all.Add(new NotificationDefinitionDetails() // mirit 25.8.19 - Task 55928 
@@ -236,6 +266,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Collateral Demand",
                 LocalName = "עמידה/אי עמידה בדרישה לבטוחה",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = true,
             });
 
             //all.Add(new NotificationDefinitionDetails() // Mirit 22.04.15 - Task 12713 //delete Task 20106
@@ -252,6 +283,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Agent Notification - Docs Inspection",
                 LocalName = "הודעה לסוכן - בקרת מסמכים",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = true,
             });
 
             all.Add(new NotificationDefinitionDetails() // Mirit 10.05.15 - Task 13106 
@@ -260,6 +292,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Agent Notification - Check",
                 LocalName = "הודעה לסוכן - תור בחינה",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = true,
+
             });
 
             all.Add(new NotificationDefinitionDetails() // Mirit 10.05.15 - Task 13106 
@@ -268,6 +302,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Agent Notification - Check",
                 LocalName = "הודעה לסוכן - תור בחינת רשות",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = true,
+
             });
 
             all.Add(new NotificationDefinitionDetails() // Mirit 10.05.15 - Task 13106 
@@ -276,6 +312,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Storage Request created",
                 LocalName = "נוצרה בקשת אחסנה",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = true,
+
             });
 
             all.Add(new NotificationDefinitionDetails() // Mirit 11.07.15 - Task 14662 
@@ -284,6 +322,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Storage Request cancelled",
                 LocalName = "בוטלה בקשת אחסנה",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = true,
+
             });
 
             all.Add(new NotificationDefinitionDetails() // Mirit 11.07.15 - Task 14662 
@@ -292,6 +332,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Storage Request updated",
                 LocalName = "עודכנה בקשת אחסנה",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = true,
+
             });
 
             all.Add(new NotificationDefinitionDetails() // moran 17.1.17 - Task 21101 
@@ -300,6 +342,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Agent Notification - Security Check",
                 LocalName = "הודעה לסוכן - בדיקה בטחונית",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = true,
+
             });
 
             all.Add(new NotificationDefinitionDetails() // Mirit 13.11.17 - Task 34198 
@@ -308,6 +352,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Agent Notification - BOL",
                 LocalName = "הודעה לסוכן - התקבל מסר שטר מטען מאסטר",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = true,
+
             });
 
             all.Add(new NotificationDefinitionDetails() // Mirit 19.11.17 - Task 34182 
@@ -316,6 +362,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Agent Notification - Load/Unload",
                 LocalName = "הודעה לסוכן - אישור פריקה/טעינה",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = true,
+
             });
 
             all.Add(new NotificationDefinitionDetails() // moran 30.10.14 - Task 8327 
@@ -324,6 +372,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Notification Regarding a Deficit",
                 LocalName = "התראת מכס לגבי תיק גרעון",
                 AssigneeNotificationTypeCode = "A",
+                ActiveInExport = false,
+
             });
 
             all.Add(new NotificationDefinitionDetails() // Mirit 09/11/14 Task 8950 
@@ -332,6 +382,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Vendor Defect",
                 LocalName = "ליקוי ספק",
                 AssigneeNotificationTypeCode = "A",
+                ActiveInExport = false,
+
                 //IsCustomerView = true
             });
 
@@ -341,6 +393,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Vendor Update",
                 LocalName = "עדכון ספק",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = false,
+
             });
 
             //<--- Yuval Chalup 17.11.2014 TASK-9089
@@ -360,6 +414,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Approval/Denial of Reply to Cllateral",
                 LocalName = "אישור/דחיה של מענה לדרישה לבטוחה",
                 AssigneeNotificationTypeCode = "A",
+                ActiveInExport = true,
+
             });
 
             all.Add(new NotificationDefinitionDetails() // Mirit 09/11/14 Task 9119 
@@ -368,6 +424,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Deposit Refund",
                 LocalName = "הודעה על החזר פיקדון",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = false,
+
             });
 
             all.Add(new NotificationDefinitionDetails() // Mirit 09/11/14 Task 9121 
@@ -376,6 +434,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Deposit Forfiet",
                 LocalName = "הודעה על חילוט פיקדון",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = false,
+
             });
 
 
@@ -386,6 +446,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "New Importer Declaration",
                 LocalName = "תצהיר תקופתי חדש",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = false,
+
             });
 
             all.Add(new NotificationDefinitionDetails() // Mirit 12/12/14 Task 8849 
@@ -394,6 +456,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Importer Declaration Updated",
                 LocalName = "תצהיר תקופתי עודכן",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = false,
+
             });
 
 
@@ -406,6 +470,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Deficit Customs Answer",
                 LocalName = "תשובת מכס בגין גרעון עצמי",
                 AssigneeNotificationTypeCode = "A",
+                ActiveInExport = false,
+
                 //IsCustomerView = true
             });
             //Yuval Chalup 17.11.2014 TASK-9089 --->
@@ -416,6 +482,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Update Custom Guarantee Notification",
                 LocalName = "עדכון ההודעה על ערבות",
                 AssigneeNotificationTypeCode = "A",
+                ActiveInExport = true,
+
             });
 
             all.Add(new NotificationDefinitionDetails() // Mirit 06/01/14 Task 1788 
@@ -424,6 +492,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Custom Guarantee Notification",
                 LocalName = "בקשה להמצאת ערבות",
                 AssigneeNotificationTypeCode = "A",
+                ActiveInExport = true,
+
             });
 
             all.Add(new NotificationDefinitionDetails() // moran 11.1.15 - Task 9921  
@@ -432,6 +502,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "POA to Agent",
                 LocalName = "הודעה על יפוי כוח שניתן לסוכן",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = false,
+
             });
 
             all.Add(new NotificationDefinitionDetails() // moran 25.1.15 - Task 9967  
@@ -440,6 +512,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Customs Approved Logistic Permit",
                 LocalName = "מכס אישר היתר לוגיסטי",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = false,
+
             });
 
             all.Add(new NotificationDefinitionDetails() // moran 25.1.15 - Task 9967  
@@ -448,6 +522,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Customs Cancelled Logistic Permit",
                 LocalName = "מכס ביטל היתר לוגיסטי",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = true,
+
             });
 
             all.Add(new NotificationDefinitionDetails() // Mirit 15.2.15 - Task 10780  
@@ -456,6 +532,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "New ProceduralFault",
                 LocalName = "התקבל ליקוי מכס",
                 AssigneeNotificationTypeCode = "A",
+                ActiveInExport = false,
+
             });
 
             all.Add(new NotificationDefinitionDetails() // Mirit 15.2.15 - Task 10780  
@@ -464,6 +542,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "ProceduralFault Updated",
                 LocalName = "עודכן ליקוי מכס",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = false,
+
             });
 
             all.Add(new NotificationDefinitionDetails() // Mirit 15.2.15 - Task 10781  
@@ -472,6 +552,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "ProceduralFault Cancelled",
                 LocalName = "בוטל ליקוי מכס",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = false,
+
             });
 
             all.Add(new NotificationDefinitionDetails() // Mirit 23.2.15 - Task 11349  
@@ -480,6 +562,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "New Deposit Notice",
                 LocalName = "הודעה על פתיחת תיק פיקדון",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = false,
+
             });
 
             all.Add(new NotificationDefinitionDetails() // Mirit 31.3.15 - Task 11405  
@@ -488,6 +572,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Declaration Cancelled",
                 LocalName = "ההצהרת יבוא בוטלה",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = false,
+
             });
 
             all.Add(new NotificationDefinitionDetails() // Mirit 08/04/15 - Task 12278  
@@ -496,6 +582,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Collerterals Request",
                 LocalName = "דרישה לבטוחה",
                 AssigneeNotificationTypeCode = "A",
+                ActiveInExport = true,
+
             });
 
             all.Add(new NotificationDefinitionDetails() // Mirit 08/04/15 - Task 12278  
@@ -504,6 +592,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Collerterals Request",
                 LocalName = "דרישה לבטוחה",
                 AssigneeNotificationTypeCode = "A",
+                ActiveInExport = true,
+
             });
 
             all.Add(new NotificationDefinitionDetails() // Mirit 07/07/15 - Task 11406  
@@ -512,6 +602,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Declaration Changed By Customs",
                 LocalName = "בוצע תיקון הצהרה",
                 AssigneeNotificationTypeCode = "A",
+                ActiveInExport = true,
+
             });
 
 
@@ -521,6 +613,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Declaration Amendment Approved",
                 LocalName = "תיקון הצהרה אושרה",
                 AssigneeNotificationTypeCode = "A",
+                ActiveInExport = false,
+
             });
 
             all.Add(new NotificationDefinitionDetails()
@@ -529,6 +623,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Declaration Amendment Partial Approval",
                 LocalName = "תיקון הצהרה אושרה חלקית",
                 AssigneeNotificationTypeCode = "A",
+                ActiveInExport = false,
+
             });
 
             all.Add(new NotificationDefinitionDetails()
@@ -537,6 +633,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Declaration Amendment Denial",
                 LocalName = "תיקון הצהרה נדחתה",
                 AssigneeNotificationTypeCode = "A",
+                ActiveInExport = false,
+
             });
 
 
@@ -546,6 +644,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Declaration Amendment Denial",
                 LocalName = "תיקון הצהרה בוטלה",
                 AssigneeNotificationTypeCode = "A",
+                ActiveInExport = false,
+
             });
 
             all.Add(new NotificationDefinitionDetails()
@@ -554,6 +654,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Amendment Waiting for customs response",
                 LocalName = "תיקון הצהרה ממתינה לטיפול מכס",
                 AssigneeNotificationTypeCode = "A",
+                ActiveInExport = false,
+
             });
 
             all.Add(new NotificationDefinitionDetails() // moran 13.7.15 - Task 14521  
@@ -562,6 +664,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Declaration Amendment Cancelled",
                 LocalName = "יש להגיש הצהרה מחדש",
                 AssigneeNotificationTypeCode = "A",
+                ActiveInExport = true,
+
             });
 
 
@@ -571,6 +675,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Required Document Verified",
                 LocalName = "מסמך נדרש אומת",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = true,
+
             });
 
             all.Add(new NotificationDefinitionDetails() // Mirit 10.08.15 - Task 15423 
@@ -579,6 +685,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Required Document Rejected",
                 LocalName = "מסמך נדרש נדחה",
                 AssigneeNotificationTypeCode = "A",
+                ActiveInExport = true,
+
             });
 
 
@@ -588,6 +696,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Special activity Execution By Warehouse",
                 LocalName = "פעולה מיוחדת בוצעה במחסן",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = false,
+
             });
 
             all.Add(new NotificationDefinitionDetails() // Mirit 10/01/16 Task 19722
@@ -596,6 +706,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Bonded Special Request Approved",
                 LocalName = "אושרה בקשה לפעולה מיוחדת במחסן",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = false,
+
             });
 
             all.Add(new NotificationDefinitionDetails() // Mirit 10/01/16 Task 19722
@@ -604,6 +716,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Bonded Special Request Deny",
                 LocalName = "נדחתה בקשה לפעולה מיוחדת במחסן",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = false,
+
             });
 
             all.Add(new NotificationDefinitionDetails() // Mirit 07/03/16 Task 20546
@@ -612,6 +726,9 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Claim Message",
                 LocalName = "הודעה לגבי תיק תביעה",
                 AssigneeNotificationTypeCode = "A",
+                ActiveInExport = false,
+
+
             });
 
             all.Add(new NotificationDefinitionDetails() // Mirit 07/03/16 Task 20547
@@ -620,6 +737,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Requested Doc for Claim",
                 LocalName = "מסמך נדרש לתיק תביעה",
                 AssigneeNotificationTypeCode = "A",
+                ActiveInExport = true,
+
             });
 
             all.Add(new NotificationDefinitionDetails() 
@@ -628,6 +747,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Cargo Split Approved",
                 LocalName = "בקשת פיצול מטען אושרה",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = false,
+
             });
 
             all.Add(new NotificationDefinitionDetails()
@@ -636,6 +757,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Cargo Split Rejected",
                 LocalName = "בקשת פיצול מטען נדחתה",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = true,
+
             });
 
             all.Add(new NotificationDefinitionDetails()
@@ -644,6 +767,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Cargo Split Canceled",
                 LocalName = "בקשת פיצול מטען בוטלה",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = false,
+
             });
 
             all.Add(new NotificationDefinitionDetails()
@@ -652,6 +777,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Cargo Split Done",
                 LocalName = "בוצע פיצול מטען",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = false,
+
             });
 
             all.Add(new NotificationDefinitionDetails()
@@ -660,6 +787,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Deposit Request bank account to refund",
                 LocalName = "בקשה להשלמת פרטי החזר פקדון",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = false,
+
             });
 
             all.Add(new NotificationDefinitionDetails() // Mirit 07/03/16 Task 20546
@@ -668,6 +797,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Acceptance/Rejection Claim Message",
                 LocalName = "אישור/דחיית תביעה",
                 AssigneeNotificationTypeCode = "A",
+                ActiveInExport = false,
+
             });
 
             all.Add(new NotificationDefinitionDetails() // Mirit 04/08/19 Task 53620
@@ -676,6 +807,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Deficit Customs Answer",
                 LocalName = "החלטה בגין גרעון",
                 AssigneeNotificationTypeCode = "A",
+                ActiveInExport = false,
+
             });
 
             all.Add(new NotificationDefinitionDetails()  
@@ -684,6 +817,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Declaration Amendment Approved",
                 LocalName = "תיקון הצהרה אושרה",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = false,
+
             });
 
             all.Add(new NotificationDefinitionDetails()
@@ -692,6 +827,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Declaration Amendment Partial Approval",
                 LocalName = "תיקון הצהרה אושרה חלקית",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = false,
+
             });
             all.Add(new NotificationDefinitionDetails()
             {
@@ -699,6 +836,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Declaration Amendment Denial",
                 LocalName = "תיקון הצהרה נדחתה",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = false,
+
             });
             all.Add(new NotificationDefinitionDetails()
             {
@@ -706,6 +845,8 @@ namespace Logitude.Customs.Def.ClosedTable
                 EnglishName = "Declaration Amendment Cancelled",
                 LocalName = "תיקון הצהרה בוטלה",
                 AssigneeNotificationTypeCode = "I",
+                ActiveInExport = false,
+
             });
             return all;
         }
@@ -717,6 +858,7 @@ namespace Logitude.Customs.Def.ClosedTable
             poco.LocalName = this.LocalName;
             poco.AssigneeNotificationTypeCode = this.AssigneeNotificationTypeCode;
             poco.SearchFields = GetSearchFields(this);
+            poco.ActiveInExport = this.ActiveInExport;
 
         }
 
