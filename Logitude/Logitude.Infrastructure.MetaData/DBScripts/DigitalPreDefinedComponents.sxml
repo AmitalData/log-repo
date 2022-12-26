@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-	<Sql Version="3">
+	<Sql Version="7">
       <![CDATA[	  
 		delete from DigitalPreDefinedComponents where id != ''
 		declare @shipmentObjectId as varchar(15)
@@ -38,6 +38,18 @@
 				CURRENT_TIMESTAMP,
 				'Shipment status info component',
 				'<ShipmentStatusInfo></ShipmentStatusInfo>');
+				
+				EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPreDefinedComponents'
+	
+		INSERT INTO DigitalPreDefinedComponents (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, Name, Content) 
+	    values (@EntityId,
+				0,
+				@shipmentObjectId,
+				CURRENT_TIMESTAMP,
+				CURRENT_TIMESTAMP,
+				'Field Template',
+				'<!-- You can add more then one field by seprating them by comma -->
+<FieldTemplate field-code=''''></FieldTemplate>');				
 		]]>
 </Sql>
 </Script>
