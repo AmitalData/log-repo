@@ -73,7 +73,7 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         confirmWindow.WindowClosed.subscribe((event: any) => {
             this.IsModified = false;
             if (confirmWindow.Yes) {
-                this.PublichChangesClicked(false);
+                this.ContinueSaveChanges(false);
                 return;
             }
             if (confirmWindow.No) {
@@ -211,6 +211,7 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
                 this.IsPreviewChanges = false;
                 this.PreviewDigitalPortal();
             }
+            this.ChangeSelectedItem();
         });
     }
 
