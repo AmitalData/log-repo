@@ -35,7 +35,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
                 "Shipment.Events",
                 "Shipment.ConsolidatorName",
                 "Shipment.WarehouseLegRemarks",
-                "Shipment.IncotermName"
+                "Shipment.IncotermName",
+                "Shipment.ShipperCountryCode",
+                "Shipment.ConsigneeCountryCode"
             };
 
             if (tenant != 0)

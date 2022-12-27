@@ -1510,10 +1510,13 @@ namespace WebFreight.Web.WebServices
                 {
                     document.CalculatedFileName =!string.IsNullOrEmpty(document.CalculatedFileName) ? document.CalculatedFileName : document.FileName;
 
+                    //document.DocumentType = documentFiling.DocumentType != null ? documentFiling.DocumentType.Name : "";
+
                     if (documentFiling.DirectionCode == "I" && !FeatureToggleHelper.HasFeatureToggle("SFC", documentFiling.Tenant))
                     {
                         document.CalculatedFileName = document.FileName;
                     }
+
                     return document;
                 }
                 else return null;

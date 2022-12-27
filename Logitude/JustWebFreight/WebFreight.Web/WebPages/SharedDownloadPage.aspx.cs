@@ -22,6 +22,7 @@ using ICSharpCode.SharpZipLib.Core;
 using WebFreight.Web.Helpers;
 using Logitude.Server.Tools.Helpers;
 using System.Data.Entity;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace WebFreight.Web.WebPages
 {
@@ -460,6 +461,15 @@ namespace WebFreight.Web.WebPages
                         filename = document.CalculatedFileName;
                     }
 
+                    var documentType = string.Empty;
+
+                    if (isFromDigital)
+                    {
+                        var query = new DocumentsFilingQuery(tenant);
+                        var cc = query.GetDocumentsFilingByDocumentId(document.Id, tenant);
+                        documentType = cc.DocumentTypeName;
+                    }
+
                     if (!string.IsNullOrEmpty(documentExtension))
                     {
                         _DatainByte = up.DownloadFile(documentId, documentExtension, "", tenant);
@@ -498,7 +508,13 @@ namespace WebFreight.Web.WebPages
 
                         if (_DatainByte != null)
                         {
-                            string documentName = filename + "." + documentExtension;
+                            string documentName = $"{filename}.{documentExtension}";
+
+                            if (isFromDigital)
+                            {
+                                documentName = $"{documentType} - {filename}.{documentExtension}";
+                            }
+
                             // _DatainByte = sender as byte[];
                             HttpContext.Current.Response.Clear();
                             HttpContext.Current.Response.AddHeader("Content-Length", _DatainByte.Length.ToString());

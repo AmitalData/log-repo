@@ -158,6 +158,67 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         }
 
         [HttpPost]
+        [Route("DigitalDashboard/GetShipmentsGroupedByFinalDestinationDate")]
+        public HttpResponseMessage GetShipmentsGroupedByFinalDestinationDate(GeneralFilters newFilters)
+        {
+            int tenant = 0;
+            string email = "";
+            try
+            {
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                tenant = authToken.Tenant;
+                email = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, newFilters.CardId);
+                newFilters.Tenant = authToken.Tenant;
+                var shipmentQuery = new ShipmentQuery(authToken.Tenant);
+
+                DateTime? currentDateTime = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+
+                DateTime? last7DateTime = currentDateTime.Value.AddDays(-7).Date;
+                DateTime? next7DateTime = currentDateTime.Value.AddDays(7).Date;
+                DateTime? tomorrowDateTime = currentDateTime.Value.AddDays(1).Date;
+
+                var result = new Dictionary<string, Dictionary<object, int>>();
+
+                var Todayshipments = shipmentQuery.GetByFilters(newFilters)
+                                                  .Where(r => r.MainCarriageFinalDestinationETA == currentDateTime)
+                                                  .GroupBy(a => new { a.TransportModeId, a.DirectionId})
+                                                  .ToDictionary( a => (object)a.Key, y => y.Count());
+
+                result.Add("today", Todayshipments);
+                var tomorrowShipmentsQuery = shipmentQuery.GetByFilters(newFilters)
+                                                  .Where(r => r.MainCarriageFinalDestinationETA == tomorrowDateTime)
+                                                  .GroupBy(a => new { a.TransportModeId, a.DirectionId})
+                                                  .ToDictionary( a => (object)a.Key, y => y.Count());
+                result.Add("tomorrow", tomorrowShipmentsQuery);
+
+                var next7DateTimeShipmentsQuery = shipmentQuery.GetByFilters(newFilters)
+                                                  .Where(r => r.MainCarriageFinalDestinationETA == next7DateTime)
+                                                  .GroupBy(a => new { a.TransportModeId, a.DirectionId})
+                                                  .ToDictionary( a => (object)a.Key, y => y.Count());
+                result.Add("Next7Days", next7DateTimeShipmentsQuery);
+
+                var last7DateTimeShipmentsQuery = shipmentQuery.GetByFilters(newFilters)
+                                                  .Where(r => r.MainCarriageFinalDestinationETA == last7DateTime)
+                                                  .GroupBy(a => new { a.TransportModeId, a.DirectionId})
+                                                  .ToDictionary( a => (object)a.Key, y => y.Count());
+                result.Add("Last7Days", last7DateTimeShipmentsQuery);
+
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (AutenticationException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.Unauthorized, ApiExceptionBuilder.BuildException(ex));
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        [HttpPost]
         [Route("DigitalDashboardController/GetDashboardSummary")]
         public HttpResponseMessage GetDashboardSummary(GeneralFilters newFilters)
         {
@@ -300,6 +361,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             return shipmentsGroupedByStatus;
         }
 
+        
         private Dictionary<string, object> GetDigitalStatusesWeightWithCount(IQueryable<DigitalShipmentList> shipments, int tenant)
         {
             var shipmentsGroupedByStatus = new Dictionary<string, object>();
