@@ -36,6 +36,7 @@ namespace WebFreight.Web.Controllers.DashboardModel.Extended
 
                 IQueryable<Dashboard> zeroDashboards = dashboardRepository.GetAll(0);
                 IQueryable<DashboardList> zeroDashboardLists = dashboardListQuery.GetIqueryableList(zeroDashboards);
+
                 IQueryable<DashboardList> dashboardLists = null;
 
                 if (authToken.Tenant != 0)

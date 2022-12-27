@@ -1,5 +1,7 @@
 import { Component, Input, OnInit, HostListener, ElementRef, Output, EventEmitter } from '@angular/core';
+import { DashboardList } from '../../../../DashboardModule/EntityLists/DashboardList';
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
     selector: "dashboard-dropdown",
@@ -22,7 +24,7 @@ export class DashboardDropDownComponent implements OnInit {
     }
 
     @Input() public SectionsItemsSource: CodeNameClass[] = [];
-    public DisplayItemsSource: any[] = [];
+    public DisplayItemsSource: DashboardList[] = [];
     public SearchText: string;
     public DisplayText: string;
     public SkeletonCount = Array(10).fill(0).map((x, i) => i);
@@ -88,13 +90,18 @@ export class DashboardDropDownComponent implements OnInit {
     }
 
     GetSectionDisplayItemsSource(code: string): any[] {
-        var arr: any[] = [];
-        if (code == "SYS")
-            arr = this.DisplayItemsSource.filter(d => (d.Tenant != 0 && d.PermissionLevelCode == "PUB") || d.Tenant == 0);
+        switch (code) {
+            case "SYS":
+                return this.DisplayItemsSource.filter(d => (d.Tenant != 0 && d.PermissionLevelCode == "PUB" && d.CreatedByUserId != SessionLocator.LoggedUserId) || d.Tenant == 0);
 
-        else
-            arr = this.DisplayItemsSource.filter(d => d.Tenant != 0 && d.PermissionLevelCode == code);
+            case "MYS":
+                return this.DisplayItemsSource.filter(d => d.Tenant != 0 && d.CreatedByUserId == SessionLocator.LoggedUserId);
 
-        return arr;
+            case "SHR":
+                return this.DisplayItemsSource.filter(d => d.Tenant != 0 && d.PermissionLevelCode == "SPF" && d.CreatedByUserId != SessionLocator.LoggedUserId);
+
+            default:
+                return this.DisplayItemsSource;
+        }
     }
 }
