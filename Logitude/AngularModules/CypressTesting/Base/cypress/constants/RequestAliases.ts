@@ -106,8 +106,8 @@ export class RequestAliases {
     public static readonly AccountingSettings = "accountingsettings"
 
     public static readonly Tenants = "Tenants"
-    
-   //Report
+
+    //Report
     public static readonly PostReport = "PostReport"
     public static readonly PutReport = "PutReport"
 
@@ -313,6 +313,7 @@ export class RequestAliases {
 
     //Workflow
     public static readonly GetWorkflowViews = 'GetWorkflowViews';
+    public static readonly MockSingleWorkflowView = 'MockSingleWorkflowView';
     public static readonly GetWorkflowFlowBuilder = 'GetWorkflowFlowBuilder';
     public static readonly PutWorkflowFlowBuilder = 'PutWorkflowFlowBuilder';
     public static readonly PostWorkflowFlowBuilder = 'PostWorkflowFlowBuilder';

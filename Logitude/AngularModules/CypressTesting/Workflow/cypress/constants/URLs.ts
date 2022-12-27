@@ -1,6 +1,7 @@
 export class URLs {
-    public static readonly GetWorkflowViews = '**/workflowviews/getbyfilters?**';
+    public static readonly GetWorkflowViews = '**/workflowviews/**';
     public static readonly GetWorkflowFlowBuilder = '**/workflows/getsingle?**';
+    public static readonly WorkflowVersionRequest = '**/workflowversions';
     public static readonly WorkflowRequest = '**/workflows';
     public static readonly GetNewWorkflow = '**/EntityResource?objectTableName=PartnerType&tenant=**';
     public static readonly GetObjectFieldViews = '**/objectfieldviews/getbyfilters?**';
@@ -9,4 +10,4 @@ export class URLs {
     public static readonly Getworkflowinstance = '**/workflowinstanceviews/getbyfilters?**';
     public static readonly GetSingleInstanceActivityList = '**/workflowinstanceactivityviews/getbyfilters?**';
     public static readonly PostGetQueryToExcelData = '**/LogitudeGridExportToExcel/PostGetQueryToExcelData';
-} 
+}
