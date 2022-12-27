@@ -236,12 +236,11 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 DateTime? currentDateTime = TenantServerConfigration.GetCurrentDateTime(newFilters.Tenant).Date;
 
-
                 var result = shipmentQuery.GetByFilters(newFilters)
                                                   .Where(r => r.MainCarriageFinalDestinationETA.Value.Year == currentDateTime.Value.Year)
                                                   .GroupBy(a => a.MainCarriageFinalDestinationETA.Value.Month)
-                                                  .ToDictionary( a => a.Key, y => y.OrderBy(a => a.MainCarriageFinalDestinationETA.Value.Month)
-                                                                                   .GroupBy(a => a.TransportModeId)
+                                                  .OrderBy(a => a.Key)
+                                                  .ToDictionary( a => a.Key, y => y.GroupBy(a => a.TransportModeId)
                                                                                    .ToDictionary(x => x.Key, q => q.Count()));
 
                 return Request.CreateResponse(HttpStatusCode.OK, result); 
