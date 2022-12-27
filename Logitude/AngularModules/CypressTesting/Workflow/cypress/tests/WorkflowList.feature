@@ -8,10 +8,6 @@ Feature: Workflow list
     When open flow
     Then the flow builder open successfully
 
-  Scenario: search flow by flow name
-    When search flow
-    Then the flow should appear successfully
-
   Scenario: refresh workflow list
     When refresh workflow list
     Then the list should refresh successfully
@@ -19,3 +15,9 @@ Feature: Workflow list
   Scenario: export workflow list
     When export workflow list
     Then the list should export successfully
+
+  Scenario: search flow by flow name
+    When search flow
+    Then the flow should appear successfully
+
+
