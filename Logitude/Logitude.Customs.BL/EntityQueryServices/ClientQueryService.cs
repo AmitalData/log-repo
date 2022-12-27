@@ -10,6 +10,7 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Server.Tools;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.BL.EntityUpdateServices;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -162,7 +163,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         public List<ClientPM> GetAllClientsPOAExpire(int tenant) 
         {
-
+            LogMessagingUtil.Instance.AppendLine(context.GetConnection().ConnectionString);
             List<ClientPM> clientsPMList = new List<ClientPM>();
             List<Client> clientsList = repository.GetAllClientsPOAExpire(tenant);
 

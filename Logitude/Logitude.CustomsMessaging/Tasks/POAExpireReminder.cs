@@ -44,7 +44,7 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
             var notificationQueryService = new NotificationQueryService(dbContext);
             var clientQueryService = new ClientQueryService(t.Tenant);
             var clients = clientQueryService.GetAllClientsPOAExpire(t.Tenant);
-            LogMessagingUtil.Instance.AppendLine(clients.Count() + " clients found");
+            LogMessagingUtil.Instance.AppendLine(clients.Count + " clients found");
 
             foreach (var client in clients)
             {
