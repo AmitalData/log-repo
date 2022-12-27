@@ -1,6 +1,7 @@
 ﻿using ICSharpCode.SharpZipLib.Core;
 using ICSharpCode.SharpZipLib.Zip;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Security;
 using Logitude.SystemLogs;
 using Simplog.Data.CommonDataModel;
@@ -51,7 +52,11 @@ namespace WebFreight.Web.WebPages
 
                     int tenant = int.Parse(filestrings[3] + "");
                     // cargo forwarding shipment
-                    if (filestrings.Length >= 5)
+                    if (filestrings.Length >= 5 && filestrings[4].ToString() == "DigitalPortal")
+                    {
+                        domainName = filestrings[4].ToString();
+                    }                    
+                    else if (filestrings.Length >= 5 && filestrings[4].ToString() != "DigitalPortal")
                     {
                         forwardingShipmentEntityId = filestrings[4].ToString();
                     }
@@ -76,19 +81,32 @@ namespace WebFreight.Web.WebPages
                     int tenant = Convert.ToInt32(filestrings[1]);
                     string copyId = filestrings.Length > 2 ? filestrings[2].ToString() : null;
 
+                    bool isDigitalPortal = filestrings.Length > 3 ? Convert.ToBoolean(filestrings[3].ToString()) : false;
+
                     Uploader up = new Uploader();
 
-                    Document myDoc = up.GetFileExtensionBySecurityIdAndCopyId(securityId, copyId,tenant);
+                    Document myDoc = up.GetFileExtensionBySecurityIdAndCopyId(securityId, copyId, tenant);
                     if ((string.IsNullOrEmpty(copyId) || copyId == "null")  && myDoc == null)
                     {
                         myDoc = up.GetFileExtensionBySecurityId(securityId, tenant);
                     }
+
                     documentExtension = myDoc.Extension;
                     filename = myDoc.FileName;
-                    if (filestrings.Length >= 4)
+                    var documentType = string.Empty;
+
+                    if (isDigitalPortal)
+                    {
+                        var query = new DocumentsFilingQuery(tenant);
+                        var cc = query.GetDocumentsFilingByDocumentId(myDoc.Id, tenant);
+                        documentType = cc.DocumentTypeName;
+                    }
+                    
+                    if (filestrings.Length >= 4 && !isDigitalPortal)
                     {
                         filename = filestrings[3] != null ? filestrings[3] : myDoc.FileName;
                     }
+
                     if (!string.IsNullOrEmpty(documentExtension))
                     {
                         _DatainByte = up.DownloadFile(myDoc.Id, documentExtension, "", myDoc.Tenant);
@@ -110,7 +128,12 @@ namespace WebFreight.Web.WebPages
                                 documentExtension = "html";
                             }
 
-                            string documentName = filename + "." + documentExtension;
+                            string documentName = $"{filename}.{documentExtension}";
+
+                            if (isDigitalPortal)
+                            {
+                                documentName = $"{documentType} - {filename}.{documentExtension}";
+                            }
                             // _DatainByte = sender as byte[];
                             HttpContext.Current.Response.Clear();
                             HttpContext.Current.Response.AddHeader("Content-Length", _DatainByte.Length.ToString());
@@ -273,20 +296,24 @@ namespace WebFreight.Web.WebPages
             try
             {
                 ShipmentRepository rep = new ShipmentRepository(tenant);                
-                    Uploader up = new Uploader();
-                Shipment shipment = rep.getSingleShipmentBySecurityIdAndId(EntityId,SecurityKey, tenant);
+                Uploader up = new Uploader();
+                Shipment shipment = rep.getSingleShipmentBySecurityIdAndId(EntityId, SecurityKey, tenant);
                 string compressedFileName = "Documents";
                 string shipmentNumber = null;
-                if (domainName == "cargo") {
+
+                if (domainName == "cargo" || domainName == "DigitalPortal") 
+                {
                     compressedFileName = $"{shipment.ShipmentNumber}_Documents";
                     shipmentNumber = shipment.ShipmentNumber;
                 }
+                
                 if (shipment != null)
                 {
-                    List<DocumentsFilingPM> documents = up.GetDocumentByEntityAndTenant(EntityId, tenant);
+                    var documents = up.GetDocumentByEntityAndTenant(EntityId, tenant);
+                    
                     if (!string.IsNullOrWhiteSpace(forwardingShipmentEntityId))
                     {
-                        List<DocumentsFilingPM> customsForwardingShipmentdocuments = up.GetDocumentByEntityAndTenant(forwardingShipmentEntityId, tenant);
+                        var customsForwardingShipmentdocuments = up.GetDocumentByEntityAndTenant(forwardingShipmentEntityId, tenant);
                         documents.AddRange(customsForwardingShipmentdocuments);
                     }
 
@@ -294,28 +321,39 @@ namespace WebFreight.Web.WebPages
                     {
                         documents = documents.Where(d => d.IsAgentView).ToList();
                     }
-
                     else if (partnerType == "CS")
                     {
                         documents = documents.Where(d => d.IsCustomerView).ToList();
                     }
-                    Dictionary<string, byte[]> CompressedArray = new Dictionary<string, byte[]>();
+
+                    var CompressedArray = new Dictionary<string, byte[]>();
                     bool DocumentsExistance = false;
                     var ItemNum = 0;
-                     List<DocumentsFilingPM> documentsListWithoutDuplications = new List<DocumentsFilingPM>();
+                    var documentsListWithoutDuplications = new List<DocumentsFilingPM>();
+
                     foreach (DocumentsFilingPM document in documents)
                     {
-                        if (domainName == "cargo" && documentsListWithoutDuplications.Any(x => x.DocumentTypeCode == document.DocumentTypeCode && x.CalculatedFileName == document.CalculatedFileName
-                            && x.FileSize == document.FileSize)) {
+                        if (domainName == "cargo" 
+                            && documentsListWithoutDuplications.Any(x => x.DocumentTypeCode == document.DocumentTypeCode 
+                                                                         && x.CalculatedFileName == document.CalculatedFileName
+                                                                         && x.FileSize == document.FileSize)) 
+                        {
                             continue;
                         }
+
                         documentsListWithoutDuplications.Add(new DocumentsFilingPM
                         {
                             CalculatedFileName = document.CalculatedFileName,
                             DocumentTypeCode = document.DocumentTypeCode,
                             FileSize = document.FileSize,
                         });
-                        document.CalculatedFileName = domainName == "cargo" ? shipmentNumber + '_' + document.DocumentTypeName : document.CalculatedFileName;
+                        
+                        document.CalculatedFileName = domainName == "cargo" 
+                                                      ? shipmentNumber + '_' + document.DocumentTypeName
+                                                      : domainName == "DigitalPortal" 
+                                                        ? $"{document.DocumentTypeName} - {document.FileName}"
+                                                        : document.CalculatedFileName;
+
                         if (document.DirectionCode == "O" && document.DoucmentTypeTemplateFormatCode == "M")
                         {
                             continue;
@@ -330,15 +368,18 @@ namespace WebFreight.Web.WebPages
                             while (CompressedArray.ContainsKey(document.FileExtension + "@"+fileName))
                             {
                                 ItemNum += 1;
-                                fileName = !string.IsNullOrEmpty(document.CalculatedFileName) ? document.CalculatedFileName + " (" + ItemNum + ")" : document.FileName+" ("+ItemNum+")";
+                                fileName = !string.IsNullOrEmpty(document.CalculatedFileName) 
+                                           ? document.CalculatedFileName + " (" + ItemNum + ")" 
+                                           : document.FileName+" ("+ItemNum+")";
                                 fileName = fileName.Replace('/', ' ');
                                 fileName += ("." + document.FileExtension);
                             }
+
                             ItemNum = 0;
                             CompressedArray.Add(document.FileExtension + "@" + fileName, up.DownloadFile(document.DocumentId, document.FileExtension, "", tenant));
                         }
-
                     }
+
                     if (DocumentsExistance)
                     {
 
@@ -362,9 +403,6 @@ namespace WebFreight.Web.WebPages
                 {
                     HttpContext.Current.Response.Write("Invalid Document Security Id!");
                 }
-
-
-
             }
             catch (Exception e)
             {
