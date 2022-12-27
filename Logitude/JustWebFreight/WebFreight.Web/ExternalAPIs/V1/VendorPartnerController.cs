@@ -37,7 +37,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
 				SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-				VendorQueryService Service = new VendorQueryService(tenant);
+                SecurityUtility.AuthenticateAccessibleAPI("Vendor", authToken.Tenant);
+
+                VendorQueryService Service = new VendorQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
                 var Result = Service.GetVendorById(id, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
@@ -61,7 +63,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     int tenant = authToken.Tenant;
                     SecurityUtility.AuthenticationOnTenant(tenant);
 					SecurityUtility.AuthenticateAPICall(tenant);
-                  
+                    SecurityUtility.AuthenticateAccessibleAPI("Vendor", authToken.Tenant);
 
                     ContactInfo loggedContactInfo = SecurityUtility.GetContactInfo(authToken.Email, tenant);
                     string computingPartnerCode = "";

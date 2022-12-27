@@ -44,6 +44,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     int tenant = authToken.Tenant;
                     SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+                    SecurityUtility.AuthenticateAccessibleAPI("Cancel ARPayment", authToken.Tenant);
+
                     ARPaymentCancellation = entity;
 
                     ARPaymentQueryService Service = new ARPaymentQueryService(tenant);

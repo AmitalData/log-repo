@@ -39,10 +39,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+                SecurityUtility.AuthenticateAccessibleAPI("Direct", authToken.Tenant);
+
                 DirectQueryService Service = new DirectQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
                 Direct Result = Service.GetDirectById(id, tenant, include);
-                //this.MapInlandDomesticStates(Result, tenant);
                 string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }
@@ -62,10 +63,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+                SecurityUtility.AuthenticateAccessibleAPI("Direct", authToken.Tenant);
+
                 DirectQueryService Service = new DirectQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
                 Direct Result = Service.GetDirectByShipmentNumber(number, tenant, include);
-                //this.MapInlandDomesticStates(Result, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }
             catch (Exception ex)
@@ -87,6 +89,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+                        SecurityUtility.AuthenticateAccessibleAPI("Direct", authToken.Tenant);
+
                         ContactInfo loggedContactInfo = SecurityUtility.GetContactInfo(authToken.Email, authToken.Tenant);
 
                         string computingPartnerCode = "";
@@ -247,6 +251,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.AuthenticateAccessibleAPI("Direct", authToken.Tenant);
+
                     return Request.CreateResponse(HttpStatusCode.OK, this.UpdateDirectShipment(entity, authToken.Tenant));
                 }
                 catch (Exception ex)
@@ -292,6 +298,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticateAccessibleAPI("Direct", authToken.Tenant);
+
             Direct directShipment = this.GetDirectShipment(id, authToken.Tenant);
             directPatchEntity.ApplyTo(directShipment);
 

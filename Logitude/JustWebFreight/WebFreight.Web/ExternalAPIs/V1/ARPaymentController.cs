@@ -41,7 +41,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                  int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-
+                SecurityUtility.AuthenticateAccessibleAPI("ARPayment", authToken.Tenant);
 
                 ARPaymentQueryService Service = new ARPaymentQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
@@ -89,6 +89,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.AuthenticateAccessibleAPI("ARPayment", authToken.Tenant);
+
                         int tenant = authToken.Tenant;
 
                         SecurityUtility.AuthenticateAPICall(authToken.Tenant);
@@ -168,6 +170,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         int tenant = authToken.Tenant;
                         SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+                        SecurityUtility.AuthenticateAccessibleAPI("ARPayment", authToken.Tenant);
+
                         if (entity != null)
                         {
                             oldEntity = LogitudeXmlSerializer.DeserializeObject<ARPayment>(LogitudeXmlSerializer.SerializeObjectToXmlString(entity));
