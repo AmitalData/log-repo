@@ -145,7 +145,31 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 }
             }
 
-            
+            // Get Local or  of amounts from lines
+            foreach (BankDepositLinePM line in entityPM.BankDepositLines)
+            {
+                if (line.ARPaymentChequeId != null)
+                {
+                    ARPaymentChequeQueryService aRPaymentChequeQueryService = new ARPaymentChequeQueryService(entityPM.Tenant);
+                    ARPaymentChequePM arPaymentCheque = aRPaymentChequeQueryService.GetSingle(line.ARPaymentChequeId, true, false);
+                    if (arPaymentCheque != null)
+                    {
+                        if (arPaymentCheque.LocalAmount != arPaymentCheque.ForeignAmount)
+                        {
+                            result += "," + arPaymentCheque.LocalAmount.ToString();
+                            result += "," + arPaymentCheque.ForeignAmount.ToString();
+
+                        }
+
+                        else
+                            result += "," + arPaymentCheque.LocalAmount.ToString();
+
+                    }
+
+                }
+            }
+
+
 
             //foreach (JournalLinePM item in entityPM.BankDepositLines)
             //{
@@ -175,9 +199,25 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             //        }
             //    }
             //}
+            string resultWithoutDuplicate = RemoveDuplicateInSearchFields(result);
+            entityPM.SearchFields = resultWithoutDuplicate;
+            poco.SearchFields = resultWithoutDuplicate;
 
-            entityPM.SearchFields = result;
-            poco.SearchFields = result;
+        }
+
+        private string RemoveDuplicateInSearchFields(string result)
+        {
+            List<string> items = result.Split(',').ToList();
+            List <string > array = new List<string > ();
+            items.ForEach(item =>
+            {
+                if (!array.Any(x => x == item))
+                {
+                    array.Add(item);
+                }
+            });
+            string searchValue = string.Join(",", array);
+            return searchValue;
 
         }
 
