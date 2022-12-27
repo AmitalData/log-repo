@@ -16,8 +16,6 @@ export class JsonPatchBuilder {
         "UIProperties",
         "UIProperty",
         "PropertyChanged",
-        "tEU",
-
         "isNotValid",
         "UniqueKey",
         "$id"
