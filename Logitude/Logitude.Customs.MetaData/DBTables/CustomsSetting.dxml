@@ -148,8 +148,8 @@
   <Column
     Name="CompanyType"
     Type="varchar"
-    DefaultValue="0"
-    Size="1">
+    Size="1"
+    DefaultValue="0">
     <Constraints
       Nullable="false" />
   </Column>
@@ -175,6 +175,20 @@
   <Column
     Name="LastNumOfMessagesDCAWS"
     Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="HSMCompanyId"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="HSMToken"
+    Type="varchar"
+    Size="1024">
     <Constraints
       Nullable="true" />
   </Column>

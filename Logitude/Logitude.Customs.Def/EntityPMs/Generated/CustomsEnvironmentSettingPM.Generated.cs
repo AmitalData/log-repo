@@ -160,6 +160,98 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string hSMSignProcess ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string HSMSignProcess  
+	   {
+	    
+	     get
+		{
+		   return hSMSignProcess;
+		 }
+		 set
+		 {
+		   if(hSMSignProcess != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HSMSignProcess",OldValue=hSMSignProcess,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   hSMSignProcess=value;
+		   }
+			
+		 }
+	   }
+	  private string hSMToken ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string HSMToken  
+	   {
+	    
+	     get
+		{
+		   return hSMToken;
+		 }
+		 set
+		 {
+		   if(hSMToken != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HSMToken",OldValue=hSMToken,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   hSMToken=value;
+		   }
+			
+		 }
+	   }
+	  private string hSMActiveCertUrl ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string HSMActiveCertUrl  
+	   {
+	    
+	     get
+		{
+		   return hSMActiveCertUrl;
+		 }
+		 set
+		 {
+		   if(hSMActiveCertUrl != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HSMActiveCertUrl",OldValue=hSMActiveCertUrl,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   hSMActiveCertUrl=value;
+		   }
+			
+		 }
+	   }
+	  private string hSMSignServiceUrl ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string HSMSignServiceUrl  
+	   {
+	    
+	     get
+		{
+		   return hSMSignServiceUrl;
+		 }
+		 set
+		 {
+		   if(hSMSignServiceUrl != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HSMSignServiceUrl",OldValue=hSMSignServiceUrl,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   hSMSignServiceUrl=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

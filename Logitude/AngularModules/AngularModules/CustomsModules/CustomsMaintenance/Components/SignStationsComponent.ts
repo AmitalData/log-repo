@@ -218,7 +218,7 @@ export class SignStationsComponent
             FieldName: 'VersionByFeatures',
             DataTypeCode: 'string',
             Display: 'גרסה',
-            Styles: { width: '80px' },
+            Styles: { width: '130px' },
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'VersionByFeatures',

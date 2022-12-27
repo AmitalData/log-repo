@@ -17,6 +17,7 @@ using Logitude.Server.Tools.ExternalServices;
 using System.Xml.Linq;
 using Simplog.Data.Helpers;
 using Logitude.CustomsMessaging.Helpers;
+using Logitude.Customs.BL.Messaging.Customs.SignQueueBL;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
@@ -26,7 +27,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         
         
 
-        public byte[] PasiveSignGetBytesToSign(int tenant, string CustomsRequestsSheetId)
+        public (byte[], RequestParamsBase) PasiveSignGetBytesToSign(int tenant, string CustomsRequestsSheetId)
         {
 
             TRequestParams defaultRequestParamsFromCustomsResponse = null;
@@ -39,9 +40,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
             {
                 //throw "Not in the right step";
             }
+            var dRequestParams = _CustomsRequestsSheetService.GetRequestParams<TRequestParams>() as RequestParamsBase;
             var xmlSerilazeObject = _CustomsRequestsSheetService.GetCustomsRequestXml();
             var bytesSerilazeObject = UTF8Encoding.UTF8.GetBytes(xmlSerilazeObject);
-            return bytesSerilazeObject;
+            return (bytesSerilazeObject, dRequestParams);
         }
 
         
@@ -118,14 +120,43 @@ namespace Logitude.CustomsMessaging.MessagingServices
                         _CustomsRequestsSheetService.StartStep(CustomsStepEnum.CustomRequestSign, curComm);
 
                         var pmCustomsSetting = Customs.BL.EntityQueryServices.CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant);
-                        if (!pmCustomsSetting.IsConnectedToUniFreight)
+                        
+                        if (string.IsNullOrEmpty(requestParams.SignMethodByQueue))
                         {
-                            _CustomsRequestsSheetService.AddExportDBSignQueue(requestParams, personId, SignatureBy, pmCustomsSetting.CustomsAgentId);
+                            throw new Exception("RequestParams.SignType is must !!");
                         }
-                        else
+                        SignMethodByQueueEnum signMethodBy = SignMethodByQueueEnum.None;
+                        if (!Enum.TryParse<SignMethodByQueueEnum>(requestParams.SignMethodByQueue, out signMethodBy))
                         {
-                            SignQueue.Instance.Add(requestParams.Tenant, personId, requestParams.CustomsRequestsSheetId, requestParams.InterfaceTypeCode, SignatureBy);
-                        }                        
+                            throw new Exception("RequestParams.SignType is must !!");
+                        }
+                        switch (signMethodBy)
+                        {
+
+                            case SignMethodByQueueEnum.HybridDbSignQueue:
+#if false
+                                if (!pmCustomsSetting.IsConnectedToUniFreight)
+                                {
+                                    _CustomsRequestsSheetService.AddExportDBSignQueue(requestParams, personId, SignatureBy, pmCustomsSetting.CustomsAgentId);
+                                }
+#endif
+                                var signQueueHybridExportDBService = new CreateSignQueueHybridExportDBService();
+                                signQueueHybridExportDBService.CreateQueue(requestParams, personId, SignatureBy, pmCustomsSetting.CustomsAgentId);
+
+                                break;
+                            case SignMethodByQueueEnum.HSMSignQueue:
+                                var signQueueHSMDBService = new CreateSignQueueHSMDBService();
+                                signQueueHSMDBService.CreateQueue(requestParams, personId, SignatureBy, pmCustomsSetting.CustomsAgentId);
+                                break;
+
+                            case SignMethodByQueueEnum.None:
+                            case SignMethodByQueueEnum.MemorySignQueue:
+                            default:
+                                {
+                                    SignQueue.Instance.Add(requestParams.Tenant, personId, requestParams.CustomsRequestsSheetId, requestParams.InterfaceTypeCode, SignatureBy);
+                                }
+                                break;
+                        }                                             
                         var businessErrorException = new BusinessErrorException("Add SignQueue ");
 
                         businessErrorException.CurrentContextTag = new TResponseData()

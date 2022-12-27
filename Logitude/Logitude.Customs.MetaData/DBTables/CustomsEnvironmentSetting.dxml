@@ -47,4 +47,32 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="HSMSignProcess"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="HSMToken"
+    Type="varchar"
+    Size="1024">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="HSMActiveCertUrl"
+    Type="varchar"
+    Size="1024">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="HSMSignServiceUrl"
+    Type="varchar"
+    Size="1024">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

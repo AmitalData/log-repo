@@ -47,7 +47,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsMessagesPending, 
 	         QtyFeedbackInPendingMessage, 
 	         LastRunningDCAWS, 
-	         LastNumOfMessagesDCAWS,
+	         LastNumOfMessagesDCAWS, 
+	         HSMCompanyId, 
+	         HSMToken,
 	      }
 
 
@@ -82,7 +84,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         QtyFeedbackInPendingMessage, 
 	         LastRunningDCAWS, 
 	         LastNumOfMessagesDCAWS, 
-	         ServiceScript,
+	         ServiceScript, 
+	         HSMCompanyId, 
+	         HSMToken,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -214,6 +218,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastNumOfMessagesDCAWS))
             {
 				entityPOCO.LastNumOfMessagesDCAWS = entityPM.LastNumOfMessagesDCAWS;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSMCompanyId))
+            {
+				entityPOCO.HSMCompanyId = entityPM.HSMCompanyId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSMToken))
+            {
+				entityPOCO.HSMToken = entityPM.HSMToken;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -352,6 +366,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.LastNumOfMessagesDCAWS = entityPOCO.LastNumOfMessagesDCAWS;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.HSMCompanyId))
+            {
+					entityPM.HSMCompanyId = entityPOCO.HSMCompanyId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.HSMToken))
+            {
+					entityPM.HSMToken = entityPOCO.HSMToken;
+            }
+
 		}
 
 		public void PMToOldPM(CustomsSettingPM entityPM, CustomsSettingPM oldEntityPM)
@@ -481,6 +505,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastNumOfMessagesDCAWS))
             {
                 oldEntityPM.LastNumOfMessagesDCAWS = entityPM.LastNumOfMessagesDCAWS;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSMCompanyId))
+            {
+                oldEntityPM.HSMCompanyId = entityPM.HSMCompanyId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSMToken))
+            {
+                oldEntityPM.HSMToken = entityPM.HSMToken;
             }
 			
 		}

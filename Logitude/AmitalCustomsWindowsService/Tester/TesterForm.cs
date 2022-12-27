@@ -1,42 +1,37 @@
-﻿using System;
+﻿using AmitalCustomsWindowsService.Tester.CustomMessage;
+using AmitalCustomsWindowsService.Tester.SU;
+using CommunicationWorkerRole;
+using CustomsWorkerRole;
+using CustomsWorkerRole.Test;
+using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.Messaging;
+using Logitude.Customs.BL.Messaging.Maman;
+using Logitude.CustomsMessaging.MessagingServices;
+using Logitude.CustomsMessaging.RabbitMQ;
+using Logitude.CustomsMessaging.ResponseServices;
+using Logitude.CustomsMessaging.U2L.CommDec;
+using Logitude.Server.Tools;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.Utils;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Server.Infrastructure;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using AmitalCustomsWindowsService.Tester.CustomMessage;
-using Unifreight.Data.AmitalModel;
-using CustomsWorkerRole;
-using CustomsWorkerRole.Test;
-using AmitalCustomsWindowsService.Utils;
-using AmitalCustomsWindowsService.Tester.SU;
-using System.Xml.Linq;
-using Logitude.CustomsMessaging.Testers.Messages;
-using Logitude.Server.Tools.Utils;
-using Simplog.Server.Infrastructure;
-using Logitude.Customs.BL.Messaging.Maman;
-using System.Threading;
-using Logitude.Customs.BL.Messaging;
-using System.Net;
-using CommunicationWorkerRole;
- using Logitude.Server.Tools.Helpers;
-using WebFreight.Web.CustomWebServices;
-using Logitude.CustomsMessaging.U2L.CommDec;
-using Logitude.CustomsMessaging.ResponseServices;
-using System.Xml.Serialization;
-using Logitude.CustomsMessaging.MessagingServices;
-using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
 using System.Xml;
-using Logitude.CustomsMessaging.RabbitMQ;
-using Logitude.Customs.BL.CloseTables;
-using Simplog.Global.Data.GlobalModel.Repositories;
-using Logitude.Server.Tools;
+using System.Xml.Linq;
+using System.Xml.Serialization;
+using Unifreight.Data.AmitalModel;
+using WebFreight.Web.CustomWebServices;
 //using System.Windows.Interactivity;
 
 namespace AmitalCustomsWindowsService.Tester
@@ -60,6 +55,7 @@ namespace AmitalCustomsWindowsService.Tester
             _CBWorkerRole.Items.Add("CustomsAnalyzeQueueWR");
             _CBWorkerRole.Items.Add("CustomsSchedularWR");
             _CBWorkerRole.Items.Add("RabbitMQReceiveWR");
+            _CBWorkerRole.Items.Add("CustomsHSMSignWR");
 
             Debug.WriteLine("Env:");
             Debug.WriteLine(LogitudeSettings.LogitudeURL);
@@ -266,7 +262,14 @@ namespace AmitalCustomsWindowsService.Tester
                 10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
                     { ServiceStarted = true, };
                     break;
-                    
+
+                case "CustomsHSMSignWR":
+                    {
+                        d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsHSMSignWR>(
+                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
+                        { ServiceStarted = true, };
+                    }
+                    break;
                 default:
                     return;
             }
@@ -316,6 +319,8 @@ namespace AmitalCustomsWindowsService.Tester
         bool _MultiThreard = false;
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            clsTester.HSMSignTests();
+            return;
             clsTester.Check_UserWcfService(GetTenant());
             return;
 
@@ -620,6 +625,16 @@ namespace AmitalCustomsWindowsService.Tester
 
                     }
                     break;
+
+                case "CustomsHSMSignWR":
+                    {
+                        var SendWEBAPIMessage2MamanWR = new CustomsHSMSignWR();
+                        SendWEBAPIMessage2MamanWR.DebugStep(_TBID.Text, _CBInterfaceID.Text, GetTenant(), 
+                            "032443830", "SignQueueByPersonId");
+
+                    }
+                    break;
+
                 default:
                     CustomsWorkerRole.Test.clsTester.DebugRQStep(
                 _CBInterfaceID.Text, GetTenant(), _TBID.Text,

@@ -1,6 +1,7 @@
 ﻿
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.Messaging.Customs;
+using Logitude.Customs.BL.Messaging.Customs.SignQueueBL;
 using Logitude.CustomsMessaging.Common.Gen;
 using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.Server.Tools;
@@ -92,7 +93,7 @@ namespace WebFreight.Web.WcfApi
 
 
 
-                            var BytesToSign = anaO.PasiveSignGetBytesToSign(exportReqSignData.Tenant, correlationId /*CustomsRequestsSheetId*/);
+                            var (BytesToSign,reqParams) = anaO.PasiveSignGetBytesToSign(exportReqSignData.Tenant, correlationId /*CustomsRequestsSheetId*/);
                             stringBuilder.AppendLine($"PasiveSignGetBytesToSign()|Bytes2Sign:{BytesToSign.Length}");
                             return new ResponseExportSignTask()
                             {
@@ -142,10 +143,9 @@ namespace WebFreight.Web.WcfApi
                             }
 
 
-
-                            var BytesToSign = anaO.PasiveSignGetBytesToSign(exportReqSignData.Tenant, correlationId /*CustomsRequestsSheetId*/);
-                            stringBuilder.AppendLine($"PasiveSignGetBytesToSign()|Bytes2Sign:{BytesToSign.Length}");
-                            return new ResponseExportSignTask() { currTenant = exportReqSignData.Tenant, queueId = queueResponse.MessageId, CustomsRequestsSheetId = correlationId, InterfaceTypeCode = InterfaceTypeCode, ReceiveBytesToSign = BytesToSign };
+                            var myRes = anaO.PasiveSignGetBytesToSign(exportReqSignData.Tenant, correlationId /*CustomsRequestsSheetId*/);
+                            stringBuilder.AppendLine($"PasiveSignGetBytesToSign()|Bytes2Sign:{myRes.bytesToSign.Length}");
+                            return new ResponseExportSignTask() { currTenant = exportReqSignData.Tenant, queueId = queueResponse.MessageId, CustomsRequestsSheetId = correlationId, InterfaceTypeCode = InterfaceTypeCode, ReceiveBytesToSign = myRes.bytesToSign };
 
 
                         }
@@ -185,7 +185,7 @@ namespace WebFreight.Web.WcfApi
                 try
                 {
 
-                    var dbSignQueueService = new CloudExportDbSignQueueService();
+                    var dbSignQueueService = new SignQueueHybridDbService();
                     dbSignQueueService.UpsertSignStation(exportReqSignData.CurrentSignCertificate, exportReqSignData.isPersonalSignOn, exportReqSignData.isCompanySignOn);
 
 

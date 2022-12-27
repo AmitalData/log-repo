@@ -179,6 +179,7 @@
     <Compile Include="CustomsCommandSendDCAWR.cs" />
     <Compile Include="CustomsCommandSendWSReceiveCorrelationWR.cs" />
     <Compile Include="CustomsCommandSignRequestWR.cs" />
+    <Compile Include="CustomsHSMSignWR.cs" />
     <Compile Include="CustomsMessagingSheetWR.cs" />
     <Compile Include="DCA\DcaDownloadTenantServiceOld.cs" />
     <Compile Include="DCA\DCATester.cs" />

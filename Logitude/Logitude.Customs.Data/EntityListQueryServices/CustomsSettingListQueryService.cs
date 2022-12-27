@@ -44,6 +44,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                         AutoFillAccountType = a.AutoFillAccountType,
                                                         AutoUnitMeasurement = a.AutoUnitMeasurement,
                                                         CompanyType = a.CompanyType,
+                                                        HSMToken = a.HSMToken,
+                                                        HSMCompanyId = a.HSMCompanyId
                                                     });
             return query;
 		}

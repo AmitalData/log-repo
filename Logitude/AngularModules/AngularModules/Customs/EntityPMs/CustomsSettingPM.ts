@@ -169,6 +169,16 @@ export class CustomsSettingPM {
     public set ServiceScript(newValue: string) { if (this.serviceScript != newValue) { this.serviceScript = newValue; this.MarkAsDirty("ServiceScript"); } }
        
 	 
+    private hSMCompanyId: string;
+    public get HSMCompanyId() { return this.hSMCompanyId; }
+    public set HSMCompanyId(newValue: string) { if (this.hSMCompanyId != newValue) { this.hSMCompanyId = newValue; this.MarkAsDirty("HSMCompanyId"); } }
+       
+	 
+    private hSMToken: string;
+    public get HSMToken() { return this.hSMToken; }
+    public set HSMToken(newValue: string) { if (this.hSMToken != newValue) { this.hSMToken = newValue; this.MarkAsDirty("HSMToken"); } }
+       
+	 
 
     public OldEntityPM: CustomsSettingPM;
 		

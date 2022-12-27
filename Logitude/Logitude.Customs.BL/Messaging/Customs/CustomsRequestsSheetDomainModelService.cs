@@ -1,16 +1,22 @@
 ﻿using Logitude.AmitalMessaging.Utils;
-using Logitude.Customs.Def.ClosedTable;
-using Logitude.Customs.Def.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
+using Logitude.Customs.BL.Messaging.Customs.PerformanceLogger;
+using Logitude.Customs.BL.Messaging.Customs.SignQueueBL;
 using Logitude.Customs.Data;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.ClosedTable;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.Def.Messaging.Customs;
+using Logitude.CustomsMessaging.Common.Gen;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.ExternalServices;
 using Logitude.Server.Tools.Helpers;
-using Logitude.Server.Tools.Models;
 using Logitude.Server.Tools.StorageService;
 using Logitude.Server.Tools.Utils;
 using Logitude.SystemLogs;
@@ -33,20 +39,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
-using System.Xml;
-using System.Xml.Serialization;
-using Logitude.Customs.Def.Messaging.Customs;
-using Logitude.Customs.Data.EntityPOCOs;
-using Logitude.Customs.BL.CloseTables;
-
-using Logitude.Customs.BL.Messaging.Customs.PerformanceLogger;
-
-
 using Unifreight.BL.EntityQueryServices;
-
-
-using Logitude.Customs.BL.Messaging.Customs.PerformanceLogger;
-using Logitude.BL.CommonDataModel.EntityQueries;
 
 
 
@@ -154,10 +147,10 @@ namespace Logitude.Customs.BL.Messaging.Customs
                     }
 
                 }
-                
+#if false
                 if (!_RequestParams.AvoidSign)// exportSignViaDBQueue
                 {
-
+                    
                     if (
                         (requestParams.RequestVIA != SendRequestVIA.DCABatch || requestParams.RequestVIA != SendRequestVIA.WebServiceBatch)
                         &&
@@ -170,7 +163,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                         )
                         )
                     {
-                        if (CloudExportDbSignQueueService.IsCloudExport(requestParams.Tenant))
+                        if (SignQueueCloudExportDbService.IsCloudExport(requestParams.Tenant))
                         {
                             //requestParams.ForcePersonalSign= true
                             requestVIA = requestParams.RequestVIA = SendRequestVIA.WebServiceBatch;
@@ -179,6 +172,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                         }
                     }
                 }
+#endif
                 if (_RequestParams.TestCase != null && !String.IsNullOrWhiteSpace(_RequestParams.TestCase.Code))
                 {
                     var detail = (new SincroTestCaseDetails()).GetAllSincroTestCaseDetails()
@@ -479,64 +473,44 @@ namespace Logitude.Customs.BL.Messaging.Customs
             Simplog.Server.Infrastructure.Helpers.CacheManager.CacheWrapper
                 .Insert("Customs.General.RequestInProgressNoteClient," + requestParams.PBId, text);
         }
-
-        public void AddExportDBSignQueue(TRequestParams requestParams, string personId, SignQueueByType SignatureBy, string CustomsAgentId)
-        {
-            string queueName = "";
-            if (SignatureBy == SignQueueByType.SignQueueByPersonId)
-            {
-                if (string.IsNullOrWhiteSpace(personId))
-                {
-                    throw new Exception($"personId is null, for userId {requestParams.LoggingUserId} - cache ?? ");
-                }
-                queueName = "PersonalSign_" + requestParams.Tenant + "_" + personId;
-            }
-            else
-            {
-
-                if (string.IsNullOrWhiteSpace(CustomsAgentId))
-                {
-                    throw new Exception($"CustomsAgentId is null, for tenant ?!? {requestParams.Tenant} - cache ?? ");
-                }
-
-                queueName = "CompanySign_" + requestParams.Tenant + "_" + CustomsAgentId;
-            }
-
-            Dictionary<string, string> messageProperties = new Dictionary<string, string>();
-            messageProperties.Add("InterfaceTypeCode", requestParams.InterfaceTypeCode);
-            messageProperties.Add("Tenant", requestParams.Tenant.ToString());
-            messageProperties.Add("CorrelationId", requestParams.CustomsRequestsSheetId);
-            var queueService = new Server.Tools.QueueService.CustomDbQueueService(queueName, 0);
-            var queueSendModel = new Server.Tools.QueueService.QueueSendModel();
-            queueSendModel.EntityCode = "CustomsRequestsSheet".ToLower();//"CustomsRequestsSheet";
-            queueSendModel.EntityId = MyCustomsRequestsSheetPM?.Id;
-            queueSendModel.UseRabbitMQ = false;//never use rabbit !!!!
-            queueSendModel.InterfaceTypeCode = requestParams.InterfaceTypeCode;
-            queueSendModel.Tenant = requestParams.Tenant;
-            queueService.Send(messageProperties, requestParams.Tenant, null, queueSendModel);
-        }
+      
         public string GetAvailableSignServer(out string personId, out SignQueueByType SignatureBy, out string noAvailableSignServerErrorText,
             string OverrideSignStepName = null)
         {
-            string availableSignServer = "";
+            string availableSignServer = null;
             noAvailableSignServerErrorText = personId = "";
 
             SignatureBy = //SignQueue.GetSignatureBy(_RequestParams.InterfaceTypeCode, _RequestParams.ForcePersonalSign);
                     this.CalcSignByFromStep(OverrideSignStepName);
             personId = SignQueue.Instance.GetUserPersonID(_RequestParams.LoggingUserId, _RequestParams.Tenant);
 
-            //if (!CustomsSettingQueryService.GetSettingByTenant(RequestParams.Tenant).IsConnectedToUniFreight)
-            if (CloudExportDbSignQueueService.IsCloudExport(_RequestParams.Tenant))
+            SignMethodByQueueEnum signMethodByQueueEnum = SignMethodByQueueEnum.None;
+            string customsAgentId = SignQueue.GetCustomsAgentIdFromTenant(_RequestParams.Tenant);
+
+            
+            if (string.IsNullOrWhiteSpace(availableSignServer) && 
+                SignQueueHybridDbService.IsCloudExport(_RequestParams.Tenant))
             {
-                var dbSignQueueService = new CloudExportDbSignQueueService();
-                availableSignServer = dbSignQueueService
+                var dbSignQueueService = new SignQueueHybridDbService();
+                (availableSignServer, signMethodByQueueEnum) = dbSignQueueService
                     .GetAvailableSignServer(_RequestParams.Tenant, SignatureBy, personId);
+                if (availableSignServer != null)
+                {
+                    RequestParams.RequestVIA = SendRequestVIA.WebServiceBatch;
+                    RequestParams.RequestVIAChangeDue = ("בקשה מחוייבת חתימה ולכן תשודר ברקע");
+                    RequestParams.SignMethodByQueue = signMethodByQueueEnum.ToString();//"HybridDbSignQueue";
+                    RequestParams.SignByPersonalId = SignCertificateClass.GetPersonID(availableSignServer);
+                    RequestParams.SignQueueByCompanyOrPersonal = SignatureBy.ToString();
+                }
+
+
 
             }
-            else
+            if (string.IsNullOrWhiteSpace(availableSignServer))
             {
                 availableSignServer = SignQueue.Instance.
                     GetAvailableSignServer(_RequestParams.Tenant, SignatureBy, personId);
+                RequestParams.SignMethodByQueue = SignMethodByQueueEnum.MemorySignQueue.ToString();//"MemorySignQueue";
 
             }
             if (string.IsNullOrWhiteSpace(availableSignServer))
@@ -1731,41 +1705,73 @@ After that Remove file  from DCA  .. ");
                         var signStepName = this.GetSignStepName(true);
                         var personId = SignQueue.Instance.GetUserPersonID(this.MyCustomsRequestsSheetPM.RequestOwnerId, this.MyCustomsRequestsSheetPM.Tenant);
                         var pmCustomsSetting = CustomsSettingQueryService.GetSettingByTenant(this.MyCustomsRequestsSheetPM.Tenant);
-                        if (!pmCustomsSetting.IsConnectedToUniFreight)
+                        //if (string.IsNullOrEmpty(RequestParams.SignMethodByQueue))
+                        //{
+                        //    throw new Exception("RequestParams.SignType is must !!");
+                        //}
+                        SignMethodByQueueEnum signMethodBy = SignMethodByQueueEnum.MemorySignQueue;
+                        if (!Enum.TryParse<SignMethodByQueueEnum>(RequestParams.SignMethodByQueue, out signMethodBy))
                         {
-                            AddExportDBSignQueue(RequestParams, personId, CalcSignByFromStep(null), pmCustomsSetting.CustomsAgentId);
+                            //throw new Exception("RequestParams.SignType is must !!");
                         }
-                        else
+                        switch (signMethodBy)
                         {
-
-                            var signQueueWebFormUrl = SignQueue.Instance
-                                .GetSignQueueWebFormUrl(
-                                _MyCustomsRequestsSheetPM.Tenant,
-                                personId,
-                                _MyCustomsRequestsSheetPM.Id, _MyCustomsRequestsSheetPM.InterfaceTypeCode, signStepName);
-                            try
-                            {
-
-                                Task.Run(
-                                    () =>
+                        
+                            case SignMethodByQueueEnum.HybridDbSignQueue:
+#if false
+                                    if (!pmCustomsSetting.IsConnectedToUniFreight)
                                     {
-                                        Thread.Sleep(5000);
-                                        var uri = new Uri(signQueueWebFormUrl);
-                                        var client = new WebClient();
-                                        client.DownloadStringCompleted += (sender, e1) =>
-                                        {
-                                        /// var res = e1.Result;
-                                        };
-                                        client.DownloadStringAsync(uri);
-                                    });
-                            }
-                            catch (Exception)
-                            {
+                                        AddExportDBSignQueue(RequestParams, personId, CalcSignByFromStep(null), pmCustomsSetting.CustomsAgentId);
+                                    }
+#endif
+                                {
+                                    var signQueueHybridExportDBService = new CreateSignQueueHybridExportDBService();
+                                    signQueueHybridExportDBService.CreateQueue(RequestParams, personId, CalcSignByFromStep(null), pmCustomsSetting.CustomsAgentId);
+                                }
+                                break;
+                            case SignMethodByQueueEnum.HSMSignQueue:
+                                {
+                                    var signQueueHSMDBService = new CreateSignQueueHSMDBService();
+                                    signQueueHSMDBService.CreateQueue(RequestParams, personId, CalcSignByFromStep(null), pmCustomsSetting.CustomsAgentId);
+                                }
 
-                                //throw;
-                            }
+                                break;
+                        
+                            case SignMethodByQueueEnum.None:
+                            case SignMethodByQueueEnum.MemorySignQueue:
+                            default:
+                                {
+
+                                    var signQueueWebFormUrl = SignQueue.Instance
+                                        .GetSignQueueWebFormUrl(
+                                        _MyCustomsRequestsSheetPM.Tenant,
+                                        personId,
+                                        _MyCustomsRequestsSheetPM.Id, _MyCustomsRequestsSheetPM.InterfaceTypeCode, signStepName);
+                                    try
+                                    {
+
+                                        Task.Run(
+                                            () =>
+                                            {
+                                                Thread.Sleep(5000);
+                                                var uri = new Uri(signQueueWebFormUrl);
+                                                var client = new WebClient();
+                                                client.DownloadStringCompleted += (sender, e1) =>
+                                                {
+                                            /// var res = e1.Result;
+                                                };
+                                                client.DownloadStringAsync(uri);
+                                            });
+                                    }
+                                    catch (Exception)
+                                    {
+
+                                        //throw;
+                                    }
+                                }
+                                break;
                         }
-
+                        
                         createSBQMessage = false;
                     }
                 }

@@ -13,9 +13,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.Customs.BL.Messaging.Customs
+namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
 {
-    public class CloudExportDbSignQueueService
+    public class SignQueueHybridDbService
     {
 
         const int LastAccessedInMin = 5;
@@ -78,79 +78,122 @@ namespace Logitude.Customs.BL.Messaging.Customs
             }
         }
 
-        public List<SignStationList> GetAllStation(string searchfields, int tenant)
+        public List<MySignStationList> GetAllStation(string searchfields, int tenant)
         {
             var repo = new SignStationRepository(tenant);
             string customsAgentId = SignQueue.GetCustomsAgentIdFromTenant(tenant);
             var res = repo.GetAllAvailable(customsAgentId, LastAccessedInMin);
 
-            var entityLists = new List<SignStationList>();
+            var entityLists = new List<MySignStationList>();
             res.ForEach(r =>
             {
-                var MySignCertificateClass = SignCertificateClass.Get(r.SignCertificate);
-                var my = new SignStationList()
-                {
-                    PersonId = MySignCertificateClass.PersonId,
-                    SignerName = MySignCertificateClass.SignerName,
+                //var MySignCertificateClass = SignCertificateClass.Get(r.SignCertificate);
+                //var my = new MySignStationList()
+                //{
+                //    PersonId = MySignCertificateClass.PersonId,
+                //    SignerName = MySignCertificateClass.SignerName,
 
-                    MachineName = MySignCertificateClass.MachineName,
-                    MachineUser = MySignCertificateClass.UserName,
+                //    MachineName = MySignCertificateClass.MachineName,
+                //    MachineUser = MySignCertificateClass.UserName,
 
-                    CustomsAgentId = MySignCertificateClass.CustomsAgentId,
-
-
-                    IsCompanySignOn = r.IsCompanySignOn,
-                    IsPersonalSignOn = r.IsPersonalSignOn,
-                    VersionByFeatures = r.VersionByFeatures,
-                    Status = r.Status,
-                    LastSignAt = r.LastAccessedAt,
-                    IsOk = r.Status.Equals("ok")
+                //    CustomsAgentId = MySignCertificateClass.CustomsAgentId,
 
 
-                };
+                //    IsCompanySignOn = r.IsCompanySignOn,
+                //    IsPersonalSignOn = r.IsPersonalSignOn,
+                //    VersionByFeatures = r.VersionByFeatures,
+                //    Status = r.Status,
+                //    LastSignAt = r.LastAccessedAt,
+                //    IsOk = r.Status.Equals("ok"),
+                    
 
+
+                //};
+                var my = r.ToMySignStationList();
                 entityLists.Add(my);
 
             }
             );
             return entityLists;
         }
-        public string GetAvailableSignServer(int tenant, SignQueueByType SignatureBy, string personId)
+        public (string signCertificate, SignMethodByQueueEnum dSignMethodByQueue) GetAvailableSignServer(int tenant, SignQueueByType SignatureBy, string personId)
         {
-
-            SignStation availableSignServer = null;
+            
+            MySignStationList availableSignServer = null;
             var repo = new SignStationRepository(tenant);
             string customsAgentId = SignQueue.GetCustomsAgentIdFromTenant(tenant);
 
-            switch (SignatureBy)
+            var hSMAllCertificates = new List<MySignStationList>();
+            var hSMSignService = new SignQueueHSMService();
+            if (hSMSignService.IsHSMSign_IsOn(tenant))
+            {
+                hSMAllCertificates = hSMSignService.GetHSMAllCertificates(tenant);
+            }
+                switch (SignatureBy)
             {
 
                 case SignQueueByType.SignQueueByCustomsAgentId:
 
-
-                    availableSignServer = repo.GetAvailableSignServerByCustomsAgentId(customsAgentId, LastAccessedInMin);
+                    availableSignServer = hSMAllCertificates.FirstOrDefault(r => r.IsCompanySignOn);
+                    if (availableSignServer != null)
+                    {
+                        return (availableSignServer.SignCertificate, SignMethodByQueueEnum.HSMSignQueue);
+                    }
+                     
+                    availableSignServer = repo.GetAvailableSignServerByCustomsAgentId(customsAgentId, LastAccessedInMin).ToMySignStationList();
 
 
                     break;
                 case SignQueueByType.SignQueueByPersonId:
+
+                    var defaultSignServer = hSMAllCertificates.FirstOrDefault(r => r.IsPersonalDefault);
                     if (String.IsNullOrWhiteSpace(personId))
                     {
-                        return null;
+                        
+                        if (defaultSignServer != null)
+                        {
+                            return (defaultSignServer.SignCertificate, SignMethodByQueueEnum.HSMSignQueue);
+                        }
+                        return (null, SignMethodByQueueEnum.None);
+                    }
+                    var hsmSignServer = hSMAllCertificates.FirstOrDefault(r => r.PersonId == personId);
+                    if (hsmSignServer != null)
+                    {
+                        return (hsmSignServer.SignCertificate, SignMethodByQueueEnum.HSMSignQueue);
                     }
 
-                    availableSignServer = repo.GetSingle(customsAgentId, personId);
+
+                    availableSignServer = repo.GetSingle(customsAgentId, personId).ToMySignStationList();
+
                     if (availableSignServer == null)
                     {
-                        return null;
+                        if (defaultSignServer != null)
+                        {
+                            return (defaultSignServer.SignCertificate, SignMethodByQueueEnum.HSMSignQueue);
+                        }
+                        return (null, SignMethodByQueueEnum.None); ;
                     }
                     if (!availableSignServer.IsPersonalSignOn)
                     {
-                        return null;
+                        if (defaultSignServer != null)
+                        {
+                            return (defaultSignServer.SignCertificate, SignMethodByQueueEnum.HSMSignQueue);
+                        }
+                        return (null, SignMethodByQueueEnum.None); ;
                     }
                     if (DateTime.Now.Subtract(availableSignServer.LastAccessedAt) > TimeSpan.FromMinutes(LastAccessedInMin))
                     {
-                        return null;
+                        if (defaultSignServer != null)
+                        {
+                            return (defaultSignServer.SignCertificate, SignMethodByQueueEnum.HSMSignQueue);
+                        }
+                        return (null, SignMethodByQueueEnum.None); ;
                     }
+                    else
+                    {
+                        return (availableSignServer.SignCertificate, SignMethodByQueueEnum.HybridDbSignQueue);
+                    }
+
                     break;
                 default:
                     throw new Exception("GetAvailableSignServer() while SignatureBy Not P/C");
@@ -159,9 +202,9 @@ namespace Logitude.Customs.BL.Messaging.Customs
 
             if (availableSignServer == null)
             {
-                return null;
+                return (null, SignMethodByQueueEnum.None); 
             }
-            return availableSignServer.SignCertificate;
+            return (availableSignServer.SignCertificate, SignMethodByQueueEnum.HybridDbSignQueue);
         }
 
         public static bool IsCloudExport(int tenant)
@@ -169,7 +212,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
             return (!CustomsSettingQueryService.GetSettingByTenant(tenant).IsConnectedToUniFreight);
         }
     }
-    public class SignStationList
+    public class MySignStationList
     {
         public string PersonId { get; set; }
         public string SignerName { get; set; }
@@ -183,5 +226,55 @@ namespace Logitude.Customs.BL.Messaging.Customs
         public DateTime? LastSignAt { get; set; }
         public bool? IsOk { get; set; }
         public string VersionByFeatures { get; set; }
+        public bool IsPersonalDefault { get; set; }
+        public string SignMethodByQueue { get; set; } //= SignMethodByQueueEnum.None.ToString(),
+        public string SignCertificate { get; set; }
+
+        public DateTime LastAccessedAt { get; set; }
+
+
+
+
     }
+
+
+    public static class SignStation_Ext
+    {
+        public static MySignStationList ToMySignStationList(this SignStation signStation
+            )
+        {
+            if (signStation == null) return null; ;
+
+            var MySignCertificateClass = SignCertificateClass.Get(signStation.SignCertificate);
+
+            
+            var my = new MySignStationList()
+            {
+                PersonId = signStation.PersonId,
+                SignerName = MySignCertificateClass.SignerName,
+
+                MachineName = signStation.MachineName,
+                MachineUser = signStation.UserName,
+
+                CustomsAgentId = signStation.CustomsAgentId,
+
+
+                IsCompanySignOn = signStation.IsCompanySignOn,
+                IsPersonalSignOn = signStation.IsPersonalSignOn,
+                VersionByFeatures = signStation.VersionByFeatures,
+                Status = signStation.Status,
+                LastSignAt = signStation.LastAccessedAt,
+                IsOk = signStation.Status.Equals("ok"),
+                SignCertificate = signStation.SignCertificate,
+                LastAccessedAt = signStation.LastAccessedAt,
+                 
+
+
+
+            };
+            return my;
+            
+        }
+    }
+
 }

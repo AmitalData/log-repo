@@ -263,4 +263,15 @@ namespace Logitude.Server.Tools.ExternalServices
         SignQueueByCustomsAgentId,
         SignQueueByPersonId
     }
+
+
+    public enum SignMethodByQueueEnum
+    {
+        None = 0,
+        MemorySignQueue,
+        HybridDbSignQueue,
+        HSMSignQueue,
+    }
+
+
 }
