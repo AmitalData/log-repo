@@ -104,9 +104,7 @@ namespace WebFreight.Web.WebPages
                     
                     if (filestrings.Length >= 4 && !isDigitalPortal)
                     {
-                        var digitalFileName = !string.IsNullOrEmpty(myDoc.CalculatedFileName) ? myDoc.CalculatedFileName : myDoc.FileName;
-
-                        filename = filestrings[3] != null ? filestrings[3] : digitalFileName;
+                        filename = filestrings[3] != null ? filestrings[3] : filename;
                     }
 
                     if (!string.IsNullOrEmpty(documentExtension))
@@ -134,6 +132,7 @@ namespace WebFreight.Web.WebPages
 
                             if (isDigitalPortal)
                             {
+                                var digitalFileName = !string.IsNullOrEmpty(myDoc.CalculatedFileName) ? myDoc.CalculatedFileName : myDoc.FileName;
                                 documentName = $"{documentType} - {filename}.{documentExtension}";
                             }
                             // _DatainByte = sender as byte[];
