@@ -183,16 +183,16 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
                     }
                     if (DateTime.Now.Subtract(availableSignServer.LastAccessedAt) > TimeSpan.FromMinutes(LastAccessedInMin))
                     {
-                        if (availableSignServer?.IsPersonalSignOn== true)
+                        if (defaultSignServer != null)
                         {
-                            return (availableSignServer.SignCertificate, SignMethodByQueueEnum.HybridDbSignQueue);
+                            return (defaultSignServer.SignCertificate, SignMethodByQueueEnum.HSMSignQueue);
                         }
+                        return (null, SignMethodByQueueEnum.None); ;
                     }
-                    if (defaultSignServer != null)
+                    else
                     {
-                        return (defaultSignServer.SignCertificate, SignMethodByQueueEnum.HSMSignQueue);
+                        return (availableSignServer.SignCertificate, SignMethodByQueueEnum.HybridDbSignQueue);
                     }
-                    return (null, SignMethodByQueueEnum.None); ;
 
                     break;
                 default:
@@ -266,6 +266,8 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
                 LastSignAt = signStation.LastAccessedAt,
                 IsOk = signStation.Status.Equals("ok"),
                 SignCertificate = signStation.SignCertificate,
+                LastAccessedAt = signStation.LastAccessedAt,
+                 
 
 
 
