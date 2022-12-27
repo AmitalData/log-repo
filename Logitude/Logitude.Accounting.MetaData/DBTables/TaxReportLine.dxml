@@ -195,7 +195,7 @@
     Name="SubTotalInLocalCurrency"
     Type="float">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="UpdatedByUserId"
