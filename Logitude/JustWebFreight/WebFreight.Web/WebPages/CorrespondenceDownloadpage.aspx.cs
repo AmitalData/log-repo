@@ -133,7 +133,7 @@ namespace WebFreight.Web.WebPages
                             if (isDigitalPortal)
                             {
                                 var digitalFileName = !string.IsNullOrEmpty(myDoc.CalculatedFileName) ? myDoc.CalculatedFileName : myDoc.FileName;
-                                documentName = $"{documentType} - {filename}.{documentExtension}";
+                                documentName = $"{documentType} - {digitalFileName}.{documentExtension}";
                             }
                             // _DatainByte = sender as byte[];
                             HttpContext.Current.Response.Clear();
