@@ -104,7 +104,9 @@ namespace WebFreight.Web.WebPages
                     
                     if (filestrings.Length >= 4 && !isDigitalPortal)
                     {
-                        filename = filestrings[3] != null ? filestrings[3] : myDoc.FileName;
+                        var digitalFileName = !string.IsNullOrEmpty(myDoc.CalculatedFileName) ? myDoc.CalculatedFileName : myDoc.FileName;
+
+                        filename = filestrings[3] != null ? filestrings[3] : digitalFileName;
                     }
 
                     if (!string.IsNullOrEmpty(documentExtension))
@@ -347,11 +349,13 @@ namespace WebFreight.Web.WebPages
                             DocumentTypeCode = document.DocumentTypeCode,
                             FileSize = document.FileSize,
                         });
-                        
+
+                        var digitalFileName = !string.IsNullOrEmpty(document.CalculatedFileName) ? document.CalculatedFileName : document.FileName;
+
                         document.CalculatedFileName = domainName == "cargo" 
                                                       ? shipmentNumber + '_' + document.DocumentTypeName
                                                       : domainName == "DigitalPortal" 
-                                                        ? $"{document.DocumentTypeName} - {document.FileName}"
+                                                        ? $"{document.DocumentTypeName} - {digitalFileName}"
                                                         : document.CalculatedFileName;
 
                         if (document.DirectionCode == "O" && document.DoucmentTypeTemplateFormatCode == "M")
