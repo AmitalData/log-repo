@@ -57,6 +57,7 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
         });
     }
 
+
     BuildItemsSource() {
         this.LabelsItemsSource = new ObservableCollection([]);
         var labelsList: CustomizationLabelItem[] = [];
@@ -64,6 +65,7 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
         this.digitalTextService.GetTextCodesByFilters(null, objectTableId).subscribe((myResult) => {
             if (!myResult.HasError) {
                 var data = myResult.Result;
+                this.loadedResults = data;
                 if (!AppTool.IsNullOrEmpty(this.SearchText)) {
                     data = data.filter(f =>
                         (!AppTool.IsNullOrEmpty(f.FieldCode) && f.FieldCode.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1) ||
@@ -83,7 +85,30 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
     public set SearchText(value: string) {
         if (this.searchText != value) {
             this.searchText = value;
-            this.BuildItemsSource();
+            this.BuildSearchItems();
+        }
+    }
+
+    loadedResults: CustomizationLabelItem[] = [];
+    BuildSearchItems() {
+        var labelsList: CustomizationLabelItem[] = [];
+        if (!AppTool.IsNullOrEmpty(this.SearchText)) {
+            var data = this.loadedResults;
+            data = data.filter(f =>
+                (!AppTool.IsNullOrEmpty(f.FieldCode) && f.FieldCode.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1) ||
+                (!AppTool.IsNullOrEmpty(f.DisplayText) && f.DisplayText.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1) ||
+                (!AppTool.IsNullOrEmpty(f.DefaultText) && f.DefaultText.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1));
+
+            data.forEach(item => {
+                labelsList.push(new CustomizationLabelItem(this, item));
+            });
+            this.LabelsItemsSource = new ObservableCollection([]);
+            this.LabelsItemsSource.InsertCollection(labelsList);
+        }
+        else {
+            this.LabelsItemsSource = new ObservableCollection([]);
+            labelsList = this.loadedResults;
+            this.LabelsItemsSource.InsertCollection(labelsList);
         }
     }
 
@@ -172,6 +197,7 @@ export class CustomizationLabelItem extends BaseComponent {
         newLabel.TextCode = this.textCode;
         newLabel.FieldCode = this.fieldCode;
         newLabel.DefaultText = newValue;
+        newLabel.DisplayText = this.displayText;
         this.father.ModifiedLables.Lables.push(newLabel);
     }
 
