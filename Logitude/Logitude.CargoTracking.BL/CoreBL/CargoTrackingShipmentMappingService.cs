@@ -188,7 +188,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
 
         private string GetShipperName(ShipmentOrderPM order, List<CardList> cardsList)
         {
-            if (cardsList.Any() && order.DirectionId == "I")
+            if (cardsList.Any() && order.DirectionId == "I" && order.ShipperId != null)
             {
                 return cardsList.FirstOrDefault(a => a.Id == order.ShipperId).EnglishName;
             }

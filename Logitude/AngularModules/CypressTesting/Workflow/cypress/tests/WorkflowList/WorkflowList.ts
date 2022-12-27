@@ -18,14 +18,6 @@ Then("the flow builder open successfully", () => {
     Actions.AssertOpenFlowBuilder();
 });
 
-When("search flow", () => {
-    Actions.SearchFlowByName();
-});
-
-Then("the flow should appear successfully", () => {
-    Actions.AssertSearchFlowByName();
-});
-
 When("refresh workflow list", () => {
     Actions.RefreshWorkflowList();
 });
@@ -40,4 +32,12 @@ When("export workflow list", () => {
 
 Then("the list should export successfully", () => {
     Actions.AsserExportWorkflowList();
+});
+
+When("search flow", () => {
+    Actions.SearchFlowByName();
+});
+
+Then("the flow should appear successfully", () => {
+    Actions.AssertSearchFlowByName();
 });

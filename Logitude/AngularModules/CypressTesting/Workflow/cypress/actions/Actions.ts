@@ -10,10 +10,11 @@ import { BaseSelectors } from "../../../Base/cypress/selectors/BaseSelectors";
 import { ConditionDetails } from "../models/ConditionDetails";
 import { WorkflowRunHistoryFixturePath } from '../fixtures/WorkflowRunHistory/WorkflowRunHistoryFixturePath'
 import { DecisionElementDetails } from "../models/DecisionElementDetails";
+import { WorkflowlistFixturePath } from "../fixtures/WorkflowList/WorkflowListFixturePath";
 
 let ConditionCounter = 1;
 let ConditionGroupButton = 1;
-let workflowName;
+let SearchworkflowName;
 let InstanceBusinessKey;
 let SearchInstanceBusinessKey;
 
@@ -27,46 +28,33 @@ export function OpenWorkflowsInAutomationTab() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetWorkflowViews, 200)
 }
 
-export function SearchFlowByName() {
-    cy.DefineRequestWait(RestAPI.GET, URLs.GetBackToWorkflowsList, RequestAliases.GetBackToWorkflowViews);
-    BackToWorkflowList();
-    cy.DefineRequestWait(RestAPI.GET, URLs.GetWorkflowViews, RequestAliases.GetWorkflowViews);
-    cy.FillLogTextBox(WorkflowSelectors.WorkflowSearchBox, workflowName);
-}
-
 export function RefreshWorkflowList() {
-    cy.DefineRequestWait(RestAPI.GET, URLs.GetWorkflowViews, RequestAliases.GetWorkflowViews);
+    cy.fixture(WorkflowlistFixturePath.MockWorkflowList).then(response => {
+        cy.DefineMockRequestWait(RestAPI.GET, URLs.GetWorkflowViews, RequestAliases.GetWorkflowViews, response);
+        SearchworkflowName = response.Result[0].Name;
+    });    
     cy.Click(WorkflowSelectors.WorkflowListRefreshButton, null)
+};
+
+export function AssertWorkflowListReresh() {
+    BaseAssertion.AssertStatusCode(RequestAliases.GetWorkflowViews, 200);
 }
 
 export function ExportWorkflowList() {
     cy.DefineRequestWait(RestAPI.GET, URLs.GetQueryExportExecution, RequestAliases.GetQueryExportExecution);
     cy.Click(WorkflowSelectors.WorkflowListExcelExport, null)
-}
+};
 
 export function AsserExportWorkflowList() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetQueryExportExecution, 200);
-    BaseAssertion.AssertElementContain(WorkflowSelectors.WorkflowLinkButton, 'Download file')
-}
-
-export function AssertWorkflowListReresh() {
-    BaseAssertion.AssertStatusCode(RequestAliases.GetWorkflowViews, 200)
-}
-
-export function AssertSearchFlowByName() {
-    BaseAssertion.AssertStatusCode(RequestAliases.GetWorkflowViews, 200);
+    BaseAssertion.AssertElementContain(WorkflowSelectors.WorkflowLinkButton, 'Download file');
+    cy.Click(BaseSelectors.button, BaseSelectors.ContainsCancel)
 }
 
 function BackToWorkflowList() {
     cy.Click(WorkflowSelectors.BackToWorkflowListButton, 'Workflows', null);
-    BaseAssertion.AssertStatusCode(RequestAliases.GetBackToWorkflowViews, 200);
 }
 
-function GetWorkflowNameInBuilder() {
-    cy.get(WorkflowSelectors.FlowNameInFlowBuilder).should(($div) => {
-        workflowName = $div.text().replace(/\s/g, "");
-    })
-}
 
 export function OpenFirstFlowInWorkFlowList() {
     cy.DefineRequestWait(RestAPI.GET, URLs.GetWorkflowFlowBuilder, RequestAliases.GetWorkflowFlowBuilder);
@@ -75,8 +63,7 @@ export function OpenFirstFlowInWorkFlowList() {
 
 export function AssertOpenFlowBuilder() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetWorkflowFlowBuilder, 200);
-    BaseAssertion.AssertElementExist(WorkflowSelectors.FlowBuilderEditButton);
-    GetWorkflowNameInBuilder();
+    BackToWorkflowList();
 }
 
 export function FillEditFlowStartNodeDetails(startNodeDetails: StartNodeDetails) {
@@ -106,8 +93,20 @@ export function OpenNewWorkflow() {
     BaseAssertion.AssertStatusCode(RequestAliases.GetNewWorkflow, 200);
 }
 
+export function SearchFlowByName() {
+    cy.fixture(WorkflowlistFixturePath.MockSingleWorkflow).then(response => {
+        cy.DefineMockRequestWait(RestAPI.GET, URLs.GetWorkflowViews, RequestAliases.MockSingleWorkflowView, response);
+    });
+    cy.FillLogTextBox(WorkflowSelectors.WorkflowSearchBox, SearchworkflowName);
+    console.log(SearchworkflowName);
+};
+
+export function AssertSearchFlowByName() {
+    BaseAssertion.AssertStatusCode(RequestAliases.MockSingleWorkflowView, 200);
+};
+
 export function FillUpdateWorkflowDetails(workflowDetails: WorkflowDetails) {
-    cy.Click(WorkflowSelectors.FlowEditButton, null);
+    cy.Click(WorkflowSelectors.WorkflowGeneralTab, null);
     let FlowName = workflowDetails.Name.toLocaleLowerCase() == "random" ?
         GenerateRandoms.GenerateRandomString(5, true) : null;
     cy.FillLogTextBox(WorkflowSelectors.WorkflowName, FlowName);
@@ -135,8 +134,8 @@ export function CloseEditStartNodeWindow() {
 
 export function SaveWorkflow() {
     CloseEditStartNodeWindow();
-    cy.DefineRequestWait(RestAPI.PUT, URLs.WorkflowRequest, RequestAliases.PutWorkflowFlowBuilder);
-    cy.Click(WorkflowSelectors.WorkflowSaveButton, null)
+    cy.DefineRequestWait(RestAPI.PUT, URLs.WorkflowVersionRequest, RequestAliases.PutWorkflowFlowBuilder);
+    cy.Click(WorkflowSelectors.WorkflowSaveDraft, null)
 }
 
 export function AssertSaveWorkflow() {
@@ -196,7 +195,7 @@ export function FillConditionsGroup(conditionDetailsList: ConditionDetails[], Is
 }
 
 export function OpenFlowRunHistory() {
-    cy.Click(WorkflowSelectors.FlowEditButton, null);
+    cy.Click(WorkflowSelectors.WorkflowRunHistory, null);
     cy.fixture(WorkflowRunHistoryFixturePath.MockWorkflowInstaces).then(response => {
         cy.DefineMockRequestWait(RestAPI.GET, URLs.Getworkflowinstance, RequestAliases.GetMockWorkflowInstances, response);
         InstanceBusinessKey = response.Result[0].BusinessKey
@@ -245,7 +244,7 @@ export function FilterInstancesBycurrentdate() {
     cy.fixture(WorkflowRunHistoryFixturePath.MockWorkflowInstaces).then(response => {
         cy.DefineMockRequestWait(RestAPI.GET, URLs.Getworkflowinstance, RequestAliases.GetMockWorkflowInstances, response);
     });
-    cy.Click(WorkflowSelectors.RunHistoryDatePicker, null).then(() =>{
+    cy.Click(WorkflowSelectors.RunHistoryDatePicker, null).then(() => {
         cy.get(WorkflowSelectors.DatePickertodayDate).click();
     });
 }
@@ -318,8 +317,8 @@ export function CloseEditDecisionNodeWindow() {
 
 export function SaveDecisionWorkflow() {
     CloseEditDecisionNodeWindow();
-    cy.DefineRequestWait(RestAPI.PUT, URLs.WorkflowRequest, RequestAliases.PutWorkflowFlowBuilder);
-    cy.Click(WorkflowSelectors.WorkflowSaveButton, null);
+    cy.DefineRequestWait(RestAPI.PUT, URLs.WorkflowVersionRequest, RequestAliases.PutWorkflowFlowBuilder);
+    cy.Click(WorkflowSelectors.WorkflowSaveDraft, null);
 }
 
 function OpenEditDecisionElement() {
@@ -383,5 +382,9 @@ function FillConditionValue(selector: string, value: string, condition: string) 
             return cy.FillLogTextBox(selector, value);
         case "Main Carriage Transport Mode":
             return cy.SelectDropDownListItem2(selector, value);
+        case "Incoterm":
+            return cy.SelectDefinedComboDropDownListItem(selector, value, 0);
+        case "Main Carriage ATA":
+            return cy.SelectDefinedComboDropDownListItem(selector, value, 0);
     }
 }

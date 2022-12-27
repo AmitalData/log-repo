@@ -211,7 +211,7 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
                 this.IsPreviewChanges = false;
                 this.PreviewDigitalPortal();
             }
-            this.ChangeSelectedItem();
+            
         });
     }
 

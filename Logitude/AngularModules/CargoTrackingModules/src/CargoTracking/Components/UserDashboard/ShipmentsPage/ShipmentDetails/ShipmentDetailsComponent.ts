@@ -500,33 +500,57 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
 
 
     SetTitleForSupplierOrClient(shipment: any) {
-        var title;
+        let title;
+
         switch (shipment.DirectionId) {
             case ShipmentDirections.Import: {
-                title = "SHIPPER"
+                title = 'SHIPPER';
                 break;
             }
-
             case ShipmentDirections.Export: {
-                title = "CLIENT"
+                title = 'CLIENT';
+                break;
+            }
+            case ShipmentDirections.Drop: {
+                if (shipment.ShipmentNumber.startsWith('EF') || shipment.ShipmentNumber.startsWith('MF')) {
+                    title = 'CLIENT';
+                } else {
+                    title = 'SHIPPER';
+                }
                 break;
             }
         }
 
-        if (shipment.EntityType == this.EntityType_Customs) {
-            title = "SHIPPER"
+        if (shipment.EntityType === this.EntityType_Customs) {
+            title = 'SHIPPER';
         }
 
         return title;
     }
 
-    SetSupplierOrCleintValueByDirection(shipmentList) {
-        if (shipmentList.DirectionId == ShipmentDirections.Import || shipmentList.EntityType == ShipmentDirections.Customs) {
-            return shipmentList.ShipperName;
-        } else if (shipmentList.DirectionId == ShipmentDirections.Export) {
-            return shipmentList.ConsigneeName;
+    SetSupplierOrClientValueByDirection(shipment) {
+        let name;
+
+        switch (shipment.DirectionId) {
+            case ShipmentDirections.Import: {
+                name = shipment.ShipperName;
+                break;
+            }
+            case ShipmentDirections.Export: {
+                name = shipment.ConsigneeName;
+                break;
+            }
+            case ShipmentDirections.Drop: {
+                if (shipment.ShipmentNumber.startsWith('EF') || shipment.ShipmentNumber.startsWith('MF')) {
+                    name = shipment.ConsigneeName;
+                } else {
+                    name = shipment.ShipperName;
+                }
+                break;
+            }
         }
-        return '';
+
+        return name;
     }
 
     SetTypeTitle() {
@@ -1141,7 +1165,7 @@ export class MilestoneCard {
 export enum ShipmentDirections {
     Import = "I",
     Export = "E",
-    Customs = "C"
+    Drop = "R"
 }
 
 export enum PartnerTypeNames {
