@@ -20,8 +20,7 @@ namespace Logitude.Customs.BL.TraceEvents
 
             if (!mySetting.IsConnectedToUniFreight && UseHybrid_When_NotIsConnectedToUniFreight)
             {
-                if (Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("FSN", declarationPM.Tenant))
-                {
+               
 
 
                     var unifreightHybridQueueTaskService = new UnifreightHybridQueueTaskService<AmitalEventTracerModel, Logitude.AmitalMessaging.Infrastructure.FuStatus.LOGICUSTFILE >(myAmitalEventTracer, logistictFile);
@@ -31,7 +30,7 @@ namespace Logitude.Customs.BL.TraceEvents
                         ParameterName = "transmission"
                        
                     },false);
-                }
+              
             }
         }
 
