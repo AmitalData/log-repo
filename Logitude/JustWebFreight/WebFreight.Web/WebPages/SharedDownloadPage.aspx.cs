@@ -512,7 +512,8 @@ namespace WebFreight.Web.WebPages
 
                             if (isFromDigital)
                             {
-                                documentName = $"{documentType} - {filename}.{documentExtension}";
+                                var digitalFileName = !string.IsNullOrEmpty(document.CalculatedFileName) ? document.CalculatedFileName : document.FileName;
+                                documentName = $"{documentType} - {digitalFileName}.{documentExtension}";
                             }
 
                             // _DatainByte = sender as byte[];
