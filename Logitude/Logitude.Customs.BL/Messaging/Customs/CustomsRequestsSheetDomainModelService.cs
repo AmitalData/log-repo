@@ -497,8 +497,11 @@ namespace Logitude.Customs.BL.Messaging.Customs
                     .GetAvailableSignServer(_RequestParams.Tenant, SignatureBy, personId);
                 if (availableSignServer != null)
                 {
-                    RequestParams.RequestVIA = SendRequestVIA.WebServiceBatch;
-                    RequestParams.RequestVIAChangeDue = ("בקשה מחוייבת חתימה ולכן תשודר ברקע");
+                    if (signMethodByQueueEnum != SignMethodByQueueEnum.HSMSignQueue)
+                    {
+                        RequestParams.RequestVIA = SendRequestVIA.WebServiceBatch;
+                        RequestParams.RequestVIAChangeDue = ("בקשה מחוייבת חתימה ולכן תשודר ברקע");
+                    }
                     RequestParams.SignMethodByQueue = signMethodByQueueEnum.ToString();//"HybridDbSignQueue";
                     RequestParams.SignByPersonalId = SignCertificateClass.GetPersonID(availableSignServer);
                     RequestParams.SignQueueByCompanyOrPersonal = SignatureBy.ToString();
