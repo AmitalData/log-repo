@@ -46,7 +46,6 @@ import {LogitudeGridExportToExcelService} from 'src/CargoTracking/Services/Other
 })
 export class ShipmentsListComponent implements AfterViewInit, OnInit {
     moreFilterCodes = MoreFilterCodes;
-
     noResult: boolean = false;
     currentDate = new Date();
     FilteredItems: any[] = [];
@@ -213,6 +212,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
 
     private GetInvitedCustomers() {
+        console.log('SessionInfo.LoggedUserCompanyLogins', SessionInfo.LoggedUserCompanyLogins);
         this.InvitedCustomers = SessionInfo.LoggedUserCompanyLogins
             .filter(d => d.CardType == 'CS' && d.CardId != null && d.Tenant == this.tenant)
             .map(d => (
@@ -473,64 +473,45 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
     }
 
-    SetTitileAndValueForSupplierOrClient(shipment: CargoTrackingShipmentList) {
-        this.SetTitleForSupplierOrClient(shipment);
-        this.SetValueForSupplierOrClient(shipment);
-    }
-
-
-    SetTitleForSupplierOrClient(shipment: CargoTrackingShipmentList) {
-        var title;
+    SetTitleAndValueForSupplierOrClient(shipment: CargoTrackingShipmentList) {
         switch (shipment.DirectionId) {
             case ShipmentDirections.Import: {
-                title = "SHIPPER"
+                this.SupplierOrClientTitle = 'SHIPPER';
+                this.SupplierOrClientValue = shipment.ShipperName;
                 break;
             }
-
             case ShipmentDirections.Export: {
-                title = "CLIENT"
+                this.SupplierOrClientTitle = 'CLIENT';
+                this.SupplierOrClientValue = shipment.ConsigneeName;
+                break;
+            }
+            case ShipmentDirections.Drop: {
+                if (shipment.ShipmentNumber.startsWith('EF') || shipment.ShipmentNumber.startsWith('MF')) {
+                    this.SupplierOrClientTitle = 'CLIENT';
+                    this.SupplierOrClientValue = shipment.ConsigneeName;
+                } else {
+                    this.SupplierOrClientTitle = 'SHIPPER';
+                    this.SupplierOrClientValue = shipment.ShipperName;
+                }
                 break;
             }
         }
 
-        if (shipment.EntityType == this.EntityType_Customs) {
-            title = "SHIPPER"
+        if (shipment.EntityType === this.EntityType_Customs) {
+            this.SupplierOrClientTitle = 'SHIPPER';
         }
-
-        this.SupplierOrClientTitle = title;
-    }
-
-    SetValueForSupplierOrClient(shipment: CargoTrackingShipmentList) {
-        var value;
-        value = this.SetSupplierOrCleintValueByDirection(shipment, value);
-        value = this.SetSupplierOrCleintValueByEntityType(shipment, value);
-
-        this.SupplierOrClientValue = value;
-    }
-
-    private SetSupplierOrCleintValueByDirection(shipment: CargoTrackingShipmentList, value: any) {
-        switch (shipment.DirectionId) {
-            case 'I': {
-                value = shipment.ShipperName;
-                break;
-            }
-
-            case 'E': {
-                value = shipment.ConsigneeName;
-                break;
-            }
-        }
-        return value;
     }
 
     QuantityAndWeight: string;
 
     public SetQuantityAndWeight(shipment: CargoTrackingShipmentList) {
-        this.QuantityAndWeight = (shipment.NumberOfPackages ? shipment.NumberOfPackages + ' Units ' : '') + (shipment.NumberOfPackages && shipment.GrossWeight ? ' / ' : '') + (shipment.GrossWeight ? shipment.GrossWeight + ' ' + shipment.GrossWeightUnitCode : '');
+        this.QuantityAndWeight = (shipment.NumberOfPackages ? shipment.NumberOfPackages + ' Units ' : '')
+            + (shipment.NumberOfPackages && shipment.GrossWeight ? ' / ' : '')
+            + (shipment.GrossWeight ? shipment.GrossWeight + ' ' + shipment.GrossWeightUnitCode : '');
     }
 
     private SetSupplierOrCleintValueByEntityType(shipment: CargoTrackingShipmentList, value: any) {
-        if (shipment.EntityType == this.EntityType_Customs) {
+        if (shipment.EntityType === this.EntityType_Customs) {
             value = shipment.ShipperName;
         }
         return value;
