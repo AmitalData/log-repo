@@ -12,6 +12,8 @@ using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.Server.Tools.Contracts;
 using Logitude.Server.Tools.Helpers;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
@@ -62,16 +64,16 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
                 newNotificationPM.DueDate = DateTime.Now;
                 newNotificationPM.Description = desc;
 
-                /*ICommonDataContext CommonContext = CommonDataContext.GetContext(t.Tenant);
+                ICommonDataContext CommonContext = CommonDataContext.GetContext(t.Tenant);
                 var cardRepository = new CardRepository(CommonContext);
-                Card card = cardRepository.GetSingleCardByVatNumber(customResponse.POA.authorizerExternalId.ToString(), t.Tenant);
+                Card card = cardRepository.GetSingleCardByVatNumber(client.Code, t.Tenant);
                 if (card != null && !String.IsNullOrWhiteSpace(card.Id))
                 {
                     newNotificationPM.CustomerId = card.Id;
-                }*/
-                newNotificationPM.CustomerId = client.Id;
+                }
+                //newNotificationPM.CustomerId = client.Id;
                 newNotificationPM.AssigneToId = NotificationBase.
-                    CalcAssigneToId(t.Tenant, client.Id, "", "3730P", "");
+                    CalcAssigneToId(t.Tenant, client.Code, "", "3730P", "");
 
                 NotificationBase.CloseAllRelatedNotification(dbContext, newNotificationPM, newNotificationPM.NotificationDefinitionCode);
                 notificationUpdateService.Update(newNotificationPM, true);

@@ -163,7 +163,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         public List<ClientPM> GetAllClientsPOAExpire(int tenant) 
         {
-            LogMessagingUtil.Instance.AppendLine(context.GetConnection().ConnectionString);
+            //LogMessagingUtil.Instance.AppendLine(context.GetConnection().ConnectionString);
             List<ClientPM> clientsPMList = new List<ClientPM>();
             List<Client> clientsList = repository.GetAllClientsPOAExpire(tenant);
 
