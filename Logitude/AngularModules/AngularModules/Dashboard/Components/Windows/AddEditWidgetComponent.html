@@ -254,7 +254,7 @@
                             <td style="vertical-align:top">
                                 <img width="ImgWitdh" height="96px" style="max-height: 96px;" [attr.src]="ChartImageSrc" />
                                 
-                                <table>      
+                                <table> 
                                     <tr class="FormFieldRow" *ngIf="isGroupByVisible">
                                         <td>
                                             <div>
@@ -270,6 +270,18 @@
                                             </div>
                                         </td>
                                     </tr>
+
+                                    <tr *ngIf="SecondaryGroupById && SelectedSecondaryGroupField && (SelectedSecondaryGroupField.DataTypeCode == 'DateTime' || SelectedSecondaryGroupField.DataTypeCode == 'Date')">
+                                        <td style="height: 32px">
+                                            <div></div>
+                                        </td>
+                                    </tr>     
+
+                                    <tr *ngIf="SelectedGroupField && (SelectedGroupField.DataTypeCode == 'DateTime' || SelectedGroupField.DataTypeCode == 'Date')">
+                                        <td style="height: 32px">
+                                            <div></div>
+                                        </td>
+                                    </tr>   
 
                                     <tr class="FormFieldRow" *ngFor="let item of WidgetMeasuresList">
                                         <td *ngIf="item.ShowRenderList" style="padding-left: 2px;width: 124px;">
