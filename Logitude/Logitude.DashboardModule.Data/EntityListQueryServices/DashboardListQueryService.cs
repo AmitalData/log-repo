@@ -50,8 +50,8 @@ namespace Logitude.DashboardModule.Data.EntityListQueryServices
 
             return (from d in iQueryable
                     where
-                    (d.PermissionLevelCode == "ONM" && d.CreatedByUserId == loggedContactId)
-                    || (d.PermissionLevelCode == "SPF" && users.Select(s => s.UserId).Contains(loggedContactId))
+                    d.CreatedByUserId == loggedContactId
+                    || users.Select(s => s.UserId).Contains(loggedContactId)
                     || (d.PermissionLevelCode == "PUB")
                     select d);
         }

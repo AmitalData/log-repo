@@ -74,6 +74,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                        VatAmountRound = a.VatAmountRound,
 
                                                        IsEquipment = a.IsEquipment,
+                                                       SubTotalInLocalCurrency=a.SubTotalInLocalCurrency,
 
                                                    });
             return query;

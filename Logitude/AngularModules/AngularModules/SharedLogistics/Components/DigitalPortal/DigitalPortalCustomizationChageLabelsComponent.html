@@ -53,7 +53,7 @@
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate [Alignment]="'left'" [IsEnabled]="false">
                                             <div style="width: 100%; text-align: left;" class="TextTrimming">
-                                                <label *ngIf="!SearchText">{{item.DefaultText}}</label>
+                                                <label>{{item.DefaultText}}</label>
                                             </div>
                                         </log-cell-template>
                                     </ng-template>

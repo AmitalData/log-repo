@@ -375,7 +375,7 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new CustomChildObjectMap());
             modelBuilder.Configurations.Add(new DataCustomObjectMap());
             modelBuilder.Configurations.Add(new ReferenceCustomObjectMap());
-
+            modelBuilder.Configurations.Add(new DeploymentPackageMap());
 
 
             modelBuilder.Entity<ObjectTable>().HasOptional(p => p.MainTip).WithMany();
@@ -1075,6 +1075,11 @@ namespace Simplog.Data.InfrastructureModel
             set;
         }
         public IDbSet<ReferenceCustomObject> ReferenceCustomObjects
+        {
+            get;
+            set;
+        }
+        public IDbSet<DeploymentPackage> DeploymentPackages
         {
             get;
             set;

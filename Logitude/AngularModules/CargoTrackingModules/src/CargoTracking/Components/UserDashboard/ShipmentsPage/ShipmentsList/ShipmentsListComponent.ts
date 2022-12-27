@@ -27,6 +27,7 @@ import {CargoTrackingMilestoneService} from 'src/CargoTracking/Services/Others/C
 import {MultipleSelectionComponent} from 'src/Infrastructure/Components/MultipleSelection/MultipleSelectionComponent';
 import {filter} from 'rxjs/operators';
 import {ShipmentDirections} from '../ShipmentDetails/ShipmentDetailsComponent';
+import {ReplaySubject} from 'rxjs';
 import {SharedService} from 'src/CargoTracking/Services/Others/SharedService';
 import {QueryColumnPM} from 'src/CargoTracking/Services/Others/QueryColumnPM';
 import {ApiQueryFilters} from 'src/CargoTracking/Services/Others/ApiQueryFilters';
@@ -627,38 +628,22 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     references: string[];
 
     private LoadShipments() {
-        if (this.ShipmentsDataSource)
+        if (this.ShipmentsDataSource) {
             this.ReloadShipments();
-
+        }
         else {
             this.InitiateShipmentDataSource();
         }
     }
 
-    private filterWithAllCustomersWhenCustomersNotSelected() {
-        let filter = Object.assign({}, this.ShipmentSearchInput);
-        filter.CustomersIds = filter.CustomersIds.length == 0 ? this.InvitedCustomers.map(d => d.CardId) : filter.CustomersIds;
-        return filter;
-    }
-
-    // private LoadShipmentsCounter() {
-    //     let filter = this.filterWithAllCustomersWhenCustomersNotSelected();
-    //     this.searchService.GetUserShipmentsCounter(filter).subscribe((counter: any) => {
-    //         this.ShipmentsCounter = counter;
-    //         this.BuildToggleFilters();
-    //         this.SetShipmentsScrollPosition();
-    //     });
-    // }
-
-
     private InitiateShipmentDataSource() {
-        let filter = this.filterWithAllCustomersWhenCustomersNotSelected();
-        this.ShipmentsDataSource = new ShipmentDataSource(this.changeDetector, this.searchService, filter, this);
+        const searchFilter = Object.assign({}, this.ShipmentSearchInput);
+        this.ShipmentsDataSource = new ShipmentDataSource(this.changeDetector, this.searchService, searchFilter, this);
     }
 
     private ReloadShipments() {
-        let filter = this.filterWithAllCustomersWhenCustomersNotSelected();
-        this.ShipmentsDataSource.ReloadData(filter);
+        const searchFilter = Object.assign({}, this.ShipmentSearchInput);
+        this.ShipmentsDataSource.ReloadData(searchFilter);
         this.ResetShipmentsScrollbarPosition();
     }
 
@@ -725,19 +710,19 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
     SetEstimationORActualDate(shipment: CargoTrackingShipmentList) {
         if (shipment.ArrivalDate != null) {
-            this.TitleOfEstimationORActualDate = 'ATA'
+            this.TitleOfEstimationORActualDate = 'ATA';
             this.ValueOfEstimationORActualDate = shipment.ArrivalDate;
         } else if (shipment.ArrivalEstimationDate != null) {
-            this.TitleOfEstimationORActualDate = 'ETA'
+            this.TitleOfEstimationORActualDate = 'ETA';
             this.ValueOfEstimationORActualDate = shipment.ArrivalEstimationDate;
         } else if (shipment.DepartureDate != null) {
-            this.TitleOfEstimationORActualDate = 'ATD'
+            this.TitleOfEstimationORActualDate = 'ATD';
             this.ValueOfEstimationORActualDate = shipment.DepartureDate;
         } else if (shipment.DepartureEstimationDate != null) {
-            this.TitleOfEstimationORActualDate = 'ETD'
+            this.TitleOfEstimationORActualDate = 'ETD';
             this.ValueOfEstimationORActualDate = shipment.DepartureEstimationDate;
         } else {
-            this.TitleOfEstimationORActualDate = 'ATA'
+            this.TitleOfEstimationORActualDate = 'ATA';
             this.ValueOfEstimationORActualDate = null;
         }
     }

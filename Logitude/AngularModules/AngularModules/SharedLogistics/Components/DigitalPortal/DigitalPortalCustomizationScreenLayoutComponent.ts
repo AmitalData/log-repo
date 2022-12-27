@@ -53,8 +53,36 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
     private selectedItem: DigitalPortalScreenList;
     SelectionChanged(Item) {
         this.selectedItem = Item;
+        if (this.IsModified) {
+            this.OpenConfirmWindow();
+            return;
+        }
         this.ChangeSelectedItem();
     }
+
+    OpenConfirmWindow() {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 450;
+        confirmWindow.Height = 190;
+        confirmWindow.ShowCancelButton = true;
+        confirmWindow.NoButtonText = "Don't Save";
+        confirmWindow.YesButtonText = "Save ";
+        confirmWindow.CancelButtonText = "Cancel";
+        confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
+        confirmWindow.Show("This Screen has unsaved changes. Do you want to save it?");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            this.IsModified = false;
+            if (confirmWindow.Yes) {
+                this.ContinueSaveChanges(false);
+                return;
+            }
+            if (confirmWindow.No) {
+                this.ChangeSelectedItem();
+                return;
+            }
+        });
+    }
+
     ChangeSelectedItem() {
         if (this.selectedItem == this.SelectedItem) return;
         this.SelectedItem = this.selectedItem;
@@ -112,7 +140,7 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         logWindow.Show('./SharedLogistics/Components/DigitalPortal/AddDigitalFieldCodeComponent');
         logWindow.WindowClosed.subscribe(($event: any) => {
             if ($event) {
-                var htmlField = "<Log-Container>\n<LogElement type='entity-field-label'field-code= '" + $event + "' ></LogElement>\n:\n<LogElement type='entity-field-value'field-code='" + $event + "'></LogElement> \n</Log-Container>";
+                var htmlField = "<LogContainer>\n<LogLabel field-code='" + $event + "' ></LogLabel>\n:\n<LogField field-code='" + $event + "'></LogField> \n</LogContainer>";
                 this.attachValue(htmlField);
             }
         });
@@ -183,6 +211,7 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
                 this.IsPreviewChanges = false;
                 this.PreviewDigitalPortal();
             }
+            this.ChangeSelectedItem();
         });
     }
 

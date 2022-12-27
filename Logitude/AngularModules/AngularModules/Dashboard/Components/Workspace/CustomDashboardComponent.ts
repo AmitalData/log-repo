@@ -58,8 +58,8 @@ export class CustomDashboardComponent extends BaseComponent implements OnDestroy
     BuildSectionsItemsSource() {
         this.SectionsItemsSource = [];
 
-        this.SectionsItemsSource.push(new CodeNameClass("ONM", "My Dashboards"));
-        this.SectionsItemsSource.push(new CodeNameClass("SPF", "Shared Dashboards"));
+        this.SectionsItemsSource.push(new CodeNameClass("MYS", "My Dashboards"));
+        this.SectionsItemsSource.push(new CodeNameClass("SHR", "Shared Dashboards"));
         this.SectionsItemsSource.push(new CodeNameClass("SYS" ,"System Dashboards"));
     }
 

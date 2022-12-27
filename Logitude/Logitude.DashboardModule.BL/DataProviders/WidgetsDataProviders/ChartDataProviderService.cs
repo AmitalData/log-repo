@@ -60,7 +60,6 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
 
         private List<SeriesMeasureVulue> GetSeriesMeasureVulues<T>(IQueryable<T> query, WidgetMeasurePM measure)
         {
-
             var groupBy = _EntityFields.ContainsKey(_Widget.GroupById) ? _EntityFields[_Widget.GroupById] : throw new Exception($"Meta Data Field '{_Widget.GroupById}' not found");
             AnalyticsFactsFieldsMetaData measureField = null;
             if (measure.MeasureFieldId != null)
@@ -87,12 +86,12 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             {
                 groupByField = ConverDateByDateGroupCode(groupBy);
             }
-            var Label = groupByField;
+            var label = groupByField;
             var join = "";
             if (groupBy.DataTypeCode == "LookUp")
             {
                 join = $" left join {groupBy.JoinedTableDBName} as JoinedTable on JoinedTable.{groupBy.JoinedTableKey} = {groupByField} ";
-                Label = $"JoinedTable.{groupBy.JoinedTableDisplayField}";
+                label = $"JoinedTable.{groupBy.JoinedTableDisplayField}";
             }
             var sortBy = CreateSortBy();
             var top = "";
@@ -101,12 +100,12 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
 
             var value = GetValueQuery(measure.MeasureCode, measureField);
             return $@"select  {top}
-                            {Label} as Label,
-                            {groupByField} as GroupById,
-                            {value} as Value From 
-                            ({resultQueryable.ToQueryStringWithParameter()}) as data
-                            {join}
-                            group by {Label},{groupByField} {sortBy}";
+                              {label} as Label,
+                              {groupByField} as GroupById,
+                              {value} as Value From 
+                              ({resultQueryable.ToQueryStringWithParameter()}) as data
+                              {join}
+                               group by {label},{groupByField} {sortBy}";
         }
 
         private List<SeriesMeasureVulue> FillDateGaps(List<SeriesMeasureVulue> seriesMeasureVulues)

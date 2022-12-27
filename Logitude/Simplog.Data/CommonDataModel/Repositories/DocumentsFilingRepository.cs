@@ -322,9 +322,15 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public DocumentsFiling GetSingleDocumentFilingBySecurityId(string id, int tenant)
         {
-            DocumentsFiling d = (from a in context.DocumentsFilings.Include("CreatedByUser.Contact").Include("Document").Include("Owner.Contact").Include("ObjectTable").Include("DocumentType")
+            DocumentsFiling d = (from a in context.DocumentsFilings
+                                                  .Include("CreatedByUser.Contact")
+                                                  .Include("Document")
+                                                  .Include("Owner.Contact")
+                                                  .Include("ObjectTable")
+                                                  .Include("DocumentType")
                                  where a.SecurityId == id && a.Tenant == tenant
-                                 select a).FirstOrDefault();
+                                 select a)
+                                 .FirstOrDefault();
             return d;
         }
 

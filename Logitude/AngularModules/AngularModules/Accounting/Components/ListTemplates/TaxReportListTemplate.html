@@ -80,6 +80,12 @@
         {{ rowData["TotalInvoiceAmount"] | NumbersPipe:'N2' }}
     </div>
 
+     <!-- SubTotalInLocalCurrency  -->
+     <div class="TextTrimming" *ngIf="fieldName == 'SubTotalInLocalCurrency'" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["SubTotalInLocalCurrency"]<0'>
+        {{ rowData["SubTotalInLocalCurrency"] | NumbersPipe:'N2' }}
+
+    </div>
+
     <!-- VatAmount -->
     <div class="TextTrimming" *ngIf="fieldName == 'VatAmount'" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["VatAmount"]<0'>
         {{ rowData["VatAmount"] | NumbersPipe:'N2' }}
