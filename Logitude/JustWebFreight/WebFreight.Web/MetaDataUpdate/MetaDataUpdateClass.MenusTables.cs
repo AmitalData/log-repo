@@ -153,6 +153,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature imageLibrariesFeature = tenantFeatures.Where(d => d.Code == "IMAGELIBRARIES" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature customerGroupFeature = tenantFeatures.Where(d => d.Code == "CustomerGroups" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature mentionFeature = tenantFeatures.Where(d => d.Code == "MENTIONS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+            Feature deploymentPackageFeature = tenantFeatures.Where(d => d.Code == "Customization.DeploymentPackage" && d.FeatureTypeCode == "MENU").FirstOrDefault();
 
             #endregion
 
@@ -303,6 +304,9 @@ namespace WebFreight.Web.MetaDataUpdate
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTMN", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 5, CategoryTypeCode = "QUO", TextCode = "General.MC.Quotation.Mentions", Icon = "Mentions.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Mention").FirstOrDefault().Id, FeatureId = mentionFeature.Id, FeatureUniqeCode = mentionFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             #endregion
 
+            #region Customization
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "DEPA", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 1, CategoryTypeCode = "CUS", TextCode = "General.MC.Customization.DeploymentPackage", Icon = "DocumentTypes.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "DeploymentPackage").FirstOrDefault().Id, FeatureId = deploymentPackageFeature.Id, FeatureUniqeCode = deploymentPackageFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
+            #endregion
 
 
             if (!LogitudeSettings.IsCostomsDeploy)// TODO MOHAMMAD
