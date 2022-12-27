@@ -162,6 +162,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
                         return (hsmSignServer.SignCertificate, SignMethodByQueueEnum.HSMSignQueue);
                     }
 
+
                     availableSignServer = repo.GetSingle(customsAgentId, personId).ToMySignStationList();
 
                     if (availableSignServer == null)
@@ -182,12 +183,17 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
                     }
                     if (DateTime.Now.Subtract(availableSignServer.LastAccessedAt) > TimeSpan.FromMinutes(LastAccessedInMin))
                     {
-                        if (defaultSignServer != null)
+                        if (availableSignServer?.IsPersonalSignOn== true)
                         {
-                            return (defaultSignServer.SignCertificate, SignMethodByQueueEnum.HSMSignQueue);
+                            return (availableSignServer.SignCertificate, SignMethodByQueueEnum.HybridDbSignQueue);
                         }
-                        return (null, SignMethodByQueueEnum.None); ;
                     }
+                    if (defaultSignServer != null)
+                    {
+                        return (defaultSignServer.SignCertificate, SignMethodByQueueEnum.HSMSignQueue);
+                    }
+                    return (null, SignMethodByQueueEnum.None); ;
+
                     break;
                 default:
                     throw new Exception("GetAvailableSignServer() while SignatureBy Not P/C");
@@ -259,6 +265,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
                 Status = signStation.Status,
                 LastSignAt = signStation.LastAccessedAt,
                 IsOk = signStation.Status.Equals("ok"),
+                SignCertificate = signStation.SignCertificate,
 
 
 

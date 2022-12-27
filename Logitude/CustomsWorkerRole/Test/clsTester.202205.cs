@@ -918,6 +918,9 @@ namespace CustomsWorkerRole.Test
         }
         public static void HSMSignTests()
         {
+            var signQueueHybridDbService = new SignQueueHybridDbService();
+            var res1=signQueueHybridDbService.GetAvailableSignServer(6, Logitude.Server.Tools.ExternalServices.SignQueueByType.SignQueueByPersonId, "031561053");
+
             var hSMActiveSignCardService = new HSMActiveSignCardService();
             var res=hSMActiveSignCardService.GetActiveCertificates(
                 6,
