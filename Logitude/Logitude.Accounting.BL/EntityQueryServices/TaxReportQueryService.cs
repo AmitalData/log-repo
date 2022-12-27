@@ -91,7 +91,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 JournalId = d.JournalId,
                 IsManuallyChanged = d.IsManuallyChanged,
                 IsEquipment = d.IsEquipment,
-                TotalInvoiceAmount = d.TotalInvoiceAmount
+                TotalInvoiceAmount = d.TotalInvoiceAmount,
+                SubTotalInLocalCurrency=d.SubTotalInLocalCurrency
             }).ToList();
             return listQuery;
         }

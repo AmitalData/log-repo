@@ -536,6 +536,18 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             ServerSideSortable: true
         });
 
+        //ameerah
+        this.columns.push({
+            FieldName: 'SubTotalInLocalCurrency',
+              DataTypeCode: 'Number',
+            Display: TextCodeTranslator.Translate("ARInvoice.F.SubTotalInLocalCurrency"),
+              Styles: { width: '100px' },
+              HtmlListComponentName: 'TaxReportListTemplate',
+              HtmlListComponentUrl: './Accounting/Components/ListTemplates/TaxReportListTemplate',
+              IsCustomTemplate: true,
+              ServerSideSortable: true
+          });
+
         this.columns.push({
             FieldName: 'VatAmount',
             DataTypeCode: 'Number',
@@ -613,6 +625,8 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ReferecneGroup",'Text',TextCodeTranslator.Translate("TaxReportLine.F.ReferecneGroup")));
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ReferenceDate",'DateTime',TextCodeTranslator.Translate("TaxReportLine.F.ReferenceDate")));
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("TotalInvoiceAmount",'Number',TextCodeTranslator.Translate("TaxReportLine.F.TotalInvoiceAmount")));
+        //ameerah
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("SubTotalInLocalCurrency",'Number',TextCodeTranslator.Translate("ARInvoice.F.SubTotalInLocalCurrency")));
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("VatAmount",'Number',TextCodeTranslator.Translate("TaxReportLine.F.VatAmount")));
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.
             GetQueryColumn(SessionLocator.LoggedUserPM.DontShowLocal ? 'StatusEnglishName' : 'StatusLocalName','Text',TextCodeTranslator.Translate("TaxReportLine.F.StatusEnglishName")));

@@ -92,6 +92,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public decimal? VatAmountRound { get; set; }
         [Column("LedgerTransactionId")]
 	    public string LedgerTransactionId { get; set; }
+        [Column("SubTotalInLocalCurrency")]
+	    public double? SubTotalInLocalCurrency { get; set; }
     }
 }
 	 
