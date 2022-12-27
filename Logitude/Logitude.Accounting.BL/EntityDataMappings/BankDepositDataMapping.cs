@@ -140,36 +140,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     if (arPaymentCheque != null)
                     {
                         result += "," + arPaymentCheque.ChequeNumber;
+                        result += "," + arPaymentCheque.LocalAmount.ToString();
+                        result += "," + arPaymentCheque.ForeignAmount.ToString();
                     }
 
                 }
             }
-
-            // Get Local or  of amounts from lines
-            foreach (BankDepositLinePM line in entityPM.BankDepositLines)
-            {
-                if (line.ARPaymentChequeId != null)
-                {
-                    ARPaymentChequeQueryService aRPaymentChequeQueryService = new ARPaymentChequeQueryService(entityPM.Tenant);
-                    ARPaymentChequePM arPaymentCheque = aRPaymentChequeQueryService.GetSingle(line.ARPaymentChequeId, true, false);
-                    if (arPaymentCheque != null)
-                    {
-                        if (arPaymentCheque.LocalAmount != arPaymentCheque.ForeignAmount)
-                        {
-                            result += "," + arPaymentCheque.LocalAmount.ToString();
-                            result += "," + arPaymentCheque.ForeignAmount.ToString();
-
-                        }
-
-                        else
-                            result += "," + arPaymentCheque.LocalAmount.ToString();
-
-                    }
-
-                }
-            }
-
-
 
             //foreach (JournalLinePM item in entityPM.BankDepositLines)
             //{
