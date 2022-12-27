@@ -542,7 +542,6 @@ namespace Logitude.Customs.Data.Repsitories
 
 
         public Declaration GetDeclarationByFunctionalReferenceIDagentFileReferenceID(string functionalReferenceID,string agentFileReferenceID, int tenant)
-
         {
             //Declaration declarationParent = (from a in context.Declarations
             //                           where declarationNumber == a.DeclarationNumber
@@ -551,6 +550,7 @@ namespace Logitude.Customs.Data.Repsitories
 
             Declaration declaration = (from a in context.Declarations
                                        where functionalReferenceID == a.AmendmentRequestNumber   && a.Tenant == tenant && a.CustomFileNo == agentFileReferenceID
+
                                        select a).FirstOrDefault();
 
             return declaration;

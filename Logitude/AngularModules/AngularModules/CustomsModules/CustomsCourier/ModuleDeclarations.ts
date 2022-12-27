@@ -109,7 +109,6 @@ export class ModuleDeclarations {
             case "SharedManifestComponent": { myResult = SharedManifestComponent; break; }
             case "PrioritizeFlightRequestsComponent": { myResult = PrioritizeFlightRequestsComponent; break; }
             case "UpdatePriorityComponent": { myResult = UpdatePriorityComponent; break; }
-                
             case "SharedManifestComponent": { myResult = SharedManifestComponent; break; }
             case "AWBWizardComponent": { myResult = AWBWizardComponent; break; }
             case "AWBWizardLoadComponent": { myResult = AWBWizardLoadComponent; break; }   

@@ -95,7 +95,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //{
             var customDocumentTypeMetaDataQuery = new CustomDocumentTypeMetaDataQueryService(customContext);
             var customsDocumentMetaDataValueQueryService = new CustomsDocumentMetaDataValueQueryService(customContext);
-            var metaDataPoco = customsDocumentMetaDataValueQueryService.GetMulti(new Data.EntityKeys.CustomsDocumentKeys { DocumentsFilingId = entityPM.DocumentId }, false);
+            var metaDataPoco = customsDocumentMetaDataValueQueryService.GetMulti(new Data.EntityKeys.CustomsDocumentKeys { DocumentsFilingId = entityPM.DocumentsFilingId }, false);
             var CustomDocumentTypeMetaData = customDocumentTypeMetaDataQuery.GetCustomDocumentTypeMetaDataByType(entityPM.DocumentTypeCode);
 
             var deleteItems = metaDataPoco.Where(x => CustomDocumentTypeMetaData.Find(y => x.MetaDataTypeCode == y.MetaDataTypeCode) == null).ToList();
@@ -733,7 +733,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 //var time = interfaceManagementQueryService.GetSingle("2715", false, true)?.SendTime;
                 var interfaceTenantDefinitionQueryService = new InterfaceTenantDefinitionQueryService(customContext);
                 var time = interfaceTenantDefinitionQueryService.GetByTenatCode(entityPM.Tenant, "2715")?.SendTime;
-                if(time!=null)
+                if(time != null)
                 time = time.Substring(11, 8);
 
                 var date = entityPM.IsCustomSendTime && !string.IsNullOrEmpty(time) ? DateTime.Today.Add(TimeSpan.Parse(time)) : (DateTime?)null;

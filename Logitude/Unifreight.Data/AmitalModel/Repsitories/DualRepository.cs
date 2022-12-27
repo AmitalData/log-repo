@@ -167,7 +167,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         }
 
 
-#if false
+ 
         public Nullable<returnType> ExecuteReaderSingleResultO<returnType>(
             string sqlReturn1Row,
              List<OracleParameter> dbParameters,//https://www.devart.com/dotconnect/oracle/docs/Parameters.html
@@ -236,7 +236,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         }
 
 
-#endif
+ 
 
         public Nullable<returnType> ExecuteReaderSingleResult<returnType>(
            string sqlReturn1Row,

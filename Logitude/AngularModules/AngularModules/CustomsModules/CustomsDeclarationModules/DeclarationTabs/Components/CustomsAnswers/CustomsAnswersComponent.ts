@@ -422,8 +422,8 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
             var error = decErrors.find(d => d.ConstraintId == constraint.ConstraintNumber);
         
             var item = new ConstraintLineModel(error, constraint,this);
-            
-            if(constraint.ConstraintStatusCode!="5" && constraint.ConstraintStatusCode!="8" && constraint.ConstraintStatusCode!="7")
+
+            if (this.EntityPM.Direction=="E" &&  constraint.ConstraintStatusCode != "5" && constraint.ConstraintStatusCode != "8" && constraint.ConstraintStatusCode != "7")
           {
             item.isDisplayOfSecound=true;
             item.displayOnly=false;

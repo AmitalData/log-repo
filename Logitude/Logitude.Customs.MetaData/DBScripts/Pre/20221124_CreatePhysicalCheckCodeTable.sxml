@@ -3,7 +3,7 @@
 	<Sql Version="1">
 	</Sql>
 
-	<Oracle Version="1">
+	<Oracle Version="2">
 		<![CDATA[
 			declare
  n int := 0;
@@ -16,11 +16,12 @@ begin SELECT
                                 object_type IN ( 'TABLE' )
                                 AND object_name = 'PHYSICALCHECKCODES';
   if n = 0 then
-EXECUTE IMMEDIATE('CREATE TABLE "PHYSICALCHECKCODES" 
-   (	"CODE" VARCHAR2(1 CHAR), 
-	"NAME" NVARCHAR2(50), 
-	"SEARCHFIELDS" NVARCHAR2(100)
-   );');
+                begin  execute immediate 'CREATE TABLE PHYSICALCHECKCODES(
+CODE     VARCHAR2(1 CHAR),
+NAME    NVARCHAR2(50),
+SEARCHFIELDS  NVARCHAR2(100)
+)';
+end;
    
     
    end if;

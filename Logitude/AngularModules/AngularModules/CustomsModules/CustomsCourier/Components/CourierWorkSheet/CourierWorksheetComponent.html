@@ -203,10 +203,10 @@
                                                             | TextCodeTranslationPipe }}</button>
                                                         <button style="text-align:right"
                                                             (click)="ChangeStorageSiteMethod()"
-                                                            [disabled]="IsDisplayOnly">{{'שינוי אתר אחסון' }}</button>
+                                                            [disabled]="IsDisplayOnly">{{'שינוי םתר םחסון' }}</button>
                                                         <button style="text-align:right"
                                                             (click)="ChangeUnloadPortSiteMethod()"
-                                                            [disabled]="IsDisplayOnly">{{'שינוי אתר פריקה' }}</button>
+                                                            [disabled]="IsDisplayOnly">{{'שינוי םתר פריקה' }}</button>
 
                                                         <button *ngIf="isAllowAccounting" style="text-align:right"
                                                             (click)="IsReadyForInvoiceClick()"
@@ -226,7 +226,7 @@
                                                         <button style="text-align:right" (click)="SendALLSVG(true)">בקרת
                                                             סיווגים</button>
                                                         <button style="text-align:right" (click)="Export2Excel()"
-                                                            [disabled]="IsDisplayOnly">{{'יצוא לאקסל' }}<img
+                                                            [disabled]="IsDisplayOnly">{{'יצום לםקסל' }}<img
                                                                 class="CenterCenter" title="Export To Excel"
                                                                 class="certOkImg"
                                                                 style="position: relative; width: 10px; margin-bottom: 8px; opacity: 0.8;"
@@ -319,7 +319,7 @@
                                                                     ({{item.Total}}) {{item.Header}}</span>
                                                                 <span
                                                                     style="font-size:13px;font-weight:bold; text-align:right"
-                                                                  
+
                                                                     dir="ltr" *ngIf="item.Code == 'HOLD' && HasRequiresApprovalFeature">
                                                                     ({{item.Total}}/{{this._NotApproved}}) {{item.Header}} </span>  
                                                             </div>
@@ -632,6 +632,7 @@
                                                                             </split-button>
                                                                         </td>
                                                                         <td style="width:1px"></td>
+                                                                         
                                                                          
                                                                         <td></td>
                                                                     </tr>
@@ -1033,6 +1034,7 @@
 
                                                                         <td style="width: 130px;">
 
+
                                                                             
                                                                             <split-button *ngIf="DelayFormVisibility"
                                                                                 (DefaultSplitButtonClicked)="SendDelayForm()"
@@ -1053,7 +1055,7 @@
                                                                                 <split-button
                                                                                     (DefaultSplitButtonClicked)="ApproveAllPendingMethod()" 
                                                                                     [IsDisabled]="IsDisplayOnly || !(SelectedPendingCodeFilter?.Key == 'A' || SelectedPendingCodeFilter?.Key == 'NotApproved' )"
-                                                                                    [ButtonText]="'אישור PENDING'"
+                                                                                    [ButtonText]="'םישור PENDING'"
                                                                                     [AsRegularButton]="'true'"
                                                                                     [MENUDivExtraTop]="24"
                                                                                     [MENUDivExtraLeft]="110">
