@@ -618,6 +618,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string environment ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Environment  
+	   {
+	    
+	     get
+		{
+		   return environment;
+		 }
+		 set
+		 {
+		   if(environment != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Environment",OldValue=environment,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   environment=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

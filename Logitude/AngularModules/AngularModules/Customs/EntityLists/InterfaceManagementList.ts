@@ -35,6 +35,7 @@ export class InterfaceManagementList {
 	InterfaceTypeName: string;
 	UseRabbitMQ: boolean;
 	SendTime: string;
+	Environment: string;
 	
 }
  

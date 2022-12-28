@@ -68,6 +68,8 @@ namespace Logitude.Customs.Data.EntityLists
        public bool UseRabbitMQ  { get; set; }
        [DataMember]
        public string SendTime  { get; set; }
+       [DataMember]
+       public string Environment  { get; set; }
    }
 
 }

@@ -129,7 +129,8 @@
   <Column
     Name="Environment"
     Type="varchar"
-    Size="10">
+    Size="10"
+    DefaultValue="'Both'">
     <Constraints
       Nullable="true" />
   </Column>
