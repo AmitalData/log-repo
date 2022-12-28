@@ -99,16 +99,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ContextGenerator.tt</DependentUpon>
     </Compile>
-
-    
-    
-
     <None Include="DBOthers\Procedures\Usp_DeleteCustomsRequestSheets.dxml" />
     <None Include="DBOthers\Procedures\Usp_DeleteComLogSteps.dxml" />
     <None Include="DBOthers\Procedures\Usp_DeleteQueMessMoreDet.dxml" />
     <None Include="DBOthers\Procedures\Usp_DeleteCommLogs.dxml" />
     <None Include="DBOthers\Procedures\usp_UpdateQueueMessagePriority.dxml" />
-
     <None Include="DBOthers\Procedures\ReconnectObjectMetaDataProcedure.dxml" />
     <None Include="DBOthers\Views\DocumentsFilingsView.dxml" />
     <None Include="DBScripts\Post\202208281500_UpdateLoadingOfDeclaration.sxml" />
@@ -1082,6 +1077,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="DBScripts\Post\202212111536_StropService.sxml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DBScripts\Post\202212281351_UpdateBothINTERFACEMANAGEMENTS.sxml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
