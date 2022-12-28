@@ -154,6 +154,11 @@ export class InterfaceManagementPM {
     public set SendTime(newValue: string) { if (this.sendTime != newValue) { this.sendTime = newValue; this.MarkAsDirty("SendTime"); } }
        
 	 
+    private environment: string;
+    public get Environment() { return this.environment; }
+    public set Environment(newValue: string) { if (this.environment != newValue) { this.environment = newValue; this.MarkAsDirty("Environment"); } }
+       
+	 
 
     public OldEntityPM: InterfaceManagementPM;
 		
