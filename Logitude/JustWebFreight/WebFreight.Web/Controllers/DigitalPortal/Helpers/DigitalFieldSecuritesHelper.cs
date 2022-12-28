@@ -35,9 +35,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
                 "Shipment.Events",
                 "Shipment.ConsolidatorName",
                 "Shipment.WarehouseLegRemarks",
-                "Shipment.IncotermName",
-                "Shipment.ShipperCountryCode",
-                "Shipment.ConsigneeCountryCode"
+                "Shipment.IncotermName"
             };
 
             if (tenant != 0)
@@ -101,7 +99,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
                     "IsAccountingClosed",
                     "ShipmentLevelCode",
                     "StatusLocation",
-                    "StatusCode"
+                    "StatusCode",
+                    "ShipperCountryCode",
+                    "ConsigneeCountryCode"
                 };
 
                 defaultDigitalFieldSecurity = defaultDigitalFieldSecurity.Where(a => !unfoundFeilds.Contains(a.FieldCode)).ToList();
