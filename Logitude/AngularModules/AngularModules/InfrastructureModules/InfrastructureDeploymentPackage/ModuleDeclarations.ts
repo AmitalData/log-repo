@@ -1,8 +1,9 @@
-﻿
+import { AddNewDeploymentPackageComponent } from "./Component/NewEntity/AddNewDeploymentPackageComponent";
+
 
 export const Components =
     [
-
+        AddNewDeploymentPackageComponent
     ];
 
 export class ModuleDeclarations {
@@ -11,7 +12,7 @@ export class ModuleDeclarations {
         var myResult: any = null;
 
         switch (name) {
-            //case "CustomizationMainComponent": { myResult = CustomizationMainComponent; break; }
+            case "AddNewDeploymentPackageComponent": { myResult = AddNewDeploymentPackageComponent; break; }
         }
 
         return myResult;
