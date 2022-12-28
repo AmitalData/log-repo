@@ -171,6 +171,11 @@ export class DocumentTypePM {
     public set IsCustomerView(newValue: boolean) { if (this.isCustomerView != newValue) { this.isCustomerView = newValue; this.MarkAsDirty("IsCustomerView"); } }
        
 	 
+    private isCustomerUploadPermission: boolean;
+    public get IsCustomerUploadPermission() { return this.isCustomerUploadPermission; }
+    public set IsCustomerUploadPermission(newValue: boolean) { if (this.isCustomerUploadPermission != newValue) { this.isCustomerUploadPermission = newValue; this.MarkAsDirty("IsCustomerUploadPermission"); } }
+       
+	 
     private isHybrid: boolean;
     public get IsHybrid() { return this.isHybrid; }
     public set IsHybrid(newValue: boolean) { if (this.isHybrid != newValue) { this.isHybrid = newValue; this.MarkAsDirty("IsHybrid"); } }
