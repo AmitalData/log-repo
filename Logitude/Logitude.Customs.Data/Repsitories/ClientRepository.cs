@@ -94,7 +94,7 @@ namespace Logitude.Customs.Data.Repsitories
         {
             var date = DateTime.Today.AddDays(30);
             var clients = from client in context.Clients
-                               where !string.IsNullOrEmpty(client.Code) && client.Tenant == tenant && client.IsExportPoaActive == true
+                               where !string.IsNullOrEmpty(client.Code) && client.Tenant == tenant && client.IsExportPoaActive == true && client.IsPOAExpireReminderSent != true
                                where !context.ClientsPoas.Any(poa=>poa.ClientId == client.Id && date <= poa.EndDate)
                                select client;
             return clients.ToList();

@@ -171,7 +171,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             {
                 foreach (Client client in clientsList)
                 {
-                    ClientPM clientPM = new ClientPM()
+                    /*ClientPM clientPM = new ClientPM()
                     {
                         Code = client.Code,
                         PassportNumber = client.PassportNumber,
@@ -180,7 +180,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         Tenant = client.Tenant,
                         ClientTypeSpecificCode = client.ClientTypeSpecificCode,
                         Id = client.Id,
-                    };
+                    };*/
+                    var clientPM = this.GetEntityPM(client, false, null);
                     clientsPMList.Add(clientPM);
                 }
             }

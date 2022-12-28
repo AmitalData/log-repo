@@ -42,6 +42,7 @@ export class ClientList {
 	FacilitationTypeCode: string;
 	NationalIdentificationNumber: string;
 	IsExportPoaActive: boolean;
+	IsPOAExpireReminderSent: boolean;
 	
 }
  

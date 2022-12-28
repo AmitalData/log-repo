@@ -52,7 +52,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ConcurrencyGUID, 
 	         FacilitationTypeCode, 
 	         NationalIdentificationNumber, 
-	         IsExportPoaActive,
+	         IsExportPoaActive, 
+	         IsPOAExpireReminderSent,
 	      }
 
 
@@ -94,7 +95,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         NewConcurrencyGUID, 
 	         FacilitationTypeCode, 
 	         NationalIdentificationNumber, 
-	         IsExportPoaActive,
+	         IsExportPoaActive, 
+	         IsPOAExpireReminderSent,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -251,6 +253,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsExportPoaActive))
             {
 				entityPOCO.IsExportPoaActive = entityPM.IsExportPoaActive;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsPOAExpireReminderSent))
+            {
+				entityPOCO.IsPOAExpireReminderSent = entityPM.IsPOAExpireReminderSent;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -414,6 +421,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.IsExportPoaActive = entityPOCO.IsExportPoaActive;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsPOAExpireReminderSent))
+            {
+					entityPM.IsPOAExpireReminderSent = entityPOCO.IsPOAExpireReminderSent;
+            }
+
 		}
 
 		public void PMToOldPM(ClientPM entityPM, ClientPM oldEntityPM)
@@ -568,6 +580,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsExportPoaActive))
             {
                 oldEntityPM.IsExportPoaActive = entityPM.IsExportPoaActive;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsPOAExpireReminderSent))
+            {
+                oldEntityPM.IsPOAExpireReminderSent = entityPM.IsPOAExpireReminderSent;
             }
 			
 		}
