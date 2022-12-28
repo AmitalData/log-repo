@@ -14,6 +14,7 @@ export class DataTypesList {
             new ListItem(FieldTypes.Date),
             new ListItem(FieldTypes.Decimal, "Number"),
             new ListItem(FieldTypes.Boolean),
+            new ListItem(FieldTypes.Record),
         ];
     }
 }

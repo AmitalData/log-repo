@@ -1,10 +1,9 @@
 import { GetRecordLimits } from "Workflow/Constants/GetRecordLimits";
 import { GetRecordTypes } from "Workflow/Constants/GetRecordTypes";
+import { Entities } from "./Entities";
 import { FlowReader } from "./FlowReader";
 import { Formatter } from "./Formatter";
 import { TreeSelectItem } from "./TreeSelectItem";
-
-type ChildEntity = { Code: string, Name: string, ParentEntityCode: string };
 
 export class SingleEditableEntitiesTreeList {
     private FlowObject: any;
@@ -12,13 +11,6 @@ export class SingleEditableEntitiesTreeList {
     private ItemKeySplitter: string = "_";
 
     public Items: TreeSelectItem[] = [];
-
-    private ChildEntities: ChildEntity[] = [
-        { Code: "Container", Name: "Container", ParentEntityCode: "Shipment" },
-        { Code: "ShipmentPackage", Name: "Package", ParentEntityCode: "Shipment" },
-        { Code: "ShipmentReceivable", Name: "Receivable", ParentEntityCode: "Shipment" },
-        { Code: "ShipmentPayable", Name: "Payable", ParentEntityCode: "Shipment" }
-    ];
 
     constructor(flowObject: any, currentNodeId: string) {
         this.initialize(flowObject, currentNodeId);
@@ -55,11 +47,12 @@ export class SingleEditableEntitiesTreeList {
 
     private getGetRecordTreeSelectItemChildren(treeItemPrefix: string, entity: string) {
         let getRecordTreeSelectItemChildren = [];
-        this.ChildEntities.filter(c => c.ParentEntityCode === entity).forEach(childEntity => {
-            let itemData = { entity: childEntity.Code };
-            let treeSelectItem = new TreeSelectItem(treeItemPrefix + this.ItemKeySplitter + childEntity.Code, childEntity.Name, true, true, false, false, [], itemData);
-            getRecordTreeSelectItemChildren.push(treeSelectItem);
-        });
+        Entities.Children.filter(c => c.Code !== "ARInvoice" && c.Code !== "APInvoice").filter(c => c.ParentEntityCode === entity)
+            .forEach(childEntity => {
+                let itemData = { entity: childEntity.Code };
+                let treeSelectItem = new TreeSelectItem(treeItemPrefix + this.ItemKeySplitter + childEntity.Code, childEntity.Name, true, true, false, false, [], itemData);
+                getRecordTreeSelectItemChildren.push(treeSelectItem);
+            });
         return getRecordTreeSelectItemChildren;
     }
 
