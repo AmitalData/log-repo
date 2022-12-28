@@ -39,6 +39,7 @@ import { EntityListService } from 'Infrastructure/Services/EntityListService';
 import { ConsignmentPM } from 'Customs/EntityPMs/ConsignmentPM';
 import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
 import { ContainerizationPM } from 'Customs/EntityPMs/ContainerizationPM';
+declare var window: any;
 
 @Injectable()
 
@@ -1738,7 +1739,24 @@ export class DeclarationWebService {
         }
     }
 
-
+    CheckConstraintRequestInProgress(declarationId: string, tenant: number) {
+        // Request sheets in progress check
+        var table = window.ObjectTables.filter(d => d.Name === "Customs.Declaration")[0];
+        var apiUrl: string = ServiceHelper.GetLogitudeURL() + 'api/CustomsRequestSheetExtended';
+        return defer(() => {
+            return this._http.get(apiUrl + '/GetRequestInProgress/?' + 'tenant=' + tenant + '&interfaceTypeCode=8214' + '&objectTableId1=' + table.Id + '&entityId1=' + encodeURIComponent(declarationId) + '&objectTableId2=' + "" + '&entityId2=' + "" + '&customFileNo=' + "" + '&displayOnlyMode= false', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                var requestSheets: any = response;
+                if (requestSheets == null || requestSheets.length == 0) {
+                    serviceResponse.Result = false;
+                }
+                else {
+                    serviceResponse.Result = true;
+                }
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        })
+            }
     GetCLSHWBEventHandle(DeclarationID: string,  a_tenent: number, a_Mode: number) {
         return defer(() => {
             var authHeader = new Headers();
