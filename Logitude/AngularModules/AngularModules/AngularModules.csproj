@@ -8804,7 +8804,6 @@
     <Folder Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\EditTabs\" />
     <Folder Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\NewEntity\" />
     <Folder Include="InfrastructureModules\InfrastructureStimulsoft\Components\" />
-    <Folder Include="Infrastructure\Components\DeploymentPackage\NewEntity\" />
     <Folder Include="Quote\Services\ExtendedLists\" />
     <Folder Include="Report\Components\FiltersComponent\Quotes\" />
     <Folder Include="Report\Components\FiltersComponent\Statistics\" />
