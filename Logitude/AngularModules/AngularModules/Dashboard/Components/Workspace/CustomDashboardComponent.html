@@ -43,7 +43,7 @@
                     <div class="DashboardInnerTab" (contextmenu)="item.onRightClick($event)">
                         <table>
                             <tr>
-                                <td (click)="TabSelectionChanged(item)" style="max-width:132px;" class="TextTrimming">{{item.Name}}</td>
+                                <td (click)="TabSelectionChanged(item)" class="dl-tab-text TextTrimming">{{item.Name}}</td>
 
                                 <td *ngIf="!item.IsPinned" style="width:8px; max-width:8px;">
                                     <div></div>

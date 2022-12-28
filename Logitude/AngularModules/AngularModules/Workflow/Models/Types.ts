@@ -34,3 +34,15 @@ export type ExpressionValue = {
     expression: string,
     variables: ExpressionVariable[]
 };
+
+export type Entity = {
+    Code: string,
+    Name: string
+};
+
+export type ChildEntity = {
+    Code: string,
+    Name: string,
+    ParentEntityCode: string,
+    ChildField: string
+};

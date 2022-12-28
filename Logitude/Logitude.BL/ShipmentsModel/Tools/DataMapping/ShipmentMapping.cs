@@ -4051,6 +4051,30 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             AddFieldChangedProperties(changeTrackingPM, "IncludesCustoms", changeTrackingPM.IncludesCustoms, pm.IncludesCustoms, "IncludesCustoms", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "CustomsClearanceDate", changeTrackingPM.CustomsClearanceDate, pm.CustomsClearanceDate, "CustomsClearanceDate", notifyPropertyChangeValuesList);
 
+            AddFieldChangedProperties(changeTrackingPM, "MainCarriageFromPortId", changeTrackingPM.MainCarriageFromPortId, pm.MainCarriageFromPortId, "string", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "MainCarriageToPortId", changeTrackingPM.MainCarriageToPortId, pm.MainCarriageToPortId, "string", notifyPropertyChangeValuesList);
+
+            AddFieldChangedProperties(changeTrackingPM, "Transshipment1ATA", changeTrackingPM.Transshipment1ATA, pm.Transshipment1ATA, "DateTime?", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "Transshipment1ETA", changeTrackingPM.Transshipment1ETA, pm.Transshipment1ETA, "DateTime?", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "Transshipment1ATD", changeTrackingPM.Transshipment1ATD, pm.Transshipment1ATD, "DateTime?", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "Transshipment1ETD", changeTrackingPM.Transshipment1ETD, pm.Transshipment1ETD, "DateTime?", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "Transshipment1FromPortId", changeTrackingPM.Transshipment1FromPortId, pm.Transshipment1FromPortId, "string", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "Transshipment1ToPortId", changeTrackingPM.Transshipment1ToPortId, pm.Transshipment1ToPortId, "string", notifyPropertyChangeValuesList);
+
+            AddFieldChangedProperties(changeTrackingPM, "Transshipment2ATA", changeTrackingPM.Transshipment2ATA, pm.Transshipment2ATA, "DateTime?", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "Transshipment2ETA", changeTrackingPM.Transshipment2ETA, pm.Transshipment2ETA, "DateTime?", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "Transshipment2ATD", changeTrackingPM.Transshipment2ATD, pm.Transshipment2ATD, "DateTime?", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "Transshipment2ETD", changeTrackingPM.Transshipment2ETD, pm.Transshipment2ETD, "DateTime?", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "Transshipment2FromPortId", changeTrackingPM.Transshipment2FromPortId, pm.Transshipment2FromPortId, "string", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "Transshipment2ToPortId", changeTrackingPM.Transshipment2ToPortId, pm.Transshipment2ToPortId, "string", notifyPropertyChangeValuesList);
+
+            AddFieldChangedProperties(changeTrackingPM, "Transshipment3ATA", changeTrackingPM.Transshipment3ATA, pm.Transshipment3ATA, "DateTime?", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "Transshipment3ETA", changeTrackingPM.Transshipment3ETA, pm.Transshipment3ETA, "DateTime?", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "Transshipment3ATD", changeTrackingPM.Transshipment3ATD, pm.Transshipment3ATD, "DateTime?", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "Transshipment3ETD", changeTrackingPM.Transshipment3ETD, pm.Transshipment3ETD, "DateTime?", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "Transshipment3FromPortId", changeTrackingPM.Transshipment3FromPortId, pm.Transshipment3FromPortId, "string", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "Transshipment3ToPortId", changeTrackingPM.Transshipment3ToPortId, pm.Transshipment3ToPortId, "string", notifyPropertyChangeValuesList);
+
 
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field1, pm.Field1, "Field1", notifyPropertyChangeValuesList);
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field2, pm.Field2, "Field2", notifyPropertyChangeValuesList);
@@ -4336,7 +4360,31 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 shipmentPM.FinalDistenationPortId = masterShipment.FinalDistenationPortId;
                 shipmentPM.StatusId = masterShipment.StatusId;
                 shipmentPM.CutoffDate = masterShipment.CutoffDate;
-                shipmentPM.MasterShipmentDataId = masterShipment.Id; 
+                shipmentPM.MasterShipmentDataId = masterShipment.Id;
+
+                shipmentPM.MainCarriageFromPortId = masterShipment.MainCarriageFromPortId;
+                shipmentPM.MainCarriageToPortId = masterShipment.MainCarriageToPortId;
+
+                shipmentPM.Transshipment1ATA = masterShipment.Transshipment1ATA;
+                shipmentPM.Transshipment1ETA = masterShipment.Transshipment1ETA;
+                shipmentPM.Transshipment1ATD = masterShipment.Transshipment1ATD;
+                shipmentPM.Transshipment1ETD = masterShipment.Transshipment1ETD;
+                shipmentPM.Transshipment1FromPortId = masterShipment.Transshipment1FromPortId;
+                shipmentPM.Transshipment1ToPortId = masterShipment.Transshipment1ToPortId;
+
+                shipmentPM.Transshipment2ATA = masterShipment.Transshipment2ATA;
+                shipmentPM.Transshipment2ETA = masterShipment.Transshipment2ETA;
+                shipmentPM.Transshipment2ATD = masterShipment.Transshipment2ATD;
+                shipmentPM.Transshipment2ETD = masterShipment.Transshipment2ETD;
+                shipmentPM.Transshipment2FromPortId = masterShipment.Transshipment2FromPortId;
+                shipmentPM.Transshipment2ToPortId = masterShipment.Transshipment2ToPortId;
+
+                shipmentPM.Transshipment3ATA = masterShipment.Transshipment3ATA;
+                shipmentPM.Transshipment3ETA = masterShipment.Transshipment3ETA;
+                shipmentPM.Transshipment3ATD = masterShipment.Transshipment3ATD;
+                shipmentPM.Transshipment3ETD = masterShipment.Transshipment3ETD;
+                shipmentPM.Transshipment3FromPortId = masterShipment.Transshipment3FromPortId;
+                shipmentPM.Transshipment3ToPortId = masterShipment.Transshipment3ToPortId;
             }
 
 

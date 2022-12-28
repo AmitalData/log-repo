@@ -5,6 +5,7 @@ import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { FieldTypes } from "Workflow/Constants/FieldTypes";
 import { SetValueOperators } from "Workflow/Constants/SetValueOperators";
+import { Entities } from "Workflow/Models/Entities";
 import { EntitiesTreeList } from "Workflow/Models/EntitiesTreeList";
 import { ObjectTables } from "Workflow/Models/ObjectTables";
 import { SetValue } from "Workflow/Models/SetValue";
@@ -81,7 +82,7 @@ export class CreateRecordPropertiesComponent extends BaseComponent {
                 let entities = this.Entity.split(".");
                 let parentEntity = entities[0];
                 let childEntity = entities[1];
-                let childField = this.EntitiesTreeList.getChildField(parentEntity, childEntity);
+                let childField = Entities.getChildField(parentEntity, childEntity);
                 let fieldCode = childEntity + "." + childField;
                 let objectField = this.FlowObjectFields.find(o => o.FieldCode === fieldCode);
                 let parentEntityObjectTable = ObjectTables.getByName(parentEntity);

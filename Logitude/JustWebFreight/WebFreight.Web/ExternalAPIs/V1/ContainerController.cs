@@ -29,6 +29,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+                SecurityUtility.AuthenticateAccessibleAPI("Container", authToken.Tenant);
+
                 ContainerDataQueryService Service = new ContainerDataQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
                 ContainerData Result = Service.GetContainerDataByContainerNumberAndShipmentNumber(containerNumber, shipmentNumber, tenant);
@@ -52,6 +54,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.AuthenticateAccessibleAPI("Container", authToken.Tenant);
 
                     if (FeatureToggleHelper.HasFeatureToggle("API", authToken.Tenant))
                     {

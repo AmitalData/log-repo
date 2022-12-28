@@ -72,7 +72,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     }
 
     initializeEntitiesTreeItems() {
-        this.EntitiesTreeList = new EntitiesTreeList(true);
+        this.EntitiesTreeList = new EntitiesTreeList("parent");
         this.EntitiesTreeItems = this.EntitiesTreeList.Items;
     }
 
@@ -101,39 +101,6 @@ export class GetRecordPropertiesComponent extends BaseComponent {
 
         this.setUIProperties();
     }
-
-    // initializeConditions(reset: boolean = false) {
-    //     if (reset) {
-    //         this.Conditions = [];
-    //         this.ConditionsOperation = ConditionOperations.And;
-    //     }
-    //     if (this.Conditions.length === 0) {
-    //         let condition = new Condition();
-
-    //         let isChildEntity = this.Entity ? (this.Entity.indexOf(".") !== -1) : false;
-    //         if (isChildEntity) {
-    //             let entities = this.Entity.split(".");
-    //             let parentEntity = entities[0];
-    //             let childEntity = entities[1];
-    //             let childField = this.EntitiesTreeList.getChildField(parentEntity, childEntity);
-    //             let fieldCode = childEntity + "." + childField;
-    //             let objectField = this.FlowObjectFields.find(o => o.FieldCode === fieldCode);
-    //             let parentEntityObjectTable = ObjectTables.getByName(parentEntity);
-
-    //             condition.field = childField;
-    //             condition.fieldCode = fieldCode;
-    //             condition.type = objectField ? objectField.DataTypeCode : null;
-    //             condition.lookupType = objectField && objectField.DataTypeCode === FieldTypes.LookUp ? ObjectTables.getNameById(objectField.LookUpTableId) : null;
-    //             condition.picklistType = objectField && objectField.DataTypeCode === FieldTypes.PickList ? objectField.CustomPickListCode : null;
-    //             condition.value = "triggeringrecord_" + parentEntity + "." + (parentEntityObjectTable ? parentEntityObjectTable.KeyPropertyPath : "Id");
-    //             condition.operator = ConditionOperators.EqualsField;
-    //             condition.isDisabled = true;
-    //         }
-
-    //         this.Conditions.push(condition);
-    //         this.IsValidConditions = false;
-    //     }
-    // }
 
     initializeConditions(recordsType: string, reset: boolean = false) {
         if (reset) {

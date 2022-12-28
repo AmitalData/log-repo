@@ -23,6 +23,7 @@ using Logitude.BL.GlobalModel.EntityPMs;
 using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.Resolvers;
+using WebFreight.Web.Helpers;
 
 namespace WebFreight.Web.Security
 {
@@ -37,6 +38,17 @@ namespace WebFreight.Web.Security
                 {
                     throw new AutenticationException("API is not activated. Please contact your system administrator");
                 }
+            }
+        }
+
+        public static void AuthenticateAccessibleAPI(string apiName, int tenant)
+        {
+            ExternalAPITemplatesBuilder externalAPIHelper = new ExternalAPITemplatesBuilder(tenant);
+            ExternalAPIResponseParameters responseParameters = externalAPIHelper.GetExternalAPIResponseParameters();
+
+            if (!responseParameters.APIsNames.Contains(apiName))
+            {
+                throw new AutenticationException("You have no permission to use this API. Please contact your system administrator");
             }
         }
 

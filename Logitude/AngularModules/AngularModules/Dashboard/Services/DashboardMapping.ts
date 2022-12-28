@@ -2,7 +2,7 @@ import { WidgetMeasurePM } from "DashboardModule/EntityPMs/WidgetMeasurePM";
 import { WidgetPM } from "DashboardModule/EntityPMs/WidgetPM";
 import { ReactWidgetMeasurePM } from "logitude-dashboard-library/dist/types/ReactWidgetMeasurePM";
 import { ReactWidgetPM } from "logitude-dashboard-library/dist/types/widget";
-import { BehaviorSubject, Subject } from 'rxjs';
+
 export class DashboardMapping {
     public static GetReactWidget(widget: WidgetPM): ReactWidgetPM {
         var myWidget: ReactWidgetPM = {} as ReactWidgetPM;
@@ -31,6 +31,8 @@ export class DashboardMapping {
             myWidget.Increase = widget.Increase;
             myWidget.FromDate = widget.FromDate;
             myWidget.ToDate = widget.ToDate;
+            myWidget.SecondaryGroupById = widget.SecondaryGroupById;
+            myWidget.SecondaryDateGroupCode = widget.SecondaryDateGroupCode;
             myWidget.Layout = {
                 minH: 5,
                 minW: 3,

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class DeploymentPackageUpdateClass
    {  		
-		public const string HashString = "10d85ada2414941c0b13bd2975e8f076";
+		public const string HashString = "b29bedaffbf37075cfc6cff5fd92a73c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -854,6 +854,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  1,
 					  						DisplayInList =  true,
+					  						DataTemplateName =  "DirectionDataTemplate",
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						MultiLine =  false,
@@ -877,6 +878,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
+					  						ColumnHeaderTemplateName =  "DirectionHeaderTemplate",
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DirectionId",
 					  						DefaultText =  "Direction",

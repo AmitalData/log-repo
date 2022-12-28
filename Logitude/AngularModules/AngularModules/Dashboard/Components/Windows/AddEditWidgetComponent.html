@@ -258,7 +258,7 @@
                                     <tr class="FormFieldRow" *ngIf="isGroupByVisible">
                                         <td>
                                             <div>
-                                                <IconButton *ngIf="IsAddNewGroupVisible" [Left]="3" [Name]="'Add'" [IsSmall]="true" [IsEnabled]="WidgetMeasuresList.length === 1" (click)="AddNewGroupByClicked()"></IconButton>
+                                                <IconButton *ngIf="IsAddNewGroupVisible" [Left]="3" [Name]="'Add'" [IsSmall]="true" [IsEnabled]="EntityId && WidgetMeasuresList.length === 1" (click)="AddNewGroupByClicked()"></IconButton>
                                             </div>
                                         </td>
                                     </tr>

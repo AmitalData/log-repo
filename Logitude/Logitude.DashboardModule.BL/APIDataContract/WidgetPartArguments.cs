@@ -13,5 +13,6 @@ namespace Logitude.DashboardModule.BL.APIDataContract
     {
         public string MeasureFieldId { get; set; }
         public string GroupByValue { get; set; }
+        public string GroupBySecValue { get; set; }
     }
 }

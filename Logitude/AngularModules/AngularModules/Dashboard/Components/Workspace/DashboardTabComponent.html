@@ -13,7 +13,7 @@
                     <div></div>
                 </td>
 
-                <td style="width: 1px; font-size: 14px; color: #292D30;font-weight: 600;">
+                <td style="width: 1px; font-size: 14px; color: #292D30;font-weight: 600;line-height: 21px;">
                     {{SelectedDashboardName}}
                 </td>
 
@@ -99,6 +99,9 @@
                         <img style="width:2px; height: 12px; top: 5px; position: absolute;"
                              src="./Images/Buttons/threedots.png" />
                     </button>
+                </td>
+                <td style="width: 12px;" *ngIf="!IsEditLayoutModeActive">
+                    <div></div>
                 </td>
             </tr>
         </table>
