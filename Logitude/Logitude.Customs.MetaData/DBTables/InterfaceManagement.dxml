@@ -126,6 +126,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="Environment"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DefaultSendOptionsCode"
     ReferencedTable="InterfaceSendOptions"
