@@ -2,15 +2,14 @@
 using Logitude.Infrastructure.Data.EntityLists;
 using Logitude.SystemLogs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using WebFreight.Web.Controllers.DigitalPortal.Helpers;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 
@@ -49,13 +48,29 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             string email = "";
             try
             {
-                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
-                tenant = authToken.Tenant;
-                email = authToken.Email;
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                string securityKey = HttpContext.Current.Request.Headers["securitykey"];
+
+                if (!string.IsNullOrWhiteSpace(securityKey))
+                {
+                    var authenticationHelper = new DigitalPortalAuthenticationHelper();
+                    var shipmentIdAndTenant = authenticationHelper.GetShipmentBySecurityKey(securityKey);
+                    if (shipmentIdAndTenant == null)
+                    {
+                        throw new AutenticationException("Sorry! this user is not authorized!");
+                    }
+
+                    tenant = shipmentIdAndTenant.Item2;
+                }
+                else
+                {
+                    var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                    email = authToken.Email;
+                    tenant = authToken.Tenant;
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                }
+
                 var screenQueryService = new DigitalPortalScreenQueryService(tenant);
                 var digitalPortalScreens = screenQueryService.GetDigitalPortalScreensQuery(tenant, objectTableId, screenCode);
-
                 var data = digitalPortalScreens.FirstOrDefault(a => a.Tenant == tenant);
 
                 if (data != null)
