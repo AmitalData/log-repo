@@ -19,5 +19,7 @@ export class DeploymentPackageList {
 		InActive: boolean;
 		Description: string;
 		SearchFields: string;
+		CreatedByUserName: string;
+		UpdatedByUserName: string;
 	
 }

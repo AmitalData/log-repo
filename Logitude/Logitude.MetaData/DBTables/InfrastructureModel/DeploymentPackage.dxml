@@ -54,14 +54,14 @@
   <Column
     Name="Name"
     Type="varchar"
-    Size="20">
+    Size="100">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
     Name="Code"
     Type="varchar"
-    Size="15">
+    Size="100">
     <Constraints
       Nullable="false" />
   </Column>

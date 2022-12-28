@@ -110,6 +110,8 @@ import { ScreenListService } from './Services/StandardLists/ScreenListService';
 import { ScreenPMService } from './Services/StandardPMs/ScreenPMService';
 import { DigitalPortalScreenListService } from './Services/StandardLists/DigitalPortalScreenListService';
 import { DigitalPreDefinedComponentListService } from './Services/StandardLists/DigitalPreDefinedComponentListService';
+import { DeploymentPackagePMService } from './Services/StandardPMs/DeploymentPackagePMService';
+import { DeploymentPackageListService } from './Services/StandardLists/DeploymentPackageListService';
 
 export class ModuleProviders {
 
@@ -225,6 +227,9 @@ export class ModuleProviders {
             case "ScreenPMService": { myResult = new ScreenPMService(); break; }
             case "DigitalPortalScreenListService": { myResult = new DigitalPortalScreenListService(); break; }
             case "DigitalPreDefinedComponentListService": { myResult = new DigitalPreDefinedComponentListService(); break; }
+            case "DeploymentPackagePMService": { myResult = new DeploymentPackagePMService(); break; }
+            case "DeploymentPackageListService": { myResult = new DeploymentPackageListService(); break; }
+
         }
 
         return myResult;
