@@ -693,9 +693,9 @@
                                 <table *ngIf="ObjectTableName == 'Customs.CustomsItems' || ObjectTableName == 'Customs.CustomsItem'">
                                     <tr>
 
-                                        <!--<td style="width: 50px; padding-right: 5px;text-align: right;" class="TextTrimming">
+                                       <!--<td style="width: 50px; padding-right: 5px;text-align: right;" class="TextTrimming">
                                             <span style="font-size: 8px; color: #4e4e4e; text-align: right;">{{item.ID}}</span>
-                                        </td>-->
+                                       </td>-->
 
                                         <td style="padding-right: 5px;text-align: right;" class="TextTrimming">
                                             <span style="font-size: 10px; color: #1982b7; text-align: right;">{{item.FullClassification}}</span>
@@ -747,6 +747,24 @@
                                         </td>
 
                                     </tr>
+                                </table>
+                                 <!--  JoinCustomsItem -->
+                                 <table *ngIf="ObjectTableName == 'JoinCustomsItem'">
+                                    <tr>
+
+                                        <td style="padding-right: 5px;text-align: right;" class="TextTrimming">
+
+                                            <span style="font-size: 10px; color: #4e4e4e; text-align: right;">{{item.FullClassification}}</span>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+                                        <td style="padding-right: 5px;text-align: right;" class="TextTrimming">
+                                            <span style="font-size: 9px; color: #1982b7; text-align: right;">{{item.Title}}</span>
+
+                                        </td>
+                                    </tr>                                   
                                 </table>
 
                             </li>
