@@ -63,6 +63,22 @@
                     </div>
                 </div>
 
+                <!-- DeploymentPackage -->
+                <div *ngIf="ObjectTableName == 'DeploymentPackage'">
+                    <div *ngIf="FieldName == 'InActive'">
+                        <img *ngIf="Entity[FieldName] == true" src="./Images/CheckBoxIcon.png" style="width:13px;height:13px;margin-top:-6px;" />
+                        <img *ngIf="Entity[FieldName] == false" src="./Images/SimplogIcons/Close.png" style="width:13px;height:13px;margin-top:-3px;" />
+                    </div>
+
+                    <div *ngIf="FieldName == 'DirectionId'" class="MediaFillRelative">
+                        <img class="CenterCenter" [attr.src]="'./Images/Directions/' + Entity[FieldName] + '.png'" />
+                    </div>
+
+                    <div *ngIf="FieldName == 'CreateDate'||FieldName == 'UpdateDate'">
+                        <div [style.text-align]="isRTL ? 'right' : 'left'">{{FieldValue | DateTimePipe:'DT'}}</div>
+                    </div>
+
+                </div>
             </div>
         </td>
     </tr>

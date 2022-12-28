@@ -34,10 +34,12 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         }
         public IQueryable<DeploymentPackageList> GetIQueryableEntityList(IQueryable<DeploymentPackage> iQueryable)
         {
+
             IQueryable<DeploymentPackageList>
-                result = from a in iQueryable
+                result = from a in iQueryable.Include("CreatedByUser.Contact").Include("UpdatedByUser.Contact")
                          select new DeploymentPackageList()
                          {
+                             Id = a.Id,
                              Tenant = a.Tenant,
                              InActive = a.InActive,
                              DirectionId = a.DirectionId,
@@ -47,11 +49,17 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                              CreatedBy = a.CreatedBy,
                              CreateDate = a.CreateDate,
                              UpdatedBy = a.UpdatedBy,
-                             UpdateDate = a.UpdateDate
+                             UpdateDate = a.UpdateDate,
+                             SearchFields = a.SearchFields,
+                             CreatedByUserName = (a.CreatedByUser!=null && a.CreatedByUser.Contact!=null) ? a.CreatedByUser.Contact.EnglishName:null,
+                             UpdatedByUserName = (a.UpdatedByUser != null && a.UpdatedByUser.Contact != null) ? a.UpdatedByUser.Contact.EnglishName : null,
+
                          };
 
             return result;
         }
+
+
 
         private DeploymentPackagePM MapDeploymentPackageToDeploymentPackagePM(DeploymentPackage deploymentPackage, DeploymentPackagePM deploymentPackagePM)
         {

@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
@@ -29,6 +30,16 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             entityPOCO.InActive = entityPM.InActive;
             entityPOCO.Description = entityPM.Description;
             entityPOCO.DirectionId = entityPM.DirectionId;
+            BuildSearchFields(entityPM, entityPOCO);
+        }
+
+        private static void BuildSearchFields(DeploymentPackagePM entityPM, DeploymentPackage entityPOCO)
+        {
+            string mySearchFields = "";
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Code);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Name);
+            entityPM.SearchFields = mySearchFields;
+            entityPOCO.SearchFields = mySearchFields;
         }
     }
 }

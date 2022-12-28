@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class DeploymentPackageUpdateClass
    {  		
-		public const string HashString = "6354c7e72a661dceebd740ff10b0d0f7";
+		public const string HashString = "10d85ada2414941c0b13bd2975e8f076";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -105,7 +105,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  true,
-			      				    IsNewWizard =  false,
+			      				    IsNewWizard =  true,
+			      				    LookUp1 =  "Name",
+			      				    LookUp2 =  "Code",
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
@@ -117,20 +119,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    IsMain =  true,
 			      				    IsAutoComplete =  false,
 			      				    EnableEditFromLOV =  false,
-			      				    SortingByObjectField =  "Id",
+			      				    SortingByObjectField =  "CreateDate",
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
 			      				    IsComposition =  false,
-			      				    EnableSecurity =  false,
+			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
+			      				    NewWizardControlName =  "./InfrastructureModules/InfrastructureDeploymentPackage/Component/NewEntity/AddNewDeploymentPackageComponent",
 			      				    DefaultText =  "Deployment Package",
-			      				    Code =  "0f78",
+			      				    Code =  "7889",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Infrastructure",
+			      				    NewWizardComponentPath =  "./InfrastructureModules/InfrastructureDeploymentPackage/Component/NewEntity/AddNewDeploymentPackageComponent",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
@@ -588,27 +592,27 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						ObjectTableName =  "DeploymentPackage",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  20,
+					  						MaxLength =  100,
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUp =  true,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  20,
+					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowList =  true,
 					  						PMPropertyPath =  "Name",
 					  						ListPropertyPath =  "Name",
-					  						DisplayInLookUpIndex =  0,
+					  						DisplayInLookUpIndex =  1,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowListIndex =  1,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -621,6 +625,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
+					  						DisplayInLookupColumnSize =  "1",
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Name",
 					  						DefaultText =  "Name",
@@ -650,21 +655,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						ObjectTableName =  "DeploymentPackage",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  15,
+					  						MaxLength =  100,
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUp =  true,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  15,
+					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowList =  true,
 					  						PMPropertyPath =  "Code",
 					  						ListPropertyPath =  "Code",
 					  						DisplayInLookUpIndex =  0,
@@ -683,6 +688,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
+					  						DisplayInLookupColumnSize =  "0",
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Code",
 					  						DefaultText =  "Code",
@@ -761,7 +767,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
+					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
@@ -888,6 +894,130 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  true,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CreatedByUserName",
+					  						ObjectTableName =  "DeploymentPackage",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  40,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CreatedByUserName",
+					  						ListPropertyPath =  "CreatedByUserName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "DeploymentPackage",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CreatedByUserName",
+					  						DefaultText =  "Created By",
+					  						ListFieldLable =  "CreatedByUserNameListLable",
+					  						ListLableDefaultText =  "Created By",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "UpdatedByUserName",
+					  						ObjectTableName =  "DeploymentPackage",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  40,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "UpdatedByUserName",
+					  						ListPropertyPath =  "UpdatedByUserName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "DeploymentPackage",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "UpdatedByUserName",
+					  						DefaultText =  "Updated By",
+					  						ListFieldLable =  "UpdatedByUserNameListLable",
+					  						ListLableDefaultText =  "Updated By",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -897,7 +1027,58 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
-	    {    
+	    {  
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+	        QueryGroup DeploymentPackageQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "7889", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup DeploymentPackageQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ca37", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+				        queryGroupRepository.SubmitChanges();
+	        ObjectTable DeploymentPackageObjectTable = objectTables.ContainsKey("DeploymentPackage") ? objectTables["DeploymentPackage"] : null;
+            if (DeploymentPackageObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
+                DeploymentPackageObjectTable = objectContext.ObjectTables.Where(d => d.Name == "DeploymentPackage" && d.Tenant == 0).FirstOrDefault();
+            }
+
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
+
+			   TextCode DeploymentPackageTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeploymentPackage.Q.ALDP", DefaultText = @"All Deployment Packages",LocalDefaultText = null, ObjectTableId = DeploymentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature DeploymentPackageFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeploymentPackage.Q.ALDP", ObjectTableId = DeploymentPackageObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeploymentPackageFeatures.ALDP", NameTextCodeDefaultText = "ALDP", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DeploymentPackageObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query ALDPQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeploymentPackageTextCode_0.Id, NameTextCodeCode = DeploymentPackageTextCode_0.Code, ObjectTableName = "DeploymentPackage", Code = "ALDP",  QueryGroupCode = "7889", IndexOrder = 0, Tenant = 0, ObjectTableId = DeploymentPackageObjectTable.Id, QuerySection = "DeploymentPackage", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeploymentPackageFeature_0.Id,FeatureUniqeCode= DeploymentPackageFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn ALDPQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALDPQuery.Id,QueryCode = ALDPQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "DeploymentPackage.DirectionId" , ColumnWidth = 65 }, addedQueryColumns);
+
+			 QueryColumn ALDPQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALDPQuery.Id,QueryCode = ALDPQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "DeploymentPackage.Code" , ColumnWidth = 65 }, addedQueryColumns);
+
+			 QueryColumn ALDPQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALDPQuery.Id,QueryCode = ALDPQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "DeploymentPackage.Name" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn ALDPQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALDPQuery.Id,QueryCode = ALDPQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "DeploymentPackage.CreateDate" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn ALDPQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALDPQuery.Id,QueryCode = ALDPQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "DeploymentPackage.CreatedByUserName" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn ALDPQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALDPQuery.Id,QueryCode = ALDPQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "DeploymentPackage.UpdateDate" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn ALDPQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALDPQuery.Id,QueryCode = ALDPQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "DeploymentPackage.UpdatedByUserName" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn ALDPQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALDPQuery.Id,QueryCode = ALDPQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "DeploymentPackage.InActive" , ColumnWidth = 50 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -909,22 +1090,52 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	      
 
 	         Screen DeploymentPackageDeploymentPackageHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "DeploymentPackage.HeaderScreen", Name = "DeploymentPackageHeaderScreen", ObjectTableId = DeploymentPackageObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
-      	
+      
+             ScreenField DeploymentPackageDeploymentPackageHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = DeploymentPackageDeploymentPackageHeaderScreenScreen0.Id,ScreenCode = DeploymentPackageDeploymentPackageHeaderScreenScreen0.Code, ObjectFieldCode = "DeploymentPackage.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField DeploymentPackageDeploymentPackageHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = DeploymentPackageDeploymentPackageHeaderScreenScreen0.Id,ScreenCode = DeploymentPackageDeploymentPackageHeaderScreenScreen0.Code, ObjectFieldCode = "DeploymentPackage.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    DeploymentPackageObjectTable.HeaderScreenId = DeploymentPackageDeploymentPackageHeaderScreenScreen0.Id;
 		    DeploymentPackageObjectTable.HeaderScreenCode = DeploymentPackageDeploymentPackageHeaderScreenScreen0.Code;
 
 	   		  
+	      
+
+	         Screen DeploymentPackageDeploymentPackageGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "DeploymentPackage.GeneralTabScreen", Name = "Deployment Package General Tab Screen", ObjectTableId = DeploymentPackageObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = false }, screensRepository, tenantScreens);
+        
 
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {      
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable DeploymentPackageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DeploymentPackage" && d.Tenant == 0).FirstOrDefault();  
+                 
+			   TextCode DeploymentPackageGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeploymentPackage.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = DeploymentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature DeploymentPackageGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeploymentPackage.Tab.General", ObjectTableId = DeploymentPackageObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeploymentPackageFeatures.DPGE", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeploymentPackageObjectTable);
+ 
+                 
+			   TextCode DeploymentPackageCustomFieldsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeploymentPackage.TH.CustomFields", DefaultText = "Custom Fields",LocalDefaultText = null, ObjectTableId = DeploymentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature DeploymentPackageCustomFieldsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeploymentPackage.Tab.CustomFields", ObjectTableId = DeploymentPackageObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeploymentPackageFeatures.DPCF", NameTextCodeDefaultText = "Custom Fields", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeploymentPackageObjectTable);
+			 TextCodeRepository.SubmitChanges();
+			 FeaturesRepository.SubmitChanges();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			    
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DPGE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = DeploymentPackageGeneralFeature_TH0.Id,FeatureUniqeCode = DeploymentPackageGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = DeploymentPackageObjectTable.Id, TabNameTextCodeId = DeploymentPackageGeneralTextCode_TH0.Id, TabNameTextCodeCode = DeploymentPackageGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DPCF",HtmlComponentName = "CustomFieldsTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureDeploymentPackage/Component/EditTabs/CustomFieldsTabComponent", FeatureId = DeploymentPackageCustomFieldsFeature_TH1.Id,FeatureUniqeCode = DeploymentPackageCustomFieldsFeature_TH1.FeatureUniqeCode, ControlPath = "./InfrastructureModules/InfrastructureDeploymentPackage/Component/EditTabs/CustomFieldsTabComponent", ObjectTableId = DeploymentPackageObjectTable.Id, TabNameTextCodeId = DeploymentPackageCustomFieldsTextCode_TH1.Id, TabNameTextCodeCode = DeploymentPackageCustomFieldsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable DeploymentPackageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DeploymentPackage" && d.Tenant == 0).FirstOrDefault(); 
-   
+
+		   Feature DeploymentPackageFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = DeploymentPackageObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeploymentPackage.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeploymentPackageObjectTable);
+		   Feature DeploymentPackageFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = DeploymentPackageObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeploymentPackage.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeploymentPackageObjectTable);
+		   Feature DeploymentPackageFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = DeploymentPackageObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeploymentPackage.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeploymentPackageObjectTable);
+		   Feature DeploymentPackageFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = DeploymentPackageObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeploymentPackage.Features.PackageFeature", NameTextCodeDefaultText = "DeploymentPackage Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeploymentPackageObjectTable);    
 	    
 		}
 
@@ -974,7 +1185,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable DeploymentPackageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DeploymentPackage" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode DeploymentPackageTextCode_DeploymentPackageTHGeneral = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeploymentPackage.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = DeploymentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 
