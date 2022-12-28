@@ -697,7 +697,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                             consignmentPM.StorageSiteCode = GetValueIDType(registeredFacility.ID);
                                             break;
                                         }
-                                    case "003":
+                                    case "008":
                                         {
                                             consignmentPM.ReceiverWarehouseCode = GetValueIDType(registeredFacility.ID);
                                             break;
