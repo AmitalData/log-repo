@@ -29,6 +29,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     AuthenticationToken authToken = GetAuthenticationToken();
                     int tenant = authToken.Tenant;
                     SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+                    SecurityUtility.AuthenticateAccessibleAPI("APInvoice Cancellation", authToken.Tenant);
+
                     APInvoiceQueryService Service = new APInvoiceQueryService(tenant);
                     APInvoice apinvoice = Service.GetSingleInvoiceByExternalEntityId(externalId, tenant);
                     APInvoicePM apinvoicePM = MapAPInvoiceToAPInvoicePM(apinvoice, tenant);
