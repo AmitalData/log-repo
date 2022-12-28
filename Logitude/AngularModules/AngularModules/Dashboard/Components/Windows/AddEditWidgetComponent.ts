@@ -223,9 +223,6 @@ export class AddEditWidgetComponent extends BaseComponent {
         if (this.EntityPM.TypeCode != "donut" && this.EntityPM.TypeCode != "pie" && this.WidgetMeasuresList.length != 1) {
             this.SortByCodes.push({ Code: 2, Text: 'Measure 2' });
         }
-        if((this.EntityPM.TypeCode == "bar" || this.TypeCode == "column") && this.SecondaryGroupById){
-            this.SortByCodes.push({Code: 3, Text: 'Group 2'});
-        }
     }
 
     get Title() { return this.EntityPM.Title }

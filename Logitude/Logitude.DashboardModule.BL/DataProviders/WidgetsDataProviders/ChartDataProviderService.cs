@@ -1,4 +1,5 @@
-﻿using Logitude.DashboardModule.BL.EntityPMs;
+﻿using Logitude.DashboardModule.BL.DataProviders.Models;
+using Logitude.DashboardModule.BL.EntityPMs;
 using Logitude.DashboardModule.Data;
 using Logitude.DashboardModule.Data.EntityPOCOs;
 using Logitude.Server.Tools;
@@ -23,12 +24,13 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             var seriesMeasures = new List<SeriesMeasure>();
             foreach (var measure in _Widget.WidgetMeasures)
             {
-                var seriesMeasure = new SeriesMeasure();
-
-                seriesMeasure.Name = GetSeriesName(measure);
-                seriesMeasure.RenderAs = measure.RenderAs;
-                seriesMeasure.MeasureFieldId = measure.MeasureFieldId;
-                seriesMeasure.SeriesMeasureVulues = GetSeriesMeasureVulues(query, measure);
+                var seriesMeasure = new SeriesMeasure
+                {
+                    Name = GetSeriesName(measure),
+                    RenderAs = measure.RenderAs,
+                    MeasureFieldId = measure.MeasureFieldId,
+                    Values = GetSeriesMeasureVulues(query, measure)
+                };
                 seriesMeasures.Add(seriesMeasure);
             }
             return seriesMeasures;
@@ -58,20 +60,169 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             return measureCode;
         }
 
-        private List<SeriesMeasureVulue> GetSeriesMeasureVulues<T>(IQueryable<T> query, WidgetMeasurePM measure)
+        private List<SeriesMeasureValue> GetSeriesMeasureVulues<T>(IQueryable<T> query, WidgetMeasurePM measure)
         {
-            var groupBy = _EntityFields.ContainsKey(_Widget.GroupById) ? _EntityFields[_Widget.GroupById] : throw new Exception($"Meta Data Field '{_Widget.GroupById}' not found");
+
             AnalyticsFactsFieldsMetaData measureField = null;
             if (measure.MeasureFieldId != null)
                 measureField = _EntityFields.ContainsKey(measure.MeasureFieldId) ? _EntityFields[measure.MeasureFieldId] : throw new Exception($"Meta Data Field '{measure.MeasureFieldId}' not found");
 
             TreeFilterQueryService treeFilterQueryService = new TreeFilterQueryService();
             var resultQueryable = treeFilterQueryService.Apply(query, new TreeFilterQueryArgs() { AdditionalTreeFilter = _Widget.Filters, ObjectTableName = "", Tenant = 0 });
-            string querys = CreateQuery(measure, groupBy, measureField, resultQueryable);
+            string queryString = BuildQuery(measure, measureField, resultQueryable);
             var conterxt = DashboardContext.GetContext(0);
-            var resultQueryables = conterxt.GetActiveDbContext().Database.SqlQuery<SeriesMeasureVulue>(querys, new object[0]).AsQueryable();
-            List<SeriesMeasureVulue> seriesMeasureVulues = resultQueryables.ToList();
-            if (groupBy.DataTypeCode == "Date" || groupBy.DataTypeCode == "DateTime")
+            var resultQueryables = conterxt.GetActiveDbContext().Database.SqlQuery<SeriesMeasureValue>(queryString, new object[0]).AsQueryable();
+            List<SeriesMeasureValue> seriesMeasureVulues = resultQueryables.ToList();
+            seriesMeasureVulues = FillGroupDateGaps(seriesMeasureVulues);
+            return seriesMeasureVulues;
+        }
+
+        private string BuildQuery<T>(WidgetMeasurePM measure, AnalyticsFactsFieldsMetaData measureField, IQueryable<T> resultQueryable)
+        {
+            if (IsMultiGroup()) return CreateMultiGroupQuery<T>(measure, measureField, resultQueryable);
+            return CreateQuery<T>(measure, measureField, resultQueryable);
+        }
+
+        private bool IsMultiGroup()
+        {
+            return !string.IsNullOrEmpty(_Widget.SecondaryGroupById);
+        }
+
+
+        private string CreateMultiGroupQuery<T>(WidgetMeasurePM measure, AnalyticsFactsFieldsMetaData measureField, IQueryable<T> resultQueryable)
+        {
+            var groupByParts = BuildGroupsParts();
+            var value = GetValueQuery(measure.MeasureCode, measureField);
+
+            return $@"select  {BuildGroupsSelectQuery(groupByParts)}
+                              {value} as Value 
+                              From {_Entity.TableName} as data
+                              INNER JOIN (
+                                   {CreateFirstGroupSortedQuery<T>(measure, measureField, resultQueryable, groupByParts[0])}
+                              ) sortedData On {groupByParts[0].GroupById} = sortedData.Id
+                              {BuildGroupsJoinQuery(groupByParts)}
+                              group by {BuildGroupsGroupQuery(groupByParts)},sortedData.indx order by sortedData.indx";
+        }
+
+        private string CreateFirstGroupSortedQuery<T>(WidgetMeasurePM measure, AnalyticsFactsFieldsMetaData measureField, IQueryable<T> resultQueryable, GroupByFieldQueryParts part)
+        {
+            var top = _Widget.MaximumGrouping.HasValue ? $"top({ _Widget.MaximumGrouping})" : "";
+            var sortBy = $"order by g1.{GetSortByField()} {_Widget.SortDirection}";
+            var value = GetValueQuery(measure.MeasureCode, measureField);
+
+            return $@"select  {top}
+                              g1.GroupById as Id,
+                              row_number() over ({sortBy}) as indx
+                              From (
+                                     select 
+                                     {BuildSingleGroupSelectQuery(part, 1)}
+                                     {value} as Value From
+                                     ({resultQueryable.ToQueryStringWithParameter()}) as data
+                                     {part.Join}
+                                      group by {part.Label},{part.GroupById}
+                              ) as g1
+                              {sortBy}";
+        }
+
+        private string CreateQuery<T>(WidgetMeasurePM measure, AnalyticsFactsFieldsMetaData measureField, IQueryable<T> resultQueryable)
+        {
+            var groupByParts = BuildGroupsParts();
+            var top = _Widget.MaximumGrouping.HasValue ? $"top({ _Widget.MaximumGrouping})" : "";
+
+            var value = GetValueQuery(measure.MeasureCode, measureField);
+            return $@"select  {top}
+                              {BuildGroupsSelectQuery(groupByParts)}
+                              {value} as Value From 
+                              ({resultQueryable.ToQueryStringWithParameter()}) as data
+                              {BuildGroupsJoinQuery(groupByParts)}
+                              group by {BuildGroupsGroupQuery(groupByParts)} {CreateSortBy()}";
+        }
+
+        private string BuildGroupsGroupQuery(List<GroupByFieldQueryParts> groupByParts)
+        {
+            var query = "";
+            foreach (var part in groupByParts)
+            {
+                query = $@"{query} {part.Label},{part.GroupById},";
+            }
+            return query.Remove(query.Length - 1);
+        }
+
+        private string BuildGroupsJoinQuery(List<GroupByFieldQueryParts> groupByParts)
+        {
+            var query = "";
+            foreach (var part in groupByParts)
+            {
+                query = $@"{query}
+                           {part.Join}";
+            }
+            return query;
+        }
+
+        private string BuildGroupsSelectQuery(List<GroupByFieldQueryParts> groupByParts)
+        {
+            var query = "";
+            int pos = 1;
+            foreach (var part in groupByParts)
+            {
+                query = $@"{query}
+                           {BuildSingleGroupSelectQuery(part, pos)}";
+                pos++;
+            }
+            return query;
+        }
+
+        private string BuildSingleGroupSelectQuery(GroupByFieldQueryParts part, int pos)
+        {
+            if (pos == 1)
+            {
+                return $@"{part.Label} as Label,
+                          {part.GroupById} as GroupById,";
+            }
+            return $@"{part.Label} as LabelSec,
+                          {part.GroupById} as GroupByIdSec,";
+        }
+
+        private List<GroupByFieldQueryParts> BuildGroupsParts()
+        {
+            List<GroupByFieldQueryParts> parts = new List<GroupByFieldQueryParts>();
+
+            parts.Add(BuildGroupByFieldQueryParts(_Widget.GroupById, "", _Widget.DateGroupCode));
+            if (!string.IsNullOrEmpty(_Widget.SecondaryGroupById))
+            {
+                parts.Add(BuildGroupByFieldQueryParts(_Widget.SecondaryGroupById, "1", _Widget.SecondaryDateGroupCode));
+            }
+            return parts;
+        }
+
+        private GroupByFieldQueryParts BuildGroupByFieldQueryParts(string groupById, string joinedlabel, string dateGroupCode)
+        {
+            var field = _EntityFields[groupById];
+            var groupByField = $"data.{field.FieldCode}";
+            string label = "";
+            string join = "";
+            if (field.DataTypeCode == "Date" || field.DataTypeCode == "DateTime")
+            {
+                groupByField = ConverDateByDateGroupCode(field, dateGroupCode);
+                label = groupByField;
+            }
+            else if (field.DataTypeCode == "LookUp")
+            {
+                join = $" left join {field.JoinedTableDBName} as JoinedTable{joinedlabel} on JoinedTable{joinedlabel}.{field.JoinedTableKey} = {groupByField} ";
+                label = $"JoinedTable{joinedlabel}.{field.JoinedTableDisplayField}";
+            }
+            return new GroupByFieldQueryParts
+            {
+                Label = label,
+                Join = join,
+                GroupById = groupByField
+            };
+        }
+
+        private List<SeriesMeasureValue> FillGroupDateGaps(List<SeriesMeasureValue> seriesMeasureVulues)
+        {
+            var groupBy = _EntityFields[_Widget.GroupById];
+            if ((groupBy.DataTypeCode == "Date" || groupBy.DataTypeCode == "DateTime"))/* && _Widget.SortBy == null*/
             {
                 seriesMeasureVulues = FillDateGaps(seriesMeasureVulues);
                 UpdateDateString(seriesMeasureVulues);
@@ -79,36 +230,7 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             return seriesMeasureVulues;
         }
 
-        private string CreateQuery<T>(WidgetMeasurePM measure, AnalyticsFactsFieldsMetaData groupBy, AnalyticsFactsFieldsMetaData measureField, IQueryable<T> resultQueryable)
-        {
-            var groupByField = $"data.{groupBy.FieldCode}";
-            if (groupBy.DataTypeCode == "Date" || groupBy.DataTypeCode == "DateTime")
-            {
-                groupByField = ConverDateByDateGroupCode(groupBy);
-            }
-            var label = groupByField;
-            var join = "";
-            if (groupBy.DataTypeCode == "LookUp")
-            {
-                join = $" left join {groupBy.JoinedTableDBName} as JoinedTable on JoinedTable.{groupBy.JoinedTableKey} = {groupByField} ";
-                label = $"JoinedTable.{groupBy.JoinedTableDisplayField}";
-            }
-            var sortBy = CreateSortBy();
-            var top = "";
-            if (_Widget.MaximumGrouping.HasValue)
-                top = $"top({ _Widget.MaximumGrouping})";
-
-            var value = GetValueQuery(measure.MeasureCode, measureField);
-            return $@"select  {top}
-                              {label} as Label,
-                              {groupByField} as GroupById,
-                              {value} as Value From 
-                              ({resultQueryable.ToQueryStringWithParameter()}) as data
-                              {join}
-                               group by {label},{groupByField} {sortBy}";
-        }
-
-        private List<SeriesMeasureVulue> FillDateGaps(List<SeriesMeasureVulue> seriesMeasureVulues)
+        private List<SeriesMeasureValue> FillDateGaps(List<SeriesMeasureValue> seriesMeasureVulues)
         {
             if (_Widget.TypeCode == "pie" || _Widget.TypeCode == "donut") return seriesMeasureVulues;
             if (seriesMeasureVulues == null || seriesMeasureVulues.Count == 0 || seriesMeasureVulues.Count == 1) return seriesMeasureVulues;
@@ -119,30 +241,39 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             return _Widget.SortDirection == "asc" ? result.OrderBy(x => x.Label).ToList() : result.OrderByDescending(x => x.Label).ToList();
         }
 
-        private List<SeriesMeasureVulue> FillAllDateGaps(List<SeriesMeasureVulue> seriesMeasureVulues)
+        private List<SeriesMeasureValue> FillAllDateGaps(List<SeriesMeasureValue> seriesMeasureVulues)
         {
             var dates = new List<string>();
             if (_Widget.DateGroupCode == "Quarter") dates = BuildQuarterDates(seriesMeasureVulues);
             else dates = BuildDateList(seriesMeasureVulues);
 
-            var result = new List<SeriesMeasureVulue>();
+            var result = new List<SeriesMeasureValue>();
             foreach (var item in dates)
             {
-                var seriesMeasureVulue = seriesMeasureVulues.FirstOrDefault(x => x.Label == item);
-                if (seriesMeasureVulue == null)
-                {
-                    seriesMeasureVulue = new SeriesMeasureVulue
-                    {
-                        Label = item,
-                        GroupById = item
-                    };
-                }
-                result.Add(seriesMeasureVulue);
+                AddDateGapsValue(seriesMeasureVulues, result, item);
+
             }
             return result;
         }
 
-        private List<string> BuildQuarterDates(List<SeriesMeasureVulue> seriesMeasureVulues)
+        private static void AddDateGapsValue(List<SeriesMeasureValue> seriesMeasureVulues, List<SeriesMeasureValue> result, string label)
+        {
+            var values = seriesMeasureVulues.Where(x => x.Label == label).ToList();
+            if (values.Any())
+            {
+                result.AddRange(values);
+                return;
+            }
+
+            var seriesMeasureVulue = new SeriesMeasureValue
+            {
+                Label = label,
+                GroupById = label
+            };
+            result.Add(seriesMeasureVulue);
+        }
+
+        private List<string> BuildQuarterDates(List<SeriesMeasureValue> seriesMeasureVulues)
         {
             var listDates = seriesMeasureVulues.Select(x => x.Label).OrderBy(x => x).ToList();
             var minDate = listDates.FirstOrDefault();
@@ -167,7 +298,7 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             return allDates;
         }
 
-        private List<string> BuildDateList(List<SeriesMeasureVulue> seriesMeasureVulues)
+        private List<string> BuildDateList(List<SeriesMeasureValue> seriesMeasureVulues)
         {
             List<DateTime> listDates = seriesMeasureVulues.Select(x => DateTime.ParseExact(x.GroupById, "yyyy/MM/dd", null)).ToList();
             DateTime minDate = listDates.Min();
