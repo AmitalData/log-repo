@@ -2205,7 +2205,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         private void SetCustomFields(string objectTableName, int tenant, Object entity, ARShipmentDetailsElement element)
         {
             TextCodeRepository textCodeRepository = new TextCodeRepository(this.tenant);
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName(objectTableName, tenant).ToList();
 
             foreach (ObjectField field in customFields)

@@ -13980,7 +13980,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
 
                 foreach (ObjectField field in customFields)
                 {
@@ -14300,7 +14300,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
 
                 foreach (ObjectField field in customFields)
                 {

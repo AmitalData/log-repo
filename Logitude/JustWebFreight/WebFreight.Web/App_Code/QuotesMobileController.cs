@@ -110,18 +110,9 @@ namespace WebFreight.Web.App_Code
 
 
             List<QuoteList> listQuery = query2.ToList();
-            List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Quote", tenant).ToList();
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
-            foreach (ObjectField field in customFields)
-            {
-                foreach (QuoteList quoteList in listQuery)
-                {
-                    PropertyInfo propInfo = typeof(QuoteList).GetProperty(field.FieldName);
-                    object newValue = customFieldResolver.GetFieldValue(quoteList, field, tenant);
-                    propInfo.SetValue(quoteList, newValue, null);
-                }
-            }
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+            customFieldResolver.SetCustomFieldsValues("Quote", tenant, listQuery.Cast<object>().ToList());
 
             return listQuery;
 

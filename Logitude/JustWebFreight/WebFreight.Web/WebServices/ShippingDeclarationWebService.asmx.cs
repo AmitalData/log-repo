@@ -3838,7 +3838,7 @@ namespace WebFreight.Web.WebServices
                     myDataProvider.PlaceAndDateOfIssue = myDataProvider.PlaceAndDateOfIssue + " " + String.Format("{0:dd MMM yyyy}", TenantServerConfigration.GetCurrentDateTime(tenant));
                 }
 
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
                 customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipment, myDataProvider);
 
                 if (myFirstPickup != null)

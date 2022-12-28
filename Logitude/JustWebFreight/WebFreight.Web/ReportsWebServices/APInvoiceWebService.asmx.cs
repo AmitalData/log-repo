@@ -75,7 +75,7 @@ namespace WebFreight.Web.ReportsWebServices
         public APInvoiceDataProvider GetAPInvoiceDataProvider(string invoiceId, int tenant)
         {
             servicHelper = new WebServiceHelper(tenant);
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             APInvoiceDataProvider invoiceDataProvider = new APInvoiceDataProvider();
 
             currentTenant = tenant;

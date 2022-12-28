@@ -77,7 +77,7 @@ namespace WebFreight.Web.ReportsWebServices
 
         public PaymentDataProvider GetPaymentDataProvider(string paymentId, int tenant, string documentTypeId)
         {
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             PaymentDataProvider paymentDataProvider = new PaymentDataProvider();
             IInvoiceContext invoiceCotnext = InvoiceContext.GetContext(tenant);
             ARPaymentRepository paymentRep = new ARPaymentRepository(invoiceCotnext);

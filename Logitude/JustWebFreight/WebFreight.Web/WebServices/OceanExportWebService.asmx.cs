@@ -2112,7 +2112,7 @@ namespace WebFreight.Web.WebServices
 
                 myDataProvider.TenantLogo = DataProviders.General.GetLogo(tenantSettings.Id);
 
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
                 customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipment, myDataProvider);
                 ShipmentPickUpDelivery lastPickUp = GetLastPickUp(shipment.Id);
                 if (lastPickUp != null)

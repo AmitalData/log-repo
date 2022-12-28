@@ -858,7 +858,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
             EmployeeGroupQueryService listService = new EmployeeGroupQueryService(crmContext);
             List<EmployeeGroupPM> myResult = listService.GetAllEmployeeGroupsByTenant(tenant);
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetCustomFieldsValues("EmployeeGroup", tenant, myResult.Cast<object>().ToList());
             return myResult.ToList();
         }
@@ -1061,7 +1061,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
             TicketEscalationListQueryService listService = new TicketEscalationListQueryService(crmContext);
             List<TicketEscalationList> myResult = listService.GetTicketEscalationListByTicketId(ticketId, tenant);
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetCustomFieldsValues("TicketEscalation", tenant, myResult.Cast<object>().ToList());
             return myResult.ToList();
         }

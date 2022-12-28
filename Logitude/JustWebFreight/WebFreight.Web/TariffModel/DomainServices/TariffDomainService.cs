@@ -38,7 +38,7 @@ namespace WebFreight.Web.TariffModel.DomainServices
 
             List<TariffList> listQuery = listService.GetList(queryOperations, tenant);
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetCustomFieldsValues("Tariff", tenant, listQuery.Cast<object>().ToList());
 
             return listQuery;

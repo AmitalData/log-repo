@@ -473,7 +473,7 @@ namespace WebFreight.Web.AccountingModel.DomainServices
 
             List<LedgerTransactionList> listQuery = query2.ToList();
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetCustomFieldsValues("LedgerTransaction", tenant, listQuery.Cast<object>().ToList());
 
             return query2;

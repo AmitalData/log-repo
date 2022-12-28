@@ -753,7 +753,7 @@ namespace WebFreight.Web.ReportsWebServices
                     profitrecord.ConsigneeReference1 = a.ConsigneeReference1;
                     profitrecord.ConsigneeReference2 = a.ConsigneeReference2;
 
-                    CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                    CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, a, profitrecord);
 
                     if (!string.IsNullOrEmpty(a.DepartmentId))
@@ -1516,7 +1516,7 @@ namespace WebFreight.Web.ReportsWebServices
             ARInvoiceQuery arInvoiceQuery = new ARInvoiceQuery(tenant);
             AddressQuery addressQuery = new AddressQuery(tenant);
             VatTypeRepository vatTypeRepository = new VatTypeRepository(tenant);
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             ARInvoiceLineRepository aRInvoiceLineRepository = new ARInvoiceLineRepository(tenant);
             ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(tenant);
 
@@ -2183,7 +2183,7 @@ namespace WebFreight.Web.ReportsWebServices
                     shipment.ContainerNr = Item.ContainerNumber;
                     shipment.ActualETA = dataView.MainCarriageATA;
 
-                    CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                    CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, dataView, shipment);
 
                     totalData.ShipmentPackages.Add(shipment);
@@ -3285,7 +3285,7 @@ namespace WebFreight.Web.ReportsWebServices
             IQueryable<APInvoiceList> iQueryable = aPInvoiceQuery.GetInvoiceListByTenant(tenant);
             List<VatType> tenantVatTypes = vatTypeRepository.GetVatTypes(tenant).ToList();
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             List<Shipment> shipments = this.GetShipmentsByAPInvoicesMainEntityId(iQueryable, tenant);
 
             #region Report Filters
@@ -12269,7 +12269,7 @@ namespace WebFreight.Web.ReportsWebServices
             IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             AddressRepository addressRepository = new AddressRepository(commonContext);
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
 
             ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
             IQueryable<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(tenant);

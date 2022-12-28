@@ -43,7 +43,7 @@ namespace WebFreight.Web.WarehouseModel.DomainServices
 
             List<WarehouseReleaseList> myResult = listService.GetList(queryOperations, tenant);
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetCustomFieldsValues("WarehouseRelease", tenant, myResult.Cast<object>().ToList());
 
             return myResult;

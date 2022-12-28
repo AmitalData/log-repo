@@ -784,7 +784,7 @@ namespace WebFreight.Web.ReportsWebServices
                 }
                 #endregion
 
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
                 customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipmentPM, provider);
             }
 

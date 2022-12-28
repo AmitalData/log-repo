@@ -231,7 +231,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                             reportAPIPayment.InvoiceNumber = ariInvoicePayment.ARInvoice.InvoiceNumber;
                             reportAPIPayment.InvocieDate = ariInvoicePayment.ARInvoice.InvoiceDate;
                             reportAPIPayment.DueDate = ariInvoicePayment.ARInvoice.DueDate;
-                            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
                             customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, ariInvoicePayment.ARInvoice, reportAPIPayment);
                             if (isLocalCurrency)
                             {

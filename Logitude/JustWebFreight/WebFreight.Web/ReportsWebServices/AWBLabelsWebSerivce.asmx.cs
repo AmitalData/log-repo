@@ -250,7 +250,7 @@ namespace WebFreight.Web.ReportsWebServices
                     newlabel.AirlineLogo = myDataProvider.AirlineLogo;
                     newlabel.FlightNumber = myDataProvider.FlightNumber;
 
-                    CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                    CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipmentPM, newlabel);
 
                     newlabel.PieceNumber = counter.ToString();

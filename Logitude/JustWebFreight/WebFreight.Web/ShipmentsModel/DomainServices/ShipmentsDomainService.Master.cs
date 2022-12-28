@@ -393,19 +393,10 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             query2 = query2.Take(queryOperations.PageSize);
 
             List<ShipmentList> listQuery = query2.ToList();
-            List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
-            foreach (ObjectField field in customFields)
-            {
-                foreach (ShipmentList shipmentList in listQuery)
-                {
-                    PropertyInfo propInfo = typeof(ShipmentList).GetProperty(field.FieldName);
-                    object newValue = customFieldResolver.GetFieldValue(shipmentList, field, tenant);
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+            customFieldResolver.SetCustomFieldsValues("Shipment", tenant, listQuery.Cast<object>().ToList());
 
-                    propInfo.SetValue(shipmentList, newValue, null);
-                }
-            }
             return listQuery.AsQueryable();
         }
 

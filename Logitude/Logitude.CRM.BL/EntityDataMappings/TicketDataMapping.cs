@@ -494,7 +494,7 @@ namespace Logitude.CRM.BL.EntityDataMappings
 
         private static string AddCustomFieldValueToSearchFields(TicketPM entityPM, string mySearchFields, ObjectField field)
         {
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(entityPM.Tenant);
             string searchFields = mySearchFields;
 
             object value = customFieldResolver.GetFieldValue(entityPM, field, entityPM.Tenant);

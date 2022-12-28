@@ -4361,7 +4361,7 @@ namespace WebFreight.Web.Helpers
                     {
                         if (field.IsCustom)
                         {
-                            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
                             object newValue = customFieldResolver.GetFieldValue(theEntity, field, tenant);
 
 
@@ -4731,7 +4731,7 @@ namespace WebFreight.Web.Helpers
                                                 {
                                                     if (insideObjectField.IsCustom)
                                                     {
-                                                        CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                                                        CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
                                                         object newValue = customFieldResolver.GetFieldValue(insideEntity, insideObjectField, tenant);
                                                         resultValue = (newValue != null ? newValue.ToString() : " ");
                                                     }
@@ -5700,7 +5700,7 @@ namespace WebFreight.Web.Helpers
 
         private object GetCustomFieldValue(ObjectField objectField, object entity, int tenant)
         {
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             object customFieldValue = customFieldResolver.GetFieldValue(entity, objectField, tenant);
             return customFieldValue;
         }

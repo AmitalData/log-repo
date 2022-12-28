@@ -64,7 +64,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             myInvoiceContext = InvoiceContext.GetContext(tenant);
             myCommonContext = CommonDataContext.GetContext(tenant);
             myShipmentsContext = ShipmentsContext.GetContext(tenant);
-            customFieldResolver = new CustomFieldResolver();
+            customFieldResolver = new CustomFieldResolver(tenant);
             addressRepository = new AddressRepository(myCommonContext);
             shipmentPackageRepository = new ShipmentPackageRepository(myShipmentsContext);
             webFreightContext = WebFreightContext.GetContext(tenant);
