@@ -45,6 +45,8 @@ export class CustomDashboardComponent extends BaseComponent implements OnDestroy
     public ComponentId: string = null;
     public ComponentContentId: string = null;
     public SectionsItemsSource: CodeNameClass[];
+    public SelectedFromDashboardDropDown: boolean = false;
+    
     constructor(private eRef: ElementRef) {
         super();
         var idIndex = this.CurrentSession.GetNewId("Meu");
@@ -281,11 +283,13 @@ export class CustomDashboardComponent extends BaseComponent implements OnDestroy
 
     TabSelectionChanged(clickdTab: DashboardTab) {
         if (!clickdTab) return;
+        this.SelectedFromDashboardDropDown = false;
         this.ChangeDashboard(clickdTab.Dashboard, false);
     }
 
     DropDwonSelectionChanged(dashboard: DashboardList) {
         MixPanelLocator.PostDashboardAction({ ActionName: "Dashboard drop down", DashboardId: dashboard.Id });
+        this.SelectedFromDashboardDropDown = true;
         this.ChangeDashboard(dashboard, true);
     }
 
@@ -331,7 +335,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnDestroy
                     else if (confirmWindow.No) {
                         MixPanelLocator.PostDashboardAction({ ActionName: "Confirm Window No Click", DashboardId: this.SelectedDashboard?.Id });
                         this.HasChanges = false;
-                        this.SelectedDashboard = clickedDashboard;
+                        this.ChangeDashboard(clickedDashboard, this.SelectedFromDashboardDropDown);    
                     } 
                 });
     }
@@ -343,7 +347,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnDestroy
             this.CurrentSession.StopBusyIndicator();
             if (myResponse.HasError) return;
             this.HasChanges = false;
-            this.ChangeDashboard(clickedDashboard, false);
+            this.ChangeDashboard(clickedDashboard, this.SelectedFromDashboardDropDown);
         });
     }
 
