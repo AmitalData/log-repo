@@ -2791,6 +2791,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        DocumentTypeId = a.DocumentTypeId,
                                                        DocumentTypeCode = a.DocumentType != null ? a.DocumentType.Code : null,
                                                        DocumentTypeName = a.DocumentType != null ? a.DocumentType.Name : null,
+                                                       IsCustomerUploadPermission = a.DocumentType != null ? a.DocumentType.IsCustomerUploadPermission : false,
                                                        DoucmentTypeTemplateFormatCode = a.DocumentType != null ? a.DocumentType.TemplateFormatCode : null,
                                                        EntityId = a.EntityId,
                                                        HasCopies = a.HasCopies,

@@ -45,7 +45,7 @@
                                         </li>
 
                                         <li [class.Selected]="SelectedTabCode == 'CUA'" (click)="SelectedTabChange('CUA')" *ngIf="IsDigitalPortal">
-                                            <div [attr.data-cy]="'Customer Update'" style="width:100px;text-align:left;font-size:11px;color:black" class="InnerChild">
+                                            <div [attr.data-cy]="'Customer Update'" style="width:150px;text-align:left;font-size:11px;color:black" class="InnerChild">
                                                 <span>Customer Update</span>
                                             </div>
                                         </li>
@@ -213,13 +213,13 @@
                                             </table>
                                         </div>
                                     </div>
-                                    <!--Tab 1: Customer Update-->
+                                    <!--Tab 3: Customer Update-->
                                     <div class="MediaFillRelative" [hidden]="SelectedTabCode != 'CUA'">
                                         <div class="MediaFillAbsolute">
                                             <table>
                                                 <tr style="height:100%">
                                                     <td>
-                                                        <div style="border:1px solid lightGray;height:100%">
+                                                        <div style="border:1px solid lightGray;height:100%;">
                                                             <table>
                                                                 <tr style="height:5px;"><td></td></tr>
                                                                 <tr style="height:100%">
@@ -232,9 +232,8 @@
                                                                                         <div class="SimpleGridViewHeader">
                                                                                             <table>
                                                                                                 <tr>
-                                                                                                    <td style="width: 100%; min-width: 100%;text-align:center">Document Name</td>
-                                                                                                    <td style="width: 100px; min-width: 100px;text-align:center">Suggested</td>
-                                                                                                    <td style="width:70px; min-width:70px;text-align:center ">Customer View</td>
+                                                                                                    <td style="width: 100%; min-width: 100%;text-align:left">Document Name</td>
+                                                                                                    <td style="width: 70px; min-width: 70px; text-align: left ">Customer Update</td>
                                                                                                 </tr>
                                                                                             </table>
                                                                                         </div>

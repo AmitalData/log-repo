@@ -130,6 +130,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
                             PrintDate = invoiceDocument?.PrintDate,
                             IsPrinted = invoiceDocument?.IsPrinted,
                             DirectionCode = item.DirectionCode,
+                            IsCustomerUploadPermission = item.IsCustomerUploadPermission,
                         });
                     }
                 }
