@@ -1065,7 +1065,25 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
                             }
+                        case "JoinCustomsItem":
+                            {
+                                ICustomContext ctx = CustomContext.GetContext(tenant);
+                                CustomsItemListQueryService query = new CustomsItemListQueryService(ctx);
 
+                                QueryOperations QO = new QueryOperations();
+                                QO.PageIndex = 0;
+                                QO.PageSize = 100;
+                                QO.SetFilter("FullClassification", SearchFields, false, "Contains", null, false);
+                                QO.SetFilter("CustomsBookTypeID", 1, false, "NotEqual", null, false);
+                                QO.SetFilter("CustomsItemCategoryID", "2,3", false, "InListInt", null, false);
+                                QO.SetFilter("dateExpire", 1, true, "Contains", null, false);
+                               
+                               
+
+                                List<JoinCustomsItemList> myResult = query.GetListJoinCustomsItem(QO, tenant);
+
+                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                            }
                         default:
                             {
                                 object myResult = null;
