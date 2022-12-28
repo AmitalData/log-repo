@@ -11,6 +11,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using WebFreight.Web.Controllers.DigitalPortal.Helpers;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 
@@ -84,9 +85,26 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             string email = "";
             try
             {
-                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
-                email = authToken.Email;
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                string securityKey = HttpContext.Current.Request.Headers["securitykey"];
+
+                if (!string.IsNullOrWhiteSpace(securityKey))
+                {
+                    var authenticationHelper = new DigitalPortalAuthenticationHelper();
+                    var shipmentIdAndTenant = authenticationHelper.GetShipmentBySecurityKey(securityKey);
+                    if (shipmentIdAndTenant == null)
+                    {
+                        throw new AutenticationException("Sorry! this user is not authorized!");
+                    }
+
+                    tenant = shipmentIdAndTenant.Item2;
+                }
+                else
+                {
+                    var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                    email = authToken.Email;
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                }
+
                 var preDefinedComponentQueryService = new DigitalPreDefinedComponentQueryService(tenant);
                 var digitalPreDefinedComponents = preDefinedComponentQueryService.GetDigitalPreDefinedComponentQuery(tenant, objectTableId, name);
                 return Request.CreateResponse(HttpStatusCode.OK, digitalPreDefinedComponents);
