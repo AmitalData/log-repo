@@ -95,7 +95,7 @@ export class FlowVariablesTreeList {
 
     private compareItemTextType(item: TreeSelectItem) {
         let fieldItemType = item.data["type"];
-        let validTypes = [FieldTypes.Text, FieldTypes.NText];
+        let validTypes = [FieldTypes.Text, FieldTypes.NText, FieldTypes.LookUp, FieldTypes.PickList];
         if (fieldItemType !== undefined && (fieldItemType === null || validTypes.indexOf(fieldItemType) === -1)) {
             return false;
         }
