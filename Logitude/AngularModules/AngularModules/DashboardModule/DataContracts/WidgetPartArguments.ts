@@ -4,4 +4,5 @@ export class WidgetPartArguments {
    public Widget: WidgetPM;
    public MeasureFieldId: string;
    public GroupByValue: string;
+   public GroupBySecValue: string;
 }

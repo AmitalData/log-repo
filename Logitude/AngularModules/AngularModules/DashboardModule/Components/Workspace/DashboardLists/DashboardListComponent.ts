@@ -124,6 +124,7 @@ export class DashboardListComponent extends BaseComponent implements OnInit {
     MapDataPointSelectionToWidgetPartArguments(dataPointSelection: DataPointSelection): WidgetPartArguments {
         var widgetPartArguments = new WidgetPartArguments();
         widgetPartArguments.GroupByValue = dataPointSelection.GroupById;
+        widgetPartArguments.GroupBySecValue = dataPointSelection.GroupByIdSec;
         widgetPartArguments.MeasureFieldId = dataPointSelection.MeasureFieldId;
         widgetPartArguments.Widget = DashboardMapping.GetWidgetPMFromReact(dataPointSelection.Widget);
         return widgetPartArguments;
