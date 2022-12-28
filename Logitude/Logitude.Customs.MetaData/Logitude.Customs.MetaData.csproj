@@ -143,6 +143,7 @@
     <None Include="DBScripts\Post\20220905_UpdateDeclarationPhysicalCheckAfter.sxml" />
     <None Include="DBScripts\Post\20221002_DropColumnExportContainerizationID.sxml" />
     <None Include="DBScripts\Post\20220905_UpdateDeclarationPhysicalCheckAfter.sxml" />
+    <None Include="DBScripts\Post\202212281351_UpdateBothINTERFACEMANAGEMENTS.sxml" />
     <None Include="DBScripts\Pre\202211290910_DropExportStorageShipCode.sxml" />
     <None Include="DBScripts\Pre\20221219_AddonExitEntry.sxml" />
     <None Include="DBScripts\Pre\202108111402_AddONSearchResult.sxml" />
