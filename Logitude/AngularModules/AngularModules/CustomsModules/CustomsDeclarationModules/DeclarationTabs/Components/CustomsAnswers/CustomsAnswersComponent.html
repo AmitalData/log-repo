@@ -413,7 +413,7 @@
                                                                         [IsMultiline]="true"></LogTextBox>
                                                         </td>
                                                         <td style="width: 110px">
-                                                            <custom-send-options [IsDisabled]="constraint.displayOnly"
+                                                            <custom-send-options [IsDisabled]="constraint.displayOnly || IsConstraintDisplayOnly"
                                                                                  #MyCustomSendOptionsComponent
                                                                                  (SendButtonClicked)="SendButtonClicked(constraint, $event)">
                                                             </custom-send-options>
