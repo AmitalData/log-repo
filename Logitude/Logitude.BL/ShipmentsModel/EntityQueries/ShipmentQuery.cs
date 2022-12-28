@@ -4151,6 +4151,31 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.PreCarriageETD = masterData.PreCarriageETD;
                 shipmentPM.OnCarriageETA = masterData.OnCarriageETA;
                 shipmentPM.OnCarriageETD = masterData.OnCarriageETD;
+
+                shipmentPM.MainCarriageFromPortId = masterData.MainCarriageFromPortId;
+                shipmentPM.MainCarriageToPortId = masterData.MainCarriageToPortId;
+
+                shipmentPM.Transshipment1ATA = masterData.Transshipment1ATA;
+                shipmentPM.Transshipment1ETA = masterData.Transshipment1ETA;
+                shipmentPM.Transshipment1ATD = masterData.Transshipment1ATD;
+                shipmentPM.Transshipment1ETD = masterData.Transshipment1ETD;
+                shipmentPM.Transshipment1FromPortId = masterData.Transshipment1FromPortId;
+                shipmentPM.Transshipment1ToPortId = masterData.Transshipment1ToPortId;
+
+                shipmentPM.Transshipment2ATA = masterData.Transshipment2ATA;
+                shipmentPM.Transshipment2ETA = masterData.Transshipment2ETA;
+                shipmentPM.Transshipment2ATD = masterData.Transshipment2ATD;
+                shipmentPM.Transshipment2ETD = masterData.Transshipment2ETD;
+                shipmentPM.Transshipment2FromPortId = masterData.Transshipment2FromPortId;
+                shipmentPM.Transshipment2ToPortId = masterData.Transshipment2ToPortId;
+
+                shipmentPM.Transshipment3ATA = masterData.Transshipment3ATA;
+                shipmentPM.Transshipment3ETA = masterData.Transshipment3ETA;
+                shipmentPM.Transshipment3ATD = masterData.Transshipment3ATD;
+                shipmentPM.Transshipment3ETD = masterData.Transshipment3ETD;
+                shipmentPM.Transshipment3FromPortId = masterData.Transshipment3FromPortId;
+                shipmentPM.Transshipment3ToPortId = masterData.Transshipment3ToPortId;
+
             }
 
             shipmentPM.Field1 = new CustomFieldClass("Field1", "Shipment", shipment.Field1);
@@ -5416,6 +5441,30 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.MainCarriageCarrierId = m.MainCarriageCarrierId;
                         shipmentPM.FinalDistenationPortId = m.Transshipment3ToPortId != null ? m.Transshipment3ToPortId : m.Transshipment2ToPortId != null ? m.Transshipment2ToPortId : m.Transshipment1ToPortId != null ? m.Transshipment1ToPortId : m.MainCarriageToPortId;
                         shipmentPM.CutoffDate = m.CutoffDate;
+
+                        shipmentPM.MainCarriageFromPortId = m.MainCarriageFromPortId;
+                        shipmentPM.MainCarriageToPortId = m.MainCarriageToPortId;
+
+                        shipmentPM.Transshipment1ATA = m.Transshipment1ATA;
+                        shipmentPM.Transshipment1ETA = m.Transshipment1ETA;
+                        shipmentPM.Transshipment1ATD = m.Transshipment1ATD;
+                        shipmentPM.Transshipment1ETD = m.Transshipment1ETD;
+                        shipmentPM.Transshipment1FromPortId = m.Transshipment1FromPortId;
+                        shipmentPM.Transshipment1ToPortId = m.Transshipment1ToPortId;
+
+                        shipmentPM.Transshipment2ATA = m.Transshipment2ATA;
+                        shipmentPM.Transshipment2ETA = m.Transshipment2ETA;
+                        shipmentPM.Transshipment2ATD = m.Transshipment2ATD;
+                        shipmentPM.Transshipment2ETD = m.Transshipment2ETD;
+                        shipmentPM.Transshipment2FromPortId = m.Transshipment2FromPortId;
+                        shipmentPM.Transshipment2ToPortId = m.Transshipment2ToPortId;
+
+                        shipmentPM.Transshipment3ATA = m.Transshipment3ATA;
+                        shipmentPM.Transshipment3ETA = m.Transshipment3ETA;
+                        shipmentPM.Transshipment3ATD = m.Transshipment3ATD;
+                        shipmentPM.Transshipment3ETD = m.Transshipment3ETD;
+                        shipmentPM.Transshipment3FromPortId = m.Transshipment3FromPortId;
+                        shipmentPM.Transshipment3ToPortId = m.Transshipment3ToPortId;
 
                     }
 
