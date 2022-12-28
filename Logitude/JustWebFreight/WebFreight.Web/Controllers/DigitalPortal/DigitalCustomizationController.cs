@@ -102,6 +102,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 {
                     var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
                     email = authToken.Email;
+                    tenant = authToken.Tenant;
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 }
 
