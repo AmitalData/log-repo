@@ -181,7 +181,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         ClientTypeSpecificCode = client.ClientTypeSpecificCode,
                         Id = client.Id,
                     };*/
-                    var clientPM = this.GetEntityPM(client, false, null);
+                    var clientPM = this.GetEntityPM(client, true, null);
                     clientsPMList.Add(clientPM);
                 }
             }
