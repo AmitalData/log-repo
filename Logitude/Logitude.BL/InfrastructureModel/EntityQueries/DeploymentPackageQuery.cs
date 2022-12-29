@@ -75,6 +75,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             deploymentPackagePM.InActive = deploymentPackage.InActive;
             deploymentPackagePM.Description = deploymentPackage.Description;
             deploymentPackagePM.DirectionId = deploymentPackage.DirectionId;
+            deploymentPackagePM.CreatedByUserName = (deploymentPackage.CreatedByUser != null && deploymentPackage.CreatedByUser.Contact != null) ? deploymentPackage.CreatedByUser.Contact.EnglishName : null ;
+            deploymentPackagePM.UpdatedByUserName = (deploymentPackage.UpdatedByUser != null && deploymentPackage.UpdatedByUser.Contact != null) ? deploymentPackage.UpdatedByUser.Contact.EnglishName : null;
             return deploymentPackagePM;
         }
     }

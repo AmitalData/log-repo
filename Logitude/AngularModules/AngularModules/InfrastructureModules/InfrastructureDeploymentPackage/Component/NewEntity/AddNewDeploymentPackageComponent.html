@@ -1,22 +1,79 @@
 <table>
     
-
     <tr>
         <td>
-            <table>
+            <div class="FillParent CurvedArea">
+                <table>
+                    <tr>
+                        <td style="width: 160px; vertical-align: top" class="AppLeftMenuBackground">
 
-                <!-- Name -->
-                <tr class="FormFieldRow">
-                   gggg
-                </tr>
+                            <table>
+                                <tr style="height: 1px">
+                                    <td>
+                                        <!-- Directions -->
+                                        <div style="margin: 10px;">
+                                            <div style="font-size: 13px; color: #6E7172;">{{'DeploymentPackage.F.DirectionId' | TextCodeTranslationPipe}}:</div>
+                                            <div style="margin-top: 10px;">
+                                                <div class="RadioButton" *ngFor="let item of DirectionsList" style="margin-bottom: 10px">
+                                                    <input [attr.id]="'DirectionRadio_' + SessionIndex + item.Code" type="radio" [attr.name]="'DirectionsRadio' + SessionIndex" [checked]="DirectionId == item.Code" (click)="DirectionId = item.Code" />
+                                                    <label [attr.for]="'DirectionRadio_' + SessionIndex + item.Code" style="text-indent: 40px; font-size: 12px" [ngStyle]="{color: DirectionId == item.Code ? '#287828':'#282E30'}">
+                                                        <img class="LeftCenter" style="margin-left: 20px;" [attr.src]="'./Images/Directions/' + item.Code + '.png'" />
+                                                        {{item.Name}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                
-         
-            </table>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </td>
+
+                        <td>
+                            <div class="MediaFill">
+                                <div class="MediaFillAbsolute MarginAbsolute10" [hidden]="DirectionId != 'E'">
+                                    <div LocationDirective Code="EXPORT"></div>
+                                </div>
+                                <div class="MediaFillAbsolute MarginAbsolute10" [hidden]="DirectionId != 'I'">
+                                    <div LocationDirective Code="IMPORT"></div>
+                                </div>
+                            </div>
+                            
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </td>
     </tr>
 
     <tr style="height: 32px;">
-       
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button id="{{'CancelButton' | IdGeneratorPipe}}" class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button id="{{'CreateButton' | IdGeneratorPipe}}" class="RedButton" (click)="CreateButtonClicked()">{{'General.B.Create' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
     </tr>
 </table>
