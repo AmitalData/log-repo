@@ -1779,6 +1779,7 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicesRecored.InvoiceType = arInvoice.ARInvoiceTypeName;
                 invoicesRecored.InvoiceDate = arInvoice.InvoiceDate.Value;
                 invoicesRecored.InvoiceNumber = arInvoice.InvoiceNumber;
+                invoicesRecored.TotalAmountForTaxReport = arInvoice.TotalAmountForTaxReport;
                 invoicesRecored.BillTo = arInvoice.BillToName;
                 invoicesRecored.PartnerName = arInvoice.PartnerName;
                 invoicesRecored.OurRefNumber = arInvoice.MainEntityReference;
