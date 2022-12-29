@@ -159,6 +159,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDecReferantData
                         _DeclarationReferantDataPM.IsClosedForFollowUp = "0";
                     }
                 }
+                else
+                {
+                    _DeclarationReferantDataPM.IsClosedForFollowUp = "0";
+                }
 
                 if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.PreClassification))
                 {
