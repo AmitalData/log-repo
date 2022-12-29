@@ -809,7 +809,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
         {
             if (!FeatureToggleHelper.HasFeatureToggle("QMU", tenant))
             {
-                return markUp.Value;
+                return (markUp == null ? 0 : markUp.Value);
             }
             else
             {
