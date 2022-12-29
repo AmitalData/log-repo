@@ -7,11 +7,53 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Server.Tools.Helpers;
+using Logitude.BL.InvoiceModel.APIDataContract;
 
 namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 {
    public partial class JournalQueryService
     {
+
+
+        public Journal SetJournalSystemUser(Journal entity)
+        {
+            String systemUserId = "";
+            UserPM myCreatedByUserPM = null;
+            if (entity.CreatedByUser != null)
+            {
+                UserQuery query = new UserQuery(entity.Tenant);
+                myCreatedByUserPM = query.UserCustomDataMappingAndValidatin(entity.CreatedByUser, entity.Tenant);
+            }
+
+
+
+            if (entity.CreatedByUser == null || myCreatedByUserPM == null)
+            {
+                systemUserId = AuthenticationUtil.ResolveSystemUserId(entity.Tenant);
+                if (!String.IsNullOrEmpty(systemUserId))
+                {
+                    entity.CreatedByUser = null;
+
+                    UserQueryService userQueryService = new UserQueryService(entity.Tenant);
+                    User systemUser = userQueryService.GetUserById(systemUserId, entity.Tenant);
+                    if (systemUser != null)
+                    {
+                        entity.CreatedByUser = new User();
+                        entity.CreatedByUser.Id = systemUser.Id;
+                        entity.CreatedByUser.EnglishName = systemUser.EnglishName;
+                        entity.CreatedByUser.ExternalCode = systemUser.ExternalCode;
+                        entity.CreatedByUser.LocalName = systemUser.LocalName;
+
+                    }
+                }
+            }
+
+            return entity;
+        }
+
 
 
         public Journal JournalDataMappingAndValidatin(JournalPM MyEntity, int Tenant, string ComputingPartnerName = "")
@@ -263,5 +305,29 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                 var temp = query.GetSinglePM(id, Tenant);
             return temp;
         }
+        public ARInvoiceJournalLT GetSingleJournalByAccountingEntity(string accountingEntityId, string accountingEntityCode, int Tenant)
+        {
+            try
+            {
+                JournalPM journalPM = query.GetByAccountingEntityIdAndAccountingEntityCode(accountingEntityId, accountingEntityCode, Tenant);
+                //if (journalPM == null)
+                //    throw new ApplicationException("Journal with accounting entity id " + accountingEntityId + " and accounting entity code " + accountingEntityCode + " doesn't exist");
+
+                ARInvoiceJournalLT aRInvoiceJournalLT = new ARInvoiceJournalLT()
+                {
+                    Id = accountingEntityId,
+                    JournalId = journalPM != null ? journalPM.Id : "",
+                    IsLedgerCreated = journalPM != null ? journalPM.IsLedgerCreated : false,
+                };
+
+                return aRInvoiceJournalLT;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
     }
 }
