@@ -42,21 +42,13 @@ export class AddNewDeploymentPackageComponent extends BaseComponent {
 
     private isLoaderReady: boolean = false;
     RunComponent() {
-        if (this.AllLocations) {
-
-            if (this.AllLocations.toArray().length == 0) {
-                this.RunComponentTimer();
-            }
-
-            else {
-                this.isLoaderReady = true;
-                this.ChangeComponent();
-            }
-        }
-
-        else {
+        if (!this.AllLocations || this.AllLocations.toArray().length == 0) {
             this.RunComponentTimer();
+            return;
         }
+        this.isLoaderReady = true;
+        this.ChangeComponent();
+
     }
 
     private Retries: number = 0;
