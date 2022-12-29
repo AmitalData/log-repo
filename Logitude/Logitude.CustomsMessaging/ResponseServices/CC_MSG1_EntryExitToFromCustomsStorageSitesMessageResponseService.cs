@@ -55,7 +55,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 var declarationQueryService = new DeclarationQueryService(myDbContext);
                 var declaration = declarationQueryService.GetDeclarationByConsignment(cargoTypeCode.ToString(), manifestNumber, secondCargoID, thirdCargoID);
-                if (declaration.Id !=null)
+                if (declaration != null && declaration.Id != null)
                 {
                     this.MyResponseData.UserMessage = " התקבל מסר יציאה ממסוף " + declaration.CustomFileNo;
                     this.MyRequestSheetParam = new RequestSheetParam();
@@ -106,12 +106,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 var deliverySiteType = deliverySiteTypeQueryService.GetSingle(customResponse.ReportingDetails.exitEntrySiteNumber, false, true);
                 var storageSite = deliverySiteType?.LocalName;
                 
-                var commentsStorageSite = storageSite != null ? ", שם אתר: " + storageSite + " " : "";
-                var commentsContainerNumber = customResponse.ReportingDetails.containerNumber != null ? ", מכולה: " + customResponse.ReportingDetails.containerNumber : "";
-                var commentsExpectedArrivalSiteNumber = customResponse.ReportingDetails.expectedArrivalSiteNumber != null ? ", אתר הגעה צפוי: " + customResponse.ReportingDetails.expectedArrivalSiteNumber : "";
-                var commentsDriverName = customResponse.TransferDetails.driverName != null ? ", שם נהג: " + customResponse.TransferDetails.driverName : "";
-                var commentsDriverIdentityNumber = customResponse.TransferDetails.driverIdentityNumber != null ? ", ת.ז נהג: " + customResponse.TransferDetails.driverIdentityNumber : "";
-                var commentsVehicleNumber = customResponse.TransferDetails.vehicleNumber != null ? ", מספר משאית: " + customResponse.TransferDetails.vehicleNumber : "";
+
+                var commentsStorageSite = !string.IsNullOrEmpty(storageSite) ? " שם אתר: " + storageSite + " " : "";
+                var commentsContainerNumber = !string.IsNullOrEmpty(customResponse.ReportingDetails.containerNumber) ? ", מכולה: " + customResponse.ReportingDetails.containerNumber : "";
+                var commentsExpectedArrivalSiteNumber = !string.IsNullOrEmpty(customResponse.ReportingDetails.expectedArrivalSiteNumber)  ? ", אתר הגעה צפוי: " + customResponse.ReportingDetails.expectedArrivalSiteNumber : "";
+                var commentsDriverName = !string.IsNullOrEmpty(customResponse.TransferDetails.driverName) ? ", שם נהג: " + customResponse.TransferDetails.driverName : "";
+                var commentsDriverIdentityNumber = !string.IsNullOrEmpty(customResponse.TransferDetails.driverIdentityNumber) ? ", ת.ז נהג: " + customResponse.TransferDetails.driverIdentityNumber : "";
+                var commentsVehicleNumber = !string.IsNullOrEmpty(customResponse.TransferDetails.vehicleNumber)  ? ", מספר משאית: " + customResponse.TransferDetails.vehicleNumber : "";
 
 
 
