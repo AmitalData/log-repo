@@ -32,7 +32,7 @@ namespace CommunicationWorkerRole.Tasks
         private void UpdateExchangeRateByExternalLink()
         {
             ExchangeRatesFromExternalLinkUpdateService exchangeRatesFromExternalLinkUpdateService = new ExchangeRatesFromExternalLinkUpdateService(Tenant);
-            exchangeRatesFromExternalLinkUpdateService.UpdateRatesByExternalXML();
+            exchangeRatesFromExternalLinkUpdateService.UpdateRatesByExternalXml();
         }
 
     }
