@@ -25,6 +25,7 @@ using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.MessagingServices;
+using System.Runtime.Remoting.Contexts;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -92,7 +93,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 SupplierInvoiceItemListQueryService queryService = new SupplierInvoiceItemListQueryService(customContext);
                 SupplierInvoiceRepository supplierInvoiceRepository = new SupplierInvoiceRepository(customContext);
-                IQueryable<SupplierInvoiceItemList> items = queryService.GetSupplierInvoiceItemsForInvoices(declarationId, supplierInvoiceCounterKeys, tenant,skip,take);
+                IQueryable<SupplierInvoiceItemList> items = queryService.GetSupplierInvoiceItemsForInvoices(declarationId, supplierInvoiceCounterKeys, tenant, skip, take);
 
                 //List<SupplierInvoice> supplierInvoices = supplierInvoiceRepository.GetSupplierInvoicesByCounterKeys(declarationId, supplierInvoiceCounterKeys, tenant);
                 //List<SupplierInvoiceList> invoices = (from a in supplierInvoices
@@ -107,7 +108,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 //{
                 //    List<SupplierInvoiceItemList> parents = items.Where(d => d.DeclarationId == item.DeclarationId && d.CounterKey == item.InvoiceCounterKey && d.IsParent).ToList();
                 //}
-            //    items= from a in items where declarationId
+                //    items= from a in items where declarationId
                 ServiceResponse response = new ServiceResponse();
                 if (getCount)
                 {
@@ -158,6 +159,36 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-       
+
+
+        public HttpResponseMessage GetPreferenceDocumentNumberSupplierInvoiceItemByDeclarationId(string declarationId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+
+                SupplierInvoiceItemListQueryService queryService = new SupplierInvoiceItemListQueryService(customContext);
+                SupplierInvoiceItemQueryService supplierInvoiceItemQueryService = new SupplierInvoiceItemQueryService(customContext);
+                List<SupplierInvoiceItem> items = supplierInvoiceItemQueryService.GetPreferenceDocumentNumberSupplierInvoiceItemByDeclarationId(declarationId,  tenant);
+
+                ServiceResponse response = new ServiceResponse();
+              
+                response.Result = items;
+                return Request.CreateResponse(HttpStatusCode.OK, response);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
     }
 }

@@ -502,6 +502,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
             else itemPM = null;
             return itemPM;
         }
+        public List<SupplierInvoiceItem> GetPreferenceDocumentNumberSupplierInvoiceItemByDeclarationId(string declarationId, int tenant)
+        {
+            List<SupplierInvoiceItem> supplierInvoiceItems = repository.GetPreferenceDocumentNumberSupplierInvoiceItemByDeclarationId(declarationId, tenant);
+
+            return supplierInvoiceItems.ToList();
+        }
 
 
     }
