@@ -2105,6 +2105,7 @@
     <TypeScriptCompile Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWQueryBuilderComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\CustomFieldList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\DeploymentPackageList.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityLists\DeploymentPackagesVersionList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\ReferenceCustomObjectList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\DataCustomObjectList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\DigitalPortalScreenList.ts" />
@@ -2139,6 +2140,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityPMs\BIReportsTypePM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DataCustomObjectPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DeploymentPackagePM.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityPMs\DeploymentPackagesVersionPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DigitalTextCodePM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DWObjectFieldPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DWObjectTablePM.ts" />
@@ -2188,6 +2190,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BIReportsExecutionLogListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\DataCustomObjectListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\DeploymentPackageListService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardLists\DeploymentPackagesVersionListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\DigitalPortalScreenListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\DigitalPreDefinedComponentListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\DigitalTextCodeListService.ts" />
@@ -2206,6 +2209,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\CounterDefinitionPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DataCustomObjectPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DeploymentPackagePMService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DeploymentPackagesVersionPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DigitalTextCodePMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DWQueryColumnPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DWQueryFilterPMService.ts" />
