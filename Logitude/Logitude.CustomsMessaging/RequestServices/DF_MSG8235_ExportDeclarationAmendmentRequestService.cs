@@ -1184,7 +1184,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             if (!String.IsNullOrWhiteSpace(consignmentPM.ReceiverWarehouseCode))
             {
                 seqnum++;
-                registeredFacilitylist.Add(GetImportRegisteredFacility(consignmentPM.ReceiverWarehouseCode, "003", seqnum, consignmentPM));
+                registeredFacilitylist.Add(GetImportRegisteredFacility(consignmentPM.ReceiverWarehouseCode, "008", seqnum, consignmentPM));
             }
             if (consignmentPM.ConsignmentInternalTransitions != null)
             {
