@@ -23,7 +23,7 @@ namespace WebFreight.Web.Helpers.StimulReportCustomizationDataProvider
         {
             this.documentDataProviderArgs = documentDataProviderArgs;
             this.fields = fields;
-            customFieldResolver = new CustomFieldResolver();
+            customFieldResolver = new CustomFieldResolver(documentDataProviderArgs.DocumentTypeTemplatePM.Tenant);
             customChildEntities = new CustomChildEntityService(new CustomChildEntityArgs() { ParentEntityId = documentDataProviderArgs.EntityId, ParentObjectTableName = parentObjectTableName, Tenant = documentDataProviderArgs.DocumentTypeTemplatePM.Tenant }).BuildCustomChildEntities();
             customFieldDataProviderService = new CustomFieldDataProviderService();
         }
