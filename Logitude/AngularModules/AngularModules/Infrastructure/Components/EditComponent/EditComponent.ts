@@ -286,8 +286,22 @@ export class EditComponent implements OnDestroy {
         }
 
     }
+    
     private SetEntityPMAfterLoadIt(result)
     {
+        
+        if (this.WorkEnvironment.toLowerCase() =="customs"  && !AppTool.IsNullOrEmpty(result["Tenant"])){
+            const entityTenant:number =result["Tenant"];
+            if (entityTenant!= SessionLocator.Tenant)//SessionLocator.LoggedUserPM.Tenant) 
+            {
+                
+                this.ValidationErrorsList=[];
+                this.ValidationErrorsList.push("You have no permission to view entities of this type. - Edit Component")
+                this.StopBusyIndicator();
+                throw new Error('You have no permission to view entities of this type. - Edit Component');
+            }
+        }
+
         this.EntityPM = result;
         if (this.EntityFields) {
             this.EntityFields.forEach(itemField =>
