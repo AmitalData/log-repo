@@ -48,6 +48,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         
                         int tenant = authToken.Tenant;
                         SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+                        SecurityUtility.AuthenticateAccessibleAPI("ARInvoice Additional Data", authToken.Tenant);
+
                         if (invoiceAdditionalData != null)
                         {
                             oldEntity = LogitudeXmlSerializer.DeserializeObject<ARInvoiceAdditionalData>(LogitudeXmlSerializer.SerializeObjectToXmlString(invoiceAdditionalData));

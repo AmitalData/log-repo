@@ -34,7 +34,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
 				SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-				CustomsQueryService Service = new CustomsQueryService(tenant);
+                SecurityUtility.AuthenticateAccessibleAPI("Customs", authToken.Tenant);
+
+                CustomsQueryService Service = new CustomsQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
                 var Result = Service.GetCustomsById(id, tenant, null);
                 string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
@@ -55,7 +57,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
 				SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-				CustomsQueryService Service = new CustomsQueryService(tenant);
+                SecurityUtility.AuthenticateAccessibleAPI("Customs", authToken.Tenant);
+
+                CustomsQueryService Service = new CustomsQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
                 var Result = Service.GetCustomsByShipmentNumber(number, tenant, null);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
@@ -78,7 +82,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 					SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-					IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
+                    SecurityUtility.AuthenticateAccessibleAPI("Customs", authToken.Tenant);
+
+                    IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                     CustomsQueryService mappingService = new CustomsQueryService(authToken.Tenant);
                     ShipmentPM entityPM = mappingService.CustomsCustomDataMappingAndValidatin(entity, authToken.Tenant);
                     entityPM.IsExternalAPI = true;
@@ -192,7 +198,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 					SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-					IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
+                    SecurityUtility.AuthenticateAccessibleAPI("Customs", authToken.Tenant);
+
+                    IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                     CustomsQueryService mappingService = new CustomsQueryService(authToken.Tenant);
                     ShipmentQuery query = new ShipmentQuery(authToken.Tenant);
                     ShipmentPM entityPM = query.GetSinglePMByShipmentNumber(entity.ShipmentNumber, authToken.Tenant);
