@@ -1503,7 +1503,7 @@
             let newEnvTenants = [951, 1022];
 
             let newSystemTenant = getCookie("newSystemTenant");
-            if (newSystemTenant == "" && newEnvTenants.indexOf(Tenant) > 0) {
+            if (newSystemTenant == "" && newEnvTenants.indexOf(Tenant) >= 0) {
                 setCookie("newSystemTenant", Tenant, 365);
             }
 
