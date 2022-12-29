@@ -2,6 +2,7 @@
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,7 +33,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public DeploymentPackage GetSingleDeploymentPackage(string id, int tenant)
         {
-            return (from a in context.DeploymentPackages
+            return (from a in context.DeploymentPackages.Include("CreatedByUser.Contact").Include("UpdatedByUser.Contact")
                     where a.Tenant == tenant && a.Id == id
                     select a).FirstOrDefault();
         }
@@ -77,6 +78,11 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         public IQueryable<DeploymentPackage> GetDeploymentPackages(int tenant)
         {
             return context.DeploymentPackages.Where(d => d.Tenant == tenant);
+        }
+
+        public bool CheckIfDeploymentPackageCodeExist(string code, int tenant)
+        {
+            return context.DeploymentPackages.Where(d => d.Code == code && d.Tenant == tenant).Any();
         }
     }
 }

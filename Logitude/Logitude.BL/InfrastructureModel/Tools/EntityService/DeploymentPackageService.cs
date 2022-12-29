@@ -46,6 +46,12 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
         public void Create(DeploymentPackagePM deploymentPackagePM)
         {
+
+            if (!string.IsNullOrEmpty(deploymentPackagePM.Code) && entityRepository.CheckIfDeploymentPackageCodeExist(deploymentPackagePM.Code , deploymentPackagePM.Tenant))
+            {
+                throw new Exception("Another Deployment Package already exist with this Code ");
+            }
+
             this.isNewEntity = true;
             this.entityPM = deploymentPackagePM;
             this.entityPM.Id = IdCounter.GetNumber("DeploymentPackage", tenant).ToString();
