@@ -174,6 +174,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         public bool FromCTool { get; set; }
         public string ReceivedByByContactId { get; set; }
-        
+        public bool IsCustomerUploadPermission { get; set; }
+
+
     }
 }
