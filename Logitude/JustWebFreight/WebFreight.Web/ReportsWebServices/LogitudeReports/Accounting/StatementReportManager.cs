@@ -154,7 +154,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             dataProvider.StatementRecordList = new List<StatementRecord>();
             dataProvider.StatementAgingSummaryRecordList = new List<StatmentAging>();
 
-            customFieldResolver = new CustomFieldResolver();            
+            customFieldResolver = new CustomFieldResolver(tenant);            
             commonContext = CommonDataContext.GetContext(tenant);                       
             ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
             addressRepository = new AddressRepository(commonContext);

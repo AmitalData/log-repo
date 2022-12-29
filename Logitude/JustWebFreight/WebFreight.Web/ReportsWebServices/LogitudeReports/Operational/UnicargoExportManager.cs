@@ -41,7 +41,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
         public UnicargoExportManager(byte[] xmlFilters, int tenant)
         {
             this.tenant = tenant;
-            customFieldResolver = new CustomFieldResolver();
+            customFieldResolver = new CustomFieldResolver(tenant);
             shipmentsContext = ShipmentsContext.GetContext(tenant);
             ContactRepository =new ContactRepository( CommonDataContext.GetContext(tenant));
             commonDataContext = CommonDataContext.GetContext(tenant);

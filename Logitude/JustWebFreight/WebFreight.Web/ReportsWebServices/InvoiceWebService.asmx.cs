@@ -128,7 +128,7 @@ namespace WebFreight.Web.ReportsWebServices
                 Tenant tenantSettings = (from a in commonContext.Tenants where a.Id == tenant select a).FirstOrDefault();
 
                 WebServiceHelper myServicHelper = new WebServiceHelper(tenant);
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
 
                 ARInvoiceQuery invoiceQuery = new ARInvoiceQuery(invoiceRepository);
                 SATInterfaceSettingRepository satInterfaceSettingRepository = new SATInterfaceSettingRepository(invoiceCotnext);
@@ -2935,7 +2935,7 @@ namespace WebFreight.Web.ReportsWebServices
                 ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
                 AddressRepository addressRepository = new AddressRepository(commonContext);
                 ContactRepository contactRepository = new ContactRepository(commonContext);
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
                 IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
                 WebServiceHelper myServicHelper = new WebServiceHelper(tenant);
                 SATInterfaceSettingRepository satInterfaceSettingRepository = new SATInterfaceSettingRepository(invoiceCotnext);

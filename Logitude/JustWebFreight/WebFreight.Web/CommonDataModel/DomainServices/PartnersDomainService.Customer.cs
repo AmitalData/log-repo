@@ -123,7 +123,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
 
             CustomerBusinessUnitFilter filter = new CustomerBusinessUnitFilter(tenant);
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetCustomFieldsValues("Customer", tenant, query2.Cast<object>().ToList());
 
             return query2;
@@ -274,7 +274,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
 
             List<CustomerList> listQuery = bigQuery.ToList();
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetCustomFieldsValues("Customer", tenant, listQuery.Cast<object>().ToList());
 
             return listQuery;
@@ -1000,7 +1000,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             CustomerBusinessUnitFilter myFilter = new CustomerBusinessUnitFilter(tenant);
             myResult = myFilter.RunFilter(myResult);
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetCustomFieldsValues("Customer", tenant, myResult.Cast<object>().ToList());
             return myResult.ToList();
         }

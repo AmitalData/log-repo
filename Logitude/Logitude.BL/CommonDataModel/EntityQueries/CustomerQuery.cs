@@ -2780,7 +2780,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             }
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetCustomFieldsValues("Customer", tenant, new List<CustomerList> { customerList }.Cast<object>().ToList());
 
             CustomerBusinessUnitFilter myFilter = new CustomerBusinessUnitFilter(tenant);
@@ -3758,7 +3758,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             List<CustomerList> listQuery = bigQuery.ToList();
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetCustomFieldsValues("Customer", tenant, listQuery.Cast<object>().ToList());
 
             return listQuery;

@@ -574,7 +574,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     ICRMContext crmContext = CRMContext.GetContext(tenant);
                     TicketListQueryService listService = new TicketListQueryService(crmContext);
                     List<TicketList> myTickets = listService.GetTicketListByShipmentIdList(shipmentId, tenant);
-                    CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                    CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
                     customFieldResolver.SetCustomFieldsValues("Ticket", tenant, myTickets.Cast<object>().ToList());
 
                     foreach (TicketList item in myTickets)

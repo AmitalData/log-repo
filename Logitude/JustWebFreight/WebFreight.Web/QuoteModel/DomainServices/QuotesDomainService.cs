@@ -491,7 +491,7 @@ namespace WebFreight.Web.QuoteModel.DomainServices
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Quote", tenant).ToList();
 
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
                 foreach (ObjectField field in customFields)
                 {
                     PropertyInfo propInfo = typeof(QuoteList).GetProperty(field.FieldName);
@@ -780,13 +780,13 @@ namespace WebFreight.Web.QuoteModel.DomainServices
             query2 = query2.Take(queryOperations.PageSize);
 
             List<QuoteList> listQuery = query2.ToList();
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetCustomFieldsValues("Quote", tenant, listQuery.Cast<object>().ToList());
 
             //List<QuoteList> listQuery = query2.ToList();
             //List<ObjectField> customFields = ObjectFieldsRepository.GetCustomObjectFieldsByObjectTableName("Quote", tenant).ToList();
 
-            //CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            //CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             //foreach (ObjectField field in customFields)
             //{
             //    foreach (QuoteList quoteList in listQuery)

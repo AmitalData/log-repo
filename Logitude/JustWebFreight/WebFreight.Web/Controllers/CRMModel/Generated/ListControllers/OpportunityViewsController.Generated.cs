@@ -64,7 +64,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 	                ICRMContext MyContext = CRMContext.GetContext(authToken.Tenant);
                 OpportunityListQueryService opportunityQuery = new OpportunityListQueryService(MyContext);
                 OpportunityList opportunityList = opportunityQuery.GetSingle(id);
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 customFieldResolver.SetCustomFieldsValues("Opportunity",  authToken.Tenant, new List<OpportunityList> { opportunityList }.Cast<object>().ToList());
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
@@ -89,7 +89,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 	                ICRMContext MyContext = CRMContext.GetContext(authToken.Tenant);
                 OpportunityListQueryService opportunityQuery = new OpportunityListQueryService(MyContext);
                 List<OpportunityList> result = opportunityQuery.GetList(authToken.Tenant);
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 customFieldResolver.SetCustomFieldsValues("Opportunity",  authToken.Tenant, result.Cast<object>().ToList());
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
@@ -223,7 +223,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 }
 
                 response.Result = entityLists;
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 customFieldResolver.SetCustomFieldsValues("Opportunity",  authToken.Tenant, entityLists.Cast<object>().ToList());
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);

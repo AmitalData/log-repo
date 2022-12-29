@@ -62,7 +62,7 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
             
             IQueryable<TariffList> myResult = this.GetRecentEntityLists(tenant, userId, objectTable.Id).AsQueryable();
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetCustomFieldsValues("Tariffs", tenant, myResult.Cast<object>().ToList());
             return myResult.ToList();
         }
@@ -128,7 +128,7 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
 
             IQueryable<TariffList> myResult = this.GetRecentSaleTariffLists(tenant, userId, objectTable.Id).AsQueryable();
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetCustomFieldsValues("Tariffs", tenant, myResult.Cast<object>().ToList());
             return myResult.ToList();
         }

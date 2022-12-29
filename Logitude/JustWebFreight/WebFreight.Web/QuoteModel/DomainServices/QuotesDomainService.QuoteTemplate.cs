@@ -449,18 +449,10 @@ namespace WebFreight.Web.QuoteModel.DomainServices
 
 
             List<QuoteTemplateList> listQuery = query2.ToList();
-            List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("QuoteTemplate", tenant).ToList();
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
-            foreach (ObjectField field in customFields)
-            {
-                foreach (QuoteTemplateList QuoteTemplateList in listQuery)
-                {
-                    PropertyInfo propInfo = typeof(QuoteTemplateList).GetProperty(field.FieldName);
-                    object newValue = customFieldResolver.GetFieldValue(QuoteTemplateList, field, tenant);
-                    propInfo.SetValue(QuoteTemplateList, newValue, null);
-                }
-            }
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+            customFieldResolver.SetCustomFieldsValues("QuoteTemplate", tenant, listQuery.Cast<object>().ToList());
+            
 
             return listQuery.AsQueryable();
         }

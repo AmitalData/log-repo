@@ -119,7 +119,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
         }
         private void SetShipmentCustomFields()
         {
-            customFieldResolver = new CustomFieldResolver();
+            customFieldResolver = new CustomFieldResolver(shipmentDataView.Tenant);
             List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", shipmentDataView.Tenant).ToList();
             crossDockReleaseDataProvider.ShipmentField1 = ResolveCustomFieldValue("Field1", shipmentDataView.Field1, customFields);
             crossDockReleaseDataProvider.ShipmentField2 = ResolveCustomFieldValue("Field2", shipmentDataView.Field2, customFields);

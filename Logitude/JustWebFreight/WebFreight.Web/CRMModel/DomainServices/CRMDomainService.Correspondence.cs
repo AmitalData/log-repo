@@ -248,7 +248,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
             //}
             //#endregion 
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetCustomFieldsValues("Correspondence", tenant, myResult.Cast<object>().ToList());
             return myResult.ToList();
         }

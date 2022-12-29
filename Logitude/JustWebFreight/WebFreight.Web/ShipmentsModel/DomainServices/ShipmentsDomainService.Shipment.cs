@@ -1167,7 +1167,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
 
             FillContainerNumbers(listQuery);
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetCustomFieldsValues("Shipment", tenant, listQuery.Cast<object>().ToList());
 
             return listQuery.AsQueryable();
