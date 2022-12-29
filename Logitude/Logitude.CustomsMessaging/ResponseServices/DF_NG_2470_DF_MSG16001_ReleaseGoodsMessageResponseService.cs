@@ -31,6 +31,8 @@ using Microsoft.Practices.Unity;
 using Logitude.Customs.BL.TraceEvents;
 using Simplog.Data.CommonDataModel;
 using System.Data.Entity;
+using Logitude.Customs.BL.NotificationBL;
+using Logitude.Customs.Data.EntityPOCOs;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -101,7 +103,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         statusDateTime = customResponse.RequestContentHeader.TransmitionDateTime;
                     }
 
-
+                    if (declarationPM.Direction == "E")
+                        declarationPM.ReleaseStatusTypeCode = customResponse.GeneralData?.ReleaseMessageCode.ToString();
+                        
                     var myCourierMasterQueryService = new CourierMasterQueryService(dbContext);
                     CourierMasterPM _CourierMasterPM = myCourierMasterQueryService.GetByDeclarationId(declarationPM.Id, requestParams.Tenant);
                     if (declarationPM.IsAmendment == true && declarationPM.AmendmentOriginalDeclartation != null && _CourierMasterPM == null)
@@ -171,6 +175,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             declarationPM.IsClose = true;
                             MyRequestSheetParam.RequestDescription = "התרה לתיק. מספר הצהרה: " + declarationNumber;//eitan h 26/2/15 task 11525
                             break;
+                        case 4 when declarationPM.Direction == "E":
+                           
+                                myEventContextTagModel.EventCode = "TAS";
+                                myEventContextTagModel.StatusDateTime = statusDateTime;
+                            break;
+
+
                         case 5: // released cancelled
                             LogMessagingUtil.Instance.AppendLine("released cancelled");
                             myEventContextTagModel.EventCode = "RSC";
@@ -180,6 +191,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             declarationPM.IsClose = false;
                             MyRequestSheetParam.RequestDescription = "ביטול התרה. תיק מספר: " + declarationPM.CustomFileNo;//eitan h 26/2/15 task 11525
                             break;
+                        case 8 when declarationPM.Direction == "E":
+                            
+                                myEventContextTagModel.EventCode = "TAC";
+                                myEventContextTagModel.StatusDateTime = statusDateTime;
+                            break;
+
                         case 9: // Pre clearance
                             LogMessagingUtil.Instance.AppendLine("Pre clearence");
                             myEventContextTagModel.EventCode = "PRS";
@@ -203,7 +220,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             this.MyResponseData.HasException = true;
                             this.MyResponseData.UserMessage = errMess;
                             LogMessagingUtil.Instance.AppendLine(errMess);
-                            return;
+                            return;                            
                     }
                     //declarationPM.HatraDate = hataraDate; - Yuval Chalup 17.01.2018 Remarked (Init in each case above)
                     LogMessagingUtil.Instance.AppendLine("declarationPM.HatraDate" + (declarationPM.HatraDate.HasValue ? declarationPM.HatraDate.Value.ToString() : "") + ",Time: " + DateTime.Now.ToString("hh:mm:ss.fff tt"));

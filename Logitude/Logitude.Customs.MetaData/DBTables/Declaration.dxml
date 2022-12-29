@@ -1036,6 +1036,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ReleaseStatusTypeCode"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Cards"
@@ -1254,6 +1261,11 @@
   <Relation
     ForeignKeyColumn="ExportLoadingPortCode"
     ReferencedTable="LoadingSiteTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ReleaseStatusTypeCode"
+    ReferencedTable="ReleaseMessageTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
   <Index

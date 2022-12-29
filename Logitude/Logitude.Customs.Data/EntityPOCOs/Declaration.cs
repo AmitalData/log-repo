@@ -453,6 +453,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string ExportLoadingPortCode { get; set; }
 	      
         public virtual LoadingSiteType ExportLoadingPort { get; set; }
+        [ForeignKey("ReleaseMessageTypeCode")]
+        [Column("ReleaseStatusTypeCode")]
+	    public string ReleaseStatusTypeCode { get; set; }
+	      
+        public virtual ReleaseMessageType ReleaseMessageTypeCode { get; set; }
     }
 }
 	 

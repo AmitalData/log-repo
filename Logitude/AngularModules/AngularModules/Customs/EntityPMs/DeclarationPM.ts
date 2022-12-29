@@ -1459,7 +1459,12 @@ export class DeclarationPM {
         }
     }
     //public DeclarationFollowUp: Array<DeclarationFollowUpPM>= [];
- 
+     private releaseStatusTypeCode: string;
+    public get ReleaseStatusTypeCode() { return this.releaseStatusTypeCode; }
+    public set ReleaseStatusTypeCode(newValue: string) { if (this.releaseStatusTypeCode != newValue) { this.releaseStatusTypeCode = newValue; this.MarkAsDirty("ReleaseStatusTypeCode"); } }
+       
+	 
+
     public OldEntityPM: DeclarationPM;
 		
     public IsDirty: boolean;

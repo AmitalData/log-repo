@@ -172,7 +172,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         AmedmentType, 
 	         IsExportClosed, 
 	         ExportClosedErrorXML, 
-	         ExportLoadingPortCode,
+	         ExportLoadingPortCode, 
+	         ReleaseStatusTypeCode,
 	      }
 
 
@@ -414,7 +415,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         TransferExporterCode, 
 	         IsExportDeclarationAmendments, 
 	         ExportLoadingPortCode, 
-	         PhysicalCheckName,
+	         PhysicalCheckName, 
+	         ReleaseStatusTypeCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -1171,6 +1173,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportLoadingPortCode))
             {
 				entityPOCO.ExportLoadingPortCode = entityPM.ExportLoadingPortCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReleaseStatusTypeCode))
+            {
+				entityPOCO.ReleaseStatusTypeCode = entityPM.ReleaseStatusTypeCode;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1934,6 +1941,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ExportLoadingPortCode = entityPOCO.ExportLoadingPortCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ReleaseStatusTypeCode))
+            {
+					entityPM.ReleaseStatusTypeCode = entityPOCO.ReleaseStatusTypeCode;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationPM entityPM, DeclarationPM oldEntityPM)
@@ -2688,6 +2700,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportLoadingPortCode))
             {
                 oldEntityPM.ExportLoadingPortCode = entityPM.ExportLoadingPortCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReleaseStatusTypeCode))
+            {
+                oldEntityPM.ReleaseStatusTypeCode = entityPM.ReleaseStatusTypeCode;
             }
 			
 		}
