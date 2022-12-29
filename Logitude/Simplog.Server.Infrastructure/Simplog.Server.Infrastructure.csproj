@@ -186,6 +186,7 @@
     <Compile Include="DataContracts\Models\DigitalUploaderInfo.cs" />
     <Compile Include="DataContracts\Models\GeneralFilters.cs" />
     <Compile Include="DataContracts\Models\InvoicesCounter.cs" />
+    <Compile Include="DataContracts\Models\InvoiceStatusDashboardModel.cs" />
     <Compile Include="DataContracts\Models\SearchModel\GlobalSearchResult.cs" />
     <Compile Include="DataContracts\Models\FilterSearchResponse.cs" />
     <Compile Include="DataContracts\Models\SearchModel\InvoiceSearchResult.cs" />
