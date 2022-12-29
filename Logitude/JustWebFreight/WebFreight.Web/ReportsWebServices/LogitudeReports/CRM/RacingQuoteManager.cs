@@ -267,7 +267,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     }
 
                 }
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
                 customFieldResolver.SetDataProviderCustomFieldsValues("Quote", tenant, item, myRecord);
 
 

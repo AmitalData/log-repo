@@ -1070,7 +1070,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 CustomerBusinessUnitFilter myFilter = new CustomerBusinessUnitFilter(tenant);
                 myResult = myFilter.RunFilter(myResult);
 
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
                 customFieldResolver.SetCustomFieldsValues("Customer", tenant, myResult.Cast<object>().ToList());
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);

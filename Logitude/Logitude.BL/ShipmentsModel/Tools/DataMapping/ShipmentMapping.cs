@@ -3941,7 +3941,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             #region Custom Fields
             List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).Where(o => o.DataTypeCode == "Text" || o.DataTypeCode == "nText").ToList();
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             foreach (ObjectField field in customFields)
             {
                 object value = customFieldResolver.GetFieldValue(entityPM, field, tenant);

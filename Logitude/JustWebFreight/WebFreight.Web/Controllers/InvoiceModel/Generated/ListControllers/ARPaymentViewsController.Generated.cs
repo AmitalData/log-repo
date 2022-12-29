@@ -84,7 +84,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 			    }
 				if (entityList != null)
 				{
-                	CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                	CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 	customFieldResolver.SetCustomFieldsValues("ARPayment",  authToken.Tenant, new List<ARPaymentList> { entityList }.Cast<object>().ToList());
  	
 					entityList = ARPaymentAPiHelper.ApplyFilters(entityList, authToken.Tenant);
@@ -121,7 +121,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 				entityLists = entityLists.OrderBy(d => d.PaymentNo);
 				List<ARPaymentList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 customFieldResolver.SetCustomFieldsValues("ARPayment", authToken.Tenant, listResult.Cast<object>().ToList());
 										
 				return Request.CreateResponse(HttpStatusCode.OK, listResult);
@@ -350,7 +350,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 
 				}
 			   List<ARPaymentList> listResult = entityLists.ToList();
-               CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+               CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                customFieldResolver.SetCustomFieldsValues("ARPayment", authToken.Tenant, listResult.Cast<object>().ToList());
 
                response.Result = listResult;
