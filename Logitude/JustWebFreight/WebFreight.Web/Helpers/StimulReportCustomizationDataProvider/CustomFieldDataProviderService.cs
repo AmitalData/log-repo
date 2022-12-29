@@ -25,7 +25,7 @@ namespace WebFreight.Web.Helpers.StimulReportCustomizationDataProvider
             this.documentDataProviderArgs = documentDataProviderArgs;
             this.objectTableName = objectTableName;
             this.fields = fields;
-            customFieldResolver = new CustomFieldResolver();
+            customFieldResolver = new CustomFieldResolver(documentDataProviderArgs.DocumentTypeTemplatePM.Tenant);
 
         }
 
@@ -68,7 +68,8 @@ namespace WebFreight.Web.Helpers.StimulReportCustomizationDataProvider
 
             if (field.IsCustom && fieldValue != null)
             {
-                fieldValue = customFieldResolver.SetFieldDataType(field.DataTypeCode, fieldValue.ToString());
+                CustomFieldClass customFilterClass = new CustomFieldClass();
+                fieldValue = customFilterClass.SetFieldDataType(field.DataTypeCode, fieldValue.ToString());
             }
 
             return fieldValue;
