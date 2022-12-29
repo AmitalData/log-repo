@@ -329,6 +329,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsCustomerUploadPermission"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CustomerRoleId"
     ReferencedTable="Roles"

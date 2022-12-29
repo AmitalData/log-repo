@@ -219,6 +219,44 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         }
 
         [HttpPost]
+        [Route("DigitalDashboard/GetShipmentsGroupedByMonthDates")]
+        public HttpResponseMessage GetShipmentsGroupedByMonthDates(GeneralFilters newFilters)
+        {
+            int tenant = 0;
+            string email = "";
+            try
+            {
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                tenant = authToken.Tenant;
+                email = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, newFilters.CardId);
+                newFilters.Tenant = authToken.Tenant;
+                var shipmentQuery = new ShipmentQuery(authToken.Tenant);
+
+                DateTime? currentDateTime = TenantServerConfigration.GetCurrentDateTime(newFilters.Tenant).Date;
+
+                var result = shipmentQuery.GetByFilters(newFilters)
+                                                  .Where(r => r.MainCarriageFinalDestinationETA.Value.Year == currentDateTime.Value.Year)
+                                                  .GroupBy(a => a.MainCarriageFinalDestinationETA.Value.Month)
+                                                  .OrderBy(a => a.Key)
+                                                  .ToDictionary( a => a.Key, y => y.GroupBy(a => a.TransportModeId)
+                                                                                   .ToDictionary(x => x.Key, q => q.Count()));
+
+                return Request.CreateResponse(HttpStatusCode.OK, result); 
+            }
+            catch (AutenticationException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.Unauthorized, ApiExceptionBuilder.BuildException(ex));
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        [HttpPost]
         [Route("DigitalDashboardController/GetDashboardSummary")]
         public HttpResponseMessage GetDashboardSummary(GeneralFilters newFilters)
         {

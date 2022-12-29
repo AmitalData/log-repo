@@ -62,6 +62,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         [DataMember]
         public bool IsCustomerView { get; set; }
         [DataMember]
+        public bool IsCustomerUploadPermission { get; set; }
+        [DataMember]
         public bool IsAgentView { get; set; }
         [DataMember]
         public bool IsReadOnly { get; set; }

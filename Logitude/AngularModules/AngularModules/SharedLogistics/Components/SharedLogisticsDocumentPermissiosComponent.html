@@ -39,10 +39,17 @@
                                         </li>
 
                                         <li [class.Selected]="SelectedTabCode == 'AGV'" (click)="SelectedTabChange('AGV')" *ngIf="HasAgentDocumentsPermission">
-                                            <div  [attr.data-cy]="'Agent View'" style="width:100px;text-align:left;font-size:11px;color:black" class="InnerChild">
+                                            <div [attr.data-cy]="'Agent View'" style="width:100px;text-align:left;font-size:11px;color:black" class="InnerChild">
                                                 <span>Agent View</span>
                                             </div>
                                         </li>
+
+                                        <li [class.Selected]="SelectedTabCode == 'CUA'" (click)="SelectedTabChange('CUA')" *ngIf="IsDigitalPortal">
+                                            <div [attr.data-cy]="'Customer Update'" style="width:150px;text-align:left;font-size:11px;color:black" class="InnerChild">
+                                                <span>Customer Update</span>
+                                            </div>
+                                        </li>
+
 
                                     </ul>
                                 </div>
@@ -206,11 +213,84 @@
                                             </table>
                                         </div>
                                     </div>
+                                    <!--Tab 3: Customer Update-->
+                                    <div class="MediaFillRelative" [hidden]="SelectedTabCode != 'CUA'">
+                                        <div class="MediaFillAbsolute">
+                                            <table>
+                                                <tr style="height:100%">
+                                                    <td>
+                                                        <div style="border:1px solid lightGray;height:100%;">
+                                                            <table>
+                                                                <tr style="height:5px;"><td></td></tr>
+                                                                <tr style="height:100%">
+                                                                    <td style="margin-left:5px;margin-right:5px;">
+                                                                        <table>
+                                                                            <tr style="height:100%">
+                                                                                <td style="width:5px;"></td>
+                                                                                <td>
+                                                                                    <div class="SimpleGridView">
+                                                                                        <div class="SimpleGridViewHeader">
+                                                                                            <table>
+                                                                                                <tr>
+                                                                                                    <td style="width: 100%; min-width: 100%;text-align:left">Document Name</td>
+                                                                                                    <td style="width: 70px; min-width: 100px; text-align: left ">Customer Update</td>
+                                                                                                </tr>
+                                                                                            </table>
+                                                                                        </div>
+                                                                                        <div class="SimpleGridViewBody">
+                                                                                            <table>
+                                                                                                <tr style="height: 1px;">
+                                                                                                    <td>
+                                                                                                        <table>
+                                                                                                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of DocumentPermissiosLists">
+                                                                                                                <td>
+                                                                                                                    <table>
+                                                                                                                        <tr style="height:25px;" (click)="DocumentPermissiosSelectedViewModel=item" [class.RowSelected]="item === DocumentPermissiosSelectedViewModel">
+                                                                                                                            <td class="GridViewCell" style="width: 100%; min-width: 100%; max-width: 100%; position: relative;">
+                                                                                                                                {{item.DocumentTypeName}}
+                                                                                                                            </td>
+                                                                                                                        
+                                                                                                                            <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px; position: relative;">
+                                                                                                                                <div class="CheckBox">
+                                                                                                                                    <input [attr.data-cy]="item.DocumentTypeName" class="CenterCenter" style="text-align:center" [attr.id]="item.CustomerPermissionCheckedBoxId" type="checkbox" [(ngModel)]="item.CustomerPermissionIsChecked" />
+                                                                                                                                    <label class="CenterCenter" [attr.for]="item.CustomerPermissionCheckedBoxId"></label>
+                                                                                                                                </div>
+                                                                                                                            </td>
+                                                                                                                        </tr>
+                                                                                                                        <tr><td colspan="10"></td></tr>
+                                                                                                                    </table>
+                                                                                                                </td>
+                                                                                                            </tr>
+                                                                                                        </table>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td>
+                                                                                                        <div></div>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </table>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </td>
+                                                                                <td style="width:5px;"></td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr style="height:5px;"><td></td></tr>
+                                                            </table>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
 
                                     <div [hidden]="SelectedTabCode != 'AGV' || IsCloud" class="MediaFillRelative">
-                                        <div class="LocationDirective" LocationDirective Code="AGV"> </div>                                   
+                                        <div class="LocationDirective" LocationDirective Code="AGV"> </div>
                                     </div>
-       
+
                                 </div>
                             </div>
                         </div>
