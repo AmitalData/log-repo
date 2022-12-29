@@ -1637,6 +1637,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              GlobalTaxCalculation = entity.GlobalTaxCalculation,
                              PaymentReferences = entity.PaymentReferences,
                              SATCancelReasonCode = entity.SATCancelReasonCode,
+                             TotalExamptFortaxReport = entity.TotalExamptFortaxReport
                          };
 
             return result;

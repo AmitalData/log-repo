@@ -6,6 +6,7 @@ import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
+import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 
 @Component({
     templateUrl: './DigitalPortalCustomizationScreenLayoutComponent.html',
@@ -20,7 +21,10 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
     ModifiedScreenData: DigitalPortalScreenUpdateModel;
     TextAreaInputId: string = Guid.newGuid();
     TextAreaInputCurrentPosition: number = 0;
+    IsPreviewChanges: boolean = false;
 
+    public editorOptions = {theme: '', language: 'html'};
+    CurrentTenantScreen: DigitalPortalScreenList;
     constructor() {
         this.Screens = [];
         this.ModifiedScreenData = new DigitalPortalScreenUpdateModel();
@@ -63,7 +67,8 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         this.digitalCustomizationService.GetDigitalPortalScreens(objectTableId, screenCode).subscribe((myResult) => {
             if (!myResult.HasError) {
                 var screen = myResult.Result;
-                if (this.Screens != null)
+                this.CurrentTenantScreen = screen;
+                if (screen != null)
                     this.hTMLEditor = screen.Content;
             }
         });
@@ -107,20 +112,32 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         logWindow.Show('./SharedLogistics/Components/DigitalPortal/AddDigitalFieldCodeComponent');
         logWindow.WindowClosed.subscribe(($event: any) => {
             if ($event) {
-                var htmlField = "<containerComponent> <labelComponent fieldCode = \"" + $event + "\" ></fieldLabel> <fieldComponent fieldCode= \"" + $event + "\" ></fieldComponent> </containerComponent>";
+                var htmlField = "<Log-Container>\n<LogElement type='entity-field-label'field-code= '" + $event + "' ></LogElement>\n:\n<LogElement type='entity-field-value'field-code='" + $event + "'></LogElement> \n</Log-Container>";
                 this.attachValue(htmlField);
             }
         });
     }
 
     RestoreDefaultLayoutClicked() {
-        var objectTableId = this.SelectedItem.ObjectTableId;
-        var screenCode = this.SelectedItem.ScreenCode;
-        this.digitalCustomizationService.GetDefaultScreenLayout(objectTableId, screenCode).subscribe((myResult) => {
-            if (!myResult.HasError) {
-                var screen = myResult.Result;
-                if (this.Screens != null)
-                    this.hTMLEditor = screen.Content;
+        var confirm = new ConfirmWindow();
+        confirm.Width = 400;
+        confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
+        confirm.ShowNoButton = true;
+        confirm.Show("All changes will be lost, continue ? ");
+        confirm.WindowClosed.subscribe((event: any) => {
+            if (confirm.Yes) {
+                confirm.Close();
+                var objectTableId = this.SelectedItem.ObjectTableId;
+                var screenCode = this.SelectedItem.ScreenCode;
+                this.digitalCustomizationService.GetDefaultScreenLayout(objectTableId, screenCode).subscribe((myResult) => {
+                    if (!myResult.HasError) {
+                        var screen = myResult.Result;
+                        if (this.Screens != null) {
+                            this.hTMLEditor = screen.DraftContent;
+                            this.IsModified = true;
+                        }
+                    }
+                });
             }
         });
     }
@@ -154,18 +171,28 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
             this.ModifiedScreenData.DraftContent = this.HTMLEditor;
         }
         else {
+            this.IsModified = false;
             this.ModifiedScreenData.Content = this.HTMLEditor;
+            this.ModifiedScreenData.DraftContent = this.CurrentTenantScreen.DraftContent;
         }
 
         this.digitalCustomizationService.UpdateDigitalPortalScreen(this.ModifiedScreenData).subscribe((myResult) => {
-            this.IsModified = false;
             this.ModifiedScreenData = new DigitalPortalScreenUpdateModel();
             this.CurrentSession.StopBusyIndicator();
+            if (this.IsPreviewChanges) {
+                this.IsPreviewChanges = false;
+                this.PreviewDigitalPortal();
+            }
         });
     }
 
     PreviewChangesClicked() {
+        this.IsPreviewChanges = true;
+        this.ContinueSaveChanges(true);
+    }
 
+    PreviewDigitalPortal() {
+        window.open(`https://${SessionLocator.TenantManagementJS.CustomerURL}/preview-draft`, "_blank");
     }
 
     blur(event) {

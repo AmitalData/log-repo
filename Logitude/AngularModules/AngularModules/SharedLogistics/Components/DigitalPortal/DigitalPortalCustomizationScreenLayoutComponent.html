@@ -58,7 +58,7 @@
         <td>
             <table>
                 <tr style="height: 32px;">
-                    <td style="width: 800px; vertical-align: top">
+                    <td style="vertical-align: top">
                         <table style="height: 22px;">
                             <tr>
 
@@ -87,10 +87,10 @@
                         <div></div>
                     </td>
                 </tr>
-                <tr style="height: 500px; vertical-align: top;">
+                <tr style="vertical-align: top;">
                     <td>
                         <div class="MediaFill">
-                            <textarea [attr.id] = "TextAreaInputId" class="input shadow" style="padding: 3%; border-width: thick;font-size:13px;"
+                            <!-- <textarea [attr.id] = "TextAreaInputId" class="language-html input shadow" style="padding: 5px; border-width: thick;font-size:14px;"
                                       [(ngModel)]="HTMLEditor"
                                       autocomplete="off"
                                       autocorrect="off"
@@ -98,11 +98,9 @@
                                       spellcheck="false"
                                       (blur)="blur($event)"
                                       placeholder="Your HTML text here ">
-                            </textarea>
+                            </textarea> -->
+                            <ngx-monaco-editor [options]="editorOptions" [(ngModel)]="HTMLEditor" style="height: 100%"></ngx-monaco-editor>
                         </div>
-                    </td>
-                    <td>
-                        <div></div>
                     </td>
                 </tr>
 
@@ -152,12 +150,7 @@
                     </td>
                 </tr>
 
-                <tr>
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
-
+               
             </table>
         </td>
     </tr>

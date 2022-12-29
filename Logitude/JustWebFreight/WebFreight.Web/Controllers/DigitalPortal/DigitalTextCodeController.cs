@@ -282,8 +282,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var textCodes = textCodeQuery.GetDigitalTextCodesQuery(tenant, objectTableId);
                 var defaultCodesObject = JsonConvert.DeserializeObject<List<DigitalTextCodeObject>>(defaultTextCodes.Labels);
 
-                var defaultCodesObjectDictionary = defaultCodesObject.ToDictionary(a => a.TextCode, x => x.DefaultText);
-
                 var customCodesObject = new List<DigitalTextCodeObject>();
 
                 if (tenant != 0)
@@ -297,14 +295,16 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                     foreach (var item in customCodesObject)
                     {
-                        if (defaultCodesObjectDictionary.ContainsKey(item.TextCode))
+                        var data = defaultCodesObject.FirstOrDefault(a => a.TextCode.Equals(item.TextCode));
+
+                        if (data != null)
                         {
-                            defaultCodesObjectDictionary[item.TextCode] = item.DefaultText;
+                            data.DefaultText = item.DefaultText;
                         }
                     }
                 }
 
-                return Request.CreateResponse(HttpStatusCode.OK, defaultCodesObjectDictionary);
+                return Request.CreateResponse(HttpStatusCode.OK, defaultCodesObject);
             }
             catch (AutenticationException ex)
             {

@@ -1,5 +1,8 @@
+import { AppTool } from "../../../../../Infrastructure/Tools";
 import { FeatureLocator } from "../../../../../Infrastructure/Utilities/FeatureLocator";
 import { CustomizationMainMenuItem } from "./CustomizationMainMenuItem";
+
+declare var window: any;
 
 export class SubEntitiesMainMenuItem extends CustomizationMainMenuItem {
 
@@ -21,7 +24,13 @@ export class SubEntitiesMainMenuItem extends CustomizationMainMenuItem {
     }
     CheckFeaturePermission(args: any): boolean {
         let IsShowSubEntities = FeatureLocator.HasFeaturePermession("General", "SubEntitiesCustomization");
-        return (!args.IsObjectTableFilterEnabled || IsShowSubEntities) && !args.IsCustomFieldsMenue && !args.IsSubEntity;
+        let IsReferenceCustomObject = this.CheckReferenceCustomObjectType(args.ObjectTableId);
+        return (!args.IsObjectTableFilterEnabled || IsShowSubEntities) && !args.IsCustomFieldsMenue && !args.IsSubEntity && !IsReferenceCustomObject;
+    }
+    CheckReferenceCustomObjectType(objectTableId: string) {
+        if (AppTool.IsNullOrEmpty(objectTableId)) return false;
+        let objectTable = window.ObjectTables.filter(d => d.Id === objectTableId)[0];
+        return (objectTable.IsCustom && AppTool.IsNullOrEmpty(objectTable.ParentObjectTableId) && objectTable.ObjectTableTypeCode == "MD");
     }
 
 }

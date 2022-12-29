@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="11">
+  <Sql Version="13">
       <![CDATA[	  
 	  delete from DigitalFieldSecurities where id != ''
 	  delete from DigitalProfiles where id != ''
@@ -179,8 +179,29 @@
 			"FieldCode" : "Shipment.WarehouseLegRemarks"
 		},
 		{
+			"FieldCode": "Shipment.ShipmentNumber" 
+		},
+		{
 			"FieldCode" : "Shipment.MainCarriageATD"
-		}]');
+		},
+		{
+           "FieldCode": "Shipment.DirectionId"
+        },
+	    {
+           "FieldCode": "Shipment.ShipmentSubTypeName"
+        },
+	    {
+            "FieldCode": "Shipment.ShipmentTypeName" 
+	    },
+	    {
+            "FieldCode": "Shipment.LongMaster"
+        },
+	    {
+           "FieldCode": "Shipment.Master"
+        },
+	    {
+            "FieldCode": "Shipment.IncotermName"
+        }]');
 		
 	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
 
@@ -431,8 +452,29 @@
 			"FieldCode" : "Shipment.WarehouseLegRemarks"
 		},
 		{
+			"FieldCode": "Shipment.ShipmentNumber" 
+		},
+		{
 			"FieldCode" : "Shipment.MainCarriageATD"
-		}]');
+		},
+		{
+           "FieldCode": "Shipment.DirectionId"
+        },
+	    {
+           "FieldCode": "Shipment.ShipmentSubTypeName"
+        },
+	    {
+            "FieldCode": "Shipment.ShipmentTypeName" 
+	    },
+	    {
+            "FieldCode": "Shipment.LongMaster"
+        },
+	    {
+           "FieldCode": "Shipment.Master"
+        },
+	    {
+            "FieldCode": "Shipment.IncotermName"
+        }]');
 		
 	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
 	  set @invocieObjectTableId = (select Id from ObjectTables where [Name] = 'ARInvoice' and Tenant = 0)

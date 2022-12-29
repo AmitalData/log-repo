@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="15">
+  <Sql Version="18">
     <![CDATA[	
 	  delete from DigitalTextCodes where id != ''
 
@@ -557,6 +557,16 @@
 			"FieldCode" : ""
 		},
 		{
+			"TextCode": "general.G.NoInfoAvailableParentMsg",
+			"DefaultText": "You don’t have any information here",
+			"FieldCode" : ""
+		},
+		{
+			"TextCode": "general.G.NoInfoAvailableMsg",
+			"DefaultText": "All information will be displayed here, when it will be added by the forwarder.",
+			"FieldCode" : ""
+		},
+		{
 			"TextCode": "General.G.DownloadData",
 			"DefaultText": "Download data",
 			"FieldCode" : ""
@@ -570,6 +580,11 @@
 	  INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, Labels) 
 	  values (@NewEntityId, 0, @shipmentObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,
 	  '[{
+			"TextCode": "Shipment.F.ShipmentNumber",
+			"DefaultText": "Shipment number",
+			"FieldCode": "Shipment.ShipmentNumber" 
+		},
+		{
 			"TextCode": "Shipment.Q.AllShipments",
 			"DefaultText": "Shipments",
 			"FieldCode": "" 
@@ -707,7 +722,7 @@
 		{
 			"TextCode": "Shipment.G.GeneralInformation",
 			"DefaultText": "General information",
-			"FieldCode": ""
+			"FieldCode": "Shipment.GeneralInformation"
 		},
 		{
 			"TextCode": "Shipment.G.FinalDestinationNoResultMsg",
@@ -717,16 +732,11 @@
 		{
 			"TextCode": "Shipment.F.House",
 			"DefaultText": "House",
-			"FieldCode": ""
+			"FieldCode": "Shipment.House"
 		},
 		{
 			"TextCode": "Shipment.G.Houses",
 			"DefaultText": "Houses",
-			"FieldCode": ""
-		},
-		{
-			"TextCode": "Shipment.O.Master",
-			"DefaultText": "Master",
 			"FieldCode": ""
 		},
 		{
@@ -1145,8 +1155,43 @@
 			"FieldCode" : ""
 		},
 		{
+			"TextCode": "Shipment.G.SearchDefaultParentMSG",
+			"DefaultText": "No shipments results found",
+			"FieldCode" : ""
+		},
+		{
 			"TextCode": "Shipment.G.SearchDefaultMSG",
-			"DefaultText": "No shipments results found Sorry, we could not find what you are looking for, Please try another way.",
+			"DefaultText": "Sorry, we could not find what you are looking for, Please try another way.",
+			"FieldCode" : ""
+		},
+		{
+			"TextCode": "Shipment.G.AllShipmentEmptyDefaultParentMSG",
+			"DefaultText": "You don’t have any active shipments yet",
+			"FieldCode" : ""
+		},
+		{
+			"TextCode": "Shipment.G.AllShipmentEmptyDefaultMSG",
+			"DefaultText": "Information about active shipments will be displayed here, when they will be added by the forwarder.",
+			"FieldCode" : ""
+		},
+		{
+			"TextCode": "Shipment.G.InprogressShipmentEmptyParentDefaultMSG",
+			"DefaultText": "You don’t have any shipments in progress yet",
+			"FieldCode" : ""
+		},
+		{
+			"TextCode": "Shipment.G.InprogressShipmentEmptyDefaultMSG",
+			"DefaultText": "Information about shipments in progress will be displayed here, when they will be added by the forwarder.",
+			"FieldCode" : ""
+		},
+		{
+			"TextCode": "Shipment.G.DocumentsDefaultParenttMSG",
+			"DefaultText": "No Shared Documents found",
+			"FieldCode" : ""
+		},
+		{
+			"TextCode": "Shipment.G.DocumentsDefaultMSG",
+			"DefaultText": "Sorry, we couldn''t find what you’re looking for, Please try another way.",
 			"FieldCode" : ""
 		},
 		{
@@ -1173,8 +1218,37 @@
 			"TextCode": "Shipment.G.ContainersLines",
 			"DefaultText": "Containers lines",
 			"FieldCode" : ""
-		}
-	]');
+		},
+		{
+           "TextCode": "Shipment.G.DirectionId",
+           "DefaultText": "Direction id",
+           "FieldCode": "Shipment.DirectionId"
+       },
+	   {
+          "TextCode": "Shipment.G.ShipmentSubTypeName",
+          "DefaultText": "Shipment sub type name",
+          "FieldCode": "Shipment.ShipmentSubTypeName"
+       },
+	   {
+		   "TextCode": "Shipment.G.ShipmentTypeName",
+           "DefaultText": "Shipment type name",
+           "FieldCode": "Shipment.ShipmentTypeName" 
+	   },
+	   {
+           "TextCode": "Shipment.G.LongMaster",
+           "DefaultText": "Long master",
+           "FieldCode": "Shipment.LongMaster"
+       },
+	   {
+          "TextCode": "Shipment.O.Master",
+          "DefaultText": "Master",
+          "FieldCode": "Shipment.Master"
+       },
+	   {
+           "TextCode": "Shipment.F.IncotermName",
+           "DefaultText": "Incoterm",
+           "FieldCode": "Shipment.IncotermName"
+       }]');
 	  
 	declare @invocieObjectTableId as varchar(15)
 	set @invocieObjectTableId = (select Id from ObjectTables where [Name] = 'ARInvoice' and Tenant = 0)
@@ -1411,6 +1485,11 @@
 				"TextCode": "ARInvoice.O.VATListLable",
 				"DefaultText": "VAT",
 				"FieldCode": "ARInvoice.TotalVATs"
+			},
+			{
+				"TextCode": "ARInvoice.G.NoInvoiceParentMSG",
+				"DefaultText": "You don''t have invoices yet",
+				"FieldCode": ""
 			},
 			{
 				"TextCode": "ARInvoice.G.NoInvoiceMSG",

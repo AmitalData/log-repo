@@ -2677,6 +2677,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private void SetInlandDomesticCountryFields(ShipmentPM shipmentPM, PortRepository portsRep)
         {
+            var tenant = shipmentPM.Tenant;
             if (shipmentPM.InlandDomesticFromTypeCode == "PORT")
             {
                 Port fromPort = portsRep.GetSinglePort(tenant, shipmentPM.MainCarriageFromPortId);
@@ -4476,7 +4477,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                               .FirstOrDefault(a => a.Id == shipment.MasterShipmentDataId);
 
                     ShipmentPM shipmentPM = new ShipmentPM();
-
+                    shipmentPM.Tenant = shipment.Tenant;
                     shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, true, false, cardId);
                     ShipmentPM securedPM = new ShipmentPM();
 
