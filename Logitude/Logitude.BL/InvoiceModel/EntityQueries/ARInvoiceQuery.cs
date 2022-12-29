@@ -2458,7 +2458,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                 }
             }
 
-            BranchPermitionsFilter.AddUserBranchRestrictionFilters(queryOperations, tenant);
             var genericFilter = new GenericFilter();
             var MyContext = InvoiceContext.GetContext(tenant);
 
