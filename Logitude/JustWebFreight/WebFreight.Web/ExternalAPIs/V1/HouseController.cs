@@ -48,11 +48,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 int tenant = authToken.Tenant;
 
                 SecurityUtility.AuthenticateAPICall(tenant);
+                SecurityUtility.AuthenticateAccessibleAPI("House", authToken.Tenant);
 
                 HouseQueryService Service = new HouseQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
                 var Result = Service.GetHouseById(id, tenant, include);
-                //string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }
             catch (Exception ex)
@@ -71,11 +71,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 int tenant = authToken.Tenant;
 
                 SecurityUtility.AuthenticateAPICall(tenant);
+                SecurityUtility.AuthenticateAccessibleAPI("House", authToken.Tenant);
 
                 HouseQueryService Service = new HouseQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
                 var Result = Service.GetHouseByShipmentNumber(number, tenant, include);
-                //string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }
             catch (Exception ex)
@@ -94,10 +94,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
                     SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-                    IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
+                    SecurityUtility.AuthenticateAccessibleAPI("House", authToken.Tenant);
 
+                    IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                     ContactInfo loggedContactInfo = SecurityUtility.GetContactInfo(authToken.Email, authToken.Tenant);
                     string computingPartnerCode = "";
                     if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
@@ -402,6 +402,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.AuthenticateAccessibleAPI("House", authToken.Tenant);
 
                     if (FeatureToggleHelper.HasFeatureToggle("API", authToken.Tenant))
                     {

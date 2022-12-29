@@ -408,8 +408,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
 
         string CustomerChanged = "false";
-        public void Update(bool mapComposition = false, bool isFromUpdateTool = false, bool isPatchUpdate = false)
+        public void Update(bool mapComposition = false, bool isFromUpdateTool = false)
         {
+            bool isPatchUpdate = false;
             using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
                 initializer.IsMappingComposition = mapComposition;

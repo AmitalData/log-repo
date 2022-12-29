@@ -24,6 +24,7 @@ namespace WebFreight.Web.ExternalAPIs
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     int tenant = authToken.Tenant;
                     SecurityUtility.AuthenticateAPICall(tenant);
+                    SecurityUtility.AuthenticateAccessibleAPI("Rates Update", authToken.Tenant);
 
                     RatesUpdateService ratesUpdateService = new RatesUpdateService(ratesUpdateEntity, tenant);
                     ratesUpdateService.CleanXMLText();

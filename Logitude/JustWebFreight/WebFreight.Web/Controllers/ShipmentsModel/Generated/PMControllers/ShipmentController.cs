@@ -235,7 +235,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                     shipmentJsonPatch.ApplyTo(shipmentPM);
 
                     ShipmentService shipmentService = new ShipmentService(shipmentsContext, shipmentPM, SecurityUtility.GetAuthenticatedUser());
-                    shipmentService.Update(true, isPatchUpdate: true);
+                    shipmentService.Update(true);
 
                     ShipmentPM updatedShipmentPM = shipmentQuery.GetSinglePM(shipmentPM.Id, shipmentPM.Tenant);
 

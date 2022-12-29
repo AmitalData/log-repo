@@ -27,6 +27,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 ValidateInputParamaters(year, month, periodTypeCode);
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+                SecurityUtility.AuthenticateAccessibleAPI("ClosedMonthCheck", authToken.Tenant);
+
                 IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
                 AccountingPeriodQueryService accountingPeriodQueryService = new AccountingPeriodQueryService(accountingContext);
                 List<AccountingPeriodPM> accountingPeriodsByTypeRegular = accountingPeriodQueryService.GetAccountingPeriodsByTenantAndType(periodTypeCode, tenant);
