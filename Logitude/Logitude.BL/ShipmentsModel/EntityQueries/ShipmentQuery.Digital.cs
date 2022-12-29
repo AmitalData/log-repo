@@ -2408,9 +2408,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 }
             }
 
-            BranchPermitionsFilter.AddUserBranchRestrictionFilters(queryOperations, tenant);
-            ProductPermitionsFilter.AddUserProductRestrictionFilters(queryOperations, tenant);
-
             var shipmentRepository = new ShipmentRepository(tenant);
 
             var customfilters = new ShipmentCustomFilter(tenant);

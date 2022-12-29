@@ -141,7 +141,14 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, newFilters.CardId);
                 newFilters.Tenant = authToken.Tenant;
                 var shipmentQuery = new ShipmentQuery(authToken.Tenant);
-                var shipmentsQuery = shipmentQuery.GetByFilters(newFilters).Where(r => !string.IsNullOrEmpty(r.StatusCode));
+                var shipmentsQuery = shipmentQuery.GetByFilters(newFilters)
+                                                  .Where(r => !string.IsNullOrEmpty(r.StatusCode))
+                                                  .Select(a => new DashboardModelObject() {
+                                                      StatusCode = a.StatusCode, 
+                                                      StatusWeight = a.StatusWeight,
+                                                      TransportModeId = a.TransportModeId
+                                                  });
+
                 var res = GetDigitalStatusesWeightWithCount(shipmentsQuery, authToken.Tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, res);
@@ -300,14 +307,11 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             return shipmentsGroupedByStatus;
         }
 
-        private Dictionary<string, object> GetDigitalStatusesWeightWithCount(IQueryable<DigitalShipmentList> shipments, int tenant)
+        private Dictionary<string, object> GetDigitalStatusesWeightWithCount(IQueryable<DashboardModelObject> shipments, int tenant)
         {
-            var shipmentsGroupedByStatus = new Dictionary<string, object>();
             var entityStatusQuery = new EntityStatusQuery(tenant);
 
             var blockedStatus = new List<string> { "PSDL", "PODR" };
-
-            var count = shipments.Count(a => a.TransportModeId == "I" && a.StatusCode == "SHOR");
 
             var allStatuses = entityStatusQuery.GetEntityStatusPMsByTenant(tenant)
                                                .Where(a => !blockedStatus.Contains(a.Code) 
@@ -336,27 +340,22 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
             var arrivedAtDestinationCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SARR").StatusWeight;
 
-            var dataOrigin = shipments.Where(r => r.StatusWeight < departedCodeWeight && allowedStatusCode.Contains(r.StatusCode))
-                                      .GroupBy(a => a.TransportModeId)
-                                      .ToDictionary(x => x.Key, y => y.Count());
-
-            var dataInTransit = shipments.Where(r => r.StatusWeight >= departedCodeWeight
-                                                     && r.StatusWeight < arrivedAtDestinationCodeWeight
-                                                     && allowedStatusCode.Contains(r.StatusCode))
-                                         .GroupBy(a => a.TransportModeId)
-                                         .ToDictionary(x => x.Key, y => y.Count());
-
-            var dataAtDestination = shipments.Where(r => r.StatusWeight >= arrivedAtDestinationCodeWeight
-                                                         && allowedStatusCode.Contains(r.StatusCode))
-                                             .GroupBy(a => a.TransportModeId)
-                                             .ToDictionary(x => x.Key, y => y.Count());
-
-            var result = new Dictionary<string, object>
-            {
-                { "Origin", dataOrigin },
-                { "InTransit", dataInTransit },
-                { "dataAtDestination", dataAtDestination }
-            };
+            var result = shipments.Where(r => allowedStatusCode.Contains(r.StatusCode)
+                                              && (r.StatusWeight < departedCodeWeight
+                                                  || (r.StatusWeight >= departedCodeWeight
+                                                      && r.StatusWeight < arrivedAtDestinationCodeWeight)
+                                                  || (r.StatusWeight >= arrivedAtDestinationCodeWeight)))
+                                   .Select(a => new { 
+                                        a.TransportModeId, 
+                                        Code = a.StatusWeight < departedCodeWeight 
+                                               ? "Origin"
+                                               : (a.StatusWeight >= departedCodeWeight
+                                                  && a.StatusWeight < arrivedAtDestinationCodeWeight) 
+                                                  ? "InTransit"
+                                                  : "dataAtDestination"
+                                   }).GroupBy(a => a.Code)
+                                   .ToDictionary(a => a.Key, y => (object)y.GroupBy( x => x.TransportModeId)
+                                                                           .ToDictionary(b => b.Key, xx => xx.Count()));
 
             return result;
         }
