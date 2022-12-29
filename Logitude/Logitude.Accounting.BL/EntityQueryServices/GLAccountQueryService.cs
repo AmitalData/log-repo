@@ -309,6 +309,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return allIdAccounts;
         }
 
+        public List<string> GetNextGLAccountIdByTypeControlNoParent(int tenant, string accountTypeCode, bool? isControlAccount, string lastMadeGLAccountId, int maxGLAccountsPerQuery)
+        {
+            List<string> allIdAccounts = repository.GetNextGLAccountIdByTypeControlNoParent(tenant, accountTypeCode, isControlAccount, lastMadeGLAccountId, maxGLAccountsPerQuery);
+
+            return allIdAccounts;
+        }
+
 
 
         private int? GetSecurityLevel(bool useSecurityLevel, int tenant)
