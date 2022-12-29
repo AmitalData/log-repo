@@ -32,11 +32,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         protected override void OnUpdating(ClientPM entityPM)
         {
             string[] InActiveStatues  = { "40", "50", "60" };
+            bool isExportPoaActive_before = entityPM.IsExportPoaActive.GetValueOrDefault();
             if (entityPM.ClientPoas == null || entityPM.ClientPoas.Count() == 0)
                 entityPM.IsExportPoaActive = null;
             else
                 entityPM.IsExportPoaActive =
                         entityPM.ClientPoas.Any(x => x.PoaAuthorizationType == "200" && DateTime.Now >= x.StartDate && DateTime.Now <= x.EndDate && !InActiveStatues.Contains(x.PoaStatus) && x.Tenant == entityPM.Tenant);
+            if (entityPM.IsExportPoaActive == true && isExportPoaActive_before == false && entityPM.IsPOAExpireReminderSent == true)
+                entityPM.IsPOAExpireReminderSent = true;
         }
         protected override void UpdateComposition(ClientPM entityPM)
         {

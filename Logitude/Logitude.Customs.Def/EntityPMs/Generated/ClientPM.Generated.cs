@@ -988,7 +988,30 @@ namespace Logitude.Customs.Def.EntityPMs
               }
              set {  deletedClientsTapags = value; }
 	    }
-	     }
+	  	  private bool? isPOAExpireReminderSent ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? IsPOAExpireReminderSent  
+	   {
+	    
+	     get
+		{
+		   return isPOAExpireReminderSent;
+		 }
+		 set
+		 {
+		   if(isPOAExpireReminderSent != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsPOAExpireReminderSent",OldValue=isPOAExpireReminderSent,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   isPOAExpireReminderSent=value;
+		   }
+			
+		 }
+	   }
+   }
    
 }
 	 

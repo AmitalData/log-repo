@@ -84,6 +84,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.NationalIdentificationNumber).HasColumnName("NationalIdentificationNumber").HasMaxLength(25).IsUnicode(false);
 
             this.Property(t => t.IsExportPoaActive).HasColumnName("IsExportPoaActive");
+
+            this.Property(t => t.IsPOAExpireReminderSent).HasColumnName("IsPOAExpireReminderSent");
         }
     }
 }

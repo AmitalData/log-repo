@@ -43,6 +43,7 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
             ICustomContext dbContext = CustomContext.GetContext(t.Tenant);
             string desc = "";
             var notificationUpdateService = new NotificationUpdateService(dbContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), t.Tenant);
+            var clientUpdateService = new ClientUpdateService(dbContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), t.Tenant);
             var notificationQueryService = new NotificationQueryService(dbContext);
             var clientQueryService = new ClientQueryService(t.Tenant);
             var clients = clientQueryService.GetAllClientsPOAExpire(t.Tenant);
@@ -77,6 +78,10 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
 
                 NotificationBase.CloseAllRelatedNotification(dbContext, newNotificationPM, newNotificationPM.NotificationDefinitionCode);
                 notificationUpdateService.Update(newNotificationPM, true);
+                client.IsPOAExpireReminderSent = true;
+                client.ChangeSetOp = ChangeSetOperation.Update;
+                clientUpdateService.Update(client, true);
+
             }
         }
     }
