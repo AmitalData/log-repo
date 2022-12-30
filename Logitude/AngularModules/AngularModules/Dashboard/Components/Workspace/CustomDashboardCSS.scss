@@ -40,7 +40,7 @@
     font-style: normal;
     flex: 1 1 auto;
     overflow: auto;
-    margin-top: 2px;
+    margin-top: 12px;
 }
 
 .custom-layout-container::-webkit-scrollbar {
@@ -53,6 +53,7 @@
 }
 
 .custom-layout-container::-webkit-scrollbar-thumb {
+    border-radius: 110px;
     background: rgba(193, 193, 193, 1);
 }
 
