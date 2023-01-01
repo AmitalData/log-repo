@@ -236,6 +236,8 @@
     Columns="Tenant,Email" />
   <Index
     Columns="Tenant" />
+	<Index
+   Columns="ExternalId" />
   <Index
     Columns="AutomaticLastUpdateDate" />
   <Index
