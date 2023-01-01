@@ -38,6 +38,7 @@ using Logitude.Customs.Def.ClosedTable;
 using Logitude.Server.Tools.Models;
 using System.ComponentModel;
 using Simplog.Server.Infrastructure.Helpers;
+using Logitude.Customs.BL.Messaging.Customs.SignQueueBL;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
@@ -805,6 +806,60 @@ Please instance and set MyResponseData ");
             catch (Exception ex)
             {
                 var msg = "Sign service failed " + Environment.NewLine + ex.Message;
+                ex.GetType().GetField("_message", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(ex, msg);
+                throw ex;
+
+                //throw new Exception("Sign service failed ", e);
+            }
+            return bytesSignedSerilazeObject;
+
+        }
+
+        private byte[] TaskSignItHSM(int tenant, TCustomsRequest customsRequest)
+        {
+            var sw = Stopwatch.StartNew();
+            byte[] bytesSignedSerilazeObject = null;
+            try
+            {
+                LogMessagingUtil.Instance.AppendLine("Must HSM Sign It");
+                //BuildRequestContentHeaderB4Sign(customsRequest);
+                
+                var xmlSerilazeObject = XmlGenericUtil<TCustomsRequest>.SerializeObject(customsRequest);
+                var bytesSerilazeObject = UTF8Encoding.UTF8.GetBytes(xmlSerilazeObject);
+
+                CustomsSettingQueryService settingService = new CustomsSettingQueryService(RequestParams.Tenant);
+                var setting = settingService.GetSettingByTenantN(RequestParams.Tenant);
+
+                var hSMSignFileService = new HSMSignFileService();
+
+                SignQueueByType signQueueByType = SignQueueByType.None;
+                string companypersonal = "";
+                Enum.TryParse<SignQueueByType>(RequestParams.SignQueueByCompanyOrPersonal, out signQueueByType);
+                switch (signQueueByType)
+                {
+
+                    case SignQueueByType.SignQueueByPersonId:
+                        companypersonal = "P";
+                        break;
+                    case SignQueueByType.SignQueueByCustomsAgentId:
+                    default:
+                        companypersonal = "C";
+                        break;
+                }
+                LogMessagingUtil.Instance.AppendLine(
+                    $"hSMSignFile({RequestParams.SignByPersonalId}, {companypersonal})");
+                bytesSignedSerilazeObject  = hSMSignFileService
+                    .SignCustomsRequest(
+                    RequestParams.Tenant, RequestParams.PBId,
+                    RequestParams.SignByPersonalId, companypersonal,
+                    setting.CustomsAgentId, bytesSerilazeObject);
+
+
+
+            }
+            catch (Exception ex)
+            {
+                var msg = "HSM Sign service failed " + Environment.NewLine + ex.Message;
                 ex.GetType().GetField("_message", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(ex, msg);
                 throw ex;
 

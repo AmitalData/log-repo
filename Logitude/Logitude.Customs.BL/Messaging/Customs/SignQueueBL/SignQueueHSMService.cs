@@ -65,7 +65,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
             "companyPersonal": "PCD"
         }
              */
-            if (DateTime.Now> new DateTime(2022,12,30))
+            if (tenantSetting.HSMCompanyId != "9999" && DateTime.Now> new DateTime(2023,01,14))
             {
                 var badCert= res.FirstOrDefault(r => r.companyBN != tenantSetting.CustomsAgentId);
                 if (badCert!=null)

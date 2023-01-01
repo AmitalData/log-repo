@@ -99,12 +99,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
             string personId = ""; SignQueueByType  SignatureBy =  SignQueueByType.None;
-                          
-            
+
+            DateTime startAt = TenantServerConfigration.GetCurrentDateTime(requestParams.Tenant);//DateTime.Now;20150909
             if (_SignRecievedModel == null)
             {
-                
-                if (SignQueue.Instance.IsPasiveSignMode())
+
+                if (SignQueue.Instance.IsPasiveSignMode() && !IsIneractiveHSM())
                 {
 
                     availableSignServer = _CustomsRequestsSheetService.GetAvailableSignServer(out personId, out SignatureBy, out noAvailableSignServerErrorText);
@@ -174,9 +174,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     }
                 }
             }
-
-            DateTime startAt = TenantServerConfigration.GetCurrentDateTime(requestParams.Tenant);//DateTime.Now;20150909
-            if (_SignRecievedModel != null)
+            else if (_SignRecievedModel != null)
             {
                 DateTime startAtD = DateTime.MinValue;
                 SignQueue.Instance.GetStartAt(requestParams.Tenant, requestParams.CustomsRequestsSheetId, out startAtD);
@@ -240,7 +238,20 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         }
 
-        
+        private bool IsIneractiveHSM()
+        {
+            
+            if (RequestParams.SignMethodByQueue != SignMethodByQueueEnum.HSMSignQueue.ToString())
+            {
+                return false;
+            }
+            if (RequestParams.RequestVIA != SendRequestVIA.WebServiceInteractive)
+            {
+                return false;
+            }
+            return true;
+
+        }
 
         private void SetRequestSheetContextCurrentX509Certificate(byte[] customRequestSignedByteArry)
         {
@@ -297,7 +308,16 @@ namespace Logitude.CustomsMessaging.MessagingServices
             }
             else
             {
-                customRequestSignedByteArry = TaskSignIt(requestParams.Tenant, customsRequest); //no catch exeption -rethrow
+
+                if (IsIneractiveHSM())
+                {
+                    customRequestSignedByteArry = TaskSignItHSM(requestParams.Tenant, customsRequest); //no catch exeption -rethrow
+                }
+                else
+                {
+                    customRequestSignedByteArry = TaskSignIt(requestParams.Tenant, customsRequest); //no catch exeption -rethrow
+                }
+                
             }
             SetRequestSheetContextCurrentX509Certificate(customRequestSignedByteArry);
             var memSign = new MemoryStream(customRequestSignedByteArry);
