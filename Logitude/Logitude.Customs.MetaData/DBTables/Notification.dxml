@@ -235,4 +235,10 @@
     Columns="BadjCount" />
   <Index
     Columns="IsClosedByAssignee" />
+	<Index
+   Columns="Tenant,BadjCount,AssigneToId,IsClosedByAssignee" />
+	<Index
+	  Columns="Tenant,BadjCount" />
+	<Index
+	  Columns="Tenant,IsClosedByAssignee" />
 </Table>

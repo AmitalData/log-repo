@@ -163,4 +163,6 @@
     ReferencedTableSchema="dbo" />
   <Index
     Columns="AutomaticLastUpdateDate" />
+	<Index
+   Columns="ExternalId,Tenant" />
 </Table>

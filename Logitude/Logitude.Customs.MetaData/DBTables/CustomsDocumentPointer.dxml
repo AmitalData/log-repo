@@ -102,4 +102,8 @@
     Columns="ParentEntityId,ParentEntityCode" />
   <Index
     Columns="ParentEntityId" />
+	<Index
+   Columns="Tenant,ParentEntityId,ParentEntityCode" />
+	<Index
+	  Columns="Tenant,ParentEntityId" />
 </Table>

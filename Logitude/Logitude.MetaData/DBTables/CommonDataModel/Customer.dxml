@@ -542,7 +542,7 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index
-    Columns="Tenant" />
+    Columns="Tenant" /> 
   <Index
     Columns="Tenant,LastShipmentDate" />
   <Index
