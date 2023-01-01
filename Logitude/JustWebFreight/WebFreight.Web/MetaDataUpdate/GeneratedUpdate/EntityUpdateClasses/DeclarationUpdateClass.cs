@@ -85,9 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-
-
-		public const string HashString = "8ab0f9489238fc3054af60e29402247d";
+		public const string HashString = "340a5a1609b59c45824e509b591cdd9f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -20298,6 +20296,20 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationONoDeclarationWithTransportTypeSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NoDeclarationWithTransportTypeSelected", DefaultText = "No declaration with transport type selected",LocalDefaultText = @"אין הצהרה עם סוג הובלה נבחר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOUpdateOneItem = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UpdateOneItem", DefaultText = "Update one item",LocalDefaultText = @"עדכן פריט אחד", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOPossibleOpenInsurance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.PossibleOpenInsurance", DefaultText = "Is it possible to open an insurance case",LocalDefaultText = @"האם אפשרי לפתוח תיק ביטוח", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOIsItForInsurance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.IsItForInsurance", DefaultText = "The customer is set up for automatic insurance, is it for insurance?",LocalDefaultText = @"הלקוח מוגדר לביצוע ביטוח אוטומטי, האם לבטח ?", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCreatingInsurance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CreatingInsurance", DefaultText = "Creating insurance",LocalDefaultText = @"יצירת ביטוח", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOInsuranceOpenedNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.InsuranceOpenedNumber ", DefaultText = "An additional insurance number was opened",LocalDefaultText = @"נפתחה תוספת ביטוח מס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCompletedUnifreight = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CompletedUnifreight", DefaultText = "Must be completed manually in Unifreight",LocalDefaultText = @"יש להשלימה בתהליך ידני ביוניפרייט", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOOpeningInsuranceCase = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.OpeningInsuranceCase", DefaultText = "Opening an insurance case",LocalDefaultText = @"מבצע פתיחת תיק ביטוח", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOOpenInsuranceFailed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.OpenInsuranceFailed", DefaultText = "The process of opening an automatic insurance supplement has failed",LocalDefaultText = @"תהליך פתיחת תוספת ביטוח אוטומטי נכשל", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
