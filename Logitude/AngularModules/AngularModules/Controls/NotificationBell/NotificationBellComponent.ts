@@ -547,13 +547,11 @@ export class NotificationBellLine {
         }
         else {
             this.IconeVisibility = false;
-        }
-
-        if (this.entity.NotificationDefinitionCode == "5101N" || this.entity.NotificationDefinitionCode == "5101R" || this.entity.NotificationDefinitionCode == "5101A" || this.entity.NotificationDefinitionCode == "5101E") {
             this.BlueIconeVisibility = true;
-            this.IconeVisibility = false;
 
         }
+
+        
 
        
         if (!AppTool.IsNullOrEmpty(this.entity.DueDate)) {
