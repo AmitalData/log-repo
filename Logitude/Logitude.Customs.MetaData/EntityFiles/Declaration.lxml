@@ -3584,6 +3584,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
