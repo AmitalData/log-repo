@@ -253,13 +253,13 @@ $border-color: #ddd;
 }
 
 .db-dropdown-scroll::-webkit-scrollbar {
+    border-radius: 110px;
     width: 4px;
     height: 80px;
 }
 
 /* Track */
 .db-dropdown-scroll::-webkit-scrollbar-track {
-    width: 6px;
     background: #F3F3F3;
 }
 
@@ -271,10 +271,10 @@ $border-color: #ddd;
 
 /* Handle on hover */
 .db-dropdown-scroll::-webkit-scrollbar-thumb:hover {
-    width: 20px;
-    height: 100px;
-    background: #D2D2D2;
+    background: #979797;
 }
+
+
 // .db-dropdown-scroll:hover::-webkit-scrollbar {
 //         width: 6px;
 //         height: 100px;
