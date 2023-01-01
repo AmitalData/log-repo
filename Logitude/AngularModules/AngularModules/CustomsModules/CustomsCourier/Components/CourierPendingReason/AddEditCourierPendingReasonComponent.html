@@ -168,6 +168,18 @@
                     </td>
                     <td></td>
                 </tr>
+
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'RequiresPayment'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogCheckBox [ObjectFieldName]="'RequiresPayment'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+
+                    </td>
+                    <td></td>
+                </tr>
                 <tr class="FormFieldRow">
                     <td>
                         <LogLabel [ObjectFieldName]="'SwissportSuspendedCode'" [ObjectTableName]="ObjectTableName"

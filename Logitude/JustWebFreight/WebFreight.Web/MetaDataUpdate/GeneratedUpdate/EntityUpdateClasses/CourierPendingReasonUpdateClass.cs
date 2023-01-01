@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CourierPendingReasonUpdateClass
    {  		
-		public const string HashString = "b0924558500a6647cf24cbb7bac59284";
+		public const string HashString = "477c634faf337906516e734c62754d16";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -864,6 +864,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "RequiresPayment",
 					  						ListPropertyPath =  "RequiresPayment",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -882,6 +883,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RequiresPayment",
 					  						DefaultText =  "RequiresPayment",
+					  						FullLocalDefaultText =  "דורש תשלום",
 					  						ListFieldLable =  "RequiresPaymentListLable",
 					  						ListLableDefaultText =  "RequiresPayment",
 					  						ListLocalDefaultText =  "דורש תשלום",
