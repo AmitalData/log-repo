@@ -3239,9 +3239,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             confirm.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
             confirm.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
             confirm.Width = 400;           
-
             confirm.Show(msg);           
-
             confirm.WindowClosed.subscribe((event: any) => {
 
                 if (confirm.Yes == true) {
@@ -3264,7 +3262,6 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                                     let InvoiceNumber = ""; InvoiceNumber = UnifreightMessageM.GetStringValue(mess, "InvoiceNumber");
 
                                     let confirmWindow = new ConfirmWindow();
-
                                     confirmWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.CreatingInsurance");
                                     confirmWindow.Width = 350;
                                     confirmWindow.Height = 200;
@@ -3284,9 +3281,9 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                                     }
                                     else if (!AppTool.IsNullOrEmpty(InvoiceNumber)) {
 
-                                       var InsuranceOpenedNumber = TextCodeTranslator.Translate("Customs.Declaration.O.InsuranceOpenedNumber");    
+                                       var InsuranceOpenNum = TextCodeTranslator.Translate("Customs.Declaration.O.InsuranceOpenNum");    
                                        var CompletedUnifreight = TextCodeTranslator.Translate("Customs.Declaration.O.CompletedUnifreight");
-                                        confirmWindow.Show(InsuranceOpenedNumber+`' ` + InvoiceNumber +`, `+ CompletedUnifreight);
+                                        confirmWindow.Show(InsuranceOpenNum+`' ` + InvoiceNumber +`, `+ CompletedUnifreight);
 
                                     }
                                     else {
