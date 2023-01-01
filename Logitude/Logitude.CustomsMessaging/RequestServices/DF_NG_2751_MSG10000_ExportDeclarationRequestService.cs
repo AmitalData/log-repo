@@ -1080,14 +1080,13 @@ namespace Logitude.CustomsMessaging.RequestServices
                     if (supplierInvoicePM.SequenceNumeric.Value == 1 && !declarationPM.ExcludeConsignment && consignmentType == "I") // I=Import
                     {
                         declarationImportConsignmentList.AddRange(GetDeclarationImportConsignment(declarationPM.Consignments[consignmentSeq], consignmentSeq, declarationPM.ProcedureCurrentCode));
-                        declarationGoodsShipment.ImportConsignment = declarationImportConsignmentList.ToArray();
-
                     }
                     else if (supplierInvoicePM.SequenceNumeric.Value == 1 && !declarationPM.ExcludeConsignment)
                     {
                         declarationConsignmentList.AddRange(GetDeclarationExportConsignment(declarationPM.Consignments[consignmentSeq], consignmentSeq));
                     }
                 }
+                declarationGoodsShipment.ImportConsignment = declarationImportConsignmentList.ToArray();
                 declarationGoodsShipment.ExportConsignment = declarationConsignmentList.ToArray();
                 declarationGoodsShipment.AdditionalDocument = GetDeclarationGoodsShipmentAdditionalDocument(supplierInvoicePM);
                 declarationGoodsShipment.GovernmentAgencyGoodsItem = GetDeclarationGoodsItems(supplierInvoicePM).ToArray();
