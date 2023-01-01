@@ -3276,9 +3276,9 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                                       })
                                     }
                                     else if (!AppTool.IsNullOrEmpty(InvoiceNumber)) {
-                                       var InsuranceOpenedNumber = TextCodeTranslator.Translate("Customs.Declaration.O.InsuranceOpenedNumber");    
+                                       var InsuranceOpenNum = TextCodeTranslator.Translate("Customs.Declaration.O.InsuranceOpenNum");    
                                        var CompletedUnifreight = TextCodeTranslator.Translate("Customs.Declaration.O.CompletedUnifreight");
-                                        confirmWindow.Show(InsuranceOpenedNumber+`' ` + InvoiceNumber +`, `+ CompletedUnifreight);
+                                        confirmWindow.Show(InsuranceOpenNum+`' ` + InvoiceNumber +`, `+ CompletedUnifreight);
 
                                     }
                                     else {

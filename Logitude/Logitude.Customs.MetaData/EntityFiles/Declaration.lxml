@@ -25824,7 +25824,7 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Customs.Declaration.O.InsuranceOpenedNumber &quot;"
+      Code="&quot;Customs.Declaration.O.InsuranceOpenNum&quot;"
       DefaultText="&quot;An additional insurance number was opened&quot;"
       LocalDefaultText="&quot;נפתחה תוספת ביטוח מס&quot;"
       TextCodeTypeCode="&quot;O&quot;"

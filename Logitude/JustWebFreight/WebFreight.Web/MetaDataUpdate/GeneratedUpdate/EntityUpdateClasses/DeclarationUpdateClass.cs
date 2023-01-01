@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "340a5a1609b59c45824e509b591cdd9f";
+		public const string HashString = "c3bb7445cf5cae74294f9d4d972c2fb9";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -20303,7 +20303,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOCreatingInsurance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CreatingInsurance", DefaultText = "Creating insurance",LocalDefaultText = @"יצירת ביטוח", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOInsuranceOpenedNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.InsuranceOpenedNumber ", DefaultText = "An additional insurance number was opened",LocalDefaultText = @"נפתחה תוספת ביטוח מס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOInsuranceOpenNum = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.InsuranceOpenNum", DefaultText = "An additional insurance number was opened",LocalDefaultText = @"נפתחה תוספת ביטוח מס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOCompletedUnifreight = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CompletedUnifreight", DefaultText = "Must be completed manually in Unifreight",LocalDefaultText = @"יש להשלימה בתהליך ידני ביוניפרייט", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
