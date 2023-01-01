@@ -774,6 +774,8 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
         this.EntityPM = new CustomsCollateralsAnswerPM(null);
         this.collateralPM = new CustomsCollateralPM();
         this.collateralPM.DeclarationId = args.DeclarationId;
+        this.collateralPM.Direction = args.Direction;
+        this.collateralPM.ImporterId = args.ImporterId;
         this.BuildAccountingCustomFilesList();
 
         this.EntityResourceService.getEntityResourceByTableName("Customs.ClientsTapag").subscribe((response:any) => {
@@ -787,8 +789,8 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
     initTapagNumberTypesFilter(): ApiQueryFilters {
 
         const TapagNumberTypesFilter = new ApiQueryFilters();
-        TapagNumberTypesFilter.GetAll = true; 
-        TapagNumberTypesFilter.addAdditionalFilter("ClientId", this.EntityPM.EntityParentPM.ImporterId, null, null, "Equals", true, false, false, "string");
+        TapagNumberTypesFilter.GetAll = true;
+        TapagNumberTypesFilter.addAdditionalFilter("ClientId", this.collateralPM.ImporterId, null, null, "Equals", true, false, false, "string");
 
         
 
