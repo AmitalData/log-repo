@@ -267,19 +267,23 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
             }
        
             this.SetScreenFieldsEditability();
+            this.SendConstraintDisplayOnly();
             DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
         });
     }
 
     SendConstraintDisplayOnly() {
-        this.declarationWebService.CheckConstraintRequestInProgress(this.EntityPM.Id, SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
-            if (response.Result != null) {
-                if (response.Result) {
-                    this.IsConstraintDisplayOnly = (this.IsDisplayOnly && response.Result);
+        if (this.EntityPM.Direction == "E") {
+
+            this.declarationWebService.CheckConstraintRequestInProgress(this.EntityPM.Id, SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
+                if (response.Result != null) {
+                    if (response.Result) {
+                        this.IsConstraintDisplayOnly = (this.IsDisplayOnly && response.Result);
+                    }
                 }
-            }
-            
-        });
+
+            });
+        }
     }
  
     //#region Filter Methods
