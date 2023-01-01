@@ -247,4 +247,6 @@
     ReferencedTableSchema="Customs" />
   <Index
     Columns="Code" />
+	<Index
+   Columns="Tenant,Code" />
 </Table>
