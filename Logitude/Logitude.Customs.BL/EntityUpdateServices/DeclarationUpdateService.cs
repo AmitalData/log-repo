@@ -379,9 +379,20 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                 }
 
+                if (entityPM.Direction == "E")
+                {
+                    foreach(var con in entityPM.Consignments)
+                    {
+                        if(con.ConsignmentType == "E")
+                        {
+                            entityPM.ShipCode = con.ShipCode;
+                            break;
+                        }
+                    }
+                }
 
 
-                ConsignmentPM consignment = (from a in entityPM.Consignments select a).FirstOrDefault();
+                    ConsignmentPM consignment = (from a in entityPM.Consignments select a).FirstOrDefault();
                 if (consignment != null) //itzik - due below crash 
                 {
                     entityPM.ExportLoadingPortCode = consignment.ExportLoadingPortCode;
