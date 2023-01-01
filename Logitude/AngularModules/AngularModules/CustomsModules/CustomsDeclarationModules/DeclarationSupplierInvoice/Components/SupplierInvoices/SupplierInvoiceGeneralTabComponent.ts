@@ -719,9 +719,9 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
         if (ExtraPayments160 == null) {
             paymentCounter += 1;
-            this.AddModification("160", paymentCounter, "הוצאות נוספות");
+            this.AddModification("160", paymentCounter, "הוצםות נוספות");
         } else {
-            ExtraPayments160.TypeName = "הוצאות נוספות"
+            ExtraPayments160.TypeName = "הוצםות נוספות"
             this.AdjustmentsList.Insert(new ModificationItemModel(ExtraPayments160, this, "160"));
         }
 
@@ -3216,14 +3216,15 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         unifreightMessageM.Requset.push(["ApprovalToInsure", ""]);
         unifreightMessageM.Requset.push(["InsuranceAmount", ""]);
         unifreightMessageM.Requset.push(["InsuranceCurrency", ""]);
-
+        var PossibleOpenInsurance = TextCodeTranslator.Translate("Customs.Declaration.O.PossibleOpenInsurance");
         AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
             "AmitalGatewayUtil.CustomExportApprovalToInsurance",
             "BFIHMAIN.LogitudeTask",
             "CustomExportApprovalToInsurance",
             unifreightMessageM,
-            "??? ????? ????? ??? ?????");
+            PossibleOpenInsurance);
 
+           
     }
 
 
@@ -3232,12 +3233,15 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
      ActivateInsurance(ApprovalToInsure) {
         
         if (ApprovalToInsure == "Yes") {
+            var msg=TextCodeTranslator.Translate("Customs.Declaration.O.IsItForInsurance");
+            
             var confirm = new ConfirmWindow();
-
             confirm.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
             confirm.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
-            confirm.Width = 400;
-            confirm.Show(`????? ????? ?????? ????? ???????, ??? ???? ?`);           
+            confirm.Width = 400;           
+
+            confirm.Show(msg);           
+
             confirm.WindowClosed.subscribe((event: any) => {
 
                 if (confirm.Yes == true) {
@@ -3260,7 +3264,8 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                                     let InvoiceNumber = ""; InvoiceNumber = UnifreightMessageM.GetStringValue(mess, "InvoiceNumber");
 
                                     let confirmWindow = new ConfirmWindow();
-                                    confirmWindow.Title = "????? ?????";
+
+                                    confirmWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.CreatingInsurance");
                                     confirmWindow.Width = 350;
                                     confirmWindow.Height = 200;
                                     confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
@@ -3278,11 +3283,16 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                                       })
                                     }
                                     else if (!AppTool.IsNullOrEmpty(InvoiceNumber)) {
-                                        confirmWindow.Show(`????? ????? ????? ??' ` + InvoiceNumber + ` , ?? ??????? ?????? ???? ??????????`);
+
+                                       var InsuranceOpenedNumber = TextCodeTranslator.Translate("Customs.Declaration.O.InsuranceOpenedNumber");    
+                                       var CompletedUnifreight = TextCodeTranslator.Translate("Customs.Declaration.O.CompletedUnifreight");
+                                        confirmWindow.Show(InsuranceOpenedNumber+`' ` + InvoiceNumber +`, `+ CompletedUnifreight);
 
                                     }
                                     else {
-                                        confirmWindow.Show(`????? ????? ????? ????? ??????? ????`);
+
+                                        var OpenInsuranceFailed = TextCodeTranslator.Translate("Customs.Declaration.O.OpenInsuranceFailed");
+                                        confirmWindow.Show(OpenInsuranceFailed);
 
                                     }
                                 }
@@ -3302,13 +3312,14 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                     unifreightMessageM.Requset.push(["InsuranceAmount", ""]);
                     unifreightMessageM.Requset.push(["InsuranceCurrency", ""]);
 
-
+                    var OpeningInsuranceCase = TextCodeTranslator.Translate("Customs.Declaration.O.OpeningInsuranceCase");
                     AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
                         "AmitalGatewayUtil.CustomExportActivateInsurance",
                         "BFIHMAIN.LogitudeTask",
                         "CustomExportActivateInsurance",
                         unifreightMessageM,
-                        "???? ????? ??? ?????");
+                        OpeningInsuranceCase);
+                        
 
                 }
 
