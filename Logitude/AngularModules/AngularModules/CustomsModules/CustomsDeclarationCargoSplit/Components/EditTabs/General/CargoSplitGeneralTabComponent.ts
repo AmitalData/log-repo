@@ -253,9 +253,15 @@ export class CargoSplitGeneralTabComponent
             this.UIProperties.SetEnabled("SecondCargoID", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("ThirdCargoID", this.ObjectTableName, false);
             this.OKButtonEnabled = false;
-            this.UIProperties.SetEnabled("ActionTypeCode", this.ObjectTableName, false);
-
-            this.SendButtonEnabled = false;
+            if (this.ResponseStatusCode != "3") {
+                this.UIProperties.SetEnabled("ActionTypeCode", this.ObjectTableName, false)
+                this.SendButtonEnabled = false;
+                 }
+               
+                 else {
+                     this.UIProperties.SetEnabled("ActionTypeCode", this.ObjectTableName, true);
+                     this.SendButtonEnabled = true;
+                }
             
         }
         else {
