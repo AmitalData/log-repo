@@ -1710,15 +1710,23 @@ export class FCLQuoteChargeItem extends BaseComponent {
                     isEnabled_Id = true;
                 }
 
-                if (isEnabled_Id) {
-                    if (this.SaleCurrencyId) {
-                        if (this.SaleCurrencyId != SessionLocator.LocalCurrencyId) {
-                            if (this.SaleCurrencyId != this.fatherComponent.SaleCurrencyId) {
-                                if (this.SaleCurrencyId != this.CostCurrencyId) {
-                                    isEnabled_Rate = true;
-                                }
-                            }
-                        }
+                //if (isEnabled_Id) {
+                //    if (this.SaleCurrencyId) {
+                //        if (this.SaleCurrencyId != SessionLocator.LocalCurrencyId) {
+                //            if (this.SaleCurrencyId != this.fatherComponent.SaleCurrencyId) {
+                //                if (this.SaleCurrencyId != this.CostCurrencyId) {
+                //                    isEnabled_Rate = true;
+                //                }
+                //            }
+                //        }
+                //    }
+                //}
+            }
+
+            if (this.SaleCurrencyId) {
+                if (this.SaleCurrencyId != SessionLocator.LocalCurrencyId) {
+                    if (this.QuotePM.IsSaleCurrencySameAsCost || this.QuotePM.IsMultiCurrency) {
+                        isEnabled_Rate = true;
                     }
                 }
             }
