@@ -796,6 +796,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "NWR,Run worker on new environment", 
                 Description = "Run worker on new environment'' ", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "LCT", 
+                Name = "Login Cargo Tracking", 
+                SearchFields = "CTL,Login Cargo Tracking", 
+                Description = "Cargo Tracking Login For Normal Users", 
+			});
 			
             return all;
        }
