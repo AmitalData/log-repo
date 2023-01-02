@@ -216,5 +216,14 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public double? ChargeableWeightInKG { get; set; }
         public double? GrossWeightInKG { get; set; }
         public double? VolumeInCBM { get; set; }
+
+        public string Field1 { get; set; }
+        public string Field2 { get; set; }
+        public string Field3 { get; set; }
+        public string Field4 { get; set; }
+        public string Field5 { get; set; }
+        public string Field6 { get; set; }
+        public string Field7 { get; set; }
+        public string Field8 { get; set; }
     }
 }
