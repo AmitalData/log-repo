@@ -79,7 +79,11 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 var res = invoices.Where(r => r.DueDate != null
                                               && r.PaidStatus != "Paid")
-                                  .ToList();
+                                  .Select(a => new InvoiceStatusDashboardModel()
+                                  { 
+                                     PaidStatus =  a.PaidStatus,
+                                     DueDate = a.DueDate
+                                  });
 
                 var response = GetInvoicesSummaries(tenant, res);
                 return Request.CreateResponse(HttpStatusCode.OK, response);
@@ -110,7 +114,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, newFilters.CardId);
                 newFilters.Tenant = authToken.Tenant;
                 var shipmentQuery = new ShipmentQuery(authToken.Tenant);
-                var shipments = shipmentQuery.GetByFilters(newFilters).Where(r => !string.IsNullOrEmpty(r.StatusCode));
+                var shipments = shipmentQuery.GetByFilters(newFilters)
+                                             .Where(r => !string.IsNullOrEmpty(r.StatusCode));
+
                 var res = GetDigitalStatusesWithCount(shipments, authToken.Tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, res);
@@ -141,7 +147,14 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, newFilters.CardId);
                 newFilters.Tenant = authToken.Tenant;
                 var shipmentQuery = new ShipmentQuery(authToken.Tenant);
-                var shipmentsQuery = shipmentQuery.GetByFilters(newFilters).Where(r => !string.IsNullOrEmpty(r.StatusCode));
+                var shipmentsQuery = shipmentQuery.GetByFilters(newFilters)
+                                                  .Where(r => !string.IsNullOrEmpty(r.StatusCode))
+                                                  .Select(a => new DashboardModelObject() {
+                                                      StatusCode = a.StatusCode, 
+                                                      StatusWeight = a.StatusWeight,
+                                                      TransportModeId = a.TransportModeId
+                                                  });
+
                 var res = GetDigitalStatusesWeightWithCount(shipmentsQuery, authToken.Tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, res);
@@ -205,63 +218,35 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         #region Private Methods 
 
-        private Dictionary<string, object> GetInvoicesSummaries(int tenant, List<ARInvoiceList> res)
+        private Dictionary<string, object> GetInvoicesSummaries(int tenant, IQueryable<InvoiceStatusDashboardModel> res)
         {
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            var lastMonth = todayDate.AddMonths(-1).Month;
+            var last2Month = todayDate.AddMonths(-2).Month;
 
-            var currentMonthInvocies = res.Where(a => a.DueDate.Value.Month == todayDate.Month)
-                                          .GroupBy(a => a.DueDate.Value.Month)
-                                          .ToDictionary(x => x.Key,
-                                                             t => new
-                                                             {
-                                                                 PartiallyPaidCount = t.Where(a => a.PaidStatus == "Partially Paid").Count(),
-                                                                 OverDueCount = t.Where(a => a.DueDate < todayDate).Count()
-                                                             });
-
-            var lastMonthInvocies = res.Where(a => a.DueDate.Value.Month == todayDate.AddMonths(-1).Month)
-                                       .GroupBy(a => a.DueDate.Value.Month)
-                                       .ToDictionary(x => x.Key,
-                                                          t => new
-                                                          {
-                                                              PartiallyPaidCount = t.Where(a => a.PaidStatus == "Partially Paid").Count(),
-                                                              OverDueCount = t.Where(a => a.DueDate < todayDate).Count()
-                                                          });
-
-            var last2MonthInvocies = res.Where(a => a.DueDate.Value.Month == todayDate.AddMonths(-2).Month)
-                                        .GroupBy(a => a.DueDate.Value.Month)
-                                        .ToDictionary(x => x.Key,
-                                                           t => new
-                                                           {
-                                                               PartiallyPaidCount = t.Where(a => a.PaidStatus == "Partially Paid").Count(),
-                                                               OverDueCount = t.Where(a => a.DueDate < todayDate).Count()
-                                                           });
-
-            var lessThan2MonthInvocies = res.Where(a => a.DueDate.Value.Month < todayDate.AddMonths(-2).Month)
-                                            .GroupBy(a => a.DueDate.Value.Month)
-                                            .ToDictionary(x => x.Key,
-                                                               t => new
-                                                               {
-                                                                   PartiallyPaidCount = t.Where(a => a.PaidStatus == "Partially Paid").Count(),
-                                                                   OverDueCount = t.Where(a => a.DueDate < todayDate).Count()
-                                                               });
-
-            var tempOverDueCount = lessThan2MonthInvocies.Values.Sum(a => a.OverDueCount);
-            var tempPartiallyPaidCount = lessThan2MonthInvocies.Values.Sum(a => a.PartiallyPaidCount);
-
-            var response = new Dictionary<string, object>
-            {
-                {"Current",  currentMonthInvocies.Values},
-                {"Last Month",  lastMonthInvocies.Values},
-                {"Last 2 Month",  last2MonthInvocies.Values},
-                {"Less than 2 Month", 
-                    new
-                    {
-                        PartiallyPaidCount = tempOverDueCount,
-                        OverDueCount = tempPartiallyPaidCount
-                    }
-                }
-            };
-
+            var response = res.Where(a => a.DueDate.Value.Month == todayDate.Month 
+                                            || a.DueDate.Value.Month == lastMonth
+                                            || a.DueDate.Value.Month == last2Month
+                                            || a.DueDate.Value.Month < last2Month)
+                              .Select(a => new 
+                              {
+                                  DueDate = a.DueDate.Value,
+                                  PaidStatus = a.PaidStatus,
+                                  data = a.DueDate.Value.Month == todayDate.Month 
+                                         ? "Current"
+                                         : a.DueDate.Value.Month == lastMonth
+                                           ? "Last Month"
+                                           : a.DueDate.Value.Month == last2Month
+                                             ? "Last 2 Month"
+                                             : "Less than 2 Month"
+                              })
+                              .GroupBy(a => a.data)
+                              .ToDictionary(x => x.Key,
+                                                  t => (object) new
+                                                  {
+                                                      PartiallyPaidCount = t.Where(a => a.PaidStatus == "Partially Paid").Count(),
+                                                      OverDueCount = t.Where(a => a.DueDate < todayDate).Count()
+                                                  });
             return response;
         }
 
@@ -300,14 +285,11 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             return shipmentsGroupedByStatus;
         }
 
-        private Dictionary<string, object> GetDigitalStatusesWeightWithCount(IQueryable<DigitalShipmentList> shipments, int tenant)
+        private Dictionary<string, object> GetDigitalStatusesWeightWithCount(IQueryable<DashboardModelObject> shipments, int tenant)
         {
-            var shipmentsGroupedByStatus = new Dictionary<string, object>();
             var entityStatusQuery = new EntityStatusQuery(tenant);
 
             var blockedStatus = new List<string> { "PSDL", "PODR" };
-
-            var count = shipments.Count(a => a.TransportModeId == "I" && a.StatusCode == "SHOR");
 
             var allStatuses = entityStatusQuery.GetEntityStatusPMsByTenant(tenant)
                                                .Where(a => !blockedStatus.Contains(a.Code) 
@@ -336,27 +318,22 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
             var arrivedAtDestinationCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SARR").StatusWeight;
 
-            var dataOrigin = shipments.Where(r => r.StatusWeight < departedCodeWeight && allowedStatusCode.Contains(r.StatusCode))
-                                      .GroupBy(a => a.TransportModeId)
-                                      .ToDictionary(x => x.Key, y => y.Count());
-
-            var dataInTransit = shipments.Where(r => r.StatusWeight >= departedCodeWeight
-                                                     && r.StatusWeight < arrivedAtDestinationCodeWeight
-                                                     && allowedStatusCode.Contains(r.StatusCode))
-                                         .GroupBy(a => a.TransportModeId)
-                                         .ToDictionary(x => x.Key, y => y.Count());
-
-            var dataAtDestination = shipments.Where(r => r.StatusWeight >= arrivedAtDestinationCodeWeight
-                                                         && allowedStatusCode.Contains(r.StatusCode))
-                                             .GroupBy(a => a.TransportModeId)
-                                             .ToDictionary(x => x.Key, y => y.Count());
-
-            var result = new Dictionary<string, object>
-            {
-                { "Origin", dataOrigin },
-                { "InTransit", dataInTransit },
-                { "dataAtDestination", dataAtDestination }
-            };
+            var result = shipments.Where(r => allowedStatusCode.Contains(r.StatusCode)
+                                              && (r.StatusWeight < departedCodeWeight
+                                                  || (r.StatusWeight >= departedCodeWeight
+                                                      && r.StatusWeight < arrivedAtDestinationCodeWeight)
+                                                  || (r.StatusWeight >= arrivedAtDestinationCodeWeight)))
+                                   .Select(a => new { 
+                                        a.TransportModeId, 
+                                        Code = a.StatusWeight < departedCodeWeight 
+                                               ? "Origin"
+                                               : (a.StatusWeight >= departedCodeWeight
+                                                  && a.StatusWeight < arrivedAtDestinationCodeWeight) 
+                                                  ? "InTransit"
+                                                  : "dataAtDestination"
+                                   }).GroupBy(a => a.Code)
+                                   .ToDictionary(a => a.Key, y => (object)y.GroupBy( x => x.TransportModeId)
+                                                                           .ToDictionary(b => b.Key, xx => xx.Count()));
 
             return result;
         }
