@@ -1636,7 +1636,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                 break;
             }
             case "NAV": {
-                filters.addAdditionalFilter("AcceptanceStatusCode", null, null, null, "IsNull", false, false, false, "string");
+                filters.addAdditionalFilter("AcceptanceStatusCode", true, null, null, "IsNull", false, false, false, "string");
                 break;
             }
         }
