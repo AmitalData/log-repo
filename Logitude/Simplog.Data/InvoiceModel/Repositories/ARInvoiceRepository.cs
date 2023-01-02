@@ -661,5 +661,13 @@ namespace Simplog.Data.InvoiceModel.Repositories
 
             return invoices.Where(d => !blockedStatusCode.Contains(d.StatusCode));
         }
+
+        public IQueryable<DigitalInvoicesCounterDataView> GetDigitalInvoicesCounterDataView(int tenant)
+        {
+            return context.DigitalInvoicesCounterDataView
+                   .Where(a => a.Tenant == tenant)
+                   .Select(a => a);
+        }
+
     }
 }
