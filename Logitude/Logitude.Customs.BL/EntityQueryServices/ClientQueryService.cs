@@ -10,6 +10,7 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Server.Tools;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.BL.EntityUpdateServices;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -29,7 +30,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             entityPM.ClientPoas = clientsPoaQueryService.GetMulti(clientKeys, true);
             entityPM.ClientsTapags = clientsTapagQueryService.GetMulti(clientKeys, true);
         }
-        public string GetIdByCode(string code, int tenant,bool insertIfNotFount = false)
+        public string GetIdByCode(string code, int tenant, bool insertIfNotFount = false)
         {
             if (string.IsNullOrEmpty(code))
             {
@@ -51,13 +52,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return id;
         }
 
-        public string GetIdByCodeOrPassport(string code,string passport, int tenant, bool insertIfNotFount = false)
+        public string GetIdByCodeOrPassport(string code, string passport, int tenant, bool insertIfNotFount = false)
         {
             //if (string.IsNullOrEmpty(code))
             //{
             //    return null;
             //}
-            string id = repository.GetIdByCodeOrPassport(tenant, code,passport);
+            string id = repository.GetIdByCodeOrPassport(tenant, code, passport);
 
             if (string.IsNullOrWhiteSpace(id) && insertIfNotFount == true)
             {
@@ -73,7 +74,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return id;
         }
 
-        public string GetIdByPassportNumberOrCountry(string passportNumber,string passportCountryCode, int tenant)
+        public string GetIdByPassportNumberOrCountry(string passportNumber, string passportCountryCode, int tenant)
         {
             if (string.IsNullOrEmpty(passportNumber) && string.IsNullOrEmpty(passportCountryCode))
             {
@@ -89,7 +90,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             ClientPM clientPM = null;
             if (client != null)
             {
-                 clientPM = new ClientPM()
+                clientPM = new ClientPM()
                 {
                     Code = client.Code,
                     PassportNumber = client.PassportNumber,
@@ -152,6 +153,35 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         ClientTypeSpecificCode = client.ClientTypeSpecificCode,
                         Id = client.Id,
                     };
+                    clientsPMList.Add(clientPM);
+                }
+            }
+
+            return clientsPMList;
+        }
+
+
+        public List<ClientPM> GetAllClientsPOAExpire(int tenant) 
+        {
+            //LogMessagingUtil.Instance.AppendLine(context.GetConnection().ConnectionString);
+            List<ClientPM> clientsPMList = new List<ClientPM>();
+            List<Client> clientsList = repository.GetAllClientsPOAExpire(tenant);
+
+            if (clientsList != null && clientsList.Count > 0)
+            {
+                foreach (Client client in clientsList)
+                {
+                    /*ClientPM clientPM = new ClientPM()
+                    {
+                        Code = client.Code,
+                        PassportNumber = client.PassportNumber,
+                        PassportCountryCode = client.PassportCountryCode,
+                        PassportTypeCode = client.PassportTypeCode,
+                        Tenant = client.Tenant,
+                        ClientTypeSpecificCode = client.ClientTypeSpecificCode,
+                        Id = client.Id,
+                    };*/
+                    var clientPM = this.GetEntityPM(client, true, new ClientKeys() { Id = client.Id });
                     clientsPMList.Add(clientPM);
                 }
             }

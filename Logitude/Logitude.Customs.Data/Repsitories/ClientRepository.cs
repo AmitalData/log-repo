@@ -89,6 +89,16 @@ namespace Logitude.Customs.Data.Repsitories
                   select rec
                   ).ToList();
         }
+
+        public List<Client> GetAllClientsPOAExpire(int tenant)
+        {
+            var date = DateTime.Now.AddDays(30);
+            var clients = from client in context.Clients
+                               where !string.IsNullOrEmpty(client.Code) && client.Tenant == tenant && client.IsExportPoaActive == true && (client.IsPOAExpireReminderSent == null || client.IsPOAExpireReminderSent == false)
+                               where !context.ClientsPoas.Any(poa=>poa.ClientId == client.Id && date <= poa.EndDate)
+                               select client;
+            return clients.ToList();
+        }
     }
 
 }

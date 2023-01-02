@@ -344,7 +344,12 @@ export class ClientPM {
         }
     }
     //public ClientsTapags: Array<ClientsTapagPM>= [];
- 
+     private isPOAExpireReminderSent: boolean;
+    public get IsPOAExpireReminderSent() { return this.isPOAExpireReminderSent; }
+    public set IsPOAExpireReminderSent(newValue: boolean) { if (this.isPOAExpireReminderSent != newValue) { this.isPOAExpireReminderSent = newValue; this.MarkAsDirty("IsPOAExpireReminderSent"); } }
+       
+	 
+
     public OldEntityPM: ClientPM;
 		
     public IsDirty: boolean;
