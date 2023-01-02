@@ -22,7 +22,7 @@ namespace Logitude.Server.Tools.QueueService
             string workerName = GetCurrentWorkerName();
             if (FeatureToggleHelper.HasFeatureToggle("NWR", tenant))
             {
-                 waitingStatus = -1033;
+                 waitingStatus = -1030;
                 if (!string.IsNullOrEmpty(workerName))
                 {
                     if (workerName.ToLower() == "staging")
