@@ -249,8 +249,7 @@ export class CustomsRequestsSheetsComponent
             var customsSetting = response.Result;
             //if (!AppTool.IsNullOrEmpty(customsSetting) && customsSetting.CompanyType == "B") {
                 this.StatisticsVisibility = !this.CurrentSession?.CurrentEditComponent?.EntityPM;;
-                var service = new CustomsRequestsSheetWebService();
-                var statistics = service.GetStatistics().subscribe((response: any) => {
+                new CustomsRequestsSheetWebService().GetStatistics(this.IncludingFuture).subscribe((response: any) => {
                     if (response.Result != null) {
                         this.SumRequests = 0;
                         this.customsRequestsSheetSummary = response.Result;

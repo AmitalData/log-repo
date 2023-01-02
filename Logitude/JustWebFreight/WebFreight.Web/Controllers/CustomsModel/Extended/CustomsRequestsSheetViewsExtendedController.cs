@@ -48,7 +48,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
     public partial class CustomsRequestsSheetViewsExtendedController : ApiController
     {
 
-        public HttpResponseMessage GetStatistics()
+        public HttpResponseMessage GetStatistics(bool includingFuture)
         {
 
             try
@@ -58,7 +58,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 int tenant = authToken.Tenant;
                 ICustomContext context = CustomContext.GetContext(tenant);
                 CustomsRequestsSheetListQueryService customsRequestsSheetQuery = new CustomsRequestsSheetListQueryService(context);
-                var summary = customsRequestsSheetQuery.GetStatistics(tenant);
+                var summary = customsRequestsSheetQuery.GetStatistics(tenant, includingFuture);
                 
                 /*var customRabbitMQQueue = new CustomRabbitMQQueue();
                 var _CustomsAnalyzeQueueServices = customRabbitMQQueue.GetAllQueueDetails().Where(r => r.AnalyzeQueueService != AnalyzeMQQueueServiceEnum.none).ToList();

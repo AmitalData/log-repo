@@ -552,7 +552,7 @@
                             <th style="width:60px" class="Statistics"><h2 style="width: calc(100% - 30px)">כמות</h2></th>
                         </tr>
                     </thead>
-                    <tbody *ngIf="IsTherecustomsRequestsSheetSummary>
+                    <tbody *ngIf="IsTherecustomsRequestsSheetSummary">
                         <tr style="display: table; width: 100%; table-layout: fixed; height: 20px; border-bottom:1px solid #A7A9AC;" *ngFor="let item of customsRequestsSheetSummary">
                             <td class="Statistics" [tooltip]="item.InterfaceTypeName" position="right" [show]="item.InterfaceTypeName.length > 29">{{item.InterfaceTypeName}}</td>
                             <td class="Statistics count-td">{{item.count}}</td>

@@ -57,13 +57,15 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         {
             return iQueryable;
         }
-        public List<CustomsRequestsSheetSummary> GetStatistics(int tenant)
+
+        public List<CustomsRequestsSheetSummary> GetStatistics(int tenant, bool includingFuture)
         {
             var lastweek = DateTime.Now.Date.AddDays(-7);
             IQueryable<CustomsRequestsSheetList> query = (from a in context.CustomsRequestsSheets
                                                           where a.Tenant == tenant && (a.RequestStatusCode == "5" || a.RequestStatusCode == "1" ||
                                                           a.RequestStatusCode == "2" || a.RequestStatusCode == "21")
                                                           && a.RequestCreateDate >= lastweek
+                                                          // && (includingFuture || a.RequestCreateDate <= DateTime.Now)
                                                           select new CustomsRequestsSheetList()
                                                           {
                                                               InterfaceTypeCode = a.InterfaceTypeCode,
