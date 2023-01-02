@@ -12270,7 +12270,7 @@ namespace WebFreight.Web.ReportsWebServices
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             AddressRepository addressRepository = new AddressRepository(commonContext);
             CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
-
+            bool HasParallelFeatureToggle = FeatureToggleHelper.HasFeatureToggle("XUP", tenant);
             ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
             IQueryable<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(tenant);
 
@@ -12659,7 +12659,10 @@ namespace WebFreight.Web.ReportsWebServices
                     shipment.ChargeableWeightUnitCode = Item.ChargeableWeightUnitCode;
                     shipment.NumberofDeliveries = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == Item.Id && d.PickUpDeliveryTypeCode == "DELV").ToList().Count;
 
-                    customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, Item, shipment);
+                    if (!HasParallelFeatureToggle)
+                    {
+                        customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, Item, shipment);
+                    }
 
                     if (Item.DirectionId == "I")
                     {
@@ -12826,6 +12829,10 @@ namespace WebFreight.Web.ReportsWebServices
             totalData.ToDate = ToDate;
             #endregion
 
+            if (HasParallelFeatureToggle)
+            {
+                customFieldResolver.SetCustomFieldsValues("Shipment", tenant, totalData.Shipments.Cast<object>().ToList());
+            }
             return totalData;
         }
 
