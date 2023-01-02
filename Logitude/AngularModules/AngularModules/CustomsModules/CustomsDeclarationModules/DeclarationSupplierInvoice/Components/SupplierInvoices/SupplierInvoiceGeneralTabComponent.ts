@@ -4293,9 +4293,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/PartnersItemsSelectionComponent');
         }
     }
-    ClassificationCodeDblClick(logCellTemplate: LogCellTemplateComponent,ClassificationTextBox) {
-        debugger
-       
+    ClassificationCodeDblClick(logCellTemplate: LogCellTemplateComponent,ClassificationTextBox) {       
         if (!AmitalGatewayUtil.Instance.AmitalBrowserInUse||this.Parent.declarationPM.IsConnectedToUnifreight) return;
         if (!this.Parent.IsReadOnly) {
             console.log("[Double Click] ", this.entityPM);
