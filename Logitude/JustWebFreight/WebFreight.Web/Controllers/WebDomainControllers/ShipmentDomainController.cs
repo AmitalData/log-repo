@@ -793,6 +793,27 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
+        public HttpResponseMessage GetShipmentReceivablePMsByShipmentId(string shipmentId, int tenant)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("", authToken.Tenant, tenant);
+
+                ShipmentReceivableQuery shipmentReceivableQuery = new ShipmentReceivableQuery(tenant);
+                List<ShipmentReceivablePM> shipmentReceivablePMs = shipmentReceivableQuery.GetShipmentReceivablePMsByShipmentId(shipmentId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, shipmentReceivablePMs);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
         public HttpResponseMessage GetMasterConnectedHouseShipments(string entityId, int tenant)
         {
             try
