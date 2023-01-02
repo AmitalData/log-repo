@@ -1504,7 +1504,7 @@
 
             let newSystemTenant = getCookie("newSystemTenant");
             if (newSystemTenant == "" && newEnvTenants.indexOf(Tenant) >= 0) {
-                setCookie("newSystemTenant", Tenant, 365);
+                setCookie("newSystemTenant", Tenant, 70);
             }
 
             if (document.location.href.indexOf('?Menu=') > 0) {
