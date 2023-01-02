@@ -253,7 +253,9 @@ $border-color: #ddd;
 }
 
 .db-dropdown-scroll::-webkit-scrollbar {
+    border-radius: 110px;
     width: 4px;
+    height: 80px;
 }
 
 /* Track */
@@ -263,15 +265,21 @@ $border-color: #ddd;
 
 /* Handle */
 .db-dropdown-scroll::-webkit-scrollbar-thumb {
+    border-radius: 110px;
     background: #D9D9D9;
 }
 
 /* Handle on hover */
 .db-dropdown-scroll::-webkit-scrollbar-thumb:hover {
-    background: #D2D2D2;
-    height: 80px;
+    background: #979797;
 }
 
+
+// .db-dropdown-scroll:hover::-webkit-scrollbar {
+//         width: 6px;
+//         height: 100px;
+//         background: #D2D2D2;  
+// }
 
 @keyframes pulse {
     0% {
