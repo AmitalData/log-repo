@@ -1170,7 +1170,7 @@
                                                 <span style="font-size:10px">{{item.QunatityTypeCode}}</span>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogTextBoxV2 #ClassificationTextBox [ObjectFieldName]="'ClassificationCode'" [DataContext]="item" [FocusOnMe]="true" [InputType]="'integertext'"
+                                                <LogTextBoxV2 (dblclick)="item.ClassificationCodeDblClick(logcelltemplate,ClassificationTextBox)" #ClassificationTextBox [ObjectFieldName]="'ClassificationCode'" [DataContext]="item" [FocusOnMe]="true" [InputType]="'integertext'"
                                                               [Text]="item.ClassificationCode" [ObjectTableName]="'Customs.SupplierInvoiceItem'" [HideColumns]="true"
                                                               (LostFocus)="item.OnClassificationLostFocus(logcelltemplate,ClassificationTextBox)" [DebounceTime]="1" (KeyUp)="item.ClassificationKeyUp($event,logcelltemplate,ClassificationTextBox)"></LogTextBoxV2>
 
