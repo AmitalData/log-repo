@@ -33,6 +33,7 @@ using Simplog.Data.CommonDataModel;
 using System.Data.Entity;
 using Logitude.Customs.BL.NotificationBL;
 using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.CustomsMessaging.MessagingServices;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -40,6 +41,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         : ResponseServiceBase<ReleaseGoodsResponseData, DF_NG_2470_DF_MSG16001_ReleaseGoodsMessage, GenericRequestParams>
     {
         private bool _LockResponseService2470Feature;
+        private DeclarationPrintResponseData _SendDeclarationPrintResponse;
 
 
         public override ReleaseGoodsResponseData GetResponse(DF_NG_2470_DF_MSG16001_ReleaseGoodsMessage customResponse, GenericRequestParams requestParams)
@@ -139,7 +141,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 }
                             }
 
-                            if (declarationPM.IsCourierDeclaration)
+                            if (declarationPM.Direction == "E")
+                            {
+                                SendDeclarationPrint(declarationPM, requestParams);
+                            }
+
+
+                                if (declarationPM.IsCourierDeclaration)
                             {
                                 // update NoOfCourierHawbwWithoutHatara
                                 IUpdateOpenDeclarationInCourierMasterService myIUpdateOpenDeclarationInCourierMasterService = ContainerAccessor.Container.Resolve(typeof(IUpdateOpenDeclarationInCourierMasterService), "UpdateOpenDeclarationInCourierMasterService", new ParameterOverride("", declarationPM.Tenant)) as IUpdateOpenDeclarationInCourierMasterService;
@@ -450,5 +458,39 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             }
         }
+
+        public bool SendDeclarationPrint(DeclarationPM myDeclarationPM, GenericRequestParams requestParams)
+        {
+            LogMessagingUtil.Instance.AppendLine("SendDeclarationPrint");
+            string decNum = myDeclarationPM.DeclarationNumber;
+            var decNumList = new List<string>();
+            decNumList.Add(decNum);
+            DF_NG_8302_Web03_DeclarationPrintRequestParams searchParams = new DF_NG_8302_Web03_DeclarationPrintRequestParams()
+            {
+                LoggingEnabled = true,
+                CustomFileNo = myDeclarationPM.CustomFileNo,
+                DeclarationNumber = decNumList, //declarationPM.DeclarationNumber,
+                Tenant = myDeclarationPM.Tenant,
+                RequestName = "Declaration Print(2470)",
+                ResponseName = "Declaration Print(2470)",
+                LoggingEntityId = myDeclarationPM.Id,
+                RequestVIA = SendRequestVIA.WebServiceBatch,
+
+
+                LoggingUserId = requestParams.LoggingUserId,
+            };
+
+            var myRequestMessagingService = new DF_NG_8302_Web03_DeclarationPrintMessagingService();
+            var resData = myRequestMessagingService.Send(searchParams);
+            _SendDeclarationPrintResponse = resData;
+            if (!resData.Succeeded)
+            {
+                LogMessagingUtil.Instance.AppendLine("Declaration Print Request Failed " + resData.CustomsRequestsSheetId + ", Message: " + resData.UserMessage);
+                return false;
+            }
+            LogMessagingUtil.Instance.AppendLine("Declaration Print Request Succeeded " + resData.CustomsRequestsSheetId);
+            return true;
+        }
+
     }
 }
