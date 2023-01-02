@@ -1,22 +1,47 @@
+import { FieldTypes } from "Workflow/Constants/FieldTypes";
 import { SetValueOperators } from "Workflow/Constants/SetValueOperators";
 import { ListItem } from "./ListItem";
 
 export class SetValueOperatorsList {
-    private IsCollectionOperators: boolean;
+    private SetValueType: string;
     public Items: ListItem[] = [];
 
-    constructor(isCollectionOperators: boolean) {
-        this.IsCollectionOperators = isCollectionOperators;
-        this.setSetValueOperators();
+    constructor(setValueType: string) {
+        this.SetValueType = setValueType;
+
+        if (this.SetValueType) {
+            this.setSetValueOperators();
+        }
     }
 
     private setSetValueOperators() {
-        if (this.IsCollectionOperators) {
+        let variableTypes = Object.values(FieldTypes).map((type) => (type as string));
+        if (!variableTypes.includes(this.SetValueType.replace("[]", ""))) {
+            this.setRecordSetValueOperators();
+        } else {
+            this.setNotRecordSetValueOperators();
+        }
+    }
+
+    private setRecordSetValueOperators() {
+        if (this.SetValueType.toString().endsWith("[]")) {
+            this.Items = [
+                new ListItem(SetValueOperators.EqualsCollection)
+            ];
+        } else {
+            this.Items = [
+                new ListItem(SetValueOperators.EqualsRecord)
+            ];
+        }
+    }
+
+    private setNotRecordSetValueOperators() {
+        if (this.SetValueType.toString().endsWith("[]")) {
             this.Items = [
                 new ListItem(SetValueOperators.EqualsCollection),
                 new ListItem(SetValueOperators.Add),
                 new ListItem(SetValueOperators.AddField)
-            ]
+            ];
         } else {
             this.Items = [
                 new ListItem(SetValueOperators.Equals),

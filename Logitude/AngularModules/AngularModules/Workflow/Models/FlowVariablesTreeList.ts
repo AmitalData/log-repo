@@ -289,10 +289,13 @@ export class FlowVariablesTreeList {
             this.getDeclareVariableNodes().forEach((declareVariableNode: any) => {
                 let treeSelectItemName = declareVariableNode.data["variableName"];
                 let treeSelectItemKey = this.DeclaredVariablesPrefix + this.ItemKeySplitter + declareVariableNode.data["variableCode"];
-                let data = {
-                    type: (declareVariableNode.data["variableType"] || null)
-                };
-                let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, true, true, false, false, [], data);
+                let variableType = declareVariableNode.data["variableType"] || null;
+                let recordType = declareVariableNode.data["recordType"] || null;
+                let declaredVariableType = this.formatDeclaredVariableType(variableType, recordType);
+                let data = { type: declaredVariableType };
+                let isRecordVariableType = this.isRecordVariableType(variableType);
+                let treeSelectItemChildren = isRecordVariableType ? this.getObjectFieldsItems(treeSelectItemKey, recordType, null) : [];
+                let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, !isRecordVariableType, true, false, false, treeSelectItemChildren, data);
                 declaredVariablesItemChildren.push(treeSelectItem);
                 this.ItemsList.push(treeSelectItem);
             });
@@ -309,10 +312,12 @@ export class FlowVariablesTreeList {
                 let treeSelectItemKey = this.DeclaredVariablesPrefix + this.ItemKeySplitter + Formatter.getCodeFromName(treeSelectItemName);
                 let treeSelectItemLoopName = this.LoopCurrentItemPrefix + treeSelectItemName;
                 let variableType = collectionNode.data["variableType"] || null;
-                let data = {
-                    type: variableType ? variableType.replace("[]", "") : null
-                };
-                let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemLoopName, true, true, false, false, [], data);
+                let recordType = collectionNode.data["recordType"] || null;
+                let declaredVariableType = this.formatDeclaredVariableType(variableType, recordType);
+                let data = { type: declaredVariableType ? declaredVariableType.replace("[]", "") : null };
+                let isRecordVariableType = this.isRecordVariableType(variableType);
+                let treeSelectItemChildren = isRecordVariableType ? this.getObjectFieldsItems(treeSelectItemKey, recordType, null) : [];
+                let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemLoopName, !isRecordVariableType, true, false, false, treeSelectItemChildren, data);
                 declaredVariablesItemChildren.push(treeSelectItem);
                 this.ItemsList.push(treeSelectItem);
             }
@@ -328,11 +333,13 @@ export class FlowVariablesTreeList {
         this.getDeclareVariableNodes(true).forEach((declareVariableNode: any) => {
             let treeSelectItemName = declareVariableNode.data["variableName"];
             let treeSelectItemKey = this.DeclaredVariablesPrefix + this.ItemKeySplitter + declareVariableNode.data["variableCode"];
-            let data = {
-                type: (declareVariableNode.data["variableType"] || null),
-                isDeclaredCollectionVariable: true
-            };
-            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, true, true, false, false, [], data);
+            let variableType = declareVariableNode.data["variableType"] || null;
+            let recordType = declareVariableNode.data["recordType"] || null;
+            let declaredVariableType = this.formatDeclaredVariableType(variableType, recordType);
+            let data = { type: declaredVariableType, isDeclaredCollectionVariable: true };
+            let isRecordVariableType = this.isRecordVariableType(variableType);
+            let treeSelectItemChildren = isRecordVariableType ? this.getObjectFieldsItems(treeSelectItemKey, recordType, null) : [];
+            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, !isRecordVariableType, true, false, false, treeSelectItemChildren, data);
             declaredCollectionVariablesItemChildren.push(treeSelectItem);
             this.ItemsList.push(treeSelectItem);
         });
@@ -427,5 +434,18 @@ export class FlowVariablesTreeList {
             return sortedItems;
         }
         return items;
+    }
+
+    private isRecordVariableType(variableType: string) {
+        if (variableType && variableType.toString().startsWith(FieldTypes.Record)) {
+            return true;
+        }
+        return false;
+    }
+
+    private formatDeclaredVariableType(variableType: string, recordType: string) {
+        return (variableType && variableType.toString().startsWith(FieldTypes.Record) && recordType) ?
+            variableType.replace(FieldTypes.Record, recordType) :
+            variableType;
     }
 }

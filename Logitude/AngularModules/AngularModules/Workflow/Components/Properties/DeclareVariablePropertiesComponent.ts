@@ -20,7 +20,7 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
     public VariableName: string = null;
     public VariableType: string = null;
     public VariableValue: string = null;
-    public RecordObject: string = null;
+    public RecordType: string = null;
     public IsCollectionVariable: boolean = false;
     public ValidationErrorsList: string[];
     public IsNew: boolean;
@@ -44,12 +44,12 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
         let variableNameData = this.Data["variableName"];
         let variableTypeData = this.Data["variableType"];
         let variableValueData = this.Data["variableValue"];
-        let recordObjectData = this.Data["recordObject"];
+        let recordTypeData = this.Data["recordType"];
 
         this.VariableName = variableNameData || null;
         this.VariableType = this.formatVariableType(variableTypeData);
         this.VariableValue = variableValueData || null;
-        this.RecordObject = recordObjectData || null;
+        this.RecordType = recordTypeData || null;
 
         if (variableTypeData && variableTypeData.toString().endsWith("[]")) {
             this.IsCollectionVariable = true;
@@ -82,7 +82,7 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
 
         this.updateVariableValue(null);
         if (this.VariableType !== FieldTypes.Record) {
-            this.updateRecordObject(null);
+            this.updateRecordType(null);
         }
 
         this.Data["variableType"] = type;
@@ -106,9 +106,9 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
         this.setUIProperties();
     }
 
-    updateRecordObject(recordObject: string) {
-        this.Data["recordObject"] = recordObject || null;
-        this.RecordObject = recordObject || null;
+    updateRecordType(recordType: string) {
+        this.Data["recordType"] = recordType || null;
+        this.RecordType = recordType || null;
 
         this.setUIProperties();
     }
@@ -117,9 +117,9 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
         this.UIProperties.SetRequired("VariableName", null, AppTool.IsNullOrEmpty(this.VariableName));
         this.UIProperties.SetRequired("VariableType", null, AppTool.IsNullOrEmpty(this.VariableType));
         if (this.VariableType === FieldTypes.Record) {
-            this.UIProperties.SetRequired("RecordObject", null, AppTool.IsNullOrEmpty(this.RecordObject));
+            this.UIProperties.SetRequired("RecordType", null, AppTool.IsNullOrEmpty(this.RecordType));
         } else {
-            this.UIProperties.SetRequired("RecordObject", null, false);
+            this.UIProperties.SetRequired("RecordType", null, false);
         }
         if (!FormatTool.IsValidNameText(this.VariableName)) {
             let error = "Name Format is Invalid <Must start with Letters and can contain only '-' >"
