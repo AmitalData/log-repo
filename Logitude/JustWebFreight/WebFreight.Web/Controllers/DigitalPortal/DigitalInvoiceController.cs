@@ -349,10 +349,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var firstInvoicesCounter = invoicesCounter.FirstOrDefault();
                 var res = new InvoicesCounter
                 {
-                    MaxOpenAmount = firstInvoicesCounter.MaxOpenAmount,
-                    MinOpenAmount = firstInvoicesCounter.MinOpenAmount,
-                    MaxTotalAmount = firstInvoicesCounter.MaxTotalAmount,
-                    MinTotalAmount = firstInvoicesCounter.MinTotalAmount
+                    MaxOpenAmount = firstInvoicesCounter != null ? firstInvoicesCounter.MaxOpenAmount: 1000,
+                    MinOpenAmount = firstInvoicesCounter != null ? firstInvoicesCounter.MinOpenAmount: 0,
+                    MaxTotalAmount = firstInvoicesCounter != null ? firstInvoicesCounter.MaxTotalAmount:2000,
+                    MinTotalAmount = firstInvoicesCounter != null ? firstInvoicesCounter.MinTotalAmount: 0
                 };
 
                 return Request.CreateResponse(HttpStatusCode.OK, res);
