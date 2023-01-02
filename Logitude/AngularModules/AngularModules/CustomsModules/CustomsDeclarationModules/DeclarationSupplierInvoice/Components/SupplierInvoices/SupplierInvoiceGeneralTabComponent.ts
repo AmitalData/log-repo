@@ -4360,8 +4360,50 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/PartnersItemsSelectionComponent');
         }
     }
+    ClassificationCodeDblClick(logCellTemplate: LogCellTemplateComponent,ClassificationTextBox) {       
+        if (!AmitalGatewayUtil.Instance.AmitalBrowserInUse||this.Parent.declarationPM.IsConnectedToUnifreight) return;
+        if (!this.Parent.IsReadOnly) {
+            console.log("[Double Click] ", this.entityPM);
 
+            if (this.Parent.IsDisplayOnly)
+                return;
 
+            //close the cell before showing window; to avoid [true] to [false] problem
+            logCellTemplate.IsDisplayMode = true;
+            logCellTemplate.IsEditMode = false;
+
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 850;
+            logWindow.Height = 650;
+            logWindow.Title = TextCodeTranslator.Translate("Customs.CustomsPartnersItem.Q.ItemQuery");
+            logWindow.ShowCloseButton = true;
+            logWindow.WindowArgs = {
+               
+                searchText: this.ClassificationCode,
+                customFileNo:this.Parent.declarationPM.CustomFileNo,
+                declarationId:this.Parent.declarationPM.Id,
+
+            };
+            logWindow.WindowClosed.subscribe(($event: any) => {
+                
+                this.PartnerItemsDescreptionSelectionCompleted(this.entityPM, $event,logCellTemplate,ClassificationTextBox);
+              
+            });
+
+            logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/PartnersItemsDescreptionSelectionComponent');
+        }
+    }
+    PartnerItemsDescreptionSelectionCompleted(item, partnersItem,logcelltemplate,ClassificationTextBox) {
+        if (!AppTool.IsNullOrEmpty(partnersItem)) {
+            console.log("Response returned: ", partnersItem);
+            if (!AppTool.IsNullOrEmpty(partnersItem.ItemCode) || !AppTool.IsNullOrEmpty(partnersItem.ClassificationCode)) {
+                item.ClassificationCode = partnersItem.ClassificationCode;
+                item.ItemDescription = partnersItem.ItemDescription;
+                
+                this.OnClassificationLostFocus(logcelltemplate,ClassificationTextBox)
+            }
+        }
+    }
     PartnerItemsSelectionCompleted(item, partnersItem) {
         if (!AppTool.IsNullOrEmpty(partnersItem)) {
             console.log("Response returned: ", partnersItem);
