@@ -221,7 +221,7 @@ namespace Logitude.Server.Tools.FTP
 		private string CreateFolderIfNotExist(string folderName, string folderPath)
 		{
 			if (string.IsNullOrEmpty(folderName)) return folderPath;
-		     this.CreateDirectory((folderPath + "/" + folderName));
+			if (!this.DirectoryExists((folderPath + "/" + folderName))) this.CreateDirectory((folderPath + "/" + folderName));
 			return (folderPath + "/" + folderName);
 		}
 
