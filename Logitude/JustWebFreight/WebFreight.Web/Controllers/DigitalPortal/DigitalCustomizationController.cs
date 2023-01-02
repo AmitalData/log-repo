@@ -1,9 +1,13 @@
-﻿using Logitude.Infrastructure.BL.EntityQueryServices;
+﻿using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.Infrastructure.BL.EntityQueryServices;
 using Logitude.Infrastructure.Data.EntityLists;
 using Logitude.SystemLogs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -17,6 +21,48 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 {
     public class DigitalCustomizationController : ApiController
     {
+        [HttpGet]
+        [Route("DigitalCustomization/GetCustomFieldsByTableId")]
+        public HttpResponseMessage GetCustomFieldsByTableId(string objectTableId)
+        {
+            int tenant = 0;
+            string email = "";
+
+            try
+            {
+                string securityKey = HttpContext.Current.Request.Headers["securitykey"];
+
+                if (!string.IsNullOrWhiteSpace(securityKey))
+                {
+                    var authenticationHelper = new DigitalPortalAuthenticationHelper();
+                    var shipmentIdAndTenant = authenticationHelper.GetShipmentBySecurityKey(securityKey);
+                    if (shipmentIdAndTenant == null)
+                    {
+                        throw new AutenticationException("Sorry! this user is not authorized!");
+                    }
+
+                    tenant = shipmentIdAndTenant.Item2;
+                }
+                else
+                {
+                    var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                    email = authToken.Email;
+                    tenant = authToken.Tenant;
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                }
+
+                var ObjectFieldsRepository = new ObjectFieldRepository(tenant);
+                var objectFieldsQuery = new ObjectFieldQuery(ObjectFieldsRepository);
+                List<ObjectFieldPM> result = objectFieldsQuery.GetDigitalCustomFieldsBytableID(objectTableId, tenant).ToList();
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         [HttpGet]
         [Route("DigitalCustomization/GetDigitalPortalScreenNames")]
         public HttpResponseMessage GetDigitalPortalScreenNames()
