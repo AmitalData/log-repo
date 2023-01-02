@@ -995,7 +995,7 @@
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
     MaxLength="1"
-    IsRequired="false"
+    IsRequired="true"
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
