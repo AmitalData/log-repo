@@ -29,11 +29,26 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 LogMessagingUtil.Instance.AppendLine("No Customs Exchange Rate details in the Response");
             }
-
-            foreach (var customsExchangeRateItem in customResponse.CurrencyRateList)
+            if (requestParams.UpdateAllTenants)
             {
-                UpdateCustomsExchangeRate(customsExchangeRateItem, requestParams.Tenant);
+                var customsSettingQueryService = new CustomsSettingQueryService(requestParams.Tenant);
+                var allCustomsSetting = customsSettingQueryService.GetAll();
+                foreach(var customsSetting in allCustomsSetting)
+                {
+                    foreach (var customsExchangeRateItem in customResponse.CurrencyRateList)
+                    {
+                        UpdateCustomsExchangeRate(customsExchangeRateItem, customsSetting.Tenant);
+                    }
+                }
             }
+            else
+            {
+                foreach (var customsExchangeRateItem in customResponse.CurrencyRateList)
+                {
+                    UpdateCustomsExchangeRate(customsExchangeRateItem, requestParams.Tenant);
+                }
+            }
+
 
             var setting = CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant);
             if (setting != null)
