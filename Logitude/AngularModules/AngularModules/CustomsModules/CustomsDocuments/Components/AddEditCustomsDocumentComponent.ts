@@ -1245,6 +1245,7 @@ export class MetaDataViewModel extends BaseComponent {
             }
         }
         if (MetaDataType.ValuesTable) {
+            debugger;
             var currentClosedTable: CustomsClosedTableList = this.closedTables.filter(d => d.Id == MetaDataType.ValuesTable)[0];
             if(currentClosedTable)
             {
@@ -1265,7 +1266,12 @@ export class MetaDataViewModel extends BaseComponent {
             }
             case "int":
                 {
-                    this.controlType = 'logtextboxint';
+                    if (this.MetaDataType.ValuesTable) {
+                        this.controlType = 'loglov';
+                    }
+                    else {
+                        this.controlType = 'logtextbox';
+                    }
                     break;
                 }
             case "date":
