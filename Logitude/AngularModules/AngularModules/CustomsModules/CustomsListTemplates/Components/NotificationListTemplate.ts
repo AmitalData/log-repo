@@ -70,13 +70,10 @@ export class NotificationListTemplate {
         }
         else {
             this.IconeVisibility = false;
-        }
-
-        if (this.rowData.NotificationDefinitionCode == "5101N" || this.rowData.NotificationDefinitionCode == "5101R" || this.rowData.NotificationDefinitionCode == "5101A" || this.rowData.NotificationDefinitionCode == "5101E") {
             this.BlueIconVisibility = true;
-            this.IconeVisibility = false;
 
         }
+
 
         var valueDate = new Date(rowData.DueDate.valueOf()).valueOf();
         var today = DateTool.GetCurrentDateAsUtc().valueOf();
