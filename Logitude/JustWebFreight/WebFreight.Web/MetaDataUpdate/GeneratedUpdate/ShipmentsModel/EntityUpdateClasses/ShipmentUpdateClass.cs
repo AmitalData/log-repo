@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "658e4b448ba34aa7f610c28ad55fecae";
+		public const string HashString = "16c749de5294fea5bd2e4c43f630811c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -60527,11 +60527,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "MainCarriageFromState",
+					 						FieldName =  "MainCarriageFromStateId",
 					  						ObjectTableName =  "Shipment",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "State",
 					  						MinLength =  0,
-					  						MaxLength =  40,
+					  						MaxLength =  15,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -60539,7 +60540,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
+					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
@@ -60547,8 +60548,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "MainCarriageFromState",
-					  						ListPropertyPath =  "MainCarriageFromState",
+					  						PMPropertyPath =  "MainCarriageFromStateId",
+					  						ListPropertyPath =  "MainCarriageFromStateId",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -60557,8 +60558,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Shipment",
-					  						ValidForQuerySection2 =  "ShipmentFollowUp",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						Code =  "MainCarriageFromState",
@@ -60570,10 +60569,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "MainCarriageFromState",
+					  						FullFieldLable =  "MainCarriageFromStateId",
 					  						DefaultText =  "From State",
-					  						ListFieldLable =  "MainCarriageFromStateListLable",
-					  						ListLableDefaultText =  "From State",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -60596,11 +60593,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "MainCarriageToState",
+					 						FieldName =  "MainCarriageToStateId",
 					  						ObjectTableName =  "Shipment",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "State",
 					  						MinLength =  0,
-					  						MaxLength =  40,
+					  						MaxLength =  15,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -60608,7 +60606,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
+					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
@@ -60616,8 +60614,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "MainCarriageToState",
-					  						ListPropertyPath =  "MainCarriageToState",
+					  						PMPropertyPath =  "MainCarriageToStateId",
+					  						ListPropertyPath =  "MainCarriageToStateId",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -60626,8 +60624,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Shipment",
-					  						ValidForQuerySection2 =  "ShipmentFollowUp",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						Code =  "MainCarriageToState",
@@ -60639,10 +60635,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "MainCarriageToState",
+					  						FullFieldLable =  "MainCarriageToStateId",
 					  						DefaultText =  "To State",
-					  						ListFieldLable =  "MainCarriageToStateListLable",
-					  						ListLableDefaultText =  "To State",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
