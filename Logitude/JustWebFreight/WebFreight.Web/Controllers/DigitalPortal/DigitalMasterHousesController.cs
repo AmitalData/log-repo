@@ -13,6 +13,8 @@ using Logitude.SystemLogs;
 using WebFreight.Web.Security;
 using System.Net.Http;
 using System.Net;
+using Simplog.Data.ShipmentsModel.Repositories;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -69,6 +71,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         Id = item.Id,
                         ShipmentNumber = item.ShipmentNumber,
                         TransportModeId = item.TransportModeId,
+                        DirectionId = item.DirectionId,
+                        ShipmentTypeName = item.ShipmentType?.Name,
+                        ShipmentSubTypeName = item.ShipmentSubType?.Name,
                         ShipmentLevelCode = item.ShipmentLevelCode,
                         ShipperName = item.ShipperName,
                         ConsigneeName = item.ConsigneeName,
@@ -116,6 +121,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 Id = masterShipment.Id,
                 ShipmentNumber = masterShipment.ShipmentNumber,
                 TransportModeId = masterShipment.TransportModeId,
+                DirectionId = masterShipment.DirectionId,
                 Tenant = masterShipment.Tenant,
                 ShipmentLevelCode = masterShipment.ShipmentLevelCode,
                 ShipperName = masterShipment.ShipperName,
@@ -126,8 +132,15 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 MainCarriageCarrierName = masterShipment.MainCarriageCarrierName,
                 From = masterShipment.From,
                 To = masterShipment.To,
+                FromCountryCode = masterShipment.FromCountryCode,
+                FromPortCountry = masterShipment.FromPortCountry,
+                ToPortCountry = masterShipment.ToPortCountry,
+                ToCountryCode = masterShipment.ToCountryCode,
+                ShipmentTypeName = masterShipment.ShipmentTypeName,
+                ShipmentSubTypeName = masterShipment.ShipmentSubTypeName,
                 Documents = digitalPortalDocumentHelper.GetShipmentSharedDocuments(documentArgs).OrderBy(o => o.Name).ToList()
             };
+
 
             return master;
         }
