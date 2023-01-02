@@ -550,6 +550,7 @@
     <Compile Include="EntityListQueryServices\UIMessageAdditionalListQueryService.cs" />
     <Compile Include="EntityListQueryServices\UIMessageListQueryService.cs" />
     <Compile Include="EntityListQueryServices\UpdateCodeListQueryService.cs" />
+    <Compile Include="EntityLists\JoinCustomsItemList.cs" />
     <Compile Include="EntityLists\CustomsPartnersItemList.cs" />
     <Compile Include="EntityLists\Generated\AcceptanceStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ActionCodeList.Generated.cs" />
