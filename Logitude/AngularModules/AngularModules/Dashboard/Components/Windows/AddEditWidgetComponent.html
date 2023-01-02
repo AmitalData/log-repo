@@ -104,9 +104,24 @@
                                         </td>
                                     </tr>
 
-                                    <tr class="FormFieldRow" *ngIf="IsSecondaryGroupByVisible">
+                                    <tr class="FormFieldRow" *ngIf="SelectedGroupField && (SelectedGroupField.DataTypeCode == 'DateTime' || SelectedGroupField.DataTypeCode == 'Date')">
+                                        <td>
+                                            <LogLabel [Text]="'Date Group Type'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td>
+                                            <ComboBox (SelectedItemChanged)="DateGroupCode = $event"
+                                                      [ItemsSource]="DateGroupCodes"
+                                                      [SelectedItem]="DateGroupCode">
+                                            </ComboBox>
+                                        </td>
                                         <td>
                                             <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="FormFieldRow" *ngIf="IsSecondaryGroupByVisible">
+                                        <td>
+                                            <LogLabel [Text]="'Secondary Group By'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
                                         <td>
                                             <LogLov [ObjectFieldName]="'SecondaryGroupById'"
@@ -122,21 +137,6 @@
                                                 [QueryFilterItems]="GroupByQueryFilters">
                                             </LogLov>
                                         </td>      
-                                    </tr>
-
-                                    <tr class="FormFieldRow" *ngIf="SelectedGroupField && (SelectedGroupField.DataTypeCode == 'DateTime' || SelectedGroupField.DataTypeCode == 'Date')">
-                                        <td>
-                                            <LogLabel [Text]="'Date Group Type'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-                                        <td>
-                                            <ComboBox (SelectedItemChanged)="DateGroupCode = $event"
-                                                      [ItemsSource]="DateGroupCodes"
-                                                      [SelectedItem]="DateGroupCode">
-                                            </ComboBox>
-                                        </td>
-                                        <td>
-                                            <div></div>
-                                        </td>
                                     </tr>
 
                                     <tr class="FormFieldRow" *ngIf="SecondaryGroupById && SelectedSecondaryGroupField && (SelectedSecondaryGroupField.DataTypeCode == 'DateTime' || SelectedSecondaryGroupField.DataTypeCode == 'Date')">
@@ -256,32 +256,32 @@
                                 
                                 <table> 
                                     <tr class="FormFieldRow" *ngIf="isGroupByVisible">
-                                        <td>
+                                        <td style="height: 32px">
                                             <div>
                                                 <IconButton *ngIf="IsAddNewGroupVisible" [Left]="3" [Name]="'Add'" [IsSmall]="true" [IsEnabled]="EntityId && WidgetMeasuresList.length === 1" (click)="AddNewGroupByClicked()"></IconButton>
                                             </div>
                                         </td>
                                     </tr>
 
-                                    <tr class="FormFieldRow" *ngIf="IsSecondaryGroupByVisible">
-                                        <td>
-                                            <div>
-                                                <IconButton *ngIf="IsDeleteGroupByVisible" [Left]="3" [Name]="'Minus'" [IsSmall]="true" (click)="DeleteGroupByClicked()"></IconButton>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr *ngIf="SecondaryGroupById && SelectedSecondaryGroupField && (SelectedSecondaryGroupField.DataTypeCode == 'DateTime' || SelectedSecondaryGroupField.DataTypeCode == 'Date')">
-                                        <td style="height: 32px">
-                                            <div></div>
-                                        </td>
-                                    </tr>     
-
                                     <tr *ngIf="SelectedGroupField && (SelectedGroupField.DataTypeCode == 'DateTime' || SelectedGroupField.DataTypeCode == 'Date')">
                                         <td style="height: 32px">
                                             <div></div>
                                         </td>
                                     </tr>   
+
+                                    <tr class="FormFieldRow" *ngIf="IsSecondaryGroupByVisible">
+                                        <td style="height: 32px">
+                                            <div>
+                                                <IconButton *ngIf="IsDeleteGroupByVisible" [Left]="3" [Name]="'Minus'" [IsSmall]="true" (click)="DeleteGroupByClicked()"></IconButton>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr *ngIf="SelectedSecondaryGroupField && (SelectedSecondaryGroupField.DataTypeCode == 'DateTime' || SelectedSecondaryGroupField.DataTypeCode == 'Date')">
+                                        <td style="height: 32px">
+                                            <div></div>
+                                        </td>
+                                    </tr>     
 
                                     <tr class="FormFieldRow" *ngFor="let item of WidgetMeasuresList">
                                         <td *ngIf="item.ShowRenderList" style="padding-left: 2px;width: 124px;">
