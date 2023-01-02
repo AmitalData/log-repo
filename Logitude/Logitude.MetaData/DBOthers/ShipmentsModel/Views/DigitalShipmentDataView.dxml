@@ -1,8 +1,6 @@
 ﻿<View DBType="Main" Name="DigitalShipmentsView" Schema="dbo" Module="Shipment">
   <SqlScript>
     <![CDATA[
-    DROP VIEW IF EXISTS [dbo].[DigitalShipmentsView];
-    go 
 	Create VIEW [dbo].[DigitalShipmentsView]  
 	AS 
 	SELECT
