@@ -24,6 +24,7 @@ using Logitude.SystemLogs;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Linq.Dynamic.Core;
+using Logitude.BL.Helpers;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -108,6 +109,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 newFilters.Tenant = authToken.Tenant;
                 var shipmentQuery = new ShipmentQuery(authToken.Tenant);
                 var entityLists = shipmentQuery.GetByFilters(newFilters);
+
                 var response = new ServiceResponse();
 
                 if (newFilters.GetCount)
@@ -127,6 +129,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var fields = string.Join(",", allowedFieldSecurites);
 
                 var shipments = entityLists.Select("new { " + fields + " }").ToDynamicList();
+
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+                customFieldResolver.SetCustomFieldsValues("Shipment", tenant, shipments.Cast<object>().ToList());
 
                 var res = shipmentQuery.BuildShipmentListWithTimeLine(shipments, authToken.Tenant);
 
