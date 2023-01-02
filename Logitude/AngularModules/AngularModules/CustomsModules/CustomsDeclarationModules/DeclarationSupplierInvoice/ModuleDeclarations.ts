@@ -18,6 +18,7 @@ import { AddEditActualLinesComponent } from './Components/SupplierInvoices/Suppl
 import { ExporterInvoiceComponent } from './Components/SupplierInvoices/ExporterInvoiceComponent';
 import { ExporterInvoiceItemComponent } from './Components/SupplierInvoices/SupplierInvoiceItem/ExporterInvoiceItemComponent';
 import { MultiUpdateComponent } from './Components/SupplierInvoices/MultiUpdateComponent';
+import { PartnersItemsDescreptionSelectionComponent } from './Components/SupplierInvoices/PartnersItemsDescreptionSelectionComponent';
 
 
 
@@ -43,6 +44,7 @@ export const Components =
         ExporterInvoiceComponent,
         ExporterInvoiceItemComponent,
         MultiUpdateComponent,
+        PartnersItemsDescreptionSelectionComponent
     ];
 
 export class ModuleDeclarations {
@@ -73,7 +75,7 @@ export class ModuleDeclarations {
             case "ExporterInvoiceComponent": { myResult = ExporterInvoiceComponent; break; }
             case "ExporterInvoiceItemComponent": { myResult = ExporterInvoiceItemComponent; break; }
             case "MultiUpdateComponent": { myResult = MultiUpdateComponent; break; }
-
+            case "PartnersItemsDescreptionSelectionComponent": { myResult = PartnersItemsDescreptionSelectionComponent; break; }
 
         }
 
