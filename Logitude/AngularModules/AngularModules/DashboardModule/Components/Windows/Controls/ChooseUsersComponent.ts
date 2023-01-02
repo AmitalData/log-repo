@@ -1,14 +1,10 @@
 import { Component, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { Validator } from '../../../Infrastructure/Validators/Validator';
-import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
-import { Cloner } from '../../../Infrastructure/Utilities/Cloner';
-import { DashboardSharedUserPM } from '../../../DashboardModule/EntityPMs/DashboardSharedUserPM';
-import { DashboardPM } from '../../../DashboardModule/EntityPMs/DashboardPM';
-import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { AppTool } from '../../../Infrastructure/Tools';
-import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { DashboardSharedUserPM } from '../../../../DashboardModule/EntityPMs/DashboardSharedUserPM';
+import { DashboardPM } from '../../../../DashboardModule/EntityPMs/DashboardPM';
+import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { AppTool } from '../../../../Infrastructure/Tools';
+import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
 declare var window: any;
 
 @Component({
@@ -84,7 +80,7 @@ export class ChooseUsersComponent implements OnDestroy {
             IsCustomTemplate: true,
             Styles: { width: '35px' },
             HtmlListComponentName: 'ChooseUserCheckBoxComponent',
-            HtmlListComponentUrl: './Dashboard/Components/Windows/ChooseUserCheckBoxComponent',
+            HtmlListComponentUrl: './DashboardModule/Components/Windows/Controls/ChooseUserCheckBoxComponent',
         });
 
         this.Columns.push({

@@ -6,8 +6,8 @@ import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 import { DashboardDataBinding } from 'logitude-dashboard-library/dist/types/DashboardDataBinding';
 import { ReactWidgetPM } from 'logitude-dashboard-library/dist/types/widget';
 import { DataPointSelection } from 'logitude-dashboard-library/dist/types/SeriesMeasure';
-import { DashboardPM } from '../../../DashboardModule/EntityPMs/DashboardPM';
-import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+import { DashboardPM } from '../../../../DashboardModule/EntityPMs/DashboardPM';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { OnDestroy } from '@angular/core';
 
 @Component({
@@ -23,7 +23,6 @@ import { OnDestroy } from '@angular/core';
             padding: 0px 0px 0px 0px;
         }`],
     selector: 'custom-layout',
-    styleUrls: ['CustomDashboardComponent.css'],
     inputs: ['IsEditLayout', 'SelectedDashboard']
 })
 

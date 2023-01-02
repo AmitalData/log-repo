@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
-import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { Validator } from '../../../Infrastructure/Validators/Validator';
-import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
-import { Cloner } from '../../../Infrastructure/Utilities/Cloner';
-import { WidgetPM } from '../../../DashboardModule/EntityPMs/WidgetPM';
-import { DashboardPM } from '../../../DashboardModule/EntityPMs/DashboardPM';
-import { WidgetMeasurePM } from '../../../DashboardModule/EntityPMs/WidgetMeasurePM';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { Validator } from '../../../../Infrastructure/Validators/Validator';
+import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
+import { Cloner } from '../../../../Infrastructure/Utilities/Cloner';
+import { WidgetPM } from '../../../../DashboardModule/EntityPMs/WidgetPM';
+import { DashboardPM } from '../../../../DashboardModule/EntityPMs/DashboardPM';
+import { WidgetMeasurePM } from '../../../../DashboardModule/EntityPMs/WidgetMeasurePM';
 import { AnalyticsFactsFieldsMetaDataList } from 'DashboardModule/EntityLists/AnalyticsFactsFieldsMetaDataList';
 import { AppTool } from 'Infrastructure/Tools';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 import { Guid } from 'Infrastructure/Utilities/Guid';
-import { WidgetFilterItem } from './Filter/WidgetFilter/WidgetFilterItem';
+import { WidgetFilterItem } from '../Filter/WidgetFilter/WidgetFilterItem';
 
 @Component({
     templateUrl: './AddEditWidgetComponent.html',
