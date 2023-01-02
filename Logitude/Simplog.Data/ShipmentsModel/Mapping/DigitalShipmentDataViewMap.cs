@@ -116,6 +116,14 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ShipmentSubTypeName).HasMaxLength(60).IsUnicode(false);
             this.Property(t => t.MainCarriageFromPartnerId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.MainCarriageToPartnerId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.Field1).HasMaxLength(2000).IsUnicode(false);
+            this.Property(t => t.Field2).HasMaxLength(2000).IsUnicode(false);
+            this.Property(t => t.Field3).HasMaxLength(2000).IsUnicode(false);
+            this.Property(t => t.Field4).HasMaxLength(2000).IsUnicode(false);
+            this.Property(t => t.Field5).HasMaxLength(2000).IsUnicode(false);
+            this.Property(t => t.Field6).HasMaxLength(2000).IsUnicode(false);
+            this.Property(t => t.Field7).HasMaxLength(2000).IsUnicode(false);
+            this.Property(t => t.Field8).HasMaxLength(2000).IsUnicode(false);
 
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
