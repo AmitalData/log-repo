@@ -3302,7 +3302,7 @@
   </Column>
   <Column
     Name="CustomerReference3"
-    Type="varchar"
+    Type="nvarchar"
     Size="300">
     <Constraints
       Nullable="true" />
