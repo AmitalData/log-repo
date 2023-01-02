@@ -73,6 +73,7 @@
                                [OpenEditLayout]="OpenEditLayout"
                                (DashboardDeleted)="RefreshTabsAfterDelete($event)"
                                (DashboardChanged)="DashboardChanged($event)"
+                               (RefreshAfterCopy)="RefreshAfterCopy($event)"
                                (TabHasChanges)="HasChanges = $event"
                                (DashboardEntity)="DashboardEntity = $event">
                 </dashboard-tab>

@@ -363,6 +363,16 @@ export class CustomDashboardComponent extends BaseComponent implements OnDestroy
         this.selectedDashboardsFromLOV?.forEach(item => { this.UpdateDashboardListItem(item, dashboard) });
         this.DashboardsTabs?.forEach(item => { this.UpdateDashboardListItem(item.Dashboard, dashboard) });
     }
+
+     public RefreshAfterCopy(copiedDashboard: DashboardPM) {
+        this.DashboardListService.getSingle(copiedDashboard.Id).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse || myResponse.HasError) return;
+            this.ItemsSource.unshift(myResponse.Result);
+            this.ChangeDashboard(myResponse.Result, true, true);
+            this.dashbaordCount++;
+        });
+    }
+
     UpdateDashboardListItem(oldDashboard: DashboardList, newDashboard: DashboardPM) {
         if (oldDashboard.Id != newDashboard.Id) return;
         oldDashboard.Name = newDashboard.Name
