@@ -108,7 +108,7 @@ export class PartnersItemsDescreptionSelectionComponent extends BaseComponent {
                 (mess: UnifreightMessageM) => {
                     var IsMatchUnifreightCallbackCommand = (
                         mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
-                        mess.LogitudeEntityNumber == this.EntityPM.DeclarationId &&
+                        mess.LogitudeEntityNumber == this.declarationId &&
                         mess.LogitudeViewModel == "SupplierInvoiceGeneralTabComponent.ts-CustomExportPratMehesList");
                     if (IsMatchUnifreightCallbackCommand) {
                         sub.unsubscribe();
