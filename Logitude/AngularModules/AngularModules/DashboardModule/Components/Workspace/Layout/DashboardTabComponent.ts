@@ -2,24 +2,25 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { DashboardPM } from '../../../../DashboardModule/EntityPMs/DashboardPM';
 import { WidgetPM } from '../../../../DashboardModule/EntityPMs/WidgetPM';
 import { ReactWidgetPM } from 'logitude-dashboard-library/dist/types/widget';
-import { DashboardPMService } from '../../../DashboardModule/Services/StandardPMs/DashboardPMService';
-import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { AppTool, DateTool } from '../../../Infrastructure/Tools';
-import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { DashboardMapping } from 'Dashboard/Services/DashboardMapping';
+import { DashboardPMService } from '../../../../DashboardModule/Services/StandardPMs/DashboardPMService';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { DashboardMapping } from 'DashboardModule/Tools/DashboardMapping';
 import { DashboardDataBinding } from 'logitude-dashboard-library/dist/types/DashboardDataBinding';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { MixPanelLocator } from '../../../Common/MixPanel/MixPanelLocator';
-import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
-import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
-import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
-import { DashboardAnalyticsService } from '../../../DashboardModule/Services/DashboardAnalyticsService';
+import { MixPanelLocator } from '../../../../Common/MixPanel/MixPanelLocator';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
+import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
+import { DashboardAnalyticsService } from '../../../../DashboardModule/Services/DashboardAnalyticsService';
 import { WidgetMeasurePM } from 'DashboardModule/EntityPMs/WidgetMeasurePM';
 import { DashboardSharedUserPM } from 'DashboardModule/EntityPMs/DashboardSharedUserPM';
 import { DashboardGlobalFilterPM } from 'DashboardModule/EntityPMs/DashboardGlobalFilterPM';
-import { DashboardListService } from '../../../DashboardModule/Services/StandardLists/DashboardListService';
-import { DashboardList } from '../../../DashboardModule/EntityLists/DashboardList';
-import { CustomDashboardComponent } from './CustomDashboardComponent';
+import { DashboardListService } from '../../../../DashboardModule/Services/StandardLists/DashboardListService';
+import { DashboardList } from '../../../../DashboardModule/EntityLists/DashboardList';
+import { DashboardCopyService } from 'DashboardModule/Tools/DashboardCopyService';
+import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 
 
 @Component({
@@ -47,10 +48,12 @@ export class DashboardTabComponent implements OnInit {
     public GlobalFilters: any[];
     private DashboardListService: DashboardListService;
     public ItemsSource: DashboardList[] = [];
+    public CanCopy: boolean;
 
     constructor() {
         this.dashboardPMService = new DashboardPMService();
         this.DashboardListService = new DashboardListService();
+        this.CanCopy = FeatureLocator.HasFeaturePermession("Dashboard", "CopyDashboard");
     }
 
     ngOnInit(): void {
@@ -127,8 +130,6 @@ export class DashboardTabComponent implements OnInit {
         this.reactWidgetsLayout = this.BindReactWidgets(this.SelectedDashboard.Widgets);
         this.DashboardDataBinding.onGetLayouts.next(DashboardMapping.deepClone(this.reactWidgetsLayout));
         if (this.OpenEditLayout) this.EditLayoutClicked();
-                      
-
     }
 
     private BindReactWidgets(widgets: WidgetPM[]) {
@@ -426,79 +427,80 @@ export class DashboardTabComponent implements OnInit {
         this.CopyDashboard();
     }
     CopyDashboard(){
-        var dashboardPM: DashboardPM = new DashboardPM();
-        dashboardPM.Tenant = SessionInfo.LoggedUserTenant;
-        dashboardPM.CreatedByUserId = SessionInfo.LoggedUserId;
-        dashboardPM.UpdatedByUserId = SessionInfo.LoggedUserId;
-        dashboardPM.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
-        dashboardPM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
-        dashboardPM.Name = "Copy of " + this.SelectedDashboard.Name;
-        dashboardPM.Description = this.SelectedDashboard.Description;
-        this.SelectedDashboard.Widgets.forEach (item => {
-            var newWidget : WidgetPM = new WidgetPM(dashboardPM);
+        var dashboardPM = DashboardCopyService.CopyDashboard(this.SelectedDashboard);
+        // var dashboardPM: DashboardPM = new DashboardPM();
+        // dashboardPM.Tenant = SessionInfo.LoggedUserTenant;
+        // dashboardPM.CreatedByUserId = SessionInfo.LoggedUserId;
+        // dashboardPM.UpdatedByUserId = SessionInfo.LoggedUserId;
+        // dashboardPM.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
+        // dashboardPM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
+        // dashboardPM.Name = "Copy of " + this.SelectedDashboard.Name;
+        // dashboardPM.Description = this.SelectedDashboard.Description;
+        // this.SelectedDashboard.Widgets.forEach (item => {
+        //     var newWidget : WidgetPM = new WidgetPM(dashboardPM);
             
-            newWidget.Tenant = SessionInfo.LoggedUserTenant;
-            newWidget.Title = item.Title;
-            newWidget.GroupById = item.GroupById;
-            newWidget.StartPotistion = item.StartPotistion;
-            newWidget.EndPosition = item.EndPosition;
-            newWidget.TypeCode = item.TypeCode;
-            newWidget.EntityId = item.EntityId;
-            item.WidgetMeasures.forEach (itemMeasure => {
-                var newWidgetMeasure: WidgetMeasurePM = new WidgetMeasurePM(newWidget);
-                newWidgetMeasure.Tenant = SessionInfo.LoggedUserTenant;
-                newWidgetMeasure.WidgetId = itemMeasure.WidgetId;
-                newWidgetMeasure.MeasureCode = itemMeasure.MeasureCode;
-                newWidgetMeasure.MeasureFieldId = itemMeasure.MeasureFieldId;
-                newWidgetMeasure.RenderAs = itemMeasure.RenderAs;
-                newWidget.WidgetMeasures.push(newWidgetMeasure);
-            });
-            newWidget.Filters = item.Filters;
-            newWidget.DateGroupCode = item.DateGroupCode;
-            newWidget.MaximumGrouping = item.MaximumGrouping;
-            newWidget.SortBy = item.SortBy;
-            newWidget.SortDirection = item.SortDirection;
-            newWidget.Key = item.Key;
-            newWidget.TimeOverTime = item.TimeOverTime;
-            newWidget.ComparisonPeriod = item.ComparisonPeriod;
-            newWidget.Increase = item.Increase;
-            newWidget.ComparisonOperator = item.ComparisonOperator;
-            newWidget.ComparisonDateGroup = item.ComparisonDateGroup;
-            newWidget.FromDate = item.FromDate;
-            newWidget.ToDate = item.ToDate;
-            newWidget.GlobalFilters = item.GlobalFilters;
-            newWidget.SecondaryGroupById = item.SecondaryGroupById;
-            newWidget.SecondaryDateGroupCode = item.SecondaryDateGroupCode;
-            dashboardPM.Widgets.push(newWidget);
+        //     newWidget.Tenant = SessionInfo.LoggedUserTenant;
+        //     newWidget.Title = item.Title;
+        //     newWidget.GroupById = item.GroupById;
+        //     newWidget.StartPotistion = item.StartPotistion;
+        //     newWidget.EndPosition = item.EndPosition;
+        //     newWidget.TypeCode = item.TypeCode;
+        //     newWidget.EntityId = item.EntityId;
+        //     item.WidgetMeasures.forEach (itemMeasure => {
+        //         var newWidgetMeasure: WidgetMeasurePM = new WidgetMeasurePM(newWidget);
+        //         newWidgetMeasure.Tenant = SessionInfo.LoggedUserTenant;
+        //         newWidgetMeasure.WidgetId = itemMeasure.WidgetId;
+        //         newWidgetMeasure.MeasureCode = itemMeasure.MeasureCode;
+        //         newWidgetMeasure.MeasureFieldId = itemMeasure.MeasureFieldId;
+        //         newWidgetMeasure.RenderAs = itemMeasure.RenderAs;
+        //         newWidget.WidgetMeasures.push(newWidgetMeasure);
+        //     });
+        //     newWidget.Filters = item.Filters;
+        //     newWidget.DateGroupCode = item.DateGroupCode;
+        //     newWidget.MaximumGrouping = item.MaximumGrouping;
+        //     newWidget.SortBy = item.SortBy;
+        //     newWidget.SortDirection = item.SortDirection;
+        //     newWidget.Key = item.Key;
+        //     newWidget.TimeOverTime = item.TimeOverTime;
+        //     newWidget.ComparisonPeriod = item.ComparisonPeriod;
+        //     newWidget.Increase = item.Increase;
+        //     newWidget.ComparisonOperator = item.ComparisonOperator;
+        //     newWidget.ComparisonDateGroup = item.ComparisonDateGroup;
+        //     newWidget.FromDate = item.FromDate;
+        //     newWidget.ToDate = item.ToDate;
+        //     newWidget.GlobalFilters = item.GlobalFilters;
+        //     newWidget.SecondaryGroupById = item.SecondaryGroupById;
+        //     newWidget.SecondaryDateGroupCode = item.SecondaryDateGroupCode;
+        //     dashboardPM.Widgets.push(newWidget);
 
-        });
-        dashboardPM.PermissionLevelCode = this.SelectedDashboard.PermissionLevelCode;
-        this.SelectedDashboard.DashboardSharedUsers.forEach(sharedUser => {
-            var newSharedUser: DashboardSharedUserPM = new DashboardSharedUserPM(dashboardPM);
-            newSharedUser.Tenant = SessionInfo.LoggedUserTenant;
-            newSharedUser.DashboardId = dashboardPM.Id;
-            newSharedUser.UserId = sharedUser.UserId;
-            newSharedUser.UserName = sharedUser.UserName;
-            dashboardPM.DashboardSharedUsers.push(newSharedUser);
-        });
-        this.SelectedDashboard.DashboardGlobalFilters.forEach(globalFilterItem => {
-            var newGlobalFilterItem: DashboardGlobalFilterPM = new DashboardGlobalFilterPM(dashboardPM);
+        // });
+        // dashboardPM.PermissionLevelCode = this.SelectedDashboard.PermissionLevelCode;
+        // this.SelectedDashboard.DashboardSharedUsers.forEach(sharedUser => {
+        //     var newSharedUser: DashboardSharedUserPM = new DashboardSharedUserPM(dashboardPM);
+        //     newSharedUser.Tenant = SessionInfo.LoggedUserTenant;
+        //     newSharedUser.DashboardId = dashboardPM.Id;
+        //     newSharedUser.UserId = sharedUser.UserId;
+        //     newSharedUser.UserName = sharedUser.UserName;
+        //     dashboardPM.DashboardSharedUsers.push(newSharedUser);
+        // });
+        // this.SelectedDashboard.DashboardGlobalFilters.forEach(globalFilterItem => {
+        //     var newGlobalFilterItem: DashboardGlobalFilterPM = new DashboardGlobalFilterPM(dashboardPM);
 
-            newGlobalFilterItem.Tenant = SessionInfo.LoggedUserTenant;
-            newGlobalFilterItem.DashboardId = dashboardPM.Id;
-            newGlobalFilterItem.IsCommonFilter = globalFilterItem.IsCommonFilter;
-            newGlobalFilterItem.CommonFilterField = globalFilterItem.CommonFilterField;
-            newGlobalFilterItem.DataSetId = globalFilterItem.DataSetId;
-            newGlobalFilterItem.DataSetFieldId = globalFilterItem.DataSetFieldId;
-            newGlobalFilterItem.FilterOperator = globalFilterItem.FilterOperator;
-            newGlobalFilterItem.DataTypeCode = globalFilterItem.DataTypeCode;
-            newGlobalFilterItem.LineNumber = globalFilterItem.LineNumber;
-            newGlobalFilterItem.JoinedTableName = globalFilterItem.JoinedTableName;
-            newGlobalFilterItem.FieldCode = globalFilterItem.FieldCode;
-            dashboardPM.DashboardGlobalFilters.push(newGlobalFilterItem);
-        });
-        dashboardPM.LoadedAutomatically = this.SelectedDashboard.LoadedAutomatically;
-        dashboardPM.PredefinedOrder = this.SelectedDashboard.PredefinedOrder;
+        //     newGlobalFilterItem.Tenant = SessionInfo.LoggedUserTenant;
+        //     newGlobalFilterItem.DashboardId = dashboardPM.Id;
+        //     newGlobalFilterItem.IsCommonFilter = globalFilterItem.IsCommonFilter;
+        //     newGlobalFilterItem.CommonFilterField = globalFilterItem.CommonFilterField;
+        //     newGlobalFilterItem.DataSetId = globalFilterItem.DataSetId;
+        //     newGlobalFilterItem.DataSetFieldId = globalFilterItem.DataSetFieldId;
+        //     newGlobalFilterItem.FilterOperator = globalFilterItem.FilterOperator;
+        //     newGlobalFilterItem.DataTypeCode = globalFilterItem.DataTypeCode;
+        //     newGlobalFilterItem.LineNumber = globalFilterItem.LineNumber;
+        //     newGlobalFilterItem.JoinedTableName = globalFilterItem.JoinedTableName;
+        //     newGlobalFilterItem.FieldCode = globalFilterItem.FieldCode;
+        //     dashboardPM.DashboardGlobalFilters.push(newGlobalFilterItem);
+        // });
+        // dashboardPM.LoadedAutomatically = this.SelectedDashboard.LoadedAutomatically;
+        // dashboardPM.PredefinedOrder = this.SelectedDashboard.PredefinedOrder;
 
         this.CreateCopiedDashBoard(dashboardPM);
     }
@@ -512,13 +514,7 @@ export class DashboardTabComponent implements OnInit {
    
     ChangeToCopyDashborad(myResponse: ServiceResponse){        
             this.SelectedDashboard = myResponse.Result;
-            this.IsEditLayoutButtonVisible = false;
-            this.IsEditLayoutModeActive = true
-            && this.SelectedDashboard
-            && (this.SelectedDashboard.CreatedByUserId == SessionLocator.LoggedUserId || SessionLocator.LoggedUserPM.IsCustomerCare);
-
             if (this.SelectedDashboard) {
-                this.applyWDashboard();
                 this.RefreshAfterCopy.emit(this.SelectedDashboard);      
             }
 

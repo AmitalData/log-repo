@@ -99,13 +99,9 @@
                         <img style="width:2px; height: 12px; top: 10px; left: 3px; position: absolute;" src="./Images/Buttons/threedots.png" />
 
                         <div class="ToggleButtonMenu" style="top: 22px;">
-                            <button (click)="CopyDashboardClicked()">Copy Dashboard</button>
+                            <button (click)="CopyDashboardClicked()" [disabled]="!CanCopy">Copy Dashboard</button>
                         </div>
                     </div>
-                    <!--button class="TabButton Button" style="font-family: 'Roboto';width: 24px;">
-                        <img style="width:2px; height: 12px; top: 5px; position: absolute;"
-                             src="./Images/Buttons/threedots.png" />
-                    </button-->
                 </td>
                 <td style="width: 12px;" *ngIf="!IsEditLayoutModeActive">
                     <div></div>
