@@ -692,6 +692,10 @@
 
     <script type="text/javascript">
 
+        let newSystemTenant = getCookie("newSystemTenant");
+        if (newSystemTenant != "" && document.location.href.indexOf("test.") > 0) {
+            document.location.href = document.location.href.replace("test.", "testnew.");
+        }  
 
         function getTwoFactorKeys() {
             var allKeys = [];
@@ -1496,6 +1500,13 @@
 
             }
 
+            let newEnvTenants = [951, 1022];
+
+            let newSystemTenant = getCookie("newSystemTenant");
+            if (newSystemTenant == "" && newEnvTenants.indexOf(Tenant) >= 0) {
+                setCookie("newSystemTenant", Tenant, 365);
+            }
+
             if (document.location.href.indexOf('?Menu=') > 0) {
                 document.location.href = document.location.href.replace("/Login.aspx", "/").replace("/login.aspx", "/").split('?')[0] + angularUrl;
             }
@@ -1506,6 +1517,29 @@
             $("#loginBusyindicator").hide();
 
         };
+
+        function setCookie(cname, cvalue, exdays) {
+            const d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        function getCookie(cname) {
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
 
 
         function ShowVerificationForm(userdata) {

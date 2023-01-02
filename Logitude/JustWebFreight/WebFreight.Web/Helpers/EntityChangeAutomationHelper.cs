@@ -27,7 +27,7 @@ namespace WebFreight.Web.Helpers
             EntityChangePM entityChangePM = EntityChangeQuery.GetSinglePM(entitychangeId, tenant);
 
             List<ObjectField> objectFieldLists = ObjectFieldRepository.GetObjectFieldsByObjectTableName(objectTableName, tenant);
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             EntityChangeAutomationsSummary entityChangeAutomationsSummary = new EntityChangeAutomationsSummary();
             List<ChangeField> changeFieldsList = new List<ChangeField>();
 

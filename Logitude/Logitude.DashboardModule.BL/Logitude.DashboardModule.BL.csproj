@@ -67,6 +67,7 @@
     <Compile Include="DataProviders\BaseDataProviderService.cs" />
     <Compile Include="DataProviders\BaseTablesDataProvider.cs" />
     <Compile Include="DataProviders\GlobalFilterService.cs" />
+    <Compile Include="DataProviders\Models\GroupByFieldQueryParts.cs" />
     <Compile Include="DataProviders\Models\KpiChart.cs" />
     <Compile Include="DataProviders\TablesDataProviders\APInvoiceDataProviderService.cs" />
     <Compile Include="DataProviders\TablesDataProviders\ARInvoiceDataProviderService.cs" />

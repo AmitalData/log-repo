@@ -84,7 +84,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 			    }
 				if (entityList != null)
 				{
-                	CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                	CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 	customFieldResolver.SetCustomFieldsValues("Vendor",  authToken.Tenant, new List<VendorList> { entityList }.Cast<object>().ToList());
  	
 					entityList = VendorAPiHelper.ApplyFilters(entityList, authToken.Tenant);
@@ -121,7 +121,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				entityLists = entityLists.OrderBy(d => d.Id);
 				List<VendorList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 customFieldResolver.SetCustomFieldsValues("Vendor", authToken.Tenant, listResult.Cast<object>().ToList());
 										
 				return Request.CreateResponse(HttpStatusCode.OK, listResult);
@@ -350,7 +350,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
 				}
 			   List<VendorList> listResult = entityLists.ToList();
-               CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+               CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                customFieldResolver.SetCustomFieldsValues("Vendor", authToken.Tenant, listResult.Cast<object>().ToList());
 
                response.Result = listResult;

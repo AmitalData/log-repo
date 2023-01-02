@@ -122,6 +122,7 @@ namespace Simplog.Data.InfrastructureModel
         IDbSet<DataCustomObject> DataCustomObjects { get; }
         IDbSet<ReferenceCustomObject> ReferenceCustomObjects { get; }
         IDbSet<DeploymentPackage> DeploymentPackages { get; }
+        IDbSet<DeploymentPackagesVersion> DeploymentPackagesVersions { get; }
         void SetAsModified(object entity);
         void DetectChanges();
         int SaveChanges();

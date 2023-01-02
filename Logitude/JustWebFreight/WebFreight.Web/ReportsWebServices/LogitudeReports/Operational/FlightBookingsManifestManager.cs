@@ -153,7 +153,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
             IQueryable<ShipmentJoinPackageList> shipmentPackageList = this.BuildShipmentPackageList();
             List<ShipmentJoinPackageList> filteredShipmentPackageList = this.Filter(shipmentPackageList);
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
 
             if (filteredShipmentPackageList != null && filteredShipmentPackageList.Count > 0)
             {

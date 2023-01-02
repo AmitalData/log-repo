@@ -704,7 +704,7 @@ namespace WebFreight.Web.ReportsWebServices
         }
         private void MapShipmentCustomFields()
         {
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipment, dataProvider);
         }
 

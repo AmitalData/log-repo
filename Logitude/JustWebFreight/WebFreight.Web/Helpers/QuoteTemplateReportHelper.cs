@@ -2190,7 +2190,7 @@ namespace Logitude.BL.Helpers
             if (field != null)
             {
                 string FullNameTextCode = field.FullNameTextCode.Code;
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(quotePM.Tenant);
 
                 PropertyInfo propInfo = typeof(QuotePM).GetProperty(field.FieldName);
                 object newValue = customFieldResolver.GetFieldValue(quotePM, field, quotePM.Tenant);

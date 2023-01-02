@@ -2997,6 +2997,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsFullInvoiced { get; set; }
         public bool IsCustomerArchived { get; set; }
         public bool IsINTTRAFROB { get; set; }
+        public string MainCarriageFromStateId { get; set; }
+        public string MainCarriageToStateId { get; set; }
     }
 
     public class TransshipmentLeg

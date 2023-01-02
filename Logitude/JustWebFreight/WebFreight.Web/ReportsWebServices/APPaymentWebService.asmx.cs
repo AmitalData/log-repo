@@ -51,7 +51,7 @@ namespace WebFreight.Web.ReportsWebServices
 
         public APPaymentDataProvider GetAPPaymentDataProvider(string paymentId, int tenant, string documentTypeId)
         {
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             APPaymentDataProvider apPaymentDataProvider = new APPaymentDataProvider();
             IInvoiceContext invoiceCotnext = InvoiceContext.GetContext(tenant);
             APPaymentRepository paymentRep = new APPaymentRepository(invoiceCotnext);
@@ -400,7 +400,7 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
-            customFieldResolver = new CustomFieldResolver();
+            customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetDataProviderCustomFieldsValues("APPayment", tenant, currentPayment, apPaymentDataProvider);
 
             return apPaymentDataProvider;

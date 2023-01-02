@@ -36,6 +36,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         Simplog.Data.CommonDataModel.EntityPOCOs.AuthenticationToken authToken = GetAuthenticationToken();
                         int tenant = authToken.Tenant;
                         SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+                        SecurityUtility.AuthenticateAccessibleAPI("Customer Open Files Amount", authToken.Tenant);
+
                         SetOldEntity(customerOpenFilesAmount);
                         CustomerOpenFilesAmountPM customerOpenFilesAmountPM = GetCustomerOpenFilesAmountPM(customerOpenFilesAmount);                        
                         customerOpenFilesAmountPM = mappingService.SetCustomerId(customerOpenFilesAmountPM);

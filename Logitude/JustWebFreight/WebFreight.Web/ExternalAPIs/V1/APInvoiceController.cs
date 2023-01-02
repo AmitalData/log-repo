@@ -39,7 +39,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-                
+                SecurityUtility.AuthenticateAccessibleAPI("APInvoice", authToken.Tenant);
+
                 APInvoiceQueryService Service = new APInvoiceQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
                 var Result = new APInvoice();
@@ -92,6 +93,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.AuthenticateAccessibleAPI("APInvoice", authToken.Tenant);
                         int tenant = authToken.Tenant;
 
                         //SecurityUtility.AuthenticateAPICall(authToken.Tenant);

@@ -1385,6 +1385,7 @@
     <Compile Include="ExternalAPIs\GetShipmentsByReferencesController.cs" />
     <Compile Include="ExternalAPIs\RatesUpdateController.cs" />
     <Compile Include="ExternalAPIs\ShipmentNumbersController.cs" />
+    <Compile Include="ExternalAPIs\V1\ARInvoiceJournalLTController.cs" />
     <Compile Include="ExternalAPIs\V1\ClosedMonthCheckController.cs" />
     <Compile Include="ExternalAPIs\V1\ContainerController.cs" />
     <Compile Include="ExternalAPIs\V1\EventTypeModule\EventTypeController.cs" />
@@ -3655,6 +3656,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\CustomChildObjectUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\CustomPickListUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DataCustomObjectUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DeploymentPackagesVersionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DeploymentPackageUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DescriptionOfGoodsUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DirectionUpdateClass.cs" />

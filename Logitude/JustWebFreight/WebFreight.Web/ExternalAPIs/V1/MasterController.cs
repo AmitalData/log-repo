@@ -55,7 +55,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
 				SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-				MasterQueryService Service = new MasterQueryService(tenant);
+                SecurityUtility.AuthenticateAccessibleAPI("Master", authToken.Tenant);
+
+                MasterQueryService Service = new MasterQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
                 var Result = Service.GetMasterById(id, tenant, include);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
@@ -76,6 +78,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+                SecurityUtility.AuthenticateAccessibleAPI("Master", authToken.Tenant);
+
                 MasterQueryService Service = new MasterQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
                 var Result = Service.GetMasterByShipmentNumber(number, tenant, include);
@@ -99,7 +103,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 					SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-					ContactInfo loggedContactInfo = SecurityUtility.GetContactInfo(authToken.Email, authToken.Tenant);
+                    SecurityUtility.AuthenticateAccessibleAPI("Master", authToken.Tenant);
+
+                    ContactInfo loggedContactInfo = SecurityUtility.GetContactInfo(authToken.Email, authToken.Tenant);
                     string computingPartnerCode = "";
                     if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
                     {
@@ -264,6 +270,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.AuthenticateAccessibleAPI("Master", authToken.Tenant);
 
                     if (entity.TransportMode != null && entity.TransportMode.Code == "A")
                     {

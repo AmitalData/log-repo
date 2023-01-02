@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from "@angular/core";
+import { Entities } from "Workflow/Models/Entities";
 import { Formatter } from "Workflow/Models/Formatter";
 
 @Pipe({
@@ -7,19 +8,21 @@ import { Formatter } from "Workflow/Models/Formatter";
 
 export class EntityLabelPipe implements PipeTransform {
 
-    private EntityNamesDictionary: { [code: string]: string } = {
-        "ShipmentPackage": "Package",
-        "ShipmentReceivable": "Receivable",
-        "ShipmentPayable": "Payable",
-        "ARInvoice": "AR Invoice",
-        "APInvoice": "AP Invoice"
-    };
-
     transform(entity: string) {
         if (entity) {
             entity = Formatter.getEntity(entity);
-            let entityName = this.EntityNamesDictionary[entity];
-            return entityName ? entityName : entity;
+
+            let parentEntity = Entities.Parents.find(e => e.Code.toLowerCase() === entity?.toLowerCase());
+            if (parentEntity) {
+                return parentEntity.Name;
+            }
+
+            let childEntity = Entities.Children.find(e => e.Code.toLowerCase() === entity?.toLowerCase());
+            if (childEntity) {
+                return childEntity.Name;
+            }
+
+            return entity ? entity : null;
         }
         return null;
     }

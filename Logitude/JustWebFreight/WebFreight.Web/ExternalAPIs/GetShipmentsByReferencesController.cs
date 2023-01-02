@@ -35,6 +35,7 @@ namespace WebFreight.Web.ExternalAPIs
             {
                 try
                 {
+                    this.ValidateAPI();
                     Shipments shipments = this.GetShipmentsByReferences(query, "D");
                     return Request.CreateResponse(HttpStatusCode.OK, shipments);
                 }
@@ -58,6 +59,7 @@ namespace WebFreight.Web.ExternalAPIs
             {
                 try
                 {
+                    this.ValidateAPI();
                     Shipments shipments = this.GetShipmentsByReferences(query, "H");                    
                     return Request.CreateResponse(HttpStatusCode.OK, shipments);
                 }
@@ -81,6 +83,7 @@ namespace WebFreight.Web.ExternalAPIs
             {
                 try
                 {
+                    this.ValidateAPI();
                     Shipments shipments = this.GetShipmentsByReferences(query, "C");
                     return Request.CreateResponse(HttpStatusCode.OK, shipments);
                 }
@@ -96,6 +99,14 @@ namespace WebFreight.Web.ExternalAPIs
                 APIHelper.AddCommunicationLog("F", query, apiExceptionResult.Exception, "RatesTable", null, "Rates Update API");
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
+        }
+
+        private void ValidateAPI()
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticateAPICall(tenant);
+            SecurityUtility.AuthenticateAccessibleAPI("Get Shipments by References", authToken.Tenant);
         }
 
         private Shipments GetShipmentsByReferences(Query query, string levelCode)

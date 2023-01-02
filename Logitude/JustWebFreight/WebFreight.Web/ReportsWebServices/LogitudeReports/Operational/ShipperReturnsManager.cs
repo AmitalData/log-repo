@@ -35,7 +35,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
         public ShipperReturnsManager(byte[] xmlFilters, int tenant)
         {
             this.tenant = tenant;
-            customFieldResolver = new CustomFieldResolver();
+            customFieldResolver = new CustomFieldResolver(tenant);
             shipmentsContext = ShipmentsContext.GetContext(tenant);
             shipmentRepository = new ShipmentRepository(tenant);
             MemoryStream memoryStream = new MemoryStream(xmlFilters);

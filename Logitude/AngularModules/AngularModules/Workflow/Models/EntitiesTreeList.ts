@@ -1,59 +1,47 @@
+import { Entities } from "./Entities";
 import { TreeSelectItem } from "./TreeSelectItem";
 
-type Entity = { Code: string, Name: string };
-type ChildEntity = { Code: string, Name: string, ParentEntityCode: string, ChildField: string };
+type EntitiesType = "all" | "parent" | "child";
 
 export class EntitiesTreeList {
     public Items: TreeSelectItem[] = [];
 
-    private OnlyParentEntities: boolean = false;
+    private EntitiesType: EntitiesType;
 
-    private Entities: Entity[] = [
-        { Code: "Shipment", Name: "Shipment" },
-        { Code: "Customer", Name: "Customer" },
-        { Code: "User", Name: "User" },
-        { Code: "Opportunity", Name: "Opportunity" },
-        { Code: "ShipmentStoragePricing", Name: "Storage Pricing" }
-    ];
-
-    private ChildEntities: ChildEntity[] = [
-        { Code: "Container", Name: "Container", ParentEntityCode: "Shipment", ChildField: "ShipmentId" },
-        { Code: "ShipmentPackage", Name: "Package", ParentEntityCode: "Shipment", ChildField: "ShipmentId" },
-        { Code: "ARInvoice", Name: "AR Invoice", ParentEntityCode: "Shipment", ChildField: "MainEntityId" },
-        { Code: "APInvoice", Name: "AP Invoice", ParentEntityCode: "Shipment", ChildField: "MainEntityId" },
-        { Code: "ShipmentReceivable", Name: "Receivable", ParentEntityCode: "Shipment", ChildField: "ShipmentId" },
-        { Code: "ShipmentPayable", Name: "Payable", ParentEntityCode: "Shipment", ChildField: "ShipmentId" }
-    ];
-
-    constructor(onlyParentEntities: boolean = false) {
-        this.OnlyParentEntities = onlyParentEntities;
+    constructor(entitiesType: EntitiesType = "all") {
+        this.EntitiesType = entitiesType;
         this.setEntitiesTreeItems();
     }
 
-    public getChildField(parentEntityCode: string, childEntityCode: string) {
-        if (this.OnlyParentEntities) {
-            return null;
+    private setEntitiesTreeItems() {
+        if (this.EntitiesType === "child") {
+            this.setChildEntitiesTreeItems();
+        } else {
+            this.setParentEntitiesTreeItems();
         }
-        let childEntity = this.ChildEntities.find(e => e.ParentEntityCode === parentEntityCode && e.Code === childEntityCode);
-        return childEntity ? childEntity.ChildField : null;
     }
 
-    private setEntitiesTreeItems() {
-        this.Entities.forEach(entity => {
-            let childrenItems = this.getChildrenItems(entity.Code);
-            let entityItem = new TreeSelectItem(entity.Code, entity.Name, this.OnlyParentEntities, true, !this.OnlyParentEntities, false, childrenItems);
-            this.Items.push(entityItem);  
+    private setChildEntitiesTreeItems() {
+        Entities.Children.forEach(childEntity => {
+            let entityItem = new TreeSelectItem(childEntity.ParentEntityCode + "." + childEntity.Code, childEntity.Name, true, true, false, false, []);
+            this.Items.push(entityItem);
+        });
+    }
+
+    private setParentEntitiesTreeItems() {
+        Entities.Parents.forEach(entity => {
+            let onlyParentEntities = this.EntitiesType === "parent";
+            let childrenItems = onlyParentEntities ? [] : this.getChildrenItems(entity.Code);
+            let entityItem = new TreeSelectItem(entity.Code, entity.Name, onlyParentEntities, true, !onlyParentEntities, false, childrenItems);
+            this.Items.push(entityItem);
         });
     }
 
     private getChildrenItems(parentEntityCode: string) {
-        if (this.OnlyParentEntities) {
-            return [];
-        }
         let childrenItems = [];
-        let childEntities = this.ChildEntities.filter(e => e.ParentEntityCode === parentEntityCode);
+        let childEntities = Entities.Children.filter(e => e.ParentEntityCode === parentEntityCode);
         childEntities.forEach(childEntity => {
-            let childrenItem = new TreeSelectItem(parentEntityCode + "." + childEntity.Code, childEntity.Name, true, true, false, false, []);
+            let childrenItem = new TreeSelectItem(childEntity.ParentEntityCode + "." + childEntity.Code, childEntity.Name, true, true, false, false, []);
             childrenItems.push(childrenItem);
         });
         return childrenItems;

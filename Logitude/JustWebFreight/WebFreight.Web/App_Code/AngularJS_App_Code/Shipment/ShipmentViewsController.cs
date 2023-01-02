@@ -316,7 +316,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 {
                     response.Count = listQuery.Count();
                 }
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
                 customFieldResolver.SetCustomFieldsValues("Shipment", tenant, listQuery.Cast<object>().ToList());
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
                 if (filters.GetCount)

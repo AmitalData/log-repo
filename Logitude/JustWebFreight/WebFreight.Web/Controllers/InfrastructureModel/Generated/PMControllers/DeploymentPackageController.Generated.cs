@@ -57,6 +57,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                SecurityUtility.CheckContactFeature("DeploymentPackage", "READ", authToken.Tenant);
                 DeploymentPackageQuery deploymentPackageQuery = new DeploymentPackageQuery(authToken.Tenant);
                 DeploymentPackagePM deploymentPackagePM = deploymentPackageQuery.GetSinglePM(id, authToken.Tenant);
                 
@@ -87,6 +89,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.CheckContactFeature("DeploymentPackage", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("DeploymentPackage", entityPM.Tenant, authToken.Tenant);
                 
                         IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
                         DeploymentPackageService service = new DeploymentPackageService(MyContext, entityPM.Tenant);
@@ -133,6 +137,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.CheckContactFeature("DeploymentPackage", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("DeploymentPackage", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "DeploymentPackage" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "DeploymentPackagePM" + entityPM.Id + entityPM.Tenant;
