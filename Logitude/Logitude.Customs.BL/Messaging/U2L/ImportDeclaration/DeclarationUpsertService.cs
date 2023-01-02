@@ -1091,6 +1091,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 this._DeclarationReferantDataPM = new Def.EntityPMs.DeclarationReferantDataPM();
                 this._DeclarationReferantDataPM.ChangeSetOp = ChangeSetOperation.Insert;
                 this._DeclarationReferantDataPM.DeclarationId = this._MyDeclarationPM.Id;
+                this._DeclarationReferantDataPM.IsClosedForFollowUp = "0";
+
                 isNew = true;
             }
             else

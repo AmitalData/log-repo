@@ -148,7 +148,21 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDecReferantData
                 {
                     _DeclarationReferantDataPM.CollectionOfMoneyStatus = _LogitudeDeclarationReferantData.QueueStatus;
                 }
-                if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.FollowUpStatus)) _DeclarationReferantDataPM.IsClosedForFollowUp = _LogitudeDeclarationReferantData.FollowUpStatus;
+                if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.FollowUpStatus))
+                {
+                    if (_LogitudeDeclarationReferantData.FollowUpStatus == "1")
+                    {
+                        _DeclarationReferantDataPM.IsClosedForFollowUp = _LogitudeDeclarationReferantData.FollowUpStatus;
+                    }
+                    else
+                    {
+                        _DeclarationReferantDataPM.IsClosedForFollowUp = "0";
+                    }
+                }
+                else
+                {
+                    _DeclarationReferantDataPM.IsClosedForFollowUp = "0";
+                }
 
                 if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.PreClassification))
                 {
