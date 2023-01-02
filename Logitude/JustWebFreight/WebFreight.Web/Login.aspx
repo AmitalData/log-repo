@@ -694,7 +694,7 @@
 
         let newSystemTenant = getCookie("newSystemTenant");
         if (newSystemTenant != "" && document.location.href.indexOf("test.") > 0) {
-            document.location.href = document.location.href.replace("test.", "testnew.");
+            document.location.href = document.location.href.replace("system.", "systemnew.");
         }  
 
         function getTwoFactorKeys() {
@@ -1500,10 +1500,10 @@
 
             }
 
-            let newEnvTenants = [951, 1022];
+            let newEnvTenants = [2889,341,1,42 ];
 
             let newSystemTenant = getCookie("newSystemTenant");
-            if (newSystemTenant == "" && newEnvTenants.indexOf(Tenant) > 0) {
+            if (newSystemTenant == "" && newEnvTenants.indexOf(Tenant) >= 0) {
                 setCookie("newSystemTenant", Tenant, 365);
             }
 
