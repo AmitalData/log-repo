@@ -274,7 +274,8 @@ namespace AmitalCustomsWindowsService
             bool test = false;
             if (test)
             {
-                BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName == "CustomsHSMSignWR").ToList();
+                BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName == "DownloadDcaMessageSheetWR").ToList();
+                //BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName == "CustomsHSMSignWR").ToList();
             }
 
 

@@ -319,6 +319,7 @@ namespace AmitalCustomsWindowsService.Tester
         bool _MultiThreard = false;
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
             try
             {
                 clsTester.TestUpdateLOGITUDE_FILE();
@@ -335,6 +336,10 @@ namespace AmitalCustomsWindowsService.Tester
             return;
 
 
+
+
+            Logitude.CustomsMessaging.Dca.RestoreWaitingImport.RestoreWaitingImportMessagesService.TestMe();
+            return;
 
             clsTester.HSMSignTests();
             return;
