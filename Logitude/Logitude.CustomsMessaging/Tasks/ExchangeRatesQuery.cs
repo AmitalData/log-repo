@@ -28,12 +28,17 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
 
             var customsSettingQueryService = new CustomsSettingQueryService(seedDefaultTenant);
             var allCustomsSetting = customsSettingQueryService.GetAll();
-            allCustomsSetting.ForEach(t => RunPerTenant(t));
+            if(allCustomsSetting != null && allCustomsSetting.Count > 0)
+            {
+                Run(allCustomsSetting[0]);
+
+            }
+            //allCustomsSetting.ForEach(t => RunPerTenant(t));
 
 
         }
 
-        private void RunPerTenant(CustomsSettingPM t)
+        private void Run(CustomsSettingPM t)
         {
 
             LogMessagingUtil.Instance.AppendLine($"RunPerTenant({t.Tenant}) send 8347");
@@ -50,6 +55,7 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
                 requestParams.CurrencyTypeId = null;
                 requestParams.RequestVIA = SendRequestVIA.WebServiceBatch;
                 requestParams.ForcePersonalSign = false;
+                requestParams.UpdateAllTenants = true;
                 // use messageing service
 
                 var service = new CD_NG_8347_Web01_CurrencyRateSearchParamMessagingService();
