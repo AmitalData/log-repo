@@ -339,9 +339,16 @@ namespace Logitude.Server.Tools.FTP
         private string CreateFolderIfNotExist(string folderName, string folderPath, nsoftware.IPWorksSSH.Sftp sftp)
         {
             if (string.IsNullOrEmpty(folderName)) return folderPath;
-            sftp.MakeDirectory((folderPath + "/" + folderName));
+
+            try
+            {
+                sftp.MakeDirectory((folderPath + "/" + folderName));
+            }
+            catch (Exception exception) { }
+
             return (folderPath + "/" + folderName);
         }
+
         public void Upload(string p_filename, byte[] filedata, bool deleteIfExist, bool uploadAsTemp, out string p_status, out string p_message)
         {
             MyStart();
