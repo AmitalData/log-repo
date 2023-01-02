@@ -1,25 +1,24 @@
 import { Component, OnDestroy, ViewEncapsulation, HostListener, ElementRef } from '@angular/core';
-import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
-import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { AppTool, ArrayTool, DateTool } from '../../../Infrastructure/Tools';
-import { DashboardPM } from '../../../DashboardModule/EntityPMs/DashboardPM';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { AppTool, ArrayTool, DateTool } from '../../../../Infrastructure/Tools';
+import { DashboardPM } from '../../../../DashboardModule/EntityPMs/DashboardPM';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
-import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { DashboardDataBinding } from 'logitude-dashboard-library/dist/types/DashboardDataBinding';
 import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
-import { DashboardListService } from '../../../DashboardModule/Services/StandardLists/DashboardListService';
-import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { DashboardList } from '../../../DashboardModule/EntityLists/DashboardList';
-import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
-import { DashboardPMService } from '../../../DashboardModule/Services/StandardPMs/DashboardPMService';
-import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import { DashboardPMExtendedService, PinnedDashboard } from '../../../DashboardModule/Services/ExtendedPMs/DashboardPMExtendedService';
-import { UserPinnedDashboardPM } from '../../../DashboardModule/EntityPMs/UserPinnedDashboardPM';
-import { DashboardListExtendedService } from '../../../DashboardModule/Services/ExtendedLists/DashboardListExtendedService';
-import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
+import { DashboardListService } from '../../../../DashboardModule/Services/StandardLists/DashboardListService';
+import { DashboardList } from '../../../../DashboardModule/EntityLists/DashboardList';
+import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
+import { DashboardPMService } from '../../../../DashboardModule/Services/StandardPMs/DashboardPMService';
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { DashboardPMExtendedService, PinnedDashboard } from '../../../../DashboardModule/Services/ExtendedPMs/DashboardPMExtendedService';
+import { UserPinnedDashboardPM } from '../../../../DashboardModule/EntityPMs/UserPinnedDashboardPM';
+import { DashboardListExtendedService } from '../../../../DashboardModule/Services/ExtendedLists/DashboardListExtendedService';
+import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 
 @Component({
     templateUrl: 'CustomDashboardComponent.html',
@@ -262,7 +261,7 @@ export class CustomDashboardComponent extends BaseComponent implements OnDestroy
         dashboardPM.PermissionLevelCode = "ONM";
 
         logitudeWindow.WindowArgs = { EntityPM: dashboardPM, };
-        logitudeWindow.Show('./Dashboard/Components/Windows/AddEditDashboardComponent');
+        logitudeWindow.Show('./DashboardModule/Components/Windows/AddEditDashboard/AddEditDashboardComponent');
         logitudeWindow.ComponentLoaded.subscribe(comp => {
             logitudeWindow.WindowClosed.subscribe(s => {
                 if (!s) return;

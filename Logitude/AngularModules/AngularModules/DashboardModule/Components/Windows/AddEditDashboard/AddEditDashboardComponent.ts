@@ -1,21 +1,21 @@
 import { Component } from '@angular/core';
-import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { Validator } from '../../../Infrastructure/Validators/Validator';
-import { AppTool, ArrayTool } from '../../../Infrastructure/Tools';
-import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
-import { DashboardPM } from '../../../DashboardModule/EntityPMs/DashboardPM';
-import { DashboardPMService } from '../../../DashboardModule/Services/StandardPMs/DashboardPMService';
-import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
-import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
-import { Cloner } from '../../../Infrastructure/Utilities/Cloner';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { Validator } from '../../../../Infrastructure/Validators/Validator';
+import { AppTool, ArrayTool } from '../../../../Infrastructure/Tools';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
+import { DashboardPM } from '../../../../DashboardModule/EntityPMs/DashboardPM';
+import { DashboardPMService } from '../../../../DashboardModule/Services/StandardPMs/DashboardPMService';
+import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { Cloner } from '../../../../Infrastructure/Utilities/Cloner';
 import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
-import { DashboardPMExtendedService } from '../../../DashboardModule/Services/ExtendedPMs/DashboardPMExtendedService';
-import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
-import { DashboardGlobalFilterPM } from '../../../DashboardModule/EntityPMs/DashboardGlobalFilterPM';
-import { AnalyticsFactsFieldsMetaDataList } from '../../../DashboardModule/EntityLists/AnalyticsFactsFieldsMetaDataList';
-import { DashboardSharedUserPM } from '../../../DashboardModule/EntityPMs/DashboardSharedUserPM';
+import { DashboardPMExtendedService } from '../../../../DashboardModule/Services/ExtendedPMs/DashboardPMExtendedService';
+import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
+import { DashboardGlobalFilterPM } from '../../../../DashboardModule/EntityPMs/DashboardGlobalFilterPM';
+import { AnalyticsFactsFieldsMetaDataList } from '../../../../DashboardModule/EntityLists/AnalyticsFactsFieldsMetaDataList';
+import { DashboardSharedUserPM } from '../../../../DashboardModule/EntityPMs/DashboardSharedUserPM';
 
 @Component({
     templateUrl: './AddEditDashboardComponent.html',
@@ -137,7 +137,7 @@ export class AddEditDashboardComponent extends BaseComponent {
         logWindow.Width = 725;
         logWindow.Height = 520;
         logWindow.WindowArgs = this.EntityPM;
-        logWindow.Show("./Dashboard/Components/Windows/ChooseUsersComponent");
+        logWindow.Show("./DashboardModule/Components/Windows/Controls/ChooseUsersComponent");
         logWindow.WindowClosed.subscribe(($event: any) => {
         });
     }
