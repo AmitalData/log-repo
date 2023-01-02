@@ -45,8 +45,8 @@
                                         </li>
 
                                         <li [class.Selected]="SelectedTabCode == 'CUA'" (click)="SelectedTabChange('CUA')" *ngIf="IsDigitalPortal">
-                                            <div [attr.data-cy]="'Customer Update'" style="width:150px;text-align:left;font-size:11px;color:black" class="InnerChild">
-                                                <span>Customer Update</span>
+                                            <div [attr.data-cy]="'Customer Upload'" style="width:150px;text-align:left;font-size:11px;color:black" class="InnerChild">
+                                                <span>Customer Upload</span>
                                             </div>
                                         </li>
 
@@ -242,7 +242,7 @@
                                                                                                 <tr style="height: 1px;">
                                                                                                     <td>
                                                                                                         <table>
-                                                                                                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of DocumentPermissiosLists">
+                                                                                                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of DocumentUploadPermissiosLists">
                                                                                                                 <td>
                                                                                                                     <table>
                                                                                                                         <tr style="height:25px;" (click)="DocumentPermissiosSelectedViewModel=item" [class.RowSelected]="item === DocumentPermissiosSelectedViewModel">
