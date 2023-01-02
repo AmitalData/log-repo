@@ -184,12 +184,12 @@ export class ClientMessagesService {
         });
     }
 
-    PutRecallClientsForCutomsRequest(fileUploadParamerter: any) {
+    PutRecallClientsForCutomsRequest(fileUploadParamerter: any, isForCardsTable: boolean = false) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
         return defer(() => {
-            return this._http.put(this._apiUrl + '/PutRecallClientsForCutomsRequest', JSON.stringify(fileUploadParamerter), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.put(this._apiUrl + '/PutRecallClientsForCutomsRequest?' + "isForCardsTable=" + isForCardsTable, JSON.stringify(fileUploadParamerter), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var result = response;
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();

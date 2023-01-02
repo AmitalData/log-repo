@@ -180,7 +180,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
-        public HttpResponseMessage PutRecallClientsForCutomsRequest(ImageParameter fileUploadParamerter)
+        public HttpResponseMessage PutRecallClientsForCutomsRequest(ImageParameter fileUploadParamerter, bool isForCardsTable)
         {
             try
             {
@@ -190,7 +190,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 if (fileUploadParamerter != null)
                 {
                     ClientWebService clientWebService = new ClientWebService();
-                    message = clientWebService.RecallClientsForCutomsRequest(fileUploadParamerter.Key, fileUploadParamerter.Tenant);
+                    message = clientWebService.RecallClientsForCutomsRequest(fileUploadParamerter.Key, fileUploadParamerter.Tenant, isForCardsTable);
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, message);

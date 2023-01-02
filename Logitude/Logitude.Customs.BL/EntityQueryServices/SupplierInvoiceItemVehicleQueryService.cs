@@ -47,6 +47,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                                                                     InvoiceCounterKey = a.InvoiceCounterKey,
                                                                                     LineNumber = a.LineNumber,
                                                                                     Tenant = a.Tenant,
+                                                                                    IdentifierID = a.IdentifierID,
                                                                                     ExcludeFromInterface = a.ExcludeFromInterface,
                                                                                     VehicleTypeName = a.VehicleType != null ? a.VehicleType.LocalName:null
 

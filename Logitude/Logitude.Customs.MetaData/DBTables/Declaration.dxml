@@ -1282,8 +1282,6 @@
     Columns="AmendmentRequestNumber" />
   <Index
     Columns="Direction" />
-
   <Index
-  Columns="Tenant,IsCancelled,IsClose,AmendmentDontDisplayInList,Direction" />
-
+    Columns="Tenant,IsCancelled,IsClose,AmendmentDontDisplayInList,Direction" />
 </Table>

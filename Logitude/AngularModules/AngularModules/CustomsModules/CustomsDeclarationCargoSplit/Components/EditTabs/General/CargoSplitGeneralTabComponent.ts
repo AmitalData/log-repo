@@ -173,10 +173,11 @@ export class CargoSplitGeneralTabComponent
 
 
     IsExportDeclaration: boolean = false;
-    GetFileData() {        
+    GetFileData() {   
         if(this.Direction=="E")     {
             this.DirectionE = true;
             this.DirectionI = false;
+            this.IsExportDeclaration = true;
         }
         if (AppTool.IsNullOrEmpty(this.CustomFileNo)) return;
         this.CurrentSession.StartBusyIndicator("")
@@ -876,7 +877,7 @@ export class CargoSplitGeneralTabComponent
 
         }
     }
-    CustomFileNoTextChanged(searchtext) {       
+    CustomFileNoTextChanged(searchtext) {   
          
         if(this._LastFetchDeclarationList?.CustomFileNo == searchtext)
             return
@@ -1034,7 +1035,7 @@ export class CargoSplitGeneralTabComponent
             this.CargoTypeCode = pm.CargoTypeCode;
             this.ManifestNumber = pm.ManifestNumber;
             this.SecondCargoID = pm.SecondCargoID;
-            this.ThirdCargoID = pm.ThirdCargoID;
+            this.ThirdCargoID = pm.ThirdCargoID; 
 
             if(pm.ConsignmentPackages.length == 1 && !AppTool.IsNullOrEmpty(this.EntityPM.DecCargoSplitCons[0].DecCargoSplitConsItems) 
                     && this.EntityPM.DecCargoSplitCons[0].DecCargoSplitConsItems.length>0 && this.IsNewEntity && !this.IsFromDeclaration && this.IsExportDeclaration)
