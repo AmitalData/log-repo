@@ -608,6 +608,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             //   if (isNewEntity)
             //    {
+
+            if((entityPM.Consignments == null || entityPM.Consignments.Count == 0) && !string.IsNullOrWhiteSpace(entityPM.Id))
+            {
+                ConsignmentQueryService consignmentService = new ConsignmentQueryService(entityPM.Tenant);
+                entityPM.Consignments = consignmentService.GetMulti(new DeclarationKeys { Id = entityPM.Id}, true);
+            }
             foreach (ConsignmentPM item in entityPM.Consignments)
                 {
                     if (!string.IsNullOrEmpty(item.ManifestNumber))
