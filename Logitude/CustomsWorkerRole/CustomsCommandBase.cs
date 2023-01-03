@@ -488,6 +488,8 @@ namespace CustomsWorkerRole
                     try
                     {
                         LogMessagingUtilWR.Instance.AppendLine("TransactionFactory.GetTransaction");
+                        //int transactionTimeOutInMin = Math.Max(10, CustomsWorkerRole.Utils.GenUtil.GetQueueTimeOutInMin());
+                        //using (TransactionScope Queue_scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(transactionTimeOutInMin)))
                         using (TransactionScope Queue_scope = TransactionFactory.GetTransaction())
                         {
                             using (TransactionScope scopeRecive = TransactionFactory.GetNewReadCommittedTransaction())
@@ -561,9 +563,9 @@ namespace CustomsWorkerRole
                                 catch (Exception)
                                 {
 
-                                    
+
                                 }
-                                
+
                                 using (var Abandon_Queue_scope = new TransactionScope(TransactionScopeOption.RequiresNew))
                                 {
 
