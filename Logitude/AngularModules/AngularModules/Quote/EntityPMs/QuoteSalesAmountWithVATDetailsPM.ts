@@ -48,6 +48,11 @@ export class QuoteSalesAmountWithVATDetailsPM {
     public set TotalAmount(newValue: number) { if (this.totalAmount != newValue) { this.totalAmount = newValue; this.MarkAsDirty("TotalAmount"); } }
        
 	 
+    private vATPercentage: string;
+    public get VATPercentage() { return this.vATPercentage; }
+    public set VATPercentage(newValue: string) { if (this.vATPercentage != newValue) { this.vATPercentage = newValue; this.MarkAsDirty("VATPercentage"); } }
+       
+	 
 
     public OldEntityPM: QuoteSalesAmountWithVATDetailsPM;
 	    
