@@ -78,5 +78,12 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         {
             return context.DeploymentPackagesVersions.Where(d => d.Tenant == tenant);
         }
+
+        public int GetLastDeploymentPackagesVersionByDeploymentPackageId(string deploymentPackageId, int tenant)
+        {
+            var deploymentPackageVersions = context.DeploymentPackagesVersions.Where(d => d.Tenant == tenant && d.DeploymentPackageID == deploymentPackageId).ToList();
+            if (deploymentPackageVersions == null || deploymentPackageVersions.Count == 0) return 0;
+            return deploymentPackageVersions.Max(d => d.VersionNumber);
+        }
     }
 }

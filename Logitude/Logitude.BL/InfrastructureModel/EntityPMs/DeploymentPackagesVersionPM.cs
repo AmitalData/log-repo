@@ -23,5 +23,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string CreatedByUserName { get; set; }
         public string UpdatedByUserName { get; set; }
         public ChangeSetOperation ChangeSetOp { get; set; }
+
     }
+
 }

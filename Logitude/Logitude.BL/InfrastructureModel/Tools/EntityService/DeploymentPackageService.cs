@@ -16,6 +16,8 @@ using Logitude.BL.InfrastructureModel.Tools.TraceEvents;
 using Logitude.BL.InfrastructureModel.Tools.DataMapping;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.BL.InfrastructureModel.Services;
+using Logitude.BL.InfrastructureModel.EntityQueries;
 
 namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 {
@@ -62,7 +64,9 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.Poco = new DeploymentPackage();
             DeploymentPackageMapping.MapEntity(deploymentPackagePM, Poco, isNewEntity);
             entityRepository.Add(Poco);
-            entityRepository.SubmitChanges();
+            Context.SaveChanges();
+            Poco.VersionId = new DeploymentPackageVersionInitializerService(deploymentPackagePM, Context).Create().Id;
+            Context.SaveChanges();
         }
 
         public void Update(DeploymentPackagePM deploymentPackagePM)
@@ -74,6 +78,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.Poco = entityRepository.GetSingleDeploymentPackage(deploymentPackagePM.Id, deploymentPackagePM.Tenant);
             if (this.Poco == null) return;
             DeploymentPackageMapping.MapEntity(deploymentPackagePM, Poco, isNewEntity);
+            DeploymentPackageMapping.MapDeploymentPackageDetails(deploymentPackagePM);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
         }

@@ -23,6 +23,17 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string SearchFields { get; set; }
         public string CreatedByUserName { get; set; }
         public string UpdatedByUserName { get; set; }
+        public string VersionId { get; set; }
+        public string DocumentId { get; set; }
         public ChangeSetOperation ChangeSetOp { get; set; }
+        public DeploymentPackageDetails DeploymentPackageDetails { get; set; }
+    }
+
+    public class DeploymentPackageDetails
+    {
+        public string Name { get; set; }
+        public string Code { get; set; }
+        public string Description { get; set; }
+        public List<ObjectFieldPM> CustomFields { get; set; }
     }
 }

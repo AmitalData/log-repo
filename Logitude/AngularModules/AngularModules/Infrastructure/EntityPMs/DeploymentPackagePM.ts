@@ -13,6 +13,8 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+import { ObjectFieldPM } from './ObjectFieldPM';
+import { DeploymentPackageDetails } from './DeploymentPackageDetails';
 
 
 export class DeploymentPackagePM {
@@ -99,7 +101,13 @@ export class DeploymentPackagePM {
     public get ChangeSetOp() { return this.changeSetOp; }
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
        
-	 
+    private versionId: string;
+    public get VersionId() { return this.versionId; }
+    public set VersionId(newValue: string) { if (this.versionId != newValue) { this.versionId = newValue; this.MarkAsDirty("VersionId"); } }
+
+    private deploymentPackageDetails: DeploymentPackageDetails;
+    public get DeploymentPackageDetails() { return this.deploymentPackageDetails; }
+    public set DeploymentPackageDetails(newValue: DeploymentPackageDetails) { if (this.deploymentPackageDetails != newValue) { this.deploymentPackageDetails = newValue; this.MarkAsDirty("DeploymentPackageDetails"); } }
 
     public OldEntityPM: DeploymentPackagePM;
 		

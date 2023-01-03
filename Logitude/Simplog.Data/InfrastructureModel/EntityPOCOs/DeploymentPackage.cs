@@ -26,5 +26,8 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public virtual User CreatedByUser { get; set; }
         public virtual User UpdatedByUser { get; set; }
         public virtual Direction Direction { get; set; }
+        public string VersionId { get; set; }
+        public virtual DeploymentPackagesVersion DeploymentPackagesVersion { get; set; }
+
     }
 }
