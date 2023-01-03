@@ -2471,6 +2471,13 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             }
             #endregion
 
+
+            #region QuoteSalesAmountWithVATDetails
+
+            entityPM.QuoteSalesAmountWithVATDetails = ComputeQuoteSalesAmountWithVATDetails(entityPM);
+
+            #endregion
+
             string totalContainers = "";
             string container = "";
             string containerTypeCode = "";
@@ -2598,6 +2605,35 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             new CustomChildEntityService(new CustomChildEntityArgs() { ParentEntity = entityPM, ParentEntityId = entityPM.Id, ParentObjectTableName = "Quote", Tenant = tenant }).Set();
 
             return entityPM;
+        }
+
+        private List<QuoteSalesAmountWithVATDetails> ComputeQuoteSalesAmountWithVATDetails(QuotePM quotePM)
+        {
+            IEnumerable<IGrouping<string, QuoteSaleChargePM>> quoteSaleChargesGroupLists = quotePM.QuoteSaleCharges.GroupBy(q => q.CurrencyCode);
+            var quoteSalesTotals = new List<QuoteSalesAmountWithVATDetails>();
+            foreach (IGrouping<string, QuoteSaleChargePM> quoteSaleChargesGrop in quoteSaleChargesGroupLists)
+            {
+                string currencyCode = "";
+                double? vATAmount = 0;
+                double? subtotalAmount = 0;
+                List<QuoteSaleChargePM> quoteSaleCharges = quoteSaleChargesGrop.ToList();
+                foreach (QuoteSaleChargePM quoteSaleChargePM in quoteSaleCharges)
+                {
+                    currencyCode = quoteSaleChargePM.CurrencyCode;
+
+                    vATAmount += quoteSaleChargePM.VatAmount != null ? (double)quoteSaleChargePM.VatAmount : 0;
+                    subtotalAmount += (quoteSaleChargePM.SaleTotalAmount != null ? quoteSaleChargePM.SaleTotalAmount : 0);
+
+                }
+                quoteSalesTotals.Add(new QuoteSalesAmountWithVATDetails() { 
+                    CurrencyCode = currencyCode,
+                    SubtotalAmount = subtotalAmount,
+                    VATAmount = vATAmount, 
+                    TotalAmount = subtotalAmount + vATAmount,
+                });
+            }
+
+            return quoteSalesTotals;
         }
 
         private void SetConsigneeNotImporterDetails(QuotePM entityPM, Quote entityPOCO, AddressRepository addressRepository)
