@@ -1,4 +1,6 @@
-﻿using Logitude.Accounting.Data.EntityListQueryServices;
+﻿using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools;
@@ -51,6 +53,15 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             MethodHelper.AddToSearchFields(ref searchFields, entityList.JournalNumber);
             MethodHelper.AddToSearchFields(ref searchFields, entityList.Source);
+            MethodHelper.AddToSearchFields(ref searchFields, entityList.LocalAmount.ToString());
+            MethodHelper.AddToSearchFields(ref searchFields, entityList.ForeignAmount.ToString());
+
+            IAccountingContext context = AccountingContext.GetContext(entityPM.Tenant);
+            GLAccountQueryService _myGLAccountQueryService = new GLAccountQueryService(context);
+            var GLAccountDisplayNumber = _myGLAccountQueryService.GetDisplayNumberByGLAccountId(entityPM.GLAccountId, entityPM.Tenant);
+
+            if (GLAccountDisplayNumber != null)
+                MethodHelper.AddToSearchFields(ref searchFields, GLAccountDisplayNumber);
 
             entityPM.SearchFields = searchFields;
             EntityPOCO.SearchFields = searchFields;

@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
-import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { Validator } from '../../../Infrastructure/Validators/Validator';
-import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
-import { Cloner } from '../../../Infrastructure/Utilities/Cloner';
-import { WidgetPM } from '../../../DashboardModule/EntityPMs/WidgetPM';
-import { DashboardPM } from '../../../DashboardModule/EntityPMs/DashboardPM';
-import { WidgetMeasurePM } from '../../../DashboardModule/EntityPMs/WidgetMeasurePM';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { Validator } from '../../../../Infrastructure/Validators/Validator';
+import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
+import { Cloner } from '../../../../Infrastructure/Utilities/Cloner';
+import { WidgetPM } from '../../../../DashboardModule/EntityPMs/WidgetPM';
+import { DashboardPM } from '../../../../DashboardModule/EntityPMs/DashboardPM';
+import { WidgetMeasurePM } from '../../../../DashboardModule/EntityPMs/WidgetMeasurePM';
 import { AnalyticsFactsFieldsMetaDataList } from 'DashboardModule/EntityLists/AnalyticsFactsFieldsMetaDataList';
 import { AppTool } from 'Infrastructure/Tools';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 import { Guid } from 'Infrastructure/Utilities/Guid';
-import { WidgetFilterItem } from './Filter/WidgetFilter/WidgetFilterItem';
+import { WidgetFilterItem } from '../Filter/WidgetFilter/WidgetFilterItem';
 
 @Component({
     templateUrl: './AddEditWidgetComponent.html',
@@ -198,14 +198,12 @@ export class AddEditWidgetComponent extends BaseComponent {
     public CheckGroupAddVisiblity() {
         var isAddVisible: boolean = true;
 
-        if (this.EntityPM.TypeCode != "bar" && this.EntityPM.TypeCode != "column" ) {
+        if (this.EntityPM.TypeCode != "bar" && this.EntityPM.TypeCode != "column") {
             isAddVisible = false;
             if (this.SecondaryGroupById) this.SecondaryGroupById = null;
             if (this.SecondaryDateGroupCode) this.SecondaryDateGroupCode = null;
             this.IsDeleteGroupByVisible = false;
             this.IsSecondaryGroupByVisible = false;
-
-
         }
 
         else if (this.SecondaryGroupById) {
@@ -638,40 +636,38 @@ export class AddEditWidgetComponent extends BaseComponent {
         if (this.TypeCode != "kpi") return;
         if (!this.TimeOverTime) return;
 
-        if (!this.ComparisonOperator) {
-            errors.push("Comparison Operater Field is Required");
-        }
-
-        else {
-            if (this.ComparisonOperator == "Between") {
-                if (!this.FromDate) {
-                    errors.push("From Date Field is Required");
-                }
-                if (!this.ToDate) {
-                    errors.push("To Date Field is Required");
-                }
-                if (this.FromDate && this.ToDate && this.FromDate > this.ToDate) {
-                    errors.push("From Date Value should be Before To Date Value");
-                }
-            }
-
-            else {
-                if (!this.ComparisonPeriod) {
-                    errors.push("Comparison Period Field is Required");
-                }
-                if (this.ComparisonPeriod && this.ComparisonPeriod < 1) {
-                    errors.push("Comparison Period should be Graeter than 0");
-                }
-                if (!this.ComparisonDateGroup) {
-                    errors.push("Comparison Date Group Field is Required");
-                }
-            }
-        }
-
         if (!this.Increase) {
             errors.push("Increase Field is Required");
         }
-        return errors;
+
+        if (!this.ComparisonOperator) {
+            errors.push("Comparison Operater Field is Required");
+            return;
+        }
+
+        if (this.ComparisonOperator == "Between") {
+            if (!this.FromDate) {
+                errors.push("From Date Field is Required");
+            }
+            if (!this.ToDate) {
+                errors.push("To Date Field is Required");
+            }
+            if (this.FromDate && this.ToDate && this.FromDate > this.ToDate) {
+                errors.push("From Date Value should be Before To Date Value");
+            }
+        }
+
+        else {
+            if (!this.ComparisonPeriod) {
+                errors.push("Comparison Period Field is Required");
+            }
+            if (this.ComparisonPeriod && this.ComparisonPeriod < 1) {
+                errors.push("Comparison Period should be Graeter than 0");
+            }
+            if (!this.ComparisonDateGroup) {
+                errors.push("Comparison Date Group Field is Required");
+            }
+        }
     }
 
     GroupByDateIsNotValid() {
@@ -790,23 +786,23 @@ export class AddEditWidgetComponent extends BaseComponent {
         else {
             widgetMeasureItem.RenderAs = null;
         }
-       
+
     }
 
     AddNewGroupByClicked() {
         this.IsAddNewGroupVisible = false;
         this.IsSecondaryGroupByVisible = true;
         this.IsDeleteGroupByVisible = true;
-        this.IsAddNewGroupVisible = false;
         this.selectedSecondaryGroupField = null;
         this.FirstTimeForSecondaryGrouping = false;
     }
 
-    DeleteGroupByClicked() {   
+    DeleteGroupByClicked() {
         this.IsSecondaryGroupByVisible = false;
         this.IsAddNewGroupVisible = true;
         this.SecondaryGroupById = null;
         this.SecondaryDateGroupCode = null;
+        this.SelectedSecondaryGroupField = null;
     }
 }
 
@@ -820,7 +816,7 @@ export class WidgetMeasureItem extends BaseComponent {
     public FieldQueryFilters: ApiQueryFilters;
     public DashboardPM: DashboardPM;
 
-    public get DefaultRender() : any {
+    public get DefaultRender(): any {
         return this.fatherComponent?.MeasureRenderList?.find(x => x.code == this.RenderAs);
     }
 

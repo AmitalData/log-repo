@@ -1,19 +1,19 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { DashboardPM } from '../../../DashboardModule/EntityPMs/DashboardPM';
-import { WidgetPM } from '../../../DashboardModule/EntityPMs/WidgetPM';
+import { DashboardPM } from '../../../../DashboardModule/EntityPMs/DashboardPM';
+import { WidgetPM } from '../../../../DashboardModule/EntityPMs/WidgetPM';
 import { ReactWidgetPM } from 'logitude-dashboard-library/dist/types/widget';
-import { DashboardPMService } from '../../../DashboardModule/Services/StandardPMs/DashboardPMService';
-import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { AppTool } from '../../../Infrastructure/Tools';
-import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { DashboardMapping } from 'Dashboard/Services/DashboardMapping';
+import { DashboardPMService } from '../../../../DashboardModule/Services/StandardPMs/DashboardPMService';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { AppTool } from '../../../../Infrastructure/Tools';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { DashboardMapping } from 'DashboardModule/Services/DashboardMapping';
 import { DashboardDataBinding } from 'logitude-dashboard-library/dist/types/DashboardDataBinding';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { MixPanelLocator } from '../../../Common/MixPanel/MixPanelLocator';
-import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
-import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
-import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
-import { DashboardAnalyticsService } from '../../../DashboardModule/Services/DashboardAnalyticsService';
+import { MixPanelLocator } from '../../../../Common/MixPanel/MixPanelLocator';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
+import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
+import { DashboardAnalyticsService } from '../../../../DashboardModule/Services/DashboardAnalyticsService';
 
 @Component({
     templateUrl: 'DashboardTabComponent.html',
@@ -174,7 +174,7 @@ export class DashboardTabComponent implements OnInit {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = "Edit Dashboard";
         logitudeWindow.WindowArgs = { EntityPM: this.SelectedDashboard, };
-        logitudeWindow.Show('./Dashboard/Components/Windows/AddEditDashboardComponent');
+        logitudeWindow.Show('./DashboardModule/Components/Windows/AddEditDashboard/AddEditDashboardComponent');
         logitudeWindow.ComponentLoaded.subscribe(comp => {
             logitudeWindow.WindowClosed.subscribe(s => {
                 if (s) {
@@ -228,7 +228,7 @@ export class DashboardTabComponent implements OnInit {
         logitudeWindow.Width = 800;
         logitudeWindow.Title = "Add Widget";
         logitudeWindow.WindowArgs = { EntityPM: myWidget, IsNew: true, DashboardPM: this.SelectedDashboard };
-        logitudeWindow.Show('./Dashboard/Components/Windows/AddEditWidgetComponent');
+        logitudeWindow.Show('./DashboardModule/Components/Windows/AddEditWidget/AddEditWidgetComponent');
         logitudeWindow.ComponentLoaded.subscribe(comp => {
             logitudeWindow.WindowClosed.subscribe(s => {
                 if (s) {
@@ -372,7 +372,7 @@ export class DashboardTabComponent implements OnInit {
         logitudeWindow.Width = 800;
         logitudeWindow.Title = "Edit Widget";
         logitudeWindow.WindowArgs = { EntityPM: myWidget, IsNew: false, DashboardPM: this.SelectedDashboard };
-        logitudeWindow.Show('./Dashboard/Components/Windows/AddEditWidgetComponent');
+        logitudeWindow.Show('./DashboardModule/Components/Windows/AddEditWidget/AddEditWidgetComponent');
         logitudeWindow.ComponentLoaded.subscribe(comp => {
             logitudeWindow.WindowClosed.subscribe(s => {
                 if (s) {
