@@ -15,8 +15,8 @@ export class SetValueOperatorsList {
     }
 
     private setSetValueOperators() {
-        let variableTypes = Object.values(FieldTypes).map((type) => (type as string));
-        if (!variableTypes.includes(this.SetValueType.replace("[]", ""))) {
+        let types = Object.values(FieldTypes).map((type) => (type as string));
+        if (!types.includes(this.SetValueType.replace("[]", ""))) {
             this.setRecordSetValueOperators();
         } else {
             this.setNotRecordSetValueOperators();

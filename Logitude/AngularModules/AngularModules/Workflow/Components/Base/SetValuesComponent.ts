@@ -10,8 +10,7 @@ import { SetValue } from "Workflow/Models/SetValue";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 import { ExpressionValue } from "Workflow/Models/Types";
 import { GetObjectFieldPipe } from "Workflow/Pipes/GetObjectFieldPipe";
-import { IsCollectionTypePipe } from "Workflow/Pipes/IsCollectionTypePipe";
-import { IsDeclaredVariablePipe } from "Workflow/Pipes/IsDeclaredVariablePipe";
+import { IsNoObjectFieldVariablePipe } from "Workflow/Pipes/IsNoObjectFieldVariablePipe";
 
 @Component({
     selector: "SetValues",
@@ -50,13 +49,15 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
     }
 
     initializeFlowVariablesTree() {
-        let showVariables = {
+        let props = {
             ShowRecordsVariables: true,
             ShowDeclaredVariables: true,
             ShowRecordsCollectionVariables: false,
-            ShowDeclaredCollectionVariables: true
+            ShowDeclaredCollectionVariables: true,
+            OnlyCurrentLoopItemVariables: false,
+            IsObjectVariableSelectable: true
         };
-        this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId, showVariables);
+        this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId, props);
         this.FlowVariablesTreeItems = this.FlowVariablesTreeList.Items;
     }
 
@@ -98,7 +99,7 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
         let field = fieldItem ? fieldItem.key : null;
         if (field !== this.SetValues[setValueIndex]?.field) {
             if (field) {
-                if (this.isDeclaredVariable(field)) {
+                if (this.isNoObjectFieldVariable(field)) {
                     let fieldType = fieldItem.data["type"] || null;
                     this.updateSetValueFieldByDeclaredVariableField(field, fieldType, setValueIndex);
                 } else {
@@ -188,16 +189,16 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
             if (setValueType.toString().endsWith("[]")) {
                 return SetValueOperators.EqualsCollection;
             }
-            let variableTypes = Object.values(FieldTypes).map((type) => (type as string));
-            if (!variableTypes.includes(setValueType)) {
+            let types = Object.values(FieldTypes).map((type) => (type as string));
+            if (!types.includes(setValueType)) {
                 return SetValueOperators.EqualsRecord;
             }
         }
         return SetValueOperators.Equals;
     }
 
-    isDeclaredVariable(field: string) {
-        return new IsDeclaredVariablePipe().transform(field);
+    isNoObjectFieldVariable(field: string) {
+        return new IsNoObjectFieldVariablePipe().transform(field);
     }
 
     getObjectField(field: string) {

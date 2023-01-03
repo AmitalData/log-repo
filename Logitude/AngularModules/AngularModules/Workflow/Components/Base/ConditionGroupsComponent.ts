@@ -18,7 +18,7 @@ import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 import { ConditionDisabledPipe } from "Workflow/Pipes/ConditionDisabledPipe";
 import { GetObjectFieldPipe } from "Workflow/Pipes/GetObjectFieldPipe";
 import { IsDateTimeTypePipe } from "Workflow/Pipes/IsDateTimeTypePipe";
-import { IsDeclaredVariablePipe } from "Workflow/Pipes/IsDeclaredVariablePipe";
+import { IsNoObjectFieldVariablePipe } from "Workflow/Pipes/IsNoObjectFieldVariablePipe";
 import { IsFieldOperatorPipe } from "Workflow/Pipes/IsFieldOperatorPipe";
 import { IsNoValueOperatorPipe } from "Workflow/Pipes/IsNoValueOperatorPipe";
 
@@ -71,13 +71,15 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
 
     initializeFlowVariablesTree() {
         if (!this.IsEntityField || !this.IsEntityFieldValue) {
-            let showVariables = {
+            let props = {
                 ShowRecordsVariables: true,
                 ShowDeclaredVariables: true,
                 ShowRecordsCollectionVariables: false,
-                ShowDeclaredCollectionVariables: false
+                ShowDeclaredCollectionVariables: false,
+                OnlyCurrentLoopItemVariables: false,
+                IsObjectVariableSelectable: false
             };
-            this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId, showVariables);
+            this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId, props);
             this.FlowVariablesTreeItems = this.FlowVariablesTreeList.Items;
         }
     }
@@ -104,7 +106,7 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
         let field = fieldItem ? fieldItem.key : null;
         if (field !== this.Conditions[conditionIndex]?.field) {
             if (field) {
-                if (this.isDeclaredVariable(field)) {
+                if (this.isNoObjectFieldVariable(field)) {
                     let fieldType = fieldItem.data["type"] || null;
                     this.updateConditionFieldByDeclaredVariableField(field, fieldType, conditionIndex);
                 } else {
@@ -254,8 +256,8 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
         this.ConditionsChangedEvent.emit(event);
     }
 
-    isDeclaredVariable(field: string) {
-        return new IsDeclaredVariablePipe().transform(field);
+    isNoObjectFieldVariable(field: string) {
+        return new IsNoObjectFieldVariablePipe().transform(field);
     }
 
     isFieldCompareOperator(operatorCode: string) {

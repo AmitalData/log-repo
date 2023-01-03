@@ -47,13 +47,15 @@ export class DeleteItemPropertiesComponent extends BaseComponent {
     }
 
     initializeFlowVariablesTreeItems() {
-        let showVariables = {
+        let props = {
             ShowRecordsVariables: true,
             ShowDeclaredVariables: true,
             ShowRecordsCollectionVariables: false,
-            ShowDeclaredCollectionVariables: false
+            ShowDeclaredCollectionVariables: false,
+            OnlyCurrentLoopItemVariables: true,
+            IsObjectVariableSelectable: true
         };
-        this.FlowVariablesTreeItems = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId, showVariables, true).Items;
+        this.FlowVariablesTreeItems = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId, props).Items;
     }
 
     updateName(name: string) {

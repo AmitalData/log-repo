@@ -24,7 +24,7 @@ import { GetObjectFieldPipe } from "./Pipes/GetObjectFieldPipe";
 import { GetObjectFieldsQueryFiltersPipe } from "./Pipes/GetObjectFieldsQueryFiltersPipe";
 import { ListItemPipe } from "./Pipes/ListItemPipe";
 import { IsDateTimeTypePipe } from "./Pipes/IsDateTimeTypePipe";
-import { IsDeclaredVariablePipe } from "./Pipes/IsDeclaredVariablePipe";
+import { IsNoObjectFieldVariablePipe } from "./Pipes/IsNoObjectFieldVariablePipe";
 import { IsFieldOperatorPipe } from "./Pipes/IsFieldOperatorPipe";
 import { IsNoValueOperatorPipe } from "./Pipes/IsNoValueOperatorPipe";
 import { ShowFlowVariablesTreeItemPipe } from "./Pipes/ShowFlowVariablesTreeItemPipe";
@@ -87,7 +87,7 @@ export const Pipes = [
     GetObjectTablesQueryFiltersPipe,
     ListItemPipe,
     IsDateTimeTypePipe,
-    IsDeclaredVariablePipe,
+    IsNoObjectFieldVariablePipe,
     IsFieldOperatorPipe,
     IsNoValueOperatorPipe,
     ShowEntitiesTreeItemPipe,

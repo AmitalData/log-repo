@@ -178,13 +178,15 @@ export class ExpressionBuilderComponent extends BaseComponent {
     }
 
     initializeFlowVariablesTree() {
-        let showVariables = {
+        let props = {
             ShowRecordsVariables: true,
             ShowDeclaredVariables: true,
             ShowRecordsCollectionVariables: true,
-            ShowDeclaredCollectionVariables: true
+            ShowDeclaredCollectionVariables: true,
+            OnlyCurrentLoopItemVariables: false,
+            IsObjectVariableSelectable: true
         };
-        this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId, showVariables);
+        this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId, props);
         this.FlowVariablesTreeItems = this.FlowVariablesTreeList.Items;
         this.addFlowVariablesToSuggestionsConfig(this.FlowVariablesTreeList.ItemsList);
     }
@@ -198,7 +200,7 @@ export class ExpressionBuilderComponent extends BaseComponent {
                     return {
                         code: type + "_" + i.key,
                         name: i.title,
-                        label: i.key.indexOf("_") === -1 ? i.title : (i.key.split("_")[0] + " - " + i.title),
+                        label: i.key.indexOf("_") === -1 ? i.title : (i.key.split("_").slice(0, -1).join(" - ") + " - " + i.title),
                         value: "{" + i.key + "}",
                         type: type
                     };

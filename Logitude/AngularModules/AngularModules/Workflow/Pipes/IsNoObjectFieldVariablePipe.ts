@@ -1,0 +1,17 @@
+import { Pipe, PipeTransform } from "@angular/core";
+
+@Pipe({
+    name: "IsNoObjectFieldVariablePipe"
+})
+
+export class IsNoObjectFieldVariablePipe implements PipeTransform {
+
+    transform(field: string) {
+        if (field) {
+            return (field.toString().indexOf("_") === -1) || (field.toString().startsWith("declaredvariables_")) ||
+                (field.toString().startsWith("declaredrecordvariables_") && field.toString().split("_").length === 2);
+        }
+        return false;
+    }
+
+}
