@@ -10,6 +10,8 @@
   DescriptionDefaultText="&quot;Define the sources that supply you with information about  new customers.&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
+  AvailableInCustomization="false"
+  SupportSubEntity="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -52,6 +54,8 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;17af&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -84,6 +88,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -158,6 +163,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -232,6 +238,7 @@
     SystemMaxLength="2"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -309,6 +316,7 @@
     SystemMaxLength="60"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -388,6 +396,7 @@
     SystemMaxLength="1000"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -464,6 +473,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -541,6 +551,7 @@
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -641,16 +652,21 @@
     IsHeaderScreen="false"
     Code="&quot;LeadSource.GeneralTabScreen&quot;"
     NumberOfColumns="1"
-    NumberOfRows="2">
+    NumberOfRows="3">
     <ScreenFields>
       <ScreenField
         Column="0"
         Row="0"
-        ObjectFieldName="&quot;Name&quot;"
+        ObjectFieldName="&quot;Code&quot;"
         ScreenName="General Tab Screen" />
       <ScreenField
         Column="0"
         Row="1"
+        ObjectFieldName="&quot;Name&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="2"
         ObjectFieldName="&quot;InActive&quot;"
         ScreenName="General Tab Screen" />
     </ScreenFields>
@@ -712,7 +728,58 @@
       IsFollowUp="false" />
   </EventTypes>
   <Records />
-  <DataContracts />
+  <DataContracts>
+    <DataContract
+      Name="&quot;LeadSource&quot;"
+      Version="&quot;ApiV1&quot;"
+      IncludeTenant0Data="false">
+      <DCField
+        DCFieldName="&quot;Id&quot;"
+        FieldName="&quot;Id&quot;"
+        IsKey="true"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="true"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
+      <DCField
+        DCFieldName="&quot;Code&quot;"
+        FieldName="&quot;Code&quot;"
+        IsKey="true"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="true"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
+      <DCField
+        DCFieldName="&quot;Name&quot;"
+        FieldName="&quot;Name&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
+    </DataContract>
+  </DataContracts>
   <AdditionalTextCodes />
   <AdditionalFeatures />
 </entity>

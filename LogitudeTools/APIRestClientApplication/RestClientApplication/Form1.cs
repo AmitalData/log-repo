@@ -402,6 +402,7 @@ namespace RestClientApplication
                         break;
                     }
                 #endregion
+
                 #region ClosedMonthCheck
                 case "ClosedMonthCheck":
                     {
@@ -501,7 +502,41 @@ namespace RestClientApplication
                 case "Customer":
                     {
                         apiName = "customer";
-                        requestText = responseParameters.XMLRequestText["Customer"];
+                        //requestText = responseParameters.XMLRequestText["Customer"];
+
+                        switch (operationCombo.SelectedIndex)
+                        {
+                            case 0:
+                                {
+                                    requestText = responseParameters.XMLRequestText["Customer"];
+                                    break;
+                                }
+
+                            case 1:
+                                {
+                                    //requestText = responseParameters.XMLRequestText[""];
+                                    break;
+                                }
+
+                            case 2:
+                                lblParameter.Text = "Code";
+                                lblParameter.Visible = true;
+                                txtParameter.Visible = true;
+
+                                lblParameter2.Text = "VAT #";
+                                lblParameter2.Visible = true;
+                                txtParameter2.Visible = true;
+
+                                lblParameter3.Text = "External Id";
+                                lblParameter3.Visible = true;
+                                txtParameter3.Visible = true;
+
+                                lblParameter4.Text = "Name";
+                                lblParameter4.Visible = true;
+                                txtParameter4.Visible = true;
+
+                                break;
+                        }
                         break;
                     }
                 #endregion
@@ -552,9 +587,11 @@ namespace RestClientApplication
                         txtParameter2.Visible = true;
                         lblParameter2.Visible = true;
                         lblParameter2.Text = "Number:";
+
                         lblParameter3.Visible = true;
                         lblParameter3.Text = "External ID:";
                         txtParameter3.Visible = true;
+
                         apiName = "APInvoice";
 
                         break;
@@ -692,7 +729,7 @@ namespace RestClientApplication
 
             if (!string.IsNullOrEmpty(this.Token))
             {
-                using (var client = new HttpClient())
+                using (HttpClient client = new HttpClient())
                 {
                     client.Timeout = new TimeSpan(0, 10, 0); // 10 minutes
                     client.DefaultRequestHeaders.Add("Token", Token);
@@ -737,6 +774,12 @@ namespace RestClientApplication
                         else if (apiName == "container")
                         {
                             response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?containerNumber=" + txtParameter.Text + "&shipmentNumber=" + txtParameter2.Text);
+                        }
+
+                        else if (apiName == "customer")
+                        {
+                            string url = GetCustomerURL();
+                            response = await client.GetAsync(url);
                         }
 
                         else
@@ -835,6 +878,23 @@ namespace RestClientApplication
             }
 
             this.Cursor = Cursors.Default;
+        }
+
+        private string GetCustomerURL()
+        {
+            if (!string.IsNullOrEmpty(txtParameter.Text))
+                return txtServerUrl.Text + "/" + apiName + "?code=" + txtParameter.Text;            
+
+            else if (!string.IsNullOrEmpty(txtParameter2.Text))
+                return txtServerUrl.Text + "/" + apiName + "?vatNumber=" + txtParameter2.Text;
+
+            else if(!string.IsNullOrEmpty(txtParameter3.Text))
+                return txtServerUrl.Text + "/" + apiName + "?externalId=" + txtParameter3.Text;
+
+            else if(!string.IsNullOrEmpty(txtParameter4.Text))
+                return txtServerUrl.Text + "/" + apiName + "?name=" + txtParameter4.Text;            
+
+            return "";
         }
 
         private string EncodeUrl(string url)

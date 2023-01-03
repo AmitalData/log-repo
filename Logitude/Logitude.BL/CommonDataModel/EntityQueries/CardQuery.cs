@@ -246,6 +246,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       StorageFreeDays = a.StorageFreeDays,
                                       RankId = a.Customer != null ? (a.Customer.Rank != null ? a.Customer.Rank.Id : null) : null,
                                       IndustryId = a.Customer != null ? (a.Customer.Industry != null ? a.Customer.Industry.Id : null) : null,
+                                      LeadSourceId = a.Customer != null ? (a.Customer.LeadSource != null ? a.Customer.LeadSource.Id : null) : null,
+                                      LeadDescription = a.Customer != null ? a.Customer.LeadDescription : null,
+                                      StartWorkingDate = a.Customer != null ? a.Customer.StartWorkingDate: null,
                                       BillToId = a.BillToId,
                                       ICAO = al != null ? al.ICAO : "",
                                       SATCustomerName = a.SATCustomerName,
@@ -352,6 +355,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   StorageFreeDays = a.StorageFreeDays,
                                   RankId = a.Customer != null ? (a.Customer.Rank != null ? a.Customer.Rank.Id : null) : null,
                                   IndustryId = a.Customer != null ? (a.Customer.Industry != null ? a.Customer.Industry.Id : null) : null,
+                                  LeadSourceId = a.Customer != null ? (a.Customer.LeadSource != null ? a.Customer.LeadSource.Id : null) : null,
+                                  LeadDescription = a.Customer != null ? a.Customer.LeadDescription : null,
+                                  StartWorkingDate = a.Customer != null ? a.Customer.StartWorkingDate : null,
                                   BillToId = a.BillToId,
                                   ICAO = al != null ? al.ICAO : "",
                                   SATCustomerName = a.SATCustomerName,
@@ -405,6 +411,16 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             var cardId = repository.GetCardIdByCode(code, tenant);
             return GetSinglePM(cardId, tenant);
 
+        }
+
+        public CardPM GetSinglePMByExternalId(string externalId, int tenant)
+        {
+            var cardId = repository.GetCardIdByExternalId(externalId, tenant);
+            CardPM cardPM = GetSinglePM(cardId, tenant);
+
+            ContactQuery contactQuery = new ContactQuery(tenant);
+            cardPM.Contacts = contactQuery.GetContactsbyCardId(cardId, tenant).ToList();
+            return cardPM;
         }
 
         public CardList GetSingleByGLAccount(string glAccountId, int tenant, bool fromCache)

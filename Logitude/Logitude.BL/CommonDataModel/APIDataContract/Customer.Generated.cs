@@ -39,9 +39,34 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
     
     public GLAccount GLAccount { get; set; }
     
+	[XmlAttribute]
     public string Code { get; set; }
     
     public string PartnerCode { get; set; }
+    
+    public User AccountManagerUser { get; set; }
+    
+    public User SalesmanUser { get; set; }
+    
+    public User Collector { get; set; }
+    
+    public Team Team { get; set; }
+    
+    public Industry Industry { get; set; }
+    
+    public Currency InvoiceCurrency { get; set; }
+    
+    public VatType VatTypeId { get; set; }
+    
+    public string ReceivablesExternalId { get; set; }
+    
+    public List<Address> Addresses { get; set; }
+    
+    public string LeadDescription { get; set; }
+    
+    public DateTime? StartWorkingDate { get; set; }
+    
+    public LeadSource LeadSource { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 
