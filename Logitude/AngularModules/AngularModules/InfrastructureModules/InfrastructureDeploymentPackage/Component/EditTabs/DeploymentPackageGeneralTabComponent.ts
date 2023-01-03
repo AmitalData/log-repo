@@ -4,13 +4,13 @@ import { DeploymentPackagePM } from '../../../../Infrastructure/EntityPMs/Deploy
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 
 @Component({
-    templateUrl: './GeneralTabComponent.html',
+    templateUrl: './DeploymentPackageGeneralTabComponent.html',
 })
 
-export class GeneralTabComponent extends BaseComponent {
+export class DeploymentPackageGeneralTabComponent extends BaseComponent {
     public EntityPM: DeploymentPackagePM;
     public ObjectTableName: string = "DeploymentPackage";
-    public DataContext: GeneralTabComponent = this;
+    public DataContext: DeploymentPackageGeneralTabComponent = this;
 
     constructor(public entityArgs: EntityArgs) {
         super();

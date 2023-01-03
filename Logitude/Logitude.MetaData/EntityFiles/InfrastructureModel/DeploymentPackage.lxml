@@ -1182,12 +1182,12 @@
     TabName="&quot;General&quot;"
     ObjectTableName="&quot;DeploymentPackage&quot;"
     Code="&quot;DPGE&quot;"
-    ControlPath="&quot;./InfrastructureModules/InfrastructureDeploymentPackage/Component/EditTabs/GeneralTabComponent&quot;"
+    ControlPath="&quot;./InfrastructureModules/InfrastructureDeploymentPackage/Component/EditTabs/DeploymentPackageGeneralTabComponent&quot;"
     TextCode="&quot;DeploymentPackage.TH.General&quot;"
     IsPackagable="true"
     IndexOrder="0"
-    HtmlComponentURL="&quot;./InfrastructureModules/InfrastructureDeploymentPackage/Component/EditTabs/GeneralTabComponent&quot;"
-    HtmlComponentName="&quot;GeneralTabComponent&quot;"
+    HtmlComponentURL="&quot;./InfrastructureModules/InfrastructureDeploymentPackage/Component/EditTabs/DeploymentPackageGeneralTabComponent&quot;"
+    HtmlComponentName="&quot;DeploymentPackageGeneralTabComponent&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab

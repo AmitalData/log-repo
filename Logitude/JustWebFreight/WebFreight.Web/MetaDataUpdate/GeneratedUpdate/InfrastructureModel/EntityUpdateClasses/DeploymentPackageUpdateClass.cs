@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class DeploymentPackageUpdateClass
    {  		
-		public const string HashString = "61490c94b7fa495407a21bcc35593751";
+		public const string HashString = "e593c77ee71d6ad6a9944b2d882d93bc";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1120,7 +1120,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DPGE",HtmlComponentName = "GeneralTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureDeploymentPackage/Component/EditTabs/GeneralTabComponent", FeatureId = DeploymentPackageGeneralFeature_TH0.Id,FeatureUniqeCode = DeploymentPackageGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "./InfrastructureModules/InfrastructureDeploymentPackage/Component/EditTabs/GeneralTabComponent", ObjectTableId = DeploymentPackageObjectTable.Id, TabNameTextCodeId = DeploymentPackageGeneralTextCode_TH0.Id, TabNameTextCodeCode = DeploymentPackageGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DPGE",HtmlComponentName = "DeploymentPackageGeneralTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureDeploymentPackage/Component/EditTabs/DeploymentPackageGeneralTabComponent", FeatureId = DeploymentPackageGeneralFeature_TH0.Id,FeatureUniqeCode = DeploymentPackageGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "./InfrastructureModules/InfrastructureDeploymentPackage/Component/EditTabs/DeploymentPackageGeneralTabComponent", ObjectTableId = DeploymentPackageObjectTable.Id, TabNameTextCodeId = DeploymentPackageGeneralTextCode_TH0.Id, TabNameTextCodeCode = DeploymentPackageGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DPCF",HtmlComponentName = "CustomFieldsTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureDeploymentPackage/Component/EditTabs/CustomFieldsTabComponent", FeatureId = DeploymentPackageCustomFieldsFeature_TH1.Id,FeatureUniqeCode = DeploymentPackageCustomFieldsFeature_TH1.FeatureUniqeCode, ControlPath = "./InfrastructureModules/InfrastructureDeploymentPackage/Component/EditTabs/CustomFieldsTabComponent", ObjectTableId = DeploymentPackageObjectTable.Id, TabNameTextCodeId = DeploymentPackageCustomFieldsTextCode_TH1.Id, TabNameTextCodeCode = DeploymentPackageCustomFieldsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
