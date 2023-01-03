@@ -145,5 +145,46 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 }, absoluteExpiration: 1440);
             return dummyInterfaceManagementDefinition;
         }
+
+
+        public  List<InterfaceTenantDefinitionManagementPM> GetInterfaceListDCA(List<InterfaceTenantDefinitionManagementPM> interfaceTenantDefinitionManagementPMs, string CompanyType)
+        {
+            var interfaceListDCA = //(new IIGMessageQueryService()).GetAll().Where(mess => mess.Interactive.HasFlag(InterfaceType.InteractiveMode.DCA)); ;
+                 interfaceTenantDefinitionManagementPMs //_AllInterface
+                 .Where(r => r.OverrideActive == true)
+
+                  //להתייחס לשדה Active מרמת ניהול מסרים
+                  .Where(r => r.InterfaceManagement.Active == true)
+
+
+
+                  .Where(
+                     r =>
+                  //INTERFACETYPE
+                  //ערכים NULL== הכל, C == רק עמילות, B == רק בלדרות
+                  string.IsNullOrWhiteSpace(r.InterfaceManagement.InterfaceType)//All
+
+                  ||
+                  (
+                  !string.IsNullOrWhiteSpace(r.InterfaceManagement.InterfaceType)
+                  &&
+                   //COMPANYTYPE שם שדה ערכים C -דיפולטיבי(בסקריפט), או B == בלדרות - אסור ריק יאותחל עם הפצה ראשונה + DEFAULT == C
+                   r.InterfaceManagement.InterfaceType == /*customsSettingPM.*/CompanyType
+                   )
+                   )
+
+                 .Where(rec =>
+                     //rec.InterfaceManagement.INOUT ==  Logitude.Customs.BL.ClosedTable.InOutType.In  &&
+                     //!string.IsNullOrWhiteSpace(rec.InterfaceManagement.DcaPrefixName) && 
+                     //!rec.OverrideInActive &&
+                     ///////rec.Interactive == Logitude.Customs.BL.ClosedTable.InteractiveMode.DCABatchIn &&
+                     !String.IsNullOrWhiteSpace(
+                     rec.InterfaceManagement.DcaPrefixName +
+                     rec.InterfaceManagement.DcaPrefixName2 +
+                     rec.InterfaceManagement.DcaPrefixName3 +
+                     rec.InterfaceManagement.DcaPrefixName4)
+                     ).ToList();
+            return interfaceListDCA;
+        }
     }
 }

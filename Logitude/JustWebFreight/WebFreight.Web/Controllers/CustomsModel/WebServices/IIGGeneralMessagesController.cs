@@ -652,9 +652,24 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
             try
             {
-
+#if restoreUsing9010
                 var service = new SYSTBL_NG_9010_MSG_MessageRestoreRequestMessagingService();
                 var responseData = service.Send(requestParams);
+#else
+                var messageWaitingRequestParams = new MessageWaitingRequestParams();
+                messageWaitingRequestParams.CorrelationID = requestParams.CorrelationID;
+                messageWaitingRequestParams.FromDate = requestParams.FromDate;
+                messageWaitingRequestParams.ToDate = requestParams.ToDate;
+                messageWaitingRequestParams.InterfaceManagementsCode = requestParams.InterfaceManagementsCode;
+                messageWaitingRequestParams.RequestVIA = SendRequestVIA.WebServiceBatch;
+                //messageWaitingRequestParams.RequestVIAChangeDue = "המסר יבוצע ברקע ";
+
+                var service = new NG_9100_MSG_OutgoingMessageRequestMessagingService();
+                var responseData = service.Send(messageWaitingRequestParams);
+
+#endif
+
+
 
 
                 return Request.CreateResponse(HttpStatusCode.OK, responseData);

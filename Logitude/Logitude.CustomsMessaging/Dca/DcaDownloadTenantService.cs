@@ -87,6 +87,9 @@ namespace Logitude.CustomsMessaging.Dca
 
             _AllInterface = interfaceTypeQueryService.GetWithInterfaceManagementDefinition(_CustomsSettingPM.Tenant);
 
+#if true
+            _InterfaceListDCA=interfaceTypeQueryService.GetInterfaceListDCA(_AllInterface, customsSettingPM.CompanyType);
+#else
 
             _InterfaceListDCA = //(new IIGMessageQueryService()).GetAll().Where(mess => mess.Interactive.HasFlag(InterfaceType.InteractiveMode.DCA)); ;
                    _AllInterface
@@ -123,6 +126,7 @@ namespace Logitude.CustomsMessaging.Dca
                        rec.InterfaceManagement.DcaPrefixName3 +
                        rec.InterfaceManagement.DcaPrefixName4)
                        ).ToList();
+#endif
             _AllDcaPreFixWithoutInOutUpper = new List<string>();
 
 
@@ -274,7 +278,7 @@ namespace Logitude.CustomsMessaging.Dca
                     }
                 }
 
-                var restoreWaitingImportService = new RestoreWaitingImport.RestoreWaitingImportMessagesService(_CustomsSettingPM, this._InterfaceListDCA);
+                var restoreWaitingImportService = new Restore9100.RestoreWaitingImportMessagesService(_CustomsSettingPM, this._InterfaceListDCA);
                 restoreWaitingImportService.RestoreWaitingImportSaveInDB();
 
                 return;

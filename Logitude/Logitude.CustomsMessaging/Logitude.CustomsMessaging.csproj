@@ -199,13 +199,15 @@
     <Compile Include="CustomsBook\CustomsItemDetailsHistoryImport.cs" />
     <Compile Include="CustomsBook\CustomsItemImport.cs" />
     <Compile Include="CustomsBook\PropertiesDetailsHistoryImport.cs" />
-    <Compile Include="Dca\RestoreWaitingImport\DcaFileNameService_EXT.cs" />
+    <Compile Include="Dca\Restore9100\OutgoingMessage9100ResponseAnalyze.cs" />
+    <Compile Include="Dca\Restore9100\DcaFileNameService_EXT.cs" />
     <Compile Include="Dca\DcaDirect9200TenantService.cs" />
     <Compile Include="Dca\DcaFilterByEnvironmentService.cs" />
     <Compile Include="Dca\DcaFilterByEnvironmentService.Test.cs" />
     <Compile Include="Dca\DedicatedCourierDCAService.cs" />
     <Compile Include="Dca\RemoveOldOrphanedFilesFromBackupService.cs" />
-    <Compile Include="Dca\RestoreWaitingImport\RestoreWaitingImportMessagesService.cs" />
+    <Compile Include="Dca\Restore9100\RestoreWaitingImportMessagesService.cs" />
+    <Compile Include="Dca\Restore9100\SendNG_9100_MSG_OutgoingMessageRequestService.cs" />
     <Compile Include="Dca\WaitingTester.cs" />
     <Compile Include="FakeMessagingServices\Courier\Fake_1770_MN_MSG1_MANIFESTResponse.cs" />
     <Compile Include="FakeMessagingServices\DCASincroService.cs" />
@@ -243,7 +245,6 @@
     <Compile Include="Helpers\ClosedTable\Update1416ModificationAndDiscountType.cs" />
     <Compile Include="MessagingServices\DCI_CourierMastersConnectedMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInCC_MSG1_EntryExitToFromCustomsStorageSitesMessageMessagingService.cs" />
-
     <Compile Include="MessagingServices\DCAInLG_NG_8410_LogisticActionRequestMessageMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInLG_NG_8411_SendLogisticActionRequestDecisionMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInMN_MSG2791_ExportDeliveryAnswerMessageMessagingServices.cs" />
@@ -632,7 +633,6 @@
     <Compile Include="Tasks\DeleteCustomRequestSheet.cs" />
     <Compile Include="Tasks\DeleteNotToCustomCommunication.cs" />
     <Compile Include="Tasks\DeleteQueMessMoreDetails.cs" />
- 
     <Compile Include="Tasks\SendDeclarationStatus.cs" />
     <Compile Include="Tasks\SendManifestService.cs" />
     <Compile Include="Testers\EcomTesterService.cs" />
@@ -719,7 +719,6 @@
       <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
       <Name>Simplog.Data</Name>
     </ProjectReference>
-
     <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
       <Project>{6D7FFAD2-35B6-4133-8700-CF73E58D0C85}</Project>
       <Name>Simplog.Global.Data</Name>

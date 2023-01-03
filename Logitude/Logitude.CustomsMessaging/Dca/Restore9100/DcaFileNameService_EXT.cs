@@ -6,8 +6,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnifreightIIG.Common.OutgoingMessageRequestServiceReference;
 
-namespace Logitude.CustomsMessaging.Dca.RestoreWaitingImport
+namespace Logitude.CustomsMessaging.Dca.Restore9100
 {
     public static class DcaFileNameService_EXT
     {
@@ -63,5 +64,34 @@ IsStart(rec.InterfaceManagement.DcaPrefixName4, myFileName)
             return false;
 
         }
+
+
+        public static List<OutgoingMessageInterface> GetOutgoingMessageInterfaceList(this List<InterfaceTenantDefinitionManagementPM> interfaceListDCA, List<NG_9101_MSG_OutgoingMessageResponseOutgoingMessage> newImportMessages)
+        {
+            var newImportMessagesWithIncludeDcaPrefixName = new List<OutgoingMessageInterface>();
+            newImportMessages.ForEach(r =>
+            {
+
+                var res = interfaceListDCA.GetInterfaceTenantDefinitionManagementPM(r.Filename);
+                if (res.messageDCA != null)
+                {
+                    newImportMessagesWithIncludeDcaPrefixName.Add(new OutgoingMessageInterface
+                    {
+                        response = r,
+                        messageDCA = res.messageDCA,
+                        dcaFile = res.dcaFile
+
+
+                    });
+                }
+            });
+            return newImportMessagesWithIncludeDcaPrefixName;
+        }
+    }
+    public class OutgoingMessageInterface
+    {
+        internal NG_9101_MSG_OutgoingMessageResponseOutgoingMessage response;
+        internal InterfaceTenantDefinitionManagementPM messageDCA;
+        internal DCAFileModel dcaFile;
     }
 }
