@@ -143,10 +143,8 @@
                     </LogLabel>
                 </div>
                 <div class="set-value-operator-container">
-                    <ComboBox
-                        [ItemsSource]="(setValue.type | IsCollectionTypePipe) ? SetValuesCollectionOperatorsItems : SetValuesOperatorsItems"
-                        [Binding]="'Name'" [SelectedItem]="setValue.operator | ListItemPipe"
-                        [IsDisabled]="setValue.isDisabled"
+                    <ComboBox [ItemsSource]="setValue.type | SetValuesOperatorsItemsPipe" [Binding]="'Name'"
+                        [SelectedItem]="setValue.operator | ListItemPipe" [IsDisabled]="setValue.isDisabled"
                         (SelectedItemChanged)="updateSetValueOperator($event.Code, setValueIndex)" [ListType]="''">
                     </ComboBox>
                 </div>
@@ -177,15 +175,15 @@
                     class="set-value-value-container">
 
                     <FieldValue *ngIf="setValue.fieldChangedToggle"
-                        [ObjectField]="(setValue.fieldCode | IsDeclaredVariablePipe) ? null : (setValue.fieldCode | GetObjectFieldPipe : FlowObjectFields)"
-                        [DataType]="(setValue.fieldCode | IsDeclaredVariablePipe) ? setValue.type : null"
+                        [ObjectField]="(setValue.fieldCode | IsNoObjectFieldVariablePipe) ? null : (setValue.fieldCode | GetObjectFieldPipe : FlowObjectFields)"
+                        [DataType]="(setValue.fieldCode | IsNoObjectFieldVariablePipe) ? setValue.type : null"
                         [Name]="'setValue_'" [CurrentValue]="setValue.value" [IsDisabled]="setValue.isDisabled"
                         (ValueChanged)="updateSetValue($event, setValueIndex)">
                     </FieldValue>
 
                     <FieldValue *ngIf="!setValue.fieldChangedToggle"
-                        [ObjectField]="(setValue.fieldCode | IsDeclaredVariablePipe) ? null : (setValue.fieldCode | GetObjectFieldPipe : FlowObjectFields)"
-                        [DataType]="(setValue.fieldCode | IsDeclaredVariablePipe) ? setValue.type : null"
+                        [ObjectField]="(setValue.fieldCode | IsNoObjectFieldVariablePipe) ? null : (setValue.fieldCode | GetObjectFieldPipe : FlowObjectFields)"
+                        [DataType]="(setValue.fieldCode | IsNoObjectFieldVariablePipe) ? setValue.type : null"
                         [Name]="'setValue_'" [CurrentValue]="setValue.value" [IsDisabled]="setValue.isDisabled"
                         (ValueChanged)="updateSetValue($event, setValueIndex)">
                     </FieldValue>

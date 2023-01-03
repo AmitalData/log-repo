@@ -2,11 +2,11 @@ export class Formatter {
 
     static getFieldCode(field: string) {
         if (field) {
-            if (field.indexOf("_") === -1) {
-                return field;
+            if (field.indexOf("_") !== -1) {
+                let fieldSections = field.split("_");
+                return fieldSections[fieldSections.length - 1];
             }
-            let fieldCode = field.split("_")[1];
-            return fieldCode;
+            return field;
         }
         return null;
     }
