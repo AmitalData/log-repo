@@ -465,6 +465,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.MainCarriageFromPortCountryName = mainCarriageFromPort.CountryName;
                         shipmentPM.FromCountryCode = mainCarriageFromPort.CountryCode;
                         shipmentPM.FromLocation = mainCarriageFromPort.Code + " " + mainCarriageFromPort.EnglishName;
+                        shipmentPM.MainCarriageFromStateId = mainCarriageFromPort.StateId;
                     }
 
                     PortPM mainCarriageToPort = portQuery.GetSinglePM(masterData.MainCarriageToPortId, masterData.Tenant);
@@ -480,8 +481,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.MainCarriageToPortCode = mainCarriageToPort.Code;
                         shipmentPM.MainCarriageToPortName = mainCarriageToPort.EnglishName;
                         shipmentPM.MainCarriageToPortCountryCode = mainCarriageToPort.CountryCode;
-
-                        shipmentPM.ToLocation = mainCarriageToPort.Code + " " + mainCarriageToPort.EnglishName;
+                        shipmentPM.ToLocation = mainCarriageToPort.Code + " " + mainCarriageToPort.EnglishName;                        
                     }
 
                     PortPM mainCarriageFinalDestinationPort = portQuery.GetSinglePM(masterData.MainCarriageFinalDestinationPortId, masterData.Tenant);
@@ -492,6 +492,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.MainCarriageFinalDestinationPortCountryCode = mainCarriageFinalDestinationPort.CountryCode;
                         shipmentPM.MainCarriageFinalDestinationPortCountryId = mainCarriageFinalDestinationPort.CountryId;
                         shipmentPM.MainCarriageFinalDestinationPortCountryName = mainCarriageFinalDestinationPort.CountryName;
+                        shipmentPM.MainCarriageToStateId = mainCarriageFinalDestinationPort.StateId;
                     }
 
                     shipmentPM.MainCarriageVesselId = masterData.MainCarriageVesselId;
