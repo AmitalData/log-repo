@@ -19,20 +19,20 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
         public IQueryable<Container> GetFilteredQuery(QueryOperations operations, IQueryable<Container> queryableData)
         {
             List<QueryFilterItem> queryFilters = operations.QueryFilterItems;
-            bool showIsClosed = false;
+            //bool showIsClosed = false;
             bool showIsCancelled = false;
             foreach (QueryFilterItem item in queryFilters)
             {
                 if (item.IsCustom)
                 {
-                    if (item.FieldName == "IsClosed")
-                    {
-                        bool value = Convert.ToBoolean(item.FieldValue);
-                        if (value)
-                        {
-                            showIsClosed = true;
-                        }
-                    }
+                    //if (item.FieldName == "IsClosed")
+                    //{
+                    //    bool value = Convert.ToBoolean(item.FieldValue);
+                    //    if (value)
+                    //    {
+                    //        showIsClosed = true;
+                    //    }
+                    //}
 
                     if (item.FieldName == "Containers")
                     {
@@ -60,8 +60,12 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         queryableData = queryableData.Where(d => d.GateOut != null &&  d.ActualEmptyReturn == null);
                     }
 
+                    if (item.FieldName == "ClosedContainers")
+                    {
+                        queryableData = queryableData.Where(d => d.IsClosed);
+                    }
 
-   
+
                 }
 
                 if (item.FieldName == "IsCancelled")
@@ -79,10 +83,10 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                 queryableData = queryableData.Where(d => d.IsCancelled == showIsCancelled);
             //}
             //else
-            if (showIsClosed)
-            {
-                queryableData= queryableData.Where(d => d.IsClosed == showIsClosed && d.IsCancelled == showIsCancelled);
-            }
+            //if (showIsClosed)
+            //{
+            //    queryableData= queryableData.Where(d => d.IsClosed == showIsClosed && d.IsCancelled == showIsCancelled);
+            //}
 
             return queryableData;
         }
