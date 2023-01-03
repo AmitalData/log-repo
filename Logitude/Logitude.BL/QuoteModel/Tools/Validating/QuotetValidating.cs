@@ -617,7 +617,6 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
             {
                 foreach (QuoteChargePM item in lines)
                 {
-                    
                     if (item.IsAllIN)
                     {
                         if (freightCharge != null)
@@ -629,11 +628,23 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
                         }
                     }
 
-                    if (item.SaleCurrencyId != entityPM.SaleCurrencyId)
+                    if (entityPM.IsSaleCurrencySameAsCost)
                     {
-                        throw new ApplicationException("All charges sale currency must be fixed to quote sale currency");
+                        
                     }
 
+                    else if (entityPM.IsMultiCurrency)
+                    {
+
+                    }
+
+                    else
+                    {
+                        if (item.SaleCurrencyId != entityPM.SaleCurrencyId)
+                        {
+                            throw new ApplicationException("All charges sale currency must be fixed to quote sale currency");
+                        }
+                    }
                 }
             }
         }
