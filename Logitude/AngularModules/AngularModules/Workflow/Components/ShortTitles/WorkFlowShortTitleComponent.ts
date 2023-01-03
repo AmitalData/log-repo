@@ -14,8 +14,9 @@ export class WorkFlowShortTitleComponent {
     public ValidVersion: WorkFlowVersionPM;
 
     constructor(public entityArgs: EntityArgs) {
-        this.EntityPM = this.entityArgs.EntityPM;
-        this.ValidVersion = this.getValidVersion();
+    }
+
+    ngOnInit() {
         this.Listen()
     }
 
@@ -24,6 +25,8 @@ export class WorkFlowShortTitleComponent {
             this.entityArgs.EntityArgEventEmitter.subscribe(
                 theMessage => {
                     if (theMessage == "RefreshWorkflowShortTitle") {
+                        this.EntityPM = this.entityArgs.EntityPM;
+                        this.ValidVersion = this.getValidVersion();
                         var clickedRowId = this.entityArgs.EditComponentArgument?.ClickedVersionRow!
                         var updatedVersionId = this.entityArgs.EditComponentArgument?.UpdatedVersion!
                         if (updatedVersionId) {
@@ -33,8 +36,6 @@ export class WorkFlowShortTitleComponent {
                         else if (clickedRowId) {
                             var version = this.EntityPM.WorkFlowVersions.find(e => e.Id == clickedRowId);
                             this.ValidVersion = version;
-                        } else {
-                            this.ValidVersion = this.getValidVersion();
                         }
                     }
                 }

@@ -1,14 +1,12 @@
-import { Component, ComponentRef, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from "@angular/core";
-import ReactFlowModeler from "logitude-workflow";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+import { Component, ComponentRef, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from "@angular/core";
+import ReactFlowModeler from "logitude-workflow";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
 import { LogitudeWindow } from "Controls/Windows/LogitudeWindow";
 import { WorkFlowPM } from "Workflow/EntityPMs/WorkFlowPM";
 import { WorkFlowPMService } from "Workflow/Services/StandardPMs/WorkFlowPMService";
 import { ServiceResponse } from "Infrastructure/DataContracts/ServiceResponse";
-import { ConfirmWindow } from "Controls/Windows/ConfirmWindow";
-import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { ObjectFieldListService } from "Infrastructure/Services/StandardLists/ObjectFieldListService";
 import { ApiQueryFiltersBuilder } from "Workflow/Models/ApiQueryFiltersBuilder";
 import { FlowReader } from "Workflow/Models/FlowReader";
@@ -19,7 +17,6 @@ import { Formatter } from "Workflow/Models/Formatter";
 import { EntityArgs } from "Infrastructure/DataContracts/EntityArgs";
 import { AppTool } from "Infrastructure/Tools";
 import { WorkFlowVersionPM } from "Workflow/EntityPMs/WorkFlowVersionPM";
-import { WorkFlowVersionPMService } from "Workflow/Services/StandardPMs/WorkFlowVersionPMService";
 
 @Component({
     templateUrl: "./WorkflowBuilderComponent.html"
@@ -33,30 +30,21 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
 
     public ReactFlowInstance: any = null;
     public EntityPM: WorkFlowPM = null;
+    public EntityId: string;
     public ValidVersion: WorkFlowVersionPM = null;
     public CurrentVersionId: string = null;
+    public WorkflowName: string;
     public WorkflowEntity: string = null;
     public BusyIndicatorText: string = null;
     public ShowBusyIndicator: boolean = false;
     public BusyIndicatorWidth: number = 200;
-    public BackButtonLable: string = "Workflows";
-    public WorkflowName: string;
     public ValidationErrorsList: string[] = [];
+    public FlowObjectFields: ObjectFieldList[] = [];
     public ReturnPropertiesDataEventKey: string = "returnPropertiesDataEventKey_" + (Date.now())?.toString();
     public returnDeleteNodeConfirmationEventKey: string = "returnDeleteNodeConfirmationEventKey_" + (Date.now())?.toString();
     public HasChanges = false;
 
-    public IsSaveDisabled: boolean = true;
-    public IsSaveAsDisabled: boolean = true;
-    public IsActivateDisabled: boolean = true;
-    public ActivateButtonTitle: string = "Activate";
-
-    public FlowObjectFields: ObjectFieldList[] = [];
-
     public WorkFlowPMService: WorkFlowPMService = new WorkFlowPMService();;
-    public WorkFlowVersionPMService: WorkFlowVersionPMService = new WorkFlowVersionPMService();
-
-    private CurrentSession = SessionLocator.SelectedSession;
     private TabSelectedEvent: any = null;
 
     @Output() BackCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -64,11 +52,12 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
-        this.setVersion(this.getValidVersion())
-        this.Listen()
+        this.EntityId = this.entityArgs.EditComponent.EntityId;
     }
 
     ngOnInit() {
+        this.loadWorkflow(true);
+        this.Listen()
     }
 
     ngOnDestroy() {
@@ -102,69 +91,61 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
                 theMessage => {
                     if (theMessage == "WorkflowVersionsUpdated") {
                         this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, HasChanges: false }
-                        this.loadWorkflowForUpdatedVersion();
+                        this.loadWorkflow(false);
                     }
                 }
             );
         }
     }
 
-    setVersion(version: WorkFlowVersionPM | null) {
-        if (version) {
-            this.ValidVersion = version;
-            this.setCurrentDisplayedVersion(version.Id)
-            this.loadWorkflow(false);
+    loadWorkflow(isNewWorkflow: boolean) {
+        if (this.EntityId) {
+            this.startBusyIndicator("Loading ...");
+            this.WorkFlowPMService.get(this.EntityId).subscribe((serviceResponse: ServiceResponse) => { this.handleGetWorkflowResponse(serviceResponse, isNewWorkflow); });
         }
     }
 
-    loadWorkflow(resetWorkflow: boolean) {
-        if (this.EntityPM) {
-            this.WorkFlowPMService.get(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) => { this.handleGetWorkflowResponse(serviceResponse, resetWorkflow); });
+    handleGetWorkflowResponse(serviceResponse: ServiceResponse, isNewWorkflow) {
+        if (isNewWorkflow) {
+            this.setNewWorkflow(serviceResponse)
+        } else {
+            this.setUpdatedWorkflow(serviceResponse)
         }
     }
 
-    handleGetWorkflowResponse(serviceResponse: ServiceResponse, resetWorkflow: boolean) {
-        this.EntityPM.WorkFlowVersions = serviceResponse.Result.WorkFlowVersions
-        if (resetWorkflow) {
-            this.ValidVersion = this.getValidVersion();
-            this.setCurrentDisplayedVersion(this.ValidVersion.Id)
-        }
+    setNewWorkflow(serviceResponse: ServiceResponse) {
+        this.EntityPM = serviceResponse.Result
+        this.entityArgs.EntityPM = serviceResponse.Result
+        this.entityArgs.EditComponent.EntityPM = serviceResponse.Result
+        this.ValidVersion = this.getValidVersion();
+        this.setCurrentDisplayedVersion(this.ValidVersion.Id)
         this.handleRenderReactWorkflow();
     }
+
+    setUpdatedWorkflow(serviceResponse: ServiceResponse) {
+        this.EntityPM.WorkFlowVersions = serviceResponse.Result.WorkFlowVersions
+        var updatedVersion = this.entityArgs.EditComponentArgument?.UpdatedVersion!
+        var version = this.EntityPM.WorkFlowVersions.find(e => e.Id == updatedVersion);
+        this.DisplayGivenVersion(version);
+    }
+
 
     DisplayGivenVersion(version: WorkFlowVersionPM) {
         if (version) {
             this.ValidVersion = version;
             this.setCurrentDisplayedVersion(version.Id)
-
             ReactDOM.unmountComponentAtNode(this.containerRef.nativeElement);
-
             this.handleRenderReactWorkflow();
         }
     }
 
     handleRenderReactWorkflow() {
-        this.startBusyIndicator("Loading ...");
         this.WorkflowName = this.EntityPM.Name;
         this.WorkflowEntity = this.ValidVersion.Entity;
         this.renderReactFlowModeler();
         this.loadObjectFields();
         this.entityArgs.SendMessage("RefreshWorkflowShortTitle");
         this.entityArgs.SendMessage("RefreshWorkflowButtons");
-    }
-
-    loadWorkflowForUpdatedVersion() {
-        if (this.EntityPM) {
-            this.startBusyIndicator("Loading ...");
-            this.WorkFlowPMService.get(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) => { this.handleWorkflowForUpdatedVersion(serviceResponse); });
-        }
-    }
-
-    handleWorkflowForUpdatedVersion(serviceResponse: ServiceResponse) {
-        this.EntityPM.WorkFlowVersions = serviceResponse.Result.WorkFlowVersions
-        var updatedVersion = this.entityArgs.EditComponentArgument?.UpdatedVersion!
-        var version = this.EntityPM.WorkFlowVersions.find(e => e.Id == updatedVersion);
-        this.DisplayGivenVersion(version);
     }
 
     setCurrentDisplayedVersion(versionId: string) {
