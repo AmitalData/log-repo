@@ -2623,7 +2623,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                     currencyCode = quoteSaleChargePM.CurrencyCode;
                     vATAmount += quoteSaleChargePM.VatAmount != null ? (double)quoteSaleChargePM.VatAmount : 0;
                     subtotalAmount += (quoteSaleChargePM.SaleTotalAmount != null ? quoteSaleChargePM.SaleTotalAmount : 0);
-                    vATPercentage += quoteSaleChargePM.VatPercentage + " %, ";
+                    vATPercentage += quoteSaleChargePM.VatPercentage + " % ,";
                 }
 
                 vATPercentage = vATPercentage.TrimEnd(',');
