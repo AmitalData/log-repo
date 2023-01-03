@@ -870,6 +870,11 @@
 			"FieldCode" : ""
 		},
 		{
+			"TextCode": "Shipment.G.DocumentType",
+			"DefaultText": "Type",
+			"FieldCode" : ""
+		},
+		{
 			"TextCode": "Shipment.G.ContainerNumber",
 			"DefaultText": "Container number",
 			"FieldCode" : "Shipment.ContainerNumber"
@@ -1205,6 +1210,16 @@
 			"FieldCode" : ""
 		},
 		{
+			"TextCode": "Shipment.G.UploadDocument",
+			"DefaultText": "Upload document",
+			"FieldCode" : ""
+		},
+		{
+			"TextCode": "Shipment.G.RequiredDocumentMessage",
+			"DefaultText": "This document is required",
+			"FieldCode" : ""
+		},
+		{
 			"TextCode": "Shipment.G.CancelButton",
 			"DefaultText": "Cancel",
 			"FieldCode" : ""
@@ -1303,6 +1318,11 @@
            "TextCode": "Shipment.F.IncotermName",
            "DefaultText": "Incoterm",
            "FieldCode": "Shipment.IncotermName"
+       },
+	   {
+           "TextCode": "Shipment.F.ChooseTypePlaceholder",
+           "DefaultText": "Choose type",
+           "FieldCode": ""
        }]');
 	  
 	declare @invocieObjectTableId as varchar(15)
@@ -1332,6 +1352,11 @@
 				"FieldCode": "ARInvoice.DueDate"
 			},
 			{
+				"TextCode": "ARInvoice.G.InvoiceNumber",
+				"DefaultText": "Invoice number",
+				"FieldCode": ""
+			},
+			{
 				"TextCode": "ARInvoice.G.TotalAmount",
 				"DefaultText": "Total Amount",
 				"FieldCode": ""
@@ -1359,6 +1384,15 @@
 			{
 				"TextCode": "ARInvoice.G.Unpaid",
 				"DefaultText": "Unpaid",
+				"FieldCode": ""
+			},
+			{
+				"TextCode": "ARInvoice.G.Paid",
+				"DefaultText": "Paid",
+				"FieldCode": ""
+			},{
+				"TextCode": "ARInvoice.G.PartiallyPaid",
+				"DefaultText": "Partially paid",
 				"FieldCode": ""
 			},
 			{
