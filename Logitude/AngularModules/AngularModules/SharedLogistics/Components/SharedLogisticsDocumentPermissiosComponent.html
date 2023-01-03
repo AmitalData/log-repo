@@ -213,7 +213,7 @@
                                             </table>
                                         </div>
                                     </div>
-                                    <!--Tab 3: Customer Update-->
+                                    <!--Tab 3: Customer Upload-->
                                     <div class="MediaFillRelative" [hidden]="SelectedTabCode != 'CUA'">
                                         <div class="MediaFillAbsolute">
                                             <table>
@@ -233,7 +233,7 @@
                                                                                             <table>
                                                                                                 <tr>
                                                                                                     <td style="width: 100%; min-width: 100%;text-align:left">Document Name</td>
-                                                                                                    <td style="width: 70px; min-width: 100px; text-align: left ">Customer Update</td>
+                                                                                                    <td style="width: 70px; min-width: 100px; text-align: left ">Customer Upload</td>
                                                                                                 </tr>
                                                                                             </table>
                                                                                         </div>
@@ -249,7 +249,7 @@
                                                                                                                             <td class="GridViewCell" style="width: 100%; min-width: 100%; max-width: 100%; position: relative;">
                                                                                                                                 {{item.DocumentTypeName}}
                                                                                                                             </td>
-                                                                                                                        
+
                                                                                                                             <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px; position: relative;">
                                                                                                                                 <div class="CheckBox">
                                                                                                                                     <input [attr.data-cy]="item.DocumentTypeName" class="CenterCenter" style="text-align:center" [attr.id]="item.CustomerPermissionCheckedBoxId" type="checkbox" [(ngModel)]="item.CustomerPermissionIsChecked" />
