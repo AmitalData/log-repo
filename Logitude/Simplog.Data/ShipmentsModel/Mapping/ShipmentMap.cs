@@ -28,7 +28,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.CustomFileNumber).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ConsigneeReference1).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.ConsigneeReference2).HasMaxLength(50).IsUnicode(false);
-            this.Property(t => t.ConsigneeReference3).HasMaxLength(300).IsUnicode(false);
+            this.Property(t => t.ConsigneeReference3).HasMaxLength(300).IsUnicode(true);
             this.Property(t => t.House).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.CASSCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.BranchId).IsRequired().HasMaxLength(15).IsUnicode(false);
