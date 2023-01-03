@@ -1,6 +1,8 @@
 ﻿
+using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
+using Logitude.CustomsMessaging.Dca.Restore9100;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +22,29 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             int messageRestoreCount = 0;
             var succeeded = false;
+            if (customResponse.OutgoingMessage==null)
+            {
+
+            }
+            else
+            {
+                var _CustomsSettingPM  = CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant);
+
+                var interfaceTypeQueryService = new InterfaceTenantDefinitionQueryService(_CustomsSettingPM.Tenant);
+                //interfaceTypeQueryService.GetInterfaceManagementwithDefinition(_CustomsSettingPM.Tenant);
+                ////var interfaceTenantDefinitionQueryService = new InterfaceTenantDefinitionQueryService(_CustomsSettingPM.Tenant);
+
+                var _AllInterface = interfaceTypeQueryService.GetWithInterfaceManagementDefinition(_CustomsSettingPM.Tenant);
+
+
+                var _InterfaceListDCA = interfaceTypeQueryService.GetInterfaceListDCA(_AllInterface, _CustomsSettingPM.CompanyType);
+
+
+                var outgoingMessage9100ResponseAnalyze = new OutgoingMessage9100ResponseAnalyze(_CustomsSettingPM, _InterfaceListDCA);
+
+                outgoingMessage9100ResponseAnalyze.SaveInDB(customResponse.OutgoingMessage.ToList());
+
+            }
             //if (customResponse.MessageRestoreResponseOutput != null)
             //{
             //    succeeded = true;

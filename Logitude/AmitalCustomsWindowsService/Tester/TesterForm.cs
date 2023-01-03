@@ -6,6 +6,7 @@ using CustomsWorkerRole.Test;
 using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.Messaging;
 using Logitude.Customs.BL.Messaging.Maman;
+using Logitude.CustomsMessaging.Dca.Restore9100;
 using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.CustomsMessaging.RabbitMQ;
 using Logitude.CustomsMessaging.ResponseServices;
@@ -320,6 +321,7 @@ namespace AmitalCustomsWindowsService.Tester
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+
             try
             {
                 clsTester.TestUpdateLOGITUDE_FILE();
@@ -338,7 +340,10 @@ namespace AmitalCustomsWindowsService.Tester
 
 
 
-            Logitude.CustomsMessaging.Dca.RestoreWaitingImport.RestoreWaitingImportMessagesService.TestMe();
+            //Logitude.CustomsMessaging.Dca.RestoreWaitingImport.RestoreWaitingImportMessagesService.TestMe();
+
+            ///RestoreWaitingImportMessagesService.TestMe();
+
             return;
 
             clsTester.HSMSignTests();
