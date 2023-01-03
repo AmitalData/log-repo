@@ -575,8 +575,8 @@
 			"TextCode": "General.G.DownloadData",
 			"DefaultText": "Download data",
 			"FieldCode" : ""
-		}
-		,{
+		},
+		{
 			"TextCode": "General.G.AllTime",
 			"DefaultText": "All Time",
 			"FieldCode": ""
@@ -870,7 +870,7 @@
 			"FieldCode" : ""
 		},
 		{
-			"TextCode": "Shipment.G.DocumentType",
+			"TextCode": "Shipment.G.Type",
 			"DefaultText": "Type",
 			"FieldCode" : ""
 		},
