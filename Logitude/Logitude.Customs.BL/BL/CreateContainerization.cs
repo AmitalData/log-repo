@@ -33,10 +33,7 @@ namespace Logitude.Customs.BL.BL
             var containerizationListKeys = new List<string>();
             ContainerizationRepository containerizationRepository = new ContainerizationRepository(context);
             ContainerizationQueryService containerizationQueryService = new ContainerizationQueryService(containerizationRepository);
-            if (list.Count == 0)
-            {
-                return null;
-            }
+
             foreach (var dec in list)
             {
 

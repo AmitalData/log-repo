@@ -489,136 +489,130 @@ export class NewContainerizationComponent extends BaseComponent {
         myConfirmWindow.YesButtonText = "המשך"
         myConfirmWindow.NoButtonText = "חזור"
         myConfirmWindow.Width = 400;
-        
-     if (this.entityPM.Id != null&&this.entityPM.ContainerizationStatus!="3") {
-        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+
+        if (this.entityPM.Id != null && this.entityPM.ContainerizationStatus != "3") {
+            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
             this.declarationWebService.GetIsConsignmentConectContainerization(
-               this.entityPM.Tenant, ArrayDeclartiosId,this.entityPM.Id,this.entityPM.CargoTypeCode,this.entityPM.ManifestNumber,this.entityPM.SecondCargoID,this.entityPM.ThirdCargoID
-                ).subscribe(res => {
-                  
-                if (res.Result.length==0) {
+                this.entityPM.Tenant, ArrayDeclartiosId, this.entityPM.Id, this.entityPM.CargoTypeCode, this.entityPM.ManifestNumber, this.entityPM.SecondCargoID, this.entityPM.ThirdCargoID
+            ).subscribe(res => {
+
+                if (res.Result.length == 0) {
                     myConfirmWindow.Show(`שם לב , אין מזהה מטען משותף שמאפשר את ההמכלה של ההצהרה/ות שנבחרה/ו`);
-                    myConfirmWindow.IsYesEnabled=false;
+                    myConfirmWindow.IsYesEnabled = false;
                     SessionLocator.SelectedSession.StopBusyIndicator();
                     return;
 
                 }
-                else{
-                            
-                            this.entityPM.ConnectedDeclarations = this.containerizationExtendedListService.ConnectedDeclarations;
-                            this.entityPM.OperationMode = "2";
-                            this.entityPM.IsChange = true;
-                            SessionLocator.SelectedSession.CurrentEditComponent.EntityPM = this.entityPM;
-                            DeclarationEventManager.AddDeclarationToContainerization.emit(null);
-                            SessionLocator.SelectedSession.StopBusyIndicator();
-                            this.CurrentSession.CurrentWindow.Close("0");
-                        
+                else {
+
+
+                     var ConnectedDeclarations =""  ;
+                    res.Result.forEach(a=>ConnectedDeclarations+=a);
+                    this.entityPM.ConnectedDeclarations = ConnectedDeclarations;
+                    this.entityPM.OperationMode = "2";
+                    this.entityPM.IsChange = true;
+                    SessionLocator.SelectedSession.CurrentEditComponent.EntityPM = this.entityPM;
+                    DeclarationEventManager.AddDeclarationToContainerization.emit(null);
+                    SessionLocator.SelectedSession.StopBusyIndicator();
+                    this.CurrentSession.CurrentWindow.Close("0");
+
                 }
             });
 
 
         }
-        else{
-
-        if(ArrayDeclartiosId.length-1==1){
-            myConfirmWindow.Show(`שים לב , תהליך המכלה מצריך יותר מהצהרה אחת`);
-            myConfirmWindow.IsYesEnabled=false;
-           
-        }
-        else{
-            var windowArgs: any = {};
-           
-            var logitudeWindow = new LogitudeWindow();
-            logitudeWindow.Height = 200;
-            logitudeWindow.Width = 250;
-            logitudeWindow.ShowCloseButton = true;
-            logitudeWindow.Title = "הצהרת סוכן";
+        else {
 
 
-            logitudeWindow.WindowArgs = windowArgs;
-            logitudeWindow.ComponentLoaded.subscribe(comp => {
-                logitudeWindow.WindowClosed.subscribe((event: any) => {
-                    if (event != null) {
-                        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-                        if (event == "true") {
-                            this.entityPM.AgentDeclaration = true;
-                        } else {
-                            this.entityPM.AgentDeclaration = false;
-                        }
-                        this.entityPM.ConnectedDeclarations = this.containerizationExtendedListService.ConnectedDeclarations;
-                      this.containerizationExtendedListService.CreateContainerizations(this.entityPM).subscribe((response: ServiceResponse) => {
-                        
-                     if(response.Result.list==null){
-                        SessionLocator.SelectedSession.StopBusyIndicator();
-                        myConfirmWindow.Show(`שם לב , תהליך המכלה דורש מזהה מטען זהה לפחות בין 2 ההצהרות`);
-                        myConfirmWindow.IsYesEnabled=false;
-                         
-                     }
-                     else {
-                        if(response.Result.list[0].Id=="0"){
-                            SessionLocator.SelectedSession.StopBusyIndicator();
-                            myConfirmWindow.Show(`מתוך המכלה מבוטלת ניתן לעדכן המכלה אחת בלבד`);
-                            myConfirmWindow.IsYesEnabled=false;
-                             
-                         }
-                         else {
-                            let confirmWindow = new ConfirmWindow();
-                            confirmWindow.Title = "המכלות שנוצרו";
-                            confirmWindow.Width = 350;
-                            confirmWindow.Height = 200;
-                            confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-                            confirmWindow.ShowNoButton=false;
-                            SessionLocator.SelectedSession.StopBusyIndicator();
-                    
-                            if(response.Result.list.length==1){
-    
-                                var ContainerizationNumber=response.Result.list[0].ContainerizationNumber;
-                                var msg = 'נוצרה סה"כ '+ response.Result.list.length +" המכלה: "+ ContainerizationNumber;
-                                
-                                confirmWindow.Show(msg);
-    
-                                confirmWindow.WindowClosed.subscribe((event: any) => {
-                                     if(confirmWindow.Yes == true){
-                                this.CurrentSession.CurrentWindow.Close("0");
-                                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
-                                    .then(cmpRef => {
-                                        cmpRef.instance.ComponentRef = cmpRef;
-                                    cmpRef.instance.Run({
 
-                                        EntityId: response.Result.list[0].Id,
-                                        ObjectTableName: "Customs.Containerization"
-                                    });
-                                });       
+                var windowArgs: any = {};
+
+                var logitudeWindow = new LogitudeWindow();
+                logitudeWindow.Height = 200;
+                logitudeWindow.Width = 250;
+                logitudeWindow.ShowCloseButton = true;
+                logitudeWindow.Title = "הצהרת סוכן";
+
+
+                logitudeWindow.WindowArgs = windowArgs;
+                logitudeWindow.ComponentLoaded.subscribe(comp => {
+                    logitudeWindow.WindowClosed.subscribe((event: any) => {
+                        if (event != null) {
+                            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+                            if (event == "true") {
+                                this.entityPM.AgentDeclaration = true;
+                            } else {
+                                this.entityPM.AgentDeclaration = false;
                             }
-                           });
-                          }
-                        else{
-                             response.Result.list.forEach(element => {
-                                containerizationNumberList+=(element.ContainerizationNumber+",");
-                                containerizationIdList+=(element.Id+",")
-                             });
-                             containerizationNumberList = containerizationNumberList.substring(0, containerizationNumberList.length - 1);
-                             containerizationIdList = containerizationIdList.substring(0, containerizationIdList.length - 1);
-                             var msg='נוצרו סה"כ '+ response.Result.list.length +" המכלות: "+containerizationNumberList;
-                            
-                             confirmWindow.Show(msg);
+                            this.entityPM.ConnectedDeclarations = this.containerizationExtendedListService.ConnectedDeclarations;
+                            this.containerizationExtendedListService.CreateContainerizations(this.entityPM).subscribe((response: ServiceResponse) => {
 
-                             confirmWindow.WindowClosed.subscribe((event: any) => {
-                                  if(confirmWindow.Yes == true){
-                                   this.CurrentSession.CurrentWindow.Close(containerizationIdList);
-                                 }
-                               });
 
-                        } 
-                    }
-                    }
-               });
-            }
-        });
-           });
-           logitudeWindow.Show('./CustomsModules/CustomsContainerization/Components/Other/AgentStatementContainerization');
+
+                                    if (response.Result.list[0].Id == "0") {
+                                        SessionLocator.SelectedSession.StopBusyIndicator();
+                                        myConfirmWindow.Show(`מתוך המכלה מבוטלת ניתן לעדכן המכלה אחת בלבד`);
+                                        myConfirmWindow.IsYesEnabled = false;
+
+                                    }
+                                    else {
+                                        let confirmWindow = new ConfirmWindow();
+                                        confirmWindow.Title = "המכלות שנוצרו";
+                                        confirmWindow.Width = 350;
+                                        confirmWindow.Height = 200;
+                                        confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                                        confirmWindow.ShowNoButton = false;
+                                        SessionLocator.SelectedSession.StopBusyIndicator();
+
+                                        if (response.Result.list.length == 1) {
+
+                                            var ContainerizationNumber = response.Result.list[0].ContainerizationNumber;
+                                            var msg = 'נוצרה סה"כ ' + response.Result.list.length + " המכלה: " + ContainerizationNumber;
+
+                                            confirmWindow.Show(msg);
+
+                                            confirmWindow.WindowClosed.subscribe((event: any) => {
+                                                if (confirmWindow.Yes == true) {
+                                                    this.CurrentSession.CurrentWindow.Close("0");
+                                                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
+                                                        .then(cmpRef => {
+                                                            cmpRef.instance.ComponentRef = cmpRef;
+                                                            cmpRef.instance.Run({
+
+                                                                EntityId: response.Result.list[0].Id,
+                                                                ObjectTableName: "Customs.Containerization"
+                                                            });
+                                                        });
+                                                }
+                                            });
+                                        }
+                                        else {
+                                            response.Result.list.forEach(element => {
+                                                containerizationNumberList += (element.ContainerizationNumber + ",");
+                                                containerizationIdList += (element.Id + ",")
+                                            });
+                                            containerizationNumberList = containerizationNumberList.substring(0, containerizationNumberList.length - 1);
+                                            containerizationIdList = containerizationIdList.substring(0, containerizationIdList.length - 1);
+                                            var msg = 'נוצרו סה"כ ' + response.Result.list.length + " המכלות: " + containerizationNumberList;
+
+                                            confirmWindow.Show(msg);
+
+                                            confirmWindow.WindowClosed.subscribe((event: any) => {
+                                                if (confirmWindow.Yes == true) {
+                                                    this.CurrentSession.CurrentWindow.Close(containerizationIdList);
+                                                }
+                                            });
+
+                                        }
+                                    }
+
+                            });
+                        }
+                    });
+                });
+                logitudeWindow.Show('./CustomsModules/CustomsContainerization/Components/Other/AgentStatementContainerization');
+
         }
-    }
     }
 
 
