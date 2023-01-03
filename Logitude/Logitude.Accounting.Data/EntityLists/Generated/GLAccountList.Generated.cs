@@ -327,6 +327,10 @@ namespace Logitude.Accounting.Data.EntityLists
         public bool IsMainGLAccount { get; set; }
         [DataMember]
         public bool IsSplitGLAccout { get; set; }
+        [DataMember]
+        public decimal? Obligo { get; set; }
+        [DataMember]
+        public decimal? CreditUsed { get; set; }
     }
 
 }
