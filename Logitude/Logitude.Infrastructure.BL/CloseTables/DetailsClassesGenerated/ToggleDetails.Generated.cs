@@ -804,6 +804,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "CTL,Login Cargo Tracking", 
                 Description = "Cargo Tracking Login For Normal Users", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "AR Invoice Printing", 
+                Code = "ARP", 
+                SearchFields = "ARP,AR Invoice Printing", 
+                Description = "AR Invoice Printing", 
+			});
 			
             return all;
        }

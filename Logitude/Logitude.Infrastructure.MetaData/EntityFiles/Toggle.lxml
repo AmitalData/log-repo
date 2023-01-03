@@ -41,7 +41,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;e1e0&quot;"
+  Code="&quot;618d&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -889,6 +889,11 @@
       Name="&quot;Login Cargo Tracking&quot;"
       SearchFields="&quot;CTL,Login Cargo Tracking&quot;"
       Description="&quot;Cargo Tracking Login For Normal Users&quot;" />
+    <Record
+      Name="&quot;AR Invoice Printing&quot;"
+      Code="&quot;ARP&quot;"
+      SearchFields="&quot;ARP,AR Invoice Printing&quot;"
+      Description="&quot;AR Invoice Printing&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
