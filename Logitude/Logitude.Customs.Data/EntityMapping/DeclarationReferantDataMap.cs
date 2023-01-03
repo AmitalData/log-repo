@@ -47,7 +47,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.WithPaper).HasColumnName("WithPaper");
 
-            this.Property(t => t.IsClosedForFollowUp).HasColumnName("IsClosedForFollowUp").HasMaxLength(1).IsUnicode(false);
+            this.Property(t => t.IsClosedForFollowUp).HasColumnName("IsClosedForFollowUp").IsRequired().HasMaxLength(1).IsUnicode(false);
 
             this.Property(t => t.IsClassificationRemarks).HasColumnName("IsClassificationRemarks");
 

@@ -30,6 +30,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using Logitude.Customs.BL.TraceEvents;
 using Simplog.Data.CommonDataModel;
+using System.Data.Entity;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -116,10 +117,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             myEventContextTagModel.EventCode = "RSG";
                             myEventContextTagModel.StatusDateTime = statusDateTime;
                             declarationPM.DeclarationStatusTypeCode = "7";
+
+                            this.CloseCustomsCollateral(declarationPM);
                            
                             ICommonDataContext commonDbContext = CommonDataContext.GetContext(declarationPM.Tenant);
                             UserRepository userRepository = new UserRepository(commonDbContext);
                             var user = userRepository.GetSingleUserByCode("MEHES", declarationPM.Tenant, true);
+
 
                             var setting = CustomsSettingQueryService.GetSettingByTenant(declarationPM.Tenant);
                             
@@ -407,5 +411,29 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         }
 
+        private void CloseCustomsCollateral(DeclarationPM dec)
+        {
+            ICustomContext dbContext = CustomContext.GetContext(dec.Tenant);
+            var CustomsCollateralQueryService = new CustomsCollateralQueryService(dbContext);
+            var DecList = new List<string>();
+            DecList.Add(dec?.AmendmentOriginalDeclartation);
+            DecList.Add(dec?.Id);
+            var CollList = CustomsCollateralQueryService.GetDecCollListByOriginalDecId(DecList, dec.Tenant);
+            var customsCollateralUpdateService = new CustomsCollateralUpdateService(dbContext, new Dictionary<string, IContext>(), dec.Tenant);
+
+            if (CollList != null && CollList.Count > 0)
+            {
+                foreach(var Coll in CollList)
+                {
+                    if (!Coll.IsClosed)
+                    {
+                        Coll.IsClosed = true;
+                        Coll.ChangeSetOp = ChangeSetOperation.Update;
+                        customsCollateralUpdateService.Update(Coll,true);
+
+                    }
+                }
+            }
+        }
     }
 }

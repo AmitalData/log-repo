@@ -2056,6 +2056,21 @@ export class DeclarationWebService {
         // return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
         return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
     }
+
+
+    public GetGoldPaymentDefaults(CustomerCode: string): Promise<GoldPaymentDefaults> {
+        const ajax: Observable<any> = this._http.get(
+            this._apiUrl + "/GetGoldPaymentDefaults/?CustomerCode=" + CustomerCode
+            ,
+            {
+                headers: ServiceHelper.GetHttpHeaders().headers,
+                params: { CustomerCode: CustomerCode }
+            }
+        );
+
+        // return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
+        return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
+    }
 }
 
 
@@ -2077,4 +2092,8 @@ export interface ExportStorageConnectToDeclaration {
     Connect: number;
     CustomsStatus: number;
     ActionCode: number;
+}
+export interface GoldPaymentDefaults {
+    CustomerDefaultGoldPay_CIM_GOLD_PAY: string
+    CompanyDefaultMaxPayMASAV_CGG_MAX_AGT_PAY: string
 }
