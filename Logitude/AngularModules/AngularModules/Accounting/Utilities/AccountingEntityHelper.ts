@@ -1,7 +1,6 @@
-
 export class AccountingEntityHelper {
 
-    static getEntityIcon(_sourceTypeCode: string){
+    static getEntityIcon(_sourceTypeCode: string) {
         var iconTxt = "";
         switch (_sourceTypeCode) {
             // 1-Journal
@@ -77,90 +76,91 @@ export class AccountingEntityHelper {
         return iconTxt;
     }
 
-    static getEntityObjectTableName(_sourceTypeCode: string){
-        var tableName = "Journal";
+    static getEntityObjectTableName(sourceTypeCode: string) {
+        let tableName = 'Journal';
 
-        switch (_sourceTypeCode) {
+        switch (sourceTypeCode) {
             // 1-Journal
-            case "1": {
-                tableName = "Journal";
+            case '1': {
+                tableName = 'Journal';
                 break;
             }
 
             // 2-ARInvoice
-            case "2": {
-                tableName = "ARInvoice";
+            case '2': {
+                tableName = 'ARInvoice';
                 break;
             }
 
             // 3-ARPayment
-            case "3": {
-                tableName = "ARPayment";
+            case '3': {
+                tableName = 'ARPayment';
 
                 break;
             }
 
             // 4-APInvoice
-            case "4": {
-                tableName = "APInvoice";
+            case '4': {
+                tableName = 'APInvoice';
 
                 break;
             }
 
             // 5-APPayment
-            case "5": {
-                tableName = "APPayment";
+            case '5': {
+                tableName = 'APPayment';
 
                 break;
             }
 
             // 6-Cheque Deposit
-            case "6": {
-                tableName = "BankDeposit";
+            case '6': {
+                tableName = 'BankDeposit';
 
                 break;
             }
 
             // 7-Cash Deposit
-            case "7": {
-                tableName = "BankDeposit";
+            case '7': {
+                tableName = 'BankDeposit';
 
                 break;
             }
 
             // 8-Revaluation
-            case "8": {
-                tableName = "Revaluation";
+            case '8': {
+                tableName = 'Revaluation';
 
                 break;
             }
 
             // 9-PaymentCheque
-            case "9": {
-                tableName = "PaymentCheque";
+            case '9': {
+                tableName = 'PaymentCheque';
 
                 break;
             }
 
             // 10-Adjustment
-            case "10": {
-                tableName = "Reconciliation";
+            case '10': {
+                tableName = 'Reconciliation';
 
                 break;
             }
-            // 10-YearTransfer
-            case "11": {
-                tableName = "Journal";
+
+            // 11-InterestReport
+            case '11': {
+                tableName = 'InterestReport';
 
                 break;
             }
-            case "12": {
-               tableName = "ExternalReconciliation";
+            case '12': {
+               tableName = 'ExternalReconciliation';
 
                break;
             }
             case AccountingEntityValues.TaxReport: {
-                tableName = "TaxReport";
+                tableName = 'TaxReport';
                 break;
             }
 
@@ -168,7 +168,6 @@ export class AccountingEntityHelper {
         return tableName;
 
     }
-
 
 
 }
