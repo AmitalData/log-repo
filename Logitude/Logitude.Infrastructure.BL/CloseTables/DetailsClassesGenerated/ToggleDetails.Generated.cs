@@ -780,6 +780,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "NWR,Run worker on new environment", 
                 Description = "Run worker on new environment'' ", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "AR Invoice Printing", 
+                Code = "ARP", 
+                SearchFields = "ARP,AR Invoice Printing", 
+                Description = "AR Invoice Printing", 
+			});
 			
             return all;
        }
