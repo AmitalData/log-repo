@@ -772,6 +772,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "XUP,Export To Excel Using Parallel", 
                 Description = "Export To Excel Using Parallel", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "NWR", 
+                Name = "Run worker on new environment'' ", 
+                SearchFields = "NWR,Run worker on new environment", 
+                Description = "Run worker on new environment'' ", 
+			});
 			
             return all;
        }

@@ -41,7 +41,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;5375&quot;"
+  Code="&quot;2bc2&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -869,6 +869,11 @@
       Name="&quot;Export To Excel Using Parallel&quot;"
       SearchFields="&quot;XUP,Export To Excel Using Parallel&quot;"
       Description="&quot;Export To Excel Using Parallel&quot;" />
+    <Record
+      Code="&quot;NWR&quot;"
+      Name="&quot;Run worker on new environment&quot; "
+      SearchFields="&quot;NWR,Run worker on new environment&quot;"
+      Description="&quot;Run worker on new environment&quot; " />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
