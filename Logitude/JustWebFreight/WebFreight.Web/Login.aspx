@@ -1515,7 +1515,7 @@
             let testNewEnvTenants = [951, 1022];
             let newSystemTenant = getCookie("newSystemTenant");
             if (newSystemTenant == "") {
-                if (document.location.href.indexOf("system.") > 0 || document.location.href.indexOf("staging.")) {
+                if (document.location.href.indexOf("system.") > 0 || document.location.href.indexOf("staging.") > 0) {
                     if (prodNewEnvTenants.indexOf(Tenant) >= 0) {
                         setCookie("newSystemTenant", Tenant, 70);
                     }
