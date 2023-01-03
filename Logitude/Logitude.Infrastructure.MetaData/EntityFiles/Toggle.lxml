@@ -41,7 +41,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;2bc2&quot;"
+  Code="&quot;e1e0&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -884,6 +884,11 @@
       Name="&quot;Run worker on new environment&quot; "
       SearchFields="&quot;NWR,Run worker on new environment&quot;"
       Description="&quot;Run worker on new environment&quot; " />
+    <Record
+      Code="&quot;LCT&quot;"
+      Name="&quot;Login Cargo Tracking&quot;"
+      SearchFields="&quot;CTL,Login Cargo Tracking&quot;"
+      Description="&quot;Cargo Tracking Login For Normal Users&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

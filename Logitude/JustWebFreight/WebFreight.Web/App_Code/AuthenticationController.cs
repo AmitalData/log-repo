@@ -881,6 +881,38 @@ namespace WebFreight.Web
 
                                 loginsList.Add(company);
                             }
+
+                            if (contact.IsUser && loginParameters.IsCargoTracking && FeatureToggleHelper.HasFeatureToggle("LCT",contact.GlobalTenantId))
+                            {
+                                bool licensed = true;
+                                if (globalTenant.TenantManagement.ManageLicencesPerUser)
+                                {
+                                    User user = (from a in commonDataContext.Users
+                                        where a.Id == contact.Id
+                                        select a).FirstOrDefault();
+
+                                    licensed = user.LicencedUser;
+
+                                }
+
+                                CompanyLogin company = new CompanyLogin()
+                                {
+                                    Email = contact.Email,
+                                    CompanyName = globalTenant.CompanyName + " (" + contact.GlobalTenantId + ")",
+                                    IsUser = true,
+                                    Tenant = contact.GlobalTenantId,
+                                    CardId = null,
+                                    CardType = null,
+                                    ContactId = contact.Id,
+                                    LicensedUser = licensed,
+                                    InternetAccess = contact.InternetAccess,
+                                    PrivateLabelId = globalTenant.PrivateLabelId
+                                };
+
+                                loginsList.Add(company);
+                            }
+
+
                             if (contact.InternetAccess)
                             {
                                 TenantRepository tenantRep = new TenantRepository(0);
