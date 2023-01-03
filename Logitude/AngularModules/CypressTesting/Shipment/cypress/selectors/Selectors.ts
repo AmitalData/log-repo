@@ -13,7 +13,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly MediaFillAbsolute = '.MediaFillAbsolute';
   public static readonly CloseBtn = '#CloseBtn';
   public static readonly DeleteAll = '#DeleteAll';
-  public static readonly ShipmentMoreList = '#MenuButtons';
+  public static readonly ShipmentMoreList = '[id="MenuButtons"]';
   public static readonly ShipmentTab = '#SHIP';
   public static readonly ContainersTab = '#CNFU';
   public static readonly ShipmentSearchBar = '#Shipment_Search';
@@ -420,7 +420,7 @@ public static readonly WarehouseOKBtn="#WarehouseOKBtn"
   public static readonly ReactivateShipmentButton = '#ShipmentBReactivateShipment';
   public static readonly SplitShipmentButton = '#ShipmentBSplitShipment';
   public static readonly OperationalCloseButton = '#ShipmentBOperationalClose';
-  public static readonly AccountllyCloseButton = '#ShipmentBAccountingClose';
+  public static readonly AccountllyCloseButton = '[id="ShipmentBAccountingClose"]';
   public static readonly OperationalReopenButton = '#ShipmentBOperationalReopen';
   public static readonly AccountllyReopenButton = '#ShipmentBAccountedReopen';
   public static readonly ConfirmActionButton = '#ConfirmAction';

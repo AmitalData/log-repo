@@ -77,7 +77,9 @@ Then("the house should create successfully", () => {
 
 Then("the house should connect successfully", () => {
     Actions.CheckBusyIndicator()
+    cy.wait(5000)
     Actions.ValidateCheckHouseCheckBox();
+    cy.wait(5000)
 });
 //#endregion
 When("close the master shipment operationally", () => {
@@ -99,7 +101,7 @@ Then("the house should close operationally successfully",()=>{
 })
 When('close master Accountly',()=>{
 
-    cy.BackButton('Shipment')
+    cy.get('[class="BackBottonBody"]').eq(1).click()
     cy.Click(ShipmentSelectors.ShipmentMoreList, null,true);
     cy.Click(ShipmentSelectors.AccountllyCloseButton, null);
     Actions.UpdateClosedShipment();
@@ -117,8 +119,8 @@ Then('the connected house should close successfully',()=>{
 })
 
 When('reopen master Accountly',()=>{
-    cy.BackButton('Shipment')
-    cy.Click(ShipmentSelectors.ShipmentMoreList, null,true);
+    cy.get('[class="BackBottonBody"]').eq(1).click()
+    cy.Click(ShipmentSelectors.ShipmentMoreList, null);
     cy.Click(ShipmentSelectors.AccountllyReopenButton, null);
     Actions.UpdateClosedShipment();
 })
