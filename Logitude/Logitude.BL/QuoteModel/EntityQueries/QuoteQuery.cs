@@ -2616,20 +2616,25 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 string currencyCode = "";
                 double? vATAmount = 0;
                 double? subtotalAmount = 0;
+                string vATPercentage = "";
                 List<QuoteSaleChargePM> quoteSaleCharges = quoteSaleChargesGrop.ToList();
                 foreach (QuoteSaleChargePM quoteSaleChargePM in quoteSaleCharges)
                 {
                     currencyCode = quoteSaleChargePM.CurrencyCode;
-
                     vATAmount += quoteSaleChargePM.VatAmount != null ? (double)quoteSaleChargePM.VatAmount : 0;
                     subtotalAmount += (quoteSaleChargePM.SaleTotalAmount != null ? quoteSaleChargePM.SaleTotalAmount : 0);
-
+                    vATPercentage += quoteSaleChargePM.VatPercentage + " %, ";
                 }
-                quoteSalesTotals.Add(new QuoteSalesAmountWithVATDetailsPM() { 
+
+                vATPercentage = vATPercentage.TrimEnd(',');
+
+                quoteSalesTotals.Add(new QuoteSalesAmountWithVATDetailsPM()
+                {
                     CurrencyCode = currencyCode,
                     SubtotalAmount = subtotalAmount,
-                    VATAmount = vATAmount, 
+                    VATAmount = vATAmount,
                     TotalAmount = subtotalAmount + vATAmount,
+                    VATPercentage = vATPercentage,
                 });
             }
 
