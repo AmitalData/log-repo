@@ -48,7 +48,7 @@ namespace CommunicationWorkerRole.Services.SAT
 
 					const string motivoCancelaOperation = "03";
 
-					ResultadoCancelacion resultadoCancelacion = conector.CancelaCFDI40(rfcEmisor, folioFiscal, motivoCancelaOperation, "No se llevó a cabo la operación");
+					ResultadoCancelacion resultadoCancelacion = conector.CancelaCFDI40(rfcEmisor, folioFiscal, motivoCancelaOperation, "");
 
 					if (resultadoCancelacion.Exitoso)
 					{
@@ -71,7 +71,7 @@ namespace CommunicationWorkerRole.Services.SAT
 					else
 					{
 						string transError = resultadoCancelacion.Descripcion;
-						if ((transError == "Comprobante ya está en proceso de cancelación" && resultadoCancelacion.TipoExcepcion == "EstatusSat") || transError == "El comprobante será cancelado")
+						if (transError.Contains("Comprobante ya está en proceso de cancelación") || transError == "El comprobante será cancelado")
 						{
 							waitingCommLog.CommunicationStatusTypeCode = "D";
 							waitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
