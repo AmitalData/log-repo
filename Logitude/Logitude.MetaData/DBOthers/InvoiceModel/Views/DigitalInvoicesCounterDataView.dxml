@@ -8,6 +8,7 @@
         where 
         IsPrinted = '1' 
         and IsConstituentInvoice = '0'
+		and StatusCode not in ('VD','DR','LL','AR','NT','CN')
         group by PartnerId,BillToId, Tenant;
 
 ]]>
