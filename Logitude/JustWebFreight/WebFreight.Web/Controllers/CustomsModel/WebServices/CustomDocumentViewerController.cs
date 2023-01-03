@@ -76,7 +76,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                     var pdfDocumentFillingId = externalDocumentRepository.GetSingleDocumentsFilingIdByDocumentId(documentId, tenant);
                     if (pdfDocumentFillingId != null)
                     {
-                        var TarDocumentId = documentRepository.GetDocumentIdByFileName(pdfDocumentFillingId);
+                        var TarDocumentId = documentRepository.GetDocumentIdByFileName(pdfDocumentFillingId, "tar");
                         if (TarDocumentId != null)
                         {
                             string documentExtension = up.GetFileExtension(TarDocumentId, tenant);

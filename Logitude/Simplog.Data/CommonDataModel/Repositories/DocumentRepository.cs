@@ -4,6 +4,7 @@ using System.Linq;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
+using System.Windows.Media;
 
 namespace Simplog.Data.CommonDataModel.Repositories
 {
@@ -61,11 +62,14 @@ namespace Simplog.Data.CommonDataModel.Repositories
                                      select a).ToList();
             return result;
         }
-        public string GetDocumentIdByFileName(string fileName)
+        public string GetDocumentIdByFileName(string fileName,string extension)
         {
-            return (from a in context.Documents
-                    where a.FileName.Contains(fileName)
-                    select a.Id).FirstOrDefault();
+            char[] delimiterChars = {  '-' };
+            int len= fileName.Length;
+            var query= (from a in context.Documents
+                    where a.Extension == extension && a.FileName.Substring(0, len) == fileName
+                    select a.Id);
+            return query.FirstOrDefault();
         }
 
         public void Add(Document entity)
