@@ -2,7 +2,7 @@
 
 namespace Logitude.BL.QuoteModel.EntityPMs
 {
-    public class QuoteSalesAmountWithVATDetails
+    public class QuoteSalesAmountWithVATDetailsPM
     {
         [Key]
         public string CurrencyCode { get; set; }
