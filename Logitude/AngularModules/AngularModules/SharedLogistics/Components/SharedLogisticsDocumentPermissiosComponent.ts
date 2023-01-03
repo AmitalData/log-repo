@@ -115,11 +115,11 @@ export class SharedLogisticsDocumentPermissiosComponent implements OnInit {
 
         if (!this.mySearchText) {
             myList = this.myTenantList;
-            documentUploadPermissiosLists = this.myTenantList.filter(a => a.IsDocIn);
+            documentUploadPermissiosLists = this.myTenantList.filter(a => a.IsDocIn && !a.InActive);
         }
         else {
             myList = this.myTenantList.filter(d => (d.Code && d.Code.toLowerCase().indexOf(this.mySearchText.toLowerCase()) > -1) || (d.Name && d.Name.toLowerCase().indexOf(this.mySearchText.toLowerCase()) > -1));
-            documentUploadPermissiosLists = this.myTenantList.filter(d => d.IsDocIn &&
+            documentUploadPermissiosLists = this.myTenantList.filter(d => d.IsDocIn && !d.InActive &&
                                                                                     ((d.Code && d.Code.toLowerCase().indexOf(this.mySearchText.toLowerCase()) > -1)
                                                                                     ||
                                                                                     (d.Name && d.Name.toLowerCase().indexOf(this.mySearchText.toLowerCase()) > -1)));
