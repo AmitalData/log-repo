@@ -189,6 +189,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             entityPM.CreatedByUserId = contact.Id;
             if (!entityPM.IsConnectedToUnifreight && entityPM.Direction != "E"  && entityPM.IsAmendment != true)
+
             {
                 entityPM.ReferentUserId = entityPM.CreatedByUserId;
             }

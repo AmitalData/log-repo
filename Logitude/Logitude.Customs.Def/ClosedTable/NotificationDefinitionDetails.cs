@@ -878,6 +878,7 @@ namespace Logitude.Customs.Def.ClosedTable
 
             });
 
+
             return all;
         }
 
