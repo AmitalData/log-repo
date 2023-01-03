@@ -2607,10 +2607,10 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             return entityPM;
         }
 
-        private List<QuoteSalesAmountWithVATDetails> ComputeQuoteSalesAmountWithVATDetails(QuotePM quotePM)
+        private List<QuoteSalesAmountWithVATDetailsPM> ComputeQuoteSalesAmountWithVATDetails(QuotePM quotePM)
         {
             IEnumerable<IGrouping<string, QuoteSaleChargePM>> quoteSaleChargesGroupLists = quotePM.QuoteSaleCharges.GroupBy(q => q.CurrencyCode);
-            var quoteSalesTotals = new List<QuoteSalesAmountWithVATDetails>();
+            var quoteSalesTotals = new List<QuoteSalesAmountWithVATDetailsPM>();
             foreach (IGrouping<string, QuoteSaleChargePM> quoteSaleChargesGrop in quoteSaleChargesGroupLists)
             {
                 string currencyCode = "";
@@ -2625,7 +2625,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                     subtotalAmount += (quoteSaleChargePM.SaleTotalAmount != null ? quoteSaleChargePM.SaleTotalAmount : 0);
 
                 }
-                quoteSalesTotals.Add(new QuoteSalesAmountWithVATDetails() { 
+                quoteSalesTotals.Add(new QuoteSalesAmountWithVATDetailsPM() { 
                     CurrencyCode = currencyCode,
                     SubtotalAmount = subtotalAmount,
                     VATAmount = vATAmount, 

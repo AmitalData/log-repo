@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 {
    public class QuoteUpdateClass
    {  		
-		public const string HashString = "26984ae59c6068153ea4f5866e836cd8";
+		public const string HashString = "883c8f14555e18655627b727aa6ccf87";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -25604,10 +25604,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "QuoteSalesAmountWithVATDetails",
 					  						ListPropertyPath =  "QuoteSalesAmountWithVATDetails",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
+					  						IsMulti =  true,
 					  						MultiTableName =  "QuoteSalesAmountWithVATDetails",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,

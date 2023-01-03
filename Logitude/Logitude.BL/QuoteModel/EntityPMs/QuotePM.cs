@@ -798,14 +798,14 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public List<CustomChildEntity> CustomChildEntities { get; set; }
 
 
-        private List<QuoteSalesAmountWithVATDetails> quoteSalesAmountWithVATDetails;
-        public List<QuoteSalesAmountWithVATDetails> QuoteSalesAmountWithVATDetails
+        private List<QuoteSalesAmountWithVATDetailsPM> quoteSalesAmountWithVATDetails;
+        public List<QuoteSalesAmountWithVATDetailsPM> QuoteSalesAmountWithVATDetails
         {
             get
             {
                 if (quoteSalesAmountWithVATDetails == null)
                 {
-                    quoteSalesAmountWithVATDetails = new List<QuoteSalesAmountWithVATDetails>();
+                    quoteSalesAmountWithVATDetails = new List<QuoteSalesAmountWithVATDetailsPM>();
                 }
 
                 return quoteSalesAmountWithVATDetails;
