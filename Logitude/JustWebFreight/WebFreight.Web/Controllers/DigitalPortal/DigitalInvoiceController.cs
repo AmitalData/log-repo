@@ -330,14 +330,28 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 newFilters.Tenant = authToken.Tenant;
                 var aRInvoiceQuery = new ARInvoiceQuery(authToken.Tenant);
-                var entityLists = aRInvoiceQuery.GetByFilters(newFilters);
+                ARInvoiceRepository arInvoiceRepository = new ARInvoiceRepository(tenant);
+                var invoicesCounter =  arInvoiceRepository.GetDigitalInvoicesCounterDataView(tenant);
+
+                var cardFilterValues = newFilters.CardId;
+                if (!string.IsNullOrWhiteSpace(cardFilterValues))
+                {
+                    var cardBillToIds = aRInvoiceQuery.GetCardBillToId(newFilters.CardId, tenant);
+                    if (cardBillToIds.Any())
+                    {
+                        cardFilterValues = cardFilterValues + "," + string.Join(",", cardBillToIds);
+                        invoicesCounter = invoicesCounter.Where(a => newFilters.CardId.Contains(a.PartnerId));
+                      
+                    }
+                    invoicesCounter = invoicesCounter.Where(a => cardFilterValues.Contains(a.BillToId));
+                }
 
                 var res = new InvoicesCounter
                 {
-                    MaxOpenAmount = entityLists.Max(a => a.AmountDue),
-                    MinOpenAmount = entityLists.Min(a => a.AmountDue),
-                    MaxTotalAmount = entityLists.Max(a => a.AmountInInvoiceCurrency),
-                    MinTotalAmount = entityLists.Min(a => a.AmountInInvoiceCurrency),
+                    MaxOpenAmount = invoicesCounter.Max(a=>a.MaxOpenAmount),
+                    MinOpenAmount = invoicesCounter.Min(a=>a.MinOpenAmount),
+                    MaxTotalAmount = invoicesCounter.Max(a => a.MaxTotalAmount),
+                    MinTotalAmount = invoicesCounter.Min(a => a.MinTotalAmount),
                 };
 
                 return Request.CreateResponse(HttpStatusCode.OK, res);

@@ -814,5 +814,13 @@ namespace Simplog.Data.InvoiceModel.Mocks
         public IDbSet<ARInvoiceAnalytic> ARInvoiceAnalytics => throw new NotImplementedException();
 
         public IDbSet<APInvoiceAnalytic> APInvoiceAnalytics => throw new NotImplementedException();
+
+        public IDbSet<DigitalInvoicesCounterDataView> DigitalInvoicesCounterDataView
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }
