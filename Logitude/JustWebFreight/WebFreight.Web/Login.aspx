@@ -1500,7 +1500,7 @@
 
             }
 
-            let newEnvTenants = [2889,341,1,42,1489 ];
+            let newEnvTenants = [2889,341,1,42,1489,0];
 
             let newSystemTenant = getCookie("newSystemTenant");
             if (newSystemTenant == "" && newEnvTenants.indexOf(Tenant) >= 0) {
