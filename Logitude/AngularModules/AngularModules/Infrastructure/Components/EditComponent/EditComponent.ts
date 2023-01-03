@@ -786,14 +786,14 @@ export class EditComponent implements OnDestroy {
         }
     }
 
-
-    private CheckEntityStatusTabsFeatures() {
-        if (this.ObjectTableName != "EntityStatus") return false;
+    private CheckTabVisibility() {
+        if (this.ObjectTableName != "EntityStatus" && this.ObjectTableName != "DeploymentPackage") return false;
+        let isAllowedUser = SessionLocator.LoggedUserPM.IsCustomerCare || SessionLocator.LoggedUserPM.IsDistributor;
+        if (this.ObjectTableName == "DeploymentPackage")
+            return isAllowedUser;
         let entityStatusFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EST")[0];
-        if (SessionLocator.LoggedUserPM.IsCustomerCare || SessionLocator.LoggedUserPM.IsDistributor || entityStatusFeatureToggle)
-            return true;
-        return false;
-    }
+        return (isAllowedUser && entityStatusFeatureToggle);
+      }
 
     FillTabsItemsSource(allTabs: any[]) {
 
@@ -828,7 +828,7 @@ export class EditComponent implements OnDestroy {
             else {
 
 
-                if (tab.Type == 'Custom' || this.CheckEntityStatusTabsFeatures() || FeatureLocator.IsFeatureGrantedByUniqeCode(tab.FeatureUniqeCode)) {
+                if (tab.Type == 'Custom' || this.CheckTabVisibility() || FeatureLocator.IsFeatureGrantedByUniqeCode(tab.FeatureUniqeCode)) {
 
                     if (this.ObjectTableName == "GLAccount") {
 
