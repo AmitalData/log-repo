@@ -1598,7 +1598,7 @@
 			{
 				"TextCode": "ARInvoice.G.InvocieType",
 				"DefaultText": "Invocie type",
-				"FieldCode": "ARInvoice.ShipmentsNumbers"
+				"FieldCode": ""
 			}]');
     ]]>       
   </Sql>
