@@ -44,12 +44,18 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 {
                     var accountingContext = AccountingContext.GetContext(tenant);
 
-                    var myGLAccountInterestActivationBalanceTask = new BatchReconciliationStageBTask(null);
+                    var myGLAccountInterestActivationBalanceTask = new BatchGLAccountInterestActivationBalanceTask(null);
                     string subj = $"GLAccount Interest Activation Balance";
-                    var batchTaskId = myGLAccountInterestActivationBalanceTask.CreateQBatchTaskExecution<ReconciliationStageBArg>(
-                        new ReconciliationStageBArg()
+                    var batchTaskId = myGLAccountInterestActivationBalanceTask.CreateQBatchTaskExecution<GLAccountInterestActivationBalanceArgs>(
+                        new GLAccountInterestActivationBalanceArgs()
                         {
                             Tenant = tenant,
+                            GLAccountId = args.GLAccountId,
+                            AccountTypeCode = args.AccountTypeCode,
+                            InterestActivationDate = args.InterestActivationDate,
+                            LastMadeGLAccountId = args.LastMadeGLAccountId, 
+                            MaxGLAccountsPerQuery = args.MaxGLAccountsPerQuery,
+                            BatchIt = 1, 
                         }, tenant, subj, false);
 
 
