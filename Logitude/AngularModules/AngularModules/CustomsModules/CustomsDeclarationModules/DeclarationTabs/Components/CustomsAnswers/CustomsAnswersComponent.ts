@@ -280,6 +280,9 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                     if (response.Result) {
                         this.IsConstraintDisplayOnly = (this.IsDisplayOnly && response.Result);
                     }
+                    else {
+                        this.IsConstraintDisplayOnly = false;
+                    }
                 }
 
             });
