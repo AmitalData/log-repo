@@ -13,7 +13,7 @@ namespace WebFreight.Web.Helpers
         private ExternalAPIResponseParameters responseParameters;
         private TenantPM tenantPM;
         private TenantQuery tenantQuery;
-        private string[] generalTenantsAPISNames = new[] { "House", "Direct", "Master", "Rates Update", "Get Shipments by References" };
+        private string[] generalTenantsAPISNames = new[] { "House", "Direct", "Master", "Customer", "Rates Update", "Get Shipments by References" };
         private string[] hypridTenantsAPISNames = new[] { "Customs", "Quote", "Customer", "Vendor", "Cargo Tracking Shipment Details" };
         private string[] oceanInsightAPISNames = new[] { "Container" };
         private string[] fullAccountingTenantsAPISNames = new[] { "Customer", "Vendor", "ARPayment", "Cancel ARPayment", "APInvoice Cancellation",
@@ -142,6 +142,7 @@ namespace WebFreight.Web.Helpers
 
         private void AddGeneralTenantsAPISRequestText()
         {
+            AddCustomerAPIsRequestText();
             AddHouseAPIsRequestText();
             AddDirectAPIsRequestText();
             AddMasterAPIsRequestText();

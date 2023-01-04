@@ -17,19 +17,19 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 {
    
-    public partial class State
+    public partial class Team
     {
 
 	    
 	[XmlAttribute]
     public string Id { get; set; }
     
-	[XmlAttribute]
-    public string Code { get; set; }
-    
-    public string EnglishName { get; set; }
+    public string Name { get; set; }
     
     public string LocalName { get; set; }
+    
+	[XmlAttribute]
+    public string Code { get; set; }
     
 	[XmlAttribute]
     public string PartnerCode { get; set; }

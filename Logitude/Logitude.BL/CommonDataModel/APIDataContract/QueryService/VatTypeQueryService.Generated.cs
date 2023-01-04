@@ -61,6 +61,25 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
+		public VatType GetVatTypeByCode(string Code,int Tenant,  string ComputingPartnerName = "")
+        { 
+		    try
+            {
+				 
+				
+				var temp = query.GetSinglePMByCode(Code, Tenant);				
+				 if (temp == null)
+                    throw new ApplicationException("VatType with Code " + Code + " doesn't exist");
+
+				return VatTypeDataMapping(temp,Tenant,ComputingPartnerName);
+			}
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+		
 		public VatType VatTypeDataMapping(VatTypePM MyEntityPM,int Tenant,string ComputingPartnerName = "")
         {
 		    try
@@ -70,7 +89,9 @@ using Simplog.Data.CommonDataModel;
 				   temp.Id = MyEntityPM.Id;
 				   temp.Code = MyEntityPM.Code;
 				   temp.EnglishName = MyEntityPM.EnglishName;
-				   temp.LocalName = MyEntityPM.LocalName;					
+				   temp.LocalName = MyEntityPM.LocalName;
+				   ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant); 
+				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"VatType");  					
 				   return temp;
 			}
             catch (Exception ex)
@@ -90,10 +111,29 @@ using Simplog.Data.CommonDataModel;
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
 					
+					if (!string.IsNullOrEmpty(MyEntity.Code))
+					{
+						temp = query.GetSinglePMByCode(MyEntity.Code, Tenant  );
+					} 
+					if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
+					{
+                        if(string.IsNullOrEmpty(ComputingPartnerName))
+                            throw new ApplicationException("ComputingPartnerCode is required");
+						ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant);
+						var MyCode = helper.GetLogitudeCodeTranslation(MyEntity.PartnerCode,ComputingPartnerName,"VatType");
+					    if(string.IsNullOrEmpty(MyCode))
+						{
+						  throw new ApplicationException("VatType with Partner Code " + MyEntity.PartnerCode + " doesn't match any record");
+						}
+						temp = query.GetSinglePMByCode(MyCode, Tenant );
+						
+						
+					}
+					
 					
 			  	   if(temp == null)
 					{   
-					    throw new ApplicationException("VatType with Id " + MyEntity.Id + " doesn't exist");
+					    throw new ApplicationException("VatType with Code " + MyEntity.Code + " doesn't exist");
 					} 
 				 
 					
@@ -141,7 +181,20 @@ using Simplog.Data.CommonDataModel;
 
 										}  
 
-										   
+					
+					if(string.IsNullOrEmpty(temp.Code))
+					{
+					   
+						 
+						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PartnerCode))
+						{								
+							temp.Code = MyEntity.PartnerCode;
+								
+						
+						}  
+
+						
+					}					   
 					return temp;
 		    }
             catch (Exception ex)

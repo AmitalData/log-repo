@@ -26,23 +26,23 @@ using Simplog.Data.CommonDataModel;
 
  namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 { 
-   public partial class CountryQueryService
+   public partial class IndustryQueryService
    {
    
 		ICommonDataContext  context;
-		//CountryService service; 
+		//IndustryService service; 
 		
-		CountryQuery query; 
+		IndustryQuery query; 
 
-        public CountryQueryService(int tenant)
+        public IndustryQueryService(int tenant)
         {
 				    context = CommonDataContext.GetContext(tenant); 
-			//service = new CountryService(context, tenant); 
-			query = new CountryQuery(tenant);
+			//service = new IndustryService(context, tenant); 
+			query = new IndustryQuery(tenant);
         }
 
 		
-		public Country GetCountryById(string Id,int Tenant,  string ComputingPartnerName = "")
+		public Industry GetIndustryById(string Id,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -50,9 +50,9 @@ using Simplog.Data.CommonDataModel;
 				
 				var temp = query.GetSinglePM(Id, Tenant);				
 				 if (temp == null)
-                    throw new ApplicationException("Country with Id " + Id + " doesn't exist");
+                    throw new ApplicationException("Industry with Id " + Id + " doesn't exist");
 
-				return CountryDataMapping(temp,Tenant,ComputingPartnerName);
+				return IndustryDataMapping(temp,Tenant,ComputingPartnerName);
 			}
 
             catch (Exception ex)
@@ -61,7 +61,7 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
-		public Country GetCountryByCode(string Code,int Tenant,  string ComputingPartnerName = "")
+		public Industry GetIndustryByCode(string Code,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -69,9 +69,9 @@ using Simplog.Data.CommonDataModel;
 				
 				var temp = query.GetSinglePMByCode(Code, Tenant);				
 				 if (temp == null)
-                    throw new ApplicationException("Country with Code " + Code + " doesn't exist");
+                    throw new ApplicationException("Industry with Code " + Code + " doesn't exist");
 
-				return CountryDataMapping(temp,Tenant,ComputingPartnerName);
+				return IndustryDataMapping(temp,Tenant,ComputingPartnerName);
 			}
 
             catch (Exception ex)
@@ -80,18 +80,17 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
-		public Country CountryDataMapping(CountryPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
+		public Industry IndustryDataMapping(IndustryPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
 				   
-				   var temp = new Country(); 
+				   var temp = new Industry(); 
 				   temp.Id = MyEntityPM.Id;
 				   temp.Code = MyEntityPM.Code;
-				   temp.EnglishName = MyEntityPM.EnglishName;
-				   temp.LocalName = MyEntityPM.LocalName;
+				   temp.Name = MyEntityPM.Name;
 				   ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant); 
-				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"Country");  					
+				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"Industry");  					
 				   return temp;
 			}
             catch (Exception ex)
@@ -101,11 +100,11 @@ using Simplog.Data.CommonDataModel;
             }
         } 
 
-		public CountryPM CountryDataMappingAndValidatin(Country MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
+		public IndustryPM IndustryDataMappingAndValidatin(Industry MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
         {
 		    try
             {
-				   					var temp = new CountryPM();								  
+				   					var temp = new IndustryPM();								  
 					if (!string.IsNullOrEmpty(MyEntity.Id))
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
@@ -120,10 +119,10 @@ using Simplog.Data.CommonDataModel;
                         if(string.IsNullOrEmpty(ComputingPartnerName))
                             throw new ApplicationException("ComputingPartnerCode is required");
 						ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant);
-						var MyCode = helper.GetLogitudeCodeTranslation(MyEntity.PartnerCode,ComputingPartnerName,"Country");
+						var MyCode = helper.GetLogitudeCodeTranslation(MyEntity.PartnerCode,ComputingPartnerName,"Industry");
 					    if(string.IsNullOrEmpty(MyCode))
 						{
-						  throw new ApplicationException("Country with Partner Code " + MyEntity.PartnerCode + " doesn't match any record");
+						  throw new ApplicationException("Industry with Partner Code " + MyEntity.PartnerCode + " doesn't match any record");
 						}
 						temp = query.GetSinglePMByCode(MyCode, Tenant );
 						
@@ -133,7 +132,7 @@ using Simplog.Data.CommonDataModel;
 					
 			  	   if(temp == null)
 					{   
-					    throw new ApplicationException("Country with Code " + MyEntity.Code + " doesn't exist");
+					    throw new ApplicationException("Industry with Code " + MyEntity.Code + " doesn't exist");
 					} 
 				 
 					
@@ -142,7 +141,7 @@ using Simplog.Data.CommonDataModel;
 					   
 					    if(!string.IsNullOrEmpty(MyEntity.Id))
 					    {
-					        throw new ApplicationException("Country with provided key doesn't exist");
+					        throw new ApplicationException("Industry with provided key doesn't exist");
 						
 						}
 						//else
@@ -169,15 +168,7 @@ using Simplog.Data.CommonDataModel;
                     
 					if(!IsUpdate)
 					{							
-						temp.EnglishName = MyEntity.EnglishName;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.LocalName = MyEntity.LocalName;
+						temp.Name = MyEntity.Name;
 
 										}  
 

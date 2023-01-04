@@ -61,6 +61,25 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
+		public Customer GetCustomerByCode(string Code,int Tenant,  string ComputingPartnerName = "")
+        { 
+		    try
+            {
+				 
+				
+				var temp = query.GetSinglePMByCode(Code, Tenant);				
+				 if (temp == null)
+                    throw new ApplicationException("Card with Code " + Code + " doesn't exist");
+
+				return CustomerDataMapping(temp,Tenant,ComputingPartnerName);
+			}
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+		
 		public Customer CustomerDataMapping(CardPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
         {
 		    try
@@ -115,7 +134,90 @@ using Simplog.Data.CommonDataModel;
 					   				   }
 				   
 				   temp.Code = MyEntityPM.Code;
-				   temp.PartnerCode = MyEntityPM.PartnerCode;					
+				   temp.PartnerCode = MyEntityPM.PartnerCode; 
+
+			  
+				   if(MyEntityPM.AccountManagerUserId != null)
+				   {
+					   UserQueryService UserService4 = new UserQueryService(Tenant);
+					   					   temp.AccountManagerUser = UserService4.GetUserById(MyEntityPM.AccountManagerUserId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				    
+
+			  
+				   if(MyEntityPM.SalesmanUserId != null)
+				   {
+					   UserQueryService UserService5 = new UserQueryService(Tenant);
+					   					   temp.SalesmanUser = UserService5.GetUserById(MyEntityPM.SalesmanUserId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				    
+
+			  
+				   if(MyEntityPM.CollectorId != null)
+				   {
+					   UserQueryService UserService6 = new UserQueryService(Tenant);
+					   					   temp.Collector = UserService6.GetUserById(MyEntityPM.CollectorId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				    
+
+			  
+				   if(MyEntityPM.TeamId != null)
+				   {
+					   TeamQueryService TeamService7 = new TeamQueryService(Tenant);
+					   					   temp.Team = TeamService7.GetTeamById(MyEntityPM.TeamId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				    
+
+			  
+				   if(MyEntityPM.IndustryId != null)
+				   {
+					   IndustryQueryService IndustryService8 = new IndustryQueryService(Tenant);
+					   					   temp.Industry = IndustryService8.GetIndustryById(MyEntityPM.IndustryId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				    
+
+			  
+				   if(MyEntityPM.InvoiceCurrencyId != null)
+				   {
+					   CurrencyQueryService CurrencyService9 = new CurrencyQueryService(Tenant);
+					   					   temp.InvoiceCurrency = CurrencyService9.GetCurrencyById(MyEntityPM.InvoiceCurrencyId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				    
+
+			  
+				   if(MyEntityPM.VatTypeId != null)
+				   {
+					   VatTypeQueryService VatTypeService10 = new VatTypeQueryService(Tenant);
+					   					   temp.VatType = VatTypeService10.GetVatTypeById(MyEntityPM.VatTypeId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				   
+				   temp.LeadDescription = MyEntityPM.LeadDescription;
+				   temp.StartWorkingDate = MyEntityPM.StartWorkingDate; 
+
+			  
+				   if(MyEntityPM.LeadSourceId != null)
+				   {
+					   LeadSourceQueryService LeadSourceService11 = new LeadSourceQueryService(Tenant);
+					   					   temp.LeadSource = LeadSourceService11.GetLeadSourceById(MyEntityPM.LeadSourceId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				    
+
+			  
+				   if(MyEntityPM.PickupDeliveryAddressId != null)
+				   {
+					   AddressQueryService AddressService12 = new AddressQueryService(Tenant);
+					   					   temp.PickupDeliveryAddress = AddressService12.GetAddressById(MyEntityPM.PickupDeliveryAddressId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				   					
 				   return temp;
 			}
             catch (Exception ex)
@@ -135,10 +237,14 @@ using Simplog.Data.CommonDataModel;
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
 					
+					if (!string.IsNullOrEmpty(MyEntity.Code))
+					{
+						temp = query.GetSinglePMByCode(MyEntity.Code, Tenant  );
+					} 
 					
 			  	   if(temp == null)
 					{   
-					    throw new ApplicationException("Card with Id " + MyEntity.Id + " doesn't exist");
+					    throw new ApplicationException("Card with Code " + MyEntity.Code + " doesn't exist");
 					} 
 				 
 					
@@ -227,11 +333,11 @@ using Simplog.Data.CommonDataModel;
 
 					if(MyEntity.Contacts != null && MyEntity.Contacts.Count > 0)
 					{
-						ContactQueryService ContactService4 = new ContactQueryService(Tenant);
+						ContactQueryService ContactService13 = new ContactQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								
-							temp.Contacts = ContactService4.ContactCustomDataMappingAndValidatin(MyEntity,MyEntity.Contacts,Tenant,ComputingPartnerName,IsUpdate);
+							temp.Contacts = ContactService13.ContactCustomDataMappingAndValidatin(MyEntity,MyEntity.Contacts,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -302,6 +408,211 @@ using Simplog.Data.CommonDataModel;
 
 										}  
 
+					
+					UserQueryService AccountManagerUserUserService = new UserQueryService(Tenant);
+					if(MyEntity.AccountManagerUser != null)
+					{
+						var myAccountManagerUserPM = AccountManagerUserUserService.UserDataMappingAndValidatin(MyEntity.AccountManagerUser,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myAccountManagerUserPM != null)
+						{ 
+
+						 
+							if(!IsUpdate)
+							{								
+								temp.AccountManagerUserId = myAccountManagerUserPM.Id;
+						  
+							}  
+
+							
+						} 
+
+					}
+			
+					
+					UserQueryService SalesmanUserUserService = new UserQueryService(Tenant);
+					if(MyEntity.SalesmanUser != null)
+					{
+						var mySalesmanUserPM = SalesmanUserUserService.UserDataMappingAndValidatin(MyEntity.SalesmanUser,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(mySalesmanUserPM != null)
+						{ 
+
+						 
+							if(!IsUpdate)
+							{								
+								temp.SalesmanUserId = mySalesmanUserPM.Id;
+						  
+							}  
+
+							
+						} 
+
+					}
+			
+					
+					UserQueryService CollectorUserService = new UserQueryService(Tenant);
+					if(MyEntity.Collector != null)
+					{
+						var myCollectorPM = CollectorUserService.UserDataMappingAndValidatin(MyEntity.Collector,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myCollectorPM != null)
+						{ 
+
+						 
+							if(!IsUpdate)
+							{								
+								temp.CollectorId = myCollectorPM.Id;
+						  
+							}  
+
+							
+						} 
+
+					}
+			
+					
+					TeamQueryService TeamTeamService = new TeamQueryService(Tenant);
+					if(MyEntity.Team != null)
+					{
+						var myTeamPM = TeamTeamService.TeamDataMappingAndValidatin(MyEntity.Team,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myTeamPM != null)
+						{ 
+
+						 
+							if(!IsUpdate)
+							{								
+								temp.TeamId = myTeamPM.Id;
+						  
+							}  
+
+							
+						} 
+
+					}
+			
+					
+					IndustryQueryService IndustryIndustryService = new IndustryQueryService(Tenant);
+					if(MyEntity.Industry != null)
+					{
+						var myIndustryPM = IndustryIndustryService.IndustryDataMappingAndValidatin(MyEntity.Industry,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myIndustryPM != null)
+						{ 
+
+						 
+							if(!IsUpdate)
+							{								
+								temp.IndustryId = myIndustryPM.Id;
+						  
+							}  
+
+							
+						} 
+
+					}
+			
+					
+					CurrencyQueryService InvoiceCurrencyCurrencyService = new CurrencyQueryService(Tenant);
+					if(MyEntity.InvoiceCurrency != null)
+					{
+						var myInvoiceCurrencyPM = InvoiceCurrencyCurrencyService.CurrencyDataMappingAndValidatin(MyEntity.InvoiceCurrency,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myInvoiceCurrencyPM != null)
+						{ 
+
+						 
+							if(!IsUpdate)
+							{								
+								temp.InvoiceCurrencyId = myInvoiceCurrencyPM.Id;
+						  
+							}  
+
+							
+						} 
+
+					}
+			
+					
+					VatTypeQueryService VatTypeVatTypeService = new VatTypeQueryService(Tenant);
+					if(MyEntity.VatType != null)
+					{
+						var myVatTypePM = VatTypeVatTypeService.VatTypeDataMappingAndValidatin(MyEntity.VatType,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myVatTypePM != null)
+						{ 
+
+						 
+							if(!IsUpdate)
+							{								
+								temp.VatTypeId = myVatTypePM.Id;
+						  
+							}  
+
+							
+						} 
+
+					}
+			
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.LeadDescription = MyEntity.LeadDescription;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.StartWorkingDate = MyEntity.StartWorkingDate;
+
+										}  
+
+					
+					LeadSourceQueryService LeadSourceLeadSourceService = new LeadSourceQueryService(Tenant);
+					if(MyEntity.LeadSource != null)
+					{
+						var myLeadSourcePM = LeadSourceLeadSourceService.LeadSourceDataMappingAndValidatin(MyEntity.LeadSource,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myLeadSourcePM != null)
+						{ 
+
+						 
+							if(!IsUpdate)
+							{								
+								temp.LeadSourceId = myLeadSourcePM.Id;
+						  
+							}  
+
+							
+						} 
+
+					}
+			
+					
+					AddressQueryService PickupDeliveryAddressAddressService = new AddressQueryService(Tenant);
+					if(MyEntity.PickupDeliveryAddress != null)
+					{
+						var myPickupDeliveryAddressPM = PickupDeliveryAddressAddressService.AddressDataMappingAndValidatin(MyEntity.PickupDeliveryAddress,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myPickupDeliveryAddressPM != null)
+						{ 
+
+						 
+							if(!IsUpdate)
+							{								
+								temp.PickupDeliveryAddressId = myPickupDeliveryAddressPM.Id;
+						  
+							}  
+
+							
+						} 
+
+					}
+			
 										   
 					return temp;
 		    }

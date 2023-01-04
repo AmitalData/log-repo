@@ -28,10 +28,17 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
 
             foreach (AddressPM itemPM in entityPM.Addresses)
             {
-                var err = AddressValidating.ValidateVendorOrCustomerAddress(itemPM);
-                if (err == "This city doesn't exist in cities table")
+                if (entityPM.IsHybrid)
                 {
-                    itemPM.City = null;
+                    var err = AddressValidating.ValidateVendorOrCustomerAddress(itemPM);
+                    if (err == "This city doesn't exist in cities table")
+                    {
+                        itemPM.City = null;
+                    }
+                }
+                else
+                {
+                    AddressValidating.Validate(itemPM);
                 }
             }
 

@@ -26,23 +26,23 @@ using Simplog.Data.CommonDataModel;
 
  namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 { 
-   public partial class CountryQueryService
+   public partial class TeamQueryService
    {
    
 		ICommonDataContext  context;
-		//CountryService service; 
+		//CustomerTeamService service; 
 		
-		CountryQuery query; 
+		CustomerTeamQuery query; 
 
-        public CountryQueryService(int tenant)
+        public TeamQueryService(int tenant)
         {
 				    context = CommonDataContext.GetContext(tenant); 
-			//service = new CountryService(context, tenant); 
-			query = new CountryQuery(tenant);
+			//service = new CustomerTeamService(context, tenant); 
+			query = new CustomerTeamQuery(tenant);
         }
 
 		
-		public Country GetCountryById(string Id,int Tenant,  string ComputingPartnerName = "")
+		public Team GetTeamById(string Id,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -50,9 +50,9 @@ using Simplog.Data.CommonDataModel;
 				
 				var temp = query.GetSinglePM(Id, Tenant);				
 				 if (temp == null)
-                    throw new ApplicationException("Country with Id " + Id + " doesn't exist");
+                    throw new ApplicationException("CustomerTeam with Id " + Id + " doesn't exist");
 
-				return CountryDataMapping(temp,Tenant,ComputingPartnerName);
+				return TeamDataMapping(temp,Tenant,ComputingPartnerName);
 			}
 
             catch (Exception ex)
@@ -61,7 +61,7 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
-		public Country GetCountryByCode(string Code,int Tenant,  string ComputingPartnerName = "")
+		public Team GetTeamByCode(string Code,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
@@ -69,9 +69,9 @@ using Simplog.Data.CommonDataModel;
 				
 				var temp = query.GetSinglePMByCode(Code, Tenant);				
 				 if (temp == null)
-                    throw new ApplicationException("Country with Code " + Code + " doesn't exist");
+                    throw new ApplicationException("CustomerTeam with Code " + Code + " doesn't exist");
 
-				return CountryDataMapping(temp,Tenant,ComputingPartnerName);
+				return TeamDataMapping(temp,Tenant,ComputingPartnerName);
 			}
 
             catch (Exception ex)
@@ -80,18 +80,18 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
-		public Country CountryDataMapping(CountryPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
+		public Team TeamDataMapping(CustomerTeamPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
 				   
-				   var temp = new Country(); 
+				   var temp = new Team(); 
 				   temp.Id = MyEntityPM.Id;
-				   temp.Code = MyEntityPM.Code;
-				   temp.EnglishName = MyEntityPM.EnglishName;
+				   temp.Name = MyEntityPM.Name;
 				   temp.LocalName = MyEntityPM.LocalName;
+				   temp.Code = MyEntityPM.Code;
 				   ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant); 
-				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"Country");  					
+				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"CustomerTeam");  					
 				   return temp;
 			}
             catch (Exception ex)
@@ -101,11 +101,11 @@ using Simplog.Data.CommonDataModel;
             }
         } 
 
-		public CountryPM CountryDataMappingAndValidatin(Country MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
+		public CustomerTeamPM TeamDataMappingAndValidatin(Team MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
         {
 		    try
             {
-				   					var temp = new CountryPM();								  
+				   					var temp = new CustomerTeamPM();								  
 					if (!string.IsNullOrEmpty(MyEntity.Id))
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
@@ -120,10 +120,10 @@ using Simplog.Data.CommonDataModel;
                         if(string.IsNullOrEmpty(ComputingPartnerName))
                             throw new ApplicationException("ComputingPartnerCode is required");
 						ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant);
-						var MyCode = helper.GetLogitudeCodeTranslation(MyEntity.PartnerCode,ComputingPartnerName,"Country");
+						var MyCode = helper.GetLogitudeCodeTranslation(MyEntity.PartnerCode,ComputingPartnerName,"CustomerTeam");
 					    if(string.IsNullOrEmpty(MyCode))
 						{
-						  throw new ApplicationException("Country with Partner Code " + MyEntity.PartnerCode + " doesn't match any record");
+						  throw new ApplicationException("CustomerTeam with Partner Code " + MyEntity.PartnerCode + " doesn't match any record");
 						}
 						temp = query.GetSinglePMByCode(MyCode, Tenant );
 						
@@ -133,7 +133,7 @@ using Simplog.Data.CommonDataModel;
 					
 			  	   if(temp == null)
 					{   
-					    throw new ApplicationException("Country with Code " + MyEntity.Code + " doesn't exist");
+					    throw new ApplicationException("CustomerTeam with Code " + MyEntity.Code + " doesn't exist");
 					} 
 				 
 					
@@ -142,7 +142,7 @@ using Simplog.Data.CommonDataModel;
 					   
 					    if(!string.IsNullOrEmpty(MyEntity.Id))
 					    {
-					        throw new ApplicationException("Country with provided key doesn't exist");
+					        throw new ApplicationException("CustomerTeam with provided key doesn't exist");
 						
 						}
 						//else
@@ -153,6 +153,22 @@ using Simplog.Data.CommonDataModel;
 
 						
 					}
+                    
+					if(!IsUpdate)
+					{							
+						temp.Name = MyEntity.Name;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.LocalName = MyEntity.LocalName;
+
+										}  
+
+					
 					if(string.IsNullOrEmpty(temp.Code))
 					{
 					   
@@ -166,22 +182,6 @@ using Simplog.Data.CommonDataModel;
 
 						
 					}
-                    
-					if(!IsUpdate)
-					{							
-						temp.EnglishName = MyEntity.EnglishName;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.LocalName = MyEntity.LocalName;
-
-										}  
-
-					
 					if(string.IsNullOrEmpty(temp.Code))
 					{
 					   

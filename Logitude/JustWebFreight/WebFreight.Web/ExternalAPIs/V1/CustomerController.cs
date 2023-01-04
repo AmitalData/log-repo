@@ -43,7 +43,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 SecurityUtility.AuthenticateAccessibleAPI("Customer", authToken.Tenant);
 
                 CustomerQueryService Service = new CustomerQueryService(tenant);
-                ServiceResponse response = new ServiceResponse();
                 var Result = Service.GetCustomerById(id, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }
@@ -54,6 +53,91 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
         }
+
+        public HttpResponseMessage GetSingleCustomerByCode(string code)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+                SecurityUtility.AuthenticateAccessibleAPI("Customer", authToken.Tenant);
+
+                CustomerQueryService Service = new CustomerQueryService(tenant);
+                Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Customer Result = Service.GetCustomerByCode(code, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, Result);
+            }
+            catch (Exception ex)
+            {
+                var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
+                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+            }
+        }
+
+        public HttpResponseMessage GetSingleCustomerByVatNumber(string vatNumber)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+                SecurityUtility.AuthenticateAccessibleAPI("Customer", authToken.Tenant);
+
+                CustomerQueryService Service = new CustomerQueryService(tenant);
+                Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Customer Result = Service.GetCustomerByCode(vatNumber, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, Result);
+            }
+            catch (Exception ex)
+            {
+                var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
+                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+            }
+        }
+
+        public HttpResponseMessage GetSingleCustomerByExternalId(string externalId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+                SecurityUtility.AuthenticateAccessibleAPI("Customer", authToken.Tenant);
+
+                CustomerQueryService Service = new CustomerQueryService(tenant);
+                Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Customer Result = Service.GetCustomerByCode(externalId, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, Result);
+            }
+            catch (Exception ex)
+            {
+                var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
+                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+            }
+        }
+
+        public HttpResponseMessage GetSingleCustomerByName(string name)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+                SecurityUtility.AuthenticateAccessibleAPI("Customer", authToken.Tenant);
+
+                CustomerQueryService Service = new CustomerQueryService(tenant);
+                Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Customer Result = Service.GetCustomerByCode(name, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, Result);
+            }
+            catch (Exception ex)
+            {
+                var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
+                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+            }
+        }
+
 
         public HttpResponseMessage Post(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Customer entity)
         {
