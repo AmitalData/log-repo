@@ -144,7 +144,10 @@ namespace Logitude.Accounting.BL.Validators
                 string msg =
                     TranslateMyTextCode("Journal.M.YouShouldHaveOneLineAtLeast", 0);
                 //TranslateMyTextCode("Journal.M.YouShouldHaveOneLineAtLeast", 0, useLocal);
-                ;
+                if (myJournalPM.AccountingEntityCode == "3")
+                {
+                    msg = "The ARPayment can't be voided, one of the ARPayment cheques has been returned to customer";
+                }
                 errorsList.AddNew(msg);
             }
             var myDataProvider = accountingValidationContextServiceProvider.GetService(typeof(IJournalValidatorContextDataProvider)) as IJournalValidatorContextDataProvider;
