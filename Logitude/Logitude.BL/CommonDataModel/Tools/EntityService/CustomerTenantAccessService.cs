@@ -163,11 +163,29 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
             if (paramentityPM.CustomerTenantAccessCards == null)
                 return;
+            ValidateCustomerTenantAccessCardPeriod(paramentityPM);
             var InValidCustomerTenantAccessCards = paramentityPM.CustomerTenantAccessCards.Find(a => a.IsCustomsActivated == false && a.IsExportActivated == false);
             if (InValidCustomerTenantAccessCards != null)
             {
                 throw new Exception("You have to choose either Export or Customs option.");
             }
+        }
+
+        private static void ValidateCustomerTenantAccessCardPeriod(CustomerTenantAccessPM paramentityPM)
+        {
+            var InValidCustomerTenantAccessCardPeriod = paramentityPM.CustomerTenantAccessCards.Find(card => IsNotValidInsertBatchBuildCustomerTenantAccessCardPeriod(card, -3));
+            if (InValidCustomerTenantAccessCardPeriod != null)
+            {
+                throw new Exception("You can\'t set start date more than three months ago");
+            }
+        }
+
+        private static bool IsNotValidInsertBatchBuildCustomerTenantAccessCardPeriod(CustomerTenantAccessCardPM customerTenantAccessCardPM, int period)
+        {
+            if (customerTenantAccessCardPM.ChangeSetOp != ChangeSetOperation.Insert) return false;
+            if (!customerTenantAccessCardPM.BuildBatch) return false;
+            DateTime threeMonthsAgoDate = DateTime.Now.AddMonths(period);
+            return DateTime.Compare(threeMonthsAgoDate, customerTenantAccessCardPM.HybridStartDate) > 0;
         }
 
         private void CustomerTenantAccessCardsCollection()

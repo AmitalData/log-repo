@@ -26,6 +26,7 @@ import {ConfirmWindow} from '../../Controls/Windows/ConfirmWindow';
 import {Validator} from '../../Infrastructure/Validators/Validator';
 import {CustomerTenantAccessPMService} from '../../Common/Services/StandardPMs/CustomerTenantAccessPMService';
 import {CustomerPMService} from '../../Common/Services/StandardPMs/CustomerPMService';
+import { AdvancedDatePickerResolverComponent } from '../../Infrastructure/Components/LogitudeComponents/AdvancedDatePickerResolverComponent';
 
 @Component({
     
@@ -63,6 +64,11 @@ export class AddEditCustomerTenantAccessCardComponent extends BaseComponent {
             this.ValidationErrorsList.push("Please Select Customer");
         }
 
+        let inValidSelectedStartDate = this.ValidateSelectedStartDate();
+        if (inValidSelectedStartDate) {
+            this.ValidationErrorsList.push('You can\'t set start date more than three months ago');
+        }
+
         if (this.ValidateCustomerTenantOptions(checkIfCustomerSelected)) {
             this.ValidationErrorsList.push("You can't add a new card. You have to choose either Export or Customs option.");
         }
@@ -96,6 +102,13 @@ export class AddEditCustomerTenantAccessCardComponent extends BaseComponent {
                 });
             }
         }
+    }
+
+    private ValidateSelectedStartDate() {
+        let todayDate = new Date();
+        let threeMonthsAgoDate = todayDate.setMonth(todayDate.getMonth() - 3);
+        let advancedDatePickerResolverComponent: AdvancedDatePickerResolverComponent = new AdvancedDatePickerResolverComponent();
+        return advancedDatePickerResolverComponent.SetValidityBetweenTwoDateOptions(this.viewModel.HybridStartDate, threeMonthsAgoDate);
     }
 
     private InitializeCustomerTenantAccessCardd(checkIfCustomerSelected: CardListDataViewModel) {
@@ -161,8 +174,13 @@ export class AddEditCustomerTenantAccessCardComponent extends BaseComponent {
                         }
 
                         var service: CustomerTenantAccessPMService = new CustomerTenantAccessPMService();
-                        service.update(this.viewModel.Parent.EntityPM).subscribe(p => {
+                        service.update(this.viewModel.Parent.EntityPM).subscribe(ServiceResponse => {
                             this.CurrentSession.StopBusyIndicator();
+                            if (ServiceResponse.HasError) {
+                                this.viewModel.isNew = true;
+                                this.ValidationErrorsList.push(ServiceResponse.ErrorsArray.toString());
+                                return
+                            }
                             this.viewModel.Parent.IsShowTipArea = false;
                             if (this.viewModel.Parent.SelectedItem == null && this.viewModel.Parent.ObsList.length > 0) {
                                 this.viewModel.Parent.SelectedItem = this.viewModel.Parent.ObsList[0];
