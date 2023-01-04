@@ -275,14 +275,14 @@ namespace Logitude.Accounting.BL.CoreBL
                         restreamVoidedJournalDueBug = true;
                     }
                 }
-                if (!restreamVoidedJournalDueBug && _JournalPM.StatusCodeEnum != JournalStatusTypePM.StatusCodeEnum.Approved)
-                {
-                    return new ResultApproveJournalM()
-                    {
-                        Success = false,
-                        FailDue = "_JournalPM.MyStatusCodeEnum != JournalStatusTypePM.StatusCodeEnum.Approved"
-                    };
-                }
+                //if (!restreamVoidedJournalDueBug && _JournalPM.StatusCodeEnum != JournalStatusTypePM.StatusCodeEnum.Approved)
+                //{
+                //    return new ResultApproveJournalM()
+                //    {
+                //        Success = false,
+                //        FailDue = "_JournalPM.MyStatusCodeEnum != JournalStatusTypePM.StatusCodeEnum.Approved"
+                //    };
+                //}
                 ;
                 bool SuppressCheckGLAccountIsMultiCurrencyWI40640 = false;
                 _JournalApproveParser = new JournalApproveParser(_JournalPM, false,
@@ -1111,8 +1111,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
             LogMessagingUtil.Instance.AppendLine(message?.MessageId?.ToString() + " " + ex.ToString());
             ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "AccountingJournalApproveWR", "AccountingJournalApproveWR: ProcessMessage() Method", null);
-            if (message.RetryNumber >= 2) {
-                myDbQueueService.Delay(new TimeSpan(0, 0, 0, 30));
+            if (message.RetryNumber >= 2 && message.RetryNumber <= 5) {
+                    myDbQueueService.Delay(new TimeSpan(0, 0, 0, 30));
             }
             if (message == null || message.RetryNumber > 5)
             {
