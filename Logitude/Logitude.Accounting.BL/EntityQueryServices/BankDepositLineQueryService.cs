@@ -64,5 +64,21 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         }
 
+        public List<int> GetDepositLineNumbersByDepositIdChequeId(string depositId, string chequeId, int tenant)
+        {
+            List<BankDepositLine> depositLines = (from a in context.BankDepositLines
+                                                  where a.DepositId == depositId && a.ARPaymentChequeId == chequeId && a.Tenant == tenant
+                                                  select a).ToList();
+            if (depositLines != null)
+            {
+                return depositLines.Select(rec => rec.Line).ToList();
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+
     }
 }
