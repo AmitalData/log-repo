@@ -446,8 +446,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             ICustomContext dbContext = CustomContext.GetContext(dec.Tenant);
             var CustomsCollateralQueryService = new CustomsCollateralQueryService(dbContext);
-            var declarationIdWithComma = dec.AmendmentOriginalDeclartation + "," + dec.Id;
-            var CollList = CustomsCollateralQueryService.GetDecCollListByOriginalDecId(declarationIdWithComma, dec.Tenant);
+            var DecList = new List<string>();
+            DecList.Add(dec?.AmendmentOriginalDeclartation);
+            DecList.Add(dec?.Id);
+            var CollList = CustomsCollateralQueryService.GetDecCollListByOriginalDecId(DecList, dec.Tenant);
             var customsCollateralUpdateService = new CustomsCollateralUpdateService(dbContext, new Dictionary<string, IContext>(), dec.Tenant);
 
             if (CollList != null && CollList.Count > 0)

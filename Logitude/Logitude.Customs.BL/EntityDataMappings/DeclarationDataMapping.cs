@@ -121,17 +121,22 @@ namespace Logitude.Customs.BL.EntityDataMappings
           
            if (entityPOCO.IsAmendment == true)
             {
-                AmendRequestRejectReasonTypeRepository amendRequestRejectReasonTypeRepository = new AmendRequestRejectReasonTypeRepository(entityPOCO.Tenant);
-                AmendRequestRejectReasonType amendRequestRejectReasonType = amendRequestRejectReasonTypeRepository.GetSingle(entityPOCO.AmendmentRejectionReason);
-                if (amendRequestRejectReasonType != null)
-                {
-                    entityPM.AmendmentRejectionReasonName = amendRequestRejectReasonType.LocalName;
+                //AmendRequestRejectReasonTypeRepository amendRequestRejectReasonTypeRepository = new AmendRequestRejectReasonTypeRepository(entityPOCO.Tenant);
+                //AmendRequestRejectReasonType amendRequestRejectReasonType = amendRequestRejectReasonTypeRepository.GetSingle(entityPOCO.AmendmentRejectionReason);
+                //if (amendRequestRejectReasonType != null)
+                //{
+                //    entityPM.AmendmentRejectionReasonName = amendRequestRejectReasonType.LocalName;
 
+                //}
+
+                if (!string.IsNullOrWhiteSpace(entityPOCO.AmendmentRejectionReason))
+                {
+                    entityPM.AmendmentRejectionReasonName = (new AmendRequestRejectReasonTypeQueryService(entityPOCO.Tenant)).GetSingle(entityPOCO.AmendmentRejectionReason, false, true)?.LocalName;
                 }
             }
 
 
-            
+
             //CancellationRequestStatusRepository cancellationRequestStatusRepository = new CancellationRequestStatusRepository(entityPOCO.Tenant);
             //CancellationRequestStatus cancellationRequestStatus = cancellationRequestStatusRepository.GetSingle(entityPOCO.CancelRequestStatusCode);
             //if (cancellationRequestStatus != null)
@@ -139,10 +144,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
             //    entityPM.CancelRequestStatusName = cancellationRequestStatus.LocalName;
 
             //}
-            var cancellationRequestStatusQueryService = new CancellationRequestStatusQueryService(entityPOCO.Tenant);
-            var pm=cancellationRequestStatusQueryService.GetSingle(entityPOCO.CancelRequestStatusCode,false, true);
-            entityPM.CancelRequestStatusName = pm?.LocalName;
-
+            if (!String.IsNullOrWhiteSpace(entityPOCO.CancelRequestStatusCode))
+            {
+                var cancellationRequestStatusQueryService = new CancellationRequestStatusQueryService(entityPOCO.Tenant);
+                var pm = cancellationRequestStatusQueryService.GetSingle(entityPOCO.CancelRequestStatusCode, false, true);
+                entityPM.CancelRequestStatusName = pm?.LocalName;
+            }
             DeclarationQueryService declarationQuery = new DeclarationQueryService(entityPOCO.Tenant);
 
 
@@ -183,7 +190,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 }
                 else
                 {*/
-                    var declarations = declarationQuery.GetDeclarationAmendmentsById/*Cache*/(entityPOCO.Tenant, entityPOCO.Id);
+                    var declarations = declarationQuery.GetDeclarationAmendmentsById_Cache/*Cache*/(entityPOCO.Tenant, entityPOCO.Id);
 
                     var declaration = declarations.FirstOrDefault(x => new string[] { "1", "3", "6" }.Contains(x.AmendmentStatus));
                     if (declaration != null)
@@ -234,13 +241,13 @@ namespace Logitude.Customs.BL.EntityDataMappings
             }
 
             var transportModeRep = new TransportModeRepository(entityPOCO.Tenant);
-            TransportMode transportMode = transportModeRep.GetSingleTransportMode(entityPOCO.TransportModeId);
+            TransportMode transportMode = transportModeRep.GetSingleTransportMode(entityPOCO.TransportModeId);//,have Cache
             if (transportMode != null)
             {
                 entityPM.TransportModeName = transportMode.Name;
 
             }
-
+            
 
 
             if (!string.IsNullOrEmpty(entityPOCO.DepartmentId))
@@ -338,7 +345,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (entityPOCO.ImporterCode != null)
             {
                 ClientQueryService clientQueryService = new ClientQueryService(entityPOCO.Tenant);
-                ClientPM client = clientQueryService.GetClientByCode(entityPOCO.ImporterCode, entityPOCO.Tenant);
+                ClientPM client = clientQueryService.GetClientByCode_Cache(entityPOCO.ImporterCode, entityPOCO.Tenant);
                 if (client != null)
                 {
 
@@ -383,7 +390,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (entityPOCO.EntitleImporterCode != null)
             {
                 ClientQueryService clientQueryService = new ClientQueryService(entityPOCO.Tenant);
-                ClientPM client = clientQueryService.GetClientByCode(entityPOCO.EntitleImporterCode, entityPOCO.Tenant);
+                ClientPM client = clientQueryService.GetClientByCode_Cache(entityPOCO.EntitleImporterCode, entityPOCO.Tenant);
                 if (client != null)
                 {
                     entityPM.CalculatedEntitleImporterName = client.FullName;
@@ -393,7 +400,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (entityPOCO.TransferImporterCode != null)
             {
                 ClientQueryService clientQueryService = new ClientQueryService(entityPOCO.Tenant);
-                ClientPM client = clientQueryService.GetClientByCode(entityPOCO.TransferImporterCode, entityPOCO.Tenant);
+                ClientPM client = clientQueryService.GetClientByCode_Cache(entityPOCO.TransferImporterCode, entityPOCO.Tenant);
                 if (client != null)
                 {
 
@@ -404,7 +411,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (entityPOCO.EntitleImporterCountryCode != null)
             {
                 CustomsCountryQueryService customsCountryQueryService = new CustomsCountryQueryService(entityPOCO.Tenant);
-                CustomsCountryPM customsCountry = customsCountryQueryService.GetSingle(entityPOCO.EntitleImporterCountryCode, false, false);
+                CustomsCountryPM customsCountry = customsCountryQueryService.GetSingle(entityPOCO.EntitleImporterCountryCode, false, true);
                 if (customsCountry != null)
                     entityPM.EntitleImporterCountryName = customsCountry.LocalName;
             }
@@ -412,7 +419,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (entityPOCO.StorageStatusCode != null)
             {
                 StorageStatusQueryService storageStatusQueryService = new StorageStatusQueryService(entityPOCO.Tenant);
-                StorageStatusPM storageStatusPM = storageStatusQueryService.GetSingle(entityPOCO.StorageStatusCode, false, false);
+                StorageStatusPM storageStatusPM = storageStatusQueryService.GetSingle(entityPOCO.StorageStatusCode, false, true);
                 if (storageStatusPM != null)
                     entityPM.StorageStatusName = storageStatusPM.LocalName;
             }
@@ -440,21 +447,25 @@ namespace Logitude.Customs.BL.EntityDataMappings
             var supplierInvoiceRepo = new SupplierInvoiceRepository(entityPOCO.Tenant);
             entityPM.IsAccumulated = supplierInvoiceRepo.DeclarationIsAccumulated(entityPOCO.Id);
 
-
-            CourierDeclarationQueryService courierDeclarationService = new CourierDeclarationQueryService(entityPOCO.Tenant);
-            CourierDeclarationPM courierDeclaration = courierDeclarationService.GetCourierDeclarationByDeclarationId(entityPOCO.Id, entityPOCO.Tenant);
-            if (courierDeclaration != null)
+            //var dCustomsSetting = CustomsSettingQueryService.GetSettingByTenant(entityPOCO.Tenant);
+            //if (dCustomsSetting.CompanyType == "B")//Courier
+            if (entityPOCO.IsCourierDeclaration)
             {
-                CourierMasterQueryService courierMasterService = new CourierMasterQueryService(entityPOCO.Tenant);
-                CourierMasterPM courierMaster = courierMasterService.GetSingle(courierDeclaration.CourierMasterId, false, true);
-                if (courierMaster != null)
+
+                CourierDeclarationQueryService courierDeclarationService = new CourierDeclarationQueryService(entityPOCO.Tenant);
+                CourierDeclarationPM courierDeclaration = courierDeclarationService.GetCourierDeclarationByDeclarationId_Cache(entityPOCO.Id, entityPOCO.Tenant);
+                if (courierDeclaration != null)
                 {
-                    entityPM.CourierData = courierMaster.AirlinePrefix + "-" + courierMaster.MAWB;
+                    CourierMasterQueryService courierMasterService = new CourierMasterQueryService(entityPOCO.Tenant);
+                    CourierMasterPM courierMaster = courierMasterService.GetSingle(courierDeclaration.CourierMasterId, false, true);
+                    if (courierMaster != null)
+                    {
+                        entityPM.CourierData = courierMaster.AirlinePrefix + "-" + courierMaster.MAWB;
+                    }
                 }
             }
-
             DeclarationPaymentQueryService declarationPaymentQueryService = new DeclarationPaymentQueryService(entityPOCO.Tenant);
-            DeclarationPaymentPM declarationPaymentPM = declarationPaymentQueryService.GetSingle(entityPOCO.Id, false, false);
+            DeclarationPaymentPM declarationPaymentPM = declarationPaymentQueryService.GetSingle(entityPOCO.Id, false, true);
          if(declarationPaymentPM!=null)   entityPM.AutomaticPayment = declarationPaymentPM.AutomaticPayment;
 
             if (!String.IsNullOrWhiteSpace( entityPOCO.WeightValue))
@@ -504,8 +515,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 }
             }
 
-            UpdateCourierDeclarationFields(entityPM, entityPOCO);
-
+            UpdateCourierDeclarationFields(entityPM, entityPOCO);//only isCourierDec
+            
             if (entityPOCO.AcceptanceStatusCode != null)
             {
                 AcceptanceStatusQueryService acceptanceStatusQueryService = new AcceptanceStatusQueryService(entityPOCO.Tenant);
@@ -522,18 +533,19 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 entityPM.CourierPendingReasonList = getCourierPendingReasonName(entityPM);
             }
 
+            
             if (entityPM.FastIndividualProcessCode != null)
             {
                 if (entityPM.FastIndividualProcessCode == "F")
                 {
-                    entityPM.FastIndividualProcessCode = "����";
+                    entityPM.FastIndividualProcessCode = "מהיר";
                 }
                 else if (entityPM.FastIndividualProcessCode == "I")
                 {
-                    entityPM.FastIndividualProcessCode = "�����";
+                    entityPM.FastIndividualProcessCode = "פרטני";
                 }
             }
-            if(entityPOCO.CustomsShip != null)
+            if (entityPOCO.CustomsShip != null)
             {
                 entityPM.ShipCodeName = entityPOCO.CustomsShip.LocalName;
             }

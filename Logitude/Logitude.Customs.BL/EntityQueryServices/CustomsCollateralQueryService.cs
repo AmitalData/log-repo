@@ -58,7 +58,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return customsCollateralList;
         }
 
-        public List<CustomsCollateralPM> GetDecCollListByOriginalDecId(string declarationId, int tenant)
+        public List<CustomsCollateralPM> GetDecCollListByOriginalDecId(List<string> declarationId, int tenant)
         {
             List<CustomsCollateral> customsCollaterals = repository.GetDecCollListByOriginalDecId(declarationId, tenant);
             List<CustomsCollateralPM> customsCollateralList = new List<CustomsCollateralPM>();

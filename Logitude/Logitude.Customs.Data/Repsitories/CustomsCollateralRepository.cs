@@ -55,7 +55,7 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.DeclarationId == declarationId && a.Tenant == tenant
                     select a).ToList();
         }
-        public List<CustomsCollateral> GetDecCollListByOriginalDecId(string declarationId, int tenant)
+        public List<CustomsCollateral> GetDecCollListByOriginalDecId(List<string> declarationId, int tenant)
         {
             return (from a in context.CustomsCollaterals
                     where declarationId.Contains(a.DeclarationId) && a.Tenant == tenant

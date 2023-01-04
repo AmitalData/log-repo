@@ -2165,6 +2165,17 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return declarations;
         }
 
+        public List<DeclarationList> GetDeclarationAmendmentsById_Cache(int tenant, string id, bool orderById = false)
+        {
+            string key = $"GetDeclarationAmendmentsById({tenant}, {id}, {orderById })";
+            var res = CacheManager.GetOrInsertNewObject<List<DeclarationList>>(key,
+                () =>
+                {
+                    return this.GetDeclarationAmendmentsById(tenant, id, orderById);
+                });
+            return res;
+
+        }
 
         public List<DeclarationList> GetDeclarationAmendmentsById(int tenant, string id, bool orderById = false)
         {
