@@ -98,6 +98,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.UIProperties.SetEnabled("SecondaryGroupById", this.ObjectTableName, !AppTool.IsNullOrEmpty(this.EntityId));
         this.WidgetMeasuresList.forEach(item => {
             item.SetUIProperties();
+            item.FilterMeasureFieldsForTypeCode();
         });
     }
 
@@ -264,6 +265,10 @@ export class AddEditWidgetComponent extends BaseComponent {
             this.SetTimeOverTimeValue();
             this.CheckGroupAddVisiblity();
             this.SetMeasureRenderList();
+            this.WidgetMeasuresList.forEach(item => {
+                item.SetUIProperties();
+                item.FilterMeasureFieldsForTypeCode();
+            });
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget Type Change ", Message: "Changed To" + this.EntityPM.TypeCode, DashboardId: this.DashboardPM?.Id });
             this.isAdvancedSettingLinkVisible = true;
         }
@@ -858,7 +863,7 @@ export class WidgetMeasureItem extends BaseComponent {
         MixPanelLocator.PostDashboardAction({ ActionName: "Widget Measure Type Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
         this.EntityPM.MeasureCode = value;
         this.MeasureFieldId = null;
-        this.FilterMeasureFields();
+        this.FilterMeasureFieldsForTypeCode();
     }
 
     get RenderAs() { return this.EntityPM.RenderAs; }
@@ -866,6 +871,21 @@ export class WidgetMeasureItem extends BaseComponent {
         if (this.EntityPM.RenderAs == value) return;
         this.EntityPM.RenderAs = value;
         MixPanelLocator.PostDashboardAction({ ActionName: "Widget Measure Show as Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
+    }
+
+    public FilterMeasureFieldsForTypeCode() {
+        this.FieldQueryFilters = new ApiQueryFilters();
+
+        switch (this.fatherComponent.TypeCode) {
+            case "kpi":
+                this.FilterMeasureFields();
+                break;
+            
+            default:
+                this.FieldQueryFilters.addAdditionalFilter("DataTypeCode", "Integer,Decimal", null, null, "InList", false, true, false, "string", false, true, true);
+                break;
+        }
+
     }
 
     FilterMeasureFields() {
