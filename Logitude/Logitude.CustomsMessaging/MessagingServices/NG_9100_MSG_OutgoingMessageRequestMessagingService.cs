@@ -1,6 +1,7 @@
 ﻿
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
+using Logitude.CustomsMessaging.Dca.Restore9100;
 using Logitude.CustomsMessaging.RequestServices;
 using Logitude.CustomsMessaging.ResponseServices;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -29,6 +30,15 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         protected override NG_9101_MSG_OutgoingMessageResponse CallWS(NG_9100_MSG_OutgoingMessageRequest customRequest, MessageWaitingRequestParams requestParams, out string exceptionMessage)
         {
+#if true
+           
+            var sendNG_9100_MSG_OutgoingMessageRequestService = new SendNG_9100_MSG_OutgoingMessageRequestService();
+            var result = sendNG_9100_MSG_OutgoingMessageRequestService.CallWS(customRequest, base.CustomsSetting, _IIGGatewayMoreParams, this.RequestsSheetExternalId);
+            exceptionMessage = result.exceptionMessage;
+            _ResponseHeader = result._ResponseHeader;
+            return result.response;
+#else
+
             exceptionMessage = null;
             var response = new NG_9101_MSG_OutgoingMessageResponse();
 
@@ -47,6 +57,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             }
 
             return response;
+#endif
         }
 
         protected override MessageWaitingRequestParams CreateDefaultRequestParamsFromCustomsResponse(NG_9101_MSG_OutgoingMessageResponse customsResponse)
