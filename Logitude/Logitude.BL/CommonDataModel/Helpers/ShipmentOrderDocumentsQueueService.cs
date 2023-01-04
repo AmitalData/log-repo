@@ -15,6 +15,7 @@ namespace Logitude.BL.CommonDataModel.Helpers
         public void Build(DocumentsFilingPM documentsFiling)
         {
             if (documentsFiling.DontAddToQueue) return;
+            if (!documentsFiling.IsSharedWithCustomer) return;
             if (string.IsNullOrEmpty(documentsFiling.ObjectTableId)) return;
 
             var objectTableName = ObjectTableRepository.GetSingleObjectTableById(documentsFiling.ObjectTableId, documentsFiling.Tenant)?.Name;
