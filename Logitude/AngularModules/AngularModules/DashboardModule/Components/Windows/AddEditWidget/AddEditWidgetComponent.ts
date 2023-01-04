@@ -96,10 +96,7 @@ export class AddEditWidgetComponent extends BaseComponent {
 
         this.UIProperties.SetEnabled("GroupById", this.ObjectTableName, !AppTool.IsNullOrEmpty(this.EntityId));
         this.UIProperties.SetEnabled("SecondaryGroupById", this.ObjectTableName, !AppTool.IsNullOrEmpty(this.EntityId));
-        this.WidgetMeasuresList.forEach(item => {
-            item.SetUIProperties();
-            item.FilterMeasureFieldsForTypeCode();
-        });
+       
     }
 
     BuildQueryFilters() {
@@ -266,8 +263,7 @@ export class AddEditWidgetComponent extends BaseComponent {
             this.CheckGroupAddVisiblity();
             this.SetMeasureRenderList();
             this.WidgetMeasuresList.forEach(item => {
-                item.SetUIProperties();
-                item.FilterMeasureFieldsForTypeCode();
+                item.FilterMeasureFields();
             });
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget Type Change ", Message: "Changed To" + this.EntityPM.TypeCode, DashboardId: this.DashboardPM?.Id });
             this.isAdvancedSettingLinkVisible = true;
@@ -831,6 +827,7 @@ export class WidgetMeasureItem extends BaseComponent {
         this.Widget = fatherComponent.EntityPM;
         this.IsNew = isNew;
         this.DashboardPM = fatherComponent?.DashboardPM;
+        this.SetUIProperties();
         this.FilterMeasureFields();
     }
 
@@ -863,7 +860,7 @@ export class WidgetMeasureItem extends BaseComponent {
         MixPanelLocator.PostDashboardAction({ ActionName: "Widget Measure Type Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
         this.EntityPM.MeasureCode = value;
         this.MeasureFieldId = null;
-        this.FilterMeasureFieldsForTypeCode();
+        this.FilterMeasureFields();
     }
 
     get RenderAs() { return this.EntityPM.RenderAs; }
@@ -873,23 +870,13 @@ export class WidgetMeasureItem extends BaseComponent {
         MixPanelLocator.PostDashboardAction({ ActionName: "Widget Measure Show as Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
     }
 
-    public FilterMeasureFieldsForTypeCode() {
-        this.FieldQueryFilters = new ApiQueryFilters();
-
-        switch (this.fatherComponent.TypeCode) {
-            case "kpi":
-                this.FilterMeasureFields();
-                break;
-            
-            default:
-                this.FieldQueryFilters.addAdditionalFilter("DataTypeCode", "Integer,Decimal", null, null, "InList", false, true, false, "string", false, true, true);
-                break;
-        }
-
-    }
-
     FilterMeasureFields() {
         this.FieldQueryFilters = new ApiQueryFilters();
+
+        if(this.fatherComponent.TypeCode != "kpi"){
+            this.FieldQueryFilters.addAdditionalFilter("DataTypeCode", "Integer,Decimal", null, null, "InList", false, true, false, "string", false, true, true);
+            return;
+        }
 
         switch (this.EntityPM.MeasureCode) {
             case "Avg":
