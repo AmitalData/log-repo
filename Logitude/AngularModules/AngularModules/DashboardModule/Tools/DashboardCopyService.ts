@@ -11,8 +11,6 @@ export class DashboardCopyService {
    
     public static CopyDashboard(sourceDashboard: DashboardPM): DashboardPM {
         var dashboard: DashboardPM = new DashboardPM();
-        //dashboard = DashboardMapping.deepClone(sourceDashboard);
-        // dashboard.Id = null;
         dashboard.Tenant = SessionInfo.LoggedUserTenant;
         dashboard.CreatedByUserId = SessionInfo.LoggedUserId;
         dashboard.UpdatedByUserId = SessionInfo.LoggedUserId;
@@ -30,41 +28,9 @@ export class DashboardCopyService {
         return dashboard;
 
     }
-    static CopyUsers( sourceDashboard: DashboardPM, dashboard: DashboardPM) {   
-        // if(!sourceDashboard.DashboardSharedUsers || sourceDashboard.DashboardSharedUsers.length == 0) return;
-        // dashboard.DashboardSharedUsers = [];
-        // sourceDashboard.DashboardSharedUsers.forEach(sourceUser => {
-        //     var user: DashboardSharedUserPM = new DashboardSharedUserPM(dashboard);
-        //     user  = DashboardMapping.deepClone(sourceUser);
-        //     user.Tenant = SessionInfo.LoggedUserTenant;
-        //     user.DashboardId = dashboard.Id;
-        //     user.Id = null;
-        //     dashboard.DashboardSharedUsers.push(user)
-        // });
-
-        sourceDashboard.DashboardSharedUsers.forEach(sourceUser => {
-                var user: DashboardSharedUserPM = new DashboardSharedUserPM(dashboard);
-                user.Tenant = SessionInfo.LoggedUserTenant;
-                user.DashboardId = dashboard.Id;
-                user.UserId = sourceUser.UserId;
-                user.UserName = sourceUser.UserName;
-                dashboard.DashboardSharedUsers.push(user);
-            });
-    }
+    
 
     static CopyWidgets(sourceDashboard: DashboardPM, dashboard: DashboardPM){
-        // if(!sourceDashboard.Widgets || sourceDashboard.Widgets.length == 0) return;
-        // dashboard.Widgets = [];
-        // sourceDashboard.Widgets.forEach(sourceWidget => {
-        //     var widget: WidgetPM = new WidgetPM(dashboard);
-        //     widget  = DashboardMapping.deepClone(sourceWidget);
-        //     widget.Tenant = SessionInfo.LoggedUserTenant;
-        //     widget.DashboardId = dashboard.Id;
-        //     widget.Id = null;
-        //     this.CopyWidgetMeasures(sourceWidget, widget);
-        //     dashboard.Widgets.push(widget)
-        // });
-
         sourceDashboard.Widgets.forEach (sourceWidget => {
             var widget : WidgetPM = new WidgetPM(dashboard);
             
@@ -98,31 +64,31 @@ export class DashboardCopyService {
         });
 
     }
-    // static CopyWidgetMeasures(sourceWidget: WidgetPM, widget: WidgetPM) {
-        // if(!sourceWidget.WidgetMeasures || sourceWidget.WidgetMeasures.length == 0) return;
-        // widget.WidgetMeasures = [];
-        // sourceWidget.WidgetMeasures.forEach(sourceMeasure => {
-        //     var measure : WidgetMeasurePM = new WidgetMeasurePM(widget);
-        //     measure = DashboardMapping.deepClone(sourceMeasure);
-        //     measure.Tenant = SessionInfo.LoggedUserTenant;
-        //     measure.WidgetId = widget.Id;
-        //     measure.Id = null;
-        //     widget.WidgetMeasures.push(measure)
-        // });
-    // }
+
+    static CopyWidgetMeasures(sourceWidget: WidgetPM, widget: WidgetPM){   
+       sourceWidget.WidgetMeasures.forEach (itemMeasure => {
+           var newWidgetMeasure: WidgetMeasurePM = new WidgetMeasurePM(widget);
+           newWidgetMeasure.Tenant = SessionInfo.LoggedUserTenant;
+           newWidgetMeasure.WidgetId = widget.Id;
+           newWidgetMeasure.MeasureCode = itemMeasure.MeasureCode;
+           newWidgetMeasure.MeasureFieldId = itemMeasure.MeasureFieldId;
+           newWidgetMeasure.RenderAs = itemMeasure.RenderAs;
+           widget.WidgetMeasures.push(newWidgetMeasure);
+       });
+
+   }
+    static CopyUsers( sourceDashboard: DashboardPM, dashboard: DashboardPM) {   
+        sourceDashboard.DashboardSharedUsers.forEach(sourceUser => {
+                var user: DashboardSharedUserPM = new DashboardSharedUserPM(dashboard);
+                user.Tenant = SessionInfo.LoggedUserTenant;
+                user.DashboardId = dashboard.Id;
+                user.UserId = sourceUser.UserId;
+                user.UserName = sourceUser.UserName;
+                dashboard.DashboardSharedUsers.push(user);
+            });
+    }
 
     static CopyGlobalFiltyers( sourceDashboard: DashboardPM, dashboard: DashboardPM) {   
-        // if(!sourceDashboard.DashboardGlobalFilters || sourceDashboard.DashboardGlobalFilters.length == 0) return;
-        // dashboard.DashboardGlobalFilters = [];
-        // sourceDashboard.DashboardGlobalFilters.forEach(sourceFilter => {
-        //     var filter : DashboardGlobalFilterPM = new DashboardGlobalFilterPM(dashboard);
-        //     filter = DashboardMapping.deepClone(sourceFilter);
-        //     filter.Tenant = SessionInfo.LoggedUserTenant;
-        //     filter.DashboardId = dashboard.Id;
-        //     filter.Id = null;
-        //     dashboard.DashboardGlobalFilters.push(filter)
-        // });
-
         sourceDashboard.DashboardGlobalFilters.forEach(globalFilterItem => {
                 var newGlobalFilterItem: DashboardGlobalFilterPM = new DashboardGlobalFilterPM(dashboard);
     
@@ -141,17 +107,5 @@ export class DashboardCopyService {
             });
     }
 
-    static CopyWidgetMeasures(sourecWidget: WidgetPM, widget: WidgetPM){
-        sourecWidget.WidgetMeasures.forEach (itemMeasure => {
-            var newWidgetMeasure: WidgetMeasurePM = new WidgetMeasurePM(widget);
-            newWidgetMeasure.Tenant = SessionInfo.LoggedUserTenant;
-            newWidgetMeasure.WidgetId = widget.Id;
-            newWidgetMeasure.MeasureCode = itemMeasure.MeasureCode;
-            newWidgetMeasure.MeasureFieldId = itemMeasure.MeasureFieldId;
-            newWidgetMeasure.RenderAs = itemMeasure.RenderAs;
-            widget.WidgetMeasures.push(newWidgetMeasure);
-        });
-
-    }
-
+    
 }

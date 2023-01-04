@@ -83,7 +83,9 @@ export class DashboardMapping {
                     && key != 'entityParentPM'
                     && key != 'PropertyChanged'
                     && key != 'PropertyChanged'
-                    && key != 'OldEntityPM') return val
+                    && key != 'OldEntityPM'
+                    && key != 'IsDirty'
+                    && key != 'MarkAsDirty()') return val
             }
         ));
 
