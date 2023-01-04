@@ -32,6 +32,7 @@ namespace WebFreight.Web.ReportsWebServices
     // [System.Web.Script.Services.ScriptService]
     public class AWBLabelsWebSerivce : System.Web.Services.WebService
     {
+        public ShipmentPM shipmentPM;
         [WebMethod]
         public byte[] GetAWBLabelsData(string shipmentId, int tenant, string documentTypeId)
         {
@@ -56,7 +57,7 @@ namespace WebFreight.Web.ReportsWebServices
             ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             AddressRepository addressRepository = new AddressRepository(tenant);
-            ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(shipmentId, tenant);
+            shipmentPM = shipmentQuery.GetSinglePM(shipmentId, tenant);
 
             if (shipmentPM != null)
             {
@@ -250,7 +251,7 @@ namespace WebFreight.Web.ReportsWebServices
                     newlabel.AirlineLogo = myDataProvider.AirlineLogo;
                     newlabel.FlightNumber = myDataProvider.FlightNumber;
 
-                    CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                    CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipmentPM, newlabel);
 
                     newlabel.PieceNumber = counter.ToString();

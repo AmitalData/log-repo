@@ -47,7 +47,7 @@ namespace WebFreight.Web.WebServices
         private IShipmentsContext shipmentsContext;
         private ICommonDataContext commonContext;
         private IWebFreightContext webfreightContext;
-        private ShipmentPM shipment;
+        public ShipmentPM shipment;
         private AddressRepository addressRepository;
         private ContactRepository contactRepository;
         private CountryRepository countryRepository;
@@ -3838,7 +3838,7 @@ namespace WebFreight.Web.WebServices
                     myDataProvider.PlaceAndDateOfIssue = myDataProvider.PlaceAndDateOfIssue + " " + String.Format("{0:dd MMM yyyy}", TenantServerConfigration.GetCurrentDateTime(tenant));
                 }
 
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
                 customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipment, myDataProvider);
 
                 if (myFirstPickup != null)

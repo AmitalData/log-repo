@@ -807,16 +807,23 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
         private double GetMarkUpValueByCurrency(double? markUp, QuoteChargePM quoteCharge = null)
         {
-            double? markUpValue = (markUp == null ? 0 : markUp.Value);
-            if (quoteCharge.SaleCurrencyId == quoteCharge.MarkUpCurrencyId)
+            if (!FeatureToggleHelper.HasFeatureToggle("QMU", tenant))
             {
+                return (markUp == null ? 0 : markUp.Value);
+            }
+            else
+            {
+                double? markUpValue = (markUp == null ? 0 : markUp.Value);
+                if (quoteCharge.SaleCurrencyId == quoteCharge.MarkUpCurrencyId)
+                {
+                    return (markUpValue == null ? 0 : markUpValue.Value);
+                }
+
+                var markUpLocalValue = markUpValue * quoteCharge.CostExchangeRate;
+                markUpValue = markUpLocalValue / quoteCharge.SaleExchangeRate;
+
                 return (markUpValue == null ? 0 : markUpValue.Value);
             }
-
-            var markUpLocalValue = markUpValue * quoteCharge.CostExchangeRate;
-            markUpValue = markUpLocalValue / quoteCharge.SaleExchangeRate;
-
-            return (markUpValue == null ? 0 : markUpValue.Value);
         }
 
         private void ComputeLineCostTotalAmounts(QuoteChargePM item)

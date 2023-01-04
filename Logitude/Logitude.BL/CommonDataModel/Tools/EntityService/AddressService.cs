@@ -244,7 +244,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     }
 
                     List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Customer", entityCard.Tenant).Where(o => o.DataTypeCode == "Text" || o.DataTypeCode == "nText").ToList();
-                    CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                    CustomFieldResolver customFieldResolver = new CustomFieldResolver(entityCard.Tenant);
                     foreach (ObjectField field in customFields)
                     {
                         object value = customFieldResolver.GetFieldValue(entityCard, field, entityCard.Tenant);

@@ -23,6 +23,7 @@ import { BatchTaskExecutionListService } from '../../../Infrastructure/Services/
 import { DocumentsFilingExtendedPMService } from '../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
 import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManager';
 import { ConsilidationInvoiceDomainService } from '../../Services/ConsilidationInvoiceDomainService'; 
+import { ShipmentDomainService } from '../../../Shipment/Services/ShipmentDomainService';
 
 export class ARInvoiceMenuButtonsHandler {
     private CurrentSession = SessionLocator.SelectedSession;
@@ -727,12 +728,71 @@ export class ARInvoiceMenuButtonsHandler {
     ApplyApproveClicked() {
 
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode !== "NONE") {
-            this.CheckExchageRateLastUpdate();
+            this.CheckVendorExpenseCharges();
         }
         else {
             this.CheckAutoCreditInvoice();
         }
     }
+
+    private CheckVendorExpenseCharges() {
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "PROF40") {
+            this.CheckExchageRateLastUpdate();
+            return;
+        }
+
+        if (!this.EntityPM.InvoiceLines.some(item => item.IsExpense)) {
+            this.CheckExchageRateLastUpdate();
+            return;
+        }
+
+        this.CurrentSession.StartBusyIndicatorLoading();
+        let shipmentDomainService = new ShipmentDomainService();
+        shipmentDomainService.GetShipmentReceivablePMsByShipmentId(this.EntityPM.MainEntityId, SessionLocator.Tenant).subscribe((serviceResponse: ServiceResponse) => {
+            this.CurrentSession.StopBusyIndicator();
+            if (serviceResponse.HasError) {
+                this.CheckExchageRateLastUpdate();
+                return;
+            }
+
+            if (!this.HasExpenseLineWithoutPayableVendor(serviceResponse.Result)) {
+                this.CheckExchageRateLastUpdate();
+                return;
+            }
+            this.OpenExpenseLineWithoutPayableVendorWarningWindow();
+        });
+    }
+
+    private HasExpenseLineWithoutPayableVendor(allShipmentReceivables) {
+        let hasExpenseLineWithoutPayableVendor = false;
+        this.EntityPM.InvoiceLines.forEach(line => {
+            hasExpenseLineWithoutPayableVendor = hasExpenseLineWithoutPayableVendor ? hasExpenseLineWithoutPayableVendor : allShipmentReceivables.some(receivable => (receivable.IsExpense || receivable.IsExpenseCharge) && receivable.Id == line.ReceivableId && AppTool.IsNullOrEmpty(receivable.PayableVendorId));
+        });
+
+        return hasExpenseLineWithoutPayableVendor;
+    }
+
+    private OpenExpenseLineWithoutPayableVendorWarningWindow() {
+        const confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 350;
+        confirmWindow.ShowCancelButton = true;
+        confirmWindow.CancelButtonText = "Cancel";
+        confirmWindow.ShowNoButton = false;
+        confirmWindow.YesButtonText = "Continue";
+        confirmWindow.ShowWarningImage = true;
+        confirmWindow.Title = TextCodeTranslator.Translate("General.O.Warning");
+        confirmWindow.Show("Some of the Expense charges don't have Vendor, do you want to proceed approving?");
+
+        confirmWindow.WindowClosed.subscribe(event => {
+            if (confirmWindow.Yes) {
+                this.CheckExchageRateLastUpdate();
+            }
+            else if (confirmWindow.Cancel) {
+                this.StopFlags();
+            }
+        });
+    }
+
     private CheckExchageRateLastUpdate() {
          
         if (this.ComputeRelativeRateDate()) {

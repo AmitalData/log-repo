@@ -991,7 +991,7 @@ if(hasApiHelper)
 <#+
 if(hasCustomFields){
 #>
-                	CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                	CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 	customFieldResolver.SetCustomFieldsValues("<#= tableName #>",  authToken.Tenant, new List<<#= listName #>> { entityList }.Cast<object>().ToList());
 <#+
 }
@@ -1047,7 +1047,7 @@ else
 <#+
 if(hasCustomFields){
 #>
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 customFieldResolver.SetCustomFieldsValues("<#= tableName #>", authToken.Tenant, listResult.Cast<object>().ToList());
 <#+
 }
@@ -1381,7 +1381,7 @@ else
 <#+
 if(hasCustomFields){
 #>
-               CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+               CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                customFieldResolver.SetCustomFieldsValues("<#= tableName #>", authToken.Tenant, listResult.Cast<object>().ToList());
 <#+
 }

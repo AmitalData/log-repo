@@ -797,5 +797,27 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public double? TotalVATInSalesCurrency { get; set; }
         public List<CustomChildEntity> CustomChildEntities { get; set; }
 
+
+        private List<QuoteSalesAmountWithVATDetailsPM> quoteSalesAmountWithVATDetails;
+        public List<QuoteSalesAmountWithVATDetailsPM> QuoteSalesAmountWithVATDetails
+        {
+            get
+            {
+                if (quoteSalesAmountWithVATDetails == null)
+                {
+                    quoteSalesAmountWithVATDetails = new List<QuoteSalesAmountWithVATDetailsPM>();
+                }
+
+                return quoteSalesAmountWithVATDetails;
+            }
+
+            set
+            {
+                if (value != null)
+                {
+                    quoteSalesAmountWithVATDetails = value;
+                }
+            }
+        }
     }
 }

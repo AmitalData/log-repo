@@ -23,6 +23,8 @@ using WebFreight.Web.Controllers.DigitalPortal.Helpers;
 using Logitude.SystemLogs;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Linq.Dynamic.Core;
+using Logitude.BL.Helpers;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -107,6 +109,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 newFilters.Tenant = authToken.Tenant;
                 var shipmentQuery = new ShipmentQuery(authToken.Tenant);
                 var entityLists = shipmentQuery.GetByFilters(newFilters);
+
                 var response = new ServiceResponse();
 
                 if (newFilters.GetCount)
@@ -117,11 +120,22 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 entityLists = QueryableExtensions.Skip(entityLists, () => newFilters.PageIndex);
                 entityLists = QueryableExtensions.Take(entityLists, () => newFilters.PageSize);
 
-                List<DigitalShipmentList> listQuery = entityLists.ToList();
+                var helper = new DigitalFieldSecuritesHelper();
+                var allowedFieldSecurites = helper.GitDigitalSecuritesFeilds(newFilters.ObjectTableId, newFilters.ProfileId, tenant, false)
+                                                  .Where(a => a.HasPersmission)
+                                                  .Select(a => a.FieldCode.Replace("Shipment.", ""))
+                                                  .ToList();
 
-                shipmentQuery.BuildShipmentListWithTimeLine(listQuery, authToken.Tenant);
+                var fields = string.Join(",", allowedFieldSecurites);
 
-                response.Result = listQuery;
+                var shipments = entityLists.Select("new { " + fields + " }").ToDynamicList();
+
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+                customFieldResolver.SetCustomFieldsValues("Shipment", tenant, shipments.Cast<object>().ToList());
+
+                var res = shipmentQuery.BuildShipmentListWithTimeLine(shipments, authToken.Tenant);
+
+                response.Result = res;
 
                 var reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 

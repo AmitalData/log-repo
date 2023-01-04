@@ -52,7 +52,7 @@ namespace WebFreight.Web.ReportsWebServices
         AddressRepository addressRepository;
         PortRepository portRepository;
         CardQuery cardQuery;
-        private ShipmentPM shipmentpm;
+        public ShipmentPM shipmentpm;
         private ShipmentRepository shipmentRepository;
         private WebServiceHelper servicHelper;
         [WebMethod]
@@ -1641,7 +1641,7 @@ namespace WebFreight.Web.ReportsWebServices
                 prealertDataProvider.WarehouseLegTerminalCode = shipmentpm.WarehouseLegTerminalCode;
                 #endregion
 
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
                 customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipmentpm, prealertDataProvider);
             }
 

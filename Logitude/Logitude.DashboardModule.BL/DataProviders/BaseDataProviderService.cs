@@ -38,7 +38,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
             var entityFields = analyticsFactsFieldsMetaDataRepository.GetAll(0).Where(e => e.AnalyticsFactsMetaDataId == _Entity.Id).ToList();
             _EntityFields = entityFields.ToDictionary(e => e.Id, e => e);
         }
-        protected void UpdateDateString(List<SeriesMeasureVulue> results)
+        protected void UpdateDateString(List<SeriesMeasureValue> results)
         {
             foreach (var item in results)
             {
@@ -91,19 +91,20 @@ namespace Logitude.DashboardModule.BL.DataProviders
             return $"CAST({measureCode}(IIF(data.{measureField.FieldCode} is null , '0' , data.{measureField.FieldCode})) AS DECIMAL(32,2))";
         }
 
-        protected object CreateSortBy()
+        protected string CreateSortBy()
         {
-            if (_Widget.SortBy == null)
-            {
-                //group by field
-                return $" order by Label {_Widget.SortDirection}";
-            }
-            return $" order by Value {_Widget.SortDirection}";
+            return $" order by {GetSortByField()} {_Widget.SortDirection}";
         }
 
-        protected string ConverDateByDateGroupCode(AnalyticsFactsFieldsMetaData groupBy)
+        protected string GetSortByField()
         {
-            switch (_Widget.DateGroupCode)
+            if (_Widget.SortBy == null) return "Label";
+            return "Value";
+        }
+
+        protected string ConverDateByDateGroupCode(AnalyticsFactsFieldsMetaData groupBy, string dateGroupCode)
+        {
+            switch (dateGroupCode)
             {
                 case "Day":
                     return $"convert(varchar, data.{groupBy.FieldCode}, 111)";
@@ -167,6 +168,12 @@ namespace Logitude.DashboardModule.BL.DataProviders
                 columns.Add(groupBy);
             }
 
+            if (!string.IsNullOrEmpty(_Widget.SecondaryGroupById))
+            {
+                var groupBy = _EntityFields.ContainsKey(_Widget.SecondaryGroupById) ? _EntityFields[_Widget.SecondaryGroupById] : throw new Exception($"Meta Data Field '{_Widget.SecondaryGroupById}' not found");
+                columns.Add(groupBy);
+            }
+
             if (!string.IsNullOrEmpty(widgetPartArguments.MeasureFieldId))
             {
                 var measure = _EntityFields.ContainsKey(widgetPartArguments.MeasureFieldId) ? _EntityFields[widgetPartArguments.MeasureFieldId] : throw new Exception($"Meta Data Field '{widgetPartArguments.MeasureFieldId}' not found");
@@ -184,15 +191,22 @@ namespace Logitude.DashboardModule.BL.DataProviders
         private string CreateQuery<T>(IQueryable<T> resultQueryable, List<AnalyticsFactsFieldsMetaData> columns, WidgetArguments widgetPartArguments)
         {
             AnalyticsFactsFieldsMetaData groupByField = null;
+            AnalyticsFactsFieldsMetaData groupByFieldsec = null;
             if (_Widget.GroupById != null)
             {
                 groupByField = _EntityFields[_Widget.GroupById];
                 if (!columns.Any(x => x.FieldCode == groupByField.FieldCode)) columns.Insert(0, groupByField);
             }
+            if (_Widget.SecondaryGroupById != null)
+            {
+                groupByFieldsec = _EntityFields[_Widget.SecondaryGroupById];
+                if (!columns.Any(x => x.FieldCode == groupByFieldsec.FieldCode)) columns.Insert(0, groupByFieldsec);
+            }
+
             var queryString = $@"select {BuildAnalyticTableFieldsSelectQuery(columns)}
                      From ({resultQueryable.ToQueryStringWithParameter()}) as data 
                      {BuildQueryJoins(columns)}
-                     {BuildQueryStatment(groupByField, widgetPartArguments.GroupByValue)} ";
+                     {BuildQueryStatment(groupByField, widgetPartArguments.GroupByValue, groupByFieldsec, widgetPartArguments.GroupBySecValue)} ";
 
             if (_Widget.TypeCode == "kpi" && _Widget.TimeOverTime)
             {
@@ -201,7 +215,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
 
             return queryString;
 
-            
+
         }
         private string CheckComparisonOperator()
         {
@@ -222,11 +236,17 @@ namespace Logitude.DashboardModule.BL.DataProviders
             return "";
         }
 
-        private string BuildQueryStatment(AnalyticsFactsFieldsMetaData groupBy, string groupByValue)
+        private string BuildQueryStatment(AnalyticsFactsFieldsMetaData groupBy, string groupByValue, AnalyticsFactsFieldsMetaData groupByFieldsec, string groupBySecValue)
         {
             if (groupBy == null) return "";
-            var query = "Where ";
+            var query = "Where " + BuildGroupQuery(groupBy, groupByValue);
+            if (groupByFieldsec != null) query = query + " And " + BuildGroupQuery(groupByFieldsec, groupBySecValue);
+            return query;
+        }
 
+        private string BuildGroupQuery(AnalyticsFactsFieldsMetaData groupBy, string groupByValue)
+        {
+            var query = "";
             var fieldCode = "data." + groupBy.FieldCode;
             if (groupByValue == null) return $@"{query} {fieldCode} IS NULL";
             if (groupBy.DataTypeCode == "LookUp") return $@"{query} {fieldCode} = '{groupByValue}'";
@@ -255,7 +275,6 @@ namespace Logitude.DashboardModule.BL.DataProviders
                     date = $@"{dateParts[0]}-{dateParts[1]}";
                     return $"{query} {fieldCode} >= '{date}' and {fieldCode} <='{date} 23:59:59.999'";
             }
-
         }
 
         private string GetQuarterGroupStatment(string fieldCode, string[] dateParts)

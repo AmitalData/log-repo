@@ -41,7 +41,7 @@ namespace WebFreight.Web.ReportsWebServices
         private string entityObjectTableId;
         private string childEntityObjectTableId;
         private string childEntityTypeCode;
-        private ShipmentPM shipment;
+        public ShipmentPM shipment;
         private ShipmentPickUpDelivery childEntity;
         private DeliveryNoteDataProvider dataProvider;
         private IShipmentsContext shipmentsContext;
@@ -704,7 +704,7 @@ namespace WebFreight.Web.ReportsWebServices
         }
         private void MapShipmentCustomFields()
         {
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipment, dataProvider);
         }
 

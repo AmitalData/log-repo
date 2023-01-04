@@ -51,7 +51,7 @@ namespace WebFreight.Web.ReportsWebServices
         private ContactRepository contactRepository;
         private AddressRepository addressRepository;
         private WebServiceHelper servicHelper;
-
+        public ShipmentPM shipmentPM;
         [WebMethod]
         public byte[] GetProfitData(string shipmentId, int tenant, string accountingCurrencyId, string currentUser)
         {
@@ -95,7 +95,7 @@ namespace WebFreight.Web.ReportsWebServices
             VatTypeRepository vatTypeRepository = new VatTypeRepository(commonContext);
             VatTypeQuery vatTypeQuery = new VatTypeQuery(vatTypeRepository);
             List<Currency> listCurrency = currencyRepository.GetCurrencies(tenant).ToList();
-            ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(shipmentId, tenant);
+            shipmentPM = shipmentQuery.GetSinglePM(shipmentId, tenant);
             portRepository = new PortRepository(commonContext);
             countryRepository = new CountryRepository(commonContext);
             TenantRepository tenantRepository = new TenantRepository(tenant);
@@ -784,7 +784,7 @@ namespace WebFreight.Web.ReportsWebServices
                 }
                 #endregion
 
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
                 customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipmentPM, provider);
             }
 

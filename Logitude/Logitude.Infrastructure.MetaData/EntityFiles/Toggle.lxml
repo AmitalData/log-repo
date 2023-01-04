@@ -41,7 +41,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;5375&quot;"
+  Code="&quot;618d&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -879,6 +879,21 @@
       Name="&quot;Export To Excel Using Parallel&quot;"
       SearchFields="&quot;XUP,Export To Excel Using Parallel&quot;"
       Description="&quot;Export To Excel Using Parallel&quot;" />
+    <Record
+      Code="&quot;NWR&quot;"
+      Name="&quot;Run worker on new environment&quot; "
+      SearchFields="&quot;NWR,Run worker on new environment&quot;"
+      Description="&quot;Run worker on new environment&quot; " />
+    <Record
+      Code="&quot;LCT&quot;"
+      Name="&quot;Login Cargo Tracking&quot;"
+      SearchFields="&quot;CTL,Login Cargo Tracking&quot;"
+      Description="&quot;Cargo Tracking Login For Normal Users&quot;" />
+    <Record
+      Name="&quot;AR Invoice Printing&quot;"
+      Code="&quot;ARP&quot;"
+      SearchFields="&quot;ARP,AR Invoice Printing&quot;"
+      Description="&quot;AR Invoice Printing&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

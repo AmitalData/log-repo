@@ -41,7 +41,7 @@ namespace Logitude.Server.Tools.CustomFields
             childEntityId = childEntitiesCustomFieldArgs.ChildEntityId;
             tenant = childEntitiesCustomFieldArgs.Tenant;
             childObjectTableName = childEntitiesCustomFieldArgs.ChildObjectTableName;
-            customFieldResolver = new CustomFieldResolver();
+            customFieldResolver = new CustomFieldResolver(tenant);
             childEntitiesCustomFieldRepository = new ChildEntitiesCustomFieldRepository(tenant);
             customObjectFields = GetCustomObjectFields();
             childEntitiesCustomFields = GetChildEntitiesCustomFields();

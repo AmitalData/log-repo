@@ -227,7 +227,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                      ObjectTableName = "Port",
                      ParentEntityId = filters.ParentEntityId,
                      ParentObjectTableName = filters.ParentObjectTableName, 
-                     Tenant = authToken.Tenant,
+                     Tenant = tenant ,
                      ParentEntity = filters.ParentEntity
                  };
 

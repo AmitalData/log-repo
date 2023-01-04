@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="13">
+  <Sql Version="14">
       <![CDATA[	  
 	  delete from DigitalFieldSecurities where id != ''
 	  delete from DigitalProfiles where id != ''
@@ -59,6 +59,9 @@
 		},
 		{
 			"FieldCode": "Shipment.StatusName"
+		},
+		{
+			"FieldCode": "Shipment.House"
 		},
 		{
 			"FieldCode": "Shipment.CreateDateTime"
@@ -332,6 +335,9 @@
 		},
 		{
 			"FieldCode": "Shipment.StatusName"
+		},
+		{
+			"FieldCode": "Shipment.House"
 		},
 		{
 			"FieldCode": "Shipment.CreateDateTime"

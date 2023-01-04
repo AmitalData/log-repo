@@ -38,7 +38,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
             }
             else if (args.PartnerType == "CS")
             {
-                myDocumentFilings = myDocumentFilings.Where(d => d.IsCustomerView).ToList();
+                myDocumentFilings = myDocumentFilings.Where(d => d.IsCustomerUploadPermission).ToList();
             }
 
             IQueryable<DocumentOutCopy> allcopies = Enumerable.Empty<DocumentOutCopy>().AsQueryable();
@@ -130,6 +130,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
                             PrintDate = invoiceDocument?.PrintDate,
                             IsPrinted = invoiceDocument?.IsPrinted,
                             DirectionCode = item.DirectionCode,
+                            IsCustomerUploadPermission = item.IsCustomerUploadPermission,
+                            IsRequired = item.IsRequested,
                         });
                     }
                 }

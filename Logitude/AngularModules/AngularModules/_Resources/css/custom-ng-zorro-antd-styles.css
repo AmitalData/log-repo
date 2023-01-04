@@ -90,11 +90,17 @@
     max-width: 300px !important;
 }
 
+.mention-menu li {
+    display: grid !important;
+}
+
 .mention-item {
+    width: 100% !important;
+    display: inline-block !important;
     padding-top: 0.3em !important;
     padding-bottom: 0.3em !important;
     padding-left: 0.3em !important;
-    padding-right: 1em !important;
+    padding-right: 0.3em !important;
     font-size: 9px !important;
     font-weight: normal !important;
     text-decoration: none !important;

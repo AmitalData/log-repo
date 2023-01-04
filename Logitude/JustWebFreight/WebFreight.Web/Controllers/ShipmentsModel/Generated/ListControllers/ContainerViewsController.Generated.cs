@@ -84,7 +84,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 			    }
 				if (entityList != null)
 				{
-                	CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                	CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 	customFieldResolver.SetCustomFieldsValues("Container",  authToken.Tenant, new List<ContainerList> { entityList }.Cast<object>().ToList());
  	
 					entityList = ContainerAPiHelper.ApplyFilters(entityList, authToken.Tenant);
@@ -121,7 +121,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 				entityLists = entityLists.OrderBy(d => d.Id);
 				List<ContainerList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 customFieldResolver.SetCustomFieldsValues("Container", authToken.Tenant, listResult.Cast<object>().ToList());
 										
 				return Request.CreateResponse(HttpStatusCode.OK, listResult);
@@ -350,7 +350,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 
 				}
 			   List<ContainerList> listResult = entityLists.ToList();
-               CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+               CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                customFieldResolver.SetCustomFieldsValues("Container", authToken.Tenant, listResult.Cast<object>().ToList());
 
                response.Result = listResult;

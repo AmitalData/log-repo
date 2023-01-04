@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="18">
+  <Sql Version="20">
     <![CDATA[	
 	  delete from DigitalTextCodes where id != ''
 
@@ -19,6 +19,11 @@
 		{
 			"TextCode": "General.G.NoDataDefaultMSG",
 			"DefaultText": "You do not have any information here All information will be displayed here, when it will be added by the forwarder",
+			"FieldCode": ""
+		},
+		{
+			"TextCode": "General.G.DragAndDropMsg",
+			"DefaultText": "Drag and drop files here to upload.",
 			"FieldCode": ""
 		},
 		{
@@ -570,6 +575,56 @@
 			"TextCode": "General.G.DownloadData",
 			"DefaultText": "Download data",
 			"FieldCode" : ""
+		},
+		{
+			"TextCode": "General.G.AllTime",
+			"DefaultText": "All Time",
+			"FieldCode": ""
+		},
+		{
+			"TextCode": "General.G.Last30Days",
+			"DefaultText": "Last 30 Days",
+			"FieldCode": ""
+		},
+		{
+			"TextCode": "General.G.ThisMonth",
+			"DefaultText": "This Month",
+			"FieldCode": ""
+		},
+		{
+			"TextCode": "General.G.LastMonth",
+			"DefaultText": "Last Month",
+			"FieldCode": ""
+		},
+		{
+			"TextCode": "General.G.ThisQuarter",
+			"DefaultText": "This Quarter",
+			"FieldCode": ""
+		},
+		{
+			"TextCode": "General.G.ThisYear",
+			"DefaultText": "This Year",
+			"FieldCode": ""
+		},
+		{
+			"TextCode": "General.G.SetPeriod",
+			"DefaultText": "Set period",
+			"FieldCode": ""
+		},
+		{
+			"TextCode": "General.G.Today",
+			"DefaultText": "Today",
+			"FieldCode": ""
+		},
+		{
+			"TextCode": "General.G.ThisWeek",
+			"DefaultText": "This week",
+			"FieldCode": ""
+		},
+		{
+			"TextCode": "General.G.Tomorrow",
+			"DefaultText": "Tomorrow",
+			"FieldCode": ""
 		}]');
 
 	  declare @shipmentObjectTableId as varchar(15)
@@ -811,6 +866,11 @@
 		},
 		{
 			"TextCode": "Shipment.G.ContainerType",
+			"DefaultText": "Type",
+			"FieldCode" : ""
+		},
+		{
+			"TextCode": "Shipment.G.Type",
 			"DefaultText": "Type",
 			"FieldCode" : ""
 		},
@@ -1150,6 +1210,16 @@
 			"FieldCode" : ""
 		},
 		{
+			"TextCode": "Shipment.G.UploadDocument",
+			"DefaultText": "Upload document",
+			"FieldCode" : ""
+		},
+		{
+			"TextCode": "Shipment.G.RequiredDocumentMessage",
+			"DefaultText": "This document is required",
+			"FieldCode" : ""
+		},
+		{
 			"TextCode": "Shipment.G.CancelButton",
 			"DefaultText": "Cancel",
 			"FieldCode" : ""
@@ -1248,6 +1318,11 @@
            "TextCode": "Shipment.F.IncotermName",
            "DefaultText": "Incoterm",
            "FieldCode": "Shipment.IncotermName"
+       },
+	   {
+           "TextCode": "Shipment.F.ChooseTypePlaceholder",
+           "DefaultText": "Choose type",
+           "FieldCode": ""
        }]');
 	  
 	declare @invocieObjectTableId as varchar(15)
@@ -1277,6 +1352,11 @@
 				"FieldCode": "ARInvoice.DueDate"
 			},
 			{
+				"TextCode": "ARInvoice.G.InvoiceNumber",
+				"DefaultText": "Invoice number",
+				"FieldCode": ""
+			},
+			{
 				"TextCode": "ARInvoice.G.TotalAmount",
 				"DefaultText": "Total Amount",
 				"FieldCode": ""
@@ -1292,11 +1372,6 @@
 				"FieldCode": ""
 			},
 			{
-				"TextCode": "ARInvoice.G.AllTime",
-				"DefaultText": "All time",
-				"FieldCode": ""
-			},
-			{
 				"TextCode": "ARInvoice.G.SearchPlaceholder",
 				"DefaultText": "Search bill to / ref# / invoice#",
 				"FieldCode": ""
@@ -1309,6 +1384,15 @@
 			{
 				"TextCode": "ARInvoice.G.Unpaid",
 				"DefaultText": "Unpaid",
+				"FieldCode": ""
+			},
+			{
+				"TextCode": "ARInvoice.G.Paid",
+				"DefaultText": "Paid",
+				"FieldCode": ""
+			},{
+				"TextCode": "ARInvoice.G.PartiallyPaid",
+				"DefaultText": "Partially paid",
 				"FieldCode": ""
 			},
 			{
@@ -1510,6 +1594,11 @@
 				"TextCode": "ARInvoice.G.ReferencesNo",
 				"DefaultText": "References no",
 				"FieldCode": "ARInvoice.ShipmentsNumbers"
+			},
+			{
+				"TextCode": "ARInvoice.G.InvocieType",
+				"DefaultText": "Invocie type",
+				"FieldCode": ""
 			}]');
     ]]>       
   </Sql>

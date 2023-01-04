@@ -788,6 +788,30 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "XUP,Export To Excel Using Parallel", 
                 Description = "Export To Excel Using Parallel", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "NWR", 
+                Name = "Run worker on new environment'' ", 
+                SearchFields = "NWR,Run worker on new environment", 
+                Description = "Run worker on new environment'' ", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "LCT", 
+                Name = "Login Cargo Tracking", 
+                SearchFields = "CTL,Login Cargo Tracking", 
+                Description = "Cargo Tracking Login For Normal Users", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "AR Invoice Printing", 
+                Code = "ARP", 
+                SearchFields = "ARP,AR Invoice Printing", 
+                Description = "AR Invoice Printing", 
+			});
 			
             return all;
        }

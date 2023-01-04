@@ -113,6 +113,10 @@ namespace WebFreight.Web.Helpers.BIReport
                             }
                             writeRange.NumberFormat = datetimeformat;
                             break;
+                        case "Time":
+                            writeRange.HorizontalAlignment = ExcelHAlign.HAlignLeft;
+                            writeRange.NumberFormat = "h:mm";
+                            break;
                         case "Decimal":
                         case "Double":
                             writeRange.HorizontalAlignment = ExcelHAlign.HAlignRight;

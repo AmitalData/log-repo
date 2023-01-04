@@ -4705,7 +4705,7 @@ User/Pass",
         {
             LoggedContactResolver.RegisterLoggedContactUtil();
             ExchangeRatesFromExternalLinkUpdateService ratesUpdateService = new ExchangeRatesFromExternalLinkUpdateService(Convert.ToInt16(textBox2.Text));
-            ratesUpdateService.UpdateRatesByExternalXML();
+            ratesUpdateService.UpdateRatesByExternalXml();
 
         }
 

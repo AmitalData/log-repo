@@ -46,7 +46,7 @@ namespace WebFreight.Web.ReportsWebServices
         private bool isRegulatedAgentActivated;
         private string contactEmail;
         private AWBDataProvider awbDp;
-        private ShipmentPM shipmentPM;
+        public ShipmentPM shipmentPM;
         private IShipmentsContext shipmentsContext;
         private ICommonDataContext commonContext;
         private AddressRepository addressRepository;
@@ -2452,7 +2452,7 @@ namespace WebFreight.Web.ReportsWebServices
         }
         private void GetCustomFieldsData()
         {
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
 
             List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", shipmentPM.Tenant).ToList();
 

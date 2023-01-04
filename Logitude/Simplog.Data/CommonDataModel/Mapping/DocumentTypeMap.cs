@@ -192,6 +192,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.AgentRoleId).HasColumnName("AgentRoleId");
             this.Property(t => t.IsAgentView).HasColumnName("IsAgentView");
             this.Property(t => t.IsCustomerView).HasColumnName("IsCustomerView");
+            this.Property(t => t.IsCustomerUploadPermission).HasColumnName("IsCustomerUploadPermission");
             this.Property(t => t.IsReadOnly).HasColumnName("IsReadOnly");
             this.Property(t => t.InActive).HasColumnName("InActive");
             this.Property(t => t.IsCopiedAtSignup).HasColumnName("IsCopiedAtSignup");

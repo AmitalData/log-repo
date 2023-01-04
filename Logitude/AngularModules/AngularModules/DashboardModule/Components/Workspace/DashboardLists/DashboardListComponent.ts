@@ -9,7 +9,7 @@ import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { AnalyticsFactsFieldsMetaDataPM } from 'DashboardModule/EntityPMs/AnalyticsFactsFieldsMetaDataPM';
 import { DashboardListLinkRendererComponent } from 'DashboardModule/Components/ListTemplates/DashboardListLinkRendererComponent';
 import * as moment from 'moment';
-import { DashboardMapping } from 'Dashboard/Services/DashboardMapping';
+import { DashboardMapping } from 'DashboardModule/Services/DashboardMapping';
 import { DashboardPM } from 'DashboardModule/EntityPMs/DashboardPM';
 import { EntityPMService } from 'Infrastructure/Services/EntityPMService';
 import { AnalyticsFactsMetaDataPMService } from 'DashboardModule/Services/StandardPMs/AnalyticsFactsMetaDataPMService';
@@ -124,6 +124,7 @@ export class DashboardListComponent extends BaseComponent implements OnInit {
     MapDataPointSelectionToWidgetPartArguments(dataPointSelection: DataPointSelection): WidgetPartArguments {
         var widgetPartArguments = new WidgetPartArguments();
         widgetPartArguments.GroupByValue = dataPointSelection.GroupById;
+        widgetPartArguments.GroupBySecValue = dataPointSelection.GroupByIdSec;
         widgetPartArguments.MeasureFieldId = dataPointSelection.MeasureFieldId;
         widgetPartArguments.Widget = DashboardMapping.GetWidgetPMFromReact(dataPointSelection.Widget);
         return widgetPartArguments;

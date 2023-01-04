@@ -19,6 +19,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
         public string To{ get; set; }
         public string ShipmentNumber { get; set; }
         public string TransportModeId { get; set; }
+        public string DirectionId { get; set; }
+        public string FromCountryCode { get; set; }
+        public string FromPortCountry { get; set; }
+        public string ToPortCountry { get; set; }
+        public string ToCountryCode { get; set; }
+        public string ShipmentSubTypeName { get; set; }
+        public string ShipmentTypeName { get; set; }
         public List<SharedLogisticDocumentPM> Documents { get; set; }
     }
 }

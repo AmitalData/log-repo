@@ -599,6 +599,8 @@
     <Compile Include="InfrastructureModel\DataContracts\MultiEntityUpdateData.cs" />
     <Compile Include="InfrastructureModel\EntityLists\CustomFieldList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\DataCustomObjectList.cs" />
+    <Compile Include="InfrastructureModel\EntityLists\DeploymentPackagesVersionList.cs" />
+    <Compile Include="InfrastructureModel\EntityLists\DeploymentPackageList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\EntityStatusTypeList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\ImageLibraryList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\QuoteChargesGroupList.cs" />
@@ -608,14 +610,18 @@
     <Compile Include="InfrastructureModel\EntityPMs\CustomChildEntity.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\CustomChildObjectPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\DataCustomObjectPM.cs" />
+    <Compile Include="InfrastructureModel\EntityPMs\DeploymentPackagesVersionPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\EntityStatusTypePM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\ImageLibraryPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\MultiEntityUpdateLogPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\QuoteChargesGroupPM.cs" />
+    <Compile Include="InfrastructureModel\EntityPMs\DeploymentPackagePM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\ReferenceCustomObjectPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\ScreenSectionPM.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\ChildEntitiesCustomFieldQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\CustomChildObjectQuery.cs" />
+    <Compile Include="InfrastructureModel\EntityQueries\DeploymentPackagesVersionQuery.cs" />
+    <Compile Include="InfrastructureModel\EntityQueries\DeploymentPackageQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\DataCustomObjectQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\EntityStatusTypeQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\ImageLibraryQuery.cs" />
@@ -654,6 +660,8 @@
     <Compile Include="InfrastructureModel\EntityQueries\RuleUpdateHistoryQuery.cs" />
     <Compile Include="InfrastructureModel\Services\CustomObjectDefaultMetaDataService.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\CustomChildObjectMapping.cs" />
+    <Compile Include="InfrastructureModel\Tools\DataMapping\DeploymentPackagesVersionMapping.cs" />
+    <Compile Include="InfrastructureModel\Tools\DataMapping\DeploymentPackageMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\DataCustomObjectMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\ReferenceCustomObjectMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\CustomChildObjectService.cs" />
@@ -665,6 +673,8 @@
     <Compile Include="InfrastructureModel\Tools\DataMapping\WorkerRoleNameMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\RuleUpdateHistoryMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\SchedulerProcedureMapping.cs" />
+    <Compile Include="InfrastructureModel\Tools\EntityService\DeploymentPackagesVersionService.cs" />
+    <Compile Include="InfrastructureModel\Tools\EntityService\DeploymentPackageService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\DataCustomObjectService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\ImageLibraryService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\MultiEntityUpdateLogService.cs" />
@@ -693,6 +703,7 @@
     <Compile Include="InvoiceModel\APIDataContract\APInvoiceTotalVAT.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\APInvoiceTransferStatus.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARInvoiceAdditionalData.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\ARInvoiceJournalLT.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARPaymentBankTranfer.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARPaymentCheque.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARPaymentChequeStatusReplica.Generated.cs" />
@@ -741,6 +752,7 @@
     <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\Payment\Complemento.PagosPago.DoctoRelacionados.CreditNotes.cs" />
     <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\Payment\Complemento.PagosPago.DoctoRelacionados.PagosPagoDoctoRelacionado.cs" />
     <Compile Include="QuoteModel\CustomFilters\DigitalPortalCustomFilter.cs" />
+    <Compile Include="QuoteModel\EntityPMs\QuoteSalesAmountWithVATDetailsPM.cs" />
     <Compile Include="QuoteModel\EntityQueries\QuoteQuery.Digital.cs" />
     <Compile Include="ShipmentDigitalFieldQuery.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\GeneralContainerTrackingArgs.cs" />

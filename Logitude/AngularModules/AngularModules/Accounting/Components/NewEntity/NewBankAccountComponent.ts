@@ -177,7 +177,9 @@ public isRTL: boolean = false;
     }
 
     SubmitChanges() {
+        this.CurrentSession.StartBusyIndicatorSaving();
         this.myService.insert(this.EntityPM).subscribe((myResult:any) => {
+            this.CurrentSession.StopBusyIndicator();
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
@@ -186,7 +188,7 @@ public isRTL: boolean = false;
 
             else {
                 this.ValidationErrorsList = mm.ErrorsArray;
-                this.CurrentSession.StopBusyIndicator();
+              
             }
         });
     }

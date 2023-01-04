@@ -2,9 +2,12 @@ import { Component } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
 import { AppTool, FormatTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
+import { FieldTypes } from "Workflow/Constants/FieldTypes";
 import { DataTypesList } from "Workflow/Models/DataTypesList";
+import { EntitiesTreeList } from "Workflow/Models/EntitiesTreeList";
 import { Formatter } from "Workflow/Models/Formatter";
 import { ListItem } from "Workflow/Models/ListItem";
+import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 
 @Component({
     templateUrl: "./DeclareVariablePropertiesComponent.html"
@@ -17,30 +20,36 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
     public VariableName: string = null;
     public VariableType: string = null;
     public VariableValue: string = null;
+    public RecordType: string = null;
     public IsCollectionVariable: boolean = false;
     public ValidationErrorsList: string[];
-    public IsNew: boolean = true;
-
+    public IsNew: boolean;
+    public VariableTypeChangedToggle: boolean = false;
     public DataTypesItems: ListItem[] = new DataTypesList().Items;
-
+    public EntitiesTreeItems: TreeSelectItem[];
+    public ExcludedEntities: string[] = ["Shipment.Container", "Shipment.ARInvoice", "Shipment.APInvoice"];
+    public FieldTypes = FieldTypes;
     public CurrentSession = SessionLocator.SelectedSession;
 
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
-        if (Object.keys(this.Data).length !== 0) {
-            this.IsNew = false;
-        }
+
         this.initialize();
+        this.initializeEntitiesTreeItems();
     }
 
     initialize() {
+        this.IsNew = Object.keys(this.Data).length === 0;
+
         let variableNameData = this.Data["variableName"];
         let variableTypeData = this.Data["variableType"];
         let variableValueData = this.Data["variableValue"];
+        let recordTypeData = this.Data["recordType"];
 
         this.VariableName = variableNameData || null;
         this.VariableType = this.formatVariableType(variableTypeData);
         this.VariableValue = variableValueData || null;
+        this.RecordType = recordTypeData || null;
 
         if (variableTypeData && variableTypeData.toString().endsWith("[]")) {
             this.IsCollectionVariable = true;
@@ -49,7 +58,12 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
         this.setUIProperties();
     }
 
+    initializeEntitiesTreeItems() {
+        this.EntitiesTreeItems = new EntitiesTreeList("child").Items;
+    }
+
     updateVariableName(variableName: string) {
+        this.Data["name"] = variableName;
         this.Data["variableName"] = variableName;
         this.Data["variableCode"] = Formatter.getCodeFromName(variableName);
         this.VariableName = variableName;
@@ -66,11 +80,14 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
             }
         }
 
+        this.updateVariableValue(null);
+        if (this.VariableType !== FieldTypes.Record) {
+            this.updateRecordType(null);
+        }
+
         this.Data["variableType"] = type;
         this.VariableType = this.formatVariableType(type);
-
-        this.Data["variableValue"] = null;
-        this.VariableValue = null;
+        this.VariableTypeChangedToggle = !this.VariableTypeChangedToggle;
 
         this.setUIProperties();
     }
@@ -78,6 +95,8 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
     updateIsCollectionVariable(isCollection: boolean) {
         this.IsCollectionVariable = isCollection;
         this.updateVariableType(this.VariableType);
+
+        this.setUIProperties();
     }
 
     updateVariableValue(value: string) {
@@ -87,9 +106,21 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
         this.setUIProperties();
     }
 
+    updateRecordType(recordType: string) {
+        this.Data["recordType"] = recordType || null;
+        this.RecordType = recordType || null;
+
+        this.setUIProperties();
+    }
+
     setUIProperties() {
         this.UIProperties.SetRequired("VariableName", null, AppTool.IsNullOrEmpty(this.VariableName));
         this.UIProperties.SetRequired("VariableType", null, AppTool.IsNullOrEmpty(this.VariableType));
+        if (this.VariableType === FieldTypes.Record) {
+            this.UIProperties.SetRequired("RecordType", null, AppTool.IsNullOrEmpty(this.RecordType));
+        } else {
+            this.UIProperties.SetRequired("RecordType", null, false);
+        }
         if (!FormatTool.IsValidNameText(this.VariableName)) {
             let error = "Name Format is Invalid <Must start with Letters and can contain only '-' >"
             this.UIProperties.SetValidity("VariableName", null, AppTool.IsNullOrEmpty(this.VariableName), error);
@@ -111,7 +142,6 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
         this.ValidationErrorsList = [];
         let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
         if (notValidUIProperties.length === 0) {
-            this.Data["name"] = this.VariableName;
             //console.log(this.Data);
             this.CurrentSession.CurrentWindow.Close(this.Data);
         } else {

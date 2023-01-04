@@ -81,6 +81,7 @@
     <None Include="DBTables\DashboardSharedUser.dxml" />
     <None Include="DBTables\PermissionLevel.dxml" />
     <None Include="DBTables\QuoteAnalytic.dxml" />
+    <None Include="DBTables\UserPinnedDashboard.dxml" />
     <None Include="EntityFiles\DashboardSharedUser.lxml" />
     <None Include="EntityFiles\PermissionLevel.lxml" />
     <None Include="EntityFiles\DashboardGlobalFilter.lxml" />
@@ -121,6 +122,7 @@
     <None Include="EntityFiles\AnalyticsFactsMetaData.lxml" />
     <None Include="EntityFiles\Dashboard.lxml" />
     <None Include="EntityFiles\MeasureType.lxml" />
+    <None Include="EntityFiles\UserPinnedDashboard.lxml" />
     <None Include="EntityFiles\Widget.lxml" />
     <None Include="EntityFiles\WidgetMeasure.lxml" />
     <None Include="EntityFiles\WidgetType.lxml" />

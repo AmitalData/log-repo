@@ -400,7 +400,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
             if (chartOfAccount.OriginalChartOfAccountTypeCode == ChartOfAccountsTypeValues.Works || 
                 !ExpandChartOfAccountToGLAccounts && chartOfAccountsWithControlAccounts.Contains(chartOfAccount.OriginalChartOfAccountTypeCode))
-                GLAccountsConnectedWithChartofAccount = gLAccountQueryService.GetControlAccountForChartOfAccount(tenant, chartsofAccountsId);
+                // GLAccountsConnectedWithChartofAccount = gLAccountQueryService.GetControlAccountForChartOfAccount(tenant, chartsofAccountsId);
+                GLAccountsConnectedWithChartofAccount = gLAccountQueryService.GetAllGLAccountIdsByChartsofAccountId(tenant, chartsofAccountsId);
             else
                 GLAccountsConnectedWithChartofAccount = gLAccountQueryService.GetAllGLAccountIdsByChartsofAccountId(tenant, chartsofAccountsId);
 
@@ -492,7 +493,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 if (chartOfAccount.TypeCode == ChartOfAccountsTypeValues.Works ||
                     !ExpandChartOfAccountToGLAccounts && chartOfAccountsWithControlAccounts.Contains(chartOfAccount.TypeCode)
                     )
-                    GLAccountsConnectedWithChartofAccount = gLAccountQueryService.GetControlAccountForChartOfAccount(tenant, ChartsofAccountsId);
+                    //GLAccountsConnectedWithChartofAccount = gLAccountQueryService.GetControlAccountForChartOfAccount(tenant, ChartsofAccountsId);
+                    GLAccountsConnectedWithChartofAccount = gLAccountQueryService.GetAllGLAccountIdsByChartsofAccountId(tenant, ChartsofAccountsId);
                 else
                     GLAccountsConnectedWithChartofAccount = gLAccountQueryService.GetAllGLAccountIdsByChartsofAccountId(tenant, ChartsofAccountsId);
 

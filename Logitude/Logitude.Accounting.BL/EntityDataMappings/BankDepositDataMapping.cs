@@ -140,12 +140,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     if (arPaymentCheque != null)
                     {
                         result += "," + arPaymentCheque.ChequeNumber;
+                        result += "," + arPaymentCheque.LocalAmount.ToString();
+                        result += "," + arPaymentCheque.ForeignAmount.ToString();
                     }
 
                 }
             }
-
-            
 
             //foreach (JournalLinePM item in entityPM.BankDepositLines)
             //{
@@ -175,9 +175,25 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             //        }
             //    }
             //}
+            string resultWithoutDuplicate = RemoveDuplicateInSearchFields(result);
+            entityPM.SearchFields = resultWithoutDuplicate;
+            poco.SearchFields = resultWithoutDuplicate;
 
-            entityPM.SearchFields = result;
-            poco.SearchFields = result;
+        }
+
+        private string RemoveDuplicateInSearchFields(string result)
+        {
+            List<string> items = result.Split(',').ToList();
+            List <string > array = new List<string > ();
+            items.ForEach(item =>
+            {
+                if (!array.Any(x => x == item))
+                {
+                    array.Add(item);
+                }
+            });
+            string searchValue = string.Join(",", array);
+            return searchValue;
 
         }
 

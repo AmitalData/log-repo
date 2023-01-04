@@ -14,11 +14,12 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
     public class KpiDataProviderService : BaseDataProviderService
     {
         private AnalyticsFactsFieldsMetaData measureField;
-        private readonly TenantRepository tenantRepository;
-
-        public KpiDataProviderService(WidgetPM widget, AnalyticsFactsMetaData entity) : base(widget, entity)
+        private TenantRepository tenantRepository;
+        private int tenant;
+        public KpiDataProviderService(WidgetPM widget, AnalyticsFactsMetaData entity, int tenant) : base(widget, entity)
         {
-            tenantRepository = new TenantRepository(_Widget.Tenant);
+            this.tenant = tenant;
+            tenantRepository = new TenantRepository(tenant);
         }
 
         internal KpiChart GetData<T>(IQueryable<T> query)
@@ -72,8 +73,8 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
 
         private string GetUnitByCode(string genericUnitCode)
         {
-            if (genericUnitCode == "LocalCurrency") return tenantRepository.GetSingleTenant(_Widget.Tenant)?.Currency?.Code;
-            if (genericUnitCode == "ProfitCurrency") return tenantRepository.GetSingleTenant(_Widget.Tenant)?.ProfitCurrency?.Code;
+            if (genericUnitCode == "LocalCurrency") return tenantRepository.GetSingleTenant(tenant)?.Currency?.Code;
+            if (genericUnitCode == "ProfitCurrency") return tenantRepository.GetSingleTenant(tenant)?.ProfitCurrency?.Code;
             throw new Exception("Please Define The Unit");
         }
 

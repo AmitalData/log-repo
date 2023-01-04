@@ -1,21 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Logitude.DashboardModule.BL.DataProviders
 {
     public class SeriesMeasure
     {
+        public SeriesMeasure()
+        {
+            Values = new List<SeriesMeasureValue>();
+        }
         public string Name { get; set; }
+        public string RenderAs { get; set; }
         public string MeasureFieldId { get; set; }
-        public List<SeriesMeasureVulue> SeriesMeasureVulues = new List<SeriesMeasureVulue>();
+        public List<SeriesMeasureValue> Values { get; set; }
     }
-    public class SeriesMeasureVulue
+    public class SeriesMeasureValue
     {
-        public string Label { get; set; }
         public decimal Value { get; set; }
+        public string Label { get; set; }
         public string GroupById { get; set; }
+        public string LabelSec { get; set; }
+        public string GroupByIdSec { get; set; }
     }
 }

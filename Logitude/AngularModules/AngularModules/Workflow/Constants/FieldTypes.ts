@@ -13,4 +13,5 @@ export enum FieldTypes {
     SigDouble = "SigDouble",
     UnsDecimal = "UnsDecimal",
     UnsInteger = "UnsInteger",
+    Record = "Record",
 }

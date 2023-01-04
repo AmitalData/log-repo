@@ -41,7 +41,7 @@ namespace WebFreight.Web.ReportsWebServices
     // [System.Web.Script.Services.ScriptService]
     public class ManifestWebService : System.Web.Services.WebService
     {
-        ShipmentPM master;
+        public ShipmentPM master;
         ShipmentPackageQuery packagesQuery;
         int tenant;
         ICommonDataContext commonContext;
@@ -94,7 +94,7 @@ namespace WebFreight.Web.ReportsWebServices
             ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
             master = shipmentQuery.GetSinglePM(masterId, tenant);
             PortRepository portRepository = new PortRepository(tenant);
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             ShipmentAssemblyRepository shipmentAssemblyRepository = new ShipmentAssemblyRepository(shipmentsContext);
             ShipmentAssemblyQuery shipmentAssemblyQuery = new ShipmentAssemblyQuery(shipmentAssemblyRepository);
             insideShipmentPackageRepository = new InsideShipmentPackageRepository(shipmentsContext);

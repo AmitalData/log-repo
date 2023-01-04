@@ -24,7 +24,7 @@ import { GetObjectFieldPipe } from "./Pipes/GetObjectFieldPipe";
 import { GetObjectFieldsQueryFiltersPipe } from "./Pipes/GetObjectFieldsQueryFiltersPipe";
 import { ListItemPipe } from "./Pipes/ListItemPipe";
 import { IsDateTimeTypePipe } from "./Pipes/IsDateTimeTypePipe";
-import { IsDeclaredVariablePipe } from "./Pipes/IsDeclaredVariablePipe";
+import { IsNoObjectFieldVariablePipe } from "./Pipes/IsNoObjectFieldVariablePipe";
 import { IsFieldOperatorPipe } from "./Pipes/IsFieldOperatorPipe";
 import { IsNoValueOperatorPipe } from "./Pipes/IsNoValueOperatorPipe";
 import { ShowFlowVariablesTreeItemPipe } from "./Pipes/ShowFlowVariablesTreeItemPipe";
@@ -38,6 +38,7 @@ import { ExpressionBuilderComponent } from "./Components/Base/ExpressionBuilderC
 import { CollectionFilterPropertiesComponent } from './Components/Properties/CollectionFilterPropertiesComponent';
 import { ShowEditableVariablesTreeItemPipe } from "./Pipes/ShowEditableVariablesTreeItemPipe";
 import { IsCollectionTypePipe } from "./Pipes/IsCollectionTypePipe";
+import { SetValuesOperatorsItemsPipe } from "./Pipes/SetValuesOperatorsItemsPipe";
 import { WorkflowVersionComponent } from './Components/WorkflowVersion/WorkflowVersionComponent';
 import { CreateWorkflowVersionComponent } from './Components/WorkflowVersion/CreateWorkflowVersionComponent';
 import { WorkFlowShortTitleComponent } from './Components/ShortTitles/WorkFlowShortTitleComponent';
@@ -86,7 +87,7 @@ export const Pipes = [
     GetObjectTablesQueryFiltersPipe,
     ListItemPipe,
     IsDateTimeTypePipe,
-    IsDeclaredVariablePipe,
+    IsNoObjectFieldVariablePipe,
     IsFieldOperatorPipe,
     IsNoValueOperatorPipe,
     ShowEntitiesTreeItemPipe,
@@ -96,7 +97,8 @@ export const Pipes = [
     ConditionDisabledPipe,
     ShowEditableVariablesTreeItemPipe,
     IsObjectTypePipe,
-    IsCollectionTypePipe
+    IsCollectionTypePipe,
+    SetValuesOperatorsItemsPipe
 ];
 
 export class ModuleDeclarations {

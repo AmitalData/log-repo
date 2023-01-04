@@ -24,7 +24,7 @@ export class WorkflowSelectors {
     public static readonly WorkflowListRefreshButton = "#Refresh";
     public static readonly WorkflowListExcelExport = "img[title^='Export To Excel']";
     public static readonly WorkflowLinkButton = "span[class^='linkbtn']";
-    public static readonly FlowEditButton = "#Edit";
+    public static readonly WorkflowGeneralTab = "#WorkFlowTHGeneral";
     public static readonly FlowRunHistory = "#WorkFlowTHRunHistory";
     public static readonly WorkflowGeneralSaveButton = "[data-cy^='EditWorkFlow_Save']";
     public static readonly WorkflowGeneralBackButton = "#BackButton";
@@ -50,6 +50,8 @@ export class WorkflowSelectors {
     public static readonly RunHistoryExportFile = "[data-cy^='RunHistoryExport']";
     public static readonly DatePickerList = "[data-cy^='RunHistoryDatePickerdropDown']";
     public static readonly DatePickertodayDate = "[data-cy^='TodayDateItem']";
+    public static readonly WorkflowSaveDraft = "#WorkFlowBSaveDraft";
+    public static readonly WorkflowRunHistory = "#WorkFlowTHRunHistory";
 
     public static RunHistoryHeaderColumnSelector(SortField: string): string {
         return "[data-cy^='" + SortField + "']";

@@ -787,7 +787,7 @@ if(!isClosed && enableSecurity)
 <#+
 if(hasCustomFields){
 #>
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 customFieldResolver.SetCustomFieldsValues("<#= tableName #>",  authToken.Tenant, new List<<#= listName #>> { <#= FirstServiceCharacterToLowerTS(listName) #> }.Cast<object>().ToList());
 <#+
 }
@@ -826,7 +826,7 @@ if(!isClosed && enableSecurity)
 <#+
 if(hasCustomFields){
 #>
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 customFieldResolver.SetCustomFieldsValues("<#= tableName #>",  authToken.Tenant, result.Cast<object>().ToList());
 <#+
 }
@@ -1010,7 +1010,7 @@ if(tableName == "Port" || tableName == "Carrier"  || tableName == "Currency")
 <#+
 if(hasCustomFields){
 #>
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 customFieldResolver.SetCustomFieldsValues("<#= tableName #>",  authToken.Tenant, entityLists.Cast<object>().ToList());
 <#+
 }

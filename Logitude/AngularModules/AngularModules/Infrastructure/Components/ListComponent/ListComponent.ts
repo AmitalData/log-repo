@@ -2340,23 +2340,20 @@ export class ListComponent implements OnInit, AfterViewInit {
                             });
                     }
                     else if (myObjectTableName == "WorkFlow") {
-                        this.WorkFlowPMService.get($event.rowData.Id).subscribe((serviceResponse: ServiceResponse) => {
-                            if (!serviceResponse.HasError) {
-                                var entitypm: WorkFlowPM
-                                entitypm = serviceResponse.Result
-                                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-                                    .then(cmpRef => {
-                                        cmpRef.instance.ComponentRef = cmpRef;
-                                        cmpRef.instance.Run({ EntityId: $event.rowData.Id, EntityPM: entitypm, ObjectTableName: 'WorkFlow', BackButtonLabel: "WorkFlows" });
+                        var entitypm: WorkFlowPM = new WorkFlowPM();
+                        entitypm.Id = $event.rowData.Id
+                        entitypm.IsDirty = false;
+                        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                            .then(cmpRef => {
+                                cmpRef.instance.ComponentRef = cmpRef;
+                                cmpRef.instance.Run({ EntityId: $event.rowData.Id, EntityPM: entitypm, ObjectTableName: 'WorkFlow', BackButtonLabel: "WorkFlows" });
 
-                                        cmpRef.instance.BackCompleted.subscribe(() => {
-                                            this.isEditControlOpened = false;
-                                            this.OnBackFromEdit(selectedEntityId, $event)
-                                            //this.RefreshBtnClick();
-                                        });
-                                    });
-                            }
-                        });
+                                cmpRef.instance.BackCompleted.subscribe(() => {
+                                    this.isEditControlOpened = false;
+                                    this.OnBackFromEdit(selectedEntityId, $event)
+                                    //this.RefreshBtnClick();
+                                });
+                            });
                     }
                     else if (this.ObjectTableName == "Customs.DeclarationReferantData") {
     var customFile = "";

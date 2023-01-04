@@ -195,8 +195,8 @@
                         [ngClass]="{'condition-date-value-container': (Condition.type | IsDateTimeTypePipe)}">
 
                         <FieldValue *ngIf="Condition.fieldChangedToggle"
-                            [ObjectField]="(Condition.fieldCode | IsDeclaredVariablePipe) ? null : (Condition.fieldCode | GetObjectFieldPipe : FlowObjectFields)"
-                            [DataType]="(Condition.fieldCode | IsDeclaredVariablePipe) ? Condition.type : null"
+                            [ObjectField]="(Condition.fieldCode | IsNoObjectFieldVariablePipe) ? null : (Condition.fieldCode | GetObjectFieldPipe : FlowObjectFields)"
+                            [DataType]="(Condition.fieldCode | IsNoObjectFieldVariablePipe) ? Condition.type : null"
                             [Name]="'ConditionValue_' + Condition.id"
                             [IsIntegerNumberInput]="(Condition.type | IsDateTimeTypePipe) && Condition.valueExpression === DateTimeValueExpressions.PlusMinusToday"
                             [CurrentValue]="Condition.value"
@@ -205,8 +205,8 @@
                         </FieldValue>
 
                         <FieldValue *ngIf="!Condition.fieldChangedToggle"
-                            [ObjectField]="(Condition.fieldCode | IsDeclaredVariablePipe) ? null : (Condition.fieldCode | GetObjectFieldPipe : FlowObjectFields)"
-                            [DataType]="(Condition.fieldCode | IsDeclaredVariablePipe) ? Condition.type : null"
+                            [ObjectField]="(Condition.fieldCode | IsNoObjectFieldVariablePipe) ? null : (Condition.fieldCode | GetObjectFieldPipe : FlowObjectFields)"
+                            [DataType]="(Condition.fieldCode | IsNoObjectFieldVariablePipe) ? Condition.type : null"
                             [Name]="'ConditionValue_' + Condition.id"
                             [IsIntegerNumberInput]="(Condition.type | IsDateTimeTypePipe) && Condition.valueExpression === DateTimeValueExpressions.PlusMinusToday"
                             [CurrentValue]="Condition.value"

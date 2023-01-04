@@ -22,7 +22,7 @@ namespace Logitude.DashboardModule.Data.EntityListQueryServices
 
     public partial class DashboardListQueryService
     {
-        private IQueryable<DashboardList> GetIqueryableList(IQueryable<Dashboard> iQueryable)
+        public IQueryable<DashboardList> GetIqueryableList(IQueryable<Dashboard> iQueryable)
         {
             IQueryable<DashboardList> query = (from a in iQueryable
                                                select new DashboardList()
@@ -36,10 +36,11 @@ namespace Logitude.DashboardModule.Data.EntityListQueryServices
                                                    SearchFields = a.SearchFields,
                                                    Name = a.Name,
                                                    Description = a.Description,
+                                                   PermissionLevelCode = a.PermissionLevelCode,
                                                });
             return query;
         }
-        private IQueryable<Dashboard> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<Dashboard> iQueryable, int tenant)
+        public IQueryable<Dashboard> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<Dashboard> iQueryable, int tenant)
         {
             DashboardSharedUserRepository dashboardSharedUserRepository = new DashboardSharedUserRepository(context);
             IQueryable<string> dashboardIds = iQueryable.Select(s => s.Id);
@@ -49,8 +50,8 @@ namespace Logitude.DashboardModule.Data.EntityListQueryServices
 
             return (from d in iQueryable
                     where
-                    (d.PermissionLevelCode == "ONM" && d.CreatedByUserId == loggedContactId)
-                    || (d.PermissionLevelCode == "SPF" && users.Select(s => s.UserId).Contains(loggedContactId))
+                    d.CreatedByUserId == loggedContactId
+                    || users.Select(s => s.UserId).Contains(loggedContactId)
                     || (d.PermissionLevelCode == "PUB")
                     select d);
         }

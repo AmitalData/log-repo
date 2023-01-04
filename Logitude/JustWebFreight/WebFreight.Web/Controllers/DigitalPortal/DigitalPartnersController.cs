@@ -336,7 +336,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 }
 
                 var listResult = entityLists.ToList();
-                var customFieldResolver = new CustomFieldResolver();
+                var customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 customFieldResolver.SetCustomFieldsValues("Customer", authToken.Tenant, listResult.Cast<object>().ToList());
                 response.Result = listResult;
                 var reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);

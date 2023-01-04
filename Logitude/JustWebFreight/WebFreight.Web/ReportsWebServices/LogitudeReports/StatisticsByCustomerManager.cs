@@ -152,7 +152,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             StatisticsByClientDataProvider myDataProvider = new StatisticsByClientDataProvider();
             myDataProvider.StatisticsList_NoGroup = new List<StatisticsByClientReport>();
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             CardRepository cardRepository = new CardRepository(tenant);
             ContactRepository contactRepository = new ContactRepository(tenant);
             ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);

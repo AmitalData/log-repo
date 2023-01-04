@@ -27,7 +27,7 @@ namespace WebFreight.Web.WorkFlow.DomainServices
 
             List<WorkFlowList> listQuery = listService.GetList(queryOperations, tenant);
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetCustomFieldsValues("WorkFlow", tenant, listQuery.Cast<object>().ToList());
 
             return listQuery;

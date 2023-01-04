@@ -25,6 +25,7 @@ namespace WebFreight.Web.AccountingModel.Reports.BankDeposit
 {
     class BankDepositPrintService
     {
+        public BankDepositPM bankDepositPM;
         public void BuildBankDepositReport(string entityId, int tenant, string documentOutId)
         {
             // 1 
@@ -86,7 +87,7 @@ namespace WebFreight.Web.AccountingModel.Reports.BankDeposit
             CurrencyQuery currencyQuery = new CurrencyQuery(tenant);
             TenantQuery tenantQuery = new TenantQuery(tenant);
 
-            BankDepositPM bankDepositPM = bankDepositQuery.GetSingle(entityId, true, false);
+            bankDepositPM = bankDepositQuery.GetSingle(entityId, true, false);
    
             if(bankDepositPM != null)
             {

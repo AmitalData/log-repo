@@ -14,12 +14,10 @@ export class WorkFlowMenuButtonsHandler {
     public entityArgs: EntityArgs
     public MenuButtons: MenuButtonPM[]
     private CurrentSession = SessionLocator.SelectedSession;
-    public WorkFlowPMService: WorkFlowPMService = new WorkFlowPMService();
     public WorkFlowVersionPMService: WorkFlowVersionPMService = new WorkFlowVersionPMService();
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
-        this.EntityPM = entityArgs.EntityPM;
         this.Listen();
     }
 
@@ -37,6 +35,7 @@ export class WorkFlowMenuButtonsHandler {
         this.entityArgs.EntityArgEventEmitter.subscribe(
             theMessage => {
                 if (theMessage == "RefreshWorkflowButtons") {
+                    this.EntityPM = this.entityArgs.EntityPM;
                     this.SetButtonStates(this.MenuButtons)
                 }
             }
@@ -145,8 +144,8 @@ export class WorkFlowMenuButtonsHandler {
     handleCreateNewVersionResponse(data: WorkFlowVersionPM) {
         if (data) {
             this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, UpdatedVersion: data.Id }
-        this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, ClickedVersionRow: null }
-        this.entityArgs.SendMessage("WorkflowVersionsUpdated");
+            this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, ClickedVersionRow: null }
+            this.entityArgs.SendMessage("WorkflowVersionsUpdated");
         }
     }
 

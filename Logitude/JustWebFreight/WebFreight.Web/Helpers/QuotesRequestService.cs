@@ -92,7 +92,7 @@ namespace WebFreight.Web.Helpers
 
         private void MapTicketCustomField(TicketPM ticketPM, string fieldCode, string fieldValue)
         {
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             CustomFieldResolverArgs customFieldResolverArgs = new CustomFieldResolverArgs
             {
                 ObjectTableName = "Ticket",
@@ -321,7 +321,7 @@ namespace WebFreight.Web.Helpers
 
         private string GetCustomFieldValue(ObjectField objectField, object entity, int tenant)
         {
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             object customFieldValue = customFieldResolver.GetFieldValue(entity, objectField, tenant);
             if (customFieldValue != null)
                 return customFieldValue.ToString();

@@ -28,7 +28,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.CustomFileNumber).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ConsigneeReference1).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.ConsigneeReference2).HasMaxLength(50).IsUnicode(false);
-            this.Property(t => t.ConsigneeReference3).HasMaxLength(300).IsUnicode(false);
+            this.Property(t => t.ConsigneeReference3).HasMaxLength(300).IsUnicode(true);
             this.Property(t => t.House).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.CASSCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.BranchId).IsRequired().HasMaxLength(15).IsUnicode(false);
@@ -173,7 +173,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.CustomerContactId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.CustomerReference1).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.CustomerReference2).HasMaxLength(50).IsUnicode(false);
-            this.Property(t => t.CustomerReference3).HasMaxLength(300).IsUnicode(false);
+            this.Property(t => t.CustomerReference3).HasMaxLength(300).IsUnicode(true);
             this.Property(t => t.ShipmentCustomerTypeCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.CustomAgentExportAddressId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.CustomAgentExportContactId).HasMaxLength(15).IsUnicode(false);

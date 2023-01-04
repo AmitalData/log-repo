@@ -57,7 +57,7 @@ namespace WebFreight.Web.ReportsWebServices
         CountryRepository countryRepository;
         int currentTenant;
         private WebServiceHelper servicHelper;
-
+        public APInvoicePM myAPInvoice;
         [WebMethod]
         public byte[] GetAPInvoiceData(string invoiceId, int tenant)
         {
@@ -75,7 +75,7 @@ namespace WebFreight.Web.ReportsWebServices
         public APInvoiceDataProvider GetAPInvoiceDataProvider(string invoiceId, int tenant)
         {
             servicHelper = new WebServiceHelper(tenant);
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             APInvoiceDataProvider invoiceDataProvider = new APInvoiceDataProvider();
 
             currentTenant = tenant;
@@ -94,7 +94,7 @@ namespace WebFreight.Web.ReportsWebServices
             cardRepository = new CardRepository(commonContext);
             invoiceQuery = new APInvoiceQuery(invoiceRepository);
             countryRepository = new CountryRepository(commonContext);
-            APInvoicePM myAPInvoice = invoiceQuery.GetSinglePM(invoiceId, tenant);
+            myAPInvoice = invoiceQuery.GetSinglePM(invoiceId, tenant);
 
             if (myAPInvoice != null)
             {
