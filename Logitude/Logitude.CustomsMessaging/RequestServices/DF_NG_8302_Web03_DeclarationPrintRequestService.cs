@@ -35,6 +35,8 @@ namespace Logitude.CustomsMessaging.RequestServices
             string declarationId = "";
             string declarationNumber = "";
             string direction = "";
+            string declarationTypeCode = "1";
+
             //Query by Declaration
             int count = 0;
             if (requestParams.DeclarationNumber.Count() > 0)
@@ -43,7 +45,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
 
                 //declarationId = declarationQueryService.GetIdByDeclarationNumber(declarationNumber, requestParams.Tenant);
-                (declarationId,direction) = declarationQueryService.GetMinDeclarationByDeclarationNumber(declarationNumber, requestParams.Tenant);
+                (declarationId,direction, declarationTypeCode) = declarationQueryService.GetMinDeclarationByDeclarationNumber(declarationNumber, requestParams.Tenant);
                 
                 foreach (var declarationNumberItem in requestParams.DeclarationNumber)
                 {
@@ -51,7 +53,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                     declarationStatus_RequestQueryDetails.QueryByDeclaration = new DF_NG_8302_Web03_DeclarationPrint_RequestQueryDetailsQueryByDeclaration()
                     {
                         DeclarationID = declarationNumberItem,
-                        DeclarationType = direction != "E" ? "1" : DeclarationTypeExport
+                        DeclarationType = declarationTypeCode,
                     };
                     declarationStatus_RequestQueryDetails.SequenceNumber = ++count;
                     declarationStatus_RequestQueryDetailsList.Add(declarationStatus_RequestQueryDetails);
