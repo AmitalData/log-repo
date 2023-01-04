@@ -640,7 +640,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         this._entityResourceService.getEntityResourceByTableName(this.LookUpTableName, 0).subscribe((res: any) => {
             this._entityResourceService.getEntityResourceByTableName("PartnerType", 0).subscribe((res3: any) => {
 
-                var apiQueryFilter: ApiQueryFilters = this.PrepareApiQueryFilters();
+                var apiQueryFilter: ApiQueryFilters = new ApiQueryFilters();
+               //this.PrepareApiQueryFilters();
                 this.entityListService.getAllFromCache("PartnerType", apiQueryFilter).then((res3: any) => {
                     res3.subscribe(res4 => {
                         this.PartnerTypes = res4.Result;
@@ -2926,7 +2927,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         return this.GetObjectTableNameForDependency(dep, parentObjectName);
     }
     private GetObjectTableNameForDependency(dependency: string, parentObjectName: string) {
-        var partnerType = this.PartnerTypes.filter(p => p.Id?.toLowerCase() == dependency?.toLowerCase())[0];
+        let partnerType: PartnerTypeList = this.PartnerTypes ?  this.PartnerTypes.filter(p => p.Id?.toLowerCase() == dependency?.toLowerCase())[0]:null;
         if (partnerType != null && partnerType != undefined) {
             var name: string = partnerType.Name.replace(" ", "");
 
