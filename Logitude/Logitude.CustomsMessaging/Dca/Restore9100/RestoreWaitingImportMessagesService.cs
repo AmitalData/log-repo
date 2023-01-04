@@ -160,24 +160,19 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
 
 
 
-        private NG_9101_MSG_OutgoingMessageResponse SendOutgoingMessageRequest(NG_9100_MSG_OutgoingMessageRequest request)
+        private NG_9101_MSG_OutgoingMessageResponse SendOutgoingMessageRequest(NG_9100_MSG_OutgoingMessageRequest customRequest)
         {
             string RequestsSheetExternalId = Guid.NewGuid().ToString();
             NG_9101_MSG_OutgoingMessageResponse response = null;
 
             var myIIGGatewayMoreParams = new UnifreightIIG.Common.TheGateway.MoreParams() { MyOption = UnifreightIIG.Common.TheGateway.MoreParams.Options.None };
 
-            using (var uifreightSdkGateway = new UnifreightSdkGateway(_CustomsSettingPM.IIGServiceAddress))
-            {
-                var _ResponseHeader = uifreightSdkGateway.GetChannel<IOutgoingMessageRequestOperation>()
-                    .OutgoingMessageRequest(
-                    RequestsSheetExternalId,
-                    _CustomsSettingPM.CustomsAgentId,
-                    request,
-                    ref myIIGGatewayMoreParams,
-                    out response);
 
-            }
+
+            var sendNG_9100_MSG_OutgoingMessageRequestService = new SendNG_9100_MSG_OutgoingMessageRequestService();
+            var result = sendNG_9100_MSG_OutgoingMessageRequestService.CallWS(customRequest, this._CustomsSettingPM, myIIGGatewayMoreParams, RequestsSheetExternalId);
+            
+            return result.response;
             return response;
         }
 

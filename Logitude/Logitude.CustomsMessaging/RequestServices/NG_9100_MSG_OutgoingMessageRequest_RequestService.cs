@@ -19,7 +19,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                     fromDate = requestParams.FromDate.Value,
                     toDate = requestParams.ToDate.Value,
                     CorrelationId = string.IsNullOrWhiteSpace(requestParams.CorrelationID) ? null : requestParams.CorrelationID,
-                    ServiceName = string.IsNullOrWhiteSpace(requestParams.InterfaceManagementsCode) ? null : requestParams.InterfaceManagementsCode,
+                    ServiceName =null,// string.IsNullOrWhiteSpace(requestParams.InterfaceManagementsCode) ? null : requestParams.InterfaceManagementsCode,
 
 
                 },

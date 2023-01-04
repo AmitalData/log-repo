@@ -660,9 +660,20 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 messageWaitingRequestParams.CorrelationID = requestParams.CorrelationID;
                 messageWaitingRequestParams.FromDate = requestParams.FromDate;
                 messageWaitingRequestParams.ToDate = requestParams.ToDate;
-                messageWaitingRequestParams.InterfaceManagementsCode = requestParams.InterfaceManagementsCode;
+                //not working ///messageWaitingRequestParams.InterfaceManagementsCode = requestParams.InterfaceManagementsCode;
                 messageWaitingRequestParams.RequestVIA = SendRequestVIA.WebServiceBatch;
+                messageWaitingRequestParams.Tenant = requestParams.Tenant;
                 //messageWaitingRequestParams.RequestVIAChangeDue = "המסר יבוצע ברקע ";
+
+
+
+
+                messageWaitingRequestParams.LoggingUserId = requestParams.LoggingUserId;
+                messageWaitingRequestParams.CorrelationID = requestParams.CorrelationID;
+                messageWaitingRequestParams.MainInterfaceCode = "9100";
+                //TODO messageWaitingRequestParams.ServiceName = requestParams.
+
+
 
                 var service = new NG_9100_MSG_OutgoingMessageRequestMessagingService();
                 var responseData = service.Send(messageWaitingRequestParams);
