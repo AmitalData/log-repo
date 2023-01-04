@@ -48,5 +48,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 
             }
         }
+
+
     }
 }

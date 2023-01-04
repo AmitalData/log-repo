@@ -40,6 +40,10 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using System.Reflection;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.Accounting.Data.Enums;
+using Logitude.Accounting.BL.Utils;
+using System.Xml.Serialization;
+using System.IO;
+using Logitude.Accounting.BL.CoreBL.Batch;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -675,6 +679,59 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             OnUpdatingCheckReconcileMethod(entityPM, entityPOCO);
 
             ValidateCurrencyChange(entityPM, entityPOCO);
+
+            if (entityPM.ActiveForInterest != entityPOCO.ActiveForInterest && entityPM.ActiveForInterest == true)
+            {
+                var args = new GLAccountInterestActivationBalanceArgs()
+                {
+                    Tenant = entityPOCO.Tenant,
+                    GLAccountId = entityPOCO.Id,
+                    AccountTypeCode = null,
+                    InterestActivationDate = entityPM.InterestCalculationStartDate.HasValue ? entityPM.InterestCalculationStartDate.Value : DateTime.MinValue,
+                    LastMadeGLAccountId = null,
+                    MaxGLAccountsPerQuery = 100,
+                    BatchIt = 1,
+                };
+                using (var memStream = new MemoryStream())
+                {
+                    var serializer = new XmlSerializer(typeof(GLAccountInterestActivationBalanceArgs));
+                    serializer.Serialize(/*stringwriter*/memStream, args);
+
+                    var communicationLogId = Communications.AddCommunicationLog(new CommunicationsParams()
+                    {
+                        Tenant = entityPOCO.Tenant,
+                        CommunicationLogTypeCode = "Q",
+                        QueueName = "externaltasksqueue" + entityPOCO.Tenant + 1,
+                        Priority = 1,
+                        InOut = "O",
+                        Status = "D",
+                        FileExtension = "xml",
+                        //LoggingUserId = loggedUserId,
+                        //LoggingObjectTableId = table.Id,
+                        //LoggingEntityId = extDocPM.Id,
+
+                        FolderName = "BatchTaskExecutionsQueue",
+
+                        To = "GLAccountInterestActivationBalanceBatch",
+
+                        //EntityId = declarationId,
+                        //ObjectTableId = objectTableId,
+                        Subject = "GLAccountInterestActivationBalanceBatch holder ",
+                        ByteData = memStream.ToArray()
+
+
+                    });
+                    args.CommunicationLogId = communicationLogId;
+
+                }
+                //GLAccountInterestActivationBalanceBatch.CreateBatchFunctionalTestTask( args,false);
+                var myGLAccountInterestActivationBalanceBatch = new BatchGLAccountInterestActivationBalanceTask(null);
+                string subj = $"GLAccount Interest Activation Balance {entityPOCO.Id}";
+                myGLAccountInterestActivationBalanceBatch.CreateQBatchTaskExecution<GLAccountInterestActivationBalanceArgs>(args, args.Tenant, subj, true);
+
+
+            }
+
         }
 
         protected override void OnUpdating(GLAccountPM entityPM)

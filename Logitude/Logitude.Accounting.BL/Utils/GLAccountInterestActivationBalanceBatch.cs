@@ -59,6 +59,7 @@ namespace Logitude.Accounting.BL.Utils
             _StatusCode = HttpStatusCode.Accepted;
 
         }
+
         public string ResponseText()
         {
             return _ResponseText;
@@ -412,6 +413,7 @@ namespace Logitude.Accounting.BL.Utils
         public string LastMadeGLAccountId { get; set; }
 
         public int MaxGLAccountsPerQuery { get; set; }
+        public string CommunicationLogId { get; set; }
 
     }
 
