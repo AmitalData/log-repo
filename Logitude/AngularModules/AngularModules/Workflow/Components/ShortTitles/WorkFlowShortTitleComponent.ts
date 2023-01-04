@@ -12,6 +12,7 @@ import { WorkFlowVersionPM } from 'Workflow/EntityPMs/WorkFlowVersionPM';
 export class WorkFlowShortTitleComponent {
     public EntityPM: WorkFlowPM;
     public ValidVersion: WorkFlowVersionPM;
+    public WarningErrorsList: string[] = [];
 
     constructor(public entityArgs: EntityArgs) {
     }
@@ -37,10 +38,21 @@ export class WorkFlowShortTitleComponent {
                             var version = this.EntityPM.WorkFlowVersions.find(e => e.Id == clickedRowId);
                             this.ValidVersion = version;
                         }
+                        this.setWarningErrorMessage();
                     }
                 }
             );
         }
+    }
+
+    setWarningErrorMessage() {
+        var warnings: string[] = [];
+
+        if (this.ValidVersion.StatusCode != "DRFT") {
+            warnings.push("This version is currently active or was activated at least once. To make changes create a new version.");
+        }
+
+        this.WarningErrorsList = warnings;
     }
 
     get WorkflowName() {
