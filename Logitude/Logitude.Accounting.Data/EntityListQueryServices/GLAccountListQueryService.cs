@@ -30,17 +30,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             string active = TranslateTextsClass.Translate("GLAccounts.Q.Active", 0);
             string inactive = TranslateTextsClass.Translate("GLAccounts.Q.Inactive", 0);
 
-
-
-            //var sumQuery2 = from a in iQueryable
-            //                join LedgerTransactions in context.LedgerTransactions on a.Id equals LedgerTransactions.AccountId
-            //                group LedgerTransactions by new { LedgerTransactions.LocalAmountCredit } into g
-            //                select new
-            //                {
-            //                    LocalAmountCredit = g.Sum(t => t.LocalAmountCredit)
-            //                };
-            //var r2 = sumQuery2.FirstOrDefault();
-
             IQueryable<GLAccountList> query = (from a in iQueryable//.Include("ChartOfAccount").Include("ChartOfAccountsType")
                                                join chartOfAccount in context.ChartOfAccounts on a.ChartOfAccountsId equals chartOfAccount.Id
                                                join chartOfAccountsType in context.ChartOfAccountsTypes on a.ChartOfAccountsTypeCode equals chartOfAccountsType.Code
@@ -67,10 +56,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                {
                                                    Id = a.Id,
                                                    Tenant = a.Tenant,
-                                                   //ameeerah
-                                                   Obligo = MoreDatas.BalanceInLocalCurrency + MoreDatas.TotFutureOpenChequesInLocalCur + CardsDatas.TotalOpenShipments ,//+ r2.LocalAmountCredit,
-                                                   CreditUsed = MoreDatas.TotFutureOpenChequesInLocalCur + CardsDatas.TotalOpenShipments + MoreDatas.BalanceInLocalCurrency - (((decimal)((int)(CardsDatas.CreditLimit * 10000))) / 10000),
-
                                                    InternalNumber = a.InternalNumber,
                                                    InterestCreditLimit = a.InterestCreditLimit,
                                                    InterestOpenBalance = a.InterestOpenBalance,
@@ -338,6 +323,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                             || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
                                                             || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? MoreDatas.TotFutureOpenChequesInLocalCur : 0,
 
+                                                   Obligo = (MoreDatas.BalanceInLocalCurrency) + (MoreDatas.TotFutureOpenChequesInLocalCur??0) + (CardsDatas.TotalOpenShipments??0),
+                                                   CreditUsed = (MoreDatas.BalanceInLocalCurrency) + (MoreDatas.TotFutureOpenChequesInLocalCur??0) + (CardsDatas.TotalOpenShipments??0) - (((decimal)((int)(CardsDatas.CreditLimit??0 * 10000))) / 10000),
+
+
                                                }); ;
             return query;
         }
@@ -347,9 +336,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             var list = from glaccount in iQueryable//.AsEnumerable()
                        select new GLAccountList()
                        {
-                           Obligo =  glaccount.Obligo,
-                           CreditUsed = glaccount.CreditUsed,
-                           //ameerah
                            Id = glaccount.Id,
                            Tenant = glaccount.Tenant,
                            InternalNumber = glaccount.InternalNumber,
