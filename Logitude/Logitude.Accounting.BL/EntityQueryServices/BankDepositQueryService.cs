@@ -427,8 +427,17 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         private List<LedgerTransactionPM> GetChequeTransactionsByDeposit(string bankDepositId, int tenant, ARPaymentChequePM chequePM)
         {
             List<LedgerTransactionPM> depositTransactions = GetDepositTransactions(bankDepositId, tenant);
-
-            var chequeTransactions = depositTransactions.Where(transaction => transaction.Reference2 == chequePM.ChequeNumber).ToList();
+            BankDepositLineQueryService bankDepositLineQueryService = new BankDepositLineQueryService(tenant);
+            List<int> bankDepositLineNumbers = bankDepositLineQueryService.GetDepositLineNumbersByDepositIdChequeId(bankDepositId, chequePM.Id, tenant);
+            List<LedgerTransactionPM> chequeTransactions;
+            if (bankDepositLineNumbers != null)
+            {
+                chequeTransactions = depositTransactions.Where(transaction => transaction.Reference2 == chequePM.ChequeNumber && bankDepositLineNumbers.Contains(transaction.JournalLineNumber)).ToList();
+            }
+            else
+            {
+                chequeTransactions = depositTransactions.Where(transaction => transaction.Reference2 == chequePM.ChequeNumber).ToList();
+            }
             return chequeTransactions;
         }
 
