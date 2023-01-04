@@ -324,7 +324,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                             || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? MoreDatas.TotFutureOpenChequesInLocalCur : 0,
 
                                                    Obligo = (MoreDatas.BalanceInLocalCurrency) + (MoreDatas.TotFutureOpenChequesInLocalCur??0) + (CardsDatas.TotalOpenShipments??0),
-                                                   CreditUsed = (MoreDatas.BalanceInLocalCurrency) + (MoreDatas.TotFutureOpenChequesInLocalCur??0) + (CardsDatas.TotalOpenShipments??0) - (((decimal)((int)(CardsDatas.CreditLimit??0 * 10000))) / 10000),
+                                                   CreditUsed = (((decimal)((int)(CardsDatas.CreditLimit ?? 0 * 10000))) / 10000)- (MoreDatas.BalanceInLocalCurrency) - (MoreDatas.TotFutureOpenChequesInLocalCur??0) - (CardsDatas.TotalOpenShipments??0) ,
 
 
                                                }); ;
