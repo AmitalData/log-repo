@@ -25,7 +25,7 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
         private readonly CustomsSettingPM _CustomsSettingPM;
         private List<InterfaceTenantDefinitionManagementPM> _InterfaceListDCA;
         
-        public StringBuilder _SB { get; }
+        public StringBuilder MyStringBuilder { get; }
         public ConcurrentQueue<string> sbFilenameQueue { get; }
         public ConcurrentBag<string> exceptionBag { get; }
         public ConcurrentBag<NG_9200_OutgoingMessageDeliveryApprovalListOfCorrelationIDs> correlationIdsCanClear { get; }
@@ -50,7 +50,7 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
             _InterfaceListDCA = (new InterfaceTenantDefinitionQueryService(customsSettingPM.Tenant)).GetInterfaceListDCA(_InterfaceListDCA, customsSettingPM.CompanyType);
 
 
-            _SB = new StringBuilder();
+            MyStringBuilder = new StringBuilder();
             sbFilenameQueue = new ConcurrentQueue<String>();
             exceptionBag = new ConcurrentBag<String>();
             correlationIdsCanClear = new ConcurrentBag<NG_9200_OutgoingMessageDeliveryApprovalListOfCorrelationIDs>();
@@ -68,10 +68,10 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
 
                 var OutgoingMessageInterfaceList = _InterfaceListDCA.GetOutgoingMessageInterfaceList(OutgoingMessageList);
 
-                Debug.WriteLine($"OutgoingMessage9100ResponseAnalyze-OutgoingMessageInterfaceList== {OutgoingMessageInterfaceList.Count}");
+                LogIt($"OutgoingMessage9100ResponseAnalyze-OutgoingMessageInterfaceList== {OutgoingMessageInterfaceList.Count}");
                 if (OutgoingMessageInterfaceList.Count == 0)
                 {
-                    Debug.WriteLine($"OutgoingMessage9100ResponseAnalyze-nothing to do");
+                    LogIt($"OutgoingMessage9100ResponseAnalyze-nothing to do");
                     return;
                 }
 
@@ -83,7 +83,7 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
                                     correlationIdsCanClear, sbFilenameQueue, exceptionBag)
                             );
                 sw.Stop();
-                Debug.WriteLine($"OutgoingMessage9100ResponseAnalyze-Parallel Save took {sw.Elapsed}");
+                LogIt($"OutgoingMessage9100ResponseAnalyze-Parallel Save took {sw.Elapsed}");
             }
             catch (System.Exception e)
             {
@@ -93,6 +93,11 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
         }
 
 
+        private void LogIt(string mess)
+        {
+            Debug.WriteLine(mess);
+            MyStringBuilder.AppendLine(mess);
+        }
 
         private  void TPL_SaveInDB(
             NG_9101_MSG_OutgoingMessageResponseOutgoingMessage itemOutgoingMessage,
@@ -102,20 +107,20 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
         {
             try
             {
-                Debug.WriteLine($"SaveRequestSheet... {itemOutgoingMessage.CorrelationId}");
+                LogIt($"SaveRequestSheet... {itemOutgoingMessage.CorrelationId}");
 
                 SaveRequestSheet(messageDCA, dcaFile, itemOutgoingMessage.MSG);
 
-                Debug.WriteLine($"SaveRequestSheet!Done! {itemOutgoingMessage.CorrelationId}");
+                LogIt($"SaveRequestSheet!Done! {itemOutgoingMessage.CorrelationId}");
 
                 correlationIdsCanClear.Add(new NG_9200_OutgoingMessageDeliveryApprovalListOfCorrelationIDs { CorrelationIDs = itemOutgoingMessage.CorrelationId });
                 sbFilenameQueue.Enqueue(dcaFile.SelectedFileDownload);
-                Debug.WriteLine($"SaveInDB({dcaFile.SelectedFileDownload}) -Done");
+                LogIt($"SaveInDB({dcaFile.SelectedFileDownload}) -Done");
                 //NumOfMessages++;
             }
             catch (System.Exception EE)
             {
-                Debug.WriteLine($"SaveInDB({dcaFile.SelectedFileDownload}) -{EE.ToString()}");
+                LogIt($"SaveInDB({dcaFile.SelectedFileDownload}) -{EE.ToString()}");
                 //_SaveError = true;
                 exceptionBag.Add($"Error while save message in DCA : {EE.ToString()}");
                 //throw;
@@ -130,7 +135,7 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
             string currMessagingServiceCode = _InterfaceListDCA.GetMainMessagingServiceCode(messageDCA);
             if (_BadMessagingServiceCode.Contains(currMessagingServiceCode))
             {
-                Debug.WriteLine($"{currMessagingServiceCode} in _BadMessagingServiceCode {dcaFile.SelectedFileDownload} ");
+                LogIt($"{currMessagingServiceCode} in _BadMessagingServiceCode {dcaFile.SelectedFileDownload} ");
                 return;
             }
             if (!ContainerAccessor.Container.IsRegistered<IMessagingServiceInterfaceType>(currMessagingServiceCode))
@@ -138,8 +143,8 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
                 try
                 {
                     _BadMessagingServiceCode.Add(currMessagingServiceCode);
-                    Debug.WriteLine("DCA MessagingSheetWR: SaveMessageToAnalyzeQueueN():!ContainerAccessor.Container.IsRegistered :analyzeClass = " + currMessagingServiceCode);
-                    Debug.WriteLine("Due infinite errors i cancel writing log");
+                    LogIt("DCA MessagingSheetWR: SaveMessageToAnalyzeQueueN():!ContainerAccessor.Container.IsRegistered :analyzeClass = " + currMessagingServiceCode);
+                    LogIt("Due infinite errors i cancel writing log");
 
                     if (DateTime.Now.Subtract(_LastErrordateTime) > TimeSpan.FromMinutes(10))
                     {
@@ -157,7 +162,7 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
                 //return;
             }
             ///Task.Delay(TimeSpan.FromSeconds(5)).Wait();
-            Debug.WriteLine($"DcaReceivedCustomResponseCorrelation.... {currMessagingServiceCode}  {dcaFile.SelectedFileDownload}");
+            LogIt($"DcaReceivedCustomResponseCorrelation.... {currMessagingServiceCode}  {dcaFile.SelectedFileDownload}");
 
             AmitalDebuggerUtil.Break();
 

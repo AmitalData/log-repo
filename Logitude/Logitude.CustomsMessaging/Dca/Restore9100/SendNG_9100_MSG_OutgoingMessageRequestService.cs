@@ -28,8 +28,14 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
             string exceptionMessage = null;
             var response = new NG_9101_MSG_OutgoingMessageResponse();
 
-            
+            bool testService=false;
+            if (testService)
+            {
+                //WORK//customRequest.GetOptions.ServiceName = "SendLO_MSG3720_PoaUpdateForCustomsAgent";
+               
 
+                //NOT WORK//customRequest.GetOptions.CorrelationId= "9d874d38-0d8f-4baa-b256-670bd4512c90";
+            }
 
             using (var uifreightSdkGateway = new UnifreightSdkGateway(customsSetting.IIGServiceAddress))
             {

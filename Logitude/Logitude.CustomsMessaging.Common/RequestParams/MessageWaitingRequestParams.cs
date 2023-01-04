@@ -21,6 +21,6 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
 
         //public string InterfaceManagementsCode { get; set; }
         //public string InterfaceManagementsCodeValue { get; set; }
-        public string InterfaceManagementsCode { get; set; }
+        public string ServiceName { get; set; }
     }
 }
