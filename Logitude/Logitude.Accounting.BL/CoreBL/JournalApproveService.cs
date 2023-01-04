@@ -275,14 +275,14 @@ namespace Logitude.Accounting.BL.CoreBL
                         restreamVoidedJournalDueBug = true;
                     }
                 }
-                if (!restreamVoidedJournalDueBug && _JournalPM.StatusCodeEnum != JournalStatusTypePM.StatusCodeEnum.Approved)
-                {
-                    return new ResultApproveJournalM()
-                    {
-                        Success = false,
-                        FailDue = "_JournalPM.MyStatusCodeEnum != JournalStatusTypePM.StatusCodeEnum.Approved"
-                    };
-                }
+                //if (!restreamVoidedJournalDueBug && _JournalPM.StatusCodeEnum != JournalStatusTypePM.StatusCodeEnum.Approved)
+                //{
+                //    return new ResultApproveJournalM()
+                //    {
+                //        Success = false,
+                //        FailDue = "_JournalPM.MyStatusCodeEnum != JournalStatusTypePM.StatusCodeEnum.Approved"
+                //    };
+                //}
                 ;
                 bool SuppressCheckGLAccountIsMultiCurrencyWI40640 = false;
                 _JournalApproveParser = new JournalApproveParser(_JournalPM, false,
