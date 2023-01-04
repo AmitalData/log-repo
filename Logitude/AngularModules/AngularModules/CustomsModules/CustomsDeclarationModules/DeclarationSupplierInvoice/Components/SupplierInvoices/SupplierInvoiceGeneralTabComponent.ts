@@ -4081,7 +4081,9 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                     }
                 }
             }
-            this.GetQuantityType();           
+            this.GetQuantityType(); 
+            logCellTemplate.IsDisplayMode = true;
+            logCellTemplate.IsEditMode = false;          
         }
         else {
             //var element = document.getElementById(logCellTemplate.OuterDivId);
@@ -4293,8 +4295,10 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/PartnersItemsSelectionComponent');
         }
     }
-    ClassificationCodeDblClick(logCellTemplate: LogCellTemplateComponent,ClassificationTextBox) {       
-        if (!AmitalGatewayUtil.Instance.AmitalBrowserInUse||this.Parent.declarationPM.IsConnectedToUnifreight) return;
+    ClassificationCodeDblClick(logCellTemplate: LogCellTemplateComponent,ClassificationTextBox) {  
+    
+        if (this.Parent.declarationPM.Direction!="E"||!AmitalGatewayUtil.Instance.AmitalBrowserInUse||this.Parent.declarationPM.IsConnectedToUnifreight) return;
+        
         if (!this.Parent.IsReadOnly) {
             console.log("[Double Click] ", this.entityPM);
 
@@ -4332,7 +4336,8 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             if (!AppTool.IsNullOrEmpty(partnersItem.ItemCode) || !AppTool.IsNullOrEmpty(partnersItem.ClassificationCode)) {
                 item.ClassificationCode = partnersItem.ClassificationCode;
                 item.ItemDescription = partnersItem.ItemDescription;
-                
+                logcelltemplate.IsDisplayMode = false;
+                logcelltemplate.IsEditMode = true;
                 this.OnClassificationLostFocus(logcelltemplate,ClassificationTextBox)
             }
         }
