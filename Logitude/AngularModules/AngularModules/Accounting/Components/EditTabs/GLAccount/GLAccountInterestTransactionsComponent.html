@@ -79,7 +79,7 @@
     <tr class="FormFieldRow">
         <td colspan="5">
             <div float-end style="width: 220px;padding: 0 5px;">
-                <SearchTextBox [ObjectTableName]="'LedgerTransaction'" [PlaceHolder]="'Accounting.General.O.JournalNoRef' | TextCodeTranslationPipe" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
+                <SearchTextBox [ObjectTableName]="'LedgerTransaction'" [PlaceHolder]="'Journal No. / Ref./ Amount'" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
             </div>
             <div float-end>
                 <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>

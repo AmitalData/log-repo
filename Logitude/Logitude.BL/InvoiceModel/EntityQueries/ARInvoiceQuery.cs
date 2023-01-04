@@ -2458,7 +2458,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                 }
             }
 
-            BranchPermitionsFilter.AddUserBranchRestrictionFilters(queryOperations, tenant);
             var genericFilter = new GenericFilter();
             var MyContext = InvoiceContext.GetContext(tenant);
 
@@ -2549,7 +2548,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return entityLists;
         }
 
-        private List<string> GetCardBillToId(string cardId, int tenant)
+        public List<string> GetCardBillToId(string cardId, int tenant)
         {
             CardRepository cardRepository = new CardRepository(tenant);
             var cardBillToIds = cardRepository.GetBillToCardById(cardId, tenant);

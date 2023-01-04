@@ -201,7 +201,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
 
         public IQueryable<Shipment> GetDigitalPortalHouseShipmentsForMaster(string masterId, int tenant)
         {
-            var consoles = context.Shipments
+            var consoles = context.Shipments.Include("ShipmentType").Include("ShipmentSubType")
                                   .Where(s => s.Tenant == tenant
                                                && s.Id != masterId
                                                && s.MasterShipmentDataId == masterId).OrderByDescending(d => d.CreateDateTime);

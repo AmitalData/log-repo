@@ -57,7 +57,15 @@ export class TreeSelectComponent implements OnInit, AfterViewInit {
         if (i.children) {
             i.children = this.checkItemsToShow(i.children);
         }
-        return this.ShowItem(i);
+        if (i.children.length === 0 && !i.selectable) {
+            return false;
+        }
+        let showItem = this.ShowItem(i);
+        if(i.children.length > 0 && !showItem){
+            i.selectable = false;
+            return true;
+        }
+        return showItem;
     })
 
     onTreeSelectSearchChange(searchTerm: string) {
@@ -112,7 +120,6 @@ export class TreeSelectComponent implements OnInit, AfterViewInit {
     getFilteredTreeItems(searchTerm: string, items: TreeSelectItem[] | null = null) {
         let filteredTreeItems = [];
         JSON.parse(JSON.stringify((items ? items : this.TreeItems))).forEach((item: TreeSelectItem) => {
-            //item.children.length > 0 || (item.children.length === 0 && item.selectable)
             if (item.title.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 || (this.Value && item.key.toLowerCase() === this.Value.toLowerCase())) {
                 filteredTreeItems.push(item);
             } else {

@@ -103,13 +103,13 @@
     <tr *ngIf="VariableType && VariableType === FieldTypes.Record" class="table-row">
         <td class="table-row-cell" colspan="2">
             <div>
-                <LogLabel [NoObjectField]="true" [Text]="'Object'" [ObjectFieldName]="'RecordObject'"
+                <LogLabel [NoObjectField]="true" [Text]="'Object'" [ObjectFieldName]="'RecordType'"
                     [DataContext]="DataContext"></LogLabel>
             </div>
             <div class="table-row-cell-block input-container">
-                <TreeSelect [Items]="EntitiesTreeItems" [Width]="'300px'" [Value]="RecordObject" [ShowExpand]="false"
+                <TreeSelect [Items]="EntitiesTreeItems" [Width]="'300px'" [Value]="RecordType" [ShowExpand]="false"
                     [ShowItem]="ExcludedEntities | ShowEntitiesTreeItemPipe" [IsDisabled]="!IsNew"
-                    (ValueChanged)="updateRecordObject($event)">
+                    (ValueChanged)="updateRecordType($event)">
                 </TreeSelect>
             </div>
         </td>

@@ -339,7 +339,7 @@ export class MainMenuComponent {
 
                     case "General.MH.Dashboard": {
                         MixPanelLocator.PostDashboardAction({ ActionName: "Custom Dashboard Tab Click" });
-                        myComponentPath = "./Dashboard/Components/Workspace/CustomDashboardComponent";
+                        myComponentPath = "./DashboardModule/Components/Workspace/Layout/CustomDashboardComponent";
                         break;
                     }
 

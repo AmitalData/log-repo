@@ -617,14 +617,6 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
             {
                 foreach (QuoteChargePM item in lines)
                 {
-                    if (item.CostCurrencyId == item.SaleCurrencyId)
-                    {
-                        if (item.CostExchangeRate != item.SaleExchangeRate)
-                        {
-                            throw new ApplicationException("Charges of same cost and sale currency should have same exchange rate");
-                        }
-                    }
-
                     if (item.IsAllIN)
                     {
                         if (freightCharge != null)
@@ -638,10 +630,7 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
 
                     if (entityPM.IsSaleCurrencySameAsCost)
                     {
-                        if (item.CostCurrencyId != item.SaleCurrencyId)
-                        {
-                            throw new ApplicationException("All charges sale currency must be same as cost currency");
-                        }
+                        
                     }
 
                     else if (entityPM.IsMultiCurrency)

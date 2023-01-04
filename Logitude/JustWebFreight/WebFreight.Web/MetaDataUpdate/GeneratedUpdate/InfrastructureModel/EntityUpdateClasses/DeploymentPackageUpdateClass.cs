@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class DeploymentPackageUpdateClass
    {  		
-		public const string HashString = "6ac7eb7cc68bc3bfd8a3d9a4f03ea047";
+		public const string HashString = "e593c77ee71d6ad6a9944b2d882d93bc";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -121,7 +121,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    EnableEditFromLOV =  false,
 			      				    SortingByObjectField =  "CreateDate",
 			      				    InActive =  false,
-			      				    IsSaveButtonVisible =  false,
+			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  false,
 			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
@@ -136,7 +136,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ClientModuleName =  "Infrastructure",
 			      				    NewWizardComponentPath =  "./InfrastructureModules/InfrastructureDeploymentPackage/Component/NewEntity/AddNewDeploymentPackageComponent",
 			      				    NoTS =  false,
-			      				    HasMenuButtons =  false,
+			      				    HasMenuButtons =  true,
 			      				    AllowedForComputingPartners =  false,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
@@ -1165,10 +1165,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 		    DeploymentPackageObjectTable.HeaderScreenCode = DeploymentPackageDeploymentPackageHeaderScreenScreen0.Code;
 
 	   		  
-	      
-
-	         Screen DeploymentPackageDeploymentPackageGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "DeploymentPackage.GeneralTabScreen", Name = "Deployment Package General Tab Screen", ObjectTableId = DeploymentPackageObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = false }, screensRepository, tenantScreens);
-        
 
 	    }
 
@@ -1188,7 +1184,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DPGE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = DeploymentPackageGeneralFeature_TH0.Id,FeatureUniqeCode = DeploymentPackageGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = DeploymentPackageObjectTable.Id, TabNameTextCodeId = DeploymentPackageGeneralTextCode_TH0.Id, TabNameTextCodeCode = DeploymentPackageGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DPGE",HtmlComponentName = "DeploymentPackageGeneralTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureDeploymentPackage/Component/EditTabs/DeploymentPackageGeneralTabComponent", FeatureId = DeploymentPackageGeneralFeature_TH0.Id,FeatureUniqeCode = DeploymentPackageGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "./InfrastructureModules/InfrastructureDeploymentPackage/Component/EditTabs/DeploymentPackageGeneralTabComponent", ObjectTableId = DeploymentPackageObjectTable.Id, TabNameTextCodeId = DeploymentPackageGeneralTextCode_TH0.Id, TabNameTextCodeCode = DeploymentPackageGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DPCF",HtmlComponentName = "CustomFieldsTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureDeploymentPackage/Component/EditTabs/CustomFieldsTabComponent", FeatureId = DeploymentPackageCustomFieldsFeature_TH1.Id,FeatureUniqeCode = DeploymentPackageCustomFieldsFeature_TH1.FeatureUniqeCode, ControlPath = "./InfrastructureModules/InfrastructureDeploymentPackage/Component/EditTabs/CustomFieldsTabComponent", ObjectTableId = DeploymentPackageObjectTable.Id, TabNameTextCodeId = DeploymentPackageCustomFieldsTextCode_TH1.Id, TabNameTextCodeCode = DeploymentPackageCustomFieldsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    

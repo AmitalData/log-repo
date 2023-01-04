@@ -693,9 +693,20 @@
     <script type="text/javascript">
 
         let newSystemTenant = getCookie("newSystemTenant");
-        if (newSystemTenant != "" && document.location.href.indexOf("test.") > 0) {
-            document.location.href = document.location.href.replace("test.", "testnew.");
-        }  
+        if (newSystemTenant != "") {
+            if (document.location.href.indexOf("system.") > 0) 
+            {
+                document.location.href = document.location.href.replace("system.", "systemnew.");
+            }
+            else if (document.location.href.indexOf("staging.") > 0) 
+            {
+                document.location.href = document.location.href.replace("staging.", "stagingnew.");
+            }
+            else if (document.location.href.indexOf("test.") > 0)
+            {
+                document.location.href = document.location.href.replace("test.", "testnew.");
+            }
+        }
 
         function getTwoFactorKeys() {
             var allKeys = [];
@@ -1500,11 +1511,19 @@
 
             }
 
-            let newEnvTenants = [951, 1022];
-
+            let prodNewEnvTenants = [2889, 341, 1, 42, 1489, 0];
+            let testNewEnvTenants = [951, 1022];
             let newSystemTenant = getCookie("newSystemTenant");
-            if (newSystemTenant == "" && newEnvTenants.indexOf(Tenant) > 0) {
-                setCookie("newSystemTenant", Tenant, 365);
+            if (newSystemTenant == "") {
+                if (document.location.href.indexOf("system.") > 0 || document.location.href.indexOf("staging.") > 0) {
+                    if (prodNewEnvTenants.indexOf(Tenant) >= 0) {
+                        setCookie("newSystemTenant", Tenant, 70);
+                    }
+                } else if (document.location.href.indexOf("test.") > 0) {
+                    if (testNewEnvTenants.indexOf(Tenant) >= 0) {
+                        setCookie("newSystemTenant", Tenant, 70);
+                    }
+                }
             }
 
             if (document.location.href.indexOf('?Menu=') > 0) {

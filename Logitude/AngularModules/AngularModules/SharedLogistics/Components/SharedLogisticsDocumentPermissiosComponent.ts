@@ -26,6 +26,7 @@ export class SharedLogisticsDocumentPermissiosComponent implements OnInit {
     myTenantZeroList: DocumentTypePM[];
     myTenantList: DocumentTypePM[];
     DocumentPermissiosLists: DocumentPermissiosViewModel[];
+    DocumentUploadPermissiosLists: DocumentPermissiosViewModel[];
     OnCloseWindowEvent = new EventEmitter();
     ObjectTableId: string;
     FullComponentsVisibility: boolean = false;
@@ -80,12 +81,10 @@ export class SharedLogisticsDocumentPermissiosComponent implements OnInit {
 
     LoadTenantZeroDate() {
         this.myTenantZeroList = [];
-
         this._documentTypePMExtendedService.GetDocumentTypesByObjectTableAndTenant(this.ObjectTableId, 0).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 this.myTenantZeroList = pmResponse.Result;
-
                 this.LoadTenantData();
             }
             else this.CurrentSession.StopBusyIndicator();
@@ -94,11 +93,13 @@ export class SharedLogisticsDocumentPermissiosComponent implements OnInit {
 
     LoadTenantData() {
         this.myTenantList = [];
+        this.DocumentUploadPermissiosLists = [];
 
         this._documentTypePMExtendedService.GetDocumentTypesByObjectTableAndTenant(this.ObjectTableId, SessionLocator.Tenant).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 this.myTenantList = pmResponse.Result;
+                
                 this.BuildData();
             }
 
@@ -109,19 +110,33 @@ export class SharedLogisticsDocumentPermissiosComponent implements OnInit {
     BuildData() {
         var myList: DocumentTypePM[] = [];
         this.DocumentPermissiosLists = [];
+        this.DocumentUploadPermissiosLists = [];
+        var documentUploadPermissiosLists = [];
+
         if (!this.mySearchText) {
             myList = this.myTenantList;
+            documentUploadPermissiosLists = this.myTenantList.filter(a => a.IsDocIn && !a.InActive);
         }
         else {
             myList = this.myTenantList.filter(d => (d.Code && d.Code.toLowerCase().indexOf(this.mySearchText.toLowerCase()) > -1) || (d.Name && d.Name.toLowerCase().indexOf(this.mySearchText.toLowerCase()) > -1));
+            documentUploadPermissiosLists = this.myTenantList.filter(d => d.IsDocIn && !d.InActive &&
+                                                                                    ((d.Code && d.Code.toLowerCase().indexOf(this.mySearchText.toLowerCase()) > -1)
+                                                                                    ||
+                                                                                    (d.Name && d.Name.toLowerCase().indexOf(this.mySearchText.toLowerCase()) > -1)));
+
         }
 
         myList = this.SortItemSource(myList);
+        documentUploadPermissiosLists = this.SortItemSource(documentUploadPermissiosLists);
         myList.forEach((item) => {
             var tenantZeroItem = this.myTenantZeroList.filter(t => t.Code == item.Code)[0];
             if (tenantZeroItem != null) {
                 this.DocumentPermissiosLists.push(new DocumentPermissiosViewModel(tenantZeroItem, item));
             }
+        });
+
+        documentUploadPermissiosLists.forEach((item) => {
+            this.DocumentUploadPermissiosLists.push(new DocumentPermissiosViewModel(null, item));
         });
     }
 
@@ -155,6 +170,11 @@ export class SharedLogisticsDocumentPermissiosComponent implements OnInit {
             }
         });
 
+        this.DocumentUploadPermissiosLists.forEach((item) => {
+            if (item.entityPM.IsDirty) {
+                this.myTenantList.push(item.entityPM);
+            }
+        });
 
         if (this.myTenantList.length > 0) {
             this._documentTypePMExtendedService.update(this.myTenantList).subscribe((res: any) => {

@@ -32,7 +32,7 @@ export class TreeSelectItem {
         this.disabled = disabled;
         this.disableCheckbox = false;
         this.expanded = expanded;
-        this.children = children;
+        this.children = children || [];
         this.data = data;
     }
 }

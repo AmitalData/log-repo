@@ -1,7 +1,6 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
-import { UserList } from '../../../Common/EntityLists/UserList';
-import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 declare var window: any;
 
 @Component({

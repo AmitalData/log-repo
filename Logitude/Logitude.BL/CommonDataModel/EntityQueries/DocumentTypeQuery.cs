@@ -2075,7 +2075,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public List<DocumentTypePM> GetDigitalDocuments(string objectTableName, int tenant)
         {
             List<DocumentTypePM> documentTypeLists = repository.context.DocumentTypes.Include("ObjectTable")
-                                                                                      .Where(a => a.Tenant == tenant && a.IsCustomerView && a.IsCustomerUploadPermission && a.ObjectTable.Name == objectTableName)
+                                                                                      .Where(a => a.Tenant == tenant && a.IsCustomerUploadPermission && a.ObjectTable.Name == objectTableName)
                                                                                       .Select(a => new DocumentTypePM()
                                                                                       {
                                                                                           Id = a.Id,

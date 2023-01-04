@@ -7,12 +7,10 @@ import { SetValueOperators } from "Workflow/Constants/SetValueOperators";
 import { FlowVariablesTreeList } from "Workflow/Models/FlowVariablesTreeList";
 import { ObjectTables } from "Workflow/Models/ObjectTables";
 import { SetValue } from "Workflow/Models/SetValue";
-import { SetValueOperatorsList } from "Workflow/Models/SetValueOperatorsList";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 import { ExpressionValue } from "Workflow/Models/Types";
 import { GetObjectFieldPipe } from "Workflow/Pipes/GetObjectFieldPipe";
-import { IsCollectionTypePipe } from "Workflow/Pipes/IsCollectionTypePipe";
-import { IsDeclaredVariablePipe } from "Workflow/Pipes/IsDeclaredVariablePipe";
+import { IsNoObjectFieldVariablePipe } from "Workflow/Pipes/IsNoObjectFieldVariablePipe";
 
 @Component({
     selector: "SetValues",
@@ -36,9 +34,6 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
     public FlowVariablesTreeList: FlowVariablesTreeList;
     public FlowVariablesTreeItems: TreeSelectItem[];
 
-    public SetValuesOperatorsItems = new SetValueOperatorsList(false).Items;
-    public SetValuesCollectionOperatorsItems = new SetValueOperatorsList(true).Items;
-
     constructor() {
         super();
     }
@@ -54,13 +49,15 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
     }
 
     initializeFlowVariablesTree() {
-        let showVariables = {
+        let props = {
             ShowRecordsVariables: true,
             ShowDeclaredVariables: true,
             ShowRecordsCollectionVariables: false,
-            ShowDeclaredCollectionVariables: true
+            ShowDeclaredCollectionVariables: true,
+            OnlyCurrentLoopItemVariables: false,
+            IsObjectVariableSelectable: true
         };
-        this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId, showVariables);
+        this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId, props);
         this.FlowVariablesTreeItems = this.FlowVariablesTreeList.Items;
     }
 
@@ -102,7 +99,7 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
         let field = fieldItem ? fieldItem.key : null;
         if (field !== this.SetValues[setValueIndex]?.field) {
             if (field) {
-                if (this.isDeclaredVariable(field)) {
+                if (this.isNoObjectFieldVariable(field)) {
                     let fieldType = fieldItem.data["type"] || null;
                     this.updateSetValueFieldByDeclaredVariableField(field, fieldType, setValueIndex);
                 } else {
@@ -133,7 +130,7 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
         this.SetValues[setValueIndex].type = fieldType;
         this.SetValues[setValueIndex].lookupType = null;
         this.SetValues[setValueIndex].picklistType = null;
-        this.SetValues[setValueIndex].operator = this.isCollectionType(fieldType) ? SetValueOperators.EqualsCollection : SetValueOperators.Equals;
+        this.SetValues[setValueIndex].operator = this.getSetValueDefaultOperator(fieldType);
         this.SetValues[setValueIndex].value = null;
         this.SetValues[setValueIndex].fieldChangedToggle = !this.SetValues[setValueIndex].fieldChangedToggle;
     }
@@ -187,12 +184,21 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
         }
     }
 
-    isDeclaredVariable(field: string) {
-        return new IsDeclaredVariablePipe().transform(field);
+    getSetValueDefaultOperator(setValueType: string) {
+        if (setValueType) {
+            if (setValueType.toString().endsWith("[]")) {
+                return SetValueOperators.EqualsCollection;
+            }
+            let types = Object.values(FieldTypes).map((type) => (type as string));
+            if (!types.includes(setValueType)) {
+                return SetValueOperators.EqualsRecord;
+            }
+        }
+        return SetValueOperators.Equals;
     }
 
-    isCollectionType(type: string) {
-        return new IsCollectionTypePipe().transform(type);
+    isNoObjectFieldVariable(field: string) {
+        return new IsNoObjectFieldVariablePipe().transform(field);
     }
 
     getObjectField(field: string) {

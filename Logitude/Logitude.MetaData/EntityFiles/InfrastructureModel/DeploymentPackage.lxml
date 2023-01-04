@@ -33,7 +33,7 @@
   SortingByObjectField="&quot;CreateDate&quot;"
   SortingByDirection="&quot;Ascending&quot;"
   InActive="false"
-  IsSaveButtonVisible="false"
+  IsSaveButtonVisible="true"
   IsComposition="false"
   EnableSecurity="true"
   AllowCustomFields="false"
@@ -53,7 +53,7 @@
   NoDefaultFeatures="false"
   HasCompactSearch="false"
   ApplyDefaultValues="false"
-  HasMenuButtons="false"
+  HasMenuButtons="true"
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
@@ -1253,24 +1253,16 @@
         ScreenName="DeploymentPackageHeaderScreen" />
     </ScreenFields>
   </Screen>
-  <Screen
-    Name="&quot;Deployment Package General Tab Screen&quot;"
-    ObjectTableName="&quot;DeploymentPackage&quot;"
-    IsReadOnly="false"
-    IsHeaderScreen="false"
-    Code="&quot;DeploymentPackage.GeneralTabScreen&quot;"
-    NumberOfColumns="2"
-    NumberOfRows="1">
-    <ScreenFields />
-  </Screen>
   <Tab
     TabName="&quot;General&quot;"
     ObjectTableName="&quot;DeploymentPackage&quot;"
     Code="&quot;DPGE&quot;"
-    ControlPath="&quot;Simplog.Infrastructure.GeneralControls.GeneralTabControl&quot;"
+    ControlPath="&quot;./InfrastructureModules/InfrastructureDeploymentPackage/Component/EditTabs/DeploymentPackageGeneralTabComponent&quot;"
     TextCode="&quot;DeploymentPackage.TH.General&quot;"
     IsPackagable="true"
     IndexOrder="0"
+    HtmlComponentURL="&quot;./InfrastructureModules/InfrastructureDeploymentPackage/Component/EditTabs/DeploymentPackageGeneralTabComponent&quot;"
+    HtmlComponentName="&quot;DeploymentPackageGeneralTabComponent&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab

@@ -18,11 +18,13 @@ export type NodeType =
 
 export type ConditionDisabled = null | "d,f,o";
 
-export type ShowVariables = {
+export type FlowVariablesTreeListProperties = {
     ShowRecordsVariables: boolean,
     ShowDeclaredVariables: boolean,
     ShowRecordsCollectionVariables: boolean,
-    ShowDeclaredCollectionVariables: boolean
+    ShowDeclaredCollectionVariables: boolean,
+    OnlyCurrentLoopItemVariables: boolean,
+    IsObjectVariableSelectable: boolean
 };
 
 export type ExpressionVariable = {

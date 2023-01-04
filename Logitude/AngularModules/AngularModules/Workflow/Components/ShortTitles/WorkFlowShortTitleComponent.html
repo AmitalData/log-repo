@@ -1,16 +1,34 @@
 <style>
+    .short-title-row {
+        display: flex;
+    }
+
     .short-title {
+        width: 25%;
+        margin-right: 125px;
+        white-space: nowrap;
+        overflow: hidden !important;
+        text-overflow: ellipsis;
+    }
+
+    .title-span {
         font-size: 18px;
         color: #1B90CB;
     }
+
+    .warning-summary {
+        width: 55%;
+    }
 </style>
 
-<table style="height: 24px;">
-    <tr>
-        <td>
-            <div class="short-title">
-                {{WorkflowName}} - V{{WorkflowVersionNumber}}
-            </div>
-        </td>
-    </tr>
-</table>
+<div class="short-title-row">
+    <div class="short-title">
+        <span class="title-span">
+            {{WorkflowName}} - V{{WorkflowVersionNumber}}
+        </span>
+    </div>
+    <div *ngIf="(WarningErrorsList != null && WarningErrorsList.length > 0) && !IsHidden" class="warning-summary">
+        <WarningSummary [ItemsSource]="WarningErrorsList" [SingleLine]="true">
+        </WarningSummary>
+    </div>
+</div>

@@ -48,7 +48,7 @@ namespace CommunicationWorkerRole.Services.SAT
 					
 					string motivoCancelacion = invoice.SATCancelReasonCode?.Trim();
 
-					string folioSustitucion = GetRelatedInvoiceUUID(invoice);
+					string folioSustitucion = GetRelatedInvoiceUUID(invoice, motivoCancelacion);
 
 					ResultadoCancelacion resultadoCancelacion = conector.CancelaCFDI40(rfcEmisor, folioFiscal, motivoCancelacion, folioSustitucion);
 
@@ -123,8 +123,9 @@ namespace CommunicationWorkerRole.Services.SAT
             return false;
         }
 
-        private static string GetRelatedInvoiceUUID(ARInvoice invoice)
+        private static string GetRelatedInvoiceUUID(ARInvoice invoice, string cancelacionReasonCode)
         {
+            if (cancelacionReasonCode != "01") return "";
             if (string.IsNullOrEmpty(invoice.RelatedInvoice)) return "";
             ARInvoice relatedARInvoice = GetRelatedARInvoice(invoice);
             if (relatedARInvoice == null) return "";

@@ -81,6 +81,12 @@ namespace Logitude.BL.Helpers.CustomFieldsResolver
 
             PropertyInfo propInfo = list.GetType().GetProperty(field.FieldName);
             object newValue = customFieldMultiSetterValueArgs.customFieldResolver.GetFieldValue(list, field, tenant);
+
+            if (propInfo == null)
+            {
+                return;
+            }
+
             propInfo.SetValue(list, newValue, null);
         }
 
