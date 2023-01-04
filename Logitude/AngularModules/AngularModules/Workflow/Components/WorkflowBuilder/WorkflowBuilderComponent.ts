@@ -197,7 +197,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     flowChangedEvent(event: any) {
         if (event && event.status === "success") {
             var version = this.EntityPM.WorkFlowVersions.find(v => v.Id == this.CurrentVersionId)
-            if (version.StatusCode != "ACVE") {
+            if (version.StatusCode == "DRFT") {
                 this.HasChanges = true;
                 this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, HasChanges: true }
                 this.entityArgs.SendMessage("RefreshWorkflowButtons");
@@ -219,7 +219,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     setWorkflowVersion(flowObject: any) {
         if (flowObject) {
             var version = this.EntityPM.WorkFlowVersions.find(v => v.Id == this.CurrentVersionId)
-            if (version.StatusCode != "ACVE") {
+            if (version.StatusCode == "DRFT") {
                 let startNode = FlowReader.getStartNode(flowObject);
                 version.Entity = startNode ? (startNode.data["entity"] || null) : null;
                 version.Trigger = startNode ? (startNode.data["trigger"] || null) : null;
