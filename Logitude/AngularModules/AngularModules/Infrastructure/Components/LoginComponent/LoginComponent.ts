@@ -296,6 +296,8 @@ export class LoginComponent implements OnInit {
 
                 this.loginService.GetLoggedUser().subscribe((myResult: any) => {
 
+                    SessionLocator.UseCachedData = !myResult.DisableCachedData;
+
                     var iGlobalDomainService = new GlobalDomainService();
 
                     iGlobalDomainService.GetTenantManagementJS(SessionInfo.LoggedUserId).subscribe((myResponse: ServiceResponse) => {
@@ -818,14 +820,14 @@ export class LoginComponent implements OnInit {
 
                 if (!SessionLocator.UseCachedData) {
 
-                    this.loginService.GetObjectFields().subscribe((myResult: any) => {
+                    //this.loginService.GetObjectFields().subscribe((myResult: any) => {
 
-                        if (!SessionLocator.UseCachedData) {
-                            window.ObjectFields = myResult;
-                        }
+                    //    if (!SessionLocator.UseCachedData) {
+                    //        window.ObjectFields = myResult;
+                    //    }
 
-                        this.IncreaseProgressBar();
-                    });
+                    //    this.IncreaseProgressBar();
+                    //});
 
                     this.loginService.GetTextCodesTranslations().subscribe((myResult: any) => {
 
@@ -838,15 +840,15 @@ export class LoginComponent implements OnInit {
                     });
                 }
 
-                else {
-                    this.loginService.GetTenantTextCode().subscribe((myResult: any) => {
-                        if (myResult) {
-                            window.TextCodes = window.TextCodes.concat(myResult);
-                            this.IncreaseProgressBar();
-                            //25
-                        }
-                    });
-                }
+            
+                this.loginService.GetTenantTextCode().subscribe((myResult: any) => {
+                    if (myResult) {
+                        window.TextCodes = window.TextCodes.concat(myResult);
+                        this.IncreaseProgressBar();
+                        //25
+                    }
+                });
+                
 
                 //CachedDataManager.CheckSystemMetadataLastUpdate().subscribe((response:any) => {
                 //    this.entityResourceService.getEntityResourceByTableName("General", 0).subscribe((response:any) => {

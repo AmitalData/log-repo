@@ -35,11 +35,11 @@ export class EntityResourceService {
       //    var m;
       //    let test = m.text;
       //}
-      if (!SessionLocator.UseCachedData) {
-        return Observable.create(observer => {
-          observer.next(1);
-        });
-      }
+      //if (!SessionLocator.UseCachedData) {
+      //  return Observable.create(observer => {
+      //    observer.next(1);
+      //  });
+      //}
 
       if (EntityResourceService.ExisitsInCache(objectTableName)) {
         return Observable.create(observer => {
