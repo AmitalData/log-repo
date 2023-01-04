@@ -39,6 +39,7 @@ import { CollectionFilterPropertiesComponent } from './Components/Properties/Col
 import { ShowEditableVariablesTreeItemPipe } from "./Pipes/ShowEditableVariablesTreeItemPipe";
 import { IsCollectionTypePipe } from "./Pipes/IsCollectionTypePipe";
 import { SetValuesOperatorsItemsPipe } from "./Pipes/SetValuesOperatorsItemsPipe";
+import { ShowTreeItemPipe } from "./Pipes/ShowTreeItemPipe";
 import { WorkflowVersionComponent } from './Components/WorkflowVersion/WorkflowVersionComponent';
 import { CreateWorkflowVersionComponent } from './Components/WorkflowVersion/CreateWorkflowVersionComponent';
 import { WorkFlowShortTitleComponent } from './Components/ShortTitles/WorkFlowShortTitleComponent';
@@ -98,7 +99,8 @@ export const Pipes = [
     ShowEditableVariablesTreeItemPipe,
     IsObjectTypePipe,
     IsCollectionTypePipe,
-    SetValuesOperatorsItemsPipe
+    SetValuesOperatorsItemsPipe,
+    ShowTreeItemPipe
 ];
 
 export class ModuleDeclarations {

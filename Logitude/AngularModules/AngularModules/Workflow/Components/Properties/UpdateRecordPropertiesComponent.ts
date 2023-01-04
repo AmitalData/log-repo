@@ -3,7 +3,7 @@ import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/Base
 import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
-import { RecordsTreeList } from "Workflow/Models/RecordsTreeList";
+import { EditableRecordsTreeList } from "Workflow/Models/EditableRecordsTreeList";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 
 @Component({
@@ -18,7 +18,7 @@ export class UpdateRecordPropertiesComponent extends BaseComponent {
     public CurrentNodeId: string;
     public FlowObjectFields: ObjectFieldList[];
 
-    public RecordsTreeItems: TreeSelectItem[];
+    public EditableRecordsTreeItems: TreeSelectItem[];
 
     public Data: any;
     public Name: string = null;
@@ -36,7 +36,7 @@ export class UpdateRecordPropertiesComponent extends BaseComponent {
 
     ngOnInit() {
         this.initialize();
-        this.initializeRecordsTreeItems();
+        this.initializeEditableRecordsTreeItems();
     }
 
     initialize() {
@@ -46,8 +46,8 @@ export class UpdateRecordPropertiesComponent extends BaseComponent {
         this.setUIProperties();
     }
 
-    initializeRecordsTreeItems() {
-        this.RecordsTreeItems = new RecordsTreeList(this.FlowObject, this.CurrentNodeId).Items;
+    initializeEditableRecordsTreeItems() {
+        this.EditableRecordsTreeItems = new EditableRecordsTreeList(this.FlowObject, this.CurrentNodeId).Items;
     }
 
     updateName(name: string) {
