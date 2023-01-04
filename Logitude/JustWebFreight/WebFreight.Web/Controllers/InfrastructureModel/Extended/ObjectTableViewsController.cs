@@ -1,4 +1,5 @@
-﻿using Logitude.BL.InfrastructureModel.EntityLists;
+﻿using Logitude.BL.InfrastructureModel.CustomFilters;
+using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -190,6 +191,9 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
                 listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+                ObjectTableCustomFilter customfilters = new ObjectTableCustomFilter(tenant);
+                entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
 
                 entityPocos = genericFilter.GetFilteredQuery<ObjectTable>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;

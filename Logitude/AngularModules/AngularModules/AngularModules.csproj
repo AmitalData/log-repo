@@ -350,8 +350,13 @@
     <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\CustomizationTabsComponent.css" />
     <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\CustomizationTabsComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\Screen\ClassicScreenComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\Screen\GridScreenComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\Screen\LighteningScreenComponent.css" />
     <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\Screen\LighteningScreenComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\QueryFilterTreeComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\Screen\Section\AddEditGridScreenSectionComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\Screen\Section\GridScreenSectionPreviewComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\SubEntitiesComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\EditTabs\AddCustomFieldsComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\EditTabs\CustomFieldsTabComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\NewEntity\AddNewDeploymentPackageComponent.html" />
@@ -2000,8 +2005,12 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\CustomizationTabsComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\RulesComponents\RuleUpdateHistoryComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\Screen\ClassicScreenComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\Screen\GridScreenComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\Screen\LighteningScreenComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\QueryFilterTreeComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\Screen\Section\AddEditGridScreenSectionComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\Screen\Section\GridScreenSectionPreviewComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\Customization\SubEntitiesComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\ExternalService\ClassicScreenLayoutService.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureCustomization\Components\SetWorkerRoleName\SetWorkerRoleNameComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\EditTabs\AddCustomFieldsComponent.ts" />

@@ -2,7 +2,7 @@
 <div class="TabHolder">
     <table>
         <tr class="TabTitleRow">
-            <td>
+            <td style="padding-bottom:20px">
                 <table>
                     <tr>
                         <td>{{'DeploymentPackage.O.CustomFields' | TextCodeTranslationPipe}}</td>
@@ -16,7 +16,7 @@
         </tr>
         <tr style="height: 100%;">
             <td>
-                <div class="SimpleGridView" style="padding-top:20px">
+                <div class="SimpleGridView">
                     <div class="SimpleGridViewHeader">
                         <table>
                             <tr>
@@ -32,18 +32,18 @@
 
                     <div class="SimpleGridViewBody" style="overflow-y:auto;overflow-x:hidden">
                         <table>
-                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of CustomFields">
+                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of OriginalCustomFieldsToExport">
                                 <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px; ">
-                                    ff
+                                    {{item.Code}}
                                 </td>
                                 <td class="GridViewCell" style="width: 150px; min-width: 150px;max-width:150px;">
-                                    dd
+                                    {{item.FieldName}}
                                 </td>
                                 <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px; ">
-                                    rr
+                                    {{item.DataTypeCode}}
                                 </td>
                                 <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px; ">
-                                   ss
+                                    <!--<label [text]="GetParentEntityNameById(item.ObjectTableId)" textWrap="true"></label>-->
                                 </td>
 
                                 <td class="GridViewCell"></td>

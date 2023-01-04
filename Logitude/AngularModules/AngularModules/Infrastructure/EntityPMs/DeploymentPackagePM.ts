@@ -105,6 +105,10 @@ export class DeploymentPackagePM {
     public get VersionId() { return this.versionId; }
     public set VersionId(newValue: string) { if (this.versionId != newValue) { this.versionId = newValue; this.MarkAsDirty("VersionId"); } }
 
+    private documentId: string;
+    public get DocumentId() { return this.documentId; }
+    public set DocumentId(newValue: string) { if (this.documentId != newValue) { this.documentId = newValue; this.MarkAsDirty("DocumentId"); } }
+
     private deploymentPackageDetails: DeploymentPackageDetails;
     public get DeploymentPackageDetails() { return this.deploymentPackageDetails; }
     public set DeploymentPackageDetails(newValue: DeploymentPackageDetails) { if (this.deploymentPackageDetails != newValue) { this.deploymentPackageDetails = newValue; this.MarkAsDirty("DeploymentPackageDetails"); } }

@@ -260,6 +260,9 @@ export class CounterAdvancedComponent extends BaseComponent {
     public set SeperatePerBranch(value: boolean) {
         if (this.seperatePerBranch == value) return;
         this.seperatePerBranch = value;
+        this.APIHelper.CounterDefinitions.forEach(item => {
+            item.UsePerBranch = value;
+        });
         this.ItemsSource.forEach(item => {
             item.EntityPM.UsePerBranch = value;
         });
