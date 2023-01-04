@@ -27,11 +27,13 @@ using Unifreight.Data.AmitalModel.Repsitories;
 using Microsoft.Practices.Unity;
 using Logitude.CustomsMessaging.Utils;
 using Logitude.Customs.Data.EntityListQueryServices;
+using Logitude.Customs.BL.BL;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
     public class MultiUpdateBatchUCBCMSS_MsgResponseService : ResponseServiceBase<INF_MSG_GenericResponseData, DCAInUCBMultiUpdateWithResponseContentHeader, GenericRequestParams>
     {
+        bool isFromPendingView;
 
         public override INF_MSG_GenericResponseData GetResponse(DCAInUCBMultiUpdateWithResponseContentHeader customResponse, GenericRequestParams requestParams)
         {
@@ -43,7 +45,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData = new INF_MSG_GenericResponseData();
             this.MyRequestSheetParam = this.MyRequestSheetParam ?? new RequestSheetParam();
             this.MyRequestSheetParam.RequestDescription = requestParams.RequestName;
-            if (customResponse.Declarationid != null)
+
+            isFromPendingView = customResponse.Declarationid == null;
+
+            if (!isFromPendingView)
             {
                 LogMessagingUtil.Instance.AppendLine("customResponse.Declarationid: " + customResponse.Declarationid + " = from DeclarationInvoiceView");
                 Do_Update(customResponse, requestParams, customResponse.Declarationid);
@@ -59,7 +64,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                    new DeclarationCourierStatusListQueryService(customContext).GetDeclarationCourierStatusListPendingBulk(customResponse.queryOperations, customResponse.tenant).Select(x => x.DeclarationId).ToList() :
                     customResponse.DeclarationIds.ToList();
 
-
                 if (customResponse.checkboxAll && customResponse.allWithoutdeclarationIdsList != null && customResponse.allWithoutdeclarationIdsList.Count() > 0)
                     declarationIdsList.RemoveAll(x => customResponse.allWithoutdeclarationIdsList.Contains(x));
 
@@ -68,105 +72,220 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     LogMessagingUtil.Instance.AppendLine("update declarationid: " + id);
                     Do_Update(customResponse, requestParams, id);
                 }
+
                 this.MyResponseData.UserMessage = "ההצהרות עודכנו";
                 this.MyRequestSheetParam.CustomFileNo = null;
                 this.MyResponseData.ApplicationID = customResponse.CourierMasterId;
-
             }
-
         }
 
         private void Do_Update(DCAInUCBMultiUpdateWithResponseContentHeader customResponse, GenericRequestParams requestParams, string declarationId)
         {
-            var mess = new StringBuilder();
             var context = CustomContext.GetContext(requestParams.Tenant);
-
             var myDeclarationQueryService = new DeclarationQueryService(context);
+            DeclarationPM declarationPM = myDeclarationQueryService.GetSingle(declarationId, true, false);
+
+            if (declarationPM == null)
+                return;
+
+            LogMessagingUtil.Instance.AppendLine("declarationPM found");
+
+            UpdateInvoiceitems(customResponse, declarationPM, context, requestParams);
+            
+            if(isFromPendingView)
+            {
+                UpdateDeclaration(customResponse, requestParams, context, declarationPM);
+                UpdateSupplierInvoices(customResponse, requestParams, declarationId, context);
+                UpdateDeclarationCourierStatus(requestParams, context, declarationPM);
+                UpdateConsignmentPackages(customResponse, requestParams, declarationId, context);
+            }
+        }
+
+        private void UpdateInvoiceitems(DCAInUCBMultiUpdateWithResponseContentHeader customResponse, DeclarationPM declarationPM, ICustomContext context, GenericRequestParams requestParams)
+        {
             var mySupplierInvoiceItemQueryService = new SupplierInvoiceItemQueryService(context);
             var mySupplierInvioceItemCertificatQueryService = new SupplierInvioceItemCertificatQueryService(context);
             var mySupplierInvoiceItemProcesTypeQueryService = new SupplierInvoiceItemProcesTypeQueryService(context);
             SupplierInvoiceItemUpdateService updateService = new SupplierInvoiceItemUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
 
-            var procestypesExist = false;
+            var supplierInvoiceItems = (customResponse.ClassificationCode != null && !isFromPendingView) ? // Update Classification no - will update only the recored with the same classification
+                mySupplierInvoiceItemQueryService.GetSupplierInvoiceItemByClassificationCode(declarationPM.Id, declarationPM.Tenant, customResponse.ClassificationCode) :
+                mySupplierInvoiceItemQueryService.GetSupplierInvoiceItemsForMultiUpdate(declarationPM.Id, declarationPM.Tenant);  // Update ALL
 
-            DeclarationPM declarationPM = myDeclarationQueryService.GetSingle(declarationId, true, false);
-
-            if (declarationPM != null)
+            foreach (var item in supplierInvoiceItems)
             {
-                LogMessagingUtil.Instance.AppendLine("declarationPM found");
-                var invoiceitems = new List<SupplierInvoiceItemPM>();
-                if (customResponse.ClassificationCode != null && customResponse.Declarationid != null) // Update Classification no - will update only the recored with the same classification
+                SupplierInvoiceItemPM supplierInvoiceItem = mySupplierInvoiceItemQueryService.GetSingleSupplierInvoicePMBySequence(item.DeclarationId, item.CounterKey, (int)item.SequenceNumeric);
+                supplierInvoiceItem.SupplierInvioceItemCertificats = mySupplierInvioceItemCertificatQueryService.GetSupplierInvioceItemCertificatesForSupplierInvoiceItem(item.DeclarationId, item.CounterKey, supplierInvoiceItem.LineNumber, supplierInvoiceItem.Tenant);
+
+                UpdateInvoiceItemProcessTypeCode(customResponse, mySupplierInvoiceItemProcesTypeQueryService, declarationPM, supplierInvoiceItem);
+                UpdateInvoiceItemTaxExemptCode(customResponse, supplierInvoiceItem);
+
+                if (isFromPendingView) // only from pendingview, dont update from invoiceview
                 {
-                    invoiceitems = mySupplierInvoiceItemQueryService.GetSupplierInvoiceItemByClassificationCode(declarationPM.Id, declarationPM.Tenant, customResponse.ClassificationCode);
-                }
-                else // Update ALL
-                {
-                    invoiceitems = mySupplierInvoiceItemQueryService.GetSupplierInvoiceItemsForMultiUpdate(declarationPM.Id, declarationPM.Tenant);
-                }
-                foreach (var item in invoiceitems)
-                {
-
-                    var invoice = mySupplierInvoiceItemQueryService.GetSingleSupplierInvoicePMBySequence(item.DeclarationId, item.CounterKey, (int)item.SequenceNumeric);
-                    invoice.SupplierInvioceItemCertificats = mySupplierInvioceItemCertificatQueryService.GetSupplierInvioceItemCertificatesForSupplierInvoiceItem(item.DeclarationId, item.CounterKey, invoice.LineNumber, invoice.Tenant);
-                    procestypesExist = false;
-                    if (customResponse.ProcessTypeCode != null && customResponse.Declarationid != null) // only from invoiceview, dont update from pendingview
-                    {
-                        var procestypes = mySupplierInvoiceItemProcesTypeQueryService.GetSupplierInvoiceItemProcesTypesForSupplierInvoiceItem(declarationPM.Id, invoice.CounterKey, invoice.LineNumber, invoice.Tenant);
-                        foreach (var proces in procestypes)
-                        {
-                            if (proces.ProcessTypeCode == customResponse.ProcessTypeCode)
-                            {
-                                procestypesExist = true;
-                            }
-                        }
-                        if (!procestypesExist)
-                        {
-                            var entity = new SupplierInvoiceItemProcesTypePM();
-                            entity.ChangeSetOp = ChangeSetOperation.Insert;
-                            entity.Tenant = customResponse.tenant;
-                            entity.ProcessTypeCode = customResponse.ProcessTypeCode;
-                            invoice.SupplierInvoiceItemProcesTypes.Add(entity);
-                            invoice.SupplierInvoiceItemsProcessTypeLastLineNumber = mySupplierInvoiceItemProcesTypeQueryService.GetMaxLineNumber(invoice.DeclarationId, invoice.CounterKey, invoice.LineNumber, customResponse.tenant);
-                            invoice.ChangeSetOp = ChangeSetOperation.Update;
-                        }
-                    }
-                    if (customResponse.TaxExemptCode != null)
-                    {
-                        invoice.TaxExemptCode = customResponse.TaxExemptCode;
-                        invoice.ChangeSetOp = ChangeSetOperation.Update;
-                    }
-                    if(customResponse.ClassificationCode != null && customResponse.Declarationid == null)
-                    {
-                        LogMessagingUtil.Instance.AppendLine("set ClassificationCode");
-
-                        invoice.ClassificationCode = customResponse.ClassificationCode;
-                        
-                        CustomsItemQueryService customsItemQueryService = new CustomsItemQueryService(customResponse.tenant);
-                        LogMessagingUtil.Instance.AppendLine("prev InvoiceQuantityType = " + invoice.InvoiceQuantityType);
-
-                        invoice.InvoiceQuantityType = customsItemQueryService.GetQuantityTypeByClassificationCode(customResponse.ClassificationCode, customResponse.tenant);
-                        LogMessagingUtil.Instance.AppendLine("set InvoiceQuantityType = " + invoice.InvoiceQuantityType);
-
-                        invoice.ChangeSetOp = ChangeSetOperation.Update;
-                    }
-                    LogMessagingUtil.Instance.AppendLine("updating invoice (CounterKey,LineNumber):" + invoice.CounterKey + "," + invoice.LineNumber);
-                    updateService.Update(invoice, true);
-                    this.MyRequestSheetParam.CustomFileNo = declarationPM.CustomFileNo;
-                    this.MyResponseData.UserMessage += mess.ToString();
-                    this.MyResponseData.ApplicationID = declarationPM.CustomFileNo;
+                    UpdateInvoiceItemClassificationCode(customResponse, supplierInvoiceItem);
+                    UpdateInvoiceItemCurrencyTypeCode(customResponse, supplierInvoiceItem);
+                    UpdateInvoiceItemPrice(customResponse, supplierInvoiceItem);
+                    UpdateInvoiceItemInvoiceQuantity(customResponse, supplierInvoiceItem);
+                    UpdateInvoiceItemInvoiceQuantityType(customResponse, supplierInvoiceItem);
                 }
 
-                if (customResponse.ProcessTypeCode != null && customResponse.Declarationid == null) // only from pendingview, dont update from invoiceview
-                {
-                    LogMessagingUtil.Instance.AppendLine("set declaration.ProcessTypeCode");
-                    declarationPM.ProcedureCurrentCode = customResponse.ProcessTypeCode;
-                    declarationPM.ChangeSetOp = ChangeSetOperation.Update;
-                    DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
-                    declarationUpdateService.Update(declarationPM, true);
-                }
+                LogMessagingUtil.Instance.AppendLine("updating invoice (CounterKey,LineNumber):" + supplierInvoiceItem.CounterKey + "," + supplierInvoiceItem.LineNumber);
+
+                updateService.Update(supplierInvoiceItem, true);
+
+                this.MyRequestSheetParam.CustomFileNo = declarationPM.CustomFileNo;
+                this.MyResponseData.UserMessage += "";
+                this.MyResponseData.ApplicationID = declarationPM.CustomFileNo;
             }
         }
 
-    }
+        private void UpdateInvoiceItemProcessTypeCode(DCAInUCBMultiUpdateWithResponseContentHeader customResponse, SupplierInvoiceItemProcesTypeQueryService mySupplierInvoiceItemProcesTypeQueryService, DeclarationPM declarationPM, SupplierInvoiceItemPM invoice)
+        {
+            if (customResponse.ProcessTypeCode == null || isFromPendingView) // only from invoiceview, dont update from pendingview
+                return;
 
+            var procestypes = mySupplierInvoiceItemProcesTypeQueryService.GetSupplierInvoiceItemProcesTypesForSupplierInvoiceItem(declarationPM.Id, invoice.CounterKey, invoice.LineNumber, invoice.Tenant);
+            bool procestypesExist = procestypes.Any(x => x.ProcessTypeCode == customResponse.ProcessTypeCode);
+
+            if (!procestypesExist)
+            {
+                var entity = new SupplierInvoiceItemProcesTypePM();
+                entity.ChangeSetOp = ChangeSetOperation.Insert;
+                entity.Tenant = customResponse.tenant;
+                entity.ProcessTypeCode = customResponse.ProcessTypeCode;
+                invoice.SupplierInvoiceItemProcesTypes.Add(entity);
+                invoice.SupplierInvoiceItemsProcessTypeLastLineNumber = mySupplierInvoiceItemProcesTypeQueryService.GetMaxLineNumber(invoice.DeclarationId, invoice.CounterKey, invoice.LineNumber, customResponse.tenant);
+                invoice.ChangeSetOp = ChangeSetOperation.Update;
+            }
+        }
+
+        private void UpdateInvoiceItemTaxExemptCode(DCAInUCBMultiUpdateWithResponseContentHeader customResponse, SupplierInvoiceItemPM invoice)
+        {
+            if (customResponse.TaxExemptCode == null)
+                return;
+
+            invoice.TaxExemptCode = customResponse.TaxExemptCode;
+            invoice.ChangeSetOp = ChangeSetOperation.Update;
+        }
+
+        private void UpdateInvoiceItemClassificationCode(DCAInUCBMultiUpdateWithResponseContentHeader customResponse, SupplierInvoiceItemPM invoice)
+        {
+            if (customResponse.ClassificationCode == null)
+                return;
+
+            LogMessagingUtil.Instance.AppendLine("set ClassificationCode");
+
+            invoice.ClassificationCode = customResponse.ClassificationCode;
+
+            CustomsItemQueryService customsItemQueryService = new CustomsItemQueryService(customResponse.tenant);
+            LogMessagingUtil.Instance.AppendLine("prev InvoiceQuantityType = " + invoice.InvoiceQuantityType);
+
+            invoice.InvoiceQuantityType = customsItemQueryService.GetQuantityTypeByClassificationCode(customResponse.ClassificationCode, customResponse.tenant);
+            LogMessagingUtil.Instance.AppendLine("set InvoiceQuantityType = " + invoice.InvoiceQuantityType);
+
+            invoice.ChangeSetOp = ChangeSetOperation.Update;
+        }
+
+        private void UpdateInvoiceItemCurrencyTypeCode(DCAInUCBMultiUpdateWithResponseContentHeader customResponse, SupplierInvoiceItemPM supplierInvoiceItem)
+        {
+            if (customResponse.InvoiceCurrencyTypeCode == null)
+                return;
+
+            supplierInvoiceItem.ItemPriceCurrencyCode = customResponse.InvoiceCurrencyTypeCode;
+            supplierInvoiceItem.ChangeSetOp = ChangeSetOperation.Update;
+        }
+
+        private void UpdateInvoiceItemPrice(DCAInUCBMultiUpdateWithResponseContentHeader customResponse, SupplierInvoiceItemPM supplierInvoiceItem)
+        {
+            if (customResponse.InvoiceAmount == null)
+                return;
+
+            supplierInvoiceItem.ItemPrice = customResponse.InvoiceAmount;
+            supplierInvoiceItem.ChangeSetOp = ChangeSetOperation.Update;
+        }
+
+        private void UpdateInvoiceItemInvoiceQuantity(DCAInUCBMultiUpdateWithResponseContentHeader customResponse, SupplierInvoiceItemPM supplierInvoiceItem)
+        {
+            if (customResponse.InvoiceQuantity == null)
+                return;
+
+            supplierInvoiceItem.InvoiceQuantity = customResponse.InvoiceQuantity;
+            supplierInvoiceItem.ChangeSetOp = ChangeSetOperation.Update;
+        }
+
+        private void UpdateInvoiceItemInvoiceQuantityType(DCAInUCBMultiUpdateWithResponseContentHeader customResponse, SupplierInvoiceItemPM supplierInvoiceItem)
+        {
+            if (customResponse.InvoiceQuantityType == null)
+                return;
+
+            supplierInvoiceItem.InvoiceQuantityType = customResponse.InvoiceQuantityType;
+            supplierInvoiceItem.ChangeSetOp = ChangeSetOperation.Update;
+        }
+
+        private void UpdateDeclaration(DCAInUCBMultiUpdateWithResponseContentHeader customResponse, GenericRequestParams requestParams, ICustomContext context, DeclarationPM declarationPM)
+        {
+            if (customResponse.ProcessTypeCode == null)
+                return;
+
+            LogMessagingUtil.Instance.AppendLine("set declaration.ProcessTypeCode");
+            declarationPM.ProcedureCurrentCode = customResponse.ProcessTypeCode;
+            declarationPM.ChangeSetOp = ChangeSetOperation.Update;
+            DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
+            declarationUpdateService.Update(declarationPM, true);
+        }
+
+        private void UpdateSupplierInvoices(DCAInUCBMultiUpdateWithResponseContentHeader customResponse, GenericRequestParams requestParams, string declarationId, ICustomContext context)
+        {
+            var supplierInvoiceQueryServices = new SupplierInvoiceQueryService(context);
+            var supplierInvoiceItemUpdateService = new SupplierInvoiceUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
+            var supplierInvoices = supplierInvoiceQueryServices.GetSupplierInvoicesForDeclaration(declarationId, requestParams.Tenant);
+
+            foreach (var supplierInvoice in supplierInvoices)
+            {
+                UpdateInvoiceCurrencyTypeCode(customResponse, supplierInvoice);
+                UpdateInvoiceInvoiceAmount(customResponse, supplierInvoice);
+
+                supplierInvoiceItemUpdateService.Update(supplierInvoice, true);
+            }
+        }
+
+        private void UpdateInvoiceCurrencyTypeCode(DCAInUCBMultiUpdateWithResponseContentHeader customResponse, SupplierInvoicePM supplierInvoice)
+        {
+            if (customResponse.InvoiceCurrencyTypeCode == null)
+                return;
+
+            supplierInvoice.InvoiceCurrencyTypeCode = customResponse.InvoiceCurrencyTypeCode;
+            supplierInvoice.ChangeSetOp = ChangeSetOperation.Update;
+        }
+
+        private void UpdateInvoiceInvoiceAmount(DCAInUCBMultiUpdateWithResponseContentHeader customResponse, SupplierInvoicePM supplierInvoice)
+        {
+            if (customResponse.InvoiceAmount == null)
+                return;
+
+            supplierInvoice.InvoiceAmount = customResponse.InvoiceAmount;
+            supplierInvoice.ChangeSetOp = ChangeSetOperation.Update;
+        }
+
+        private void UpdateDeclarationCourierStatus(GenericRequestParams requestParams, ICustomContext context, DeclarationPM declarationPM)
+        {
+            var declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+            var declarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declarationPM.Id, false, false);
+            new CalculateDeclarationCourierStatus(declarationPM, declarationPM.Id, requestParams.Tenant).CalcTotalInvoiceAmountInUSD(declarationCourierStatusPM);
+        }
+
+        private void UpdateConsignmentPackages(DCAInUCBMultiUpdateWithResponseContentHeader customResponse, GenericRequestParams requestParams, string declarationId, ICustomContext context)
+        {
+            List<ConsignmentPackagePM> consignmentPackages = new ConsignmentPackageQueryService(context).GetConsignmentPackagesForDeclaration(declarationId);
+            var consignmentPackageUpdateService = new ConsignmentPackageUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
+
+            foreach (var consignmentPackagePM in consignmentPackages)
+            {
+                consignmentPackagePM.GrossMassMeasure = customResponse.GrossMassMeasure;
+                consignmentPackagePM.ChangeSetOp = ChangeSetOperation.Update;
+
+                consignmentPackageUpdateService.Update(consignmentPackagePM, true);
+            }
+        }
+    }
 }

@@ -33,6 +33,11 @@ namespace Logitude.Customs.Data.Repsitories
                 .DeleteWhere<ConsignmentPackage>(rec => rec.DeclarationId == entityKeyFields.Id);
         }
 
+        public List<ConsignmentPackage> GetConsignmentPackagesByDeclaration(string declarationId) =>
+            (from a in context.ConsignmentPackages
+                    where a.DeclarationId == declarationId
+                    select a).ToList();        
+
         public List<ConsignmentPackage> GetConsignmentPackagesFilterByMeasureQualifierCode(string declarationId)
         {
             string code = "2" ; 

@@ -18,5 +18,10 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
         public string CourierMasterId { get; set; }
         public List<string> allWithoutdeclarationIdsList { get; set; }
         public bool checkboxAll { get; set; }
+        public decimal? InvoiceAmount { get; set; }
+        public decimal? InvoiceQuantity { get; set; }
+        public string InvoiceCurrencyTypeCode { get; set; }
+        public string InvoiceQuantityType { get; set; }
+        public decimal? GrossMassMeasure { get; set; }
     }
 }
