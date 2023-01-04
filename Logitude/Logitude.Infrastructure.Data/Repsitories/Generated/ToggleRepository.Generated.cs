@@ -48,7 +48,7 @@ namespace Logitude.Infrastructure.Data.Repsitories
                     where a.Code == keys.Code
                     select a).FirstOrDefault();
         }
-		         
+		 		                 
         partial void onAdd();//Partial Methods Definition in Generated
         public void Add(Toggle entity)
         {

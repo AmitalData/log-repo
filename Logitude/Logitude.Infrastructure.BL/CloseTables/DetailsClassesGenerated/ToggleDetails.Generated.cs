@@ -772,6 +772,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "XUP,Export To Excel Using Parallel", 
                 Description = "Export To Excel Using Parallel", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "DCS", 
+                Name = "Disable Storage Cache", 
+                SearchFields = "DCS,Disable Storage Cache", 
+                Description = "Disable Storage Cache", 
+			});
 			
             return all;
        }
