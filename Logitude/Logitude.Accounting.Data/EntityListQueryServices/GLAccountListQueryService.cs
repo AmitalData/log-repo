@@ -476,6 +476,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                            CalculatedAgingPeriod3 = glaccount.Access ? glaccount.CalculatedAgingPeriod3 : 0,
                            TotalOpenChequesInLocalCur = glaccount.Access ? glaccount.TotalOpenChequesInLocalCur : 0,
                            TotFutureOpenChequesInLocalCur = glaccount.Access ? glaccount.TotFutureOpenChequesInLocalCur : 0,
+                           Obligo=glaccount.Obligo,
+                           CreditUsed=glaccount.CreditUsed,
                        };
 
 
