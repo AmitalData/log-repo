@@ -564,12 +564,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                         this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                         myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
-
-                        bool sendDeclarationPrintSync = false;
-                        if (sendDeclarationPrintSync)
-                            SendDeclarationPrintSync(requestParams);
-                        else
-                            SendDeclarationPrint(requestParams);
+                        if(this._MyDeclarationPM.HatraDate != null)
+                        {
+                            bool sendDeclarationPrintSync = false;
+                            if (sendDeclarationPrintSync)
+                                SendDeclarationPrintSync(requestParams);
+                            else
+                                SendDeclarationPrint(requestParams);
+                        }
+                       
 
                         if (customResponse.CollateralRequests != null)
                         {

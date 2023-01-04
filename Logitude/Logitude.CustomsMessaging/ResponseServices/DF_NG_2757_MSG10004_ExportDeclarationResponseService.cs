@@ -986,13 +986,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             MyResponseData.ApplicationID = requestParams.AppicationId;
             MyResponseData.Succeeded = true;
-            if (_MyDeclarationPM.CurrentContextTag == Logitude.Customs.BL.EntityUpdateServices.DeclarationUpdateService.CreateUnifreightPaymentConst) // moran 28.1.15 - Task 10005
-            {
-                if (!_MyDeclarationPM.IsCourierDeclaration)
-                {
-                    SendDeclarationPrint(_MyDeclarationPM, SendRequestVIA.WebServiceBatch, requestParams);
-                }
-            }
+            
             if (requestParams.InterfaceTypeCode == "9079")
             {
                 myDeclarationUpdateService.SendDelayedDeclarationStatusRequest(_MyDeclarationPM);
@@ -1033,37 +1027,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (_MyDeclarationPM.DepositionStatusCode == "R") _MyDeclarationPM.DepositionStatusCode = null;
         }
 
-        public void SendDeclarationPrint(DeclarationPM declarationPM, SendRequestVIA RequestVIA, GenericRequestParams requestParams) // moran 28.1.15 - Task 10005
-        {
-
-            LogMessagingUtil.Instance.AppendLine("SendDeclarationPrint");
-            string decNum = declarationPM.DeclarationNumber;
-            var decNumList = new List<string>();
-            decNumList.Add(decNum);
-            DF_NG_8302_Web03_DeclarationPrintRequestParams searchParams = new DF_NG_8302_Web03_DeclarationPrintRequestParams()
-            {
-                LoggingEnabled = true,
-                CustomFileNo = declarationPM.CustomFileNo,
-                DeclarationNumber = decNumList, //declarationPM.DeclarationNumber,
-                Tenant = declarationPM.Tenant,
-                RequestName = "Declaration Print (2750)",
-                ResponseName = "Declaration Print (2750)",
-                LoggingEntityId = declarationPM.Id,
-
-
-                LoggingUserId = requestParams.LoggingUserId, //HD CALL#298426
-            };
-
-            searchParams.RequestVIA = RequestVIA; // SendRequestVIA.WebServiceBatch;
-            var myRequestMessagingService = new DF_NG_8302_Web03_DeclarationPrintMessagingService();
-            var resData = myRequestMessagingService.Send(searchParams);
-            if (!resData.Succeeded)
-            {
-                LogMessagingUtil.Instance.AppendLine("Request Failed " + resData.CustomsRequestsSheetId + ", Message: " + resData.UserMessage);
-                return;
-            }
-            LogMessagingUtil.Instance.AppendLine("Request Succeeded " + resData.CustomsRequestsSheetId);
-        }
+       
 
         //ITZIK+MIRT  private string GetErrosXmlFromResponseHeaderExeption()          {              return _ResponseHeaderExeption.ErrorDescription;         }
 
