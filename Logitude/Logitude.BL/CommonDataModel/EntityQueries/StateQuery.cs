@@ -58,6 +58,33 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return securedPm;
         }
 
+        public StatePM GetSinglePMByCode(string code, int tenant)
+        {
+            StatePM state = (from a in repository.context.States.Include("Country")
+                             where a.Tenant == tenant && a.Code == code
+                             select new StatePM()
+                             {
+                                 AddedManually = a.AddedManually,
+                                 Code = a.Code,
+                                 CountryId = a.CountryId,
+                                 EnglishName = a.EnglishName,
+                                 Id = a.Id,
+                                 InActive = a.InActive,
+                                 LocalName = a.LocalName,
+                                 Notes = a.Notes,
+                                 Tenant = a.Tenant,
+                                 CountryCode = a.Country.Code,
+                                 SearchFields = a.SearchFields,
+                                 QBOTransactionLocationCode = a.QBOTransactionLocationCode,
+                                 ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
+                             }).FirstOrDefault();
+
+            StatePM securedPm = new StatePM();
+            SecuredMapping.GetMappedPM(state, securedPm, "State", tenant);
+
+            return securedPm;
+        }
+
         public IQueryable<StatePM> GetStatePMsByTenant(int tenant)
         {
             IQueryable<StatePM> states = from a in repository.context.States.Include("Country")

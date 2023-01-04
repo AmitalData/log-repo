@@ -164,6 +164,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     myBillingAddressId = myBillingAddress.Id;
                 }
 
+                AddressPM myPickupDeliveryAddress = addressQuery.GetAddressPMByTypeAndCard(id, "P", tenant);
+                string myPickupDeliveryAddressId = null;
+                if (myPickupDeliveryAddress != null)
+                {
+                    myPickupDeliveryAddressId = myPickupDeliveryAddress.Id;
+                }
+
                 if (HttpContext.Current != null)
                 {
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
@@ -191,6 +198,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       Code = a.Code,
                                       MainAddressId = myMainAddressId,
                                       BillingAddressId = myBillingAddressId,
+                                      PickupDeliveryAddressId = myPickupDeliveryAddressId,
                                       CountryId = a.CountryId,
                                       CountryCode = a.CountryCode,
                                       CountryName = a.CountryName,
@@ -300,6 +308,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   Code = a.Code,
                                   MainAddressId = myMainAddressId,
                                   BillingAddressId = myBillingAddressId,
+                                  PickupDeliveryAddressId = myPickupDeliveryAddressId,
                                   CountryId = a.CountryId,
                                   CountryCode = a.CountryCode,
                                   CountryName = a.CountryName,

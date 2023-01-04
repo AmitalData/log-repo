@@ -79,26 +79,7 @@ using Simplog.Data.CommonDataModel;
                 throw ex;
             }
         }
-
-		public Customer GetCustomerByExternalId(string externalId, int Tenant, string ComputingPartnerName = "")
-		{
-			try
-			{
-
-
-				var temp = query.GetSinglePMByExternalId(externalId, Tenant);
-				if (temp == null)
-					throw new ApplicationException("Card with external id " + externalId + " doesn't exist");
-
-				return CustomerDataMapping(temp, Tenant, ComputingPartnerName);
-			}
-
-			catch (Exception ex)
-			{
-				throw ex;
-			}
-		}
-
+		
 		public Customer CustomerDataMapping(CardPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
         {
 		    try
@@ -213,18 +194,10 @@ using Simplog.Data.CommonDataModel;
 				   if(MyEntityPM.VatTypeId != null)
 				   {
 					   VatTypeQueryService VatTypeService10 = new VatTypeQueryService(Tenant);
-					   					   temp.VatTypeId = VatTypeService10.GetVatTypeById(MyEntityPM.VatTypeId,Tenant,ComputingPartnerName); 
+					   					   temp.VatType = VatTypeService10.GetVatTypeById(MyEntityPM.VatTypeId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   
-				   temp.ReceivablesExternalId = MyEntityPM.ReceivablesAccountingCard;
-				if(MyEntityPM.Addresses != null && MyEntityPM.Addresses.Count > 0)
-				{
-					 AddressQueryService AddressService11 = new AddressQueryService(Tenant);
-					 temp.Addresses = AddressService11.AddressCustomDataMapping(MyEntityPM,MyEntityPM.Addresses,Tenant,ComputingPartnerName);
-				}
-
-							 
 				   temp.LeadDescription = MyEntityPM.LeadDescription;
 				   temp.StartWorkingDate = MyEntityPM.StartWorkingDate; 
 
@@ -233,6 +206,15 @@ using Simplog.Data.CommonDataModel;
 				   {
 					   LeadSourceQueryService LeadSourceService11 = new LeadSourceQueryService(Tenant);
 					   					   temp.LeadSource = LeadSourceService11.GetLeadSourceById(MyEntityPM.LeadSourceId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				    
+
+			  
+				   if(MyEntityPM.PickupDeliveryAddressId != null)
+				   {
+					   AddressQueryService AddressService12 = new AddressQueryService(Tenant);
+					   					   temp.PickupDeliveryAddress = AddressService12.GetAddressById(MyEntityPM.PickupDeliveryAddressId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   					
@@ -351,11 +333,11 @@ using Simplog.Data.CommonDataModel;
 
 					if(MyEntity.Contacts != null && MyEntity.Contacts.Count > 0)
 					{
-						ContactQueryService ContactService12 = new ContactQueryService(Tenant);
+						ContactQueryService ContactService13 = new ContactQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								
-							temp.Contacts = ContactService12.ContactCustomDataMappingAndValidatin(MyEntity,MyEntity.Contacts,Tenant,ComputingPartnerName,IsUpdate);
+							temp.Contacts = ContactService13.ContactCustomDataMappingAndValidatin(MyEntity,MyEntity.Contacts,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -553,18 +535,18 @@ using Simplog.Data.CommonDataModel;
 					}
 			
 					
-					VatTypeQueryService VatTypeIdVatTypeService = new VatTypeQueryService(Tenant);
-					if(MyEntity.VatTypeId != null)
+					VatTypeQueryService VatTypeVatTypeService = new VatTypeQueryService(Tenant);
+					if(MyEntity.VatType != null)
 					{
-						var myVatTypeIdPM = VatTypeIdVatTypeService.VatTypeDataMappingAndValidatin(MyEntity.VatTypeId,Tenant,ComputingPartnerName,IsUpdate);
+						var myVatTypePM = VatTypeVatTypeService.VatTypeDataMappingAndValidatin(MyEntity.VatType,Tenant,ComputingPartnerName,IsUpdate);
 						
-						if(myVatTypeIdPM != null)
+						if(myVatTypePM != null)
 						{ 
 
 						 
 							if(!IsUpdate)
 							{								
-								temp.VatTypeId = myVatTypeIdPM.Id;
+								temp.VatTypeId = myVatTypePM.Id;
 						  
 							}  
 
@@ -574,30 +556,6 @@ using Simplog.Data.CommonDataModel;
 					}
 			
 					
-                    
-					if(!IsUpdate)
-					{							
-						temp.ReceivablesAccountingCard = MyEntity.ReceivablesExternalId;
-
-										}  
-
-					 
-
-					if(MyEntity.Addresses != null && MyEntity.Addresses.Count > 0)
-					{
-						AddressQueryService AddressService12 = new AddressQueryService(Tenant);
-						  
-						if(!IsUpdate)
-						{								
-							temp.Addresses = AddressService12.AddressCustomDataMappingAndValidatin(MyEntity,MyEntity.Addresses,Tenant,ComputingPartnerName,IsUpdate);
-
-					 
-						}  
-
-						
-					}
-
-								 
                     
 					if(!IsUpdate)
 					{							
@@ -626,6 +584,27 @@ using Simplog.Data.CommonDataModel;
 							if(!IsUpdate)
 							{								
 								temp.LeadSourceId = myLeadSourcePM.Id;
+						  
+							}  
+
+							
+						} 
+
+					}
+			
+					
+					AddressQueryService PickupDeliveryAddressAddressService = new AddressQueryService(Tenant);
+					if(MyEntity.PickupDeliveryAddress != null)
+					{
+						var myPickupDeliveryAddressPM = PickupDeliveryAddressAddressService.AddressDataMappingAndValidatin(MyEntity.PickupDeliveryAddress,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myPickupDeliveryAddressPM != null)
+						{ 
+
+						 
+							if(!IsUpdate)
+							{								
+								temp.PickupDeliveryAddressId = myPickupDeliveryAddressPM.Id;
 						  
 							}  
 

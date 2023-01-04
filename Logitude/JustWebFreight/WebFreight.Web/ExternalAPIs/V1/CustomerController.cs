@@ -107,7 +107,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 SecurityUtility.AuthenticateAccessibleAPI("Customer", authToken.Tenant);
 
                 CustomerQueryService Service = new CustomerQueryService(tenant);
-                Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Customer Result = Service.GetCustomerByExternalId(externalId, tenant);
+                Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Customer Result = Service.GetCustomerByCode(externalId, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }
             catch (Exception ex)

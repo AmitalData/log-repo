@@ -88,7 +88,9 @@ using Simplog.Data.CommonDataModel;
 				   var temp = new LeadSource(); 
 				   temp.Id = MyEntityPM.Id;
 				   temp.Code = MyEntityPM.Code;
-				   temp.Name = MyEntityPM.Name;					
+				   temp.Name = MyEntityPM.Name;
+				   ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant); 
+				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"LeadSource");  					
 				   return temp;
 			}
             catch (Exception ex)
@@ -112,6 +114,21 @@ using Simplog.Data.CommonDataModel;
 					{
 						temp = query.GetSinglePMByCode(MyEntity.Code, Tenant  );
 					} 
+					if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
+					{
+                        if(string.IsNullOrEmpty(ComputingPartnerName))
+                            throw new ApplicationException("ComputingPartnerCode is required");
+						ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant);
+						var MyCode = helper.GetLogitudeCodeTranslation(MyEntity.PartnerCode,ComputingPartnerName,"LeadSource");
+					    if(string.IsNullOrEmpty(MyCode))
+						{
+						  throw new ApplicationException("LeadSource with Partner Code " + MyEntity.PartnerCode + " doesn't match any record");
+						}
+						temp = query.GetSinglePMByCode(MyCode, Tenant );
+						
+						
+					}
+					
 					
 			  	   if(temp == null)
 					{   
@@ -155,7 +172,20 @@ using Simplog.Data.CommonDataModel;
 
 										}  
 
-										   
+					
+					if(string.IsNullOrEmpty(temp.Code))
+					{
+					   
+						 
+						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PartnerCode))
+						{								
+							temp.Code = MyEntity.PartnerCode;
+								
+						
+						}  
+
+						
+					}					   
 					return temp;
 		    }
             catch (Exception ex)

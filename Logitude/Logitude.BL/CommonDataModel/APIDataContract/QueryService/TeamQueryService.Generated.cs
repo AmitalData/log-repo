@@ -89,7 +89,9 @@ using Simplog.Data.CommonDataModel;
 				   temp.Id = MyEntityPM.Id;
 				   temp.Name = MyEntityPM.Name;
 				   temp.LocalName = MyEntityPM.LocalName;
-				   temp.Code = MyEntityPM.Code;					
+				   temp.Code = MyEntityPM.Code;
+				   ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant); 
+				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"CustomerTeam");  					
 				   return temp;
 			}
             catch (Exception ex)
@@ -113,6 +115,21 @@ using Simplog.Data.CommonDataModel;
 					{
 						temp = query.GetSinglePMByCode(MyEntity.Code, Tenant  );
 					} 
+					if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
+					{
+                        if(string.IsNullOrEmpty(ComputingPartnerName))
+                            throw new ApplicationException("ComputingPartnerCode is required");
+						ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant);
+						var MyCode = helper.GetLogitudeCodeTranslation(MyEntity.PartnerCode,ComputingPartnerName,"CustomerTeam");
+					    if(string.IsNullOrEmpty(MyCode))
+						{
+						  throw new ApplicationException("CustomerTeam with Partner Code " + MyEntity.PartnerCode + " doesn't match any record");
+						}
+						temp = query.GetSinglePMByCode(MyCode, Tenant );
+						
+						
+					}
+					
 					
 			  	   if(temp == null)
 					{   
@@ -159,6 +176,19 @@ using Simplog.Data.CommonDataModel;
 						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
 						{								
 							temp.Code = MyEntity.Code;
+								
+						
+						}  
+
+						
+					}
+					if(string.IsNullOrEmpty(temp.Code))
+					{
+					   
+						 
+						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PartnerCode))
+						{								
+							temp.Code = MyEntity.PartnerCode;
 								
 						
 						}  
