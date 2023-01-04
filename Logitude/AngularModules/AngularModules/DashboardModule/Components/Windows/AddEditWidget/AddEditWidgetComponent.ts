@@ -96,9 +96,7 @@ export class AddEditWidgetComponent extends BaseComponent {
 
         this.UIProperties.SetEnabled("GroupById", this.ObjectTableName, !AppTool.IsNullOrEmpty(this.EntityId));
         this.UIProperties.SetEnabled("SecondaryGroupById", this.ObjectTableName, !AppTool.IsNullOrEmpty(this.EntityId));
-        this.WidgetMeasuresList.forEach(item => {
-            item.SetUIProperties();
-        });
+       
     }
 
     BuildQueryFilters() {
@@ -264,6 +262,9 @@ export class AddEditWidgetComponent extends BaseComponent {
             this.SetTimeOverTimeValue();
             this.CheckGroupAddVisiblity();
             this.SetMeasureRenderList();
+            this.WidgetMeasuresList.forEach(item => {
+                item.FilterMeasureFields();
+            });
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget Type Change ", Message: "Changed To" + this.EntityPM.TypeCode, DashboardId: this.DashboardPM?.Id });
             this.isAdvancedSettingLinkVisible = true;
         }
@@ -826,6 +827,7 @@ export class WidgetMeasureItem extends BaseComponent {
         this.Widget = fatherComponent.EntityPM;
         this.IsNew = isNew;
         this.DashboardPM = fatherComponent?.DashboardPM;
+        this.SetUIProperties();
         this.FilterMeasureFields();
     }
 
@@ -870,6 +872,11 @@ export class WidgetMeasureItem extends BaseComponent {
 
     FilterMeasureFields() {
         this.FieldQueryFilters = new ApiQueryFilters();
+
+        if(this.fatherComponent.TypeCode != "kpi"){
+            this.FieldQueryFilters.addAdditionalFilter("DataTypeCode", "Integer,Decimal", null, null, "InList", false, true, false, "string", false, true, true);
+            return;
+        }
 
         switch (this.EntityPM.MeasureCode) {
             case "Avg":
