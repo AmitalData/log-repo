@@ -323,9 +323,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                             || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
                                                             || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? MoreDatas.TotFutureOpenChequesInLocalCur : 0,
 
-                                                   Obligo = (MoreDatas.BalanceInLocalCurrency) + (MoreDatas.TotFutureOpenChequesInLocalCur??0) + (CardsDatas.TotalOpenShipments??0),
-                                                   CreditUsed = (((decimal)((int)(CardsDatas.CreditLimit ?? 0 * 10000))) / 10000)- (MoreDatas.BalanceInLocalCurrency) - (MoreDatas.TotFutureOpenChequesInLocalCur??0) - (CardsDatas.TotalOpenShipments??0) ,
-
+                                                   Obligo = (MoreDatas.BalanceInLocalCurrency) + (MoreDatas.TotFutureOpenChequesInLocalCur ?? 0) + (CardsDatas.TotalOpenShipments ?? 0),
+                                                   CreditUsed = (((decimal)(int)((CardsDatas.CreditLimit == null ? 0  : CardsDatas.CreditLimit) * 10000)) / 10000) - (MoreDatas.BalanceInLocalCurrency) - (MoreDatas.TotFutureOpenChequesInLocalCur ?? 0) - (CardsDatas.TotalOpenShipments ?? 0),
 
                                                }); ;
             return query;
@@ -476,8 +475,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                            CalculatedAgingPeriod3 = glaccount.Access ? glaccount.CalculatedAgingPeriod3 : 0,
                            TotalOpenChequesInLocalCur = glaccount.Access ? glaccount.TotalOpenChequesInLocalCur : 0,
                            TotFutureOpenChequesInLocalCur = glaccount.Access ? glaccount.TotFutureOpenChequesInLocalCur : 0,
-                           Obligo=glaccount.Obligo,
-                           CreditUsed=glaccount.CreditUsed,
+                           Obligo = glaccount.Obligo,
+                           CreditUsed = glaccount.CreditUsed,
                        };
 
 
