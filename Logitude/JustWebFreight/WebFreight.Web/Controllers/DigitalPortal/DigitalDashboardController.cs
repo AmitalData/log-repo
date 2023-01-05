@@ -221,33 +221,34 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         private Dictionary<string, object> GetInvoicesSummaries(int tenant, IQueryable<InvoiceStatusDashboardModel> res)
         {
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
-            var lastMonth = todayDate.AddMonths(-1).Month;
-            var last2Month = todayDate.AddMonths(-2).Month;
+            var lastMonth = todayDate.AddMonths(-1);
+            var last2Month = todayDate.AddMonths(-2);
 
-            var response = res.Where(a => a.DueDate.Value.Month == todayDate.Month 
-                                            || a.DueDate.Value.Month == lastMonth
-                                            || a.DueDate.Value.Month == last2Month
-                                            || a.DueDate.Value.Month < last2Month)
+            var response = res.Where(a => a.DueDate.Value == todayDate 
+                                            || a.DueDate.Value == lastMonth
+                                            || a.DueDate.Value == last2Month
+                                            || a.DueDate.Value < last2Month)
                               .Select(a => new 
                               {
                                   DueDate = a.DueDate.Value,
                                   PaidStatus = a.PaidStatus,
-                                  data = a.DueDate.Value.Month == todayDate.Month 
+                                  data = a.DueDate.Value == todayDate 
                                          ? "Current"
-                                         : a.DueDate.Value.Month == lastMonth
+                                         : a.DueDate.Value == lastMonth
                                            ? "Last Month"
-                                           : a.DueDate.Value.Month == last2Month
+                                           : a.DueDate.Value == last2Month
                                              ? "Last 2 Month"
                                              : "Less than 2 Month"
                               })
-                              .GroupBy(a => a.data)
-                              .ToDictionary(x => x.Key,
-                                                  t => (object) new
+                              .GroupBy(a => a.data);
+
+
+            return response.ToDictionary(x => x.Key,
+                                                  t => (object)new
                                                   {
                                                       PartiallyPaidCount = t.Where(a => a.PaidStatus == "Partially Paid").Count(),
                                                       OverDueCount = t.Where(a => a.DueDate < todayDate).Count()
                                                   });
-            return response;
         }
 
         private Dictionary<string, object> GetDigitalStatusesWithCount(IQueryable<DigitalShipmentList> shipments, int tenant)
@@ -318,23 +319,24 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
             var arrivedAtDestinationCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SARR").StatusWeight;
 
-            var result = shipments.Where(r => allowedStatusCode.Contains(r.StatusCode)
+            var result1 = shipments.Where(r => allowedStatusCode.Contains(r.StatusCode)
                                               && (r.StatusWeight < departedCodeWeight
                                                   || (r.StatusWeight >= departedCodeWeight
                                                       && r.StatusWeight < arrivedAtDestinationCodeWeight)
                                                   || (r.StatusWeight >= arrivedAtDestinationCodeWeight)))
-                                   .Select(a => new { 
-                                        a.TransportModeId, 
-                                        Code = a.StatusWeight < departedCodeWeight 
+                                   .Select(a => new
+                                   {
+                                       a.TransportModeId,
+                                       Code = a.StatusWeight < departedCodeWeight
                                                ? "Origin"
                                                : (a.StatusWeight >= departedCodeWeight
-                                                  && a.StatusWeight < arrivedAtDestinationCodeWeight) 
+                                                  && a.StatusWeight < arrivedAtDestinationCodeWeight)
                                                   ? "InTransit"
                                                   : "dataAtDestination"
-                                   }).GroupBy(a => a.Code)
-                                   .ToDictionary(a => a.Key, y => (object)y.GroupBy( x => x.TransportModeId)
-                                                                           .ToDictionary(b => b.Key, xx => xx.Count()));
+                                   }).GroupBy(a => a.Code).ToList();
 
+            var result = result1.ToDictionary(a => a.Key, y => (object)y.GroupBy(x => x.TransportModeId)
+                                                                           .ToDictionary(b => b.Key, xx => xx.Count()));
             return result;
         }
 
