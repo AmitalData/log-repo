@@ -83,7 +83,8 @@ export class DashboardMapping {
                     && key != 'entityParentPM'
                     && key != 'PropertyChanged'
                     && key != 'PropertyChanged'
-                    && key != 'OldEntityPM') return val
+                    && key != 'OldEntityPM'
+                    ) return val
             }
         ));
 

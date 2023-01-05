@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DashboardUpdateClass
    {  		
-		public const string HashString = "ebdecf41a7d3a4df90658dca18ef6d20";
+		public const string HashString = "d88f9012de82efdf0d88b8a982f51991";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -130,7 +130,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Dashboard",
-			      				    Code =  "b15d",
+			      				    Code =  "b4fb",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "DashboardModule",
@@ -1101,7 +1101,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature DashboardFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = DashboardObjectTable.Id, Tenant = 0, NameTextCodeCode = "Dashboard.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DashboardObjectTable);
 		   Feature DashboardFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = DashboardObjectTable.Id, Tenant = 0, NameTextCodeCode = "Dashboard.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DashboardObjectTable);
 		   Feature DashboardFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = DashboardObjectTable.Id, Tenant = 0, NameTextCodeCode = "Dashboard.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DashboardObjectTable);
-		   Feature DashboardFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = DashboardObjectTable.Id, Tenant = 0, NameTextCodeCode = "Dashboard.Features.PackageFeature", NameTextCodeDefaultText = "Dashboard Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DashboardObjectTable);    
+		   Feature DashboardFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = DashboardObjectTable.Id, Tenant = 0, NameTextCodeCode = "Dashboard.Features.PackageFeature", NameTextCodeDefaultText = "Dashboard Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DashboardObjectTable); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature DashboardFeature_CopyDashboard = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CopyDashboard", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DashboardObjectTable.Id, Tenant = 0, NameTextCodeCode = "Dashboard.Features.CopyDashboard", NameTextCodeDefaultText = @"Copy Dashboard" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DashboardObjectTable);
+
+   
 	    
 		}
 
