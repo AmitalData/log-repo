@@ -249,7 +249,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                                   }); ;
 
 
-            return response
+            return response;
         }
 
         private Dictionary<string, object> GetDigitalStatusesWithCount(IQueryable<DigitalShipmentList> shipments, int tenant)
