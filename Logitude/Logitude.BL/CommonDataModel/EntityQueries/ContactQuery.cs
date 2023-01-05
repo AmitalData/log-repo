@@ -1975,7 +1975,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return contact;
         }
 
-
+        public ContactPM GetSinglePMByEmail(string email, int tenant)
+        {
+            return this.GetSingleByEmail(email, tenant);
+        }
         public IQueryable<ContactList> GetDemoTenantContactList(IQueryable<Contact> iQueryable, string loggedUserId, int tenant)
         {
             List<ContactList> result = new List<ContactList>();

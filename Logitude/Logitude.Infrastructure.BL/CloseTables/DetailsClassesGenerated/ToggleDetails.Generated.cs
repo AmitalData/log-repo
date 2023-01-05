@@ -772,6 +772,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "XUP,Export To Excel Using Parallel", 
                 Description = "Export To Excel Using Parallel", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "CTI", 
+                Name = "Customers API", 
+                SearchFields = "CTI,Customers API", 
+                Description = "Customers API", 
+			});
 			
             return all;
        }
