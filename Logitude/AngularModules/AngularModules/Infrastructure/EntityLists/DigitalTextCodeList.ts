@@ -15,6 +15,7 @@ export class DigitalTextCodeList {
 	ObjectTableId: string;
 	Labels: string;
 	ObjectTableName: string;
+	ProfileId: string;
 	
 }
  
