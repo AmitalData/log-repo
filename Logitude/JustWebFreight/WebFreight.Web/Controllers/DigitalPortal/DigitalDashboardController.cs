@@ -192,33 +192,30 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 DateTime? next7DateTime = currentDateTime.Value.AddDays(7).Date;
                 DateTime? tomorrowDateTime = currentDateTime.Value.AddDays(1).Date;
 
-                var result = new Dictionary<string, Dictionary<object, int>>();
+                var shipments  = shipmentQuery.GetByFilters(newFilters)
+                                                  .Where(r => (r.MainCarriageFinalDestinationETA <= next7DateTime 
+                                                               || r.MainCarriageFinalDestinationETA >= last7DateTime)
+                                                               && !r.DirectionId.Equals("D"))
+                                                  .Select(a => new {
+                                                        a.TransportModeId,
+                                                        a.DirectionId,
+                                                        a.MainCarriageFinalDestinationETA,
+                                                        Data = a.MainCarriageFinalDestinationETA == currentDateTime 
+                                                               ? "Today" 
+                                                               : a.MainCarriageFinalDestinationETA == tomorrowDateTime
+                                                                 ? "Tomorrow" 
+                                                                 : a.MainCarriageFinalDestinationETA > currentDateTime
+                                                                    && a.MainCarriageFinalDestinationETA <= next7DateTime
+                                                                    ? "Next7Days"
+                                                                    : "Last7Days"
+                                                  })
+                                                  .GroupBy(a => a.Data)
+                                                  .ToDictionary( a => a.Key, 
+                                                                 y => y.GroupBy(a => new { a.TransportModeId, a.DirectionId })
+                                                                       .OrderBy(a => a.Key)
+                                                                       .ToDictionary(a => (object)a.Key, x => x.Count()));
 
-                var Todayshipments = shipmentQuery.GetByFilters(newFilters)
-                                                  .Where(r => r.MainCarriageFinalDestinationETA == currentDateTime)
-                                                  .GroupBy(a => new { a.TransportModeId, a.DirectionId})
-                                                  .ToDictionary( a => (object)a.Key, y => y.Count());
-
-                result.Add("today", Todayshipments);
-                var tomorrowShipmentsQuery = shipmentQuery.GetByFilters(newFilters)
-                                                  .Where(r => r.MainCarriageFinalDestinationETA == tomorrowDateTime)
-                                                  .GroupBy(a => new { a.TransportModeId, a.DirectionId})
-                                                  .ToDictionary( a => (object)a.Key, y => y.Count());
-                result.Add("tomorrow", tomorrowShipmentsQuery);
-
-                var next7DateTimeShipmentsQuery = shipmentQuery.GetByFilters(newFilters)
-                                                  .Where(r => r.MainCarriageFinalDestinationETA == next7DateTime)
-                                                  .GroupBy(a => new { a.TransportModeId, a.DirectionId})
-                                                  .ToDictionary( a => (object)a.Key, y => y.Count());
-                result.Add("Next7Days", next7DateTimeShipmentsQuery);
-
-                var last7DateTimeShipmentsQuery = shipmentQuery.GetByFilters(newFilters)
-                                                  .Where(r => r.MainCarriageFinalDestinationETA == last7DateTime)
-                                                  .GroupBy(a => new { a.TransportModeId, a.DirectionId})
-                                                  .ToDictionary( a => (object)a.Key, y => y.Count());
-                result.Add("Last7Days", last7DateTimeShipmentsQuery);
-
-                return Request.CreateResponse(HttpStatusCode.OK, result);
+                return Request.CreateResponse(HttpStatusCode.OK, shipments);
             }
             catch (AutenticationException ex)
             {
