@@ -23,6 +23,14 @@ import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
 import { CargoIdentifireTypeListService } from 'Customs/Services/StandardLists/CargoIdentifireTypeListService';
 import { UnifreightController, UnifreightResponseEventArgs } from 'Customs/Controller/UnifreightController';
 import { AmitalGatewayUtil, UnifreightMessageM } from 'Infrastructure/Utilities/AmitalGatewayUtil';
+import { SupplierInvoiceExtendedListService } from 'Customs/Services/ExtendedLists/SupplierInvoiceExtendedListService';
+import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
+import { CustDocsTicketWebService } from 'Customs/Services/WebServices/CustDocsTicketWebService';
+import { CustomsDocumentsTicketPM } from 'Customs/EntityPMs/CustomsDocumentsTicketPM';
+import { CustDocMetaDataValuesWebService } from 'Customs/Services/WebServices/CustDocMetaDataValuesWebService';
+import { CustomsDocumentMetaDataValuePM } from 'Customs/EntityPMs/CustomsDocumentMetaDataValuePM';
+import { SupplierInvoiceItemLine } from '../DeclarationPayment/SupplierInvoiceSelectionComponent';
+import { SupplierInvoiceItemList } from 'Customs/EntityLists/Extended/SupplierInvoiceItemList';
 
 @Component({
     selector: 'ExportDeclarationClosingDataComponent',
@@ -42,6 +50,8 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     exportDeclarationClosingDatasExtendPMService: ExportDeclarationClosingDatasExtendPMService = new ExportDeclarationClosingDatasExtendPMService();
     _CargoIdentifireTypeListService: CargoIdentifireTypeListService = new CargoIdentifireTypeListService();
     private CurrentSession = SessionLocator.SelectedSession;
+    supplierInvoiceExtendedListService: SupplierInvoiceExtendedListService = new SupplierInvoiceExtendedListService();
+    public SupplierInvoiceItemList: SupplierInvoiceItemList[] = [];
     public IsNew: boolean = false;
     private exportDeclarationClosingWebService: ExportDeclarationClosingWebService = new ExportDeclarationClosingWebService();
     public ActualSailingDate: string = "תםריך הפלגה בפועל";
@@ -57,24 +67,24 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     ) {
         super();
     }
-   
+
     SetUIProperty() {
-        if(this.DecPM.TransportModeId != 'O')
-        this.UIProperties.SetEnabled("FinalShipCode", this.ObjectTableName, false);
+        if (this.DecPM.TransportModeId != 'O')
+            this.UIProperties.SetEnabled("FinalShipCode", this.ObjectTableName, false);
         this.UIProperties.SetWarning("LoadingDateTime", this.ObjectTableName, true);
         this.UIProperties.SetEnabled("Smp", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("FlightDate", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("MainAWB", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("ChargingSite", this.ObjectTableName, false);
-         
-        
+
+
     }
 
 
     SetWindowArgs(args: any) {
         this.EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response: any) => {
             this.DecPM = args.EntityPM;
-            if(!this.DecPM.IsConnectedToUnifreight && AmitalGatewayUtil.Instance.AmitalBrowserInUse)
+            if (!this.DecPM.IsConnectedToUnifreight && AmitalGatewayUtil.Instance.AmitalBrowserInUse)
                 this.operationalDataFromUnifreight()
             this.GetExportDeclarationClosingData(this.DecPM.Id);
             this.SetUIProperty();
@@ -83,12 +93,12 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                 this.setInputsReadOnly();
             }
 
-            if (this.DecPM.Direction === 'E'){
+            if (this.DecPM.Direction === 'E') {
                 this.setIdentifiersPlaceHolders();
-            }           
+            }
 
 
-        });        
+        });
 
     }
 
@@ -110,8 +120,8 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
             this.exportDeclarationClosingDatasExtendPMService.GetSingleWithEFIFILEMData(id).subscribe((response: any) => {
                 this.EntityPM = response.Result;
-                 if (this.EntityPM)
-                
+                if (this.EntityPM)
+
                     if (response.Result.ChangeSetOp == "1") {
                         this.EntityPM.IsDirty = true;
                         this.IsNew = true;
@@ -120,18 +130,18 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                     }
 
                 if (this.DecPM.Direction === 'E' && this.DecPM.TransportModeId === 'O') {
-                 
-                    this.FinalShipCode=this.FinalShipCode??this.DecPM.Consignments.find(x=>x.ConsignmentType=="E").ShipCode;
+
+                    this.FinalShipCode = this.FinalShipCode ?? this.DecPM.Consignments.find(x => x.ConsignmentType == "E").ShipCode;
                     if (this.FinalCargoTypeCode == null) {
-                        
+
                         this.FinalManifestNumber = this.FinalManifestNumber == null ? '' : this.FinalManifestNumber;
                         this.FinalSecondCargoId = this.FinalSecondCargoId == null ? '' : this.FinalSecondCargoId;
                         this.FinalThirdCargoId = this.FinalThirdCargoId == null ? '' : this.FinalThirdCargoId;
                         this.FinalCargoTypeCode = '37';
-                                                          
+
                     }
-                   
-                    else{
+
+                    else {
                         this.setIdentifiersPlaceHolders();
                     }
 
@@ -153,10 +163,10 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
 
 
-                
-               
 
-               
+
+
+
                 /*this.EntityPM = new ExportDeclarationClosingDataPM();
                 this.EntityPM.DeclarationId = id;
                 this.EntityPM.Tenant = this.DecPM.Tenant;
@@ -175,39 +185,38 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
                 this.initOceanExportData();
 
-                if(this.DecPM.TransportModeId == 'L') //TransportMod- land
+                if (this.DecPM.TransportModeId == 'L') //TransportMod- land
                 {
-    
-    
-                this.exportDeclarationClosingDataPMService.get(id).subscribe((response: any) => {
-                    if(AppTool.IsNullOrEmpty(response.Result))
-                    {
-                    
 
-                        if(!AppTool.IsNullOrEmpty(this.DecPM.Consignments[0].CargoTypeCodeForExport)) this.FinalCargoTypeCode = this.DecPM.Consignments[0].CargoTypeCodeForExport;
-                            
-                        
-    
-                        if(!AppTool.IsNullOrEmpty(this.DecPM.Consignments[0].ManifestNumber)) this.FinalManifestNumber = this.DecPM.Consignments[0].ManifestNumber;
-                            
-                        
-    
-                        if(!AppTool.IsNullOrEmpty(this.DecPM.Consignments[0].ExportLoadingPortCode)) this.FinalLoadingSite = this.DecPM.Consignments[0].ExportLoadingPortCode;
-                            
-                        
-    
-                    
-                    }
-                });
-                    
 
-                
+                    this.exportDeclarationClosingDataPMService.get(id).subscribe((response: any) => {
+                        if (AppTool.IsNullOrEmpty(response.Result)) {
+
+
+                            if (!AppTool.IsNullOrEmpty(this.DecPM.Consignments[0].CargoTypeCodeForExport)) this.FinalCargoTypeCode = this.DecPM.Consignments[0].CargoTypeCodeForExport;
+
+
+
+                            if (!AppTool.IsNullOrEmpty(this.DecPM.Consignments[0].ManifestNumber)) this.FinalManifestNumber = this.DecPM.Consignments[0].ManifestNumber;
+
+
+
+                            if (!AppTool.IsNullOrEmpty(this.DecPM.Consignments[0].ExportLoadingPortCode)) this.FinalLoadingSite = this.DecPM.Consignments[0].ExportLoadingPortCode;
+
+
+
+
+                        }
+                    });
+
+
+
                 }
 
             });
 
-            
-          
+
+
         }
     }
 
@@ -224,7 +233,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     get LoadingDateTime() { return this.EntityPM ? this.EntityPM.LoadingDateTime : null; }
     set LoadingDateTime(value: Date) {
 
-        if (this.EntityPM.LoadingDateTime != value) { 
+        if (this.EntityPM.LoadingDateTime != value) {
             this.EntityPM.LoadingDateTime = value;
             this.EntityPM.IsDirty = true;
         }
@@ -287,11 +296,12 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         }
     }
 
-    get FinalCargoTypeCode() { 
+    get FinalCargoTypeCode() {
 
-      return this.EntityPM ? this.EntityPM.FinalCargoTypeCode : null; }
-    set FinalCargoTypeCode(value: string) {        
-        
+        return this.EntityPM ? this.EntityPM.FinalCargoTypeCode : null;
+    }
+    set FinalCargoTypeCode(value: string) {
+
         if (this.EntityPM.FinalCargoTypeCode != value) {
             this.EntityPM.FinalCargoTypeCode = value;
             this.EntityPM.IsDirty = true;
@@ -300,17 +310,17 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                 this.setIdentifiersPlaceHolders();
             }
         }
-        
+
     }
 
     get FinalManifestNumber() {
-    
+
         return this.EntityPM ? this.EntityPM.FinalManifestNumber : null;
     }
 
-    set FinalManifestNumber(value: string) {        
+    set FinalManifestNumber(value: string) {
 
-         if (this.EntityPM.FinalManifestNumber != value) {
+        if (this.EntityPM.FinalManifestNumber != value) {
             this.EntityPM.FinalManifestNumber = value;
             this.EntityPM.IsDirty = true;
 
@@ -333,10 +343,10 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     }
 
     ViewDocumentsComponent() {
-       
+        
         var windowArgs: any = {};
         windowArgs.EntityPM = this.DecPM;
-        windowArgs.ClosingData=this.EntityPM;
+        windowArgs.ClosingData = this.EntityPM;
         //windowArgs.ObjectTableName = "Customs.DeclarationCancellation";
         windowArgs.ObjectTableName = "Customs.Declaration";// this.ObjectTableName;
         windowArgs.EntityParentPM = "ExportDeclarationClosingData";
@@ -359,41 +369,96 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         this.entityArgs.SkipCtor = false;
     }
     SendButtonClicked(event: CustomSendOptionsArgs) {
+
+
         if (AppTool.IsNullOrEmpty(this.EntityPM.LoadingDateTime)) {
             var msg = " שדה תםריך טעינה שדה חובה";
             this.ValidationErrors.push(msg);
             this.FillValidationErrors("Errors");
         }
         else {
-            if (this.EntityPM.IsDirty) {
-                if (this.IsNew) {
-                    this.exportDeclarationClosingDataPMService.insert(this.EntityPM).subscribe((response: ServiceResponse) => {
+            this.CheckDocuments();
 
 
-                        if (!response.HasError) {
-                            this.SendAmendmentCloseDeclaration(event);
+        }
+    }
+    CheckDocuments() {
+        
+        var custDocsTicketWebService: CustDocsTicketWebService = new CustDocsTicketWebService();
+        var custDocsMetadataWebService: CustDocMetaDataValuesWebService = new CustDocMetaDataValuesWebService();
+        var customsDocTickets: string = "";
+        var MetadataValues: CustomsDocumentMetaDataValuePM[];
+        var CustomsDocumentsTickets: CustomsDocumentsTicketPM[];
+        
+        var SupplierInvoiceNumberList=""
+        this.SupplierInvoiceItemList=[];
+         this.supplierInvoiceExtendedListService.GetPreferenceDocumentNumberSupplierInvoiceItemByDeclarationId(this.DecPM.Id).subscribe((response: any) => {
+            if (response) {
+                
+                response.Result.forEach(element => {
+                    if (!AppTool.IsNullOrEmpty(element.PreferenceDocumentNumber))
+                        this.SupplierInvoiceItemList.push(element)
+                });
+                
+            
+                if (this.SupplierInvoiceItemList.length > 0) {
+                    custDocsTicketWebService.GetCustomsDocumentsTicketsByEntityIdAndChilds(this.DecPM.Id, null, null, null, "ExportDeclarationClosingData", false).subscribe((response: ServiceResponse) => {
+                        CustomsDocumentsTickets = response.Result;
+                        CustomsDocumentsTickets = CustomsDocumentsTickets.filter(c => c.DocumentTypeCode == 'IL_184' || c.DocumentTypeCode == '954' || c.DocumentTypeCode == 'IL_329');
+                        if (CustomsDocumentsTickets.length == 0) {
+                            this.SupplierInvoiceItemList.forEach(supplierInvoiceItem => {
+                                SupplierInvoiceNumberList=this.DecPM.SupplierInvoices.find(s=>s.InvoiceCounterKey==supplierInvoiceItem.CounterKey).InvoiceNumber;
+                            });
+                            this.ShowWarnningMessage(SupplierInvoiceNumberList)
+                            
                         }
-                    });
-                } else {
-                    this.exportDeclarationClosingDataPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
 
-                        if (!response.HasError) {
-                            this.SendAmendmentCloseDeclaration(event);
+                        else {
+                            for (var i = 0; i < CustomsDocumentsTickets.length; i++) {
+                                customsDocTickets = customsDocTickets + "," + CustomsDocumentsTickets[i].DocumentsFilingId;
+                            }
+                            customsDocTickets = customsDocTickets.substr(1, customsDocTickets.length - 1);
+                            custDocsMetadataWebService.GetCustomsDocumentMetaDataValuesByCustomsDocumentFilingIds(customsDocTickets).subscribe((response2: ServiceResponse) => {
+                                MetadataValues = response2.Result;
+                                var metaDataTypesCode = MetadataValues.filter(c => c.MetaDataTypeCode == '35' || c.MetaDataTypeCode == '46')
+                                var index = 0
+                                this.SupplierInvoiceItemList.forEach(element => {
+                                    index = metaDataTypesCode.findIndex(t => t.MetaDataValue == element.PreferenceDocumentNumber);
+                                    if (index < 0) {
+                                         SupplierInvoiceNumberList=SupplierInvoiceNumberList+',' + this.DecPM.SupplierInvoices.find(s=>s.InvoiceCounterKey==element.CounterKey).InvoiceNumber;
+                                     }
+
+                                });
+                                if(SupplierInvoiceNumberList.length>0)
+                                {
+                                    this.ShowWarnningMessage(SupplierInvoiceNumberList);
+                                    SupplierInvoiceNumberList="";
+                                }
+                                else{
+                                    this.Send("ok")
+                                }
+                            })
                         }
                     });
                 }
+                else {
+                    this.Send("ok")
+                }
+
             }
             else {
-                this.SendAmendmentCloseDeclaration(event);
+                this.Send("ok")
             }
-        }
-    }
 
+        });
+
+
+    }
 
     SendAmendmentCloseDeclaration(event: CustomSendOptionsArgs) {
 
         this.CurrentSession.StartBusyIndicator("שליחת מסר סגירת הצהרה");
-       var searchParams: AmendmentRequestParams = new AmendmentRequestParams();
+        var searchParams: AmendmentRequestParams = new AmendmentRequestParams();
         searchParams.Tenant = SessionLocator.Tenant;
         searchParams.AppicationId = this.EntityPM.DeclarationId;
         searchParams.LoggingEnabled = true;
@@ -457,6 +522,30 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         });
 
     }
+    ShowWarnningMessage(error: string){
+        this.CurrentSession.StopBusyIndicator();
+        this.ValidationErrors.push("לא אותרה צרופה מתאימה למסמך העדפה שצויין בחשבון" +" "+`${error}`)
+        var windowArgs: any = {};
+        windowArgs.Errors = this.ValidationErrors;
+        windowArgs.ComponentHeight = '328px';
+        windowArgs.CancelButtonVisibility = true
+        var windowTitle = "בדיקת צירוף תעודות מקור";
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 600;
+        logWindow.Height = 400;
+        logWindow.Title = windowTitle;
+        logWindow.ShowCloseButton = true;
+        windowArgs.SaveButtonText = "שלח";
+
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) =>
+            this.Send($event)
+
+
+        );
+        logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
+    }
+
     FillValidationErrors(title: string) {
 
 
@@ -475,8 +564,40 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
     }
     OnAddEditWindowClosed(event) {
+        ;
         this.ValidationErrors = [];
+
     }
+    Send(event) {
+        this.ValidationErrors = [];
+        if (event == "ok") {
+            if (this.EntityPM.IsDirty) {
+                if (this.IsNew) {
+                    this.exportDeclarationClosingDataPMService.insert(this.EntityPM).subscribe((response: ServiceResponse) => {
+
+
+                        if (!response.HasError) {
+                            this.SendAmendmentCloseDeclaration(event);
+                        }
+                    });
+                } else {
+                    this.exportDeclarationClosingDataPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
+
+                        if (!response.HasError) {
+                            this.SendAmendmentCloseDeclaration(event);
+                        }
+                    });
+                }
+            }
+            else {
+                this.SendAmendmentCloseDeclaration(event);
+            }
+        }
+
+
+    }
+
+
     CancelButtonClicked() {
         SessionLocator.SelectedSession.CloseCurrentWindowEmit("Cancel");
     }
@@ -502,7 +623,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
 
     setIdentifiersPlaceHolders() {
-       
+
         this._CargoIdentifireTypeListService.getSingleFromCache(this.FinalCargoTypeCode)
             .subscribe((Response: ServiceResponse) => {
                 if (Response.Result != null) {
@@ -536,7 +657,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                 resolve(response.Result.IsConnectedToUniFreight)))
     }
 
-    operationalDataFromUnifreight(){
+    operationalDataFromUnifreight() {
 
         SessionLocator.SelectedSession.StartBusyIndicatorLoading();
         let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
@@ -548,15 +669,15 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                     if (IsMatchUnifreightCallbackCommand) {
                         sub.unsubscribe();
                         SessionLocator.SelectedSession.StopBusyIndicator();
-                        let LoadPort = UnifreightMessageM.GetStringValue(mess,"LoadPort");
-                        let Mawb = UnifreightMessageM.GetStringValue(mess,"Mawb");
-                        let Hawb = UnifreightMessageM.GetStringValue(mess,"Hawb");
-                        let FlightDate = UnifreightMessageM.GetStringValue(mess,"FlightDate");
-                        var datetime=new Date(Number(FlightDate.substring(0,4)),Number(FlightDate.substring(4,6))-1,Number(FlightDate.substring(6,8)),2,2,2);
-                        Mawb? this.MainAWB = Mawb : '';
-                        Hawb? this.Smp = Hawb : '';
-                        LoadPort? this.ChargingSite = LoadPort : ''; 
-                        FlightDate? this.FlightDate = datetime : '';
+                        let LoadPort = UnifreightMessageM.GetStringValue(mess, "LoadPort");
+                        let Mawb = UnifreightMessageM.GetStringValue(mess, "Mawb");
+                        let Hawb = UnifreightMessageM.GetStringValue(mess, "Hawb");
+                        let FlightDate = UnifreightMessageM.GetStringValue(mess, "FlightDate");
+                        var datetime = new Date(Number(FlightDate.substring(0, 4)), Number(FlightDate.substring(4, 6)) - 1, Number(FlightDate.substring(6, 8)), 2, 2, 2);
+                        Mawb ? this.MainAWB = Mawb : '';
+                        Hawb ? this.Smp = Hawb : '';
+                        LoadPort ? this.ChargingSite = LoadPort : '';
+                        FlightDate ? this.FlightDate = datetime : '';
 
                         SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
                     }
@@ -566,15 +687,15 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         SessionLocator.SelectedSession.StartBusyIndicator("");
         var unifreightMessageM =
             AmitalGatewayUtil.Instance.
-            DeclarationMessaging.GetMessage(this.DecPM.CustomFileNo, this.DecPM.Id, "ExportDeclarationClosingDataComponent.ts", "BFIFILE"); 
+                DeclarationMessaging.GetMessage(this.DecPM.CustomFileNo, this.DecPM.Id, "ExportDeclarationClosingDataComponent.ts", "BFIFILE");
 
-                    AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
-                        "AmitalGatewayUtil.CustomExportCloseFile",
-                        "BFIHMAIN.LogitudeTask",
-                        "CustomExportCloseFile",
-                        unifreightMessageM,
-                        "נתונים תפעולים בסגירת הצהרה");      
-            
+        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+            "AmitalGatewayUtil.CustomExportCloseFile",
+            "BFIHMAIN.LogitudeTask",
+            "CustomExportCloseFile",
+            unifreightMessageM,
+            "נתונים תפעולים בסגירת הצהרה");
+
     }
 
 

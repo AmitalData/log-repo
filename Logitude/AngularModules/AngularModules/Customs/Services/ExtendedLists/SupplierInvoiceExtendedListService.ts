@@ -152,6 +152,35 @@ export class SupplierInvoiceExtendedListService {
     }
 
 
+    GetPreferenceDocumentNumberSupplierInvoiceItemByDeclarationId(declarationId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+        var url = this._apiUrl + '/GetSupplierInvoiceItemsForInvoices';
+        
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetPreferenceDocumentNumberSupplierInvoiceItemByDeclarationId/?' + 'declarationId=' + declarationId , ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
+
+       
+                   
+                //var serviceResponse: ServiceResponse = new ServiceResponse();
+                var serviceResponse: ServiceResponse = response;
+                var _mappedListsArray: Array<SupplierInvoiceItemList> = [];
+                if (serviceResponse.Result) {
+                    for (var key in serviceResponse.Result) {
+
+                        var entity: SupplierInvoiceItemList;
+                        entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
+                        _mappedListsArray.push(entity);
+
+                    }
+                }
+                serviceResponse.Result = _mappedListsArray;
+                return serviceResponse;
+            }),catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
 
 
 }

@@ -299,6 +299,13 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.DeclarationId == declarationId && a.Tenant==tenant && a.ItemCode== ItemCode
                     select a).ToList();
         }
+
+        public List<SupplierInvoiceItem> GetPreferenceDocumentNumberSupplierInvoiceItemByDeclarationId( string declarationId, int tenant)
+        {
+            return (from a in context.SupplierInvoiceItems 
+                    where a.DeclarationId == declarationId && a.Tenant == tenant 
+                    select a).ToList();
+        }
     }
 
 }
