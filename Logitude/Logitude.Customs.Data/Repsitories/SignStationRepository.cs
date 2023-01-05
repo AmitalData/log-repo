@@ -20,27 +20,31 @@ namespace Logitude.Customs.Data.Repsitories
             
 			throw new NotImplementedException();
         }
-        public SignStation GetAvailableSignServerByCustomsAgentId(string customsAgentId,int LastAccessedInMin)
+        public SignStation GetAvailableSignServerByCustomsAgentId(int tenant, string customsAgentId,int LastAccessedInMin)
         {
             DateTime LastAccessedAt = DateTime.Now.AddMinutes(-1 * LastAccessedInMin);
             return (from a in context.SignStations
+                    where a.Tenant == tenant
                     where a.CustomsAgentId == customsAgentId && a.IsCompanySignOn && a.LastAccessedAt > LastAccessedAt
                     select a).FirstOrDefault();
         }
-        public List<SignStation> GetAllAvailable(string customsAgentId, int LastAccessedInMin)
+        public List<SignStation> GetAllAvailable(int tenant, string customsAgentId, int LastAccessedInMin)
         {
             DateTime LastAccessedAt = DateTime.Now.AddMinutes(-1 * LastAccessedInMin);
             return (from a in context.SignStations
+                    where a.Tenant == tenant
                     where a.CustomsAgentId == customsAgentId && a.LastAccessedAt > LastAccessedAt
                     select a).ToList();
         }
 
-        public SignStation GetSingle(string customsagentid, string personid)
-        {
-            return (from a in context.SignStations
-                    where a.CustomsAgentId == customsagentid && a.PersonId == personid 
-                    select a).FirstOrDefault();
-        }
+
+        //public SignStation GetSingle(string customsagentid, string personid)
+        //{
+        //    return (from a in context.SignStations
+        //            where a.CustomsAgentId == customsagentid && a.PersonId == personid
+        //            select a).FirstOrDefault();
+        //}
+
 
     }
 
