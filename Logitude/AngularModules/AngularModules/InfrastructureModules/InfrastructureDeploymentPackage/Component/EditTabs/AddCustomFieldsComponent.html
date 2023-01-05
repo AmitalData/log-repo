@@ -15,7 +15,6 @@
                                 <label style="width:120px">Select Object</label>
 
                                 <LogLov *ngIf="IsLogLovReady"
-                                        (SelectedItemChanged)="SelectedEntity = $event"
                                         [ObjectFieldName]="'SelectedObjectTableId'"
                                         [ObjectTableName]="'ObjectTable'"
                                         [DataContext]="DataContext"
