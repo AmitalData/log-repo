@@ -47,6 +47,14 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
         }
         public static void MapDeploymentPackageDetails(DeploymentPackagePM deploymentPackagePM)
         {
+            deploymentPackagePM.DeploymentPackageDetails.Name = deploymentPackagePM.Name;
+            deploymentPackagePM.DeploymentPackageDetails.Code = deploymentPackagePM.Code;
+            deploymentPackagePM.DeploymentPackageDetails.Description = deploymentPackagePM.Description;
+            UpdateDocument(deploymentPackagePM);
+        }
+
+        private static void UpdateDocument(DeploymentPackagePM deploymentPackagePM)
+        {
             if (deploymentPackagePM.DocumentId == null) return;
             Document document = new DocumentRepository(deploymentPackagePM.Tenant).GetSingleDocument(deploymentPackagePM.Tenant, deploymentPackagePM.DocumentId);
             var deploymentPackageDetailsBytes = Encoding.ASCII.GetBytes(JsonSerializer.Serialize(deploymentPackagePM.DeploymentPackageDetails));

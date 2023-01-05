@@ -34,6 +34,26 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string Name { get; set; }
         public string Code { get; set; }
         public string Description { get; set; }
-        public List<ObjectFieldPM> CustomFields { get; set; }
+        public List<CustomFields> CustomFields { get; set; }
+    }
+
+    public class CustomFields
+    {
+        public string Code { get; set; }
+        public string FieldCode { get; set; }
+        public string Name { get; set; }
+        public string DataTypeName { get; set; }
+        public string ObjectTableName { get; set; }
+        public string LookUpTableName { get; set; }
+        public string HelpText { get; set; }
+        public string SearchFields { get; set; }
+        public int NumberOfDigits { get; set; }
+        public int DigitsAfterPoint { get; set; }
+        public int MaxLength { get; set; }
+        public int MinLength { get; set; }
+        public bool IsRequiered { get; set; }
+        public bool DisplayOnly { get; set; }
+        public bool MultiLine { get; set; }
+        
     }
 }

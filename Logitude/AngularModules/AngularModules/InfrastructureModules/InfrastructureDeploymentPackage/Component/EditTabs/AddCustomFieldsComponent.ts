@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { CustomFields } from '../../../../Infrastructure/EntityPMs/DeploymentPackageDetails';
 import { DeploymentPackagePM } from '../../../../Infrastructure/EntityPMs/DeploymentPackagePM';
 import { ObjectFieldPM } from '../../../../Infrastructure/EntityPMs/ObjectFieldPM';
 import { ObjectTablePM } from '../../../../Infrastructure/EntityPMs/ObjectTablePM';
+import { GeneralDomainService } from '../../../../Infrastructure/Services/GeneralDomainService';
 import { AppTool } from '../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { CustomFieldsTabComponent } from './CustomFieldsTabComponent';
@@ -17,73 +20,93 @@ declare var window: any;
 export class AddCustomFieldsComponent extends BaseComponent {
     
     private CurrentSession = SessionLocator.SelectedSession;
-    private deploymentPackagePM: DeploymentPackagePM;
     private customFieldsTabComponent: CustomFieldsTabComponent;
-    public CustomFields: ObjectFieldPM[];
-    public SelectedCustomFields: ObjectFieldPM[];
+    public CustomFields: CustomFields[] = [];
+    public SelectedCustomFields: CustomFields[] = [];
     public DataContext: AddCustomFieldsComponent = this;
-    public EntityFilterItems: ApiQueryFilters;
+    public ObjectTablesFilterItems: ApiQueryFilters;
     public IsLogLovReady: boolean = false;
-    
+    private generalDomainService: GeneralDomainService;
+
     constructor() {
         super();
     }
 
     SetWindowArgs(args: any) {
         this.customFieldsTabComponent = args.CustomFieldsTabComponent;
-        this.deploymentPackagePM = args.DeploymentPackagePM;
+        this.generalDomainService = new GeneralDomainService();
         this.InitLOVFilters();
         this.IsLogLovReady = true;
-        this.BuildSelectedCustomFields();
+        this.SetSelectedCustomFields();
     }
 
     InitLOVFilters() {
-        this.EntityFilterItems = new ApiQueryFilters();
-        this.EntityFilterItems.addAdditionalFilter("IsDeploymentPackage", true, null, null, "Equals", true, false, false, "string");
-        this.EntityFilterItems.Tenant = SessionLocator.Tenant;
+        this.ObjectTablesFilterItems = new ApiQueryFilters();
+        this.ObjectTablesFilterItems.addAdditionalFilter("IsDeploymentPackage", true, null, null, "Equals", true, false, false, "string");
+        this.ObjectTablesFilterItems.Tenant = SessionLocator.Tenant;
     }
 
-    BuildSelectedCustomFields() {
-        this.SelectedCustomFields = this.customFieldsTabComponent.CustomFieldsToExport;
+    SetSelectedCustomFields() {
+        this.SelectedCustomFields = this.customFieldsTabComponent.ExportCustomFields;
     }
-    CheckIfFieldIsSelected(cutsomField: ObjectFieldPM) {
-        let field = this.SelectedCustomFields.filter(selectedCustomField => selectedCustomField == cutsomField);
+
+    IsSelected(cutsomField: CustomFields) {
+        let field = this.SelectedCustomFields.filter(selectedCustomField => selectedCustomField.FieldCode == cutsomField.FieldCode)[0];
         if (!field) return false;
-        if (!field[0]) return false;
         return true;
     }
 
-    CheckCustomField(event: any, cutsomField: ObjectFieldPM) {
-        if (event) {
-            this.SelectedCustomFields.push(cutsomField);
+    SelectCustomField(event: any, customField: CustomFields) {
+        if (!event) {
+            this.SelectedCustomFields = this.customFieldsTabComponent.ExportCustomFields = this.SelectedCustomFields.filter(selectedCustomField => selectedCustomField.FieldCode != customField.FieldCode);
             return;
         }
-        this.SelectedCustomFields = this.customFieldsTabComponent.CustomFieldsToExport = this.SelectedCustomFields.filter(selectedCustomField => selectedCustomField.Id != cutsomField.Id);
+        if(this.IsSelected(customField)) return;
+        this.SelectedCustomFields.push(customField);
     }
 
-    private selectedEntityId: string;
-    public get SelectedEntityId() { return this.selectedEntityId; }
-    public set SelectedEntityId(value: string) {
-        if (this.selectedEntityId == value) return;
-        this.selectedEntityId = value;
+    private selectedObjectTableId: string;
+    public get SelectedObjectTableId() { return this.selectedObjectTableId; }
+    public set SelectedObjectTableId(value: string) {
+        if (this.selectedObjectTableId == value) return;
+        this.selectedObjectTableId = value;
         this.BuildCustomFieldsList();
     }
 
-    private checkAllCustomFields: boolean = false;
-    public get CheckAllCustomFields() { return this.checkAllCustomFields; }
-    public set CheckAllCustomFields(value: boolean) {
-        if (this.checkAllCustomFields == value) return;
-        this.checkAllCustomFields = value;
+    private selectAllCustomFields: boolean = true;
+    public get SelectAllCustomFields() {
+         this.CustomFields.forEach(customField => {
+             if(!this.IsSelected(customField)) this.selectAllCustomFields = false;       
+         });
+        return this.selectAllCustomFields && this.CustomFields.length != 0;
+    }
+    public set SelectAllCustomFields(value: boolean) {
+        if (this.selectAllCustomFields == value) return;
+        this.selectAllCustomFields = value;
+        this.CustomFields.forEach(customField =>{
+             this.SelectCustomField(value,customField);
+        });
     }
 
     public BuildCustomFieldsList() {
-        if (AppTool.IsNullOrEmpty(this.SelectedEntityId)) return;
-        this.CustomFields = window.ObjectFields.filter(objectField => objectField.ObjectTableId == this.SelectedEntityId && objectField.IsCustom);
+        if (AppTool.IsNullOrEmpty(this.SelectedObjectTableId)) return;
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.generalDomainService.GetCustomFieldsByTableId(this.SelectedObjectTableId).subscribe((response: ServiceResponse) => {
+            if (response.HasError) return;
+            this.MapCustomFieldsDetails(response.Result);
+        });
+    }
+
+    public MapCustomFieldsDetails(objectFieldsPM: ObjectFieldPM[]) {
+        this.CustomFields = [];
+        objectFieldsPM.forEach(objectField => this.CustomFields.push(new CustomFields(objectField)));
+        this.CurrentSession.StopBusyIndicator();
     }
 
     CancelButtonClicked() {
-        this.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindowEmit("Cancel");
     }
+
     OkButtonClicked() {
         this.CurrentSession.CloseCurrentWindowEmit("OK");
     }

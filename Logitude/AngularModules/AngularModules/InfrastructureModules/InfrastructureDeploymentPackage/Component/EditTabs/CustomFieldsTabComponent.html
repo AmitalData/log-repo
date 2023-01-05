@@ -32,18 +32,18 @@
 
                     <div class="SimpleGridViewBody" style="overflow-y:auto;overflow-x:hidden">
                         <table>
-                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of OriginalCustomFieldsToExport">
+                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of OriginalExportCustomFields">
                                 <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px; ">
                                     {{item.Code}}
                                 </td>
                                 <td class="GridViewCell" style="width: 150px; min-width: 150px;max-width:150px;">
-                                    {{item.FieldName}}
+                                    {{item.Name}}
                                 </td>
                                 <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px; ">
-                                    {{item.DataTypeCode}}
+                                    {{item.DataTypeName}}
                                 </td>
                                 <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px; ">
-                                    <!--<label [text]="GetParentEntityNameById(item.ObjectTableId)" textWrap="true"></label>-->
+                                    {{item.ObjectTableName}}
                                 </td>
 
                                 <td class="GridViewCell"></td>

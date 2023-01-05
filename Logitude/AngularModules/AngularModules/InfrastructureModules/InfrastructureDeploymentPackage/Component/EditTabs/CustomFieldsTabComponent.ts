@@ -3,6 +3,7 @@ import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { CustomFields } from '../../../../Infrastructure/EntityPMs/DeploymentPackageDetails';
 import { DeploymentPackagePM } from '../../../../Infrastructure/EntityPMs/DeploymentPackagePM';
 import { ObjectFieldPM } from '../../../../Infrastructure/EntityPMs/ObjectFieldPM';
 import { GeneralDomainService } from '../../../../Infrastructure/Services/GeneralDomainService';
@@ -19,22 +20,16 @@ export class CustomFieldsTabComponent extends BaseComponent {
     public EntityPM: DeploymentPackagePM;
     public ObjectTableName: string = "DeploymentPackage";
     public DataContext: CustomFieldsTabComponent = this;
-    public CustomFieldsToExport: ObjectFieldPM[];
-    public OriginalCustomFieldsToExport: ObjectFieldPM[] = [];
+    public ExportCustomFields: CustomFields[];
+    public OriginalExportCustomFields: CustomFields[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
 
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
-        this.BuildCustomFieldsList();
+        this.BuildExportCustomFieldsList();
     }
 
-
-    public BuildCustomFieldsList() {
-        this.CustomFieldsToExport = [];
-        this.CustomFieldsToExport.forEach(o => {
-            this.OriginalCustomFieldsToExport.push(o);
-        });
-    }
     AddCustomFields() {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Add Custom Field";
@@ -42,22 +37,35 @@ export class CustomFieldsTabComponent extends BaseComponent {
         logWindow.Height = 550;
         logWindow.WindowArgs = {
             CustomFieldsTabComponent: this,
-            DeploymentPackagePM: this.EntityPM,
         }
+
         logWindow.Show('./InfrastructureModules/InfrastructureDeploymentPackage/Component/EditTabs/AddCustomFieldsComponent');
         logWindow.WindowClosed.subscribe((event: any) => {
             if (event == "OK") {
-                this.OriginalCustomFieldsToExport = []
-                this.CustomFieldsToExport.forEach(o => {
-                    this.OriginalCustomFieldsToExport.push(o);
-                });
+                this.BuildOriginalExportCustomFieldsList();
+                 return;
             }
-            //this.BuildCustomFieldsList();
+            this.BuildExportCustomFieldsList();
         });
     }
-    GetParentEntityNameById(objectTableId: string) {
-        return "11";
+
+    private BuildExportCustomFieldsList() {
+        this.ExportCustomFields = [];
+        this.OriginalExportCustomFields = this.EntityPM.DeploymentPackageDetails.CustomFields;
+        this.OriginalExportCustomFields.forEach(customObjectField => {
+            this.ExportCustomFields.push(customObjectField);
+        });
     }
-   
+
+    private BuildOriginalExportCustomFieldsList() {
+        this.OriginalExportCustomFields = [];
+        this.ExportCustomFields.forEach(exportCustomField => {
+            this.OriginalExportCustomFields.push(exportCustomField);
+        });
+
+        this.EntityPM.DeploymentPackageDetails.CustomFields = this.OriginalExportCustomFields;
+        this.EntityPM.MarkAsDirty("DeploymentPackageDetails");
+
+    }   
 
 }

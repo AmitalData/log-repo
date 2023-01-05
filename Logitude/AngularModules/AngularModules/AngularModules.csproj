@@ -2188,6 +2188,9 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\BusinessProcessQueuePMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\BusinessRolePMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\CounterDefinitionPMService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DataCustomObjectPMService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DeploymentPackagePMService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DeploymentPackagesVersionPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DWQueryColumnPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DWQueryFilterPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\HelpResourcePMService.ts" />

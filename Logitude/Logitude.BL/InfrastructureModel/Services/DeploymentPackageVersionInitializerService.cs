@@ -72,7 +72,7 @@ namespace Logitude.BL.InfrastructureModel.Services
                 Name = deploymentPackagePM.Name,
                 Code = deploymentPackagePM.Code,
                 Description = deploymentPackagePM.Description,
-                CustomFields = new List<ObjectFieldPM>()
+                CustomFields = new List<CustomFields>()
             };
         }
 
