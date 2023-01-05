@@ -35,6 +35,13 @@ namespace Logitude.Customs.Data.Repsitories
                     select a).ToList();
         }
 
+        public SignStation GetSingle(string customsagentid, string personid)
+        {
+            return (from a in context.SignStations
+                    where a.CustomsAgentId == customsagentid && a.PersonId == personid 
+                    select a).FirstOrDefault();
+        }
+
     }
 
 }
