@@ -128,12 +128,22 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     try
                     {
-                        if (
-                            (declarationPrintAnswerItem.DeclarationPrintDetails.DeclarationType == "1") // Import Declaration
-                            ||
-                            (declarationPrintAnswerItem.DeclarationPrintDetails.DeclarationType == "2") // Export Declaration
-                            )
+                        List<String> declarationTypes = new List<string>() {
+                            "1", // Import 
+                            "2", // Export 
+                            "3"//"Declaration of Claim"
+                        };
+                        if (!declarationTypes.Contains(declarationPrintAnswerItem.DeclarationPrintDetails.DeclarationType))
                         {
+                            LogMessagingUtil.Instance.AppendLine("The DeclarationType must be one of Import, Export, or Declaration of Claim.");
+                        }
+                        //if (
+
+                        //    (declarationPrintAnswerItem.DeclarationPrintDetails.DeclarationType == "1") // Import Declaration
+                        //    ||
+                        //    (declarationPrintAnswerItem.DeclarationPrintDetails.DeclarationType == "2") // Export Declaration
+                        //    )
+                        else {
                             var myDeclarationId = myDeclarationQueryService.GetIdByDeclarationNumber(declarationPrintAnswerItem.DeclarationPrintDetails.DeclarationID, requestParams.Tenant);
                             _MyDeclarationPM = myDeclarationQueryService.GetSingle(myDeclarationId, false, false);
                             if (_MyDeclarationPM == null)
