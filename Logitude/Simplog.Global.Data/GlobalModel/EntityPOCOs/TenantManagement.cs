@@ -189,6 +189,7 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public string SupportDomain { get; set; }
         public string MainColor { get; set; }
         public string SecondaryColor { get; set; }
+        public string TertiaryColor { get; set; }
         public int? TotalNumberOfUsers { get; set; }
         public int? TotalFreeUsers { get; set; }
         public double? AveragePrice { get; set; }

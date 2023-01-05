@@ -142,6 +142,7 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public double? TotalPrice { get; set; }
         public string MainColor { get; set; }
         public string SecondaryColor { get; set; }
+        public string TertiaryColor { get; set; }
         public decimal Opacity { get; set; }
         public string BackgroundId { get; set; }
         public string ComapnylogoId { get; set; }
