@@ -22,6 +22,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             {
                 entityPOCO.Id = entityPM.Id;
                 entityPOCO.Tenant = entityPM.Tenant;
+                entityPM.DeploymentPackageDetails = new DeploymentPackageDetails();
             }
             entityPOCO.CreateDate = entityPM.CreateDate;
             entityPOCO.CreatedBy = entityPM.CreatedBy;
@@ -48,7 +49,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
         }
         public static void MapDeploymentPackageDetails(DeploymentPackagePM entityPM)
         {
-            entityPM.DeploymentPackageDetails = new DeploymentPackageDetails();
+            
             entityPM.DeploymentPackageDetails.Name = entityPM.Name;
             entityPM.DeploymentPackageDetails.Code = entityPM.Code;
             entityPM.DeploymentPackageDetails.Description = entityPM.Description;
