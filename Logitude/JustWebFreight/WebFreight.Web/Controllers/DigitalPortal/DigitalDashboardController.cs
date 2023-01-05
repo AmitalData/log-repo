@@ -240,15 +240,16 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                              ? "Last 2 Month"
                                              : "Less than 2 Month"
                               })
-                              .GroupBy(a => a.data);
-
-
-            return response.ToDictionary(x => x.Key,
+                              .GroupBy(a => a.data)
+                              .ToDictionary(x => x.Key,
                                                   t => (object)new
                                                   {
                                                       PartiallyPaidCount = t.Where(a => a.PaidStatus == "Partially Paid").Count(),
                                                       OverDueCount = t.Where(a => a.DueDate < todayDate).Count()
-                                                  });
+                                                  }); ;
+
+
+            return response
         }
 
         private Dictionary<string, object> GetDigitalStatusesWithCount(IQueryable<DigitalShipmentList> shipments, int tenant)
@@ -319,7 +320,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
             var arrivedAtDestinationCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SARR").StatusWeight;
 
-            var result1 = shipments.Where(r => allowedStatusCode.Contains(r.StatusCode)
+            var result = shipments.Where(r => allowedStatusCode.Contains(r.StatusCode)
                                               && (r.StatusWeight < departedCodeWeight
                                                   || (r.StatusWeight >= departedCodeWeight
                                                       && r.StatusWeight < arrivedAtDestinationCodeWeight)
@@ -333,10 +334,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                                   && a.StatusWeight < arrivedAtDestinationCodeWeight)
                                                   ? "InTransit"
                                                   : "dataAtDestination"
-                                   }).GroupBy(a => a.Code).ToList();
-
-            var result = result1.ToDictionary(a => a.Key, y => (object)y.GroupBy(x => x.TransportModeId)
-                                                                           .ToDictionary(b => b.Key, xx => xx.Count()));
+                                   })
+                                   .GroupBy(a => a.Code)
+                                   .ToDictionary(a => a.Key, y => (object)y.GroupBy(x => x.TransportModeId)
+                                                                           .ToDictionary(b => b.Key, xx => xx.Count())); ;
             return result;
         }
 
