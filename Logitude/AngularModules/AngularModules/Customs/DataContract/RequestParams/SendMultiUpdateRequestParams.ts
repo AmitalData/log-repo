@@ -9,4 +9,9 @@ export class SendMultiUpdateRequestParams extends GenericRequestParams {
     CourierMasterId: string;
     allWithoutdeclarationIdsList: string[];
     checkboxAll: boolean;
+    InvoiceAmount: string;
+    InvoiceQuantity: string;
+    InvoiceCurrencyTypeCode: string;
+    InvoiceQuantityType: string;
+    GrossMassMeasure: string;
 }

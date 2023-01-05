@@ -284,6 +284,8 @@ export class BulkFeedPendingComponent extends BaseComponent {
     //logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.MultiUpdate");
     logWindow.WindowArgs = windowArgs;
     logWindow.ShowCloseButton = true;
+    logWindow.Width = 500;
+    logWindow.Height = 500;
     logWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/MultiUpdateDecComponent');
     logWindow.WindowClosed.subscribe(($event: any) => {
       //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();

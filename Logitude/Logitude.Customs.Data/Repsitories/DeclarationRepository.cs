@@ -538,8 +538,6 @@ namespace Logitude.Customs.Data.Repsitories
                     where query.Contains(a.Id) && a.Tenant == tenant && a.AmendmentDontDisplayInList != true
                     select a);
         }
-        
-
 
         public Declaration GetDeclarationByFunctionalReferenceID(string functionalReferenceID, int tenant)
         {

@@ -92,6 +92,122 @@
                 </table>
             </td>
         </tr>
+        <tr style="height:15px">
+            <td>
+                <div></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <td style="width:140px">
+                            <LogLabel [ObjectFieldName]="'InvoiceAmount'" [ObjectTableName]="'Customs.SupplierInvoice'" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:160px">
+                            <LogTextBoxV2 [ObjectFieldName]="'InvoiceAmount'" [ObjectTableName]="'Customs.SupplierInvoice'" [HideColumns]="true" 
+                            [DataContext]="DataContext" [AddCommasToNumbers]="true" [IsAccumulative]="true" (LostFocus)="InvoiceAmountBlur($event)"></LogTextBoxV2>
+                        </td>
+                        <td><div></div></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr style="height:15px">
+            <td>
+                <div></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <td style="width:140px">
+                            <LogLabel [ObjectFieldName]="'InvoiceCurrencyTypeCode'" [ObjectTableName]="'Customs.SupplierInvoice'" [DataContext]="DataContext"></LogLabel>                        
+                        </td>
+                        <td style="width:160px">
+                            <LogLov [ObjectFieldName]="'InvoiceCurrencyTypeCode'"
+                                [ObjectTableName]="'Customs.SupplierInvoice'"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'Customs.CurrencyType'"
+                                [HideColumns]="true">
+                            </LogLov>
+                        </td>
+                        <td><div></div></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr style="height:15px">
+            <td>
+                <div></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <td style="width:140px">
+                            <LogLabel [ObjectFieldName]="'InvoiceQuantity'" [ObjectTableName]="'Customs.SupplierInvoiceItem'" [DataContext]="DataContext"></LogLabel>                        
+                        </td>
+                        <td style="width:160px">
+                            <LogTextBox [ObjectFieldName]="'InvoiceQuantity'" [DataContext]="DataContext" [IsAccumulative]="true"
+                             [InputType]="'decimal'" [ObjectTableName]="'Customs.SupplierInvoiceItem'" [HideColumns]="true"></LogTextBox>
+                        </td>
+                        <td><div></div></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr style="height:15px">
+            <td>
+                <div></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <td style="width:140px">
+                            <LogLabel [ObjectFieldName]="'InvoiceQuantityType'" [ObjectTableName]="'Customs.SupplierInvoiceItem'" [DataContext]="DataContext"></LogLabel>                        
+                        </td>
+                        <td style="width:160px">
+                            <LogLov [ObjectFieldName]="'InvoiceQuantityType'"
+                            [ObjectTableName]="'Customs.SupplierInvoiceItem'"
+                            [DataContext]="DataContext"
+                            [LookUpTableName]="'Customs.MeasurmentUnit'"                            
+                            [HideColumns]="true"
+                            [FocusOnMe]="true">
+                    </LogLov>
+
+                        </td>
+                        <td><div></div></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr style="height:15px">
+            <td>
+                <div></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <td style="width:140px">
+                            <LogLabel [ObjectFieldName]="'GrossMassMeasure'" [ObjectTableName]="'Customs.CourierMaster'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:160px">
+                            <LogTextBox [ObjectFieldName]="'GrossMassMeasure'" [InputType]="'text'" [DataContext]="DataContext"
+                                        [ObjectTableName]="'Customs.CourierMaster'" [HideColumns]="true"></LogTextBox>
+                        </td>
+                        <td><div></div></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
         <tr style="height:32px;">
             <td><div></div></td>
         </tr>
