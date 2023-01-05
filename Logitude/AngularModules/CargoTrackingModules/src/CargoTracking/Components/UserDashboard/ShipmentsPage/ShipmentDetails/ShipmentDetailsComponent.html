@@ -520,7 +520,7 @@
                                 {{cargoTrackingShipmentPM?.SHOBookingConfirmationNumber}}
                             </div>
                         </div>
-
+ACKAGE TYPE
                     </div>
                 </div>
 
@@ -538,9 +538,7 @@
                     <div class="data-cards" *ngIf="cargoTrackingShipmentPM">
                         <div *ngIf="!IsOrderShipment" class="hide-mobile" style="width:170px">
 
-                            <div class="title" *ngIf="cargoTrackingShipmentPM.TransportModeId == 'A'">PACKAGE TYPE</div>
-                            <div class="title" *ngIf="cargoTrackingShipmentPM.TransportModeId != 'A'">CONTAINER TYPE
-                            </div>
+                            <div class="title" >PACKAGE TYPE</div>
                             <div *ngIf="!IsOrderShipment" style="width:170px">
                                 <div *ngFor="let package of cargoTrackingShipmentPM.Packages.slice(0,2), let i = index"
                                     style="display:flex;flex-direction:row">
