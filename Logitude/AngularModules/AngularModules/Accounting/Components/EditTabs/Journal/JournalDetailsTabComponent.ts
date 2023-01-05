@@ -225,8 +225,17 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     }
 
     private CheckIfJournalManuallyCreated() {
-        const AccountingEntityCode_Journal = "1";
-        var isJournalManuallyCreated = this.EntityPM.ExternalSystem == null && this.EntityPM.ExternalNo == null && this.EntityPM.AccountingEntityCode == AccountingEntityCode_Journal;
+        const allowedAccountingEntityCodes = [
+            '1', //Journal
+            '10', //Adjustment
+            '12' //Bank Adjustment
+        ];
+
+        const isJournalManuallyCreated =
+            this.EntityPM.ExternalSystem == null &&
+            this.EntityPM.ExternalNo == null &&
+            allowedAccountingEntityCodes.includes(this.EntityPM.AccountingEntityCode);
+
         if (isJournalManuallyCreated) {
             this.IsJournalEditableAfterApproval = true;
         }
