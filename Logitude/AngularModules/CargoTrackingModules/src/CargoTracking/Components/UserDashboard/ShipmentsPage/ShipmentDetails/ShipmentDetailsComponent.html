@@ -495,7 +495,7 @@
                         <div *ngIf="!IsOrderShipment">
                             <div class="title">total taxes nis</div>
                             <div class="description" *ngIf="this.cargoTrackingShipmentPM.CustomsData">
-                                {{this.cargoTrackingShipmentPM?.CustomsData.TotalTax||0 | number}} ₪</div>
+                                {{cargoTrackingShipmentPM?.CustomsData.TotalTax||0 | number}} ₪</div>
                         </div>
                         <div *ngIf="!IsOrderShipment">
                             <div class="title">declaration status</div>
@@ -754,7 +754,7 @@
                         <div>
                             <div class="title">total taxes nis</div>
                             <div class="description">
-                                {{this.cargoTrackingShipmentPM?.CustomsData.TotalTax||0 | number}} ₪
+                                {{cargoTrackingShipmentPM?.CustomsData.TotalTax||0 | number}} ₪
                             </div>
                         </div>
                         <div>
