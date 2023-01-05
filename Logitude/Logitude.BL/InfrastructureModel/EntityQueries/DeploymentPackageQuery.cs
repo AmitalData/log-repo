@@ -1,5 +1,8 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
@@ -9,6 +12,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
@@ -77,7 +81,30 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             deploymentPackagePM.DirectionId = deploymentPackage.DirectionId;
             deploymentPackagePM.CreatedByUserName = (deploymentPackage.CreatedByUser != null && deploymentPackage.CreatedByUser.Contact != null) ? deploymentPackage.CreatedByUser.Contact.EnglishName : null ;
             deploymentPackagePM.UpdatedByUserName = (deploymentPackage.UpdatedByUser != null && deploymentPackage.UpdatedByUser.Contact != null) ? deploymentPackage.UpdatedByUser.Contact.EnglishName : null;
+            deploymentPackagePM.VersionId = deploymentPackage.VersionId;
+            deploymentPackagePM.DocumentId = deploymentPackage.DeploymentPackagesVersion != null ? deploymentPackage.DeploymentPackagesVersion.DocumentId : null;
+            MapDeploymentPackageDetails(deploymentPackagePM);
             return deploymentPackagePM;
+        }
+
+        public void MapDeploymentPackageDetails(DeploymentPackagePM deploymentPackagePM)
+        {
+            if (deploymentPackagePM.DocumentId == null) return;
+            StorageDataArgs storageDataArgs = GetStorageDataArgs(deploymentPackagePM, tenant);
+            byte[] deploymentPackageDetailsBytes = StorageDataService.ReadFileFromStorage(storageDataArgs);
+            deploymentPackagePM.DeploymentPackageDetails = JsonSerializer.Deserialize<DeploymentPackageDetails>(deploymentPackageDetailsBytes);
+        }
+
+        private StorageDataArgs GetStorageDataArgs(DeploymentPackagePM deploymentPackagePM, int tenant)
+        {
+            Document document = new DocumentRepository(deploymentPackagePM.Tenant).GetSingleDocument(deploymentPackagePM.Tenant, deploymentPackagePM.DocumentId);
+            return new StorageDataArgs()
+            {
+                FileName = document.Id,
+                FolderName = document.Folder,
+                Tenant = document.Tenant,
+                Extension = document.Extension
+            };
         }
     }
 }

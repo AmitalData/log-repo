@@ -33,7 +33,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public DeploymentPackage GetSingleDeploymentPackage(string id, int tenant)
         {
-            return (from a in context.DeploymentPackages.Include("CreatedByUser.Contact").Include("UpdatedByUser.Contact")
+            return (from a in context.DeploymentPackages.Include("CreatedByUser.Contact").Include("UpdatedByUser.Contact").Include("DeploymentPackagesVersion")
                     where a.Tenant == tenant && a.Id == id
                     select a).FirstOrDefault();
         }
