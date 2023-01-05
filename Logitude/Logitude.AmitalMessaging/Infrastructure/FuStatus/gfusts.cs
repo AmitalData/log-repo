@@ -1017,6 +1017,15 @@ namespace Logitude.AmitalMessaging.Infrastructure.FuStatus
 
         [System.Xml.Serialization.XmlElementAttribute("Direction")]
         public string direction { get; set; }
+
+        [System.Xml.Serialization.XmlElementAttribute("ExportFile")]
+        public string exportFile { get; set; }
+
+        [System.Xml.Serialization.XmlElementAttribute("CustomsFile")]
+        public string customsFile{ get; set; }
+
+        [System.Xml.Serialization.XmlElementAttribute("TransportModeId")]
+        public string TransportModeId{ get; set; }
     }
 
 
