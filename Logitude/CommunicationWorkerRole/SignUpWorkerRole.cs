@@ -228,7 +228,7 @@ namespace CommunicationWorkerRole
 
         private static EmailCommunicationParams GetLogboxEmailCommunicationParams(SignUpInfoClass signUpInfo, string emailbody)
         {
-            string additionalCCEmails = signUpInfo.IsCreateLogboxTenantFromCloud ? signUpInfo.Email : "";
+            string additionalCCEmails = signUpInfo.IsCreateLogboxTenantFromCloud ? signUpInfo.AdditionalEmail : "";
             string additionalBCCEmails = signUpInfo.IsCreateLogboxTenantFromCloud ? "" : ";boazelkana@gmail.com";
             return new EmailCommunicationParams()
             {
