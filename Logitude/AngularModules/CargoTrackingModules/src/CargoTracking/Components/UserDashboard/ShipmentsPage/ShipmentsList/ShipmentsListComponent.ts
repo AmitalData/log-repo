@@ -84,8 +84,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     SupplierOrClientTitle: string;
     SupplierOrClientValue: string;
     ShowMobileSearch: boolean = false;
-    ShipmenTypeForRouting: string;
-    RoutingPortNames: string;
     public SortOptions = SortOptions;
     MasterOrHouseLabel: string = "";
     EntityType_Customs = "C";
@@ -517,21 +515,17 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         return value;
     }
 
-    SetShipmenTypeForRouting(shipment: CargoTrackingShipmentList) {
+    SetShipmenTypeForRouting(shipment: CargoTrackingShipmentList): string {
 
-        if (shipment.ShipmentLevelCode == 'D') {
-            this.ShipmenTypeForRouting = "Direct"
-        } else if (shipment.ShipmentLevelCode == 'H') {
-            this.ShipmenTypeForRouting = "House"
-        } else if (shipment.ShipmentTypeCode == "FCL") {
-            this.ShipmenTypeForRouting = "FCL"
-        } else if (shipment.ShipmentTypeCode == "LCL") {
-            this.ShipmenTypeForRouting = "LCL"
+        if (shipment.ShipmentLevelCode === 'D') {
+            return 'Direct';
+        } else if (shipment.ShipmentLevelCode === 'H') {
+            return  'House';
+        } else if (shipment.ShipmentTypeCode === 'FCL') {
+            return 'FCL';
+        } else if (shipment.ShipmentTypeCode === 'LCL') {
+            return 'LCL';
         }
-    }
-
-    SetRoutingPortNames(shipment: CargoTrackingShipmentList) {
-        this.RoutingPortNames = shipment.FromPortCode + " to " + shipment.ToPortCode;
     }
 
     private InitComponent() {
