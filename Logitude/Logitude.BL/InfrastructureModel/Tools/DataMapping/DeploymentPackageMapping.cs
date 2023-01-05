@@ -1,5 +1,7 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
@@ -7,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
@@ -30,6 +33,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             entityPOCO.InActive = entityPM.InActive;
             entityPOCO.Description = entityPM.Description;
             entityPOCO.DirectionId = entityPM.DirectionId;
+            entityPOCO.VersionId = entityPM.VersionId;
+            MapDeploymentPackageDetails(entityPM);
             BuildSearchFields(entityPM, entityPOCO);
         }
 
@@ -41,5 +46,14 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             entityPM.SearchFields = mySearchFields;
             entityPOCO.SearchFields = mySearchFields;
         }
+        public static void MapDeploymentPackageDetails(DeploymentPackagePM entityPM)
+        {
+            entityPM.DeploymentPackageDetails = new DeploymentPackageDetails();
+            entityPM.DeploymentPackageDetails.Name = entityPM.Name;
+            entityPM.DeploymentPackageDetails.Code = entityPM.Code;
+            entityPM.DeploymentPackageDetails.Description = entityPM.Description;
+
+        }
+
     }
 }

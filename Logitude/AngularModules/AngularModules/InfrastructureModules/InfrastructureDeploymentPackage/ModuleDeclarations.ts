@@ -1,3 +1,4 @@
+import { AddCustomFieldsComponent } from "./Component/EditTabs/AddCustomFieldsComponent";
 import { CustomFieldsTabComponent } from "./Component/EditTabs/CustomFieldsTabComponent";
 import { DeploymentPackageGeneralTabComponent } from "./Component/EditTabs/DeploymentPackageGeneralTabComponent";
 import { AddNewDeploymentPackageComponent } from "./Component/NewEntity/AddNewDeploymentPackageComponent";
@@ -10,6 +11,7 @@ export const Components =
         AddNewDeploymentPackageComponent,
         NewExportDeploymentPackageComponent,
         NewImportDeploymentPackageComponent,
+        AddCustomFieldsComponent,
         CustomFieldsTabComponent,
         DeploymentPackageGeneralTabComponent
     ];
@@ -24,6 +26,7 @@ export class ModuleDeclarations {
             case "NewExportDeploymentPackageComponent": { myResult = NewExportDeploymentPackageComponent; break; }
             case "NewImportDeploymentPackageComponent": { myResult = NewImportDeploymentPackageComponent; break; }
             case "CustomFieldsTabComponent": { myResult = CustomFieldsTabComponent; break; }
+            case "AddCustomFieldsComponent": { myResult = AddCustomFieldsComponent; break; }
             case "DeploymentPackageGeneralTabComponent": { myResult = DeploymentPackageGeneralTabComponent; break; }
         }
 
