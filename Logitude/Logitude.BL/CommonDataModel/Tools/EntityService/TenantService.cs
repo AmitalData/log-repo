@@ -127,7 +127,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     tenantManagement.Technology = "AG";
                     //theEntityPm.ExportQuotationsToIntegratedSystem = false;
                 }
-
+                
+                MapNewLogboxFromCloudTenantManagement(tenantManagement, theEntityPm);
+                
                 tenantManagementRep.Add(tenantManagement);
                 tenantManagementRep.SubmitChanges();
 
@@ -170,6 +172,15 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             //}
 
             CreateDWHSettings();
+        }
+
+        private static void MapNewLogboxFromCloudTenantManagement(TenantManagement tenantManagement, TenantPM newTenantPM)
+        {
+            if (!newTenantPM.IsNewLogboxFromCloud) return;
+
+            const string ShipperConsigneeTenantTypeCode = "SHC";
+            tenantManagement.TenantTypeCode = ShipperConsigneeTenantTypeCode;
+            tenantManagement.IsTrial = false;
         }
 
         private static bool IsEmptyTotalDefaultNumberOfUsers(TenantPM theEntityPm)
