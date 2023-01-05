@@ -286,7 +286,7 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     private SetEntityTertiaryColor() {
         var hex = this.TertiaryColorCode;
         if (AppTool.IsNullOrEmpty(this.TertiaryColorCode))
-            hex = 'rgba(255, 255, 255, 1)';
+            hex = '#ffffff';
         this.EntityTertiaryColor = this.ConvertHexToRGBColor(hex, this.TertiaryColorOpacity);
     }
 
