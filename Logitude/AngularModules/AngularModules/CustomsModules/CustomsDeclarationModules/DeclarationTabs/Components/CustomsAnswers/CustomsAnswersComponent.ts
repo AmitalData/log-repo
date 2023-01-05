@@ -42,6 +42,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     public DataContext: any = this;
     public CurrentEditComponentId: string;
     public IsDisplayOnly: boolean = false;
+    public IsConstraintDisplayOnly: boolean = false;
     public ShowStorageStatusMessage: boolean = false;
     public DisplayOnlyMessage: string = "";
     public IsDescriptionVisible: boolean = false;
@@ -106,6 +107,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                             console.log("Declaration", this.EntityPM);
 
                             this.DisplayOnlyCheck();
+                            this.SendConstraintDisplayOnly();
 
                             //#region Textcodes loading
 
@@ -174,6 +176,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                         this.SetFilter();
                         this.ReloadDeclarationErrors();
                         this.DisplayOnlyCheck();
+                        this.SendConstraintDisplayOnly();
                     }
                 })
             );
@@ -184,6 +187,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
                             this.SetFilter();
                             this.ReloadDeclarationErrors();
                             this.DisplayOnlyCheck();
+                            this.SendConstraintDisplayOnly();
                         }
                     }
                 })
@@ -263,11 +267,27 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
             }
        
             this.SetScreenFieldsEditability();
+            this.SendConstraintDisplayOnly();
             DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
         });
     }
 
+    SendConstraintDisplayOnly() {
+        if (this.EntityPM.Direction == "E") {
 
+            this.declarationWebService.CheckConstraintRequestInProgress(this.EntityPM.Id, SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
+                if (response.Result != null) {
+                    if (response.Result) {
+                        this.IsConstraintDisplayOnly = (this.IsDisplayOnly && response.Result);
+                    }
+                    else {
+                        this.IsConstraintDisplayOnly = false;
+                    }
+                }
+
+            });
+        }
+    }
  
     //#region Filter Methods
     IsErrorsVisible: boolean = true;
