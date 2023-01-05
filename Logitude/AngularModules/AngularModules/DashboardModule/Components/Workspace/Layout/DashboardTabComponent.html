@@ -1,6 +1,6 @@
 
 <div class="dl-tab-container">
-    <div>
+    <div style="min-width: 1220px;">
         <table>
             <tr style="height:10px;">
                 <td>
@@ -107,7 +107,7 @@
         </table>
     </div>
 
-    <div *ngIf="SelectedDashboard" [hidden]="!IsGlobalFiltersOpened" class="dl-flobal-filter-container">
+    <div *ngIf="SelectedDashboard" [hidden]="!IsGlobalFiltersOpened" class="dl-flobal-filter-container"  style="min-width: 1220px;">
         <GlobalFilter [Dashboard]="SelectedDashboard" (ApplyFilters)="ApplyFilters($event)"></GlobalFilter>
     </div>
 
