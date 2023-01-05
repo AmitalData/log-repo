@@ -3,6 +3,7 @@ using Logitude.AmitalMessaging.Utils;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
+using Logitude.Customs.BL.TraceEvents;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityKeys;
 using Logitude.Customs.Data.Repsitories;
@@ -10,6 +11,7 @@ using Logitude.Customs.Def.EntityPMs;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.Server.Tools.Helpers;
+using Microsoft.VisualBasic;
 using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -270,7 +272,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 declarationPM.IsDiamondDeclaration = false;              
                 declarationPM.ExportDeclarationOfficeCode = GetValueIDType(declaration.ExportDeclarationOfficeID);                
                 declarationPM.DeclarationTypeCode = GetValueCodeType(declaration.TypeCode);
-                  
+                if (customResponse.Response.Status!=null && customResponse.Response.Status.Count() > 0)
+                    declarationPM.DeclarationStatusTypeCode = GetValueCodeType(customResponse.Response.Status[0].NameCode);
                 GetAgent(declaration, ref declarationPM);
 
                 if (declaration.GovernmentProcedure != null)
@@ -282,7 +285,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     
                     declarationPM.CustomFileNo = GetValueIDType(declaration.DMExtensions.AgentFileReferenceID);
 
-                    declarationPM.ExportFile = GetValueIDType(declaration.DMExtensions.ExternalDeclarationID).Substring(15);              
+                    declarationPM.ExportFile = Strings.Right(GetValueIDType(declaration.DMExtensions.ExternalDeclarationID), 10).TrimStart('0');    
                     declarationPM.ExternalDeclarationNumber = GetValueIDType(declaration.DMExtensions.ExternalDeclarationID);
                     declarationPM.DestinationCountryCode = GetValueCodeType(declaration.DMExtensions.DestinationCountry);                  
                     declarationPM.ExportAutonomyRegionTypeCode = GetValueIDType(declaration.DMExtensions.AutonomyRegionType);
@@ -290,6 +293,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         declarationPM.IsExporterConfirmation = declaration.DMExtensions.TransferDeclarationToDestinationCountry.Value;
                     //if (declaration.DMExtensions.ReferenceDateTime != null)
                     //    declarationPM.TaxationDateTime = Convert.ToDateTime(declaration.DMExtensions.ReferenceDateTime);
+                    if (declaration.DMExtensions.ReleaseDateTime != null)
+                        declarationPM.HatraDate = Convert.ToDateTime(declaration.DMExtensions.ReleaseDateTime);
+                    declarationPM.VersionId = GetValueIDType(declaration.DMExtensions.VersionID);
 
                     if (declaration.PreviousDocument != null)
                     {
@@ -340,6 +346,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
                 CreateEvent( tenant,  declarationId);
+                AmitalInsertToQueueService.insertToQueue(declarationPM);
             }
             catch (System.Exception ex)
             {
