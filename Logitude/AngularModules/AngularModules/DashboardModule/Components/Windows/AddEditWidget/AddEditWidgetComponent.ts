@@ -96,6 +96,10 @@ export class AddEditWidgetComponent extends BaseComponent {
 
         this.UIProperties.SetEnabled("GroupById", this.ObjectTableName, !AppTool.IsNullOrEmpty(this.EntityId));
         this.UIProperties.SetEnabled("SecondaryGroupById", this.ObjectTableName, !AppTool.IsNullOrEmpty(this.EntityId));
+
+        this.WidgetMeasuresList.forEach(item => {
+            item.SetUIProperties();
+        });
        
     }
 
@@ -827,7 +831,6 @@ export class WidgetMeasureItem extends BaseComponent {
         this.Widget = fatherComponent.EntityPM;
         this.IsNew = isNew;
         this.DashboardPM = fatherComponent?.DashboardPM;
-        this.SetUIProperties();
         this.FilterMeasureFields();
     }
 
