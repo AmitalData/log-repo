@@ -323,10 +323,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             var lastMonth = todayDate.AddMonths(-1);
             var last2Month = todayDate.AddMonths(-2);
 
-            var response = res.Where(a => a.DueDate.Value == todayDate 
-                                            || a.DueDate.Value == lastMonth
-                                            || a.DueDate.Value == last2Month
-                                            || a.DueDate.Value < last2Month)
+            var response = res.Where(a => a.DueDate.Value <= todayDate)
                               .Select(a => new 
                               {
                                   DueDate = a.DueDate.Value,
