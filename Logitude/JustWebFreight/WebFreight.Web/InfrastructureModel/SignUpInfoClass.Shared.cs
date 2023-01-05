@@ -23,5 +23,6 @@ namespace WebFreight.Web.InfrastructureModel
         public string City { get; set; }
         public bool IsCreateLogboxTenantFromCloud { get; set; }
         public bool IsCreateLogboxTenantFromCloudPassed { get; set; }
+        public string AdditionalEmail { get; set; }
     }
 }
