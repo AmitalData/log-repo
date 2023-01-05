@@ -60,6 +60,12 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 {
                     entityLists = GetAllStation(searchfields, tenant);
                 }
+                if (!String.IsNullOrWhiteSpace(searchfields))
+                {
+                    entityLists = entityLists
+                        .Where(r => String.Concat(r.MachineUser, r.MachineUser, r.PersonId, r.SignerName, r.Status).ToLower().Contains(searchfields.ToLower())).ToList();
+                }
+
                 var q = (from a in entityLists
                          group a by a.Status into gStatus
                          select new { gStatus.Key, Total = gStatus.Count() }

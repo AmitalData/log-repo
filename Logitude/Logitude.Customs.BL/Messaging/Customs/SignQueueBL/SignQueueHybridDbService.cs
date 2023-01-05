@@ -19,16 +19,16 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
     {
 
         const int LastAccessedInMin = 5;
-        public void UpsertSignStation(string currentSignCertificate, bool isPersonalSignOn, bool isCompanySignOn)
+        public void UpsertSignStation(string currentSignCertificate, bool isPersonalSignOn, bool isCompanySignOn, int tenant)
         {
             try
             {
                 if (string.IsNullOrWhiteSpace(currentSignCertificate)) { return; }
 
-                string companyTenant = SignQueue.GetCompanyTenant(currentSignCertificate) ?? "0";
+                //string companyTenant = SignQueue.GetCompanyTenant(currentSignCertificate) ?? "0";
                 //var tenantListOfPersonID = SignQueue.GetTenantListOfPersonID(SignCertificateClass.Get(currentSignCertificate).PersonId, 0);
-                int tenant = 0;
-                int.TryParse(companyTenant, out tenant);
+                //int tenant = 0;
+                //int.TryParse(companyTenant, out tenant);
 
                 var context = CustomContext.GetContext(tenant);
                 var signStationQueryService = new SignStationQueryService(context);
@@ -64,7 +64,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
                     pm.VersionByFeatures = SignCertificateClass.Get(currentSignCertificate).SignServerVersionByFeature;
                     pm.Status = SignCertificateClass.Get(currentSignCertificate).SignServerStatus;
                     pm.LastAccessedAt = DateTime.Now;
-
+                    pm.Tenant = tenant;
                     signStationUpdateService.Update(pm, true);
                     trans.Complete();
                 }
@@ -82,7 +82,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
         {
             var repo = new SignStationRepository(tenant);
             string customsAgentId = SignQueue.GetCustomsAgentIdFromTenant(tenant);
-            var res = repo.GetAllAvailable(customsAgentId, LastAccessedInMin);
+            var res = repo.GetAllAvailable(tenant,customsAgentId, LastAccessedInMin);
 
             var entityLists = new List<MySignStationList>();
             res.ForEach(r =>
@@ -140,7 +140,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
                         return (availableSignServer.SignCertificate, SignMethodByQueueEnum.HSMSignQueue);
                     }
                      
-                    availableSignServer = repo.GetAvailableSignServerByCustomsAgentId(customsAgentId, LastAccessedInMin).ToMySignStationList();
+                    availableSignServer = repo.GetAvailableSignServerByCustomsAgentId(tenant,customsAgentId, LastAccessedInMin).ToMySignStationList();
 
 
                     break;
@@ -163,7 +163,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
                     }
 
 
-                    availableSignServer = repo.GetSingle(customsAgentId, personId).ToMySignStationList();
+                    availableSignServer = repo.GetSingle(customsAgentId, personId, tenant).ToMySignStationList();
 
                     if (availableSignServer == null)
                     {
