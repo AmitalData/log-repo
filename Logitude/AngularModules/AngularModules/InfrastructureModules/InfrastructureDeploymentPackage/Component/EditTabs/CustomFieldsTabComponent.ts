@@ -33,7 +33,7 @@ export class CustomFieldsTabComponent extends BaseComponent {
     AddCustomFields() {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Add Custom Field";
-        logWindow.Width = 700;
+        logWindow.Width = 720;
         logWindow.Height = 550;
         logWindow.WindowArgs = {
             CustomFieldsTabComponent: this,

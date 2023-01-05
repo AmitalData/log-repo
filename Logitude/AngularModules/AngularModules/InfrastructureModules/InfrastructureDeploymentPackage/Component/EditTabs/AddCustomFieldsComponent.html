@@ -3,11 +3,16 @@
         <td>
             <div class="FillParent CurvedArea" style="padding:20px">
                 <table>
+                    <tr style="height:1px;" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
+                        <td style="padding: 3px;">
+                            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+                        </td>
+                    </tr>
                     <tr>
                         <td style="height:60px">
                             <div style="display:flex; width:100%; height:60px; align-items:center">
 
-                                <label style="width:120px">Select Entity</label>
+                                <label style="width:120px">Select Object</label>
 
                                 <LogLov *ngIf="IsLogLovReady"
                                         (SelectedItemChanged)="SelectedEntity = $event"
@@ -22,7 +27,7 @@
                                         [HideLastColumn]="true"
                                         [DisplayMemberPath]="'Name'"
                                         [QueryFilterItems]="ObjectTablesFilterItems"
-                                        [CustomizedWidth] ="'350px'"
+                                        [CustomizedWidth]="'350px'"
                                         style="width: 350px">
                                 </LogLov>
 

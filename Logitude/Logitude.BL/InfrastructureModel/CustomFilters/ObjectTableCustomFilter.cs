@@ -45,7 +45,7 @@ namespace Logitude.BL.InfrastructureModel.CustomFilters
         {
             return queryableData.Where(objectTable => objectTable.AllowCustomFields == true &&
                                                       (objectTable.Tenant == Tenant || objectTable.Tenant == 0) &&
-                                                      !(objectTable.IsCustom && !string.IsNullOrEmpty(objectTable.ParentObjectTableId)));
+                                                      !objectTable.IsCustom);
                                                       
         }
 

@@ -78,7 +78,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.Poco = entityRepository.GetSingleDeploymentPackage(deploymentPackagePM.Id, deploymentPackagePM.Tenant);
             if (this.Poco == null) return;
             DeploymentPackageMapping.MapEntity(deploymentPackagePM, Poco, isNewEntity);
-            DeploymentPackageMapping.MapDeploymentPackageDetails(deploymentPackagePM);
+            new DeploymentPackageVersionInitializerService(deploymentPackagePM, Context).Update();
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
         }

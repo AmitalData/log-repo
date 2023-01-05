@@ -27,9 +27,11 @@ export class AddCustomFieldsComponent extends BaseComponent {
     public ObjectTablesFilterItems: ApiQueryFilters;
     public IsLogLovReady: boolean = false;
     private generalDomainService: GeneralDomainService;
+    public ValidationErrorsList: string[] = [];
 
     constructor() {
         super();
+        this.ValidationErrorsList = [];
     }
 
     SetWindowArgs(args: any) {
@@ -108,7 +110,36 @@ export class AddCustomFieldsComponent extends BaseComponent {
     }
 
     OkButtonClicked() {
+        this.ValidationErrorsList = [];
+        this.ValidateCustomFields();
+        if (this.ValidationErrorsList.length > 0) return;
         this.CurrentSession.CloseCurrentWindowEmit("OK");
+    }
+
+    public ValidateCustomFields() {
+
+        if (AppTool.IsNullOrEmpty(this.SelectedObjectTableId)) {
+            this.ValidationErrorsList.push("Object field is required");
+            return;
+        }
+            
+        if (this.CustomFields.length == 0) {
+            this.ValidationErrorsList.push("This object doesn't contain custom fields, please add custom fields for this object first");
+            return;
+        }
+
+        if (this.GetSelectedCustomFieldsCountBySelectedTable() == 0) {
+            this.ValidationErrorsList.push("Please select at least one custom field");
+            return;
+        }
+
+    }
+
+    GetSelectedCustomFieldsCountBySelectedTable() {
+        if (this.SelectedCustomFields.length == 0) return 0;
+        let objectTable = window.ObjectTables.filter(objectTable => objectTable.Id == this.SelectedObjectTableId)[0];
+        let selectedcustomFieldsOfObjectTable = this.SelectedCustomFields.filter(s => s.ObjectTableName == objectTable.Name);
+        return selectedcustomFieldsOfObjectTable?.length;
     }
 
 }

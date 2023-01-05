@@ -34,6 +34,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             entityPOCO.Description = entityPM.Description;
             entityPOCO.DirectionId = entityPM.DirectionId;
             entityPOCO.VersionId = entityPM.VersionId;
+            MapDeploymentPackageDetails(entityPM);
             BuildSearchFields(entityPM, entityPOCO);
         }
 
@@ -45,31 +46,14 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             entityPM.SearchFields = mySearchFields;
             entityPOCO.SearchFields = mySearchFields;
         }
-        public static void MapDeploymentPackageDetails(DeploymentPackagePM deploymentPackagePM)
+        public static void MapDeploymentPackageDetails(DeploymentPackagePM entityPM)
         {
-            deploymentPackagePM.DeploymentPackageDetails.Name = deploymentPackagePM.Name;
-            deploymentPackagePM.DeploymentPackageDetails.Code = deploymentPackagePM.Code;
-            deploymentPackagePM.DeploymentPackageDetails.Description = deploymentPackagePM.Description;
-            UpdateDocument(deploymentPackagePM);
+            entityPM.DeploymentPackageDetails = new DeploymentPackageDetails();
+            entityPM.DeploymentPackageDetails.Name = entityPM.Name;
+            entityPM.DeploymentPackageDetails.Code = entityPM.Code;
+            entityPM.DeploymentPackageDetails.Description = entityPM.Description;
+
         }
 
-        private static void UpdateDocument(DeploymentPackagePM deploymentPackagePM)
-        {
-            if (deploymentPackagePM.DocumentId == null) return;
-            Document document = new DocumentRepository(deploymentPackagePM.Tenant).GetSingleDocument(deploymentPackagePM.Tenant, deploymentPackagePM.DocumentId);
-            var deploymentPackageDetailsBytes = Encoding.ASCII.GetBytes(JsonSerializer.Serialize(deploymentPackagePM.DeploymentPackageDetails));
-            document.FileSize = deploymentPackageDetailsBytes.Length;
-            DocumentRepository documentrepository = new DocumentRepository(deploymentPackagePM.Tenant);
-            documentrepository.Update(document);
-            documentrepository.SubmitChanges();
-            StorageDataService.WriteFileOnStorage(new StorageDataArgs()
-            {
-                FileName = document.Id,
-                FolderName = document.Folder,
-                Tenant = document.Tenant,
-                FileData = deploymentPackageDetailsBytes,
-                Extension = document.Extension
-            });
-        }
     }
 }

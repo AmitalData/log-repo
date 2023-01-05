@@ -29,22 +29,44 @@ namespace Logitude.BL.InfrastructureModel.Services
             deploymentPackagesVersionPM = new DeploymentPackagesVersionPM();
             documentrepository = new DocumentRepository(deploymentPackagePM.Tenant);
             deploymentPackagesVersionService = new DeploymentPackagesVersionService(iWebFreightContext, deploymentPackagePM.Tenant);
-            CreateDocument();
         }
         public DeploymentPackagesVersionPM Create()
         {
+            CreateDocument();
             deploymentPackagesVersionPM.DocumentId = document.Id;
             deploymentPackagesVersionPM.DeploymentPackageID = deploymentPackagePM.Id;
             deploymentPackagesVersionPM.Tenant = deploymentPackagePM.Tenant;
             deploymentPackagesVersionService.Create(deploymentPackagesVersionPM, false);
             return deploymentPackagesVersionPM;
         }
+        public DeploymentPackagesVersionPM Update()
+        {
+            UpdateDocument(deploymentPackagePM);
+           
+            deploymentPackagesVersionService.Update(deploymentPackagesVersionPM);
+            return deploymentPackagesVersionPM;
+        }
+
         public void CreateDocument()
         {
             deploymentPackagePM.DeploymentPackageDetails = GetInstanceOfDeploymentPackageDetails();
             var deploymentPackageDetailsBytes = Encoding.ASCII.GetBytes(JsonSerializer.Serialize(deploymentPackagePM.DeploymentPackageDetails));
+            document = GetInstanceOfDocument(deploymentPackageDetailsBytes);
+            documentrepository.Add(document);
+            documentrepository.SubmitChanges();
+            StorageDataService.WriteFileOnStorage(new StorageDataArgs()
+            {
+                FileName = document.Id,
+                FolderName = document.Folder,
+                Tenant = document.Tenant,
+                FileData = deploymentPackageDetailsBytes,
+                Extension = document.Extension
+            });
+        }
 
-            document = new Document()
+        private Document GetInstanceOfDocument(byte[] deploymentPackageDetailsBytes)
+        {
+           return new Document()
             {
                 CreateDate = DateTime.Now,
                 Extension = "json",
@@ -54,15 +76,6 @@ namespace Logitude.BL.InfrastructureModel.Services
                 HasFile = true,
                 Folder = "others",
             };
-            documentrepository.Add(document);
-            documentrepository.SubmitChanges();
-            StorageDataService.WriteFileOnStorage(new StorageDataArgs() { 
-                FileName = document.Id,
-                FolderName = document.Folder,
-                Tenant = document.Tenant,
-                FileData = deploymentPackageDetailsBytes,
-                Extension = document.Extension
-            });
         }
 
         private DeploymentPackageDetails GetInstanceOfDeploymentPackageDetails()
@@ -76,7 +89,27 @@ namespace Logitude.BL.InfrastructureModel.Services
             };
         }
 
-   
-        
+        private void UpdateDocument(DeploymentPackagePM deploymentPackagePM)
+        {
+            if (deploymentPackagePM.DocumentId == null) return;
+            Document document = new DocumentRepository(deploymentPackagePM.Tenant).GetSingleDocument(deploymentPackagePM.Tenant, deploymentPackagePM.DocumentId);
+            var deploymentPackageDetailsBytes = Encoding.ASCII.GetBytes(JsonSerializer.Serialize(deploymentPackagePM.DeploymentPackageDetails));
+            document.FileSize = deploymentPackageDetailsBytes.Length;
+            DocumentRepository documentrepository = new DocumentRepository(deploymentPackagePM.Tenant);
+            documentrepository.Update(document);
+            documentrepository.SubmitChanges();
+            StorageDataService.WriteFileOnStorage(new StorageDataArgs()
+            {
+                FileName = document.Id,
+                FolderName = document.Folder,
+                Tenant = document.Tenant,
+                FileData = deploymentPackageDetailsBytes,
+                Extension = document.Extension
+            });
+        }
+
+
+
+
     }
 }
