@@ -652,33 +652,10 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
             try
             {
-#if restoreUsing9010
+
                 var service = new SYSTBL_NG_9010_MSG_MessageRestoreRequestMessagingService();
                 var responseData = service.Send(requestParams);
-#else
-                var messageWaitingRequestParams = new MessageWaitingRequestParams();
-                messageWaitingRequestParams.CorrelationID = requestParams.CorrelationID;
-                messageWaitingRequestParams.FromDate = requestParams.FromDate;
-                messageWaitingRequestParams.ToDate = requestParams.ToDate;
-                //not working ///messageWaitingRequestParams.InterfaceManagementsCode = requestParams.InterfaceManagementsCode;
-                messageWaitingRequestParams.RequestVIA = SendRequestVIA.WebServiceBatch;
-                messageWaitingRequestParams.Tenant = requestParams.Tenant;
-                //messageWaitingRequestParams.RequestVIAChangeDue = "המסר יבוצע ברקע ";
 
-
-
-
-                messageWaitingRequestParams.LoggingUserId = requestParams.LoggingUserId;
-                messageWaitingRequestParams.CorrelationID = requestParams.CorrelationID;
-                messageWaitingRequestParams.MainInterfaceCode = "9100";
-                //TODO messageWaitingRequestParams.ServiceName = requestParams.
-
-
-
-                var service = new NG_9100_MSG_OutgoingMessageRequestMessagingService();
-                var responseData = service.Send(messageWaitingRequestParams);
-
-#endif
 
 
 
@@ -693,6 +670,35 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
 
         }
+
+
+
+        public HttpResponseMessage PostMessageWaitingRequestParams
+           (MessageWaitingRequestParams requestParams)
+        {
+
+            try
+            {
+
+                var service = new NG_9100_MSG_OutgoingMessageRequestMessagingService();
+                var responseData = service.Send(requestParams);
+
+
+
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, responseData);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+
+        }
+
+
         public HttpResponseMessage PostBlockListInWarehouseRequestParams
            (BlockListInWarehouseRequestParams requestParams)
         {

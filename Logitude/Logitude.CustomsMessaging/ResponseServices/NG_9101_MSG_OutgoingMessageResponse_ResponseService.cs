@@ -52,7 +52,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     Succeeded = true,
                     MessageRestoreCount = 0,
-                    UserMessage = "No result from IIG"
+                    UserMessage = "No result was returned from the IIG MessageWaitingResponseData."
                 };
 
             }
@@ -66,7 +66,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         Succeeded = true,
                         MessageRestoreCount = 0,
-                        UserMessage = "Already Shrink"
+                        UserMessage = "The message has already been shrinked and cannot be re-analyzed."
                     };
                 }
                 else
@@ -95,7 +95,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         Succeeded = true,
                         MessageRestoreCount = outgoingMessage9100ResponseAnalyze.correlationIdsCanClear.Count,
                         UserMessage = 
-                        $"OK:{String.Join(Environment.NewLine, outgoingMessage9100ResponseAnalyze.correlationIdsCanClear.Select(r=>r.CorrelationIDs))}" 
+                        $"HowManyOtherWaitingMessages:{customResponse.Result.HowManyOtherWaitingMessages}"
+                        + Environment.NewLine +
+                        $"CorrelationIDs is saved in the database:{String.Join(Environment.NewLine, outgoingMessage9100ResponseAnalyze.correlationIdsCanClear.Select(r=>r.CorrelationIDs))}" 
                         + Environment.NewLine+ 
                         $"Error:{String.Join(Environment.NewLine, outgoingMessage9100ResponseAnalyze.exceptionBag.ToList())}"
 
