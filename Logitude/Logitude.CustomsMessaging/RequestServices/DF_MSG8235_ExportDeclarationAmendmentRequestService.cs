@@ -2046,15 +2046,10 @@ namespace Logitude.CustomsMessaging.RequestServices
                     var vehicleDetails = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemDMExtensionsProductIdentification();
                     vehicleDetails.ID = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemDMExtensionsProductIdentificationID();
                     vehicleDetails.IDTypeCode = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemDMExtensionsProductIdentificationIDTypeCode();
-                    if (!string.IsNullOrWhiteSpace(supplierInvoiceItemVehicleItem.RichbitFileNumber))
+                    if (!string.IsNullOrWhiteSpace(supplierInvoiceItemVehicleItem.IdentifierID))
                     {
-                        vehicleDetails.ID.Value = supplierInvoiceItemVehicleItem.RichbitFileNumber;
+                        vehicleDetails.ID.Value = supplierInvoiceItemVehicleItem.IdentifierID;
                         vehicleDetails.IDTypeCode.Value = supplierInvoiceItemVehicleItem.VehicleTypeCode; // "ZZZ"; // moran 28.1.16 - Bug 19966 - change to take from DB instead of constant
-                    }
-                    else if (!string.IsNullOrWhiteSpace(supplierInvoiceItemVehicleItem.VehicleChassisNumber))
-                    {
-                        vehicleDetails.ID.Value = supplierInvoiceItemVehicleItem.VehicleChassisNumber;
-                        vehicleDetails.IDTypeCode.Value = supplierInvoiceItemVehicleItem.VehicleTypeCode; // "CN"; // moran 28.1.16 - Bug 19966 - change to take from DB instead of constant
                     }
 
                     mySupplierInvoiceItemVehiclesList.Add(vehicleDetails);
