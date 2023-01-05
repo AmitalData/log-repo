@@ -487,7 +487,7 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
                 return `rgb(${r}, ${g}, ${b})`;
             }
         } else {
-            return 'rgba(0,0,0,1)';
+            return 'rgba(0,0,0,1)'; 
         }
     }
 
