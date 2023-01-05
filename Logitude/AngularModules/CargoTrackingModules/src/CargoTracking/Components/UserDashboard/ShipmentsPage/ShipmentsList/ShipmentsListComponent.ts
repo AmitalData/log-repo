@@ -425,12 +425,11 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
 
     private SetShipmentsScrollPosition() {
-        const shipmentCardsContainer = document.getElementById("scrollArea");
+        const shipmentCardsContainer = document.getElementById('scrollArea');
         if (shipmentCardsContainer) {
-            shipmentCardsContainer.scrollTop = RootContext.ShipmentsScrollPosition || 0;
+            shipmentCardsContainer.scrollTop = 0;
         }
     }
-
 
     private SetDefaultBackgroundColor() {
         document.documentElement.style.setProperty('--BGColor', 'RGB(250,251,252)');
@@ -609,7 +608,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
 
     private SaveShipmentsScrollPosition() {
-        const shipmentCardsContainer = document.getElementById("scrollArea");
+        const shipmentCardsContainer = document.getElementById('scrollArea');
         RootContext.ShipmentsScrollPosition = shipmentCardsContainer.scrollTop;
     }
 
