@@ -714,6 +714,11 @@ export class TenantManagementPM {
     public set SecondaryColor(newValue: string) { if (this.secondaryColor != newValue) { this.secondaryColor = newValue; this.MarkAsDirty("SecondaryColor"); } }
        
 	 
+    private tertiaryColor: string;
+    public get TertiaryColor() { return this.tertiaryColor; }
+    public set TertiaryColor(newValue: string) { if (this.tertiaryColor != newValue) { this.tertiaryColor = newValue; this.MarkAsDirty("TertiaryColor"); } }
+       
+	 
     private backgroundId: string;
     public get BackgroundId() { return this.backgroundId; }
     public set BackgroundId(newValue: string) { if (this.backgroundId != newValue) { this.backgroundId = newValue; this.MarkAsDirty("BackgroundId"); } }

@@ -1001,6 +1001,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="TertiaryColor"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="GlobalTenants"
@@ -1060,5 +1067,5 @@
     ForeignKeyColumn="BluesnapInttraStockContractId"
     ReferencedTable="BluesnapContracts"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo" />  
 </Table>
