@@ -84,6 +84,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                                                                     LineNumber = a.LineNumber,
                                                                                     Tenant = a.Tenant,
                                                                                     ExcludeFromInterface = a.ExcludeFromInterface,
+                                                                                    IdentifierID=a.IdentifierID
 
                                                                                 }).ToList();
             SupplierInvoiceItemVehicleModQueryService supplierInvoiceItemVehicleModificationQueryService = new SupplierInvoiceItemVehicleModQueryService(context);
