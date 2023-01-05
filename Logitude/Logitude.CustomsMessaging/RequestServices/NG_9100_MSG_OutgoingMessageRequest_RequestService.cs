@@ -10,21 +10,24 @@ namespace Logitude.CustomsMessaging.RequestServices
     {
         public override NG_9100_MSG_OutgoingMessageRequest GetRequest(MessageWaitingRequestParams requestParams)
         {
-          
+
             var customReq = new NG_9100_MSG_OutgoingMessageRequest()
             {
-                 GetOptions =  new NG_9100_MSG_OutgoingMessageRequestGetOptions() { 
-                      fromDate = requestParams.FromDate.Value,
-                     toDate = requestParams.ToDate.Value,
-                     ServiceName =requestParams.InterfaceManagementsCode,
-                      
-                      
-                 },
-                  PeekWay = new NG_9100_MSG_OutgoingMessageRequestPeekWay()
-                  {
-                      Peek_Way = 3,
-                      Take = 100,
-                  },
+                GetOptions = new NG_9100_MSG_OutgoingMessageRequestGetOptions()
+                {
+
+                    fromDate = requestParams.FromDate.Value,
+                    toDate = requestParams.ToDate.Value,
+                    CorrelationId = string.IsNullOrWhiteSpace(requestParams.CorrelationID) ? null : requestParams.CorrelationID,
+                    ServiceName =string.IsNullOrWhiteSpace(requestParams.ServiceName) ? null : requestParams.ServiceName,
+
+
+                },
+                PeekWay = new NG_9100_MSG_OutgoingMessageRequestPeekWay()
+                {
+                    Peek_Way = 3,
+                    Take = 999,
+                },
             };
 
 

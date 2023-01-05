@@ -38,12 +38,12 @@ namespace Logitude.CustomsMessaging.Dca
                 var messageWaitingRequestParams = new MessageWaitingRequestParams
                 {
                     //SuppressSplitWR = true,
-                    Tenant = 1,
+                    Tenant = 6,
                     FromDate = DateTime.Now.AddDays(-30),
                     ToDate = DateTime.Now,
                     //InterfaceManagementsCode = "2470",
                     //InterfaceManagementsCode = "SendDF_MSG2470_ReleaseGoodsMessage",
-                    InterfaceManagementsCode = "SendCOLT_MSG_8213_CollateralAnswerApprovalMsg_EX",
+                    ///InterfaceManagementsCode = "SendCOLT_MSG_8213_CollateralAnswerApprovalMsg_EX",
                     //InterfaceManagementsCode= "SendDF_MSG2470_ReleaseGoodsMessage_Out.",
                     //RequestVIA = Logitude.CustomsMessaging.Common.RequestParams.SendRequestVIA.WebServiceBatch
                     RequestVIA = Logitude.CustomsMessaging.Common.RequestParams.SendRequestVIA.WebServiceInteractive

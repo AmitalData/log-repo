@@ -451,6 +451,27 @@ export class IIGGeneralMessagesService {
     }
 
 
+    
+    PostMessageWaitingRequestParams(entity: any) {
+        return defer(() => {
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            return this._http.post(
+                this._apiUrl + '/PostMessageWaitingRequestParams/',
+                JSON.stringify(entity),
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                    serviceResponse.Result = res;
+                    return serviceResponse;
+                }), catchError(ServiceHelper.HandleServiceError));
+        }
+
+        );
+    }
     PostMessageRestoreRequestParams(entity: any) {
         return defer(() => {
             var authHeader = new Headers();

@@ -4,13 +4,13 @@ import { BaseComponent } from '../../../Infrastructure/Components/LogitudeCompon
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { IIGGeneralMessagesService } from '../../../Customs/Services/WebServices/IIGGeneralMessagesService';
-import { MessageRestoreRequestParams } from '../../../Customs/DataContract/RequestParams/MessageRestoreRequestParams';
+import { MessageRestoreRequestParams, MessageWaitingRequestParams } from '../../../Customs/DataContract/RequestParams/MessageRestoreRequestParams';
 import { ExchangeRatesQueryResponseData, ExchangeRatesQueryResult } from '../../../Customs/DataContract/ResponseData/ExchangeRatesQueryResponseData';
 import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { AppTool, DateTool } from '../../../Infrastructure/Tools';
 import { BaseRequestsSheetMassaging, IRequestsSheetMassagingComponent } from '../../../CustomsModules/CustomsRequests/Components/BaseRequestsSheetMassaging';
-import { CustomSendOptionsArgs } from '../../../Customs/DataContract/RequestParams/RequestParamsBase';
+import { CustomSendOptionsArgs, SendRequestVIA } from '../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
 import { CustomMessageProgressComponent } from '../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
@@ -335,7 +335,67 @@ export class CustomsRestoreMessagesComponent
         }
 
 
-        var currRequestParams = new MessageRestoreRequestParams();///Force new GUID On Each Send !!
+        this.PostMessageWaitingRequestParams(dcaPrefix, interfaceManagementsCodeValue, customSendOptionsArgs);
+        //this.PostMessageRestoreRequestParams(dcaPrefix, interfaceManagementsCodeValue, customSendOptionsArgs);
+    }
+
+
+    private PostMessageWaitingRequestParams(dcaPrefix: string, interfaceManagementsCodeValue: string, customSendOptionsArgs: CustomSendOptionsArgs) {
+        var currRequestParams = new MessageWaitingRequestParams(); ///Force new GUID On Each Send !!
+        currRequestParams.LoggingEnabled = true;
+        currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
+        currRequestParams.Tenant = SessionLocator.Tenant;
+        if (AppTool.IsNullOrEmpty(this.CorrelationNo)) {
+            currRequestParams.CorrelationID = "";
+        } else {
+            currRequestParams.CorrelationID = this.CorrelationNo;
+        }
+        currRequestParams.ServiceName = dcaPrefix;
+        currRequestParams.ServiceNameCode = this.InterfaceManagementsCode;
+        currRequestParams.FromDate = this.FromDate;
+        if (this.FromDateTime != null) {
+            var fromDate = this.FromDate;
+            fromDate.setHours(this.FromDateTime.getHours());
+            fromDate.setMinutes(this.FromDateTime.getMinutes());
+            currRequestParams.FromDate = fromDate;
+        }
+        currRequestParams.ToDate = this.ToDate;
+        if (this.ToDateTime != null) {
+            var toDate = this.ToDate;
+            toDate.setHours(this.ToDateTime.getHours());
+            toDate.setMinutes(this.ToDateTime.getMinutes());
+            currRequestParams.ToDate = toDate;
+        }
+        currRequestParams.RequestVIA = SendRequestVIA.WebServiceBatch;//must 
+        currRequestParams.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
+
+        CustomMessageProgressComponent
+            .ShowProgressBar(this.CurrentSession, currRequestParams.PBId,
+                "שליחת שאילתא לשיחזור מסרים",
+                false)
+            .then((res) => {
+                this.ResponseData = res;
+                this.OnMassageDisplayMethod();
+            }
+            ).catch((err) => {
+                this.ValidationErrorsList.push(err);
+            });
+        ////
+        this._IIGGeneralMessagesService.PostMessageWaitingRequestParams(currRequestParams)
+            .subscribe(
+                (myServiceResponse: ServiceResponse) => { },
+                (err) => this.ValidationErrorsList.push(err),
+                () => this.CurrentSession.StopBusyIndicator()
+                
+
+
+
+
+            );
+    }
+
+    private PostMessageRestoreRequestParams(dcaPrefix: string, interfaceManagementsCodeValue: string, customSendOptionsArgs: CustomSendOptionsArgs) {
+        var currRequestParams = new MessageRestoreRequestParams(); ///Force new GUID On Each Send !!
         currRequestParams.LoggingEnabled = true;
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
         currRequestParams.Tenant = SessionLocator.Tenant;
@@ -364,9 +424,9 @@ export class CustomsRestoreMessagesComponent
         currRequestParams.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
-            "שליחת שאילתא לשיחזור מסרים"
-            , false)
+            .ShowProgressBar(this.CurrentSession, currRequestParams.PBId,
+                "שליחת שאילתא לשיחזור מסרים",
+                false)
             .then((res) => {
                 this.ResponseData = res;
                 this.OnMassageDisplayMethod();
@@ -374,13 +434,9 @@ export class CustomsRestoreMessagesComponent
             ).catch((err) => {
                 this.ValidationErrorsList.push(err);
             });
-
+        ////
         this._IIGGeneralMessagesService.PostMessageRestoreRequestParams(currRequestParams)
             .subscribe((myServiceResponse: ServiceResponse) => {
-
             });
     }
-
-
-
 }

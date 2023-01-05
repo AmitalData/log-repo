@@ -36,6 +36,7 @@ using System.Configuration;
 using System.Collections.Concurrent;
 using Logitude.Server.Tools.Utils;
 using Logitude.BL.Security;
+using System.Globalization;
 
 namespace Logitude.CustomsMessaging.Dca
 {
@@ -86,6 +87,9 @@ namespace Logitude.CustomsMessaging.Dca
 
             _AllInterface = interfaceTypeQueryService.GetWithInterfaceManagementDefinition(_CustomsSettingPM.Tenant);
 
+#if true
+            _InterfaceListDCA=interfaceTypeQueryService.GetInterfaceListDCA(_AllInterface, customsSettingPM.CompanyType);
+#else
 
             _InterfaceListDCA = //(new IIGMessageQueryService()).GetAll().Where(mess => mess.Interactive.HasFlag(InterfaceType.InteractiveMode.DCA)); ;
                    _AllInterface
@@ -122,6 +126,7 @@ namespace Logitude.CustomsMessaging.Dca
                        rec.InterfaceManagement.DcaPrefixName3 +
                        rec.InterfaceManagement.DcaPrefixName4)
                        ).ToList();
+#endif
             _AllDcaPreFixWithoutInOutUpper = new List<string>();
 
 
@@ -218,7 +223,33 @@ namespace Logitude.CustomsMessaging.Dca
             return DcaPrefixName;
         }
 
+        private static bool IsAppSettingOn(string appSettingKeyValueIsLogUntilDateyyyyMMdd)
+        {
+            bool IsOn = false;
+            DateTime  stopLogAt = DateTime.MinValue;
+            string UntilDateyyyyMMdd = ConfigurationManager.AppSettings[appSettingKeyValueIsLogUntilDateyyyyMMdd];//"2018062018HD312280.LogUntilDateyyyyMMdd"];
+            if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+            {
 
+
+                if(DateTime.TryParseExact(UntilDateyyyyMMdd,
+                                                        "yyyyMMdd",
+                                                        CultureInfo.InvariantCulture,
+                                                        DateTimeStyles.None,
+                                                        out stopLogAt))
+                {
+                    //stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
+                    //                                        "yyyyMMdd",
+                    //                                        CultureInfo.InvariantCulture,
+                    //                                        DateTimeStyles.None);
+                    IsOn = DateTime.Now <= stopLogAt;
+
+                }
+
+
+            }
+            return IsOn;
+        }
         public void DownloadAll(string debugIIGMessageId, DedicatedCourierDCAModel dedicatedCourierDCAModel)
         {
 
@@ -226,20 +257,30 @@ namespace Logitude.CustomsMessaging.Dca
 
             if (this.HasFeature_DcaDirect9200() || dedicatedCourierDCAModel != null)
             {
-
-                var dcaDirect9200TenantService = new DcaDirect9200TenantService(
-                    this._CustomsSettingPM,
-                    _AllDcaPreFixWithoutInOutUpper,
-                    this._InterfaceListDCA,
-                    _AllInterface,
-                    dedicatedCourierDCAModel
-                    );
-                dcaDirect9200TenantService.DownloadAll(/*debugIIGMessageId*/);
-                if (dedicatedCourierDCAModel != null)
+                if (IsAppSettingOn("SuppressDownloadDCA.UntilDateyyyyMMdd"))
                 {
-                    var removeOldOrphanedFilesFromBackupService = new RemoveOldOrphanedFilesFromBackupService();
-                    removeOldOrphanedFilesFromBackupService.RemoveOldFiles(dedicatedCourierDCAModel.BackupPath);
+                    Debug.WriteLine("SuppressDownloadDCA.UntilDateyyyyMMdd");
                 }
+                else
+                {
+                    var dcaDirect9200TenantService = new DcaDirect9200TenantService(
+                        this._CustomsSettingPM,
+                        _AllDcaPreFixWithoutInOutUpper,
+                        this._InterfaceListDCA,
+                        _AllInterface,
+                        dedicatedCourierDCAModel
+                        );
+                    dcaDirect9200TenantService.DownloadAll(/*debugIIGMessageId*/);
+                    if (dedicatedCourierDCAModel != null)
+                    {
+                        var removeOldOrphanedFilesFromBackupService = new RemoveOldOrphanedFilesFromBackupService();
+                        removeOldOrphanedFilesFromBackupService.RemoveOldFiles(dedicatedCourierDCAModel.BackupPath);
+                    }
+                }
+
+                var restoreWaitingImportService = new Restore9100.RestoreWaitingImportMessagesService(_CustomsSettingPM, this._InterfaceListDCA);
+                restoreWaitingImportService.RestoreWaitingImportSaveInDB();
+
                 return;
             }
 

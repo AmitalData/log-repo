@@ -657,6 +657,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 var responseData = service.Send(requestParams);
 
 
+
+
+
                 return Request.CreateResponse(HttpStatusCode.OK, responseData);
             }
 
@@ -667,6 +670,35 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
 
         }
+
+
+
+        public HttpResponseMessage PostMessageWaitingRequestParams
+           (MessageWaitingRequestParams requestParams)
+        {
+
+            try
+            {
+
+                var service = new NG_9100_MSG_OutgoingMessageRequestMessagingService();
+                var responseData = service.Send(requestParams);
+
+
+
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, responseData);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+
+        }
+
+
         public HttpResponseMessage PostBlockListInWarehouseRequestParams
            (BlockListInWarehouseRequestParams requestParams)
         {

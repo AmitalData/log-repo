@@ -6,6 +6,7 @@ using CustomsWorkerRole.Test;
 using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.Messaging;
 using Logitude.Customs.BL.Messaging.Maman;
+using Logitude.CustomsMessaging.Dca.Restore9100;
 using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.CustomsMessaging.RabbitMQ;
 using Logitude.CustomsMessaging.ResponseServices;
@@ -319,6 +320,8 @@ namespace AmitalCustomsWindowsService.Tester
         bool _MultiThreard = false;
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            RestoreWaitingImportMessagesService.TestMe();
+            return;
             clsTester.HSMSignTests();
             return;
             clsTester.Check_UserWcfService(GetTenant());
