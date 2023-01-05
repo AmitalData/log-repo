@@ -57,6 +57,9 @@ namespace Logitude.Customs.BL.TraceEvents
                 totalPackages = myDeclaration?.SupplierInvoices.Sum(s => s.SupplierInvoiceItems.Sum(si => si.PackageQuantity)).ToString(),
                 loadingDateTime = myDeclaration?.LoadingDateTime.ToString(),
                 direction = myDeclaration?.Direction,
+                exportFile=myDeclaration?.ExportFile,
+                customsFile=myDeclaration?.CustomFileNo,
+                TransportModeId = myDeclaration?.TransportModeId,
 
             };
             LogistictFile.logitudeCustomsFile.invoice = new Invoices[myDeclaration.SupplierInvoices.Count];
@@ -90,6 +93,7 @@ namespace Logitude.Customs.BL.TraceEvents
 
             var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
             {
+                
                 Tenant = declarationPM.Tenant,
                 objectTableName = "Customs.Declaration",
                 EventCode = null,
@@ -98,7 +102,7 @@ namespace Logitude.Customs.BL.TraceEvents
                 EntityId = declarationPM.Id,
                 UserId = declarationPM.CreatedByUserId,
 
-                CommunicationSubject = "",
+                CommunicationSubject = "עדכון תיק מכס",
                 
             };
             return myAmitalEventTracerModel;
