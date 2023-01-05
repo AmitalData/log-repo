@@ -42,6 +42,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string VersionByFeatures { get; set; }
         [Column("LastAccessedAt")]
 	    public DateTime LastAccessedAt { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
     }
 }
 	 

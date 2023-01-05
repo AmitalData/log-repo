@@ -221,6 +221,7 @@ export class SignStationPMService {
 	  public GetNewEntityPM() {		 
 		    var entityPM: SignStationPM;
 			entityPM = new SignStationPM();
+			entityPM.Tenant = InfraSettings.TenantPM.Id;
 			return entityPM;
     }
 		 

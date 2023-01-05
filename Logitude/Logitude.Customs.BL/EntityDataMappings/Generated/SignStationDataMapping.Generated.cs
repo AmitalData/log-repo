@@ -32,7 +32,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SearchFields, 
 	         Status, 
 	         VersionByFeatures, 
-	         LastAccessedAt,
+	         LastAccessedAt, 
+	         Tenant,
 	      }
 
 
@@ -49,7 +50,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SearchFields, 
 	         Status, 
 	         VersionByFeatures, 
-	         LastAccessedAt,
+	         LastAccessedAt, 
+	         Tenant,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -101,6 +103,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastAccessedAt))
             {
 				entityPOCO.LastAccessedAt = entityPM.LastAccessedAt;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -164,6 +171,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.LastAccessedAt = entityPOCO.LastAccessedAt;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
 		}
 
 		public void PMToOldPM(SignStationPM entityPM, SignStationPM oldEntityPM)
@@ -213,6 +225,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastAccessedAt))
             {
                 oldEntityPM.LastAccessedAt = entityPM.LastAccessedAt;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
             }
 			
 		}

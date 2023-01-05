@@ -31,8 +31,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             GenericSort sortClass = new GenericSort();
 
             IQueryable<SignStation> iQueryable = (from a in context.SignStations
-                                               select a);
-            			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
+                                              
+                   where a.Tenant == tenant select a);
+            			iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
             nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
@@ -142,14 +143,15 @@ namespace Logitude.Customs.Data.EntityListQueryServices
            
         }
 
-        public int GetListCount(QueryOperations queryOperations)
+        public int GetListCount(QueryOperations queryOperations, int tenant)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<SignStation> iQueryable = (from a in context.SignStations  select a);
+            IQueryable<SignStation> iQueryable = (from a in context.SignStations 
+                   where a.Tenant == tenant select a);
 
-			  			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
+			  			iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
             nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
