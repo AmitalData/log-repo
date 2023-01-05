@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="21">
+  <Sql Version="22">
     <![CDATA[	
 	  delete from DigitalTextCodes where id != ''
 
@@ -53,12 +53,12 @@
 		},
 		{
 			"TextCode": "Dashboard.G.TotalShipmentByStatus",
-			"DefaultText": "Total shipments by statuses",
+			"DefaultText": "Total Shipments By Stages",
 			"FieldCode": ""
 		},
 		{
 			"TextCode": "Dashboard.G.TotalInvoiceByStatus",
-			"DefaultText": "Total invoices by statuses",
+			"DefaultText": "Total Invoices by Due Date",
 			"FieldCode": ""
 		},
 		{
@@ -1650,12 +1650,12 @@
 		},
 		{
 			"TextCode": "Dashboard.G.TotalShipmentByStatus",
-			"DefaultText": "Total shipments by statuses",
+			"DefaultText": "Total Shipments By Stages",
 			"FieldCode": ""
 		},
 		{
 			"TextCode": "Dashboard.G.TotalInvoiceByStatus",
-			"DefaultText": "Total invoices by statuses",
+			"DefaultText": "Total Invoices by Due Date",
 			"FieldCode": ""
 		},
 		{
