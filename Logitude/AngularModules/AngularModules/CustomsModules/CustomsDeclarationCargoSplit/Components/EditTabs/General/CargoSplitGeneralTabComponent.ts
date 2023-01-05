@@ -253,9 +253,15 @@ export class CargoSplitGeneralTabComponent
             this.UIProperties.SetEnabled("SecondCargoID", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("ThirdCargoID", this.ObjectTableName, false);
             this.OKButtonEnabled = false;
-            this.UIProperties.SetEnabled("ActionTypeCode", this.ObjectTableName, false);
-
-            this.SendButtonEnabled = false;
+            if (this.ResponseStatusCode != "3") {
+                this.UIProperties.SetEnabled("ActionTypeCode", this.ObjectTableName, false)
+                this.SendButtonEnabled = false;
+                 }
+               
+                 else {
+                     this.UIProperties.SetEnabled("ActionTypeCode", this.ObjectTableName, true);
+                     this.SendButtonEnabled = true;
+                }
             
         }
         else {
@@ -1425,10 +1431,15 @@ export class CargoSplitGeneralTabComponent
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
             //this.declarationCargoSplitPMService.update(this.EntityPM).then((res: any) => {
             //    res.subscribe((myResponse: ServiceResponse) => {
-            this.EntityPM.DecCargoSplitCargoIdentifiers[0].CargoTypeCode=this.decCargoSplitCargoIdentifierModel?.CargoTypeCode;     
-            this.EntityPM.DecCargoSplitCargoIdentifiers[0].CargoIdentifierKey1=this.decCargoSplitCargoIdentifierModel?.CargoIdentifierKey1;
-            this.EntityPM.DecCargoSplitCargoIdentifiers[0].CargoIdentifierKey2=this.decCargoSplitCargoIdentifierModel?.CargoIdentifierKey2;
-            this.EntityPM.DecCargoSplitCargoIdentifiers[0].CargoIdentifierKey3=this.decCargoSplitCargoIdentifierModel?.CargoIdentifierKey3;
+
+            if(!AppTool.IsNullOrEmpty(this.decCargoSplitCargoIdentifierModel))
+            {
+                this.EntityPM.DecCargoSplitCargoIdentifiers[0].CargoTypeCode=this.decCargoSplitCargoIdentifierModel?.CargoTypeCode;     
+                this.EntityPM.DecCargoSplitCargoIdentifiers[0].CargoIdentifierKey1=this.decCargoSplitCargoIdentifierModel?.CargoIdentifierKey1;
+                this.EntityPM.DecCargoSplitCargoIdentifiers[0].CargoIdentifierKey2=this.decCargoSplitCargoIdentifierModel?.CargoIdentifierKey2;
+                this.EntityPM.DecCargoSplitCargoIdentifiers[0].CargoIdentifierKey3=this.decCargoSplitCargoIdentifierModel?.CargoIdentifierKey3;
+            }
+            
             this.declarationCargoSplitPMService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
                 this.CurrentSession.StopBusyIndicator();
 
