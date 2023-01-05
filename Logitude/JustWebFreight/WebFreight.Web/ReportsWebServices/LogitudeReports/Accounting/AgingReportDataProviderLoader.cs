@@ -264,7 +264,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 groupedPeriodsByAccount = result.GroupBy(d => d.AccountId).Select(d => new AgingPeriod()
                 {
                     PeriodName = showLocals ? "סיכום תקופות" : "Foreign",
-                    Total = d.Sum(x => x.Total),
+                    Total = d.First().BalanceInLocalAccountingDate,
                     AccountName = (d.First().AccountLocalName != null ? d.First().AccountLocalName : d.First().AccountEnglishName),
                     AccountLocalName = d.First().AccountLocalName,
                     AccountEnglishName = d.First().AccountEnglishName,
