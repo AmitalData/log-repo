@@ -57,8 +57,7 @@ namespace Logitude.Customs.BL.TraceEvents
                 totalPackages = myDeclaration?.SupplierInvoices.Sum(s => s.SupplierInvoiceItems.Sum(si => si.PackageQuantity)).ToString(),
                 loadingDateTime = myDeclaration?.LoadingDateTime.ToString(),
                 direction = myDeclaration?.Direction,
-                exportFile=myDeclaration?.ExportFile,
-                customsFile=myDeclaration?.CustomFileNo,
+                exportFile=myDeclaration?.ExportFile,             
                 TransportModeId = myDeclaration?.TransportModeId,
 
             };
