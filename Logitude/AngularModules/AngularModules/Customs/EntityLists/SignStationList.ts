@@ -9,6 +9,7 @@
 export class SignStationList {
    
 	SearchFields: string;
+	Tenant: number;
 	
 }
  

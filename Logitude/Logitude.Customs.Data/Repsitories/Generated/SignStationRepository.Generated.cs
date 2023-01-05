@@ -28,16 +28,17 @@ namespace Logitude.Customs.Data.Repsitories
 
 		 
 		
-		public  SignStation GetSingle(string customsagentid, string personid)
+		public  SignStation GetSingle(string customsagentid, string personid, int tenant)
         {
             return (from a in context.SignStations
-                    where a.CustomsAgentId == customsagentid && a.PersonId == personid 
+                    where a.CustomsAgentId == customsagentid && a.PersonId == personid && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
-        public IQueryable<SignStation> GetAll()
+        public IQueryable<SignStation> GetAll(int tenant)
         {
             return from a in context.SignStations  
+                   where a.Tenant == tenant
                    select a;
         }
 				 

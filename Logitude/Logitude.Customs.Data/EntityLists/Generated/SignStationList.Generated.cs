@@ -14,6 +14,8 @@ namespace Logitude.Customs.Data.EntityLists
    {
           [DataMember]
        public string SearchFields  { get; set; }
+       [DataMember]
+       public int Tenant  { get; set; }
    }
 
 }

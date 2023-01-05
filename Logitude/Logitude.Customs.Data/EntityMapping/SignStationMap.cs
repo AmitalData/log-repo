@@ -44,6 +44,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.VersionByFeatures).HasColumnName("VersionByFeatures").HasMaxLength(32).IsUnicode(false);
 
             this.Property(t => t.LastAccessedAt).HasColumnName("LastAccessedAt");
+
+            this.Property(t => t.Tenant).HasColumnName("Tenant");
         }
     }
 }
