@@ -674,7 +674,7 @@
                                                                 <div *ngIf="EntityPM.StatusCode !='AD'">
                                                                     <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddChequesButtonClicked()"></IconButton>
                                                                 </div>
-                                                                <div *ngIf="isMultipleCheques && EntityPM.StatusCode=='AD'">
+                                                                <div *ngIf="EntityPM.StatusCode=='AD'">
                                                                     <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="DisplayChequesButtonClicked()"></IconButton>
                                                                 </div>
                                                             </td>

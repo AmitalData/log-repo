@@ -976,6 +976,7 @@ h1{
     display: flex;
     align-items:center;
     margin-left: 5px;
+    font-weight:bold;
 }
 .shipment-direction-div
 {
@@ -990,5 +991,4 @@ h1{
 .to-port
 {
     margin-left: 5px;
-    font-weight:bold;
 }
