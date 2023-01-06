@@ -198,8 +198,7 @@ using Simplog.Data.CommonDataModel;
 			       
 					   				   }
 				   
-				   temp.LeadDescription = MyEntityPM.LeadDescription;
-				   temp.StartWorkingDate = MyEntityPM.StartWorkingDate; 
+				   temp.LeadDescription = MyEntityPM.LeadDescription; 
 
 			  
 				   if(MyEntityPM.LeadSourceId != null)
@@ -217,8 +216,14 @@ using Simplog.Data.CommonDataModel;
 					   					   temp.PickupDeliveryAddress = AddressService12.GetAddressById(MyEntityPM.PickupDeliveryAddressId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
-				   					
-				   return temp;
+				   
+				   temp.ReceivableExternalId = MyEntityPM.ReceivablesAccountingCard;
+
+				CustomFieldQueryService customFieldService = new CustomFieldQueryService(Tenant, "Customer");
+				temp.CustomFields = customFieldService.CustomFieldCustomDataMapping(MyEntityPM, Tenant);
+
+
+				return temp;
 			}
             catch (Exception ex)
             {
@@ -564,14 +569,6 @@ using Simplog.Data.CommonDataModel;
 										}  
 
 					
-                    
-					if(!IsUpdate)
-					{							
-						temp.StartWorkingDate = MyEntity.StartWorkingDate;
-
-										}  
-
-					
 					LeadSourceQueryService LeadSourceLeadSourceService = new LeadSourceQueryService(Tenant);
 					if(MyEntity.LeadSource != null)
 					{
@@ -613,8 +610,38 @@ using Simplog.Data.CommonDataModel;
 
 					}
 			
-										   
-					return temp;
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.ReceivablesAccountingCard = MyEntity.ReceivableExternalId;
+
+										}
+
+
+
+				CustomFieldQueryService customFieldService = new CustomFieldQueryService(Tenant, "Customer");
+				if (MyEntity.CustomFields != null)
+				{
+					customFieldService.CustomFieldCustomDataMappingAndValidatin(MyEntity.CustomFields, temp, Tenant);
+				}
+
+				//if(MyEntity.CustomFields != null && MyEntity.CustomFields.Count > 0)
+				//{
+				//	CustomFieldQueryService CustomFieldService13 = new CustomFieldQueryService(Tenant);
+
+				//	if(!IsUpdate)
+				//	{								
+				//		temp.CustomFields = CustomFieldService13.CustomFieldCustomDataMappingAndValidatin(MyEntity,MyEntity.CustomFields,Tenant,ComputingPartnerName,IsUpdate);
+
+
+				//	}  
+
+
+				//}
+
+
+				return temp;
 		    }
             catch (Exception ex)
             {

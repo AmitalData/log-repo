@@ -82,7 +82,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 					myCustomer.EnglishName = MyEntity.EnglishName;
 					myCustomer.VatNumber = MyEntity.VatNumber;
 					myCustomer.LeadDescription = MyEntity.LeadDescription;
-					myCustomer.StartWorkingDate = MyEntity.StartWorkingDate;
+					myCustomer.ReceivablesAccountingCard = MyEntity.ReceivableExternalId;
 
 					if (!string.IsNullOrEmpty(MyEntity.LocalName))
 						myCustomer.LocalName = FormatHelper.ConvertFromBase64(MyEntity.LocalName);
@@ -113,6 +113,12 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 					{
 						ContactQueryService contactService1 = new ContactQueryService(Tenant);
 						myCustomer.Contacts = contactService1.ContactCustomDataMappingAndValidatin(MyEntity, MyEntity.Contacts, Tenant, ComputingPartnerName);
+					}
+
+					CustomFieldQueryService customFieldService = new CustomFieldQueryService(Tenant, "Customer");
+					if (MyEntity.CustomFields != null)
+					{
+						customFieldService.CustomFieldCustomDataMappingAndValidatin(MyEntity.CustomFields, myCustomer, Tenant);
 					}
 				}
 
@@ -153,7 +159,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 			UserQueryService userService = new UserQueryService(tenant);
 			if (user != null)
 			{
-				var myUserPM = userService.UserCustomDataMappingAndValidatin(user, tenant, computingPartnerName);
+				var myUserPM = userService.UserDataMappingAndValidatin(user, tenant, computingPartnerName);
 				if (myUserPM != null)
 					return myUserPM.Id;
 			}

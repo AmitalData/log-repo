@@ -13,7 +13,7 @@ namespace WebFreight.Web.Helpers
         private ExternalAPIResponseParameters responseParameters;
         private TenantPM tenantPM;
         private TenantQuery tenantQuery;
-        private string[] generalTenantsAPISNames = new[] { "House", "Direct", "Master", "Customer", "Rates Update", "Get Shipments by References" };
+        private string[] generalTenantsAPISNames = new[] { "House", "Direct", "Master", "Rates Update", "Get Shipments by References" };
         private string[] hypridTenantsAPISNames = new[] { "Customs", "Quote", "Customer", "Vendor", "Cargo Tracking Shipment Details" };
         private string[] oceanInsightAPISNames = new[] { "Container" };
         private string[] fullAccountingTenantsAPISNames = new[] { "Customer", "Vendor", "ARPayment", "Cancel ARPayment", "APInvoice Cancellation",
@@ -71,10 +71,11 @@ namespace WebFreight.Web.Helpers
                 {
                     AddTenantAPIsNames(generalTenantsAPISNames);
 
-                    if(FeatureToggleHelper.HasFeatureToggle("OIC", this.responseParameters.Tenant))
-                    {
-                        AddTenantAPIsNames(oceanInsightAPISNames);
-                    }
+                    if(FeatureToggleHelper.HasFeatureToggle("OIC", this.responseParameters.Tenant))                    
+                        AddTenantAPIsNames(oceanInsightAPISNames);                    
+
+                    if (FeatureToggleHelper.HasFeatureToggle("CTI", this.responseParameters.Tenant))                    
+                        AddTenantAPIsNames(new[] { "Customer" });                    
                 }
 
                 else if (this.responseParameters.ApiTanentType == "FullAccounting")
@@ -95,10 +96,11 @@ namespace WebFreight.Web.Helpers
                     AddTenantAPIsNames(hypridTenantsAPISNames);
                     AddTenantAPIsNames(fullAccountingTenantsAPISNames);
 
-                    if (FeatureToggleHelper.HasFeatureToggle("OIC", this.responseParameters.Tenant))
-                    {
+                    if (FeatureToggleHelper.HasFeatureToggle("OIC", this.responseParameters.Tenant))                    
                         AddTenantAPIsNames(oceanInsightAPISNames);
-                    }
+
+                    if (FeatureToggleHelper.HasFeatureToggle("CTI", this.responseParameters.Tenant))
+                        AddTenantAPIsNames(new[] { "Customer" });
                 }
             }
         }

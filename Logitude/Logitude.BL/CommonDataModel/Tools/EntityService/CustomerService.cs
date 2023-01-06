@@ -1879,6 +1879,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     itemContactPM.Id = entityPM.ExistedContactId;
                 }
 
+                if (string.IsNullOrEmpty(itemContactPM.Id) && itemContactPM.IsAPIContact)
+                {
+                    itemContactPM.Id = contactRepository.GetSingleContactByEmail(itemContactPM.Email, tenant, false)?.Id;
+                }
+
                 if (string.IsNullOrEmpty(itemContactPM.Id))
                 {
                     #region

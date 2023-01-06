@@ -240,6 +240,7 @@
     Columns="AutomaticLastUpdateDate" />
   <Index
     Columns="Email" />
-  <UniqueConstraint Env="cloud"
+  <UniqueConstraint
+    Env="cloud"
     Columns="Tenant,ComputedKey" />
 </Table>

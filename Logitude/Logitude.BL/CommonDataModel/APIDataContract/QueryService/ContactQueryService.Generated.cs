@@ -61,6 +61,25 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
+		public Contact GetContactByEmail(string Email,int Tenant,  string ComputingPartnerName = "")
+        { 
+		    try
+            {
+				 
+				
+				var temp = query.GetSinglePMByEmail(Email, Tenant);				
+				 if (temp == null)
+                    throw new ApplicationException("Contact with Email " + Email + " doesn't exist");
+
+				return ContactDataMapping(temp,Tenant,ComputingPartnerName);
+			}
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+		
 		public Contact ContactDataMapping(ContactPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
         {
 		    try
@@ -71,7 +90,10 @@ using Simplog.Data.CommonDataModel;
 				   temp.EnglishName = MyEntityPM.EnglishName;
 				   temp.LocalName = MyEntityPM.LocalName;
 				   temp.Code = MyEntityPM.ExternalId;
-				   temp.Email = MyEntityPM.Email;					
+				   temp.Email = MyEntityPM.Email;
+				   temp.Position = MyEntityPM.Position;
+				   temp.BusinessPhone = MyEntityPM.BusinessPhone;
+				   temp.Mobile = MyEntityPM.Mobile;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -91,10 +113,14 @@ using Simplog.Data.CommonDataModel;
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
 					
+					if (!string.IsNullOrEmpty(MyEntity.Email))
+					{
+						temp = query.GetSinglePMByEmail(MyEntity.Email, Tenant  );
+					} 
 					
 			  	   if(temp == null)
 					{   
-					    throw new ApplicationException("Contact with Id " + MyEntity.Id + " doesn't exist");
+					    throw new ApplicationException("Contact with Email " + MyEntity.Email + " doesn't exist");
 					} 
 				 
 					
@@ -142,6 +168,30 @@ using Simplog.Data.CommonDataModel;
 					if(!IsUpdate)
 					{							
 						temp.Email = MyEntity.Email;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.Position = MyEntity.Position;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.BusinessPhone = MyEntity.BusinessPhone;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.Mobile = MyEntity.Mobile;
 
 										}  
 
