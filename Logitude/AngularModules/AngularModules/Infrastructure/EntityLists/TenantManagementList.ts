@@ -136,6 +136,7 @@ export class TenantManagementList {
 		TotalPrice: number;
 		MainColor: string;
 		SecondaryColor: string;
+		TertiaryColor: string;
 		Opacity: number;
 		BackgroundId: string;
 		ComapnylogoId: string;
@@ -161,6 +162,6 @@ export class TenantManagementList {
 		WhatsAppMessagingPhoneNumber: string;
 		ActivatedforDeclarationApprove: boolean;
 		DeclarationMessage: string;
-        ActivatePrivateSite: boolean;
-
-}
+		ActivatePrivateSite: boolean;
+	
+}

@@ -1334,7 +1334,8 @@ namespace WebFreight.Web.InfrastructureModel
                 TimeZoneOffset = null,
                 CheckDigitControlAlgorithmCode = "NONE",
                 TransferQuotationsToUnifreightTrigger = "OnSend",
-                VatNumber = signUpInfoClass.VatNumber
+                VatNumber = signUpInfoClass.VatNumber,
+                IsNewLogboxFromCloud = signUpInfoClass.IsCreateLogboxTenantFromCloud,
             };
 
             return newTenant;

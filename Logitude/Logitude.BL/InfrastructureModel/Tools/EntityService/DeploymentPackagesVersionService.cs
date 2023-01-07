@@ -34,6 +34,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         private DeploymentPackagesVersionPM entityPM;
         private DeploymentPackagesVersionRepository entityRepository;
         private Contact loggedContact;
+        private string versionKey="1";
 
         public DeploymentPackagesVersionService(IWebFreightContext context, int tenant)
         {
@@ -44,7 +45,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.GetLoggedContact();
         }
 
-        public void Create(DeploymentPackagesVersionPM deploymentPackagesVersionPM)
+        public void Create(DeploymentPackagesVersionPM deploymentPackagesVersionPM, bool submitChanges = true)
         {
             this.isNewEntity = true;
             this.entityPM = deploymentPackagesVersionPM;
@@ -53,12 +54,24 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
             this.entityPM.UpdatedByUserId = this.loggedContact != null ? this.loggedContact.Id : this.entityPM.UpdatedByUserId;
             this.entityPM.CreatedByUserId = this.loggedContact != null ? this.loggedContact.Id : this.entityPM.CreatedByUserId;
+            this.entityPM.VersionNumber = GetLastVersionByDeploymentPackageId(deploymentPackagesVersionPM);
+            this.entityPM.VersionName = BuildVersionName(this.entityPM.VersionNumber);
             this.Poco = new DeploymentPackagesVersion();
             DeploymentPackagesVersionMapping.MapEntity(deploymentPackagesVersionPM, Poco, isNewEntity);
             entityRepository.Add(Poco);
+            if (!submitChanges) return;
             entityRepository.SubmitChanges();
         }
-
+        private int GetLastVersionByDeploymentPackageId(DeploymentPackagesVersionPM deploymentPackagesVersionPM)
+        {
+            DeploymentPackagesVersionRepository deploymentPackagesVersionRepository = new DeploymentPackagesVersionRepository(deploymentPackagesVersionPM.Tenant);
+            int lastVersionNumber = deploymentPackagesVersionRepository.GetLastDeploymentPackagesVersionByDeploymentPackageId(deploymentPackagesVersionPM.DeploymentPackageID, deploymentPackagesVersionPM.Tenant);
+            return lastVersionNumber == 0 ? 0 : lastVersionNumber + 1;
+        }
+        private string BuildVersionName(int versionNumber)
+        {
+            return versionKey +"." + versionNumber;
+        }
         public void Update(DeploymentPackagesVersionPM deploymentPackagesVersionPM)
         {
             this.isNewEntity = false;

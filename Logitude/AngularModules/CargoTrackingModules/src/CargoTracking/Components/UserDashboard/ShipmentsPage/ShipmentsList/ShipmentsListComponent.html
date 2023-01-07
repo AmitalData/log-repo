@@ -418,14 +418,18 @@
                                 </div>
 
 
-                                <div class="subtitle hide-mobile" [attr.src]="SetShipmenTypeForRouting(shipment)">
+                                <div class="subtitle hide-mobile" >
                                     ROUTING</div>
-                                <div [attr.src]="SetRoutingPortNames(shipment)" class="value truncateText hide-mobile">
-                                    <span (click)="$event.stopPropagation()"
-                                          [matTooltip]=" RoutingPortNames?.length > maxNumberOfCarachter ? RoutingPortNames : ''">{{GetSlice(RoutingPortNames,maxNumberOfCarachter)}}</span><br>
-                                    <span style="font-weight:bold"> {{ShipmenTypeForRouting}}</span>
+                                <div class="value truncateText hide-mobile shipment-direction-div">
+
+                                    <img class="country-image" src="./assets/images/Flags/{{shipment.FromPortCountryCode}}.png" style="margin-left: 0;"/>
+                                    <span class="shipments-direction">{{shipment.FromPortCode}}</span>
+                                    <span class="to-port">to</span>
+                                    <img class="country-image" src="./assets/images/Flags/{{shipment.ToPortCountryCode}}.png"/>
+                                    <span class="shipments-direction">{{shipment.ToPortCode}}</span>
+
                                 </div>
-                                <span style="font-weight:bold"> {{ShipmenTypeForRouting}}</span>
+                                <span style="font-weight:bold"> {{SetShipmenTypeForRouting(shipment)}}</span>
 
                             </div>
                         </div>

@@ -143,6 +143,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.TotalFreeUsers = entityPM.TotalFreeUsers;
             entityPOCO.AveragePrice = entityPM.AveragePrice;
             entityPOCO.TotalPaymentamount = entityPM.TotalPaymentamount;
+            entityPOCO.TertiaryColor = entityPM.TertiaryColor;
             entityPOCO.SecondaryColor = entityPM.SecondaryColor;
             entityPM.MainColor = entityPM.MainColor;
             entityPM.SecondaryColor = entityPM.SecondaryColor;

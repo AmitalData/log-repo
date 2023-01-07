@@ -199,6 +199,7 @@ export class CutsomerTenantAccessManagementComponent implements OnInit {
     CreateLogboxTenantLinkClick() {
         let windowArgs: any = {};
         windowArgs.IsCreateLogboxTenantFromCloud = true;
+        windowArgs.LogBoxAdminUserId = this.myTenantPM.LogBoxAdminUserId;
         var logWindow = new LogitudeWindow();
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = 750;

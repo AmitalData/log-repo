@@ -11,6 +11,7 @@ namespace WebFreight.Web.DataContracts
         public string Email { get; set; }
         public string MainColor { get; set; }
         public string SecondaryColor { get; set; }
+        public string TertiaryColor { get; set; }
         public string BackgroundId { get; set; }
         public string BrowserIconId { get; set; }
         public string ComapnylogoId { get; set; }

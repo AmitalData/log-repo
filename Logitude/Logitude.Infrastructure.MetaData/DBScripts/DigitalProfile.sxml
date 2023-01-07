@@ -1,9 +1,8 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="14">
+  <Sql Version="15">
       <![CDATA[	  
 	  delete from DigitalFieldSecurities where id != ''
 	  delete from DigitalProfiles where id != ''
-
       declare @NewEntityId as varchar(15)
  	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT, 'DigitalProfiles'
 	  INSERT INTO DigitalProfiles (Id, Tenant, CreateDate, UpdateDate,  Name) 

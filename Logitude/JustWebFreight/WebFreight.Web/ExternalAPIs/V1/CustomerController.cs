@@ -166,31 +166,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         throw new ApplicationException("Please provide the computing partner code");
                     }
 
-                    if (entity.MainAddress != null)
-                    {
-                        if (entity.MainAddress.Country == null)
-                        {
-                            throw new ApplicationException("Main address country is required");
-                        }
-
-                        if (entity.MainAddress.City == null)
-                        {
-                            throw new ApplicationException("Main address city is required");
-                        }
-                    }
-
-                    if (entity.BillingAddress != null)
-                    {
-                        if (entity.BillingAddress.Country == null)
-                        {
-                            throw new ApplicationException("Billing address country is required");
-                        }
-
-                        if (entity.BillingAddress.City == null)
-                        {
-                            throw new ApplicationException("Billing address city is required");
-                        }
-                    }
+                    this.ValidateAddress(entity.MainAddress, "Main");
+                    this.ValidateAddress(entity.BillingAddress, "Billing");
+                    this.ValidateAddress(entity.PickupDeliveryAddress, "Pickup/Delivery");
+                    this.ValidateContacts(entity.Contacts, authToken.Tenant);
 
                     if (!string.IsNullOrEmpty(entity.Code))
                     {
@@ -208,7 +187,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     CustomerPM entityPM = mappingService.CustomerCustomDataMappingAndValidating(entity, authToken.Tenant, computingPartnerCode);
 
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
-                    {    
+                    {
+                        this.ValidateSalesman(entityPM.SalesmanUserId, authToken.Tenant);
+
                         if(entityPM.Addresses.Count == 0)
                         {
                             throw new ApplicationException("Missing Main Address");
@@ -232,13 +213,14 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 }
                             }
                         }
+
                         if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
                         {
                             ComputingPartnerQuery computingPartnerQuery = new ComputingPartnerQuery(authToken.Tenant);
                             var partner = computingPartnerQuery.GetSinglePMByCodeAndCheckTenantZero(entity.ComputingPartnerCode, authToken.Tenant);
                             entityPM.CreatedByPartner = (partner != null ? partner.Name : null);
-
                         }
+
                         CustomerService service = new CustomerService(MyContext, entityPM);
                         service.Create();
                         service.Submit();
@@ -413,6 +395,36 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Customer", null, "Customer API");
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
+        }
+        private void ValidateAddress(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Address address, string addressType)
+        {
+            if (address == null) return;
+
+            if (address.Country == null)
+                throw new ApplicationException(addressType + " address country is required");
+
+            if (address.City == null)
+                throw new ApplicationException(addressType + " address city is required");
+        }
+        private void ValidateContacts(List<Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Contact> contacts, int tenant)
+        {
+            if (!FeatureToggleHelper.HasFeatureToggle("CTI", tenant)) return;
+            if (contacts == null || contacts.Count == 0) return;
+
+            foreach(var contact in contacts)
+            {
+                if(string.IsNullOrEmpty(contact.Email))
+                    throw new ApplicationException("Contact email is required");
+            }
+        }
+        private void ValidateSalesman(string salesmanUserId, int tenant)
+        {
+            if (string.IsNullOrEmpty(salesmanUserId)) return;
+
+            UserRepository userRepository = new UserRepository(tenant);
+            Simplog.Data.CommonDataModel.EntityPOCOs.User user = userRepository.GetSingleUser(salesmanUserId, tenant);
+            if (user != null && !user.IsSalesman)
+                throw new ApplicationException("Invalid salesman user");
         }
 
         public HttpResponseMessage Put(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Customer entity)

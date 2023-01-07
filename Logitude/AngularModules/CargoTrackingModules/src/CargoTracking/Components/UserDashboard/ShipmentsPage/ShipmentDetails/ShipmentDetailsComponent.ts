@@ -554,16 +554,12 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
     }
 
     SetTypeTitle() {
-        if (this.cargoTrackingShipmentPM.TransportModeId == "A") {
-            this.TypeTitle = "PACKAGE TYPE";
-
-        }
-        if (this.cargoTrackingShipmentPM.TransportModeId != "A") {
-            this.TypeTitle = "CONTAINER TYPE";
-        }
-        if (this.cargoTrackingShipmentPM.EntityType == 'O') {
+        
+       if (this.cargoTrackingShipmentPM.EntityType == 'O') {
             this.TypeTitle = "SHIPMENT TYPE";
         }
+        else 
+        this.TypeTitle = "PACKAGE TYPE";
     }
 
     SetHasContainersDetails() {

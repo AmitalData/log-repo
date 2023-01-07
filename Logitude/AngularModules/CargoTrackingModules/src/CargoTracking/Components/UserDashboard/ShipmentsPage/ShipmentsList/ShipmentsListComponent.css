@@ -251,7 +251,6 @@ h1{
 }
 
 .record-row .column {
-    height: 100%;
     float: left;
     padding: 0 10px;
 }
@@ -970,4 +969,26 @@ h1{
     height: 35px;
     box-shadow: 0px 0px 3px 1px #00000026;
     border: none;
+}
+
+.shipments-direction
+{
+    display: flex;
+    align-items:center;
+    margin-left: 5px;
+    font-weight:bold;
+}
+.shipment-direction-div
+{
+    display: flex;
+}
+.country-image
+{
+    width:16px;
+    height:auto;
+    margin-left: 5px;
+}
+.to-port
+{
+    margin-left: 5px;
 }

@@ -41,6 +41,7 @@
     flex: 1 1 auto;
     overflow: auto;
     margin-top: 12px;
+    min-width: 1220px;
 }
 
 .custom-layout-container::-webkit-scrollbar {
@@ -220,6 +221,21 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
+}
+
+.dl-tab-container::-webkit-scrollbar {
+    width: 6px;
+    height: 8px;
+}
+
+.dl-tab-container::-webkit-scrollbar-track {
+    background: none;
+}
+
+.dl-tab-container::-webkit-scrollbar-thumb {
+    border-radius: 110px;
+    background: rgba(193, 193, 193, 1);
 }
 
 .CloseDashboardTabBtn {

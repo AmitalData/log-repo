@@ -1026,6 +1026,70 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "VersionId",
+					  						ObjectTableName =  "DeploymentPackage",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "DeploymentPackagesVersion",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "VersionId",
+					  						ListPropertyPath =  "VersionId",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "DeploymentPackagesVersion",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "VersionId",
+					  						DefaultText =  "VersionId",
+					  						ListFieldLable =  "VersionIdListLable",
+					  						ListLableDefaultText =  "VersionId",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "DeploymentPackagesVersion",
+					  						NavigationPropertyName =  "DeploymentPackagesVersion",
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -1190,6 +1254,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  		   ObjectTable DeploymentPackageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DeploymentPackage" && d.Tenant == 0).FirstOrDefault(); 
 
  		   TextCode DeploymentPackageTextCode_DeploymentPackageTHGeneral = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeploymentPackage.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = DeploymentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeploymentPackageTextCode_DeploymentPackageOCustomFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeploymentPackage.O.CustomFields", DefaultText = "Custom Fields",LocalDefaultText = null, ObjectTableId = DeploymentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeploymentPackageTextCode_DeploymentPackageOCustomFieldCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeploymentPackage.O.CustomField.Code", DefaultText = "Code",LocalDefaultText = null, ObjectTableId = DeploymentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeploymentPackageTextCode_DeploymentPackageOCustomFieldName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeploymentPackage.O.CustomField.Name", DefaultText = "Field Name",LocalDefaultText = null, ObjectTableId = DeploymentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeploymentPackageTextCode_DeploymentPackageOCustomFieldDataType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeploymentPackage.O.CustomField.DataType", DefaultText = "Data Type",LocalDefaultText = null, ObjectTableId = DeploymentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeploymentPackageTextCode_DeploymentPackageOCustomFieldParentEntity = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DeploymentPackage.O.CustomField.ParentEntity", DefaultText = "Parent Entity",LocalDefaultText = null, ObjectTableId = DeploymentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

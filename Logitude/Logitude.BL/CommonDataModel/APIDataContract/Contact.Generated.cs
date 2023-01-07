@@ -31,7 +31,14 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 	[XmlAttribute]
     public string Code { get; set; }
     
+	[XmlAttribute]
     public string Email { get; set; }
+    
+    public string Position { get; set; }
+    
+    public string BusinessPhone { get; set; }
+    
+    public string Mobile { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

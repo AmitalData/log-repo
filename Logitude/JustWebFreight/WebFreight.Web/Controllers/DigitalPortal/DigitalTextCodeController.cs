@@ -147,7 +147,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         [HttpGet]
         [Route("DigitalTextCode/GetTextCodesByFilters")]
-        public HttpResponseMessage GetTextCodesByFilters(string cardId, string objectTableId)
+        public HttpResponseMessage GetTextCodesByFilters(string cardId, string objectTableId, string profileId)
         {
             int tenant = 0;
             string email = "";
@@ -160,7 +160,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
                 var textCodeQuery = new DigitalTextCodeQueryService(tenant);
 
-                var defaultTextCode = textCodeQuery.GetDigitalTextCodesQuery(0, objectTableId);
+                var defaultTextCode = textCodeQuery.GetDigitalTextCodesQuery(0, objectTableId, profileId);
 
                 var defaultCodesObject = JsonConvert.DeserializeObject<List<DigitalTextCodeObject>>(defaultTextCode.Labels);
 
@@ -168,7 +168,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 if (tenant != 0)
                 {
-                    var customTextCodes = textCodeQuery.GetDigitalTextCodesQuery(tenant, objectTableId);
+                    var customTextCodes = textCodeQuery.GetDigitalTextCodesQuery(tenant, objectTableId, profileId);
 
                     if (customTextCodes != null)
                     {
@@ -214,7 +214,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, digitalTextCodeUpdateModel.CardId);
                 var textCodeQuery = new DigitalTextCodeQueryService(tenant);
-                var customTextCodes = textCodeQuery.GetDigitalTextCodesQuery(digitalTextCodeUpdateModel.Tenant, digitalTextCodeUpdateModel.ObjectTableId);
+                var customTextCodes = textCodeQuery.GetDigitalTextCodesQuery(digitalTextCodeUpdateModel.Tenant, digitalTextCodeUpdateModel.ObjectTableId, digitalTextCodeUpdateModel.ProfileId);
 
                 if (customTextCodes != null)
                 {
@@ -250,6 +250,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     {
                         ObjectTableId = digitalTextCodeUpdateModel.ObjectTableId,
                         Tenant = digitalTextCodeUpdateModel.Tenant,
+                        ProfileId = digitalTextCodeUpdateModel.ProfileId,
                         Labels = JsonConvert.SerializeObject(digitalTextCodeUpdateModel.Lables),
                         CreateDate = DateTime.UtcNow,
                         UpdateDate = DateTime.UtcNow
@@ -273,20 +274,18 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         [HttpGet]
         [Route("DigitalTextCode/GetTranslationCodes")]
-        public HttpResponseMessage GetTranslationCodes(int tenant, string objectTableId)
+        public HttpResponseMessage GetTranslationCodes(int tenant, string objectTableId, string profileId)
         {
             try
             {
                 var textCodeQuery = new DigitalTextCodeQueryService(tenant);
-                var defaultTextCodes = textCodeQuery.GetDigitalTextCodesQuery(0, objectTableId);
-                var textCodes = textCodeQuery.GetDigitalTextCodesQuery(tenant, objectTableId);
+                var defaultTextCodes = textCodeQuery.GetDigitalTextCodesQuery(0, objectTableId, profileId);
                 var defaultCodesObject = JsonConvert.DeserializeObject<List<DigitalTextCodeObject>>(defaultTextCodes.Labels);
-
                 var customCodesObject = new List<DigitalTextCodeObject>();
 
                 if (tenant != 0)
                 {
-                    var customTextCodes = textCodeQuery.GetDigitalTextCodesQuery(tenant, objectTableId);
+                    var customTextCodes = textCodeQuery.GetDigitalTextCodesQuery(tenant, objectTableId, profileId);
 
                     if (customTextCodes != null)
                     {
