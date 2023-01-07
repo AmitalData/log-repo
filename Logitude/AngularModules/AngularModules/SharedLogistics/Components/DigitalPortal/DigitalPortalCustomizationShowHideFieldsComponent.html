@@ -49,7 +49,7 @@
                                     <ng-template let-item>
                                         <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                             <div style="padding-top: 1px; width: 18px; height:20px;float:left;vertical-align:central">
-                                                <LogCheckBox [Checked]="item.HasPersmission"[NoObjectField]="true"
+                                                <LogCheckBox [Checked]="item.HasPersmission" [NoObjectField]="true"
                                                              [ObjectFieldName]="'HasPersmission'" [DataContext]="item.DataContext" [HideColumns]="true"></LogCheckBox>
                                             </div>
                                         </log-cell-template>
@@ -57,10 +57,37 @@
 
                                 </log-column>
 
-                            
+                                <!-- Default Text -->
+                                <log-column [width]="'250'" [header]="'Default Text'" [Alignment]="'left'">
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate [Alignment]="'left'" [IsEnabled]="false">
+                                            <div style="width: 100%; text-align: left;" class="TextTrimming">
+                                                <label>{{item.DefaultText}}</label>
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
+
+                                <!-- Display Label -->
+                                <log-column [width]="'250'" [header]="'Display Text'" [Alignment]="'left'">
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate [Alignment]="'left'">
+                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;" class="TextTrimming">
+                                                <table>
+                                                    <tr>
+                                                        <td>{{item.DisplayText}}</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox (LostFocus)="item.UpdateModifiedLables($event)" [FocusOnMe]="'true'" [ObjectFieldName]="'DisplayText'" [Text]="item.DisplayText" [DataContext]="item.DataContext" [NoObjectField]="true" [HideColumns]="true"></LogTextBox>
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
+
                             </logitude-edit-grid>
                         </div>
-
                     </td>
                 </tr>
             </table>
