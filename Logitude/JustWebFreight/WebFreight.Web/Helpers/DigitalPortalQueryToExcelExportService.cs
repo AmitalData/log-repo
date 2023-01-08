@@ -279,8 +279,8 @@ namespace WebFreight.Web.Helpers
                     row[10] = item.StatusName;
                     row[11] = item.TruckContainerNumber;
                     row[12] = item.NumberOfPackages;
-                    row[13] = ShipmentMapping.GetWeightInKG("LB", item.GrossWeight);
-                    row[14] = item.GrossWeightInKG;
+                    row[13] = item.GrossWeightInKG;  
+                    row[14] = ShipmentMapping.GetWeightInKG("LB", item.GrossWeight);
                     row[15] = item.ChargeableWeightInKG;
                     row[16] = ShipmentMapping.GetWeightInKG("LB", item.ChargeableWeight);
                     row[17] = item.IncotermCode;
