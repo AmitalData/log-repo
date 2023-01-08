@@ -34,13 +34,13 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
         {
             var objetTables = context.DigitalTextCodes
                                      .Include("ObjectTable")
-                                     .Where(a => a.Tenant == tenant)
+                                     .Where(a => a.Tenant == tenant).GroupBy(a => a.ObjectTable)
                                      .Select(a => new DigitalTextCodeList
                                      {
-                                         ObjectTableId = a.ObjectTableId,
-                                         ObjectTableName = a.ObjectTable.Name,
-                                     })
-                                     .ToList();
+                                         ObjectTableId = a.Key.Id,
+                                         ObjectTableName = a.Key.Name,
+                                     }).ToList();
+
             return objetTables;
         }
                 

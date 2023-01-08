@@ -29,7 +29,7 @@ export class AddDigitalFieldCodeComponent {
 
     BuildItemsSource() {
         this.LabelsItemsSource = new ObservableCollection([]);
-        this.digitalTextService.GetTextCodesByFilters(null, this.ObjectTableId).subscribe((myResult) => {
+        this.digitalTextService.GetTextCodesByFilters(null, this.ObjectTableId, null).subscribe((myResult) => {
             if (!myResult.HasError) {
                 var data = myResult.Result?.filter(a => !AppTool.IsNullOrEmpty(a.FieldCode));
                 if (!AppTool.IsNullOrEmpty(this.SearchText)) {
