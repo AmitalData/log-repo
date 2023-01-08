@@ -12,16 +12,17 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
 {
     public partial class DigitalTextCodeQueryService
     {
-        public DigitalTextCodeList GetDigitalTextCodesQuery(int tenant, string objectTableId)
+        public DigitalTextCodeList GetDigitalTextCodesQuery(int tenant, string objectTableId, string profileId = "")
         {
             DigitalTextCodeRepository digitalTextCodeRepository = new DigitalTextCodeRepository(tenant);
-            var defaultTextCode = digitalTextCodeRepository.GetDigitalTextCodes(tenant, objectTableId)
+            var defaultTextCode = digitalTextCodeRepository.GetDigitalTextCodes(tenant, objectTableId, profileId)
                                                             .Select(x => new DigitalTextCodeList
                                                             {
                                                                 Id = x.Id,
                                                                 ObjectTableId = x.ObjectTableId,
                                                                 Tenant = x.Tenant,
                                                                 Labels = x.Labels,
+                                                                ProfileId = x.ProfileId,
                                                                 CreateDate = x.CreateDate,
                                                                 UpdateDate = x.UpdateDate
                                                             })
@@ -33,13 +34,13 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
         {
             var objetTables = context.DigitalTextCodes
                                      .Include("ObjectTable")
-                                     .Where(a => a.Tenant == tenant)
+                                     .Where(a => a.Tenant == tenant).GroupBy(a => a.ObjectTable)
                                      .Select(a => new DigitalTextCodeList
                                      {
-                                         ObjectTableId = a.ObjectTableId,
-                                         ObjectTableName = a.ObjectTable.Name,
-                                     })
-                                     .ToList();
+                                         ObjectTableId = a.Key.Id,
+                                         ObjectTableName = a.Key.Name,
+                                     }).ToList();
+
             return objetTables;
         }
                 
@@ -52,6 +53,7 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                     ObjectTableId = digitalTextCodeList.ObjectTableId,
                     Tenant = digitalTextCodeList.Tenant,
                     Labels = digitalTextCodeList.Labels,
+                    ProfileId = digitalTextCodeList.ProfileId,
                     CreateDate = digitalTextCodeList.CreateDate,
                     UpdateDate = digitalTextCodeList.UpdateDate
                 };
@@ -69,6 +71,7 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                     ObjectTableId = digitalTextCodeList.ObjectTableId,
                     Tenant = digitalTextCodeList.Tenant,
                     Labels = digitalTextCodeList.Labels,
+                    ProfileId = digitalTextCodeList.ProfileId,
                     CreateDate = digitalTextCodeList.CreateDate,
                     UpdateDate = digitalTextCodeList.UpdateDate
                 };

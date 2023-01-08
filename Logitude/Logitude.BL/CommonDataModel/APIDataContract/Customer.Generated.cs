@@ -60,11 +60,13 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
     
     public string LeadDescription { get; set; }
     
-    public DateTime? StartWorkingDate { get; set; }
-    
     public LeadSource LeadSource { get; set; }
     
     public Address PickupDeliveryAddress { get; set; }
+    
+    public string ReceivableExternalId { get; set; }
+    
+    public List<CustomField> CustomFields { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

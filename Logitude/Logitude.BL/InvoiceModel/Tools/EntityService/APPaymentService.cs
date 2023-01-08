@@ -927,7 +927,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         this.UpdateInvoicePaidDate(invoice);
                         this.UpdateInvoicePaymentsNumbers(invoice);
                         APInvoiceService aPInvoiceService = new APInvoiceService(this.objectContext, this.tenant);
-                        aPInvoiceService.Update(invoice);
+                        aPInvoiceService.Update(invoice, true);
                         #endregion
                     }
                 }

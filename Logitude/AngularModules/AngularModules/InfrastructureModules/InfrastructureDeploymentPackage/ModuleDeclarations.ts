@@ -4,6 +4,7 @@ import { DeploymentPackageGeneralTabComponent } from "./Component/EditTabs/Deplo
 import { AddNewDeploymentPackageComponent } from "./Component/NewEntity/AddNewDeploymentPackageComponent";
 import { NewExportDeploymentPackageComponent } from "./Component/NewEntity/NewExportDeploymentPackageComponent";
 import { NewImportDeploymentPackageComponent } from "./Component/NewEntity/NewImportDeploymentPackageComponent";
+import { ExportMenuButtonComponent } from "./Component/MenuButtons/ExportMenuButtonComponent";
 
 
 export const Components =
@@ -13,7 +14,8 @@ export const Components =
         NewImportDeploymentPackageComponent,
         AddCustomFieldsComponent,
         CustomFieldsTabComponent,
-        DeploymentPackageGeneralTabComponent
+        DeploymentPackageGeneralTabComponent,
+        ExportMenuButtonComponent
     ];
 
 export class ModuleDeclarations {
@@ -28,6 +30,7 @@ export class ModuleDeclarations {
             case "CustomFieldsTabComponent": { myResult = CustomFieldsTabComponent; break; }
             case "AddCustomFieldsComponent": { myResult = AddCustomFieldsComponent; break; }
             case "DeploymentPackageGeneralTabComponent": { myResult = DeploymentPackageGeneralTabComponent; break; }
+            case "ExportMenuButtonComponent": { myResult = ExportMenuButtonComponent; break; }
         }
 
         return myResult;

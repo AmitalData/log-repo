@@ -5,7 +5,7 @@ export class ShipmentSelectors extends RegexSelectors {
 
   public static readonly LastElementShipment = ":last";
   public static readonly FirstRowinpackages = '#row0';
-  public static readonly Shipmentcontinernumbere = '#edit-log-grid_0_20_3_0';
+  public static readonly Shipmentcontinernumbere = '[id="edit-log-grid_0_20_3_0"]';
   public static readonly ShipmentcontinernumbereHouse = '#edit-log-grid_0_40_4_0';
   
   
@@ -13,7 +13,7 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly MediaFillAbsolute = '.MediaFillAbsolute';
   public static readonly CloseBtn = '#CloseBtn';
   public static readonly DeleteAll = '#DeleteAll';
-  public static readonly ShipmentMoreList = '#MenuButtons';
+  public static readonly ShipmentMoreList = '[id="MenuButtons"]';
   public static readonly ShipmentTab = '#SHIP';
   public static readonly ContainersTab = '#CNFU';
   public static readonly ShipmentSearchBar = '#Shipment_Search';
@@ -116,8 +116,8 @@ export class ShipmentSelectors extends RegexSelectors {
   public static readonly OrdersTab = '#ShipmentTHOrders';
   public static readonly PartnersTab = '#ShipmentTHPartners';
   public static readonly ShipmentsTab = '#ShipmentTHConsolidation';
-  public static readonly PackagesTab = '#ShipmentTHPackages';
-  public static readonly PackagesTab_Number = '[id^=ShipmentTHPackages]'
+  public static readonly PackagesTab = '[id="ShipmentTHPackages"]';
+  public static readonly PackagesTab_Number = '[id="ShipmentTHPackages_1"]'
   public static readonly ReceivablesTab = '#ShipmentTHReceivables';
   public static readonly RoutingsTab = '#ShipmentTHRoutings';
   public static readonly RoutingsTab_Number = '[id^=ShipmentTHRoutings]'
@@ -420,7 +420,7 @@ public static readonly WarehouseOKBtn="#WarehouseOKBtn"
   public static readonly ReactivateShipmentButton = '#ShipmentBReactivateShipment';
   public static readonly SplitShipmentButton = '#ShipmentBSplitShipment';
   public static readonly OperationalCloseButton = '#ShipmentBOperationalClose';
-  public static readonly AccountllyCloseButton = '#ShipmentBAccountingClose';
+  public static readonly AccountllyCloseButton = '[id="ShipmentBAccountingClose"]';
   public static readonly OperationalReopenButton = '#ShipmentBOperationalReopen';
   public static readonly AccountllyReopenButton = '#ShipmentBAccountedReopen';
   public static readonly ConfirmActionButton = '#ConfirmAction';

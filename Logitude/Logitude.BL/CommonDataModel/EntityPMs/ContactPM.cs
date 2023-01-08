@@ -206,7 +206,9 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public bool IsCreatedWithPartner { get; set; }
-         
+        [DataMember]
+        public bool IsAPIContact { get; set; }
+
         [DataMember]
         public string CompanyName { get; set; }
 

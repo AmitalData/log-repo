@@ -279,7 +279,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 if (documentOutPM == null)
                 {
                     DocumentHelper documentHelper = new DocumentHelper();
-                    documentOutPM = documentHelper.CreateDocumentOut(createDocumentOutArgs.DocumentTypeId, createDocumentOutArgs.EntityId, createDocumentOutArgs.ChildEntityId, createDocumentOutArgs.ChildReference, createDocumentOutArgs.ObjectTableId, createDocumentOutArgs.Tenant);
+                    documentOutPM = documentHelper.CreateDocumentOut(createDocumentOutArgs.DocumentTypeId, createDocumentOutArgs.EntityId, createDocumentOutArgs.ChildEntityId, createDocumentOutArgs.ChildReference, createDocumentOutArgs.ObjectTableId, createDocumentOutArgs.Tenant,null, createDocumentOutArgs.DocumentTypeTemplateId);
                 }
          
                 return Request.CreateResponse(HttpStatusCode.OK, documentOutPM);

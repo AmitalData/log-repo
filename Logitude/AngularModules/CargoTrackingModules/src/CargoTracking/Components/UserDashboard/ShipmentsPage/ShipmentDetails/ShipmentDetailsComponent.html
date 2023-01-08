@@ -493,8 +493,9 @@
                                 {{this.cargoTrackingShipmentPM?.CustomsData.TotalValueInNIS||0 | number}} ₪</div>
                         </div>
                         <div *ngIf="!IsOrderShipment">
-                            <div class="title">total taxes</div>
-                            <div class="description">{{cargoTrackingShipmentPM?.TotalTax}}</div>
+                            <div class="title">total taxes nis</div>
+                            <div class="description" *ngIf="this.cargoTrackingShipmentPM.CustomsData">
+                                {{cargoTrackingShipmentPM?.CustomsData.TotalTax||0 | number}} ₪</div>
                         </div>
                         <div *ngIf="!IsOrderShipment">
                             <div class="title">declaration status</div>
@@ -749,8 +750,9 @@ ACKAGE TYPE
                             </div>
                         </div>
                         <div>
-                            <div class="title">total taxes</div>
-                            <div class="description">{{this.cargoTrackingShipmentPM.CustomsData.TotalTax||0 | number}}
+                            <div class="title">total taxes nis</div>
+                            <div class="description">
+                                {{cargoTrackingShipmentPM?.CustomsData.TotalTax||0 | number}} ₪
                             </div>
                         </div>
                         <div>
@@ -798,14 +800,14 @@ ACKAGE TYPE
                             <th style="width: 200px;"><span class="hide-mobile">calculation base</span><span
                                     class="mobile-only">base</span></th>
 
-                            <th style="width: 150px;text-align: right;"><span class="hide-mobile">tax amount</span><span
+                            <th style="width: 150px;text-align: right;"><span class="hide-mobile">tax amount (NIS)</span><span
                                     class="mobile-only">amount</span></th>
                             <!-- <th style="width: 200px;">pay amount</th>
                         <th style="width: 200px;">rejected amount</th> -->
                         </tr>
                         <tr *ngFor="let detail of this.cargoTrackingShipmentPM.CustomsData.TaxDetails">
                             <td>{{detail.TaxTypeName}}</td>
-                            <td>{{detail.TaxBasis}}</td>
+                            <td>{{detail.TaxBasis| number}}</td>
                             <td style="text-align: right;">{{detail.TaxAmount | number}}</td>
                         </tr>
 

@@ -27,7 +27,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         CreateDate, 
 	         UpdateDate, 
 	         ObjectTableId, 
-	         Labels,
+	         Labels, 
+	         ProfileId,
 	      }
 
 
@@ -40,7 +41,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         UpdateDate, 
 	         ObjectTableId, 
 	         Labels, 
-	         ObjectTableName,
+	         ObjectTableName, 
+	         ProfileId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -72,6 +74,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Labels))
             {
 				entityPOCO.Labels = entityPM.Labels;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ProfileId))
+            {
+				entityPOCO.ProfileId = entityPM.ProfileId;
 			}
 			}
 
@@ -108,6 +115,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 					entityPM.Labels = entityPOCO.Labels;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ProfileId))
+            {
+					entityPM.ProfileId = entityPOCO.ProfileId;
+            }
+
 		}
 
 		public void PMToOldPM(DigitalTextCodePM entityPM, DigitalTextCodePM oldEntityPM)
@@ -137,6 +149,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Labels))
             {
                 oldEntityPM.Labels = entityPM.Labels;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ProfileId))
+            {
+                oldEntityPM.ProfileId = entityPM.ProfileId;
             }
 			
 		}

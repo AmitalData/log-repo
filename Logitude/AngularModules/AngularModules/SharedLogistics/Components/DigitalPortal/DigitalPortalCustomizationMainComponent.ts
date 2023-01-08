@@ -50,7 +50,7 @@ export class DigitalPortalCustomizationMainComponent {
         var myResult: CustomizationMainMenuItem[] = [];
 
         var args = new CustomizationMainMenuItem();
-        args.TextCode = "Chage Labels";
+        args.TextCode = "Change Labels";
         args.Code = "ChageLabels";
         args.ComponentPath = "./SharedLogistics/Components/DigitalPortal/DigitalPortalCustomizationChageLabelsComponent";
         myResult.push(args);
@@ -62,7 +62,7 @@ export class DigitalPortalCustomizationMainComponent {
         myResult.push(args);
 
         args = new CustomizationMainMenuItem();
-        args.TextCode = "Fields Permissions";
+        args.TextCode = "Fields Management";
         args.Code = "ShowHideFields";
         args.ComponentPath = "./SharedLogistics/Components/DigitalPortal/DigitalPortalCustomizationShowHideFieldsComponent";
         myResult.push(args);
