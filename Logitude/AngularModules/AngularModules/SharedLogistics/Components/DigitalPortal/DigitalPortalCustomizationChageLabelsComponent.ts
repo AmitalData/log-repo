@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { DigitalPortalCustomizationMainComponent } from './DigitalPortalCustomizationMainComponent';
 import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
@@ -11,13 +11,14 @@ import { AppTool } from '../../../Infrastructure/Tools';
     templateUrl: './DigitalPortalCustomizationChageLabelsComponent.html',
 })
 
-export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponent {
+export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponent implements OnInit {
     private digitalTextService: DigitalTextService;
     private CurrentSession = SessionLocator.SelectedSession;
     public customizationEditComponent: DigitalPortalCustomizationMainComponent;
     public LabelsItemsSource: ObservableCollection;
     public ModifiedLables: DigitalTextCodeUpdateModel;
     public IsModifiedLables = false;
+    public IsChange: boolean = false;
 
     constructor() {
         super();
@@ -30,6 +31,14 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
 
     SetWindowArgs(args: any) {
         this.FillObjectTablesFiltersList();
+    }
+
+    ngOnInit() {
+        this.CurrentSession.SessionEvent.subscribe(($event: any) => {
+            if ($event.Name == "ReloadDigitalPortalLabels") {
+                this.IsChange = true;
+            }
+        });
     }
 
     public ObjectTablesFilterList: CodeNameClass[];
