@@ -2397,6 +2397,93 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
         #region Digital Portal 
 
+        public IQueryable<ARInvoice> GetByFiltersForDashBoard(GeneralFilters newFilters)
+        {
+            var tenant = newFilters.Tenant;
+            var myTenantRepository = new TenantRepository(tenant);
+            var myTenant = myTenantRepository.GetSingleTenant(tenant);
+
+            var filters = new ApiQueryFilters()
+            {
+                Filter1Value = newFilters.CardId,
+                Filter2Value = newFilters.CardType
+            };
+
+            var queryOperations = new QueryOperations()
+            {
+                ObjectTableName = "ARInvoice",
+                PageIndex = newFilters.PageIndex,
+                PageSize = newFilters.PageSize,
+                QuerySection = "ARInvoices",
+                SortByColumnName = newFilters.SortBy,
+                SortDirectin = newFilters.SortDirection
+            };
+
+            queryOperations.SetFilter("IsPrinted", true, false, "Equals", null, false);
+            queryOperations.SetFilter("IsConstituentInvoice", false, false, "Equals", null, false);
+
+            var cardFilterValues = newFilters.CardId;
+            if (!string.IsNullOrWhiteSpace(cardFilterValues))
+            {
+                var cardBillToIds = GetCardBillToId(newFilters.CardId, tenant);
+                if (cardBillToIds.Any())
+                {
+                    cardFilterValues = cardFilterValues + "," + string.Join(",", cardBillToIds);
+                    queryOperations.SetFilter("PartnerId", newFilters.CardId, false, "InList", null, false);
+                }
+
+                queryOperations.SetFilter("BillToId", cardFilterValues, false, "InList", null, false);
+            }
+
+            var ARInvoiceObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableNameWithNoIncludes("ARInvoice", tenant);
+
+            if (newFilters.AdditionalFilters.Any())
+            {
+                foreach (var filter in newFilters.AdditionalFilters)
+                {
+                    var field = ARInvoiceObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+
+                    if (field != null)
+                    {
+                        string valuestring1 = filter.FieldValue?.ToString();
+                        object value1 = FieldValueResolver.GetFieldDataValue(field, valuestring1);
+                        string valuestring2 = filter.FieldValue2?.ToString();
+                        object value2 = FieldValueResolver.GetFieldDataValue(field, valuestring2);
+                        queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+                    }
+                    else
+                    {
+                        queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
+                    }
+                }
+            }
+
+            var genericFilter = new GenericFilter();
+            var MyContext = InvoiceContext.GetContext(tenant);
+
+            var nonListQueryOperation = new QueryOperations
+            {
+                QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList()
+            };
+
+            var listQueryOperation = new QueryOperations
+            {
+                QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList()
+            };
+
+            var aRInvoiceRepository = new ARInvoiceRepository(MyContext);
+            var aRInvoiceQuery = new ARInvoiceQuery(aRInvoiceRepository);
+
+            var entityPocos = aRInvoiceRepository.GetARInvoices(tenant);
+
+            entityPocos = aRInvoiceRepository.FilterInvoicesStatusesForList(entityPocos);
+
+            var customfilters = new ARInvoiceCustomFilter(tenant);
+            entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
+            entityPocos = genericFilter.GetFilteredQuery(nonListQueryOperation, entityPocos);
+            return entityPocos;
+        }
+
         public IQueryable<ARInvoiceList> GetByFilters(GeneralFilters newFilters)
         {
             var tenant = newFilters.Tenant;

@@ -58,7 +58,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             }
         }
 
-
         [HttpPost]
         [Route("DigitalDashboard/GetInvoicesGroupedByDate")]
         public HttpResponseMessage GetInvoicesGroupedByDate(GeneralFilters newFilters)
@@ -75,17 +74,59 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 newFilters.Tenant = authToken.Tenant;
                 var aRInvoiceQuery = new ARInvoiceQuery(authToken.Tenant);
-                var invoices = aRInvoiceQuery.GetByFilters(newFilters);
+                var invoices = aRInvoiceQuery.GetByFiltersForDashBoard(newFilters);
 
-                var res = invoices.Where(r => r.DueDate != null
-                                              && r.PaidStatus != "Paid")
-                                  .Select(a => new InvoiceStatusDashboardModel()
-                                  { 
-                                     PaidStatus =  a.PaidStatus,
-                                     DueDate = a.DueDate
-                                  });
+                DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+                var lastMonth = todayDate.AddMonths(-1);
+                var last2Month = todayDate.AddMonths(-2);
+                var nextMonth = todayDate.AddMonths(1);
 
-                var response = GetInvoicesSummaries(tenant, res);
+                var overDueCounters = invoices.Where(a => a.DueDate != null
+                                                          && a.DueDate < todayDate
+                                                          && a.PaidStatus == "Unpaid" || a.PaidStatus == "Partially Paid")
+                                              .GroupBy(a => a.DueDate.Value.Month == todayDate.Month && a.DueDate.Value.Year == todayDate.Year
+                                                         ? "Current"
+                                                      : a.DueDate.Value.Month == lastMonth.Month && a.DueDate.Value.Year == lastMonth.Year
+                                                        ? "Last Month"
+                                                        : a.DueDate.Value.Month == last2Month.Month && a.DueDate.Value.Year == last2Month.Year
+                                                          ? "Last 2 Month"
+                                                          : "Less than 2 Month")
+                                              .Select(a => new
+                                              {
+                                                  Lable = a.Key,
+                                                  OverDueCount = a.Count()
+                                              })
+                                              .ToList();
+
+                var partiallyPaidCounter = invoices.Where(a => a.DueDate != null
+                                                                && a.DueDate < todayDate
+                                                                && a.PaidStatus == "Partially Paid")
+                                                   .GroupBy(a => a.DueDate.Value.Month == todayDate.Month && a.DueDate.Value.Year == todayDate.Year
+                                                              ? "Current"
+                                                           : a.DueDate.Value.Month == lastMonth.Month && a.DueDate.Value.Year == lastMonth.Year
+                                                             ? "Last Month"
+                                                             : a.DueDate.Value.Month == last2Month.Month && a.DueDate.Value.Year == last2Month.Year
+                                                               ? "Last 2 Month"
+                                                               : "Less than 2 Month")
+                                                   .Select(a => new
+                                                   {
+                                                       Lable = a.Key,
+                                                       PartiallyPaidCount = a.Count()
+                                                   })
+                                                   .ToList();
+
+                var response = new Dictionary<string, object>();
+
+                foreach (var item in partiallyPaidCounter)
+                {
+                    var data = overDueCounters.FirstOrDefault(a => a.Lable.Equals(item.Lable));
+                    response.Add(item.Lable, new
+                    {
+                        item.PartiallyPaidCount,
+                        data.OverDueCount
+                    });
+                }
+
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             }
             catch (AutenticationException ex)
@@ -347,37 +388,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         }
 
         #region Private Methods 
-
-        private Dictionary<string, object> GetInvoicesSummaries(int tenant, IQueryable<InvoiceStatusDashboardModel> res)
-        {
-            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
-            var lastMonth = todayDate.AddMonths(-1);
-            var last2Month = todayDate.AddMonths(-2);
-
-            var response = res.Where(a => a.DueDate.Value <= todayDate)
-                              .Select(a => new 
-                              {
-                                  DueDate = a.DueDate.Value,
-                                  PaidStatus = a.PaidStatus,
-                                  data = a.DueDate.Value.Month == todayDate.Month && a.DueDate.Value.Year == todayDate.Year
-                                         ? "Current"
-                                         : a.DueDate.Value.Month == lastMonth.Month && a.DueDate.Value.Year == lastMonth.Year
-                                           ? "Last Month"
-                                           : a.DueDate.Value.Month == last2Month.Month && a.DueDate.Value.Year == last2Month.Year
-                                             ? "Last 2 Month"
-                                             : "Less than 2 Month"
-                              })
-                              .GroupBy(a => a.data)
-                              .ToDictionary(x => x.Key,
-                                                  t => (object)new
-                                                  {
-                                                      PartiallyPaidCount = t.Where(a => a.PaidStatus == "Partially Paid").Count(),
-                                                      OverDueCount = t.Where(a => a.DueDate < todayDate).Count()
-                                                  }); ;
-
-
-            return response;
-        }
 
         private Dictionary<string, object> GetDigitalStatusesWithCount(IQueryable<DigitalShipmentList> shipments, int tenant)
         {
