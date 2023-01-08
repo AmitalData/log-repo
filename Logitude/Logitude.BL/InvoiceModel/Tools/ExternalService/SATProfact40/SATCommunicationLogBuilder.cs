@@ -123,13 +123,11 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
 
         private string GetFolioSustitucion(SATCommunicationLogArgs args)
         {
-            if (args.IsPayment) return "No se llevó a cabo la operación";
+            if (args.IsPayment) return "";
             switch (args.ARInvoicePM.SATCancelReasonCode)
             {
                 case "01": return GetRelatedInvoiceUUID(args);
-                case "02": return "Comprobante emitido con errores sin relación";
-                case "03": return "No se llevó a cabo la operación";
-                default: return "0";
+                default: return "";
             }
         }
 

@@ -268,6 +268,20 @@ export class ShipmentDomainService extends BaseService  {
             }), catchError(ServiceHelper.HandleServiceError));
         });
     }
+    GetShipmentReceivablePMsByShipmentId(shipmentId: any, tenant: number) {
+        var url = this._apiUrl + '/GetShipmentReceivablePMsByShipmentId?shipmentId=' + shipmentId + '&tenant=' + tenant;
+
+        return defer(() => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var myJsonResult = response;
+
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myJsonResult;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
     GetShipmentsQuotesCount() {
 
         var url = this._apiUrl + '/GetShipmentsQuotesCount?';

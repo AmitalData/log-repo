@@ -1712,9 +1712,8 @@ export class ARPaymentInvoiceArgs extends BaseComponent {
             this.isControlEnabled = true;
             this.CheckBoxVisibility = true;
             this.NotMatchedVisibility = false;
-            if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE" && this.PaymentPM.SATTransferStatusCode != undefined && this.PaymentPM.SATTransferStatusCode != "NT" && this.PaymentPM.SATTransferStatusCode != "TE" &&
-                !(this.PaymentPM.SATTransferStatusCode == "TD" && (this.PaymentPM.StatusCode == "DR"))) {
-                this.CheckBoxEnabled = false;
+            if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE" && this.PaymentPM.SATTransferStatusCode != undefined && this.PaymentPM.SATTransferStatusCode != "NT" && this.PaymentPM.SATTransferStatusCode != "TE") {
+                this.CheckBoxEnabled = !(this.PaymentPM.SATTransferStatusCode == "TD" && this.PaymentPM.StatusCode == "AD");
             }
         }
 
