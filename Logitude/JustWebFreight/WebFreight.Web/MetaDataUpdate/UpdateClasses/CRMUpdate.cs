@@ -25,6 +25,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.CRM.BL.CLoseTable;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.EntityUpdateClasses;
+using System.Configuration;
 
 namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 {
@@ -68,17 +69,25 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
         public void UpgradeClosedTablesForTenantZero()
         {
             isUpdate = true;
-            List<GlobalDB> dbList = null;
-            using (TransactionScope scop = TransactionFactory.GetNewTransaction(new TimeSpan(0, 5, 0)))//new TransactionScope(TransactionScopeOption.RequiresNew, new TimeSpan(0, 5, 0)))
-            {
-                GlobalDBRepository globalDbRep = new GlobalDBRepository();
-                dbList = globalDbRep.GetGlobalDBs().ToList();
-                scop.Complete();
-            }
 
-            foreach (GlobalDB db in dbList)
+            string enviroment = ConfigurationManager.AppSettings.Get("ENVIROMENT");
+            if (enviroment == "azure app service")
+                LoadBaseTablesForConnection(ConfigurationManager.ConnectionStrings["SystemMainStr"].ConnectionString);
+
+            else
             {
-                LoadBaseTablesForConnection(db.DBConnection);
+                List<GlobalDB> dbList = null;
+                using (TransactionScope scop = TransactionFactory.GetNewTransaction(new TimeSpan(0, 5, 0)))//new TransactionScope(TransactionScopeOption.RequiresNew, new TimeSpan(0, 5, 0)))
+                {
+                    GlobalDBRepository globalDbRep = new GlobalDBRepository();
+                    dbList = globalDbRep.GetGlobalDBs().ToList();
+                    scop.Complete();
+                }
+
+                foreach (GlobalDB db in dbList)
+                {
+                    LoadBaseTablesForConnection(db.DBConnection);
+                }
             }
         }
 

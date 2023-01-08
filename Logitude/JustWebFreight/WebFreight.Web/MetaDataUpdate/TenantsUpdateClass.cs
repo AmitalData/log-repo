@@ -52,6 +52,7 @@ using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel;
 using WebFreight.Web.Helpers.AutomationModel;
 using Microsoft.VisualStudio.Services.Common;
+using Simplog.Global.Data.GlobalModel.Helpers;
 
 namespace WebFreight.Web.MetaDataUpdate
 {
@@ -1418,10 +1419,10 @@ namespace WebFreight.Web.MetaDataUpdate
             updateClass.LoadObjectTableRulesANDFieldsValidations();
         }
         private static void ForCourier()
-        {
-            GlobalDBRepository globalDbRep = new GlobalDBRepository();
-            var db = globalDbRep.GetGlobalDBs().First();
+        {            
+            var db = GlobalDbHelper.GetGlobalDB(0);
             var commonDataContext = new CommonDataContext(DatabaseInitializer.GetConnection(db.DBConnection));
+
             MetaDataUpdateClass.CustomsInterfaces(commonDataContext);//courier 
         }
 

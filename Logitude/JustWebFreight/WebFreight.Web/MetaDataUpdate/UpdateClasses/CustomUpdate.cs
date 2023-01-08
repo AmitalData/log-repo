@@ -36,6 +36,7 @@ using WebFreight.Web.MetaDataUpdate.DetailClasses;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.BL;
 using Logitude.Infrastructure.Data.EntityPOCOs;
+using System.Configuration;
 
 namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 {
@@ -16577,31 +16578,45 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
         public void LoadBaseTablesForDataBases()
         {
-            GlobalDBRepository globalDbRep = new GlobalDBRepository();
-            List<GlobalDB> dbList = globalDbRep.GetGlobalDBs().ToList();
+            string enviroment = ConfigurationManager.AppSettings.Get("ENVIROMENT");
+            if (enviroment == "azure app service")
+                LoadBaseTablesForConnection(ConfigurationManager.ConnectionStrings["SystemMainStr"].ConnectionString);
 
-            foreach (GlobalDB db in dbList)
+            else
             {
-                LoadBaseTablesForConnection(db.DBConnection);
+                GlobalDBRepository globalDbRep = new GlobalDBRepository();
+                List<GlobalDB> dbList = globalDbRep.GetGlobalDBs().ToList();
+
+                foreach (GlobalDB db in dbList)
+                {
+                    LoadBaseTablesForConnection(db.DBConnection);
+                }
             }
         }
 
         public void UpgradeClosedTablesForTenantZero()
         {
             isUpdate = true;
-            List<GlobalDB> dbList = null;
-            using (TransactionScope scop = TransactionFactory.GetNewTransaction(new TimeSpan(0, 5, 0)))//new TransactionScope(TransactionScopeOption.RequiresNew, new TimeSpan(0, 5, 0)))
-            {
-                GlobalDBRepository globalDbRep = new GlobalDBRepository();
-                dbList = globalDbRep.GetGlobalDBs().ToList();
-                scop.Complete();
-            }
 
-            foreach (GlobalDB db in dbList)
-            {
-                LoadBaseTablesForConnection(db.DBConnection);
-            }
+            string enviroment = ConfigurationManager.AppSettings.Get("ENVIROMENT");
+            if (enviroment == "azure app service")
+                LoadBaseTablesForConnection(ConfigurationManager.ConnectionStrings["SystemMainStr"].ConnectionString);
 
+            else
+            {
+                List<GlobalDB> dbList = null;
+                using (TransactionScope scop = TransactionFactory.GetNewTransaction(new TimeSpan(0, 5, 0)))//new TransactionScope(TransactionScopeOption.RequiresNew, new TimeSpan(0, 5, 0)))
+                {
+                    GlobalDBRepository globalDbRep = new GlobalDBRepository();
+                    dbList = globalDbRep.GetGlobalDBs().ToList();
+                    scop.Complete();
+                }
+
+                foreach (GlobalDB db in dbList)
+                {
+                    LoadBaseTablesForConnection(db.DBConnection);
+                }
+            }
         }
 
         private void LoadBaseTablesForConnection(string connectionStr)

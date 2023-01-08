@@ -29,6 +29,7 @@ using Logitude.Server.Tools.CloseTablesClasses;
 using Logitude.Accounting.BL.CloseTables;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Def.EntityPMs;
+using System.Configuration;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 {
@@ -82,29 +83,45 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 
         public void LoadBaseTablesForDataBases()
         {
-            GlobalDBRepository globalDbRep = new GlobalDBRepository();
-            List<GlobalDB> dbList = globalDbRep.GetGlobalDBs().ToList();
+            string enviroment = ConfigurationManager.AppSettings.Get("ENVIROMENT");
 
-            foreach (GlobalDB db in dbList)
+            if (enviroment == "azure app service")
+                LoadBaseTablesForConnection(ConfigurationManager.ConnectionStrings["SystemMainStr"].ConnectionString);
+
+            else
             {
-                LoadBaseTablesForConnection(db.DBConnection);
+                GlobalDBRepository globalDbRep = new GlobalDBRepository();
+                List<GlobalDB> dbList = globalDbRep.GetGlobalDBs().ToList();
+
+                foreach (GlobalDB db in dbList)
+                {
+                    LoadBaseTablesForConnection(db.DBConnection);
+                }
             }
         }
        
         public void UpgradeClosedTablesForTenantZero()
         {
             isUpdate = true;
-            List<GlobalDB> dbList = null;
-            using (TransactionScope scop = TransactionFactory.GetNewTransaction(new TimeSpan(0, 5, 0)))//new TransactionScope(TransactionScopeOption.RequiresNew, new TimeSpan(0, 5, 0)))
-            {
-                GlobalDBRepository globalDbRep = new GlobalDBRepository();
-                dbList = globalDbRep.GetGlobalDBs().ToList();
-                scop.Complete();
-            }
 
-            foreach (GlobalDB db in dbList)
+            string enviroment = ConfigurationManager.AppSettings.Get("ENVIROMENT");
+            if (enviroment == "azure app service")
+                LoadBaseTablesForConnection(ConfigurationManager.ConnectionStrings["SystemMainStr"].ConnectionString);
+
+            else
             {
-                LoadBaseTablesForConnection(db.DBConnection);
+                List<GlobalDB> dbList = null;
+                using (TransactionScope scop = TransactionFactory.GetNewTransaction(new TimeSpan(0, 5, 0)))//new TransactionScope(TransactionScopeOption.RequiresNew, new TimeSpan(0, 5, 0)))
+                {
+                    GlobalDBRepository globalDbRep = new GlobalDBRepository();
+                    dbList = globalDbRep.GetGlobalDBs().ToList();
+                    scop.Complete();
+                }
+
+                foreach (GlobalDB db in dbList)
+                {
+                    LoadBaseTablesForConnection(db.DBConnection);
+                }
             }
         }
 
