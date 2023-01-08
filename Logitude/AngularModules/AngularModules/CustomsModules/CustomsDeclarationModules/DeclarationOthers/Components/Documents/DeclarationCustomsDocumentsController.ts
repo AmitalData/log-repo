@@ -193,12 +193,17 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
                         var customsDocumentTicketViewModel_271: CustomsDocumentTicketViewModel = this.originalCustomsDocumentTicketViewModel.filter(d => d.DocumentTypeCode == '271')[0];
                         if (!customsDocumentTicketViewModel_271) {
                             var sum: number = 0;
+                            var isPackageCodeD5: boolean = false;
                             for (var i = 0; i < this.declarationPM.Consignments.length; i++) {
                                 for (var j = 0; j < this.declarationPM.Consignments[i].ConsignmentPackages.length; j++) {
                                     sum = sum + this.declarationPM.Consignments[i].ConsignmentPackages[j].PackageQuantity;
+                                    if (this.declarationPM.Consignments[i].ConsignmentPackages[j].PackageTypeCode == 'D5') {
+                                        isPackageCodeD5 = true;
+                                    }
                                 }
                             }
-                            if (sum != null && sum > 1) {
+
+                            if ((sum != null && sum > 1) || (isPackageCodeD5 && this.declarationPM.TransportModeId == 'O')) {
                                 var entityParams: RelatedEntityParams = new RelatedEntityParams()
                                 entityParams.ParentEntityCode = 'Declaration';
                                 entityParams.ParentEntityId = this.declarationPM.Id;
