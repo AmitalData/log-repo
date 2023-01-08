@@ -93,7 +93,7 @@
                     [DataContext]="DataContext"></LogLabel>
             </div>
             <div class="table-row-cell-block">
-                <TreeSelect [Items]="RecordsTreeItems" [Width]="'300px'" [Value]="Record" [ShowExpand]="false"
+                <TreeSelect [Items]="EditableRecordsTreeItems" [Width]="'300px'" [Value]="Record" [ShowExpand]="false"
                     (ValueChanged)="updateRecord($event)">
                 </TreeSelect>
             </div>
