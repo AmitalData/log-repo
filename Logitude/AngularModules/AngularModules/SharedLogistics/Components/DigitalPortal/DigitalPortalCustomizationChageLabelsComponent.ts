@@ -155,7 +155,7 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
         if (this.IsModifiedLables) {
             this.CurrentSession.StartBusyIndicatorLoading();
             this.ModifiedLables.ObjectTableId = this.SelectedObjectTableItem.Name;
-            this.ModifiedLables.ProfileId = this.SelectedProfileItem.Name;
+            this.ModifiedLables.ProfileId = this.SelectedProfileItem.Code;
             this.digitalTextService.UpdateDigitalTextCodes(this.ModifiedLables).subscribe((myResult) => {
                 this.customizationEditComponent.IsDirty = false;
                 this.ModifiedLables = new DigitalTextCodeUpdateModel();
