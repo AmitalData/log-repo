@@ -246,16 +246,17 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
             baseIdCombination = this.ObjectFieldName;
         }
         if (this.CheckIfExists(baseIdCombination)) {
+            
             setTimeout(() => {
                 if (this.CheckIfExists(baseIdCombination)) {
                     this.counterId = ControlsIdCounter.GetNextControlIdCounter(baseIdCombination);
+                    if (this.counterId != null) {
+                        baseIdCombination = baseIdCombination + '_' + this.counterId.toString();
+                    }
+            
+                    this.SetControlIds(baseIdCombination);
                 }
             }, 1000)
-
-        }
-
-        if (this.counterId != null) {
-            baseIdCombination = baseIdCombination + '_' + this.counterId.toString();
         }
 
         this.SetControlIds(baseIdCombination);
