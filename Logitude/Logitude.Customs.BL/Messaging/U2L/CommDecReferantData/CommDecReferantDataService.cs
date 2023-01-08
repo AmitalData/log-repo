@@ -129,6 +129,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDecReferantData
                     this._DeclarationReferantDataPM = new Def.EntityPMs.DeclarationReferantDataPM();
                     this._DeclarationReferantDataPM.ChangeSetOp = ChangeSetOperation.Insert;
                     this._DeclarationReferantDataPM.DeclarationId = this._MyDeclarationPM.Id;
+                    this._DeclarationReferantDataPM.IsClosedForFollowUp ="0";
+
                 }
                 else
                 {
@@ -159,11 +161,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDecReferantData
                         _DeclarationReferantDataPM.IsClosedForFollowUp = "0";
                     }
                 }
-                else
-                {
-                    _DeclarationReferantDataPM.IsClosedForFollowUp = "0";
-                }
-
+               
                 if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.PreClassification))
                 {
                     if(_LogitudeDeclarationReferantData.PreClassification == "D")
