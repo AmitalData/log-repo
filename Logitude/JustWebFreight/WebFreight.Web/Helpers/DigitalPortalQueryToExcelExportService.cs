@@ -35,6 +35,7 @@ using WebFreight.Web.Controllers.InvoiceModel.ApiHelpers;
 using WebFreight.Web.Controllers.ShipmentsModel.ApiHelpers;
 using WebFreight.Web.Security;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.Tools.DataMapping;
 
 namespace WebFreight.Web.Helpers
 {
@@ -278,12 +279,12 @@ namespace WebFreight.Web.Helpers
                     row[10] = item.StatusName;
                     row[11] = item.TruckContainerNumber;
                     row[12] = item.NumberOfPackages;
-                    row[13] = item.GrossWeight;
+                    row[13] = ShipmentMapping.GetWeightInKG("LB", item.GrossWeight);
                     row[14] = item.GrossWeightInKG;
-                    row[15] = item.ChargeableWeight;
-                    row[16] = item.ChargeableWeightInKG;
+                    row[15] = item.ChargeableWeightInKG;
+                    row[16] = ShipmentMapping.GetWeightInKG("LB", item.ChargeableWeight);
                     row[17] = item.IncotermCode;
-                    row[18] = item.Volume;
+                    row[18] = ShipmentMapping.GetVolumeInCBM("CBF", item.Volume);
                     row[19] = item.VolumeInCBM;
                     row[20] = item.ValueOfGoods;
                     row[21] = item.DescriptionOfGoods;
