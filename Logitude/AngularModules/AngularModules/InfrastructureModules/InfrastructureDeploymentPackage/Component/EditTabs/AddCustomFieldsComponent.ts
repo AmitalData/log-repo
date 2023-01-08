@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { CustomFields } from '../../../../Infrastructure/EntityPMs/DeploymentPackageDetails';
+import { CustomPickListList } from '../../../../Infrastructure/EntityLists/CustomPickListList';
+import { CustomFields, CustomPickListItem } from '../../../../Infrastructure/EntityPMs/DeploymentPackageDetails';
 import { DeploymentPackagePM } from '../../../../Infrastructure/EntityPMs/DeploymentPackagePM';
 import { ObjectFieldPM } from '../../../../Infrastructure/EntityPMs/ObjectFieldPM';
 import { ObjectTablePM } from '../../../../Infrastructure/EntityPMs/ObjectTablePM';
 import { GeneralDomainService } from '../../../../Infrastructure/Services/GeneralDomainService';
+import { CustomPickListListService } from '../../../../Infrastructure/Services/StandardLists/CustomPickListListService';
 import { AppTool } from '../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { CustomFieldsTabComponent } from './CustomFieldsTabComponent';
@@ -28,6 +30,7 @@ export class AddCustomFieldsComponent extends BaseComponent {
     public IsLogLovReady: boolean = false;
     private generalDomainService: GeneralDomainService;
     public ValidationErrorsList: string[] = [];
+    private customPickListItems: CustomPickListItem[];
 
     constructor() {
         super();
@@ -113,7 +116,8 @@ export class AddCustomFieldsComponent extends BaseComponent {
         this.ValidationErrorsList = [];
         this.ValidateCustomFields();
         if (this.ValidationErrorsList.length > 0) return;
-        this.CurrentSession.CloseCurrentWindowEmit("OK");
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.SetCustomPickLists();
     }
 
     public ValidateCustomFields() {
@@ -142,4 +146,26 @@ export class AddCustomFieldsComponent extends BaseComponent {
         return selectedcustomFieldsOfObjectTable?.length;
     }
 
+    SetCustomPickLists() {
+        var customPickListListService = new CustomPickListListService();
+        customPickListListService.getAll().subscribe((response: ServiceResponse) => {
+            if (response.HasError) return;
+            this.MapCustomPickListsDetails(response.Result);
+            this.customFieldsTabComponent.CustomPickLists = this.customPickListItems;
+            this.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
+        });
+    }
+    MapCustomPickListsDetails(customPickLists: Array<CustomPickListList>) {
+        this.customPickListItems = [];
+        this.SelectedCustomFields.forEach(customfield => {
+            if (AppTool.IsNullOrEmpty(customfield.CustomPickListCode)) return;
+
+            let customPickListItem = this.customPickListItems.filter(customPickListItem => customPickListItem.Code == customfield.CustomPickListCode)[0];
+            if (customPickListItem) return;
+
+            let customPickListList = customPickLists.filter(customPickList => customPickList.Code == customfield.CustomPickListCode);
+            customPickListList.forEach(customPickList => this.customPickListItems.push(new CustomPickListItem(customPickList)));
+        });
+    }
 }

@@ -1,4 +1,4 @@
-<div class="TabHolder">
+<div class="TabHolder" [style.opacity]="EntityPM.IsExported ? '0.5':'1'" [style.pointer-events]="EntityPM.IsExported ? 'none':'auto'">
     <table>
         <tr style="height: 1px;">
             <td>
@@ -45,6 +45,15 @@
                                     </td>
                                 </tr>
 
+                                <!-- Test button -->
+                                <tr class="FormFieldRow">
+                                    <td style="width: 100px;">
+                                    </td>
+
+                                    <td>
+                                        <button class="Button" (click)="Download()">Download Document</button>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td></td>
                                 </tr>

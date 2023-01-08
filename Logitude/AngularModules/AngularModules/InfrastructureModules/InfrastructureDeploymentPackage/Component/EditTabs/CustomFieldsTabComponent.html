@@ -1,5 +1,5 @@
 
-<div class="TabHolder">
+<div class="TabHolder" [style.opacity]="EntityPM.IsExported ? '0.5':'1'" [style.pointer-events]="EntityPM.IsExported ? 'none':'auto'">
     <table>
         <tr class="TabTitleRow">
             <td style="padding-bottom:20px">
@@ -37,7 +37,7 @@
                                     {{item.Code}}
                                 </td>
                                 <td class="GridViewCell" style="width: 150px; min-width: 150px;max-width:150px;">
-                                    {{item.Name}}
+                                    {{item.DefaultText}}
                                 </td>
                                 <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px; ">
                                     {{item.DataTypeName}}

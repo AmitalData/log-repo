@@ -109,6 +109,10 @@ export class DeploymentPackagePM {
     public get DocumentId() { return this.documentId; }
     public set DocumentId(newValue: string) { if (this.documentId != newValue) { this.documentId = newValue; this.MarkAsDirty("DocumentId"); } }
 
+    private isExported: boolean;
+    public get IsExported() { return this.isExported; }
+    public set IsExported(newValue: boolean) { if (this.isExported != newValue) { this.isExported = newValue; } }
+
     private deploymentPackageDetails: DeploymentPackageDetails;
     public get DeploymentPackageDetails() { return this.deploymentPackageDetails; }
     public set DeploymentPackageDetails(newValue: DeploymentPackageDetails) { if (this.deploymentPackageDetails != newValue) { this.deploymentPackageDetails = newValue; this.MarkAsDirty("DeploymentPackageDetails"); } }
