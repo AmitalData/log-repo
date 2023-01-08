@@ -102,9 +102,9 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 					myCustomer.GLAccountId = this.GetGLAccountId(MyEntity.GLAccount, Tenant, ComputingPartnerName);
 					myCustomer.CustomerSizeId = this.GetCustomerSizeId(MyEntity.CustomerSize, Tenant, ComputingPartnerName);
 
-					AddressPM mainAddress = this.GetAddress(MyEntity.MainAddress, Tenant, ComputingPartnerName, "M");
-					AddressPM billingAddress = this.GetAddress(MyEntity.BillingAddress, Tenant, ComputingPartnerName, "B");
-					AddressPM pickupDeliveryAddress = this.GetAddress(MyEntity.PickupDeliveryAddress, Tenant, ComputingPartnerName, "P");
+					AddressPM mainAddress = this.GetAddress(MyEntity.MainAddress, Tenant, ComputingPartnerName, "M", myCustomer.EnglishName);
+					AddressPM billingAddress = this.GetAddress(MyEntity.BillingAddress, Tenant, ComputingPartnerName, "B", myCustomer.EnglishName);
+					AddressPM pickupDeliveryAddress = this.GetAddress(MyEntity.PickupDeliveryAddress, Tenant, ComputingPartnerName, "P", myCustomer.EnglishName);
 
 					if (mainAddress != null) myCustomer.Addresses.Add(mainAddress);
 					if (billingAddress != null) myCustomer.Addresses.Add(billingAddress);
@@ -251,12 +251,12 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 
 			return null;
 		}
-		private AddressPM GetAddress(Address address, int tenant, string computingPartnerName, string addressType)
+		private AddressPM GetAddress(Address address, int tenant, string computingPartnerName, string addressType, string customerName)
 		{
 			AddressQueryService addressService = new AddressQueryService(tenant);
 			if (address != null)
 			{
-				AddressPM addressPM = addressService.AddressDataMappingAndValidatin(address, tenant);
+				AddressPM addressPM = addressService.AddressDataMappingAndValidatin(address, tenant, computingPartnerName);
 				if (!string.IsNullOrEmpty(address.City))
 					addressPM = addressService.AddressCustomDataMappingAndValidatin_CityCountry(address, tenant, computingPartnerName);
 
@@ -266,6 +266,8 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 
 				if (!string.IsNullOrEmpty(address.Name))
 					addressPM.Name = FormatHelper.ConvertFromBase64(address.Name);
+				else
+					addressPM.Name = customerName;
 
 				if (!string.IsNullOrEmpty(address.Address1))
 					addressPM.Address1 = FormatHelper.ConvertFromBase64(address.Address1);
