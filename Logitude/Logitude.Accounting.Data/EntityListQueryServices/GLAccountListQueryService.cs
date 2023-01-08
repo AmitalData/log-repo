@@ -30,7 +30,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             string active = TranslateTextsClass.Translate("GLAccounts.Q.Active", 0);
             string inactive = TranslateTextsClass.Translate("GLAccounts.Q.Inactive", 0);
 
+
             IQueryable<GLAccountList> query = (from a in iQueryable//.Include("ChartOfAccount").Include("ChartOfAccountsType")
+                                             //  join ledgerTransactions in context.LedgerTransactions on a.Id equals ledgerTransactions.AccountId
                                                join chartOfAccount in context.ChartOfAccounts on a.ChartOfAccountsId equals chartOfAccount.Id
                                                join chartOfAccountsType in context.ChartOfAccountsTypes on a.ChartOfAccountsTypeCode equals chartOfAccountsType.Code
 
@@ -49,7 +51,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                join FollowUpDatas in context.GLAccountFollowUpDatas on a.Id equals FollowUpDatas.GlAccountId
                                                into FollowUpDatasjoin
                                                join MoreDatas in context.GLAccountMoreDatas on a.Id equals MoreDatas.AccountId
-
+                                               
                                                from FollowUpDatas in FollowUpDatasjoin.DefaultIfEmpty()
 
                                                select new GLAccountList()
@@ -323,10 +325,26 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                             || (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
                                                             || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? MoreDatas.TotFutureOpenChequesInLocalCur : 0,
 
-                                                   Obligo = (MoreDatas.BalanceInLocalCurrency) + (MoreDatas.TotFutureOpenChequesInLocalCur ?? 0) + (CardsDatas.TotalOpenShipments ?? 0),
-                                                   CreditUsed = (((decimal)(int)((CardsDatas.CreditLimit == null ? 0  : CardsDatas.CreditLimit) * 10000)) / 10000) - (MoreDatas.BalanceInLocalCurrency) - (MoreDatas.TotFutureOpenChequesInLocalCur ?? 0) - (CardsDatas.TotalOpenShipments ?? 0),
+                                                   Obligo = (MoreDatas.BalanceInLocalCurrency == null ? 0 : MoreDatas.BalanceInLocalCurrency) + (MoreDatas.TotFutureOpenChequesInLocalCur ?? 0) + (CardsDatas.TotalOpenShipments ?? 0),
+
+                                                  CreditUsed = (CardsDatas.CreditLimit ?? 0)  
+                                                  - (double)(MoreDatas.BalanceInLocalCurrency ) 
+                                                  - (double)(MoreDatas.TotFutureOpenChequesInLocalCur ??0) 
+                                                  - (double)(CardsDatas.TotalOpenShipments ?? 0),
 
                                                }); ;
+
+            /*
+                                                query = query.ToList().Select(a =>
+                                                {
+                                                    a.CreditUsed = (decimal)(a.CreditLimit ?? 0)
+                                                                   - (a.BalanceInLocalCurrency ?? 0)
+                                                                   - (a.TotFutureOpenChequesInLocalCur ?? 0)
+                                                                   -( a.TotalOpenShipments ?? 0);
+                                                    return a;
+                                                }).AsQueryable();*/
+
+
             return query;
         }
         public IQueryable<GLAccountList> MapListFields(IQueryable<GLAccountList> iQueryable, User loggedUser)

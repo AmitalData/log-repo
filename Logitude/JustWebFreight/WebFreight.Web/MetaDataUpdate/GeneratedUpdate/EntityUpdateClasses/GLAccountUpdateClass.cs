@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "03d445a386e8a87eb1ffa82c15c58c36";
+		public const string HashString = "d9b6e38e38fff0608fa75e65f99ed7b1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -11456,7 +11456,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CreditUsed",
 					  						ObjectTableName =  "GLAccount",
-					  						FieldsDataType =  "Decimal",
+					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
@@ -12036,23 +12036,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn AllGLAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "GLAccount.DisplayNumber" , ColumnWidth = 85 }, addedQueryColumns);
 
-			 QueryColumn AllGLAccountsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "GLAccount.Obligo" , ColumnWidth = 80 }, addedQueryColumns);
+			 QueryColumn AllGLAccountsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "GLAccount.CreditUsed" , ColumnWidth = 80 }, addedQueryColumns);
 
-			 QueryColumn AllGLAccountsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "GLAccount.LocalName" , ColumnWidth = 160 }, addedQueryColumns);
+			 QueryColumn AllGLAccountsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "GLAccount.Obligo" , ColumnWidth = 80 }, addedQueryColumns);
 
-			 QueryColumn AllGLAccountsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "GLAccount.EnglishName" , ColumnWidth = 160 }, addedQueryColumns);
+			 QueryColumn AllGLAccountsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "GLAccount.LocalName" , ColumnWidth = 160 }, addedQueryColumns);
 
-			 QueryColumn AllGLAccountsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "GLAccount.CurrencyCode" , ColumnWidth = 80 }, addedQueryColumns);
+			 QueryColumn AllGLAccountsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "GLAccount.EnglishName" , ColumnWidth = 160 }, addedQueryColumns);
 
-			 QueryColumn AllGLAccountsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "GLAccount.IsMultiCurrency" , ColumnWidth = 110 }, addedQueryColumns);
+			 QueryColumn AllGLAccountsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "GLAccount.CurrencyCode" , ColumnWidth = 80 }, addedQueryColumns);
 
-			 QueryColumn AllGLAccountsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "GLAccount.BalanceInLocalCurrency" , ColumnWidth = 180 }, addedQueryColumns);
+			 QueryColumn AllGLAccountsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "GLAccount.IsMultiCurrency" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn AllGLAccountsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "GLAccount.ChartOfAccountsName" , ColumnWidth = 140 }, addedQueryColumns);
+			 QueryColumn AllGLAccountsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "GLAccount.BalanceInLocalCurrency" , ColumnWidth = 180 }, addedQueryColumns);
 
-			 QueryColumn AllGLAccountsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "GLAccount.ChartOfAccountsTypeName" , ColumnWidth = 160 }, addedQueryColumns);
+			 QueryColumn AllGLAccountsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "GLAccount.ChartOfAccountsName" , ColumnWidth = 140 }, addedQueryColumns);
 
-			 QueryColumn AllGLAccountsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "GLAccount.Inactive" , ColumnWidth = 75 }, addedQueryColumns);
+			 QueryColumn AllGLAccountsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "GLAccount.ChartOfAccountsTypeName" , ColumnWidth = 160 }, addedQueryColumns);
+
+			 QueryColumn AllGLAccountsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "GLAccount.Inactive" , ColumnWidth = 75 }, addedQueryColumns);
 
              AdvancedQueryFilter AllGLAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "1",PredefinedValue2 = null, CustomPredefined = false, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
