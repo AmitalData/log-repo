@@ -419,7 +419,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public List<DocumentTypeTemplateList> getDocumentTypeTemplatesByDocumentTypeCode(string documentTypeCode, int tenant)
         {
-            DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery();
+            DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(tenant);
             DocumentTypePM documentTypePM  = documentTypeQuery.GetSinglePMByCode(documentTypeCode, tenant);
             List<DocumentTypeTemplateList> documentTypeTemplates = (from a in repository.context.DocumentTypeTemplates
                                                                   where a.DocumentTypeId == documentTypePM.Id && a.Tenant == tenant && a.InActive == false && a.TemplateType =="P"
