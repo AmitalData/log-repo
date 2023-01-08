@@ -49,7 +49,7 @@ namespace Logitude.BL.InfrastructureModel.Services.DeploymentPackage
         {
             deploymentPackageDependiencyContext.DeploymentPackageDependiencyResult.MissingDependiencies.Add(new DeploymentPackageMissingDependiency
             {
-                Name = lookUpCustomField.Name,
+                Name = lookUpCustomField.DefaultText,
                 DataTypeName = "Object Field",
                 EntityName = lookUpCustomField.ObjectTableName,
                 DependencyOn = lookUpCustomField.LookUpTableName,
