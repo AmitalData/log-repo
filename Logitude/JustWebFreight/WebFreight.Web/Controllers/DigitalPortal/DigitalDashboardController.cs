@@ -81,8 +81,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var last2Month = todayDate.AddMonths(-2);
                 var nextMonth = todayDate.AddMonths(1);
 
+                var firstDayOfMonth = new DateTime(nextMonth.Year, nextMonth.Month, 1);
+
                 var overDueCounters = invoices.Where(a => a.DueDate != null
-                                                          && a.DueDate < todayDate
+                                                          && a.DueDate < firstDayOfMonth
                                                           && a.PaidStatus == "Unpaid" || a.PaidStatus == "Partially Paid")
                                               .GroupBy(a => a.DueDate.Value.Month == todayDate.Month && a.DueDate.Value.Year == todayDate.Year
                                                          ? "Current"
@@ -99,7 +101,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                               .ToList();
 
                 var partiallyPaidCounter = invoices.Where(a => a.DueDate != null
-                                                                && a.DueDate < todayDate
+                                                                && a.DueDate < firstDayOfMonth
                                                                 && a.PaidStatus == "Partially Paid")
                                                    .GroupBy(a => a.DueDate.Value.Month == todayDate.Month && a.DueDate.Value.Year == todayDate.Year
                                                               ? "Current"
