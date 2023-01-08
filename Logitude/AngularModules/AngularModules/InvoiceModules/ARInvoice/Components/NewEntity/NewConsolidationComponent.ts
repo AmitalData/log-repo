@@ -125,6 +125,10 @@ export class NewConsolidationComponent extends BaseComponent {
         this.GetDocumentTypeTemplates();
     }
 
+    IsHaveARInvoicePrintToogleFeature() {
+        return SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "ARP")[0];
+    }
+
     private GetDocumentTypeCode() {
         if (this.EntityPM.IsConsolidationInvoice) return "999C";
         if (this.EntityPM.IsGeneralInvoice) return "999G";

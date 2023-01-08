@@ -78,12 +78,12 @@
                                         </LogLov>
                                     </td>
 
-                                    <td>
+                                    <td *ngIf="IsHaveARInvoicePrintToogleFeature()">
                                         <LogLabel [ObjectFieldName]="'DocumentTemplateId'" [ObjectTableName]="ObjectTableName"
                                                   [DataContext]="DataContext"></LogLabel>
                                     </td>
 
-                                    <td style="width:230px;">
+                                    <td *ngIf="IsHaveARInvoicePrintToogleFeature()" style="width:230px;">
                                         <table>
                                             <tr>
                                                 <td>

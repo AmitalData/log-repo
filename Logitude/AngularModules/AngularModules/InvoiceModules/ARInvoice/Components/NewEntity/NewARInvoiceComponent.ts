@@ -115,7 +115,9 @@ export class NewARInvoiceComponent extends BaseComponent {
         this.GetDocumentTypeTemplates();
     }
 
-
+    IsHaveARInvoicePrintToogleFeature() {
+        return SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "ARP")[0];
+    }
 
     private GetDocumentTypeCode() {
         if (this.EntityPM.IsConsolidationInvoice) return "999C";
