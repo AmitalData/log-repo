@@ -1423,6 +1423,121 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private int? hawbQuantityNoDocuments ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? HawbQuantityNoDocuments  
+	   {
+	    
+	     get
+		{
+		   return hawbQuantityNoDocuments;
+		 }
+		 set
+		 {
+		   if(hawbQuantityNoDocuments != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HawbQuantityNoDocuments",OldValue=hawbQuantityNoDocuments,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   hawbQuantityNoDocuments=value;
+		   }
+			
+		 }
+	   }
+	  private int? hawbQuantityNoClassification ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? HawbQuantityNoClassification  
+	   {
+	    
+	     get
+		{
+		   return hawbQuantityNoClassification;
+		 }
+		 set
+		 {
+		   if(hawbQuantityNoClassification != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HawbQuantityNoClassification",OldValue=hawbQuantityNoClassification,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   hawbQuantityNoClassification=value;
+		   }
+			
+		 }
+	   }
+	  private int? hawbQuantityNoTransManifest ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? HawbQuantityNoTransManifest  
+	   {
+	    
+	     get
+		{
+		   return hawbQuantityNoTransManifest;
+		 }
+		 set
+		 {
+		   if(hawbQuantityNoTransManifest != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HawbQuantityNoTransManifest",OldValue=hawbQuantityNoTransManifest,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   hawbQuantityNoTransManifest=value;
+		   }
+			
+		 }
+	   }
+	  private int? hawbQuantityNoTransDeclaration ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? HawbQuantityNoTransDeclaration  
+	   {
+	    
+	     get
+		{
+		   return hawbQuantityNoTransDeclaration;
+		 }
+		 set
+		 {
+		   if(hawbQuantityNoTransDeclaration != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HawbQuantityNoTransDeclaration",OldValue=hawbQuantityNoTransDeclaration,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   hawbQuantityNoTransDeclaration=value;
+		   }
+			
+		 }
+	   }
+	  private int? hawbQuantityNoTransPayment ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? HawbQuantityNoTransPayment  
+	   {
+	    
+	     get
+		{
+		   return hawbQuantityNoTransPayment;
+		 }
+		 set
+		 {
+		   if(hawbQuantityNoTransPayment != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HawbQuantityNoTransPayment",OldValue=hawbQuantityNoTransPayment,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   hawbQuantityNoTransPayment=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -124,7 +124,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CourierMasterRemarks, 
 	         OpenDeclarations, 
 	         NoOfCourierHawbwWithoutHatara, 
-	         NoOfCourierHawbWithoutDelivery,
+	         NoOfCourierHawbWithoutDelivery, 
+	         HawbQuantityNoDocuments, 
+	         HawbQuantityNoClassification, 
+	         HawbQuantityNoTransManifest, 
+	         HawbQuantityNoTransDeclaration, 
+	         HawbQuantityNoTransPayment,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
