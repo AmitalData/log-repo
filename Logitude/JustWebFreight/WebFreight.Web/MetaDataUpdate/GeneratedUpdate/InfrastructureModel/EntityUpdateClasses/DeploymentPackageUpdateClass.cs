@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class DeploymentPackageUpdateClass
    {  		
-		public const string HashString = "e593c77ee71d6ad6a9944b2d882d93bc";
+		public const string HashString = "077bb51962e95a18972e7b90d3bc52e4";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1052,6 +1052,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "VersionId",
 					  						ListPropertyPath =  "VersionId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1244,6 +1245,43 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
+		   //FeatureRepository featureRepository = new FeatureRepository(0); 
+		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
+		   ObjectTable DeploymentPackageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DeploymentPackage" && d.Tenant == 0).FirstOrDefault();       
+    
+			   Feature DeploymentPackageFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Export", ObjectTableId = DeploymentPackageObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeploymentPackage.Features.Export", NameTextCodeDefaultText = "Export", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeploymentPackageObjectTable);
+
+ 
+
+		   TextCodeRepository.SubmitChanges();
+		   FeaturesRepository.SubmitChanges();
+		   MenuButtonGroup DeploymentPackageMenuButtonGroup = AddMenuButtonGroupAndMenuButtons.AddMenuButtonGroup(new MenuButtonGroupDetails()
+				{
+					MenuButtonGroupType = "DeploymentPackageEdit",
+					Name = "DeploymentPackageEditButtonsGroup",
+					ObjectTableId = DeploymentPackageObjectTable.Id,
+					Tenant = 0
+				}, menuButtonGroupRepository, tenantMenuButtonGroups);        
+   
+			   MenuButton DeploymentPackageMenuButton0 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "Export",
+						Index = 0, 
+						IsActive = true,
+						LabelTextCodeCode = "DeploymentPackage.B.Export",
+						LabelTextCodeDefaultText = "Export",
+						Tenant = 0,
+						MenuButtonGroupId = DeploymentPackageMenuButtonGroup.Id,
+						ObjectTableId = DeploymentPackageObjectTable.Id,
+						MenuButtonType = "button",
+						FeatureId = DeploymentPackageFeature_MB0.Id,
+						Style = "ExportButtonStyle",
+						LocalDefaultText = "יְצוּא",
+						FeatureUniqeCode = DeploymentPackageFeature_MB0.FeatureUniqeCode,
+						HtmlComponentPath = null,
+						Width = 0,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)

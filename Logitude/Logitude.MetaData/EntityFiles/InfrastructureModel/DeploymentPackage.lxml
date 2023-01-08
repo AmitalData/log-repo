@@ -1129,6 +1129,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;VersionId&quot;"
     ListPropertyPath="&quot;VersionId&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -1306,6 +1307,18 @@
       IsFollowUp="false" />
   </EventTypes>
   <Records />
+  <MenuButtons
+    MenuButtonGroupType="&quot;DeploymentPackageEdit&quot;"
+    MenuButtonGroupName="&quot;DeploymentPackageEditButtonsGroup&quot;">
+    <MenuButton
+      EventCode="&quot;Export&quot;"
+      DefaultText="&quot;Export&quot;"
+      MenuButtonType="&quot;button&quot;"
+      Style="&quot;ExportButtonStyle&quot;"
+      IndexOrder="0"
+      LocalDefaultText="&quot;יְצוּא&quot;"
+      IsPackagable="false" />
+  </MenuButtons>
   <DataContracts />
   <AdditionalTextCodes>
     <TextCode

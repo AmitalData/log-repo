@@ -71,7 +71,7 @@
                     type="button"
                     [attr.id]="button.LabelTextCodeCode | IdGeneratorPipe"
                     (click)="OnClick(button)"
-                    [class]="button.Style == 'RedButtonStyle' ? 'RedButton' : (button.Style == 'ApproveButtonStyle' ? 'GreenButton' : 'Button')"
+                    [class]="button.Style == 'RedButtonStyle' ? 'RedButton' : ((button.Style == 'ApproveButtonStyle' || button.Style == 'ExportButtonStyle') ? 'GreenButton' : 'Button')"
                     [disabled]="button.IsDisabled"
                     [style.width.px]="button.Width"
                     style="margin: 0px 2px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"
