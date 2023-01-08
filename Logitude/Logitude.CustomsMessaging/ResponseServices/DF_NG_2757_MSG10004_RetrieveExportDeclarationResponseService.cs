@@ -294,7 +294,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     //if (declaration.DMExtensions.ReferenceDateTime != null)
                     //    declarationPM.TaxationDateTime = Convert.ToDateTime(declaration.DMExtensions.ReferenceDateTime);
                     if (declaration.DMExtensions.ReleaseDateTime != null)
-                        declarationPM.HatraDate = Convert.ToDateTime(declaration.DMExtensions.ReleaseDateTime);
+                        declarationPM.HatraDate = Convert.ToDateTime(declaration.DMExtensions.ReleaseDateTime.Value);
                     declarationPM.VersionId = GetValueIDType(declaration.DMExtensions.VersionID);
 
                     if (declaration.PreviousDocument != null)
