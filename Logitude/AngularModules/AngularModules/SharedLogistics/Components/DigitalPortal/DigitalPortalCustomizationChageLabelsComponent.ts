@@ -30,13 +30,38 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
     }
 
     SetWindowArgs(args: any) {
-        this.FillObjectTablesFiltersList();
+        this.FillDigitalProfileFiltersList();
     }
 
     ngOnInit() {
         this.CurrentSession.SessionEvent.subscribe(($event: any) => {
             if ($event.Name == "ReloadDigitalPortalLabels") {
                 this.IsChange = true;
+            }
+        });
+    }
+
+    public DigitalProfileFilterList: CodeNameClass[];
+    private selectedProfileItem: CodeNameClass;
+    get SelectedProfileItem() { return this.selectedProfileItem; }
+    set SelectedProfileItem(value: CodeNameClass) {
+        if (this.selectedProfileItem != value) {
+            this.selectedProfileItem = value;
+            this.BuildItemsSource();
+        }
+    }
+
+    private FillDigitalProfileFiltersList() {
+        this.DigitalProfileFilterList = [];
+        this.digitalTextService.GetDigitalProfileName().subscribe((myResult) => {
+            if (!myResult.HasError) {
+                var objectTables = myResult.Result;
+                objectTables.forEach(item => {
+                    this.DigitalProfileFilterList.push(new CodeNameClass(item.Id, item.Name));
+                });
+
+                this.selectedProfileItem = this.DigitalProfileFilterList[0];
+                this.FillObjectTablesFiltersList();
             }
         });
     }
@@ -71,7 +96,8 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
         this.LabelsItemsSource = new ObservableCollection([]);
         var labelsList: CustomizationLabelItem[] = [];
         var objectTableId = this.SelectedObjectTableItem.Name;
-        this.digitalTextService.GetTextCodesByFilters(null, objectTableId).subscribe((myResult) => {
+        var profileId = this.SelectedProfileItem.Code;
+        this.digitalTextService.GetTextCodesByFilters(null, objectTableId, profileId).subscribe((myResult) => {
             if (!myResult.HasError) {
                 var data = myResult.Result;
                 this.loadedResults = data;
@@ -129,8 +155,8 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
         if (this.IsModifiedLables) {
             this.CurrentSession.StartBusyIndicatorLoading();
             this.ModifiedLables.ObjectTableId = this.SelectedObjectTableItem.Name;
+            this.ModifiedLables.ProfileId = this.SelectedProfileItem.Name;
             this.digitalTextService.UpdateDigitalTextCodes(this.ModifiedLables).subscribe((myResult) => {
-                //this.customizationEditComponent.CurrentSession.CloseCurrentWindow();
                 this.customizationEditComponent.IsDirty = false;
                 this.ModifiedLables = new DigitalTextCodeUpdateModel();
                 this.CurrentSession.StopBusyIndicator();

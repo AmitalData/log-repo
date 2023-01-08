@@ -98,7 +98,8 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
 
     BuildFields() {
         var objectTableId = this.SelectedObjectTableItem.Name;
-        this.digitalTextService.GetTextCodesByFilters(null, objectTableId).subscribe((myResult) => {
+        var profileId = this.SelectedProfileItem.Code;
+        this.digitalTextService.GetTextCodesByFilters(null, objectTableId, profileId).subscribe((myResult) => {
             if (!myResult.HasError) {
                 this.loadedFieldsResults = myResult.Result.filter(a => !AppTool.IsNullOrEmpty(a['FieldCode']));
                 this.BuildFieldsPremissions();
