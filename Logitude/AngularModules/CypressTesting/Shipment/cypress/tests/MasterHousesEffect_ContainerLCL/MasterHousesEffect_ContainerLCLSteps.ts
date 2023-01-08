@@ -52,8 +52,10 @@ Then("the house should create successfully", () => {
     })
 });
 Then("the house should connect successfully", () => {
-    Actions.CheckBusyIndicator()
-   // Actions.ValidateCheckHouseCheckBox();
+   Actions.CheckBusyIndicator()
+   cy.wait(5000)
+   //Actions.ValidateCheckHouseCheckBox();
+  
 });
 Given('the user in the house package tab', () => {
     Actions.openHouseShipment(Housenumberopen)
@@ -77,7 +79,7 @@ Then('the package should add successfully', () => {
     Actions.AsserationthepackageaddsuccessfullyinHouse()
 })
 Given('the user in the master package tab', () => {
-    cy.BackButton('Shipment')
+    cy.get('[class="BackBottonBody"]').eq(1).click()
     cy.Navigate(ShipmentSelectors.PackagesTab)
 })
 Given('rebuild master containers by adding new container with the following details', (dataTable) => {
