@@ -228,6 +228,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     CustomerCreditLimit = (decimal)d.First().CreditLimitAmount,
                     InsuredCreditLimit = d.First().InsuredCreditLimit,
                     BalanceInLocalAccountingDate = d.First().BalanceInLocalAccountingDate,
+                    BalanceInForeignAccountingDate = d.First().BalanceInForeignAccountingDate,
                     TotalFutureOpenCheques = d.First().TotalFutureOpenCheques,
                     TotalOpenCheques = d.First().TotalOpenCheques,
                     TotalOpenShipments = d.First().TotalOpenShipments,
@@ -264,7 +265,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 groupedPeriodsByAccount = result.GroupBy(d => d.AccountId).Select(d => new AgingPeriod()
                 {
                     PeriodName = showLocals ? "סיכום תקופות" : "Foreign",
-                    Total = d.First().BalanceInLocalAccountingDate,
+                    Total = d.First().BalanceInForeignAccountingDate,
                     AccountName = (d.First().AccountLocalName != null ? d.First().AccountLocalName : d.First().AccountEnglishName),
                     AccountLocalName = d.First().AccountLocalName,
                     AccountEnglishName = d.First().AccountEnglishName,
@@ -274,6 +275,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     CustomerCreditLimit = (decimal)d.First().CreditLimitAmount,
                     InsuredCreditLimit = d.First().InsuredCreditLimit,
                     BalanceInLocalAccountingDate = d.First().BalanceInLocalAccountingDate,
+                    BalanceInForeignAccountingDate = d.First().BalanceInForeignAccountingDate,
                     TotalFutureOpenCheques = d.First().TotalFutureOpenCheques,
                     TotalOpenCheques = d.First().TotalOpenCheques,
                     TotalOpenShipments = d.First().TotalOpenShipments,
@@ -330,6 +332,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     CustomerCreditLimit = (decimal)d.First().CreditLimitAmount,
                     InsuredCreditLimit = d.First().InsuredCreditLimit,
                     BalanceInLocalAccountingDate = d.First().BalanceInLocalAccountingDate,
+                    BalanceInForeignAccountingDate = d.First().BalanceInForeignAccountingDate,
                     TotalFutureOpenCheques = d.First().TotalFutureOpenCheques,
                     TotalOpenCheques = d.First().TotalOpenCheques,
                     TotalOpenShipments = d.First().TotalOpenShipments,
@@ -377,6 +380,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     CustomerCreditLimit = (decimal)d.First().CreditLimitAmount,
                     InsuredCreditLimit = d.First().InsuredCreditLimit,
                     BalanceInLocalAccountingDate = d.First().BalanceInLocalAccountingDate,
+                    BalanceInForeignAccountingDate = d.First().BalanceInForeignAccountingDate,
                     TotalFutureOpenCheques = d.First().TotalFutureOpenCheques,
                     TotalOpenCheques = d.First().TotalOpenCheques,
                     TotalOpenShipments = d.First().TotalOpenShipments,
@@ -422,6 +426,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     CustomerCreditLimit = (decimal)d.First().CreditLimitAmount,
                     InsuredCreditLimit = d.First().InsuredCreditLimit,
                     BalanceInLocalAccountingDate = d.First().BalanceInLocalAccountingDate,
+                    BalanceInForeignAccountingDate = d.First().BalanceInForeignAccountingDate,
                     TotalFutureOpenCheques = d.First().TotalFutureOpenCheques,
                     TotalOpenCheques = d.First().TotalOpenCheques,
                     TotalOpenShipments = d.First().TotalOpenShipments,
@@ -477,6 +482,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     CustomerCreditLimit = (decimal)d.First().CreditLimitAmount,
                     InsuredCreditLimit = d.First().InsuredCreditLimit,
                     BalanceInLocalAccountingDate = d.First().BalanceInLocalAccountingDate,
+                    BalanceInForeignAccountingDate = d.First().BalanceInForeignAccountingDate,
                     TotalFutureOpenCheques = d.First().TotalFutureOpenCheques,
                     TotalOpenCheques = d.First().TotalOpenCheques,
                     TotalOpenShipments = d.First().TotalOpenShipments,
@@ -523,6 +529,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     CustomerCreditLimit = (decimal)d.First().CustomerCreditLimit,
                     InsuredCreditLimit = d.First().InsuredCreditLimit,
                     BalanceInLocalAccountingDate = d.First().BalanceInLocalAccountingDate,
+                    BalanceInForeignAccountingDate = d.First().BalanceInForeignAccountingDate,
                     TotalFutureOpenCheques = d.First().TotalFutureOpenCheques,
                     TotalOpenCheques = d.First().TotalOpenCheques,
                     TotalOpenShipments = d.First().TotalOpenShipments,
@@ -750,6 +757,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                         record.CustomerCreditLimit = (decimal)item.CreditLimitAmount;
                         record.InsuredCreditLimit = item.InsuredCreditLimit;
                         record.BalanceInLocalAccountingDate = item.BalanceInLocalAccountingDate;
+                        record.BalanceInForeignAccountingDate = item.BalanceInForeignAccountingDate;
                         record.TotalFutureOpenCheques = item.TotalFutureOpenCheques;
                         record.TotalOpenCheques = item.TotalOpenCheques;
                         record.TotalOpenShipments = item.TotalOpenShipments;
@@ -804,6 +812,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                         record.CustomerCreditLimit = (decimal)item.CreditLimitAmount;
                         record.InsuredCreditLimit = item.InsuredCreditLimit;
                         record.BalanceInLocalAccountingDate = item.BalanceInLocalAccountingDate;
+                        record.BalanceInForeignAccountingDate = item.BalanceInForeignAccountingDate;
                         record.TotalFutureOpenCheques = item.TotalFutureOpenCheques;
                         record.TotalOpenCheques = item.TotalOpenCheques;
                         record.TotalOpenShipments = item.TotalOpenShipments;

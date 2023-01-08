@@ -48,6 +48,8 @@ namespace WebFreight.Web.DataProviders
         public decimal GLAccountStandardInterestRate { get; set; }
 
         public decimal? BalanceInLocalAccountingDate { get; set; }
+        public decimal? BalanceInForeignAccountingDate { get; set; }
+        
         public decimal? TotalFutureOpenCheques { get; set; }
         public decimal? TotalOpenCheques { get; set; }
         public decimal? TotalOpenShipments { get; set; }
