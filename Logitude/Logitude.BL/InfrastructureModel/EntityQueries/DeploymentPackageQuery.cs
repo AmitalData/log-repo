@@ -83,6 +83,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             deploymentPackagePM.UpdatedByUserName = (deploymentPackage.UpdatedByUser != null && deploymentPackage.UpdatedByUser.Contact != null) ? deploymentPackage.UpdatedByUser.Contact.EnglishName : null;
             deploymentPackagePM.VersionId = deploymentPackage.VersionId;
             deploymentPackagePM.DocumentId = deploymentPackage.DeploymentPackagesVersion != null ? deploymentPackage.DeploymentPackagesVersion.DocumentId : null;
+            deploymentPackagePM.IsExported = deploymentPackage.DeploymentPackagesVersion != null ? deploymentPackage.DeploymentPackagesVersion.IsExported : false;
             MapDeploymentPackageDetails(deploymentPackagePM);
             return deploymentPackagePM;
         }
