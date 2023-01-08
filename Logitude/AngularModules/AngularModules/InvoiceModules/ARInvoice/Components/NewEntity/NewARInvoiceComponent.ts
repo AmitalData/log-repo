@@ -51,7 +51,7 @@ export class NewARInvoiceComponent extends BaseComponent {
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    public documentTypeTemplates: DocumentTypeTemplateList[];
+    public documentTypeTemplates: DocumentTypeTemplateList[] = [];
     public selectedDocumentTypeTemplate: DocumentTypeTemplateList;
 
     constructor(private entityResourceService: EntityResourceService) {
@@ -128,6 +128,7 @@ export class NewARInvoiceComponent extends BaseComponent {
     }
 
     private GetDocumentTypeTemplates() {
+        if (!this.IsHaveARInvoicePrintToogleFeature()) return;
         let documentTypeCode: string = this.GetDocumentTypeCode();
         this.documentTypeTemplatePMExtendedService.getDocumentTypeTemplatesByDocumentTypeCode(documentTypeCode, SessionLocator.Tenant).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
