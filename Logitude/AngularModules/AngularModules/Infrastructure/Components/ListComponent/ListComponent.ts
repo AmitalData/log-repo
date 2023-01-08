@@ -2740,6 +2740,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             else if (this.ObjectTableName == "Currency") {
                 this.NewEntityButtonLabel = TextCodeTranslator.Translate("General.B.Add");
             }
+    
             /*else if (this.ObjectTableName == "Customs.ExportStorge") {
                this.NewEntityButtonLabel = "New Storage"
             }*/
@@ -2755,8 +2756,14 @@ export class ListComponent implements OnInit, AfterViewInit {
                     var useLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
                     if (useLocal == true) {
                         var GeneralText = TextCodeTranslator.Translate("General.O.NewEntity");
-
                         var ChangedText = GeneralText.split('%')[0];
+                    if(this.ObjectTableName=="Customs.Vehicle" ){
+
+                        ChangedText= TextCodeTranslator.Translate("General.O.New");
+                        
+                    }
+                       
+                       
                         var NewText = TextCodeTranslator.TranslateTable(this.ObjectTableName);
                         var FinalText = NewText + " " + ChangedText;
                         if (this.ObjectTableName == "Customer") {
@@ -2901,6 +2908,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     AddNewEntity() {
+        
         if (this.SelectedQuery != null) {
 
             if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "NEW", true)) {
@@ -2914,6 +2922,8 @@ export class ListComponent implements OnInit, AfterViewInit {
                 if (useLocal == true) {
                     var GeneralText = TextCodeTranslator.Translate("General.O.NewEntity");
                     var ChangedText = GeneralText.split('%')[0];
+                   
+
                     var NewText = TextCodeTranslator.TranslateTable(this.ObjectTableName);
                     var FinalText = NewText + " " + ChangedText;
                 }
@@ -3224,7 +3234,10 @@ export class ListComponent implements OnInit, AfterViewInit {
             if (this.ObjectTableName == "Currency") {
                 str = TextCodeTranslator.Translate("General.B.Add") + " Currency";
             }
-
+            
+            if (this.ObjectTableName == "Customs.Vehicle") {
+                str = TextCodeTranslator.TranslateTable(this.ObjectTableName)+" "+TextCodeTranslator.Translate("General.O.New") ;
+            }
 
 
             if (this.ObjectTableName == "Customs.CustomsVendor") {
