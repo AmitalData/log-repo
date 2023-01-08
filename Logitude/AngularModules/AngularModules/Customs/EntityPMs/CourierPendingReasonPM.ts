@@ -89,6 +89,11 @@ export class CourierPendingReasonPM {
     public set RequiresApproval(newValue: boolean) { if (this.requiresApproval != newValue) { this.requiresApproval = newValue; this.MarkAsDirty("RequiresApproval"); } }
        
 	 
+    private requiresPayment: boolean;
+    public get RequiresPayment() { return this.requiresPayment; }
+    public set RequiresPayment(newValue: boolean) { if (this.requiresPayment != newValue) { this.requiresPayment = newValue; this.MarkAsDirty("RequiresPayment"); } }
+       
+	 
 
     public OldEntityPM: CourierPendingReasonPM;
 		

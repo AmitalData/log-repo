@@ -196,6 +196,11 @@ export class AddEditCourierPendingReasonComponent
         this.EntityPM.RequiresApproval = newValue;
     }
 
+    public get RequiresPayment() { return this.EntityPM.RequiresPayment; }
+    public set RequiresPayment(newValue: boolean) {
+        this.EntityPM.RequiresPayment = newValue;
+    }
+
     private _UnifreightStatusCode: string;
     public get UnifreightStatusCode() { return this._UnifreightStatusCode; }
     public set UnifreightStatusCode(newValue: string) {

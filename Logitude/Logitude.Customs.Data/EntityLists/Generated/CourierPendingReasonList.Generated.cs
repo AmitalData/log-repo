@@ -40,6 +40,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string SwissportSuspendedCode  { get; set; }
        [DataMember]
        public bool? RequiresApproval  { get; set; }
+       [DataMember]
+       public bool? RequiresPayment  { get; set; }
    }
 
 }

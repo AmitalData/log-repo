@@ -46,6 +46,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string SwissportSuspendedCode { get; set; }
         [Column("RequiresApproval")]
 	    public bool? RequiresApproval { get; set; }
+        [Column("RequiresPayment")]
+	    public bool? RequiresPayment { get; set; }
     }
 }
 	 

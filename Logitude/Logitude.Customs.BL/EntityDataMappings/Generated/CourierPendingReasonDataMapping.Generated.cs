@@ -33,7 +33,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         UnifreightStatusCode, 
 	         MamanSuspendedCode, 
 	         SwissportSuspendedCode, 
-	         RequiresApproval,
+	         RequiresApproval, 
+	         RequiresPayment,
 	      }
 
 
@@ -52,7 +53,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ErrorPlaceName, 
 	         MamanSuspendedCode, 
 	         SwissportSuspendedCode, 
-	         RequiresApproval,
+	         RequiresApproval, 
+	         RequiresPayment,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -114,6 +116,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequiresApproval))
             {
 				entityPOCO.RequiresApproval = entityPM.RequiresApproval;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequiresPayment))
+            {
+				entityPOCO.RequiresPayment = entityPM.RequiresPayment;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -182,6 +189,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.RequiresApproval = entityPOCO.RequiresApproval;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.RequiresPayment))
+            {
+					entityPM.RequiresPayment = entityPOCO.RequiresPayment;
+            }
+
 		}
 
 		public void PMToOldPM(CourierPendingReasonPM entityPM, CourierPendingReasonPM oldEntityPM)
@@ -241,6 +253,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequiresApproval))
             {
                 oldEntityPM.RequiresApproval = entityPM.RequiresApproval;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequiresPayment))
+            {
+                oldEntityPM.RequiresPayment = entityPM.RequiresPayment;
             }
 			
 		}
