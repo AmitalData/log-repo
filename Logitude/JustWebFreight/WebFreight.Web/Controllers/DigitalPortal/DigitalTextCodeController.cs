@@ -160,6 +160,12 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
                 var textCodeQuery = new DigitalTextCodeQueryService(tenant);
 
+                if (profileId == "null")
+                {
+                    var digitalProfileQueryService = new DigitalProfileQueryService(0);
+                    profileId = digitalProfileQueryService.GetDigitalProfileByName(0, "Customer").Id;
+                }
+
                 var defaultTextCode = textCodeQuery.GetDigitalTextCodesQuery(0, objectTableId, profileId);
 
                 var defaultCodesObject = JsonConvert.DeserializeObject<List<DigitalTextCodeObject>>(defaultTextCode.Labels);
@@ -279,6 +285,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             try
             {
                 var textCodeQuery = new DigitalTextCodeQueryService(tenant);
+
                 var defaultTextCodes = textCodeQuery.GetDigitalTextCodesQuery(0, objectTableId, profileId);
                 var defaultCodesObject = JsonConvert.DeserializeObject<List<DigitalTextCodeObject>>(defaultTextCodes.Labels);
                 var customCodesObject = new List<DigitalTextCodeObject>();
@@ -315,7 +322,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
+       
         [HttpGet]
         [Route("DigitalTextCode/GetDigitalTextCodesObjetTables")]
         public HttpResponseMessage GetDigitalTextCodesObjetTables()
