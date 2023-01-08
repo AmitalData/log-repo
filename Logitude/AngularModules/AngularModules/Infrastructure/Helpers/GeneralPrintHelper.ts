@@ -91,7 +91,7 @@ export class GeneralPrintHelper {
         });
     }
 
-    ShowPrintControl() {
+    ShowPrintControl(documentTypeTemplate:string = null) {
         if (this.IsLoadPrintControl && !this.IsStartPrint) {
             this.IsStartPrint = true;
             this.CurrentSession.StartBusyIndicatorLoading();
@@ -102,7 +102,7 @@ export class GeneralPrintHelper {
                     this.documentOutPM = myResult;
 
                     if (!this.documentOutPM) {
-                        this.documentOutPMService.getCreateDocumentOut(this.documentTypeList.Id, this.EntityId, this.ChildEntityId, this.ChildReference, this.CurrentObjectTableId, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
+                        this.documentOutPMService.getCreateDocumentOut(this.documentTypeList.Id, this.EntityId, this.ChildEntityId, this.ChildReference, this.CurrentObjectTableId, SessionInfo.LoggedUserTenant, documentTypeTemplate).subscribe((res:any) => {
                             var pmResponse: ServiceResponse = res;
                             if (!pmResponse.HasError) {
                                 var myResult = pmResponse.Result;

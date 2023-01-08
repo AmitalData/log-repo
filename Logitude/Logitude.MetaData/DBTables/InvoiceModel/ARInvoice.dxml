@@ -841,6 +841,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="DocumentTemplateId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreditedByARInvoiceId"
     ReferencedTable="ARInvoices"
@@ -980,6 +987,11 @@
     ForeignKeyColumn="RegimenFiscalCode"
     ReferencedTable="RegimenFiscals"
     ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DocumentTemplateId"
+    ReferencedTable="DocumentTypeTemplates"
+    ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant,InvoiceDate" />

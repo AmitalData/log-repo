@@ -136,6 +136,16 @@ export class DocumentTypeTemplatePMExtendedService {
         }),catchError(ServiceHelper.HandleServiceError));
     }
 
+    getDocumentTypeTemplatesByDocumentTypeCode(documentTypeCode: string, tenant: number) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
+        return this._http.get(this._apiUrl + '/getDocumentTypeTemplatesByDocumentTypeCode/?' + 'documentTypeCode=' + documentTypeCode + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+            pmresponse.Result = response;
+            return pmresponse;
+        }), catchError(ServiceHelper.HandleServiceError));
+    }
     SaveDocumentTemplate(filter: any) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());

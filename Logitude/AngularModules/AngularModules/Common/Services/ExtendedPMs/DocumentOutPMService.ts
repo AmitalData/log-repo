@@ -68,7 +68,7 @@ export class DocumentOutPMService {
 
 
 
-    getCreateDocumentOut(documentTypeId: string, entityId: string, childEntityId: string, childReference: string, objectTableId: string, tenant: number) {
+    getCreateDocumentOut(documentTypeId: string, entityId: string, childEntityId: string, childReference: string, objectTableId: string, tenant: number, documentTypeTemplateId:string = null) {
 
         var createDocumentOutArgs: CreateDocumentOutArgs = new CreateDocumentOutArgs();
         createDocumentOutArgs.DocumentTypeId = documentTypeId;
@@ -77,6 +77,7 @@ export class DocumentOutPMService {
         createDocumentOutArgs.ChildReference = childReference;
         createDocumentOutArgs.ObjectTableId = objectTableId;
         createDocumentOutArgs.Tenant = tenant;
+        createDocumentOutArgs.DocumentTypeTemplateId = documentTypeTemplateId;
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
@@ -258,6 +259,6 @@ export class CreateDocumentOutArgs{
     ChildReference: string;
     ObjectTableId: string;
     Tenant: number;
-
+    DocumentTypeTemplateId: string;
 }
 
