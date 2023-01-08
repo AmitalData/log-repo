@@ -20063,7 +20063,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-
   <Query
     Code="&quot;OpenCourierMaster&quot;"
     TextCode="&quot;Courier Master Open&quot;"
@@ -26086,7 +26085,6 @@
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
     <Feature
-
       Code="&quot;EntryExit&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Customs.Declaration.Features.EntryExit&quot;"
