@@ -3213,14 +3213,14 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         unifreightMessageM.Requset.push(["ApprovalToInsure", ""]);
         unifreightMessageM.Requset.push(["InsuranceAmount", ""]);
         unifreightMessageM.Requset.push(["InsuranceCurrency", ""]);
-
+        var PossibleOpenInsurance = TextCodeTranslator.Translate("Customs.Declaration.O.PossibleOpenInsurance");
         AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
             "AmitalGatewayUtil.CustomExportApprovalToInsurance",
             "BFIHMAIN.LogitudeTask",
             "CustomExportApprovalToInsurance",
             unifreightMessageM,
-            "הםם םפשרי לפתוח תיק ביטוח");
-
+            PossibleOpenInsurance);
+           
     }
 
 
@@ -3229,12 +3229,13 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
      ActivateInsurance(ApprovalToInsure) {
         
         if (ApprovalToInsure == "Yes") {
+            var msg=TextCodeTranslator.Translate("Customs.Declaration.O.IsItForInsurance");
+            
             var confirm = new ConfirmWindow();
-
             confirm.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
             confirm.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
-            confirm.Width = 400;
-            confirm.Show(`הלקוח מוגדר לביצוע ביטוח םוטומטי, הםם לבטח ?`);           
+            confirm.Width = 400;           
+            confirm.Show(msg);           
             confirm.WindowClosed.subscribe((event: any) => {
 
                 if (confirm.Yes == true) {
@@ -3257,7 +3258,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                                     let InvoiceNumber = ""; InvoiceNumber = UnifreightMessageM.GetStringValue(mess, "InvoiceNumber");
 
                                     let confirmWindow = new ConfirmWindow();
-                                    confirmWindow.Title = "יצירת ביטוח";
+                                    confirmWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.CreatingInsurance");
                                     confirmWindow.Width = 350;
                                     confirmWindow.Height = 200;
                                     confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
@@ -3275,11 +3276,14 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                                       })
                                     }
                                     else if (!AppTool.IsNullOrEmpty(InvoiceNumber)) {
-                                        confirmWindow.Show(`נפתחה תוספת ביטוח מס' ` + InvoiceNumber + ` , יש להשלימה בתהליך ידני ביוניפרייט`);
+                                       var InsuranceOpenNum = TextCodeTranslator.Translate("Customs.Declaration.O.InsuranceOpenNum");    
+                                       var CompletedUnifreight = TextCodeTranslator.Translate("Customs.Declaration.O.CompletedUnifreight");
+                                        confirmWindow.Show(InsuranceOpenNum+`' ` + InvoiceNumber +`, `+ CompletedUnifreight);
 
                                     }
                                     else {
-                                        confirmWindow.Show(`תהליך פתיחת תוספת ביטוח םוטומטי נכשל`);
+                                        var OpenInsuranceFailed = TextCodeTranslator.Translate("Customs.Declaration.O.OpenInsuranceFailed");
+                                        confirmWindow.Show(OpenInsuranceFailed);
 
                                     }
                                 }
@@ -3299,13 +3303,14 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                     unifreightMessageM.Requset.push(["InsuranceAmount", ""]);
                     unifreightMessageM.Requset.push(["InsuranceCurrency", ""]);
 
-
+                    var OpeningInsuranceCase = TextCodeTranslator.Translate("Customs.Declaration.O.OpeningInsuranceCase");
                     AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
                         "AmitalGatewayUtil.CustomExportActivateInsurance",
                         "BFIHMAIN.LogitudeTask",
                         "CustomExportActivateInsurance",
                         unifreightMessageM,
-                        "מבצע פתיחת תיק ביטוח");
+                        OpeningInsuranceCase);
+                        
 
                 }
 

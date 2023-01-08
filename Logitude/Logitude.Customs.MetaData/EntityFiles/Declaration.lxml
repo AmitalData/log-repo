@@ -25806,6 +25806,48 @@
       LocalDefaultText="&quot;עדכן פריט אחד&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.PossibleOpenInsurance&quot;"
+      DefaultText="&quot;Is it possible to open an insurance case&quot;"
+      LocalDefaultText="&quot;האם אפשרי לפתוח תיק ביטוח&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.IsItForInsurance&quot;"
+      DefaultText="&quot;The customer is set up for automatic insurance, is it for insurance?&quot;"
+      LocalDefaultText="&quot;הלקוח מוגדר לביצוע ביטוח אוטומטי, האם לבטח ?&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.CreatingInsurance&quot;"
+      DefaultText="&quot;Creating insurance&quot;"
+      LocalDefaultText="&quot;יצירת ביטוח&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.InsuranceOpenNum&quot;"
+      DefaultText="&quot;An additional insurance number was opened&quot;"
+      LocalDefaultText="&quot;נפתחה תוספת ביטוח מס&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.CompletedUnifreight&quot;"
+      DefaultText="&quot;Must be completed manually in Unifreight&quot;"
+      LocalDefaultText="&quot;יש להשלימה בתהליך ידני ביוניפרייט&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.OpeningInsuranceCase&quot;"
+      DefaultText="&quot;Opening an insurance case&quot;"
+      LocalDefaultText="&quot;מבצע פתיחת תיק ביטוח&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.OpenInsuranceFailed&quot;"
+      DefaultText="&quot;The process of opening an automatic insurance supplement has failed&quot;"
+      LocalDefaultText="&quot;תהליך פתיחת תוספת ביטוח אוטומטי נכשל&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
