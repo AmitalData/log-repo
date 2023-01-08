@@ -3175,8 +3175,9 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
 
     InspectionRequest() {
-       // var IsActivateInsurance = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "AIN")[0]? true : false;               
-       //  if(!IsActivateInsurance) return;
+
+      // var IsActivateInsurance = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "AIN")[0]? true : false;               
+      //  if(!IsActivateInsurance) return;
 
         if (!this.EntityPM.IsDirty) return;
 
