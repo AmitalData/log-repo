@@ -3175,8 +3175,8 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
     InspectionRequest() {
 
-        var IsActivateInsurance = FeatureLocator.HasFeaturePermession("Customs.Declaration", "ISACTIVATEINSURANCE")
-        if(!IsActivateInsurance) return;
+        // var IsActivateInsurance = FeatureLocator.HasFeaturePermession("Customs.Declaration", "ISACTIVATEINSURANCE")
+        // if(!IsActivateInsurance) return;
 
         if (!this.EntityPM.IsDirty) return;
 
