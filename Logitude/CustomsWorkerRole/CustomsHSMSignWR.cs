@@ -196,7 +196,12 @@ where not exists(select *
                             break;
                         }
 
-
+                        if (_CustomDBQueueMessage.Retries>10)
+                        {
+                            _CustomDBQueueMessage.SafeComplete();
+                            scope.Complete();
+                            continue;
+                        }
                         int.TryParse(_CustomDBQueueMessage.Properties["Tenant"].ToString(), out _Tenant);
 
                         string customsRequestsSheetId = null;
