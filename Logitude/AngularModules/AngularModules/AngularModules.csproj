@@ -355,6 +355,7 @@
     <Content Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\EditTabs\AddCustomFieldsComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\EditTabs\CustomFieldsTabComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\EditTabs\DeploymentPackageGeneralTabComponent.html" />
+    <Content Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\MenuButtons\ExportMenuButtonComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\NewEntity\AddNewDeploymentPackageComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\NewEntity\NewExportDeploymentPackageComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\NewEntity\NewImportDeploymentPackageComponent.html" />
@@ -1992,6 +1993,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\EditTabs\AddCustomFieldsComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\EditTabs\CustomFieldsTabComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\EditTabs\DeploymentPackageGeneralTabComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\MenuButtons\ExportMenuButtonComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\NewEntity\AddNewDeploymentPackageComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\NewEntity\NewExportDeploymentPackageComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDeploymentPackage\Component\NewEntity\NewImportDeploymentPackageComponent.ts" />
@@ -2057,6 +2059,7 @@
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\BatchTaskExecution\BTEParameterTabComponent\BTEParameterTabComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Maintenance\CacheLogComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\MenuButtons\AnalyzeQueueMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\MenuButtons\DeploymentPackageMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\MultiPrint\MultiPrintCheckBoxComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\MultiPrint\MultiPrintCheckTemplate.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\MultiPrint\MultiPrintErrorHandlerComponent.ts" />
@@ -2166,6 +2169,7 @@
     <TypeScriptCompile Include="Infrastructure\Pipes\HighlightSearch.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\BatchPrintService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedLists\BIReportFolderExtendedListService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\DeploymentPackageExtendedPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\CustomPickListPMExtendedService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\EventTypeExtendedPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\FollowUpPMExtendedService.ts" />
