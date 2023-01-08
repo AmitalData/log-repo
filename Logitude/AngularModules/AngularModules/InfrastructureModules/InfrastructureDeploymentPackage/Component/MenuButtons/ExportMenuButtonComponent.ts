@@ -4,6 +4,8 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import { DeploymentPackagePM } from '../../../../Infrastructure/EntityPMs/DeploymentPackagePM';
 import { DeploymentPackageExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/DeploymentPackageExtendedPMService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
+import { DeploymentPackagePMService } from '../../../../Infrastructure/Services/StandardPMs/DeploymentPackagePMService';
 declare var window: any;
 
 @Component({
@@ -20,17 +22,22 @@ export class ExportMenuButtonComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     public MissingPackageDependiencies: [] = [];
     private DeploymentPackageExtendedPMService: DeploymentPackageExtendedPMService;
+    private deploymentPackagePMService: DeploymentPackagePMService;
+
     constructor() {
         super();
         this.DeploymentPackageExtendedPMService = new DeploymentPackageExtendedPMService();
+        this.deploymentPackagePMService = new DeploymentPackagePMService();
     }
 
     SetWindowArgs(args: any) {
         this.EntityPM = args.EntityPM;
+        this.IsExported = this.EntityPM.IsExported;
         this.LoadMissingPackageDependiencies();
     }
 
     LoadMissingPackageDependiencies() {
+        if (this.IsExported) return;
         this.IsValidForExport = false;
         this.ValidationErrorsList = [];
         this.MissingPackageDependiencies = [];
@@ -65,7 +72,20 @@ export class ExportMenuButtonComponent extends BaseComponent {
             this.ValidationErrorsList.push("Not Valid For Export");
             return;
         }
-        this.IsExported = true;
-        //this.CurrentSession.CloseCurrentWindowEmit("Exported");
+
+        this.CurrentSession.StartBusyIndicator("Exporting ... ");
+
+        this.EntityPM.IsExported = true;
+
+        this.deploymentPackagePMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
+            if (response.HasError) return;
+            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            this.IsExported = true;
+            this.CurrentSession.StopBusyIndicator();
+        });
+    }
+
+    DownloadFile() {
+        DownloadManager.DownloadPage(this.EntityPM.DocumentId, null, true);
     }
 }
