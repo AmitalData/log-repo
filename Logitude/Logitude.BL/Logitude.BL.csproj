@@ -288,6 +288,7 @@
     <Compile Include="CommonDataModel\APIDataContract\Currency.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Customer.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\CustomerOpenFilesAmount.Generated.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\CustomerSize.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\CustomField.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Department.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\DimensionsUnit.Generated.cs" />
@@ -313,6 +314,7 @@
     <Compile Include="CommonDataModel\APIDataContract\QueryService\CustomerOpenFilesAmountQueryService.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\CustomerQueryService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\CustomerQueryService.Generated.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\QueryService\CustomerSizeQueryService.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\CustomFieldQueryService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\DocumentsFilingQueryService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\IndustryQueryService.Generated.cs" />
