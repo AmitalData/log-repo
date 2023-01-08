@@ -85,10 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-
-
-
-		public const string HashString = "c3bb7445cf5cae74294f9d4d972c2fb9";
+		public const string HashString = "97c9a81fac1442e5b0d9104a573019e7";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -273,7 +270,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						AdditionalQuerySections =  "Customs.ExportDeclaration",
 					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
@@ -534,6 +530,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						AdditionalQuerySections =  "Customs.ExportDeclaration",
 					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
@@ -2917,7 +2914,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
-					  						AdditionalQuerySections =  "Customs.ExportDeclaration",
 					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
@@ -13999,7 +13995,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  10,
@@ -16329,125 +16325,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "DeclarationFollowUp",
-					  						ObjectTableName =  "Customs.Declaration",
-					  						FieldsDataType =  "List",
-					  						MinLength =  0,
-					  						MaxLength =  0,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "DeclarationFollowUp",
-					  						ListPropertyPath =  "DeclarationFollowUp",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  true,
-					  						MultiTableName =  "Customs.DeclarationFollowUp",
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "DeclarationFollowUp",
-					  						DefaultText =  "Declaration Follow Up",
-					  						FullLocalDefaultText =  "Declaration Follow Up",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "ReleaseStatusTypeCode",
-					  						ObjectTableName =  "Customs.Declaration",
-					  						FieldsDataType =  "Text",
-					  						MinLength =  0,
-					  						MaxLength =  2,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  2,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "ReleaseStatusTypeCode",
-					  						ListPropertyPath =  "ReleaseStatusTypeCode",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.Declaration",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ReleaseStatusTypeCode",
-					  						DefaultText =  "Release Status Type Code",
-					  						ListFieldLable =  "ReleaseStatusTypeCodeListLable",
-					  						ListLableDefaultText =  "Release Status Type Code",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -17386,39 +17263,39 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DEGC",HtmlComponentName = "DeclarationGeneralComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/DeclarationGeneralComponent", FeatureId = DeclarationGeneralFeature_TH1.Id,FeatureUniqeCode = DeclarationGeneralFeature_TH1.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.Tabs.DeclarationGeneralTabControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationGeneralTextCode_TH1.Id, TabNameTextCodeCode = DeclarationGeneralTextCode_TH1.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DEIN",HtmlComponentName = "DeclarationSupplierInvoiceTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/DeclarationSupplierInvoiceTabComponent", FeatureId = DeclarationSupplierInvoicesFeature_TH2.Id,FeatureUniqeCode = DeclarationSupplierInvoicesFeature_TH2.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.Tabs.DeclarationInvoicesTabControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationSupplierInvoicesTextCode_TH2.Id, TabNameTextCodeCode = DeclarationSupplierInvoicesTextCode_TH2.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DEIN",HtmlComponentName = "DeclarationSupplierInvoiceTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/DeclarationSupplierInvoiceTabComponent", FeatureId = DeclarationSupplierInvoicesFeature_TH2.Id,FeatureUniqeCode = DeclarationSupplierInvoicesFeature_TH2.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.Tabs.DeclarationInvoicesTabControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationSupplierInvoicesTextCode_TH2.Id, TabNameTextCodeCode = DeclarationSupplierInvoicesTextCode_TH2.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DECR",HtmlComponentName = "CertificateTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Certificate/CertificateTabComponent", FeatureId = DeclarationCertificatesFeature_TH3.Id,FeatureUniqeCode = DeclarationCertificatesFeature_TH3.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.Tabs.DeclarationCertificatesTabControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCertificatesTextCode_TH3.Id, TabNameTextCodeCode = DeclarationCertificatesTextCode_TH3.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DECR",HtmlComponentName = "CertificateTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Certificate/CertificateTabComponent", FeatureId = DeclarationCertificatesFeature_TH3.Id,FeatureUniqeCode = DeclarationCertificatesFeature_TH3.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.Tabs.DeclarationCertificatesTabControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCertificatesTextCode_TH3.Id, TabNameTextCodeCode = DeclarationCertificatesTextCode_TH3.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCCD",HtmlComponentName = "CustomsDocumentsComponent",HtmlComponentUrl = "./CustomsModules/CustomsDocuments/Components/CustomsDocumentsComponent", FeatureId = DeclarationCustomsDocumentsFeature_TH4.Id,FeatureUniqeCode = DeclarationCustomsDocumentsFeature_TH4.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.Documents.DeclarationCustomDocumentsControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCustomsDocumentsTextCode_TH4.Id, TabNameTextCodeCode = DeclarationCustomsDocumentsTextCode_TH4.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCCD",HtmlComponentName = "CustomsDocumentsComponent",HtmlComponentUrl = "./CustomsModules/CustomsDocuments/Components/CustomsDocumentsComponent", FeatureId = DeclarationCustomsDocumentsFeature_TH4.Id,FeatureUniqeCode = DeclarationCustomsDocumentsFeature_TH4.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.Documents.DeclarationCustomDocumentsControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCustomsDocumentsTextCode_TH4.Id, TabNameTextCodeCode = DeclarationCustomsDocumentsTextCode_TH4.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCCA",HtmlComponentName = "CustomsAnswersComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/CustomsAnswers/CustomsAnswersComponent", FeatureId = DeclarationCustomsReplyFeature_TH5.Id,FeatureUniqeCode = DeclarationCustomsReplyFeature_TH5.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.Tabs.DeclarationCustomsAnswersControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCustomsReplyTextCode_TH5.Id, TabNameTextCodeCode = DeclarationCustomsReplyTextCode_TH5.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCCA",HtmlComponentName = "CustomsAnswersComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/CustomsAnswers/CustomsAnswersComponent", FeatureId = DeclarationCustomsReplyFeature_TH5.Id,FeatureUniqeCode = DeclarationCustomsReplyFeature_TH5.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.Tabs.DeclarationCustomsAnswersControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCustomsReplyTextCode_TH5.Id, TabNameTextCodeCode = DeclarationCustomsReplyTextCode_TH5.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DETX",HtmlComponentName = "DeclarationTaxesTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Taxes/DeclarationTaxesTabComponent", FeatureId = DeclarationTaxesFeature_TH6.Id,FeatureUniqeCode = DeclarationTaxesFeature_TH6.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.Tabs.DeclarationTaxesTabControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationTaxesTextCode_TH6.Id, TabNameTextCodeCode = DeclarationTaxesTextCode_TH6.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DETX",HtmlComponentName = "DeclarationTaxesTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Taxes/DeclarationTaxesTabComponent", FeatureId = DeclarationTaxesFeature_TH6.Id,FeatureUniqeCode = DeclarationTaxesFeature_TH6.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.Tabs.DeclarationTaxesTabControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationTaxesTextCode_TH6.Id, TabNameTextCodeCode = DeclarationTaxesTextCode_TH6.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCPO",HtmlComponentName = "DeclarationPaymentOrderTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/PaymentOrder/DeclarationPaymentOrderTabComponent", FeatureId = DeclarationPaymentOrdersFeature_TH7.Id,FeatureUniqeCode = DeclarationPaymentOrdersFeature_TH7.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationPaymentOrdersTextCode_TH7.Id, TabNameTextCodeCode = DeclarationPaymentOrdersTextCode_TH7.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCPO",HtmlComponentName = "DeclarationPaymentOrderTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/PaymentOrder/DeclarationPaymentOrderTabComponent", FeatureId = DeclarationPaymentOrdersFeature_TH7.Id,FeatureUniqeCode = DeclarationPaymentOrdersFeature_TH7.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationPaymentOrdersTextCode_TH7.Id, TabNameTextCodeCode = DeclarationPaymentOrdersTextCode_TH7.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCPC",HtmlComponentName = "DeclarationPhysicalCheckTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/PhysicalCheck/DeclarationPhysicalCheckTabComponent", FeatureId = DeclarationPhysicalChecksFeature_TH8.Id,FeatureUniqeCode = DeclarationPhysicalChecksFeature_TH8.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationPhysicalChecksTextCode_TH8.Id, TabNameTextCodeCode = DeclarationPhysicalChecksTextCode_TH8.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCPC",HtmlComponentName = "DeclarationPhysicalCheckTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/PhysicalCheck/DeclarationPhysicalCheckTabComponent", FeatureId = DeclarationPhysicalChecksFeature_TH8.Id,FeatureUniqeCode = DeclarationPhysicalChecksFeature_TH8.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationPhysicalChecksTextCode_TH8.Id, TabNameTextCodeCode = DeclarationPhysicalChecksTextCode_TH8.Code, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DEEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = DeclarationEventsFeature_TH9.Id,FeatureUniqeCode = DeclarationEventsFeature_TH9.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationEventsTextCode_TH9.Id, TabNameTextCodeCode = DeclarationEventsTextCode_TH9.Code, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DEEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = DeclarationEventsFeature_TH9.Id,FeatureUniqeCode = DeclarationEventsFeature_TH9.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationEventsTextCode_TH9.Id, TabNameTextCodeCode = DeclarationEventsTextCode_TH9.Code, Tenant = 0, IndexOrder = 8 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCRS",HtmlComponentName = "RequestSheetTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent", FeatureId = DeclarationRequestSheetsFeature_TH10.Id,FeatureUniqeCode = DeclarationRequestSheetsFeature_TH10.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationRequestSheetsTextCode_TH10.Id, TabNameTextCodeCode = DeclarationRequestSheetsTextCode_TH10.Code, Tenant = 0, IndexOrder = 8 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCRS",HtmlComponentName = "RequestSheetTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent", FeatureId = DeclarationRequestSheetsFeature_TH10.Id,FeatureUniqeCode = DeclarationRequestSheetsFeature_TH10.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationRequestSheetsTextCode_TH10.Id, TabNameTextCodeCode = DeclarationRequestSheetsTextCode_TH10.Code, Tenant = 0, IndexOrder = 9 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DECM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = DeclarationCommunicationsFeature_TH11.Id,FeatureUniqeCode = DeclarationCommunicationsFeature_TH11.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCommunicationsTextCode_TH11.Id, TabNameTextCodeCode = DeclarationCommunicationsTextCode_TH11.Code, Tenant = 0, IndexOrder = 9 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DECM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = DeclarationCommunicationsFeature_TH11.Id,FeatureUniqeCode = DeclarationCommunicationsFeature_TH11.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCommunicationsTextCode_TH11.Id, TabNameTextCodeCode = DeclarationCommunicationsTextCode_TH11.Code, Tenant = 0, IndexOrder = 10 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCMF",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = DeclarationMoreFieldsFeature_TH12.Id,FeatureUniqeCode = DeclarationMoreFieldsFeature_TH12.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationMoreFieldsTextCode_TH12.Id, TabNameTextCodeCode = DeclarationMoreFieldsTextCode_TH12.Code, Tenant = 0, IndexOrder = 10 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCMF",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = DeclarationMoreFieldsFeature_TH12.Id,FeatureUniqeCode = DeclarationMoreFieldsFeature_TH12.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationMoreFieldsTextCode_TH12.Id, TabNameTextCodeCode = DeclarationMoreFieldsTextCode_TH12.Code, Tenant = 0, IndexOrder = 11 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCTP",HtmlComponentName = "DeclarationTapagTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Tapag/DeclarationTapagTabComponent", FeatureId = DeclarationTapagsFeature_TH13.Id,FeatureUniqeCode = DeclarationTapagsFeature_TH13.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationTapagsTextCode_TH13.Id, TabNameTextCodeCode = DeclarationTapagsTextCode_TH13.Code, Tenant = 0, IndexOrder = 11 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCTP",HtmlComponentName = "DeclarationTapagTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Tapag/DeclarationTapagTabComponent", FeatureId = DeclarationTapagsFeature_TH13.Id,FeatureUniqeCode = DeclarationTapagsFeature_TH13.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationTapagsTextCode_TH13.Id, TabNameTextCodeCode = DeclarationTapagsTextCode_TH13.Code, Tenant = 0, IndexOrder = 12 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCNT",HtmlComponentName = "NotificationReplyTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/NotificationReplyTabComponent", FeatureId = DeclarationNotificationReplyFeature_TH14.Id,FeatureUniqeCode = DeclarationNotificationReplyFeature_TH14.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationNotificationReplyTextCode_TH14.Id, TabNameTextCodeCode = DeclarationNotificationReplyTextCode_TH14.Code, Tenant = 0, IndexOrder = 12 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCNT",HtmlComponentName = "NotificationReplyTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/NotificationReplyTabComponent", FeatureId = DeclarationNotificationReplyFeature_TH14.Id,FeatureUniqeCode = DeclarationNotificationReplyFeature_TH14.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationNotificationReplyTextCode_TH14.Id, TabNameTextCodeCode = DeclarationNotificationReplyTextCode_TH14.Code, Tenant = 0, IndexOrder = 13 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCNF",HtmlComponentName = "NotificationComponent",HtmlComponentUrl = "./CustomsModules/CustomsControls/Components/NotificationComponent", FeatureId = DeclarationNotificationsFeature_TH15.Id,FeatureUniqeCode = DeclarationNotificationsFeature_TH15.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationNotificationsTextCode_TH15.Id, TabNameTextCodeCode = DeclarationNotificationsTextCode_TH15.Code, Tenant = 0, IndexOrder = 13 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCNF",HtmlComponentName = "NotificationComponent",HtmlComponentUrl = "./CustomsModules/CustomsControls/Components/NotificationComponent", FeatureId = DeclarationNotificationsFeature_TH15.Id,FeatureUniqeCode = DeclarationNotificationsFeature_TH15.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationNotificationsTextCode_TH15.Id, TabNameTextCodeCode = DeclarationNotificationsTextCode_TH15.Code, Tenant = 0, IndexOrder = 14 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCCL",HtmlComponentName = "DeclarationCollateralsComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Collateral/DeclarationCollateralsComponent", FeatureId = DeclarationCustomsCollateralFeature_TH16.Id,FeatureUniqeCode = DeclarationCustomsCollateralFeature_TH16.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCustomsCollateralTextCode_TH16.Id, TabNameTextCodeCode = DeclarationCustomsCollateralTextCode_TH16.Code, Tenant = 0, IndexOrder = 14 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCCL",HtmlComponentName = "DeclarationCollateralsComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Collateral/DeclarationCollateralsComponent", FeatureId = DeclarationCustomsCollateralFeature_TH16.Id,FeatureUniqeCode = DeclarationCustomsCollateralFeature_TH16.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCustomsCollateralTextCode_TH16.Id, TabNameTextCodeCode = DeclarationCustomsCollateralTextCode_TH16.Code, Tenant = 0, IndexOrder = 15 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCCS",HtmlComponentName = "DeclarationCargoSplitTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/CargoSplit/DeclarationCargoSplitTabComponent", FeatureId = DeclarationCargoSplitFeature_TH17.Id,FeatureUniqeCode = DeclarationCargoSplitFeature_TH17.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCargoSplitTextCode_TH17.Id, TabNameTextCodeCode = DeclarationCargoSplitTextCode_TH17.Code, Tenant = 0, IndexOrder = 15 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCCS",HtmlComponentName = "DeclarationCargoSplitTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/CargoSplit/DeclarationCargoSplitTabComponent", FeatureId = DeclarationCargoSplitFeature_TH17.Id,FeatureUniqeCode = DeclarationCargoSplitFeature_TH17.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCargoSplitTextCode_TH17.Id, TabNameTextCodeCode = DeclarationCargoSplitTextCode_TH17.Code, Tenant = 0, IndexOrder = 16 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCCF",HtmlComponentName = "DeclarationClassificationComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Classification/DeclarationClassificationComponent", FeatureId = DeclarationClassificationFeature_TH18.Id,FeatureUniqeCode = DeclarationClassificationFeature_TH18.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationClassificationTextCode_TH18.Id, TabNameTextCodeCode = DeclarationClassificationTextCode_TH18.Code, Tenant = 0, IndexOrder = 16 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCCF",HtmlComponentName = "DeclarationClassificationComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Classification/DeclarationClassificationComponent", FeatureId = DeclarationClassificationFeature_TH18.Id,FeatureUniqeCode = DeclarationClassificationFeature_TH18.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationClassificationTextCode_TH18.Id, TabNameTextCodeCode = DeclarationClassificationTextCode_TH18.Code, Tenant = 0, IndexOrder = 17 }, objectTableTabsRepository, TenantObjectTableTabs);
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCSE",HtmlComponentName = "DeclarationCargoSealTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/CargoSeal/DeclarationCargoSealTabComponent", FeatureId = DeclarationCargoSealFeature_TH19.Id,FeatureUniqeCode = DeclarationCargoSealFeature_TH19.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCargoSealTextCode_TH19.Id, TabNameTextCodeCode = DeclarationCargoSealTextCode_TH19.Code, Tenant = 0, IndexOrder = 18 }, objectTableTabsRepository, TenantObjectTableTabs);
    
@@ -17495,11 +17372,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   Feature DeclarationFeature_IIGEXPORTIMPORTDECLARATION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IIGEXPORTIMPORTDECLARATION", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.IIGEXPORTIMPORTDECLARATION", NameTextCodeDefaultText = @"Export & Import IIG Tenant" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
-		   Feature DeclarationFeature_CancelOldCommunication = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CancelOldCommunication", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.CancelOldCommunication", NameTextCodeDefaultText = @"CancelOldCommunication" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
-
 		   Feature DeclarationFeature_EntryExit = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EntryExit", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.EntryExit", NameTextCodeDefaultText = @"יציאה ממסוף / נמל" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
-
-		   Feature DeclarationFeature_ISACTIVATEINSURANCE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ISACTIVATEINSURANCE", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.ISACTIVATEINSURANCE", NameTextCodeDefaultText = @"Is Activate Insurance" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
    
 	    
@@ -18923,42 +18796,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, EventTypeRepository, tenantEventTypes);
 
 
-            AddEventTypes.AddEventType(new EventTypeDetails()
-            {
-                Code =  "TAS",
-                EnglishName =  "Transshipment Approved",
-                LocalName =  "אישור שטעון",
-                IsManualEntry =  false,
-                ShortView =  false,
-                IsAgentView =  false,
-                IsCustomerView =  false,
-                IsSharedLogisticsEnabled =  false,
-                AllowedInAutomation =  false,
-                ManualActivatedFollowUp =  false,
-                IsFollowUp =  false,
-                ObjectTableId = DeclarationObjectTable.Id,
-				 
-            }, EventTypeRepository, tenantEventTypes);
-
-
-            AddEventTypes.AddEventType(new EventTypeDetails()
-            {
-                Code =  "TAC",
-                EnglishName =  "Transshipment Approved Canceled",
-                LocalName =  "אישור שטעון בוטל",
-                IsManualEntry =  false,
-                ShortView =  false,
-                IsAgentView =  false,
-                IsCustomerView =  false,
-                IsSharedLogisticsEnabled =  false,
-                AllowedInAutomation =  false,
-                ManualActivatedFollowUp =  false,
-                IsFollowUp =  false,
-                ObjectTableId = DeclarationObjectTable.Id,
-				 
-            }, EventTypeRepository, tenantEventTypes);
-
-
 	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
@@ -20300,20 +20137,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationONoDeclarationWithTransportTypeSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.NoDeclarationWithTransportTypeSelected", DefaultText = "No declaration with transport type selected",LocalDefaultText = @"אין הצהרה עם סוג הובלה נבחר", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOUpdateOneItem = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.UpdateOneItem", DefaultText = "Update one item",LocalDefaultText = @"עדכן פריט אחד", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode DeclarationTextCode_CustomsDeclarationOPossibleOpenInsurance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.PossibleOpenInsurance", DefaultText = "Is it possible to open an insurance case",LocalDefaultText = @"האם אפשרי לפתוח תיק ביטוח", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode DeclarationTextCode_CustomsDeclarationOIsItForInsurance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.IsItForInsurance", DefaultText = "The customer is set up for automatic insurance, is it for insurance?",LocalDefaultText = @"הלקוח מוגדר לביצוע ביטוח אוטומטי, האם לבטח ?", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCreatingInsurance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CreatingInsurance", DefaultText = "Creating insurance",LocalDefaultText = @"יצירת ביטוח", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode DeclarationTextCode_CustomsDeclarationOInsuranceOpenNum = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.InsuranceOpenNum", DefaultText = "An additional insurance number was opened",LocalDefaultText = @"נפתחה תוספת ביטוח מס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode DeclarationTextCode_CustomsDeclarationOCompletedUnifreight = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CompletedUnifreight", DefaultText = "Must be completed manually in Unifreight",LocalDefaultText = @"יש להשלימה בתהליך ידני ביוניפרייט", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode DeclarationTextCode_CustomsDeclarationOOpeningInsuranceCase = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.OpeningInsuranceCase", DefaultText = "Opening an insurance case",LocalDefaultText = @"מבצע פתיחת תיק ביטוח", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode DeclarationTextCode_CustomsDeclarationOOpenInsuranceFailed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.OpenInsuranceFailed", DefaultText = "The process of opening an automatic insurance supplement has failed",LocalDefaultText = @"תהליך פתיחת תוספת ביטוח אוטומטי נכשל", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
