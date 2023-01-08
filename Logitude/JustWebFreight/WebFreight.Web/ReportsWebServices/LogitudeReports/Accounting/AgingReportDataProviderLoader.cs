@@ -264,7 +264,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 groupedPeriodsByAccount = result.GroupBy(d => d.AccountId).Select(d => new AgingPeriod()
                 {
                     PeriodName = showLocals ? "סיכום תקופות" : "Foreign",
-                    Total = d.Sum(x => x.Total),
+                    Total = d.First().BalanceInLocalAccountingDate,
                     AccountName = (d.First().AccountLocalName != null ? d.First().AccountLocalName : d.First().AccountEnglishName),
                     AccountLocalName = d.First().AccountLocalName,
                     AccountEnglishName = d.First().AccountEnglishName,
@@ -366,7 +366,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 groupedPeriodsByAccount = result.Where(d => d.Total != null && d.CurrencyCode != totalData.TenantCurrencyCode).GroupBy(d => d.AccountAndCurr).Distinct().Select(d => new AgingPeriod()
                 {
                     PeriodName = showLocals ? "יתרה בשח להיום" : "Local",
-                    Total = d.First().BalanceInLocalCurrency,
+                    Total = d.First().BalanceInLocalAccountingDate,
                     AccountName = (d.First().AccountLocalName != null ? d.First().AccountLocalName : d.First().AccountEnglishName) + " / " + d.First().CurrencyCode,
                     AccountLocalName = d.First().AccountLocalName + " / " + d.First().CurrencyCode,
                     AccountEnglishName = d.First().AccountEnglishName + " / " + d.First().CurrencyCode,
@@ -412,7 +412,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 groupedPeriodsByAccount = result.Where(d => d.Total != null).GroupBy(d => d.AccountId).Distinct().Select(d => new AgingPeriod()
                 {
                     PeriodName = showLocals ? "יתרה בשח להיום" : "Local",
-                    Total = d.FirstOrDefault() == null ? 0 : d.FirstOrDefault().BalanceInLocalCurrency,
+                    Total = d.FirstOrDefault() == null ? 0 : d.FirstOrDefault().BalanceInLocalAccountingDate,
                     AccountName = (d.First().AccountLocalName != null ? d.First().AccountLocalName : d.First().AccountEnglishName),
                     AccountLocalName = d.First().AccountLocalName,
                     AccountEnglishName = d.First().AccountEnglishName ,

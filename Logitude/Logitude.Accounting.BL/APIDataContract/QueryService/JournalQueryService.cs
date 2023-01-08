@@ -7,12 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Server.Tools.Helpers;
+using Logitude.BL.InvoiceModel.APIDataContract;
 
 namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 {
    public partial class JournalQueryService
     {
-
 
         public Journal JournalDataMappingAndValidatin(JournalPM MyEntity, int Tenant, string ComputingPartnerName = "")
         {
@@ -263,5 +266,29 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                 var temp = query.GetSinglePM(id, Tenant);
             return temp;
         }
+        public ARInvoiceJournalLT GetSingleJournalByAccountingEntity(string accountingEntityId, string accountingEntityCode, int Tenant)
+        {
+            try
+            {
+                JournalPM journalPM = query.GetByAccountingEntityIdAndAccountingEntityCode(accountingEntityId, accountingEntityCode, Tenant);
+                //if (journalPM == null)
+                //    throw new ApplicationException("Journal with accounting entity id " + accountingEntityId + " and accounting entity code " + accountingEntityCode + " doesn't exist");
+
+                ARInvoiceJournalLT aRInvoiceJournalLT = new ARInvoiceJournalLT()
+                {
+                    Id = accountingEntityId,
+                    JournalId = journalPM != null ? journalPM.Id : "",
+                    IsLedgerCreated = journalPM != null ? journalPM.IsLedgerCreated : false,
+                };
+
+                return aRInvoiceJournalLT;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
     }
 }

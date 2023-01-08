@@ -332,10 +332,10 @@ export class PublicShipmentDetailsComponent implements OnInit
         if (this.AllMilestoneFields) {
             this.AllMilestoneFields.forEach(S =>
             {
-                if (S.IsEstimation) {
+                if (S.IsEstimation || (S.EstimationDate && !S.Date)) {
 
                     this.FuturesMilestoneFields.push(S);
-                    if (S.IsEstimation && (S.EstimationDate != null || S.Date != null)) {
+                    if (S.IsEstimation || (S.EstimationDate != null || S.Date != null)) {
 
                         this.isPlannedMilestonesExist = true;
                     }
