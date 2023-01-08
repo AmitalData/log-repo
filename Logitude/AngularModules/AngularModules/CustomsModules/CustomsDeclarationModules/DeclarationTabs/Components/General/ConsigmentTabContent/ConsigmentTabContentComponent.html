@@ -902,18 +902,18 @@
                                             </td>
 
                                             <td style="width: 150px;">
-                                                <LogLabel [ObjectFieldName]="'RecieverWareHouseCode'"
+                                                <LogLabel [ObjectFieldName]="'ExportRecieverWareHouseCode'"
                                                     [ObjectTableName]="'Customs.Consignment'"
                                                     [DataContext]="DataContext" [NoObjectField]="true"
                                                     [Text]="'אתר ביניים'"></LogLabel>
                                             </td>
 
                                             <td style="width: 160px;">
-                                                <LogLov [ObjectFieldName]="'RecieverWareHouseCode'"
+                                                <LogLov [ObjectFieldName]="'ExportRecieverWareHouseCode'"
                                                     [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                                    [LookUpTableName]="'Customs.RegisteredWarehouseSiteType'"
+                                                    [LookUpTableName]="'Customs.DeliverySiteType'"
                                                     [DisplayMemberPath]="'LocalName'"
-                                                    [SelectedValue]="RecieverWareHouseCode" [HideColumns]="true">
+                                                    [SelectedValue]="ExportRecieverWareHouseCode" [HideColumns]="true">
                                                 </LogLov>
 
                                             </td>
