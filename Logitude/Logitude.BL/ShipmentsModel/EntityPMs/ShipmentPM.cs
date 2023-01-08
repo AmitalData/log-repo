@@ -2999,6 +2999,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsINTTRAFROB { get; set; }
         public string MainCarriageFromStateId { get; set; }
         public string MainCarriageToStateId { get; set; }
+        public double? GrossWeightInLB { get; set; }
+        public double? VolumeInCBF { get; set; }
+        public double? ChargeableWeightInLB { get; set; }
     }
 
     public class TransshipmentLeg

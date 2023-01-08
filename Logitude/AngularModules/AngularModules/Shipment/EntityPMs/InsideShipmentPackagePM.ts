@@ -313,6 +313,16 @@ export class InsideShipmentPackagePM {
     public set GrossWeightInKG(newValue: number) { if (this.grossWeightInKG != newValue) { this.grossWeightInKG = newValue; this.MarkAsDirty("GrossWeightInKG"); } }
        
 	 
+    private grossWeightInLB: number;
+    public get GrossWeightInLB() { return this.grossWeightInLB; }
+    public set GrossWeightInLB(newValue: number) { if (this.grossWeightInLB != newValue) { this.grossWeightInLB = newValue; this.MarkAsDirty("GrossWeightInLB"); } }
+       
+	 
+    private volumeInCBF: number;
+    public get VolumeInCBF() { return this.volumeInCBF; }
+    public set VolumeInCBF(newValue: number) { if (this.volumeInCBF != newValue) { this.volumeInCBF = newValue; this.MarkAsDirty("VolumeInCBF"); } }
+       
+	 
 
     public OldEntityPM: InsideShipmentPackagePM;
 	    
