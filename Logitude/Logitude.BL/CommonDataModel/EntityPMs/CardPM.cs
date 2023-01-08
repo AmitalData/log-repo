@@ -98,6 +98,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string LeadDescription { get; set; }
         public DateTime? StartWorkingDate { get; set; }
         public string LeadSourceId { get; set; }
+        public string CustomerSizeId { get; set; }
 
         [Include]
         [Association("CardCustomAgent", "Id", "Id", IsForeignKey = true)]

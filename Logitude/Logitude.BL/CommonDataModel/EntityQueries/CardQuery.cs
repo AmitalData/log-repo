@@ -262,6 +262,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       SATCustomerName = a.SATCustomerName,
                                       ExportLocalCustomerGroupId = a.ExportLocalCustomerGroupId,
                                       ImportLocalCustomerGroupId = a.ImportLocalCustomerGroupId,
+                                      CustomerSizeId = a.Customer != null ? (a.Customer.CustomerSize != null ? a.Customer.CustomerSize.Id : null) : null,
                                   }).FirstOrDefault();
 
 
@@ -365,6 +366,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   RankId = a.Customer != null ? (a.Customer.Rank != null ? a.Customer.Rank.Id : null) : null,
                                   IndustryId = a.Customer != null ? (a.Customer.Industry != null ? a.Customer.Industry.Id : null) : null,
                                   LeadSourceId = a.Customer != null ? (a.Customer.LeadSource != null ? a.Customer.LeadSource.Id : null) : null,
+                                  CustomerSizeId = a.Customer != null ? (a.Customer.CustomerSize != null ? a.Customer.CustomerSize.Id : null) : null,
                                   LeadDescription = a.Customer != null ? a.Customer.LeadDescription : null,
                                   StartWorkingDate = a.Customer != null ? a.Customer.StartWorkingDate : null,
                                   BillToId = a.BillToId,

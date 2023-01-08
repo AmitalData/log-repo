@@ -13,5 +13,6 @@ export class CustomerSizeList {
 		Order: number;
 		InActive: boolean;
 		SearchFields: string;
+		Code: string;
 	
 }

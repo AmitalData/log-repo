@@ -100,6 +100,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 					myCustomer.VatTypeId = this.GetVatTypeId(MyEntity.VatType, Tenant, ComputingPartnerName);
 					myCustomer.LeadSourceId = this.GetLeadSourceId(MyEntity.LeadSource, Tenant, ComputingPartnerName);
 					myCustomer.GLAccountId = this.GetGLAccountId(MyEntity.GLAccount, Tenant, ComputingPartnerName);
+					myCustomer.CustomerSizeId = this.GetCustomerSizeId(MyEntity.CustomerSize, Tenant, ComputingPartnerName);
 
 					AddressPM mainAddress = this.GetAddress(MyEntity.MainAddress, Tenant, ComputingPartnerName, "M");
 					AddressPM billingAddress = this.GetAddress(MyEntity.BillingAddress, Tenant, ComputingPartnerName, "B");
@@ -234,6 +235,18 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 				var myGLAccountPM = gLAccountService.GLAccountCustomDataMappingAndValidatin(gLAccount, tenant);
 				if (myGLAccountPM != null)
 					return myGLAccountPM.Id;
+			}
+
+			return null;
+		}
+		private string GetCustomerSizeId(CustomerSize customerSize, int tenant, string computingPartnerName)
+		{
+			CustomerSizeQueryService customerSizeQuery = new CustomerSizeQueryService(tenant);
+			if (customerSize != null)
+			{
+				var myCustomerSizePM = customerSizeQuery.CustomerSizeDataMappingAndValidatin(customerSize, tenant, computingPartnerName);
+				if (myCustomerSizePM != null)
+					return myCustomerSizePM.Id;
 			}
 
 			return null;
