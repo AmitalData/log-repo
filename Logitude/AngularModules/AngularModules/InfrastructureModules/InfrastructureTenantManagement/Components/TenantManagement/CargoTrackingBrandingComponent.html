@@ -318,8 +318,36 @@
                         </td>
                     </tr>
 
-
-
+                    <!-- Tertiary Color -->
+                    <tr *ngIf="IsLogitudeEnvironment" style="vertical-align:top;height:33px">
+                        <td style="width:8px">
+                            <div></div>
+                        </td>
+                        <td style="width:200px;">
+                            <LogLabel [ObjectFieldName]="'TertiaryColor'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogLabel>
+                        </td>
+                        <td colspan="2">
+                            <div style="width:70px; direction: ltr;" float-start>
+                                <LogTextBox [HideColumns]="true" [ObjectFieldName]="'TertiaryColorCode'" [ObjectTableName]="'TenantManagement'" [Text]="TertiaryColorCode" [DataContext]="DataContext">
+                                </LogTextBox>
+                            </div>
+                            <div float-start style="width: 5px;height: 10px;"></div>
+                            <div class="color-picker-wrapper" float-start>
+                                <input [class.disabled]="!EnableBranding" [(ngModel)]="TertiaryColorCode" type="color" class="colorPicker" id="color" [style.opacity]="TertiaryColorOpacity/100" value="">
+                            </div>
+                            <div float-start style="width: 20px;height: 10px;"></div>
+                            <div float-start style="color: #757575;padding: 5px 5px 0 5px">
+                                Opacity:
+                            </div>
+                            <div float-start class="range">
+                                <input [class.disabled]="!EnableBranding" [(ngModel)]="TertiaryColorOpacity" class="slider" id="slider" min="25" max="100" step="25" type="range" />
+                                <span style="position: absolute;top: 7px; padding: 0 7px;">{{TertiaryColorOpacity}}%</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
 
                     <tr style="vertical-align:top;height:33px">
                         <td style="width:8px">
@@ -448,8 +476,8 @@
 
                         <td style="vertical-align:top">
                             <div style="width:160px;height:100px">
-                                <ImageComponent [KeepOriginalSize]="true" [WidthImage]="'200px'" [class.disabled]="!EnableBranding" [HeightImage]="'95px'" [ImageId]="BackgroundId" [EntityId]="EntityId" [EntityName]="'TenantManagement'" [Extension]="'png'" 
-                                [ValidWidth]="1920" [ValidHeight]="1080" (ImageDimensionsValid)="AreBackgroundImageDimensionsValid($event)" (UploadCompleted)="BackgroundImageUploadedCompleted($event)"
+                                <ImageComponent [KeepOriginalSize]="true" [WidthImage]="'200px'" [class.disabled]="!EnableBranding" [HeightImage]="'95px'" [ImageId]="BackgroundId" [EntityId]="EntityId" [EntityName]="'TenantManagement'" [Extension]="'png'"
+                                                [ValidWidth]="1920" [ValidHeight]="1080" (ImageDimensionsValid)="AreBackgroundImageDimensionsValid($event)" (UploadCompleted)="BackgroundImageUploadedCompleted($event)"
                                                 style="height:72px;width:72px">
                                 </ImageComponent>
                             </div>

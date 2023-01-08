@@ -42,6 +42,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                        Id = a.Id,
                                                        MainColor = a.MainColor,
                                                        SecondaryColor = a.SecondaryColor,
+                                                       TertiaryColor  =a.TertiaryColor,
                                                        BackgroundId = a.BackgroundId,
                                                        ShipmentHeaderImageId = a.ShipmentHeaderImageId,
                                                        ComapnylogoId = a.ComapnylogoId,
@@ -68,6 +69,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                        Id = a.Id,
                                                        MainColor = a.MainColor,
                                                        SecondaryColor = a.SecondaryColor,
+                                                       TertiaryColor = a.TertiaryColor,
                                                        BackgroundId = a.BackgroundId,
                                                        ShipmentHeaderImageId = a.ShipmentHeaderImageId,
                                                        ComapnylogoId = a.ComapnylogoId,
@@ -264,7 +266,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      TotalPaymentamount = a.TotalPaymentamount,
                                                      MainColor = a.MainColor,// != null && a.MainColor.Length > 7) ? "#" + a.MainColor.Substring(3, 6) : null,
                                                      SecondaryColor = a.SecondaryColor,// != null && a.SecondaryColor.Length > 7) ? "#" + a.SecondaryColor.Substring(3, 6) : null,
-
+                                                     TertiaryColor = a.TertiaryColor,
                                                      BackgroundId = a.BackgroundId,
                                                      ShipmentHeaderImageId = a.ShipmentHeaderImageId,
                                                      PermissionBuildMonths = a.PermissionBuildMonths,
@@ -469,7 +471,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   TotalPaymentamount = a.TotalPaymentamount,
                                                   MainColor = a.MainColor,//!= null && a.MainColor.Length > 7) ? "#" + a.MainColor.Substring(3, 6) : null,
                                                   SecondaryColor = a.SecondaryColor,// != null && a.SecondaryColor.Length > 7) ? "#" + a.SecondaryColor.Substring(3, 6) : null,
-
+                                                  TertiaryColor = a.TertiaryColor,
                                                   BackgroundId = a.BackgroundId,
                                                   ComapnylogoId = a.ComapnylogoId,
                                                   InvertedLogoId = a.InvertedLogoId,
@@ -1255,6 +1257,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
                                              CargoTokenTimeout = a.CargoTokenTimeout,
                                              SecondaryColor = a.SecondaryColor,
+                                             TertiaryColor = a.TertiaryColor,
                                              ComapnylogoId = a.ComapnylogoId
                                          }).FirstOrDefault();
 

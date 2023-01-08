@@ -29,7 +29,7 @@ import { GlobalDomainService } from '../../../../Common/Services/GlobalDomainSer
     templateUrl: './CargoTrackingBrandingComponent.html',
 })
 
-export class CargoTrackingBrandingComponent extends BaseComponent implements AfterViewInit, OnInit, OnDestroy  {
+export class CargoTrackingBrandingComponent extends BaseComponent implements AfterViewInit, OnInit, OnDestroy {
     public EntityPM: TenantManagementPM;
     public myForm: FormGroup;
     public DataContext: any = this;
@@ -87,13 +87,20 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     }
 
     private SetColorsFromEntity() {
+
         if (this.EntityPM.MainColor) {
             this.mainColorOpacity = this.GetOpacityFromRGBA(this.EntityPM.MainColor);
             this.mainColorCode = this.ConvertRGBAToHexColor(this.EntityPM.MainColor);
         }
+
         if (this.EntityPM.SecondaryColor) {
             this.secondaryColorOpacity = this.GetOpacityFromRGBA(this.EntityPM.SecondaryColor);
             this.secondaryColorCode = this.ConvertRGBAToHexColor(this.EntityPM.SecondaryColor);
+        }
+
+        if (this.EntityPM.TertiaryColor) {
+            this.tertiaryColorOpacity = this.GetOpacityFromRGBA(this.EntityPM.TertiaryColor);
+            this.tertiaryColorCode = this.ConvertRGBAToHexColor(this.EntityPM.TertiaryColor);
         }
     }
 
@@ -230,8 +237,26 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         this.SetEntitySecondaryColor();
     }
 
+    get EntityTertiaryColor() {
+        return this.EntityPM.TertiaryColor;
+    }
+    set EntityTertiaryColor(value: string) {
+        this.EntityPM.TertiaryColor = value;
+    }
+
+    tertiaryColorOpacity: any = 100;
+    get TertiaryColorOpacity() {
+        return this.tertiaryColorOpacity;
+    }
+    set TertiaryColorOpacity(value: number) {
+        this.tertiaryColorOpacity = value;
+        this.SetEntityTertiaryColor();
+    }
+
     wrongSecondaryColor: boolean = false;
     wrongMainColor: boolean = false;
+    wrongTertiaryColor: boolean = false;
+
     private secondaryColorCode: string;
     private SetEntitySecondaryColor() {
         this.EntitySecondaryColor = this.ConvertHexToRGBColor(this.SecondaryColorCode, this.SecondaryColorOpacity);
@@ -247,15 +272,37 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         this.SetEntitySecondaryColor();
     }
 
-
-
-
     private ValidateSecondaryColor(hexColor: string) {
         if (!this.ValidateHexCode(hexColor, "SecondaryColorCode"))
             this.wrongSecondaryColor = true;
 
         else
             this.wrongSecondaryColor = false;
+
+        this.UpdateEditComponentValidationErrors();
+    }
+
+    private tertiaryColorCode: string;
+    private SetEntityTertiaryColor() {
+        this.EntityTertiaryColor = this.ConvertHexToRGBColor(this.TertiaryColorCode, this.TertiaryColorOpacity);
+    }
+
+    public get TertiaryColorCode(): string {
+        return this.tertiaryColorCode;
+    }
+    public set TertiaryColorCode(hexColor: string) {
+        this.tertiaryColorCode = hexColor;
+
+        this.ValidateTertiaryColor(hexColor);
+        this.SetEntityTertiaryColor();
+    }
+
+    private ValidateTertiaryColor(hexColor: string) {
+        if (!this.ValidateHexCode(hexColor, "TertiaryColorCode"))
+            this.wrongTertiaryColor = true;
+
+        else
+            this.wrongTertiaryColor = false;
 
         this.UpdateEditComponentValidationErrors();
     }
@@ -363,7 +410,7 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         this.EntityPM.BackgroundId = code;
     }
     AreBackgroundImageDimensionsValid(value) {
-        if(value) {
+        if (value) {
             SessionLocator.SelectedSession.CurrentEditComponent.IsEditValid = true;
             SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = [];
         } else {
