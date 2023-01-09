@@ -98,6 +98,7 @@ export class DashboardTabComponent implements OnInit {
                 this.SelectedDashboard = myResponse.Result;
                 this.IsEditLayoutButtonVisible = !this.IsEditLayoutModeActive
                     && this.SelectedDashboard
+                    && this.SelectedDashboard.Tenant == SessionLocator.Tenant
                     && (this.SelectedDashboard.CreatedByUserId == SessionLocator.LoggedUserId || SessionLocator.LoggedUserPM.IsCustomerCare);
 
                 if (this.SelectedDashboard) {
@@ -223,6 +224,7 @@ export class DashboardTabComponent implements OnInit {
 
     private ResetFlags() {
         this.IsEditLayoutButtonVisible = !AppTool.IsNullOrEmpty(this.DashboardId)
+            && this.SelectedDashboard.Tenant == SessionLocator.Tenant
             && (this.SelectedDashboard.CreatedByUserId == SessionLocator.LoggedUserId || SessionLocator.LoggedUserPM.IsCustomerCare);
 
         this.IsEditDashboardButtonVisible = false;
