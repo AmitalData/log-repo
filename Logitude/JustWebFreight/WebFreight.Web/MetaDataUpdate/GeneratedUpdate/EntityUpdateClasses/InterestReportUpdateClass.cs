@@ -4419,13 +4419,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode InterestReportTextCode_InterestReportOPrintInvoicesAlone = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.PrintInvoicesAlone", DefaultText = "Print Invoices Alone",LocalDefaultText = @"הדפס חשבוניות בלבד", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-   
-	    
-}
+		   TextCode InterestReportTextCode_InterestReportOOpeningBalanceNotCalculated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.OpeningBalanceNotCalculated", DefaultText = "Opening balance for interest has not been calculated", LocalDefaultText = @"טרם חושבה יתרת פתיחה לריבית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-    
 
-   }
+
+		}
+
+
+
+	}
     
 }
 	 
