@@ -449,7 +449,7 @@
                                             </table>
                                         </div>
 
-                                        <div class="MediaFillAbsolute CurvedEditArea"  style="overflow: overlay;"
+                                        <div class="MediaFillAbsolute CurvedEditArea scrollable-overflow-element"  style="overflow: overlay;"
                                             [style.top.px]="HeaderScreenHeight - 5">
                                             <table *ngIf="IsTabsHidden == false">
                                                 <tr>
@@ -460,7 +460,7 @@
                                                                 <ul>
                                                                     <li class="DefaultMenuItem"
                                                                         id="{{ item.TextCode | IdGeneratorPipe  }}"
-                                                                        *ngFor="let item of TabsItemsSource"
+                                                                        *ngFor="let item of TabsItemsSource ; first as TabFirst;"
                                                                         (click)="SelectionChanged(item)"
                                                                         [class.SelectedMenuItem]="item === SelectedTab"
                                                                         [class.DisabledTabItem]="item.IsDisabled == true"
