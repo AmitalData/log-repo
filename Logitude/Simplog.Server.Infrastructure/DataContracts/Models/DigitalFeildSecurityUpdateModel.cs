@@ -1,7 +1,12 @@
-﻿namespace Simplog.Server.Infrastructure.DataContracts.Models
+﻿using System;
+
+namespace Simplog.Server.Infrastructure.DataContracts.Models
 {
     public class DigitalFeildSecurityUpdateModel
     {
         public string FieldCode { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime? CreatedOn { get; set; }
+        public bool HasPersmission { get; set; }
     }
 }

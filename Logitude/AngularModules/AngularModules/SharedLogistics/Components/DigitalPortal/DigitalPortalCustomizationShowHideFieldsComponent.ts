@@ -138,9 +138,9 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
         if (this.IsModifiedLables) {
             this.ModifiedLables.ObjectTableId = this.SelectedObjectTableItem.Name;
             this.ModifiedLables.ProfileId = this.SelectedProfileItem.Code;
-            var hasHasPersmissionList = this.FieldsItemsSource.Collection.filter(a => a.HasPersmission);
+            var hasHasPermissionList = this.FieldsItemsSource.Collection.filter(a => a.HasPermission);
 
-            hasHasPersmissionList.forEach(item => {
+            hasHasPermissionList.forEach(item => {
                 var newLabel = new DigitalFeildSecurityUpdateModel();
                 newLabel.FieldCode = item.FieldCode;
                 this.ModifiedLables.DefaultSettings.push(newLabel);
@@ -203,7 +203,7 @@ export class ProfileFieldsItem extends BaseComponent {
 
     constructor(public father: DigitalPortalCustomizationShowHideFieldsComponent, item) {
         super();
-        this.hasPersmission = item.HasPersmission;
+        this.hasPermission = item.HasPermission;
         this.fieldCode = item.FieldCode;
         var selelectField = father.loadedFieldsResults.filter(a => a['FieldCode'] == this.fieldCode)[0];
         this.textCode = selelectField['TextCode'];
@@ -221,22 +221,22 @@ export class ProfileFieldsItem extends BaseComponent {
         }
     }
 
-    private hasPersmission = false;
-    get HasPersmission() { return this.hasPersmission; }
-    set HasPersmission(value) {
-        if (value != this.hasPersmission) {
-            this.hasPersmission = value;
-            this.UpdatePersmission(value);
+    private hasPermission = false;
+    get HasPermission() { return this.hasPermission; }
+    set HasPermission(value) {
+        if (value != this.hasPermission) {
+            this.hasPermission = value;
+            this.UpdatePermission(value);
         }
     }
 
-    public UpdatePersmission(newValue) {
+    public UpdatePermission(newValue) {
         this.father.IsModifiedLables = true;
         this.father.customizationEditComponent.IsDirty = true;
     }
 
-    HasPersmissionClicked(item) {
-        this.HasPersmission = !item.HasPersmission;
+    HasPermissionClicked(item) {
+        this.HasPermission = !item.HasPermission;
     }
 
     private defaultText = "";

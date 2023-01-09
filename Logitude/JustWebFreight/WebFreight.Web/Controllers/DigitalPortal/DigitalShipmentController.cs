@@ -62,7 +62,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     var shipmentPMJson = JsonConvert.SerializeObject(shipmentPM);
                     var helper = new DigitalFieldSecuritesHelper();
                     var blockedFieldSecurites = helper.GitDigitalSecuritesFeilds(objectTableId, profileId, tenant)
-                                                      .Where(a => !a.HasPersmission)
+                                                      .Where(a => !a.HasPermission)
                                                       .Select(a => a.FieldCode)
                                                       .ToList();
 
@@ -122,7 +122,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 var helper = new DigitalFieldSecuritesHelper();
                 var allowedFieldSecurites = helper.GitDigitalSecuritesFeilds(newFilters.ObjectTableId, newFilters.ProfileId, tenant, false)
-                                                  .Where(a => a.HasPersmission)
+                                                  .Where(a => a.HasPermission)
                                                   .Select(a => a.FieldCode.Replace("Shipment.", ""))
                                                   .ToList();
 
