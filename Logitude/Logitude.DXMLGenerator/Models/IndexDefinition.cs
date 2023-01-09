@@ -16,6 +16,9 @@ namespace Logitude.DXMLGenerator.Models
 
         [XmlAttribute()]
         public string Include { get; set; }
+        public string Partition { get; set; }
+        public string PartitionValue { get; set; }
+
 
         [XmlIgnore]
         public bool IncludeSpecified { get { return Include != null; } }

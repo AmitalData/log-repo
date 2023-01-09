@@ -16,6 +16,10 @@ namespace Logitude.DBMigrations.Models
 
         [XmlAttribute()]
         public string Include { get; set; }
+        [XmlAttribute()]
+        public string Partition { get; set; }
+        [XmlAttribute()]
+        public string PartitionValue { get; set; }
 
         [XmlAttribute()]
         public string IndexName { get; set; }

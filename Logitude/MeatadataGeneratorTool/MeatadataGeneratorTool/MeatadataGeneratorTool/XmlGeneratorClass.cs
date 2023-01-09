@@ -2248,7 +2248,14 @@ namespace MeatadataGeneratorTool
                         {
                             indexXmlElement.SetAttribute("Columns", indexElement.Attribute("Columns").Value);
                         }
-
+                        if (indexElement.Attribute("Partition") != null)
+                        {
+                            indexXmlElement.SetAttribute("Partition", indexElement.Attribute("Partition").Value);
+                        }
+                        if (indexElement.Attribute("PartitionValue") != null)
+                        {
+                            indexXmlElement.SetAttribute("PartitionValue", indexElement.Attribute("PartitionValue").Value);
+                        }
                         if (indexElement.Attribute("Include") != null)
                         {
                             indexXmlElement.SetAttribute("Include", indexElement.Attribute("Include").Value);
