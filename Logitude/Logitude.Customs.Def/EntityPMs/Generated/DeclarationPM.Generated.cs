@@ -5780,6 +5780,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string referentUserName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ReferentUserName  
+	   {
+	    
+	     get
+		{
+		   return referentUserName;
+		 }
+		 set
+		 {
+		   if(referentUserName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ReferentUserName",OldValue=referentUserName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   referentUserName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

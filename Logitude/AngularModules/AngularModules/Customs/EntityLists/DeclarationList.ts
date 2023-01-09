@@ -220,6 +220,7 @@ export class DeclarationList {
 	ExportLoadingPortCode: string;
 	PhysicalCheckName: string;
 	ReleaseStatusTypeCode: string;
+	ReferentUserName: string;
 	
 }
  

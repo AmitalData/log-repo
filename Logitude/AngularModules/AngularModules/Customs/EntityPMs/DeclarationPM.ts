@@ -1464,6 +1464,11 @@ export class DeclarationPM {
     public set ReleaseStatusTypeCode(newValue: string) { if (this.releaseStatusTypeCode != newValue) { this.releaseStatusTypeCode = newValue; this.MarkAsDirty("ReleaseStatusTypeCode"); } }
        
 	 
+    private referentUserName: string;
+    public get ReferentUserName() { return this.referentUserName; }
+    public set ReferentUserName(newValue: string) { if (this.referentUserName != newValue) { this.referentUserName = newValue; this.MarkAsDirty("ReferentUserName"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		
