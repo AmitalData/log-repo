@@ -174,7 +174,7 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
                 this.ModifiedFields = new DigitalTextCodeUpdateModel();
                 this.StopBusyIndicator();
                 this.IsModifiedFields = false;
-                this.CurrentSession.SessionEvent.emit({ Name: "ReloadDigitalPortalLabels" });
+                this.CurrentSession.SessionEvent.emit({ Name: "ReloadDigitalPortalLabels" }); 
             });
         }
     }
