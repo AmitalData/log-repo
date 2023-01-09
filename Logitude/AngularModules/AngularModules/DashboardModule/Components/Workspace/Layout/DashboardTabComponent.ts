@@ -428,80 +428,6 @@ export class DashboardTabComponent implements OnInit {
     }
     CopyDashboard(){
         var dashboardPM = DashboardCopyService.CopyDashboard(this.SelectedDashboard);
-        // var dashboardPM: DashboardPM = new DashboardPM();
-        // dashboardPM.Tenant = SessionInfo.LoggedUserTenant;
-        // dashboardPM.CreatedByUserId = SessionInfo.LoggedUserId;
-        // dashboardPM.UpdatedByUserId = SessionInfo.LoggedUserId;
-        // dashboardPM.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
-        // dashboardPM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
-        // dashboardPM.Name = "Copy of " + this.SelectedDashboard.Name;
-        // dashboardPM.Description = this.SelectedDashboard.Description;
-        // this.SelectedDashboard.Widgets.forEach (item => {
-        //     var newWidget : WidgetPM = new WidgetPM(dashboardPM);
-            
-        //     newWidget.Tenant = SessionInfo.LoggedUserTenant;
-        //     newWidget.Title = item.Title;
-        //     newWidget.GroupById = item.GroupById;
-        //     newWidget.StartPotistion = item.StartPotistion;
-        //     newWidget.EndPosition = item.EndPosition;
-        //     newWidget.TypeCode = item.TypeCode;
-        //     newWidget.EntityId = item.EntityId;
-        //     item.WidgetMeasures.forEach (itemMeasure => {
-        //         var newWidgetMeasure: WidgetMeasurePM = new WidgetMeasurePM(newWidget);
-        //         newWidgetMeasure.Tenant = SessionInfo.LoggedUserTenant;
-        //         newWidgetMeasure.WidgetId = itemMeasure.WidgetId;
-        //         newWidgetMeasure.MeasureCode = itemMeasure.MeasureCode;
-        //         newWidgetMeasure.MeasureFieldId = itemMeasure.MeasureFieldId;
-        //         newWidgetMeasure.RenderAs = itemMeasure.RenderAs;
-        //         newWidget.WidgetMeasures.push(newWidgetMeasure);
-        //     });
-        //     newWidget.Filters = item.Filters;
-        //     newWidget.DateGroupCode = item.DateGroupCode;
-        //     newWidget.MaximumGrouping = item.MaximumGrouping;
-        //     newWidget.SortBy = item.SortBy;
-        //     newWidget.SortDirection = item.SortDirection;
-        //     newWidget.Key = item.Key;
-        //     newWidget.TimeOverTime = item.TimeOverTime;
-        //     newWidget.ComparisonPeriod = item.ComparisonPeriod;
-        //     newWidget.Increase = item.Increase;
-        //     newWidget.ComparisonOperator = item.ComparisonOperator;
-        //     newWidget.ComparisonDateGroup = item.ComparisonDateGroup;
-        //     newWidget.FromDate = item.FromDate;
-        //     newWidget.ToDate = item.ToDate;
-        //     newWidget.GlobalFilters = item.GlobalFilters;
-        //     newWidget.SecondaryGroupById = item.SecondaryGroupById;
-        //     newWidget.SecondaryDateGroupCode = item.SecondaryDateGroupCode;
-        //     dashboardPM.Widgets.push(newWidget);
-
-        // });
-        // dashboardPM.PermissionLevelCode = this.SelectedDashboard.PermissionLevelCode;
-        // this.SelectedDashboard.DashboardSharedUsers.forEach(sharedUser => {
-        //     var newSharedUser: DashboardSharedUserPM = new DashboardSharedUserPM(dashboardPM);
-        //     newSharedUser.Tenant = SessionInfo.LoggedUserTenant;
-        //     newSharedUser.DashboardId = dashboardPM.Id;
-        //     newSharedUser.UserId = sharedUser.UserId;
-        //     newSharedUser.UserName = sharedUser.UserName;
-        //     dashboardPM.DashboardSharedUsers.push(newSharedUser);
-        // });
-        // this.SelectedDashboard.DashboardGlobalFilters.forEach(globalFilterItem => {
-        //     var newGlobalFilterItem: DashboardGlobalFilterPM = new DashboardGlobalFilterPM(dashboardPM);
-
-        //     newGlobalFilterItem.Tenant = SessionInfo.LoggedUserTenant;
-        //     newGlobalFilterItem.DashboardId = dashboardPM.Id;
-        //     newGlobalFilterItem.IsCommonFilter = globalFilterItem.IsCommonFilter;
-        //     newGlobalFilterItem.CommonFilterField = globalFilterItem.CommonFilterField;
-        //     newGlobalFilterItem.DataSetId = globalFilterItem.DataSetId;
-        //     newGlobalFilterItem.DataSetFieldId = globalFilterItem.DataSetFieldId;
-        //     newGlobalFilterItem.FilterOperator = globalFilterItem.FilterOperator;
-        //     newGlobalFilterItem.DataTypeCode = globalFilterItem.DataTypeCode;
-        //     newGlobalFilterItem.LineNumber = globalFilterItem.LineNumber;
-        //     newGlobalFilterItem.JoinedTableName = globalFilterItem.JoinedTableName;
-        //     newGlobalFilterItem.FieldCode = globalFilterItem.FieldCode;
-        //     dashboardPM.DashboardGlobalFilters.push(newGlobalFilterItem);
-        // });
-        // dashboardPM.LoadedAutomatically = this.SelectedDashboard.LoadedAutomatically;
-        // dashboardPM.PredefinedOrder = this.SelectedDashboard.PredefinedOrder;
-
         this.CreateCopiedDashBoard(dashboardPM);
     }
 
@@ -514,7 +440,8 @@ export class DashboardTabComponent implements OnInit {
    
     ChangeToCopyDashborad(myResponse: ServiceResponse){        
             this.SelectedDashboard = myResponse.Result;
-            if (this.SelectedDashboard) {
+        if (this.SelectedDashboard) {
+                this.EditDashboardClicked();
                 this.RefreshAfterCopy.emit(this.SelectedDashboard);      
             }
 
