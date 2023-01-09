@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="17">
+  <Sql Version="18">
       <![CDATA[	  
 	  delete from DigitalFieldSecurities where id != ''
 	  
@@ -333,15 +333,6 @@
 		{
             "FieldCode": "Shipment.ConsigneeCountryCode"
         },
-		{
-			"FieldCode": "ShipmentPackage.WarehouseLegAddressCity"
-		},
-		{
-			"FieldCode": "ShipmentPackage.WarehouseLegAddressCountryCode"
-		},
-		{
-			"FieldCode": "ShipmentPackage.WarehouseLegActualEntryDate"
-		},
 		{
 			"FieldCode": "Shipment.WarehouseLegExpectedEntryDate"
 		},
@@ -905,15 +896,6 @@
 		{
             "FieldCode": "Shipment.ConsigneeCountryCode"
         },
-		{
-			"FieldCode": "ShipmentPackage.WarehouseLegAddressCity"
-		},
-		{
-			"FieldCode": "ShipmentPackage.WarehouseLegAddressCountryCode"
-		},
-		{
-			"FieldCode": "ShipmentPackage.WarehouseLegActualEntryDate"
-		},
 		{
 			"FieldCode": "Shipment.WarehouseLegExpectedEntryDate"
 		},
@@ -1519,6 +1501,15 @@
 			},
 			{
 				"FieldCode": "ShipmentPackage.PackageTypeVolume"
+			},
+			{
+				"FieldCode": "ShipmentPackage.WarehouseLegAddressCity"
+			},
+			{
+				"FieldCode": "ShipmentPackage.WarehouseLegAddressCountryCode"
+			},
+			{
+				"FieldCode": "ShipmentPackage.WarehouseLegActualEntryDate"
 			}]');
 			
 	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
@@ -1869,6 +1860,15 @@
 			},
 			{
 				"FieldCode": "ShipmentPackage.PackageTypeVolume"
+			},
+			{
+				"FieldCode": "ShipmentPackage.WarehouseLegAddressCity"
+			},
+			{
+				"FieldCode": "ShipmentPackage.WarehouseLegAddressCountryCode"
+			},
+			{
+				"FieldCode": "ShipmentPackage.WarehouseLegActualEntryDate"
 			}]');
 			
 			
