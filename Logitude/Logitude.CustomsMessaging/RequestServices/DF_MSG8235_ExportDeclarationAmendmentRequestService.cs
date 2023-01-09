@@ -1110,7 +1110,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                     string consignmentType = declarationPM.Consignments[consignmentSeq].ConsignmentType;
                     if (supplierInvoicePM.SequenceNumeric.Value == 1 && !declarationPM.ExcludeConsignment && consignmentType == "I") // I=Import
                     {
-                        declarationGoodsShipment.ImportConsignment = GetDeclarationImportConsignment(declarationPM.Consignments[consignmentSeq], consignmentSeq).ToArray();
+                        declarationGoodsShipment.ImportConsignment = GetDeclarationImportConsignment(declarationPM.Consignments[consignmentSeq], consignmentSeq, declarationPM.ProcedureCurrentCode).ToArray();
                     }
                     else if (supplierInvoicePM.SequenceNumeric.Value == 1 && !declarationPM.ExcludeConsignment)
                     {
@@ -1151,8 +1151,10 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         }
 
-        private DeclarationGoodsShipmentImportConsignmentDMExtensions GetImportConsignmentDMExtensions(ConsignmentPM consignmentPM)
+        private DeclarationGoodsShipmentImportConsignmentDMExtensions GetImportConsignmentDMExtensions(ConsignmentPM consignmentPM, string ProcedureCurrentCode)
         {
+            var arrProcedureCurrentCode = new string[] { "8070005", "8070010", "8070505", "8070510" };
+
             var dmExtensions = new DeclarationGoodsShipmentImportConsignmentDMExtensions
             {
                 CargoDescription = new DeclarationGoodsShipmentImportConsignmentDMExtensionsCargoDescription()
@@ -1169,6 +1171,15 @@ namespace Logitude.CustomsMessaging.RequestServices
             dmExtensions.LastReleaseFromWarehousInd = new LastReleaseFromWarehousIndType();
            
                 dmExtensions.LastReleaseFromWarehousInd.Value = true;
+            }
+            else
+            {
+                if (arrProcedureCurrentCode.Contains(ProcedureCurrentCode))
+                {
+                    dmExtensions.LastReleaseFromWarehousInd = new LastReleaseFromWarehousIndType();
+
+                    dmExtensions.LastReleaseFromWarehousInd.Value = false;
+                }
             }
             //else
             //{
@@ -1313,14 +1324,14 @@ namespace Logitude.CustomsMessaging.RequestServices
 
 
 
-        private List<DeclarationGoodsShipmentImportConsignment> GetDeclarationImportConsignment(ConsignmentPM consignmentPM, int consignmentSeq)
+        private List<DeclarationGoodsShipmentImportConsignment> GetDeclarationImportConsignment(ConsignmentPM consignmentPM, int consignmentSeq, string ProcedureCurrentCode)
         {
             var declarationConsignmentList = new List<DeclarationGoodsShipmentImportConsignment>();
             var declarationConsignment = new DeclarationGoodsShipmentImportConsignment()
             {
                 SequenceNumeric = consignmentSeq + 1
             };
-            declarationConsignment.DMExtensions = GetImportConsignmentDMExtensions(consignmentPM);
+            declarationConsignment.DMExtensions = GetImportConsignmentDMExtensions(consignmentPM, ProcedureCurrentCode);
             declarationConsignment.LoadingLocation = new DeclarationGoodsShipmentImportConsignmentLoadingLocation
             {
                 ID = SetIDTypeValue<DeclarationGoodsShipmentImportConsignmentLoadingLocationID>(consignmentPM.LoadingPortCode)
