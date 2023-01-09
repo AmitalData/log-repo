@@ -166,7 +166,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         try
                         {
                             var cancelOldCommunicationLogs = new CancelOldCommunicationLogs();
-                            cancelOldCommunicationLogs.CancelOldECTHRDataMaman(tenant, declarationId);
+                            cancelOldCommunicationLogs.CancelOldECTHRDataMaman(requestParams.Tenant, itemDeclarationIdStorageSiteCode.Key);
                         }
                         catch
                         {
