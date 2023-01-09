@@ -55,7 +55,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 var declarationQueryService = new DeclarationQueryService(myDbContext);
                 var declaration = declarationQueryService.GetDeclarationByConsignment(cargoTypeCode.ToString(), manifestNumber, secondCargoID, thirdCargoID);
-                if (declaration.Id !=null)
+                if (declaration != null && declaration.Id != null)
                 {
                     this.MyResponseData.UserMessage = " התקבל מסר יציאה ממסוף " + declaration.CustomFileNo;
                     this.MyRequestSheetParam = new RequestSheetParam();
@@ -105,8 +105,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 DeliverySiteTypeQueryService deliverySiteTypeQueryService = new DeliverySiteTypeQueryService(Tanent);
                 var deliverySiteType = deliverySiteTypeQueryService.GetSingle(customResponse.ReportingDetails.exitEntrySiteNumber, false, true);
                 var storageSite = deliverySiteType?.LocalName;
-                var commentsStorageSite = storageSite != null ? ", שם אתר: " + storageSite + " " : "";
-                var commentsContainerNumber = customResponse.ReportingDetails.containerNumber != null ? ", מכולה: " + customResponse.ReportingDetails.containerNumber : "";
+                
+                var commentsStorageSite = !string.IsNullOrEmpty(storageSite) ? " שם אתר: " + storageSite + " " : "";
+                var commentsContainerNumber = !string.IsNullOrEmpty(customResponse.ReportingDetails.containerNumber) ? ", מכולה: " + customResponse.ReportingDetails.containerNumber : "";
+                var commentsExpectedArrivalSiteNumber = !string.IsNullOrEmpty(customResponse.ReportingDetails.expectedArrivalSiteNumber)  ? ", אתר הגעה צפוי: " + customResponse.ReportingDetails.expectedArrivalSiteNumber : "";
+                var commentsDriverName = !string.IsNullOrEmpty(customResponse.TransferDetails.driverName) ? ", שם נהג: " + customResponse.TransferDetails.driverName : "";
+                var commentsDriverIdentityNumber = !string.IsNullOrEmpty(customResponse.TransferDetails.driverIdentityNumber) ? ", ת.ז נהג: " + customResponse.TransferDetails.driverIdentityNumber : "";
+                var commentsVehicleNumber = !string.IsNullOrEmpty(customResponse.TransferDetails.vehicleNumber)  ? ", מספר משאית: " + customResponse.TransferDetails.vehicleNumber : "";
+
 
 
                 //var declarationQueryService = new DeclarationQueryService(dbContext);
@@ -133,7 +139,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         status_DateTime = customResponse.General.entryExitDateTime != null ? customResponse.General.entryExitDateTime : DateTime.Now  ,
                         //status_place = "FRA",
                         //status_save = "no_fail",
-                        comments = commentsStorageSite + commentsContainerNumber,
+                        comments = commentsStorageSite + commentsContainerNumber + commentsExpectedArrivalSiteNumber + commentsDriverName + commentsDriverIdentityNumber + commentsVehicleNumber,
                         //מספ]ר מכולה  + אתר אחסון לשלוף מטבלת מכס , לקחת מהקאש
                     }
                 };
