@@ -61,6 +61,25 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
+		public State GetStateByCode(string Code,int Tenant,  string ComputingPartnerName = "")
+        { 
+		    try
+            {
+				 
+				
+				var temp = query.GetSinglePMByCode(Code, Tenant);				
+				 if (temp == null)
+                    throw new ApplicationException("State with Code " + Code + " doesn't exist");
+
+				return StateDataMapping(temp,Tenant,ComputingPartnerName);
+			}
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+		
 		public State StateDataMapping(StatePM MyEntityPM,int Tenant,string ComputingPartnerName = "")
         {
 		    try
@@ -92,6 +111,10 @@ using Simplog.Data.CommonDataModel;
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
 					
+					if (!string.IsNullOrEmpty(MyEntity.Code))
+					{
+						temp = query.GetSinglePMByCode(MyEntity.Code, Tenant  );
+					} 
 					if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
 					{
                         if(string.IsNullOrEmpty(ComputingPartnerName))
@@ -110,7 +133,7 @@ using Simplog.Data.CommonDataModel;
 					
 			  	   if(temp == null)
 					{   
-					    throw new ApplicationException("State with Id " + MyEntity.Id + " doesn't exist");
+					    throw new ApplicationException("State with Code " + MyEntity.Code + " doesn't exist");
 					} 
 				 
 					

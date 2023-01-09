@@ -88,9 +88,9 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 						myCustomer.LocalName = FormatHelper.ConvertFromBase64(MyEntity.LocalName);
 
 					myCustomer.PaymentTermId = this.GetPaymentTermId(MyEntity.PaymentTerm, Tenant, ComputingPartnerName);
-					myCustomer.MainAddressId = this.GetAddressId(MyEntity.MainAddress, Tenant, ComputingPartnerName);
-					myCustomer.BillingAddressId = this.GetAddressId(MyEntity.BillingAddress, Tenant, ComputingPartnerName);
-					myCustomer.PickupDeliveryAddressId = this.GetAddressId(MyEntity.PickupDeliveryAddress, Tenant, ComputingPartnerName);
+					//myCustomer.MainAddressId = this.GetAddressId(MyEntity.MainAddress, Tenant, ComputingPartnerName);
+					//myCustomer.BillingAddressId = this.GetAddressId(MyEntity.BillingAddress, Tenant, ComputingPartnerName);
+					//myCustomer.PickupDeliveryAddressId = this.GetAddressId(MyEntity.PickupDeliveryAddress, Tenant, ComputingPartnerName);
 					myCustomer.AccountManagerUserId = this.GetUserId(MyEntity.AccountManagerUser, Tenant, ComputingPartnerName);
 					myCustomer.SalesmanUserId = this.GetUserId(MyEntity.SalesmanUser, Tenant, ComputingPartnerName);
 					myCustomer.CollectorId = this.GetUserId(MyEntity.Collector, Tenant, ComputingPartnerName);
@@ -100,10 +100,11 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 					myCustomer.VatTypeId = this.GetVatTypeId(MyEntity.VatType, Tenant, ComputingPartnerName);
 					myCustomer.LeadSourceId = this.GetLeadSourceId(MyEntity.LeadSource, Tenant, ComputingPartnerName);
 					myCustomer.GLAccountId = this.GetGLAccountId(MyEntity.GLAccount, Tenant, ComputingPartnerName);
+					myCustomer.CustomerSizeId = this.GetCustomerSizeId(MyEntity.CustomerSize, Tenant, ComputingPartnerName);
 
-					AddressPM mainAddress = this.GetAddress(MyEntity.MainAddress, Tenant, ComputingPartnerName, "M");
-					AddressPM billingAddress = this.GetAddress(MyEntity.BillingAddress, Tenant, ComputingPartnerName, "B");
-					AddressPM pickupDeliveryAddress = this.GetAddress(MyEntity.PickupDeliveryAddress, Tenant, ComputingPartnerName, "P");
+					AddressPM mainAddress = this.GetAddress(MyEntity.MainAddress, Tenant, ComputingPartnerName, "M", myCustomer.EnglishName);
+					AddressPM billingAddress = this.GetAddress(MyEntity.BillingAddress, Tenant, ComputingPartnerName, "B", myCustomer.EnglishName);
+					AddressPM pickupDeliveryAddress = this.GetAddress(MyEntity.PickupDeliveryAddress, Tenant, ComputingPartnerName, "P", myCustomer.EnglishName);
 
 					if (mainAddress != null) myCustomer.Addresses.Add(mainAddress);
 					if (billingAddress != null) myCustomer.Addresses.Add(billingAddress);
@@ -238,12 +239,24 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 
 			return null;
 		}
-		private AddressPM GetAddress(Address address, int tenant, string computingPartnerName, string addressType)
+		private string GetCustomerSizeId(CustomerSize customerSize, int tenant, string computingPartnerName)
+		{
+			CustomerSizeQueryService customerSizeQuery = new CustomerSizeQueryService(tenant);
+			if (customerSize != null)
+			{
+				var myCustomerSizePM = customerSizeQuery.CustomerSizeDataMappingAndValidatin(customerSize, tenant, computingPartnerName);
+				if (myCustomerSizePM != null)
+					return myCustomerSizePM.Id;
+			}
+
+			return null;
+		}
+		private AddressPM GetAddress(Address address, int tenant, string computingPartnerName, string addressType, string customerName)
 		{
 			AddressQueryService addressService = new AddressQueryService(tenant);
 			if (address != null)
 			{
-				AddressPM addressPM = addressService.AddressDataMappingAndValidatin(address, tenant);
+				AddressPM addressPM = addressService.AddressDataMappingAndValidatin(address, tenant, computingPartnerName);
 				if (!string.IsNullOrEmpty(address.City))
 					addressPM = addressService.AddressCustomDataMappingAndValidatin_CityCountry(address, tenant, computingPartnerName);
 
@@ -253,6 +266,8 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 
 				if (!string.IsNullOrEmpty(address.Name))
 					addressPM.Name = FormatHelper.ConvertFromBase64(address.Name);
+				else
+					addressPM.Name = customerName;
 
 				if (!string.IsNullOrEmpty(address.Address1))
 					addressPM.Address1 = FormatHelper.ConvertFromBase64(address.Address1);

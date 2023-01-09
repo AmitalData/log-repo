@@ -1715,7 +1715,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         private void FillPickUpVerticalTimeLine(VerticalTimeLineData timeLineData, IQueryable<ShipmentPickUpDelivery> shipmentPickUpDeliveries)
         {
 
-            var firstPickup = shipmentPickUpDeliveries?.Where(d => d.PickUpDeliveryTypeCode == "PICK").OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
+            var firstPickup = shipmentPickUpDeliveries?.Where(d => d.PickUpDeliveryTypeCode == "PICK")
+                                                       .OrderBy(s => s.PickUpDeliveryNumber)
+                                                       .FirstOrDefault();
             if (firstPickup == null)
             {
                 return;
@@ -2212,7 +2214,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private void FillDeliveryVerticalTimeLine(VerticalTimeLineData timeLineData, IQueryable<ShipmentPickUpDelivery> shipmentPickUpDeliveries)
         {
-            var finalDelivery = shipmentPickUpDeliveries?.Where(d => d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+            var finalDelivery = shipmentPickUpDeliveries?.Where(d => d.PickUpDeliveryTypeCode == "DELV")
+                                                         .OrderByDescending(s => s.PickUpDeliveryNumber)
+                                                         .FirstOrDefault();
             if (finalDelivery == null)
             {
                 return;

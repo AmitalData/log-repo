@@ -288,6 +288,7 @@
     <Compile Include="CommonDataModel\APIDataContract\Currency.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Customer.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\CustomerOpenFilesAmount.Generated.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\CustomerSize.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\CustomField.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Department.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\DimensionsUnit.Generated.cs" />
@@ -313,6 +314,7 @@
     <Compile Include="CommonDataModel\APIDataContract\QueryService\CustomerOpenFilesAmountQueryService.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\CustomerQueryService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\CustomerQueryService.Generated.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\QueryService\CustomerSizeQueryService.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\CustomFieldQueryService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\DocumentsFilingQueryService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\IndustryQueryService.Generated.cs" />
@@ -605,6 +607,7 @@
     <Compile Include="InfrastructureModel\CustomFilters\ScreenCustomFilter.cs" />
     <Compile Include="InfrastructureModel\DataContracts\MultiEntityUpdateData.cs" />
     <Compile Include="InfrastructureModel\EntityLists\CustomFieldList.cs" />
+    <Compile Include="InfrastructureModel\EntityLists\CustomFieldsMainObjectList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\DataCustomObjectList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\DeploymentPackagesVersionList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\DeploymentPackageList.cs" />
@@ -616,6 +619,7 @@
     <Compile Include="InfrastructureModel\EntityPMs\ChildEntitiesCustomFieldPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\CustomChildEntity.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\CustomChildObjectPM.cs" />
+    <Compile Include="InfrastructureModel\EntityPMs\CustomFieldsMainObjectPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\DataCustomObjectPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\DeploymentPackagesVersionPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\EntityStatusTypePM.cs" />
@@ -627,6 +631,7 @@
     <Compile Include="InfrastructureModel\EntityPMs\ScreenSectionPM.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\ChildEntitiesCustomFieldQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\CustomChildObjectQuery.cs" />
+    <Compile Include="InfrastructureModel\EntityQueries\CustomFieldsMainObjectQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\DeploymentPackagesVersionQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\DeploymentPackageQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\DataCustomObjectQuery.cs" />
@@ -668,7 +673,10 @@
     <Compile Include="InfrastructureModel\Services\DeploymentPackageVersionInitializerService.cs" />
     <Compile Include="InfrastructureModel\Services\CustomObjectDefaultMetaDataService.cs" />
     <Compile Include="InfrastructureModel\Services\DeploymentPackage\DeploymentPackageDependienciesService.cs" />
+    <Compile Include="InfrastructureModel\Services\DeploymentPackage\DeploymentPackageObjectFieldDependienciesService.cs" />
+    <Compile Include="InfrastructureModel\Services\DeploymentPackage\IDeploymentPackageDependiency.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\CustomChildObjectMapping.cs" />
+    <Compile Include="InfrastructureModel\Tools\DataMapping\CustomFieldsMainObjectMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\DeploymentPackagesVersionMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\DeploymentPackageMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\DataCustomObjectMapping.cs" />
@@ -682,6 +690,7 @@
     <Compile Include="InfrastructureModel\Tools\DataMapping\WorkerRoleNameMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\RuleUpdateHistoryMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\SchedulerProcedureMapping.cs" />
+    <Compile Include="InfrastructureModel\Tools\EntityService\CustomFieldsMainObjectService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\DeploymentPackagesVersionService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\DeploymentPackageService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\DataCustomObjectService.cs" />

@@ -13,6 +13,9 @@ using System.Text.Json;
 using Logitude.Server.Tools.StorageService;
 using System.Collections.Generic;
 using Logitude.Server.Tools.Helpers;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Logitude.BL.InfrastructureModel.EntityQueries;
 
 namespace Logitude.BL.InfrastructureModel.Services
 {
@@ -23,12 +26,14 @@ namespace Logitude.BL.InfrastructureModel.Services
         private Document document;
         private DocumentRepository documentrepository;
         DeploymentPackagesVersionService deploymentPackagesVersionService;
+        DeploymentPackagesVersionQuery deploymentPackagesVersionQuery;
         public DeploymentPackageVersionInitializerService(DeploymentPackagePM deploymentPackagePM, IWebFreightContext iWebFreightContext)
         {
             this.deploymentPackagePM = deploymentPackagePM;
             deploymentPackagesVersionPM = new DeploymentPackagesVersionPM();
             documentrepository = new DocumentRepository(deploymentPackagePM.Tenant);
             deploymentPackagesVersionService = new DeploymentPackagesVersionService(iWebFreightContext, deploymentPackagePM.Tenant);
+            deploymentPackagesVersionQuery = new DeploymentPackagesVersionQuery(deploymentPackagePM.Tenant);
         }
         public DeploymentPackagesVersionPM Create()
         {
@@ -42,7 +47,8 @@ namespace Logitude.BL.InfrastructureModel.Services
         public DeploymentPackagesVersionPM Update()
         {
             UpdateDocument(deploymentPackagePM);
-           
+            deploymentPackagesVersionPM = deploymentPackagesVersionQuery.GetSinglePM(deploymentPackagePM.VersionId, deploymentPackagePM.Tenant);
+            deploymentPackagesVersionPM.IsExported = deploymentPackagePM.IsExported;
             deploymentPackagesVersionService.Update(deploymentPackagesVersionPM);
             return deploymentPackagesVersionPM;
         }
@@ -85,7 +91,8 @@ namespace Logitude.BL.InfrastructureModel.Services
                 Name = deploymentPackagePM.Name,
                 Code = deploymentPackagePM.Code,
                 Description = deploymentPackagePM.Description,
-                CustomFields = new List<CustomFields>()
+                CustomFields = new List<CustomFields>(),
+                CustomPickLists = new List<CustomPickListItem>()
             };
         }
 

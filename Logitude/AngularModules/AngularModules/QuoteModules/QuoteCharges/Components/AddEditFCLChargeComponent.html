@@ -580,7 +580,7 @@
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate [IsEnabled]="item.IsEnabled_SaleQuantity">
                                             <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;" class="TextTrimming" [attr.title]="item.SaleQuantity | NumbersPipe:'N2'">
-                                                {{item.SaleQuantity | NumbersPipe:'N2'}}
+                                                {{item.SaleQuantity | NumbersPipe:'N3'}}
                                             </div>
 
                                             <div *ngIf="logcelltemplate.IsEditMode">

@@ -223,7 +223,14 @@ using Simplog.Data.CommonDataModel;
 				temp.CustomFields = customFieldService.CustomFieldCustomDataMapping(MyEntityPM, Tenant);
 
 
-				return temp;
+				if (MyEntityPM.CustomerSizeId != null)
+				   {
+					   CustomerSizeQueryService CustomerSizeService13 = new CustomerSizeQueryService(Tenant);
+					   					   temp.CustomerSize = CustomerSizeService13.GetCustomerSizeById(MyEntityPM.CustomerSizeId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				   					
+				   return temp;
 			}
             catch (Exception ex)
             {
@@ -338,11 +345,11 @@ using Simplog.Data.CommonDataModel;
 
 					if(MyEntity.Contacts != null && MyEntity.Contacts.Count > 0)
 					{
-						ContactQueryService ContactService13 = new ContactQueryService(Tenant);
+						ContactQueryService ContactService14 = new ContactQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								
-							temp.Contacts = ContactService13.ContactCustomDataMappingAndValidatin(MyEntity,MyEntity.Contacts,Tenant,ComputingPartnerName,IsUpdate);
+							temp.Contacts = ContactService14.ContactCustomDataMappingAndValidatin(MyEntity,MyEntity.Contacts,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -626,22 +633,29 @@ using Simplog.Data.CommonDataModel;
 					customFieldService.CustomFieldCustomDataMappingAndValidatin(MyEntity.CustomFields, temp, Tenant);
 				}
 
-				//if(MyEntity.CustomFields != null && MyEntity.CustomFields.Count > 0)
-				//{
-				//	CustomFieldQueryService CustomFieldService13 = new CustomFieldQueryService(Tenant);
 
-				//	if(!IsUpdate)
-				//	{								
-				//		temp.CustomFields = CustomFieldService13.CustomFieldCustomDataMappingAndValidatin(MyEntity,MyEntity.CustomFields,Tenant,ComputingPartnerName,IsUpdate);
+				CustomerSizeQueryService CustomerSizeCustomerSizeService = new CustomerSizeQueryService(Tenant);
+					if(MyEntity.CustomerSize != null)
+					{
+						var myCustomerSizePM = CustomerSizeCustomerSizeService.CustomerSizeDataMappingAndValidatin(MyEntity.CustomerSize,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myCustomerSizePM != null)
+						{ 
 
+						 
+							if(!IsUpdate)
+							{								
+								temp.CustomerSizeId = myCustomerSizePM.Id;
+						  
+							}  
 
-				//	}  
+							
+						} 
 
-
-				//}
-
-
-				return temp;
+					}
+			
+										   
+					return temp;
 		    }
             catch (Exception ex)
             {

@@ -28,6 +28,7 @@ import { HeaderScreenDataResult } from '../../Interface/IHeaderScreenService';
 import { TableTabService } from 'Infrastructure/Services/ExtendedPMs/TableTabService';
 import { ObjectTableTabPM } from 'Infrastructure/EntityPMs/ObjectTableTabPM';
 import { CloneDeep } from 'Infrastructure/Helpers/LodashClone';
+import { WorkFlowVersionPMService } from 'Workflow/Services/StandardPMs/WorkFlowVersionPMService';
 //import { CloneEntityPM } from 'Infrastructure/Helpers/SafeCloneDeep';
 
 
@@ -1351,6 +1352,11 @@ export class EditComponent implements OnDestroy {
         if (this.ObjectTableName == "ARInvoice" && this.EntityPM.ARInvoiceTypeCode == this.InterestInvoiceARInvoiceType) {
             myResult = false;
         }
+
+        if(this.ObjectTableName == "WorkFlow" && this.entityArgs?.EditComponentArgument?.HasChanges! == true){
+            myResult = true;
+        }
+
         return myResult;
     }
 
@@ -1546,6 +1552,36 @@ export class EditComponent implements OnDestroy {
                 });
             }
 
+            else if (this.ObjectTableName == "WorkFlow" && this.entityArgs?.EditComponentArgument?.HasChanges! == true) {
+                this.entityPMService.update(this.ObjectTableName, this.EntityPM, this.ClonedEntityPM).then((res: any) => {
+                    res.subscribe((myResponse: ServiceResponse) => {
+                        if (myResponse.HasError) {
+                            this.OnSavingFailed();
+                            this.ValidationErrorsList = myResponse.ErrorsArray;
+                            this.FireSaveCompleted(false);
+                        }
+                        else {
+                            this.EntityPM = myResponse.Result;
+                            this.entityArgs.EntityPM = this.EntityPM;
+
+                            this.SaveDraftVersion();
+
+                            this.SaveAndCloseCompleted.emit(true);
+
+                        }
+                        this.ClonedEntityPM = CloneDeep(this.EntityPM);
+
+                    }, error => {
+                        this.OnSavingFailed();
+                        this.StopBusyIndicator();
+                        var myErrors: string[] = [];
+                        myErrors.push(error.message);
+                        this.ValidationErrorsList = myErrors;
+                        this.FireSaveCompleted(false);
+                    });
+                });
+            }
+
             else {
                 this._totangoService.SendTotangoUserActivity(this.ObjectTableName, "Edit " + this.ObjectTableName);
 
@@ -1612,7 +1648,27 @@ export class EditComponent implements OnDestroy {
             }
         }
 
+        else if (this.ObjectTableName == "WorkFlow" && this.entityArgs?.EditComponentArgument?.HasChanges! == true){
+            this.SaveDraftVersion();
+        }
+
         else {
+            this.Close();
+        }
+    }
+
+    public WorkFlowVersionPMService: WorkFlowVersionPMService = new WorkFlowVersionPMService();
+    SaveDraftVersion() {
+        var CurrentDisplayedVersionId = this.entityArgs.EditComponentArgument?.CurrentDisplayedVersionId
+        var version = this.EntityPM.WorkFlowVersions.find(v => v.Id == CurrentDisplayedVersionId);
+
+        this.StartBusyIndicator("Saving ...");
+
+        this.WorkFlowVersionPMService.update(version).subscribe((serviceResponse: ServiceResponse) => { this.handleSaveDraftVersionResponse(serviceResponse); });
+    }
+    handleSaveDraftVersionResponse(serviceResponse: ServiceResponse) {
+        if (!serviceResponse.HasError) {
+            this.StopBusyIndicator();
             this.Close();
         }
     }

@@ -78,29 +78,31 @@
                                         </LogLov>
                                     </td>
 
-                                    <td *ngIf="IsHaveARInvoicePrintToogleFeature()">
-                                        <LogLabel [ObjectFieldName]="'DocumentTemplateId'" [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"></LogLabel>
-                                    </td>
-
-                                    <td *ngIf="IsHaveARInvoicePrintToogleFeature()" style="width:230px;">
-                                        <table>
-                                            <tr>
-                                                <td>
-                                                    <ComboBox [ItemsSource]="documentTypeTemplates" [Binding]="'Description'"
-                                                              [SelectedItem]="selectedDocumentTypeTemplate" (SelectedItemChanged)="OnDocumentTypeTemplateSelectedChanged($event)"></ComboBox>
-                                                </td>
-
-                                                <td style="width: 36px;">
-                                                    <div></div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
                                     <td>
-                                        <div></div>
+                                        <div>
+                                            <table *ngIf="IsHaveARInvoicePrintToogleFeature()">
+                                                <tr class="FormFieldRow">
+                                                    <td>
+                                                        <LogLabel [ObjectFieldName]="'DocumentTemplateId'" [ObjectTableName]="ObjectTableName"
+                                                                  [DataContext]="DataContext"></LogLabel>
+                                                    </td>
+                                                    <td style="width:230px;">
+                                                        <table>
+                                                            <tr>
+                                                                <td>
+                                                                    <ComboBox [ItemsSource]="documentTypeTemplates" [Binding]="'Description'"
+                                                                              [SelectedItem]="selectedDocumentTypeTemplate" (SelectedItemChanged)="OnDocumentTypeTemplateSelectedChanged($event)"></ComboBox>
+                                                                </td>
+                                                                <td style="width: 36px;">
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
                                     </td>
-
                                 </tr>
                                 <!-- BillToId -->
                                 <tr class="FormFieldRow">

@@ -475,6 +475,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          CustomerVatNumber = r.CustomerVatNumber,
                          BalanceInLocalAccountingDate = a.LocalAmountDebit - a.LocalAmountCredit,
                          BalanceInLocalDueDate = d.LocalAmountDebit - d.LocalAmountCredit,
+                         BalanceInForeignAccountingDate = a.ForeignAmountDebit - a.ForeignAmountCredit,
+                         BalanceInForeignDueDate = d.ForeignAmountDebit - d.ForeignAmountCredit,
 
 
                          AccountSalesmanName = r.AccountSalesmanName,
@@ -1898,6 +1900,8 @@ Period	Acc	Currency	Total
         public string SplitAccountId { get;  set; }
         public decimal BalanceInLocalAccountingDate { get; set; }
         public decimal BalanceInLocalDueDate { get; set; }
+        public decimal BalanceInForeignAccountingDate { get; set; }
+        public decimal BalanceInForeignDueDate { get; set; }
         public string AccountSalesmanName { get; set; }
         public string AccountSalesmanLocalName { get; set; }
 

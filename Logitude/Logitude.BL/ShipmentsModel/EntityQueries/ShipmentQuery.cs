@@ -36,6 +36,7 @@ using System.Threading.Tasks;
 using Logitude.BL.ShipmentsModel.Tools.Initializers;
 using System.Web;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
+using Logitude.BL.ShipmentsModel.Tools.DataMapping;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -1503,9 +1504,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.Field70 = new CustomFieldClass("Field70", "Shipment", shipment.Field70);
 
             shipmentPM.GrossWeightInKG = shipment.GrossWeightInKG;
+            shipmentPM.GrossWeightInLB = ShipmentMapping.GetWeightInKG("LB", shipment.GrossWeight);  
             shipmentPM.GrossWeightPerStorageDays = shipment.GrossWeightPerStorageDays;
             shipmentPM.GrossWeight = shipment.GrossWeight;
             shipmentPM.ChargeableWeight = shipment.ChargeableWeight;
+            shipmentPM.ChargeableWeightInLB = ShipmentMapping.GetWeightInKG("LB", shipment.ChargeableWeight);
+
             shipmentPM.Notes = shipment.Notes;
             shipmentPM.NotesSharedWithCustomer = shipment.NotesSharedWithCustomer;
             shipmentPM.CreateDateTime = shipment.CreateDateTime;
@@ -1584,6 +1588,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.ChargeableWeightUnitCode = shipment.ChargeableWeightUnitCode;
             shipmentPM.Volume = shipment.Volume;
             shipmentPM.VolumeInCBM = shipment.VolumeInCBM;
+            shipmentPM.VolumeInCBF = ShipmentMapping.GetVolumeInCBM("CBF", shipment.Volume); 
             shipmentPM.VolumetricWeight = shipment.VolumetricWeight;
             shipmentPM.Ratio = shipment.Ratio;
             shipmentPM.DimFactor = shipment.DimFactor;
@@ -2659,7 +2664,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
 
             if (shipment.IsDangerous && iDangerousShipmentPackages) shipmentPM.ShipmentContanisDangerousGoods = true;
-
 
             MapShipmentComputedFields(shipmentPM, masterData);
 

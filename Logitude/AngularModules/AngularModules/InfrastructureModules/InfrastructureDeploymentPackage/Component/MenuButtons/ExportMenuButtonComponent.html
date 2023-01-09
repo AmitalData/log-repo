@@ -10,8 +10,9 @@
                     </tr>
                     <tr *ngIf="IsExported" style="height:1px;text-align:center">
                         <td style="width: 155px;">
-                            <div style="margin-top:5px;margin-left:5px;">
-                                <Label style="width: 155px;font-family:Arial; font-size:11px;color:gray; white-space: pre-line; word-wrap: break-word; text-wrap: normal;text-overflow: ellipsis;"> Exported </Label>
+                            <div style="display:flex; flex-direction:column; align-items:center">
+                                <Label style="width: 250px;font-family:Arial; font-size:15px;color:gray; white-space: pre-line; word-wrap: break-word; text-wrap: normal;text-overflow: ellipsis;"> You can download the file from here: </Label>
+                                <button class="GreenButton"  style="height:25px; width:100px; margin-top: 10px;" (click)="DownloadFile()"> Download </button>
                             </div>
                         </td>
                     </tr>
@@ -83,7 +84,7 @@
     <tr style="height: 32px;">
         <td style="vertical-align: bottom">
             <table style="height: 22px;">
-                <tr>
+                <tr *ngIf="!IsExported">
                     <td>
                         <div></div>
                     </td>
@@ -94,7 +95,15 @@
                         <div></div>
                     </td>
                     <td style="width: 57px;">
-                        <button id="{{'OkButton' | IdGeneratorPipe}}" class="RedButton" [disabled]="!IsValidForExport || IsExported" (click)="ExportButtonClicked()">Export</button>
+                        <button id="{{'OkButton' | IdGeneratorPipe}}" class="RedButton" [disabled]="!IsValidForExport" (click)="ExportButtonClicked()">Export</button>
+                    </td>
+                </tr>
+                <tr *ngIf="IsExported">
+                    <td>
+                        <div></div>
+                    </td>
+                    <td style="width: 57px;">
+                        <button id="{{'CloseButton' | IdGeneratorPipe}}" class="Button" (click)="CancelButtonClicked()">Close</button>
                     </td>
                 </tr>
             </table>

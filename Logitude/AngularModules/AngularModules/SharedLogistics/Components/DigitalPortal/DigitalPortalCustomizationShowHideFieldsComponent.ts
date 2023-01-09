@@ -145,7 +145,7 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
                 newLabel.FieldCode = item.FieldCode;
                 this.ModifiedLables.DefaultSettings.push(newLabel);
             });
-            
+
             this.digitalTextService.UpdateFeildPermission(this.ModifiedLables).subscribe((myResult) => {
                 this.customizationEditComponent.IsDirty = false;
                 this.ModifiedLables = new DigitalFeildSecurityObjectModel();
@@ -159,18 +159,23 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
 
             this.UpdateModifiedFields();
         }
+        else {
+            this.UpdateModifiedFields();
+        }
     }
 
     UpdateModifiedFields() {
         if (this.IsModifiedFields) {
             this.ModifiedFields.ObjectTableId = this.SelectedObjectTableItem.Name;
+            this.ModifiedFields.ProfileId = this.SelectedProfileItem.Code;
+
             this.digitalTextService.UpdateDigitalTextCodes(this.ModifiedFields).subscribe((myResult) => {
                 this.customizationEditComponent.IsDirty = false;
                 this.ModifiedFields = new DigitalTextCodeUpdateModel();
+                this.ModifiedFields.Lables = [];
                 this.StopBusyIndicator();
                 this.IsModifiedFields = false;
-                this.CurrentSession.SessionEvent.emit({ Name: "ReloadDigitalPortalLabels" });
-
+                this.CurrentSession.SessionEvent.emit({ Name: "ReloadDigitalPortalLabels" }); 
             });
         }
     }

@@ -395,7 +395,7 @@ namespace WebFreight.Web.WebPages
                             Response.Clear();
                             Response.Write(result);
                             HttpContext.Current.Response.ContentType = "application/json";
-                            HttpContext.Current.Response.AppendHeader("Content-Disposition", "inline" + "; filename*=UTF-8''" + filename + "\"");
+                            HttpContext.Current.Response.AppendHeader("Content-Disposition", (forceDownload  ? "attachment" : "inline") + "; filename*=UTF-8''" + filename + "\"");
 
                             return;
                         }

@@ -434,6 +434,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         public double? VolumeInCBM { get; set; }
         public double? GrossWeightInKG { get; set; }
+        public double? GrossWeightInLB { get; set; }
+        public double? VolumeInCBF { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? ContainerStrippedDate { get; set; }

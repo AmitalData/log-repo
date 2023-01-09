@@ -3,7 +3,7 @@ import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { CustomFields } from '../../../../Infrastructure/EntityPMs/DeploymentPackageDetails';
+import { CustomFields, CustomPickListItem } from '../../../../Infrastructure/EntityPMs/DeploymentPackageDetails';
 import { DeploymentPackagePM } from '../../../../Infrastructure/EntityPMs/DeploymentPackagePM';
 import { ObjectFieldPM } from '../../../../Infrastructure/EntityPMs/ObjectFieldPM';
 import { GeneralDomainService } from '../../../../Infrastructure/Services/GeneralDomainService';
@@ -22,7 +22,7 @@ export class CustomFieldsTabComponent extends BaseComponent {
     public DataContext: CustomFieldsTabComponent = this;
     public ExportCustomFields: CustomFields[];
     public OriginalExportCustomFields: CustomFields[] = [];
-    private CurrentSession = SessionLocator.SelectedSession;
+    public CustomPickLists: CustomPickListItem[] = [];
 
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -64,8 +64,10 @@ export class CustomFieldsTabComponent extends BaseComponent {
         });
 
         this.EntityPM.DeploymentPackageDetails.CustomFields = this.OriginalExportCustomFields;
+        this.EntityPM.DeploymentPackageDetails.CustomPickLists = this.CustomPickLists;
+
         this.EntityPM.MarkAsDirty("DeploymentPackageDetails");
 
-    }   
+    }
 
 }

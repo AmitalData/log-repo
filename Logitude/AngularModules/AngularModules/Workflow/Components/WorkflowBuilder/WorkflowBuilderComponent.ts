@@ -78,10 +78,11 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
                     else if (clickedRowId) {
                         var version = this.EntityPM.WorkFlowVersions.find(e => e.Id == clickedRowId);
                         this.DisplayGivenVersion(version);
-                    } else {
-                        ReactDOM.unmountComponentAtNode(this.containerRef.nativeElement);
-                        this.loadWorkflow(true);
-                    }
+                    } 
+                    // else {
+                    //     ReactDOM.unmountComponentAtNode(this.containerRef.nativeElement);
+                    //     this.loadWorkflow(true);
+                    // }
                 }
             });
         }

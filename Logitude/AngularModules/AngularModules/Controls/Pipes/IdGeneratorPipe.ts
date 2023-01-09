@@ -16,15 +16,20 @@ export class IdGeneratorPipe {
         }
 
         var UnuieqDomId: string = value;
-
         if (this.CheckIfExists(value)) {
-            var counterId = ControlsIdCounter.GetNextControlIdCounter(value);
-
-            if (counterId != null) {
-                UnuieqDomId = UnuieqDomId + "_" + counterId;
-            }
+            setTimeout( ()=>{
+                if (this.CheckIfExists(value)) {
+                    var counterId = ControlsIdCounter.GetNextControlIdCounter(value);
+        
+                    if (counterId != null) {
+                        UnuieqDomId = UnuieqDomId + "_" + counterId;
+                    }
+                }
+                }, 1000)
+                
         }
-
+        
+ 
         return UnuieqDomId;
 
     }

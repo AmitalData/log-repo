@@ -13330,7 +13330,7 @@
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;GLAccount&quot;"
-    FieldsDataType="&quot;Decimal&quot;"
+    FieldsDataType="&quot;Double&quot;"
     MinLength="0"
     MaxLength="0"
     IsRequired="false"
