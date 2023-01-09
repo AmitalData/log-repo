@@ -105,19 +105,6 @@ export class DashboardPMExtendedService {
         });
     }
 
-    GetPinnedDashboards(pinnedDashboardsJson: string) {
-        var url = this._apiUrl + '/GetPinnedDashboards?pinnedDashboardsJson=' + pinnedDashboardsJson;
-
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var myResult = response;
-                var myResponse: ServiceResponse = new ServiceResponse();
-                myResponse.Result = myResult;
-                return myResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-
     PinDashboard(pinnedDashboardTab: PinnedDashboard) {
         var url = this._apiUrl + '/PostPinDashboard';
 

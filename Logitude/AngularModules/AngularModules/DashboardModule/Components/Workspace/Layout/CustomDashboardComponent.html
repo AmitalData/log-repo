@@ -11,7 +11,7 @@
                     <div></div>
                 </td>
 
-                <td style="width:200px; height:22px;" >
+                <td style="width:200px; height:22px;" *ngIf="dashbaordCount > 0">
                     <dashboard-dropdown [DisplayMemberPath]="'Name'"
                                         [SelectedItem]="SelectedDashboard"
                                         [ItemsSource]="ItemsSource"
@@ -25,7 +25,7 @@
                     <div></div>
                 </td>
 
-                <td style="width: 117px; height: 22px;" >
+                <td style="width: 117px; height: 22px;" *ngIf="dashbaordCount > 0">
                     <button class="Dashboard-create-button" (click)="AddDashboardClicked()">
                         <img style="width:10px; height: 10px; margin-right: 4px; color: #F3942F;" src="./Images/Buttons/add.orange.png" />
                         Create dashboard
@@ -58,10 +58,10 @@
                         </table>
                     </div>
 
-                    <div [id]="item.DropdownId" *ngIf="item.IsTabMenuOpened" class="Dashboard-menu" [class.Dashboard-menu-oneRow]="pinnedDashboardsCount > 8">
-                        <button class="Dashboard-menu-button" *ngIf="!item.IsPinned && pinnedDashboardsCount <= 8" (click)="PinDashboardTabClicked(item)">Pin dashboard</button>
-                        <button class="Dashboard-menu-button" *ngIf="item.IsPinned" (click)="UnpinDashboardTabClicked(item)">Unpin dashboard</button>
-                        <button class="Dashboard-menu-button" (click)="CloseDashboardTabClicked(item)">Close dashboard</button>
+                    <div [id]="item.DropdownId" *ngIf="item.IsTabMenuOpened" class="Dashboard-menu">
+                        <p class="Dashboard-menu-button" *ngIf="!item.IsPinned && CanPinn"  (click)="PinDashboardTabClicked(item)">Pin dashboard</p>
+                        <p class="Dashboard-menu-button" *ngIf="item.IsPinned" (click)="UnpinDashboardTabClicked(item)">Unpin dashboard</p>
+                        <p class="Dashboard-menu-button" (click)="CloseDashboardTabClicked(item)">Close dashboard</p>
                     </div>
                 </li>
             </ul>
@@ -80,7 +80,7 @@
             </div>
         </div>
 
-        <div class="DashboardTabBody" style="top: 0;" *ngIf="dashbaordCount == 0">
+        <div class="DashboardTabBody" style="top: 0;" *ngIf="dashbaordCount != -1 && (dashbaordCount == 0 || DashboardsTabs.length == 0)">
             <div class="dl-info-card">
 
                 <div class="dl-info-image-cotainer">
@@ -94,14 +94,14 @@
                     </div>
                     <div class="dl-info-center-div">
                         <p class="dl-info-description-text">
-                            There are currently no dashboards.
-                            <br> It is time to add a new
-                            one
+                            {{MainMessage}}
+                            <br> 
+                            {{MainSubMessage}}
                         </p>
                     </div>
                 </div>
 
-                <div class="dl-info-center-div" style="margin-top: 12px;">
+                <div class="dl-info-center-div" style="margin-top: 12px;" *ngIf="dashbaordCount == 0">
                     <button class="Button" (click)="AddDashboardClicked()">
                         <svg width="20" height="20" viewBox="0 0 5 5"
                              style="display: inline-block; vertical-align: middle;">
