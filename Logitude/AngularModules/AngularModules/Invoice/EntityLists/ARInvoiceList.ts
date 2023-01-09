@@ -160,5 +160,6 @@ export class ARInvoiceList {
 		SATCancelReasonCode: string;
 		DigitalPortalSearchFields: string;
 		TotalExamptFortaxReport: number;
+		DocumentTemplateId: string;
 	
 }
