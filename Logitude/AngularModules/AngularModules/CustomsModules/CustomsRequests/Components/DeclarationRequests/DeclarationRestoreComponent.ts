@@ -357,7 +357,7 @@ async FullDeclarationRestore(){
         var IsUpdateDB=false
         var IsDeclarationRestoreUpdate = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "DRU")[0]? true : false;
 
-        if(IsDeclarationRestoreUpdate && !AppTool.IsNullOrEmpty(currRequestParams.DeclarationId) && currRequestParams.LoggingEntityReference == 'E') {
+        if(IsDeclarationRestoreUpdate && !AppTool.IsNullOrEmpty(this.RequestParams.DeclarationId) && this.RequestParams.LoggingEntityReference == 'E') {
                
                 IsUpdateDB  = await this.FullDeclarationRestore()
                 if(!IsUpdateDB)
