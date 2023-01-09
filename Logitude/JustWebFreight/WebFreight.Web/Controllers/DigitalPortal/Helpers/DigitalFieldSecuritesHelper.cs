@@ -80,7 +80,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
                 "Shipment.MainCarriageFinalDestinationPortName",
                 "Shipment.ToPartnerCountryCode",
                 "Shipment.MainCarriageFinalDestinationPortCountryCode",
-                "Shipment.MainCarriageFinalDestinationATA",
                 "Shipment.Transshipment3ToPortId",
                 "Shipment.Transshipment1ToPortId",
                 "Shipment.Transshipment2ToPortId",
