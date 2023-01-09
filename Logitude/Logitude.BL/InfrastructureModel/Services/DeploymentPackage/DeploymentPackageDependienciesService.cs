@@ -1,7 +1,10 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.Services.DeploymentPackage;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.InfrastructureModel;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -30,22 +33,35 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
         public DeploymentPackageDependiency Validate()
         {
-            //
-            return deploymentPackageDependiency;
+            DeploymentPackageDependiencyContext deploymentPackageDependiencyContext = BuildDeploymentPackageDependiencyContext(deploymentPackageDependiency);
+            List<IDeploymentPackageDependiency> deploymentPackageDependiencies = BuildDeploymentPackageDependiencies();
+            foreach (IDeploymentPackageDependiency deploymentPackage in deploymentPackageDependiencies)
+            {
+                deploymentPackage.Validate(deploymentPackageDependiencyContext);
+            }
+            return deploymentPackageDependiencyContext.DeploymentPackageDependiencyResult;
         }
-    }
 
-    public class DeploymentPackageDependiency
-    {
-        public bool IsValid { get; set; }
-        public List<DeploymentPackageMissingDependiency> MissingDependiencies { get; set; }
-    }
+        private DeploymentPackageDependiencyContext BuildDeploymentPackageDependiencyContext(DeploymentPackageDependiency deploymentPackageDependiency)
+        {
+            ObjectTableRepository objectTableRepository = new ObjectTableRepository(tenant);
+            List<ObjectTable> customObjectTables = objectTableRepository.GetObjectsByTenantOrTenantZero(tenant).Where(objectTable => objectTable.IsCustom).ToList();
 
-    public class DeploymentPackageMissingDependiency
-    {
-        public string Name { get; set; }
-        public string DataTypeName { get; set; }
-        public string EntityName { get; set; }
-        public string DependencyOn { get; set; }
+            return new DeploymentPackageDependiencyContext
+            {
+                Tenant = tenant,
+                DeploymentPackagePM = deploymentPackagePM,
+                DeploymentPackageDependiencyResult = deploymentPackageDependiency,
+                CustomObjectTables = customObjectTables
+            };
+        }
+        private List<IDeploymentPackageDependiency> BuildDeploymentPackageDependiencies()
+        {
+            List<IDeploymentPackageDependiency> deploymentPackageDependiencies = new List<IDeploymentPackageDependiency>
+            {
+                new DeploymentPackageObjectFieldDependienciesService()
+            };
+            return deploymentPackageDependiencies;
+        }
     }
 }
