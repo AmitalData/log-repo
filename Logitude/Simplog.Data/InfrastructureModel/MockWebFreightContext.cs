@@ -2114,5 +2114,7 @@ namespace Simplog.Data.InfrastructureModel
         public IDbSet<ReferenceCustomObject> ReferenceCustomObjects => throw new NotImplementedException();
         public IDbSet<DeploymentPackage> DeploymentPackages => throw new NotImplementedException();
         public IDbSet<DeploymentPackagesVersion> DeploymentPackagesVersions => throw new NotImplementedException();
+        public IDbSet<CustomFieldsMainObject> CustomFieldsMainObjects => throw new NotImplementedException();
+
     }
 }
