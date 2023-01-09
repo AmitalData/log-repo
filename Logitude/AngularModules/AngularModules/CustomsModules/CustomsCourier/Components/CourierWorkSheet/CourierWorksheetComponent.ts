@@ -2346,7 +2346,6 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
     }
     ApproveAllPendingMethod() {
-        debugger;
         if (this.IsDisplayOnly) {
            var myMessageWindow = new MessageWindow();
            myMessageWindow.Width = 250;
