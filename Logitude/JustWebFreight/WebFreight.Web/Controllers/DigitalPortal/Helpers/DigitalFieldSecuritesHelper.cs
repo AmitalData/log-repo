@@ -145,8 +145,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
             {
                 defaultDigitalFieldSecurity.ForEach(a => a.HasPersmission = true);
             }
-
-            var cc = defaultDigitalFieldSecurity.GroupBy(a => a.FieldCode).ToDictionary(x => x.Key, y => y.Count());
             
             return defaultDigitalFieldSecurity;
         }
