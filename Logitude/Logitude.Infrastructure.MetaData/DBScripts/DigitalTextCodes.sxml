@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="25">
+  <Sql Version="26">
     <![CDATA[	
 	  delete from DigitalTextCodes where id != ''
 
@@ -1543,21 +1543,6 @@
 			"TextCode": "Shipment.G.ConsigneeCountryCode",
 			"DefaultText": "Consignee Country Code",
 			"FieldCode": "Shipment.ConsigneeCountryCode"
-		},
-		{
-			"TextCode": "Shipment.F.WarehouseLegAddressCity",
-			"DefaultText": "Warehouse Leg Address City",
-			"FieldCode": "ShipmentPackage.WarehouseLegAddressCity"
-		},
-		{
-			"TextCode": "Shipment.F.WarehouseLegAddressCountryCode",
-			"DefaultText": "Warehouse leg address country code",
-			"FieldCode": "ShipmentPackage.WarehouseLegAddressCountryCode"
-		},
-		{
-			"TextCode": "Shipment.F.WarehouseLegActualEntryDate",
-			"DefaultText": "Warehouse leg actual entry date",
-			"FieldCode": "ShipmentPackage.WarehouseLegActualEntryDate"
 		},
 		{
 			"TextCode": "Shipment.F.WarehouseLegExpectedEntryDate",
@@ -3658,21 +3643,6 @@
 			"FieldCode": "Shipment.ConsigneeCountryCode"
 		},
 		{
-			"TextCode": "Shipment.F.WarehouseLegAddressCity",
-			"DefaultText": "Warehouse Leg Address City",
-			"FieldCode": "ShipmentPackage.WarehouseLegAddressCity"
-		},
-		{
-			"TextCode": "Shipment.F.WarehouseLegAddressCountryCode",
-			"DefaultText": "Warehouse leg address country code",
-			"FieldCode": "ShipmentPackage.WarehouseLegAddressCountryCode"
-		},
-		{
-			"TextCode": "Shipment.F.WarehouseLegActualEntryDate",
-			"DefaultText": "Warehouse leg actual entry date",
-			"FieldCode": "ShipmentPackage.WarehouseLegActualEntryDate"
-		},
-		{
 			"TextCode": "Shipment.F.WarehouseLegExpectedEntryDate",
 			"DefaultText": "Warehouse leg expected entry date",
 			"FieldCode": "Shipment.WarehouseLegExpectedEntryDate"
@@ -4812,6 +4782,21 @@
 					"TextCode": "ShipmentPackage.F.PackageTypeVolume",
 					"DefaultText": "Package type volume",
 					"FieldCode": "ShipmentPackage.PackageTypeVolume"
+				},
+				{
+					"TextCode": "Shipment.F.WarehouseLegAddressCity",
+					"DefaultText": "Warehouse Leg Address City",
+					"FieldCode": "ShipmentPackage.WarehouseLegAddressCity"
+				},
+				{
+					"TextCode": "Shipment.F.WarehouseLegAddressCountryCode",
+					"DefaultText": "Warehouse leg address country code",
+					"FieldCode": "ShipmentPackage.WarehouseLegAddressCountryCode"
+				},
+				{
+					"TextCode": "Shipment.F.WarehouseLegActualEntryDate",
+					"DefaultText": "Warehouse leg actual entry date",
+					"FieldCode": "ShipmentPackage.WarehouseLegActualEntryDate"
 				}]');
 			
 			EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCodes'
@@ -5391,6 +5376,21 @@
 					"TextCode": "ShipmentPackage.F.PackageTypeVolume",
 					"DefaultText": "Package type volume",
 					"FieldCode": "ShipmentPackage.PackageTypeVolume"
+				},
+				{
+					"TextCode": "Shipment.F.WarehouseLegAddressCity",
+					"DefaultText": "Warehouse Leg Address City",
+					"FieldCode": "ShipmentPackage.WarehouseLegAddressCity"
+				},
+				{
+					"TextCode": "Shipment.F.WarehouseLegAddressCountryCode",
+					"DefaultText": "Warehouse leg address country code",
+					"FieldCode": "ShipmentPackage.WarehouseLegAddressCountryCode"
+				},
+				{
+					"TextCode": "Shipment.F.WarehouseLegActualEntryDate",
+					"DefaultText": "Warehouse leg actual entry date",
+					"FieldCode": "ShipmentPackage.WarehouseLegActualEntryDate"
 				}]');
 				
 				
