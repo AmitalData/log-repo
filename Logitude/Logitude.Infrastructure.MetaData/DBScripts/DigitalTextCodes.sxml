@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="24">
+  <Sql Version="25">
     <![CDATA[	
 	  delete from DigitalTextCodes where id != ''
 
@@ -634,6 +634,26 @@
 		{
 			"TextCode": "General.G.Tomorrow",
 			"DefaultText": "Tomorrow",
+			"FieldCode": ""
+		},
+		{
+			"TextCode": "Dashboard.G.Last7Days",
+			"DefaultText": "Last 7 days",
+			"FieldCode": ""
+		},
+		{
+			"TextCode": "Dashboard.G.Next7days",
+			"DefaultText": "Next 7 days",
+			"FieldCode": ""
+		},
+		{
+			"TextCode": "Dashboard.G.Expected",
+			"DefaultText": "Expected",
+			"FieldCode": ""
+		},
+		{
+			"TextCode": "Dashboard.G.Actual",
+			"DefaultText": "Actual",
 			"FieldCode": ""
 		}]');
 
@@ -1523,6 +1543,306 @@
 			"TextCode": "Shipment.G.ConsigneeCountryCode",
 			"DefaultText": "Consignee Country Code",
 			"FieldCode": "Shipment.ConsigneeCountryCode"
+		},
+		{
+			"TextCode": "Shipment.F.WarehouseLegAddressCity",
+			"DefaultText": "Warehouse Leg Address City",
+			"FieldCode": "ShipmentPackage.WarehouseLegAddressCity"
+		},
+		{
+			"TextCode": "Shipment.F.WarehouseLegAddressCountryCode",
+			"DefaultText": "Warehouse leg address country code",
+			"FieldCode": "ShipmentPackage.WarehouseLegAddressCountryCode"
+		},
+		{
+			"TextCode": "Shipment.F.WarehouseLegActualEntryDate",
+			"DefaultText": "Warehouse leg actual entry date",
+			"FieldCode": "ShipmentPackage.WarehouseLegActualEntryDate"
+		},
+		{
+			"TextCode": "Shipment.F.WarehouseLegExpectedEntryDate",
+			"DefaultText": "Warehouse leg expected entry date",
+			"FieldCode": "Shipment.WarehouseLegExpectedEntryDate"
+		},
+		{
+			"TextCode": "Shipment.F.WarehouseLegExpectedReleaseDate",
+			"DefaultText": "Warehouse leg expected release date",
+			"FieldCode": "Shipment.WarehouseLegExpectedReleaseDate"
+		},
+		{
+			"TextCode": "Shipment.F.WarehouseLegActualReleaseDate",
+			"DefaultText": "Warehouse leg actual release date",
+			"FieldCode": "Shipment.WarehouseLegActualReleaseDate"
+		},
+		{
+			"TextCode": "Shipment.F.WarehouseLegCutOffDate",
+			"DefaultText": "Warehouse leg cutOff date",
+			"FieldCode": "Shipment.WarehouseLegCutOffDate"
+		},
+		{
+			"TextCode": "Shipment.F.PreCarriageFromPortId",
+			"DefaultText": "PreCarriage from port id",
+			"FieldCode": "Shipment.PreCarriageFromPortId"
+		},
+		{
+			"TextCode": "Shipment.F.PreCarriageFromPortName",
+			"DefaultText": "PreCarriage from port name",
+			"FieldCode": "Shipment.PreCarriageFromPortName"
+		},
+		{
+			"TextCode": "Shipment.F.PreCarriageATD",
+			"DefaultText": "PreCarriage ATD",
+			"FieldCode": "Shipment.PreCarriageATD"
+		},
+		{
+			"TextCode": "Shipment.F.PreCarriageETD",
+			"DefaultText": "PreCarriage ETD",
+			"FieldCode": "Shipment.PreCarriageETD"
+		},
+		{
+			"TextCode": "Shipment.F.PreCarriageFromPortCountryCode",
+			"DefaultText": "PreCarriage from port country code",
+			"FieldCode": "Shipment.PreCarriageFromPortCountryCode"
+		},
+		{
+			"TextCode": "Shipment.F.PreCarriageATA",
+			"DefaultText": "PreCarriage ATA",
+			"FieldCode": "Shipment.PreCarriageATA"
+		},
+		{
+			"TextCode": "Shipment.F.PreCarriageETA",
+			"DefaultText": "PreCarriage ETA",
+			"FieldCode": "Shipment.PreCarriageETA"
+		},
+		{
+			"TextCode": "Shipment.F.PreCarriageTransportModeId",
+			"DefaultText": "PreCarriage transport modeId",
+			"FieldCode": "Shipment.PreCarriageTransportModeId"
+		},
+		{
+			"TextCode": "Shipment.F.PreCarriageCarrierName",
+			"DefaultText": "PreCarriage carrier name",
+			"FieldCode": "Shipment.PreCarriageCarrierName"
+		},
+		{
+			"TextCode": "Shipment.F.PreCarriageCarrierNumber",
+			"DefaultText": "PreCarriage carrier number",
+			"FieldCode": "Shipment.PreCarriageCarrierNumber"
+		},
+		{
+			"TextCode": "Shipment.F.PreCarriageVesselName",
+			"DefaultText": "PreCarriage vessel name",
+			"FieldCode": "Shipment.PreCarriageVesselName"
+		},
+		{
+			"TextCode": "Shipment.F.MainCarriageFromPortName",
+			"DefaultText": "Main carriage from port name",
+			"FieldCode": "Shipment.MainCarriageFromPortName"
+		},
+		{
+			"TextCode": "Shipment.F.FromPartnerCountryCode",
+			"DefaultText": "From partner country code",
+			"FieldCode": "Shipment.FromPartnerCountryCode"
+		},
+		{
+			"TextCode": "Shipment.F.MainCarriageFromPortCountryCode",
+			"DefaultText": "Main carriage from port country code",
+			"FieldCode": "Shipment.MainCarriageFromPortCountryCode"
+		},
+		{
+			"TextCode": "Shipment.F.MainCarriageATA",
+			"DefaultText": "Main carriage ATA",
+			"FieldCode": "Shipment.MainCarriageATA"
+		},
+		{
+			"TextCode": "Shipment.F.AirlinePrefix",
+			"DefaultText": "Airline prefix",
+			"FieldCode": "Shipment.AirlinePrefix"
+		},
+		{
+			"TextCode": "Shipment.F.MainCarriageCarrierName",
+			"DefaultText": "Main carriage carrier name",
+			"FieldCode": "Shipment.MainCarriageCarrierName"
+		},
+		{
+			"TextCode": "Shipment.F.MainCarriageCarrierNumber",
+			"DefaultText": "Main carriage carrier number",
+			"FieldCode": "Shipment.MainCarriageCarrierNumber"
+		},
+		{
+			"TextCode": "Shipment.F.MainCarriageVesselName",
+			"DefaultText": "Main carriage vessel name",
+			"FieldCode": "Shipment.MainCarriageVesselName"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment1FromPortId",
+			"DefaultText": "Transshipment1 from port id",
+			"FieldCode": "Shipment.Transshipment1FromPortId"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment1FromPortName",
+			"DefaultText": "Transshipment1 from port name",
+			"FieldCode": "Shipment.Transshipment1FromPortName"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment1FromPortCountryCode",
+			"DefaultText": "Transshipment1 from port country code",
+			"FieldCode": "Shipment.Transshipment1FromPortCountryCode"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment2FromPortName",
+			"DefaultText": "Transshipment2 from port name",
+			"FieldCode": "Shipment.Transshipment2FromPortName"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment2FromPortCountryCode",
+			"DefaultText": "Transshipment2 from port country code",
+			"FieldCode": "Shipment.Transshipment2FromPortCountryCode"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment3FromPortName",
+			"DefaultText": "Transshipment3 from port name",
+			"FieldCode": "Shipment.Transshipment3FromPortName"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment3FromPortCountryCode",
+			"DefaultText": "Transshipment3 from port country code",
+			"FieldCode": "Shipment.Transshipment3FromPortCountryCode"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment1AdditionalMAWBOBLBL",
+			"DefaultText": "Transshipment1 Additional MAWBOBLBL",
+			"FieldCode": "Shipment.Transshipment1AdditionalMAWBOBLBL"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment1CarrierNumber",
+			"DefaultText": "Transshipment1 carrier number",
+			"FieldCode": "Shipment.Transshipment1CarrierNumber"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment1VesselName",
+			"DefaultText": "Transshipment1 vessel name",
+			"FieldCode": "Shipment.Transshipment1VesselName"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment2AdditionalMAWBOBLBL",
+			"DefaultText": "Transshipment2 Additional MAWBOBLBL",
+			"FieldCode": "Shipment.Transshipment2AdditionalMAWBOBLBL"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment2CarrierName",
+			"DefaultText": "Transshipment2 carrier name",
+			"FieldCode": "Shipment.Transshipment2CarrierName"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment2CarrierNumber",
+			"DefaultText": "Transshipment2 carrier number",
+			"FieldCode": "Shipment.Transshipment2CarrierNumber"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment2VesselName",
+			"DefaultText": "Transshipment2 vessel name",
+			"FieldCode": "Shipment.Transshipment2VesselName"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment3AdditionalMAWBOBLBL",
+			"DefaultText": "Transshipment3 Additional MAWBOBLBL",
+			"FieldCode": "Shipment.Transshipment3AdditionalMAWBOBLBL"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment3CarrierName",
+			"DefaultText": "Transshipment3 carrier name",
+			"FieldCode": "Shipment.Transshipment3CarrierName"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment3CarrierNumber",
+			"DefaultText": "Transshipment3 carrier number",
+			"FieldCode": "Shipment.Transshipment3CarrierNumber"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment3VesselName",
+			"DefaultText": "Transshipment3 vessel name",
+			"FieldCode": "Shipment.Transshipment3VesselName"
+		},
+		{
+			"TextCode": "Shipment.F.MainCarriageFinalDestinationPortName",
+			"DefaultText": "Main carriage final destination port name",
+			"FieldCode": "Shipment.MainCarriageFinalDestinationPortName"
+		},
+		{
+			"TextCode": "Shipment.F.ToPartnerCountryCode",
+			"DefaultText": "To partner country code",
+			"FieldCode": "Shipment.ToPartnerCountryCode"
+		},
+		{
+			"TextCode": "Shipment.F.MainCarriageFinalDestinationPortCountryCode",
+			"DefaultText": "Main carriage final destination port country code",
+			"FieldCode": "Shipment.MainCarriageFinalDestinationPortCountryCode"
+		},
+		{
+			"TextCode": "Shipment.F.MainCarriageFinalDestinationATA",
+			"DefaultText": "Main carriage final destination ATA",
+			"FieldCode": "Shipment.MainCarriageFinalDestinationATA"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment3ToPortId",
+			"DefaultText": "Transshipment3 to port id",
+			"FieldCode": "Shipment.Transshipment3ToPortId"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment1ToPortId",
+			"DefaultText": "Transshipment3 to port id",
+			"FieldCode": "Shipment.Transshipment1ToPortId"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment2ToPortId",
+			"DefaultText": "Transshipment2 to port id",
+			"FieldCode": "Shipment.Transshipment2ToPortId"
+		},
+		{
+			"TextCode": "Shipment.F.MainCarriageToPortId",
+			"DefaultText": "Main carriage to port id",
+			"FieldCode": "Shipment.MainCarriageToPortId"
+		},
+		{
+			"TextCode": "Shipment.F.AirlinePrefix",
+			"DefaultText": "Airline prefix",
+			"FieldCode": "Shipment.AirlinePrefix"
+		},
+		{
+			"TextCode": "Shipment.F.Master",
+			"DefaultText": "Master",
+			"FieldCode": "Shipment.Master"
+		},
+		{
+			"TextCode": "Shipment.F.OnCarriageFromPortName",
+			"DefaultText": "OnCarriage from port name",
+			"FieldCode": "Shipment.OnCarriageFromPortName"
+		},
+		{
+			"TextCode": "Shipment.F.OnCarriageFromPortCountryCode",
+			"DefaultText": "OnCarriage from port country code",
+			"FieldCode": "Shipment.OnCarriageFromPortCountryCode"
+		},
+		{
+			"TextCode": "Shipment.F.OnCarriageTransportModeId",
+			"DefaultText": "OnCarriage transport mode id",
+			"FieldCode": "Shipment.OnCarriageTransportModeId"
+		},
+		{
+			"TextCode": "Shipment.F.OnCarriageCarrierName",
+			"DefaultText": "OnCarriage carrier name",
+			"FieldCode": "Shipment.OnCarriageCarrierName"
+		},
+		{
+			"TextCode": "Shipment.F.OnCarriageCarrierNumber",
+			"DefaultText": "OnCarriage carrier number",
+			"FieldCode": "Shipment.OnCarriageCarrierNumber"
+		},
+		{
+			"TextCode": "Shipment.F.OnCarriageVesselName",
+			"DefaultText": "OnCarriage vessel name",
+			"FieldCode": "Shipment.OnCarriageVesselName"
 		}]');
 	  
 	declare @invocieObjectTableId as varchar(15)
@@ -2432,6 +2752,26 @@
 			"TextCode": "General.G.Tomorrow",
 			"DefaultText": "Tomorrow",
 			"FieldCode": ""
+		},
+		{
+			"TextCode": "Dashboard.G.Last7Days",
+			"DefaultText": "Last 7 days",
+			"FieldCode": ""
+		},
+		{
+			"TextCode": "Dashboard.G.Next7days",
+			"DefaultText": "Next 7 days",
+			"FieldCode": ""
+		},
+		{
+			"TextCode": "Dashboard.G.Expected",
+			"DefaultText": "Expected",
+			"FieldCode": ""
+		},
+		{
+			"TextCode": "Dashboard.G.Actual",
+			"DefaultText": "Actual",
+			"FieldCode": ""
 		}]');
 
 	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCodes'
@@ -3316,6 +3656,306 @@
 			"TextCode": "Shipment.G.ConsigneeCountryCode",
 			"DefaultText": "Consignee Country Code",
 			"FieldCode": "Shipment.ConsigneeCountryCode"
+		},
+		{
+			"TextCode": "Shipment.F.WarehouseLegAddressCity",
+			"DefaultText": "Warehouse Leg Address City",
+			"FieldCode": "ShipmentPackage.WarehouseLegAddressCity"
+		},
+		{
+			"TextCode": "Shipment.F.WarehouseLegAddressCountryCode",
+			"DefaultText": "Warehouse leg address country code",
+			"FieldCode": "ShipmentPackage.WarehouseLegAddressCountryCode"
+		},
+		{
+			"TextCode": "Shipment.F.WarehouseLegActualEntryDate",
+			"DefaultText": "Warehouse leg actual entry date",
+			"FieldCode": "ShipmentPackage.WarehouseLegActualEntryDate"
+		},
+		{
+			"TextCode": "Shipment.F.WarehouseLegExpectedEntryDate",
+			"DefaultText": "Warehouse leg expected entry date",
+			"FieldCode": "Shipment.WarehouseLegExpectedEntryDate"
+		},
+		{
+			"TextCode": "Shipment.F.WarehouseLegExpectedReleaseDate",
+			"DefaultText": "Warehouse leg expected release date",
+			"FieldCode": "Shipment.WarehouseLegExpectedReleaseDate"
+		},
+		{
+			"TextCode": "Shipment.F.WarehouseLegActualReleaseDate",
+			"DefaultText": "Warehouse leg actual release date",
+			"FieldCode": "Shipment.WarehouseLegActualReleaseDate"
+		},
+		{
+			"TextCode": "Shipment.F.WarehouseLegCutOffDate",
+			"DefaultText": "Warehouse leg cutOff date",
+			"FieldCode": "Shipment.WarehouseLegCutOffDate"
+		},
+		{
+			"TextCode": "Shipment.F.PreCarriageFromPortId",
+			"DefaultText": "PreCarriage from port id",
+			"FieldCode": "Shipment.PreCarriageFromPortId"
+		},
+		{
+			"TextCode": "Shipment.F.PreCarriageFromPortName",
+			"DefaultText": "PreCarriage from port name",
+			"FieldCode": "Shipment.PreCarriageFromPortName"
+		},
+		{
+			"TextCode": "Shipment.F.PreCarriageATD",
+			"DefaultText": "PreCarriage ATD",
+			"FieldCode": "Shipment.PreCarriageATD"
+		},
+		{
+			"TextCode": "Shipment.F.PreCarriageETD",
+			"DefaultText": "PreCarriage ETD",
+			"FieldCode": "Shipment.PreCarriageETD"
+		},
+		{
+			"TextCode": "Shipment.F.PreCarriageFromPortCountryCode",
+			"DefaultText": "PreCarriage from port country code",
+			"FieldCode": "Shipment.PreCarriageFromPortCountryCode"
+		},
+		{
+			"TextCode": "Shipment.F.PreCarriageATA",
+			"DefaultText": "PreCarriage ATA",
+			"FieldCode": "Shipment.PreCarriageATA"
+		},
+		{
+			"TextCode": "Shipment.F.PreCarriageETA",
+			"DefaultText": "PreCarriage ETA",
+			"FieldCode": "Shipment.PreCarriageETA"
+		},
+		{
+			"TextCode": "Shipment.F.PreCarriageTransportModeId",
+			"DefaultText": "PreCarriage transport modeId",
+			"FieldCode": "Shipment.PreCarriageTransportModeId"
+		},
+		{
+			"TextCode": "Shipment.F.PreCarriageCarrierName",
+			"DefaultText": "PreCarriage carrier name",
+			"FieldCode": "Shipment.PreCarriageCarrierName"
+		},
+		{
+			"TextCode": "Shipment.F.PreCarriageCarrierNumber",
+			"DefaultText": "PreCarriage carrier number",
+			"FieldCode": "Shipment.PreCarriageCarrierNumber"
+		},
+		{
+			"TextCode": "Shipment.F.PreCarriageVesselName",
+			"DefaultText": "PreCarriage vessel name",
+			"FieldCode": "Shipment.PreCarriageVesselName"
+		},
+		{
+			"TextCode": "Shipment.F.MainCarriageFromPortName",
+			"DefaultText": "Main carriage from port name",
+			"FieldCode": "Shipment.MainCarriageFromPortName"
+		},
+		{
+			"TextCode": "Shipment.F.FromPartnerCountryCode",
+			"DefaultText": "From partner country code",
+			"FieldCode": "Shipment.FromPartnerCountryCode"
+		},
+		{
+			"TextCode": "Shipment.F.MainCarriageFromPortCountryCode",
+			"DefaultText": "Main carriage from port country code",
+			"FieldCode": "Shipment.MainCarriageFromPortCountryCode"
+		},
+		{
+			"TextCode": "Shipment.F.MainCarriageATA",
+			"DefaultText": "Main carriage ATA",
+			"FieldCode": "Shipment.MainCarriageATA"
+		},
+		{
+			"TextCode": "Shipment.F.AirlinePrefix",
+			"DefaultText": "Airline prefix",
+			"FieldCode": "Shipment.AirlinePrefix"
+		},
+		{
+			"TextCode": "Shipment.F.MainCarriageCarrierName",
+			"DefaultText": "Main carriage carrier name",
+			"FieldCode": "Shipment.MainCarriageCarrierName"
+		},
+		{
+			"TextCode": "Shipment.F.MainCarriageCarrierNumber",
+			"DefaultText": "Main carriage carrier number",
+			"FieldCode": "Shipment.MainCarriageCarrierNumber"
+		},
+		{
+			"TextCode": "Shipment.F.MainCarriageVesselName",
+			"DefaultText": "Main carriage vessel name",
+			"FieldCode": "Shipment.MainCarriageVesselName"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment1FromPortId",
+			"DefaultText": "Transshipment1 from port id",
+			"FieldCode": "Shipment.Transshipment1FromPortId"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment1FromPortName",
+			"DefaultText": "Transshipment1 from port name",
+			"FieldCode": "Shipment.Transshipment1FromPortName"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment1FromPortCountryCode",
+			"DefaultText": "Transshipment1 from port country code",
+			"FieldCode": "Shipment.Transshipment1FromPortCountryCode"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment2FromPortName",
+			"DefaultText": "Transshipment2 from port name",
+			"FieldCode": "Shipment.Transshipment2FromPortName"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment2FromPortCountryCode",
+			"DefaultText": "Transshipment2 from port country code",
+			"FieldCode": "Shipment.Transshipment2FromPortCountryCode"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment3FromPortName",
+			"DefaultText": "Transshipment3 from port name",
+			"FieldCode": "Shipment.Transshipment3FromPortName"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment3FromPortCountryCode",
+			"DefaultText": "Transshipment3 from port country code",
+			"FieldCode": "Shipment.Transshipment3FromPortCountryCode"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment1AdditionalMAWBOBLBL",
+			"DefaultText": "Transshipment1 Additional MAWBOBLBL",
+			"FieldCode": "Shipment.Transshipment1AdditionalMAWBOBLBL"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment1CarrierNumber",
+			"DefaultText": "Transshipment1 carrier number",
+			"FieldCode": "Shipment.Transshipment1CarrierNumber"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment1VesselName",
+			"DefaultText": "Transshipment1 vessel name",
+			"FieldCode": "Shipment.Transshipment1VesselName"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment2AdditionalMAWBOBLBL",
+			"DefaultText": "Transshipment2 Additional MAWBOBLBL",
+			"FieldCode": "Shipment.Transshipment2AdditionalMAWBOBLBL"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment2CarrierName",
+			"DefaultText": "Transshipment2 carrier name",
+			"FieldCode": "Shipment.Transshipment2CarrierName"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment2CarrierNumber",
+			"DefaultText": "Transshipment2 carrier number",
+			"FieldCode": "Shipment.Transshipment2CarrierNumber"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment2VesselName",
+			"DefaultText": "Transshipment2 vessel name",
+			"FieldCode": "Shipment.Transshipment2VesselName"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment3AdditionalMAWBOBLBL",
+			"DefaultText": "Transshipment3 Additional MAWBOBLBL",
+			"FieldCode": "Shipment.Transshipment3AdditionalMAWBOBLBL"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment3CarrierName",
+			"DefaultText": "Transshipment3 carrier name",
+			"FieldCode": "Shipment.Transshipment3CarrierName"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment3CarrierNumber",
+			"DefaultText": "Transshipment3 carrier number",
+			"FieldCode": "Shipment.Transshipment3CarrierNumber"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment3VesselName",
+			"DefaultText": "Transshipment3 vessel name",
+			"FieldCode": "Shipment.Transshipment3VesselName"
+		},
+		{
+			"TextCode": "Shipment.F.MainCarriageFinalDestinationPortName",
+			"DefaultText": "Main carriage final destination port name",
+			"FieldCode": "Shipment.MainCarriageFinalDestinationPortName"
+		},
+		{
+			"TextCode": "Shipment.F.ToPartnerCountryCode",
+			"DefaultText": "To partner country code",
+			"FieldCode": "Shipment.ToPartnerCountryCode"
+		},
+		{
+			"TextCode": "Shipment.F.MainCarriageFinalDestinationPortCountryCode",
+			"DefaultText": "Main carriage final destination port country code",
+			"FieldCode": "Shipment.MainCarriageFinalDestinationPortCountryCode"
+		},
+		{
+			"TextCode": "Shipment.F.MainCarriageFinalDestinationATA",
+			"DefaultText": "Main carriage final destination ATA",
+			"FieldCode": "Shipment.MainCarriageFinalDestinationATA"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment3ToPortId",
+			"DefaultText": "Transshipment3 to port id",
+			"FieldCode": "Shipment.Transshipment3ToPortId"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment1ToPortId",
+			"DefaultText": "Transshipment3 to port id",
+			"FieldCode": "Shipment.Transshipment1ToPortId"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment2ToPortId",
+			"DefaultText": "Transshipment2 to port id",
+			"FieldCode": "Shipment.Transshipment2ToPortId"
+		},
+		{
+			"TextCode": "Shipment.F.MainCarriageToPortId",
+			"DefaultText": "Main carriage to port id",
+			"FieldCode": "Shipment.MainCarriageToPortId"
+		},
+		{
+			"TextCode": "Shipment.F.AirlinePrefix",
+			"DefaultText": "Airline prefix",
+			"FieldCode": "Shipment.AirlinePrefix"
+		},
+		{
+			"TextCode": "Shipment.F.Master",
+			"DefaultText": "Master",
+			"FieldCode": "Shipment.Master"
+		},
+		{
+			"TextCode": "Shipment.F.OnCarriageFromPortName",
+			"DefaultText": "OnCarriage from port name",
+			"FieldCode": "Shipment.OnCarriageFromPortName"
+		},
+		{
+			"TextCode": "Shipment.F.OnCarriageFromPortCountryCode",
+			"DefaultText": "OnCarriage from port country code",
+			"FieldCode": "Shipment.OnCarriageFromPortCountryCode"
+		},
+		{
+			"TextCode": "Shipment.F.OnCarriageTransportModeId",
+			"DefaultText": "OnCarriage transport mode id",
+			"FieldCode": "Shipment.OnCarriageTransportModeId"
+		},
+		{
+			"TextCode": "Shipment.F.OnCarriageCarrierName",
+			"DefaultText": "OnCarriage carrier name",
+			"FieldCode": "Shipment.OnCarriageCarrierName"
+		},
+		{
+			"TextCode": "Shipment.F.OnCarriageCarrierNumber",
+			"DefaultText": "OnCarriage carrier number",
+			"FieldCode": "Shipment.OnCarriageCarrierNumber"
+		},
+		{
+			"TextCode": "Shipment.F.OnCarriageVesselName",
+			"DefaultText": "OnCarriage vessel name",
+			"FieldCode": "Shipment.OnCarriageVesselName"
 		}]');
 	   
 	EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCodes'
@@ -3590,7 +4230,6 @@
 				"DefaultText": "Invocie type",
 				"FieldCode": ""
 			}]');
-			
 			
 			
 			declare @packagesObjectTableId as varchar(15)
@@ -4753,6 +5392,219 @@
 					"DefaultText": "Package type volume",
 					"FieldCode": "ShipmentPackage.PackageTypeVolume"
 				}]');
+				
+				
+			declare @shipmentPickUpDeliveryObjectTableId as varchar(15)
+		    set @shipmentPickUpDeliveryObjectTableId = (select Id from ObjectTables where [Name] = 'ShipmentPickUpDelivery' and Tenant = 0)
+			EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCodes'
+			INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, Labels) 
+			values (@NewEntityId, 0, @shipmentPickUpDeliveryObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, @customerProfileId,
+			'[{
+				"TextCode": "ShipmentPickUpDelivery.F.PickUpDeliveryTypeCode",
+				"DefaultText": "PickUp delivery type code",
+				"FieldCode": "ShipmentPickUpDelivery.PickUpDeliveryTypeCode"
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.PickUpDeliveryNumber",
+				"DefaultText": "PickUp delivery number",
+				"FieldCode": "ShipmentPickUpDelivery.PickUpDeliveryNumber"
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.ATD",
+				"DefaultText": "ATD",
+				"FieldCode": "ShipmentPickUpDelivery.ATD"
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.ETD",
+				"DefaultText": "ETD",
+				"FieldCode": "ShipmentPickUpDelivery.ETD"
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.TransportModeCode",
+				"DefaultText": "Transport mode code",
+				"FieldCode": "ShipmentPickUpDelivery.TransportModeCode"
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.CarrierId",
+				"DefaultText": "Carrier id",
+				"FieldCode": "ShipmentPickUpDelivery.CarrierId"
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.CarrierNumber",
+				"DefaultText": "Carrier number",
+				"FieldCode": "ShipmentPickUpDelivery.CarrierNumber"
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.CarrierNumber",
+				"DefaultText": "Carrier number",
+				"FieldCode": "ShipmentPickUpDelivery.CarrierNumber"
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.ATA",
+				"DefaultText": "ATA",
+				"FieldCode": "ShipmentPickUpDelivery.ATA"
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.ETA",
+				"DefaultText": "ETA",
+				"FieldCode": "ShipmentPickUpDelivery.ETA"
+			}]');
+			
+			
+			EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCodes'
+			INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, Labels) 
+			values (@NewEntityId, 0, @shipmentPickUpDeliveryObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, @agentProfileId,
+			'[{
+				"TextCode": "ShipmentPickUpDelivery.F.PickUpDeliveryTypeCode",
+				"DefaultText": "PickUp delivery type code",
+				"FieldCode": "ShipmentPickUpDelivery.PickUpDeliveryTypeCode"
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.PickUpDeliveryNumber",
+				"DefaultText": "PickUp delivery number",
+				"FieldCode": "ShipmentPickUpDelivery.PickUpDeliveryNumber"
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.ATD",
+				"DefaultText": "ATD",
+				"FieldCode": "ShipmentPickUpDelivery.ATD"
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.ETD",
+				"DefaultText": "ETD",
+				"FieldCode": "ShipmentPickUpDelivery.ETD"
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.TransportModeCode",
+				"DefaultText": "Transport mode code",
+				"FieldCode": "ShipmentPickUpDelivery.TransportModeCode"
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.CarrierId",
+				"DefaultText": "Carrier id",
+				"FieldCode": "ShipmentPickUpDelivery.CarrierId"
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.CarrierNumber",
+				"DefaultText": "Carrier number",
+				"FieldCode": "ShipmentPickUpDelivery.CarrierNumber"
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.CarrierNumber",
+				"DefaultText": "Carrier number",
+				"FieldCode": "ShipmentPickUpDelivery.CarrierNumber"
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.ATA",
+				"DefaultText": "ATA",
+				"FieldCode": "ShipmentPickUpDelivery.ATA"
+			},
+			{
+				"TextCode": "ShipmentPickUpDelivery.F.ETA",
+				"DefaultText": "ETA",
+				"FieldCode": "ShipmentPickUpDelivery.ETA"
+			}]');
+			
+			
+			declare @truckerObjectTableId as varchar(15)
+		    set @truckerObjectTableId = (select Id from ObjectTables where [Name] = 'Trucker' and Tenant = 0)
+			EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCodes'
+			INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, Labels) 
+			values (@NewEntityId, 0, @truckerObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, @customerProfileId,
+			'[{
+				"TextCode": "Trucker.F.EnglishName",
+				"DefaultText": "Trucker name",
+				"FieldCode": "Trucker.EnglishName"
+			},
+			{
+				"TextCode": "Trucker.F.Code",
+				"DefaultText": "Trucker code",
+				"FieldCode": "Trucker.Code"
+			},
+			{
+				"TextCode": "Trucker.F.Notes",
+				"DefaultText": "Notes",
+				"FieldCode": "Trucker.Notes"
+			},
+			{
+				"TextCode": "Trucker.F.Addresses",
+				"DefaultText": "Addresses",
+				"FieldCode": "Trucker.Addresses"
+			},
+			{
+				"TextCode": "Trucker.F.CountryId",
+				"DefaultText": "Country id",
+				"FieldCode": "Trucker.CountryId"
+			},
+			{
+				"TextCode": "Trucker.F.CountryCode",
+				"DefaultText": "Country code",
+				"FieldCode": "Trucker.CountryCode"
+			},
+			{
+				"TextCode": "Trucker.F.CountryName",
+				"DefaultText": "Country name",
+				"FieldCode": "Trucker.CountryName"
+			},
+			{
+				"TextCode": "Trucker.F.StateName",
+				"DefaultText": "State name",
+				"FieldCode": "Trucker.StateName"
+			},
+			{
+				"TextCode": "Trucker.F.StateName",
+				"DefaultText": "State name",
+				"FieldCode": "Trucker.StateName"
+			}]');
+			
+			EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCodes'
+			INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, Labels) 
+			values (@NewEntityId, 0, @truckerObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, @agentProfileId,
+			'[{
+				"TextCode": "Trucker.F.EnglishName",
+				"DefaultText": "Trucker name",
+				"FieldCode": "Trucker.EnglishName"
+			},
+			{
+				"TextCode": "Trucker.F.Code",
+				"DefaultText": "Trucker code",
+				"FieldCode": "Trucker.Code"
+			},
+			{
+				"TextCode": "Trucker.F.Notes",
+				"DefaultText": "Notes",
+				"FieldCode": "Trucker.Notes"
+			},
+			{
+				"TextCode": "Trucker.F.Addresses",
+				"DefaultText": "Addresses",
+				"FieldCode": "Trucker.Addresses"
+			},
+			{
+				"TextCode": "Trucker.F.CountryId",
+				"DefaultText": "Country id",
+				"FieldCode": "Trucker.CountryId"
+			},
+			{
+				"TextCode": "Trucker.F.CountryCode",
+				"DefaultText": "Country code",
+				"FieldCode": "Trucker.CountryCode"
+			},
+			{
+				"TextCode": "Trucker.F.CountryName",
+				"DefaultText": "Country name",
+				"FieldCode": "Trucker.CountryName"
+			},
+			{
+				"TextCode": "Trucker.F.StateName",
+				"DefaultText": "State name",
+				"FieldCode": "Trucker.StateName"
+			},
+			{
+				"TextCode": "Trucker.F.StateName",
+				"DefaultText": "State name",
+				"FieldCode": "Trucker.StateName"
+			}]');
     ]]>       
   </Sql>
 </Script>
