@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Data.SqlClient;
+using System.Data;
 
 namespace Logitude.DBMigrations.Models
 {
@@ -1179,14 +1180,56 @@ namespace Logitude.DBMigrations.Models
 
             return dropDefaultWithHistoryScript;
         }
+        protected Boolean CheckIfPartitionShemaExist(string Partition)
+        {
+            string connectionString = ToolConfigurations.GetConnectionString(DXMLTable.DBType);
+            if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
+            {
+                return false;
+            }
+            else
+            {
+                string currentCommandText = null;
+                SqlConnection sqlConnection = new SqlConnection(connectionString);
 
+                try
+                {
+                    string queryString = "select * from sys.partition_schemes where name='" + Partition +"'";
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    SqlCommand command = sqlConnection.CreateCommand();
+                    command.CommandText = queryString;
+                    da.SelectCommand = command;
+                    DataSet ds = new DataSet();
+
+
+
+                    da.Fill(ds);
+                    sqlConnection.Close();
+                    if(ds.Tables.Count > 0)
+                    {
+                        return true;
+                    }
+                }
+                catch (Exception exception)
+                {
+                    sqlConnection.Close();
+                }
+            }
+            return false;
+        }
         protected override string GetCreateIndexScript(IndexDefinition index)
         {
+            string partition = "";
             bool isZeroDownTimeArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME);
             string indexOnlineOption = isZeroDownTimeArgumentProvided ? (ToolConfigurations.AOTCreateIndexWithOnline ? " WITH (ONLINE = ON)" : null) : null;
 
             string indexColumns = !index.Columns.Contains(",") ? "[" + index.Columns + "]" : string.Join(",", index.Columns.Split(',').Select(c => "[" + c + "]").ToArray());
             string includeColumns = String.IsNullOrEmpty(index.Include) ? null : (!index.Include.Contains(",") ? "[" + index.Include + "]" : string.Join(",", index.Include.Split(',').Select(c => "[" + c + "]").ToArray()));
+
+            if(index != null && index.Partition != null && index.PartitionValue != null && CheckIfPartitionShemaExist(index.Partition))
+            {
+                partition = " ON "  + index.Partition + " (" + index.PartitionValue +")";
+            }
             string tableName = "[" + DXMLTable.Schema + "].[" + DXMLTable.Name + "]";
             string createIndexScript = "-- Create Index On " + DXMLTable.Name + " Table\n";
             string indexName = "IX_" + DXMLTable.Name + "_" + (!indexColumns.Contains(",") ? indexColumns : string.Join("_", indexColumns.Split(',').ToArray())).Replace("[", String.Empty).Replace("]", String.Empty);
@@ -1197,11 +1240,11 @@ namespace Logitude.DBMigrations.Models
 
             if (includeColumns != null)
             {
-                createIndexScript += "EXEC('CREATE NONCLUSTERED INDEX " + "[" + indexName + "]" + " ON " + tableName + "(" + indexColumns + ") INCLUDE(" + includeColumns + ")" + indexOnlineOption + "')";
+                createIndexScript += "EXEC('CREATE NONCLUSTERED INDEX " + "[" + indexName + "]" + " ON " + tableName + "(" + indexColumns + ") INCLUDE(" + includeColumns + ")" + indexOnlineOption + partition + "')";
             }
             else
             {
-                createIndexScript += "EXEC('CREATE NONCLUSTERED INDEX " + "[" + indexName + "]" + " ON " + tableName + "(" + indexColumns + ")" + indexOnlineOption + "')";
+                createIndexScript += "EXEC('CREATE NONCLUSTERED INDEX " + "[" + indexName + "]" + " ON " + tableName + "(" + indexColumns + ")" + indexOnlineOption + partition + "')";
             }
 
             createIndexScript += ";\n\n";
