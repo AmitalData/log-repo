@@ -37,6 +37,7 @@ namespace Logitude.DashboardModule.Data.EntityListQueryServices
                                                    Name = a.Name,
                                                    Description = a.Description,
                                                    PermissionLevelCode = a.PermissionLevelCode,
+                                                   LoadedAutomatically = a.LoadedAutomatically,
                                                });
             return query;
         }

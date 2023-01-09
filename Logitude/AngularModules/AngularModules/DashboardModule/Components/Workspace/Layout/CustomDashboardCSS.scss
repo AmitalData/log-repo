@@ -150,7 +150,7 @@
 .dl-info-header-text {
     font-family: 'Manrope';
     font-style: normal;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 16px;
     line-height: 24px;
     color: #292D30;
@@ -159,13 +159,12 @@
 .dl-info-description-text {
     font-family: 'Manrope';
     font-style: normal;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 12px;
     line-height: 18px;
     text-align: center;
     color: #292D30;
     margin-top: 4px;
-    width: 175px;
 }
 
 .dl-info-center-div {
@@ -256,7 +255,6 @@
     padding: 4px 0px;
     position: absolute;
     width: 129px;
-    height: 56px;
     background: #FFFFFF;
     box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.15);
     z-index: 1;
@@ -281,10 +279,13 @@ Dashboard-menu-oneRow {
     flex: none;
     order: 0;
     flex-grow: 0;
+    padding-top: 4px;
+    padding-left: 8px;
+    padding-bottom: 2px;
 }
 
 .dl-tab-text {
-    max-width: 132px;
+    max-width: 75px;
     font-weight: 500;
     font-size: 11px;
     font-family: 'Manrope';
