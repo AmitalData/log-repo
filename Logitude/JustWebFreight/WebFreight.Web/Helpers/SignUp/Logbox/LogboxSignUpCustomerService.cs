@@ -153,6 +153,7 @@ namespace WebFreight.Web.Helpers.SignUp.Logbox
 
             CustomerService CustomerService = new CustomerService(commonContext, customerPM, contactPM.Id);
             CustomerService.Create();
+            signUpInfoClass.CustomerId = customerPM.Id;
         }
     }
 }
