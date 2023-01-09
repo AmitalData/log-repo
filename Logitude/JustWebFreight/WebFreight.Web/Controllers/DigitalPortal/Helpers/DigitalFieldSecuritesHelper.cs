@@ -108,7 +108,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
 
                         if (temp != null)
                         {
-                            temp.HasPersmission = true;
+                            temp.HasPermission = true;
                         }
                     }
                 }
@@ -135,14 +135,14 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
                     defaultDigitalFieldSecurity.Add(new DigitalFeildSecurityObject
                     {
                         FieldCode = item,
-                        HasPersmission = true
+                        HasPermission = true
                     });
                 }
             }
 
             if (!customDigitalFeildSecurityObject.Any())
             {
-                defaultDigitalFieldSecurity.ForEach(a => a.HasPersmission = true);
+                defaultDigitalFieldSecurity.ForEach(a => a.HasPermission = true);
             }
             
             return defaultDigitalFieldSecurity;
