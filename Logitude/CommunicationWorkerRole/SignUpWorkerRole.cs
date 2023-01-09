@@ -181,29 +181,7 @@ namespace CommunicationWorkerRole
             }
             else if (LogitudeSettings.DeploymentStage == "logboxwe1")
             {
-                //EmailParameters parameters = new EmailParameters()
-                //{
-                //    From = "admin@fnarsoft.com",
-                //    To = "ahmada@logitudeworld.com",//;itzik@amital.co.il;YaronC@AMITAL.CO.IL",
-                //    Cc = "ahmadb@logitudeworld.com;YaronC@AMITAL.CO.IL;boazelkana@gmail.com;basel@amital.co.il",
-                //    Bcc = "",
-                //    Subject = LogitudeSettings.DeploymentStage + " - SignUp complete successfully for " + signUpInfo.Company,
-                //    Body = emailbody,
-                //}; 
-                //Debug.WriteLine(parameters.To);
-                //EmailingHelper.SendEmail(parameters);
-
-                emailParams = new EmailCommunicationParams()
-                {
-                    From = "admin@fnarsoft.com",
-                    To = "ahmada@logitudeworld.com",//;itzik@amital.co.il;YaronC@AMITAL.CO.IL",
-                    CC = "Eric@AMITAL.CO.IL;boazelkana@gmail.com",
-                    BCC = "",
-                    Subject = LogitudeSettings.DeploymentStage + " - SignUp complete successfully for " + signUpInfo.Company,
-                    EmailBody = emailbody,
-                    Tenant = 0,
-                    IsBodySecured = true,
-                };
+                emailParams = GetLogboxEmailCommunicationParams(signUpInfo, emailbody);
 
             }
             else
@@ -246,6 +224,23 @@ namespace CommunicationWorkerRole
 
             Communications.AddEmailCommunicationLogQueue(emailParams, 0);
             Debug.WriteLine("SendEmail:done!!");
+        }
+
+        private static EmailCommunicationParams GetLogboxEmailCommunicationParams(SignUpInfoClass signUpInfo, string emailbody)
+        {
+            string additionalCCEmails = signUpInfo.IsCreateLogboxTenantFromCloud ? signUpInfo.AdditionalEmail : "";
+            string additionalBCCEmails = signUpInfo.IsCreateLogboxTenantFromCloud ? "" : ";boazelkana@gmail.com";
+            return new EmailCommunicationParams()
+            {
+                From = "admin@fnarsoft.com",
+                To = "Eric@AMITAL.CO.IL",
+                CC = additionalCCEmails,
+                BCC = "ahmada@logitudeworld.com" + additionalBCCEmails,
+                Subject = LogitudeSettings.DeploymentStage + " - SignUp complete successfully for " + signUpInfo.Company,
+                EmailBody = emailbody,
+                Tenant = 0,
+                IsBodySecured = true,
+            };
         }
 
         public override bool OnStart()

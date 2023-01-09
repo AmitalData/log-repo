@@ -10,6 +10,7 @@ import {SignUpInfoClass} from '../../../../InfrastructureModules/InfrastructureO
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {CountryList} from '../../../../Common/EntityLists/CountryList';
 import { CountryListService } from '../../../../Common/Services/StandardLists/CountryListService';
+import { UserPMService } from '../../../../Common/Services/StandardPMs/UserPMService';
 
 @Component({
     selector: 'CreateTenantComponent',
@@ -19,6 +20,7 @@ import { CountryListService } from '../../../../Common/Services/StandardLists/Co
 export class CreateTenantComponent extends BaseComponent implements OnInit {
     DataContext: CreateTenantComponent = this;
     Email: string;
+    AdditionalEmail: string;
     ContactName: string;
     Phone: string;
     CompanyName: string;
@@ -72,6 +74,20 @@ export class CreateTenantComponent extends BaseComponent implements OnInit {
 
     SetWindowArgs(args: any) {
         this.IsCreateLogboxTenantFromCloud = args.IsCreateLogboxTenantFromCloud;
+        this.SetAdditionalEmail(args);
+    }
+
+    SetAdditionalEmail(args: any) {
+        if (!args.IsCreateLogboxTenantFromCloud) return;
+
+        this.CurrentSession.StartBusyIndicatorLoading();
+        let userPMService = new UserPMService();
+        userPMService.get(args.LogBoxAdminUserId).subscribe((serviceResponse: ServiceResponse) => {
+            if (serviceResponse != null && serviceResponse.Result != null && !serviceResponse.HasError) {
+                this.AdditionalEmail = serviceResponse.Result.Email;
+            }
+            this.CurrentSession.StopBusyIndicator();
+        });
     }
 
     CountryId: string;
@@ -194,6 +210,7 @@ export class CreateTenantComponent extends BaseComponent implements OnInit {
         SignUpInfo.TimeZoneOffset = this.TimeZoneOffset;
         SignUpInfo.City = this.City;
         SignUpInfo.IsCreateLogboxTenantFromCloud = this.IsCreateLogboxTenantFromCloud;
+        SignUpInfo.AdditionalEmail = this.AdditionalEmail;
       
         this.signUpService.CreateTenant(SignUpInfo).subscribe((myResponse: ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();

@@ -132,5 +132,6 @@ export class SignUpInfoClass {
     public TimeZoneOffset: number;
     public City: string;
     public IsCreateLogboxTenantFromCloud: boolean;
+    public AdditionalEmail: string;
     
 }
