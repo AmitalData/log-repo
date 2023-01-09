@@ -277,6 +277,7 @@
     <None Include="EntityFiles\CommonDataModel\HorseGender.lxml" />
     <None Include="EntityFiles\CommonDataModel\Mention.lxml" />
     <None Include="EntityFiles\InfrastructureModel\ChildEntitiesCustomField.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\CustomFieldsMainObjects.lxml" />
     <None Include="EntityFiles\InfrastructureModel\CustomChildObject.lxml" />
     <None Include="EntityFiles\InfrastructureModel\DataCustomObject.lxml" />
     <None Include="EntityFiles\InfrastructureModel\DeploymentPackagesVersion.lxml" />

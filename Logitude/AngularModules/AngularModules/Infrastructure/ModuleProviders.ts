@@ -113,6 +113,8 @@ import { DigitalPortalScreenListService } from './Services/StandardLists/Digital
 import { DigitalPreDefinedComponentListService } from './Services/StandardLists/DigitalPreDefinedComponentListService';
 import { DeploymentPackagePMService } from './Services/StandardPMs/DeploymentPackagePMService';
 import { DeploymentPackageListService } from './Services/StandardLists/DeploymentPackageListService';
+import { CustomFieldsMainObjectPMService } from './Services/StandardPMs/CustomFieldsMainObjectsPMService';
+import { CustomFieldsMainObjectListService } from './Services/StandardLists/CustomFieldsMainObjectListService';
 
 export class ModuleProviders {
 
@@ -231,6 +233,8 @@ export class ModuleProviders {
             case "DigitalPreDefinedComponentListService": { myResult = new DigitalPreDefinedComponentListService(); break; }
             case "DeploymentPackagePMService": { myResult = new DeploymentPackagePMService(); break; }
             case "DeploymentPackageListService": { myResult = new DeploymentPackageListService(); break; }
+            case "CustomFieldsMainObjectPMService": { myResult = new CustomFieldsMainObjectPMService(); break; }
+            case "CustomFieldsMainObjectListService": { myResult = new CustomFieldsMainObjectListService(); break; }
 
         }
 
