@@ -330,8 +330,39 @@ export class DeclarationRestoreComponent
 
     }
 
+async FullDeclarationRestore(){
+    const res = await new Promise<boolean>((resolve, reject) => {  
+        var confirm = new ConfirmWindow();
 
-    SendDeclarationRestoreRequest(customSendOptionsArgs: CustomSendOptionsArgs) {
+        confirm.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+        confirm.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
+        confirm.Width = 450;
+        confirm.Height = 150;
+        confirm.Title = "שיחזור מספר הצהרה";
+        confirm.Show("שים לב כל נתוני ההצהרה ישוחזרו על פי גרסת המכס , האם להמשיך ?");           
+        confirm.WindowClosed.subscribe((event: any) => {
+
+            if (confirm.Yes == true) {
+                resolve(true);
+            }
+            else{
+                resolve(false);
+            }
+            
+        });
+  })
+  return res;
+}
+    async SendDeclarationRestoreRequest(customSendOptionsArgs: CustomSendOptionsArgs) {
+        var IsUpdateDB=false
+        var IsDeclarationRestoreUpdate = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "DRU")[0]? true : false;
+
+        if(IsDeclarationRestoreUpdate && !AppTool.IsNullOrEmpty(currRequestParams.DeclarationId) && currRequestParams.LoggingEntityReference == 'E') {
+               
+                IsUpdateDB  = await this.FullDeclarationRestore()
+                if(!IsUpdateDB)
+                 return
+            }
         var currRequestParams = new DeclarationRestoreRequestParams();///Force new GUID On Each Send !!
 
          currRequestParams.TestCase = this.RequestParams.TestCase;
@@ -345,8 +376,8 @@ export class DeclarationRestoreComponent
         currRequestParams.CustomsFile = this.RequestParams.CustomsFile;
         currRequestParams.RequestVIA = customSendOptionsArgs.RequestVIA;
         currRequestParams.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
-
-
+        currRequestParams.IsUpdateDB = IsUpdateDB;
+        
         CustomMessageProgressComponent
             .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
             "שליחת שאילתא לשיחזור נתוני הצהרה", true)

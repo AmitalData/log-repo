@@ -18604,6 +18604,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             AddClosedTables.AddToggle(new ToggleDetails() { Code = "FSN", Name = "Force Sign",Description = "Force Sign" }, toggleRepository);
             AddClosedTables.AddToggle(new ToggleDetails() { Code = "AIN", Name = "Activate Insurance", Description = "Is Activate Insurance" }, toggleRepository);
+            AddClosedTables.AddToggle(new ToggleDetails() { Code = "DRU", Name = "Declaration Restore Update", Description = "Declaration Restore Update" }, toggleRepository);
             toggleRepository.SubmitChanges();
 
         }
