@@ -2435,7 +2435,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                 queryOperations.SetFilter("BillToId", cardFilterValues, false, "InList", null, false);
             }
 
-            var ARInvoiceObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableNameWithNoIncludes("ARInvoice", tenant);
+            var ARInvoiceObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("ARInvoice", tenant);
 
             if (newFilters.AdditionalFilters.Any())
             {
