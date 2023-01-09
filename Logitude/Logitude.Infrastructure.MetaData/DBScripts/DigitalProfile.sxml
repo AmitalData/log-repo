@@ -2,15 +2,28 @@
   <Sql Version="17">
       <![CDATA[	  
 	  delete from DigitalFieldSecurities where id != ''
-	  delete from DigitalProfiles where id != ''
-      declare @NewEntityId as varchar(15)
- 	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT, 'DigitalProfiles'
-	  INSERT INTO DigitalProfiles (Id, Tenant, CreateDate, UpdateDate,  Name) 
-	  values (@NewEntityId, 0, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, 'Customer')
-	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT, 'DigitalProfiles'
-	  INSERT INTO DigitalProfiles (Id, Tenant, CreateDate, UpdateDate,  Name) 
-	  values (@NewEntityId, 0, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, 'Agent')
-	  declare @newDigitalFieldEntityId as varchar(15)
+	  
+	  declare @NewEntityId as varchar(15)
+
+	   BEGIN
+		   IF NOT EXISTS (SELECT * FROM DigitalProfiles WHERE Name = 'Customer')
+		   BEGIN
+		       EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT, 'DigitalProfiles'
+			   INSERT INTO DigitalProfiles (Id, Tenant, CreateDate, UpdateDate,  Name) 
+			   values (@NewEntityId, 0, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, 'Customer')
+		   END
+		END
+
+		BEGIN
+		   IF NOT EXISTS (SELECT * FROM DigitalProfiles WHERE Name = 'Agent')
+		   BEGIN
+		       EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT, 'DigitalProfiles'
+			   INSERT INTO DigitalProfiles (Id, Tenant, CreateDate, UpdateDate,  Name) 
+			   values (@NewEntityId, 0, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, 'Agent')
+		   END
+		END
+
+	  declare @newDigitalFieldEntityId as varchar(15)
  	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
 
 	  declare @generalObjectTableId as varchar(15)
