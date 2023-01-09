@@ -441,8 +441,8 @@ export class DashboardTabComponent implements OnInit {
     ChangeToCopyDashborad(myResponse: ServiceResponse){        
             this.SelectedDashboard = myResponse.Result;
         if (this.SelectedDashboard) {
-                this.EditDashboardClicked();
-                this.RefreshAfterCopy.emit(this.SelectedDashboard);      
+               // this.EditDashboardClicked();
+                this.OpenEditDashboardWindowForCopiedDashboard();             
             }
 
             else {
@@ -450,6 +450,30 @@ export class DashboardTabComponent implements OnInit {
             }
 
             this.CurrentSession.StopBusyIndicator();      
+    }
+
+    OpenEditDashboardWindowForCopiedDashboard() {
+        MixPanelLocator.PostDashboardAction({ ActionName: "Open Dashboard edit page for copied dashboard", DashboardId: this.SelectedDashboard?.Id });
+
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Title = "Copy Dashboard";
+        logitudeWindow.WindowArgs = { EntityPM: this.SelectedDashboard, };
+        logitudeWindow.Show('./DashboardModule/Components/Windows/AddEditDashboard/AddEditDashboardComponent');
+        logitudeWindow.ComponentLoaded.subscribe(comp => {
+            logitudeWindow.WindowClosed.subscribe(s => {
+                if (s) {
+                    if (s == "OK_delete") {
+                        this.DashboardDeleted.emit(this.SelectedDashboard?.Id);
+                    }
+                    else {
+                        this.SelectedDashboardName = this.SelectedDashboard.Name;
+                        this.RefreshAfterCopy.emit(this.SelectedDashboard);
+                        //this.DashboardChanged.emit(this.SelectedDashboard);
+                    }
+                }
+            });
+        });
+
     }
 
 }
