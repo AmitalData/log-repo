@@ -260,7 +260,7 @@ export class DashboardTabComponent implements OnInit {
         });
     }
     HandelPossion(myWidget: WidgetPM): Observable<{ StartPotistion: string, EndPosition: string }> {
-        if (myWidget.TypeCode == "line" || myWidget.TypeCode == "bar") {
+        if (myWidget.TypeCode == "line" || myWidget.TypeCode == "bar" || myWidget.TypeCode == "column") {
             var subject = new Subject<{ StartPotistion: string, EndPosition: string }>();
             var dashboardAnalyticsService = new DashboardAnalyticsService();
             dashboardAnalyticsService.GetData(DashboardMapping.GetReactWidget(myWidget)).subscribe(e => {
@@ -323,7 +323,7 @@ export class DashboardTabComponent implements OnInit {
     }
     GetNumberOfGroup(result) {
         if (!result || result.length == 0) return 0;
-        return result[0].SeriesMeasureVulues.length;
+        return result[0].Values.length;
     }
     EvaluateNewWidgetPosition(w, h) {
         let widgetYPosition = 0;
