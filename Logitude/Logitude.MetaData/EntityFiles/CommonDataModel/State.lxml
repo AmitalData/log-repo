@@ -1640,7 +1640,7 @@
       <DCField
         DCFieldName="&quot;Code&quot;"
         FieldName="&quot;Code&quot;"
-        IsKey="false"
+        IsKey="true"
         IsManualMapping="false"
         IsMulti="false"
         FieldsDataType="&quot;Text&quot;"

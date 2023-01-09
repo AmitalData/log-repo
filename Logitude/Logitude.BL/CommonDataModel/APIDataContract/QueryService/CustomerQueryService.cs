@@ -88,9 +88,9 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 						myCustomer.LocalName = FormatHelper.ConvertFromBase64(MyEntity.LocalName);
 
 					myCustomer.PaymentTermId = this.GetPaymentTermId(MyEntity.PaymentTerm, Tenant, ComputingPartnerName);
-					myCustomer.MainAddressId = this.GetAddressId(MyEntity.MainAddress, Tenant, ComputingPartnerName);
-					myCustomer.BillingAddressId = this.GetAddressId(MyEntity.BillingAddress, Tenant, ComputingPartnerName);
-					myCustomer.PickupDeliveryAddressId = this.GetAddressId(MyEntity.PickupDeliveryAddress, Tenant, ComputingPartnerName);
+					//myCustomer.MainAddressId = this.GetAddressId(MyEntity.MainAddress, Tenant, ComputingPartnerName);
+					//myCustomer.BillingAddressId = this.GetAddressId(MyEntity.BillingAddress, Tenant, ComputingPartnerName);
+					//myCustomer.PickupDeliveryAddressId = this.GetAddressId(MyEntity.PickupDeliveryAddress, Tenant, ComputingPartnerName);
 					myCustomer.AccountManagerUserId = this.GetUserId(MyEntity.AccountManagerUser, Tenant, ComputingPartnerName);
 					myCustomer.SalesmanUserId = this.GetUserId(MyEntity.SalesmanUser, Tenant, ComputingPartnerName);
 					myCustomer.CollectorId = this.GetUserId(MyEntity.Collector, Tenant, ComputingPartnerName);
