@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="18">
+  <Sql Version="19">
       <![CDATA[	  
 	  delete from DigitalFieldSecurities where id != ''
 	  
@@ -221,9 +221,6 @@
         },
 		{
             "FieldCode": "Shipment.MainCarriageETD"
-        },
-		{
-            "FieldCode": "Shipment.MainCarriageFinalDestinationATA"
         },
 		{
             "FieldCode": "Shipment.MainCarriageFinalDestinationETA"
@@ -1027,9 +1024,6 @@
 		},
 		{
 			"FieldCode": "Shipment.MainCarriageFinalDestinationPortCountryCode"
-		},
-		{
-			"FieldCode": "Shipment.MainCarriageFinalDestinationATA"
 		},
 		{
 			"FieldCode": "Shipment.Transshipment3ToPortId"

@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="26">
+  <Sql Version="27">
     <![CDATA[	
 	  delete from DigitalTextCodes where id != ''
 
@@ -1363,11 +1363,6 @@
 			"TextCode": "Shipment.F.MainCarriageETD",
 			"DefaultText": "Main Carriage ETD",
 			"FieldCode": "Shipment.MainCarriageETD"
-		},
-		{
-			"TextCode": "Shipment.F.MainCarriageFinalDestinationATA",
-			"DefaultText": "Main Carriage Final Destination ATA",
-			"FieldCode": "Shipment.MainCarriageFinalDestinationATA"
 		},
 		{
 			"TextCode": "Shipment.F.MainCarriageFinalDestinationETA",
@@ -3861,11 +3856,6 @@
 			"TextCode": "Shipment.F.MainCarriageFinalDestinationPortCountryCode",
 			"DefaultText": "Main carriage final destination port country code",
 			"FieldCode": "Shipment.MainCarriageFinalDestinationPortCountryCode"
-		},
-		{
-			"TextCode": "Shipment.F.MainCarriageFinalDestinationATA",
-			"DefaultText": "Main carriage final destination ATA",
-			"FieldCode": "Shipment.MainCarriageFinalDestinationATA"
 		},
 		{
 			"TextCode": "Shipment.F.Transshipment3ToPortId",
