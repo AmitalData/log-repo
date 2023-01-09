@@ -1177,6 +1177,9 @@ export class ARInvoicePM {
     public set IsFromAutomation(newValue: boolean) { if (this.isFromAutomation != newValue) { this.isFromAutomation = newValue; this.MarkAsDirty("IsFromAutomation"); } }
        
 	 
+    private documentTemplateId: string;
+    public get DocumentTemplateId() { return this.documentTemplateId; }
+    public set DocumentTemplateId(newValue: string) { if (this.documentTemplateId != newValue) { this.documentTemplateId = newValue; this.MarkAsDirty("DocumentTemplateId"); } }
 
     public OldEntityPM: ARInvoicePM;
 		

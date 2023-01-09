@@ -1637,7 +1637,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              GlobalTaxCalculation = entity.GlobalTaxCalculation,
                              PaymentReferences = entity.PaymentReferences,
                              SATCancelReasonCode = entity.SATCancelReasonCode,
-                             TotalExamptFortaxReport = entity.TotalExamptFortaxReport
+                             TotalExamptFortaxReport = entity.TotalExamptFortaxReport,
+                             DocumentTemplateId = entity.DocumentTemplateId
                          };
 
             return result;
@@ -1765,6 +1766,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               PaymentReferences = a.PaymentReferences,
                                               SATCancelReasonCode = a.SATCancelReasonCode,
                                               TotalEquation = a.TotalEquation,
+                                              DocumentTemplateId = a.DocumentTemplateId
                                           }).ToList();
             return invoices;
         }
@@ -1902,6 +1904,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     IsDigitalDueDateColorRed = (entityPOCO.DueDate == null || entityPOCO.PaidStatus == "Paid") ? false : (entityPOCO.DueDate.Value < todayDate ? true : false),
                     TotalEquation = entityPOCO.TotalEquation,
                     SATXML = entityPOCO.SATXML,
+                    DocumentTemplateId = entityPOCO.DocumentTemplateId
                 };
 
                 entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;
@@ -2302,6 +2305,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              GlobalTaxCalculation = entity.GlobalTaxCalculation,
                              PaymentReferences = entity.PaymentReferences,
                              SATCancelReasonCode = entity.SATCancelReasonCode,
+                             DocumentTemplateId = entity.DocumentTemplateId
                          };
 
             return result;

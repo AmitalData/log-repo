@@ -569,6 +569,9 @@ export class ARInvoiceMenuButtonsHandler {
             if (isLoadSuccess) {
                 this.EntityPM = this.entityArgs.EditComponent.EntityPM;
 
+                if (this.isPrintRequested && this.IsHaveARInvoicePrintToogleFeature()) {
+                    this.InitializePrinting();
+                }
                 if (this.IsAutoCreditConsolidation) {
                     this.IsAutoCreditConsolidation = false;
 
@@ -608,6 +611,11 @@ export class ARInvoiceMenuButtonsHandler {
             }
         }
     }
+
+    IsHaveARInvoicePrintToogleFeature() {
+        return SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "ARP")[0];
+    }
+
     ApproveClicked() {
         if (!FeatureLocator.HasEntityPermessions("ARInvoice", "UPDT", true)) {
             this.StopFlags();
@@ -855,6 +863,7 @@ export class ARInvoiceMenuButtonsHandler {
         }
 
         else {
+            if (this.IsHaveARInvoicePrintToogleFeature()) this.isPrintRequested = true;
             this.entityArgs.EditComponent.SaveChanges(msg);
         }
     }
@@ -1386,7 +1395,7 @@ export class ARInvoiceMenuButtonsHandler {
         var myPrintHelper = new GeneralPrintHelper(myObjectTableName, myDocumentTypeCode, myEntityId, myChildEntityId, myReference, mychildObjectTableId);
         if (myPrintHelper.IsLoadPrintControl) {
             ServiceLocator.SendTotangoUserActivity("ARInvoice", "PrintInvoice");
-            myPrintHelper.ShowPrintControl();
+            myPrintHelper.ShowPrintControl(this.EntityPM.DocumentTemplateId);
         }
     }
     GetDocument() {
@@ -1463,8 +1472,9 @@ export class ARInvoiceMenuButtonsHandler {
                     this.timer = setInterval(() => {
                         this.CheckBatchTaskExecution(this.EntityPM.BatchTaskExecutionId);
                     }, this.timerInterval);
-                    
-                }                
+
+                }
+                else if (this.IsHaveARInvoicePrintToogleFeature()) this.InitializePrinting();
             }
         });
     }
@@ -1495,6 +1505,7 @@ export class ARInvoiceMenuButtonsHandler {
                     this.entityArgs.EditComponent.EntityPM = this.EntityPM;
                     this.entityArgs.EditComponent.NeedRefresh = true;
                     this.entityArgs.EditComponent.StopBusyIndicator();
+                    if (this.IsHaveARInvoicePrintToogleFeature()) this.isPrintRequested = true;
                     this.entityArgs.EditComponent.ReloadEntityPM();
                 }
 
