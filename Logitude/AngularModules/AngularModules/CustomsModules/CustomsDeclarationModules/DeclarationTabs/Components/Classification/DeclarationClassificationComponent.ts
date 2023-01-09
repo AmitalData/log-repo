@@ -222,7 +222,7 @@ export class DeclarationClassificationComponent extends BaseComponent implements
         this.UIProperties.SetEnabled("FreightAmount", this.ObjectTableName, false);//41322
         
         this.UIProperties.SetEnabled("ProcedureCurrentCode", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("CargoDescription", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("CargoDescription", "Customs.Consignment", !this.IsDisplayOnly);
 
         
         this.IsImporerCodeEnabled = !this.IsDisplayOnly;

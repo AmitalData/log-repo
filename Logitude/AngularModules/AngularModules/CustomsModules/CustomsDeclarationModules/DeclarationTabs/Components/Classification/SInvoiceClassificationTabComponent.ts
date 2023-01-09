@@ -105,7 +105,7 @@ export class SInvoiceClassificationTabComponent extends BaseComponent implements
             console.log("viewContainerRefOfClassificationCode:", this.myDiv);
             let LogCellTemplateComponent = this.myDiv as any;
             if (LogCellTemplateComponent) {
-                LogCellTemplateComponent.IsEditMode = true;
+                LogCellTemplateComponent.IsEditMode = this.IsDisplayOnly ? false : true;
             }
             
             clearTimeout(token);
