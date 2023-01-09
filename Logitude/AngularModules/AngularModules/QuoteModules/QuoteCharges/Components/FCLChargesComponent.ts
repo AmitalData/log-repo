@@ -747,7 +747,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
                 var measurementCode = item.UnitOfMesurmentCode;
                 var measurementId = item.UnitOfMesurmentId;
                 if (!item.IsAllIn) {
-                    var saleAmount = AppTool.Round(item.SaleTotalAmount, 3);
+                    var saleAmount = AppTool.Round(item.SaleTotalAmount, 2);
                     chargePM.SaleTotalAmount = saleAmount;
                     if (measurementCode != 'FIXD' && measurementCode != 'BTEU') {
                         this.FillQuoteFCLCharges(this.ContainerType1Id, chargePM, item);
@@ -796,7 +796,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
                 chargePM.CostMeasurementCode = measurementCode;
                 chargePM.CostMeasurementId = measurementId;
                 if (!item.IsAllIn) {
-                    var saleAmount = AppTool.Round(item.SaleTotalAmount, 3);
+                    var saleAmount = AppTool.Round(item.SaleTotalAmount, 2);
                     chargePM.SaleTotalAmount = saleAmount;
                     chargePM.SaleMinAmount = AppTool.Round(item.IsDifferentCurrency ? item.ActualMinPrice : item.MinPrice, 3);
                     if (measurementCode != 'FIXD' && measurementCode != 'BTEU') {
@@ -866,7 +866,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     }
 
     FillQuoteFCLCharges(packageId: string, chargePM: QuoteChargePM, item: any) {
-        var saleAmount: number = AppTool.Round(item.Price, 3);
+        var saleAmount: number = AppTool.Round(item.Price, 2);
         var quantity = null;
 
         if (packageId == this.EntityPM.PackageType1Id) {
@@ -2605,7 +2605,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
     get CostQuantity() { return this.EntityPM.CostQuantity; }
     set CostQuantity(value: number) {
         if (this.EntityPM.CostQuantity != value) {
-            this.EntityPM.CostQuantity = AppTool.Round(value, 2);
+            this.EntityPM.CostQuantity = AppTool.Round(value, 3);
             this.ComputeCostAmounts();
             this.fatherComponent.CheckUpdateQuantities();
         }
@@ -2942,8 +2942,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
                     }
             }
         }
-
-        this.CostQuantity = myResult;
+        this.CostQuantity = AppTool.Round(myResult, 3);
         this.SetUIProperties();
     }
     ComputeCostAmounts() {
@@ -3138,7 +3137,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
     get SaleQuantity() { return this.EntityPM.SaleQuantity; }
     set SaleQuantity(value: number) {
         if (this.EntityPM.SaleQuantity != value) {
-            this.EntityPM.SaleQuantity = AppTool.Round(value, 2);
+            this.EntityPM.SaleQuantity = AppTool.Round(value, 3);
             this.ComputeSaleAmounts(false);
             this.fatherComponent.CheckUpdateQuantities();
         }
@@ -3308,8 +3307,7 @@ export class FCLQuoteChargeItem extends BaseComponent {
                     }
             }
         }
-
-        this.SaleQuantity = myResult;
+        this.SaleQuantity = AppTool.Round(myResult, 3);
         this.SetUIProperties();
     }
     ComputeSaleAmounts(ApplyScreenChanges : boolean = true) {

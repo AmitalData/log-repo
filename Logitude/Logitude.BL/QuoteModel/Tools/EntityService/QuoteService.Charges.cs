@@ -658,7 +658,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 }
             }
 
-            item.CostQuantity = MethodHelper.Round(myResult, 2);
+            item.CostQuantity = MethodHelper.Round(myResult, 3);
         }
         private void ComputeLineSaleQuantity(QuoteChargePM item)
         {
@@ -707,7 +707,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 }
             }
 
-            item.SaleQuantity = MethodHelper.Round(myResult, 2);
+            item.SaleQuantity = MethodHelper.Round(myResult, 3);
         }
 
         private void ComputeLineCostUnitPrice(QuoteChargePM item)
