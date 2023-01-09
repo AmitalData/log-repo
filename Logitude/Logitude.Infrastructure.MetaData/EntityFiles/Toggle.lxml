@@ -41,7 +41,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;2bc2&quot;"
+  Code="&quot;ec5c&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -874,6 +874,11 @@
       Name="&quot;Run worker on new environment&quot; "
       SearchFields="&quot;NWR,Run worker on new environment&quot;"
       Description="&quot;Run worker on new environment&quot; " />
+    <Record
+      Code="&quot;DCS&quot;"
+      Name="&quot;Disable Storage Cache&quot;"
+      SearchFields="&quot;DCS,Disable Storage Cache&quot;"
+      Description="&quot;Disable Storage Cache&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

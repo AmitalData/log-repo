@@ -621,6 +621,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 }
             }
 
+            loggeduser.DisableCachedData = FeatureToggleHelper.HasFeatureToggle("DCS", tenant);
             return loggeduser;
         }
 

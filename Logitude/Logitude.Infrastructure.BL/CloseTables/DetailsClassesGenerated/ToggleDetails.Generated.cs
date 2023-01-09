@@ -780,6 +780,13 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "NWR,Run worker on new environment", 
                 Description = "Run worker on new environment'' ", 
 			});
+            all.Add(new ToggleDetails()
+            {    
+                Code = "DCS", 
+                Name = "Disable Storage Cache", 
+                SearchFields = "DCS,Disable Storage Cache", 
+                Description = "Disable Storage Cache", 
+			});
 			
             return all;
        }
