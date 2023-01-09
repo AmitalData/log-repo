@@ -172,6 +172,7 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
             this.digitalTextService.UpdateDigitalTextCodes(this.ModifiedFields).subscribe((myResult) => {
                 this.customizationEditComponent.IsDirty = false;
                 this.ModifiedFields = new DigitalTextCodeUpdateModel();
+                this.ModifiedFields.Lables = [];
                 this.StopBusyIndicator();
                 this.IsModifiedFields = false;
                 this.CurrentSession.SessionEvent.emit({ Name: "ReloadDigitalPortalLabels" }); 
