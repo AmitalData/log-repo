@@ -55,7 +55,6 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
         }
 
 
-
         public Journal JournalDataMappingAndValidatin(JournalPM MyEntity, int Tenant, string ComputingPartnerName = "")
         {
             try
