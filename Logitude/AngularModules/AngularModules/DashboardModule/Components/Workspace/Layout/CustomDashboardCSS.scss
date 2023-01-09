@@ -45,8 +45,10 @@
 }
 
 .custom-layout-container::-webkit-scrollbar {
-    width: 6px;
+    width: 4px;
     height: 6px;
+    border-radius: 9px;
+    background: #F6F6F6;
 }
 
 .custom-layout-container::-webkit-scrollbar-track {
@@ -55,7 +57,8 @@
 
 .custom-layout-container::-webkit-scrollbar-thumb {
     border-radius: 110px;
-    background: rgba(193, 193, 193, 1);
+    width: 4px;
+    background: #7F7F7F;
 }
 
 .DashboardTabHeadLi {
