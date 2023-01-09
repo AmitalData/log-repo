@@ -476,7 +476,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                 var measurementCode = item.UnitOfMesurmentCode;
                 var measurementId = item.UnitOfMesurmentId;
                 chargePM.SaleMinAmount = AppTool.Round(item.IsDifferentCurrency ? item.ActualMinPrice : item.MinPrice, 3);
-                var saleAmount = AppTool.Round(item.SaleTotalAmount, 3);
+                var saleAmount = AppTool.Round(item.SaleTotalAmount, 2);
                 chargePM.SaleTotalAmount = saleAmount;
                 chargePM.SaleMeasurementCode = measurementCode;
                 chargePM.SaleMeasurementId = measurementId;
@@ -512,7 +512,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                 chargePM.CostMeasurementCode = measurementCode;
                 chargePM.CostMeasurementId = measurementId;
                 chargePM.SaleMinAmount = AppTool.Round(item.IsDifferentCurrency ? item.ActualMinPrice : item.MinPrice, 3);
-                var saleAmount = AppTool.Round(item.SaleTotalAmount, 3);
+                var saleAmount = AppTool.Round(item.SaleTotalAmount, 2);
                 chargePM.SaleTotalAmount = saleAmount;
                 chargePM.SetSaleQuantity();
                 var saleQuantity: number = chargePM.SaleQuantity;
@@ -1015,8 +1015,8 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                 if (this.EntityPM.QuoteCharges.filter(f => f.ChargesGroupCode == "FRT").length > 0) {
                     if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "PRFR" || f.SaleMeasurementCode == "PRFR").length > 0) {
 
-                        var FRT_CostQuantity = AppTool.Round(ArrayTool.Sum(this.EntityPM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT"), "CostTotalAmount"),3);
-                        var FRT_SaleQuantity = AppTool.Round(ArrayTool.Sum(this.EntityPM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT"), "SaleTotalAmount"),3);
+                        var FRT_CostQuantity = AppTool.Round(ArrayTool.Sum(this.EntityPM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT"), "CostTotalAmount"),2);
+                        var FRT_SaleQuantity = AppTool.Round(ArrayTool.Sum(this.EntityPM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT"), "SaleTotalAmount"),2);
                         //var FRT_CostQuantity = this.EntityPM.QuoteCharges.filter(f => f.ChargesGroupCode == "FRT")[0].CostTotalAmount;
                         //var FRT_SaleQuantity = this.EntityPM.QuoteCharges.filter(f => f.ChargesGroupCode == "FRT")[0].SaleTotalAmount;
 
@@ -2730,7 +2730,7 @@ export class QuoteChargeItem extends BaseComponent {
             }
 
             else {
-                output = AppTool.Round((saleUnitPrice * this.EntityPM.SaleExchangeRate / this.QuotePM.ExchangeRate), 2);
+                output = AppTool.Round((saleUnitPrice * this.EntityPM.SaleExchangeRate / this.QuotePM.ExchangeRate), 3);
             }
         }
 
