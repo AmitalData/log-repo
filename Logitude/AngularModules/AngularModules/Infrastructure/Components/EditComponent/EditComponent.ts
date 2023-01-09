@@ -2,7 +2,7 @@ import { BankDepositExtendedPMService } from './../../../Accounting/Services/Ext
 import { CashBookExtendedPMService } from './../../../Accounting/Services/ExtendedPMs/CashBookExtendedPMService';
 import { ReconciliationExtendedPMService } from './../../../Accounting/Services/ExtendedPMs/ReconciliationExtendedPMService';
 declare var window: any;
-import { Component, Type, ComponentRef, ViewContainerRef, ViewChild, Output, EventEmitter, ViewChildren, QueryList, OnDestroy, ChangeDetectorRef,HostListener } from '@angular/core';
+import { Component, Type, ComponentRef, ViewContainerRef, ViewChild, Output, EventEmitter, ViewChildren, QueryList, OnDestroy, ChangeDetectorRef,HostListener, AfterViewInit, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
 import { ObjectTablePM } from '../../EntityPMs/ObjectTablePM';
 import { ObjectFieldPM } from '../../EntityPMs/ObjectFieldPM';
 import { TextCodeTranslator } from '../../Utilities/TextCodeTranslator';
@@ -33,7 +33,7 @@ import { AmitalGatewayUtil } from 'Infrastructure/Utilities/AmitalGatewayUtil';
     providers: [EntityArgs],
 })
 
-export class EditComponent implements OnDestroy {
+export class EditComponent implements OnDestroy, AfterViewInit {
     public HeaderId: string;
     public ComponentId: string;
     public EditComponentCellId: string;
@@ -87,8 +87,7 @@ export class EditComponent implements OnDestroy {
     public CurrentSession = SessionLocator.SelectedSession;
     public IsReloadNeeded: boolean = false;
     public isEntityChange: boolean = false;
-    
-    
+     
 
     constructor(private entityPMService: EntityPMService, private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private _totangoService: TotangoService, private cd: ChangeDetectorRef) {
         this.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
@@ -100,6 +99,35 @@ export class EditComponent implements OnDestroy {
         this.WorkEnvironment = ObjectsLocator.GlobalSetting == undefined ? "logitude" : ObjectsLocator.GlobalSetting.WorkEnvironment;
         
     }
+
+    
+    
+    ngAfterViewInit(): void {
+        if (this.WorkEnvironment.toLowerCase() == "customs") {
+            setTimeout(() => {
+                const htmlElement = document?.querySelector('html');
+                if (htmlElement.scrollTop > 0) {
+                    htmlElement.scrollTop = 0;
+                }
+                const element1 = document?.querySelector('.scrollable-overflow-element');
+                if (element1.scrollTop > 0) {
+                    element1.scrollTop = 0;
+                    ///this.findParentWithNonZeroScrollTop(element1);
+                }
+            }, 3000);
+        }
+    }
+
+    findParentWithNonZeroScrollTop(element) {
+        while (element) {
+          if (element.scrollTop > 0) {
+            return element;
+          }
+          element = element.parentElement;
+        }
+        return null;
+      }
+      
 
     OnSaveAndCloseHotKey(){
         if(!this.IsSaveBtnDisable){
