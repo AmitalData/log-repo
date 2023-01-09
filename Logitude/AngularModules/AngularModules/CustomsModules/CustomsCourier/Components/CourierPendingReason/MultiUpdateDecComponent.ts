@@ -65,16 +65,19 @@ export class MultiUpdateDecComponent extends BaseComponent {
         this.IsDisplayOnly = args.IsDisplayOnly;
     }
 
+    customsItemTextValue: string;
     procedureCurrentCode: string;
     taxExemptCode: string;
     classificationCode: string;
     customsItem: string;
-    customsItemTextValue: string;
     invoiceAmount: string;
     invoiceCurrencyTypeCode: string;
     invoiceQuantity: string;
     invoiceQuantityType: string;
     grossMassMeasure: string;
+
+    get CustomsItemTextValue() { return this.customsItemTextValue; }
+    set CustomsItemTextValue(value: string) { this.customsItemTextValue = value;}
 
     get ProcedureCurrentCode() { return this.procedureCurrentCode; }
     set ProcedureCurrentCode(value: string) { this.procedureCurrentCode = value; }
@@ -84,12 +87,9 @@ export class MultiUpdateDecComponent extends BaseComponent {
 
     get ClassificationCode() { return this.classificationCode }
     set ClassificationCode(value: string) { this.classificationCode = value; }
-
+    
     get CustomsItem() { return this.customsItem; }
     set CustomsItem(value: string) { this.customsItem = value; }
-
-    get CustomsItemTextValue() { return this.customsItemTextValue; }
-    set CustomsItemTextValue(value: string) { this.customsItemTextValue = value;}
     
     get InvoiceAmount() { return this.invoiceAmount; }
     set InvoiceAmount(newValue: string) { this.invoiceAmount = newValue; }
@@ -347,7 +347,17 @@ export class MultiUpdateDecComponent extends BaseComponent {
     OkButtonClicked() {
         this.ValidationErrorsList = [];
         var errors = [];
-        if (this.ProcedureCurrentCode == null && this.TaxExemptCode == null && this.classificationCode == null) {
+        if ([
+            this.ProcedureCurrentCode,
+            this.TaxExemptCode,
+            this.classificationCode,
+            this.invoiceAmount,
+            this.invoiceCurrencyTypeCode,
+            this.invoiceQuantity,
+            this.invoiceQuantityType,
+            this.grossMassMeasure,
+        ].every(x => x == null)
+        ) {
             errors.push("חובה להזין אחד מהשדות לעדכון");
         }
        
