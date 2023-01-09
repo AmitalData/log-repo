@@ -198,7 +198,7 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
     }
 
     isNoObjectFieldVariable(field: string) {
-        return new IsNoObjectFieldVariablePipe().transform(field);
+        return new IsNoObjectFieldVariablePipe().transform(field, this.FlowObjectFields);
     }
 
     getObjectField(field: string) {

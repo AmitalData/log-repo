@@ -68,6 +68,9 @@ export class ExpressionBuilderComponent extends BaseComponent {
             variables: []
         };
         this.ExpressionValue = args.ExpressionValue ? JSON.parse(JSON.stringify(args.ExpressionValue)) : defaultExpressionValue;
+
+        let expressionLength = this.ExpressionValue.expression ? this.ExpressionValue.expression.length : 0;
+        this.updateCursorPointer(expressionLength, expressionLength);
     }
 
     ngOnInit() {
@@ -292,6 +295,9 @@ export class ExpressionBuilderComponent extends BaseComponent {
             this.ExpressionValue.expression = null;
         }
         this.ExpressionValue.variables = [];
+
+        let expressionLength = this.ExpressionValue.expression ? this.ExpressionValue.expression.length : 0;
+        this.updateCursorPointer(expressionLength, expressionLength);
     }
 
     setIsSuggestionsPanelOpened() {
