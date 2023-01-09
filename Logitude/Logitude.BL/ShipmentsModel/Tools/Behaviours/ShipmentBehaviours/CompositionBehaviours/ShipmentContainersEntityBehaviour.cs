@@ -258,7 +258,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
         {
             if (this.initializer.ShipmentPackagesChangeSet != null)
             {
-                foreach (ShipmentPackagePM itemPM in this.initializer.ShipmentPackagesChangeSet)
+                foreach (ShipmentPackagePM itemPM in this.initializer.ShipmentPackagesChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Delete))
+                {
+                    this.DeleteContainer(itemPM);
+                }
+
+                foreach (ShipmentPackagePM itemPM in this.initializer.ShipmentPackagesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete))
                 {
                     switch (itemPM.ChangeSetOp)
                     {
@@ -286,11 +291,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                                 break;
                             }
 
-                        case ChangeSetOperation.Delete:
-                            {
-                                this.DeleteContainer(itemPM);
-                                break;
-                            }
+                        //case ChangeSetOperation.Delete:
+                        //    {
+                        //        this.DeleteContainer(itemPM);
+                        //        break;
+                        //    }
                         default: { break; }
                     }
                 }
@@ -313,8 +318,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
             return true;
         }
-
-
         private bool IsOceanInsightFeatureToggleExistInTenant(int tenant)
         {
             string ocaenInsightFeatureToggleCode = "OIC";
