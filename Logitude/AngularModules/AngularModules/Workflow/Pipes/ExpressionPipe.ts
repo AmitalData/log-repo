@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from "@angular/core";
 import { Formatter } from "Workflow/Models/Formatter";
+import { ObjectTables } from "Workflow/Models/ObjectTables";
 
 @Pipe({
     name: "ExpressionPipe"
@@ -25,8 +26,11 @@ export class ExpressionPipe implements PipeTransform {
                             (customObjectField.FullNameTextCodeDefaultText || null) : null;
 
                         if (customObjectField && customObjectFieldName) {
-                            let formattedExpressionVariable = expressionVariable.replace(fieldCode, customObjectFieldName.replace(/\ /gi, ""));
-                            expression = expression.replace(expressionVariable, formattedExpressionVariable);
+                            let customObjectTableName = ObjectTables.getNameById(customObjectField.ObjectTableId);
+                            if (customObjectTableName) {
+                                let formattedExpressionVariable = expressionVariable.replace(fieldCode, (customObjectTableName + "." + customObjectFieldName.replace(/\ /gi, "")));
+                                expression = expression.replace(expressionVariable, formattedExpressionVariable);
+                            }
                         }
                     }
                 });
