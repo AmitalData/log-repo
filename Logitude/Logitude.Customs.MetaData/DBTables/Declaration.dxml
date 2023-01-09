@@ -1271,23 +1271,9 @@
   <Index
     Columns="AmendmentOriginalDeclartation" />
   <Index
-    Columns="CourierHAWB" />
-  <Index
-    Columns="IsCancelled" />
-  <Index
     Columns="PaymentDate" />
   <Index
-    Columns="AvailabilityDate" />
-  <Index
-    Columns="HatraDate" />
-  <Index
-    Columns="IsClose" />
-  <Index
     Columns="ExternalDeclarationNumber" />
-  <Index
-    Columns="VersionId" />
-  <Index 
-    Columns="IsAmendment" />
   <Index
     Columns="TaxationDateTime" />
   <Index
@@ -1297,28 +1283,13 @@
   <Index 
     Columns="Tenant,AmendmentOriginalDeclartation" />
   <Index
-    Columns="Tenant,IsCancelled"   Partition="TenantPS1"
-    PartitionValue="Tenant" /> 
-  <Index
     Columns="Tenant,PaymentDate" />
   <Index
-    Columns="Tenant,AvailabilityDate" />
-  <Index
-    Columns="Tenant,HatraDate" />
-  <Index
-    Columns="Tenant,IsClose" />
-  <Index
     Columns="Tenant,ExternalDeclarationNumber" />
-  <Index
-    Columns="Tenant,VersionId" />
   <Index
     Columns="Tenant,IsAmendment" />
   <Index
     Columns="Tenant,TaxationDateTime" />
-  <Index
-    Columns="Tenant,AmendmentRequestNumber" />
-  <Index
-    Columns="Tenant,Direction" />
   <Index
     Columns="Tenant,IsCancelled,IsClose,AmendmentDontDisplayInList,Direction"
   />
