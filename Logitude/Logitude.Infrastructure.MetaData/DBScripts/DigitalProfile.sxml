@@ -1,16 +1,29 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="15">
+  <Sql Version="17">
       <![CDATA[	  
 	  delete from DigitalFieldSecurities where id != ''
-	  delete from DigitalProfiles where id != ''
-      declare @NewEntityId as varchar(15)
- 	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT, 'DigitalProfiles'
-	  INSERT INTO DigitalProfiles (Id, Tenant, CreateDate, UpdateDate,  Name) 
-	  values (@NewEntityId, 0, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, 'Customer')
-	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT, 'DigitalProfiles'
-	  INSERT INTO DigitalProfiles (Id, Tenant, CreateDate, UpdateDate,  Name) 
-	  values (@NewEntityId, 0, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, 'Agent')
-	  declare @newDigitalFieldEntityId as varchar(15)
+	  
+	  declare @NewEntityId as varchar(15)
+
+	   BEGIN
+		   IF NOT EXISTS (SELECT * FROM DigitalProfiles WHERE Name = 'Customer')
+		   BEGIN
+		       EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT, 'DigitalProfiles'
+			   INSERT INTO DigitalProfiles (Id, Tenant, CreateDate, UpdateDate,  Name) 
+			   values (@NewEntityId, 0, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, 'Customer')
+		   END
+		END
+
+		BEGIN
+		   IF NOT EXISTS (SELECT * FROM DigitalProfiles WHERE Name = 'Agent')
+		   BEGIN
+		       EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT, 'DigitalProfiles'
+			   INSERT INTO DigitalProfiles (Id, Tenant, CreateDate, UpdateDate,  Name) 
+			   values (@NewEntityId, 0, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, 'Agent')
+		   END
+		END
+
+	  declare @newDigitalFieldEntityId as varchar(15)
  	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
 
 	  declare @generalObjectTableId as varchar(15)
@@ -107,7 +120,6 @@
 		{
 			"FieldCode": "Shipment.GrossWeight"
 		},
-		
 		{
 			"FieldCode": "Shipment.CustomerName"
 		},
@@ -203,7 +215,304 @@
         },
 	    {
             "FieldCode": "Shipment.IncotermName"
-        }]');
+        },
+		{
+            "FieldCode": "Shipment.Id"
+        },
+		{
+            "FieldCode": "Shipment.MainCarriageETD"
+        },
+		{
+            "FieldCode": "Shipment.MainCarriageFinalDestinationATA"
+        },
+		{
+            "FieldCode": "Shipment.MainCarriageFinalDestinationETA"
+        },
+		{
+            "FieldCode": "Shipment.InlandDomesticFromTypeCode"
+        },
+		{
+            "FieldCode": "Shipment.MainCarriageFromAddressId"
+        },
+		{
+            "FieldCode": "Shipment.MainCarriageFromPortCode"
+        },
+		{
+            "FieldCode": "Shipment.InlandDomesticFromCity"
+        },
+		{
+            "FieldCode": "Shipment.InlandDomesticToTypeCode"
+        },
+		{
+            "FieldCode": "Shipment.MainCarriageToAddressId"
+        },
+		{
+            "FieldCode": "Shipment.MainCarriageToPortCode"
+        },
+		{
+            "FieldCode": "Shipment.InlandDomesticToCity"
+        },
+		{
+            "FieldCode": "Shipment.InlandDomesticFromCountryId"
+        },
+		{
+            "FieldCode": "Shipment.MainCarriageFromCity"
+        },
+		{
+            "FieldCode": "Shipment.FromPortName"
+        },
+		{
+            "FieldCode": "Shipment.FromCountryCode"
+        },
+		{
+            "FieldCode": "Shipment.Transshipment1ETA"
+        },
+		{
+            "FieldCode": "Shipment.Transshipment1ATA"
+        },
+		{
+            "FieldCode": "Shipment.Transshipment1ETD"
+        },
+		{
+            "FieldCode": "Shipment.Transshipment1ATD"
+        },
+		{
+            "FieldCode": "Shipment.Transshipment2ETA"
+        },
+		{
+            "FieldCode": "Shipment.Transshipment2ATA"
+        },
+		{
+            "FieldCode": "Shipment.Transshipment2ETD"
+        },
+		{
+            "FieldCode": "Shipment.Transshipment2ATD"
+        },
+		{
+            "FieldCode": "Shipment.Transshipment3ETA"
+        },
+		{
+            "FieldCode": "Shipment.Transshipment3ATA"
+        },
+		{
+            "FieldCode": "Shipment.Transshipment3ETD"
+        },
+		{
+            "FieldCode": "Shipment.Transshipment3ATD"
+        },
+		{
+            "FieldCode": "Shipment.MainCarriageToCity"
+        },
+		{
+            "FieldCode": "Shipment.ToPortName"
+        },
+		{
+            "FieldCode": "Shipment.ToCountryCode"
+        },
+		{
+            "FieldCode": "Shipment.IsOperationalClosed"
+        },
+		{
+            "FieldCode": "Shipment.IsCustomerArchived"
+        },
+		{
+            "FieldCode": "Shipment.IsAccountingClosed"
+        },
+		{
+            "FieldCode": "Shipment.ShipmentLevelCode"
+        },
+		{
+            "FieldCode": "Shipment.StatusLocation"
+        },
+		{
+            "FieldCode": "Shipment.StatusCode"
+        },
+		{
+            "FieldCode": "Shipment.ShipperCountryCode"
+        },
+		{
+            "FieldCode": "Shipment.ConsigneeCountryCode"
+        },
+		{
+			"FieldCode": "ShipmentPackage.WarehouseLegAddressCity"
+		},
+		{
+			"FieldCode": "ShipmentPackage.WarehouseLegAddressCountryCode"
+		},
+		{
+			"FieldCode": "ShipmentPackage.WarehouseLegActualEntryDate"
+		},
+		{
+			"FieldCode": "Shipment.WarehouseLegExpectedEntryDate"
+		},
+		{
+			"FieldCode": "Shipment.WarehouseLegExpectedReleaseDate"
+		},
+		{
+			"FieldCode": "Shipment.WarehouseLegActualReleaseDate"
+		},
+		{
+			"FieldCode": "Shipment.WarehouseLegCutOffDate"
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageFromPortId"
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageFromPortName"
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageATD"
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageETD"
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageFromPortCountryCode"
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageATA"
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageETA"
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageTransportModeId"
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageCarrierName"
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageCarrierNumber"
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageVesselName"
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageFromPortName"
+		},
+		{
+			"FieldCode": "Shipment.FromPartnerCountryCode"
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageFromPortCountryCode"
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageATA"
+		},
+		{
+			"FieldCode": "Shipment.AirlinePrefix"
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageCarrierName"
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageCarrierNumber"
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageVesselName"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment1FromPortId"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment1FromPortName"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment1FromPortCountryCode"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment2FromPortName"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment2FromPortCountryCode"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment3FromPortName"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment3FromPortCountryCode"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment1AdditionalMAWBOBLBL"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment1CarrierNumber"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment1VesselName"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment2AdditionalMAWBOBLBL"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment2CarrierName"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment2CarrierNumber"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment2VesselName"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment3AdditionalMAWBOBLBL"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment3CarrierName"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment3CarrierNumber"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment3VesselName"
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageFinalDestinationPortName"
+		},
+		{
+			"FieldCode": "Shipment.ToPartnerCountryCode"
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageFinalDestinationPortCountryCode"
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageFinalDestinationATA"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment3ToPortId"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment1ToPortId"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment2ToPortId"
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageToPortId"
+		},
+		{
+			"FieldCode": "Shipment.AirlinePrefix"
+		},
+		{
+			"FieldCode": "Shipment.Master"
+		},
+		{
+			"FieldCode": "Shipment.OnCarriageFromPortName"
+		},
+		{
+			"FieldCode": "Shipment.OnCarriageFromPortCountryCode"
+		},
+		{
+			"FieldCode": "Shipment.OnCarriageTransportModeId"
+		},
+		{
+			"FieldCode": "Shipment.OnCarriageCarrierName"
+		},
+		{
+			"FieldCode": "Shipment.OnCarriageCarrierNumber"
+		},
+		{
+			"FieldCode": "Shipment.OnCarriageVesselName"
+		}]');
 		
 	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
 
@@ -383,7 +692,6 @@
 		{
 			"FieldCode": "Shipment.GrossWeight"
 		},
-		
 		{
 			"FieldCode": "Shipment.CustomerName"
 		},
@@ -479,7 +787,304 @@
         },
 	    {
             "FieldCode": "Shipment.IncotermName"
-        }]');
+        },
+		{
+            "FieldCode": "Shipment.Id"
+        },
+		{
+            "FieldCode": "Shipment.MainCarriageETD"
+        },
+		{
+            "FieldCode": "Shipment.MainCarriageFinalDestinationATA"
+        },
+		{
+            "FieldCode": "Shipment.MainCarriageFinalDestinationETA"
+        },
+		{
+            "FieldCode": "Shipment.InlandDomesticFromTypeCode"
+        },
+		{
+            "FieldCode": "Shipment.MainCarriageFromAddressId"
+        },
+		{
+            "FieldCode": "Shipment.MainCarriageFromPortCode"
+        },
+		{
+            "FieldCode": "Shipment.InlandDomesticFromCity"
+        },
+		{
+            "FieldCode": "Shipment.InlandDomesticToTypeCode"
+        },
+		{
+            "FieldCode": "Shipment.MainCarriageToAddressId"
+        },
+		{
+            "FieldCode": "Shipment.MainCarriageToPortCode"
+        },
+		{
+            "FieldCode": "Shipment.InlandDomesticToCity"
+        },
+		{
+            "FieldCode": "Shipment.InlandDomesticFromCountryId"
+        },
+		{
+            "FieldCode": "Shipment.MainCarriageFromCity"
+        },
+		{
+            "FieldCode": "Shipment.FromPortName"
+        },
+		{
+            "FieldCode": "Shipment.FromCountryCode"
+        },
+		{
+            "FieldCode": "Shipment.Transshipment1ETA"
+        },
+		{
+            "FieldCode": "Shipment.Transshipment1ATA"
+        },
+		{
+            "FieldCode": "Shipment.Transshipment1ETD"
+        },
+		{
+            "FieldCode": "Shipment.Transshipment1ATD"
+        },
+		{
+            "FieldCode": "Shipment.Transshipment2ETA"
+        },
+		{
+            "FieldCode": "Shipment.Transshipment2ATA"
+        },
+		{
+            "FieldCode": "Shipment.Transshipment2ETD"
+        },
+		{
+            "FieldCode": "Shipment.Transshipment2ATD"
+        },
+		{
+            "FieldCode": "Shipment.Transshipment3ETA"
+        },
+		{
+            "FieldCode": "Shipment.Transshipment3ATA"
+        },
+		{
+            "FieldCode": "Shipment.Transshipment3ETD"
+        },
+		{
+            "FieldCode": "Shipment.Transshipment3ATD"
+        },
+		{
+            "FieldCode": "Shipment.MainCarriageToCity"
+        },
+		{
+            "FieldCode": "Shipment.ToPortName"
+        },
+		{
+            "FieldCode": "Shipment.ToCountryCode"
+        },
+		{
+            "FieldCode": "Shipment.IsOperationalClosed"
+        },
+		{
+            "FieldCode": "Shipment.IsCustomerArchived"
+        },
+		{
+            "FieldCode": "Shipment.IsAccountingClosed"
+        },
+		{
+            "FieldCode": "Shipment.ShipmentLevelCode"
+        },
+		{
+            "FieldCode": "Shipment.StatusLocation"
+        },
+		{
+            "FieldCode": "Shipment.StatusCode"
+        },
+		{
+            "FieldCode": "Shipment.ShipperCountryCode"
+        },
+		{
+            "FieldCode": "Shipment.ConsigneeCountryCode"
+        },
+		{
+			"FieldCode": "ShipmentPackage.WarehouseLegAddressCity"
+		},
+		{
+			"FieldCode": "ShipmentPackage.WarehouseLegAddressCountryCode"
+		},
+		{
+			"FieldCode": "ShipmentPackage.WarehouseLegActualEntryDate"
+		},
+		{
+			"FieldCode": "Shipment.WarehouseLegExpectedEntryDate"
+		},
+		{
+			"FieldCode": "Shipment.WarehouseLegExpectedReleaseDate"
+		},
+		{
+			"FieldCode": "Shipment.WarehouseLegActualReleaseDate"
+		},
+		{
+			"FieldCode": "Shipment.WarehouseLegCutOffDate"
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageFromPortId"
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageFromPortName"
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageATD"
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageETD"
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageFromPortCountryCode"
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageATA"
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageETA"
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageTransportModeId"
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageCarrierName"
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageCarrierNumber"
+		},
+		{
+			"FieldCode": "Shipment.PreCarriageVesselName"
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageFromPortName"
+		},
+		{
+			"FieldCode": "Shipment.FromPartnerCountryCode"
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageFromPortCountryCode"
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageATA"
+		},
+		{
+			"FieldCode": "Shipment.AirlinePrefix"
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageCarrierName"
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageCarrierNumber"
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageVesselName"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment1FromPortId"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment1FromPortName"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment1FromPortCountryCode"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment2FromPortName"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment2FromPortCountryCode"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment3FromPortName"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment3FromPortCountryCode"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment1AdditionalMAWBOBLBL"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment1CarrierNumber"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment1VesselName"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment2AdditionalMAWBOBLBL"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment2CarrierName"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment2CarrierNumber"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment2VesselName"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment3AdditionalMAWBOBLBL"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment3CarrierName"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment3CarrierNumber"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment3VesselName"
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageFinalDestinationPortName"
+		},
+		{
+			"FieldCode": "Shipment.ToPartnerCountryCode"
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageFinalDestinationPortCountryCode"
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageFinalDestinationATA"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment3ToPortId"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment1ToPortId"
+		},
+		{
+			"FieldCode": "Shipment.Transshipment2ToPortId"
+		},
+		{
+			"FieldCode": "Shipment.MainCarriageToPortId"
+		},
+		{
+			"FieldCode": "Shipment.AirlinePrefix"
+		},
+		{
+			"FieldCode": "Shipment.Master"
+		},
+		{
+			"FieldCode": "Shipment.OnCarriageFromPortName"
+		},
+		{
+			"FieldCode": "Shipment.OnCarriageFromPortCountryCode"
+		},
+		{
+			"FieldCode": "Shipment.OnCarriageTransportModeId"
+		},
+		{
+			"FieldCode": "Shipment.OnCarriageCarrierName"
+		},
+		{
+			"FieldCode": "Shipment.OnCarriageCarrierNumber"
+		},
+		{
+			"FieldCode": "Shipment.OnCarriageVesselName"
+		}]');
 		
 	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
 	  set @invocieObjectTableId = (select Id from ObjectTables where [Name] = 'ARInvoice' and Tenant = 0)
@@ -564,6 +1169,844 @@
 			{
 				"FieldCode": "ARInvoice.ShipmentsNumbers"
 			}]');
+			
+	  declare @shipmentPackageObjectTableId as varchar(15)
+	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
+	  set @shipmentPackageObjectTableId = (select Id from ObjectTables where [Name] = 'ShipmentPackage' and Tenant = 0)
+	  INSERT INTO DigitalFieldSecurities (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, DefaultSettings) 
+	  values (@newDigitalFieldEntityId, 0, @shipmentPackageObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @customerProfileId, 
+		'[{
+				"FieldCode": "ShipmentPackage.ClassNumber"
+			},
+			{
+				"FieldCode": "ShipmentPackage.ContainerNumber"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Description"
+			},
+			{
+				"FieldCode": "ShipmentPackage.FlashPoint"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Harmonize"
+			},
+			{
+				"FieldCode": "ShipmentPackage.OriginalShipmentPackageId"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Height"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Id"
+			},
+			{
+				"FieldCode": "ShipmentPackage.IMDGCode"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Length"
+			},
+			{
+				"FieldCode": "ShipmentPackage.MarksAndNumbers"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Quantity"
+			},
+			{
+				"FieldCode": "ShipmentPackage.InUse"
+			},
+			{
+				"FieldCode": "ShipmentPackage.ShipperSeal"
+			},
+			{
+				"FieldCode": "ShipmentPackage.CarrierSeal"
+			},
+			{
+				"FieldCode": "ShipmentPackage.ShipmentId"
+			},
+			{
+				"FieldCode": "ShipmentPackage.SOC"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Temperature"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Tenant"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Tare"
+			},
+			{
+				"FieldCode": "ShipmentPackage.UnNumber"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Ventilation"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Volume"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Weight"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Width"
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackagingGroup"
+			},
+			{
+				"FieldCode": "ShipmentPackage.MaterialDescription"
+			},
+			{
+				"FieldCode": "ShipmentPackage.IsDangerous"
+			},
+			{
+				"FieldCode": "ShipmentPackage.VolumetricWeight"
+			},
+			{
+				"FieldCode": "ShipmentPackage.CommodityId"
+			},
+			{
+				"FieldCode": "ShipmentPackage.NumberOfInsidePackages"
+			},
+			{
+				"FieldCode": "ShipmentPackage.NumberOfInsidePackagesDetails"
+			},
+			{
+				"FieldCode": "ShipmentPackage.VGM"
+			},
+			{
+				"FieldCode": "ShipmentPackage.MethodUsed"
+			},
+			{
+				"FieldCode": "ShipmentPackage.ShipmentNumber"
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeId"
+			},
+			{
+				"FieldCode": "ShipmentPackage.IsDeliveryFU"
+			},
+			{
+				"FieldCode": "ShipmentPackage.DeliveryId"
+			},
+			{
+				"FieldCode": "ShipmentPackage.DeliveryETD"
+			},
+			{
+				"FieldCode": "ShipmentPackage.DeliveryATD"
+			},
+			{
+				"FieldCode": "ShipmentPackage.DeliveryETA"
+			},
+			{
+				"FieldCode": "ShipmentPackage.DeliveryATA"
+			},
+			{
+				"FieldCode": "ShipmentPackage.DeliveryTo"
+			},
+			{
+				"FieldCode": "ShipmentPackage.DeliveryFrom"
+			},
+			{
+				"FieldCode": "ShipmentPackage.IsEmptyContainerReturnFU"
+			},
+			{
+				"FieldCode": "ShipmentPackage.EmptyContainerReturnId"
+			},
+			{
+				"FieldCode": "ShipmentPackage.EmptyContainerReturnETD"
+			},
+			{
+				"FieldCode": "ShipmentPackage.EmptyContainerReturnATD"
+			},
+			{
+				"FieldCode": "ShipmentPackage.EmptyContainerReturnETA"
+			},
+			{
+				"FieldCode": "ShipmentPackage.EmptyContainerReturnATA"
+			},
+			{
+				"FieldCode": "ShipmentPackage.EmptyContainerReturnTo"
+			},
+			{
+				"FieldCode": "ShipmentPackage.EmptyContainerReturnFrom"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Reference1"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Reference2"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Reference3"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Reference4"
+			},
+			{
+				"FieldCode": "ShipmentPackage.CommodityNumber"
+			},
+			{
+				"FieldCode": "ShipmentPackage.CommodityName"
+			},
+			{
+				"FieldCode": "ShipmentPackage.CeficClass"
+			},
+			{
+				"FieldCode": "ShipmentPackage.KelmerCode"
+			},
+			{
+				"FieldCode": "ShipmentPackage.EMS"
+			},
+			{
+				"FieldCode": "ShipmentPackage.ProperShippingName"
+			},
+			{
+				"FieldCode": "ShipmentPackage.MarinePollutant"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Notes"
+			},
+			{
+				"FieldCode": "ShipmentPackage.TemperatureUnitCode"
+			},
+			{
+				"FieldCode": "ShipmentPackage.FlashPointTemperatureUnitCode"
+			},
+			{
+				"FieldCode": "ShipmentPackage.NonActiveContainer"
+			},
+			{
+				"FieldCode": "ShipmentPackage.OnCarriageATA"
+			},
+			{
+				"FieldCode": "ShipmentPackage.OnCarriageATD"
+			},
+			{
+				"FieldCode": "ShipmentPackage.OnCarriageETA"
+			},
+			{
+				"FieldCode": "ShipmentPackage.OnCarriageETD"
+			},
+			{
+				"FieldCode": "ShipmentPackage.LastStatusCode"
+			},
+			{
+				"FieldCode": "ShipmentPackage.LastStatusDate"
+			},
+			{
+				"FieldCode": "ShipmentPackage.LastStatusName"
+			},
+			{
+				"FieldCode": "ShipmentPackage.DeliveryTransportModeCode"
+			},
+			{
+				"FieldCode": "ShipmentPackage.ECRTransportModeCode"
+			},
+			{
+				"FieldCode": "ShipmentPackage.IsMultiHarmonize"
+			},
+			{
+				"FieldCode": "ShipmentPackage.ETD"
+			},
+			{
+				"FieldCode": "ShipmentPackage.ETA"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Routing"
+			},
+			{
+				"FieldCode": "ShipmentPackage.RoutingIds"
+			},
+			{
+				"FieldCode": "ShipmentPackage.VoyageTripNumber"
+			},
+			{
+				"FieldCode": "ShipmentPackage.HasContainerException"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Make"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Year"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Model"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Color"
+			},
+			{
+				"FieldCode": "ShipmentPackage.ChassisNumber"
+			},
+			{
+				"FieldCode": "ShipmentPackage.RegistrationNumber"
+			},
+			{
+				"FieldCode": "ShipmentPackage.CountryId"
+			},
+			{
+				"FieldCode": "ShipmentPackage.WarehouseReleaseNumber"
+			},
+			{
+				"FieldCode": "ShipmentPackage.HorseId"
+			},
+			{
+				"FieldCode": "ShipmentPackage.HorseName"
+			},
+			{
+				"FieldCode": "ShipmentPackage.LCLContainerTypeId"
+			},
+			{
+				"FieldCode": "ShipmentPackage.ContainerEntityId"
+			},
+			{
+				"FieldCode": "ShipmentPackage.ContainerStatusSourceCode"
+			},
+			{
+				"FieldCode": "ShipmentPackage.ContainerStrippedDate"
+			},
+			{
+				"FieldCode": "ShipmentPackage.InsideShipmentPackages"
+			},
+			{
+				"FieldCode": "ShipmentPackage.ShipmentPackageItems"
+			},
+			{
+				"FieldCode": "ShipmentPackage.ShipmentPackageHarmonizes"
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeId"
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeCode"
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeName"
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeLocalName"
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeNote"
+			},
+			{
+				"FieldCode": "ShipmentPackage.PrintAs"
+			},
+			{
+				"FieldCode": "ShipmentPackage.IsPackageAddedManually"
+			},
+			{
+				"FieldCode": "ShipmentPackage.IsContainer"
+			},
+			{
+				"FieldCode": "ShipmentPackage.IsContainerRefrigerated"
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeIsInland"
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeIsOcean"
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeIsAir"
+			},
+			{
+				"FieldCode": "ShipmentPackage.TEU"
+			},
+			{
+				"FieldCode": "ShipmentPackage.ContainerSize"
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeVolume"
+			}]');
+			
+	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
+	  set @shipmentPackageObjectTableId = (select Id from ObjectTables where [Name] = 'ShipmentPackage' and Tenant = 0)
+	  INSERT INTO DigitalFieldSecurities (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, DefaultSettings) 
+	  values (@newDigitalFieldEntityId, 0, @shipmentPackageObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @agentProfileId, 
+		'[{
+				"FieldCode": "ShipmentPackage.ClassNumber"
+			},
+			{
+				"FieldCode": "ShipmentPackage.ContainerNumber"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Description"
+			},
+			{
+				"FieldCode": "ShipmentPackage.FlashPoint"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Harmonize"
+			},
+			{
+				"FieldCode": "ShipmentPackage.OriginalShipmentPackageId"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Height"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Id"
+			},
+			{
+				"FieldCode": "ShipmentPackage.IMDGCode"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Length"
+			},
+			{
+				"FieldCode": "ShipmentPackage.MarksAndNumbers"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Quantity"
+			},
+			{
+				"FieldCode": "ShipmentPackage.InUse"
+			},
+			{
+				"FieldCode": "ShipmentPackage.ShipperSeal"
+			},
+			{
+				"FieldCode": "ShipmentPackage.CarrierSeal"
+			},
+			{
+				"FieldCode": "ShipmentPackage.ShipmentId"
+			},
+			{
+				"FieldCode": "ShipmentPackage.SOC"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Temperature"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Tenant"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Tare"
+			},
+			{
+				"FieldCode": "ShipmentPackage.UnNumber"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Ventilation"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Volume"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Weight"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Width"
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackagingGroup"
+			},
+			{
+				"FieldCode": "ShipmentPackage.MaterialDescription"
+			},
+			{
+				"FieldCode": "ShipmentPackage.IsDangerous"
+			},
+			{
+				"FieldCode": "ShipmentPackage.VolumetricWeight"
+			},
+			{
+				"FieldCode": "ShipmentPackage.CommodityId"
+			},
+			{
+				"FieldCode": "ShipmentPackage.NumberOfInsidePackages"
+			},
+			{
+				"FieldCode": "ShipmentPackage.NumberOfInsidePackagesDetails"
+			},
+			{
+				"FieldCode": "ShipmentPackage.VGM"
+			},
+			{
+				"FieldCode": "ShipmentPackage.MethodUsed"
+			},
+			{
+				"FieldCode": "ShipmentPackage.ShipmentNumber"
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeId"
+			},
+			{
+				"FieldCode": "ShipmentPackage.IsDeliveryFU"
+			},
+			{
+				"FieldCode": "ShipmentPackage.DeliveryId"
+			},
+			{
+				"FieldCode": "ShipmentPackage.DeliveryETD"
+			},
+			{
+				"FieldCode": "ShipmentPackage.DeliveryATD"
+			},
+			{
+				"FieldCode": "ShipmentPackage.DeliveryETA"
+			},
+			{
+				"FieldCode": "ShipmentPackage.DeliveryATA"
+			},
+			{
+				"FieldCode": "ShipmentPackage.DeliveryTo"
+			},
+			{
+				"FieldCode": "ShipmentPackage.DeliveryFrom"
+			},
+			{
+				"FieldCode": "ShipmentPackage.IsEmptyContainerReturnFU"
+			},
+			{
+				"FieldCode": "ShipmentPackage.EmptyContainerReturnId"
+			},
+			{
+				"FieldCode": "ShipmentPackage.EmptyContainerReturnETD"
+			},
+			{
+				"FieldCode": "ShipmentPackage.EmptyContainerReturnATD"
+			},
+			{
+				"FieldCode": "ShipmentPackage.EmptyContainerReturnETA"
+			},
+			{
+				"FieldCode": "ShipmentPackage.EmptyContainerReturnATA"
+			},
+			{
+				"FieldCode": "ShipmentPackage.EmptyContainerReturnTo"
+			},
+			{
+				"FieldCode": "ShipmentPackage.EmptyContainerReturnFrom"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Reference1"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Reference2"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Reference3"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Reference4"
+			},
+			{
+				"FieldCode": "ShipmentPackage.CommodityNumber"
+			},
+			{
+				"FieldCode": "ShipmentPackage.CommodityName"
+			},
+			{
+				"FieldCode": "ShipmentPackage.CeficClass"
+			},
+			{
+				"FieldCode": "ShipmentPackage.KelmerCode"
+			},
+			{
+				"FieldCode": "ShipmentPackage.EMS"
+			},
+			{
+				"FieldCode": "ShipmentPackage.ProperShippingName"
+			},
+			{
+				"FieldCode": "ShipmentPackage.MarinePollutant"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Notes"
+			},
+			{
+				"FieldCode": "ShipmentPackage.TemperatureUnitCode"
+			},
+			{
+				"FieldCode": "ShipmentPackage.FlashPointTemperatureUnitCode"
+			},
+			{
+				"FieldCode": "ShipmentPackage.NonActiveContainer"
+			},
+			{
+				"FieldCode": "ShipmentPackage.OnCarriageATA"
+			},
+			{
+				"FieldCode": "ShipmentPackage.OnCarriageATD"
+			},
+			{
+				"FieldCode": "ShipmentPackage.OnCarriageETA"
+			},
+			{
+				"FieldCode": "ShipmentPackage.OnCarriageETD"
+			},
+			{
+				"FieldCode": "ShipmentPackage.LastStatusCode"
+			},
+			{
+				"FieldCode": "ShipmentPackage.LastStatusDate"
+			},
+			{
+				"FieldCode": "ShipmentPackage.LastStatusName"
+			},
+			{
+				"FieldCode": "ShipmentPackage.DeliveryTransportModeCode"
+			},
+			{
+				"FieldCode": "ShipmentPackage.ECRTransportModeCode"
+			},
+			{
+				"FieldCode": "ShipmentPackage.IsMultiHarmonize"
+			},
+			{
+				"FieldCode": "ShipmentPackage.ETD"
+			},
+			{
+				"FieldCode": "ShipmentPackage.ETA"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Routing"
+			},
+			{
+				"FieldCode": "ShipmentPackage.RoutingIds"
+			},
+			{
+				"FieldCode": "ShipmentPackage.VoyageTripNumber"
+			},
+			{
+				"FieldCode": "ShipmentPackage.HasContainerException"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Make"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Year"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Model"
+			},
+			{
+				"FieldCode": "ShipmentPackage.Color"
+			},
+			{
+				"FieldCode": "ShipmentPackage.ChassisNumber"
+			},
+			{
+				"FieldCode": "ShipmentPackage.RegistrationNumber"
+			},
+			{
+				"FieldCode": "ShipmentPackage.CountryId"
+			},
+			{
+				"FieldCode": "ShipmentPackage.WarehouseReleaseNumber"
+			},
+			{
+				"FieldCode": "ShipmentPackage.HorseId"
+			},
+			{
+				"FieldCode": "ShipmentPackage.HorseName"
+			},
+			{
+				"FieldCode": "ShipmentPackage.LCLContainerTypeId"
+			},
+			{
+				"FieldCode": "ShipmentPackage.ContainerEntityId"
+			},
+			{
+				"FieldCode": "ShipmentPackage.ContainerStatusSourceCode"
+			},
+			{
+				"FieldCode": "ShipmentPackage.ContainerStrippedDate"
+			},
+			{
+				"FieldCode": "ShipmentPackage.InsideShipmentPackages"
+			},
+			{
+				"FieldCode": "ShipmentPackage.ShipmentPackageItems"
+			},
+			{
+				"FieldCode": "ShipmentPackage.ShipmentPackageHarmonizes"
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeId"
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeCode"
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeName"
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeLocalName"
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeNote"
+			},
+			{
+				"FieldCode": "ShipmentPackage.PrintAs"
+			},
+			{
+				"FieldCode": "ShipmentPackage.IsPackageAddedManually"
+			},
+			{
+				"FieldCode": "ShipmentPackage.IsContainer"
+			},
+			{
+				"FieldCode": "ShipmentPackage.IsContainerRefrigerated"
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeIsInland"
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeIsOcean"
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeIsAir"
+			},
+			{
+				"FieldCode": "ShipmentPackage.TEU"
+			},
+			{
+				"FieldCode": "ShipmentPackage.ContainerSize"
+			},
+			{
+				"FieldCode": "ShipmentPackage.PackageTypeVolume"
+			}]');
+			
+			
+	  declare @shipmentPickUpDeliveryObjectTableId as varchar(15)
+	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
+	  set @shipmentPickUpDeliveryObjectTableId = (select Id from ObjectTables where [Name] = 'ShipmentPickUpDelivery' and Tenant = 0)
+	  INSERT INTO DigitalFieldSecurities (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, DefaultSettings) 
+	  values (@newDigitalFieldEntityId, 0, @shipmentPickUpDeliveryObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @customerProfileId, 
+	  '[{
+			"FieldCode": "ShipmentPickUpDelivery.PickUpDeliveryTypeCode"
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.PickUpDeliveryNumber"
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.ATD"
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.ETD"
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.TransportModeCode"
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.CarrierId"
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.CarrierNumber"
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.CarrierNumber"
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.ATA"
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.ETA"
+		}]');
+
+	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
+	  set @shipmentPickUpDeliveryObjectTableId = (select Id from ObjectTables where [Name] = 'ShipmentPickUpDelivery' and Tenant = 0)
+	  INSERT INTO DigitalFieldSecurities (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, DefaultSettings) 
+	  values (@newDigitalFieldEntityId, 0, @shipmentPickUpDeliveryObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @agentProfileId, 
+	  '[{
+			"FieldCode": "ShipmentPickUpDelivery.PickUpDeliveryTypeCode"
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.PickUpDeliveryNumber"
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.ATD"
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.ETD"
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.TransportModeCode"
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.CarrierId"
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.CarrierNumber"
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.CarrierNumber"
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.ATA"
+		},
+		{
+			"FieldCode": "ShipmentPickUpDelivery.ETA"
+		}]');
+
+	  declare @truckerObjectTableId as varchar(15)
+	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
+	  set @truckerObjectTableId = (select Id from ObjectTables where [Name] = 'Trucker' and Tenant = 0)
+	  INSERT INTO DigitalFieldSecurities (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, DefaultSettings) 
+	  values (@newDigitalFieldEntityId, 0, @truckerObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @customerProfileId, 
+	  '[{
+			"FieldCode": "Trucker.EnglishName"
+		},
+		{
+			"FieldCode": "Trucker.Code"
+		},
+		{
+			"FieldCode": "Trucker.Notes"
+		},
+		{
+			"FieldCode": "Trucker.Addresses"
+		},
+		{
+			"FieldCode": "Trucker.CountryId"
+		},
+		{
+			"FieldCode": "Trucker.CountryCode"
+		},
+		{
+			"FieldCode": "Trucker.CountryName"
+		},
+		{
+			"FieldCode": "Trucker.StateName"
+		},
+		{
+			"FieldCode": "Trucker.StateName"
+		}]');
+
+	  EXECUTE usp_GetNextTableIdValue @newDigitalFieldEntityId OUTPUT,'DigitalFieldSecurity'
+	  set @truckerObjectTableId = (select Id from ObjectTables where [Name] = 'Trucker' and Tenant = 0)
+	  INSERT INTO DigitalFieldSecurities (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, DefaultSettings) 
+	  values (@newDigitalFieldEntityId, 0, @truckerObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @agentProfileId, 
+	  '[{
+			"FieldCode": "Trucker.EnglishName"
+		},
+		{
+			"FieldCode": "Trucker.Code"
+		},
+		{
+			"FieldCode": "Trucker.Notes"
+		},
+		{
+			"FieldCode": "Trucker.Addresses"
+		},
+		{
+			"FieldCode": "Trucker.CountryId"
+		},
+		{
+			"FieldCode": "Trucker.CountryCode"
+		},
+		{
+			"FieldCode": "Trucker.CountryName"
+		},
+		{
+			"FieldCode": "Trucker.StateName"
+		},
+		{
+			"FieldCode": "Trucker.StateName"
+		}]');
       ]]>       
   </Sql>
 </Script>
