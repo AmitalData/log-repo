@@ -237,7 +237,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         BalanceInForeignCurrency, 
 	         ForeignBalanceInDue, 
 	         ChartOfAccountSecurityLevel,
-	      }
+			 Obligo,
+			 CreditUsed,
+		}
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();

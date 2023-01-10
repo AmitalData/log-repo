@@ -888,7 +888,14 @@ export class GLAccountPM {
     public get ChartOfAccountSecurityLevel() { return this.chartOfAccountSecurityLevel; }
     public set ChartOfAccountSecurityLevel(newValue: number) { if (this.chartOfAccountSecurityLevel != newValue) { this.chartOfAccountSecurityLevel = newValue; this.MarkAsDirty("ChartOfAccountSecurityLevel"); } }
        
+    private obligo: number;
+    public get Obligo() { return this.obligo; }
+    public set Obligo(newValue: number) { if (this.obligo != newValue) { this.obligo = newValue; this.MarkAsDirty("Obligo"); } }
+       
 	 
+    private creditUsed: number;
+    public get CreditUsed() { return this.creditUsed; }
+    public set CreditUsed(newValue: number) { if (this.creditUsed != newValue) { this.creditUsed = newValue; this.MarkAsDirty("CreditUsed"); } }
 
     public OldEntityPM: GLAccountPM;
 		
