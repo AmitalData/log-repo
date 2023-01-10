@@ -33,14 +33,46 @@ namespace WebFreight.Web.Controllers.DigitalPortal
     {
         [HttpPost]
         [Route("DigitalCustomization/CheckIfFieldInuse")]
-        public HttpResponseMessage CheckIfFieldInuse(string fieldCode)
+        public HttpResponseMessage CheckIfFieldInuse(CheckObjectFieldExistenceRequest checkObjectFieldExistenceRequest)
         {
+            int tenant = 0;
+            string email = "";
+
+            try
+            {
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                tenant = authToken.Tenant;
+                email = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                var helper = new DigitalFieldSecuritesHelper();
+                var defaultDigitalFieldSecurity = helper.GitDigitalSecuritesFeilds(checkObjectFieldExistenceRequest.ObjectTableId, checkObjectFieldExistenceRequest.ProfileId, tenant);
+
+                var res = false;
+
+                if (defaultDigitalFieldSecurity.Any(a => a.FieldCode.Equals(checkObjectFieldExistenceRequest.FieldCode, StringComparison.InvariantCultureIgnoreCase)))
+                {
+                    res = true;
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, res);
+            }
+            catch (AutenticationException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
             return null;
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("DigitalCustomization/GetObjectFieldsByFilters")]
-        public HttpResponseMessage GetObjectFieldsByFilters(GeneralFilters filters)
+        public HttpResponseMessage GetObjectFieldsByFilters([FromUri] ApiQueryFilters filters)
         {
             int tenant = 0;
             string email = "";
@@ -58,7 +90,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     PageSize = filters.PageSize,
                     QuerySection = "ObjectFields",
                     SortByColumnName = filters.SortBy,
-                    SortDirectin = filters.SortDirection
+                    SortDirectin = filters.SortDirection,
+                    GetAll = filters.GetAll
                 };
 
                 List<ObjectField> ObjectFieldObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("ObjectField", 0);
@@ -90,30 +123,29 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     }
                 }
 
-                foreach (var filter in filters.AdditionalFilters)
+                if (!string.IsNullOrEmpty(filters.AdditionalFilters))
                 {
-                    ObjectField field = ObjectFieldObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
-                    if (field != null)
-                    {
-                        string valuestring1 = filter.FieldValue != null 
-                                                ? filter.FieldValue.ToString() 
-                                                : null;
+                    JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
+                    var filters_list = JsonConvert.Deserialize<List<QueryFilterItem>>(filters.AdditionalFilters);
 
-                        object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
-                            
-                        string valuestring2 = filter.FieldValue2 != null 
-                                                ? filter.FieldValue2.ToString() 
-                                                : null;
-
-                        object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
-                        queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
-                    }
-                    else
+                    foreach (QueryFilterItem filter in filters_list)
                     {
-                        queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
+                        ObjectField field = ObjectFieldObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        if (field != null)
+                        {
+                            string valuestring1 = filter.FieldValue != null ? filter.FieldValue.ToString() : null;
+                            object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+                            string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
+                            object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+                            queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode, field.IsListFilter);
+                        }
+                        else
+                        {
+                            queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
+                        }
                     }
                 }
-                
+
                 GenericFilter genericFilter = new GenericFilter();
 
                 IWebFreightContext MyContext = WebFreightContext.GetContext(tenant);
