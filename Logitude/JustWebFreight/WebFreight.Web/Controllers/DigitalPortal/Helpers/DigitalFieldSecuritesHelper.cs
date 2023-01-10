@@ -1,6 +1,7 @@
 ﻿using Logitude.Infrastructure.BL.EntityQueryServices;
 using Newtonsoft.Json;
 using Simplog.Server.Infrastructure.DataContracts.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -102,13 +103,17 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
                 {
                     customDigitalFeildSecurityObject = JsonConvert.DeserializeObject<List<DigitalFeildSecurityObject>>(customDigitalFieldSecurityList.DefaultSettings);
 
-                    foreach (var item in customDigitalFeildSecurityObject)
+                    foreach (var item in defaultDigitalFieldSecurity)
                     {
-                        var temp = defaultDigitalFieldSecurity.FirstOrDefault(a => a.FieldCode.Equals(item.FieldCode));
+                        var temp = customDigitalFeildSecurityObject.FirstOrDefault(a => a.FieldCode.Equals(item.FieldCode));
 
                         if (temp != null)
                         {
-                            temp.HasPermission = true;
+                            continue;
+                        }
+                        else
+                        {
+                            customDigitalFeildSecurityObject.Add(item);
                         }
                     }
                 }
@@ -142,10 +147,30 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
 
             if (!customDigitalFeildSecurityObject.Any())
             {
-                defaultDigitalFieldSecurity.ForEach(a => a.HasPermission = true);
+                return defaultDigitalFieldSecurity;
             }
             
-            return defaultDigitalFieldSecurity;
+            return customDigitalFeildSecurityObject;
+        }
+    
+        public bool CheckIfFieldInuse(CheckObjectFieldExistenceRequest checkObjectFieldExistenceRequest, int tenant)
+        {
+            var helper = new DigitalFieldSecuritesHelper();
+            var defaultDigitalFieldSecurity = helper.GitDigitalSecuritesFeilds(checkObjectFieldExistenceRequest.ObjectTableId,
+                                                                               checkObjectFieldExistenceRequest.ProfileId, tenant);
+
+            var defaultDigitalFieldTenant0 = helper.GitDigitalSecuritesFeilds(checkObjectFieldExistenceRequest.ObjectTableId,
+                                                                               checkObjectFieldExistenceRequest.ProfileId, 0);
+
+            var res = false;
+
+            if (defaultDigitalFieldSecurity.Any(a => a.FieldCode.Equals(checkObjectFieldExistenceRequest.FieldCode, StringComparison.InvariantCultureIgnoreCase))
+                || defaultDigitalFieldTenant0.Any(a => a.FieldCode.Equals(checkObjectFieldExistenceRequest.FieldCode, StringComparison.InvariantCultureIgnoreCase)))
+            {
+                res = true;
+            }
+
+            return res;
         }
     }
 }

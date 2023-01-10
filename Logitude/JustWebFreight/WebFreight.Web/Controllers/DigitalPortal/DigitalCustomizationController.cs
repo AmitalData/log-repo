@@ -5,6 +5,7 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Infrastructure.BL.EntityQueryServices;
 using Logitude.Infrastructure.Data.EntityLists;
 using Logitude.SystemLogs;
+using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
@@ -31,6 +32,143 @@ namespace WebFreight.Web.Controllers.DigitalPortal
     public class DigitalCustomizationController : ApiController
     {
         [HttpPost]
+        [Route("DigitalCustomization/AddCustomField")]
+        public HttpResponseMessage AddCustomField(AddCustomFieldRequest addCustomFieldRequest)
+        {
+            int tenant = 0;
+            string email = "";
+
+            try
+            {
+                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
+                tenant = authToken.Tenant;
+                email = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                var helper = new DigitalFieldSecuritesHelper();
+
+                if (helper.CheckIfFieldInuse(new CheckObjectFieldExistenceRequest 
+                                             { 
+                                                 FieldCode = addCustomFieldRequest.FieldCode, 
+                                                 ProfileId = addCustomFieldRequest.ProfileId, 
+                                                 ObjectTableId = addCustomFieldRequest.ObjectTableId
+                                             }, tenant))
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, $"Field {addCustomFieldRequest.FieldCode} already exist in your tenant");
+                }
+
+                var digitalFieldSecurityQuery = new DigitalFieldSecurityQueryService(tenant);
+                var customDigitalFieldSecurity = digitalFieldSecurityQuery.GetDigitalFieldSecurityQuery(tenant, 
+                                                                                                        addCustomFieldRequest.ObjectTableId,
+                                                                                                        addCustomFieldRequest.ProfileId);
+
+                var items = new List<DigitalFeildSecurityObject>();
+                if (customDigitalFieldSecurity == null)
+                {
+                    var defaultDigitalFieldSecurity = digitalFieldSecurityQuery.GetDigitalFieldSecurityQuery(0,
+                                                                                         addCustomFieldRequest.ObjectTableId,
+                                                                                         addCustomFieldRequest.ProfileId);
+
+                    items = JsonConvert.DeserializeObject<List<DigitalFeildSecurityObject>>(defaultDigitalFieldSecurity.DefaultSettings);
+
+                    items.Add(new DigitalFeildSecurityObject
+                    {
+                        FieldCode = addCustomFieldRequest.FieldCode,
+                        CreatedBy = addCustomFieldRequest.CreatedBy,
+                        CreatedOn = DateTime.UtcNow,
+                        HasPermission = true
+                    });
+
+                    customDigitalFieldSecurity = new DigitalFieldSecurityList
+                    {
+                        ObjectTableId = addCustomFieldRequest.ObjectTableId,
+                        Tenant = tenant,
+                        DefaultSettings = JsonConvert.SerializeObject(items),
+                        CreateDate = DateTime.UtcNow,
+                        UpdateDate = DateTime.UtcNow,
+                        ProfileId = addCustomFieldRequest.ProfileId
+                    };
+                }
+                else
+                {
+                    items = JsonConvert.DeserializeObject<List<DigitalFeildSecurityObject>>(customDigitalFieldSecurity.DefaultSettings);
+
+                    items.Add(new DigitalFeildSecurityObject
+                    {
+                        FieldCode = addCustomFieldRequest.FieldCode,
+                        CreatedBy = addCustomFieldRequest.CreatedBy,
+                        CreatedOn = DateTime.UtcNow,
+                        HasPermission = true
+                    });
+
+                    customDigitalFieldSecurity.DefaultSettings = JsonConvert.SerializeObject(items);
+                    customDigitalFieldSecurity.UpdateDate = DateTime.UtcNow;
+                }
+
+                digitalFieldSecurityQuery.UpdateDigitalFieldSecurity(customDigitalFieldSecurity);
+
+                var textCodeQuery = new DigitalTextCodeQueryService(tenant);
+                var customTextCodes = textCodeQuery.GetDigitalTextCodesQuery(tenant,
+                                                                             addCustomFieldRequest.ObjectTableId,
+                                                                             addCustomFieldRequest.ProfileId);
+
+                if (customTextCodes == null)
+                {
+                    var defaultTextCodes = textCodeQuery.GetDigitalTextCodesQuery(tenant,
+                                                                                  addCustomFieldRequest.ObjectTableId,
+                                                                                  addCustomFieldRequest.ProfileId);
+
+                    var customCodesMappedObject = JsonConvert.DeserializeObject<List<DigitalTextCodeUpdateObject>>(defaultTextCodes.Labels);
+
+                    customCodesMappedObject.Add(new DigitalTextCodeUpdateObject
+                    {
+                        DefaultText = addCustomFieldRequest.DefaultText, 
+                        TextCode = addCustomFieldRequest.TextCode,
+                        FieldCode = addCustomFieldRequest.FieldCode
+                    });
+
+                    customTextCodes = new DigitalTextCodeList
+                    {
+                        ObjectTableId = addCustomFieldRequest.ObjectTableId,
+                        Tenant = tenant,
+                        ProfileId = addCustomFieldRequest.ProfileId,
+                        Labels = JsonConvert.SerializeObject(customCodesMappedObject),
+                        CreateDate = DateTime.UtcNow,
+                        UpdateDate = DateTime.UtcNow
+                    };
+
+                }
+                else
+                {
+                    var customCodesMappedObject = JsonConvert.DeserializeObject<List<DigitalTextCodeUpdateObject>>(customTextCodes.Labels);
+
+                    customCodesMappedObject.Add(new DigitalTextCodeUpdateObject
+                    {
+                        DefaultText = addCustomFieldRequest.DefaultText,
+                        TextCode = addCustomFieldRequest.TextCode,
+                        FieldCode = addCustomFieldRequest.FieldCode
+                    });
+
+                    customTextCodes.Labels = JsonConvert.SerializeObject(customCodesMappedObject);
+                    customTextCodes.UpdateDate = DateTime.UtcNow;
+                }
+
+                textCodeQuery.UpdateDigitalTextCodes(customTextCodes);
+
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (AutenticationException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        [HttpPost]
         [Route("DigitalCustomization/CheckIfFieldInuse")]
         public HttpResponseMessage CheckIfFieldInuse(CheckObjectFieldExistenceRequest checkObjectFieldExistenceRequest)
         {
@@ -45,16 +183,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                 var helper = new DigitalFieldSecuritesHelper();
-                var defaultDigitalFieldSecurity = helper.GitDigitalSecuritesFeilds(checkObjectFieldExistenceRequest.ObjectTableId, checkObjectFieldExistenceRequest.ProfileId, tenant);
 
-                var res = false;
-
-                if (defaultDigitalFieldSecurity.Any(a => a.FieldCode.Equals(checkObjectFieldExistenceRequest.FieldCode, StringComparison.InvariantCultureIgnoreCase)))
-                {
-                    res = true;
-                }
-
-                return Request.CreateResponse(HttpStatusCode.OK, res);
+                return Request.CreateResponse(HttpStatusCode.OK, helper.CheckIfFieldInuse(checkObjectFieldExistenceRequest, tenant));
             }
             catch (AutenticationException ex)
             {
@@ -65,8 +195,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {tenant}", "", null);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-
-            return null;
         }
 
         [HttpGet]

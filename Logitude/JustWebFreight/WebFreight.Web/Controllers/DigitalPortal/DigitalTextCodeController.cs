@@ -83,38 +83,16 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
                 tenant = authToken.Tenant;
                 email = authToken.Email;
-                digitalFeildSecurityObjectModel.Tenant = tenant;
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, digitalFeildSecurityObjectModel.CardId);
+                
+                digitalFeildSecurityObjectModel.Tenant = tenant;
                 var digitalFieldSecurityQuery = new DigitalFieldSecurityQueryService(tenant);
                 var customDigitalFieldSecurity = digitalFieldSecurityQuery.GetDigitalFieldSecurityQuery(digitalFeildSecurityObjectModel.Tenant, digitalFeildSecurityObjectModel.ObjectTableId, digitalFeildSecurityObjectModel.ProfileId);
 
                 if (customDigitalFieldSecurity != null)
                 {
-                    var existingDigitalFieldSecurityMappedObject = JsonConvert.DeserializeObject<List<DigitalFeildSecurityUpdateModel>>(customDigitalFieldSecurity.DefaultSettings);
-
-                    var diff = existingDigitalFieldSecurityMappedObject.Except(digitalFeildSecurityObjectModel.DefaultSettings).ToList();
-
-                    foreach (var item in diff)
-                    {
-                        existingDigitalFieldSecurityMappedObject.Remove(item);
-                    }
-
-                    foreach (var item in digitalFeildSecurityObjectModel.DefaultSettings)
-                    {
-                        var existingKey = existingDigitalFieldSecurityMappedObject.FirstOrDefault(a => a.FieldCode.Equals(item.FieldCode));
-
-                        if (existingKey != null)
-                        {
-                            continue;
-                        }
-                        else
-                        {
-                            existingDigitalFieldSecurityMappedObject.Add(item);
-                        }
-                    }
-
-                    customDigitalFieldSecurity.DefaultSettings = JsonConvert.SerializeObject(existingDigitalFieldSecurityMappedObject);
+                    customDigitalFieldSecurity.DefaultSettings = JsonConvert.SerializeObject(digitalFeildSecurityObjectModel.DefaultSettings);
                     customDigitalFieldSecurity.UpdateDate = DateTime.UtcNow;
                 }
                 else
@@ -232,7 +210,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                         if (string.IsNullOrWhiteSpace(item.DefaultText))
                         {
-                            customCodesMappedObject.RemoveAll(a=>a.TextCode == item.TextCode);
+                            customCodesMappedObject.RemoveAll(a => a.TextCode == item.TextCode);
                         }
                         else
                         {
