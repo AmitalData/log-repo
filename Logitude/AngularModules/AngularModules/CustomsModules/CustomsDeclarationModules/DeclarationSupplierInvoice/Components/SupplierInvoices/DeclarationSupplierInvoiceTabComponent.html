@@ -314,9 +314,12 @@
                             </div>
                         </td>
                         
-                        <td style="height: 20px;padding: 5px;padding-bottom: 0px;width: 200px;">
+                        <td style="height: 20px;padding: 5px;padding-bottom: 0px;width: 350px;">
                             <div>
                                 <button *ngIf="showMultiUpdateWindowBtn" [disabled]="IsDisplayOnly" class="Button" (click)="OpenMultiUpdateWindow()" style="width: 140px; display: inline-block;">  עדכון קוד תהליך/הנחה פטור </button>
+                                <button *ngIf="showUploadInvoicesFromCsvBtn" [disabled]="IsDisplayOnly" class="Button" (click)="OpenUpLoadFile()" style="width: 140px; margin-right: 15px; display: inline-block;">טעינת חשבונות יצואן מאקסל</button>
+                                <input #myInput accept=".csv,.CSV" [attr.id]="UploadFileId" type="file" [(ngModel)]="FileData" (change)="UploadFile($event)" (click)="UploadFile($event)" style="display:none;width:65px" class="upload" />
+   
                                 <IconButton [IsEnabled]="!IsDisplayOnly" [Name]="'Add'" (click)="Add()" style="float:left;"></IconButton>
                             </div>                                        
                         </td>                      

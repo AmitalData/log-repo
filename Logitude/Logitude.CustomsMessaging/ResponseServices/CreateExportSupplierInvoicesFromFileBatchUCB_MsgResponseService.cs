@@ -64,7 +64,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var context = CustomContext.GetContext(tenant);
             var declarationQueryService = new DeclarationQueryService(context);
             DeclarationPM declarationPM = declarationQueryService.GetSingle(declarationid, true, false);
-            MyRequestSheetParam.RequestDescription = $"{declarationPM.DeclarationNumber} קליטת חשבון ספק מקובץ, הצהרה";
+            MyRequestSheetParam.RequestDescription = $"{declarationPM.DeclarationNumber} קליטת חשבונות יצואן מקובץ, הצהרה";
 
             foreach (var invoiceFromFile in fromFile)
             {
@@ -152,7 +152,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             try
             {
-                var lines = decodedString.Split(new string[] { "\r\n" }, StringSplitOptions.None).ToList();
+                var lines = decodedString.Split(new string[] { "\n" }, StringSplitOptions.None).ToList();
                 string[] firstRow = Regex.Split(lines[0], ",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
                 DateTime? issueDate = null;
                 if (!string.IsNullOrWhiteSpace(firstRow[0]))
@@ -172,8 +172,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         //new invoice
                         InvoiceFromFile row = new InvoiceFromFile();
-                        row.InvoiceNumber = data[1];//split
-                        row.InvoiceAmount = string.IsNullOrWhiteSpace(data[2]) ? (decimal?)null : Convert.ToDecimal(data[2]);//split
+                        var invoiceNumber = string.IsNullOrWhiteSpace(data[1]) ? "" : data[1].Split(':')[1];
+                        row.InvoiceNumber = invoiceNumber.Replace(" ","");
+                        var amount = string.IsNullOrWhiteSpace(data[2]) ? "" : data[2].Split(':')[1];
+                        row.InvoiceAmount = string.IsNullOrWhiteSpace(amount) ? (decimal?)null : Convert.ToDecimal(amount);
                         row.InvoiceCurrency = data[3];
                         row.IssueDate = issueDate;
                         row.SupplierInvoiceItems = new List<InvoiceItemFromFile> { };
@@ -185,14 +187,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         if (string.IsNullOrWhiteSpace(string.Join(" ", data))) continue;
                         //new item
-                        currentInvoice.BuyerName = data[4];
-                        currentInvoice.BuyerCountryCode = data[5];
-                        currentInvoice.BuyerAddress = data[6];
-                        currentInvoice.BuyerRoleCode = data[7];
-                        currentInvoice.PartyRelationCode = data[8];
+                        currentInvoice.BuyerName = data[5];
+                        currentInvoice.BuyerCountryCode = data[6];
+                        currentInvoice.BuyerAddress = data[7];
+                        currentInvoice.BuyerRoleCode = data[8];
+                        currentInvoice.PartyRelationCode = data[9];
+                        string num = "";
+                        if (!string.IsNullOrWhiteSpace(data[0]))
+                            num = data[0].Substring(0, data[0].IndexOf('.') > 0 ? data[0].IndexOf('.') : data[0].Length);
                         currentInvoice.SupplierInvoiceItems.Add(new InvoiceItemFromFile
                         {
-                            InvoiceQuentity = string.IsNullOrWhiteSpace(data[0]) ? (int?)null : Convert.ToInt32(data[0]),
+                            InvoiceQuentity = string.IsNullOrWhiteSpace(num) ? (int?)null : Convert.ToInt32(num),
                             ItemDescription = data[2],
                             ClassificationCode = data[3],
                             ItemPrice = string.IsNullOrWhiteSpace(data[4]) ? (decimal?)null : Convert.ToDecimal(data[4]),
