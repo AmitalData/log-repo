@@ -26182,5 +26182,14 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;UploadExportInvoicesFromCsv&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Customs.Declaration.Features.UploadExportInvoicesFromCsv&quot;"
+      FeatureDefaultText="&quot;הצגת כפתור טעינת חשבונות יצואן מקובץ&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>
