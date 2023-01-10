@@ -25,8 +25,12 @@
                             <tr style="vertical-align:top;">
                                 <td style="padding-left: 5px; padding-right: 5px;min-height: 215px;vertical-align:top;">
                                     <div style="vertical-align:top;" class="GeneratedGridContainer">
-                                        <logitude-grid style="vertical-align:top;" GridWidth="100%" GridHeight="100%" [dataSource]="DataSource"
-                                                       [columns]="columns" [autoLoad]="true" [rows]="items" [searchFields]="searchFields" [SearchFieldchangeevent]="SearchFieldchangeevent">
+                                        <logitude-grid style="vertical-align:top;" GridWidth="100%" GridHeight="100%"
+                                                       [dataSource]="DataSource"
+                                                       [columns]="columns"  [ObjectTable]="'ObjectField'"
+                                                       [autoLoad]="true"
+                                                       [searchFields]="searchFields"
+                                                       [SearchFieldchangeevent]="SearchFieldchangeevent">
                                         </logitude-grid>
                                     </div>
                                 </td>

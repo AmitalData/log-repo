@@ -83,8 +83,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 package.InsidePackageHarmonizes = shipmentPackageHarmonizeQuery.GetInsideShipmentPackageHarmonizes(package.Id, package.Tenant);
                 package.VolumeInCBM = ShipmentMapping.GetVolumeInCBM("CBM", package.Volume);
                 package.GrossWeightInKG = ShipmentMapping.GetWeightInKG("KG", package.Weight);
-                package.VolumeInCBF = ShipmentMapping.GetVolumeInCBM("CBF", package.VolumeInCBM);
-                package.GrossWeightInLB = ShipmentMapping.GetWeightInKG("LB", package.GrossWeightInKG);
+                package.VolumeInCBF = ShipmentMapping.GetVolumeInCBF(package.VolumeInCBM);
+                package.GrossWeightInLB = ShipmentMapping.GetWeightInLB(package.GrossWeightInKG);
             }
 
             return myResult;

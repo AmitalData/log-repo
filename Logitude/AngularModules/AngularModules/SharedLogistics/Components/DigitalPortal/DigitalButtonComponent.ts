@@ -4,6 +4,7 @@ import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
 import { InfraSettings } from '../../../Infrastructure/Utilities/InfraSettings';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
+import { DigitalCustomizationService, CheckObjectFieldExistenceRequest } from '../../../Infrastructure/Services/WebServices/DigitalCustomizationService';
 
 @Component({
     selector: 'DigitalButtonComponent',
@@ -18,12 +19,16 @@ export class DigitalButtonComponent implements OnInit {
     public entityId: string;
     public InUseVisibile: boolean = true;
     private CurrentSession = SessionLocator.SelectedSession;
+    digitalCustomizationService: DigitalCustomizationService;
+
     constructor(private CD: ChangeDetectorRef, private _entityListService: EntityListService) {
         this.TenantPM = InfraSettings.TenantPM;
+        this.digitalCustomizationService = new DigitalCustomizationService();
     }
 
     setVariables(rowData: any, fieldName: string) {
         this.rowData = rowData;
+        this.Check();
         this.fieldName = fieldName;
         this.InUseVisibile = this.rowData.InUse;
 
@@ -38,7 +43,7 @@ export class DigitalButtonComponent implements OnInit {
     }
 
     Check() {
-        this.GetInUseObjectField(this.rowData.Code);
+        this.GetInUseObjectField(this.rowData);
     }
 
     DoItClick() {
@@ -80,8 +85,15 @@ export class DigitalButtonComponent implements OnInit {
         
     }
 
-    GetInUseObjectField(code: string) {
-       
+    GetInUseObjectField(rowData) {
+        var record = new CheckObjectFieldExistenceRequest();
+        record.ObjectTableId = rowData.ObjectTableId;
+        record.FieldCode = rowData.FieldCode;
+
+        this.digitalCustomizationService.CheckIfFieldInuse(record).subscribe((myResult) => {
+            this.InUseVisibile = myResult.Result;
+        });
+
     }
 
     private StartBusyIndicator(message: string) {

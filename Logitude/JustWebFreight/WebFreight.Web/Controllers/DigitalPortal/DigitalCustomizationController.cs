@@ -182,6 +182,12 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 email = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
+                if (checkObjectFieldExistenceRequest.ProfileId == null)
+                {
+                    var digitalProfileQueryService = new DigitalProfileQueryService(tenant);
+                    checkObjectFieldExistenceRequest.ProfileId = digitalProfileQueryService.GetDigitalProfileByName(tenant, "Customer").Id;
+                }
+
                 var helper = new DigitalFieldSecuritesHelper();
 
                 return Request.CreateResponse(HttpStatusCode.OK, helper.CheckIfFieldInuse(checkObjectFieldExistenceRequest, tenant));
@@ -206,7 +212,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             try
             {
                 var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
-                tenant = authToken.Tenant;
                 email = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
@@ -303,6 +308,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 entityLists = genericFilter.GetFilteredQuery(listQueryOperation, entityLists);
 
                 ServiceResponse response = new ServiceResponse();
+                entityLists = entityLists.OrderBy(d => d.FullNameTextCodeDefaultText);
 
                 if (filters.GetCount)
                 {
@@ -315,7 +321,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     entityLists = entityLists.Take(queryOperations.PageSize);
                 }
 
-                List<ObjectFieldList> listResult = entityLists.OrderBy(d => d.FullNameTextCodeDefaultText).ToList();
+                List<ObjectFieldList> listResult = entityLists.ToList();
                 response.Result = listResult;
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
                 return reponseMessage;

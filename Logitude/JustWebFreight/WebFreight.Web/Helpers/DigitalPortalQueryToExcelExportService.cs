@@ -280,11 +280,11 @@ namespace WebFreight.Web.Helpers
                     row[11] = item.TruckContainerNumber;
                     row[12] = item.NumberOfPackages;
                     row[13] = item.GrossWeightInKG;  
-                    row[14] = ShipmentMapping.GetWeightInKG("LB", item.GrossWeightInKG);
+                    row[14] = ShipmentMapping.GetWeightInLB(item.GrossWeightInKG);
                     row[15] = item.ChargeableWeightInKG;
-                    row[16] = ShipmentMapping.GetWeightInKG("LB", item.ChargeableWeightInKG);
+                    row[16] = ShipmentMapping.GetWeightInLB(item.ChargeableWeightInKG);
                     row[17] = item.IncotermCode;
-                    row[18] = ShipmentMapping.GetVolumeInCBM("CBF", item.VolumeInCBM);
+                    row[18] = ShipmentMapping.GetVolumeInCBF(item.VolumeInCBM);
                     row[19] = item.VolumeInCBM;
                     row[20] = item.ValueOfGoods;
                     row[21] = item.DescriptionOfGoods;

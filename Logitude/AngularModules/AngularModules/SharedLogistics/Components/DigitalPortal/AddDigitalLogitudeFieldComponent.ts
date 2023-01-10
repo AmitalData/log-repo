@@ -1,11 +1,12 @@
 declare var window: any;
-import { Component, OnInit, Output, EventEmitter, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
+import { DigitalCustomizationService} from '../../../Infrastructure/Services/WebServices/DigitalCustomizationService';
 
 @Component({
 
@@ -27,11 +28,13 @@ export class AddDigitalLogitudeFieldComponent extends BaseComponent implements O
     public TenantPM: TenantPM;
     public columns: any[] = [];
     public ObjectFields: any[] = [];
-
+    digitalCustomizationService: DigitalCustomizationService;
+    public items: any[] = [];
 
     constructor(private _entityListService: EntityListService) {
         super();
         this.TenantPM = SessionLocator.TenantPM;
+        this.digitalCustomizationService = new DigitalCustomizationService();
     }
 
     SetWindowArgs(args) {
@@ -73,7 +76,13 @@ export class AddDigitalLogitudeFieldComponent extends BaseComponent implements O
         filters.SortDirection = sortingDir;
         filters.Tenant = 0;
         filters.addAdditionalFilter("ObjectTableId", this.ObjectTableId, null, null, "Equals", false, false, false, "string");
-        return this._entityListService.getByFilters("ObjectField", filters);
+
+        var servicelink = './Infrastructure/Services/WebServices/DigitalCustomizationService';
+        return new Promise((resolve, reject) => {
+            SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
+                resolve(this.digitalCustomizationService.GetObjectFieldsByFilters(filters));
+            });
+        });
     }
 
     BuildColumns() {
@@ -85,7 +94,7 @@ export class AddDigitalLogitudeFieldComponent extends BaseComponent implements O
             FieldName: 'FieldCode',
             DataTypeCode: 'String',
             Display: 'Default Name',
-            Styles: { width: '150px' },
+            Styles: { width: '200px' },
             IsCustomTemplate: true
         });
 
@@ -93,7 +102,7 @@ export class AddDigitalLogitudeFieldComponent extends BaseComponent implements O
             FieldName: 'DataTypeCode',
             DataTypeCode: 'String',
             Display: 'Data Type',
-            Styles: { width: '150px' },
+            Styles: { width: '200px' },
             IsCustomTemplate: true
         });
 
@@ -112,14 +121,15 @@ export class AddDigitalLogitudeFieldComponent extends BaseComponent implements O
             DataTypeCode: 'String',
             Display: '',
             IsCustomTemplate: true,
-            Styles: { width: '60px' },
+            Styles: { width: '70px' },
             HtmlListComponentName: 'DigitalButtonComponent',
             HtmlListComponentUrl: './SharedLogistics/Components/DigitalPortal/DigitalButtonComponent',
         });
     }
 
     TextChanged(searchtext) {
-        
+        this.searchFields = searchtext;
+        this.SearchFieldchangeevent.emit(this.searchFields);
     }
 
     CloseButtonClicked() {
