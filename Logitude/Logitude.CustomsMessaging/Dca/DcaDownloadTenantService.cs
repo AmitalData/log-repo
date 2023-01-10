@@ -252,11 +252,11 @@ namespace Logitude.CustomsMessaging.Dca
         }
         public void DownloadAll(string debugIIGMessageId, DedicatedCourierDCAModel dedicatedCourierDCAModel)
         {
-
-
-
             if (this.HasFeature_DcaDirect9200() || dedicatedCourierDCAModel != null)
             {
+                var sb = new StringBuilder();
+                var sw = Stopwatch.StartNew();
+
                 if (IsAppSettingOn("SuppressDownloadDCA.UntilDateyyyyMMdd"))
                 {
                     Debug.WriteLine("SuppressDownloadDCA.UntilDateyyyyMMdd");
@@ -277,10 +277,15 @@ namespace Logitude.CustomsMessaging.Dca
                         removeOldOrphanedFilesFromBackupService.RemoveOldFiles(dedicatedCourierDCAModel.BackupPath);
                     }
                 }
+                sb.AppendLine($"DownloadAll({this._CustomsSettingPM.Tenant}):took:{sw.Elapsed}");
+                sw.Restart();
+
 
                 var restoreWaitingImportService = new Restore9100.RestoreWaitingImportMessagesService(_CustomsSettingPM, this._InterfaceListDCA);
                 restoreWaitingImportService.RestoreWaitingImportSaveInDB();
 
+                sb.AppendLine($"RestoreWaitingImportSaveInDB({this._CustomsSettingPM.Tenant}):took:{sw.Elapsed}");
+                Logger.LogMe(sb.ToString(), false, "DCAStopwatch");
                 return;
             }
 
@@ -500,7 +505,7 @@ out myMessageOut);
 
             if (myErrorOccurred)
             {
-                Thread.Sleep(TimeSpan.FromSeconds(3));
+                Thread.Sleep(TimeSpan.FromSeconds(1));
 
             }
             myFileListing = myFileListing ?? new List<string>();
@@ -789,7 +794,7 @@ out myMessageOut);
 
             if (myErrorOccurred)
             {
-                Thread.Sleep(TimeSpan.FromSeconds(3));
+                Thread.Sleep(TimeSpan.FromSeconds(1));
 
             }
             myFileListing = myFileListing ?? new List<string>();
