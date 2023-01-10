@@ -83,8 +83,6 @@ export class AddDigitalLogitudeFieldComponent extends BaseComponent implements O
                 resolve(this.digitalCustomizationService.GetObjectFieldsByFilters(filters));
             });
         });
-
-        //return this.digitalCustomizationService.GetObjectFieldsByFilters(filters);
     }
 
     BuildColumns() {
@@ -96,7 +94,7 @@ export class AddDigitalLogitudeFieldComponent extends BaseComponent implements O
             FieldName: 'FieldCode',
             DataTypeCode: 'String',
             Display: 'Default Name',
-            Styles: { width: '150px' },
+            Styles: { width: '200px' },
             IsCustomTemplate: true
         });
 
@@ -104,7 +102,7 @@ export class AddDigitalLogitudeFieldComponent extends BaseComponent implements O
             FieldName: 'DataTypeCode',
             DataTypeCode: 'String',
             Display: 'Data Type',
-            Styles: { width: '150px' },
+            Styles: { width: '200px' },
             IsCustomTemplate: true
         });
 
@@ -123,14 +121,15 @@ export class AddDigitalLogitudeFieldComponent extends BaseComponent implements O
             DataTypeCode: 'String',
             Display: '',
             IsCustomTemplate: true,
-            Styles: { width: '60px' },
+            Styles: { width: '70px' },
             HtmlListComponentName: 'DigitalButtonComponent',
             HtmlListComponentUrl: './SharedLogistics/Components/DigitalPortal/DigitalButtonComponent',
         });
     }
 
     TextChanged(searchtext) {
-        
+        this.searchFields = searchtext;
+        this.SearchFieldchangeevent.emit(this.searchFields);
     }
 
     CloseButtonClicked() {

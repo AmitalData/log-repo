@@ -28,6 +28,7 @@ export class DigitalButtonComponent implements OnInit {
 
     setVariables(rowData: any, fieldName: string) {
         this.rowData = rowData;
+        this.Check();
         this.fieldName = fieldName;
         this.InUseVisibile = this.rowData.InUse;
 
@@ -86,8 +87,8 @@ export class DigitalButtonComponent implements OnInit {
 
     GetInUseObjectField(rowData) {
         var record = new CheckObjectFieldExistenceRequest();
-        record.ObjectTableId = record.ObjectTableId;
-        record.FieldCode = record.FieldCode;
+        record.ObjectTableId = rowData.ObjectTableId;
+        record.FieldCode = rowData.FieldCode;
 
         this.digitalCustomizationService.CheckIfFieldInuse(record).subscribe((myResult) => {
             this.InUseVisibile = myResult.Result;

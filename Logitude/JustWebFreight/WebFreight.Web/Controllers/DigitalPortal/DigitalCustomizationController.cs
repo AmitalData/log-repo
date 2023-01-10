@@ -44,6 +44,12 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 email = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
+                if (checkObjectFieldExistenceRequest.ProfileId == null)
+                {
+                    var digitalProfileQueryService = new DigitalProfileQueryService(tenant);
+                    checkObjectFieldExistenceRequest.ProfileId = digitalProfileQueryService.GetDigitalProfileByName(tenant, "Customer").Id;
+                }
+
                 var helper = new DigitalFieldSecuritesHelper();
                 var defaultDigitalFieldSecurity = helper.GitDigitalSecuritesFeilds(checkObjectFieldExistenceRequest.ObjectTableId, checkObjectFieldExistenceRequest.ProfileId, tenant);
 
