@@ -3297,7 +3297,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             GLAccountPM debitGLAcount = getDebitGLAccount(entityPM.BillToId, entityPM.Tenant, entityPM.BillToGLAccountId);
             if (entityPM.IsMultiCurrency && !(entityPM.BillToGLAccountId != null && debitGLAcount.ChartOfAccountsTypeCode == WorksChartOfAccountTypeCode && debitGLAcount.Id == entityPM.BillToGLAccountId) && debitGLAcount.IsMultiCurrency != null & debitGLAcount.IsMultiCurrency.Value == true)
             {
-                var splittedGlAccount = GetSplittedAccountByInvoiceLineCurrency(debitGLAcount, invoiceLine.ForiegnCurrencyId, invoiceLine.Tenant);
+                var splittedGlAccount = GetSplittedAccountByInvoiceLineCurrency(debitGLAcount, entityPM.InvoiceCurrencyId, invoiceLine.Tenant);
                 interestTransactionGLAccount = splittedGlAccount != null ? splittedGlAccount : debitGLAcount;
             }
             else if (!entityPM.IsMultiCurrency && !(entityPM.BillToGLAccountId != null && debitGLAcount.ChartOfAccountsTypeCode == WorksChartOfAccountTypeCode && debitGLAcount.Id == entityPM.BillToGLAccountId) && debitGLAcount.IsMultiCurrency != null & debitGLAcount.IsMultiCurrency.Value == true)
