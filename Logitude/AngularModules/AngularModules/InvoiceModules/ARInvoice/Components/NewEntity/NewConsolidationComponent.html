@@ -80,7 +80,7 @@
 
                                     <td>
                                         <div>
-                                            <table *ngIf="IsHaveARInvoicePrintToogleFeature()">
+                                            <table *ngIf="IsHaveARInvoicePrintToogleFeature() && IsLoadDocumentTemplateReady">
                                                 <tr class="FormFieldRow">
                                                     <td>
                                                         <LogLabel [ObjectFieldName]="'DocumentTemplateId'" [ObjectTableName]="ObjectTableName"
