@@ -67,7 +67,7 @@
                         </td>
 
                         <td style="width: 1px;">
-                            <button id="{{'addAddress' | IdGeneratorPipe}}" class="Button" (click)="AddAddressClicked()" [disabled]="!IsEditingEnabled">{{'Address.B.NewAddress' | TextCodeTranslationPipe}}</button>
+                            <button id="{{'addAddress' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="AddAddressClicked()" [disabled]="!IsEditingEnabled">{{'Address.B.NewAddress' | TextCodeTranslationPipe}}</button>
                         </td>
                     </tr>
                 </table>
@@ -141,7 +141,7 @@
                                                     <td>{{item.CityLineText}}</td>
                                                 </tr>
 
-                                                <tr id="{{'rowid' | IdGeneratorPipe}}" class="BoxItemRow">
+                                                <tr id="{{'rowid' | IdGeneratorAsyncPipe | async}}" class="BoxItemRow">
                                                     <td>{{item.CountryName}}</td>
                                                 </tr>
 

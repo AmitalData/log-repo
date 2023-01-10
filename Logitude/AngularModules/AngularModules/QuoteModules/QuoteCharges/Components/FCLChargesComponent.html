@@ -97,7 +97,7 @@
                                     </td>
 
                                     <td style="width: 1px;" *ngIf="IsPriceCheckVisible">
-                                        <button id="{{'PriceCheck' | IdGeneratorPipe}}" class="Button" (click)="PriceCheck()" [disabled]="!IsEditingEnabled">{{'Quote.Features.QuotePriceCheck' | TextCodeTranslationPipe}}</button>
+                                        <button id="{{'PriceCheck' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="PriceCheck()" [disabled]="!IsEditingEnabled">{{'Quote.Features.QuotePriceCheck' | TextCodeTranslationPipe}}</button>
                                     </td>
 
                                     <td style="width: 5px;" *ngIf="IsPriceCheckVisible">
@@ -105,7 +105,7 @@
                                     </td>
 
                                     <td style="width: 1px;" *ngIf="IsSalePriceCheckVisible">
-                                        <button id="{{'SalesLocalCharges' | IdGeneratorPipe}}" class="Button" (click)="GenerateSalesLocalChargesClicked()" [disabled]="!IsEditingEnabled">{{'Quote.S.GenerateSalesLocalCharges' | TextCodeTranslationPipe}}</button>
+                                        <button id="{{'SalesLocalCharges' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="GenerateSalesLocalChargesClicked()" [disabled]="!IsEditingEnabled">{{'Quote.S.GenerateSalesLocalCharges' | TextCodeTranslationPipe}}</button>
                                     </td>
 
                                     <td style="width: 5px;" *ngIf="IsSalePriceCheckVisible">
@@ -113,11 +113,11 @@
                                     </td>
 
                                     <td style="width: 1px;">
-                                        <button id="{{ 'AddCharges' | IdGeneratorPipe}}" class="Button" (click)="AddChargeClicked()" [disabled]="!IsEditingEnabled">{{'Quote.B.Charges.AddCharge' | TextCodeTranslationPipe}}</button>
+                                        <button id="{{ 'AddCharges' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="AddChargeClicked()" [disabled]="!IsEditingEnabled">{{'Quote.B.Charges.AddCharge' | TextCodeTranslationPipe}}</button>
                                     </td>
 
                                     <td style="width: 1px; padding-left: 5px;">
-                                        <button id="{{'DeleteAll' | IdGeneratorPipe}}" class="Button" [disabled]="IsEditingEnabled == false || ItemsSource.Length == 0" (click)="DeleteAllClicked()">Delete All</button>
+                                        <button id="{{'DeleteAll' | IdGeneratorAsyncPipe | async}}" class="Button" [disabled]="IsEditingEnabled == false || ItemsSource.Length == 0" (click)="DeleteAllClicked()">Delete All</button>
                                     </td>
                                 </tr>
                             </table>

@@ -109,7 +109,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'OKButtonID' | IdGeneratorPipe}}" class="RedButton"
+                        <button id="{{'OKButtonID' | IdGeneratorAsyncPipe | async}}" class="RedButton"
                             (click)="OkButtonClicked()">Ok</button>
                     </td>
                 </tr>

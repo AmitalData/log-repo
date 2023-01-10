@@ -6,6 +6,8 @@ import { BaseComponent } from '../../../Infrastructure/Components/LogitudeCompon
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
 import { DigitalTextService, DigitalFeildSecurityObjectModel, DigitalFeildSecurityUpdateModel, DigitalTextCodeObject, DigitalTextCodeUpdateModel } from '../../../Infrastructure/Services/WebServices/DigitalTextService'
 import { AppTool } from '../../../Infrastructure/Tools';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+
 
 @Component({
     templateUrl: './DigitalPortalCustomizationShowHideFieldsComponent.html',
@@ -195,6 +197,22 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
     OnLostFocus() {
         this.LostFocus.emit(true);
     }
+
+    AddFieldClicked() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 700;
+        logWindow.Height = 600;
+        var windowArgs: any = {};
+        windowArgs.ObjectTableId = this.SelectedObjectTableItem.Name;
+        logWindow.Title = "Add a field";
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Show('./SharedLogistics/Components/DigitalPortal/AddDigitalLogitudeFieldComponent');
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            if ($event) {
+                
+            }
+        });
+    }
 }
 
 export class ProfileFieldsItem extends BaseComponent {
@@ -206,6 +224,9 @@ export class ProfileFieldsItem extends BaseComponent {
         this.hasPermission = item.HasPermission;
         this.fieldCode = item.FieldCode;
         var selelectField = father.loadedFieldsResults.filter(a => a['FieldCode'] == this.fieldCode)[0];
+        if (selelectField == null) {
+            var test = this.fieldCode;
+        }
         this.textCode = selelectField['TextCode'];
         this.defaultText = selelectField['DefaultText'];
         this.displayText = selelectField['DisplayText'];

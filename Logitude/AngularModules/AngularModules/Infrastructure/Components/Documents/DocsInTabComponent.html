@@ -178,12 +178,12 @@
 
 
                                         <td class="CellStretched" [style.width]="IsRTL ? 'initial' : '190px'" [style.min-width]="IsRTL ? 'initial' : '190px'" [style.max-width]="IsRTL ? 'initial' : '190px'" style="position: relative;">
-                                            <button id="{{'SetReceivedDocumentbtn' | IdGeneratorPipe}}" *ngIf="item.SetReceivedButtonVisibility" style="display:inline;width:75px;height:20px;font-size:10px;vertical-align:top;text-align:left;margin-top:2px" class="Button" (click)="item.SetReceivedButtonClicked()">
+                                            <button id="{{'SetReceivedDocumentbtn' | IdGeneratorAsyncPipe | async}}" *ngIf="item.SetReceivedButtonVisibility" style="display:inline;width:75px;height:20px;font-size:10px;vertical-align:top;text-align:left;margin-top:2px" class="Button" (click)="item.SetReceivedButtonClicked()">
 
                                                 {{'DocsIn.B.SetReceived' | TextCodeTranslationPipe}}
                                             </button>
 
-                                            <button [style.margin-left]="item.SetReceivedButtonVisibility? '5px':'0px'" id="{{'UploadDocumentdbtn' | IdGeneratorPipe}}" [disabled]="IsClickToUpload" *ngIf="item.SetAttachedButtonVisibility" style="display:inline;height:20px;width:50px;font-size:10px;vertical-align:top;text-align:left;margin-top:2px;" class="Button" (click)="item.UploadButtonClicked()">
+                                            <button [style.margin-left]="item.SetReceivedButtonVisibility? '5px':'0px'" id="{{'UploadDocumentdbtn' | IdGeneratorAsyncPipe | async}}" [disabled]="IsClickToUpload" *ngIf="item.SetAttachedButtonVisibility" style="display:inline;height:20px;width:50px;font-size:10px;vertical-align:top;text-align:left;margin-top:2px;" class="Button" (click)="item.UploadButtonClicked()">
                                                 {{'DocsIn.B.Upload' | TextCodeTranslationPipe}}
                                             </button>
 

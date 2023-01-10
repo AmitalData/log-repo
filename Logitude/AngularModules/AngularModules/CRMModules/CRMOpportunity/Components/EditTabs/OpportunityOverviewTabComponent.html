@@ -306,11 +306,11 @@
                                                                                                 <td style="width:50px">Quotes</td>
                                                                                                 <td></td>
                                                                                                 <td style="width:40px">
-                                                                                                    <button id="{{'AddQuote' | IdGeneratorPipe}}"  class="Button" [disabled]="!IsAddRemoveEnabled" (click)="NewQuote()">Add</button>
+                                                                                                    <button id="{{'AddQuote' | IdGeneratorAsyncPipe | async}}"  class="Button" [disabled]="!IsAddRemoveEnabled" (click)="NewQuote()">Add</button>
                                                                                                 </td>
                                                                                                 <td style="width:3px"></td>
                                                                                                 <td style="width:40px">
-                                                                                                    <button id="{{'ConnectQuote' | IdGeneratorPipe}}"  class="Button" [disabled]="!IsAddRemoveEnabled" (click)="ConnectQuotesMethod()">Connect</button>
+                                                                                                    <button id="{{'ConnectQuote' | IdGeneratorAsyncPipe | async}}"  class="Button" [disabled]="!IsAddRemoveEnabled" (click)="ConnectQuotesMethod()">Connect</button>
                                                                                                 </td>
                                                                                                 <td style="width:3px"></td>
                                                                                             </tr>
@@ -786,7 +786,7 @@
                                                                                                 <table>
                                                                                                     <tr>
                                                                                                         <td style="width: 35px;">
-                                                                                                            <button id="{{'AddPhoneCall' | IdGeneratorPipe}}" class="Button" (click)="AddActivity('CL')">
+                                                                                                            <button id="{{'AddPhoneCall' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="AddActivity('CL')">
                                                                                                                 <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
                                                                                                                 <img style="left:5px;" src="./Images/Buttons/Call.png" />
                                                                                                             </button>
@@ -797,7 +797,7 @@
                                                                                                         </td>
 
                                                                                                         <td style="width: 35px;">
-                                                                                                            <button id="{{'AddTask' | IdGeneratorPipe}}" class="Button" (click)="AddActivity('TS')">
+                                                                                                            <button id="{{'AddTask' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="AddActivity('TS')">
                                                                                                                 <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
                                                                                                                 <img style="left:5px;" src="./Images/Buttons/Task.png" />
                                                                                                             </button>
@@ -808,7 +808,7 @@
                                                                                                         </td>
 
                                                                                                         <td style="width: 35px;">
-                                                                                                            <button id="{{'AddAppointment' | IdGeneratorPipe}}" class="Button" (click)="AddActivity('AP')">
+                                                                                                            <button id="{{'AddAppointment' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="AddActivity('AP')">
                                                                                                                 <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
                                                                                                                 <img style="left:5px;" src="./Images/Buttons/Appointment.png" />
                                                                                                             </button>
@@ -819,7 +819,7 @@
                                                                                                         </td>
 
                                                                                                         <td style="width: 35px;">
-                                                                                                            <button id="{{'SendEMail' | IdGeneratorPipe}}" class="Button" (click)="AddEmail()">
+                                                                                                            <button id="{{'SendEMail' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="AddEmail()">
                                                                                                                 <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
                                                                                                                 <img style="left:5px;" src="./Images/Buttons/Email.png" />
                                                                                                             </button>

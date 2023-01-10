@@ -426,7 +426,7 @@
                                         <span style="vertical-align:middle;font-size:18px;color:#6E7172;margin-left: 10px;">Documents</span>
                                     </td>
                                     <td style="float:right;">
-                                        <button id="{{'AddLogboxDocument' | IdGeneratorPipe}}" class="IconButton"  style="width:114px;height:26px;margin-right:5px;" (click)="AddDocumentClick()" [class.Disable]="DisableAddDocumentButton == true || !SelectedShipment">
+                                        <button id="{{'AddLogboxDocument' | IdGeneratorAsyncPipe | async}}" class="IconButton"  style="width:114px;height:26px;margin-right:5px;" (click)="AddDocumentClick()" [class.Disable]="DisableAddDocumentButton == true || !SelectedShipment">
                                             <img src="./Images/LogBox/Add.png"  style="visibility:inherit;left:2px;vertical-align:middle;position:relative;" />
                                             <span style="vertical-align:middle;">Add Document</span>
                                         </button>
@@ -536,7 +536,7 @@
                                                 </div>
                                                 <div *ngFor="let item1 of externalDocs" style="padding:5px;float:left;width:100%;">
                                                     <span style="font-size:16px;border-bottom:1px solid #BCBEC0;width:100%;float:left;">{{item1.key}}</span>
-                                                    <div id="{{'EmptyTicket' | IdGeneratorPipe}}" *ngFor="let item of item1.value let i = index" class="emptyticket" [class.SearchResult]="(SearchText != null && SearchText != '' && item.SearchFields.toLowerCase().indexOf(SearchText.toLowerCase()) > -1)" style="max-width:164px;margin-top:10px;">
+                                                    <div id="{{'EmptyTicket' | IdGeneratorAsyncPipe | async}}" *ngFor="let item of item1.value let i = index" class="emptyticket" [class.SearchResult]="(SearchText != null && SearchText != '' && item.SearchFields.toLowerCase().indexOf(SearchText.toLowerCase()) > -1)" style="max-width:164px;margin-top:10px;">
                                                         <table *ngIf="!item.hasFile" style="height:162px;width:162px;" (click)="DocumentClicked(item)">
                                                             <tr>
                                                                 <td style="height:40px;">

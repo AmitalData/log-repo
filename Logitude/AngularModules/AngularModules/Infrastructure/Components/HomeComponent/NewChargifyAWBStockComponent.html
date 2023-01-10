@@ -177,13 +177,13 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'CloseBtn' | IdGeneratorPipe}}" class="Button" (click)="CloseButtonClicked()">Close</button>
+                        <button id="{{'CloseBtn' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CloseButtonClicked()">Close</button>
                     </td>
                     <td style="width: 10px;">
                         <div></div>
                     </td>
                     <td style="width: 57px;">
-                        <button id="{{'SendBtn' | IdGeneratorPipe}}" class="RedButton" (click)="SendButtonClicked()" [disabled]="!IsValidationWarningsVisible">Confirm</button>
+                        <button id="{{'SendBtn' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="SendButtonClicked()" [disabled]="!IsValidationWarningsVisible">Confirm</button>
                     </td>
                 </tr>
             </table>

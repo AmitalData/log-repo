@@ -100,7 +100,7 @@
                                                         <div style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
                                                     </div>
                                                 </td>
-                                                <td id="{{'PassId' | IdGeneratorPipe}}" class="TextTrimming" style="text-align: left; vertical-align:middle;">
+                                                <td id="{{'PassId' | IdGeneratorAsyncPipe | async}}" class="TextTrimming" style="text-align: left; vertical-align:middle;">
                                                     <label *ngIf="NewUserPM.Password" class="Label" style="color:#6E7172">{{'User.F.Password' | TextCodeTranslationPipe}}:</label>
                                                     <label *ngIf="!NewUserPM.Password" class="Label" style="color:red">{{'User.F.Password' | TextCodeTranslationPipe}}:</label>
                                                 </td>
@@ -112,7 +112,7 @@
                                         <table>
                                             <tr>
                                                 <td style="width:193px;">
-                                                    <input id="{{'PasswordId' | IdGeneratorPipe}}" [disabled]="IsPasswordDisable" type="password" autocomplete="off" style="height:22px;width:193px;" [(ngModel)]="NewUserPM.Password" value="" />
+                                                    <input id="{{'PasswordId' | IdGeneratorAsyncPipe | async}}" [disabled]="IsPasswordDisable" type="password" autocomplete="off" style="height:22px;width:193px;" [(ngModel)]="NewUserPM.Password" value="" />
                                                 </td>
                                                 <td>
                                                     <div></div>
@@ -131,7 +131,7 @@
                                                         <div style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
                                                     </div>
                                                 </td>
-                                                <td id="{{'Password' | IdGeneratorPipe}}" class="TextTrimming" style="text-align: left; vertical-align:middle;">
+                                                <td id="{{'Password' | IdGeneratorAsyncPipe | async}}" class="TextTrimming" style="text-align: left; vertical-align:middle;">
                                                     <label *ngIf="ReTypePassword" class="Label" style="color:#6E7172">{{'User.O.ReTypePassword' | TextCodeTranslationPipe}}:</label>
                                                     <label *ngIf="!ReTypePassword" class="Label" style="color:red">{{'User.O.ReTypePassword' | TextCodeTranslationPipe}}:</label>
                                                 </td>
@@ -143,7 +143,7 @@
                                         <table>
                                             <tr>
                                                 <td style="width:193px;">
-                                                    <input id="{{'retypePass' | IdGeneratorPipe}}" [disabled]="IsPasswordDisable" type="password" autocomplete="off" style="height:22px;width:193px;" [(ngModel)]="ReTypePassword" value="" />
+                                                    <input id="{{'retypePass' | IdGeneratorAsyncPipe | async}}" [disabled]="IsPasswordDisable" type="password" autocomplete="off" style="height:22px;width:193px;" [(ngModel)]="ReTypePassword" value="" />
                                                 </td>
                                                 <td>
                                                     <div></div>
@@ -359,10 +359,10 @@
                             <tr style="height: 1px;">
                                 <td>
                                     <table>
-                                        <tr id="{{'row1' | IdGeneratorPipe}}" class="SimpleGridViewRow RowHover" *ngFor="let item of ObsList">
+                                        <tr id="{{'row1' | IdGeneratorAsyncPipe | async}}" class="SimpleGridViewRow RowHover" *ngFor="let item of ObsList">
                                             <td>
                                                 <table>
-                                                    <tr id="{{'row11' | IdGeneratorPipe}}" style="height:25px;" (click)="SelectedUserRolesItem = item" [class.RowSelected]="item === SelectedUserRolesItem">
+                                                    <tr id="{{'row11' | IdGeneratorAsyncPipe | async}}" style="height:25px;" (click)="SelectedUserRolesItem = item" [class.RowSelected]="item === SelectedUserRolesItem">
                                                         <td class="GridViewCell" style="width: 190px; min-width: 190px; max-width: 190px; position: relative;">
                                                             {{item.Name}}
                                                         </td>
@@ -435,7 +435,7 @@
                         </td>
 
                         <td style="width: 57px;">
-                            <button id="{{'OKIdButton' | IdGeneratorPipe}}" class="RedButton" (click)="SaveButtonClicked()">Ok</button>
+                            <button id="{{'OKIdButton' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="SaveButtonClicked()">Ok</button>
                         </td>
                     </tr>
                 </table>

@@ -70,7 +70,7 @@
                                             <div class="QueriesSection" style="color: #58B8FF;">
                                                 <div>{{ 'InterestBasesType.Q.InterestBases' | TextCodeTranslationPipe }}</div>
                                                 <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
-                                                    <button class="Button" id="{{'NewInterestBase' | IdGeneratorPipe}}"  (click)="RunNewInterestBasesTypeWizard()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
+                                                    <button class="Button" id="{{'NewInterestBase' | IdGeneratorAsyncPipe | async}}"  (click)="RunNewInterestBasesTypeWizard()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
                                                 </div>
                                                 <div>
                                                     <table>

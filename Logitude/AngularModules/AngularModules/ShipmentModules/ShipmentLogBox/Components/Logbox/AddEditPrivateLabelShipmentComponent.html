@@ -1656,7 +1656,7 @@
 
                                                                     </td>
                                                                     <td>
-                                                                        <button id="{{'AddLogboxDocument' | IdGeneratorPipe}}" class="IconButton" style="width:114px;height:26px;margin-right:5px;margin-left:10px" (click)="AddDocumentClick()">
+                                                                        <button id="{{'AddLogboxDocument' | IdGeneratorAsyncPipe | async}}" class="IconButton" style="width:114px;height:26px;margin-right:5px;margin-left:10px" (click)="AddDocumentClick()">
                                                                             <img src="./Images/LogBox/Add.png" style="visibility:inherit;left:-2px;vertical-align:middle;position:relative;" />
                                                                             <span style="vertical-align:middle;">Add Document</span>
                                                                         </button>
@@ -1787,14 +1787,14 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" id="{{'ShipmentCancelbtn' | IdGeneratorPipe}}" (click)="CloseButtonClicked()">Cancel</button>
+                        <button class="Button" id="{{'ShipmentCancelbtn' | IdGeneratorAsyncPipe | async}}" (click)="CloseButtonClicked()">Cancel</button>
                     </td>
                     <td *ngIf="DirectionId == 'E' && !IsDSVTenant" style="width: 5px;">
                         <div></div>
                     </td>
 
                     <td *ngIf="DirectionId == 'E' && !IsDSVTenant" style="width: 57px;">
-                        <button [ngClass]="ShowAddDocument ?  'Button' : 'RedButton'" (click)="NextButtonClicked()" id="{{'ShipmentCreatebtn' | IdGeneratorPipe}}">{{ChangePageButton}}</button>
+                        <button [ngClass]="ShowAddDocument ?  'Button' : 'RedButton'" (click)="NextButtonClicked()" id="{{'ShipmentCreatebtn' | IdGeneratorAsyncPipe | async}}">{{ChangePageButton}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -1802,7 +1802,7 @@
                     </td>
 
                     <td *ngIf="DirectionId != 'E' || ShowAddDocument || IsDSVTenant" style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()" id="{{'ShipmentCreatebtn' | IdGeneratorPipe}}">{{IsNew ? 'Create' : 'Update'}}</button>
+                        <button class="RedButton" (click)="OkButtonClicked()" id="{{'ShipmentCreatebtn' | IdGeneratorAsyncPipe | async}}">{{IsNew ? 'Create' : 'Update'}}</button>
                     </td>
                 </tr>
             </table>

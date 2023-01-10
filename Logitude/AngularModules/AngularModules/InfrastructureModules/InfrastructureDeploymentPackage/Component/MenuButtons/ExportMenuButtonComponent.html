@@ -89,13 +89,13 @@
                         <div></div>
                     </td>
                     <td style="width: 57px;">
-                        <button id="{{'CancelButton' | IdGeneratorPipe}}" class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        <button id="{{'CancelButton' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
                     <td style="width: 5px;">
                         <div></div>
                     </td>
                     <td style="width: 57px;">
-                        <button id="{{'OkButton' | IdGeneratorPipe}}" class="RedButton" [disabled]="!IsValidForExport" (click)="ExportButtonClicked()">Export</button>
+                        <button id="{{'OkButton' | IdGeneratorAsyncPipe | async}}" class="RedButton" [disabled]="!IsValidForExport" (click)="ExportButtonClicked()">Export</button>
                     </td>
                 </tr>
                 <tr *ngIf="IsExported">
@@ -103,7 +103,7 @@
                         <div></div>
                     </td>
                     <td style="width: 57px;">
-                        <button id="{{'CloseButton' | IdGeneratorPipe}}" class="Button" (click)="CancelButtonClicked()">Close</button>
+                        <button id="{{'CloseButton' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CancelButtonClicked()">Close</button>
                     </td>
                 </tr>
             </table>

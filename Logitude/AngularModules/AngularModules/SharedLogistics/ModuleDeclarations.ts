@@ -29,6 +29,9 @@ import { DigitalPortalCustomizationShowHideFieldsComponent } from './Components/
 import { DigitalPortalCustomizationScreenLayoutComponent } from './Components/DigitalPortal/DigitalPortalCustomizationScreenLayoutComponent'; 
 import { AddDigitalFieldCodeComponent } from './Components/DigitalPortal/AddDigitalFieldCodeComponent';
 import { AddDigitalPredefinedComponent } from './Components/DigitalPortal/AddDigitalPredefinedComponent';
+import { AddDigitalLogitudeFieldComponent } from './Components/DigitalPortal/AddDigitalLogitudeFieldComponent';
+import { DigitalButtonComponent } from './Components/DigitalPortal/DigitalButtonComponent';
+import { DigitalCheckBoxComponent } from './Components/DigitalPortal/DigitalCheckBoxComponent';
 
 export const ControlsComponents =
     [
@@ -39,7 +42,6 @@ export const ControlsComponents =
         SharedLogisticsMoneyPermissiosComponent,
         SharedLogisticsPartnersPermissiosComponent,
         SharedLogisticsDigitalPortalComponent,
-
     ];
 
 
@@ -76,6 +78,10 @@ export const Components =
         DigitalPortalCustomizationScreenLayoutComponent,
         AddDigitalFieldCodeComponent,
         AddDigitalPredefinedComponent,
+        AddDigitalLogitudeFieldComponent,
+        DigitalButtonComponent,
+        DigitalCheckBoxComponent
+
     ];
 
 export class ModuleDeclarations {
@@ -115,6 +121,9 @@ export class ModuleDeclarations {
             case "DigitalPortalCustomizationScreenLayoutComponent": { myResult = DigitalPortalCustomizationScreenLayoutComponent; break; }
             case "AddDigitalFieldCodeComponent": { myResult = AddDigitalFieldCodeComponent; break; }
             case "AddDigitalPredefinedComponent": { myResult = AddDigitalPredefinedComponent; break; }
+            case "AddDigitalLogitudeFieldComponent": { myResult = AddDigitalLogitudeFieldComponent; break; }
+            case "DigitalButtonComponent": { myResult = DigitalButtonComponent; break; }
+            case "DigitalCheckBoxComponent": { myResult = DigitalCheckBoxComponent; break; }
         }
 
         return myResult;

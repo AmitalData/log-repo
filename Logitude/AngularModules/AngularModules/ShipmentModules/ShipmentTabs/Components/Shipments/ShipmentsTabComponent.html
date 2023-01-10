@@ -56,7 +56,7 @@
                                     </td>
 
                                     <td style="width: 1px;">
-                                        <button class="Button" id="{{ 'NewHouseBtn' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" (click)="NewShipmentClicked()">New house</button>
+                                        <button class="Button" id="{{ 'NewHouseBtn' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsEditingEnabled" (click)="NewShipmentClicked()">New house</button>
                                     </td>
 
                                     <td style="width: 5px;">

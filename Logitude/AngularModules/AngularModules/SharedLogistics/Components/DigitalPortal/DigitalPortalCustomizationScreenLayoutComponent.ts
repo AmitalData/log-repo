@@ -6,7 +6,6 @@ import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
-import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 
 @Component({
     templateUrl: './DigitalPortalCustomizationScreenLayoutComponent.html',
