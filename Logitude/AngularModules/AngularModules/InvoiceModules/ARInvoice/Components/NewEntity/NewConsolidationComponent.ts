@@ -48,6 +48,7 @@ export class NewConsolidationComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     public documentTypeTemplates: DocumentTypeTemplateList[] = [];
     public selectedDocumentTypeTemplate: DocumentTypeTemplateList;
+    public IsLoadDocumentTemplateReady = false;
 
     constructor(private entityResourceService: EntityResourceService) {
         super();
@@ -85,6 +86,7 @@ export class NewConsolidationComponent extends BaseComponent {
             this.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
 
             this.SetUIProperties();
+            this.GetDocumentTypeTemplates();
             this.BuildPartnersTypes();
           this.LoadData();
 
@@ -122,7 +124,6 @@ export class NewConsolidationComponent extends BaseComponent {
 
     ngOnInit() {
         this.BuildAdditionalFields();
-        this.GetDocumentTypeTemplates();
     }
 
     IsHaveARInvoicePrintToogleFeature() {
@@ -139,6 +140,7 @@ export class NewConsolidationComponent extends BaseComponent {
 
     private GetDocumentTypeTemplates() {
         if (!this.IsHaveARInvoicePrintToogleFeature()) return;
+        this.CurrentSession.StartBusyIndicatorLoading();
         let documentTypeCode: string = this.GetDocumentTypeCode();
         this.documentTypeTemplatePMExtendedService.getDocumentTypeTemplatesByDocumentTypeCode(documentTypeCode, SessionLocator.Tenant).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
@@ -147,6 +149,7 @@ export class NewConsolidationComponent extends BaseComponent {
             let selectedDocumentTypeTemplate = this.documentTypeTemplates.filter(d => d.IsDefault == true)[0];
             if (!selectedDocumentTypeTemplate) selectedDocumentTypeTemplate = this.documentTypeTemplates[0];
             this.OnDocumentTypeTemplateSelectedChanged(selectedDocumentTypeTemplate);
+            this.IsLoadDocumentTemplateReady = true;
         });
     }
 
