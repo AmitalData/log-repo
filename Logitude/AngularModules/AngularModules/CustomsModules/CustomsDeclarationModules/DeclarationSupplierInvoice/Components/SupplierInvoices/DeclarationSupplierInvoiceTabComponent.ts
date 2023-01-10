@@ -48,6 +48,7 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
     public UploadFileId: string = Guid.NewRandomString();
     filterImageParameter: ImageParameter;
     File: any;
+    FileData: number;
     supplierInvoiceExtendedPMService: SupplierInvoiceExtendedPMService;
     customsDocumentPointerService: CustomsDocumentPointerService;
     supplierInvoicePMService: SupplierInvoicePMService;
@@ -137,7 +138,7 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
         });
 
         this.showMultiUpdateWindowBtn = FeatureLocator.HasFeaturePermession("Customs.Declaration", "MultiUpdateClassificationCodeWindow")
-        this.showUploadInvoicesFromCsvBtn = true;//todo: add feature
+        this.showUploadInvoicesFromCsvBtn = FeatureLocator.HasFeaturePermession("Customs.Declaration", "UploadExportInvoicesFromCsv")
     }
 
     IsAccumulatedMessageText: string;
