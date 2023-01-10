@@ -115,6 +115,7 @@ import { DeploymentPackagePMService } from './Services/StandardPMs/DeploymentPac
 import { DeploymentPackageListService } from './Services/StandardLists/DeploymentPackageListService';
 import { CustomFieldsMainObjectPMService } from './Services/StandardPMs/CustomFieldsMainObjectsPMService';
 import { CustomFieldsMainObjectListService } from './Services/StandardLists/CustomFieldsMainObjectListService';
+import { DigitalCustomizationService } from './Services/WebServices/DigitalCustomizationService';
 
 export class ModuleProviders {
 
@@ -235,7 +236,7 @@ export class ModuleProviders {
             case "DeploymentPackageListService": { myResult = new DeploymentPackageListService(); break; }
             case "CustomFieldsMainObjectPMService": { myResult = new CustomFieldsMainObjectPMService(); break; }
             case "CustomFieldsMainObjectListService": { myResult = new CustomFieldsMainObjectListService(); break; }
-
+            case "DigitalCustomizationService": { myResult = new DigitalCustomizationService(); break; }
         }
 
         return myResult;

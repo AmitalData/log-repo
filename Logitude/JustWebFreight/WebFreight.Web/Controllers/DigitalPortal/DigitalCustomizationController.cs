@@ -78,7 +78,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             try
             {
                 var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
-                tenant = authToken.Tenant;
                 email = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
@@ -175,6 +174,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 entityLists = genericFilter.GetFilteredQuery(listQueryOperation, entityLists);
 
                 ServiceResponse response = new ServiceResponse();
+                entityLists = entityLists.OrderBy(d => d.FullNameTextCodeDefaultText);
 
                 if (filters.GetCount)
                 {
@@ -187,7 +187,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     entityLists = entityLists.Take(queryOperations.PageSize);
                 }
 
-                List<ObjectFieldList> listResult = entityLists.OrderBy(d => d.FullNameTextCodeDefaultText).ToList();
+                List<ObjectFieldList> listResult = entityLists.ToList();
                 response.Result = listResult;
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
                 return reponseMessage;
