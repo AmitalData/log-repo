@@ -382,7 +382,7 @@
                                     </ng-template>
 
                                     <ng-template let-item>
-                                        <log-cell-template id="{{ 'CostPrice' | IdGeneratorPipe}}" #logcelltemplate [IsEnabled]="item.IsEnabled_CostUnitPrice ">
+                                        <log-cell-template id="{{ 'CostPrice' | IdGeneratorAsyncPipe | async}}" #logcelltemplate [IsEnabled]="item.IsEnabled_CostUnitPrice ">
                                             <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;" class="TextTrimming" [attr.title]="item.CostUnitPrice | NumbersPipe:'N2'">
                                                 <table>
                                                     <tr>
@@ -1049,7 +1049,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{ 'CancelAddCharges' | IdGeneratorPipe}}" class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        <button id="{{ 'CancelAddCharges' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -1057,7 +1057,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{ 'OKAddCharges' | IdGeneratorPipe}}" class="RedButton" (click)="OkButtonClicked()" [disabled]="!IsEditingEnabled">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        <button id="{{ 'OKAddCharges' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="OkButtonClicked()" [disabled]="!IsEditingEnabled">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

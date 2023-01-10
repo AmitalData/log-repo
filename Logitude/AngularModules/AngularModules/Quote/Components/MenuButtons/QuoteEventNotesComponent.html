@@ -95,7 +95,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" id="{{'CancelApproved' | IdGeneratorPipe}}" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        <button class="Button" id="{{'CancelApproved' | IdGeneratorAsyncPipe | async}}" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -103,7 +103,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" id="{{'ConfrimApproved' | IdGeneratorPipe}}" (click)="OkButtonClicked()">{{'General.B.Confirm' | TextCodeTranslationPipe}}</button>
+                        <button class="Button" id="{{'ConfrimApproved' | IdGeneratorAsyncPipe | async}}" (click)="OkButtonClicked()">{{'General.B.Confirm' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

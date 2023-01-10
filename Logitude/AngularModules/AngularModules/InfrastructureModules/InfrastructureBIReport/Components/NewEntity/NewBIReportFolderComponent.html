@@ -16,7 +16,7 @@
                     </td>
 
                     <td style="width:260px;">
-                        <LogTextBox id="{{'BIFolderName' | IdGeneratorPipe}}" [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                        <LogTextBox id="{{'BIFolderName' | IdGeneratorAsyncPipe | async}}" [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                     </td>
                     <td>
                         <div></div>
@@ -40,7 +40,7 @@
                             <tr>
                                 <td style="width:260px;height:85px;">
                                     <div class="MediaFill">
-                                        <LogTextBox id="{{'BIFolderDescription' | IdGeneratorPipe}}" [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true" [HideColumns]="true"></LogTextBox>
+                                        <LogTextBox id="{{'BIFolderDescription' | IdGeneratorAsyncPipe | async}}" [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true" [HideColumns]="true"></LogTextBox>
                                     </div>
                                 </td>
                                 <td><div></div></td>
@@ -132,7 +132,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'CancelButton' | IdGeneratorPipe}}" class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        <button id="{{'CancelButton' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -140,7 +140,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'OKButton' | IdGeneratorPipe}}" class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        <button id="{{'OKButton' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

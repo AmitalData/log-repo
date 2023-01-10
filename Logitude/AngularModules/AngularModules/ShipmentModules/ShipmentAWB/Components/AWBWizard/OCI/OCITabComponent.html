@@ -14,7 +14,7 @@
                                         </td>
 
                                         <td style="width: 60px;">
-                                            <button id="{{'BtnAddLineOCI' | IdGeneratorPipe}}" class="Button" (click)="Add()" [disabled]="!IsEditingEnabled">Add line</button>
+                                            <button id="{{'BtnAddLineOCI' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="Add()" [disabled]="!IsEditingEnabled">Add line</button>
                                         </td>
                                     </tr>
                                 </table>

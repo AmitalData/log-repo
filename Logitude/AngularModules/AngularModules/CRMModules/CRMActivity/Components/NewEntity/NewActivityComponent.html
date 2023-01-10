@@ -24,7 +24,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'Cancel-DontAddActivity' | IdGeneratorPipe}}" class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                        <button id="{{'Cancel-DontAddActivity' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CancelButtonClicked()">Cancel</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -32,13 +32,13 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'Ok-AddActivity' | IdGeneratorPipe}}" class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                        <button id="{{'Ok-AddActivity' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="OkButtonClicked()">Ok</button>
                     </td>
                     <td *ngIf="TypeCode === 'CL'" style="width: 5px;">
                         <div></div>
                     </td>
                     <td *ngIf="TypeCode === 'CL'" style="width: 57px;">
-                        <button id="{{'SaveAsComplete' | IdGeneratorPipe}}" class="GreenButton" (click)="SaveAsCompletedClicked()">Save as Completed</button>
+                        <button id="{{'SaveAsComplete' | IdGeneratorAsyncPipe | async}}" class="GreenButton" (click)="SaveAsCompletedClicked()">Save as Completed</button>
                     </td>
                 </tr>
             </table>

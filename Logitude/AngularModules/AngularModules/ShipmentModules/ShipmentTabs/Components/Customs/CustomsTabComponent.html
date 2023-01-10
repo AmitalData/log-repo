@@ -374,7 +374,7 @@
                                                                     <td style="width: 200px;">
                                                                         <table>
                                                                             <tr>
-                                                                                <td attr.data-cy="{{'StatusValue' | IdGeneratorPipe}}" style="width:60px; float:left;" [ngStyle]="{color: item.StatusCode | StringToColorPipe:'CustomsTransmissionsStatus'}">
+                                                                                <td attr.data-cy="{{'StatusValue' | IdGeneratorAsyncPipe | async}}" style="width:60px; float:left;" [ngStyle]="{color: item.StatusCode | StringToColorPipe:'CustomsTransmissionsStatus'}">
                                                                                     {{item.StatusName}}
                                                                                 </td>
 
@@ -405,7 +405,7 @@
                                                                 <tr>
                                                                     <td style="width:70px;" class="Label">Last Sent:</td>
 
-                                                                    <td attr.data-cy="{{'StatusDate' | IdGeneratorPipe}}" style="text-align: left; width:200px;">{{item.StatusDate | DateTimePipe: 'SHWH'}}</td>
+                                                                    <td attr.data-cy="{{'StatusDate' | IdGeneratorAsyncPipe | async}}" style="text-align: left; width:200px;">{{item.StatusDate | DateTimePipe: 'SHWH'}}</td>
 
                                                                     <td>
                                                                         <div></div>
@@ -421,7 +421,7 @@
                                                                 <tr>
                                                                     <td style="width:70px;" class="Label">By:</td>
 
-                                                                    <td attr.data-cy="{{'UserName' | IdGeneratorPipe}}" style="width:200px;">{{item.UserName}}</td>
+                                                                    <td attr.data-cy="{{'UserName' | IdGeneratorAsyncPipe | async}}" style="width:200px;">{{item.UserName}}</td>
 
                                                                     <td>
                                                                         <div></div>

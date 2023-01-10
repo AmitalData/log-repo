@@ -1829,7 +1829,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" id="{{'ShipmentCancelbtn' | IdGeneratorPipe}}" (click)="CancelButtonClicked()">Cancel</button>
+                        <button class="Button" id="{{'ShipmentCancelbtn' | IdGeneratorAsyncPipe | async}}" (click)="CancelButtonClicked()">Cancel</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -1837,7 +1837,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()" id="{{'ShipmentCreatebtn' | IdGeneratorPipe}}" [disabled]="!IsScreenEnabled" >{{OkButtonLabel}}</button>
+                        <button class="RedButton" (click)="OkButtonClicked()" id="{{'ShipmentCreatebtn' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsScreenEnabled" >{{OkButtonLabel}}</button>
                     </td>
                 </tr>
             </table>

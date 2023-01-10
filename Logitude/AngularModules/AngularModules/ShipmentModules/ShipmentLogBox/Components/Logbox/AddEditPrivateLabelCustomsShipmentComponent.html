@@ -472,7 +472,7 @@
 
                     </td>
                     <td>
-                        <button id="{{'AddLogboxDocument' | IdGeneratorPipe}}" class="IconButton" style="width:114px;height:26px;margin-right:5px;margin-left:10px" (click)="AddDocumentClick()">
+                        <button id="{{'AddLogboxDocument' | IdGeneratorAsyncPipe | async}}" class="IconButton" style="width:114px;height:26px;margin-right:5px;margin-left:10px" (click)="AddDocumentClick()">
                             <img src="./Images/LogBox/Add.png" style="visibility:inherit;left:-2px;vertical-align:middle;position:relative;" />
                             <span style="vertical-align:middle;">Add Document</span>
                         </button>

@@ -447,11 +447,11 @@
                                                                                                                                         </td>
                                                                                                                                         <td *ngIf="item" style="width:5%;"></td>
                                                                                                                                         <td class="LinkBtn" style="width:70px;">
-                                                                                                                                            <span id="{{GetIdWithoutSpecialCharacters('AddQBRootColumn'+item.DisplayName | IdGeneratorPipe)}}" class="LinkBtn" (click)="btnAdd_Click(item)">Add Column</span>
+                                                                                                                                            <span id="{{GetIdWithoutSpecialCharacters('AddQBRootColumn'+item.DisplayName | IdGeneratorAsyncPipe | async)}}" class="LinkBtn" (click)="btnAdd_Click(item)">Add Column</span>
                                                                                                                                         </td>
                                                                                                                                         <td *ngIf="item " style="width:1%;"></td>
                                                                                                                                         <td *ngIf="!item.CannotFilter" class="LinkBtn" style="width:65px;">
-                                                                                                                                            <span id="{{GetIdWithoutSpecialCharacters('AddQBRootFilter'+item.DisplayName | IdGeneratorPipe)}}" class="LinkBtn" (click)="btnAddFilter_Click(item)">Add Filter</span>
+                                                                                                                                            <span id="{{GetIdWithoutSpecialCharacters('AddQBRootFilter'+item.DisplayName | IdGeneratorAsyncPipe | async)}}" class="LinkBtn" (click)="btnAddFilter_Click(item)">Add Filter</span>
                                                                                                                                         </td>
                                                                                                                                         <td *ngIf="item" style="width:4%;"></td>
                                                                                                                                         <!--<td *ngIf="item &&  item.HasTree" style="width:30%;"></td>-->
@@ -495,12 +495,12 @@
                                                                                                                                                                 </td>
                                                                                                                                                                 <td *ngIf="item &&  !item.HasTree" style="width:5%;"></td>
                                                                                                                                                                 <td class="LinkBtn" style="width:10%;">
-                                                                                                                                                                    <span id="{{GetIdWithoutSpecialCharacters('AddQBColumn'+ item.TranslationText | IdGeneratorPipe)}}" class="LinkBtn" (click)="btnAdd_Click(item)">Add Column</span>
+                                                                                                                                                                    <span id="{{GetIdWithoutSpecialCharacters('AddQBColumn'+ item.TranslationText | IdGeneratorAsyncPipe | async)}}" class="LinkBtn" (click)="btnAdd_Click(item)">Add Column</span>
                                                                                                                                                                 </td>
                                                                                                                                                                 <td *ngIf="item &&  !item.HasTree" style="width:1%;"></td>
                                                                                                                                                                 <td style="width:2px;"></td>
                                                                                                                                                                 <td *ngIf="!item.CannotFilter" class="LinkBtn" style="width:10%;">
-                                                                                                                                                                    <span id="{{GetIdWithoutSpecialCharacters('AddQBFilter'+ item.TranslationText | IdGeneratorPipe)}}" class="LinkBtn" (click)="btnAddFilter_Click(item)">Add Filter</span>
+                                                                                                                                                                    <span id="{{GetIdWithoutSpecialCharacters('AddQBFilter'+ item.TranslationText | IdGeneratorAsyncPipe | async)}}" class="LinkBtn" (click)="btnAddFilter_Click(item)">Add Filter</span>
                                                                                                                                                                 </td>
                                                                                                                                                                 <td *ngIf="item &&  !item.HasTree" style="width:4%;"></td>
                                                                                                                                                                 <td *ngIf="item &&  item.HasTree" style="width:30%;"></td>
@@ -827,7 +827,7 @@
                                                                                         <tr style="height:1px;">
                                                                                             <td></td>
                                                                                             <td style="width:200px;">
-                                                                                                <button id="{{'LoadPreviewData' | IdGeneratorPipe}}" style="min-width: 35px; padding-left: 5px; padding-right: 5px;height:40px;font-size:13px;" class="Button" (click)="SaveChanges()">Load Preview Data</button>
+                                                                                                <button id="{{'LoadPreviewData' | IdGeneratorAsyncPipe | async}}" style="min-width: 35px; padding-left: 5px; padding-right: 5px;height:40px;font-size:13px;" class="Button" (click)="SaveChanges()">Load Preview Data</button>
                                                                                             </td>
                                                                                             <td></td>
                                                                                         </tr>
@@ -873,7 +873,7 @@
                         </td>
 
                         <td style="width: 57px;">
-                            <button id="{{'CancelButton' | IdGeneratorPipe}}" class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                            <button id="{{'CancelButton' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                         </td>
 
                         <td style="width: 5px;">
@@ -881,7 +881,7 @@
                         </td>
 
                         <td style="width: 57px;">
-                            <button id="{{'SaveButton' | IdGeneratorPipe}}" class="RedButton" (click)="SaveButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
+                            <button id="{{'SaveButton' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="SaveButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
                         </td>
 
                         <td style="width: 5px;">
@@ -898,7 +898,7 @@
                                         <div style="width: 5px;height:20px;"></div>
                                     </td>
                                     <td>
-                                        <button id="{{'OKButton' | IdGeneratorPipe}}" class="RedButton" (click)="EditButtonClicked()">Edit</button>
+                                        <button id="{{'OKButton' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="EditButtonClicked()">Edit</button>
                                     </td>
                                 </tr>
                             </table>

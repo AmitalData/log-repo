@@ -38,13 +38,13 @@
                         <div></div>
                     </td>
                     <td style="width: 57px;">
-                        <button id="{{'CloseBtn' | IdGeneratorPipe}}" class="Button" (click)="CloseButtonClicked()">Cancel</button>
+                        <button id="{{'CloseBtn' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CloseButtonClicked()">Cancel</button>
                     </td>
                     <td style="width: 5px;">
                         <div></div>
                     </td>
                     <td style="width: 100px;">
-                        <button id="{{'CloseBtn' | IdGeneratorPipe}}" class="Button" (click)="AddFieldCodeClicked()">Add Field Code</button>
+                        <button id="{{'CloseBtn' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="AddFieldCodeClicked()">Add Field Code</button>
                     </td>
 
                 </tr>

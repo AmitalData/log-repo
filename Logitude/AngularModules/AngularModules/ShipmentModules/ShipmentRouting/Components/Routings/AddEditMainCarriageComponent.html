@@ -188,7 +188,7 @@
 
                                                                     <td>
                                                                         <div>
-                                                                            <Hyperlink id="{{'AddStock' | IdGeneratorPipe}}" *ngIf="MainCarriageCarrierId && TransportModeId == 'A'" (click)="AddStockClicked(MainCarriageCarrierId)">Add Stock</Hyperlink>
+                                                                            <Hyperlink id="{{'AddStock' | IdGeneratorAsyncPipe | async}}" *ngIf="MainCarriageCarrierId && TransportModeId == 'A'" (click)="AddStockClicked(MainCarriageCarrierId)">Add Stock</Hyperlink>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -316,8 +316,8 @@
                                                                     </td>
 
                                                                     <td>
-                                                                        <button id="{{'GetFromStockBtn' | IdGeneratorPipe}}" style="margin-left: -5px; width: 90px;" class="Button" *ngIf="IsFromStockVisible && TransportModeId == 'A'" [disabled]="!IsFromStockEnabled" (click)="GetStockClicked()">Get from stock</button>
-                                                                        <button id="{{'ReturnStockBtn' | IdGeneratorPipe}}" style="margin-left: -5px; width: 90px;" class="Button" *ngIf="IsReturnStockVisible && TransportModeId == 'A'" [disabled]="!IsReturnStockEnabled" (click)="ReturnStockClicked()">Return to stock</button>
+                                                                        <button id="{{'GetFromStockBtn' | IdGeneratorAsyncPipe | async}}" style="margin-left: -5px; width: 90px;" class="Button" *ngIf="IsFromStockVisible && TransportModeId == 'A'" [disabled]="!IsFromStockEnabled" (click)="GetStockClicked()">Get from stock</button>
+                                                                        <button id="{{'ReturnStockBtn' | IdGeneratorAsyncPipe | async}}" style="margin-left: -5px; width: 90px;" class="Button" *ngIf="IsReturnStockVisible && TransportModeId == 'A'" [disabled]="!IsReturnStockEnabled" (click)="ReturnStockClicked()">Return to stock</button>
                                                                     </td>
 
                                                                 </tr>
@@ -1467,7 +1467,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CancelButtonClicked()" id="{{ 'MainCarriageCancelBtn' | IdGeneratorPipe}}">Cancel</button>
+                        <button class="Button" (click)="CancelButtonClicked()" id="{{ 'MainCarriageCancelBtn' | IdGeneratorAsyncPipe | async}}">Cancel</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -1475,7 +1475,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!IsEditingEnabled" id="{{ 'MainCarriageOKBtn' | IdGeneratorPipe}}">Ok</button>
+                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!IsEditingEnabled" id="{{ 'MainCarriageOKBtn' | IdGeneratorAsyncPipe | async}}">Ok</button>
                     </td>
                 </tr>
             </table>

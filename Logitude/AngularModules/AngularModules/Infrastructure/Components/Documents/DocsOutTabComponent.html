@@ -103,7 +103,7 @@
                                 <tr style="height: 1px;">
                                     <td>
                                         <table>
-                                            <tr id="{{item.DocumentTypeCode+'-L-DocsOut' | IdGeneratorPipe}}" class="SimpleGridViewRow RowHover" *ngFor="let item of ItemsSource" >
+                                            <tr id="{{item.DocumentTypeCode+'-L-DocsOut' | IdGeneratorAsyncPipe | async}}" class="SimpleGridViewRow RowHover" *ngFor="let item of ItemsSource" >
                                                 <td>
                                                     <table style="height:22px;">
                                                         <tr style="height:22px" (click)="OnSelectedDocumentOutList(item)" [class.RowSelected]="item === SelectedInternalDocument" (mouseleave)="OnmMouseleave(item)" (mouseover)="OnmMouseOver(item)">
@@ -134,8 +134,8 @@
 
                                                             <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px; position: relative;">
 
-                                                                <button id="{{item.DocumentTypeCode+'-S-DocsOut' | IdGeneratorPipe}}" [disabled]="DisableSendOriginalCopy" *ngIf="item.VisibleSendButton" style="width: 40px;" class="Button"  (click)="SendButtonClick(item)"   >Send</button>
-                                                                <button id="{{item.DocumentTypeCode+'-P-DocsOut' | IdGeneratorPipe}}" *ngIf="item.VisiblePrintButton" style="width: 75px;" class="Button" (click)="PrintButtonClick(item)"   >Print/Send</button>
+                                                                <button id="{{item.DocumentTypeCode+'-S-DocsOut' | IdGeneratorAsyncPipe | async}}" [disabled]="DisableSendOriginalCopy" *ngIf="item.VisibleSendButton" style="width: 40px;" class="Button"  (click)="SendButtonClick(item)"   >Send</button>
+                                                                <button id="{{item.DocumentTypeCode+'-P-DocsOut' | IdGeneratorAsyncPipe | async}}" *ngIf="item.VisiblePrintButton" style="width: 75px;" class="Button" (click)="PrintButtonClick(item)"   >Print/Send</button>
 
 
 
@@ -167,7 +167,7 @@
 
                                                             <td *ngIf="IsShowFollowColum" (mouseleave)="OnFollowMouseleave(item)" (mouseover)="OnFollowMouseOver(item)" class="GridViewCell" style="width: 70px; min-width: 70px; max-width: 70px; position: relative;">
 
-                                                                <span id="{{item.DocumentTypeCode+'-F-DocsOut' | IdGeneratorPipe}}" (click)="AddFollowUp(item)" style="width:20px"  >
+                                                                <span id="{{item.DocumentTypeCode+'-F-DocsOut' | IdGeneratorAsyncPipe | async}}" (click)="AddFollowUp(item)" style="width:20px"  >
 
                                                                     <img *ngIf="item.ShowFollowUp || item.HasFollowUp" src="./_Resources/Images/Icons/Followups/Followup_Black.png" />
                                                                     <img style="opacity:0.7" *ngIf="!item.ShowFollowUp && !item.HasFollowUp" src="./_Resources/Images/Icons/Followups/Followup.png" />

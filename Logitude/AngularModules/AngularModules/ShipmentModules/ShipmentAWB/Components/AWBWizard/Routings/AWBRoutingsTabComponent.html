@@ -201,7 +201,7 @@
 
                                                                                 <td style="padding-left: 5px;">
                                                                                     <div>
-                                                                                        <span id="{{'AddStock' | IdGeneratorPipe}}" class="hyperlink" *ngIf="MainCarriageCarrierId" (click)="AddStockClicked(MainCarriageCarrierId)">Add Stock</span>
+                                                                                        <span id="{{'AddStock' | IdGeneratorAsyncPipe | async}}" class="hyperlink" *ngIf="MainCarriageCarrierId" (click)="AddStockClicked(MainCarriageCarrierId)">Add Stock</span>
                                                                                     </div>
                                                                                 </td>
                                                                             </tr>
@@ -234,7 +234,7 @@
 
                                                                                             <td style="width: 90px;">
                                                                                                 <div *ngIf="IsFlightSchedulesVisible">
-                                                                                                    <button id="{{'FindFlightsBtn' | IdGeneratorPipe}}" class="GreenButton" *ngIf="!Transshipment1FromPortId || !InterlineId" (click)="FlightSchedulesClicked(true)">Find Flights</button>
+                                                                                                    <button id="{{'FindFlightsBtn' | IdGeneratorAsyncPipe | async}}" class="GreenButton" *ngIf="!Transshipment1FromPortId || !InterlineId" (click)="FlightSchedulesClicked(true)">Find Flights</button>
                                                                                                 </div>
                                                                                             </td>
 
@@ -288,7 +288,7 @@
 
                                                                                 <td>
                                                                                     <div style="padding-left: 5px;">
-                                                                                        <span id="{{'AddStock' | IdGeneratorPipe}}" class="hyperlink" *ngIf="InterlineId" (click)="AddStockClicked(InterlineId)">Add Stock</span>
+                                                                                        <span id="{{'AddStock' | IdGeneratorAsyncPipe | async}}" class="hyperlink" *ngIf="InterlineId" (click)="AddStockClicked(InterlineId)">Add Stock</span>
                                                                                     </div>
                                                                                 </td>
                                                                             </tr>
@@ -315,8 +315,8 @@
                                                                                             </td>
 
                                                                                             <td style="width: 90px;">
-                                                                                                <button id="{{'GetFromStockBtn' | IdGeneratorPipe}}" class="Button" *ngIf="IsFromStockVisible" [disabled]="!IsFromStockEnabled" (click)="GetStockClicked()">Get from stock</button>
-                                                                                                <button id="{{'ReturnStockBtn' | IdGeneratorPipe}}" class="Button" *ngIf="IsReturnStockVisible" [disabled]="!IsReturnStockEnabled" (click)="ReturnStockClicked()">Return to stock</button>
+                                                                                                <button id="{{'GetFromStockBtn' | IdGeneratorAsyncPipe | async}}" class="Button" *ngIf="IsFromStockVisible" [disabled]="!IsFromStockEnabled" (click)="GetStockClicked()">Get from stock</button>
+                                                                                                <button id="{{'ReturnStockBtn' | IdGeneratorAsyncPipe | async}}" class="Button" *ngIf="IsReturnStockVisible" [disabled]="!IsReturnStockEnabled" (click)="ReturnStockClicked()">Return to stock</button>
                                                                                             </td>
 
                                                                                             <td>
@@ -504,7 +504,7 @@
 
                                                                                             <td style="padding-left: 2px; padding-right: 5px;">
                                                                                                 <div *ngIf="IsFlightSchedulesVisible">
-                                                                                                    <button id="{{'FindFlightsBtn' | IdGeneratorPipe}}" class="GreenButton" *ngIf="InterlineId" (click)="FlightSchedulesClicked(false)">Find Flights</button>
+                                                                                                    <button id="{{'FindFlightsBtn' | IdGeneratorAsyncPipe | async}}" class="GreenButton" *ngIf="InterlineId" (click)="FlightSchedulesClicked(false)">Find Flights</button>
                                                                                                 </div>
                                                                                             </td>
                                                                                         </tr>

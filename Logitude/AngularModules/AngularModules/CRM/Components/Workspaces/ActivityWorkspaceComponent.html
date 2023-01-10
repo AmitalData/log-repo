@@ -151,13 +151,13 @@
                                         <div class="QueriesSection" *ngIf="IsQueryVisible_OpenGroup">
                                             <div>Open Activities</div>
                                             <div style="height:22px; width: 57px; position: absolute; top:0px; right:0px;">
-                                                <div id="{{'NEWACTIVITY' | IdGeneratorPipe}}" tabindex="0" class="ToggleButton" style="margin: auto; width: 100% !important; height: 100% !important">
+                                                <div id="{{'NEWACTIVITY' | IdGeneratorAsyncPipe | async}}" tabindex="0" class="ToggleButton" style="margin: auto; width: 100% !important; height: 100% !important">
                                                     <label>New</label>
                                                     <img src="./Images/ToggleIcon.png" />
                                                     <div class="ToggleButtonMenu" style="width: 80px;">
-                                                        <button id="{{'NEWTASK' | IdGeneratorPipe}}" (click)="NewActivityClicked('TS')">Task</button>
-                                                        <button id="{{'NEWPHONECALL' | IdGeneratorPipe}}" (click)="NewActivityClicked('CL')">Phone Call</button>
-                                                        <button id="{{'NEWAPPOINTMENT' | IdGeneratorPipe}}" (click)="NewActivityClicked('AP')">Appointment</button>
+                                                        <button id="{{'NEWTASK' | IdGeneratorAsyncPipe | async}}" (click)="NewActivityClicked('TS')">Task</button>
+                                                        <button id="{{'NEWPHONECALL' | IdGeneratorAsyncPipe | async}}" (click)="NewActivityClicked('CL')">Phone Call</button>
+                                                        <button id="{{'NEWAPPOINTMENT' | IdGeneratorAsyncPipe | async}}" (click)="NewActivityClicked('AP')">Appointment</button>
                                                     </div>
                                                 </div>
                                             </div>

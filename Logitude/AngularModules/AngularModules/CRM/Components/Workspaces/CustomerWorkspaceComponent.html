@@ -167,7 +167,7 @@
                                     <div class="QueriesSection">
                                         <div>Views</div>
                                         <div style="height:22px; width: 57px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px; right:2px;">
-                                            <button  id="{{'NewCustomer' | IdGeneratorPipe}}" class="Button" (click)="NewCustomerClicked()">New</button>
+                                            <button  id="{{'NewCustomer' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="NewCustomerClicked()">New</button>
                                         </div>
                                         <div>
                                             <p *ngIf="IsMyCustomersSalesmanQueryVisible" class="QueryLink" (click)="ViewCustomerQuery('My')">My Customers (as Salesman) ({{Customers_My}})</p>

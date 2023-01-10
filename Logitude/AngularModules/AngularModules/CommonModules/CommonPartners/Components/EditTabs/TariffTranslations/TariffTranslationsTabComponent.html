@@ -8,7 +8,7 @@
                         <td>{{'TariffCarrierTranslation.O.TariffTranslations' | TextCodeTranslationPipe}}</td>
 
                         <td style="width: 1px;">
-                            <button id="{{'addTranslation' | IdGeneratorPipe}}" class="Button" (click)="AddTranslationClicked()">{{'TariffCarrierTranslation.B.NewTranslation' | TextCodeTranslationPipe}}</button>
+                            <button id="{{'addTranslation' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="AddTranslationClicked()">{{'TariffCarrierTranslation.B.NewTranslation' | TextCodeTranslationPipe}}</button>
                         </td>
 
                         <td style="width:5px;">

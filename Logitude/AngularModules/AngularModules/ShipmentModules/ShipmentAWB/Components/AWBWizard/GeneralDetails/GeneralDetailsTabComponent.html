@@ -34,7 +34,7 @@
                                                                     </td>
 
                                                                     <td style="width: 70px;">
-                                                                        <button id="{{'AdvancedFWBBtn' | IdGeneratorPipe}}" class="Button" *ngIf="IsFWB" (click)="AccountingAdvancedButtonClicked()">Advanced</button>
+                                                                        <button id="{{'AdvancedFWBBtn' | IdGeneratorAsyncPipe | async}}" class="Button" *ngIf="IsFWB" (click)="AccountingAdvancedButtonClicked()">Advanced</button>
                                                                     </td>
 
                                                                     <td style="width: 36px;">
@@ -95,7 +95,7 @@
                                                                     </td>
 
                                                                     <td style="width: 70px;">
-                                                                        <button id="{{'AdvancedAWBBtn' | IdGeneratorPipe}}" class="Button" (click)="CommentsAdvancedButtonClicked()">Advanced</button>
+                                                                        <button id="{{'AdvancedAWBBtn' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CommentsAdvancedButtonClicked()">Advanced</button>
                                                                     </td>
 
                                                                     <td style="width: 36px;">
