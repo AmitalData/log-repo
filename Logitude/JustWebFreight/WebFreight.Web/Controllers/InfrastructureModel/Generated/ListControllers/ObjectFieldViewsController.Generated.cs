@@ -125,7 +125,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                int tenant = authToken.Tenant;
+                int tenant = 0;
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
