@@ -116,6 +116,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
             this.textValue = newValue;
             this.TextValueChanges(newValue);
         }
+
     }
     ErrorPopUpId: string;
     InputId: string;
@@ -224,7 +225,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
         //this.CurrentSession.isTabWithShiftClicked = false;
 
     }
-    
+
     ngOnInit() {
 
         this.StaticPlaceHolder = this.Placeholder;
@@ -244,24 +245,22 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
         else {
             baseIdCombination = this.ObjectFieldName;
         }
-        
         if (this.CheckIfExists(baseIdCombination)) {
-                this.counterId = ControlsIdCounter.GetNextControlIdCounter(baseIdCombination);
-                if (this.counterId != null) {
-                    baseIdCombination = baseIdCombination + '_' + this.counterId.toString();
-                }
 
-                setTimeout(() => { 
-                    if (!this.CheckIfExists(baseIdCombination.replace('_' + this.counterId.toString(),''))) {
-                        baseIdCombination = baseIdCombination.replace('_' + this.counterId.toString(),'');
-                        this.SetControlIds(baseIdCombination);
-                        this.cd.detectChanges();
+            setTimeout(() => {
+                if (this.CheckIfExists(baseIdCombination)) {
+                    this.counterId = ControlsIdCounter.GetNextControlIdCounter(baseIdCombination);
+                    if (this.counterId != null) {
+                        baseIdCombination = baseIdCombination + '_' + this.counterId.toString();
                     }
-                }, 1000)
+
+                    this.SetControlIds(baseIdCombination);
+                }
+            }, 1000)
         }
 
         this.SetControlIds(baseIdCombination);
-        
+
         if (this.FocusOnMe) {// it means it is inside a grid.
             this.CopyValueSubs = this.CurrentSession.CopyCellIntoMemory.subscribe((id) => {
                 if (id == this.InputId) {
@@ -304,19 +303,19 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
 
         this.uiProperty = this.DataContext.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext);
 
-        this.IsDisabled = !this.uiProperty.IsEnabled || this.ForceDisabled; 
+        this.IsDisabled = !this.uiProperty.IsEnabled || this.ForceDisabled;
 
-             if (this.IsDisabled || this.ForceDisable) {
-                this.SetDisabled();
-            }
-            else {
-                this.SetEnabled();
-            }
-            this.cd.detectChanges();
-            this.uiProperty.UIPropertyChanged.subscribe((value) => {
-                this.HandleUIPropertyChanged(value);
-             }); 
-       
+        if (this.IsDisabled || this.ForceDisable) {
+            this.SetDisabled();
+        }
+        else {
+            this.SetEnabled();
+        }
+
+        this.uiProperty.UIPropertyChanged.subscribe((value) => {
+            this.HandleUIPropertyChanged(value);
+            //this.DetectChanges();
+        });
 
         // if(this.DataContext.EntityPM){
         //     const pmuiProperty = this.DataContext.EntityPM.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext.EntityPM);
