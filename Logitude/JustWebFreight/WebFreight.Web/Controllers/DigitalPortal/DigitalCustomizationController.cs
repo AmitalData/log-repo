@@ -22,7 +22,6 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Script.Serialization;
 using WebFreight.Web.Controllers.DigitalPortal.Helpers;
-using WebFreight.Web.Controllers.DigitalPortal.Models;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
