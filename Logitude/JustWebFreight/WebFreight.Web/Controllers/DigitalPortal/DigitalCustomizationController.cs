@@ -35,7 +35,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         [Route("DigitalCustomization/CheckIfFieldInuse")]
         public HttpResponseMessage CheckIfFieldInuse(string fieldCode)
         {
-            return Ok();
+            return null;
         }
 
         [HttpPost]
