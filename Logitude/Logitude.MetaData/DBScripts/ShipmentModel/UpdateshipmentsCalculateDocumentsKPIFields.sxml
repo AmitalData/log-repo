@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="DocumentsFilings">
-  <Sql Version="5">
+  <Sql Version="7">
     <![CDATA[
     
 declare @ObjectTableId as VARCHAR(15)   set @ObjectTableId = (select id from ObjectTables where Name = 'Shipment')
@@ -9,6 +9,7 @@ declare @ObjectTableId as VARCHAR(15)   set @ObjectTableId = (select id from Obj
        declare @FieldName as VARCHAR(200) 
 	   declare @FieldValue as datetime 
 	    declare @DocumentTypeId as VARCHAR(15) 
+			    declare @Tenant as int
 
 DECLARE DataCursor CURSOR READ_ONLY
 	FOR
@@ -17,7 +18,7 @@ select DocumentsFilings.EntityId,DocumentsFilings.DocumentTypeId,
        WHEN DocumentsFilings.DirectionCode = 'I' THEN DocumentTypes.OnUploadPopulateDateFieldName
        WHEN DocumentsFilings.DirectionCode = 'O' and DocumentsFilings.DocumentId is not null THEN DocumentTypes.OnPrintPopulateDateFieldName
  END AS FieldName,
- Max(DocumentsFilings.UpdateDate)
+ Max(DocumentsFilings.ReceivedDate) , DocumentsFilings.Tenant
 
  from DocumentsFilings
  inner join DocumentTypes on DocumentTypes.Id = DocumentsFilings.DocumentTypeId
@@ -33,8 +34,8 @@ where  $LastCounterWhere$ and DocumentsFilings.EntityId is not null and (
  GROUP BY EntityId,DocumentTypeId , CASE
        WHEN DocumentsFilings.DirectionCode = 'I' THEN DocumentTypes.OnUploadPopulateDateFieldName
        WHEN DocumentsFilings.DirectionCode = 'O' and DocumentsFilings.DocumentId is not null THEN DocumentTypes.OnPrintPopulateDateFieldName
- END
-    OPEN DataCursor FETCH NEXT FROM DataCursor INTO @Id,@DocumentTypeId ,@FieldName ,@FieldValue
+ END, DocumentsFilings.Tenant
+    OPEN DataCursor FETCH NEXT FROM DataCursor INTO @Id,@DocumentTypeId ,@FieldName ,@FieldValue , @Tenant
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 
@@ -43,7 +44,7 @@ where  $LastCounterWhere$ and DocumentsFilings.EntityId is not null and (
 
 			set @TableName ='Shipments'
 
-
+	  set @FieldName =  REPLACE(@FieldName,'Shipment.'+ CAST(@Tenant AS varchar(100))+'.', '');
 		set @FieldName =  REPLACE(@FieldName,'Shipment.', '');
 
 	  IF COL_LENGTH('ShipmentComputedFields',@FieldName) IS  NULL
@@ -55,7 +56,7 @@ where  $LastCounterWhere$ and DocumentsFilings.EntityId is not null and (
 	 set @functionring = 'update ' +@TableName +' set ' + @FieldName +'= ' + ''''+ CONVERT(varchar, @FieldValue,113) +'''' +'  where id = ' + ''''+ @Id +'''' 
 	EXEC(@functionring)
 
-	FETCH NEXT FROM DataCursor  INTO @Id,@DocumentTypeId ,@FieldName ,@FieldValue
+	FETCH NEXT FROM DataCursor  INTO @Id,@DocumentTypeId ,@FieldName ,@FieldValue , @Tenant
 	END
 	CLOSE DataCursor
 	DEALLOCATE DataCursor
