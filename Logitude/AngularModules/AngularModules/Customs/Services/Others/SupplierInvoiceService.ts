@@ -96,4 +96,18 @@ export class SupplierInvoiceService {
 
         });
     }
+    PutExportSupplierInviocesFromFileRequest(fileUploadParamerter: any, tenant: number, declarationId: string) {
+
+        return defer(() => {
+            return this._http.put(this._apiUrl + "/PutExportSupplierInviocesFromFileRequest?" + "tenant=" + tenant
+                + "&declarationId=" + declarationId, JSON.stringify(fileUploadParamerter), ServiceHelper.GetHttpHeaders()).pipe(map((response: any) => {
+
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = response;
+                    return serviceResponse;
+                }), catchError(ServiceHelper.HandleServiceError));
+
+        });
+    }
 }

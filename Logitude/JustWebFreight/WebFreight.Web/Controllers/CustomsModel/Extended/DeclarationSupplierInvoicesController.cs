@@ -863,6 +863,28 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
+        public HttpResponseMessage PutExportSupplierInviocesFromFileRequest(int tenant, string declarationId, ImageParameter fileUploadParamerter)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                if (fileUploadParamerter != null && !string.IsNullOrEmpty(fileUploadParamerter.Base64String))
+                {
+                    byte[] data = Convert.FromBase64String(fileUploadParamerter.Base64String);
+                    string decodedString = Encoding.UTF8.GetString(data);
+                    var messagingService = new DCAInUCBCreateExportSupplierInvoicesFromFile_MsgMessagingService();
+                    var sts = messagingService.CreateCRS(tenant, declarationId, decodedString);
+                    return Request.CreateResponse(HttpStatusCode.OK, sts);
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, "");
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage PutSupplierInvioceFromFileRequest(int tenant, string clientId, string partnerId, string declarationId,bool ignoreChecks, ImageParameter fileUploadParamerter)
         {
             try
