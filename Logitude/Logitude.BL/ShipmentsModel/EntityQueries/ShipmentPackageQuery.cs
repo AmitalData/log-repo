@@ -216,7 +216,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return myResult;
         }
 
-        public List<ShipmentPackagePM> GetShipmentPackages(string shipmentId, string myShipmentNumber, int tenant)
+        public List<ShipmentPackagePM> GetShipmentPackages(string shipmentId, string myShipmentNumber, int tenant,string volumeUnitCode = null, string weightUnitCode = null)
         {
             InsideShipmentPackageRepository insideShipmentPackagesRepository = new InsideShipmentPackageRepository(repository.context);
             InsideShipmentPackageQuery insideShipmentPackageQuery = new InsideShipmentPackageQuery(insideShipmentPackagesRepository);
@@ -340,11 +340,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
             foreach (ShipmentPackagePM package in shipmentPackages)
             {
-                package.VolumeInCBM = ShipmentMapping.GetVolumeInCBM("CBM", package.Volume) ;
-                package.GrossWeightInKG  = ShipmentMapping.GetWeightInKG("KG", package.Weight);
-                package.VolumeInCBF = ShipmentMapping.GetVolumeInCBM("CBF", package.VolumeInCBM);
-                package.GrossWeightInLB = ShipmentMapping.GetWeightInKG("LB", package.GrossWeightInKG);
-                package.InsideShipmentPackages = insideShipmentPackageQuery.GetInsideShipmentPackages(package.Id, package.Tenant);
+                package.VolumeInCBM = ShipmentMapping.GetVolumeInCBM(volumeUnitCode, package.Volume);
+                package.GrossWeightInKG = ShipmentMapping.GetWeightInKG(weightUnitCode, package.Weight);
+
+                package.VolumeInCBF = ShipmentMapping.GetVolumeInCBF(volumeUnitCode, package.Volume);
+                package.GrossWeightInLB = ShipmentMapping.GetWeightInLB(weightUnitCode, package.Weight);
+
+                package.InsideShipmentPackages = insideShipmentPackageQuery.GetInsideShipmentPackages(package.Id, package.Tenant, volumeUnitCode, weightUnitCode);
                 package.ShipmentPackageItems = shipmentPackageItemQuery.GetShipmentPackageItems(package.Id, package.Tenant);
                 package.ShipmentPackageHarmonizes = shipmentPackageHarmonizeQuery.GetShipmentPackageHarmonizes(package.Id, package.Tenant);
                 if (!string.IsNullOrEmpty(package.PackageTypeId))

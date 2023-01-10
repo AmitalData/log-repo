@@ -3582,6 +3582,65 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
             return myResult;
         }
+
+        public static double? GetVolumeInCBF(string volumeCode, double? volume)
+        {
+            double? myResult = null;
+
+            if (volume != null)
+            {
+                double? factorOfConvert = 1;
+
+                if (!string.IsNullOrEmpty(volumeCode))
+                {
+                    switch (volumeCode.ToUpper())
+                    {
+                        case "CBF": { factorOfConvert = 1; break; }
+                        case "CBI": { factorOfConvert = 1728; break; }      // 1m³ = 61024in³
+                        case "CBM": { factorOfConvert = 35.315; break; }     // 1m³ = 35.315ft³
+                    }
+                }
+
+                myResult = volume * factorOfConvert;
+            }
+
+            if (myResult != null)
+            {
+                myResult = MethodHelper.Round(myResult.Value, 3);
+            }
+
+            return myResult;
+        }
+
+        public static double? GetWeightInLB(string weightCode, double? weight)
+        {
+            double? myResult = null;
+
+            if (weight != null)
+            {
+                double? factorOfConvert = 1;
+
+                if (!string.IsNullOrEmpty(weightCode))
+                {
+                    switch (weightCode.ToUpper())
+                    {
+                        case "LB": { factorOfConvert = 1; break; }
+                        case "KG": { factorOfConvert = 2.20462262; break; }    
+                        case "MT": { factorOfConvert = 2204.62262; break; }   
+                    }
+                }
+
+                myResult = weight * factorOfConvert;
+            }
+
+            if (myResult != null)
+            {
+                myResult = MethodHelper.Round(myResult.Value, 3);
+            }
+
+            return myResult;
+        }
+
         public static double? GetWeightInKG(string weightCode, double? weight)
         {
             double? myResult = null;
