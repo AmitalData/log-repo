@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="27">
+  <Sql Version="28">
     <![CDATA[	
 	  delete from DigitalTextCodes where id != ''
 
@@ -1483,6 +1483,11 @@
 			"TextCode": "Shipment.F.Transshipment3ATD",
 			"DefaultText": "Transshipment3 ATD",
 			"FieldCode": "Shipment.Transshipment3ATD"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment3ATA",
+			"DefaultText": "Transshipment3 ATA",
+			"FieldCode": "Shipment.Transshipment3ATA"
 		},
 		{
 			"TextCode": "Shipment.F.MainCarriageToCity",
@@ -3576,6 +3581,11 @@
 			"TextCode": "Shipment.F.Transshipment3ETD",
 			"DefaultText": "Transshipment3 ETD",
 			"FieldCode": "Shipment.Transshipment3ETD"
+		},
+		{
+			"TextCode": "Shipment.F.Transshipment3ATA",
+			"DefaultText": "Transshipment3 ATA",
+			"FieldCode": "Shipment.Transshipment3ATA"
 		},
 		{
 			"TextCode": "Shipment.F.Transshipment3ATD",

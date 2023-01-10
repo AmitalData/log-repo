@@ -2422,11 +2422,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 if (field != null)
                 {
                     string valuestring1 = filter.FieldValue?.ToString();
-                    object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+                    object value1 = Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
                     string valuestring2 = filter.FieldValue2?.ToString();
-                    object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+                    object value2 = Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
                     string valuestring3 = filter.FieldValue3?.ToString();
-                    object value3 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring3);
+                    object value3 = Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring3);
                     queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
                 }
                 else

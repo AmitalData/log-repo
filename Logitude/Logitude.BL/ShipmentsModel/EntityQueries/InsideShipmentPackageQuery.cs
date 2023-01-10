@@ -21,7 +21,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             repository = myRepository;
         }
 
-        public List<InsideShipmentPackagePM> GetInsideShipmentPackages(string shipmentPackageId, int tenant)
+        public List<InsideShipmentPackagePM> GetInsideShipmentPackages(string shipmentPackageId, int tenant, string volumeUnitCode = null, string weightUnitCode = null)
         {
             ShipmentPackageHarmonizeRepository shipmentPackageHarmonizeRepository = new ShipmentPackageHarmonizeRepository(repository.context);
             ShipmentPackageHarmonizeQuery shipmentPackageHarmonizeQuery = new ShipmentPackageHarmonizeQuery(shipmentPackageHarmonizeRepository);
@@ -81,10 +81,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             foreach (InsideShipmentPackagePM package in myResult)
             {
                 package.InsidePackageHarmonizes = shipmentPackageHarmonizeQuery.GetInsideShipmentPackageHarmonizes(package.Id, package.Tenant);
-                package.VolumeInCBM = ShipmentMapping.GetVolumeInCBM("CBM", package.Volume);
-                package.GrossWeightInKG = ShipmentMapping.GetWeightInKG("KG", package.Weight);
-                package.VolumeInCBF = ShipmentMapping.GetVolumeInCBM("CBF", package.VolumeInCBM);
-                package.GrossWeightInLB = ShipmentMapping.GetWeightInKG("LB", package.GrossWeightInKG);
+                package.VolumeInCBM = ShipmentMapping.GetVolumeInCBM(volumeUnitCode, package.Volume);
+                package.GrossWeightInKG = ShipmentMapping.GetWeightInKG(weightUnitCode, package.Weight);
+
+                package.VolumeInCBF = ShipmentMapping.GetVolumeInCBF(volumeUnitCode, package.Volume);
+                package.GrossWeightInLB = ShipmentMapping.GetWeightInLB(weightUnitCode, package.Weight);
             }
 
             return myResult;
