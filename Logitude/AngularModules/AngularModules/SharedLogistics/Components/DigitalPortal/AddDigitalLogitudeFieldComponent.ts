@@ -77,7 +77,14 @@ export class AddDigitalLogitudeFieldComponent extends BaseComponent implements O
         filters.Tenant = 0;
         filters.addAdditionalFilter("ObjectTableId", this.ObjectTableId, null, null, "Equals", false, false, false, "string");
 
-        return this.digitalCustomizationService.GetObjectFieldsByFilters(filters);
+        var servicelink = './Infrastructure/Services/WebServices/DigitalCustomizationService';
+        return new Promise((resolve, reject) => {
+            SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
+                resolve(this.digitalCustomizationService.GetObjectFieldsByFilters(filters));
+            });
+        });
+
+        //return this.digitalCustomizationService.GetObjectFieldsByFilters(filters);
     }
 
     BuildColumns() {
