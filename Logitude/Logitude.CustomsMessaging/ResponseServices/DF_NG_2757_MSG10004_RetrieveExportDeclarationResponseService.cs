@@ -186,8 +186,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         public void CreateDeclarationFromResponse(Declaration declaration, int tenant, DF_NG_2757_MSG10004_ExportDeclarationResponse customResponse)
         {
            
-            try
-            {
+           
                 var context = CustomContext.GetContext(tenant);
                 DeclarationRepository declarationRepository = new DeclarationRepository(context);
                 var myQueryService = new DeclarationQueryService(context);
@@ -347,12 +346,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 CreateEvent( tenant,  declarationId);
                 AmitalInsertToQueueService.insertToQueue(declarationPM);
-            }
-            catch (System.Exception ex)
-            {
-              
-               // return null;
-            }
+      
         }
         private void CreateEvent(int tenant,string declarationId)
         {
