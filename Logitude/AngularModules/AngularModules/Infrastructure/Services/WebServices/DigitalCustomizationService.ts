@@ -103,7 +103,7 @@ export class DigitalCustomizationService {
     }
 
     GetObjectFieldsByFilters(filters: ApiQueryFilters) {
-        var urlparameters = '/getobjectfieldsbyfilters?';
+        var urlparameters = '/GetObjectFieldsByFilters?';
         var mykeys = Object.keys(filters);
         var addtionalFiltersValues = null;
         for (var i in mykeys) {
