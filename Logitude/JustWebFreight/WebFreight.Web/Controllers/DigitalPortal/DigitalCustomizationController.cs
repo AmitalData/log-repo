@@ -22,6 +22,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Script.Serialization;
 using WebFreight.Web.Controllers.DigitalPortal.Helpers;
+using WebFreight.Web.Controllers.DigitalPortal.Models;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
@@ -30,9 +31,16 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 {
     public class DigitalCustomizationController : ApiController
     {
-        [HttpGet]
+        [HttpPost]
+        [Route("DigitalCustomization/CheckIfFieldInuse")]
+        public HttpResponseMessage CheckIfFieldInuse(string fieldCode)
+        {
+            return Ok();
+        }
+
+        [HttpPost]
         [Route("DigitalCustomization/GetObjectFieldsByFilters")]
-        public HttpResponseMessage GetObjectFieldsByFilters([FromUri] ApiQueryFilters filters)
+        public HttpResponseMessage GetObjectFieldsByFilters(GeneralFilters filters)
         {
             int tenant = 0;
             string email = "";
@@ -50,8 +58,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     PageSize = filters.PageSize,
                     QuerySection = "ObjectFields",
                     SortByColumnName = filters.SortBy,
-                    SortDirectin = filters.SortDirection,
-                    GetAll = filters.GetAll,
+                    SortDirectin = filters.SortDirection
                 };
 
                 List<ObjectField> ObjectFieldObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("ObjectField", 0);
@@ -83,36 +90,30 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     }
                 }
 
-                if (!string.IsNullOrEmpty(filters.AdditionalFilters))
+                foreach (var filter in filters.AdditionalFilters)
                 {
-                    JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
-                    var filters_list = JsonConvert.Deserialize<List<QueryFilterItem>>(filters.AdditionalFilters);
-
-                    foreach (QueryFilterItem filter in filters_list)
+                    ObjectField field = ObjectFieldObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                    if (field != null)
                     {
-                        ObjectField field = ObjectFieldObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
-                        if (field != null)
-                        {
-                            string valuestring1 = filter.FieldValue != null 
-                                                  ? filter.FieldValue.ToString() 
-                                                  : null;
+                        string valuestring1 = filter.FieldValue != null 
+                                                ? filter.FieldValue.ToString() 
+                                                : null;
 
-                            object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+                        object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
                             
-                            string valuestring2 = filter.FieldValue2 != null 
-                                                  ? filter.FieldValue2.ToString() 
-                                                  : null;
+                        string valuestring2 = filter.FieldValue2 != null 
+                                                ? filter.FieldValue2.ToString() 
+                                                : null;
 
-                            object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
-                            queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
-                        }
-                        else
-                        {
-                            queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
-                        }
+                        object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+                        queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
+                    }
+                    else
+                    {
+                        queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
                     }
                 }
-
+                
                 GenericFilter genericFilter = new GenericFilter();
 
                 IWebFreightContext MyContext = WebFreightContext.GetContext(tenant);
