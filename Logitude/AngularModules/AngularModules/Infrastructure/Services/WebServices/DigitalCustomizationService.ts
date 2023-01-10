@@ -1,9 +1,12 @@
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { defer, of } from 'rxjs';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { ApiQueryFilters } from '../../DataContracts/ApiQueryFilters';
+import { PerformanceLogger } from '../../Utilities/PerformanceLogger';
+import { ObjectFieldList } from '../../EntityLists/ObjectFieldList';
 
 @Injectable()
 export class DigitalCustomizationService {
@@ -57,6 +60,22 @@ export class DigitalCustomizationService {
         });
     }
 
+    CheckIfFieldInuse(data: CheckObjectFieldExistenceRequest) {
+        return defer(() => {
+            return this._http.post(this._apiUrl + "/CheckIfFieldInuse", JSON.stringify(data), ServiceHelper.GetHttpHeaders())
+                .pipe(
+                    map((response: any) => {
+                        var myResult = response;
+                        var serviceResponse: ServiceResponse;
+                        serviceResponse = new ServiceResponse();
+                        serviceResponse.Result = myResult;
+                        return serviceResponse;
+                    }),
+                    catchError(ServiceHelper.HandleServiceError));
+
+        });
+    }
+
     UpdateDigitalPortalScreen(data: DigitalPortalScreenUpdateModel) {
         return defer(() => {
             return this._http.post(this._apiUrl + "/UpdateDigitalPortalScreen", JSON.stringify(data), ServiceHelper.GetHttpHeaders())
@@ -83,6 +102,68 @@ export class DigitalCustomizationService {
         });
     }
 
+    GetObjectFieldsByFilters(filters: ApiQueryFilters) {
+        var urlparameters = '/getobjectfieldsbyfilters?';
+        var mykeys = Object.keys(filters);
+        var addtionalFiltersValues = null;
+        for (var i in mykeys) {
+            var propName = mykeys[i];
+            var propValue = filters[propName];
+
+            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
+
+            if (urlparameters != "?") {
+                urlparameters = urlparameters.concat('&');
+            }
+            if (!ignoreFilter)
+                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+
+            if (propName == "AdditionalFilters" && propValue.length > 0)
+                addtionalFiltersValues = JSON.stringify(propValue);
+        }
+
+        if (addtionalFiltersValues) {
+            urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
+        }
+
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        var callUrl = this._apiUrl.concat(urlparameters);
+
+        return defer(() => {
+            return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
+
+                var viewResponse: ServiceResponse = response.body;
+                var _mappedListsArray: Array<ObjectFieldList> = [];
+                if (viewResponse.Result) {
+                    for (var key in viewResponse.Result) {
+
+                        var entity: ObjectFieldList;
+                        entity = this.MapJsonToEntityList(viewResponse.Result[key]);
+                        _mappedListsArray.push(entity);
+                    }
+                }
+                viewResponse.Result = _mappedListsArray;
+                return viewResponse;
+            }));
+        }
+        );
+    }
+
+
+    MapJsonToEntityList(jsonList: any) {
+        var entityList: ObjectFieldList;
+        entityList = new ObjectFieldList();
+        var jsonListKeys = Object.keys(jsonList);
+
+        for (var key in jsonListKeys) {
+            var property = jsonListKeys[key];
+            entityList[property] = jsonList[property];
+        }
+
+        return entityList;
+    }
+
 }
 
 export class DigitalPortalScreenUpdateModel {
@@ -94,4 +175,10 @@ export class DigitalPortalScreenUpdateModel {
     public Content: string;
     public DraftContent: string;
     public IsDraft: boolean;
+}
+
+export class CheckObjectFieldExistenceRequest {
+    public ObjectTableId: string;
+    public ProfileId: string;
+    public FieldCode: string;
 }

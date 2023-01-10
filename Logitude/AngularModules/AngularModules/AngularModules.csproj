@@ -407,6 +407,7 @@
     <Content Include="SharedLogistics\Components\DigitalPortal\AddDigitalLogitudeFieldComponent.html" />
     <Content Include="SharedLogistics\Components\DigitalPortal\AddDigitalPredefinedComponent.html" />
     <Content Include="SharedLogistics\Components\DigitalPortal\DigitalButtonComponent.html" />
+    <Content Include="SharedLogistics\Components\DigitalPortal\DigitalCheckBoxComponent.html" />
     <Content Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationChageLabelsComponent.html" />
     <Content Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationMainComponent.html" />
     <Content Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationScreenLayoutComponent.html" />
@@ -2108,6 +2109,7 @@
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationSetValue.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\ChangePasswordParameter.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\ComponentArgs.ts" />
+    <TypeScriptCompile Include="Infrastructure\DataContracts\GeneralFilters.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\KeyCode.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\ParameterComponentArgs.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\SchedulerDetails.ts" />
@@ -2233,6 +2235,8 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\ScreenPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\ScreenSectionPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\TeamPMService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\WebServices\DigitalCustomizationService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\WebServices\DigitalTextService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\WebServices\PrivateLabelsBrandingDataService.ts" />
     <TypeScriptCompile Include="Infrastructure\Utilities\PackageAmountCalculator.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\BusinessProcessDomainService.ts" />
@@ -4888,6 +4892,7 @@
     <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\AddDigitalLogitudeFieldComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\AddDigitalPredefinedComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalButtonComponent.ts" />
+    <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalCheckBoxComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationChageLabelsComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationMainComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationScreenLayoutComponent.ts" />
