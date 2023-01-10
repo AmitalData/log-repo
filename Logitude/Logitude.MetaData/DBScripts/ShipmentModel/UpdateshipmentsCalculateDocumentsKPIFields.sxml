@@ -1,65 +1,106 @@
 ﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="DocumentsFilings">
   <Sql Version="7">
     <![CDATA[
-    
-declare @ObjectTableId as VARCHAR(15)   set @ObjectTableId = (select id from ObjectTables where Name = 'Shipment')
+ DECLARE @ObjectTableId AS VARCHAR(15) SET @ObjectTableId = (SELECT id
+                      FROM   objecttables
+                      WHERE  NAME = 'Shipment') DECLARE @Id AS VARCHAR(15)
+DECLARE @FieldName AS VARCHAR(200)
+DECLARE @FieldValue AS DATETIME
+DECLARE @DocumentTypeId AS VARCHAR(15)
+DECLARE @Tenant AS INT
+DECLARE datacursor CURSOR read_only FOR
+  SELECT  documentsfilings.entityid,
+                documentsfilings.documenttypeid,
+                CASE
+                  WHEN documentsfilings.directioncode = 'I' THEN
+                  documenttypes.onuploadpopulatedatefieldname
+                  WHEN documentsfilings.directioncode = 'O'
+                       AND documentsfilings.documentid IS NOT NULL THEN
+                  documenttypes.onprintpopulatedatefieldname
+                END AS FieldName,
+                Max(documentsfilings.receiveddate),
+                documentsfilings.tenant
+  FROM   documentsfilings
+         INNER JOIN documenttypes
+                 ON documenttypes.id = documentsfilings.documenttypeid
+  WHERE  $LastCounterWhere$ and
+          documentsfilings.receiveddate IS NOT NULL
+         AND documentsfilings.entityid IS NOT NULL
+         AND ( CASE
+                 WHEN documentsfilings.directioncode = 'I' THEN
+                 documenttypes.onuploadpopulatedatefieldname
+                 WHEN documentsfilings.directioncode = 'O'
+                      AND documentsfilings.documentid IS NOT NULL THEN
+                 documenttypes.onprintpopulatedatefieldname
+               END ) IS NOT NULL
+         AND ( CASE
+                 WHEN documentsfilings.directioncode = 'I' THEN
+                 documenttypes.onuploadpopulatedatefieldname
+                 WHEN documentsfilings.directioncode = 'O'
+                      AND documentsfilings.documentid IS NOT NULL THEN
+                 documenttypes.onprintpopulatedatefieldname
+               END ) != ''
+         AND documentsfilings.objecttableid = @ObjectTableId
+         AND documenttypes.objecttableid = @ObjectTableId
+  GROUP  BY entityid,
+            documenttypeid,
+            CASE
+              WHEN documentsfilings.directioncode = 'I' THEN
+              documenttypes.onuploadpopulatedatefieldname
+              WHEN documentsfilings.directioncode = 'O'
+                   AND documentsfilings.documentid IS NOT NULL THEN
+              documenttypes.onprintpopulatedatefieldname
+            END,
+            documentsfilings.tenant OPEN datacursor FETCH next FROM datacursor INTO @Id, @DocumentTypeId, @FieldName, @FieldValue,
+@Tenant WHILE @@FETCH_STATUS = 0
+  BEGIN
+      DECLARE @functionring AS VARCHAR(3000)
+      DECLARE @TableName VARCHAR(100)       SET @TableName ='Shipments'
+      SET @FieldName = Replace(@FieldName, 'Shipment.'
+                                           + Cast(@Tenant AS VARCHAR(100)) + '.'
+                       ,
+                       '');
+      SET @FieldName = Replace(@FieldName, 'Shipment.', '');       IF Col_length('ShipmentComputedFields', @FieldName) IS NULL
+        BEGIN
+            IF Col_length('ShipmentComputedFields',
+               Replace(@FieldName, 'Date', ''))
+               IS
+               NOT
+               NULL
+              BEGIN
+                  SET @FieldName = Replace(@FieldName, 'Date', '');
+                  SET @TableName = 'ShipmentComputedFields'
+              END
+        END
+      ELSE
+        SET @TableName = 'ShipmentComputedFields'     
+IF( @FieldName LIKE '%Field%' )
+        BEGIN
+            SET @functionring = 'update ' + @TableName + ' set ' + @FieldName +
+                                '= '
+                                + ''''
+                                + Format (Convert(datetime, @FieldValue ,121),
+                                'yyyyMMddhhmmss')
+                                + '''' + '  where id = ' + '''' + @Id + ''''
+        END
+      ELSE
+        BEGIN
+            SET @functionring = 'update ' + @TableName + ' set ' + @FieldName +
+                                '= '
+                                + '''' + CONVERT(VARCHAR, @FieldValue, 113) +
+                                ''''
+                                + '  where id = ' + '''' + @Id + ''''
 
-
-  declare @Id as varchar(15)
-       declare @FieldName as VARCHAR(200) 
-	   declare @FieldValue as datetime 
-	    declare @DocumentTypeId as VARCHAR(15) 
-			    declare @Tenant as int
-
-DECLARE DataCursor CURSOR READ_ONLY
-	FOR
-select DocumentsFilings.EntityId,DocumentsFilings.DocumentTypeId,
-  CASE
-       WHEN DocumentsFilings.DirectionCode = 'I' THEN DocumentTypes.OnUploadPopulateDateFieldName
-       WHEN DocumentsFilings.DirectionCode = 'O' and DocumentsFilings.DocumentId is not null THEN DocumentTypes.OnPrintPopulateDateFieldName
- END AS FieldName,
- Max(DocumentsFilings.ReceivedDate) , DocumentsFilings.Tenant
-
- from DocumentsFilings
- inner join DocumentTypes on DocumentTypes.Id = DocumentsFilings.DocumentTypeId
-where  $LastCounterWhere$ and DocumentsFilings.EntityId is not null and (
- CASE WHEN DocumentsFilings.DirectionCode = 'I' THEN DocumentTypes.OnUploadPopulateDateFieldName
- WHEN DocumentsFilings.DirectionCode = 'O' and DocumentsFilings.DocumentId is not null THEN DocumentTypes.OnPrintPopulateDateFieldName
  
-           END) is not null  and (
- CASE WHEN DocumentsFilings.DirectionCode = 'I' THEN DocumentTypes.OnUploadPopulateDateFieldName
- WHEN DocumentsFilings.DirectionCode = 'O' and DocumentsFilings.DocumentId is not null THEN DocumentTypes.OnPrintPopulateDateFieldName
-  END) !=''
- and   DocumentsFilings.ObjectTableId =@ObjectTableId and DocumentTypes.ObjectTableId =@ObjectTableId 
- GROUP BY EntityId,DocumentTypeId , CASE
-       WHEN DocumentsFilings.DirectionCode = 'I' THEN DocumentTypes.OnUploadPopulateDateFieldName
-       WHEN DocumentsFilings.DirectionCode = 'O' and DocumentsFilings.DocumentId is not null THEN DocumentTypes.OnPrintPopulateDateFieldName
- END, DocumentsFilings.Tenant
-    OPEN DataCursor FETCH NEXT FROM DataCursor INTO @Id,@DocumentTypeId ,@FieldName ,@FieldValue , @Tenant
-	WHILE @@FETCH_STATUS = 0
-	BEGIN
 
-		 declare @functionring as varchar(3000)
-		 	declare @TableName varchar(100) 
+        END      
 
-			set @TableName ='Shipments'
+  EXEC(@functionring)
 
-	  set @FieldName =  REPLACE(@FieldName,'Shipment.'+ CAST(@Tenant AS varchar(100))+'.', '');
-		set @FieldName =  REPLACE(@FieldName,'Shipment.', '');
+FETCH NEXT FROM DataCursor  INTO @Id,@DocumentTypeId ,@FieldName ,@FieldValue , @Tenant
+  END CLOSE datacursor DEALLOCATE datacursor
 
-	  IF COL_LENGTH('ShipmentComputedFields',@FieldName) IS  NULL
-	  begin 
-	   IF COL_LENGTH('ShipmentComputedFields',REPLACE(@FieldName, 'Date', '')) IS not NULL
-	   begin  set @FieldName = REPLACE(@FieldName, 'Date', ''); set @TableName = 'ShipmentComputedFields' end
-	  end
-	  else set @TableName = 'ShipmentComputedFields'
-	 set @functionring = 'update ' +@TableName +' set ' + @FieldName +'= ' + ''''+ CONVERT(varchar, @FieldValue,113) +'''' +'  where id = ' + ''''+ @Id +'''' 
-	EXEC(@functionring)
-
-	FETCH NEXT FROM DataCursor  INTO @Id,@DocumentTypeId ,@FieldName ,@FieldValue , @Tenant
-	END
-	CLOSE DataCursor
-	DEALLOCATE DataCursor
+ 
 
 
     ]]>
