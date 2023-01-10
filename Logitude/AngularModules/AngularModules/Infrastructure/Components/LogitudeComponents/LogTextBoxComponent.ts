@@ -312,7 +312,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
             else {
                 this.SetEnabled();
             }
-            this.cd.detectChanges();
+            
             this.uiProperty.UIPropertyChanged.subscribe((value) => {
                 this.HandleUIPropertyChanged(value);
              }); 
