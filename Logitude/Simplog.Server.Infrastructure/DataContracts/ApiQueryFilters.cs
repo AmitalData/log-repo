@@ -69,5 +69,7 @@ namespace Simplog.Server.Infrastructure.DataContracts
         public bool GetAll { get; set; }
         public string ParentEntity { get; set; }
 
+        public string ProfileId { get; set; }
+        public string ObjectTableId { get; set; }
     }
 }

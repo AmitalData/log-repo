@@ -322,6 +322,21 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 }
 
                 List<ObjectFieldList> listResult = entityLists.ToList();
+
+                var helper = new DigitalFieldSecuritesHelper();
+
+                var defaultData = helper.GitDigitalSecuritesFeilds(filters.ObjectTableId, filters.ProfileId, 0);
+                var customData = helper.GitDigitalSecuritesFeilds(filters.ObjectTableId, filters.ProfileId, tenant);
+
+                foreach (var item in listResult)
+                {
+                    if(defaultData.Any(a => a.FieldCode.Equals(item.FieldCode))
+                        || customData.Any(a => a.FieldCode.Equals(item.FieldCode)))
+                    {
+                        item.InUse = true;
+                    }
+                }
+
                 response.Result = listResult;
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
                 return reponseMessage;
