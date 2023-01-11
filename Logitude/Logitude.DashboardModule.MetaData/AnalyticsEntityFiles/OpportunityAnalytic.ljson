@@ -1,5 +1,5 @@
 {
-  "HashString": "6fbc019181544dfd9f35d4d2d09220f4",
+  "HashString": "610772e6972341c68e7047384c6a47f7",
   "Name": "Opportunity Statistics",
   "TableName": "OpportunityAnalytics",
   "ObjectTableName": "Opportunity",
@@ -16,8 +16,7 @@
       "JoinedTableDBName": "Contacts",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName",
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "6a30fb574a0d44488f279ad721ae28c9",
@@ -27,12 +26,7 @@
       "FieldCode": "Subject",
       "DisplayName": "Subject",
       "DisplayNamePlural": "Subject",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "f178932734d6453e92e7263486349bf7",
@@ -46,8 +40,7 @@
       "JoinedTableDBName": "Cards",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName",
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "f178932734d6453e92e7263486349bf7",
@@ -61,8 +54,7 @@
       "JoinedTableDBName": "LeadSources",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "Name",
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "3a8405bb192f46e882d77ed3c1dd1a4e",
@@ -76,8 +68,7 @@
       "JoinedTableDBName": "Contacts",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName",
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "ea35b042864d47d6aa008ba0aad38e56",
@@ -87,12 +78,7 @@
       "FieldCode": "EstimatedClosingDate",
       "DisplayName": "Est. Closing Date",
       "DisplayNamePlural": "Est. Closing Date",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "3a8405bb192f46e882d77ed3c1dd1a4e",
@@ -106,8 +92,7 @@
       "JoinedTableDBName": "Stages",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "Name",
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "cbb22dfe82b84f5c8c9c33eaad8e607c",
@@ -117,12 +102,7 @@
       "FieldCode": "Probability",
       "DisplayName": "Probability (%)",
       "DisplayNamePlural": "Probability (%)",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "f3de0a0e39dc4e30be9ead5565948750",
@@ -132,12 +112,8 @@
       "FieldCode": "CreateDate",
       "DisplayName": "Create Date",
       "DisplayNamePlural": "CreateDate",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
       "HasUnit": false,
-      "Unit": null
+      "CommonFilterCode": "CreateDate"
     },
     {
       "HashString": "487ed7f1cc13467f958f9235ab419ca7",
@@ -151,8 +127,7 @@
       "JoinedTableDBName": "Contacts",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName",
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "1d24d8c473d34d5b85e5edac163c13f8",
@@ -162,12 +137,7 @@
       "FieldCode": "UpdateDate",
       "DisplayName": "Update Date",
       "DisplayNamePlural": "Update Date",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "ff6317ec227a4c19b083f5e68f3f3dc6",
@@ -181,8 +151,7 @@
       "JoinedTableDBName": "Contacts",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName",
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "ff6317ec227a4c19b083f5e68f3f3dc6",
@@ -196,8 +165,7 @@
       "JoinedTableDBName": "Ratings",
       "JoinedTableKey": "Code",
       "JoinedTableDisplayField": "Name",
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "959515575e4e481e969f8730bc92c4ca",
@@ -207,12 +175,7 @@
       "FieldCode": "IsClosed",
       "DisplayName": "Is Closed",
       "DisplayNamePlural": "Is Closed",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "1d24d8c473d34d5b85e5edac163c13f8",
@@ -222,12 +185,7 @@
       "FieldCode": "ActualClosingDate",
       "DisplayName": "Actual Closing Date",
       "DisplayNamePlural": "Actual Closing Date",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "6a30fb574a0d44488f279ad721ae28c9",
@@ -237,12 +195,7 @@
       "FieldCode": "ClosingDescription",
       "DisplayName": "Closing Description",
       "DisplayNamePlural": "Closing Description",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "cbb22dfe82b84f5c8c9c33eaad8e607c",
@@ -252,12 +205,7 @@
       "FieldCode": "NumberOfShipments",
       "DisplayName": "No. Of Shipments",
       "DisplayNamePlural": "No. Of Shipments",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "5f30553bdb9a4401b897aac683da87e1",
@@ -267,12 +215,7 @@
       "FieldCode": "ValueField",
       "DisplayName": "Value",
       "DisplayNamePlural": "Value",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "1d24d8c473d34d5b85e5edac163c13f8",
@@ -282,12 +225,7 @@
       "FieldCode": "LastStageDate",
       "DisplayName": "Last Stage Date",
       "DisplayNamePlural": "Last Stage Date",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "3a8405bb192f46e882d77ed3c1dd1a4e",
@@ -301,8 +239,7 @@
       "JoinedTableDBName": "Stages",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "Name",
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "1d24d8c473d34d5b85e5edac163c13f8",
@@ -312,12 +249,7 @@
       "FieldCode": "LastCompletedActivityDate",
       "DisplayName": "Last Activity Date",
       "DisplayNamePlural": "Last Activity Date",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "6a30fb574a0d44488f279ad721ae28c9",
@@ -327,12 +259,7 @@
       "FieldCode": "LeadDescription",
       "DisplayName": "LeadDescription",
       "DisplayNamePlural": "Description",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "3a8405bb192f46e882d77ed3c1dd1a4e",
@@ -346,8 +273,7 @@
       "JoinedTableDBName": "ActivityTypes",
       "JoinedTableKey": "Code",
       "JoinedTableDisplayField": "Name",
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "6a30fb574a0d44488f279ad721ae28c9",
@@ -357,12 +283,7 @@
       "FieldCode": "LastActivitySubject",
       "DisplayName": "Last Activity Subject",
       "DisplayNamePlural": "Last Activity Subject",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "1d24d8c473d34d5b85e5edac163c13f8",
@@ -372,12 +293,7 @@
       "FieldCode": "NextActivityDate",
       "DisplayName": "Next Activity Date",
       "DisplayNamePlural": "Next Activity Date",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "3a8405bb192f46e882d77ed3c1dd1a4e",
@@ -391,8 +307,7 @@
       "JoinedTableDBName": "ActivityTypes",
       "JoinedTableKey": "Code",
       "JoinedTableDisplayField": "Name",
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "6a30fb574a0d44488f279ad721ae28c9",
@@ -402,12 +317,7 @@
       "FieldCode": "NextActivitySubject",
       "DisplayName": "Next Activity Subject",
       "DisplayNamePlural": "Next Activity Subject",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "1d24d8c473d34d5b85e5edac163c13f8",
@@ -417,12 +327,7 @@
       "FieldCode": "StageDueDate",
       "DisplayName": "Stage Due Date",
       "DisplayNamePlural": "Stage Due Date",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "509e038bcbbe4552b92d1797006ae4b2",
@@ -436,8 +341,7 @@
       "JoinedTableDBName": "BusinessUnits",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "Name",
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "3a8405bb192f46e882d77ed3c1dd1a4e",
@@ -451,8 +355,7 @@
       "JoinedTableDBName": "Contacts",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName",
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "f178932734d6453e92e7263486349bf7",
@@ -466,8 +369,7 @@
       "JoinedTableDBName": "Cards",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName",
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "d81eb24286b04f2181e87b376988b010",
@@ -481,8 +383,7 @@
       "JoinedTableDBName": "Cards",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName",
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "f178932734d6453e92e7263486349bf7",
@@ -496,8 +397,7 @@
       "JoinedTableDBName": "Cards",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName",
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "f178932734d6453e92e7263486349bf7",
@@ -511,8 +411,7 @@
       "JoinedTableDBName": "OpportunityClosingReasons",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "Name",
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "959515575e4e481e969f8730bc92c4ca",
@@ -522,12 +421,7 @@
       "FieldCode": "IsCancelled",
       "DisplayName": "Is Cancelled",
       "DisplayNamePlural": "Is Cancelled",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "f178932734d6453e92e7263486349bf7",
@@ -541,8 +435,7 @@
       "JoinedTableDBName": "OpportunityTypes",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "Name",
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "cbb22dfe82b84f5c8c9c33eaad8e607c",
@@ -552,12 +445,7 @@
       "FieldCode": "NumberOfConnectedQuotes",
       "DisplayName": "No. of Quotes",
       "DisplayNamePlural": "No. of Quotes",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     }
   ]
 }

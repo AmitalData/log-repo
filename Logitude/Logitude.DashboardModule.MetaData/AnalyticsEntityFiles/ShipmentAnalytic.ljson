@@ -1,5 +1,5 @@
 {
-  "HashString": "1ef16bc51dda41f68c45b2255574b94b",
+  "HashString": "4c63e465cdb74c43b21204cec0f7baaa",
   "Name": "Shipment Statistics",
   "TableName": "ShipmentAnalytics",
   "ObjectTableName": "Shipment",
@@ -56,7 +56,8 @@
       "JoinedTableDBName": "TransportModes",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "Name",
-      "HasUnit": false
+      "HasUnit": false,
+      "CommonFilterCode": "TransportMode"
     },
     {
       "HashString": "ea35b042864d47d6aa008ba0aad38e56",
@@ -189,7 +190,8 @@
       "JoinedTableDBName": "Directions",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "Name",
-      "HasUnit": false
+      "HasUnit": false,
+      "CommonFilterCode": "Direction"
     },
     {
       "HashString": "a434bea8d8cb4af6bfdee16976a03e83",

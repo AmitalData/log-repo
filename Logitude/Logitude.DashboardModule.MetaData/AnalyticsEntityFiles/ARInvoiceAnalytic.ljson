@@ -1,5 +1,5 @@
 {
-  "HashString": "4921e982a501488e923eb6016ee8b2d1",
+  "HashString": "a4844d57e23f42888e1ac5804290f04c",
   "Name": "AR Invoices Statistics",
   "TableName": "ARInvoiceAnalytics",
   "ObjectTableName": "ARInvoice",
@@ -12,12 +12,7 @@
       "FieldCode": "InvoiceDate",
       "DisplayName": "Invoice Date",
       "DisplayNamePlural": "Invoice Date",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "bf7e52abb6c44aa5b5da871e01cb82f9",
@@ -31,8 +26,7 @@
       "JoinedTableDBName": "PaymentTerms",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName",
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "10fd4998443a4228a4b5367ac348cde6",
@@ -42,12 +36,7 @@
       "FieldCode": "DueDate",
       "DisplayName": "Due Date",
       "DisplayNamePlural": "Due Date",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "163e01a61c284341ab53b5850534770f",
@@ -61,8 +50,7 @@
       "JoinedTableDBName": "Currencies",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "Code",
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "b66e28ed8724487e9851f382e476eaec",
@@ -72,10 +60,6 @@
       "FieldCode": "SubTotalInLocalCurrency",
       "DisplayName": "Sub Total In Local Currency",
       "DisplayNamePlural": "Sub Total In Local Currency",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
       "HasUnit": true,
       "Unit": "{(LocalCurrency)}"
     },
@@ -87,10 +71,6 @@
       "FieldCode": "AmountInLocalCurrency",
       "DisplayName": "Amount In Local Currency",
       "DisplayNamePlural": "AmountInLocalCurrency",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
       "HasUnit": true,
       "Unit": "{(LocalCurrency)}"
     },
@@ -106,8 +86,7 @@
       "JoinedTableDBName": "ARInvoiceStatus",
       "JoinedTableKey": "Code",
       "JoinedTableDisplayField": "Name",
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "f3de0a0e39dc4e30be9ead5565948750",
@@ -117,12 +96,8 @@
       "FieldCode": "CreateDate",
       "DisplayName": "Create Date",
       "DisplayNamePlural": "CreateDate",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
       "HasUnit": false,
-      "Unit": null
+      "CommonFilterCode": "CreateDate"
     },
     {
       "HashString": "487ed7f1cc13467f958f9235ab419ca7",
@@ -136,8 +111,7 @@
       "JoinedTableDBName": "Contacts",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName",
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "05e20a08b9c346649e37014f71178171",
@@ -147,12 +121,7 @@
       "FieldCode": "IsClosed",
       "DisplayName": "Is Closed",
       "DisplayNamePlural": "IsClosed",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "3df5666073af459ca1c07c90f0d03481",
@@ -166,8 +135,7 @@
       "JoinedTableDBName": "Currencies",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "Code",
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "130b4e545ba344b1b4dfb11128db769c",
@@ -177,10 +145,6 @@
       "FieldCode": "AmountInProfitCurrency",
       "DisplayName": "Amount In Profit Currency",
       "DisplayNamePlural": "AmountInProfitCurrency",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
       "HasUnit": true,
       "Unit": "{(ProfitCurrency)}"
     },
@@ -196,8 +160,7 @@
       "JoinedTableDBName": "Contacts",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName",
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "6759c7b823c847e987434d6302fbe208",
@@ -207,12 +170,7 @@
       "FieldCode": "UpdateDate",
       "DisplayName": "Update Date",
       "DisplayNamePlural": "UpdateDate",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "23505b4b084d47e6a30efe4e619c8c4c",
@@ -222,12 +180,7 @@
       "FieldCode": "MainEntityReference",
       "DisplayName": "Main Entity Reference",
       "DisplayNamePlural": "MainEntityReference",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "21a69dd6767e46578f8968716def5307",
@@ -237,10 +190,6 @@
       "FieldCode": "AmountDueInLocalCurrency",
       "DisplayName": "Amount Due In Local Currency",
       "DisplayNamePlural": "AmountDueInLocalCurrency",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
       "HasUnit": true,
       "Unit": "{(LocalCurrency)}"
     },
@@ -252,10 +201,6 @@
       "FieldCode": "AmountDueInProfitCurrency",
       "DisplayName": "Amount Due In Profit Currency",
       "DisplayNamePlural": "AmountDueInProfitCurrency",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
       "HasUnit": true,
       "Unit": "{(ProfitCurrency)}"
     },
@@ -271,8 +216,7 @@
       "JoinedTableDBName": "Branches",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName",
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "d527a8ab6e924948b6db3a010b3cd72c",
@@ -282,12 +226,7 @@
       "FieldCode": "TransferError",
       "DisplayName": "Transfer Error",
       "DisplayNamePlural": "TransferError",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "8a58d20d39f144ce9404bb0be89e58fa",
@@ -297,12 +236,7 @@
       "FieldCode": "IsTransferStarted",
       "DisplayName": "Is Transfer Started",
       "DisplayNamePlural": "IsTransferStarted",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "d29699fe881a4345bd4fbf25451535fc",
@@ -316,8 +250,7 @@
       "JoinedTableDBName": "ARInvoiceTransferStatus",
       "JoinedTableKey": "Code",
       "JoinedTableDisplayField": "Name",
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "127dfd8923ab470685e7a847fcf2cdca",
@@ -327,12 +260,7 @@
       "FieldCode": "ApprovedDate",
       "DisplayName": "Approved Date",
       "DisplayNamePlural": "ApprovedDate",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "38dfa56bd8fc4645901be55118dee844",
@@ -342,12 +270,7 @@
       "FieldCode": "InvoiceNumber",
       "DisplayName": "Invoice Number",
       "DisplayNamePlural": "InvoiceNumber",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "78e02c30d4d84314aee9d0d6c05a7164",
@@ -361,8 +284,7 @@
       "JoinedTableDBName": "Contacts",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName",
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "10a63a2d3ff64c35a95ba62be62161f8",
@@ -372,12 +294,7 @@
       "FieldCode": "OperationalDate",
       "DisplayName": "Operational Date",
       "DisplayNamePlural": "OperationalDate",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "44a19276e7a840879fc4cb8a7c9d52e9",
@@ -387,12 +304,7 @@
       "FieldCode": "PaidDate",
       "DisplayName": "Paid Date",
       "DisplayNamePlural": "PaidDate",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "c5e630253d1e4e1a9fc3c4c1d35bb750",
@@ -406,8 +318,7 @@
       "JoinedTableDBName": "ARInvoiceTypes",
       "JoinedTableKey": "Code",
       "JoinedTableDisplayField": "Name",
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "aa75e3e74d8f45eb9a2aec4be308627f",
@@ -421,8 +332,7 @@
       "JoinedTableDBName": "PrepaidCollects",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "Name",
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "3186034570e8459fa75749a402a625b4",
@@ -432,12 +342,7 @@
       "FieldCode": "DraftNumber",
       "DisplayName": "Draft Number",
       "DisplayNamePlural": "DraftNumber",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "483b1c095b7a482f8454b8070fa75cff",
@@ -451,8 +356,7 @@
       "JoinedTableDBName": "Cards",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName",
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "9e432a0327324409aeed562dbb6662eb",
@@ -466,8 +370,7 @@
       "JoinedTableDBName": "Addresses",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "Name",
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "f02022107a6f4294ab7255b223d78cd4",
@@ -477,12 +380,7 @@
       "FieldCode": "VatNumber",
       "DisplayName": "Vat Number",
       "DisplayNamePlural": "VatNumber",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "01cee4f418ac4778b69affff9b027c88",
@@ -496,8 +394,7 @@
       "JoinedTableDBName": "Contacts",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName",
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "21573745978641a79692573308dbf595",
@@ -507,12 +404,7 @@
       "FieldCode": "IsPrinted",
       "DisplayName": "Is Printed",
       "DisplayNamePlural": "IsPrinted",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "08d8530d35654029b63bc5731e929bb9",
@@ -522,12 +414,7 @@
       "FieldCode": "PrintDate",
       "DisplayName": "Print Date",
       "DisplayNamePlural": "PrintDate",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "f8711fa40fb5440f814d74b33b38fce6",
@@ -537,12 +424,7 @@
       "FieldCode": "Sent",
       "DisplayName": "Sent",
       "DisplayNamePlural": "Sent",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "56a82f0b6a7c46dca22bf66a9c1cdb4a",
@@ -552,12 +434,7 @@
       "FieldCode": "IsInvoiceNumberManuallySet",
       "DisplayName": "Is Invoice Number Manually Set",
       "DisplayNamePlural": "IsInvoiceNumberManuallySet",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "be45f872004a4ece9c0ef4876866b40e",
@@ -567,12 +444,7 @@
       "FieldCode": "IsConstituentInvoice",
       "DisplayName": "Is Constituent Invoice",
       "DisplayNamePlural": "IsConstituentInvoice",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "897a77c8fb7943369fd1125786dbecae",
@@ -582,12 +454,7 @@
       "FieldCode": "IsConsolidationInvoice",
       "DisplayName": "Is Consolidation Invoice",
       "DisplayNamePlural": "IsConsolidationInvoice",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "8ac85ce4a55d49c9b6913aa24a492afb",
@@ -597,12 +464,7 @@
       "FieldCode": "IsMultiCurrency",
       "DisplayName": "Is Multi Currency",
       "DisplayNamePlural": "IsMultiCurrency",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "dd028113328d4f5e81026f5897c98ef4",
@@ -616,8 +478,7 @@
       "JoinedTableDBName": "Contacts",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName",
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "a80c856630e0429cb1fa7a969e0bdc2c",
@@ -627,12 +488,7 @@
       "FieldCode": "Intercompany",
       "DisplayName": "Inter company",
       "DisplayNamePlural": "Intercompany",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "5cebcecec7aa4038845d9865f827b3de",
@@ -646,8 +502,7 @@
       "JoinedTableDBName": "BankAccountLites",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName",
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "bc6de8b3efe6499fb8a00fca327b8b5a",
@@ -661,8 +516,7 @@
       "JoinedTableDBName": "VatTypes",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName",
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "bd218a4bcc2d4145bc99a14975ea9e8b",
@@ -672,12 +526,7 @@
       "FieldCode": "RegionalTaxPercentage",
       "DisplayName": "RegionalTaxPercentage",
       "DisplayNamePlural": "RegionalTaxPercentage",
-      "JoinedTableName": null,
-      "JoinedTableDBName": null,
-      "JoinedTableKey": null,
-      "JoinedTableDisplayField": null,
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     },
     {
       "HashString": "60e1de66b3f24f918e03454cdb4ffbc9",
@@ -691,8 +540,7 @@
       "JoinedTableDBName": "Cards",
       "JoinedTableKey": "Id",
       "JoinedTableDisplayField": "EnglishName",
-      "HasUnit": false,
-      "Unit": null
+      "HasUnit": false
     }
   ]
 }
