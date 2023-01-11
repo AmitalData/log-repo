@@ -324,16 +324,23 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             }
 
             var allowedStatusCode = allStatuses.Select(a => a.Code).ToList();
-
             var departedCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SDEP").StatusWeight;
-
             var arrivedAtDestinationCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SARR").StatusWeight;
 
-            var result = shipments.Where(r => allowedStatusCode.Contains(r.StatusCode)
-                                              && (r.StatusWeight < departedCodeWeight
-                                                  || (r.StatusWeight >= departedCodeWeight
-                                                      && r.StatusWeight < arrivedAtDestinationCodeWeight)
-                                                  || (r.StatusWeight >= arrivedAtDestinationCodeWeight)))
+            var cc = shipments.Where(r => allowedStatusCode.Contains(r.StatusCode))
+                                   .Select(a => new
+                                   {
+                                       a.TransportModeId,
+                                       Code = a.StatusWeight < departedCodeWeight
+                                               ? "Origin"
+                                               : (a.StatusWeight >= departedCodeWeight
+                                                  && a.StatusWeight < arrivedAtDestinationCodeWeight)
+                                                  ? "InTransit"
+                                                  : "dataAtDestination"
+                                   })
+                                   .GroupBy(a => a.Code);
+
+            var result = shipments.Where(r => allowedStatusCode.Contains(r.StatusCode))
                                    .Select(a => new
                                    {
                                        a.TransportModeId,
@@ -346,7 +353,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                    })
                                    .GroupBy(a => a.Code)
                                    .ToDictionary(a => a.Key, y => (object)y.GroupBy(x => x.TransportModeId)
-                                                                           .ToDictionary(b => b.Key, xx => xx.Count())); ;
+                                                                           .ToDictionary(b => b.Key, xx => xx.Count()));
             return result;
         }
 
