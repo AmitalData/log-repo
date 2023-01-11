@@ -65,11 +65,11 @@ Then("the house should connect successfully", () => {
 
 //#region Add packages
 Given("the user navigate to the first house workspace", () => {
-    cy.get(ShipmentSelectors.HouseHyperLink).eq(0).click({ force: true })
+    cy.get(ShipmentSelectors.HouseHyperLink).contains((ShipmentContext.HouseNumber).replace(/^0+/, '')).click({ force: true })
 });
 
 Given("the user navigate to the seconed house workspace", () => {
-    cy.get(ShipmentSelectors.HouseHyperLink).eq(1).click({ force: true })
+    cy.get(ShipmentSelectors.HouseHyperLink).contains((ShipmentContext.HouseNumber).replace(/^0+/, '')).click({ force: true })
 });
 
 Given("fill the following package details", (dataTable) => {
