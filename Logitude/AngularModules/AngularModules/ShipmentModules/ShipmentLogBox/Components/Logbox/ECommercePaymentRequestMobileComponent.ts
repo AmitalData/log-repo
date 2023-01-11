@@ -116,7 +116,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                         this.Tenant = me.Tenant;
                     }
 
-                    this.orianStyle = +this.Tenant === 126;
+                    this.orianStyle = +this.Tenant === 126 || +this.Tenant === 1153;
 
                     //SessionLocator.ExternalParams.Args.forEach(arg => {
                     //    if (arg.FieldName == 'ShipmentId') {
@@ -174,7 +174,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                 this.RefreshTimer = setInterval(() => this.ReloadPage(), 1200000);//1200000
             }
             else {
-                this.FinalMessage = "התיק לם קיים בסביבה הזו";
+                this.FinalMessage = "התיק לא קיים בסביבה הזו";
                 this.ShowFinalMessage = true;
                 this.ShowErrorMessage = true;
                 this.StopBusyIndicator();
@@ -199,7 +199,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     private SetTotalAmountInNIS() {
         let ammount = 0;
         let maxDigitsAfterPoint = 0;
-        this.AdditionalData.RequestPaymentData.ServiceTypes.forEach((item, key) => {
+        this.AdditionalData.RequestPaymentData?.ServiceTypes.forEach((item, key) => {
             let splitItemAmount = item.AmountInNIS?.toString()?.split('.');
             if (splitItemAmount != null && splitItemAmount.length > 1 && splitItemAmount[1].length > maxDigitsAfterPoint) {
                 maxDigitsAfterPoint = splitItemAmount[1].length;
@@ -242,7 +242,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                     this.RefreshTimer = setInterval(() => this.ReloadPage(), 1200000);//1200000
                 }
                 else {
-                    this.FinalMessage = "התיק לם קיים בסביבה הזו";
+                    this.FinalMessage = "התיק לא קיים בסביבה הזו";
                     this.ShowFinalMessage = true;
                     this.ShowErrorMessage = true;
                 }
@@ -262,69 +262,69 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public get EcommerceSupportEmail() { return this.ecommerceSupportEmail }
     public set EcommerceSupportEmail(newValue: string) { this.ecommerceSupportEmail = newValue; }
 
-    public get CustomerName() { return this.AdditionalData.RequestPaymentData.CustomerName }
+    public get CustomerName() { return this.AdditionalData.RequestPaymentData?.CustomerName }
     public set CustomerName(newValue: string) { this.AdditionalData.RequestPaymentData.CustomerName = newValue; }
 
-    public get CustomerAddress() { return this.AdditionalData.RequestPaymentData.CustomerAddress }
+    public get CustomerAddress() { return this.AdditionalData.RequestPaymentData?.CustomerAddress }
     public set CustomerAddress(newValue: string) { this.AdditionalData.RequestPaymentData.CustomerAddress = newValue; }
 
-    public get Master() { return this.AdditionalData.RequestPaymentData.Master }
+    public get Master() { return this.AdditionalData.RequestPaymentData?.Master }
     public set Master(newValue: string) { this.AdditionalData.RequestPaymentData.Master = newValue; }
 
-    public get Hawb() { return this.AdditionalData.RequestPaymentData.Hawb }
+    public get Hawb() { return this.AdditionalData.RequestPaymentData?.Hawb }
     public set Hawb(newValue: string) { this.AdditionalData.RequestPaymentData.Hawb = newValue; }
 
-    public get DeclarationNumber() { return new CustomNumbersPipe().transform(this.AdditionalData.RequestPaymentData.DeclarationNumber, 0) }
+    public get DeclarationNumber() { return new CustomNumbersPipe().transform(this.AdditionalData.RequestPaymentData?.DeclarationNumber, 0) }
     public set DeclarationNumber(newValue: string) { this.AdditionalData.RequestPaymentData.DeclarationNumber = newValue; }
 
-    public get ShipmentValueInNIS() { return new CustomNumbersPipe().transform(this.AdditionalData.RequestPaymentData.ShipmentValueInNIS, 0) }
+    public get ShipmentValueInNIS() { return new CustomNumbersPipe().transform(this.AdditionalData.RequestPaymentData?.ShipmentValueInNIS, 0) }
     public set ShipmentValueInNIS(newValue: string) { this.AdditionalData.RequestPaymentData.ShipmentValueInNIS = newValue; }
 
-    public get ForeignCurrencyValue() { return this.orianStyle ? this.AdditionalData.RequestPaymentData.ForeignCurrencyValue : new CustomNumbersPipe().transform(this.AdditionalData.RequestPaymentData.ForeignCurrencyValue, 0) }
+    public get ForeignCurrencyValue() { return this.orianStyle ? this.AdditionalData.RequestPaymentData?.ForeignCurrencyValue : new CustomNumbersPipe().transform(this.AdditionalData.RequestPaymentData.ForeignCurrencyValue, 0) }
     public set ForeignCurrencyValue(newValue: string) { this.AdditionalData.RequestPaymentData.ForeignCurrencyValue = newValue; }
 
-    public get ForeignCurrency() { return this.AdditionalData.RequestPaymentData.ForeignCurrency }
+    public get ForeignCurrency() { return this.AdditionalData.RequestPaymentData?.ForeignCurrency }
     public set ForeignCurrency(newValue: string) { this.AdditionalData.RequestPaymentData.ForeignCurrency = newValue; }
 
-    public get SenderDetails() { return this.AdditionalData.RequestPaymentData.SenderDetails }
+    public get SenderDetails() { return this.AdditionalData.RequestPaymentData?.SenderDetails }
     public set SenderDetails(newValue: string) { this.AdditionalData.RequestPaymentData.SenderDetails = newValue; }
 
-    public get GoodsDescritpion() { return this.AdditionalData.RequestPaymentData.GoodsDescritpion }
+    public get GoodsDescritpion() { return this.AdditionalData.RequestPaymentData?.GoodsDescritpion }
     public set GoodsDescritpion(newValue: string) { this.AdditionalData.RequestPaymentData.GoodsDescritpion = newValue; }
 
-    public get IsImporterApprovalRequried() { return this.AdditionalData.RequestPaymentData.IsImporterApprovalRequried }
+    public get IsImporterApprovalRequried() { return this.AdditionalData.RequestPaymentData?.IsImporterApprovalRequried }
     public set IsImporterApprovalRequried(newValue: boolean) { this.AdditionalData.RequestPaymentData.IsImporterApprovalRequried = newValue; }
 
-    public get Quantity() { return this.AdditionalData.RequestPaymentData.Quantity }
+    public get Quantity() { return this.AdditionalData.RequestPaymentData?.Quantity }
     public set Quantity(newValue: string) { this.AdditionalData.RequestPaymentData.Quantity = newValue; }
 
-    public get Weight() { return this.AdditionalData.RequestPaymentData.Weight }
+    public get Weight() { return this.AdditionalData.RequestPaymentData?.Weight }
     public set Weight(newValue: string) { this.AdditionalData.RequestPaymentData.Weight = newValue; }
 
-    public get TotalChargesInNIS() { return this.AdditionalData.RequestPaymentData.TotalChargesInNIS }
+    public get TotalChargesInNIS() { return this.AdditionalData.RequestPaymentData?.TotalChargesInNIS }
     public set TotalChargesInNIS(newValue: string) { this.AdditionalData.RequestPaymentData.TotalChargesInNIS = newValue; }
 
-    public get sum() { return this.AdditionalData.PaymentData.sum }
+    public get sum() { return this.AdditionalData.PaymentData?.sum }
     public set sum(newValue: string) { this.AdditionalData.PaymentData.sum = newValue; }
 
-    public get currency() { return this.AdditionalData.PaymentData.currency }
+    public get currency() { return this.AdditionalData.PaymentData?.currency }
     public set currency(newValue: string) { this.AdditionalData.PaymentData.currency = newValue; }
 
-    public get op() { return this.AdditionalData.PaymentData.op }
+    public get op() { return this.AdditionalData.PaymentData?.op }
     public set op(newValue: string) { this.AdditionalData.PaymentData.op = newValue; }
 
-    public get DCdisable() { return this.AdditionalData.PaymentData.DCdisable }
+    public get DCdisable() { return this.AdditionalData.PaymentData?.DCdisable }
     public set DCdisable(newValue: string) { this.AdditionalData.PaymentData.DCdisable = newValue; }
 
-    public get DclickTK() { return this.AdditionalData.PaymentData.DclickTK }
+    public get DclickTK() { return this.AdditionalData.PaymentData?.DclickTK }
     public set DclickTK(newValue: string) { this.AdditionalData.PaymentData.DclickTK = newValue; }
 
-    public get thtk() { return this.AdditionalData.PaymentData.thtk }
+    public get thtk() { return this.AdditionalData.PaymentData?.thtk }
     public set thtk(newValue: string) { this.AdditionalData.PaymentData.thtk = newValue; }
 
     public get TargetEnv() {
         let directTranzilaLink = this.GetDirectTranzilaLink();
-        var Env = directTranzilaLink + this.AdditionalData.PaymentData.TargetEnv + "/";//amitaltest
+        var Env = directTranzilaLink + this.AdditionalData.PaymentData?.TargetEnv + "/";//amitaltest
         return Env;
     }
     private GetDirectTranzilaLink() {
@@ -336,10 +336,10 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
 
     public set TargetEnv(newValue: string) { this.AdditionalData.PaymentData.TargetEnv = newValue; }
 
-    public get TermsOfUseDocumentId() { return this.AdditionalData.RequestPaymentData.TermsOfUseDocumentId }
+    public get TermsOfUseDocumentId() { return this.AdditionalData.RequestPaymentData?.TermsOfUseDocumentId }
     public set TermsOfUseDocumentId(newValue: string) { this.AdditionalData.RequestPaymentData.TermsOfUseDocumentId = newValue; }
 
-    public get u71() { return this.AdditionalData.PaymentData.u71 }
+    public get u71() { return this.AdditionalData.PaymentData?.u71 }
     public set u71(newValue: string) { this.AdditionalData.PaymentData.u71 = newValue; }
 
     public BusyIndicatorText: string = null;
