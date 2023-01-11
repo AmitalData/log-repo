@@ -154,6 +154,6 @@ export class AddDigitalLogitudeFieldComponent extends BaseComponent implements O
     }
 
     CloseButtonClicked() {
-        this.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindowEmit("Ok");
     }
 }
