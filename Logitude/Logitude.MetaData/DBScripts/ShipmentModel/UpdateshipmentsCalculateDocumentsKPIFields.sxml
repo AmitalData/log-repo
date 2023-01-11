@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="DocumentsFilings">
-  <Sql Version="7">
+  <Sql Version="8">
     <![CDATA[
 -- DECLARE @ObjectTableId AS VARCHAR(15) SET @ObjectTableId = (SELECT id
 --                      FROM   objecttables
