@@ -20,6 +20,7 @@ namespace Logitude.DashboardModule.Data
        	 IDbSet<AnalyticsFactsFieldsMetaData> AnalyticsFactsFieldsMetaDatas { get; }
 		 IDbSet<AnalyticsFactsMetaData> AnalyticsFactsMetaDatas { get; }
 		 IDbSet<Dashboard> Dashboards { get; }
+		 IDbSet<DashboardCommonFilter> DashboardCommonFilters { get; }
 		 IDbSet<DashboardGlobalFilter> DashboardGlobalFilters { get; }
 		 IDbSet<DashboardSharedUser> DashboardSharedUsers { get; }
 		 IDbSet<MeasureType> MeasureTypes { get; }

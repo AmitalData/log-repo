@@ -82,6 +82,7 @@
     <None Include="DBTables\PermissionLevel.dxml" />
     <None Include="DBTables\QuoteAnalytic.dxml" />
     <None Include="DBTables\UserPinnedDashboard.dxml" />
+    <None Include="EntityFiles\DashboardCommonFilter.lxml" />
     <None Include="EntityFiles\DashboardSharedUser.lxml" />
     <None Include="EntityFiles\PermissionLevel.lxml" />
     <None Include="EntityFiles\DashboardGlobalFilter.lxml" />

@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="DashboardCommonFilters"
+  Schema="dbo"
+  DBType="Main"
+  Module="DashboardModule">
+  <Column
+    Name="Code"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="DisplayName"
+    Type="varchar"
+    Size="150">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="DataTypeCode"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsDisabled"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsMultiSelect"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="JoinedTableName"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="DataTypeCode"
+    ReferencedTable="FieldDataTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+</Table>
