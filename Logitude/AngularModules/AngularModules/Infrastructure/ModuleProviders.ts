@@ -115,7 +115,7 @@ import { DeploymentPackagePMService } from './Services/StandardPMs/DeploymentPac
 import { DeploymentPackageListService } from './Services/StandardLists/DeploymentPackageListService';
 import { CustomFieldsMainObjectPMService } from './Services/StandardPMs/CustomFieldsMainObjectsPMService';
 import { CustomFieldsMainObjectListService } from './Services/StandardLists/CustomFieldsMainObjectListService';
-import { DigitalCustomizationService } from './Services/WebServices/DigitalCustomizationService';
+import { DigitalCustomizationService } from './Services/WebServices/DigitalCustomizationService'; 
 
 export class ModuleProviders {
 

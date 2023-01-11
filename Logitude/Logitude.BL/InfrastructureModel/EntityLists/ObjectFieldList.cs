@@ -91,5 +91,6 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public int DigitsAfterPoint { get; set; }
         public string CustomPickListCode { get; set; }
 
+        public bool InUse { get; set; }
     }
 }

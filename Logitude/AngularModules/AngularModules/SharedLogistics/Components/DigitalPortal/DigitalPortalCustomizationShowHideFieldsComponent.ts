@@ -140,7 +140,7 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
         if (this.IsModifiedLables) {
             this.ModifiedLables.ObjectTableId = this.SelectedObjectTableItem.Name;
             this.ModifiedLables.ProfileId = this.SelectedProfileItem.Code;
-            var hasHasPermissionList = this.FieldsItemsSource.Collection.filter(a => a.HasPermission);
+            var hasHasPermissionList = this.FieldsItemsSource.Collection;
 
             hasHasPermissionList.forEach(item => {
                 var newLabel = new DigitalFeildSecurityUpdateModel();
@@ -200,10 +200,11 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
 
     AddFieldClicked() {
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 700;
-        logWindow.Height = 600;
+        logWindow.Width = 1000;
+        logWindow.Height = 800;
         var windowArgs: any = {};
         windowArgs.ObjectTableId = this.SelectedObjectTableItem.Name;
+        windowArgs.ProfileId = this.SelectedProfileItem.Code;
         logWindow.Title = "Add a field";
         logWindow.WindowArgs = windowArgs;
         logWindow.Show('./SharedLogistics/Components/DigitalPortal/AddDigitalLogitudeFieldComponent');

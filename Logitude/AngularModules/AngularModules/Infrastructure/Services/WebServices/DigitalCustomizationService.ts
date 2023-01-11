@@ -60,9 +60,9 @@ export class DigitalCustomizationService {
         });
     }
 
-    CheckIfFieldInuse(data: CheckObjectFieldExistenceRequest) {
+    AddCustomField(data: AddCustomFieldRequest) {
         return defer(() => {
-            return this._http.post(this._apiUrl + "/CheckIfFieldInuse", JSON.stringify(data), ServiceHelper.GetHttpHeaders())
+            return this._http.post(this._apiUrl + "/AddCustomField", JSON.stringify(data), ServiceHelper.GetHttpHeaders())
                 .pipe(
                     map((response: any) => {
                         var myResult = response;
@@ -177,8 +177,11 @@ export class DigitalPortalScreenUpdateModel {
     public IsDraft: boolean;
 }
 
-export class CheckObjectFieldExistenceRequest {
+export class AddCustomFieldRequest {
     public ObjectTableId: string;
     public ProfileId: string;
     public FieldCode: string;
+    public DefaultText: string;
+    public TextCode: string;
+    public CreatedBy: string;
 }
