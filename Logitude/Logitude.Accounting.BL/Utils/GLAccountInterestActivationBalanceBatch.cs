@@ -42,9 +42,10 @@ namespace Logitude.Accounting.BL.Utils
         private const string WorksChartOfAccountTypeCode = "6";
         public const int LT_LinesMaximum_MIN = 2;
         public const int LT_LinesMaximum_MAX = 200;
-        public const int MaxPageSize_MAX = 1000;
+        public const int MaxPageSize_MAX = 1000; 
         public const int MaxGLAccountsPerQuery_Def = 100;
         public DateTime InterestActivationDate;
+        public DateTime ActionDate = DateTime.Today; // this may be not equal to args.ActionDate, when the WR runs later 
         public string LastMadeGLAccountId = "";
         public int MaxGLAccountsPerQuery = 100;
         private List<string> badList;
@@ -79,6 +80,7 @@ namespace Logitude.Accounting.BL.Utils
                 InterestActivationDate = gLAccountInterestActivationBalanceArgs.InterestActivationDate;
                 LastMadeGLAccountId = gLAccountInterestActivationBalanceArgs.LastMadeGLAccountId;
                 MaxGLAccountsPerQuery = gLAccountInterestActivationBalanceArgs.MaxGLAccountsPerQuery;
+                ActionDate = gLAccountInterestActivationBalanceArgs.ActionDate;
                 if (MaxGLAccountsPerQuery <= 0) MaxGLAccountsPerQuery = MaxGLAccountsPerQuery_Def;
                 badList = new List<string>();
                 goodList = new List<string>();
@@ -125,14 +127,14 @@ namespace Logitude.Accounting.BL.Utils
                             _MyResult.LastMadeGLAccountId = gLAccountIdList.Last();
                             gLAccountIdList.ForEach(accId =>
                             {
-                                ActivationBalanceCalculation(accId, gLAccountInterestActivationBalanceArgs.InterestActivationDate, tenant);
+                                ActivationBalanceCalculation(accId, gLAccountInterestActivationBalanceArgs.InterestActivationDate, ActionDate, tenant);
                             });
                         }
 
                     }
                     else
                     {
-                        ActivationBalanceCalculation(myGLAccountId, gLAccountInterestActivationBalanceArgs.InterestActivationDate, tenant);
+                        ActivationBalanceCalculation(myGLAccountId, gLAccountInterestActivationBalanceArgs.InterestActivationDate, ActionDate, tenant);
                     }
                 }
 
@@ -169,7 +171,7 @@ namespace Logitude.Accounting.BL.Utils
 
 
 
-        public void ActivationBalanceCalculation(string gLAccountId, DateTime interestActivationDate, int _Tenant)
+        public void ActivationBalanceCalculation(string gLAccountId, DateTime interestActivationDate, DateTime actionDate, int _Tenant)
         {
             IAccountingContext context = AccountingContext.GetContext(_Tenant);
             try
@@ -246,10 +248,39 @@ namespace Logitude.Accounting.BL.Utils
                         amount_before = amount_before_qm.HasValue ? amount_before_qm.Value : 0m;
                     }
 
+                    ////////////
+                    /// 2.7. Compute our InterestReportId 
+                    string actionDateStr = actionDate.ToString("dd.MM.yyyy").Replace(".", String.Empty);
+                    string ourInterestReportId = "OPEN_" + actionDateStr;
+
+
+                    ////////////
+                    /// 2.8. Compute "Before" - closed (by other InterestReportId)
+
+                    var calcClosedBeforeInterestTrans =
+                             (
+                                from intTrans in myInterestTransactionRepository.GetAll(_Tenant)
+                                    .Where(intTrans => intTrans.GLAccountId == gLAccountId
+                                    && intTrans.IsClosed && (intTrans.InterestReportId != ourInterestReportId || String.IsNullOrEmpty(intTrans.InterestReportId))
+                                    && intTrans.InterestValueDate < interestActivationDate)
+                                select new InterestTransactionBefore
+                                {
+                                    Tenant = intTrans.Tenant,
+                                    Id = intTrans.Id,
+                                    LocalAmount = intTrans.LocalAmount,
+                                }
+                             );
+                    decimal amount_closed_before = 0m;
+                    List<InterestTransactionBefore> closed_before_list = calcBeforeInterestTrans.ToList();
+                    if (before_list != null)
+                    {
+                        decimal? amount_before_qm = before_list.Select(c => c.LocalAmount).Sum();
+                        amount_before = amount_before_qm.HasValue ? amount_before_qm.Value : 0m;
+                    }
 
                     ////////////////
                     /// 3.Compute interestOpenBalance
-                    decimal interestOpenBalance = amount_before + balance_on_act_date;
+                    decimal interestOpenBalance = amount_before + balance_on_act_date - amount_closed_before;
 
 
 
@@ -273,7 +304,7 @@ namespace Logitude.Accounting.BL.Utils
                                 {
                                     interestTransactionPM.IsClosed = true;
                                     interestTransactionPM.ChangeSetOp = ChangeSetOperation.Update;
-                                    interestTransactionPM.InterestReportId = "OPEN";
+                                    interestTransactionPM.InterestReportId = ourInterestReportId;
                                     myInterestTransactionUpdateService.Update(interestTransactionPM, commit);
                                 }
                             }
@@ -414,6 +445,8 @@ namespace Logitude.Accounting.BL.Utils
 
         public int MaxGLAccountsPerQuery { get; set; }
         public string CommunicationLogId { get; set; }
+
+        public DateTime ActionDate { get; set; }
 
     }
 

@@ -55,6 +55,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                             InterestActivationDate = args.InterestActivationDate,
                             LastMadeGLAccountId = args.LastMadeGLAccountId, 
                             MaxGLAccountsPerQuery = args.MaxGLAccountsPerQuery,
+                            ActionDate = args.ActionDate,
                             BatchIt = 1, 
                         }, tenant, subj, false);
 
@@ -118,6 +119,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 BatchIt = batchIt,
                 LastMadeGLAccountId = lastMadeGLAccountId,
                 MaxGLAccountsPerQuery = maxGLAccountsPerQuery,
+                ActionDate = DateTime.Today,
             };
             isSuccess = true;
             return isSuccess;

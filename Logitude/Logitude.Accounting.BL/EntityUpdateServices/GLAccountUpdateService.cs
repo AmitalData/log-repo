@@ -690,6 +690,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     InterestActivationDate = entityPM.InterestCalculationStartDate.HasValue ? entityPM.InterestCalculationStartDate.Value : DateTime.MinValue,
                     LastMadeGLAccountId = null,
                     MaxGLAccountsPerQuery = 100,
+                    ActionDate = DateTime.Today,
                     BatchIt = 1,
                 };
                 using (var memStream = new MemoryStream())
