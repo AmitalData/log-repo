@@ -4,7 +4,8 @@
             <table>
                 <tr>
                     <td style="width: 300px; vertical-align:middle;">
-                        <SearchTextBox (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
+                        <SearchTextBox [ObjectTableName]="'ObjectField'"
+                                                   (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
                     </td>
 
                     <td> </td>
@@ -30,6 +31,7 @@
                                                        [columns]="columns"  [ObjectTable]="'ObjectField'"
                                                        [autoLoad]="true"
                                                        [searchFields]="searchFields"
+                                                       [QueryChangeEvent]="DigitalPortalQueryChangeEvent"
                                                        [SearchFieldchangeevent]="SearchFieldchangeevent">
                                         </logitude-grid>
                                     </div>

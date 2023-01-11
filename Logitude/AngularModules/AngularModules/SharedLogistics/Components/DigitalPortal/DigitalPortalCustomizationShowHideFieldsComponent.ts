@@ -140,7 +140,7 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
         if (this.IsModifiedLables) {
             this.ModifiedLables.ObjectTableId = this.SelectedObjectTableItem.Name;
             this.ModifiedLables.ProfileId = this.SelectedProfileItem.Code;
-            var hasHasPermissionList = this.FieldsItemsSource.Collection.filter(a => a.HasPermission);
+            var hasHasPermissionList = this.FieldsItemsSource.Collection;
 
             hasHasPermissionList.forEach(item => {
                 var newLabel = new DigitalFeildSecurityUpdateModel();

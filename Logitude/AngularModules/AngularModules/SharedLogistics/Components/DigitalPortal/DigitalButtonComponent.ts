@@ -16,7 +16,6 @@ export class DigitalButtonComponent {
     public rowData: any;
     public fieldName: any;
     public TenantPM: TenantPM;
-    public entityId: string;
     public InUseVisibile: boolean = true;
     private CurrentSession = SessionLocator.SelectedSession;
     private digitalCustomizationService: DigitalCustomizationService;
@@ -45,20 +44,13 @@ export class DigitalButtonComponent {
     }
 
     AddObjectFieldClicked() {
-        this.entityId = this.rowData.Id;
         this.StartBusyIndicator("Adding field to your list");
         this.AddObjectField();
     }
 
-    RefreshDate() {
-        this.InUseVisibile = true;
-        var isDestroyed: boolean = this.CD['destroyed'];
-        if (!isDestroyed) {
-            this.CD.detectChanges();
-        }
-    }
 
     RefreshDateUpdated() {
+        this.InUseVisibile = true;
         var isDestroyed: boolean = this.CD['destroyed'];
         if (!isDestroyed) {
             this.CD.detectChanges();
@@ -79,8 +71,8 @@ export class DigitalButtonComponent {
         newField.CreatedBy = SessionLocator.LoggedUserPM.EnglishName;
 
         this.digitalCustomizationService.AddCustomField(newField).subscribe((myResult) => {
-            this.StopBusyIndicator();
             this.RefreshDateUpdated();
+            this.StopBusyIndicator();
         });
     }
 

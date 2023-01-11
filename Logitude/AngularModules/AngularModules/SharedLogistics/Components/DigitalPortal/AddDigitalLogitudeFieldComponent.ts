@@ -2,7 +2,7 @@ declare var window: any;
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ApiQueryFilters, FilterItem} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
@@ -25,12 +25,13 @@ export class AddDigitalLogitudeFieldComponent extends BaseComponent implements O
     private CurrentSession = SessionLocator.SelectedSession;
     @Output() SearchFieldchangeevent = new EventEmitter();
     public searchFields: string;
-    public searchText: string;
+    searchFieldFilter: FilterItem;
     public TenantPM: TenantPM;
     public columns: any[] = [];
     public ObjectFields: any[] = [];
     digitalCustomizationService: DigitalCustomizationService;
     public items: any[] = [];
+    @Output() DigitalPortalQueryChangeEvent = new EventEmitter();
 
     constructor(private _entityListService: EntityListService) {
         super();
@@ -80,7 +81,9 @@ export class AddDigitalLogitudeFieldComponent extends BaseComponent implements O
         filters.addAdditionalFilter("ObjectTableId", this.ObjectTableId, null, null, "Equals", false, false, false, "string");
         filters.ProfileId = this.ProfileId;
         filters.ObjectTableId = this.ObjectTableId;
-        
+        if (this.searchFieldFilter) {
+            filters.AdditionalFilters.push(this.searchFieldFilter);
+        }
         var servicelink = './Infrastructure/Services/WebServices/DigitalCustomizationService';
         return new Promise((resolve, reject) => {
             SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
@@ -131,9 +134,23 @@ export class AddDigitalLogitudeFieldComponent extends BaseComponent implements O
         });
     }
 
+    private timerToken: any;
     TextChanged(searchtext) {
-        this.searchFields = searchtext;
-        this.SearchFieldchangeevent.emit(this.searchFields);
+        if (searchtext != null || searchtext != undefined) {
+            
+            this.timerToken = setTimeout(() => {
+                this.searchFieldFilter = new FilterItem("FieldCode", searchtext, null, null, "Contains", false, false, false, "string", false);
+                this.ReloadScreen();
+            }, 700);
+
+        } else {
+            this.searchFieldFilter = null;
+            this.ReloadScreen();
+        }
+    }
+
+    ReloadScreen() {
+        this.DigitalPortalQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
     }
 
     CloseButtonClicked() {

@@ -168,6 +168,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     {
                         temp.DisplayText = item.DefaultText;
                     }
+                    else
+                    {
+                        defaultCodesObject.Add(item);
+                    }
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, defaultCodesObject);

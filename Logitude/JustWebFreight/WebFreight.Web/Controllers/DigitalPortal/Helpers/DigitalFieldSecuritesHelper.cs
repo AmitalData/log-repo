@@ -103,9 +103,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
                 {
                     customDigitalFeildSecurityObject = JsonConvert.DeserializeObject<List<DigitalFeildSecurityObject>>(customDigitalFieldSecurityList.DefaultSettings);
 
-                    foreach (var item in defaultDigitalFieldSecurity)
+                    foreach (var item in customDigitalFeildSecurityObject)
                     {
-                        var temp = customDigitalFeildSecurityObject.FirstOrDefault(a => a.FieldCode.Equals(item.FieldCode));
+                        var temp = defaultDigitalFieldSecurity.FirstOrDefault(a => a.FieldCode.Equals(item.FieldCode, StringComparison.InvariantCultureIgnoreCase));
 
                         if (temp != null)
                         {
@@ -113,7 +113,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
                         }
                         else
                         {
-                            customDigitalFeildSecurityObject.Add(item);
+                            defaultDigitalFieldSecurity.Add(item);
                         }
                     }
                 }
@@ -150,7 +150,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
                 return defaultDigitalFieldSecurity;
             }
             
-            return customDigitalFeildSecurityObject;
+            return defaultDigitalFieldSecurity;
         }
     
         public bool CheckIfFieldInuse(CheckObjectFieldExistenceRequest checkObjectFieldExistenceRequest, int tenant)

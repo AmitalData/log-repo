@@ -282,8 +282,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 IWebFreightContext MyContext = WebFreightContext.GetContext(tenant);
                 ObjectFieldRepository objectFieldRepository = new ObjectFieldRepository(MyContext);
-                var IncludeMetaDataFields = true;
-                IQueryable<ObjectField> entityPocos = objectFieldRepository.GetObjectFieldsFromTenanZeroAndMyTenant(tenant, IncludeMetaDataFields);
+                IQueryable<ObjectField> entityPocos = objectFieldRepository.GetObjectFieldsFromTenanZeroAndMyTenant(tenant);
 
                 ObjectFieldQuery objectFieldQuery = new ObjectFieldQuery(objectFieldRepository);
 
@@ -325,6 +324,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 foreach (var item in listResult)
                 {
+                    if(item.FieldCode == "Shipment.INTTRABookingTransStatusCode")
+                    {
+
+                    }
                     if(defaultData.Any(a => a.FieldCode.Equals(item.FieldCode))
                         || customData.Any(a => a.FieldCode.Equals(item.FieldCode)))
                     {
