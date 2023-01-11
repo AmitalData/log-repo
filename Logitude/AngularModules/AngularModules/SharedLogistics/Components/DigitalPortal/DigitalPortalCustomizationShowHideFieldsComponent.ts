@@ -200,8 +200,8 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
 
     AddFieldClicked() {
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 700;
-        logWindow.Height = 600;
+        logWindow.Width = 1000;
+        logWindow.Height = 800;
         var windowArgs: any = {};
         windowArgs.ObjectTableId = this.SelectedObjectTableItem.Name;
         windowArgs.ProfileId = this.SelectedProfileItem.Code;
