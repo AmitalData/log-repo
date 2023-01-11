@@ -199,7 +199,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     private SetTotalAmountInNIS() {
         let ammount = 0;
         let maxDigitsAfterPoint = 0;
-        this.AdditionalData.RequestPaymentData.ServiceTypes.forEach((item, key) => {
+        this.AdditionalData.RequestPaymentData?.ServiceTypes.forEach((item, key) => {
             let splitItemAmount = item.AmountInNIS?.toString()?.split('.');
             if (splitItemAmount != null && splitItemAmount.length > 1 && splitItemAmount[1].length > maxDigitsAfterPoint) {
                 maxDigitsAfterPoint = splitItemAmount[1].length;
