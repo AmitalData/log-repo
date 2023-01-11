@@ -93,10 +93,22 @@ namespace Logitude.DashboardModule.MetaDataTool.Models
             if (string.IsNullOrEmpty(this.TableName)) str.AppendLine("Name is required!");
             if (string.IsNullOrEmpty(this.Name)) str.AppendLine("Table Name is required!");
             if (string.IsNullOrEmpty(this.ObjectTableName)) str.AppendLine("Object Table Name is required!");
-
+            ValidateCommonFilterCode(str);
             foreach (var field in this.AnalyticsFactsFieldsMetaDataViewModels) field.Validate(str);
 
+
             ErrorMessages = str.ToString();
+        }
+
+        private void ValidateCommonFilterCode(StringBuilder str)
+        {
+            if (AnalyticsFactsFieldsMetaDataViewModels == null || AnalyticsFactsFieldsMetaDataViewModels.Count == 0) return;
+            var duplicates = AnalyticsFactsFieldsMetaDataViewModels.Where(x=>x.CommonFilterCode != null && x.CommonFilterCode != "").GroupBy(x => x.CommonFilterCode).Where(x => x.Count() > 1).Select(x => x.Key).ToList();
+
+            foreach (var item in duplicates)
+            {
+                str.AppendLine("Duplicate CommonFilter Code :" + item);
+            }
         }
 
         internal void BuildObsList()

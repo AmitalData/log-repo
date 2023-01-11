@@ -411,6 +411,29 @@ namespace Logitude.DashboardModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private string commonFilterCode ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CommonFilterCode  
+	   {
+	    
+	     get
+		{
+		   return commonFilterCode;
+		 }
+		 set
+		 {
+		   if(commonFilterCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CommonFilterCode",OldValue=commonFilterCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   commonFilterCode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

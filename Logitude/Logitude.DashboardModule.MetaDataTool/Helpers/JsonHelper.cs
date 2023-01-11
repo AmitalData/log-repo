@@ -22,7 +22,10 @@ namespace Logitude.DashboardModule.MetaDataTool.Helpers
                 MessageBox.Show("file path in not valid!");
                 return;
             }
-            var json = JsonConvert.SerializeObject(analyticsFactsMetaData, Formatting.Indented);
+
+            JsonSerializerSettings settings = new JsonSerializerSettings();
+            settings.NullValueHandling = NullValueHandling.Ignore;
+            var json = JsonConvert.SerializeObject(analyticsFactsMetaData, Formatting.Indented, settings);
             File.WriteAllText(App.DirectOpenPath, json);
         }
 
