@@ -1644,6 +1644,174 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return result;
         }
 
+        public IQueryable<ARInvoiceList> GetDigitalIQueryableEntityList(IQueryable<ARInvoice> iQueryable, int tenant = 0)
+        {
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            string[] invoiceStatusCodes = { "DR", "LL" };
+
+            var result = iQueryable.Include("BillTo")
+                                    .Include("BillTo.PartnerType")
+                                    .Include("CreatedByUser.Contact").Include("InvoiceCurrency")
+                                    .Include("Status")
+                                    .Include("ARInvoiceType")
+                                    .Include("IssuedByUser.Contact")
+                                    .Include("PrintByUser.Contact")
+                                    .Include("PaymentTerm")
+                                    .Include("ProfitCurrency")
+                                    .Include("LocalCurrency")
+                                    .Include("TransferStatus")
+                                    .Include("ApprovedByUser")
+                                    .Include("ApprovedByUser.Contact")
+                                    .Include("SalesmanUser")
+                                    .Include("SalesmanUser.Contact")
+                                    .Include("CreditedByARInvoice")
+                                    .Include("SATInvoiceStatus")
+                                    .Include("SATTransferStatus")
+                                    .Include("Branch")
+                                    .Select(entity =>   new ARInvoiceList()
+                                    {
+                                         IsClosed = entity.IsClosed,
+                                         BillToAddressId = entity.BillToAddressId,
+                                         BillToId = entity.BillToId,
+                                         VatNumber = entity.VatNumber,
+                                         CancelledByARInvoiceId = entity.CancelledByARInvoiceId,
+                                         DueDate = entity.DueDate,
+                                         AmountInInvoiceCurrency = entity.AmountInInvoiceCurrency,
+                                         AmountInLocalCurrency = entity.AmountInLocalCurrency,
+                                         Id = entity.Id,
+                                         InternalNotes = entity.InternalNotes,
+                                         InvoiceCurrencyId = entity.InvoiceCurrencyId,
+                                         InvoiceDate = entity.InvoiceDate,
+                                         InvoiceNumber = invoiceStatusCodes.Contains(entity.StatusCode) ? entity.DraftNumber : entity.InvoiceNumber,
+                                         DraftNumber = !string.IsNullOrEmpty(entity.DraftNumber) ? entity.DraftNumber : entity.Id,
+                                         StatusCode = entity.StatusCode,
+                                         StatusName = entity.Status == null ? "" : entity.Status.Name,
+                                         InvoiceCurrencyExchangeRate = entity.InvoiceCurrencyExchangeRate,
+                                         ARInvoiceTypeCode = entity.ARInvoiceTypeCode,
+                                         IsAutoCredit = entity.IsAutoCredit,
+                                         IsCancelled = entity.IsCancelled,
+                                         IssuedByUserId = entity.IssuedByUserId,
+                                         LocalCurrencyId = entity.LocalCurrencyId,
+                                         PrintNotes = entity.PrintNotes,
+                                         PrintByUserId = entity.PrintByUserId,
+                                         PrintDate = entity.PrintDate,
+                                         SubTotalInInvoiceCurrency = entity.SubTotalInInvoiceCurrency,
+                                         SubTotalInLocalCurrency = entity.SubTotalInLocalCurrency,
+                                         Tenant = entity.Tenant,
+                                         BillToName = entity.BillTo.EnglishName,
+                                         BillToCity = entity.BillTo == null ? "" : entity.BillTo.CityName,
+                                         BillToCountry = entity.BillTo == null ? "" : entity.BillTo.CountryName,
+                                         BillToCode = entity.BillTo.Code,
+                                         BillToPartnerName = entity.BillTo.PartnerType.Name,
+                                         BillToPartnerId = entity.BillTo.PartnerTypeId,
+                                         CreateDate = entity.CreateDate,
+                                         CreatedByUserName = entity.CreatedByUser.Contact.EnglishName,
+                                         InvoiceCurrencyCode = entity.InvoiceCurrency.Code,
+                                         ARInvoiceTypeName = entity.ARInvoiceType.Name,
+                                         CreatedByUserId = entity.CreatedByUserId,
+                                         IssuedByUserName = entity.IssuedByUser != null ? entity.IssuedByUser.Contact.EnglishName : null,
+                                         LocalCurrencyCode = entity.LocalCurrency.Code,
+                                         SearchFields = entity.SearchFields,
+                                         PrintByUserName = entity.PrintByUser != null ? entity.PrintByUser.Contact.EnglishName : null,
+                                         Sent = entity.Sent,
+                                         PaymentTermId = entity.PaymentTermId,
+                                         PaymentTermName = entity.PaymentTerm != null ? entity.PaymentTerm.EnglishName : null,
+                                         IsInvoiceNumberManuallySet = entity.IsInvoiceNumberManuallySet,
+                                         AmountDue = entity.AmountDue,
+                                         ExpectedPaymentDate = entity.ExpectedPaymentDate,
+                                         IsPrinted = entity.IsPrinted,
+                                         ProfitCurrencyCode = entity.ProfitCurrency != null ? entity.ProfitCurrency.Code : null,
+                                         AmountDueInLocalCurrency = entity.AmountDueInLocalCurrency,
+                                         AmountDueInProfitCurrency = entity.AmountDueInProfitCurrency,
+                                         Field1 = entity.Field1,
+                                         Field2 = entity.Field2,
+                                         Field3 = entity.Field3,
+                                         Field4 = entity.Field4,
+                                         Field5 = entity.Field5,
+                                         Field6 = entity.Field6,
+                                         Field7 = entity.Field7,
+                                         Field8 = entity.Field8,
+                                         Field9 = entity.Field9,
+                                         Field10 = entity.Field10,
+                                         DebitAccount = entity.DebitAccount,
+                                         AmountInProfitCurrency = entity.AmountInProfitCurrency,
+                                         HouseNumber = entity.HouseNumber,
+                                         MasterNumber = entity.MasterNumber,
+                                         Description = entity.Description,
+                                         CustomerRef = entity.CustomerRef,
+                                         IsConstituentInvoice = entity.IsConstituentInvoice,
+                                         IsConsolidationInvoice = entity.IsConsolidationInvoice,
+                                         ConsolidationInvoiceId = entity.ConsolidationInvoiceId,
+                                         TransferTries = entity.TransferTries,
+                                         TransferError = entity.TransferError,
+                                         IsTransferStarted = entity.IsTransferStarted,
+                                         TransferStatusCode = entity.TransferStatusCode,
+                                         TransferStatusName = entity.TransferStatus == null ? "" : entity.TransferStatus.Name,
+                                         AccountingExternalCode = entity.AccountingExternalCode,
+                                         ReadyForTransfer = entity.TransferStatusCode == "RD" ? true : false,
+                                         PaymentTermExternalId = entity.PaymentTermExternalId,
+                                         MainEntityId = entity.MainEntityId,
+                                         MasterEntityId = entity.MainEntityId,
+                                         MainEntityReference = entity.MainEntityReference,
+                                         IsDueDateColorRed = (entity.DueDate == null || entity.StatusCode == "PD") ? false : (entity.DueDate.Value < todayDate ? true : false),
+                                         IsDigitalDueDateColorRed = (entity.DueDate == null || entity.PaidStatus == "Paid") ? false : (entity.DueDate.Value < todayDate ? true : false),
+                                         IsExpectedPaymentDateColorRed = (entity.ExpectedPaymentDate == null || entity.StatusCode == "PD") ? false : (entity.ExpectedPaymentDate.Value < todayDate ? true : false),
+                                         UpdateDate = entity.UpdateDate,
+                                         UpdatedByUserId = entity.UpdatedByUserId,
+                                         ApprovedDate = entity.ApprovedDate,
+                                         ApprovedByUserId = entity.ApprovedByUserId,
+                                         ApprovedByUserName = entity.ApprovedByUser == null ? null : (entity.ApprovedByUser.Contact == null ? null : entity.ApprovedByUser.Contact.EnglishName),
+                                         OperationalDate = entity.OperationalDate,
+                                         DateForInterest = entity.DateForInterest,
+                                         SplitJournalByCurrency = entity.SplitJournalByCurrency,
+                                         IsExternalEntity = entity.IsExternalEntity,
+                                         IsGeneralInvoice = entity.IsGeneralInvoice,
+                                         SATPaymentMethodCode = entity.SATPaymentMethodCode,
+                                         SalesmanUserId = entity.SalesmanUserId,
+                                         SalesmanUserName = entity.SalesmanUser == null ? null : (entity.SalesmanUser.Contact == null ? null : entity.SalesmanUser.Contact.EnglishName),
+                                         IsCustomsChargesOnly = entity.IsCustomsChargesOnly,
+                                         RelatedInvoice = entity.RelatedInvoice,
+                                         CreditedByARInvoiceId = entity.CreditedByARInvoiceId,
+                                         CreditedByARInvoiceTypeCode = entity.CreditedByARInvoice == null ? null : entity.CreditedByARInvoice.ARInvoiceTypeCode,
+                                         MetodoPagoCode = entity.MetodoPagoCode,
+                                         UsoCFDICode = entity.UsoCFDICode,
+                                         RegimenFiscalCode = entity.RegimenFiscalCode,
+                                         PeriodCode = entity.PeriodCode,
+                                         SATTransferStatusCode = entity.SATTransferStatusCode,
+                                         SATTransferStatusName = entity.SATTransferStatus != null ? entity.SATTransferStatus.Name : null,
+                                         SATInvoiceStatusCode = entity.SATInvoiceStatusCode,
+                                         SATInvoiceStatusName = entity.SATInvoiceStatus != null ? entity.SATInvoiceStatus.Name : null,
+                                         TransmissionError = entity.TransmissionError,
+                                         Intercompany = entity.Intercompany,
+                                         BankAccountLiteId = entity.BankAccountLiteId,
+                                         IsMultiCurrency = entity.IsMultiCurrency,
+                                         TotalAmountForTaxReport = entity.TotalAmountForTaxReport,
+                                         TotalVAT = entity.TotalVAT,
+                                         TotaVatableAmountForTaxReport = entity.TotaVatableAmountForTaxReport,
+                                         SATApprovalDate = entity.SATApprovalDate,
+                                         IsFullAccounting = entity.IsFullAccounting,
+                                         IsInvoiceNumberFromStock = entity.IsInvoiceNumberFromStock,
+                                         BranchName = entity.Branch == null ? null : entity.Branch.EnglishName,
+                                         CreatedByPartner = entity.CreatedByPartner,
+                                         RegionalTaxId = entity.RegionalTaxId,
+                                         RegionalTaxPercentage = entity.RegionalTaxPercentage,
+                                         PaidDate = entity.PaidDate,
+                                         PaidStatus = entity.PaidStatus,
+                                         IsFromInterestBatchInvoice = entity.IsFromInterestBatchInvoice,
+                                         PartnerId = entity.PartnerId,
+                                         ShipmentsNumbers = entity.ShipmentsNumbers,
+                                         MasterNumbers = entity.MasterNumbers,
+                                         MasterShipmentNumbers = entity.MasterShipmentNumbers,
+                                         HouseNumbers = entity.HouseNumbers,
+                                         GlobalTaxCalculation = entity.GlobalTaxCalculation,
+                                         PaymentReferences = entity.PaymentReferences,
+                                         SATCancelReasonCode = entity.SATCancelReasonCode,
+                                         TotalExamptFortaxReport = entity.TotalExamptFortaxReport,
+                                         DocumentTemplateId = entity.DocumentTemplateId
+                                    });
+            return result;
+        }
+
         public List<ARInvoicePM> GetInvoicesByCustomer(string customerId, int tenant)
         {
             List<ARInvoicePM> invoices = (from a in repository.context.ARInvoices.Include("BillTo").Include("InvoiceCurrency").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("Branch")
@@ -2573,7 +2741,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
             entityPocos = genericFilter.GetFilteredQuery(nonListQueryOperation, entityPocos);
 
-            var entityLists = aRInvoiceQuery.GetIQueryableEntityList(entityPocos);
+            var entityLists = aRInvoiceQuery.GetDigitalIQueryableEntityList(entityPocos, tenant);
+
             entityLists = genericFilter.GetFilteredQuery(listQueryOperation, entityLists);
 
             if (!string.IsNullOrWhiteSpace(queryOperations.SortByColumnName) && !string.IsNullOrWhiteSpace(queryOperations.SortDirectin))
