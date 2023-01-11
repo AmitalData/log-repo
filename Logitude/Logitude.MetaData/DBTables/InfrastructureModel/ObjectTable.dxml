@@ -476,6 +476,10 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo"
     Ignore="true" />
+
+  <Index
+    Columns="CacheOnClient,IsClosed" />
+
   <UniqueConstraint
     Columns="Name,Tenant" />
 </Table>

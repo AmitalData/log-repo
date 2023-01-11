@@ -58,12 +58,13 @@ namespace CustomsWorkerRole
                     try
                     {
                         WorkOnce();
-                        Thread.Sleep(TimeSpan.FromSeconds(2));
+                        Thread.Sleep(TimeSpan.FromSeconds(1));
                     }
                     catch (Exception e)
                     {
                         ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "DownloadDcaMessageSheetWR : Run() Method", null);
-                        Thread.Sleep(TimeSpan.FromMinutes(1)); ///+1 MIN
+                        //Thread.Sleep(TimeSpan.FromMinutes(1)); ///+1 MIN
+                        Thread.Sleep(TimeSpan.FromSeconds(3));
                     }
                 }
 
@@ -165,7 +166,8 @@ namespace CustomsWorkerRole
                 if (!costomSettingDCAList.Any())
                 {
                     Logger.LogMe("_DedicatedCourierDCAModel.Tenant is not valid!!!! must env.CompanyType == B and in customssetting !!", true);
-                    Thread.Sleep(TimeSpan.FromMinutes(3));
+                    //Thread.Sleep(TimeSpan.FromMinutes(3));
+                    Thread.Sleep(TimeSpan.FromSeconds(3));
                     return;
                 }
             }
@@ -189,7 +191,7 @@ namespace CustomsWorkerRole
                 {
 
                     ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "DownloadDcaMessageSheetWR :DownloadAll" + costomSetting.DCAPartnerVault, null);
-                    Thread.Sleep(TimeSpan.FromSeconds(20));
+                    Thread.Sleep(TimeSpan.FromSeconds(2));
                 }
 
             }

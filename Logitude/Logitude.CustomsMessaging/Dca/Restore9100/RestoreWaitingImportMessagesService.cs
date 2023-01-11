@@ -25,12 +25,12 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
     {
         private static List<MessageCorrelationSavedInDB> _MessageCorrelationSavedInDBList = new List<MessageCorrelationSavedInDB>();
         private static HashSet<string> _BadMessagingServiceCode = new HashSet<string>();
-        const int Minutes2Retrieve= 15;
+
         StringBuilder _StringBuilder = new StringBuilder();
         DateTime? _LastRetrive = null;
         private readonly CustomsSettingPM _CustomsSettingPM;
         private List<InterfaceTenantDefinitionManagementPM> _InterfaceListDCA;
-        
+
 
         public RestoreWaitingImportMessagesService(CustomsSettingPM customsSettingPM, List<InterfaceTenantDefinitionManagementPM> interfaceListDCA)
         {
@@ -43,7 +43,7 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
                 throw new System.ArgumentNullException("interfaceListDCA");
             }
 
-                
+
 
             _CustomsSettingPM = customsSettingPM;
             _InterfaceListDCA = interfaceListDCA;
@@ -51,7 +51,7 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
 
         public static void TestMe()
         {
-            CustomsSettingPM customsSettingPM = (new CustomsSettingQueryService(6)).GetSingle("6", false,false);
+            CustomsSettingPM customsSettingPM = (new CustomsSettingQueryService(6)).GetSingle("6", false, false);
             var interfaceTypeQueryService = new InterfaceTenantDefinitionQueryService(6);
             var _AllInterface = interfaceTypeQueryService.GetWithInterfaceManagementDefinition(customsSettingPM.Tenant);
 
@@ -63,7 +63,21 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
             restoreWaitingImportService.RestoreWaitingImportSaveInDB();
 
         }
-
+        
+        int Minutes2Retrieve()
+        {
+            const int C_Minutes2Retrieve = 15;
+            string s=ConfigurationManager.AppSettings.Get("RestoreWaitingImportMessages:Minutes2Retrieve");
+            int iMinutes2Retrieve = C_Minutes2Retrieve;
+            if (int.TryParse(s,out iMinutes2Retrieve))
+            {
+                if (iMinutes2Retrieve>15 && iMinutes2Retrieve< 180)
+                {
+                    return iMinutes2Retrieve;
+                }
+            }
+            return C_Minutes2Retrieve;
+        }
         public void RestoreWaitingImportSaveInDB()
         {
 
@@ -84,7 +98,7 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
             {
 
 
-                _LastRetrive = _LastRetrive ?? DateTime.Now.AddMinutes(-1* Minutes2Retrieve);
+                _LastRetrive = _LastRetrive ?? DateTime.Now.AddMinutes(-1* Minutes2Retrieve());
                 if (DateTime.Now.Date.Equals(new DateTime(2023,01,3)))
                 {
                     ///_LastRetrive = DateTime.Now.AddDays(-31);
@@ -94,6 +108,7 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
                 Debug.WriteLine($"RestoreWaitingImportSaveInDB-Send 9100 restore fromDate {request.GetOptions.fromDate}");
                 var response = SendOutgoingMessageRequest(request);
                 Debug.WriteLine($"RestoreWaitingImportSaveInDB-Send 9100 took {sw.Elapsed}");
+                Logger.LogMe($"t{_CustomsSettingPM.Tenant};fromDate {request.GetOptions.fromDate}; OutgoingMessage={response?.OutgoingMessage?.Length}", false, "DCAStopwatch");
                 if (response?.OutgoingMessage?.Length == null || response?.OutgoingMessage?.Length == 0)
                 {
                     Debug.WriteLine($"RestoreWaitingImportSaveInDB-OutgoingMessage == 0 - nothing todo");
@@ -136,7 +151,7 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
             }
             finally
             {
-                int min2delete = Minutes2Retrieve + 2;
+                int min2delete = Minutes2Retrieve() + 2;
                 var oldFiles = _MessageCorrelationSavedInDBList
                     .Where(r => r.Tenant == _CustomsSettingPM.Tenant)
                     .Where(r => DateTime.Now.Subtract(r.DownloadAt) > TimeSpan.FromMinutes(min2delete)).ToList();
