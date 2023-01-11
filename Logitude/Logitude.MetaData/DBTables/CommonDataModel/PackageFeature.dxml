@@ -52,8 +52,4 @@
     Ignore="true" />
   
 
-
-  <Index
-    Columns="PackageCode" />
-
 </Table>
