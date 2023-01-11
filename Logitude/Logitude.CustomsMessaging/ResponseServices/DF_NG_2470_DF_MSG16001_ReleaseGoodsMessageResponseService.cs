@@ -147,10 +147,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 }
                             }
 
-                            if (declarationPM.Direction == "E")
-                            {
-                                SendDeclarationPrint(declarationPM, requestParams);
-                            }
 
 
                                 if (declarationPM.IsCourierDeclaration)
@@ -249,6 +245,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     if (declarationPM.IsConvertedDeclaration)
                     {
                         MyRequestSheetParam.RequestDescription = string.Concat(MyRequestSheetParam.RequestDescription, "\n", declarationPM.UserNotes);
+                    }
+                    if (declarationPM.Direction == "E")
+                    {
+                        SendDeclarationPrint(declarationPM, requestParams);
                     }
                     requestParams.LoggingEntityId = declarationPM.Id;
                     this.MyResponseData = new ReleaseGoodsResponseData()
