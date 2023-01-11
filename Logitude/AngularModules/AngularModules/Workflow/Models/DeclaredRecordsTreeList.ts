@@ -24,10 +24,11 @@ export class DeclaredRecordsTreeList {
 
     private initializeRecordsItems() {
         this.getDeclareRecordVariableNodes().forEach((recordDeclareVariableNode: any) => {
+            let name = recordDeclareVariableNode.data["name"] || null;
             let variableName = recordDeclareVariableNode.data["variableName"] || null;
             let recordType = recordDeclareVariableNode.data["recordType"] || null;
             let treeSelectItemName = variableName;
-            let treeSelectItemKey = Formatter.getCodeFromName(treeSelectItemName);
+            let treeSelectItemKey = Formatter.getCodeFromName(name);
             let treeSelectItemData = { type: Formatter.getEntity(recordType) };
             let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, false, true, false, false, [], treeSelectItemData);
             this.Items.push(treeSelectItem);

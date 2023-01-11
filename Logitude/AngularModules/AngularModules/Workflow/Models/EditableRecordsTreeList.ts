@@ -30,9 +30,10 @@ export class EditableRecordsTreeList {
 
     private initializeRecordsItems() {
         this.getEditableGetRecordNodes().forEach((getRecordNode: any) => {
+            let treeSelectItemLabel = getRecordNode.data["label"];
             let treeSelectItemName = getRecordNode.data["name"];
             let treeSelectItemKey = Formatter.getCodeFromName(treeSelectItemName);
-            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, true, true, false, false, []);
+            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemLabel, true, true, false, false, []);
             this.Items.push(treeSelectItem);
         });
     }

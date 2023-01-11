@@ -63,7 +63,10 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
     }
 
     updateVariableName(variableName: string) {
-        this.Data["name"] = variableName;
+        if (this.IsNew) {
+            this.Data["name"] = Formatter.getCodeFromName(variableName);
+        }
+        this.Data["label"] = variableName;
         this.Data["variableName"] = variableName;
         this.Data["variableCode"] = Formatter.getCodeFromName(variableName);
         this.VariableName = variableName;

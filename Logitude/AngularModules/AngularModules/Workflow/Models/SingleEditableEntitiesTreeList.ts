@@ -37,10 +37,11 @@ export class SingleEditableEntitiesTreeList {
     private initializeGetRecordTreeSelectItems() {
         this.getSingleEditableGetRecordNodes().forEach((getRecordNode: any) => {
             let entity = getRecordNode.data["entity"];
+            let treeSelectItemLabel = getRecordNode.data["label"];
             let treeSelectItemName = getRecordNode.data["name"];
             let treeSelectItemKey = Formatter.getCodeFromName(treeSelectItemName);
             let childrenItems = this.getGetRecordTreeSelectItemChildren(treeSelectItemKey, entity);
-            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, false, false, false, false, childrenItems);
+            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemLabel, false, false, false, false, childrenItems);
             this.Items.push(treeSelectItem);
         });
     }

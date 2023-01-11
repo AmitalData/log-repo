@@ -8,6 +8,7 @@ import { SingleEditableEntitiesTreeList } from "Workflow/Models/SingleEditableEn
 import { Condition } from "Workflow/Models/Condition";
 import { ObjectTables } from "Workflow/Models/ObjectTables";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
+import { Formatter } from "Workflow/Models/Formatter";
 
 @Component({
     templateUrl: "./CollectionFilterPropertiesComponent.html"
@@ -34,6 +35,7 @@ export class CollectionFilterPropertiesComponent extends BaseComponent {
     public ValidationErrorsList: string[];
 
     public CurrentSession = SessionLocator.SelectedSession;
+    public IsNew: boolean = false;
 
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
@@ -48,7 +50,9 @@ export class CollectionFilterPropertiesComponent extends BaseComponent {
     }
 
     initialize() {
-        this.Name = this.Data["name"] || null;
+        this.IsNew = Object.keys(this.Data).length === 0;
+
+        this.Name = this.Data["label"] || null;
         this.Collection = this.Data["collection"] || null;
         this.Entity = this.Data["entity"] || null;
 
@@ -79,7 +83,10 @@ export class CollectionFilterPropertiesComponent extends BaseComponent {
     }
 
     updateName(name: string) {
-        this.Data["name"] = name;
+        if(this.IsNew){
+            this.Data["name"] = Formatter.getCodeFromName(name);
+        }
+        this.Data["label"] = name;
         this.Name = name;
 
         this.setUIProperties();
