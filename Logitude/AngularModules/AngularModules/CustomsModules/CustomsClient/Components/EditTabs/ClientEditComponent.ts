@@ -310,13 +310,13 @@ export class ClientEditComponent extends BaseComponent{
         }
 
         if (this.CurrentEntity.ClientAddresses == null || (this.CurrentEntity.ClientAddresses != null && this.CurrentEntity.ClientAddresses.length == 0)) {
-            errors.push("חובה להזין לפחות כתובת םחת ללקוח");
+            errors.push("חובה להזין לפחות כתובת אחת ללקוח");
         }
 
         if (this.CurrentEntity.ClientDrivingLicenses != null && this.CurrentEntity.ClientDrivingLicenses.length > 0){
             for (let item of this.CurrentEntity.ClientDrivingLicenses) {
                 if (item.ClientDrivingLicenseTypes == null || (item.ClientDrivingLicenseTypes != null && item.ClientDrivingLicenseTypes.length == 0)) {
-                    errors.push("חובה להזין לפחות סוג רישיון םחד לכל רישיון");
+                    errors.push("חובה להזין לפחות סוג רישיון אחד לכל רישיון");
                 }
             }
         }
