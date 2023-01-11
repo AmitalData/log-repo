@@ -35,7 +35,63 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
                 "Shipment.Events",
                 "Shipment.ConsolidatorName",
                 "Shipment.WarehouseLegRemarks",
-                "Shipment.IncotermName"
+                "Shipment.IncotermName",
+                "Shipment.WarehouseLegExpectedEntryDate",
+                "Shipment.WarehouseLegExpectedReleaseDate",
+                "Shipment.WarehouseLegActualReleaseDate",
+                "Shipment.WarehouseLegCutOffDate",
+                "Shipment.PreCarriageFromPortId",
+                "Shipment.PreCarriageFromPortName",
+                "Shipment.PreCarriageATD",
+                "Shipment.PreCarriageETD",
+                "Shipment.PreCarriageFromPortCountryCode",
+                "Shipment.PreCarriageATA",
+                "Shipment.PreCarriageETA",
+                "Shipment.PreCarriageTransportModeId",
+                "Shipment.PreCarriageCarrierName",
+                "Shipment.PreCarriageCarrierNumber",
+                "Shipment.PreCarriageVesselName",
+                "Shipment.MainCarriageFromPortName",
+                "Shipment.FromPartnerCountryCode",
+                "Shipment.MainCarriageFromPortCountryCode",
+                "Shipment.MainCarriageATA",
+                "Shipment.AirlinePrefix",
+                "Shipment.MainCarriageCarrierName",
+                "Shipment.MainCarriageCarrierNumber",
+                "Shipment.MainCarriageVesselName",
+                "Shipment.Transshipment1FromPortId",
+                "Shipment.Transshipment1FromPortName",
+                "Shipment.Transshipment1FromPortCountryCode",
+                "Shipment.Transshipment2FromPortName",
+                "Shipment.Transshipment2FromPortCountryCode",
+                "Shipment.Transshipment3FromPortName",
+                "Shipment.Transshipment3FromPortCountryCode",
+                "Shipment.Transshipment1AdditionalMAWBOBLBL",
+                "Shipment.Transshipment1CarrierNumber",
+                "Shipment.Transshipment1VesselName",
+                "Shipment.Transshipment2AdditionalMAWBOBLBL",
+                "Shipment.Transshipment2CarrierName",
+                "Shipment.Transshipment2CarrierNumber",
+                "Shipment.Transshipment2VesselName",
+                "Shipment.Transshipment3AdditionalMAWBOBLBL",
+                "Shipment.Transshipment3CarrierName",
+                "Shipment.Transshipment3CarrierNumber",
+                "Shipment.Transshipment3VesselName",
+                "Shipment.MainCarriageFinalDestinationPortName",
+                "Shipment.ToPartnerCountryCode",
+                "Shipment.MainCarriageFinalDestinationPortCountryCode",
+                "Shipment.Transshipment3ToPortId",
+                "Shipment.Transshipment1ToPortId",
+                "Shipment.Transshipment2ToPortId",
+                "Shipment.MainCarriageToPortId",
+                "Shipment.AirlinePrefix",
+                "Shipment.Master",
+                "Shipment.OnCarriageFromPortName",
+                "Shipment.OnCarriageFromPortCountryCode",
+                "Shipment.OnCarriageTransportModeId",
+                "Shipment.OnCarriageCarrierName",
+                "Shipment.OnCarriageCarrierNumber",
+                "Shipment.OnCarriageVesselName",
             };
 
             if (tenant != 0)
@@ -52,7 +108,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
 
                         if (temp != null)
                         {
-                            temp.HasPersmission = true;
+                            temp.HasPermission = true;
                         }
                     }
                 }
@@ -62,46 +118,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
             {
                 var extraFieldsForShipmentListApi  = new List<string>
                 {
-                    "Id",
-                    "MainCarriageETD",
-                    "MainCarriageFinalDestinationATA",
-                    "MainCarriageFinalDestinationETA",
-                    "InlandDomesticFromTypeCode",
-                    "MainCarriageFromAddressId",
-                    "MainCarriageFromPortCode",
-                    "InlandDomesticFromCity",
-                    "InlandDomesticToTypeCode",
-                    "MainCarriageToAddressId",
-                    "MainCarriageToPortCode",
-                    "InlandDomesticToCity",
-                    "InlandDomesticFromCountryId",
-                    "InlandDomesticToCountryId",
-                    "MainCarriageFromCity",
-                    "FromPortName",
-                    "FromCountryCode",
-                    "Transshipment1ETA",
-                    "Transshipment1ATA",
-                    "Transshipment1ETD",
-                    "Transshipment1ATD",
-                    "Transshipment2ETA",
-                    "Transshipment2ATA",
-                    "Transshipment2ETD",
-                    "Transshipment2ATD",
-                    "Transshipment3ETA",
-                    "Transshipment3ATA",
-                    "Transshipment3ETD",
-                    "Transshipment3ATD",
-                    "MainCarriageToCity",
-                    "ToPortName",
-                    "ToCountryCode",
-                    "IsOperationalClosed",
-                    "IsCustomerArchived",
-                    "IsAccountingClosed",
-                    "ShipmentLevelCode",
-                    "StatusLocation",
-                    "StatusCode",
-                    "ShipperCountryCode",
-                    "ConsigneeCountryCode",
                     "Field1",
                     "Field2",
                     "Field3",
@@ -119,16 +135,16 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
                     defaultDigitalFieldSecurity.Add(new DigitalFeildSecurityObject
                     {
                         FieldCode = item,
-                        HasPersmission = true
+                        HasPermission = true
                     });
                 }
             }
 
             if (!customDigitalFeildSecurityObject.Any())
             {
-                defaultDigitalFieldSecurity.ForEach(a => a.HasPersmission = true);
+                defaultDigitalFieldSecurity.ForEach(a => a.HasPermission = true);
             }
-
+            
             return defaultDigitalFieldSecurity;
         }
     }

@@ -131,10 +131,10 @@
 
                                                                                             <td class="CellStretched" style="width: 140px; min-width: 140px; max-width: 140px; position: relative;">
 
-                                                                                                <button id="{{item.DocumentTypeCode+'-S-DocsOut' | IdGeneratorPipe}}" *ngIf="item.VisibleViewButton" style="width: 40px;display:inline" class="Button" (click)="ViewButtonClick(item)">View</button>
+                                                                                                <button id="{{item.DocumentTypeCode+'-S-DocsOut' | IdGeneratorAsyncPipe | async}}" *ngIf="item.VisibleViewButton" style="width: 40px;display:inline" class="Button" (click)="ViewButtonClick(item)">View</button>
 
-                                                                                                <button id="{{item.DocumentTypeCode+'-P-DocsOut' | IdGeneratorPipe}}" *ngIf="item.VisibleBliudDocumentButton" style="width: 75px;display:inline" class="Button" (click)="BuildButtonClick(item)">{{item.ActionButtonLabel}}</button>
-                                                                                                <button id="{{item.DocumentTypeCode+'-P-DocsOut' | IdGeneratorPipe}}" *ngIf="item.VisibleUploadButton" style="width: 75px;display:inline" class="Button" (click)="UploadButtonClick(item,shipmentShareDocumentsData)">{{item.ActionButtonLabel}}</button>
+                                                                                                <button id="{{item.DocumentTypeCode+'-P-DocsOut' | IdGeneratorAsyncPipe | async}}" *ngIf="item.VisibleBliudDocumentButton" style="width: 75px;display:inline" class="Button" (click)="BuildButtonClick(item)">{{item.ActionButtonLabel}}</button>
+                                                                                                <button id="{{item.DocumentTypeCode+'-P-DocsOut' | IdGeneratorAsyncPipe | async}}" *ngIf="item.VisibleUploadButton" style="width: 75px;display:inline" class="Button" (click)="UploadButtonClick(item,shipmentShareDocumentsData)">{{item.ActionButtonLabel}}</button>
                                                                                             
                                                                                              </td>
 

@@ -301,7 +301,7 @@
                                             </td>
 
                                             <td *ngIf="SelectedFiltersDataSource" style="width: 57px;">
-                                                <button id="{{'RunBIReport' | IdGeneratorPipe}}" [class.RunBIButtonShake]="IsFilterValueChanged == true" [class.RunBIButton]="IsFilterValueChanged == false" (click)="RunReportButtonClicked()">{{IsScheduler ? 'Preview' : 'Run'}} Report</button>
+                                                <button id="{{'RunBIReport' | IdGeneratorAsyncPipe | async}}" [class.RunBIButtonShake]="IsFilterValueChanged == true" [class.RunBIButton]="IsFilterValueChanged == false" (click)="RunReportButtonClicked()">{{IsScheduler ? 'Preview' : 'Run'}} Report</button>
                                             </td>
 
                                             <td style="width: 5px;">
@@ -355,7 +355,7 @@
                                                         </td>
 
                                                         <td [hidden]="IsScheduler" style="width: 57px;">
-                                                            <button id="{{'EditQueryBuilder' | IdGeneratorPipe}}" [disabled]="IsNewEntity" class="Button" (click)="ShowQueryBuilderClicked()">Edit Query</button>
+                                                            <button id="{{'EditQueryBuilder' | IdGeneratorAsyncPipe | async}}" [disabled]="IsNewEntity" class="Button" (click)="ShowQueryBuilderClicked()">Edit Query</button>
                                                         </td>
 
                                                         <td *ngIf="!IsScheduler" style="width: 2px;">

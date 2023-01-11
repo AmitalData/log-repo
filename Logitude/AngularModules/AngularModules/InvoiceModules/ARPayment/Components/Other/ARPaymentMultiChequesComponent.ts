@@ -271,7 +271,11 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
         .ReturnChequeToCustomer(this.paymentPM.Tenant,cheque.entityPM.Id,this.paymentPM.Id)
             .subscribe((response:ServiceResponse) => {
                 this.CurrentSession.StopBusyIndicator();
-                this.GetPayment();
+                if(response.HasError) {
+                    this.ValidationErrorsList.push(response.ErrorsArray[0]);
+                } else {
+                    this.GetPayment();
+                }
             });
 
     }

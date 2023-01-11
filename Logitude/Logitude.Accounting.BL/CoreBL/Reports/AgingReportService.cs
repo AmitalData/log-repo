@@ -392,7 +392,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                              TotalOpenShipments = card != null ? card.TotalOpenShipments : 0,
                              TotalFutureOpenCheques = moredata != null ? (decimal)moredata.TotFutureOpenChequesInLocalCur : 0,
                              TotalOpenCheques = moredata != null ? (decimal)moredata.TotalOpenChequesInLocalCur : 0,
-
+                             IsMultiCurrency = acc.IsMultiCurrency,
                              AccountEnglishName = acc.EnglishName,
                              AccountLocalName = acc.LocalName,
                              AccountCurrencyCode = acc.ReconcileMethodCode == "0" ? tenant.CurrencyCode : acc.CurrencyCode,
@@ -441,6 +441,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          CurrencyId = r.CurrencyId,
                          CurrencyCode = r.CurrencyCode,
                          Total = r.Total,
+                         IsMultiCurrency = r.IsMultiCurrency,
                          AccountEnglishName = r.AccountEnglishName,
                          AccountLocalName = r.AccountLocalName,
                          AccountDisplayNumber = r.AccountDisplayNumber,
@@ -475,6 +476,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          CustomerVatNumber = r.CustomerVatNumber,
                          BalanceInLocalAccountingDate = a.LocalAmountDebit - a.LocalAmountCredit,
                          BalanceInLocalDueDate = d.LocalAmountDebit - d.LocalAmountCredit,
+                         BalanceInForeignAccountingDate = r.IsMultiCurrency == true ? a.LocalAmountDebit - a.LocalAmountCredit  : a.ForeignAmountDebit - a.ForeignAmountCredit,
+                         BalanceInForeignDueDate = r.IsMultiCurrency == true ? a.LocalAmountDebit - a.LocalAmountCredit : a.ForeignAmountDebit - a.ForeignAmountCredit,
 
 
                          AccountSalesmanName = r.AccountSalesmanName,
@@ -1030,6 +1033,7 @@ _Param.AgingForDate.Date, false, true, true,false, false);
                                                       CurrencyId = line.CurrencyId,
                                                       CurrencyCode = currency == null ? null : currency.Code,
                                                       Total = line.Total,
+                                                      IsMultiCurrency = account != null ? account.IsMultiCurrency : null,
                                                       AccountEnglishName = account != null ? account.AccountEnglishName : null,
                                                       AccountLocalName = account != null ? account.AccountLocalName: null,
                                                       AccountDisplayNumber = account != null ? account.AccountDisplayNumber : null,
@@ -1836,6 +1840,7 @@ Period	Acc	Currency	Total
     }
     public class PeriodMExtended: PeriodM
     {
+        public bool? IsMultiCurrency { get; set; }
         public string AccountEnglishName { get; set; }
         public string AccountLocalName { get; set; }
 
@@ -1898,6 +1903,8 @@ Period	Acc	Currency	Total
         public string SplitAccountId { get;  set; }
         public decimal BalanceInLocalAccountingDate { get; set; }
         public decimal BalanceInLocalDueDate { get; set; }
+        public decimal BalanceInForeignAccountingDate { get; set; }
+        public decimal BalanceInForeignDueDate { get; set; }
         public string AccountSalesmanName { get; set; }
         public string AccountSalesmanLocalName { get; set; }
 

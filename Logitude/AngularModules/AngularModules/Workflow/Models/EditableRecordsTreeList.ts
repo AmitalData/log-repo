@@ -3,7 +3,7 @@ import { FlowReader } from "./FlowReader";
 import { Formatter } from "./Formatter";
 import { TreeSelectItem } from "./TreeSelectItem";
 
-export class RecordsTreeList {
+export class EditableRecordsTreeList {
     public Items: TreeSelectItem[] = [];
     private FlowObject: any;
     private CurrentNodeId: string;

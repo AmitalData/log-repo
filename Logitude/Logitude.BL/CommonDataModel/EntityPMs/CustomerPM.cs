@@ -1016,6 +1016,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         public string MainAddressId { get; set; }
         public string BillingAddressId { get; set; }
+        public string PickupDeliveryAddressId { get; set; }
         public string GLAccountId { get; set; }
         public string CreatedByPartner { get; set; }
 

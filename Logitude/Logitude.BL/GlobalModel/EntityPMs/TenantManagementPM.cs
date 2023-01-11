@@ -252,7 +252,7 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public string PackageCodeSearchField { get; set; }
         public string MainColor { get; set; }
         public string SecondaryColor { get; set; }
-        
+        public string TertiaryColor { get; set; }
         public string BackgroundId { get; set; }
         public string ComapnylogoId { get; set; }
         public string InvertedLogoId { get; set; }
@@ -356,6 +356,7 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public string MainColorOpacity { get; set; }
         public string SupportDomain { get; set; }
         public string SecondaryColorOpacity { get; set; }
+        public string TertiaryColorOpacity { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public int? TotalNumberOfUsers { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]

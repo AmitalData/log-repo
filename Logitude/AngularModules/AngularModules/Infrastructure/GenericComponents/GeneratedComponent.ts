@@ -155,7 +155,7 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
                     }
                 }
 
-                this.ScreenColumns = myScreenColumns.filter(c => c.ObjectFields?.length > 0);
+                this.ScreenColumns = myScreenColumns?.filter(c => c.ObjectFields?.length > 0);
                 let screenSection = new ScreenSectionPM();
                 screenSection.Number = 0;
                 screenSection.Name = this.ShowTitle ? TextCodeTranslationPipe.apply(this.generalTextCode) : "";
@@ -454,7 +454,7 @@ export class ScreenSection {
         this.Type = screenSectionPM.Type;
         this.RelatedScreenCode = screenSectionPM.RelatedScreenCode;
         this.ScreenColumns = screenColumns;
-        this.actualColumnsCount = screenColumns.filter(c=>c.ObjectFields.length > 0).length;
+        this.actualColumnsCount = screenColumns?.filter(c=>c.ObjectFields.length > 0).length;
     }
 
 }

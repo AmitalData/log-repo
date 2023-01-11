@@ -71,10 +71,11 @@ namespace WebFreight.Web.Helpers
                 {
                     AddTenantAPIsNames(generalTenantsAPISNames);
 
-                    if(FeatureToggleHelper.HasFeatureToggle("OIC", this.responseParameters.Tenant))
-                    {
-                        AddTenantAPIsNames(oceanInsightAPISNames);
-                    }
+                    if(FeatureToggleHelper.HasFeatureToggle("OIC", this.responseParameters.Tenant))                    
+                        AddTenantAPIsNames(oceanInsightAPISNames);                    
+
+                    if (FeatureToggleHelper.HasFeatureToggle("CTI", this.responseParameters.Tenant))                    
+                        AddTenantAPIsNames(new[] { "Customer" });                    
                 }
 
                 else if (this.responseParameters.ApiTanentType == "FullAccounting")
@@ -95,10 +96,11 @@ namespace WebFreight.Web.Helpers
                     AddTenantAPIsNames(hypridTenantsAPISNames);
                     AddTenantAPIsNames(fullAccountingTenantsAPISNames);
 
-                    if (FeatureToggleHelper.HasFeatureToggle("OIC", this.responseParameters.Tenant))
-                    {
+                    if (FeatureToggleHelper.HasFeatureToggle("OIC", this.responseParameters.Tenant))                    
                         AddTenantAPIsNames(oceanInsightAPISNames);
-                    }
+
+                    if (FeatureToggleHelper.HasFeatureToggle("CTI", this.responseParameters.Tenant))
+                        AddTenantAPIsNames(new[] { "Customer" });
                 }
             }
         }
@@ -142,6 +144,7 @@ namespace WebFreight.Web.Helpers
 
         private void AddGeneralTenantsAPISRequestText()
         {
+            AddCustomerAPIsRequestText();
             AddHouseAPIsRequestText();
             AddDirectAPIsRequestText();
             AddMasterAPIsRequestText();

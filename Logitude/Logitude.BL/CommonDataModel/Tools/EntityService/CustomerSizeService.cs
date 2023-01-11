@@ -44,6 +44,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.Poco = new CustomerSize();
             this.Poco.Id = this.entityPm.Id;
 
+            CustomerSizeValidating.Validate(entityPM);
             CustomerSizeTracing.Trace(entityPM, Poco, isNewEntity);
             CustomerSizeMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Add(Poco);
@@ -56,7 +57,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.entityPm = entityPM;
             this.Poco = entityRepository.GetSingleCustomerSize(entityPM.Id, entityPm.Tenant);
 
-            CustomerSizeTracing.Trace(entityPM, Poco, isNewEntity);
+            CustomerSizeValidating.Validate(entityPM);
+            CustomerSizeTracing.Trace(entityPM, Poco, isNewEntity);           
             CustomerSizeMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();

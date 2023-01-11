@@ -1,6 +1,6 @@
 
 <div class="dl-tab-container">
-    <div>
+    <div style="min-width: 1220px;">
         <table>
             <tr style="height:10px;">
                 <td>
@@ -95,10 +95,13 @@
                 </td>
 
                 <td style="width:24px;" *ngIf="!IsEditLayoutModeActive">
-                    <button class="TabButton Button" style="font-family: 'Roboto';width: 24px;">
-                        <img style="width:2px; height: 12px; top: 5px; position: absolute;"
-                             src="./Images/Buttons/threedots.png" />
-                    </button>
+                    <div tabindex="0" class="ToggleButton">
+                        <img style="width:2px; height: 12px; top: 10px; left: 3px; position: absolute;" src="./Images/Buttons/threedots.png" />
+
+                        <div class="ToggleButtonMenu" style="top: 22px;">
+                            <button (click)="CopyDashboardClicked()" [disabled]="!CanCopy">Copy Dashboard</button>
+                        </div>
+                    </div>
                 </td>
                 <td style="width: 12px;" *ngIf="!IsEditLayoutModeActive">
                     <div></div>
@@ -107,7 +110,7 @@
         </table>
     </div>
 
-    <div *ngIf="SelectedDashboard" [hidden]="!IsGlobalFiltersOpened" class="dl-flobal-filter-container">
+    <div *ngIf="SelectedDashboard" [hidden]="!IsGlobalFiltersOpened" class="dl-flobal-filter-container"  style="min-width: 1220px;">
         <GlobalFilter [Dashboard]="SelectedDashboard" (ApplyFilters)="ApplyFilters($event)"></GlobalFilter>
     </div>
 

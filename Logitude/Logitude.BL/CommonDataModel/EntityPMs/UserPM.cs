@@ -276,6 +276,10 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string SignatureImageId { get; set; }
 
         [DataMember]
-        public bool IsHRUser { get; set; }  
+        public bool IsHRUser { get; set; }
+
+        [DataMember]
+        public bool DisableCachedData { get; set; }
+
     }
 }

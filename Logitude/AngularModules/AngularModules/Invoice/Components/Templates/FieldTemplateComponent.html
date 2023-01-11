@@ -29,7 +29,7 @@
                                     <div *ngIf="IsHeaderScreenTemplate">
                                         <table>
                                             <tr>
-                                                <td id="{{'ARInvoiceHeaderStatusName' | IdGeneratorPipe}}" style="width: 1px;" [ngStyle]="{color: Entity[FieldName] | StringToColorPipe}">{{Entity[FieldName]}}</td>
+                                                <td id="{{'ARInvoiceHeaderStatusName' | IdGeneratorAsyncPipe | async}}" style="width: 1px;" [ngStyle]="{color: Entity[FieldName] | StringToColorPipe}">{{Entity[FieldName]}}</td>
 
                                                 <td style="width: 1px; padding-left: 2px;" *ngIf="Entity[FieldName] == 'Paid'">
                                                     <img style="vertical-align:middle;" src="./Images/Icons/IsClosed.png" />

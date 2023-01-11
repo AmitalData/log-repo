@@ -149,14 +149,6 @@ using Simplog.Data.CommonDataModel;
 					}
 					
 					
-					if(temp == null)
-					{             
-					
-				    	temp =  GetPortFromTenantZero( MyEntity, Tenant)   ;
-								
-					}
-				
-					
 			  	   if(temp == null)
 					{   
 					    throw new ApplicationException("Port with Code " + MyEntity.Code + " doesn't exist");
@@ -263,36 +255,6 @@ using Simplog.Data.CommonDataModel;
         }
 
 
-	  public PortPM GetPortFromTenantZero(Port MyEntity,int Tenant)
-        {
-		    try
-            {
-					var temp = new PortPM();
-					PortService service = new PortService(context, Tenant);
-					
-					
-					if (!string.IsNullOrEmpty(MyEntity.Code))
-					{
-						temp = query.GetSinglePMByCombinedCode(MyEntity.Code, 0);
-					}
-
-					
-					if (temp != null)
-					{
-				    	temp.Tenant = Tenant;
-						service.Create(temp);
-					}
-
-
-		return temp;	
-		    }
-       catch (Exception ex)
-            {
-
-                throw ex;
-            } 
-
-		 }
-										   
+						   
    }
 }

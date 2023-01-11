@@ -41,11 +41,14 @@
     flex: 1 1 auto;
     overflow: auto;
     margin-top: 12px;
+    min-width: 1220px;
 }
 
 .custom-layout-container::-webkit-scrollbar {
-    width: 6px;
+    width: 4px;
     height: 6px;
+    border-radius: 9px;
+    background: #F6F6F6;
 }
 
 .custom-layout-container::-webkit-scrollbar-track {
@@ -54,7 +57,8 @@
 
 .custom-layout-container::-webkit-scrollbar-thumb {
     border-radius: 110px;
-    background: rgba(193, 193, 193, 1);
+    width: 4px;
+    background: #7F7F7F;
 }
 
 .DashboardTabHeadLi {
@@ -146,7 +150,7 @@
 .dl-info-header-text {
     font-family: 'Manrope';
     font-style: normal;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 16px;
     line-height: 24px;
     color: #292D30;
@@ -155,13 +159,12 @@
 .dl-info-description-text {
     font-family: 'Manrope';
     font-style: normal;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 12px;
     line-height: 18px;
     text-align: center;
     color: #292D30;
     margin-top: 4px;
-    width: 175px;
 }
 
 .dl-info-center-div {
@@ -220,6 +223,21 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
+}
+
+.dl-tab-container::-webkit-scrollbar {
+    width: 6px;
+    height: 8px;
+}
+
+.dl-tab-container::-webkit-scrollbar-track {
+    background: none;
+}
+
+.dl-tab-container::-webkit-scrollbar-thumb {
+    border-radius: 110px;
+    background: rgba(193, 193, 193, 1);
 }
 
 .CloseDashboardTabBtn {
@@ -237,7 +255,6 @@
     padding: 4px 0px;
     position: absolute;
     width: 129px;
-    height: 56px;
     background: #FFFFFF;
     box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.15);
     z-index: 1;
@@ -262,10 +279,13 @@ Dashboard-menu-oneRow {
     flex: none;
     order: 0;
     flex-grow: 0;
+    padding-top: 4px;
+    padding-left: 8px;
+    padding-bottom: 2px;
 }
 
 .dl-tab-text {
-    max-width: 132px;
+    max-width: 75px;
     font-weight: 500;
     font-size: 11px;
     font-family: 'Manrope';

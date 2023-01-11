@@ -4,9 +4,9 @@ import { WidgetPM } from '../../../../DashboardModule/EntityPMs/WidgetPM';
 import { ReactWidgetPM } from 'logitude-dashboard-library/dist/types/widget';
 import { DashboardPMService } from '../../../../DashboardModule/Services/StandardPMs/DashboardPMService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { AppTool } from '../../../../Infrastructure/Tools';
+import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
-import { DashboardMapping } from 'DashboardModule/Services/DashboardMapping';
+import { DashboardMapping } from 'DashboardModule/Tools/DashboardMapping';
 import { DashboardDataBinding } from 'logitude-dashboard-library/dist/types/DashboardDataBinding';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { MixPanelLocator } from '../../../../Common/MixPanel/MixPanelLocator';
@@ -14,6 +14,14 @@ import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { DashboardAnalyticsService } from '../../../../DashboardModule/Services/DashboardAnalyticsService';
+import { WidgetMeasurePM } from 'DashboardModule/EntityPMs/WidgetMeasurePM';
+import { DashboardSharedUserPM } from 'DashboardModule/EntityPMs/DashboardSharedUserPM';
+import { DashboardGlobalFilterPM } from 'DashboardModule/EntityPMs/DashboardGlobalFilterPM';
+import { DashboardListService } from '../../../../DashboardModule/Services/StandardLists/DashboardListService';
+import { DashboardList } from '../../../../DashboardModule/EntityLists/DashboardList';
+import { DashboardCopyService } from 'DashboardModule/Tools/DashboardCopyService';
+import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
+
 
 @Component({
     templateUrl: 'DashboardTabComponent.html',
@@ -27,6 +35,7 @@ export class DashboardTabComponent implements OnInit {
     @Output() DashboardChanged = new EventEmitter<DashboardPM>();
     @Output() TabHasChanges = new EventEmitter<boolean>();
     @Output() DashboardEntity = new EventEmitter<DashboardPM>();
+    @Output() RefreshAfterCopy = new EventEmitter<DashboardPM>();
     public SelectedDashboardName: string = null;
     public SelectedDashboard: DashboardPM;
     private dashboardPMService: DashboardPMService;
@@ -37,9 +46,14 @@ export class DashboardTabComponent implements OnInit {
     public newWidgetHeight = 5;
     public CloneDashboardLayout: WidgetPM[];
     public GlobalFilters: any[];
+    private DashboardListService: DashboardListService;
+    public ItemsSource: DashboardList[] = [];
+    public CanCopy: boolean;
 
     constructor() {
         this.dashboardPMService = new DashboardPMService();
+        this.DashboardListService = new DashboardListService();
+        this.CanCopy = FeatureLocator.HasFeaturePermession("Dashboard", "CopyDashboard");
     }
 
     ngOnInit(): void {
@@ -84,6 +98,7 @@ export class DashboardTabComponent implements OnInit {
                 this.SelectedDashboard = myResponse.Result;
                 this.IsEditLayoutButtonVisible = !this.IsEditLayoutModeActive
                     && this.SelectedDashboard
+                    && this.SelectedDashboard.Tenant == SessionLocator.Tenant
                     && (this.SelectedDashboard.CreatedByUserId == SessionLocator.LoggedUserId || SessionLocator.LoggedUserPM.IsCustomerCare);
 
                 if (this.SelectedDashboard) {
@@ -209,6 +224,7 @@ export class DashboardTabComponent implements OnInit {
 
     private ResetFlags() {
         this.IsEditLayoutButtonVisible = !AppTool.IsNullOrEmpty(this.DashboardId)
+            && this.SelectedDashboard.Tenant == SessionLocator.Tenant
             && (this.SelectedDashboard.CreatedByUserId == SessionLocator.LoggedUserId || SessionLocator.LoggedUserPM.IsCustomerCare);
 
         this.IsEditDashboardButtonVisible = false;
@@ -244,7 +260,7 @@ export class DashboardTabComponent implements OnInit {
         });
     }
     HandelPossion(myWidget: WidgetPM): Observable<{ StartPotistion: string, EndPosition: string }> {
-        if (myWidget.TypeCode == "line" || myWidget.TypeCode == "bar") {
+        if (myWidget.TypeCode == "line" || myWidget.TypeCode == "bar" || myWidget.TypeCode == "column") {
             var subject = new Subject<{ StartPotistion: string, EndPosition: string }>();
             var dashboardAnalyticsService = new DashboardAnalyticsService();
             dashboardAnalyticsService.GetData(DashboardMapping.GetReactWidget(myWidget)).subscribe(e => {
@@ -307,7 +323,7 @@ export class DashboardTabComponent implements OnInit {
     }
     GetNumberOfGroup(result) {
         if (!result || result.length == 0) return 0;
-        return result[0].SeriesMeasureVulues.length;
+        return result[0].Values.length;
     }
     EvaluateNewWidgetPosition(w, h) {
         let widgetYPosition = 0;
@@ -408,6 +424,58 @@ export class DashboardTabComponent implements OnInit {
         });
         if (!widgetFilters || widgetFilters.length == 0) return null;
         return JSON.stringify(widgetFilters);
+    }
+    CopyDashboardClicked(){
+        this.CopyDashboard();
+    }
+    CopyDashboard(){
+        var dashboardPM = DashboardCopyService.CopyDashboard(this.SelectedDashboard);
+        this.CreateCopiedDashBoard(dashboardPM);
+    }
+
+    CreateCopiedDashBoard(dashboardPM: DashboardPM){
+        this.dashboardPMService.insert(dashboardPM)
+        .subscribe((myResponse: ServiceResponse) => {            
+            this.ChangeToCopyDashborad(myResponse);            
+        });
+    }
+   
+    ChangeToCopyDashborad(myResponse: ServiceResponse){        
+            this.SelectedDashboard = myResponse.Result;
+        if (this.SelectedDashboard) {
+               // this.EditDashboardClicked();
+                this.OpenEditDashboardWindowForCopiedDashboard();             
+            }
+
+            else {
+                this.DashboardDataBinding.onGetLayouts.next(DashboardMapping.deepClone({ lg: [] }));
+            }
+
+            this.CurrentSession.StopBusyIndicator();      
+    }
+
+    OpenEditDashboardWindowForCopiedDashboard() {
+        MixPanelLocator.PostDashboardAction({ ActionName: "Open Dashboard edit page for copied dashboard", DashboardId: this.SelectedDashboard?.Id });
+
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Title = "Copy Dashboard";
+        logitudeWindow.WindowArgs = { EntityPM: this.SelectedDashboard, };
+        logitudeWindow.Show('./DashboardModule/Components/Windows/AddEditDashboard/AddEditDashboardComponent');
+        logitudeWindow.ComponentLoaded.subscribe(comp => {
+            logitudeWindow.WindowClosed.subscribe(s => {
+                if (s) {
+                    if (s == "OK_delete") {
+                        this.DashboardDeleted.emit(this.SelectedDashboard?.Id);
+                    }
+                    else {
+                        this.SelectedDashboardName = this.SelectedDashboard.Name;
+                        this.RefreshAfterCopy.emit(this.SelectedDashboard);
+                        //this.DashboardChanged.emit(this.SelectedDashboard);
+                    }
+                }
+            });
+        });
+
     }
 
 }

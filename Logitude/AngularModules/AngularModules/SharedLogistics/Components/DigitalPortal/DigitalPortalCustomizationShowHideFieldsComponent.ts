@@ -4,7 +4,10 @@ import { DigitalPortalCustomizationMainComponent } from './DigitalPortalCustomiz
 import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
-import { DigitalTextService, DigitalFeildSecurityObjectModel, DigitalFeildSecurityUpdateModel} from '../../../Infrastructure/Services/WebServices/DigitalTextService'
+import { DigitalTextService, DigitalFeildSecurityObjectModel, DigitalFeildSecurityUpdateModel, DigitalTextCodeObject, DigitalTextCodeUpdateModel } from '../../../Infrastructure/Services/WebServices/DigitalTextService'
+import { AppTool } from '../../../Infrastructure/Tools';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+
 
 @Component({
     templateUrl: './DigitalPortalCustomizationShowHideFieldsComponent.html',
@@ -16,17 +19,25 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
     private CurrentSession = SessionLocator.SelectedSession;
     public customizationEditComponent: DigitalPortalCustomizationMainComponent;
     public FieldsItemsSource: ObservableCollection;
+    public loadedFieldsResults: [];
     public ModifiedLables: DigitalFeildSecurityObjectModel;
-    public IsModifiedLables = false;
+    public IsModifiedLables = false
+    public ModifiedFields: DigitalTextCodeUpdateModel;
+    public IsModifiedFields = false;
+
     @Output() LostFocus: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     constructor() {
         super();
         this.digitalTextService = new DigitalTextService();
         this.FieldsItemsSource = new ObservableCollection([]);
+        this.loadedFieldsResults = [];
         this.ModifiedLables = new DigitalFeildSecurityObjectModel();
         this.ModifiedLables.DefaultSettings = [];
         this.IsModifiedLables = false;
+        this.ModifiedFields = new DigitalTextCodeUpdateModel();
+        this.ModifiedFields.Lables = [];
+        this.IsModifiedFields = false;
     }
 
     SetWindowArgs(args: any) {
@@ -84,13 +95,28 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
     }
 
     BuildItemsSource() {
+        this.BuildFields();
+    }
+
+    BuildFields() {
+        var objectTableId = this.SelectedObjectTableItem.Name;
+        var profileId = this.SelectedProfileItem.Code;
+        this.digitalTextService.GetTextCodesByFilters(null, objectTableId, profileId).subscribe((myResult) => {
+            if (!myResult.HasError) {
+                this.loadedFieldsResults = myResult.Result.filter(a => !AppTool.IsNullOrEmpty(a['FieldCode']));
+                this.BuildFieldsPremissions();
+            }
+        });
+    }
+
+    BuildFieldsPremissions() {
         this.FieldsItemsSource = new ObservableCollection([]);
         var profilesList: ProfileFieldsItem[] = [];
         var objectTableId = this.SelectedObjectTableItem.Name;
         var profileId = this.SelectedProfileItem.Code;
         this.digitalTextService.GetFeildPermissionByFilters(null, objectTableId, profileId).subscribe((myResult) => {
             if (!myResult.HasError) {
-                myResult.Result.forEach(item => {
+                myResult.Result.filter(a => !AppTool.IsNullOrEmpty(a.FieldCode)).forEach(item => {
                     profilesList.push(new ProfileFieldsItem(this, item));
                 });
                 this.FieldsItemsSource.InsertCollection(profilesList);
@@ -110,29 +136,61 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
     }
 
     Save() {
+        this.StartBusyIndicator();
         if (this.IsModifiedLables) {
-
-            this.CurrentSession.StartBusyIndicatorLoading();
             this.ModifiedLables.ObjectTableId = this.SelectedObjectTableItem.Name;
             this.ModifiedLables.ProfileId = this.SelectedProfileItem.Code;
-            var hasHasPersmissionList = this.FieldsItemsSource.Collection.filter(a => a.HasPersmission);
+            var hasHasPermissionList = this.FieldsItemsSource.Collection.filter(a => a.HasPermission);
 
-            hasHasPersmissionList.forEach(item => {
+            hasHasPermissionList.forEach(item => {
                 var newLabel = new DigitalFeildSecurityUpdateModel();
                 newLabel.FieldCode = item.FieldCode;
                 this.ModifiedLables.DefaultSettings.push(newLabel);
             });
-            
+
             this.digitalTextService.UpdateFeildPermission(this.ModifiedLables).subscribe((myResult) => {
-                //this.customizationEditComponent.CurrentSession.CloseCurrentWindow();
                 this.customizationEditComponent.IsDirty = false;
                 this.ModifiedLables = new DigitalFeildSecurityObjectModel();
                 this.ModifiedLables.DefaultSettings = [];
-                this.CurrentSession.StopBusyIndicator();
+                this.StopBusyIndicator();
+                this.IsModifiedLables = false;
                 if (this.customizationEditComponent.NewSelectedMenu) {
                     this.customizationEditComponent.SelectedMenu = this.customizationEditComponent.NewSelectedMenu;
                 }
             });
+
+            this.UpdateModifiedFields();
+        }
+        else {
+            this.UpdateModifiedFields();
+        }
+    }
+
+    UpdateModifiedFields() {
+        if (this.IsModifiedFields) {
+            this.ModifiedFields.ObjectTableId = this.SelectedObjectTableItem.Name;
+            this.ModifiedFields.ProfileId = this.SelectedProfileItem.Code;
+
+            this.digitalTextService.UpdateDigitalTextCodes(this.ModifiedFields).subscribe((myResult) => {
+                this.customizationEditComponent.IsDirty = false;
+                this.ModifiedFields = new DigitalTextCodeUpdateModel();
+                this.ModifiedFields.Lables = [];
+                this.StopBusyIndicator();
+                this.IsModifiedFields = false;
+                this.CurrentSession.SessionEvent.emit({ Name: "ReloadDigitalPortalLabels" }); 
+            });
+        }
+    }
+
+    StartBusyIndicator() {
+        if (this.IsModifiedLables || this.IsModifiedFields) {
+            this.CurrentSession.StartBusyIndicatorLoading();
+        }
+    }
+
+    StopBusyIndicator() {
+        if (this.IsModifiedLables || this.IsModifiedFields) {
+            this.CurrentSession.StopBusyIndicator();
         }
     }
 
@@ -140,6 +198,21 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
         this.LostFocus.emit(true);
     }
 
+    AddFieldClicked() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 700;
+        logWindow.Height = 600;
+        var windowArgs: any = {};
+        windowArgs.ObjectTableId = this.SelectedObjectTableItem.Name;
+        logWindow.Title = "Add a field";
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Show('./SharedLogistics/Components/DigitalPortal/AddDigitalLogitudeFieldComponent');
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            if ($event) {
+                
+            }
+        });
+    }
 }
 
 export class ProfileFieldsItem extends BaseComponent {
@@ -148,8 +221,15 @@ export class ProfileFieldsItem extends BaseComponent {
 
     constructor(public father: DigitalPortalCustomizationShowHideFieldsComponent, item) {
         super();
-        this.hasPersmission = item.HasPersmission;
+        this.hasPermission = item.HasPermission;
         this.fieldCode = item.FieldCode;
+        var selelectField = father.loadedFieldsResults.filter(a => a['FieldCode'] == this.fieldCode)[0];
+        if (selelectField == null) {
+            var test = this.fieldCode;
+        }
+        this.textCode = selelectField['TextCode'];
+        this.defaultText = selelectField['DefaultText'];
+        this.displayText = selelectField['DisplayText'];
     }
 
     private fieldCode: string = "";
@@ -162,22 +242,71 @@ export class ProfileFieldsItem extends BaseComponent {
         }
     }
 
-    private hasPersmission = false;
-    get HasPersmission() { return this.hasPersmission; }
-    set HasPersmission(value) {
-        if (value != this.hasPersmission) {
-            this.hasPersmission = value;
-            this.UpdateModifiedLables(value);
+    private hasPermission = false;
+    get HasPermission() { return this.hasPermission; }
+    set HasPermission(value) {
+        if (value != this.hasPermission) {
+            this.hasPermission = value;
+            this.UpdatePermission(value);
         }
     }
 
-    public UpdateModifiedLables(newValue) {
+    public UpdatePermission(newValue) {
         this.father.IsModifiedLables = true;
         this.father.customizationEditComponent.IsDirty = true;
     }
 
-    HasPersmissionClicked(item) {
-        this.HasPersmission = !item.HasPersmission;
+    HasPermissionClicked(item) {
+        this.HasPermission = !item.HasPermission;
+    }
+
+    private defaultText = "";
+    get DefaultText() { return this.defaultText; }
+    set DefaultText(value) {
+        if (value != this.defaultText) {
+            this.defaultText = value;
+        }
+    }
+
+    private displayText = "";
+    get DisplayText() { return this.displayText; }
+    set DisplayText(value) {
+        if (value != this.displayText) {
+            this.displayText = value;
+        }
+    }
+
+    private textCode: string = "";
+    get TextCode() {
+        return this.textCode;
+    }
+
+    set TextCode(value) {
+        if (value != this.textCode) {
+            this.textCode = value;
+        }
+    }
+
+    public UpdateModifiedLables(newValue) {
+
+        if (this.father.ModifiedFields.Lables == null) {
+            this.father.ModifiedFields.Lables = [];
+        }
+
+        this.father.IsModifiedFields = true;
+        this.father.customizationEditComponent.IsDirty = true;
+        var label = this.father.ModifiedFields?.Lables?.filter(d => d.FieldCode == this.fieldCode)[0];
+        var index = this.father.ModifiedFields?.Lables?.indexOf(label);
+        if (index != null && index != -1) {
+            this.father.ModifiedFields.Lables.splice(index, 1);
+        }
+
+        var newLabel = new DigitalTextCodeObject();
+        newLabel.TextCode = this.textCode;
+        newLabel.FieldCode = this.fieldCode;
+        newLabel.DefaultText = newValue;
+        newLabel.DisplayText = this.displayText;
+        this.father.ModifiedFields.Lables.push(newLabel);
     }
 
 }

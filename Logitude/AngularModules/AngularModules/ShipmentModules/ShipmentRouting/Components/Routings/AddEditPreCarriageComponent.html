@@ -545,7 +545,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" id="{{ 'PreCarriageCancelBtn' | IdGeneratorPipe}}" (click)="CancelButtonClicked()">Cancel</button>
+                        <button class="Button" id="{{ 'PreCarriageCancelBtn' | IdGeneratorAsyncPipe | async}}" (click)="CancelButtonClicked()">Cancel</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -553,7 +553,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!IsOkButtonEnabled" id="{{ 'PreCarriageOKBtn' | IdGeneratorPipe}}">Ok</button>
+                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!IsOkButtonEnabled" id="{{ 'PreCarriageOKBtn' | IdGeneratorAsyncPipe | async}}">Ok</button>
                     </td>
                 </tr>
             </table>

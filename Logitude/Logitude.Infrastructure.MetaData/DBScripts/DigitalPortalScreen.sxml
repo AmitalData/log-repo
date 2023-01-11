@@ -1,15 +1,12 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-	<Sql Version="14">
+	<Sql Version="15">
       <![CDATA[	  
+	  
 		delete from DigitalPortalScreens where id != ''
-		
 		declare @shipmentObjectId as varchar(15)
 		set @shipmentObjectId = (select Id from ObjectTables where [Name] = 'Shipment' and Tenant = 0 )
-
         declare @EntityId as varchar(15)
-		
  		EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPortalScreens'
-
 		INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, Content, DraftContent) 
 	    values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Shipment list card item', 'SLCI', 
  		   '<div class=''list-item-first-row''>

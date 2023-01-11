@@ -15,7 +15,7 @@
                         </td>
 
                         <td style="width: 1px;">
-                            <button id="{{'AssignStockTo' | IdGeneratorPipe}}"  class="Button" [disabled]="!IsAddEnabled" (click)="AssignClicked()">Assign to</button>
+                            <button id="{{'AssignStockTo' | IdGeneratorAsyncPipe | async}}"  class="Button" [disabled]="!IsAddEnabled" (click)="AssignClicked()">Assign to</button>
                         </td>
 
                         <td style="width: 5px;">
@@ -23,7 +23,7 @@
                         </td>
 
                         <td style="width: 57px;">
-                            <button id="{{'AddStocks' | IdGeneratorPipe}}"  class="Button" [disabled]="!IsAddEnabled" (click)="AddStockClicked()">Add</button>
+                            <button id="{{'AddStocks' | IdGeneratorAsyncPipe | async}}"  class="Button" [disabled]="!IsAddEnabled" (click)="AddStockClicked()">Add</button>
                         </td>
 
                         <td style="width: 5px;">
@@ -31,7 +31,7 @@
                         </td>
 
                         <td style="width: 1px;">
-                            <button id="{{'RemoveStock' | IdGeneratorPipe}}"  class="Button" [disabled]="!IsRemoveEnabled" (click)="RemoveClicked()">{{'General.B.Remove' | TextCodeTranslationPipe}}</button>
+                            <button id="{{'RemoveStock' | IdGeneratorAsyncPipe | async}}"  class="Button" [disabled]="!IsRemoveEnabled" (click)="RemoveClicked()">{{'General.B.Remove' | TextCodeTranslationPipe}}</button>
                         </td>
 
                         <td style="width: 5px;">
@@ -39,7 +39,7 @@
                         </td>
 
                         <td style="width: 1px;">
-                            <button id="{{'AddSeriesStocks' | IdGeneratorPipe}}"  class="Button" [disabled]="!IsRemoveEnabled" (click)="RemoveSeriesClicked()">{{'MAWBStack.B.RemoveSeries' | TextCodeTranslationPipe}}</button>
+                            <button id="{{'AddSeriesStocks' | IdGeneratorAsyncPipe | async}}"  class="Button" [disabled]="!IsRemoveEnabled" (click)="RemoveSeriesClicked()">{{'MAWBStack.B.RemoveSeries' | TextCodeTranslationPipe}}</button>
                         </td>
                     </tr>
                 </table>
@@ -67,7 +67,7 @@
                             </table>
                         </div>
 
-                        <div id="{{'AirlineSimpleGridBodyId' | IdGeneratorPipe}}" class="SimpleGridViewBody">
+                        <div id="{{'AirlineSimpleGridBodyId' | IdGeneratorAsyncPipe | async}}" class="SimpleGridViewBody">
                             <table>
                                 <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ItemsSource" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
 

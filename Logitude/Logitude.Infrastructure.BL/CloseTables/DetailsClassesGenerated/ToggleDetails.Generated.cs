@@ -812,6 +812,22 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "ARP,AR Invoice Printing", 
                 Description = "AR Invoice Printing", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "DCS", 
+                Name = "Disable Storage Cache", 
+                SearchFields = "DCS,Disable Storage Cache", 
+                Description = "Disable Storage Cache", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "CTI", 
+                Name = "Customers API", 
+                SearchFields = "CTI,Customers API", 
+                Description = "Customers API", 
+			});
 			
             return all;
        }

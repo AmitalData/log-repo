@@ -7,7 +7,7 @@ import {AppTool} from '../../Infrastructure/Tools';
     changeDetection: ChangeDetectionStrategy.OnPush,
 
     template:
-    `      <button id="{{'ReportID' | IdGeneratorPipe}}" class="HyperlinkQueryButtonControl" [disabled]="!IsEnabled" tabindex="-1">            
+    `      <button id="{{'ReportID' | IdGeneratorAsyncPipe | async}}" class="HyperlinkQueryButtonControl" [disabled]="!IsEnabled" tabindex="-1">            
             {{Text}}
        
             <span style="pointer-events: none;">            

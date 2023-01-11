@@ -640,7 +640,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         this._entityResourceService.getEntityResourceByTableName(this.LookUpTableName, 0).subscribe((res: any) => {
             this._entityResourceService.getEntityResourceByTableName("PartnerType", 0).subscribe((res3: any) => {
 
-                var apiQueryFilter: ApiQueryFilters = this.PrepareApiQueryFilters();
+                var apiQueryFilter: ApiQueryFilters = new ApiQueryFilters();
+               //this.PrepareApiQueryFilters();
                 this.entityListService.getAllFromCache("PartnerType", apiQueryFilter).then((res3: any) => {
                     res3.subscribe(res4 => {
                         this.PartnerTypes = res4.Result;
@@ -1264,7 +1265,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             else {
                 let includeMetaDataFieldsFilter = this.QueryFilterItems && this.QueryFilterItems.AdditionalFilters ?
                 this.QueryFilterItems.AdditionalFilters.find(f => f.FieldName == "IncludeMetaDataFields") : null;
-                
+
                 if (this.LookUpTableName === "ObjectField" && includeMetaDataFieldsFilter && includeMetaDataFieldsFilter.FieldValue === true) {
                     let objectFieldListService = new ObjectFieldListService();
                     objectFieldListService.getSingle(value, true).subscribe(myResponse => {
@@ -1289,7 +1290,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     this.entityListService.getSingle(value, this.LookUpTableName).then((res: any) => {
                         res.subscribe(myResponse => {
                             if (myResponse != null) {
-                                
+
                                 var list = myResponse;
                                 if (myResponse instanceof ServiceResponse) {
                                     list = myResponse.Result;
@@ -1501,41 +1502,41 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
     OnSearchIputKeyDown($event) {
 
-        var TABKEY = 9;
-        var ENTERKEY = 13;
-        var DOWNKEY = 40;
-        var UPKEY = 38;
-        var ESC = 27;
-        var CTRL = 17;
-        var SHIFT = 16;
-        if ($event.keyCode == CTRL) {
+        const TABKEY = 9;
+        const ENTERKEY = 13;
+        const DOWNKEY = 40;
+        const UPKEY = 38;
+        const ESC = 27;
+        const CTRL = 17;
+        const SHIFT = 16;
+
+        if ($event.keyCode === CTRL) {
             this.IsCTRLDown = true;
         }
 
-        if ($event.keyCode == 220) {
+        if ($event.keyCode === 220) {
             return false;
         }
-        if ($event.keyCode == TABKEY) {
+        if ($event.keyCode === TABKEY) {
             this.MouseInArea = false;
             this.tabkeyDown = true;
 
             if (this.IsOpen) {
                 this.FocusOnSelect = false;
                 this.SelectHighlightedItem();
-                this.ToggleOpenDropDown();
             }
         }
 
-        if ($event.keyCode == ENTERKEY) {
+        if ($event.keyCode === ENTERKEY) {
             if (this.IsOpen) {
                 this.SelectHighlightedItem();
             }
             else {
-                this.KeyDownEvent.emit(13)
+                this.KeyDownEvent.emit(13);
             }
         }
 
-        if ($event.keyCode == DOWNKEY) {
+        if ($event.keyCode === DOWNKEY) {
 
             if (!this.IsOpen) {
                 this.ToggleOpenDropDown();
@@ -1544,7 +1545,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 }
             }
             else {
-                var selected = document.getElementsByClassName("liItemSelected");
+                const selected = document.getElementsByClassName('liItemSelected');
                 if (selected[0]) {
                     if (this.ItemsSource && this.ItemsSource.length > 0) {
                         this.RemoveSelectedAddHighlighted(this.MyDataListId);
@@ -1559,30 +1560,27 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             return false;
         }
 
-        if ($event.keyCode == UPKEY) {
+        if ($event.keyCode === UPKEY) {
             this.NavigateListItems(false);
             return false;
         }
 
-        if ($event.keyCode == ESC) {
+        if ($event.keyCode === ESC) {
             if (this.IsOpen) {
                 this.ToggleOpenDropDown();
             }
         }
 
-        var key = $event.keyCode;
-        if (key != 17 && key != 18 && key != 19 && key != 20
-            && key != 37 && key != 38 && key != 39 && key != 40
-            && key != 35 && key != 45 && key != 33 && key != 34
-            && key != 145 && key != 13 && key != 27 && key != 9
-            && key != 16 && key != 36 && key != 144
+        const key = $event.keyCode;
+        if (key !== 17 && key !== 18 && key !== 19 && key !== 20
+            && key !== 37 && key !== 38 && key != 39 && key !== 40
+            && key !== 35 && key !== 45 && key !== 33 && key !== 34
+            && key !== 145 && key !== 13 && key !== 27 && key !== 9
+            && key !== 16 && key !== 36 && key !== 144
             && !(key >= 112 && key <= 123) && !this.IsCTRLDown) {
             this.OnDeleteValue(false);
         }
 
-        //if ((48 <= key && key <= 57) || (65 <= key && key <= 90) || key == 8 || key == 46 || key == 32) {
-        //    this.OnDeleteValue(false);
-        //}
     }
 
     RemoveSelectedAddHighlighted(dropDownId: string) {
@@ -2926,7 +2924,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         return this.GetObjectTableNameForDependency(dep, parentObjectName);
     }
     private GetObjectTableNameForDependency(dependency: string, parentObjectName: string) {
-        var partnerType = this.PartnerTypes.filter(p => p.Id?.toLowerCase() == dependency?.toLowerCase())[0];
+        let partnerType: PartnerTypeList = this.PartnerTypes ?  this.PartnerTypes.filter(p => p.Id?.toLowerCase() == dependency?.toLowerCase())[0]:null;
         if (partnerType != null && partnerType != undefined) {
             var name: string = partnerType.Name.replace(" ", "");
 

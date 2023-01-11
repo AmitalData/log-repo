@@ -355,7 +355,7 @@
                                     </td>
 
                                     <td style="width: 80px;">
-                                        <button id="{{'VATApplyToAll' | IdGeneratorPipe}}" class="Button" [disabled]="!VatTypeFilterIsEnabled" (click)="VatTypeFilterClicked()">{{'ARInvoice.B.Details.ApplyToAll' | TextCodeTranslationPipe}}</button>
+                                        <button id="{{'VATApplyToAll' | IdGeneratorAsyncPipe | async}}" class="Button" [disabled]="!VatTypeFilterIsEnabled" (click)="VatTypeFilterClicked()">{{'ARInvoice.B.Details.ApplyToAll' | TextCodeTranslationPipe}}</button>
                                     </td>
 
                                     <td style="width: 20px;">

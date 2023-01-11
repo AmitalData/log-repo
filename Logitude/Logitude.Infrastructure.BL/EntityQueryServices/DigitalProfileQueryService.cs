@@ -1,4 +1,5 @@
-﻿using Logitude.Infrastructure.Data.EntityLists;
+﻿using Logitude.Infrastructure.BL.EntityPMs;
+using Logitude.Infrastructure.Data.EntityLists;
 using Logitude.Infrastructure.Data.Repsitories;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,21 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                                                              })
                                                              .ToList();
             return digitalProfileList;
+        }
+
+        public DigitalProfilePM GetDigitalProfileByName(int tenant, string profileName)
+        {
+            DigitalProfileRepository digitalProfileRepository = new DigitalProfileRepository(tenant);
+            var digitalProfile = digitalProfileRepository.GetDigitalProfileByName(tenant, profileName);
+
+            if (digitalProfile != null)
+            {
+                EntityPM = new DigitalProfilePM();
+                mapping.CustomPOCOToPM(EntityPM, digitalProfile);
+                mapping.POCOToPM(EntityPM, digitalProfile);
+            };
+
+            return EntityPM;
         }
     }
 }

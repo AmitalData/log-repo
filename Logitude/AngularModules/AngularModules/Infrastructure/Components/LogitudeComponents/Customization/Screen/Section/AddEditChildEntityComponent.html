@@ -92,11 +92,11 @@
 					</td>
 					<!-- Save -->
 					<td style="width: 57px;">
-						<button id="{{ 'SaveBtn' | IdGeneratorPipe}}" *ngIf="!EntityPM.IsDirty" class="Button" (click)="OkButtonClicked()">
+						<button id="{{ 'SaveBtn' | IdGeneratorAsyncPipe | async}}" *ngIf="!EntityPM.IsDirty" class="Button" (click)="OkButtonClicked()">
 							<img class="LeftCenter" style="margin-left: 2px;" src="./Images/Buttons/Save.png" />
 							<span style="line-height: 19px; margin-left: 17px;">Save</span>
 						</button>
-						<button id="{{ 'SaveBtn' | IdGeneratorPipe}}" class="EntityChangesButton" *ngIf="EntityPM.IsDirty" (click)="OkButtonClicked()">
+						<button id="{{ 'SaveBtn' | IdGeneratorAsyncPipe | async}}" class="EntityChangesButton" *ngIf="EntityPM.IsDirty" (click)="OkButtonClicked()">
 							<img class="LeftCenter" style="margin-left: 2px;" src="./Images/Buttons/Save.Red.png" />
 							<span style="line-height: 19px; margin-left: 17px;">Save</span>
 						</button>
@@ -106,11 +106,11 @@
 					</td>
 					<!-- Save & Open -->
 					<td style="width: 25px;">
-						<button id="{{ 'SaveOpen' | IdGeneratorPipe}}" *ngIf="!EntityPM.IsDirty" class="Button" (click)="SaveChangesAndOpen()">
+						<button id="{{ 'SaveOpen' | IdGeneratorAsyncPipe | async}}" *ngIf="!EntityPM.IsDirty" class="Button" (click)="SaveChangesAndOpen()">
 							<img class="CenterCenter" src="./Images/Buttons/SaveAndNew.png" style="width: 22px; height: 22px;" />
 						</button>
 
-						<button id="{{ 'SaveOpen' | IdGeneratorPipe}}" *ngIf="EntityPM.IsDirty" class="EntityChangesButton" (click)="SaveChangesAndOpen()">
+						<button id="{{ 'SaveOpen' | IdGeneratorAsyncPipe | async}}" *ngIf="EntityPM.IsDirty" class="EntityChangesButton" (click)="SaveChangesAndOpen()">
 							<img class="CenterCenter" src="./Images/Buttons/SaveAndNew.Orange.png" style="width: 22px; height: 22px;" />
 						</button>
 					</td>

@@ -183,7 +183,7 @@
                                                     <table>
                                                         <tr>
                                                             <td style="width:1px;">
-                                                                <span id="{{'Reply' | IdGeneratorPipe}}" class="hyperlink" [class.HyperlinkDisabled]="!IsTicketReplyEnabled" (click)="SendEmailCommand('Ex')" style="font-size:16px" [ngStyle]="{color:LinkColor}"> Reply </span>
+                                                                <span id="{{'Reply' | IdGeneratorAsyncPipe | async}}" class="hyperlink" [class.HyperlinkDisabled]="!IsTicketReplyEnabled" (click)="SendEmailCommand('Ex')" style="font-size:16px" [ngStyle]="{color:LinkColor}"> Reply </span>
                                                             </td>
                                                             <td style="width:5px;">
                                                                 <div></div>
@@ -195,7 +195,7 @@
                                                                 <div></div>
                                                             </td>
                                                             <td style="width:1px;">
-                                                                <span id="{{'AddInternalNote' | IdGeneratorPipe}}" class="hyperlink" [class.HyperlinkDisabled]="!IsTicketReplyEnabled" (click)="SendEmailCommand('In')" style="font-size:16px;" [ngStyle]="{color:LinkColor}">Add Internal Note</span>
+                                                                <span id="{{'AddInternalNote' | IdGeneratorAsyncPipe | async}}" class="hyperlink" [class.HyperlinkDisabled]="!IsTicketReplyEnabled" (click)="SendEmailCommand('In')" style="font-size:16px;" [ngStyle]="{color:LinkColor}">Add Internal Note</span>
                                                             </td>
                                                             <td>
                                                                 <div></div>

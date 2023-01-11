@@ -21,7 +21,7 @@
                     <td style="width:20px"></td>
                     <!--IsException-->
                     <td style="width: 120px;">
-                        <CheckBox id="{{'IsExceptionCheckBox' | IdGeneratorPipe}}" [IsChecked]="IsException" (Checked)="IsException = $event" [Text]="'Is Exception'"></CheckBox>
+                        <CheckBox id="{{'IsExceptionCheckBox' | IdGeneratorAsyncPipe | async}}" [IsChecked]="IsException" (Checked)="IsException = $event" [Text]="'Is Exception'"></CheckBox>
                     </td>
 
                     <td *ngIf="IsReportScheduler" style="width:50px;min-width:50px;"></td>
@@ -69,7 +69,7 @@
                     <td *ngIf="IsReportScheduler" style="width:50px;min-width:50px;"></td>
 
                     <td style="width: 80px;">
-                        <button id="{{'RunReportButton' | IdGeneratorPipe}}" class="GreenButton" (click)="RunReport()">{{RunReportTitle}}</button>
+                        <button id="{{'RunReportButton' | IdGeneratorAsyncPipe | async}}" class="GreenButton" (click)="RunReport()">{{RunReportTitle}}</button>
                     </td>
                     <td><div></div></td>
                 </tr>

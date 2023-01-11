@@ -41,7 +41,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;618d&quot;"
+  Code="&quot;ec5c&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -894,6 +894,16 @@
       Code="&quot;ARP&quot;"
       SearchFields="&quot;ARP,AR Invoice Printing&quot;"
       Description="&quot;AR Invoice Printing&quot;" />
+    <Record
+      Code="&quot;DCS&quot;"
+      Name="&quot;Disable Storage Cache&quot;"
+      SearchFields="&quot;DCS,Disable Storage Cache&quot;"
+      Description="&quot;Disable Storage Cache&quot;" />
+    <Record
+      Code="&quot;CTI&quot;"
+      Name="&quot;Customers API&quot;"
+      SearchFields="&quot;CTI,Customers API&quot;"
+      Description="&quot;Customers API&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

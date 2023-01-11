@@ -27,7 +27,7 @@
             {{WorkflowName}} - V{{WorkflowVersionNumber}}
         </span>
     </div>
-    <div *ngIf="(WarningErrorsList != null && WarningErrorsList.length > 0) && !IsHidden" class="warning-summary">
+    <div *ngIf="WarningErrorsList != null && WarningErrorsList.length > 0" class="warning-summary">
         <WarningSummary [ItemsSource]="WarningErrorsList" [SingleLine]="true">
         </WarningSummary>
     </div>

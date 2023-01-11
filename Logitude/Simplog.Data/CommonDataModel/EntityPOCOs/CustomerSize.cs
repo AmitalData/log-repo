@@ -11,6 +11,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
     {
         [Key]
         public string Id { get; set; }
+        public string Code { get; set; }
         public int Tenant { get; set; }
         public string Name { get; set; }
         public int OrderNumber { get; set; }

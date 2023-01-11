@@ -7,7 +7,7 @@ import {ObjectsLocator} from '../Infrastructure/Locators/ObjectsLocator';
     changeDetection: ChangeDetectionStrategy.OnPush,
     template:
     `
-    <button [attr.data-cy]="DataCy" id="{{ Name+ExternalId | IdGeneratorPipe}}"   title="{{Title}}" *ngIf="!IsIconOnly"
+    <button [attr.data-cy]="DataCy" id="{{ Name+ExternalId | IdGeneratorAsyncPipe | async}}"   title="{{Title}}" *ngIf="!IsIconOnly"
             class="LogitudeIconButton"
             [style.width.px]="Width"
             [style.height.px]="Height"

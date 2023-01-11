@@ -161,5 +161,7 @@ export class GLAccountList {
 	ChartOfAccountSecurityLevel: number;
 	
     Access: boolean;
+	Obligo: number;
+	CreditUsed: number;
 
 }

@@ -23,14 +23,18 @@ namespace WebFreight.Web.Helpers
                 return null;
             }
 
+            brandingData.MainColor = string.IsNullOrEmpty(tenantManagementPM.MainColor)
+                         ? "rgba(1,44,84,1)"
+                         : tenantManagementPM.MainColor;
+            brandingData.SecondaryColor = string.IsNullOrEmpty(tenantManagementPM.SecondaryColor)
+                                          ? "rgba(24,144,255,1)"
+                                          : tenantManagementPM.SecondaryColor;
+            brandingData.TertiaryColor = string.IsNullOrEmpty(tenantManagementPM.TertiaryColor)
+                                         ? "rgba(255, 255, 255,1)"
+                                         : tenantManagementPM.TertiaryColor;
+
             if (!tenantManagementPM.EnableBranding)
             {
-                brandingData.MainColor = string.IsNullOrEmpty(tenantManagementPM.MainColor)
-                                         ? "rgba(1,44,84,1)"
-                                         : tenantManagementPM.MainColor;
-                brandingData.SecondaryColor = string.IsNullOrEmpty(tenantManagementPM.SecondaryColor)
-                                              ? "rgba(24,144,255,1)"
-                                              : tenantManagementPM.SecondaryColor;
                 brandingData.Tenant = tenantManagementPM.Id;
                 brandingData.ComapnylogoId = tenantManagementPM.ComapnylogoId;
                 brandingData.Email = tenantManagementPM.ContactEmail;
@@ -39,8 +43,6 @@ namespace WebFreight.Web.Helpers
             }
 
             brandingData.Tenant = tenantManagementPM.Id;
-            brandingData.MainColor = string.IsNullOrEmpty(tenantManagementPM.MainColor) ? "rgba(1,44,84,1)" : tenantManagementPM.MainColor;
-            brandingData.SecondaryColor = string.IsNullOrEmpty(tenantManagementPM.SecondaryColor) ? "rgba(24,144,255,1)" : tenantManagementPM.SecondaryColor;
             brandingData.BackgroundId = tenantManagementPM.BackgroundId;
             brandingData.BrowserIconId = tenantManagementPM.BrowserIconId;
             brandingData.ComapnylogoId = tenantManagementPM.ComapnylogoId;

@@ -59,6 +59,11 @@ export class DigitalTextCodePM {
     public set ObjectTableName(newValue: string) { if (this.objectTableName != newValue) { this.objectTableName = newValue; this.MarkAsDirty("ObjectTableName"); } }
        
 	 
+    private profileId: string;
+    public get ProfileId() { return this.profileId; }
+    public set ProfileId(newValue: string) { if (this.profileId != newValue) { this.profileId = newValue; this.MarkAsDirty("ProfileId"); } }
+       
+	 
 
     public OldEntityPM: DigitalTextCodePM;
 		

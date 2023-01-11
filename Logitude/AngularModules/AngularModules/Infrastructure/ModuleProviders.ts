@@ -71,6 +71,7 @@ import { BatchTaskExecutionPMService } from './Services/StandardPMs/BatchTaskExe
 
 import { AnalyzeQueueMenuButtonsHandler } from './Components/MenuButtons/AnalyzeQueueMenuButtonsHandler';
 import {TenantManagementMenuButtonsHandler} from './Components/MenuButtons/TenantManagementMenuButtonsHandler';
+import {DeploymentPackageMenuButtonsHandler} from './Components/MenuButtons/DeploymentPackageMenuButtonsHandler';
 //
 import {BusinessProcessQueueListService} from  './Services/StandardLists/BusinessProcessQueueListService';
 import {BusinessProcessQueuePMService} from  './Services/StandardPMs/BusinessProcessQueuePMService';
@@ -112,6 +113,9 @@ import { DigitalPortalScreenListService } from './Services/StandardLists/Digital
 import { DigitalPreDefinedComponentListService } from './Services/StandardLists/DigitalPreDefinedComponentListService';
 import { DeploymentPackagePMService } from './Services/StandardPMs/DeploymentPackagePMService';
 import { DeploymentPackageListService } from './Services/StandardLists/DeploymentPackageListService';
+import { CustomFieldsMainObjectPMService } from './Services/StandardPMs/CustomFieldsMainObjectsPMService';
+import { CustomFieldsMainObjectListService } from './Services/StandardLists/CustomFieldsMainObjectListService';
+import { DigitalCustomizationService } from './Services/WebServices/DigitalCustomizationService';
 
 export class ModuleProviders {
 
@@ -192,6 +196,7 @@ export class ModuleProviders {
             case "ApiCredintialsListService": { myResult = new ApiCredintialsListService(); break; }
             case "AnalyzeQueueMenuButtonsHandler": { myResult = new AnalyzeQueueMenuButtonsHandler(); break; }
             case "TenantManagementMenuButtonsHandler": { myResult = new TenantManagementMenuButtonsHandler(); break; }
+            case "DeploymentPackageMenuButtonsHandler": { myResult = new DeploymentPackageMenuButtonsHandler(); break; }
             case "ErrorLogPMFileLoggerService": { myResult = new ErrorLogPMFileLoggerService(); break; }
             case "BusinessProcessQueueListService": { myResult = new BusinessProcessQueueListService(); break; }
             case "BusinessProcessQueuePMService": { myResult = new BusinessProcessQueuePMService(); break; }
@@ -229,7 +234,9 @@ export class ModuleProviders {
             case "DigitalPreDefinedComponentListService": { myResult = new DigitalPreDefinedComponentListService(); break; }
             case "DeploymentPackagePMService": { myResult = new DeploymentPackagePMService(); break; }
             case "DeploymentPackageListService": { myResult = new DeploymentPackageListService(); break; }
-
+            case "CustomFieldsMainObjectPMService": { myResult = new CustomFieldsMainObjectPMService(); break; }
+            case "CustomFieldsMainObjectListService": { myResult = new CustomFieldsMainObjectListService(); break; }
+            case "DigitalCustomizationService": { myResult = new DigitalCustomizationService(); break; }
         }
 
         return myResult;

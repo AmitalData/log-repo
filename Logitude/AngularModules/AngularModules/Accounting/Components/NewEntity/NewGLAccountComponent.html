@@ -401,7 +401,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'Cancel-DontCreatGLAccount' | IdGeneratorPipe}}" class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        <button id="{{'Cancel-DontCreatGLAccount' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -409,7 +409,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'Ok-AddGLAccount' | IdGeneratorPipe}}" class="RedButton" (click)="OkButtonClicked()">{{'Accounting.General.B.OK' | TextCodeTranslationPipe}}</button>
+                        <button id="{{'Ok-AddGLAccount' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="OkButtonClicked()">{{'Accounting.General.B.OK' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

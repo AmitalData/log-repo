@@ -547,7 +547,7 @@
                         <td [attr.colspan]="IsLinesSelection?3:1" style="height: 100%; padding-bottom: 75px;">
 
                             <div class="GeneratedGridContainer">
-                                <div *ngIf="IsLinesSelection && CashbookLines?.Length == 0" id="{{'ARPaymentSpinner' | IdGeneratorPipe}}" class="NoDataText">
+                                <div *ngIf="IsLinesSelection && CashbookLines?.Length == 0" id="{{'ARPaymentSpinner' | IdGeneratorAsyncPipe | async}}" class="NoDataText">
                                     {{'CashbookLine.O.NoDataFound' | TextCodeTranslationPipe}}
                                 </div>
                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%"

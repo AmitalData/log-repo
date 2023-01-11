@@ -226,9 +226,7 @@ export function CancelShipment(note: string) {
 }
 export function OperationalCloseShipment() {
     cy.wait(1000)
-    cy.get(ShipmentSelectors.ShipmentMoreList).click({ force: true })
-    cy.wait(1000)
-    cy.Click(ShipmentSelectors.ShipmentMoreList, null, true);
+    cy.Click(ShipmentSelectors.ShipmentMoreList, null);
     cy.Click(ShipmentSelectors.OperationalCloseButton + BaseSelectors.LastElement, null);
     UpdateShipment(ShipmentSelectors.ConfirmActionButton);
 }

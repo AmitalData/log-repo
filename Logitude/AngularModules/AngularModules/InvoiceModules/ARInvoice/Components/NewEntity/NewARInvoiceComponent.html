@@ -25,7 +25,7 @@
                     <tr class="FormFieldRow">
                         <td style="width:140px;">
                             <LogLabel [ObjectFieldName]="'PartnerType'" [NoObjectField]="true"
-                                [DataContext]="DataContext" [TextCode]="'PartnerType'"></LogLabel>
+                                      [DataContext]="DataContext" [TextCode]="'PartnerType'"></LogLabel>
                         </td>
 
                         <td style="width:230px;">
@@ -33,8 +33,8 @@
                                 <tr>
                                     <td>
                                         <ComboBox [ItemsSource]="InvoicePartners" [Binding]="'Name'"
-                                            [SelectedItem]="SelectedPartnerType"
-                                            (SelectedItemChanged)="PartnersTypeSelectionMethod($event)"></ComboBox>
+                                                  [SelectedItem]="SelectedPartnerType"
+                                                  (SelectedItemChanged)="PartnersTypeSelectionMethod($event)"></ComboBox>
                                     </td>
 
                                     <td style="width: 36px;">
@@ -49,38 +49,59 @@
                         </td>
                     </tr>
 
-                    <!-- PartnerId -->
+                    <!-- PartnerId & Template -->
                     <tr class="FormFieldRow">
                         <td>
                             <LogLabel [ObjectFieldName]="'PartnerId'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"></LogLabel>
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
 
                         <td>
                             <LogLov [ObjectFieldName]="'PartnerId'" [SelectedValue]="PartnerId"
-                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                [LookUpTableName]="'Card'" [DependencyFilter1Value]="BillToDependencyValue1"
-                                [DependencyFilter1IsList]="BillToDependencyValue1IsList">
+                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                    [LookUpTableName]="'Card'" [DependencyFilter1Value]="BillToDependencyValue1"
+                                    [DependencyFilter1IsList]="BillToDependencyValue1IsList">
                             </LogLov>
                         </td>
 
                         <td>
-                            <div></div>
+                            <div>
+                                <table *ngIf="IsHaveARInvoicePrintToogleFeature() && IsLoadDocumentTemplateReady">
+                                    <tr class="FormFieldRow">
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'DocumentTemplateId'" [ObjectTableName]="ObjectTableName"
+                                                      [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td style="width:230px;">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <ComboBox [ItemsSource]="documentTypeTemplates" [Binding]="'Description'"
+                                                                  [SelectedItem]="selectedDocumentTypeTemplate" (SelectedItemChanged)="OnDocumentTypeTemplateSelectedChanged($event)"></ComboBox>
+                                                    </td>
+                                                    <td style="width: 36px;">
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
                         </td>
-
                     </tr>
 
                     <!-- BillToId -->
                     <tr class="FormFieldRow">
                         <td>
                             <LogLabel [ObjectFieldName]="'BillToId'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"></LogLabel>
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
 
                         <td>
                             <LogLov [ObjectFieldName]="'BillToId'" [SelectedValue]="BillToId"
-                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                [LookUpTableName]="'Card'">
+                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                    [LookUpTableName]="'Card'">
                             </LogLov>
                         </td>
 
@@ -94,13 +115,13 @@
                     <tr class="FormFieldRow">
                         <td>
                             <LogLabel [ObjectFieldName]="'BillToAddressId'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"></LogLabel>
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
 
                         <td>
                             <LogLov [ObjectFieldName]="'BillToAddressId'" [SelectedValue]="BillToAddressId"
-                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                [LookUpTableName]="'Address'" [DependencyFilter1Value]="BillToId">
+                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                    [LookUpTableName]="'Address'" [DependencyFilter1Value]="BillToId">
                             </LogLov>
                         </td>
 
@@ -114,12 +135,12 @@
                     <tr class="FormFieldRow">
                         <td>
                             <LogLabel [ObjectFieldName]="'CustomerRef'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"></LogLabel>
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
 
                         <td>
                             <LogTextBox [ObjectFieldName]="'CustomerRef'" [Text]="CustomerRef"
-                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                         </td>
 
                         <td>
@@ -132,13 +153,13 @@
                     <tr class="FormFieldRow">
                         <td>
                             <LogLabel [ObjectFieldName]="'InvoiceCurrencyId'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"></LogLabel>
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
 
                         <td>
                             <LogLov [ObjectFieldName]="'InvoiceCurrencyId'" [SelectedValue]="InvoiceCurrencyId"
-                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                [LookUpTableName]="'Currency'">
+                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                    [LookUpTableName]="'Currency'">
                             </LogLov>
                         </td>
 
@@ -151,7 +172,7 @@
                     <tr class="FormFieldRow">
                         <td>
                             <LogLabel [ObjectFieldName]="'InvoiceCurrencyExchangeRate'"
-                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                      [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                         </td>
 
                         <td colspan="2">
@@ -159,8 +180,8 @@
                                 <tr>
                                     <td style="width: 194px">
                                         <LogTextBox [ObjectFieldName]="'InvoiceCurrencyExchangeRate'"
-                                            [Text]="InvoiceCurrencyExchangeRate" [ObjectTableName]="ObjectTableName"
-                                            [DataContext]="DataContext" [HideColumns]="true" [DigitsAfterPoint]="5">
+                                                    [Text]="InvoiceCurrencyExchangeRate" [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext" [HideColumns]="true" [DigitsAfterPoint]="5">
                                         </LogTextBox>
                                     </td>
 
@@ -170,7 +191,7 @@
 
                                     <td style="width: 18px;" *ngIf="IsEditExchangeRateVisible">
                                         <IconButton [Name]="'Edit'" [IsSmall]="true"
-                                            (click)="UpdateCurrencyRateClicked()" [disabled]="!RateIsEnabled">
+                                                    (click)="UpdateCurrencyRateClicked()" [disabled]="!RateIsEnabled">
                                         </IconButton>
                                     </td>
 
@@ -191,12 +212,12 @@
                     <tr class="FormFieldRow">
                         <td>
                             <LogLabel [ObjectFieldName]="'InvoiceDate'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"></LogLabel>
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
 
                         <td>
                             <LogDatePicker [ObjectFieldName]="'InvoiceDate'" [SelectedDateValue]="InvoiceDate"
-                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                           [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
                         </td>
 
                         <td>
@@ -209,13 +230,13 @@
                     <tr *ngIf="DisplaySATSettings" class="FormFieldRow">
                         <td>
                             <LogLabel [ObjectFieldName]="'MetodoPagoCode'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"></LogLabel>
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
 
                         <td>
                             <LogLov [ObjectFieldName]="'MetodoPagoCode'" [SelectedValue]="MetodoPagoCode"
-                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                [LookUpTableName]="'MetodoPago'">
+                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                    [LookUpTableName]="'MetodoPago'">
                             </LogLov>
                         </td>
 
@@ -229,13 +250,13 @@
                     <tr *ngIf="DisplaySATSettings" class="FormFieldRow">
                         <td [title]="'ARInvoice.F.SATPaymentMethodCode' | TextCodeTranslationPipe">
                             <LogLabel [ObjectFieldName]="'SATPaymentMethodCode'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"></LogLabel>
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
 
                         <td>
                             <LogLov [ObjectFieldName]="'SATPaymentMethodCode'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext" [SelectedValue]="SATPaymentMethodCode"
-                                [LookUpTableName]="'SATPaymentMethod'">
+                                    [DataContext]="DataContext" [SelectedValue]="SATPaymentMethodCode"
+                                    [LookUpTableName]="'SATPaymentMethod'">
                             </LogLov>
                         </td>
 
@@ -248,12 +269,12 @@
                     <tr *ngIf="DisplaySATSettings" class="FormFieldRow">
                         <td [title]="'ARInvoice.F.UsoCFDICode' | TextCodeTranslationPipe">
                             <LogLabel [ObjectFieldName]="'UsoCFDICode'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"></LogLabel>
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
 
                         <td>
                             <LogLov [ObjectFieldName]="'UsoCFDICode'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext" [SelectedValue]="UsoCFDICode" [LookUpTableName]="'UsoCFDI'">
+                                    [DataContext]="DataContext" [SelectedValue]="UsoCFDICode" [LookUpTableName]="'UsoCFDI'">
                             </LogLov>
                         </td>
 
@@ -266,13 +287,13 @@
                     <tr class="FormFieldRow">
                         <td>
                             <LogLabel [ObjectFieldName]="'PaymentTermId'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"></LogLabel>
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
 
                         <td>
                             <LogLov [ObjectFieldName]="'PaymentTermId'" [SelectedValue]="PaymentTermId"
-                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                [LookUpTableName]="'PaymentTerm'" [DependencyFilter1Value]="PaymentTermDisplayInLOV">
+                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                    [LookUpTableName]="'PaymentTerm'" [DependencyFilter1Value]="PaymentTermDisplayInLOV">
                             </LogLov>
                         </td>
 
@@ -286,12 +307,12 @@
                     <tr class="FormFieldRow">
                         <td>
                             <LogLabel [ObjectFieldName]="'DueDate'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"></LogLabel>
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
 
                         <td>
                             <LogDatePicker [ObjectFieldName]="'DueDate'" [SelectedDateValue]="DueDate"
-                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                           [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
                         </td>
 
                         <td>
@@ -304,12 +325,12 @@
                     <tr class="FormFieldRow">
                         <td>
                             <LogLabel [ObjectFieldName]="'VatNumber'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"></LogLabel>
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
 
                         <td>
                             <LogTextBox [ObjectFieldName]="'VatNumber'" [Text]="VatNumber"
-                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                         </td>
 
                         <td>
@@ -321,12 +342,12 @@
                     <tr class="FormFieldRow">
                         <td>
                             <LogLabel [ObjectFieldName]="'BranchId'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"></LogLabel>
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
 
                         <td>
                             <LogLov [ObjectFieldName]="'BranchId'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext" [SelectedValue]="BranchId" [LookUpTableName]="'Branch'">
+                                    [DataContext]="DataContext" [SelectedValue]="BranchId" [LookUpTableName]="'Branch'">
                             </LogLov>
                         </td>
 
@@ -339,12 +360,12 @@
                     <tr class="FormFieldRow" *ngIf="IsConstituentInvoiceVisible">
                         <td>
                             <LogLabel [ObjectFieldName]="'IsConstituentInvoice'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"></LogLabel>
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
 
                         <td>
                             <LogCheckBox [ObjectFieldName]="'IsConstituentInvoice'" [Checked]="IsConstituentInvoice"
-                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                         [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                         </td>
 
                         <td>
@@ -356,12 +377,12 @@
                     <tr class="FormFieldRow" *ngIf="IsIntercompanyVisible">
                         <td>
                             <LogLabel [ObjectFieldName]="'Intercompany'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"></LogLabel>
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
 
                         <td>
                             <LogCheckBox [ObjectFieldName]="'Intercompany'" [Checked]="Intercompany"
-                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                         [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                         </td>
 
                         <td>
@@ -373,7 +394,7 @@
                     <tr class="FormFieldRow" *ngIf="IsRegionalTaxVisible">
                         <td>
                             <LogLabel [ObjectFieldName]="'RegionalTaxId'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"></LogLabel>
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
 
                         <td colspan="2">
@@ -381,9 +402,9 @@
                                 <tr>
                                     <td style="width: 194px">
                                         <LogLov [ObjectFieldName]="'RegionalTaxId'" [SelectedValue]="RegionalTaxId"
-                                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                            [LookUpTableName]="'VatType'" [HideColumns]="true"
-                                            [DependencyFilter2Value]="true">
+                                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                                [LookUpTableName]="'VatType'" [HideColumns]="true"
+                                                [DependencyFilter2Value]="true">
                                         </LogLov>
                                     </td>
 
@@ -444,7 +465,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'CancelARInvoice' | IdGeneratorPipe}}" class="Button"
+                        <button id="{{'CancelARInvoice' | IdGeneratorAsyncPipe | async}}" class="Button"
                             (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
@@ -453,7 +474,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'Ok-CreateARInvoice' | IdGeneratorPipe}}" class="RedButton"
+                        <button id="{{'Ok-CreateARInvoice' | IdGeneratorAsyncPipe | async}}" class="RedButton"
                             (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>

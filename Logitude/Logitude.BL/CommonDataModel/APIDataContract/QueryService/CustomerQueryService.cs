@@ -45,153 +45,253 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
             }
         }
 
-        public CustomerPM MapAndValidate(Customer MyEntity, int Tenant, string ComputingPartnerName = "")
+        public CustomerPM MapAndValidate(Customer MyEntity, int Tenant, string ComputingPartnerName = "", bool isUpdate = false)
         {
-            try
-            {
-                var myQuery = new CustomerQuery(Tenant);
-                var temp = new CustomerPM();
-                if (!string.IsNullOrEmpty(MyEntity.Id))
-                {
-                    temp = myQuery.GetSinglePM(MyEntity.Id, Tenant);
-                }
-                
-                if (temp == null)
-                {
-                    throw new ApplicationException("Card with Id " + MyEntity.Id + " doesn't exist");
-                }
+			try
+			{
+				CustomerQuery myQuery = new CustomerQuery(Tenant);
+				CustomerPM myCustomer = new CustomerPM();
+				if (!string.IsNullOrEmpty(MyEntity.Id))
+				{
+					myCustomer = myQuery.GetSinglePM(MyEntity.Id, Tenant);
+				}
 
-                if (string.IsNullOrEmpty(temp.Id))
-                {
-                    temp.Id = MyEntity.Id;
-                }
+				if (myCustomer == null)
+				{
+					throw new ApplicationException("Customer with Id " + MyEntity.Id + " doesn't exist");
+				}
 
-                temp.EnglishName = MyEntity.EnglishName;
-                temp.VatNumber = MyEntity.VatNumber;
-                temp.Code = MyEntity.Code;
+				if (!string.IsNullOrEmpty(MyEntity.Code))
+				{
+					myCustomer = myQuery.GetSingleCustomerPMByCode(MyEntity.Code, Tenant);
+				}
 
-                if(!string.IsNullOrEmpty(MyEntity.LocalName))
-                {
-                    temp.LocalName = FormatHelper.ConvertFromBase64(MyEntity.LocalName);
-                }                               
+				if (myCustomer == null)
+				{
+					throw new ApplicationException("Customer with Code " + MyEntity.Code + " doesn't exist");
+				}
 
-                PaymentTermQueryService PaymentTermPaymentTermService = new PaymentTermQueryService(Tenant);
-                if (MyEntity.PaymentTerm != null)
-                {
-                    var myPaymentTermPM = PaymentTermPaymentTermService.PaymentTermDataMappingAndValidatin(MyEntity.PaymentTerm, Tenant, ComputingPartnerName);
-                    if (myPaymentTermPM != null)
-                    {
-                        temp.PaymentTermId = myPaymentTermPM.Id;
-                    }
-                }
+				myCustomer.Id = MyEntity.Id;
+				myCustomer.Code = MyEntity.Code;
 
-                AddressQueryService AddressAddressService = new AddressQueryService(Tenant);
-                if (MyEntity.MainAddress != null)
-                {
-                    var myMainAddressPM = AddressAddressService.AddressCustomDataMappingAndValidatin(MyEntity.MainAddress, Tenant, ComputingPartnerName);
-                    if (myMainAddressPM != null)
-                    {
-                        temp.MainAddressId = myMainAddressPM.Id;
-                    }
-                }
-                
-                if (MyEntity.BillingAddress != null)
-                {
-                    var myBillingAddressPM = AddressAddressService.AddressCustomDataMappingAndValidatin(MyEntity.BillingAddress, Tenant, ComputingPartnerName);
-                    if (myBillingAddressPM != null)
-                    {
-                        temp.BillingAddressId = myBillingAddressPM.Id;
-                    }
-                }
-                
-                if (MyEntity.Contacts != null && MyEntity.Contacts.Count > 0)
-                {
-                    ContactQueryService ContactService2 = new ContactQueryService(Tenant);
-                    temp.Contacts = ContactService2.ContactCustomDataMappingAndValidatin(MyEntity, MyEntity.Contacts, Tenant, ComputingPartnerName);
-                }
+				//if (string.IsNullOrEmpty(myCustomer.Code))
+				//	myCustomer.Code = MyEntity.PartnerCode;
 
-                AddressQueryService AddressQueryService = new AddressQueryService(Tenant);
-                if (MyEntity.MainAddress != null)
-                {
-                    AddressPM address = AddressQueryService.AddressDataMappingAndValidatin(MyEntity.MainAddress, Tenant);
-                    if (!string.IsNullOrEmpty(MyEntity.MainAddress.City))
-                    {
-                        address = AddressQueryService.AddressCustomDataMappingAndValidatin_CityCountry(MyEntity.MainAddress, Tenant, ComputingPartnerName);
-                    }
+				if (!isUpdate)
+				{
+					myCustomer.EnglishName = MyEntity.EnglishName;
+					myCustomer.VatNumber = MyEntity.VatNumber;
+					myCustomer.LeadDescription = MyEntity.LeadDescription;
+					myCustomer.ReceivablesAccountingCard = MyEntity.ReceivableExternalId;
 
-                    else if(!string.IsNullOrEmpty(MyEntity.MainAddress.City))
-                    {                        
-                        address.City = MyEntity.MainAddress.City;
-                    }
-                    
-                    address.AddressTypeId = "M";
-                    address.Description = "Main Address";
-                    address.Tenant = Tenant;                    
+					if (!string.IsNullOrEmpty(MyEntity.LocalName))
+						myCustomer.LocalName = FormatHelper.ConvertFromBase64(MyEntity.LocalName);
 
-                    if(!string.IsNullOrEmpty(MyEntity.MainAddress.Name))
-                    {
-                        address.Name = FormatHelper.ConvertFromBase64(MyEntity.MainAddress.Name);                        
-                    }
+					myCustomer.PaymentTermId = this.GetPaymentTermId(MyEntity.PaymentTerm, Tenant, ComputingPartnerName);
+					//myCustomer.MainAddressId = this.GetAddressId(MyEntity.MainAddress, Tenant, ComputingPartnerName);
+					//myCustomer.BillingAddressId = this.GetAddressId(MyEntity.BillingAddress, Tenant, ComputingPartnerName);
+					//myCustomer.PickupDeliveryAddressId = this.GetAddressId(MyEntity.PickupDeliveryAddress, Tenant, ComputingPartnerName);
+					myCustomer.AccountManagerUserId = this.GetUserId(MyEntity.AccountManagerUser, Tenant, ComputingPartnerName);
+					myCustomer.SalesmanUserId = this.GetUserId(MyEntity.SalesmanUser, Tenant, ComputingPartnerName);
+					myCustomer.CollectorId = this.GetUserId(MyEntity.Collector, Tenant, ComputingPartnerName);
+					myCustomer.TeamId = this.GetTeamId(MyEntity.Team, Tenant, ComputingPartnerName);
+					myCustomer.IndustryId = this.GetIndustryId(MyEntity.Industry, Tenant, ComputingPartnerName);
+					myCustomer.InvoiceCurrencyId = this.GetCurrencyId(MyEntity.InvoiceCurrency, Tenant, ComputingPartnerName);
+					myCustomer.VatTypeId = this.GetVatTypeId(MyEntity.VatType, Tenant, ComputingPartnerName);
+					myCustomer.LeadSourceId = this.GetLeadSourceId(MyEntity.LeadSource, Tenant, ComputingPartnerName);
+					myCustomer.GLAccountId = this.GetGLAccountId(MyEntity.GLAccount, Tenant, ComputingPartnerName);
+					myCustomer.CustomerSizeId = this.GetCustomerSizeId(MyEntity.CustomerSize, Tenant, ComputingPartnerName);
 
-                    if (!string.IsNullOrEmpty(MyEntity.MainAddress.Address1))
-                    {
-                        address.Address1 = FormatHelper.ConvertFromBase64(MyEntity.MainAddress.Address1);
-                    }
+					AddressPM mainAddress = this.GetAddress(MyEntity.MainAddress, Tenant, ComputingPartnerName, "M", myCustomer.EnglishName);
+					AddressPM billingAddress = this.GetAddress(MyEntity.BillingAddress, Tenant, ComputingPartnerName, "B", myCustomer.EnglishName);
+					AddressPM pickupDeliveryAddress = this.GetAddress(MyEntity.PickupDeliveryAddress, Tenant, ComputingPartnerName, "P", myCustomer.EnglishName);
 
-                    if (!string.IsNullOrEmpty(MyEntity.MainAddress.Address2))
-                    {
-                        address.Address2 = FormatHelper.ConvertFromBase64(MyEntity.MainAddress.Address2);
-                    }
+					if (mainAddress != null) myCustomer.Addresses.Add(mainAddress);
+					if (billingAddress != null) myCustomer.Addresses.Add(billingAddress);
+					if (pickupDeliveryAddress != null) myCustomer.Addresses.Add(pickupDeliveryAddress);
 
-                    temp.Addresses.Add(address);
-                }
+					if (MyEntity.Contacts != null && MyEntity.Contacts.Count > 0)
+					{
+						ContactQueryService contactService1 = new ContactQueryService(Tenant);
+						myCustomer.Contacts = contactService1.ContactCustomDataMappingAndValidatin(MyEntity, MyEntity.Contacts, Tenant, ComputingPartnerName);
+					}
 
-                if (MyEntity.BillingAddress != null)
-                {
-                    AddressPM address = AddressQueryService.AddressDataMappingAndValidatin(MyEntity.BillingAddress, Tenant);
-                    if (!string.IsNullOrEmpty(MyEntity.BillingAddress.City))
-                    {
-                        address = AddressQueryService.AddressCustomDataMappingAndValidatin_CityCountry(MyEntity.BillingAddress, Tenant, ComputingPartnerName);
-                    }
+					CustomFieldQueryService customFieldService = new CustomFieldQueryService(Tenant, "Customer");
+					if (MyEntity.CustomFields != null)
+					{
+						customFieldService.CustomFieldCustomDataMappingAndValidatin(MyEntity.CustomFields, myCustomer, Tenant);
+					}
+				}
 
-                    else if (!string.IsNullOrEmpty(MyEntity.BillingAddress.City))
-                    {
-                        address.City = MyEntity.BillingAddress.City;
-                    }
+				return myCustomer;
+			}
 
-                    address.AddressTypeId = "B";
-                    address.Description = "Billing Address";
-                    address.Tenant = Tenant;
-
-                    if (!string.IsNullOrEmpty(MyEntity.BillingAddress.Name))
-                    {
-                        address.Name = FormatHelper.ConvertFromBase64(MyEntity.BillingAddress.Name);
-                    }
-
-                    if (!string.IsNullOrEmpty(MyEntity.BillingAddress.Address1))
-                    {
-                        address.Address1 = FormatHelper.ConvertFromBase64(MyEntity.BillingAddress.Address1);
-                    }
-
-                    if (!string.IsNullOrEmpty(MyEntity.BillingAddress.Address2))
-                    {
-                        address.Address2 = FormatHelper.ConvertFromBase64(MyEntity.BillingAddress.Address2);
-                    }
-
-                    temp.Addresses.Add(address);
-                }
-                
-                return temp;
-            }
-
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+			catch (Exception ex)
+			{
+				throw ex;
+			}
         }
+        private string GetPaymentTermId(PaymentTerm paymentTerm, int tenant, string computingPartnerName)
+        {
+			PaymentTermQueryService paymentTermService = new PaymentTermQueryService(tenant);
+			if (paymentTerm != null)
+			{
+				var myPaymentTermPM = paymentTermService.PaymentTermDataMappingAndValidatin(paymentTerm, tenant, computingPartnerName);
+				if (myPaymentTermPM != null)
+					return myPaymentTermPM.Id;
+			}
 
+			return null;
+		}
+		private string GetAddressId(Address address, int tenant, string computingPartnerName)
+		{
+			AddressQueryService addressService = new AddressQueryService(tenant);
+			if (address != null)
+			{
+				var myAddressPM = addressService.AddressCustomDataMappingAndValidatin(address, tenant, computingPartnerName);
+				if (myAddressPM != null)
+					return myAddressPM.Id;
+			}
 
-        public Customer CustomerCustomDataMapping(string code, int Tenant)
+			return null;
+		}
+		private string GetUserId(User user, int tenant, string computingPartnerName)
+		{
+			UserQueryService userService = new UserQueryService(tenant);
+			if (user != null)
+			{
+				var myUserPM = userService.UserDataMappingAndValidatin(user, tenant, computingPartnerName);
+				if (myUserPM != null)
+					return myUserPM.Id;
+			}
+
+			return null;
+		}
+		private string GetTeamId(Team team, int tenant, string computingPartnerName)
+		{
+			TeamQueryService teamService = new TeamQueryService(tenant);
+			if (team != null)
+			{
+				var myTeamPM = teamService.TeamDataMappingAndValidatin(team, tenant, computingPartnerName);
+				if (myTeamPM != null)
+					return myTeamPM.Id;
+			}
+
+			return null;
+		}
+		private string GetIndustryId(Industry industry, int tenant, string computingPartnerName)
+		{
+			IndustryQueryService industryService = new IndustryQueryService(tenant);
+			if (industry != null)
+			{
+				var myIndustryPM = industryService.IndustryDataMappingAndValidatin(industry, tenant, computingPartnerName);
+				if (myIndustryPM != null)
+					return myIndustryPM.Id;
+			}
+
+			return null;
+		}
+		private string GetCurrencyId(Currency currency, int tenant, string computingPartnerName)
+		{
+			CurrencyQueryService currencyService = new CurrencyQueryService(tenant);
+			if (currency != null)
+			{
+				var myCurrencyPM = currencyService.CurrencyDataMappingAndValidatin(currency, tenant, computingPartnerName);
+				if (myCurrencyPM != null)
+					return myCurrencyPM.Id;
+			}
+
+			return null;
+		}
+		private string GetVatTypeId(VatType vatType, int tenant, string computingPartnerName)
+		{
+			VatTypeQueryService vatTypeService = new VatTypeQueryService(tenant);
+			if (vatType != null)
+			{
+				var myVatTypePM = vatTypeService.VatTypeDataMappingAndValidatin(vatType, tenant, computingPartnerName);
+				if (myVatTypePM != null)
+					return myVatTypePM.Id;
+			}
+
+			return null;
+		}
+		private string GetLeadSourceId(LeadSource leadSource, int tenant, string computingPartnerName)
+		{
+			LeadSourceQueryService leadSourceService = new LeadSourceQueryService(tenant);
+			if (leadSource != null)
+			{
+				var myLeadSourcePM = leadSourceService.LeadSourceDataMappingAndValidatin(leadSource, tenant, computingPartnerName);
+				if (myLeadSourcePM != null)
+					return myLeadSourcePM.Id;
+			}
+
+			return null;
+		}
+		private string GetGLAccountId(GLAccount gLAccount, int tenant, string computingPartnerName)
+		{
+			GLAccountQueryService gLAccountService = new GLAccountQueryService(tenant);
+			if (gLAccount != null)
+			{
+				var myGLAccountPM = gLAccountService.GLAccountCustomDataMappingAndValidatin(gLAccount, tenant);
+				if (myGLAccountPM != null)
+					return myGLAccountPM.Id;
+			}
+
+			return null;
+		}
+		private string GetCustomerSizeId(CustomerSize customerSize, int tenant, string computingPartnerName)
+		{
+			CustomerSizeQueryService customerSizeQuery = new CustomerSizeQueryService(tenant);
+			if (customerSize != null)
+			{
+				var myCustomerSizePM = customerSizeQuery.CustomerSizeDataMappingAndValidatin(customerSize, tenant, computingPartnerName);
+				if (myCustomerSizePM != null)
+					return myCustomerSizePM.Id;
+			}
+
+			return null;
+		}
+		private AddressPM GetAddress(Address address, int tenant, string computingPartnerName, string addressType, string customerName)
+		{
+			AddressQueryService addressService = new AddressQueryService(tenant);
+			if (address != null)
+			{
+				AddressPM addressPM = addressService.AddressDataMappingAndValidatin(address, tenant, computingPartnerName);
+				if (!string.IsNullOrEmpty(address.City))
+					addressPM = addressService.AddressCustomDataMappingAndValidatin_CityCountry(address, tenant, computingPartnerName);
+
+				addressPM.AddressTypeId = addressType;
+				addressPM.Description = this.GetAddressDescription(addressType);
+				addressPM.Tenant = tenant;
+
+				if (!string.IsNullOrEmpty(address.Name))
+					addressPM.Name = FormatHelper.ConvertFromBase64(address.Name);
+				else
+					addressPM.Name = customerName;
+
+				if (!string.IsNullOrEmpty(address.Address1))
+					addressPM.Address1 = FormatHelper.ConvertFromBase64(address.Address1);
+
+				if (!string.IsNullOrEmpty(address.Address2))
+					addressPM.Address2 = FormatHelper.ConvertFromBase64(address.Address2);
+
+				return addressPM;
+			}
+
+			return null;
+		}
+		private string GetAddressDescription(string addressType)
+		{
+			if (addressType == "M")
+				return "Main Address";
+			if (addressType == "B")
+				return "Billing Address";
+			if (addressType == "P")
+				return "Pickup Delivery Address";
+			else
+				return "Others";
+		}
+		public Customer CustomerCustomDataMapping(string code, int Tenant)
         {
             try
             {

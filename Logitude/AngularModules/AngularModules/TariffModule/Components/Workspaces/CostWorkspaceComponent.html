@@ -11,7 +11,7 @@
                                     <div class="QueriesSection">
                                         <div>Freight</div>
                                         <div style="height:22px; width: 45px; position: absolute; top:4px; right:0px;">
-                                            <div id="{{'NEWTARIFF' | IdGeneratorPipe}}" tabindex="0" class="ToggleButton" style="margin: auto; width: 100% !important; height: 100% !important">
+                                            <div id="{{'NEWTARIFF' | IdGeneratorAsyncPipe | async}}" tabindex="0" class="ToggleButton" style="margin: auto; width: 100% !important; height: 100% !important">
                                                 <label>New</label>
                                                 <img src="./Images/ToggleIcon.png" />
                                                 <div class="ToggleButtonMenu" style="width: 50px;">
@@ -37,7 +37,7 @@
                                     <div class="QueriesSection">
                                         <div>Surcharge</div>
                                         <div style="height:22px; width: 45px; position: absolute; top:4px; right:0px;">
-                                            <div id="{{'NEWTARIFF' | IdGeneratorPipe}}" tabindex="0" class="ToggleButton" style="margin: auto; width: 100% !important; height: 100% !important">
+                                            <div id="{{'NEWTARIFF' | IdGeneratorAsyncPipe | async}}" tabindex="0" class="ToggleButton" style="margin: auto; width: 100% !important; height: 100% !important">
                                                 <label>New</label>
                                                 <img src="./Images/ToggleIcon.png" />
                                                 <div class="ToggleButtonMenu" style="width: 80px;">
@@ -49,13 +49,13 @@
                                         </div>
                                         <div>
                                             <div *ngIf="AirSurchargesCostVisibility">
-                                                <HyperlinkQuery (click)="ViewTariffs('AS')" attr.data-cy="{{'Surcharge_Air' | IdGeneratorPipe}}">Air ({{AirSurchargeCount}})</HyperlinkQuery>
+                                                <HyperlinkQuery (click)="ViewTariffs('AS')" attr.data-cy="{{'Surcharge_Air' | IdGeneratorAsyncPipe | async}}">Air ({{AirSurchargeCount}})</HyperlinkQuery>
                                             </div>
                                             <div *ngIf="OceanLCLSurchargesCostVisibility">
-                                                <HyperlinkQuery (click)="ViewTariffs('OSC')" attr.data-cy="{{'Surcharge_OceanLCL' | IdGeneratorPipe}}">Ocean LCL ({{OceanSurchargeCount}})</HyperlinkQuery>
+                                                <HyperlinkQuery (click)="ViewTariffs('OSC')" attr.data-cy="{{'Surcharge_OceanLCL' | IdGeneratorAsyncPipe | async}}">Ocean LCL ({{OceanSurchargeCount}})</HyperlinkQuery>
                                             </div>
                                             <div *ngIf="OceanFCLSurchargesCostVisibility">
-                                                <HyperlinkQuery (click)="ViewTariffs('OFS')" attr.data-cy="{{'Surcharge_OceanFCL' | IdGeneratorPipe}}">Ocean FCL ({{OceanFCLSurchargesCount}})</HyperlinkQuery>
+                                                <HyperlinkQuery (click)="ViewTariffs('OFS')" attr.data-cy="{{'Surcharge_OceanFCL' | IdGeneratorAsyncPipe | async}}">Ocean FCL ({{OceanFCLSurchargesCount}})</HyperlinkQuery>
                                             </div>
                                         </div>
                                     </div>
@@ -63,7 +63,7 @@
                                     <div class="QueriesSection" *ngIf="IsCustomsChargesVisible">
                                         <div>Customs Charges</div>
                                         <div style="height:22px; width: 45px; position: absolute; top:4px; right:0px;">
-                                            <div id="{{'NEWTARIFF' | IdGeneratorPipe}}" tabindex="0" class="ToggleButton" style="margin: auto; width: 100% !important; height: 100% !important">
+                                            <div id="{{'NEWTARIFF' | IdGeneratorAsyncPipe | async}}" tabindex="0" class="ToggleButton" style="margin: auto; width: 100% !important; height: 100% !important">
                                                 <label>New</label>
                                                 <img src="./Images/ToggleIcon.png" />
                                                 <div class="ToggleButtonMenu" style="width: 80px;">
@@ -74,10 +74,10 @@
                                         </div>
                                         <div>
                                             <div *ngIf="ImportCustomsCostVisibility">
-                                                <HyperlinkQuery (click)="ViewTariffs('ICC')" attr.data-cy="{{'CustomCharges_Import' | IdGeneratorPipe}}">Import ({{ImportCustomsChargesCount}})</HyperlinkQuery>
+                                                <HyperlinkQuery (click)="ViewTariffs('ICC')" attr.data-cy="{{'CustomCharges_Import' | IdGeneratorAsyncPipe | async}}">Import ({{ImportCustomsChargesCount}})</HyperlinkQuery>
                                             </div>
                                             <div *ngIf="ExportCustomsCostVisibility">
-                                                <HyperlinkQuery (click)="ViewTariffs('ECC')" attr.data-cy="{{'CustomCharges_Export' | IdGeneratorPipe}}">Export ({{ExportCustomsChargesCount}})</HyperlinkQuery>
+                                                <HyperlinkQuery (click)="ViewTariffs('ECC')" attr.data-cy="{{'CustomCharges_Export' | IdGeneratorAsyncPipe | async}}">Export ({{ExportCustomsChargesCount}})</HyperlinkQuery>
                                             </div>
                                         </div>
                                     </div>
@@ -85,7 +85,7 @@
                                     <div class="QueriesSection" *ngIf="IsInlandTariffsVisible">
                                         <div>Inland Tariffs</div>
                                         <div style="height:22px; width: 45px; position: absolute; top:4px; right:0px;">
-                                            <div id="{{'NEWTARIFF' | IdGeneratorPipe}}" tabindex="0" class="ToggleButton" style="margin: auto; width: 100% !important; height: 100% !important">
+                                            <div id="{{'NEWTARIFF' | IdGeneratorAsyncPipe | async}}" tabindex="0" class="ToggleButton" style="margin: auto; width: 100% !important; height: 100% !important">
                                                 <label>New</label>
                                                 <img src="./Images/ToggleIcon.png" />
                                                 <div class="ToggleButtonMenu" style="width: 80px;">
@@ -95,7 +95,7 @@
                                         </div>
                                         <div>
                                             <div>
-                                                <HyperlinkQuery (click)="ViewTariffs('IFT')" attr.data-cy="{{'InlandFTL' | IdGeneratorPipe}}">Inland FTL ({{InlandFTLTariffsCount}})</HyperlinkQuery>
+                                                <HyperlinkQuery (click)="ViewTariffs('IFT')" attr.data-cy="{{'InlandFTL' | IdGeneratorAsyncPipe | async}}">Inland FTL ({{InlandFTLTariffsCount}})</HyperlinkQuery>
                                             </div>
                                         </div>
                                     </div>

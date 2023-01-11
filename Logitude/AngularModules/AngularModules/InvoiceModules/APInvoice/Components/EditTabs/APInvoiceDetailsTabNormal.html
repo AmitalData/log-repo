@@ -200,7 +200,7 @@
                             <table>
                                 <tr>
                                     <td style="width: 1px;">
-                                        <button id="{{'AddInvoiceLine' | IdGeneratorPipe}}" [disabled]="!IsScreenEnabled" class="Button" (click)="AddButtonClicked()">{{'APInvoice.B.AddLine' | TextCodeTranslationPipe}}</button>
+                                        <button id="{{'AddInvoiceLine' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsScreenEnabled" class="Button" (click)="AddButtonClicked()">{{'APInvoice.B.AddLine' | TextCodeTranslationPipe}}</button>
                                     </td>
 
                                     <td>
@@ -242,7 +242,7 @@
                                                 </td>
 
                                                 <td style="width: 80px;">
-                                                    <button id="{{'VATApplyToAll' | IdGeneratorPipe}}" class="Button" [disabled]="!VatTypeFilterButtonIsEnabled" (click)="RunVatTypeFilterMethod()">{{'APInvoice.B.ApplyToAll' | TextCodeTranslationPipe}}</button>
+                                                    <button id="{{'VATApplyToAll' | IdGeneratorAsyncPipe | async}}" class="Button" [disabled]="!VatTypeFilterButtonIsEnabled" (click)="RunVatTypeFilterMethod()">{{'APInvoice.B.ApplyToAll' | TextCodeTranslationPipe}}</button>
                                                 </td>
                                             </tr>
                                         </table>

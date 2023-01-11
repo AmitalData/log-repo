@@ -319,7 +319,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'OKButtonID' | IdGeneratorPipe}}" class="RedButton" (click)="OkButtonClicked()" [disabled]="!DataContext.IsEditingEnabled">Ok</button>
+                        <button id="{{'OKButtonID' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="OkButtonClicked()" [disabled]="!DataContext.IsEditingEnabled">Ok</button>
                     </td>
                 </tr>
             </table>

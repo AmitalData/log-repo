@@ -23,6 +23,8 @@ import {InvoiceDomainService} from '../../../../Invoice/Services/InvoiceDomainSe
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { ServiceLocator } from '../../../../Infrastructure/Locators/ServiceLocator';
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
+import { DocumentTypeTemplatePMExtendedService } from '../../../../Common/Services/ExtendedPMs/DocumentTypeTemplatePMExtendedService';
+import { DocumentTypeTemplateList } from '../../../../Common/EntityLists/DocumentTypeTemplateList';
 declare var window: any;
 
 @Component({
@@ -44,6 +46,10 @@ export class NewConsolidationComponent extends BaseComponent {
     public Profact4Enabled: boolean = false;
 
     private CurrentSession = SessionLocator.SelectedSession;
+    public documentTypeTemplates: DocumentTypeTemplateList[] = [];
+    public selectedDocumentTypeTemplate: DocumentTypeTemplateList;
+    public IsLoadDocumentTemplateReady = false;
+
     constructor(private entityResourceService: EntityResourceService) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");          
@@ -59,12 +65,14 @@ export class NewConsolidationComponent extends BaseComponent {
     private myPaymentTermListService: PaymentTermListService;
     private myInvoiceDomainService: InvoiceDomainService;
     private myEntityPMService: ARInvoicePMService;
+    private documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService;
     InitializeServices() {
         this.myCardListService = new CardListService();
         this.myCurrencyListService = new CurrencyListService();
         this.myPaymentTermListService = new PaymentTermListService();
         this.myInvoiceDomainService = new InvoiceDomainService();
         this.myEntityPMService = new ARInvoicePMService();
+        this.documentTypeTemplatePMExtendedService = new DocumentTypeTemplatePMExtendedService();
     }
    
     SetWindowArgs(typeCode: string) {
@@ -78,6 +86,7 @@ export class NewConsolidationComponent extends BaseComponent {
             this.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
 
             this.SetUIProperties();
+            this.GetDocumentTypeTemplates();
             this.BuildPartnersTypes();
           this.LoadData();
 
@@ -115,6 +124,41 @@ export class NewConsolidationComponent extends BaseComponent {
 
     ngOnInit() {
         this.BuildAdditionalFields();
+    }
+
+    IsHaveARInvoicePrintToogleFeature() {
+        return SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "ARP")[0];
+    }
+
+    private GetDocumentTypeCode() {
+        if (this.EntityPM.IsConsolidationInvoice) return "999C";
+        if (this.EntityPM.IsGeneralInvoice) return "999G";
+        if (this.EntityPM.ARInvoiceTypeCode == "MN") return "999M";
+        if (this.EntityPM.ARInvoiceTypeCode == "CI" || this.EntityPM.ARInvoiceTypeCode == "CC") return "999CI";
+        return "999S";
+    }
+
+    private GetDocumentTypeTemplates() {
+        if (!this.IsHaveARInvoicePrintToogleFeature()) return;
+        this.CurrentSession.StartBusyIndicatorLoading();
+        let documentTypeCode: string = this.GetDocumentTypeCode();
+        this.documentTypeTemplatePMExtendedService.getDocumentTypeTemplatesByDocumentTypeCode(documentTypeCode, SessionLocator.Tenant).subscribe((res: any) => {
+            var pmResponse: ServiceResponse = res;
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.documentTypeTemplates = pmResponse.Result;
+            let selectedDocumentTypeTemplate = this.documentTypeTemplates.filter(d => d.IsDefault == true)[0];
+            if (!selectedDocumentTypeTemplate) selectedDocumentTypeTemplate = this.documentTypeTemplates[0];
+            this.OnDocumentTypeTemplateSelectedChanged(selectedDocumentTypeTemplate);
+            this.IsLoadDocumentTemplateReady = true;
+        });
+    }
+
+    OnDocumentTypeTemplateSelectedChanged(documentTypeTemplate) {
+        if (!documentTypeTemplate) return;
+        this.selectedDocumentTypeTemplate = documentTypeTemplate;
+        if (this.EntityPM) {
+            this.EntityPM.DocumentTemplateId = this.selectedDocumentTypeTemplate.Id;
+        }
     }
 
     private timerToken: any;

@@ -58,7 +58,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             }
         }
 
-
         [HttpPost]
         [Route("DigitalDashboard/GetInvoicesGroupedByDate")]
         public HttpResponseMessage GetInvoicesGroupedByDate(GeneralFilters newFilters)
@@ -75,17 +74,61 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 newFilters.Tenant = authToken.Tenant;
                 var aRInvoiceQuery = new ARInvoiceQuery(authToken.Tenant);
-                var invoices = aRInvoiceQuery.GetByFilters(newFilters);
+                var invoices = aRInvoiceQuery.GetByFiltersForDashBoard(newFilters);
 
-                var res = invoices.Where(r => r.DueDate != null
-                                              && r.PaidStatus != "Paid")
-                                  .Select(a => new InvoiceStatusDashboardModel()
-                                  { 
-                                     PaidStatus =  a.PaidStatus,
-                                     DueDate = a.DueDate
-                                  });
+                DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+                var lastMonth = todayDate.AddMonths(-1);
+                var last2Month = todayDate.AddMonths(-2);
+                var nextMonth = todayDate.AddMonths(1);
 
-                var response = GetInvoicesSummaries(tenant, res);
+                var firstDayOfMonth = new DateTime(nextMonth.Year, nextMonth.Month, 1);
+
+                var overDueCounters = invoices.Where(a => a.DueDate != null
+                                                          && a.DueDate < firstDayOfMonth
+                                                          && a.PaidStatus == "Unpaid" || a.PaidStatus == "Partially Paid")
+                                              .GroupBy(a => a.DueDate.Value.Month == todayDate.Month && a.DueDate.Value.Year == todayDate.Year
+                                                         ? "Current"
+                                                      : a.DueDate.Value.Month == lastMonth.Month && a.DueDate.Value.Year == lastMonth.Year
+                                                        ? "Last Month"
+                                                        : a.DueDate.Value.Month == last2Month.Month && a.DueDate.Value.Year == last2Month.Year
+                                                          ? "Last 2 Month"
+                                                          : "Less than 2 Month")
+                                              .Select(a => new
+                                              {
+                                                  Lable = a.Key,
+                                                  OverDueCount = a.Count()
+                                              })
+                                              .ToList();
+
+                var partiallyPaidCounter = invoices.Where(a => a.DueDate != null
+                                                                && a.DueDate < firstDayOfMonth
+                                                                && a.PaidStatus == "Partially Paid")
+                                                   .GroupBy(a => a.DueDate.Value.Month == todayDate.Month && a.DueDate.Value.Year == todayDate.Year
+                                                              ? "Current"
+                                                           : a.DueDate.Value.Month == lastMonth.Month && a.DueDate.Value.Year == lastMonth.Year
+                                                             ? "Last Month"
+                                                             : a.DueDate.Value.Month == last2Month.Month && a.DueDate.Value.Year == last2Month.Year
+                                                               ? "Last 2 Month"
+                                                               : "Less than 2 Month")
+                                                   .Select(a => new
+                                                   {
+                                                       Lable = a.Key,
+                                                       PartiallyPaidCount = a.Count()
+                                                   })
+                                                   .ToList();
+
+                var response = new Dictionary<string, object>();
+
+                foreach (var item in partiallyPaidCounter)
+                {
+                    var data = overDueCounters.FirstOrDefault(a => a.Lable.Equals(item.Lable));
+                    response.Add(item.Lable, new
+                    {
+                        item.PartiallyPaidCount,
+                        data.OverDueCount
+                    });
+                }
+
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             }
             catch (AutenticationException ex)
@@ -192,33 +235,64 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 DateTime? next7DateTime = currentDateTime.Value.AddDays(7).Date;
                 DateTime? tomorrowDateTime = currentDateTime.Value.AddDays(1).Date;
 
-                var result = new Dictionary<string, Dictionary<object, int>>();
+                var shipments  = shipmentQuery.GetByFilters(newFilters)
+                                              .Where(r => ((r.MainCarriageFinalDestinationETA <= next7DateTime 
+                                                            || r.MainCarriageFinalDestinationETA >= last7DateTime)
+                                                           && r.MainCarriageFinalDestinationATA == null)
+                                                          && !r.DirectionId.Equals("D"))
+                                              .Select(a => new {
+                                                  ObjectKey = "Expected&" + a.TransportModeId + "&" + a.DirectionId,
+                                                  a.MainCarriageFinalDestinationETA,
+                                                  a.MainCarriageFinalDestinationATA,
+                                                  Data = a.MainCarriageFinalDestinationETA == currentDateTime 
+                                                          ? "Today" 
+                                                          : a.MainCarriageFinalDestinationETA == tomorrowDateTime
+                                                              ? "Tomorrow" 
+                                                              : a.MainCarriageFinalDestinationETA > currentDateTime
+                                                              && a.MainCarriageFinalDestinationETA <= next7DateTime
+                                                              ? "Next7Days"
+                                                              : "Last7Days"
+                                              })
+                                              .GroupBy(a => a.Data)
+                                              .ToDictionary( a => a.Key, 
+                                                              y => y.GroupBy(a => a.ObjectKey)
+                                                                  .OrderBy(a => a.Key)
+                                                                  .ToDictionary(a => a.Key, x => x.Count()));
 
-                var Todayshipments = shipmentQuery.GetByFilters(newFilters)
-                                                  .Where(r => r.MainCarriageFinalDestinationETA == currentDateTime)
-                                                  .GroupBy(a => new { a.TransportModeId, a.DirectionId})
-                                                  .ToDictionary( a => (object)a.Key, y => y.Count());
+                var shipmentsActual  = shipmentQuery.GetByFilters(newFilters)
+                                              .Where(r => (r.MainCarriageFinalDestinationATA <= currentDateTime
+                                                               && r.MainCarriageFinalDestinationATA >= last7DateTime)
+                                                          && !r.DirectionId.Equals("D"))
+                                              .Select(a => new {
+                                                  ObjectKey = "Actual&" + a.TransportModeId + "&" + a.DirectionId,
+                                                  a.MainCarriageFinalDestinationATA,
+                                                  Data = a.MainCarriageFinalDestinationATA == currentDateTime 
+                                                         ? "Today" 
+                                                         : "Last7Days"
+                                              })
+                                              .GroupBy(a => a.Data)
+                                              .ToDictionary( a => a.Key, 
+                                                              y => y.GroupBy(a => a.ObjectKey)
+                                                                  .OrderBy(a => a.Key)
+                                                                  .ToDictionary(a => a.Key, x => x.Count()));
 
-                result.Add("today", Todayshipments);
-                var tomorrowShipmentsQuery = shipmentQuery.GetByFilters(newFilters)
-                                                  .Where(r => r.MainCarriageFinalDestinationETA == tomorrowDateTime)
-                                                  .GroupBy(a => new { a.TransportModeId, a.DirectionId})
-                                                  .ToDictionary( a => (object)a.Key, y => y.Count());
-                result.Add("tomorrow", tomorrowShipmentsQuery);
+                foreach (var item in shipmentsActual.Keys)
+                {
+                    if (shipments.ContainsKey(item))
+                    {
+                        foreach (var cc in shipmentsActual[item].Keys)
+                        {
+                            shipmentsActual[item].TryGetValue(cc, out int count);
+                            shipments[item].Add(cc, count);
+                        }
+                    }
+                    else
+                    {
+                        shipments.Add(item, shipmentsActual[item]);
+                    }
+                }
 
-                var next7DateTimeShipmentsQuery = shipmentQuery.GetByFilters(newFilters)
-                                                  .Where(r => r.MainCarriageFinalDestinationETA == next7DateTime)
-                                                  .GroupBy(a => new { a.TransportModeId, a.DirectionId})
-                                                  .ToDictionary( a => (object)a.Key, y => y.Count());
-                result.Add("Next7Days", next7DateTimeShipmentsQuery);
-
-                var last7DateTimeShipmentsQuery = shipmentQuery.GetByFilters(newFilters)
-                                                  .Where(r => r.MainCarriageFinalDestinationETA == last7DateTime)
-                                                  .GroupBy(a => new { a.TransportModeId, a.DirectionId})
-                                                  .ToDictionary( a => (object)a.Key, y => y.Count());
-                result.Add("Last7Days", last7DateTimeShipmentsQuery);
-
-                return Request.CreateResponse(HttpStatusCode.OK, result);
+                return Request.CreateResponse(HttpStatusCode.OK, shipments);
             }
             catch (AutenticationException ex)
             {
@@ -317,38 +391,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         #region Private Methods 
 
-        private Dictionary<string, object> GetInvoicesSummaries(int tenant, IQueryable<InvoiceStatusDashboardModel> res)
-        {
-            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
-            var lastMonth = todayDate.AddMonths(-1).Month;
-            var last2Month = todayDate.AddMonths(-2).Month;
-
-            var response = res.Where(a => a.DueDate.Value.Month == todayDate.Month 
-                                            || a.DueDate.Value.Month == lastMonth
-                                            || a.DueDate.Value.Month == last2Month
-                                            || a.DueDate.Value.Month < last2Month)
-                              .Select(a => new 
-                              {
-                                  DueDate = a.DueDate.Value,
-                                  PaidStatus = a.PaidStatus,
-                                  data = a.DueDate.Value.Month == todayDate.Month 
-                                         ? "Current"
-                                         : a.DueDate.Value.Month == lastMonth
-                                           ? "Last Month"
-                                           : a.DueDate.Value.Month == last2Month
-                                             ? "Last 2 Month"
-                                             : "Less than 2 Month"
-                              })
-                              .GroupBy(a => a.data)
-                              .ToDictionary(x => x.Key,
-                                                  t => (object) new
-                                                  {
-                                                      PartiallyPaidCount = t.Where(a => a.PaidStatus == "Partially Paid").Count(),
-                                                      OverDueCount = t.Where(a => a.DueDate < todayDate).Count()
-                                                  });
-            return response;
-        }
-
         private Dictionary<string, object> GetDigitalStatusesWithCount(IQueryable<DigitalShipmentList> shipments, int tenant)
         {
             var shipmentsGroupedByStatus = new Dictionary<string, object>();
@@ -422,18 +464,19 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                                   || (r.StatusWeight >= departedCodeWeight
                                                       && r.StatusWeight < arrivedAtDestinationCodeWeight)
                                                   || (r.StatusWeight >= arrivedAtDestinationCodeWeight)))
-                                   .Select(a => new { 
-                                        a.TransportModeId, 
-                                        Code = a.StatusWeight < departedCodeWeight 
+                                   .Select(a => new
+                                   {
+                                       a.TransportModeId,
+                                       Code = a.StatusWeight < departedCodeWeight
                                                ? "Origin"
                                                : (a.StatusWeight >= departedCodeWeight
-                                                  && a.StatusWeight < arrivedAtDestinationCodeWeight) 
+                                                  && a.StatusWeight < arrivedAtDestinationCodeWeight)
                                                   ? "InTransit"
                                                   : "dataAtDestination"
-                                   }).GroupBy(a => a.Code)
-                                   .ToDictionary(a => a.Key, y => (object)y.GroupBy( x => x.TransportModeId)
-                                                                           .ToDictionary(b => b.Key, xx => xx.Count()));
-
+                                   })
+                                   .GroupBy(a => a.Code)
+                                   .ToDictionary(a => a.Key, y => (object)y.GroupBy(x => x.TransportModeId)
+                                                                           .ToDictionary(b => b.Key, xx => xx.Count())); ;
             return result;
         }
 

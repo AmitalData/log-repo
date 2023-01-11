@@ -18,6 +18,7 @@ export class DashboardList {
 	Name: string;
 	Description: string;
 	PermissionLevelCode: string;
+	LoadedAutomatically: boolean;
 	
 }
  

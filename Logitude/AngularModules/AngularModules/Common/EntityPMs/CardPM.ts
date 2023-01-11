@@ -274,6 +274,21 @@ export class CardPM {
     public set IndustryId(newValue: string) { if (this.industryId != newValue) { this.industryId = newValue; this.MarkAsDirty("IndustryId"); } }
        
 	 
+    private leadDescription: string;
+    public get LeadDescription() { return this.leadDescription; }
+    public set LeadDescription(newValue: string) { if (this.leadDescription != newValue) { this.leadDescription = newValue; this.MarkAsDirty("LeadDescription"); } }
+       
+	 
+    private startWorkingDate: Date;
+    public get StartWorkingDate() { return this.startWorkingDate; }
+    public set StartWorkingDate(newValue: Date) { if (this.startWorkingDate != newValue) { this.startWorkingDate = newValue; this.MarkAsDirty("StartWorkingDate"); } }
+       
+	 
+    private leadSourceId: string;
+    public get LeadSourceId() { return this.leadSourceId; }
+    public set LeadSourceId(newValue: string) { if (this.leadSourceId != newValue) { this.leadSourceId = newValue; this.MarkAsDirty("LeadSourceId"); } }
+       
+	 
     private customAgent: any;
     public get CustomAgent() { return this.customAgent; }
     public set CustomAgent(newValue: any) { if (this.customAgent != newValue) { this.customAgent = newValue; this.MarkAsDirty("CustomAgent"); } }

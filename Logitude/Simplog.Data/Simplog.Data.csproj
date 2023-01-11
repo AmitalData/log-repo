@@ -217,6 +217,7 @@
     <Compile Include="Helpers\ShipmentToShipmentAnalyticMapper.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\CustomChildObject.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\ChildEntitiesCustomField.cs" />
+    <Compile Include="InfrastructureModel\EntityPOCOs\CustomFieldsMainObject.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DeploymentPackagesVersion.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DeploymentPackage.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DataCustomObject.cs" />
@@ -651,6 +652,7 @@
     <Compile Include="InfrastructureModel\EntityPOCOs\SharedUserQuery.cs" />
     <Compile Include="InfrastructureModel\Mapping\CustomChildObjectMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\ChildEntitiesCustomFieldMap.cs" />
+    <Compile Include="InfrastructureModel\Mapping\CustomFieldsMainObjectMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DeploymentPackagesVersionMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DeploymentPackageMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DataCustomObjectMap.cs" />
@@ -674,6 +676,7 @@
     <Compile Include="InfrastructureModel\Mapping\SharedUserQueryMap.cs" />
     <Compile Include="InfrastructureModel\Repositories\CustomChildObjectRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\ChildEntitiesCustomFieldRepository.cs" />
+    <Compile Include="InfrastructureModel\Repositories\CustomFieldsMainObjectRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DeploymentPackagesVersionRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DeploymentPackageRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DataCustomObjectRepository.cs" />

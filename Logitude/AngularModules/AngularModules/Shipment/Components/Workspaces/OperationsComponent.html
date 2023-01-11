@@ -3,15 +3,15 @@
     <tr style="height:21px;" *ngIf="IsMenuVisible">
         <td>
             <ul class="PagesMenu" *ngIf="IsResourcesReady">
-                <li id="{{'BOOK' | IdGeneratorPipe}}" *ngIf="IsBookingItemVisible" [class.SelectedPageMenu]="SelectedItem == 'BOOK'" (click)="SelectedItem = 'BOOK'">Bookings</li>
+                <li id="{{'BOOK' | IdGeneratorAsyncPipe | async}}" *ngIf="IsBookingItemVisible" [class.SelectedPageMenu]="SelectedItem == 'BOOK'" (click)="SelectedItem = 'BOOK'">Bookings</li>
 
-                <li id="{{'SHIP' | IdGeneratorPipe}}" [class.SelectedPageMenu]="SelectedItem == 'SHIP'" (click)="SelectedItem = 'SHIP'">Shipments</li>
+                <li id="{{'SHIP' | IdGeneratorAsyncPipe | async}}" [class.SelectedPageMenu]="SelectedItem == 'SHIP'" (click)="SelectedItem = 'SHIP'">Shipments</li>
 
-                <li id="{{'SHMA' | IdGeneratorPipe}}" *ngIf="IsSharedManifestItemVisible" [class.SelectedPageMenu]="SelectedItem == 'SHMA'" (click)="SelectedItem = 'SHMA'">Shared Manifests</li>
+                <li id="{{'SHMA' | IdGeneratorAsyncPipe | async}}" *ngIf="IsSharedManifestItemVisible" [class.SelectedPageMenu]="SelectedItem == 'SHMA'" (click)="SelectedItem = 'SHMA'">Shared Manifests</li>
 
-                <li id="{{'CNFU' | IdGeneratorPipe}}" *ngIf="IsContainersFUItemVisible" [class.SelectedPageMenu]="SelectedItem == 'CNFU'" (click)="SelectedItem = 'CNFU'">{{'Shipment.Features.ContainersFU' | TextCodeTranslationPipe}}</li>
+                <li id="{{'CNFU' | IdGeneratorAsyncPipe | async}}" *ngIf="IsContainersFUItemVisible" [class.SelectedPageMenu]="SelectedItem == 'CNFU'" (click)="SelectedItem = 'CNFU'">{{'Shipment.Features.ContainersFU' | TextCodeTranslationPipe}}</li>
 
-                <li id="{{'AMANAC' | IdGeneratorPipe}}" *ngIf="IsAMANACItemVisible" [class.SelectedPageMenu]="SelectedItem == 'AMANAC'" (click)="SelectedItem = 'AMANAC'">AMANAC</li>
+                <li id="{{'AMANAC' | IdGeneratorAsyncPipe | async}}" *ngIf="IsAMANACItemVisible" [class.SelectedPageMenu]="SelectedItem == 'AMANAC'" (click)="SelectedItem = 'AMANAC'">AMANAC</li>
 
             </ul>
         </td>

@@ -3582,6 +3582,34 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
             return myResult;
         }
+
+        public static double? GetVolumeInCBF(double? volumeInCBM)
+        {
+            double? myResult = null;
+            myResult = volumeInCBM * 35.315;
+            
+            if (myResult != null)
+            {
+                myResult = MethodHelper.Round(myResult.Value, 3);
+            }
+
+            return myResult;
+        }
+
+        public static double? GetWeightInLB(double? weight)
+        {
+            double? myResult = null;
+            myResult = weight / 0.45359237;
+
+            if (myResult != null)
+            {
+                myResult = MethodHelper.Round(myResult.Value, 3);
+            }
+
+            return myResult;
+        }
+
+        
         public static double? GetWeightInKG(string weightCode, double? weight)
         {
             double? myResult = null;

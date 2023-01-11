@@ -434,5 +434,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool IsDigitalDueDateColorRed { get; set; }
         public string TotalEquation { get; set; }
         public bool IsFromAutomation { get; set; }
+        public string DocumentTemplateId { get; set; }
     }
 }

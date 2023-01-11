@@ -767,7 +767,7 @@
                         <div></div>
                     </td>
                     <td style="width: 57px;">
-                        <button class="Button" id="{{ 'WarehouseCancelBtn' | IdGeneratorPipe}}" (click)="CancelButtonClicked()">Cancel</button>
+                        <button class="Button" id="{{ 'WarehouseCancelBtn' | IdGeneratorAsyncPipe | async}}" (click)="CancelButtonClicked()">Cancel</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -775,7 +775,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()" id="{{ 'WarehouseOKBtn' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled">Ok</button>
+                        <button class="RedButton" (click)="OkButtonClicked()" id="{{ 'WarehouseOKBtn' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsEditingEnabled">Ok</button>
                     </td>
                 </tr>
             </table>

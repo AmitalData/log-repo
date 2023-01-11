@@ -257,7 +257,7 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
     }
 
     isNoObjectFieldVariable(field: string) {
-        return new IsNoObjectFieldVariablePipe().transform(field);
+        return new IsNoObjectFieldVariablePipe().transform(field, this.FlowObjectFields);
     }
 
     isFieldCompareOperator(operatorCode: string) {

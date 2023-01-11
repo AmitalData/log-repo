@@ -53,7 +53,7 @@
                                                         <td>
                                                             <ul>
                                                                 <!-- SelectedMenuItem -->
-                                                                <li class="DefaultMenuItem" id="{{item.TextCode | IdGeneratorPipe}}" [style.pointer-events]="pointerEvents" *ngFor="let item of MainMenuItems"
+                                                                <li class="DefaultMenuItem" id="{{item.TextCode | IdGeneratorAsyncPipe | async}}" [style.pointer-events]="pointerEvents" *ngFor="let item of MainMenuItems"
                                                                     (click)="SelectionChanged(item)"
                                                                     [ngStyle]="(item === SelectedMenu) && hasMainTabHighlightColor? privateLabelClass : ''"
                                                                     [class.SelectedMenuItem]="(item === SelectedMenu) && !hasMainTabHighlightColor"

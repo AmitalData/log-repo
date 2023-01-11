@@ -340,8 +340,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
             foreach (ShipmentPackagePM package in shipmentPackages)
             {
-                package.VolumeInCBM = ShipmentMapping.GetVolumeInCBM("CBM", package.Volume) ;
-                package.GrossWeightInKG  = ShipmentMapping.GetWeightInKG("KG", package.Weight);
+                package.VolumeInCBM = ShipmentMapping.GetVolumeInCBM("CBM", package.Volume);
+                package.GrossWeightInKG = ShipmentMapping.GetWeightInKG("KG", package.Weight);
+
+                package.VolumeInCBF = ShipmentMapping.GetVolumeInCBF( package.VolumeInCBM);
+                package.GrossWeightInLB = ShipmentMapping.GetWeightInLB(package.GrossWeightInKG);
+
                 package.InsideShipmentPackages = insideShipmentPackageQuery.GetInsideShipmentPackages(package.Id, package.Tenant);
                 package.ShipmentPackageItems = shipmentPackageItemQuery.GetShipmentPackageItems(package.Id, package.Tenant);
                 package.ShipmentPackageHarmonizes = shipmentPackageHarmonizeQuery.GetShipmentPackageHarmonizes(package.Id, package.Tenant);
@@ -363,15 +367,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     package.ContainerSize = CurrentPackageType.ContainerSize;
                     package.PackageTypeVolume = CurrentPackageType.Volume;
                     package.IsVehicle = CurrentPackageType.IsVehicle;
-
                 }
+
                 if (!string.IsNullOrEmpty(package.CountryId))
                 {
                     package.CountryName = (from d in commonContext.Countries
-
                                            where d.Id == package.CountryId
-
-                                           select d.EnglishName).FirstOrDefault();
+                                           select d.EnglishName)
+                                           .FirstOrDefault();
 
                 }
                 this.MapTheLastStatusName(package, webFreightContext);

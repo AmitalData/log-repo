@@ -12,22 +12,28 @@ using Simplog.Server.Infrastructure;
 
 namespace Logitude.Infrastructure.Data.Repsitories
 {
-   public partial class DigitalProfileRepository:IRepository<DigitalProfile>
-   {
-        
-		public List<DigitalProfile> GetMulti(EntityKeyFields entityKeys)
+    public partial class DigitalProfileRepository : IRepository<DigitalProfile>
+    {
+
+        public List<DigitalProfile> GetMulti(EntityKeyFields entityKeys)
         {
-            
-			throw new NotImplementedException();
+
+            throw new NotImplementedException();
         }
 
         public IQueryable<DigitalProfile> GetDigitalProfiles(int tenant, string profileName = "")
         {
             return context.DigitalProfiles
                           .Where(a => a.Tenant == tenant
-                                      && (string.IsNullOrEmpty(profileName) 
+                                      && (string.IsNullOrEmpty(profileName)
                                            || a.Name.Equals(profileName)));
         }
-   }
+
+        public DigitalProfile GetDigitalProfileByName(int tenant, string profileName)
+        {
+            return context.DigitalProfiles
+                          .Where(a => a.Tenant == tenant && a.Name.Equals(profileName)).FirstOrDefault();
+        }
+    }
 }
    

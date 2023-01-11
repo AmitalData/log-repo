@@ -27,7 +27,7 @@
 
     .table-container {
         overflow: auto;
-        height: 515px;
+        height: 420px;
     }
 
     .label {
@@ -106,12 +106,88 @@
     <tr *ngIf="EntityId" class="table-row">
         <td class="table-row-cell-label">
             <div class="table-row-cell-block">
-                <div class="label">Set Fields Values of {{Entity | EntityLabelPipe}}</div>
+                <div class="label">How to Set the Record Fields</div>
             </div>
         </td>
     </tr>
 
     <tr *ngIf="EntityId" class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+                <table>
+                    <tr>
+                        <td>
+                            <RadioButton [Name]="'SetRecordFieldsTypeRadio'"
+                                [IsChecked]="SetRecordFieldsType === SetRecordFieldsTypes.UseRecord"
+                                (Checked)="updateSetRecordFieldsType(SetRecordFieldsTypes.UseRecord)"
+                                [Text]="'Use all fields values from a record'" [Top]="5"
+                                [DataCy]="'set-record-fields-type-userecord'">
+                            </RadioButton>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <RadioButton [Name]="'SetRecordFieldsTypeRadio'"
+                                [IsChecked]="SetRecordFieldsType === SetRecordFieldsTypes.SetValues"
+                                (Checked)="updateSetRecordFieldsType(SetRecordFieldsTypes.SetValues)"
+                                [Text]="'Set fields values'" [Top]="5" [DataCy]="'set-record-fields-type-setvalues'">
+                            </RadioButton>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="EntityId && SetRecordFieldsType === SetRecordFieldsTypes.UseRecord" class="table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr *ngIf="EntityId && SetRecordFieldsType === SetRecordFieldsTypes.UseRecord" class="table-row">
+        <td class="table-row-cell-label">
+            <div class="table-row-cell-block">
+                <div class="label">Select Record to Append</div>
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="EntityId && SetRecordFieldsType === SetRecordFieldsTypes.UseRecord" class="table-row">
+        <td class="table-row-cell">
+            <div>
+                <LogLabel [NoObjectField]="true" [Text]="'Record'" [ObjectFieldName]="'Record'"
+                    [DataContext]="DataContext"></LogLabel>
+            </div>
+            <div class="table-row-cell-block">
+                <TreeSelect *ngIf="CollectionChanged" [Items]="DeclaredRecordsTreeItems" [Width]="'300px'"
+                    [Value]="Record" [ShowExpand]="false" [ShowItem]="Entity | ShowTreeItemPipe : 'type'"
+                    (ValueChanged)="updateRecord($event)">
+                </TreeSelect>
+
+                <TreeSelect *ngIf="!CollectionChanged" [Items]="DeclaredRecordsTreeItems" [Width]="'300px'"
+                    [Value]="Record" [ShowExpand]="false" [ShowItem]="Entity | ShowTreeItemPipe : 'type'"
+                    (ValueChanged)="updateRecord($event)">
+                </TreeSelect>
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="EntityId && SetRecordFieldsType === SetRecordFieldsTypes.SetValues" class="table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr *ngIf="EntityId && SetRecordFieldsType === SetRecordFieldsTypes.SetValues" class="table-row">
+        <td class="table-row-cell-label">
+            <div class="table-row-cell-block">
+                <div class="label">Set Fields Values of {{Entity | EntityLabelPipe}}</div>
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="EntityId && SetRecordFieldsType === SetRecordFieldsTypes.SetValues" class="table-row">
         <td class="table-row-cell">
             <div class="table-container">
 
