@@ -828,6 +828,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "CTI,Customers API", 
                 Description = "Customers API", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "DMS", 
+                Name = "Dispose Memory Stream", 
+                SearchFields = "DMS,Dispose Memory Stream", 
+                Description = "Dispose Memory Stream", 
+			});
 			
             return all;
        }

@@ -25,6 +25,7 @@ using System.Xml.Serialization;
 using WebFreight.Web.AccountingModel.LedgerTransactionService;
 using WebFreight.Web.DataProviders;
 using WebFreight.Web.Security;
+using WebFreight.Web.Services;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 {
@@ -74,14 +75,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         public byte[] GetData()
         {
             BuildDataProvider();
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(ExternalReconciliationLinesReportDataProvider));
-            MemoryStream memoryStream = new MemoryStream();
-            xmlSerializer.Serialize(memoryStream, dataProvider);
-            memoryStream.Seek(0, SeekOrigin.Begin);
-            StreamReader streamReader = new StreamReader(memoryStream);
-            string content = streamReader.ReadToEnd();
-            byte[] bytearray = memoryStream.ToArray();
-            return bytearray;
+            return new ReportMemoryStreamService().Convert(dataProvider, typeof(ShipmentsStocksDataProvider), tenant);
         }
         private void BuildDataProvider()
         {

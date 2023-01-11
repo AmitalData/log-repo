@@ -19,6 +19,7 @@ using System.Linq;
 using System.Web;
 using System.Xml.Serialization;
 using WebFreight.Web.DataProviders;
+using WebFreight.Web.Services;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 {
@@ -135,17 +136,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         public byte[] GetData()
         {
             StatementDataProvider myDataProvider = new StatementDataProvider();
-
             myDataProvider = this.LoadDataProvider();
-
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(StatementDataProvider));
-            MemoryStream memoryStream = new MemoryStream();
-            xmlSerializer.Serialize(memoryStream, myDataProvider);
-            memoryStream.Seek(0, SeekOrigin.Begin);
-            StreamReader streamReader = new StreamReader(memoryStream);
-            string content = streamReader.ReadToEnd();
-            byte[] bytearray = memoryStream.ToArray();
-            return bytearray;
+            return new ReportMemoryStreamService().Convert(myDataProvider, typeof(StatementDataProvider), tenant);
         }
 
         private StatementDataProvider LoadDataProvider()

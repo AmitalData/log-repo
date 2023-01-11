@@ -24,6 +24,7 @@ using Logitude.BL.DataContracts;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using WebFreight.Web.Services;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 {
@@ -175,15 +176,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         {
             this.InitializeDataProvider();
             this.LoadDataProvider();
-
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(ArchivoExportadoDataProvider));
-            MemoryStream memoryStream = new MemoryStream();
-            xmlSerializer.Serialize(memoryStream, myDataProvider);
-            memoryStream.Seek(0, SeekOrigin.Begin);
-
-            StreamReader streamReader = new StreamReader(memoryStream);
-            byte[] bytearray = memoryStream.ToArray();
-            return bytearray;
+            return new ReportMemoryStreamService().Convert(myDataProvider, typeof(ArchivoExportadoDataProvider), tenant);
         }
         private void InitializeDataProvider()
         {
