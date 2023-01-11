@@ -59,16 +59,16 @@ namespace WebFreight.Web.Helpers
 
             TenantRepository tenantRepoitory = new TenantRepository(tenant);
             var CurTenant = tenantRepoitory.GetSingleByTenant(tenant);
-            var rows = dataTable.Rows.Count;
+            var rows = dataTable.Rows.Count - 40000;
             if (rows > 0)
             {
+                
                 for (int j = 1; j <= dataTable.Columns.Count; j++)
                 {
                     var agColumn = bITabularViewSettings.Columns.Where(a => a.Name == dataTable.Columns[j - 1].ColumnName).FirstOrDefault();
                     if (agColumn != null)
                     {
-
-                        var writeRange = sheet.Range[2, j, rows + 1, j];
+                        var writeRange = sheet.Range[2, j, rows+1, j];
                         switch (agColumn.DataTypeCode)
                         {
                             case "Constant":
