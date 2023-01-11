@@ -27,7 +27,7 @@ namespace Logitude.DashboardModule.Data.EntityLists
        [DataMember]
        public string JoinedTableName  { get; set; }
        [DataMember]
-       public int? Order  { get; set; }
+       public int? Sort  { get; set; }
    }
 
 }

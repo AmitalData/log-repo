@@ -54,9 +54,9 @@ export class DashboardCommonFilterPM {
     public set JoinedTableName(newValue: string) { if (this.joinedTableName != newValue) { this.joinedTableName = newValue; this.MarkAsDirty("JoinedTableName"); } }
        
 	 
-    private order: number;
-    public get Order() { return this.order; }
-    public set Order(newValue: number) { if (this.order != newValue) { this.order = newValue; this.MarkAsDirty("Order"); } }
+    private sort: number;
+    public get Sort() { return this.sort; }
+    public set Sort(newValue: number) { if (this.sort != newValue) { this.sort = newValue; this.MarkAsDirty("Sort"); } }
        
 	 
 

@@ -158,25 +158,25 @@ namespace Logitude.DashboardModule.BL.EntityPMs
 			
 		 }
 	   }
-	  private int? order ;
+	  private int? sort ;
 	  	  
        
 	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int? Order  
+       public int? Sort  
 	   {
 	    
 	     get
 		{
-		   return order;
+		   return sort;
 		 }
 		 set
 		 {
-		   if(order != value)
+		   if(sort != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Order",OldValue=order,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Sort",OldValue=sort,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
-		   order=value;
+		   sort=value;
 		   }
 			
 		 }

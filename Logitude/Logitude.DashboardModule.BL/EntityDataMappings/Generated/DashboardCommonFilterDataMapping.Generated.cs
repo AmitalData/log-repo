@@ -28,7 +28,7 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         IsDisabled, 
 	         IsMultiSelect, 
 	         JoinedTableName, 
-	         Order,
+	         Sort,
 	      }
 
 
@@ -41,7 +41,7 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         IsDisabled, 
 	         IsMultiSelect, 
 	         JoinedTableName, 
-	         Order,
+	         Sort,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -75,9 +75,9 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 				entityPOCO.JoinedTableName = entityPM.JoinedTableName;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Order))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Sort))
             {
-				entityPOCO.Order = entityPM.Order;
+				entityPOCO.Sort = entityPM.Sort;
 			}
 			}
 
@@ -114,9 +114,9 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 					entityPM.JoinedTableName = entityPOCO.JoinedTableName;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Order))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Sort))
             {
-					entityPM.Order = entityPOCO.Order;
+					entityPM.Sort = entityPOCO.Sort;
             }
 
 		}
@@ -150,9 +150,9 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
                 oldEntityPM.JoinedTableName = entityPM.JoinedTableName;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Order))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Sort))
             {
-                oldEntityPM.Order = entityPM.Order;
+                oldEntityPM.Sort = entityPM.Sort;
             }
 			
 		}

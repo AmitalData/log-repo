@@ -67,6 +67,7 @@
     <None Include="DBScripts\202209010934_AddARInvoiceAnalyticColumnStoreIndex.sxml" />
     <None Include="DBScripts\202209010934_AddAPInvoiceAnalyticsColumnStoreIndex.sxml" />
     <None Include="DBScripts\202209010934_AddQuoteAnalyticsColumnStoreIndex.sxml" />
+    <None Include="DBScripts\202311010301_FillDashboardCommonFilters.sxml" />
     <None Include="DBScripts\202210270330_FillOpportunityAnalytics.sxml" />
     <None Include="DBScripts\202210270330_AddOpportunityAnalyticsColumnStoreIndex.sxml" />
     <None Include="DBScripts\202209010934_FillARInvoiceAnalytics.sxml" />

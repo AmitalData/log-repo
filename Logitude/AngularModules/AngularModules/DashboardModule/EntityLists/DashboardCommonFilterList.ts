@@ -14,7 +14,7 @@ export class DashboardCommonFilterList {
 	IsDisabled: boolean;
 	IsMultiSelect: boolean;
 	JoinedTableName: string;
-	Order: number;
+	Sort: number;
 	
 }
  

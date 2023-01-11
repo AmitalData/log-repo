@@ -35,7 +35,7 @@ namespace Logitude.DashboardModule.Data.EntityMapping
 
             this.Property(t => t.JoinedTableName).HasColumnName("JoinedTableName").HasMaxLength(100).IsUnicode(false);
 
-            this.Property(t => t.Order).HasColumnName("Order");
+            this.Property(t => t.Sort).HasColumnName("Sort");
         }
     }
 }

@@ -1,0 +1,25 @@
+﻿<Script DBType="Main" Module="Dashboard">
+  <Sql Version="1">
+    <![CDATA[
+	
+	 if not exists (select Code from DashboardCommonFilters where Code = 'TransportMode')
+	 begin
+		insert into DashboardCommonFilters(Code, DisplayName, DataTypeCode, IsMultiSelect, JoinedTableName, Sort)
+		values ('TransportMode', 'Transport Mode', 'LookUp', 1 ,'TransportMode','1')
+	 end
+	 
+	 if not exists (select Code from DashboardCommonFilters where Code = 'Direction')
+	 begin
+		insert into DashboardCommonFilters(Code, DisplayName, DataTypeCode, IsMultiSelect, JoinedTableName, Sort)
+		values ('Direction', 'Direction', 'LookUp', 1 ,'Direction','2')
+	 end
+     
+     if not exists (select Code from DashboardCommonFilters where Code = 'CreateDate')
+	 begin
+		insert into DashboardCommonFilters(Code, DisplayName, DataTypeCode, Sort)
+		values ('CreateDate', 'Create Date', 'DateTime', 3)
+	 end
+	  
+    ]]>       
+  </Sql>
+</Script>

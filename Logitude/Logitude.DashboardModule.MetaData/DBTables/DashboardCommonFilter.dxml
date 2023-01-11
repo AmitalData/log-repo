@@ -46,7 +46,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="Order"
+    Name="Sort"
+    OldNames="Order"
     Type="int">
     <Constraints
       Nullable="true" />
