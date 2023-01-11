@@ -163,6 +163,31 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="Alignment"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ThousandSeparator"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="UseNumberAbbreviation"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DecimalPlaces"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="GroupById"
     ReferencedTable="AnalyticsFactsFieldsMetaDatas"

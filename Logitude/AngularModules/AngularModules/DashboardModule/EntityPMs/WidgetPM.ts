@@ -187,6 +187,26 @@ export class WidgetPM {
     public set SecondaryDateGroupCode(newValue: string) { if (this.secondaryDateGroupCode != newValue) { this.secondaryDateGroupCode = newValue; this.MarkAsDirty("SecondaryDateGroupCode"); } }
        
 	 
+    private alignment: string;
+    public get Alignment() { return this.alignment; }
+    public set Alignment(newValue: string) { if (this.alignment != newValue) { this.alignment = newValue; this.MarkAsDirty("Alignment"); } }
+       
+	 
+    private thousandSeparator: boolean;
+    public get ThousandSeparator() { return this.thousandSeparator; }
+    public set ThousandSeparator(newValue: boolean) { if (this.thousandSeparator != newValue) { this.thousandSeparator = newValue; this.MarkAsDirty("ThousandSeparator"); } }
+       
+	 
+    private useNumberAbbreviation: boolean;
+    public get UseNumberAbbreviation() { return this.useNumberAbbreviation; }
+    public set UseNumberAbbreviation(newValue: boolean) { if (this.useNumberAbbreviation != newValue) { this.useNumberAbbreviation = newValue; this.MarkAsDirty("UseNumberAbbreviation"); } }
+       
+	 
+    private decimalPlaces: number;
+    public get DecimalPlaces() { return this.decimalPlaces; }
+    public set DecimalPlaces(newValue: number) { if (this.decimalPlaces != newValue) { this.decimalPlaces = newValue; this.MarkAsDirty("DecimalPlaces"); } }
+       
+	 
 
     public OldEntityPM: WidgetPM;
 	

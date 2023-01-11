@@ -68,6 +68,14 @@ namespace Logitude.DashboardModule.Data.EntityMapping
             this.Property(t => t.SecondaryGroupById).HasColumnName("SecondaryGroupById").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.SecondaryDateGroupCode).HasColumnName("SecondaryDateGroupCode").HasMaxLength(17).IsUnicode(false);
+
+            this.Property(t => t.Alignment).HasColumnName("Alignment").HasMaxLength(50).IsUnicode(false);
+
+            this.Property(t => t.ThousandSeparator).HasColumnName("ThousandSeparator");
+
+            this.Property(t => t.UseNumberAbbreviation).HasColumnName("UseNumberAbbreviation");
+
+            this.Property(t => t.DecimalPlaces).HasColumnName("DecimalPlaces");
         }
     }
 }

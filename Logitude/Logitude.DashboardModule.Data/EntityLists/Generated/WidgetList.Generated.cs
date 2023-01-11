@@ -36,6 +36,14 @@ namespace Logitude.DashboardModule.Data.EntityLists
        public DateTime? FromDate  { get; set; }
        [DataMember]
        public DateTime? ToDate  { get; set; }
+       [DataMember]
+       public string Alignment  { get; set; }
+       [DataMember]
+       public bool? ThousandSeparator  { get; set; }
+       [DataMember]
+       public bool? UseNumberAbbreviation  { get; set; }
+       [DataMember]
+       public int? DecimalPlaces  { get; set; }
    }
 
 }
