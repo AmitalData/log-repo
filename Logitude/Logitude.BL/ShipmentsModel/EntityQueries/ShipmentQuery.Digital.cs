@@ -2365,7 +2365,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         #endregion Transport & Subtypes
 
         #region Global Search 
-        public IQueryable<DigitalShipmentList> GetByFilters(GeneralFilters newFilters)
+        public Tuple<QueryOperations, IQueryable<DigitalShipmentList>>  GetByFiltersTuple(GeneralFilters newFilters)
         {
             var tenant = newFilters.Tenant;
 
@@ -2461,6 +2461,23 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             var entityLists = myShipmentQuery.GetDigitalIQueryableShipmentList(shipments, tenant);
             entityLists = genericFilter.GetFilteredQuery(listQueryOperation, entityLists);
 
+            return Tuple.Create(queryOperations, entityLists);
+        }
+
+        public IQueryable<DigitalShipmentList> GetByFilters(GeneralFilters newFilters)
+        {
+            var response = GetByFiltersTuple(newFilters);
+
+            return response.Item2;
+        }
+
+        public IQueryable<DigitalShipmentList>  GetByFilterWithSortingFilter(GeneralFilters newFilters)
+        {
+            var response = GetByFiltersTuple(newFilters); 
+
+            var queryOperations = response.Item1;
+            var entityLists  = response.Item2;
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 var propInfo = typeof(DigitalShipmentList).GetProperty(queryOperations.SortByColumnName);
@@ -2526,7 +2543,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return entityLists;
         }
-
         #endregion
 
         public Tuple<string, int> GetShipmentIdBySecurityKey(string key)
