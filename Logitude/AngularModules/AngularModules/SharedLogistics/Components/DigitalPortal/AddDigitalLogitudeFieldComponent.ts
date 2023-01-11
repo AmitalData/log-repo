@@ -106,7 +106,7 @@ export class AddDigitalLogitudeFieldComponent extends BaseComponent implements O
             FieldName: 'DataTypeCode',
             DataTypeCode: 'String',
             Display: 'Data Type',
-            Styles: { width: '200px' },
+            Styles: { width: '120px' },
             IsCustomTemplate: true
         });
 

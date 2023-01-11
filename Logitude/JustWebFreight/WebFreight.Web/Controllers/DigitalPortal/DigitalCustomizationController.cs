@@ -114,7 +114,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 if (customTextCodes == null)
                 {
-                    var defaultTextCodes = textCodeQuery.GetDigitalTextCodesQuery(tenant,
+                    var defaultTextCodes = textCodeQuery.GetDigitalTextCodesQuery(0,
                                                                                   addCustomFieldRequest.ObjectTableId,
                                                                                   addCustomFieldRequest.ProfileId);
 
@@ -282,7 +282,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 IWebFreightContext MyContext = WebFreightContext.GetContext(tenant);
                 ObjectFieldRepository objectFieldRepository = new ObjectFieldRepository(MyContext);
-                var IncludeMetaDataFields = queryOperations.QueryFilterItems.Where(a => a.FieldName == "IncludeMetaDataFields").FirstOrDefault() != null;
+                var IncludeMetaDataFields = true;
                 IQueryable<ObjectField> entityPocos = objectFieldRepository.GetObjectFieldsFromTenanZeroAndMyTenant(tenant, IncludeMetaDataFields);
 
                 ObjectFieldQuery objectFieldQuery = new ObjectFieldQuery(objectFieldRepository);
@@ -292,12 +292,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 QueryOperations listQueryOperation = new QueryOperations();
                 listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
 
-                if (listQueryOperation.QueryFilterItems != null)
-                {
-                    var queryFilter = listQueryOperation.QueryFilterItems.Where(d => d.FieldName == "FullNameTextCodeDefaultText").FirstOrDefault();
-                    if (queryFilter != null) queryFilter.Operator = "Contains";
-                }
-
+               
                 entityPocos = genericFilter.GetFilteredQuery(nonListQueryOperation, entityPocos);
 
                 ObjectFieldCustomFilter customfilters = new ObjectFieldCustomFilter(tenant);
