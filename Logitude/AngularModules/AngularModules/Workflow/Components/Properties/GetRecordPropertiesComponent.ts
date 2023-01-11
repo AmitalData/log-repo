@@ -15,6 +15,7 @@ import { EntitiesTreeList } from "Workflow/Models/EntitiesTreeList";
 import { ObjectTables } from "Workflow/Models/ObjectTables";
 import { ConditionOperators } from "Workflow/Constants/ConditionOperators";
 import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
+import { Formatter } from "Workflow/Models/Formatter";
 
 @Component({
     templateUrl: "./GetRecordPropertiesComponent.html"
@@ -57,6 +58,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     public GetRecordLimits = GetRecordLimits;
     public GetRecordTypes = GetRecordTypes;
     public SortDirections = SortDirections;
+    public IsNew: boolean = false;
 
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
@@ -77,7 +79,9 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     }
 
     initialize() {
-        this.Name = this.Data["name"] || null;
+        this.IsNew = Object.keys(this.Data).length === 0;
+
+        this.Name = this.Data["label"] || null;
         this.Entity = this.Data["entity"] || null;
         this.RecordsLimit = this.Data["recordsLimit"] ? this.Data["recordsLimit"] : GetRecordLimits.FirstRecord;
         this.RecordsType = this.Data["recordsType"] ? this.Data["recordsType"] : null;
@@ -153,7 +157,10 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     }
 
     updateName(Name: any) {
-        this.Data["name"] = Name;
+        if(this.IsNew){
+            this.Data["name"] = Formatter.getCodeFromName(Name);
+        }
+        this.Data["label"] = Name;
         this.Name = Name;
 
         this.setUIProperties();

@@ -4,6 +4,7 @@ import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { FlowVariablesTreeList } from "Workflow/Models/FlowVariablesTreeList";
+import { Formatter } from "Workflow/Models/Formatter";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 
 @Component({
@@ -30,6 +31,7 @@ export class LoopPropertiesComponent extends BaseComponent {
     public LastToFirstDirection = { Code: "LastToFirst", Name: "Last item to first item" };
 
     public CurrentSession = SessionLocator.SelectedSession;
+    public IsNew: boolean = false;
 
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
@@ -53,7 +55,9 @@ export class LoopPropertiesComponent extends BaseComponent {
     }
 
     initialize() {
-        this.Name = this.Data["name"] || null;
+        this.IsNew = Object.keys(this.Data).length === 0;
+
+        this.Name = this.Data["label"] || null;
         this.CollectionVariable = this.Data["collectionVariable"] || null;
         this.Direction = this.Data["direction"] ? this.Data["direction"] : this.FirstToLastDirection.Code;
 
@@ -68,7 +72,10 @@ export class LoopPropertiesComponent extends BaseComponent {
     }
 
     updateName(Name: any) {
-        this.Data["name"] = Name;
+        if(this.IsNew){
+            this.Data["name"] = Formatter.getCodeFromName(Name);
+        }
+        this.Data["label"] = Name;
         this.Name = Name;
         this.setUIProperties();
     }

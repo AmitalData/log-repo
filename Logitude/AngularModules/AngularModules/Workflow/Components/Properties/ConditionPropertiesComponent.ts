@@ -7,6 +7,7 @@ import { Condition } from "Workflow/Models/Condition";
 import { ObjectTablePM } from "Infrastructure/EntityPMs/ObjectTablePM";
 import { ObjectTables } from "Workflow/Models/ObjectTables";
 import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
+import { Formatter } from "Workflow/Models/Formatter";
 
 @Component({
     templateUrl: "./ConditionPropertiesComponent.html"
@@ -31,6 +32,7 @@ export class ConditionPropertiesComponent extends BaseComponent {
     public FlowObjectFields: ObjectFieldList[];
     
     public CurrentSession = SessionLocator.SelectedSession;
+    public IsNew: boolean = false;
 
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
@@ -44,9 +46,10 @@ export class ConditionPropertiesComponent extends BaseComponent {
 
     initialize() {
         if (this.WorkflowEntity) {
+            this.IsNew = Object.keys(this.Data).length === 0;
             this.setWorkflowEntityTable();
 
-            this.Name = this.Data["name"] || null;
+            this.Name = this.Data["label"] || null;
             this.ConditionLabel = this.Data["conditionLabel"] || null;
     
             this.Conditions = this.Data["conditions"] || [];
@@ -75,7 +78,10 @@ export class ConditionPropertiesComponent extends BaseComponent {
     }
 
     updateName(name: string) {
-        this.Data["name"] = name;
+        if(this.IsNew){
+            this.Data["name"] = Formatter.getCodeFromName(name);
+        }
+        this.Data["label"] = name;
         this.Name = name;
 
         this.setUIProperties();

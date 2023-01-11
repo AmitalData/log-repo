@@ -5,6 +5,7 @@ import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 import { FlowVariablesTreeList } from "Workflow/Models/FlowVariablesTreeList";
+import { Formatter } from "Workflow/Models/Formatter";
 
 @Component({
     templateUrl: "./DeleteItemPropertiesComponent.html"
@@ -26,6 +27,7 @@ export class DeleteItemPropertiesComponent extends BaseComponent {
     public ValidationErrorsList: string[];
 
     public CurrentSession = SessionLocator.SelectedSession;
+    public IsNew: boolean = false;
 
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
@@ -40,7 +42,9 @@ export class DeleteItemPropertiesComponent extends BaseComponent {
     }
 
     initialize() {
-        this.Name = this.Data["name"] || null;
+        this.IsNew = Object.keys(this.Data).length === 0;
+
+        this.Name = this.Data["label"] || null;
         this.Record = this.Data["record"] || null;
 
         this.setUIProperties();
@@ -59,7 +63,10 @@ export class DeleteItemPropertiesComponent extends BaseComponent {
     }
 
     updateName(name: string) {
-        this.Data["name"] = name;
+        if(this.IsNew){
+            this.Data["name"] = Formatter.getCodeFromName(name);
+        }
+        this.Data["label"] = name;
         this.Name = name;
 
         this.setUIProperties();

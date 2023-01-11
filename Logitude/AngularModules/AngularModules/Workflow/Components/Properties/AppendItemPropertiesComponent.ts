@@ -9,6 +9,7 @@ import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 import { SetValue } from "Workflow/Models/SetValue";
 import { DeclaredRecordsTreeList } from "Workflow/Models/DeclaredRecordsTreeList";
 import { SetRecordFieldsTypes } from "Workflow/Constants/SetRecordFieldsTypes";
+import { Formatter } from "Workflow/Models/Formatter";
 
 @Component({
     templateUrl: "./AppendItemPropertiesComponent.html"
@@ -36,6 +37,7 @@ export class AppendItemPropertiesComponent extends BaseComponent {
     public ExcludedEntities: string[] = ["Container"];
     public SetRecordFieldsTypes = SetRecordFieldsTypes;
     public CurrentSession = SessionLocator.SelectedSession;
+    public IsNew: boolean = false;
 
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
@@ -50,7 +52,9 @@ export class AppendItemPropertiesComponent extends BaseComponent {
     }
 
     initialize() {
-        this.Name = this.Data["name"] || null;
+        this.IsNew = Object.keys(this.Data).length === 0;
+
+        this.Name = this.Data["label"] || null;
         this.Collection = this.Data["collection"] || null;
         this.Entity = this.Data["entity"] || null;
         this.SetValues = this.Data["setValues"] || [];
@@ -82,7 +86,10 @@ export class AppendItemPropertiesComponent extends BaseComponent {
     }
 
     updateName(name: string) {
-        this.Data["name"] = name;
+        if(this.IsNew){
+            this.Data["name"] = Formatter.getCodeFromName(name);
+        }
+        this.Data["label"] = name;
         this.Name = name;
 
         this.setUIProperties();

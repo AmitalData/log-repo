@@ -3,6 +3,7 @@ import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/Base
 import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
+import { Formatter } from "Workflow/Models/Formatter";
 import { SetValue } from "Workflow/Models/SetValue";
 
 @Component({
@@ -24,6 +25,8 @@ export class SetValuePropertiesComponent extends BaseComponent {
     public IsValidSetValues: boolean = true;
     public ValidationErrorsList: string[];
 
+    public IsNew: boolean = false;
+
     constructor() {
         super();
     }
@@ -38,7 +41,9 @@ export class SetValuePropertiesComponent extends BaseComponent {
     }
 
     initialize() {
-        this.Name = this.Data["name"] || null;
+        this.IsNew = Object.keys(this.Data).length === 0;
+
+        this.Name = this.Data["label"] || null;
         this.SetValues = this.Data["setValues"] || [];
 
         this.initializeSetValue();
@@ -55,7 +60,10 @@ export class SetValuePropertiesComponent extends BaseComponent {
     }
 
     updateName(name: any) {
-        this.Data["name"] = name;
+        if(this.IsNew){
+            this.Data["name"] = Formatter.getCodeFromName(name);
+        }
+        this.Data["label"] = name;
         this.Name = name;
         this.setUIProperties();
     }
