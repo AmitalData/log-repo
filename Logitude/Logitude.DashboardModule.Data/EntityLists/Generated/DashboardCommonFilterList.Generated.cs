@@ -26,6 +26,8 @@ namespace Logitude.DashboardModule.Data.EntityLists
        public bool IsMultiSelect  { get; set; }
        [DataMember]
        public string JoinedTableName  { get; set; }
+       [DataMember]
+       public int? Order  { get; set; }
    }
 
 }

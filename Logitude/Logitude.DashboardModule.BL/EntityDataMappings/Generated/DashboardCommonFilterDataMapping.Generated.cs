@@ -27,7 +27,8 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         DataTypeCode, 
 	         IsDisabled, 
 	         IsMultiSelect, 
-	         JoinedTableName,
+	         JoinedTableName, 
+	         Order,
 	      }
 
 
@@ -39,7 +40,8 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         DataTypeCode, 
 	         IsDisabled, 
 	         IsMultiSelect, 
-	         JoinedTableName,
+	         JoinedTableName, 
+	         Order,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -71,6 +73,11 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.JoinedTableName))
             {
 				entityPOCO.JoinedTableName = entityPM.JoinedTableName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Order))
+            {
+				entityPOCO.Order = entityPM.Order;
 			}
 			}
 
@@ -107,6 +114,11 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 					entityPM.JoinedTableName = entityPOCO.JoinedTableName;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Order))
+            {
+					entityPM.Order = entityPOCO.Order;
+            }
+
 		}
 
 		public void PMToOldPM(DashboardCommonFilterPM entityPM, DashboardCommonFilterPM oldEntityPM)
@@ -136,6 +148,11 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.JoinedTableName))
             {
                 oldEntityPM.JoinedTableName = entityPM.JoinedTableName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Order))
+            {
+                oldEntityPM.Order = entityPM.Order;
             }
 			
 		}

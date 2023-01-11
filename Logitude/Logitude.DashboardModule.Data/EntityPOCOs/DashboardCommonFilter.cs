@@ -34,6 +34,8 @@ namespace Logitude.DashboardModule.Data.EntityPOCOs
 	    public bool IsMultiSelect { get; set; }
         [Column("JoinedTableName")]
 	    public string JoinedTableName { get; set; }
+        [Column("Order")]
+	    public int? Order { get; set; }
     }
 }
 	 

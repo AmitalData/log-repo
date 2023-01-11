@@ -158,6 +158,29 @@ namespace Logitude.DashboardModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private int? order ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? Order  
+	   {
+	    
+	     get
+		{
+		   return order;
+		 }
+		 set
+		 {
+		   if(order != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Order",OldValue=order,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   order=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -54,6 +54,11 @@ export class DashboardCommonFilterPM {
     public set JoinedTableName(newValue: string) { if (this.joinedTableName != newValue) { this.joinedTableName = newValue; this.MarkAsDirty("JoinedTableName"); } }
        
 	 
+    private order: number;
+    public get Order() { return this.order; }
+    public set Order(newValue: number) { if (this.order != newValue) { this.order = newValue; this.MarkAsDirty("Order"); } }
+       
+	 
 
     public OldEntityPM: DashboardCommonFilterPM;
 		

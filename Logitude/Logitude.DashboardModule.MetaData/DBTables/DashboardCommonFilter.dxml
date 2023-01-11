@@ -45,6 +45,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="Order"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DataTypeCode"
     ReferencedTable="FieldDataTypes"
