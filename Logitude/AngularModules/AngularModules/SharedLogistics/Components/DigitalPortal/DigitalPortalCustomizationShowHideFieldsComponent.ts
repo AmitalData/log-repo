@@ -5,7 +5,7 @@ import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameCla
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
 import { DigitalTextService, DigitalFeildSecurityObjectModel, DigitalFeildSecurityUpdateModel, DigitalTextCodeObject, DigitalTextCodeUpdateModel } from '../../../Infrastructure/Services/WebServices/DigitalTextService'
-import { AppTool } from '../../../Infrastructure/Tools';
+import { AppTool, DateTool } from '../../../Infrastructure/Tools';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 
 
@@ -145,6 +145,9 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
             hasHasPermissionList.forEach(item => {
                 var newLabel = new DigitalFeildSecurityUpdateModel();
                 newLabel.FieldCode = item.FieldCode;
+                newLabel.CreatedBy = SessionLocator.LoggedUserPM.EnglishName;
+                newLabel.CreatedOn = DateTool.GetCurrentDateAsUtc();
+                newLabel.HasPersmission = item.HasPermission;
                 this.ModifiedLables.DefaultSettings.push(newLabel);
             });
 
@@ -210,7 +213,7 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
         logWindow.Show('./SharedLogistics/Components/DigitalPortal/AddDigitalLogitudeFieldComponent');
         logWindow.WindowClosed.subscribe(($event: any) => {
             if ($event) {
-                
+                this.BuildItemsSource();
             }
         });
     }
