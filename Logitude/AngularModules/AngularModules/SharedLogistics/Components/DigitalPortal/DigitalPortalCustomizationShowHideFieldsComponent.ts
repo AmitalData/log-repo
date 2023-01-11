@@ -204,6 +204,7 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
         logWindow.Height = 600;
         var windowArgs: any = {};
         windowArgs.ObjectTableId = this.SelectedObjectTableItem.Name;
+        windowArgs.ProfileId = this.SelectedProfileItem.Code;
         logWindow.Title = "Add a field";
         logWindow.WindowArgs = windowArgs;
         logWindow.Show('./SharedLogistics/Components/DigitalPortal/AddDigitalLogitudeFieldComponent');

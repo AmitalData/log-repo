@@ -18,8 +18,9 @@ export class ApiQueryFilters {
     public ParentObjectTableName: string = '';
     public ForceCacheRefresh: boolean = false;
     public DontApplyVirtualization: boolean = false;
+    public ProfileId: string;
+    public ObjectTableId: string;
 
-    
     addAdditionalFilter(
         FieldName: string,
         FieldValue: any,

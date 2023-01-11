@@ -18,6 +18,7 @@ export class AddDigitalLogitudeFieldComponent extends BaseComponent implements O
     public SearchText: string = "Search";
     public DataContext: AddDigitalLogitudeFieldComponent = this;
     public ObjectTableId: string;
+    public ProfileId: string;
     public ObjectTableName: string;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     public IsVisible: boolean = false;
@@ -39,6 +40,7 @@ export class AddDigitalLogitudeFieldComponent extends BaseComponent implements O
 
     SetWindowArgs(args) {
         this.ObjectTableId = args.ObjectTableId;
+        this.ProfileId = args.ProfileId;
     }
 
     ngOnInit() {
@@ -76,7 +78,9 @@ export class AddDigitalLogitudeFieldComponent extends BaseComponent implements O
         filters.SortDirection = sortingDir;
         filters.Tenant = 0;
         filters.addAdditionalFilter("ObjectTableId", this.ObjectTableId, null, null, "Equals", false, false, false, "string");
-
+        filters.ProfileId = this.ProfileId;
+        filters.ObjectTableId = this.ObjectTableId;
+        
         var servicelink = './Infrastructure/Services/WebServices/DigitalCustomizationService';
         return new Promise((resolve, reject) => {
             SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
@@ -117,11 +121,11 @@ export class AddDigitalLogitudeFieldComponent extends BaseComponent implements O
         });
  
         this.columns.push({
-            FieldName: this.ObjectTableName,
+            FieldName: this.ObjectTableId + "," + this.ObjectTableName + "," + this.ProfileId,
             DataTypeCode: 'String',
             Display: '',
             IsCustomTemplate: true,
-            Styles: { width: '70px' },
+            Styles: { width: '80px' },
             HtmlListComponentName: 'DigitalButtonComponent',
             HtmlListComponentUrl: './SharedLogistics/Components/DigitalPortal/DigitalButtonComponent',
         });
