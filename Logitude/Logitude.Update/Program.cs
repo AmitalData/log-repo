@@ -26,7 +26,13 @@ namespace Logitude.Update
             {
                 JenkinsCustomUpdate();
                 return;
-            }
+            } 
+            
+            if (System.Environment.CommandLine.EndsWith("/JenkinsAccountingUpdate", StringComparison.OrdinalIgnoreCase))
+            {
+                new Form1().UpdateModule(0, "accounting", new Label());
+                return;
+            } 
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
