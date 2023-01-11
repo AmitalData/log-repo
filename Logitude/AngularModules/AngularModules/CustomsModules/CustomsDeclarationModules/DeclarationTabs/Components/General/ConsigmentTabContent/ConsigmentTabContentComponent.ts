@@ -78,7 +78,7 @@ export class ConsigmentTabContentComponent
     public ImportCargoTypeFilterItems: ApiQueryFilters;
     private CurrentSession = SessionLocator.SelectedSession;
 
-    public ConsignmentTypes: ConsignmentType[] = [{ Id: "E", Value: "יצום" }, { Id: "I", Value: "יבום" }];
+    public ConsignmentTypes: ConsignmentType[] = [{ Id: "E", Value: "יצוא" }, { Id: "I", Value: "יבוא" }];
     CargoIdKeyOrigin: { a: string, b: string, c: string } = { a: '', b: '', c: '' };
 
 
@@ -125,7 +125,7 @@ export class ConsigmentTabContentComponent
                     messageWindow.Width = 250;
                     messageWindow.Height = 150;
                     messageWindow.RTL = true;
-                    messageWindow.Show("לם נמצםה הצהרה");
+                    messageWindow.Show("לא נמצאה הצהרה");
                 }
             }
         });
@@ -173,7 +173,7 @@ export class ConsigmentTabContentComponent
         windowArgs.declarationPM = this.declarationPM;
         windowArgs.IsDisplayOnly = this.IsDisplayOnly;
         //var windowTitle = TextCodeTranslator.Translate("Customs.ExportDeclarationDataQuery.F.ExportDeclarationData");
-        var windowTitle = "נתונים נוספים ליצום - חטיבת משגור";
+        var windowTitle = "נתונים נוספים ליצוא - חטיבת משגור";
 
         var logWindow = new LogitudeWindow();
         //windowArgs.Type = "Importer";
@@ -729,7 +729,7 @@ export class ConsigmentTabContentComponent
                 case '1':
                     {
                         this.ManifestNumberPlaceholder = "הזן שנת טיסה";
-                        this.SecondCargoIDPlaceholder = "הזן שט”מ רםשי";
+                        this.SecondCargoIDPlaceholder = "הזן שט”מ ראשי";
                         this.ThirdCargoIdPlaceholder = "הזן שט”מ פנימי";
                         break;
                     }
@@ -742,7 +742,7 @@ export class ConsigmentTabContentComponent
                     }
                 case '8':
                     {
-                        this.ManifestNumberPlaceholder = "הזן הצהרת םחסנה";
+                        this.ManifestNumberPlaceholder = "הזן הצהרת אחסנה";
                         this.SecondCargoIDPlaceholder = " ";
                         this.ThirdCargoIdPlaceholder = " ";
                         break;
@@ -758,7 +758,7 @@ export class ConsigmentTabContentComponent
                     {
                         this.ManifestNumberPlaceholder = "הזן ש.מ בלדר";
                         this.SecondCargoIDPlaceholder = "הזן ח.פ בלדר";
-                        this.ThirdCargoIdPlaceholder = "הזן תםריך הקמה";
+                        this.ThirdCargoIdPlaceholder = "הזן תאריך הקמה";
                         break;
                     }
                 case '20':
