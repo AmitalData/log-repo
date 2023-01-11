@@ -1,5 +1,5 @@
 {
-  "HashString": "610772e6972341c68e7047384c6a47f7",
+  "HashString": "e93a38ba6c55439bb36bf8dd82dcedae",
   "Name": "Opportunity Statistics",
   "TableName": "OpportunityAnalytics",
   "ObjectTableName": "Opportunity",
@@ -7,7 +7,6 @@
     {
       "HashString": "3a8405bb192f46e882d77ed3c1dd1a4e",
       "DataTypeCode": "LookUp",
-      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "OwnerId",
       "DisplayName": "Owner",
@@ -15,23 +14,18 @@
       "JoinedTableName": "Contact",
       "JoinedTableDBName": "Contacts",
       "JoinedTableKey": "Id",
-      "JoinedTableDisplayField": "EnglishName",
-      "HasUnit": false
+      "JoinedTableDisplayField": "EnglishName"
     },
     {
       "HashString": "6a30fb574a0d44488f279ad721ae28c9",
       "DataTypeCode": "Text",
-      "CanMeasure": false,
-      "CanGroup": false,
       "FieldCode": "Subject",
       "DisplayName": "Subject",
-      "DisplayNamePlural": "Subject",
-      "HasUnit": false
+      "DisplayNamePlural": "Subject"
     },
     {
       "HashString": "f178932734d6453e92e7263486349bf7",
       "DataTypeCode": "LookUp",
-      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "CustomerId",
       "DisplayName": "Customer",
@@ -39,13 +33,11 @@
       "JoinedTableName": "Card",
       "JoinedTableDBName": "Cards",
       "JoinedTableKey": "Id",
-      "JoinedTableDisplayField": "EnglishName",
-      "HasUnit": false
+      "JoinedTableDisplayField": "EnglishName"
     },
     {
       "HashString": "f178932734d6453e92e7263486349bf7",
       "DataTypeCode": "LookUp",
-      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "LeadSourceId",
       "DisplayName": "Source",
@@ -53,13 +45,11 @@
       "JoinedTableName": "LeadSource",
       "JoinedTableDBName": "LeadSources",
       "JoinedTableKey": "Id",
-      "JoinedTableDisplayField": "Name",
-      "HasUnit": false
+      "JoinedTableDisplayField": "Name"
     },
     {
       "HashString": "3a8405bb192f46e882d77ed3c1dd1a4e",
       "DataTypeCode": "LookUp",
-      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "ContactId",
       "DisplayName": "Contact",
@@ -67,8 +57,7 @@
       "JoinedTableName": "Contact",
       "JoinedTableDBName": "Contacts",
       "JoinedTableKey": "Id",
-      "JoinedTableDisplayField": "EnglishName",
-      "HasUnit": false
+      "JoinedTableDisplayField": "EnglishName"
     },
     {
       "HashString": "ea35b042864d47d6aa008ba0aad38e56",
@@ -77,13 +66,11 @@
       "CanGroup": true,
       "FieldCode": "EstimatedClosingDate",
       "DisplayName": "Est. Closing Date",
-      "DisplayNamePlural": "Est. Closing Date",
-      "HasUnit": false
+      "DisplayNamePlural": "Est. Closing Date"
     },
     {
       "HashString": "3a8405bb192f46e882d77ed3c1dd1a4e",
       "DataTypeCode": "LookUp",
-      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "StageId",
       "DisplayName": "Stage",
@@ -91,18 +78,15 @@
       "JoinedTableName": "Stage",
       "JoinedTableDBName": "Stages",
       "JoinedTableKey": "Id",
-      "JoinedTableDisplayField": "Name",
-      "HasUnit": false
+      "JoinedTableDisplayField": "Name"
     },
     {
       "HashString": "cbb22dfe82b84f5c8c9c33eaad8e607c",
       "DataTypeCode": "Integer",
       "CanMeasure": true,
-      "CanGroup": false,
       "FieldCode": "Probability",
       "DisplayName": "Probability (%)",
-      "DisplayNamePlural": "Probability (%)",
-      "HasUnit": false
+      "DisplayNamePlural": "Probability (%)"
     },
     {
       "HashString": "f3de0a0e39dc4e30be9ead5565948750",
@@ -112,13 +96,11 @@
       "FieldCode": "CreateDate",
       "DisplayName": "Create Date",
       "DisplayNamePlural": "CreateDate",
-      "HasUnit": false,
       "CommonFilterCode": "CreateDate"
     },
     {
       "HashString": "487ed7f1cc13467f958f9235ab419ca7",
       "DataTypeCode": "LookUp",
-      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "CreatedByUserId",
       "DisplayName": "Created By User",
@@ -126,8 +108,7 @@
       "JoinedTableName": "Contact",
       "JoinedTableDBName": "Contacts",
       "JoinedTableKey": "Id",
-      "JoinedTableDisplayField": "EnglishName",
-      "HasUnit": false
+      "JoinedTableDisplayField": "EnglishName"
     },
     {
       "HashString": "1d24d8c473d34d5b85e5edac163c13f8",
@@ -136,13 +117,11 @@
       "CanGroup": true,
       "FieldCode": "UpdateDate",
       "DisplayName": "Update Date",
-      "DisplayNamePlural": "Update Date",
-      "HasUnit": false
+      "DisplayNamePlural": "Update Date"
     },
     {
       "HashString": "ff6317ec227a4c19b083f5e68f3f3dc6",
       "DataTypeCode": "LookUp",
-      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "UpdatedByUserId",
       "DisplayName": "Updated by",
@@ -150,13 +129,11 @@
       "JoinedTableName": "Contact",
       "JoinedTableDBName": "Contacts",
       "JoinedTableKey": "Id",
-      "JoinedTableDisplayField": "EnglishName",
-      "HasUnit": false
+      "JoinedTableDisplayField": "EnglishName"
     },
     {
       "HashString": "ff6317ec227a4c19b083f5e68f3f3dc6",
       "DataTypeCode": "LookUp",
-      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "RatingCode",
       "DisplayName": "Rating",
@@ -164,18 +141,14 @@
       "JoinedTableName": "Rating",
       "JoinedTableDBName": "Ratings",
       "JoinedTableKey": "Code",
-      "JoinedTableDisplayField": "Name",
-      "HasUnit": false
+      "JoinedTableDisplayField": "Name"
     },
     {
       "HashString": "959515575e4e481e969f8730bc92c4ca",
       "DataTypeCode": "Boolean",
-      "CanMeasure": false,
-      "CanGroup": false,
       "FieldCode": "IsClosed",
       "DisplayName": "Is Closed",
-      "DisplayNamePlural": "Is Closed",
-      "HasUnit": false
+      "DisplayNamePlural": "Is Closed"
     },
     {
       "HashString": "1d24d8c473d34d5b85e5edac163c13f8",
@@ -184,38 +157,30 @@
       "CanGroup": true,
       "FieldCode": "ActualClosingDate",
       "DisplayName": "Actual Closing Date",
-      "DisplayNamePlural": "Actual Closing Date",
-      "HasUnit": false
+      "DisplayNamePlural": "Actual Closing Date"
     },
     {
       "HashString": "6a30fb574a0d44488f279ad721ae28c9",
       "DataTypeCode": "Text",
-      "CanMeasure": false,
-      "CanGroup": false,
       "FieldCode": "ClosingDescription",
       "DisplayName": "Closing Description",
-      "DisplayNamePlural": "Closing Description",
-      "HasUnit": false
+      "DisplayNamePlural": "Closing Description"
     },
     {
       "HashString": "cbb22dfe82b84f5c8c9c33eaad8e607c",
       "DataTypeCode": "Integer",
       "CanMeasure": true,
-      "CanGroup": false,
       "FieldCode": "NumberOfShipments",
       "DisplayName": "No. Of Shipments",
-      "DisplayNamePlural": "No. Of Shipments",
-      "HasUnit": false
+      "DisplayNamePlural": "No. Of Shipments"
     },
     {
       "HashString": "5f30553bdb9a4401b897aac683da87e1",
       "DataTypeCode": "Decimal",
       "CanMeasure": true,
-      "CanGroup": false,
       "FieldCode": "ValueField",
       "DisplayName": "Value",
-      "DisplayNamePlural": "Value",
-      "HasUnit": false
+      "DisplayNamePlural": "Value"
     },
     {
       "HashString": "1d24d8c473d34d5b85e5edac163c13f8",
@@ -224,13 +189,11 @@
       "CanGroup": true,
       "FieldCode": "LastStageDate",
       "DisplayName": "Last Stage Date",
-      "DisplayNamePlural": "Last Stage Date",
-      "HasUnit": false
+      "DisplayNamePlural": "Last Stage Date"
     },
     {
       "HashString": "3a8405bb192f46e882d77ed3c1dd1a4e",
       "DataTypeCode": "LookUp",
-      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "LastStageIdBeforeClosure",
       "DisplayName": "Last stage before closure",
@@ -238,8 +201,7 @@
       "JoinedTableName": "Stage",
       "JoinedTableDBName": "Stages",
       "JoinedTableKey": "Id",
-      "JoinedTableDisplayField": "Name",
-      "HasUnit": false
+      "JoinedTableDisplayField": "Name"
     },
     {
       "HashString": "1d24d8c473d34d5b85e5edac163c13f8",
@@ -248,23 +210,18 @@
       "CanGroup": true,
       "FieldCode": "LastCompletedActivityDate",
       "DisplayName": "Last Activity Date",
-      "DisplayNamePlural": "Last Activity Date",
-      "HasUnit": false
+      "DisplayNamePlural": "Last Activity Date"
     },
     {
       "HashString": "6a30fb574a0d44488f279ad721ae28c9",
       "DataTypeCode": "Text",
-      "CanMeasure": false,
-      "CanGroup": false,
       "FieldCode": "LeadDescription",
       "DisplayName": "LeadDescription",
-      "DisplayNamePlural": "Description",
-      "HasUnit": false
+      "DisplayNamePlural": "Description"
     },
     {
       "HashString": "3a8405bb192f46e882d77ed3c1dd1a4e",
       "DataTypeCode": "LookUp",
-      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "LastCompletedActivityTypeCode",
       "DisplayName": "Last Activity",
@@ -272,18 +229,14 @@
       "JoinedTableName": "ActivityType",
       "JoinedTableDBName": "ActivityTypes",
       "JoinedTableKey": "Code",
-      "JoinedTableDisplayField": "Name",
-      "HasUnit": false
+      "JoinedTableDisplayField": "Name"
     },
     {
       "HashString": "6a30fb574a0d44488f279ad721ae28c9",
       "DataTypeCode": "Text",
-      "CanMeasure": false,
-      "CanGroup": false,
       "FieldCode": "LastActivitySubject",
       "DisplayName": "Last Activity Subject",
-      "DisplayNamePlural": "Last Activity Subject",
-      "HasUnit": false
+      "DisplayNamePlural": "Last Activity Subject"
     },
     {
       "HashString": "1d24d8c473d34d5b85e5edac163c13f8",
@@ -292,13 +245,11 @@
       "CanGroup": true,
       "FieldCode": "NextActivityDate",
       "DisplayName": "Next Activity Date",
-      "DisplayNamePlural": "Next Activity Date",
-      "HasUnit": false
+      "DisplayNamePlural": "Next Activity Date"
     },
     {
       "HashString": "3a8405bb192f46e882d77ed3c1dd1a4e",
       "DataTypeCode": "LookUp",
-      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "NextActivityTypeCode",
       "DisplayName": "Next Activity",
@@ -306,18 +257,14 @@
       "JoinedTableName": "ActivityType",
       "JoinedTableDBName": "ActivityTypes",
       "JoinedTableKey": "Code",
-      "JoinedTableDisplayField": "Name",
-      "HasUnit": false
+      "JoinedTableDisplayField": "Name"
     },
     {
       "HashString": "6a30fb574a0d44488f279ad721ae28c9",
       "DataTypeCode": "Text",
-      "CanMeasure": false,
-      "CanGroup": false,
       "FieldCode": "NextActivitySubject",
       "DisplayName": "Next Activity Subject",
-      "DisplayNamePlural": "Next Activity Subject",
-      "HasUnit": false
+      "DisplayNamePlural": "Next Activity Subject"
     },
     {
       "HashString": "1d24d8c473d34d5b85e5edac163c13f8",
@@ -326,13 +273,11 @@
       "CanGroup": true,
       "FieldCode": "StageDueDate",
       "DisplayName": "Stage Due Date",
-      "DisplayNamePlural": "Stage Due Date",
-      "HasUnit": false
+      "DisplayNamePlural": "Stage Due Date"
     },
     {
       "HashString": "509e038bcbbe4552b92d1797006ae4b2",
       "DataTypeCode": "LookUp",
-      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "BusinessUnitId",
       "DisplayName": "Business Unit",
@@ -340,13 +285,11 @@
       "JoinedTableName": "BusinessUnit",
       "JoinedTableDBName": "BusinessUnits",
       "JoinedTableKey": "Id",
-      "JoinedTableDisplayField": "Name",
-      "HasUnit": false
+      "JoinedTableDisplayField": "Name"
     },
     {
       "HashString": "3a8405bb192f46e882d77ed3c1dd1a4e",
       "DataTypeCode": "LookUp",
-      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "LeadUserId",
       "DisplayName": "User",
@@ -354,13 +297,11 @@
       "JoinedTableName": "Contact",
       "JoinedTableDBName": "Contacts",
       "JoinedTableKey": "Id",
-      "JoinedTableDisplayField": "EnglishName",
-      "HasUnit": false
+      "JoinedTableDisplayField": "EnglishName"
     },
     {
       "HashString": "f178932734d6453e92e7263486349bf7",
       "DataTypeCode": "LookUp",
-      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "LeadPartnerId",
       "DisplayName": "Partner",
@@ -368,13 +309,11 @@
       "JoinedTableName": "Card",
       "JoinedTableDBName": "Cards",
       "JoinedTableKey": "Id",
-      "JoinedTableDisplayField": "EnglishName",
-      "HasUnit": false
+      "JoinedTableDisplayField": "EnglishName"
     },
     {
       "HashString": "d81eb24286b04f2181e87b376988b010",
       "DataTypeCode": "LookUp",
-      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "AgentId",
       "DisplayName": "Agent",
@@ -382,13 +321,11 @@
       "JoinedTableName": "Card",
       "JoinedTableDBName": "Cards",
       "JoinedTableKey": "Id",
-      "JoinedTableDisplayField": "EnglishName",
-      "HasUnit": false
+      "JoinedTableDisplayField": "EnglishName"
     },
     {
       "HashString": "f178932734d6453e92e7263486349bf7",
       "DataTypeCode": "LookUp",
-      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "ForeignClientId",
       "DisplayName": "Foreign Client",
@@ -396,13 +333,11 @@
       "JoinedTableName": "Card",
       "JoinedTableDBName": "Cards",
       "JoinedTableKey": "Id",
-      "JoinedTableDisplayField": "EnglishName",
-      "HasUnit": false
+      "JoinedTableDisplayField": "EnglishName"
     },
     {
       "HashString": "f178932734d6453e92e7263486349bf7",
       "DataTypeCode": "LookUp",
-      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "ClosingReasonId",
       "DisplayName": "Closing Reason",
@@ -410,23 +345,18 @@
       "JoinedTableName": "OpportunityClosingReason",
       "JoinedTableDBName": "OpportunityClosingReasons",
       "JoinedTableKey": "Id",
-      "JoinedTableDisplayField": "Name",
-      "HasUnit": false
+      "JoinedTableDisplayField": "Name"
     },
     {
       "HashString": "959515575e4e481e969f8730bc92c4ca",
       "DataTypeCode": "Boolean",
-      "CanMeasure": false,
-      "CanGroup": false,
       "FieldCode": "IsCancelled",
       "DisplayName": "Is Cancelled",
-      "DisplayNamePlural": "Is Cancelled",
-      "HasUnit": false
+      "DisplayNamePlural": "Is Cancelled"
     },
     {
       "HashString": "f178932734d6453e92e7263486349bf7",
       "DataTypeCode": "LookUp",
-      "CanMeasure": false,
       "CanGroup": true,
       "FieldCode": "OpportunityTypeId",
       "DisplayName": "Opportunity Type",
@@ -434,18 +364,15 @@
       "JoinedTableName": "OpportunityType",
       "JoinedTableDBName": "OpportunityTypes",
       "JoinedTableKey": "Id",
-      "JoinedTableDisplayField": "Name",
-      "HasUnit": false
+      "JoinedTableDisplayField": "Name"
     },
     {
       "HashString": "cbb22dfe82b84f5c8c9c33eaad8e607c",
       "DataTypeCode": "Integer",
       "CanMeasure": true,
-      "CanGroup": false,
       "FieldCode": "NumberOfConnectedQuotes",
       "DisplayName": "No. of Quotes",
-      "DisplayNamePlural": "No. of Quotes",
-      "HasUnit": false
+      "DisplayNamePlural": "No. of Quotes"
     }
   ]
 }

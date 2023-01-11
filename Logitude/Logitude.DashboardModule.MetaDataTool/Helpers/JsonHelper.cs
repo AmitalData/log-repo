@@ -25,6 +25,7 @@ namespace Logitude.DashboardModule.MetaDataTool.Helpers
 
             JsonSerializerSettings settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
+            settings.DefaultValueHandling = DefaultValueHandling.Ignore;
             var json = JsonConvert.SerializeObject(analyticsFactsMetaData, Formatting.Indented, settings);
             File.WriteAllText(App.DirectOpenPath, json);
         }
