@@ -25,12 +25,11 @@ export class DeclaredRecordsTreeList {
     private initializeRecordsItems() {
         this.getDeclareRecordVariableNodes().forEach((recordDeclareVariableNode: any) => {
             let name = recordDeclareVariableNode.data["name"] || null;
-            let variableName = recordDeclareVariableNode.data["variableName"] || null;
+            let label = recordDeclareVariableNode.data["label"] || null;
             let recordType = recordDeclareVariableNode.data["recordType"] || null;
-            let treeSelectItemName = variableName;
             let treeSelectItemKey = Formatter.getCodeFromName(name);
             let treeSelectItemData = { type: Formatter.getEntity(recordType) };
-            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, false, true, false, false, [], treeSelectItemData);
+            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, label, false, true, false, false, [], treeSelectItemData);
             this.Items.push(treeSelectItem);
         });
     }
