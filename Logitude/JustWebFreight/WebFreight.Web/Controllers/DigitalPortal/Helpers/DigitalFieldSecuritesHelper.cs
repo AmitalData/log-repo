@@ -119,32 +119,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
                 }
             }
 
-            if (!singleApi)
-            {
-                var extraFieldsForShipmentListApi  = new List<string>
-                {
-                    "Field1",
-                    "Field2",
-                    "Field3",
-                    "Field4",
-                    "Field5",
-                    "Field6",
-                    "Field7",
-                    "Field8"
-                };
-
-                defaultDigitalFieldSecurity = defaultDigitalFieldSecurity.Where(a => !unfoundFeilds.Contains(a.FieldCode)).ToList();
-
-                foreach (var item in extraFieldsForShipmentListApi)
-                {
-                    defaultDigitalFieldSecurity.Add(new DigitalFeildSecurityObject
-                    {
-                        FieldCode = item,
-                        HasPermission = true
-                    });
-                }
-            }
-
             if (!customDigitalFeildSecurityObject.Any())
             {
                 return defaultDigitalFieldSecurity;

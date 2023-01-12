@@ -22,7 +22,7 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
     TextAreaInputCurrentPosition: number = 0;
     IsPreviewChanges: boolean = false;
 
-    public editorOptions = {theme: '', language: 'html'};
+    public editorOptions = { theme: '', language: 'html', validate: 'true' };
     CurrentTenantScreen: DigitalPortalScreenList;
     constructor() {
         this.Screens = [];
@@ -89,6 +89,7 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
     }
 
     GetHTMLText() {
+        this.CurrentSession.StartBusyIndicatorLoading();
         var objectTableId = this.SelectedItem.ObjectTableId;
         var screenCode = this.SelectedItem.ScreenCode;
         this.digitalCustomizationService.GetDigitalPortalScreens(objectTableId, screenCode).subscribe((myResult) => {
@@ -98,6 +99,7 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
                 if (screen != null)
                     this.hTMLEditor = screen.Content;
             }
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 
@@ -137,11 +139,21 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         logWindow.Title = "Insert Field";
         logWindow.WindowArgs = windowArgs;
         logWindow.Show('./SharedLogistics/Components/DigitalPortal/AddDigitalFieldCodeComponent');
-        logWindow.WindowClosed.subscribe(($event: any) => {
-            if ($event) {
-                var htmlField = "<LogContainer>\n<LogLabel field-code='" + $event + "' ></LogLabel>\n:\n<LogField field-code='" + $event + "'></LogField> \n</LogContainer>";
-                this.attachValue(htmlField);
-            }
+        logWindow.ComponentLoaded.subscribe(s => {
+            logWindow.WindowClosed.subscribe(($event: any) => {
+                if ($event) {
+                    var isAddingComponent = s.IsAddingComponent;
+                    var htmlField = "";
+                    if (isAddingComponent) {
+                        htmlField = "<LogContainer>\n<LogLabel field-code='" + $event + "' ></LogLabel>\n:\n<LogField field-code='" + $event + "'></LogField> \n</LogContainer>";
+                    }
+                    else {
+                        htmlField = $event;
+                    }
+
+                    this.attachValue(htmlField);
+                }
+            });
         });
     }
 
@@ -167,6 +179,10 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
                 });
             }
         });
+    }
+
+    LoadDraftLayoutClicked() {
+        this.HTMLEditor = this.CurrentTenantScreen.DraftContent;
     }
 
     PublichChangesClicked(isDraft) {

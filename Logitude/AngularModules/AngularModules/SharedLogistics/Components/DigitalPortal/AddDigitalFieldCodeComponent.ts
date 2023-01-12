@@ -15,6 +15,7 @@ export class AddDigitalFieldCodeComponent {
     digitalTextService: DigitalTextService;
     SelectedDigitalFieldCode: DigitalTextCodeObject;
     private CurrentSession = SessionLocator.SelectedSession;
+    IsAddingComponent = false;
 
     constructor() {
        
@@ -55,7 +56,14 @@ export class AddDigitalFieldCodeComponent {
         this.SelectedDigitalFieldCode = item;
     }
 
+    AddFieldComponentClicked() {
+        this.IsAddingComponent = true;
+        var fieldcode = this.SelectedDigitalFieldCode?.FieldCode;
+        this.CurrentSession.CloseCurrentWindowEmit(fieldcode);
+    }
+
     AddFieldCodeClicked() {
+        this.IsAddingComponent = false;
         var fieldcode = this.SelectedDigitalFieldCode?.FieldCode;
         this.CurrentSession.CloseCurrentWindowEmit(fieldcode);
     }
