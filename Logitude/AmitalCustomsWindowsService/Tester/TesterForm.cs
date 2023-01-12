@@ -316,6 +316,7 @@ namespace AmitalCustomsWindowsService.Tester
         bool _MultiThreard = false;
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            clsTester.Check_Poco2PM(GetTenant());
             clsTester.Check_UserWcfService(GetTenant());
             return;
 
