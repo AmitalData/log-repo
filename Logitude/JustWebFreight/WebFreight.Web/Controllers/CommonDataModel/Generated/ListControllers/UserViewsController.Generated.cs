@@ -253,7 +253,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
                 {
                     AdditionalTreeFilter = filters.TreeFilters,
-                    ObjectTableName = "AirlineStatistics",
+                    ObjectTableName = "User",
                     ParentEntityId = filters.ParentEntityId,
                     ParentObjectTableName = filters.ParentObjectTableName,
                     Tenant = tenant,
