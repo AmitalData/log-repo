@@ -26,6 +26,11 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using Logitude.Customs.BL.Messaging.Customs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.Accounting.Def.EntityUpdateServicesExt;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
 
 namespace Logitude.Accounting.BL.Utils
 {
@@ -94,10 +99,16 @@ namespace Logitude.Accounting.BL.Utils
                 GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(context);
                 LedgerTransactionListQueryService ledgerTransactionListQueryService = new LedgerTransactionListQueryService(context);
 
-                // Ensure the GLAccount is not a (currency) descendant of a (multi-currency) GLAccount
-                if (!String.IsNullOrEmpty(myGLAccountId))
+
+                GLAccountPM gLAccountPM = null;
+                if (String.IsNullOrWhiteSpace(myGLAccountId) && String.IsNullOrWhiteSpace(accountTypeCode))
                 {
-                    GLAccountPM gLAccountPM = gLAccountQueryService.GetSinglePM(myGLAccountId, tenant);
+                    this.AddErrorRow($"GLAccount Id is empty");
+                    _errors = true;
+                }
+                else
+                {
+                    gLAccountPM = gLAccountQueryService.GetSinglePM(myGLAccountId, tenant);
                     if (gLAccountPM == null)
                     {
                         this.AddErrorRow($"GLAccount id={gLAccountPM} is not found in tenant {tenant}");
@@ -108,29 +119,47 @@ namespace Logitude.Accounting.BL.Utils
                         this.AddErrorRow($"GLAccount id={gLAccountPM} display={gLAccountPM.DisplayNumber} is a control account");
                         _errors = true;
                     }
-                    else if (gLAccountPM.ParentAccountId != null)
-                    {
-                        this.AddErrorRow($"GLAccount id={gLAccountPM} display={gLAccountPM.DisplayNumber} is a descendant of {gLAccountPM.ParentAccountId}");
-                        _errors = true;
-                    }
+                    //else if (gLAccountPM.ParentAccountId != null)
+                    //{
+                    //    this.AddErrorRow($"GLAccount id={gLAccountPM} display={gLAccountPM.DisplayNumber} is a descendant of {gLAccountPM.ParentAccountId}");
+                    //    _errors = true;
+                    //}
                 }
 
                 if (!_errors)
                 {
                     if (String.IsNullOrEmpty(myGLAccountId))
                     {
-                        List<string> gLAccountIdList;
-                        gLAccountIdList = gLAccountQueryService.GetNextGLAccountIdByTypeControlNoParent(tenant, accountTypeCode, false, LastMadeGLAccountId, MaxGLAccountsPerQuery);
-
-                        if (gLAccountIdList != null && gLAccountIdList.Count > 0)
+                        // single or parent. (must be multi-currency)
+                        if (gLAccountPM.ParentAccountId == null)
                         {
-                            _MyResult.LastMadeGLAccountId = gLAccountIdList.Last();
-                            gLAccountIdList.ForEach(accId =>
-                            {
-                                ActivationBalanceCalculation(accId, gLAccountInterestActivationBalanceArgs.InterestActivationDate, ActionDate, tenant);
-                            });
-                        }
+                            List<string> gLAccountIdList;
+                            gLAccountIdList = gLAccountQueryService.GetNextGLAccountIdByTypeControlNoParent(tenant, accountTypeCode, false, LastMadeGLAccountId, MaxGLAccountsPerQuery);
 
+                            if (gLAccountIdList != null && gLAccountIdList.Count > 0)
+                            {
+                                _MyResult.LastMadeGLAccountId = gLAccountIdList.Last();
+                                gLAccountIdList.ForEach(accId =>
+                                {
+                                    ActivationBalanceCalculation(accId, gLAccountInterestActivationBalanceArgs.InterestActivationDate, ActionDate, tenant);
+                                });
+                            }
+                        }
+                        else
+                        {
+                            // descendant. (must not be multi-currency)
+                            List<string> gLAccountIdList;
+                            gLAccountIdList = gLAccountQueryService.GetNextGLAccountIdByTypeControlDescendant(tenant, accountTypeCode, false, LastMadeGLAccountId, MaxGLAccountsPerQuery);
+
+                            if (gLAccountIdList != null && gLAccountIdList.Count > 0)
+                            {
+                                _MyResult.LastMadeGLAccountId = gLAccountIdList.Last();
+                                gLAccountIdList.ForEach(accId =>
+                                {
+                                    ActivationBalanceCalculation(accId, gLAccountInterestActivationBalanceArgs.InterestActivationDate, ActionDate, tenant);
+                                });
+                            }
+                        }
                     }
                     else
                     {
@@ -200,7 +229,9 @@ namespace Logitude.Accounting.BL.Utils
 
                     var myInterestTransactionRepository = new InterestTransactionRepository(context);
 
-
+                    TenantQuery tenantQuery = new TenantQuery(_Tenant);
+                    TenantPM tPM = tenantQuery.GetSinglePM(_Tenant);
+                    string accountingCurrencyId = tPM.CurrencyId;
 
                     //////////////// 
                     /// 1. Compute BalanceInLocalCurrency
@@ -280,7 +311,7 @@ namespace Logitude.Accounting.BL.Utils
 
                     ////////////////
                     /// 3.Compute interestOpenBalance
-                    decimal interestOpenBalance = amount_before + balance_on_act_date - amount_closed_before;
+                    decimal interestOpenBalance = amount_before + balance_on_act_date - amount_closed_before; // nis
 
 
 
@@ -322,7 +353,29 @@ namespace Logitude.Accounting.BL.Utils
                     GLAccountPM gLAccountPM = gLAccountQueryService.GetSinglePM(gLAccountId, _Tenant);
                     if (gLAccountPM != null)
                     {
-                        gLAccountPM.InterestOpenBalance = interestOpenBalance;
+                        if (!String.IsNullOrWhiteSpace(gLAccountPM.ParentAccountId))
+                        {
+                            InterestTransactionPM interestTransaction = new InterestTransactionPM()
+                            {
+                                InterestEntityTypeCode = "4", // Open Balance 
+                                EntityId = gLAccountPM.Id,
+                                AccountingEntityCode = "1", // GLAccount ?
+                                OriginalEntityLineNumber = 1,
+                                LocalAmount = interestOpenBalance,
+                                GLAccountId = gLAccountPM.ParentAccountId,
+                                ForeignAmount = interestOpenBalance,
+                                InterestValueDate = actionDate,
+                                Tenant = _Tenant,
+                                ChangeSetOp = ChangeSetOperation.Insert,
+                                CurrencyId = accountingCurrencyId,  // NIS
+                            };
+                            IInterestTransactionUpdateServiceExt interestTransactionUpdateService = ContainerAccessor.Container.Resolve(typeof(IInterestTransactionUpdateServiceExt), "InterestTransactionUpdateServiceExt", new ParameterOverride("", 1)) as IInterestTransactionUpdateServiceExt;
+                            interestTransactionUpdateService.Create(interestTransaction);
+
+                        }
+
+
+                        gLAccountPM.InterestOpenBalance = interestOpenBalance; 
                         gLAccountPM.ChangeSetOp = ChangeSetOperation.Update;
                         gLAccountUpdateService.Update(gLAccountPM, true);
 
