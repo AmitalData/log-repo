@@ -374,7 +374,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      //   TransportModeId = a.TransportModeId,
                                                      AutonomyRegionTypeCode = a.AutonomyRegionTypeCode,
                                                      ReferentUserId = a.ReferentUserId,
-                                                     ReferentUserName = a.ReferentUser.Code,
+                                                     ReferentUserName = a.ReferentUser == null ? null : a.ReferentUser.Code,
                                                      DeclarationStatusTypeName = a.DeclarationStatusType == null ? null : a.DeclarationStatusType.LocalName,
                                                      IsCancelled = a.IsCancelled,
                                                      PlatformFee = a.PlatformFee,
