@@ -92,4 +92,9 @@
     Columns="Tenant" />
   <Index
     Columns="HasFile" />
+
+  <Index
+    Columns="Extension" />
+
+  
 </Table>
