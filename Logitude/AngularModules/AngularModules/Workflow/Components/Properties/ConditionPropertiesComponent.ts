@@ -49,7 +49,10 @@ export class ConditionPropertiesComponent extends BaseComponent {
             this.IsNew = Object.keys(this.Data).length === 0;
             this.setWorkflowEntityTable();
 
-            this.Name = this.Data["label"] || null;
+            if(!this.Data["label"]){
+                this.Data["label"] = this.Data["name"]
+            }
+            this.Name = this.Data["label"] || null
             this.ConditionLabel = this.Data["conditionLabel"] || null;
     
             this.Conditions = this.Data["conditions"] || [];
