@@ -1202,6 +1202,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             
             FieldChange.Add(entityPoco.IsINTTRAFROB, entityPM.IsINTTRAFROB, nameof(entityPM.IsINTTRAFROB), fieldChanges);
             entityPoco.IsINTTRAFROB = entityPM.IsINTTRAFROB;
+            entityPoco.ShippingLine = entityPM.ShippingLine;
+            entityPoco.PlaceOfDelivery = entityPM.PlaceOfDelivery;
+            entityPoco.PickupPlace = entityPM.PickupPlace;
+            entityPoco.SealNo = entityPM.SealNo;
+            entityPoco.HSCode = entityPM.HSCode;
 
             BuildSearchField(entityPM, entityPoco, entityMasterData, myPackagesList);
             if (!LBcurrentTenant.IsDocumentsArchive)
@@ -3683,6 +3688,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.AMSBL);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.WarehouseLegReference);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.WarehouseLeg2Reference);
+
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ShippingLine);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.PlaceOfDelivery);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.PickupPlace);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.SealNo);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.HSCode);
+
+
             if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I")
             {
                 AddressRepository addressRepository = new AddressRepository(entityPoco.Tenant);
@@ -4003,6 +4016,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 entityPM.SearchFields = mySearchFields;
                 entityPoco.SearchFields = mySearchFields;
             }
+
 
         }
 

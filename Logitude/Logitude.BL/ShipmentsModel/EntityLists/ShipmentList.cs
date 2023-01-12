@@ -683,6 +683,11 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string InlandDomesticFromTypeCode { get; set; }
         public string InlandDomesticFromCountryId { get; set; }
         public string InlandDomesticToCountryId { get; set; }
+        public string ShippingLine { get; set; }
+        public string PlaceOfDelivery { get; set; }
+        public string PickupPlace { get; set; }
+        public string SealNo { get; set; }
+        public string HSCode { get; set; }
 
     }
 
