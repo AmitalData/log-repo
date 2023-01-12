@@ -20,7 +20,7 @@ export const Components =
         NotificationComponent,
         ObjectViewerComponent,
         SendDeclarationTastCaseComponent,
-        RemarksPopUp
+        RemarksPopUp,
     ];
 
 export class ModuleDeclarations {

@@ -1,0 +1,22 @@
+.StatisticsTable-td {
+    label {
+        display: inline;
+        vertical-align: middle;
+    }
+
+    #StatisticsTable {
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 6px;
+    }
+
+    td {
+        text-overflow: ellipsis;
+        overflow:hidden; 
+        white-space:nowrap; 
+    }
+
+    .count-td {
+        width: 60px;
+    }
+}

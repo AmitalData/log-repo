@@ -16,7 +16,8 @@ export class CustomsRequestsSheetWebService {
         this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomsRequestsSheetViewsExtended';
     }
-    GetStatistics() {
+    
+    GetStatistics(includingFuture: boolean) {
         return defer(() => {
 
             var authHeader = new Headers();
@@ -26,7 +27,7 @@ export class CustomsRequestsSheetWebService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            return this._http.get(this._apiUrl + "/GetStatistics" , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + "/GetStatistics" , {params: {includingFuture: '' + includingFuture},  ...ServiceHelper.GetHttpHeaders()} ).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse.Result = response;

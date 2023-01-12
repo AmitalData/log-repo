@@ -57,28 +57,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         {
             return iQueryable;
         }
-        public List<CustomsRequestsSheetSummary> GetStatistics(int tenant)
-        {
-            var lastweek = DateTime.Now.Date.AddDays(-7);
-            IQueryable<CustomsRequestsSheetList> query = (from a in context.CustomsRequestsSheets
-                                                          where a.Tenant == tenant && (a.RequestStatusCode == "5" || a.RequestStatusCode == "1" ||
-                                                          a.RequestStatusCode == "2" || a.RequestStatusCode == "21")
-                                                          && a.RequestCreateDate >= lastweek
-                                                          select new CustomsRequestsSheetList()
-                                                          {
-                                                              InterfaceTypeCode = a.InterfaceTypeCode,
-                                                              InterfaceTypeName = a.InterfaceManagement != null ? a.InterfaceManagement.Description : null,
-                                                          });
-
-
-            var qGroupIt = query.GroupBy(q => q.InterfaceTypeName).Select(g => new CustomsRequestsSheetSummary
-            {
-                Id = new Guid(),
-                count = g.Select(x => x.InterfaceTypeCode).Count(),
-                InterfaceTypeName = g.Key
-            }).ToList();
-            return qGroupIt;
-        }
 
         public List<PriorityRequestsSheetSummary> GetStatisticsByCourierDeclarations(int tenant,string courierMasterId)
         {

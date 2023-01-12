@@ -10,6 +10,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Simplog.Server.Infrastructure.Helpers;
+using Logitude.Customs.Data.DataContracts;
+using Simplog.Data.InfrastructureModel;
+
 namespace Logitude.Customs.BL.EntityQueryServices
 {
     public partial class InterfaceManagementQueryService : EntityQueryService<InterfaceManagement, InterfaceManagementKeys, InterfaceManagementPM, object, InterfaceManagementKeys>
@@ -208,6 +211,37 @@ namespace Logitude.Customs.BL.EntityQueryServices
             allPM = repository.GetAll().ToList().Select(poco => GetEntityPM(poco)).ToList();
 
             return allPM;
+        }
+
+        public List<CustomsRequestsSheetSummary> GetQueueMessagesSatistic(int tenant, bool includingFuture)
+        {
+            var summry = new List<CustomsRequestsSheetSummary>();
+            var dateTimeNow = DateTime.Now;
+            List<InterfaceManagement> interfaceManagements = repository.GetAllFromCache();
+            var webFreightContext = WebFreightContext.GetContext(tenant);
+
+            var summryQ = (from qm in webFreightContext.QueueMessages
+                           where qm.Tenant == tenant
+                           && (includingFuture || qm.NextRunDateTime < dateTimeNow)
+                           && qm.InterfaceTypeCode != null
+
+                           group qm by qm.InterfaceTypeCode into g
+                           select new
+                           {
+                               InterfaceTypeName = g.Key,
+                               count = g.Count()
+                           });
+
+            var res = summryQ.ToList();
+
+            res.ForEach(qm =>
+                summry.Add(new CustomsRequestsSheetSummary()
+                {
+                    count = qm.count,
+                    InterfaceTypeName = interfaceManagements.Find(im => im.Code == qm.InterfaceTypeName).Description
+                }));
+
+            return summry;
         }
     }
 }
