@@ -373,7 +373,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      //ErrosXml = a.ErrosXml,
                                                      //   TransportModeId = a.TransportModeId,
                                                      AutonomyRegionTypeCode = a.AutonomyRegionTypeCode,
-                                                     //  ReferentUserId = a.ReferentUserId,
+                                                     ReferentUserId = a.ReferentUserId,
+                                                     ReferentUserName = a.ReferentUser == null ? null : a.ReferentUser.Code,
                                                      DeclarationStatusTypeName = a.DeclarationStatusType == null ? null : a.DeclarationStatusType.LocalName,
                                                      IsCancelled = a.IsCancelled,
                                                      PlatformFee = a.PlatformFee,
@@ -391,8 +392,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      EntitleImporterCode = a.EntitleImporterCode,
                                                      CreatedByUserName =
                                                      //a.CreatedByUser != null ? (a.CreatedByUser.Contact.LocalName != null ? a.CreatedByUser.Contact.LocalName : a.CreatedByUser.Contact.EnglishName) : null,
-
                                                      a.CreatedByUser.Code,
+         
                                                      IsHatraDateNull = a.HatraDate == null,
                                                      ImporterAddress = a.ImporterAddress,
                                                      ImporterAddressForExport = a.ImporterAddress,
