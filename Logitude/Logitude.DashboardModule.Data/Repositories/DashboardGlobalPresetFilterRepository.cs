@@ -12,10 +12,10 @@ using Simplog.Server.Infrastructure;
 
 namespace Logitude.DashboardModule.Data.Repositories
 {
-   public partial class DashboardCommonFilterRepository:IRepository<DashboardCommonFilter>
+   public partial class DashboardGlobalPresetFilterRepository:IRepository<DashboardGlobalPresetFilter>
    {
         
-		public List<DashboardCommonFilter> GetMulti(EntityKeyFields entityKeys)
+		public List<DashboardGlobalPresetFilter> GetMulti(EntityKeyFields entityKeys)
         {
             
 			throw new NotImplementedException();

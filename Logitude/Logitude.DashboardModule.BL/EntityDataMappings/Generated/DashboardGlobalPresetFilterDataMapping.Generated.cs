@@ -17,7 +17,7 @@ using Logitude.DashboardModule.Data;
 namespace Logitude.DashboardModule.BL.EntityDataMappings
 {
    
-   public partial class DashboardCommonFilterDataMapping: IMapping<DashboardCommonFilterPM, DashboardCommonFilter>,IMappingEncodeBase64NVARCHARFields<DashboardCommonFilterPM>
+   public partial class DashboardGlobalPresetFilterDataMapping: IMapping<DashboardGlobalPresetFilterPM, DashboardGlobalPresetFilter>,IMappingEncodeBase64NVARCHARFields<DashboardGlobalPresetFilterPM>
    {
           public enum POCOPropertyNames
           { 
@@ -47,7 +47,7 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
     
-	    public void PMToPOCO(DashboardCommonFilterPM entityPM, DashboardCommonFilter entityPOCO)
+	    public void PMToPOCO(DashboardGlobalPresetFilterPM entityPM, DashboardGlobalPresetFilter entityPOCO)
         {
 			 
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DisplayName))
@@ -81,7 +81,7 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			}
 			}
 
-		public void POCOToPM(DashboardCommonFilterPM entityPM, DashboardCommonFilter entityPOCO)
+		public void POCOToPM(DashboardGlobalPresetFilterPM entityPM, DashboardGlobalPresetFilter entityPOCO)
         {
 			 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Code))
@@ -121,7 +121,7 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 
 		}
 
-		public void PMToOldPM(DashboardCommonFilterPM entityPM, DashboardCommonFilterPM oldEntityPM)
+		public void PMToOldPM(DashboardGlobalPresetFilterPM entityPM, DashboardGlobalPresetFilterPM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
 			 
@@ -157,7 +157,7 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			
 		}
 
-	    public void EncodeBase64NVARCHARFields(DashboardCommonFilterPM entityPM)
+	    public void EncodeBase64NVARCHARFields(DashboardGlobalPresetFilterPM entityPM)
         {
             if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
             {

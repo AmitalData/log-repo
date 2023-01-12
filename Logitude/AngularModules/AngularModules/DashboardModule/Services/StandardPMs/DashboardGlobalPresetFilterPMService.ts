@@ -19,17 +19,17 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 
-import {DashboardCommonFilterPM} from '../../EntityPMs/DashboardCommonFilterPM';
+import {DashboardGlobalPresetFilterPM} from '../../EntityPMs/DashboardGlobalPresetFilterPM';
 
 
 @Injectable()
 
-export class DashboardCommonFilterPMService {
+export class DashboardGlobalPresetFilterPMService {
  private _http: HttpClient;
  private _apiUrl: string;
  constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/dashboardcommonfilters';      
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/dashboardglobalpresetfilters';      
     }
 
 	get(code: string) {       
@@ -42,7 +42,7 @@ export class DashboardCommonFilterPMService {
 					map((response: HttpResponse<any>) => {
 						var pm = response.body;
 				
-						var entity: DashboardCommonFilterPM;
+						var entity: DashboardGlobalPresetFilterPM;
 						if (pm) {
 							entity = this.MapJsonToEntityPM(pm);
 						}
@@ -51,7 +51,7 @@ export class DashboardCommonFilterPMService {
 						serviceResponse.Result = entity;
               
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DashboardCommonFilter", "GetSinglePM", 'code=' + code);
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DashboardGlobalPresetFilter", "GetSinglePM", 'code=' + code);
 				 
 						return serviceResponse;
 
@@ -61,7 +61,7 @@ export class DashboardCommonFilterPMService {
 		});                    
 	}
 
-	insert(entityPM: DashboardCommonFilterPM) {
+	insert(entityPM: DashboardGlobalPresetFilterPM) {
  
 		var callTime = new Date();  
 		
@@ -69,12 +69,12 @@ export class DashboardCommonFilterPMService {
 
 			var serviceResponse: ServiceResponse = new ServiceResponse();
 			var validator: ClassLevelValidator = new ClassLevelValidator();                
-			var errorsArray = validator.Validate("DashboardCommonFilter", entityPM);
+			var errorsArray = validator.Validate("DashboardGlobalPresetFilter", entityPM);
 
 
 			if (errorsArray.length == 0) {
 
-				var mappedEntity: DashboardCommonFilterPM = this.MapJsonToEntityPM(entityPM, false);
+				var mappedEntity: DashboardGlobalPresetFilterPM = this.MapJsonToEntityPM(entityPM, false);
 				
 				return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
 					.pipe(
@@ -82,12 +82,12 @@ export class DashboardCommonFilterPMService {
 
 							var pm = response.body;
 							if (pm) {
-								var mappedResult: DashboardCommonFilterPM = this.MapJsonToEntityPM(pm, true, entityPM);
+								var mappedResult: DashboardGlobalPresetFilterPM = this.MapJsonToEntityPM(pm, true, entityPM);
 								serviceResponse.Result = mappedResult;
 							}						
 
 							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DashboardCommonFilter", "SaveChanges", "");                    
+							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DashboardGlobalPresetFilter", "SaveChanges", "");                    
 												                             
 							return serviceResponse;
 						}),
@@ -103,7 +103,7 @@ export class DashboardCommonFilterPMService {
 		});
 	}
 
-	update(entityPM: DashboardCommonFilterPM) {
+	update(entityPM: DashboardGlobalPresetFilterPM) {
 
 		var callTime = new Date();     
 		
@@ -111,12 +111,12 @@ export class DashboardCommonFilterPMService {
 
 			var serviceResponse: ServiceResponse = new ServiceResponse();
 			var validator: ClassLevelValidator = new ClassLevelValidator();               
-			var errorsArray = validator.Validate("DashboardCommonFilter", entityPM);
+			var errorsArray = validator.Validate("DashboardGlobalPresetFilter", entityPM);
 
 
 			if (errorsArray.length == 0) {
 
-				var mappedEntity: DashboardCommonFilterPM = this.MapJsonToEntityPM(entityPM, false);
+				var mappedEntity: DashboardGlobalPresetFilterPM = this.MapJsonToEntityPM(entityPM, false);
 				
 				return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
 					.pipe(
@@ -124,12 +124,12 @@ export class DashboardCommonFilterPMService {
                  
 							var pm = response.body;
 							if (pm) {
-								var mappedResult: DashboardCommonFilterPM = this.MapJsonToEntityPM(pm, true, entityPM);
+								var mappedResult: DashboardGlobalPresetFilterPM = this.MapJsonToEntityPM(pm, true, entityPM);
 								serviceResponse.Result = mappedResult;
 							}
 							 
 							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DashboardCommonFilter", "SaveChanges", "");                    
+							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DashboardGlobalPresetFilter", "SaveChanges", "");                    
 					                           
 							return serviceResponse;
 						}),
@@ -147,12 +147,12 @@ export class DashboardCommonFilterPMService {
 
    
 
-	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: DashboardCommonFilterPM = null) {
+	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: DashboardGlobalPresetFilterPM = null) {
 
          
         if (!entityPM) {
             
-            entityPM = new DashboardCommonFilterPM();
+            entityPM = new DashboardGlobalPresetFilterPM();
 			entityPM.DisableMarkAsDirty = true;
         }
 
@@ -219,8 +219,8 @@ export class DashboardCommonFilterPMService {
     }
 
 	  public GetNewEntityPM() {		 
-		    var entityPM: DashboardCommonFilterPM;
-			entityPM = new DashboardCommonFilterPM();
+		    var entityPM: DashboardGlobalPresetFilterPM;
+			entityPM = new DashboardGlobalPresetFilterPM();
 			return entityPM;
     }
 		 

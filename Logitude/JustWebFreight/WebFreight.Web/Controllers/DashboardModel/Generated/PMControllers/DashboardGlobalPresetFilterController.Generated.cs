@@ -47,7 +47,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
 
     
-    public partial class DashboardCommonFiltersController : ApiController
+    public partial class DashboardGlobalPresetFiltersController : ApiController
     {
 	  
        
@@ -59,16 +59,16 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("DashboardCommonFilter", "READ", authToken.Tenant);
+                SecurityUtility.CheckContactFeature("DashboardGlobalPresetFilter", "READ", authToken.Tenant);
 	                
                 IDashboardContext MyContext = DashboardContext.GetContext(authToken.Tenant);
-                DashboardCommonFilterQueryService dashboardCommonFilterQuery = new DashboardCommonFilterQueryService(MyContext);
-				dashboardCommonFilterQuery.InitializeSettings();
-                DashboardCommonFilterPM dashboardCommonFilterPM = dashboardCommonFilterQuery.GetSingle(code,true,false);
+                DashboardGlobalPresetFilterQueryService dashboardGlobalPresetFilterQuery = new DashboardGlobalPresetFilterQueryService(MyContext);
+				dashboardGlobalPresetFilterQuery.InitializeSettings();
+                DashboardGlobalPresetFilterPM dashboardGlobalPresetFilterPM = dashboardGlobalPresetFilterQuery.GetSingle(code,true,false);
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
             
-                return Request.CreateResponse(HttpStatusCode.OK, dashboardCommonFilterPM);
+                return Request.CreateResponse(HttpStatusCode.OK, dashboardGlobalPresetFilterPM);
 			 }
             catch (Exception ex)
             {

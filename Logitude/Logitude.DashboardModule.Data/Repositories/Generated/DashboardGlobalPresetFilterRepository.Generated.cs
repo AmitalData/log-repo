@@ -12,67 +12,67 @@ using Simplog.Server.Infrastructure;
 
 namespace Logitude.DashboardModule.Data.Repositories
 {
-   public partial class DashboardCommonFilterRepository:IRepository<DashboardCommonFilter>
+   public partial class DashboardGlobalPresetFilterRepository:IRepository<DashboardGlobalPresetFilter>
    {
    
         private IDashboardContext currentContext;
-        public DashboardCommonFilterRepository(int tenant)
+        public DashboardGlobalPresetFilterRepository(int tenant)
         {
             currentContext = DashboardContext.GetContext(tenant);
         }
 
-        public DashboardCommonFilterRepository(IDashboardContext context)
+        public DashboardGlobalPresetFilterRepository(IDashboardContext context)
         {
             currentContext = context;
         }
 
 		 
 		
-		public  DashboardCommonFilter GetSingle(string code)
+		public  DashboardGlobalPresetFilter GetSingle(string code)
         {
-            return (from a in context.DashboardCommonFilters
+            return (from a in context.DashboardGlobalPresetFilters
                     where a.Code == code 
                     select a).FirstOrDefault();
         }
 
-        public IQueryable<DashboardCommonFilter> GetAll()
+        public IQueryable<DashboardGlobalPresetFilter> GetAll()
         {
-            return from a in context.DashboardCommonFilters  
+            return from a in context.DashboardGlobalPresetFilters  
                    select a;
         }
 				 
-        public DashboardCommonFilter GetSingle(EntityKeyFields entityKeys)
+        public DashboardGlobalPresetFilter GetSingle(EntityKeyFields entityKeys)
         {
-            DashboardCommonFilterKeys keys = entityKeys as DashboardCommonFilterKeys;
-            return (from a in context.DashboardCommonFilters
+            DashboardGlobalPresetFilterKeys keys = entityKeys as DashboardGlobalPresetFilterKeys;
+            return (from a in context.DashboardGlobalPresetFilters
                     where a.Code == keys.Code
                     select a).FirstOrDefault();
         }
 		 		                 
         partial void onAdd();//Partial Methods Definition in Generated
-        public void Add(DashboardCommonFilter entity)
+        public void Add(DashboardGlobalPresetFilter entity)
         {
             onAdd();
-            context.DashboardCommonFilters.Add(entity);
+            context.DashboardGlobalPresetFilters.Add(entity);
         }
 
-        public void Remove(DashboardCommonFilter entity)
+        public void Remove(DashboardGlobalPresetFilter entity)
         {
-            context.DashboardCommonFilters.Attach(entity);
-            context.DashboardCommonFilters.Remove(entity);
+            context.DashboardGlobalPresetFilters.Attach(entity);
+            context.DashboardGlobalPresetFilters.Remove(entity);
         }
 
         partial void onUpdate();//Partial Methods Definition in Generated
-        public void Update(DashboardCommonFilter entity)
+        public void Update(DashboardGlobalPresetFilter entity)
         {
             onUpdate();
-            context.DashboardCommonFilters.Attach(entity);
+            context.DashboardGlobalPresetFilters.Attach(entity);
             context.SetAsModified(entity);
         }
 
-        public List<DashboardCommonFilter> All()
+        public List<DashboardGlobalPresetFilter> All()
         {
-            return context.DashboardCommonFilters.ToList();
+            return context.DashboardGlobalPresetFilters.ToList();
         }
 
         private IDashboardContext context

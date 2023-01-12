@@ -17,24 +17,24 @@ using Logitude.DashboardModule.Data.EntityLists;
 namespace Logitude.DashboardModule.Data.EntityListQueryServices
 { 
 
-    public partial class DashboardCommonFilterListQueryService
+    public partial class DashboardGlobalPresetFilterListQueryService
     {
          private IDashboardContext context;
-        public DashboardCommonFilterListQueryService(IDashboardContext context)
+        public DashboardGlobalPresetFilterListQueryService(IDashboardContext context)
         {
             this.context = context;
         }
 
-        public List<DashboardCommonFilterList> GetList(QueryOperations queryOperations, int tenant ){
+        public List<DashboardGlobalPresetFilterList> GetList(QueryOperations queryOperations, int tenant ){
 		     return GetList(queryOperations,tenant, new TreeFilterQueryArgs());
 		 }
 
-        public List<DashboardCommonFilterList> GetList(QueryOperations queryOperations, int tenant , TreeFilterQueryArgs treeFilterQueryArgs)
+        public List<DashboardGlobalPresetFilterList> GetList(QueryOperations queryOperations, int tenant , TreeFilterQueryArgs treeFilterQueryArgs)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<DashboardCommonFilter> iQueryable = (from a in context.DashboardCommonFilters
+            IQueryable<DashboardGlobalPresetFilter> iQueryable = (from a in context.DashboardGlobalPresetFilters
                                                select a);
             			iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable);
 						iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
@@ -44,21 +44,21 @@ namespace Logitude.DashboardModule.Data.EntityListQueryServices
             QueryOperations listQueryOperation = new QueryOperations();
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
 
-            iQueryable = filter.GetFilteredQuery<DashboardCommonFilter>(nonListQueryOperation, iQueryable);
+            iQueryable = filter.GetFilteredQuery<DashboardGlobalPresetFilter>(nonListQueryOperation, iQueryable);
 
             int skippedPorts = queryOperations.PageIndex;
 
-            IQueryable<DashboardCommonFilterList> query2 = GetIqueryableList(iQueryable);
+            IQueryable<DashboardGlobalPresetFilterList> query2 = GetIqueryableList(iQueryable);
            
-            query2 = filter.GetFilteredQuery<DashboardCommonFilterList>(listQueryOperation, query2);
-		    query2 = InjectionUtil.Instance.ApplyTreeFilter<DashboardCommonFilterList>(query2, treeFilterQueryArgs);
+            query2 = filter.GetFilteredQuery<DashboardGlobalPresetFilterList>(listQueryOperation, query2);
+		    query2 = InjectionUtil.Instance.ApplyTreeFilter<DashboardGlobalPresetFilterList>(query2, treeFilterQueryArgs);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
-                PropertyInfo propInfo = typeof(DashboardCommonFilterList).GetProperty(queryOperations.SortByColumnName);
-                List<ObjectField> DashboardCommonFilterObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("DashboardCommonFilter",tenant).ToList();
+                PropertyInfo propInfo = typeof(DashboardGlobalPresetFilterList).GetProperty(queryOperations.SortByColumnName);
+                List<ObjectField> DashboardGlobalPresetFilterObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("DashboardGlobalPresetFilter",tenant).ToList();
 
-                ObjectField objectField = (from a in DashboardCommonFilterObjectFields
+                ObjectField objectField = (from a in DashboardGlobalPresetFilterObjectFields
                                            where a.FieldName == queryOperations.SortByColumnName
                                            select a).FirstOrDefault();
 
@@ -66,7 +66,7 @@ namespace Logitude.DashboardModule.Data.EntityListQueryServices
                 {
 				 if (objectField.IsCustom)
                     {
-                        query2 = sortClass.GetSorterQuery<DashboardCommonFilterList, string>(queryOperations, query2);
+                        query2 = sortClass.GetSorterQuery<DashboardGlobalPresetFilterList, string>(queryOperations, query2);
                     }
                     else
                     {
@@ -75,36 +75,36 @@ namespace Logitude.DashboardModule.Data.EntityListQueryServices
                          case "ntext":
                         case "text":
                             {
-                                query2 = sortClass.GetSorterQuery<DashboardCommonFilterList, string>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<DashboardGlobalPresetFilterList, string>(queryOperations, query2);
                                 break;
                             }
 						case "sigdouble":
 						case "double":
                             {
-                                query2 = sortClass.GetSorterQuery<DashboardCommonFilterList, double>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<DashboardGlobalPresetFilterList, double>(queryOperations, query2);
                                 break;
                             }
 						case "date":
                         case "datetime":
                             {
-                                query2 = sortClass.GetSorterQuery<DashboardCommonFilterList, DateTime>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<DashboardGlobalPresetFilterList, DateTime>(queryOperations, query2);
                                 break;
                             }
 						case "unsinteger":
                         case "integer":
                             {
-                                query2 = sortClass.GetSorterQuery<DashboardCommonFilterList, int>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<DashboardGlobalPresetFilterList, int>(queryOperations, query2);
                                 break;
                             }
                         case "boolean":
                             {
-                                query2 = sortClass.GetSorterQuery<DashboardCommonFilterList, bool>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<DashboardGlobalPresetFilterList, bool>(queryOperations, query2);
                                 break;
                             }
 						case "unsdecimal":
 						case "decimal":
                             {
-                                query2 = sortClass.GetSorterQuery<DashboardCommonFilterList, decimal>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<DashboardGlobalPresetFilterList, decimal>(queryOperations, query2);
                                 break;
                             }
                         default:
@@ -130,21 +130,21 @@ namespace Logitude.DashboardModule.Data.EntityListQueryServices
     
         }
 
-         public List<DashboardCommonFilterList> GetList(int tenant)
+         public List<DashboardGlobalPresetFilterList> GetList(int tenant)
          {
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public DashboardCommonFilterList GetSingle(string code)
+        public DashboardGlobalPresetFilterList GetSingle(string code)
         {
-            IQueryable<DashboardCommonFilter> DashboardCommonFilterQuery = (from a in context.DashboardCommonFilters
+            IQueryable<DashboardGlobalPresetFilter> DashboardGlobalPresetFilterQuery = (from a in context.DashboardGlobalPresetFilters
                                                        where a.Code == code
                                                        select a);
 
              
-            IQueryable<DashboardCommonFilterList> DashboardCommonFilterListQuery = GetIqueryableList( DashboardCommonFilterQuery);
-            DashboardCommonFilterList DashboardCommonFilterList = DashboardCommonFilterListQuery.FirstOrDefault();
-            return DashboardCommonFilterList;
+            IQueryable<DashboardGlobalPresetFilterList> DashboardGlobalPresetFilterListQuery = GetIqueryableList( DashboardGlobalPresetFilterQuery);
+            DashboardGlobalPresetFilterList DashboardGlobalPresetFilterList = DashboardGlobalPresetFilterListQuery.FirstOrDefault();
+            return DashboardGlobalPresetFilterList;
            
         }
 
@@ -160,7 +160,7 @@ namespace Logitude.DashboardModule.Data.EntityListQueryServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<DashboardCommonFilter> iQueryable = (from a in context.DashboardCommonFilters  select a);
+            IQueryable<DashboardGlobalPresetFilter> iQueryable = (from a in context.DashboardGlobalPresetFilters  select a);
 
 			  			iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable);
 						iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
@@ -170,14 +170,14 @@ namespace Logitude.DashboardModule.Data.EntityListQueryServices
             QueryOperations listQueryOperation = new QueryOperations();
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
             
-			iQueryable = filter.GetFilteredQuery<DashboardCommonFilter>(nonListQueryOperation, iQueryable);
+			iQueryable = filter.GetFilteredQuery<DashboardGlobalPresetFilter>(nonListQueryOperation, iQueryable);
 
 
 
-            IQueryable<DashboardCommonFilterList> query2 = GetIqueryableList(iQueryable);
+            IQueryable<DashboardGlobalPresetFilterList> query2 = GetIqueryableList(iQueryable);
 
-            query2 = filter.GetFilteredQuery<DashboardCommonFilterList>(listQueryOperation, query2);
-		    query2 = InjectionUtil.Instance.ApplyTreeFilter<DashboardCommonFilterList>(query2, treeFilterQueryArgs);
+            query2 = filter.GetFilteredQuery<DashboardGlobalPresetFilterList>(listQueryOperation, query2);
+		    query2 = InjectionUtil.Instance.ApplyTreeFilter<DashboardGlobalPresetFilterList>(query2, treeFilterQueryArgs);
 
             int count = query2.Count();
             return count;

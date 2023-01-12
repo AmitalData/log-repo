@@ -14,15 +14,15 @@ using Logitude.DashboardModule.Data;
 namespace Logitude.DashboardModule.BL.EntityDataMappings
 {
    
-   public partial class DashboardCommonFilterDataMapping: IMapping<DashboardCommonFilterPM, DashboardCommonFilter>
+   public partial class DashboardGlobalPresetFilterDataMapping: IMapping<DashboardGlobalPresetFilterPM, DashboardGlobalPresetFilter>
    {
 
-        public void CustomPMToPOCO(DashboardCommonFilterPM entityPM, DashboardCommonFilter entityPOCO)
+        public void CustomPMToPOCO(DashboardGlobalPresetFilterPM entityPM, DashboardGlobalPresetFilter entityPOCO)
         {
             //throw new NotImplementedException();
         }
 
-        public void CustomPOCOToPM(DashboardCommonFilterPM entityPM, DashboardCommonFilter entityPOCO)
+        public void CustomPOCOToPM(DashboardGlobalPresetFilterPM entityPM, DashboardGlobalPresetFilter entityPOCO)
         {
             //throw new NotImplementedException();
         }

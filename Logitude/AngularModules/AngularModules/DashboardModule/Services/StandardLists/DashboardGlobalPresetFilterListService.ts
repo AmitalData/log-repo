@@ -19,17 +19,17 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
-import {DashboardCommonFilterList} from '../../EntityLists/DashboardCommonFilterList';
+import {DashboardGlobalPresetFilterList} from '../../EntityLists/DashboardGlobalPresetFilterList';
 
 @Injectable()
 
-export class DashboardCommonFilterListService {
+export class DashboardGlobalPresetFilterListService {
 	private _http: HttpClient;
     private _apiUrl: string;   
-	public static CachedData: Array<DashboardCommonFilterList> = [];
+	public static CachedData: Array<DashboardGlobalPresetFilterList> = [];
     constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/dashboardcommonfilterviews';  
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/dashboardglobalpresetfilterviews';  
     }
 
 	getSingle(code: string) {
@@ -42,7 +42,7 @@ export class DashboardCommonFilterListService {
 					map((response: HttpResponse<any>) => {
 
 						var list = response.body;                   
-						var entity: DashboardCommonFilterList;
+						var entity: DashboardGlobalPresetFilterList;
 						if (list) {
 							entity = this.MapJsonToEntityList(list);
 						}   
@@ -52,7 +52,7 @@ export class DashboardCommonFilterListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DashboardCommonFilter", "GetSingleList", 'code=' + code); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DashboardGlobalPresetFilter", "GetSingleList", 'code=' + code); 
 
 						return serviceResponse;
 					}),
@@ -71,10 +71,10 @@ export class DashboardCommonFilterListService {
 					map((response: HttpResponse<any>) => {
 
 						var allLists = response.body;
-						var _mappedListsArray: Array<DashboardCommonFilterList> = [];
+						var _mappedListsArray: Array<DashboardGlobalPresetFilterList> = [];
 						if (allLists) {
 							for (var key in allLists) {				
-								var entity: DashboardCommonFilterList = this.MapJsonToEntityList(allLists[key]);
+								var entity: DashboardGlobalPresetFilterList = this.MapJsonToEntityList(allLists[key]);
 								_mappedListsArray.push(entity);
 							}
 						}
@@ -84,7 +84,7 @@ export class DashboardCommonFilterListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DashboardCommonFilter", "GetAllLists", ""); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DashboardGlobalPresetFilter", "GetAllLists", ""); 
 
 						return serviceResponse;
 					}),
@@ -135,11 +135,11 @@ export class DashboardCommonFilterListService {
 					map((response: HttpResponse<any>) => {
 
 						var serviceResponse: ServiceResponse = response.body;
-						var _mappedListsArray: Array<DashboardCommonFilterList> = [];
+						var _mappedListsArray: Array<DashboardGlobalPresetFilterList> = [];
 
 						if (serviceResponse.Result) {
 							for (var key in serviceResponse.Result) {				
-								var entity: DashboardCommonFilterList = this.MapJsonToEntityList(serviceResponse.Result[key]);
+								var entity: DashboardGlobalPresetFilterList = this.MapJsonToEntityList(serviceResponse.Result[key]);
 								_mappedListsArray.push(entity);
 							}
 						}   
@@ -148,7 +148,7 @@ export class DashboardCommonFilterListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DashboardCommonFilter", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DashboardGlobalPresetFilter", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
 				           
 						return serviceResponse;
 					}),
@@ -160,8 +160,8 @@ export class DashboardCommonFilterListService {
 	
 	    MapJsonToEntityList(jsonList: any) {
        
-            var entityList: DashboardCommonFilterList;
-            entityList = new DashboardCommonFilterList();
+            var entityList: DashboardGlobalPresetFilterList;
+            entityList = new DashboardGlobalPresetFilterList();
             var jsonListKeys = Object.keys(jsonList);
 
             for (var key in jsonListKeys) {

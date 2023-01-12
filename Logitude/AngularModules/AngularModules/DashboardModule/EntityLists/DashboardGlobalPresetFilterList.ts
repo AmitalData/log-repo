@@ -6,7 +6,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class DashboardCommonFilterList {
+export class DashboardGlobalPresetFilterList {
    
 	Code: string;
 	DisplayName: string;

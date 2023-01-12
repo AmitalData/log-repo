@@ -14,7 +14,7 @@ using Simplog.Data.InvoiceModel.EntityPOCOs;
 namespace Logitude.DashboardModule.Data.EntityPOCOs
 {
    
-    public class DashboardCommonFilter
+    public class DashboardGlobalPresetFilter
     {
 	 string dbms;
 

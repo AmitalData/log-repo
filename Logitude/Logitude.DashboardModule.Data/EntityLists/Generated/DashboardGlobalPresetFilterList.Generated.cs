@@ -10,7 +10,7 @@ using System.Runtime.Serialization;
 namespace Logitude.DashboardModule.Data.EntityLists
 {
    [DataContract]
-   public partial class DashboardCommonFilterList
+   public partial class DashboardGlobalPresetFilterList
    {
    
        [Key]

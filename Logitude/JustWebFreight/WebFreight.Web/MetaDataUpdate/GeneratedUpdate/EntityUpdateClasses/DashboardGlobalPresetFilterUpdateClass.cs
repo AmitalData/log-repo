@@ -83,20 +83,20 @@ using Logitude.DashboardModule.BL;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
-   public class DashboardCommonFilterUpdateClass
+   public class DashboardGlobalPresetFilterUpdateClass
    {  		
-		public const string HashString = "8dcc0a7e320de7829f5c517332e4f3a4";
+		public const string HashString = "6cea1be1b7c5cac2e87f14c731aa66c2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    ObjectTableName =  "DashboardCommonFilter",
+	             				    ObjectTableName =  "DashboardGlobalPresetFilter",
 			      				    IsNew =  true,
-			      				    DBTableName =  "DashboardCommonFilters",
-			      				    ObjectTableSingular =  "DashboardCommonFilter",
-			      				    ObjectTablePlural =  "DashboardCommonFilters",
+			      				    DBTableName =  "DashboardGlobalPresetFilters",
+			      				    ObjectTableSingular =  "DashboardGlobalPresetFilter",
+			      				    ObjectTablePlural =  "DashboardGlobalPresetFilters",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    AvailableInCustomization =  false,
@@ -126,8 +126,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    DefaultText =  "Dashboard Common Filters",
-			      				    Code =  "d21e",
+			      				    DefaultText =  "Dashboard Preset Filters",
+			      				    Code =  "75e6",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "DashboardModule",
@@ -140,7 +140,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
-			      				    HashString =  DashboardCommonFilterUpdateClass.HashString,
+			      				    HashString =  DashboardGlobalPresetFilterUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -152,7 +152,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Code",
-					  						ObjectTableName =  "DashboardCommonFilter",
+					  						ObjectTableName =  "DashboardGlobalPresetFilter",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  100,
@@ -180,7 +180,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "DashboardCommonFilter",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -214,7 +213,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DisplayName",
-					  						ObjectTableName =  "DashboardCommonFilter",
+					  						ObjectTableName =  "DashboardGlobalPresetFilter",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  150,
@@ -273,7 +272,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "DataTypeCode",
-					  						ObjectTableName =  "DashboardCommonFilter",
+					  						ObjectTableName =  "DashboardGlobalPresetFilter",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  10,
@@ -334,7 +333,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsDisabled",
-					  						ObjectTableName =  "DashboardCommonFilter",
+					  						ObjectTableName =  "DashboardGlobalPresetFilter",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
 					  						MaxLength =  0,
@@ -393,7 +392,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsMultiSelect",
-					  						ObjectTableName =  "DashboardCommonFilter",
+					  						ObjectTableName =  "DashboardGlobalPresetFilter",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
 					  						MaxLength =  0,
@@ -452,7 +451,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "JoinedTableName",
-					  						ObjectTableName =  "DashboardCommonFilter",
+					  						ObjectTableName =  "DashboardGlobalPresetFilter",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  100,
@@ -511,7 +510,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Sort",
-					  						ObjectTableName =  "DashboardCommonFilter",
+					  						ObjectTableName =  "DashboardGlobalPresetFilter",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  0,
@@ -574,15 +573,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
-		   ObjectTable DashboardCommonFilterObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DashboardCommonFilter" && d.Tenant == 0).FirstOrDefault();
-		   //List<ObjectField> DashboardCommonFilterObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "DashboardCommonFilter").ToList();
+		   ObjectTable DashboardGlobalPresetFilterObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DashboardGlobalPresetFilter" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> DashboardGlobalPresetFilterObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "DashboardGlobalPresetFilter").ToList();
 		       
 	      
 
-	         Screen DashboardCommonFilterDashboardCommonFilterHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "DashboardCommonFilter.HeaderScreen", Name = "DashboardCommonFilterHeaderScreen", ObjectTableId = DashboardCommonFilterObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen DashboardGlobalPresetFilterDashboardCommonFilterHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "DashboardGlobalPresetFilter.HeaderScreen", Name = "DashboardCommonFilterHeaderScreen", ObjectTableId = DashboardGlobalPresetFilterObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
-		    DashboardCommonFilterObjectTable.HeaderScreenId = DashboardCommonFilterDashboardCommonFilterHeaderScreenScreen0.Id;
-		    DashboardCommonFilterObjectTable.HeaderScreenCode = DashboardCommonFilterDashboardCommonFilterHeaderScreenScreen0.Code;
+		    DashboardGlobalPresetFilterObjectTable.HeaderScreenId = DashboardGlobalPresetFilterDashboardCommonFilterHeaderScreenScreen0.Id;
+		    DashboardGlobalPresetFilterObjectTable.HeaderScreenCode = DashboardGlobalPresetFilterDashboardCommonFilterHeaderScreenScreen0.Code;
 
 	   		  
 
@@ -594,18 +593,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
-		   ObjectTable DashboardCommonFilterObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DashboardCommonFilter" && d.Tenant == 0).FirstOrDefault(); 
+		   ObjectTable DashboardGlobalPresetFilterObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DashboardGlobalPresetFilter" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature DashboardCommonFilterFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = DashboardCommonFilterObjectTable.Id, Tenant = 0, NameTextCodeCode = "DashboardCommonFilter.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DashboardCommonFilterObjectTable);
-		   Feature DashboardCommonFilterFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = DashboardCommonFilterObjectTable.Id, Tenant = 0, NameTextCodeCode = "DashboardCommonFilter.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DashboardCommonFilterObjectTable);
-		   Feature DashboardCommonFilterFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = DashboardCommonFilterObjectTable.Id, Tenant = 0, NameTextCodeCode = "DashboardCommonFilter.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DashboardCommonFilterObjectTable);
-		   Feature DashboardCommonFilterFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = DashboardCommonFilterObjectTable.Id, Tenant = 0, NameTextCodeCode = "DashboardCommonFilter.Features.PackageFeature", NameTextCodeDefaultText = "DashboardCommonFilter Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DashboardCommonFilterObjectTable);    
+		   Feature DashboardGlobalPresetFilterFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = DashboardGlobalPresetFilterObjectTable.Id, Tenant = 0, NameTextCodeCode = "DashboardGlobalPresetFilter.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DashboardGlobalPresetFilterObjectTable);
+		   Feature DashboardGlobalPresetFilterFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = DashboardGlobalPresetFilterObjectTable.Id, Tenant = 0, NameTextCodeCode = "DashboardGlobalPresetFilter.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DashboardGlobalPresetFilterObjectTable);
+		   Feature DashboardGlobalPresetFilterFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = DashboardGlobalPresetFilterObjectTable.Id, Tenant = 0, NameTextCodeCode = "DashboardGlobalPresetFilter.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DashboardGlobalPresetFilterObjectTable);
+		   Feature DashboardGlobalPresetFilterFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = DashboardGlobalPresetFilterObjectTable.Id, Tenant = 0, NameTextCodeCode = "DashboardGlobalPresetFilter.Features.PackageFeature", NameTextCodeDefaultText = "DashboardGlobalPresetFilter Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DashboardGlobalPresetFilterObjectTable);    
 	    
 		}
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
-			ObjectTable DashboardCommonFilterObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DashboardCommonFilter" && d.Tenant == 0).FirstOrDefault(); 
+			ObjectTable DashboardGlobalPresetFilterObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DashboardGlobalPresetFilter" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CREV",
@@ -619,7 +618,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = DashboardCommonFilterObjectTable.Id,
+                ObjectTableId = DashboardGlobalPresetFilterObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -637,7 +636,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = DashboardCommonFilterObjectTable.Id,
+                ObjectTableId = DashboardGlobalPresetFilterObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 

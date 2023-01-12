@@ -67,7 +67,7 @@
     <None Include="DBScripts\202209010934_AddARInvoiceAnalyticColumnStoreIndex.sxml" />
     <None Include="DBScripts\202209010934_AddAPInvoiceAnalyticsColumnStoreIndex.sxml" />
     <None Include="DBScripts\202209010934_AddQuoteAnalyticsColumnStoreIndex.sxml" />
-    <None Include="DBScripts\202311010301_FillDashboardCommonFilters.sxml" />
+    <None Include="DBScripts\202311010301_FillDashboardGlobalPresetFilters.sxml" />
     <None Include="DBScripts\202210270330_FillOpportunityAnalytics.sxml" />
     <None Include="DBScripts\202210270330_AddOpportunityAnalyticsColumnStoreIndex.sxml" />
     <None Include="DBScripts\202209010934_FillARInvoiceAnalytics.sxml" />
@@ -79,11 +79,12 @@
     <None Include="DBTables\APInvoiceAnalytic.dxml" />
     <None Include="DBTables\ARInvoiceAnalytic.dxml" />
     <None Include="DBTables\DashboardGlobalFilter.dxml" />
+    <None Include="DBTables\DashboardGlobalPresetFilter.dxml" />
     <None Include="DBTables\DashboardSharedUser.dxml" />
     <None Include="DBTables\PermissionLevel.dxml" />
     <None Include="DBTables\QuoteAnalytic.dxml" />
     <None Include="DBTables\UserPinnedDashboard.dxml" />
-    <None Include="EntityFiles\DashboardCommonFilter.lxml" />
+    <None Include="EntityFiles\DashboardGlobalPresetFilter.lxml" />
     <None Include="EntityFiles\DashboardSharedUser.lxml" />
     <None Include="EntityFiles\PermissionLevel.lxml" />
     <None Include="EntityFiles\DashboardGlobalFilter.lxml" />

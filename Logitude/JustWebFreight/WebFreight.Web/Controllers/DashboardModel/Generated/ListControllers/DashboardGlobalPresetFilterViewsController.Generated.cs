@@ -47,7 +47,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
 
     
-    public partial class DashboardCommonFilterViewsController : ApiController
+    public partial class DashboardGlobalPresetFilterViewsController : ApiController
     {
 	  
        
@@ -59,13 +59,13 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("DashboardCommonFilter", "READ", authToken.Tenant);
+                SecurityUtility.CheckContactFeature("DashboardGlobalPresetFilter", "READ", authToken.Tenant);
 	                IDashboardContext MyContext = DashboardContext.GetContext(authToken.Tenant);
-                DashboardCommonFilterListQueryService dashboardCommonFilterQuery = new DashboardCommonFilterListQueryService(MyContext);
-                DashboardCommonFilterList dashboardCommonFilterList = dashboardCommonFilterQuery.GetSingle(code);
+                DashboardGlobalPresetFilterListQueryService dashboardGlobalPresetFilterQuery = new DashboardGlobalPresetFilterListQueryService(MyContext);
+                DashboardGlobalPresetFilterList dashboardGlobalPresetFilterList = dashboardGlobalPresetFilterQuery.GetSingle(code);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
-                return Request.CreateResponse(HttpStatusCode.OK,  dashboardCommonFilterList);
+                return Request.CreateResponse(HttpStatusCode.OK,  dashboardGlobalPresetFilterList);
             }
             catch (Exception ex)
             {
@@ -82,10 +82,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("DashboardCommonFilter", "READ", authToken.Tenant);
+                SecurityUtility.CheckContactFeature("DashboardGlobalPresetFilter", "READ", authToken.Tenant);
 	                IDashboardContext MyContext = DashboardContext.GetContext(authToken.Tenant);
-                DashboardCommonFilterListQueryService dashboardCommonFilterQuery = new DashboardCommonFilterListQueryService(MyContext);
-                List<DashboardCommonFilterList> result = dashboardCommonFilterQuery.GetList(authToken.Tenant);
+                DashboardGlobalPresetFilterListQueryService dashboardGlobalPresetFilterQuery = new DashboardGlobalPresetFilterListQueryService(MyContext);
+                List<DashboardGlobalPresetFilterList> result = dashboardGlobalPresetFilterQuery.GetList(authToken.Tenant);
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -105,23 +105,23 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("DashboardCommonFilter", "READ", authToken.Tenant);
+                SecurityUtility.CheckContactFeature("DashboardGlobalPresetFilter", "READ", authToken.Tenant);
 	                
 				int tenant = authToken.Tenant;
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
-                    ObjectTableName = "DashboardCommonFilter",
+                    ObjectTableName = "DashboardGlobalPresetFilter",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "DashboardCommonFilters",
+                    QuerySection = "DashboardGlobalPresetFilters",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
                 };
 
 				
-				List<ObjectField> DashboardCommonFilterObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("DashboardCommonFilter",tenant);
+				List<ObjectField> DashboardGlobalPresetFilterObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("DashboardGlobalPresetFilter",tenant);
                 List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
                 for (int i = 1; i <= 10; i++)
                 {
@@ -144,7 +144,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                             //}
 						//}
                         //ToDo: Get object field by name and set the remained filter properties
-						ObjectField field = DashboardCommonFilterObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+						ObjectField field = DashboardGlobalPresetFilterObjectFields.FirstOrDefault(f => f.FieldName == filterName);
                        if (field != null)
                         {
                             string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
@@ -172,7 +172,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                     foreach (QueryFilterItem filter in filters_list)
                     {
-                        ObjectField field = DashboardCommonFilterObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        ObjectField field = DashboardGlobalPresetFilterObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
                         if (field != null)
                         {
 
@@ -195,12 +195,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 }
 
                 IDashboardContext MyContext = DashboardContext.GetContext(tenant);
-				DashboardCommonFilterListQueryService dashboardCommonFilterQuery = new DashboardCommonFilterListQueryService(MyContext);
+				DashboardGlobalPresetFilterListQueryService dashboardGlobalPresetFilterQuery = new DashboardGlobalPresetFilterListQueryService(MyContext);
 
                 TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
                  { 
                      AdditionalTreeFilter = filters.TreeFilters,
-                     ObjectTableName = "DashboardCommonFilter",
+                     ObjectTableName = "DashboardGlobalPresetFilter",
                      ParentEntityId = filters.ParentEntityId,
                      ParentObjectTableName = filters.ParentObjectTableName, 
                      Tenant = tenant ,
@@ -208,12 +208,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                  };
 
 
-                List<DashboardCommonFilterList> entityLists = dashboardCommonFilterQuery.GetList(queryOperations, tenant , treeFilterQueryArgs);
+                List<DashboardGlobalPresetFilterList> entityLists = dashboardGlobalPresetFilterQuery.GetList(queryOperations, tenant , treeFilterQueryArgs);
 
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = dashboardCommonFilterQuery.GetListCount(queryOperations , treeFilterQueryArgs);
+                    int count = dashboardGlobalPresetFilterQuery.GetListCount(queryOperations , treeFilterQueryArgs);
                     response.Count = count;
                 }
 

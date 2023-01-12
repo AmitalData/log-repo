@@ -17,12 +17,12 @@ using Logitude.DashboardModule.Data.EntityLists;
 namespace Logitude.DashboardModule.Data.EntityListQueryServices
 { 
 
-    public partial class DashboardCommonFilterListQueryService
+    public partial class DashboardGlobalPresetFilterListQueryService
     {
-	    private IQueryable<DashboardCommonFilterList> GetIqueryableList(IQueryable<DashboardCommonFilter> iQueryable)
+	    private IQueryable<DashboardGlobalPresetFilterList> GetIqueryableList(IQueryable<DashboardGlobalPresetFilter> iQueryable)
         {
-		IQueryable<DashboardCommonFilterList> query = (from a in iQueryable
-                                            select new DashboardCommonFilterList()
+		IQueryable<DashboardGlobalPresetFilterList> query = (from a in iQueryable
+                                            select new DashboardGlobalPresetFilterList()
 											{
                      
 					                          Code = a.Code,
@@ -37,15 +37,17 @@ namespace Logitude.DashboardModule.Data.EntityListQueryServices
 					
 					                          JoinedTableName = a.JoinedTableName,
 					
+					                          Sort = a.Sort,
+					
 		                    	            });
             return query;
 		}
 
-		private IQueryable<DashboardCommonFilter> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<DashboardCommonFilter> iQueryable)
+		private IQueryable<DashboardGlobalPresetFilter> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<DashboardGlobalPresetFilter> iQueryable)
         {
 			throw new NotImplementedException();
 		}
-				private IQueryable<DashboardCommonFilter> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<DashboardCommonFilter> iQueryable)
+				private IQueryable<DashboardGlobalPresetFilter> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<DashboardGlobalPresetFilter> iQueryable)
         {
 			return iQueryable;
 		}

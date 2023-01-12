@@ -10,7 +10,7 @@ using Simplog.Server.Infrastructure;
   
 namespace Logitude.DashboardModule.Data.EntityKeys
 {
-   public partial class DashboardCommonFilterKeys : EntityKeyFields
+   public partial class DashboardGlobalPresetFilterKeys : EntityKeyFields
    {
    	  public string Code  { get; set; }
 	  
@@ -26,7 +26,7 @@ namespace Logitude.DashboardModule.Data.EntityKeys
 
       public override string GetEntityPMName()
       {
-          return "DashboardCommonFilterPM";
+          return "DashboardGlobalPresetFilterPM";
       }
 	 
    }

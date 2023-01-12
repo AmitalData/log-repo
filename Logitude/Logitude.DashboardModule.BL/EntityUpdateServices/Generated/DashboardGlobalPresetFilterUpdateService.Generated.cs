@@ -22,46 +22,46 @@ using Logitude.DashboardModule.Data;
 
 namespace Logitude.DashboardModule.BL.EntityUpdateServices
 { 
-   public partial class DashboardCommonFilterUpdateService:EntityUpdateService<DashboardCommonFilter,DashboardCommonFilterPM,EntityPM>
+   public partial class DashboardGlobalPresetFilterUpdateService:EntityUpdateService<DashboardGlobalPresetFilter,DashboardGlobalPresetFilterPM,EntityPM>
    {
    
-        DashboardCommonFilterRepository entityRepository;
-        public DashboardCommonFilterUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+        DashboardGlobalPresetFilterRepository entityRepository;
+        public DashboardGlobalPresetFilterUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
             : base(mainContext,additionalContexts, tenant)
         {
             IDashboardContext  context = mainContext as DashboardContext;
             context = context ??mainContext as IDashboardContext ; //Up line is A BUG -and i need it 4 Fakes
-            Mapping = new DashboardCommonFilterDataMapping();
-            Repository = new DashboardCommonFilterRepository(context);
+            Mapping = new DashboardGlobalPresetFilterDataMapping();
+            Repository = new DashboardGlobalPresetFilterRepository(context);
         }
 
        
         private IDashboardContext currentContext;
-        public DashboardCommonFilterUpdateService(int tenant)
+        public DashboardGlobalPresetFilterUpdateService(int tenant)
         {
             currentContext = DashboardContext.GetContext(tenant);
         }
 
-        public DashboardCommonFilterUpdateService(IDashboardContext context)
+        public DashboardGlobalPresetFilterUpdateService(IDashboardContext context)
         {
             currentContext = context;
         }
 
 		
-		protected override EntityKeyFields GetKeys(DashboardCommonFilterPM entityPM)
+		protected override EntityKeyFields GetKeys(DashboardGlobalPresetFilterPM entityPM)
         {
-            DashboardCommonFilterKeys entityKeys = new DashboardCommonFilterKeys() { Code = entityPM.Code };
+            DashboardGlobalPresetFilterKeys entityKeys = new DashboardGlobalPresetFilterKeys() { Code = entityPM.Code };
             return entityKeys;
         }
 
 		
-		protected override void FillDefaultValuesOnCreate(DashboardCommonFilterPM entityPM)
+		protected override void FillDefaultValuesOnCreate(DashboardGlobalPresetFilterPM entityPM)
         {     
   
 		
 	    }
         
-		protected override void FillDefaultValuesOnUpdate(DashboardCommonFilterPM entityPM)
+		protected override void FillDefaultValuesOnUpdate(DashboardGlobalPresetFilterPM entityPM)
         {       
            
         }

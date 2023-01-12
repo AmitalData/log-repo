@@ -14,12 +14,12 @@ using Logitude.DashboardModule.Data;
 namespace Logitude.DashboardModule.Data.EntityMapping
 {
  
-    public class DashboardCommonFilterMap : EntityTypeConfiguration<DashboardCommonFilter>
+    public class DashboardGlobalPresetFilterMap : EntityTypeConfiguration<DashboardGlobalPresetFilter>
     {
 	    string dbms;
-        public DashboardCommonFilterMap()
+        public DashboardGlobalPresetFilterMap()
         { 
-				this.ToTable("DashboardCommonFilters");
+				this.ToTable("DashboardGlobalPresetFilters");
 		
 		    this.HasKey(t => new { t.Code });
 	 

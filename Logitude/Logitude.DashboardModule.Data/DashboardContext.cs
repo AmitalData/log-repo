@@ -73,9 +73,9 @@ namespace Logitude.DashboardModule.Data
 	
             modelBuilder.Configurations.Add(new DashboardMap());
 	
-            modelBuilder.Configurations.Add(new DashboardCommonFilterMap());
-	
             modelBuilder.Configurations.Add(new DashboardGlobalFilterMap());
+	
+            modelBuilder.Configurations.Add(new DashboardGlobalPresetFilterMap());
 	
             modelBuilder.Configurations.Add(new DashboardSharedUserMap());
 	
@@ -389,13 +389,13 @@ namespace Logitude.DashboardModule.Data
 	 
 	 }
 	
-	 public IDbSet<DashboardCommonFilter> DashboardCommonFilters 
+	 public IDbSet<DashboardGlobalFilter> DashboardGlobalFilters 
 	 {
 	      get; set;
 	 
 	 }
 	
-	 public IDbSet<DashboardGlobalFilter> DashboardGlobalFilters 
+	 public IDbSet<DashboardGlobalPresetFilter> DashboardGlobalPresetFilters 
 	 {
 	      get; set;
 	 

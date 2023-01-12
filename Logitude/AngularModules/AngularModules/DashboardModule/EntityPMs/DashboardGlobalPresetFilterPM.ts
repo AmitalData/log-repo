@@ -14,7 +14,7 @@ import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
-export class DashboardCommonFilterPM {
+export class DashboardGlobalPresetFilterPM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
@@ -60,7 +60,7 @@ export class DashboardCommonFilterPM {
        
 	 
 
-    public OldEntityPM: DashboardCommonFilterPM;
+    public OldEntityPM: DashboardGlobalPresetFilterPM;
 		
     public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
@@ -71,13 +71,13 @@ export class DashboardCommonFilterPM {
 		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "DashboardCommonFilter");
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "DashboardGlobalPresetFilter");
            
         }
        }
     }
 
-    private MyClone: DashboardCommonFilterPM;
+    private MyClone: DashboardGlobalPresetFilterPM;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);

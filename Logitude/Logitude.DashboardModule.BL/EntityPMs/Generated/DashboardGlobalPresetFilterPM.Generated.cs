@@ -16,7 +16,7 @@ namespace Logitude.DashboardModule.BL.EntityPMs
 {
    [CustomValidation(typeof(DashboardModuleClassLevelValidator), "ValidateClass")]
    [DataContract]
-   public partial class DashboardCommonFilterPM : EntityPM
+   public partial class DashboardGlobalPresetFilterPM : EntityPM
    {
    	  private string code ;
 	  
