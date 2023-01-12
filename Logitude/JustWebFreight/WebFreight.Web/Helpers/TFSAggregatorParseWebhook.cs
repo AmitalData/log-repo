@@ -42,11 +42,11 @@ namespace WebFreight.Web.Helpers
         {
             this.AnalyzeQueueId = AnalyzeQueueId;
             this.Tenant = tenant;
-              if(!String.IsNullOrEmpty(WiId))
+            if (!String.IsNullOrEmpty(WiId))
             {
-                int Id ;
+                int Id;
                 int.TryParse(WiId, out Id);
-                this.DOJOB(Id); 
+                this.DOJOB(Id);
             }
         }
 
@@ -74,6 +74,8 @@ namespace WebFreight.Web.Helpers
 
         private void HandleWorkItemRelations(WorkItem currentWorkItem)
         {
+            if (currentWorkItem.Relations == null) return;
+
             var relations = currentWorkItem.Relations.Where(a => a.Rel == "System.LinkTypes.Hierarchy-Reverse");
             if (relations != null)
             {
@@ -146,7 +148,10 @@ namespace WebFreight.Web.Helpers
                 var effort = Convert.ToSingle(parentItem.Fields.GetValueOrDefault("Custom.TasksEffort"));
                 var completedwork = Convert.ToSingle(parentItem.Fields.GetValueOrDefault("Microsoft.VSTS.Scheduling.CompletedWork"));
 
-                List<WorkItemRelation> items = parentItem.Relations.Where(a => a.Rel == "System.LinkTypes.Hierarchy-Forward").ToList();
+                List<WorkItemRelation> items = new List<WorkItemRelation>();
+                if (parentItem.Relations != null)
+                    items = parentItem.Relations.Where(a => a.Rel == "System.LinkTypes.Hierarchy-Forward").ToList();
+
                 double EffotSum = 0;
                 double completedworkSum = 0;
                 if (items.Count != 0)
