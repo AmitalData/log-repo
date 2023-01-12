@@ -156,15 +156,22 @@ namespace Logitude.CustomsMessaging.ResponseServices
             try
             {
                 string response = "";
-                using (var scope = TransactionFactory.GetNewTransaction())
+                 using (var scope = TransactionFactory.GetNewTransaction())
                 {
                     FeatureQuery featureQuery = new FeatureQuery();
                     var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(requestParams.Tenant), requestParams.Tenant);
                     var feature = features.Features.FirstOrDefault(x => x.Code == "CancelOldCommunication");
                     if (feature != null)
                     {
-                        var cancelOldCommunicationLogs = new CancelOldCommunicationLogs();
-                        cancelOldCommunicationLogs.CancelOldECTHRDataMaman(requestParams.Tenant, itemDeclarationIdStorageSiteCode.Key);
+                        try
+                        {
+                            var cancelOldCommunicationLogs = new CancelOldCommunicationLogs();
+                            cancelOldCommunicationLogs.CancelOldECTHRDataMaman(requestParams.Tenant, itemDeclarationIdStorageSiteCode.Key);
+                        }
+                        catch
+                        {
+
+                        }
                     }
                     if (def.DEFDATA.Contains("ILMMN") && itemDeclarationIdStorageSiteCode.Value == "ILMMN") // Maman
                     {

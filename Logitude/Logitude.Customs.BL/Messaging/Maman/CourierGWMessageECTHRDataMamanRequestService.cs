@@ -177,7 +177,8 @@ namespace Logitude.Customs.BL.Messaging.Maman
             string MamanSuspendedCode = "";
             var courierPendingReasonRepository = new CourierPendingReasonRepository(myDeclarationPM.Tenant);
             var courierPendingListWithMamanSuspendedCode = courierPendingReasonRepository.GetPendingReasonsWithMamanSuspendedCode(myDeclarationPM.Tenant);
-
+            var sb = new StringBuilder();
+            sb.AppendLine($"DeclarationId:{declarationCourierStatus.DeclarationId};CourierPendingReasonList:{declarationCourierStatus.CourierPendingReasonList}");
             if (!string.IsNullOrEmpty(declarationCourierStatus.CourierPendingReasonList))
             {
                 var arrPendings = declarationCourierStatus.CourierPendingReasonList.Split(',');
@@ -186,12 +187,19 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 if (pendingCounted == 1)
                 {
                     MamanSuspendedCode = courierPendingListWithMamanSuspendedCode.Where(x => arrPendings.Contains(x.Code)).FirstOrDefault().MamanSuspendedCode;
+                    sb.AppendLine($"pendingCounted == 1;MamanSuspendedCode:{MamanSuspendedCode}");
                 }
                 if (pendingCounted > 1)
                 {
+                    sb.AppendLine($"pendingCounted > 1;MamanSuspendedCode:9999");
                     MamanSuspendedCode = "9999";
                 }
             }
+            if (Send2MasofIfNeededService.GetStopLogAt() > DateTime.Now)
+            {
+                Logger.LogMe(sb.ToString(), false, "GWMessageECTHRDataMaman");
+            }
+            
             string aw8 = null;
             if (!string.IsNullOrWhiteSpace(myCourierMasterPM.ShortHAWB) && CInt(myCourierMasterPM.ShortHAWB)!=0)
             {
