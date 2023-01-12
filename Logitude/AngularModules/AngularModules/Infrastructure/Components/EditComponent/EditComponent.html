@@ -298,13 +298,13 @@
 
                                             <!-- Save & Close -->
                                             <td style="width: 25px; min-width: 25px;" *ngIf="IsSaveBtnVisible">
-                                                <button [disabled]="IsSaveBtnDisable" *ngIf="!IsEntityLoaded" class="Button" [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe" (click)="SaveChangesAndClose()">
+                                                <button id="{{ ObjectTableName+'-SaveClose' | IdGeneratorPipe}}" [disabled]="IsSaveBtnDisable" *ngIf="!IsEntityLoaded" class="Button" [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe" (click)="SaveChangesAndClose()">
                                                     <img class="CenterCenter" src="./Images/Buttons/Save.png" />
                                                     <img src="./Images/RedX2.png" style="width: 7px; height: 7px; position: absolute; top:1px; " [ngStyle]="LayoutDirection == 'rtl' ? {'left': '1px'} : {'right': '1px'}" />
                                                 </button>
 
                                                 <div *ngIf="IsEntityLoaded">
-                                                    <button [disabled]="IsSaveBtnDisable" *ngIf="EntityPM && !EntityPM.IsDirty" class="Button" [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe" (click)="SaveChangesAndClose()">
+                                                    <button id="{{ ObjectTableName+'-SaveClose' | IdGeneratorPipe}}" [disabled]="IsSaveBtnDisable" *ngIf="EntityPM && !EntityPM.IsDirty" class="Button" [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe" (click)="SaveChangesAndClose()">
                                                         <img class="CenterCenter" src="./Images/Buttons/Save.png" />
                                                         <img src="./Images/RedX2.png" style="width: 7px; height: 7px; position: absolute; top:1px;" [ngStyle]="LayoutDirection == 'rtl' ? {'left': '1px'} : {'right': '1px'}" />
                                                     </button>
