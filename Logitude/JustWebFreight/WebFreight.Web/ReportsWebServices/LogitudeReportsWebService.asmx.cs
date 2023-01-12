@@ -1881,14 +1881,7 @@ namespace WebFreight.Web.ReportsWebServices
         internal byte[] LoadVDKDataProvider(byte[] xmlFilters, int tenant)
         {
             VDKDataProvider dataprovider = GetVDKDataProvider(xmlFilters, tenant);
-            XmlSerializer serializer = new XmlSerializer(typeof(VDKDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, dataprovider);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
-            return bytearray;
+            return new ReportMemoryStreamService().Convert(dataprovider, typeof(VDKDataProvider), tenant);
         }
 
         private VDKDataProvider GetVDKDataProvider(byte[] xmlFilters, int tenant)
@@ -9925,14 +9918,7 @@ namespace WebFreight.Web.ReportsWebServices
         public byte[] LoadTasksWithoutProjectsData(byte[] xmlFilters, int tenant)
         {
             TasksWithoutProjectsDataProvider dataprovider = GetTasksWithoutProjectsDataProvider(xmlFilters, tenant);
-            XmlSerializer serializer = new XmlSerializer(typeof(TasksWithoutProjectsDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, dataprovider);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
-            return bytearray;
+            return new ReportMemoryStreamService().Convert(dataprovider, typeof(TasksWithoutProjectsDataProvider), tenant);
         }
 
         private TasksWithoutProjectsDataProvider GetTasksWithoutProjectsDataProvider(byte[] xmlFilters, int tenant)
@@ -10031,14 +10017,7 @@ namespace WebFreight.Web.ReportsWebServices
         public byte[] LoadAccountingAgingDataProvider(byte[] xmlFilters, int tenant)
         {
             AccountingAgingDataProvider dataprovider = GetAccountingAgingDataProvider(xmlFilters, tenant);
-            XmlSerializer serializer = new XmlSerializer(typeof(AccountingAgingDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, dataprovider);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
-            return bytearray;
+            return new ReportMemoryStreamService().Convert(dataprovider, typeof(AccountingAgingDataProvider), tenant);
         }
 
         private AccountingAgingDataProvider GetAccountingAgingDataProvider(byte[] xmlFilters, int tenant)
@@ -10054,14 +10033,7 @@ namespace WebFreight.Web.ReportsWebServices
         public byte[] LoadCustomerStatusDataProvider(byte[] xmlFilters, int tenant)
         {
             CustomerStatusDataProvider dataprovider = GetCustomerStatusDataProvider(xmlFilters, tenant);
-            XmlSerializer serializer = new XmlSerializer(typeof(CustomerStatusDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, dataprovider);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
-            return bytearray;
+            return new ReportMemoryStreamService().Convert(dataprovider, typeof(CustomerStatusDataProvider), tenant);
         }
         private CustomerStatusDataProvider GetCustomerStatusDataProvider(byte[] xmlFilters, int tenant)
         {
@@ -10076,13 +10048,7 @@ namespace WebFreight.Web.ReportsWebServices
         public byte[] LoadLedgerTransactionDataProvider(byte[] xmlFilters, ReportFliter reportFliter, int tenant)
         {
             LedgerTransactionsDataProvider dataprovider = GetLedgerTransactionsDataProvider(xmlFilters, tenant);
-            XmlSerializer serializer = new XmlSerializer(typeof(LedgerTransactionsDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, dataprovider);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
+            byte[] bytearray = new ReportMemoryStreamService().Convert(dataprovider, typeof(LedgerTransactionsDataProvider), tenant);
             ReportManipulationDataService reportManipulationDataService = new ReportManipulationDataService(dataprovider, reportFliter);
             bytearray = reportManipulationDataService.IsDataProviderHaveListWithValues() ? bytearray : null;
             return bytearray;
@@ -10109,16 +10075,11 @@ namespace WebFreight.Web.ReportsWebServices
         public byte[] LoadOpenShipmentsByCustomerDataProvider(byte[] xmlFilters, ReportFliter reportFliter, int tenant)
         {
             OpenShipmentsByCustomerDataProvider dataprovider = GetOpenShipmentsByCustomerDataProvider(xmlFilters, tenant);
-            XmlSerializer serializer = new XmlSerializer(typeof(OpenShipmentsByCustomerDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, dataprovider);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
+            byte[] bytearray = new ReportMemoryStreamService().Convert(dataprovider, typeof(OpenShipmentsByCustomerDataProvider), tenant);
             ReportManipulationDataService reportManipulationDataService = new ReportManipulationDataService(dataprovider, reportFliter);
             bytearray = reportManipulationDataService.IsDataProviderHaveListWithValues() ? bytearray : null;
             return bytearray;
+            
         }
 
         private OpenShipmentsByCustomerDataProvider GetOpenShipmentsByCustomerDataProvider(byte[] xmlFilters, int tenant)
@@ -10356,14 +10317,7 @@ namespace WebFreight.Web.ReportsWebServices
         public byte[] LoadParentVsChildTenantsDataProvider(byte[] xmlFilters, int tenant)
         {
             ParentVsChildTenantsDataProvider dataprovider = GetParentVsChildTenantsDataProvider(xmlFilters, tenant);
-            XmlSerializer serializer = new XmlSerializer(typeof(ParentVsChildTenantsDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, dataprovider);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
-            return bytearray;
+            return new ReportMemoryStreamService().Convert(dataprovider, typeof(ParentVsChildTenantsDataProvider), tenant);
         }
 
         private ParentVsChildTenantsDataProvider GetParentVsChildTenantsDataProvider(byte[] xmlFilters, int tenant)
@@ -10473,14 +10427,7 @@ namespace WebFreight.Web.ReportsWebServices
         public byte[] LoadRevenueExpenseDataProvider(byte[] xmlFilters, int tenant)
         {
             RevenueExpenseDataProvider dataprovider = GetRevenueExpenseDataProvider(xmlFilters, tenant);
-            XmlSerializer serializer = new XmlSerializer(typeof(RevenueExpenseDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, dataprovider);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
-            return bytearray;
+            return new ReportMemoryStreamService().Convert(dataprovider, typeof(RevenueExpenseDataProvider), tenant);
         }
 
         private RevenueExpenseDataProvider GetRevenueExpenseDataProvider(byte[] xmlFilters, int tenant)
@@ -10914,14 +10861,7 @@ namespace WebFreight.Web.ReportsWebServices
         public byte[] LoadTrailBalanceDataProvider(byte[] xmlFilters, int tenant)
         {
             RevenueExpenseDataProvider dataprovider = GetTrailBalanceDataProvider(xmlFilters, tenant);
-            XmlSerializer serializer = new XmlSerializer(typeof(RevenueExpenseDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, dataprovider);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
-            return bytearray;
+            return new ReportMemoryStreamService().Convert(dataprovider, typeof(RevenueExpenseDataProvider), tenant);
         }
         bool showLocals;
         private RevenueExpenseDataProvider GetTrailBalanceDataProvider(byte[] xmlFilters, int tenant)
@@ -12053,13 +11993,7 @@ namespace WebFreight.Web.ReportsWebServices
         public byte[] LoadShipmentDetailsDataProvider(byte[] xmlFilters, ReportFliter reportFliter, int tenant)
         {
             ShipmentDetailsDataProvider dataprovider = GetShipmentDetailsDataProvider(xmlFilters, tenant);
-            XmlSerializer serializer = new XmlSerializer(typeof(ShipmentDetailsDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, dataprovider);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
+            byte[] bytearray = new ReportMemoryStreamService().Convert(dataprovider, typeof(ShipmentDetailsDataProvider), tenant);
             ReportManipulationDataService reportManipulationDataService = new ReportManipulationDataService(dataprovider, reportFliter);
             bytearray = reportManipulationDataService.IsDataProviderHaveListWithValues() ? bytearray : null;
             return bytearray;
@@ -12637,15 +12571,8 @@ namespace WebFreight.Web.ReportsWebServices
         #region License Management
         public byte[] LoadLicenseManagementDataProvider(byte[] xmlFilters, int tenant)
         {
-            LicenseManagementDataProvider dataprovider = GetLicenseManagementDataProvider(xmlFilters, tenant);
-            XmlSerializer serializer = new XmlSerializer(typeof(LicenseManagementDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, dataprovider);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
-            return bytearray;
+            LicenseManagementDataProvider dataprovider = GetLicenseManagementDataProvider(xmlFilters, tenant);;
+            return new ReportMemoryStreamService().Convert(dataprovider, typeof(LicenseManagementDataProvider), tenant);
         }
 
         private LicenseManagementDataProvider GetLicenseManagementDataProvider(byte[] xmlFilters, int tenant)

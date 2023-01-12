@@ -6,6 +6,7 @@ using System.Xml.Serialization;
 using WebFreight.Web.DataProviders;
 using Logitude.CRM.BL.DataContracts;
 using Newtonsoft.Json;
+using WebFreight.Web.Services;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMReport
 {
@@ -41,13 +42,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMRepor
         public byte[] Load()
         {
             LogitudeCRMReportDataProvider logitudeCRMReportDataProvider = BuildDataProvider();
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(LogitudeCRMReportDataProvider));
-            MemoryStream memoryStream = new MemoryStream();
-            xmlSerializer.Serialize(memoryStream, logitudeCRMReportDataProvider);
-            memoryStream.Seek(0, SeekOrigin.Begin);
-            byte[] bytearray = memoryStream.ToArray();
-            //File.WriteAllText(@"D:\path.json", JsonConvert.SerializeObject(logitudeCRMReportDataProvider));
-            return bytearray;
+            return new ReportMemoryStreamService().Convert(logitudeCRMReportDataProvider, typeof(LogitudeCRMReportDataProvider), tenant);
         }
 
         private LogitudeCRMReportDataProvider BuildDataProvider()

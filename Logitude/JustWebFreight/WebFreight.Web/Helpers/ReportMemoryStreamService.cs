@@ -14,30 +14,31 @@ namespace WebFreight.Web.Services
         {
             if(FeatureToggleHelper.HasFeatureToggle("DMS", tenant))
             {
-                using (MemoryStream memstream = new MemoryStream())
-                {
-                    XmlSerializer serializer = new XmlSerializer(type);
-                    serializer.Serialize(memstream, dataprovider);
-                    memstream.Seek(0, SeekOrigin.Begin);
-                    var reader = new StreamReader(memstream);
-                    string content = reader.ReadToEnd();
-                    byte[] bytearray = memstream.ToArray();
-                    memstream.Dispose();
-                    memstream.Close();
-                    return bytearray;
-                }
+                return SerializeDataWithUsingMemoryStream(dataprovider, type);
             }
-            else
+            return SerializeData(new MemoryStream(),dataprovider, type);
+        }
+
+        private byte[] SerializeDataWithUsingMemoryStream(object dataprovider, Type type)
+        {
+            using (MemoryStream memoryStream = new MemoryStream())
             {
-                XmlSerializer serializer = new XmlSerializer(type);
-                MemoryStream memstream = new MemoryStream();
-                serializer.Serialize(memstream, dataprovider);
-                memstream.Seek(0, SeekOrigin.Begin);
-                var reader = new StreamReader(memstream);
-                string content = reader.ReadToEnd();
-                byte[] bytearray = memstream.ToArray();
+                byte[] bytearray = SerializeData(memoryStream, dataprovider, type);
+                memoryStream.Dispose();
+                memoryStream.Close();
                 return bytearray;
             }
+        }
+
+        public byte[] SerializeData(MemoryStream memoryStream , object dataprovider, Type type)
+        {
+            XmlSerializer serializer = new XmlSerializer(type);
+            serializer.Serialize(memoryStream, dataprovider);
+            memoryStream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memoryStream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memoryStream.ToArray();
+            return bytearray;
         }
     }
 }
