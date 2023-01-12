@@ -79,7 +79,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 Agent = GetCardById(shipmentPM.AgentId),
                 Consignee = GetCardById(shipmentPM.ConsigneeId),
                 AgentName = shipmentPM.PrivateLabelAgentName,
-
+                PlaceOfDelivery = shipmentPM.PlaceOfDelivery,
+                PickupPlace = shipmentPM.PickupPlace,
+                SealNo = shipmentPM.SealNo,
             };
         }
         
@@ -112,6 +114,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 Weight = shipmentPM.OrderGrossWeight,
                 Volume = shipmentPM.BookingVolume,
                 ShipmentPackages = GetShipmentPackages(),
+                ShippingLine = shipmentPM.ShippingLine,
+                PlaceOfDelivery = shipmentPM.PlaceOfDelivery,
+                PickupPlace = shipmentPM.PickupPlace,
+                SealNo = shipmentPM.SealNo,
+                HSCode= shipmentPM.HSCode
             };
         }
         
@@ -123,7 +130,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 shipmentPMPackages.Add(new Packages
                 {
                     Quantity = shipmentPMPackage.Quantity,
-                    GrossWeight = shipmentPM.ShipmentTypeName != "FCL" ? shipmentPMPackage.GrossWeight : null,
+                    GrossWeight =  shipmentPMPackage.GrossWeight,
                     Length = shipmentPM.ShipmentTypeName != "FCL" ? shipmentPMPackage.Length : null,
                     Width = shipmentPM.ShipmentTypeName != "FCL" ? shipmentPMPackage.Width : null,
                     Height = shipmentPM.ShipmentTypeName != "FCL" ? shipmentPMPackage.Height : null,

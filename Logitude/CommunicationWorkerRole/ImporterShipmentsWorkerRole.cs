@@ -605,11 +605,7 @@ namespace CommunicationWorkerRole
                                                             IsDangerouseOfGoods = Shipment.OrderIsDangerouseGoods,
                                                             AgentName = Shipment.PrivateLabelAgentName,
                                                             IsShipmentOrder = Shipment.IsShipmentOrder,
-                                                            ShippingLine = Shipment.ShippingLine,
-                                                            PlaceOfDelivery = Shipment.PlaceOfDelivery,
-                                                            PickupPlace = Shipment.PickupPlace,
-                                                            SealNo = Shipment.SealNo,
-                                                            HSCode = Shipment.HSCode,
+                                                            
                                                             Agent = new CodeProperties()
                                                             {
                                                                 Code = AgentCode
@@ -854,11 +850,7 @@ namespace CommunicationWorkerRole
                                                             IsDangerouseOfGoods = Shipment.OrderIsDangerouseGoods,
                                                             AgentName = Shipment.PrivateLabelAgentName,
                                                             IsShipmentOrder = Shipment.IsShipmentOrder,
-                                                            ShippingLine = Shipment.ShippingLine,
-                                                            PlaceOfDelivery = Shipment.PlaceOfDelivery,
-                                                            PickupPlace = Shipment.PickupPlace,
-                                                            SealNo = Shipment.SealNo,
-                                                            HSCode = Shipment.HSCode,
+                                                            
                                                             Agent = new CodeProperties()
                                                             {
                                                                 Code = AgentCode
