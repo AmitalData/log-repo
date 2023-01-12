@@ -276,6 +276,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private void UpdateConsignmentPackages(DCAInUCBMultiUpdateWithResponseContentHeader customResponse, GenericRequestParams requestParams, string declarationId, ICustomContext context)
         {
+            if (customResponse.GrossMassMeasure == null)
+                return;
+
             List<ConsignmentPackagePM> consignmentPackages = new ConsignmentPackageQueryService(context).GetConsignmentPackagesForDeclaration(declarationId);
             var consignmentPackageUpdateService = new ConsignmentPackageUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
 
