@@ -1,4 +1,3 @@
-
 import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -14,9 +13,10 @@ import {AppTool} from '../../../Infrastructure/Tools';
 import {ReconciliationExtendedPMService} from '../../Services/ExtendedPMs/ReconciliationExtendedPMService';
 import {AccountingPeriodListService} from '../../Services/StandardLists/AccountingPeriodListService';
 import {AccountingPeriodList} from '../../EntityLists/AccountingPeriodList';
-import { FullAccountingSettingListService } from '../../Services/StandardLists/FullAccountingSettingListService';
-import { FullAccountingSettingList } from '../../EntityLists/FullAccountingSettingList';
-import { GLAccountPMService } from '../../Services/StandardPMs/GLAccountPMService';
+import {FullAccountingSettingListService} from '../../Services/StandardLists/FullAccountingSettingListService';
+import {FullAccountingSettingList} from '../../EntityLists/FullAccountingSettingList';
+import {GLAccountPMService} from '../../Services/StandardPMs/GLAccountPMService';
+import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
 
 @Component({
     templateUrl: './JournalReconcileComponent.html',
@@ -42,6 +42,7 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
     public isRTL: boolean = false;
     public ValidationErrorsList: string[];
     private CurrentSession = SessionLocator.SelectedSession;
+
     constructor(private CD: ChangeDetectorRef) {
         super();
 
@@ -62,19 +63,17 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
                                 this.GLAccount = res;
 
                             }
-                            });
+                        });
                     }
 
                 }
             }
         });
 
-
         this.GLAccountsFilterItems = new ApiQueryFilters();
-        this.GLAccountsFilterItems.addAdditionalFilter("AccountTypeCode", "5,4", null, null, "Exclude", false, false, false, "string", false, true);
-
-        this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, true);
-
+        this.GLAccountsFilterItems.addAdditionalFilter("AccountTypeCode", "5,4",
+            null, null, "Exclude", false, false,
+            false, "string", false, true);
     }
 
     public get IsCustomerCare() {
@@ -82,9 +81,12 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
     }
 
 
-
     glAcccountId: string;
-    get GLAccountId() { return this.glAcccountId; }
+
+    get GLAccountId() {
+        return this.glAcccountId;
+    }
+
     set GLAccountId(value: string) {
         if (this.glAcccountId != value) {
             this.glAcccountId = value;
@@ -92,12 +94,16 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
     }
 
     glAccount: GLAccountPM;
-    get GLAccount() { return this.glAccount; }
+
+    get GLAccount() {
+        return this.glAccount;
+    }
+
     set GLAccount(value: GLAccountPM) {
         if (this.glAccount != value) {
             this.glAccount = value;
         }
-        if (!AppTool.IsNullOrEmpty( this.glAccount)) {
+        if (!AppTool.IsNullOrEmpty(this.glAccount)) {
             this.UIProperties.SetRequired("GLAccount", this.ObjectTableName, false);
             this.UIProperties.SetRequired("GLAccountId", this.ObjectTableName, false);
 
@@ -107,7 +113,6 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
         }
 
     }
-
 
     txt_Reference: string = TextCodeTranslator.Translate("Accounting.General.O.Reference");
     txt_Amount: string = TextCodeTranslator.Translate("JournalLine.F.LocalAmount");
@@ -124,13 +129,18 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
         });
 
         this.GetAccountingPeriods();
-        //set focus on accounting date
-        var t = setTimeout(() => { this.forceFocus = true; }, 1);
+        var t = setTimeout(() => {
+            this.forceFocus = true;
+        }, 1);
     }
 
     //#region Properties
-    reference1: string="";
-    get Reference1() { return this.reference1; }
+    reference1: string = "";
+
+    get Reference1() {
+        return this.reference1;
+    }
+
     set Reference1(value: string) {
         if (this.reference1 != value) {
 
@@ -139,8 +149,12 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
         }
     }
 
-    reference2: string="";
-    get Reference2() { return this.reference2; }
+    reference2: string = "";
+
+    get Reference2() {
+        return this.reference2;
+    }
+
     set Reference2(value: string) {
         if (this.reference2 != value) {
 
@@ -149,8 +163,12 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
         }
     }
 
-    reference3: string="";
-    get Reference3() { return this.reference3; }
+    reference3: string = "";
+
+    get Reference3() {
+        return this.reference3;
+    }
+
     set Reference3(value: string) {
         if (this.reference3 != value) {
 
@@ -159,8 +177,12 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
         }
     }
 
-    notes: string="";
-    get Notes() { return this.notes; }
+    notes: string = "";
+
+    get Notes() {
+        return this.notes;
+    }
+
     set Notes(value: string) {
         if (this.notes != value) {
 
@@ -170,7 +192,11 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
     }
 
     dueDate: Date;
-    get DueDate() { return this.dueDate; }
+
+    get DueDate() {
+        return this.dueDate;
+    }
+
     set DueDate(value: Date) {
         if (this.dueDate != value) {
 
@@ -179,7 +205,11 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
     }
 
     refDate: Date;
-    get RefDate() { return this.refDate; }
+
+    get RefDate() {
+        return this.refDate;
+    }
+
     set RefDate(value: Date) {
         if (this.refDate != value) {
 
@@ -188,7 +218,10 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
     }
 
     _AccountingDate: Date;
-    get AccountingDate() { return this._AccountingDate; }
+    get AccountingDate() {
+        return this._AccountingDate;
+    }
+
     set AccountingDate(value: Date) {
         if (this._AccountingDate != value) {
 
@@ -221,20 +254,15 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
             }
 
             this._AccountingDate = value;
-            if (!AppTool.IsNullOrEmpty(this._AccountingDate)) {
-                this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, false);
-            } else {
-                //this.AccountingDate = null;
-                this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, true);
-            }
         }
-
-
-
     }
 
     accountingPeriod: AccountingPeriodList;
-    get AccountingPeriod() { return this.accountingPeriod; }
+
+    get AccountingPeriod() {
+        return this.accountingPeriod;
+    }
+
     set AccountingPeriod(value: AccountingPeriodList) {
         if (this.accountingPeriod != value) {
             this.accountingPeriod = value;
@@ -251,7 +279,6 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
     DetectChanges() {
         this.CD.detectChanges();
     }
-
 
 
     GetAccountingPeriods() {
@@ -273,12 +300,12 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
         return new Date(year, month + 1, 0).getDate();
     }
 
-    _SelectedLines: ObservableCollection;//SelectedLines[];
+    _SelectedLines: ObservableCollection;
     _GLAccountPMId: string;
-
     TotalDifference: any;
     TotalCredit: any;
     TotalDebit: any;
+
     SetWindowArgs(winArgs) {
         this._SelectedLines = winArgs.SelectedLines;
         this._GLAccountPMId = winArgs.GLAccountPMId;
@@ -286,41 +313,25 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
         this.TotalCredit = winArgs.TotalCredit;
         this.TotalDebit = winArgs.TotalDebit;
     }
+
     FillErrors(isSplitJournal: boolean) {
         this.ValidationErrorsList = [];
         if (AppTool.IsNullOrEmpty(this.glAccount)) {
             this.ValidationErrorsList.push('GLAccount is Required');
-        }
-        else if (AppTool.IsNullOrEmpty( this.AccountingDate) && !isSplitJournal) {
-            this.ValidationErrorsList.push(TextCodeTranslator.Translate( 'Journal.RE.AccountingDateRequired'));
+        } else if (AppTool.IsNullOrEmpty(this.AccountingDate) && !isSplitJournal) {
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate('Journal.RE.AccountingDateRequired'));
         } else {
             this.ValidationErrorsList = [];
         }
     }
 
-    ShowMessage(isSplitJournal: boolean) {
-
-    }
-    OkButtonClicked(isSplitJournal: boolean) {
-        this.FillErrors(isSplitJournal);
-
-        if (this.ValidationErrorsList.length > 0) {
-            return;
-        }
-
-        this.ShowMessage(isSplitJournal);
-
-        this.CurrentSession.StartBusyIndicatorCreating();
-
-        var myReconciliationLines: ReconciliationLinePM[] = [];
-
-
-        for (var i = 0; i < this._SelectedLines.Length; i++) {
-            var selectedTransaction = this._SelectedLines.Collection[i];
-            var newLine: any = {};
-            newLine.ChangeSetOp = "1";
-            newLine.ReconciliationId = "new";
-            newLine.Tenant = SessionLocator.Tenant;;
+    BuildReconciliationLines(myReconciliationLines: ReconciliationLinePM[]): void {
+        for (let i = 0; i < this._SelectedLines.Length; i++) {
+            const selectedTransaction = this._SelectedLines.Collection[i];
+            const newLine: any = {};
+            newLine.ChangeSetOp = '1';
+            newLine.ReconciliationId = 'new';
+            newLine.Tenant = SessionLocator.Tenant;
             newLine.Line = i;
             newLine.CurrencyId = selectedTransaction.OpenAmountCurrencyId;
             newLine.TransactionId = selectedTransaction.Id;
@@ -330,61 +341,96 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
             newLine.Reference2 = selectedTransaction.Reference2;
             newLine.Reference3 = selectedTransaction.Reference3;
             newLine.Notes = selectedTransaction.Notes;
-            //newLine.GroupNumber = selectedTransaction.GroupHash;
-
             myReconciliationLines.push(newLine);
         }
+    }
 
-        if(isSplitJournal) {
-            this._ReconciliationExtendedPMService.CreateSplitJournalReconcile(
-                myReconciliationLines,
-                this._GLAccountPMId, this.GLAccount.Id, this.AccountingDate.toUTCString(), this.DueDate ? this.DueDate.toUTCString() : null, this.RefDate? this.RefDate.toUTCString() : null,
-                this.reference1, this.reference2, this.reference3, this.Notes)
-                .subscribe(
-                (res:ServiceResponse) => {
+    OkButtonClicked(isSplitJournal: boolean) {
+        this.FillErrors(isSplitJournal);
+
+        if (this.ValidationErrorsList.length > 0) {
+            return;
+        }
+
+        const reconciliationLines: ReconciliationLinePM[] = [];
+        this.BuildReconciliationLines(reconciliationLines);
+
+        if (isSplitJournal && AppTool.IsNullOrEmpty(this.AccountingDate)) {
+            const confirmMsg = 'Leaving the accounting date / due date/ reference date/references/note empty will create adjustment journals with dates/references/note taken from the original ones. If you want to continue click ok. If not click cancel and fill the date/references/note fields';
+            const confirmWindow = new ConfirmWindow();
+            confirmWindow.Width = 400;
+            confirmWindow.Show(confirmMsg);
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    this.ReconcileSplit(reconciliationLines);
+                    confirmWindow.Close();
+                }
+            });
+        } else {
+            this.Reconcile(reconciliationLines);
+        }
+    }
+
+    ReconcileSplit(myReconciliationLines: ReconciliationLinePM[]) {
+        this.CurrentSession.StartBusyIndicatorCreating();
+
+        this._ReconciliationExtendedPMService.CreateSplitJournalReconcile(
+            myReconciliationLines,
+            this._GLAccountPMId, this.GLAccount.Id,
+            this.AccountingDate ? this.AccountingDate.toUTCString() : null,
+            this.DueDate ? this.DueDate.toUTCString() : null,
+            this.RefDate ? this.RefDate.toUTCString() : null,
+            this.reference1, this.reference2, this.reference3, this.Notes)
+            .subscribe(
+                (res: ServiceResponse) => {
 
                     this.CurrentSession.StopBusyIndicator();
                     if (res.HasError) {
                         this.ValidationErrorsList = res.ErrorsArray;
 
                     } else {
-                        var journalsArray: JournalPM[];
+                        let journalsArray: JournalPM[];
                         journalsArray = res.Result;
                         this._NewJournals = journalsArray;
                     }
 
                 });
+    }
 
-        } else {
-            this._ReconciliationExtendedPMService.CreateJournalReconcile(
+    Reconcile(myReconciliationLines: ReconciliationLinePM[]) {
+        this.CurrentSession.StartBusyIndicatorCreating();
+
+        this._ReconciliationExtendedPMService.CreateJournalReconcile(
             myReconciliationLines,
-            this._GLAccountPMId, this.GLAccount.Id, this.AccountingDate.toUTCString(), this.DueDate ? this.DueDate.toUTCString() : null, this.RefDate? this.RefDate.toUTCString() : null,
+            this._GLAccountPMId, this.GLAccount.Id, this.AccountingDate.toUTCString(),
+            this.DueDate ? this.DueDate.toUTCString() : null, this.RefDate ? this.RefDate.toUTCString() : null,
             this.reference1, this.reference2, this.reference3, this.Notes)
             .subscribe(
-            (res:ServiceResponse) => {
+                (res: ServiceResponse) => {
 
-                this.CurrentSession.StopBusyIndicator();
-                if (res.HasError) {
-                    this.ValidationErrorsList = res.ErrorsArray;
+                    this.CurrentSession.StopBusyIndicator();
+                    if (res.HasError) {
+                        this.ValidationErrorsList = res.ErrorsArray;
 
-                } else {
-                    var journalPM: JournalPM;
-                    journalPM = res.Result;
-                    console.log(journalPM);
-                    this._NewJournalPM = journalPM;
-                }
+                    } else {
+                        let journalPM: JournalPM;
+                        journalPM = res.Result;
+                        this._NewJournalPM = journalPM;
+                    }
 
-            });
-        }
+                });
     }
+
     _NewJournalPM: JournalPM;
     _NewJournals: JournalPM[];
+
     OpenJournal(id: string) {
         if (!AppTool.IsNullOrEmpty(id)) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent',
+                this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'Journal' });
+                    cmpRef.instance.Run({EntityId: id, ObjectTableName: 'Journal'});
                     cmpRef.instance.BackCompleted.subscribe(bk => {
                     });
                 });
@@ -394,13 +440,18 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
-    getScreenHeight() { return self.innerHeight; }
+
+    getScreenHeight() {
+        return self.innerHeight;
+    }
+
     dropdownDisplay: string = 'none';
+
     DropdowndisplayToggle() {
         var item = document.getElementById("adjustbutton");
         var itemRect = item.getBoundingClientRect();
 
-        let DDLHeight =22.5;//    height: 22px; * 3 +30
+        let DDLHeight = 22.5;//    height: 22px; * 3 +30
         let Extra = 22 + 1 + 1; //    height: 22px; +1 UP +1 DOWN
         if (itemRect.bottom + DDLHeight < this.getScreenHeight()) {//this.PaintTop = true
             document.getElementById("dropdowmenu").style.top = (itemRect.bottom - DDLHeight - Extra) + 'px';
@@ -408,8 +459,7 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
 
         if (this.dropdownDisplay == 'none') {
             this.dropdownDisplay = 'block';
-        }
-        else {
+        } else {
             this.dropdownDisplay = 'none';
         }
     }
