@@ -286,24 +286,31 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
         this.TotalCredit = winArgs.TotalCredit;
         this.TotalDebit = winArgs.TotalDebit;
     }
-    FillErrors() {
+    FillErrors(isSplitJournal: boolean) {
         this.ValidationErrorsList = [];
         if (AppTool.IsNullOrEmpty(this.glAccount)) {
             this.ValidationErrorsList.push('GLAccount is Required');
         }
-        else if (AppTool.IsNullOrEmpty( this.AccountingDate )) {
+        else if (AppTool.IsNullOrEmpty( this.AccountingDate) && !isSplitJournal) {
             this.ValidationErrorsList.push(TextCodeTranslator.Translate( 'Journal.RE.AccountingDateRequired'));
         } else {
             this.ValidationErrorsList = [];
         }
     }
+
+    ShowMessage(isSplitJournal: boolean) {
+
+    }
     OkButtonClicked(isSplitJournal: boolean) {
-        this.FillErrors();
+        this.FillErrors(isSplitJournal);
+
         if (this.ValidationErrorsList.length > 0) {
             return;
         }
-        this.CurrentSession.StartBusyIndicatorCreating();
 
+        this.ShowMessage(isSplitJournal);
+
+        this.CurrentSession.StartBusyIndicatorCreating();
 
         var myReconciliationLines: ReconciliationLinePM[] = [];
 
