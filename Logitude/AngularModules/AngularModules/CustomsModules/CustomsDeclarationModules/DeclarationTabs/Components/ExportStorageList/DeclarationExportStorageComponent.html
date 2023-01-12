@@ -3,7 +3,7 @@
         color: #1b90cb;
         font-size: 16px;
     }
-    
+
 
     .DisbleBox {
         display: inline-block;
@@ -15,7 +15,6 @@
         color: gray;
         font-family: sans-serif;
     }
-   
 </style>
 <table *ngIf="IsLoaded">
     <tr>
@@ -27,21 +26,17 @@
                             {{'Customs.Declaration.TH.ExportStorageList'| TextCodeTranslationPipe}}
                         </td>
 
-                        
+
                     </tr>
 
                     <tr>
                         <td colspan="5" style="height: 100%;">
                             <div class="CellContent" style="bottom: 5px;padding:5px">
-                                <logitude-edit-grid 
-                                    [ItemSource]="DeclarationExportStorageList"
-                                     
-                                    [ColumnName]="'DeclarationId'"
-                                    [Condition]="EntityPM.Id"
-                                    (SelectedItemChanged)="OnRowSelected($event)"
-                                    >
-    
-                                   
+                                <logitude-edit-grid [ItemSource]="DeclarationExportStorageList"
+                                    [ColumnName]="'DeclarationId'" [Condition]="EntityPM.Id"
+                                    (SelectedItemChanged)="OnRowSelected($event)">
+
+
                                     <!-- OpenDate -->
                                     <log-column [header]="'Customs.ExportStorage.F.OpenDate' | TextCodeTranslationPipe"
                                         [binding]="'OpenDate'" [width]="'110'" [Alignment]="'right'">
@@ -75,6 +70,18 @@
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                                 <div style="text-align:right">
                                                     <span>{{item.ExporterName}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+                                    <!-- ExporterName -->
+                                    <log-column
+                                        [header]="'Customs.ExportStorage.F.ExporterCode' | TextCodeTranslationPipe"
+                                        [binding]="'ExporterCode'" [width]="'110'" [Alignment]="'right'">
+                                        <ng-template let-item>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                <div style="text-align:right">
+                                                    <span>{{item.ExporterCode}}</span>
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>
@@ -185,7 +192,7 @@
                                     </log-column>
 
 
-                                    
+
 
                                 </logitude-edit-grid>
                             </div>
