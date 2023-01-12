@@ -81,7 +81,10 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     initialize() {
         this.IsNew = Object.keys(this.Data).length === 0;
 
-        this.Name = this.Data["label"] || null;
+        if(!this.Data["label"]){
+            this.Data["label"] = this.Data["name"]
+        }
+        this.Name = this.Data["label"] || null
         this.Entity = this.Data["entity"] || null;
         this.RecordsLimit = this.Data["recordsLimit"] ? this.Data["recordsLimit"] : GetRecordLimits.FirstRecord;
         this.RecordsType = this.Data["recordsType"] ? this.Data["recordsType"] : null;

@@ -54,7 +54,10 @@ export class AppendItemPropertiesComponent extends BaseComponent {
     initialize() {
         this.IsNew = Object.keys(this.Data).length === 0;
 
-        this.Name = this.Data["label"] || null;
+        if(!this.Data["label"]){
+            this.Data["label"] = this.Data["name"]
+        }
+        this.Name = this.Data["label"] || null
         this.Collection = this.Data["collection"] || null;
         this.Entity = this.Data["entity"] || null;
         this.SetValues = this.Data["setValues"] || [];
@@ -86,7 +89,7 @@ export class AppendItemPropertiesComponent extends BaseComponent {
     }
 
     updateName(name: string) {
-        if(this.IsNew){
+        if (this.IsNew) {
             this.Data["name"] = Formatter.getCodeFromName(name);
         }
         this.Data["label"] = name;

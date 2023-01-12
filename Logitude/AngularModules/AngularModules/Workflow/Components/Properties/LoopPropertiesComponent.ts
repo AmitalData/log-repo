@@ -57,7 +57,10 @@ export class LoopPropertiesComponent extends BaseComponent {
     initialize() {
         this.IsNew = Object.keys(this.Data).length === 0;
 
-        this.Name = this.Data["label"] || null;
+        if(!this.Data["label"]){
+            this.Data["label"] = this.Data["name"]
+        }
+        this.Name = this.Data["label"] || null
         this.CollectionVariable = this.Data["collectionVariable"] || null;
         this.Direction = this.Data["direction"] ? this.Data["direction"] : this.FirstToLastDirection.Code;
 
