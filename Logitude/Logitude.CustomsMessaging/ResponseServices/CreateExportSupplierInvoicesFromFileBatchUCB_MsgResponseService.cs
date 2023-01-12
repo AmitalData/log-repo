@@ -71,6 +71,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 // create new invoice
                 var invoice = new SupplierInvoicePM
                 {
+                    AccountTypeCode="380",
                     InvoiceNumber = invoiceFromFile.InvoiceNumber,
                     InvoiceAmount = invoiceFromFile.InvoiceAmount,
                     BuyerName = invoiceFromFile.BuyerName,
