@@ -28,7 +28,7 @@ export class DeclarationDisplayOnlyChecks {
     }
     private timerToken: any;
     private _CourierMasterValidator: CourierMasterValidator = new CourierMasterValidator();
-
+    
     public DeclarationViewDisplayOnlyChecks(entityPM: DeclarationPM) {
         var editComponentNeedsRefresh: boolean = null;
         
@@ -97,14 +97,23 @@ export class DeclarationDisplayOnlyChecks {
         if (editComponentNeedsRefresh && this.CurrentSession.CurrentEditComponent.EditComponentController.MustRefreshMessage != null) {
             return defer(() => {
                 var text = this.CurrentSession.CurrentEditComponent.EditComponentController.MustRefreshMessage;
-                serviceResponse.Result = new DisplayOnlyCheckResult(true, text);
+               serviceResponse.Result = new DisplayOnlyCheckResult(true, text);
                 
                 return of(serviceResponse);
             });
-            
+           
+                   }
+
+        if(this.CurrentSession.CurrentEditComponent.EditComponentController.MustRefreshMessage!=null && this.CurrentSession.CurrentEditComponent.EditComponentController.IsInBatchRequest==true){
+            return defer(() => {
+                var text = this.CurrentSession.CurrentEditComponent.EditComponentController.MustRefreshMessage;
+               
+                serviceResponse.Result = new DisplayOnlyCheckResult(false, text);
+                
+                return of(serviceResponse);
+            });
+              
         }
-
-
         //Check if changing StorageSiteCode
         if (this.entityPM.IsCourierDeclaration) {
             this._CourierMasterValidator.CheckRequestInProgressForCourierMaster(this.entityPM.Tenant, "UCBCMSS", this.entityPM.CourierMasterId).subscribe((response: any) => {
@@ -118,7 +127,7 @@ export class DeclarationDisplayOnlyChecks {
                         editComponentNeedsRefresh = SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefresh;
                         SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.MustRefreshMessage = errorMessage;
                         serviceResponse.Result = new DisplayOnlyCheckResult(true, errorMessage);
-                        
+                       
                         return serviceResponse;
                     }
                 }
@@ -195,8 +204,8 @@ export class DeclarationDisplayOnlyChecks {
                     if((requestSheets == null || requestSheets.length == 0)  || requestSheets[0].InterfaceTypeCode==null 
                     && this.entityPM.ErrosXml.includes('Exception')){
                          serviceResponse.Result = new DisplayOnlyCheckResult(false, "התקבלה הודעת שגיאה במסך תשובה לתיק");
-                       
-                        
+                          this.CurrentSession.CurrentEditComponent.EditComponentController.MustRefreshMessage=serviceResponse.Result.DisplayOnlyMessage;
+                        this.CurrentSession.CurrentEditComponent.EditComponentController.IsInBatchRequest=true;
                         return serviceResponse;
                     }
                     if ((requestSheets == null || requestSheets.length == 0) && !editComponentNeedsRefresh) {

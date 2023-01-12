@@ -1522,17 +1522,16 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
     DisplayOnlyCheck() {
         this.DrawMe = true;
         this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
-
+        this.IsDisplayMessage=this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
         if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
             {
                 this.IsDisplayMessage = true;
-
                 this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
                 if (this.EntityPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.EntityPM.IsAmendmentDisplayOnly;
             }
         }
         else if (this.IsDisplayOnly) {
-            this.DisplayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
+             this.DisplayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
             this.SetScreenFieldsEditability();
             DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
             return;
@@ -1541,8 +1540,8 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
             this.ShowStorageStatusMessage = true;
             this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
         }
-
-
+       
+      
 
 
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
@@ -1553,24 +1552,24 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
             if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
                 {
                     this.IsDisplayMessage = true;
-
+                    
                     this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
                     if (this.EntityPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.EntityPM.IsAmendmentDisplayOnly;
                 }
             }
             else if (this.IsDisplayOnly) {
-                this.DisplayOnlyMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
+                                this.DisplayOnlyMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
             }
             else if (this.EntityPM.StorageStatusCode) {
-                this.ShowStorageStatusMessage = true;
+                                this.ShowStorageStatusMessage = true;
                 this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
             }
 
-            else if (this.EntityPM.ErrosXml.includes("Exception")) {
-                this.DisplayOnlyMessage = displayOnlyCheckResult.DisplayOnlyMessage;
+            else if (this.CurrentSession.CurrentEditComponent.EditComponentController.IsInBatchRequest && !displayOnlyCheckResult.IsDisplayOnly) {
+                 this.DisplayOnlyMessage = displayOnlyCheckResult.DisplayOnlyMessage;
                 this.IsDisplayMessage=true;
             }
-
+          
             this.SetScreenFieldsEditability();
             DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
         });

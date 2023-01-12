@@ -145,7 +145,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             MessageError = item.ExeptionDescription,
                             Code = "Exception",
-                            ListVersionID="4"
+                            ListVersionID="1"
 
                         });
                         declarationError.Entitites.Add(entity);
