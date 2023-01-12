@@ -542,18 +542,20 @@
             </table>
         </td>
         <td *ngIf="StatisticsVisibility" class="StatisticsTable-td">
+            <label for="StatisticsTable">כולל עתידי<!-- {{'Customs.RequestSheet.O.IncludingFuture' | TextCodeTranslationPipe }} --></label>
+            <CheckBox id="StatisticsTable" (Checked)="IncludingFuture = $event" [IsChecked]="IncludingFuture"></CheckBox>
             <div style="width:80%">
                 <table class="StatisticsTable">
                     <thead style="width: 100%; display:table;">
                         <tr>
-                            <th style="width:50%" class="Statistics"><h2>סוג בקשה</h2></th>
-                            <th style="width:50%" class="Statistics"><h2 style="width: calc(100% - 30px)">כמות</h2></th>
+                            <th class="Statistics"><h2>סוג בקשה</h2></th>
+                            <th style="width:60px" class="Statistics"><h2 style="width: calc(100% - 30px)">כמות</h2></th>
                         </tr>
                     </thead>
                     <tbody *ngIf="IsTherecustomsRequestsSheetSummary">
                         <tr style="display: table; width: 100%; table-layout: fixed; height: 20px; border-bottom:1px solid #A7A9AC;" *ngFor="let item of customsRequestsSheetSummary">
-                            <td class="Statistics">{{item.InterfaceTypeName}}</td>
-                            <td class="Statistics">{{item.count}}</td>
+                            <td class="Statistics" [tooltip]="item.InterfaceTypeName" position="right" [show]="item.InterfaceTypeName.length > 29">{{item.InterfaceTypeName}}</td>
+                            <td class="Statistics count-td">{{item.count}}</td>
                         </tr>
                     </tbody>
                     <tbody *ngIf="!IsTherecustomsRequestsSheetSummary">
@@ -561,8 +563,8 @@
                     </tbody>
                     <tfoot  [ngStyle]="{'width':this.customsRequestsSheetSummary.length > 4 ?  'calc(100% - 18px)' : '100%' }" style="display: table;">
                         <tr>
-                            <td style="width:50%" class="Statistics"></td>
-                            <td style="width:50% " class="Statistics">
+                            <td class="Statistics"></td>
+                            <td class="Statistics count-td">
                                 <span *ngIf="SumRequests > 0">{{SumRequests}}</span>
                             </td>
                         </tr>

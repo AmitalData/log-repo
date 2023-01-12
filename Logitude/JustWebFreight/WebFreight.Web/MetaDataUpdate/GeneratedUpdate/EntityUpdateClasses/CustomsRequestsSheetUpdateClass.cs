@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsRequestsSheetUpdateClass
    {  		
-		public const string HashString = "aaf3f15888c3134ea46da60d89c02114";
+		public const string HashString = "16239013201681c54795d0a60d33538c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Customs Requests Sheet",
-			      				    Code =  "f213",
+			      				    Code =  "6053",
 			      				    Name =  "Customs.CustomsRequestsSheet Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -1536,6 +1536,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "TenantPriority",
 					  						ListPropertyPath =  "TenantPriority",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1682,6 +1683,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsRequestsSheetTextCode_CustomsRequestSheetODCA = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.RequestSheet.O.DCA", DefaultText = "DCA",LocalDefaultText = @"כספת", ObjectTableId = CustomsRequestsSheetObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsRequestsSheetTextCode_CustomsRequestSheetORegular = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.RequestSheet.O.Regular", DefaultText = "Regular",LocalDefaultText = @"רגיל", ObjectTableId = CustomsRequestsSheetObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsRequestsSheetTextCode_CustomsRequestSheetOIncludingFuture = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.RequestSheet.O.IncludingFuture", DefaultText = "including future",LocalDefaultText = @"כולל עתידי", ObjectTableId = CustomsRequestsSheetObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

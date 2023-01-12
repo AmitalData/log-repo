@@ -31,7 +31,7 @@ import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'CustomsRequestsSheetsComponent',
-
+    styleUrls: ['./CustomsRequestsSheetsComponent.scss'],
     templateUrl: './CustomsRequestsSheetsComponent.html',
     providers: [CustomsRequestsSheetExtendedListService]
 })
@@ -108,6 +108,8 @@ export class CustomsRequestsSheetsComponent
     CloseButtonVisibility: boolean;//?????
     selectStatusesHeight: string;
     //_stratSearch: boolean = true;
+    IncludingFuture: boolean = false;
+    
     public get AllCRSSChecked() { return this._AllCRSSChecked };
     public set AllCRSSChecked(value: boolean) {
         this._AllCRSSChecked = value;
@@ -247,8 +249,7 @@ export class CustomsRequestsSheetsComponent
             var customsSetting = response.Result;
             //if (!AppTool.IsNullOrEmpty(customsSetting) && customsSetting.CompanyType == "B") {
                 this.StatisticsVisibility = !this.CurrentSession?.CurrentEditComponent?.EntityPM;;
-                var service = new CustomsRequestsSheetWebService();
-                var statistics = service.GetStatistics().subscribe((response: any) => {
+                new CustomsRequestsSheetWebService().GetStatistics(this.IncludingFuture).subscribe((response: any) => {
                     if (response.Result != null) {
                         this.SumRequests = 0;
                         this.customsRequestsSheetSummary = response.Result;
