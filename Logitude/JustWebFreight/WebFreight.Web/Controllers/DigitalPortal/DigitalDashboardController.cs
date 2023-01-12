@@ -327,19 +327,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             var departedCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SDEP").StatusWeight;
             var arrivedAtDestinationCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SARR").StatusWeight;
 
-            var cc = shipments.Where(r => allowedStatusCode.Contains(r.StatusCode))
-                                   .Select(a => new
-                                   {
-                                       a.TransportModeId,
-                                       Code = a.StatusWeight < departedCodeWeight
-                                               ? "Origin"
-                                               : (a.StatusWeight >= departedCodeWeight
-                                                  && a.StatusWeight < arrivedAtDestinationCodeWeight)
-                                                  ? "InTransit"
-                                                  : "dataAtDestination"
-                                   })
-                                   .GroupBy(a => a.Code);
-
             var result = shipments.Where(r => allowedStatusCode.Contains(r.StatusCode))
                                    .Select(a => new
                                    {
