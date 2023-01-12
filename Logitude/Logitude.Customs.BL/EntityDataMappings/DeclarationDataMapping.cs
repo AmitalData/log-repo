@@ -190,9 +190,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 }
                 else
                 {*/
-                    var declarations = declarationQuery.GetDeclarationAmendmentsById_Cache/*Cache*/(entityPOCO.Tenant, entityPOCO.Id);
+                var declarations = declarationQuery//.GetDeclarationAmendmentsById_Cache/*Cache*/(entityPOCO.Tenant, entityPOCO.Id);
+                .GetAllDeclarationPOCOs(entityPOCO.Tenant, entityPOCO.CustomFileNo);
 
-                    var declaration = declarations.FirstOrDefault(x => new string[] { "1", "3", "6" }.Contains(x.AmendmentStatus));
+                var declaration = declarations.FirstOrDefault(x => new string[] { "1", "3", "6" }.Contains(x.AmendmentStatus));
                     if (declaration != null)
                     {
                         if (declaration.AmedmentType == "2")
@@ -451,18 +452,20 @@ namespace Logitude.Customs.BL.EntityDataMappings
             //if (dCustomsSetting.CompanyType == "B")//Courier
             if (entityPOCO.IsCourierDeclaration)
             {
-
-                CourierDeclarationQueryService courierDeclarationService = new CourierDeclarationQueryService(entityPOCO.Tenant);
-                CourierDeclarationPM courierDeclaration = courierDeclarationService.GetCourierDeclarationByDeclarationId_Cache(entityPOCO.Id, entityPOCO.Tenant);
-                if (courierDeclaration != null)
-                {
-                    CourierMasterQueryService courierMasterService = new CourierMasterQueryService(entityPOCO.Tenant);
-                    CourierMasterPM courierMaster = courierMasterService.GetSingle(courierDeclaration.CourierMasterId, false, true);
-                    if (courierMaster != null)
-                    {
-                        entityPM.CourierData = courierMaster.AirlinePrefix + "-" + courierMaster.MAWB;
-                    }
-                }
+                
+                
+                //CourierDeclarationQueryService courierDeclarationService = new CourierDeclarationQueryService(entityPOCO.Tenant);
+                //CourierDeclarationPM courierDeclaration = courierDeclarationService.GetCourierDeclarationByDeclarationId_Cache(entityPOCO.Id, entityPOCO.Tenant);
+                //if (courierDeclaration != null)
+                //{
+                //    CourierMasterQueryService courierMasterService = new CourierMasterQueryService(entityPOCO.Tenant);
+                    //CourierMasterPM courierMaster = courierMasterService.GetSingle(courierDeclaration.CourierMasterId, false, true);
+                    //if (courierMaster != null)
+                    //{
+                    //    entityPM.CourierData = courierMaster.AirlinePrefix + "-" + courierMaster.MAWB;
+                    //}
+                    entityPM.CourierData = (new CourierMasterRepository(entityPOCO.Tenant)).GetPrefixMAWBByDeclarationId(entityPOCO.Id, entityPOCO.Tenant);
+                //}
             }
             DeclarationPaymentQueryService declarationPaymentQueryService = new DeclarationPaymentQueryService(entityPOCO.Tenant);
             DeclarationPaymentPM declarationPaymentPM = declarationPaymentQueryService.GetSingle(entityPOCO.Id, false, true);
