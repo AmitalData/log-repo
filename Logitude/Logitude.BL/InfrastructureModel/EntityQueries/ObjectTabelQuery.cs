@@ -185,7 +185,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                     AvailableInCustomization = a.AvailableInCustomization,
                                     ParentObjectTableId = a.ParentObjectTableId,
                                     IsCustom = a.IsCustom,
-                                    SupportSubEntity = a.SupportSubEntity
+                                    SupportSubEntity = a.SupportSubEntity,
                                     NewMechanismForCustomFields = a.NewMechanismForCustomFields
                                 }).ToList();
             }
