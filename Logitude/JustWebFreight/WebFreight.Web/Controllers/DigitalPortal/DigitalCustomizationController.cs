@@ -122,6 +122,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                     customCodesMappedObject.Add(new DigitalTextCodeUpdateObject
                     {
+                        DisplayText = addCustomFieldRequest.DisplayText,
                         DefaultText = addCustomFieldRequest.DefaultText, 
                         TextCode = addCustomFieldRequest.TextCode,
                         FieldCode = addCustomFieldRequest.FieldCode
@@ -144,6 +145,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                     customCodesMappedObject.Add(new DigitalTextCodeUpdateObject
                     {
+                        DisplayText = addCustomFieldRequest.DisplayText,
                         DefaultText = addCustomFieldRequest.DefaultText,
                         TextCode = addCustomFieldRequest.TextCode,
                         FieldCode = addCustomFieldRequest.FieldCode
