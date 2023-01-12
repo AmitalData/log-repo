@@ -37,7 +37,7 @@ export class GeneralPrintHelper {
     documentTypePM: DocumentTypePM;
     documentTypePMService: DocumentTypePMExtendedService;
     documentOutPMService: DocumentOutPMService;
-    public IsLoadPrintControl: boolean = false;
+    public IsLoadPrintControl: boolean = true;
     public IsStartPrint: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(objecttablename: string, documentTypeCode: string, entityId: string, childEntityId: string, childReference:string ,childObjectTableId:string ) {
