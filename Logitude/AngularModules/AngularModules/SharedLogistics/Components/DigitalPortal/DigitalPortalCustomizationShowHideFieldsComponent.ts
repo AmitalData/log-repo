@@ -79,6 +79,15 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
         }
     }
 
+    private searchText: string = null;
+    public get SearchText() { return this.searchText; }
+    public set SearchText(value: string) {
+        if (this.searchText != value) {
+            this.searchText = value;
+            this.BuildSearchItems();
+        }
+    }
+
     private FillDigitalProfileFiltersList() {
         this.DigitalProfileFilterList = [];
         this.digitalTextService.GetDigitalProfileName().subscribe((myResult) => {
@@ -116,12 +125,37 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
         var profileId = this.SelectedProfileItem.Code;
         this.digitalTextService.GetFeildPermissionByFilters(null, objectTableId, profileId).subscribe((myResult) => {
             if (!myResult.HasError) {
+                this.loadedResults = myResult.Result;
                 myResult.Result.filter(a => !AppTool.IsNullOrEmpty(a.FieldCode)).forEach(item => {
                     profilesList.push(new ProfileFieldsItem(this, item));
                 });
                 this.FieldsItemsSource.InsertCollection(profilesList);
             }
         });
+    }
+
+    loadedResults = [];
+    BuildSearchItems() {
+        var labelsList: ProfileFieldsItem[] = [];
+        if (!AppTool.IsNullOrEmpty(this.SearchText)) {
+            var data = this.loadedResults;
+            data = data.filter(f =>
+                (!AppTool.IsNullOrEmpty(f.FieldCode) && f.FieldCode.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1) ||
+                (!AppTool.IsNullOrEmpty(f.DisplayText) && f.DisplayText.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1) ||
+                (!AppTool.IsNullOrEmpty(f.DefaultText) && f.DefaultText.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1));
+
+            data.forEach(item => {
+                labelsList.push(new ProfileFieldsItem(this, item));
+            });
+
+            this.FieldsItemsSource = new ObservableCollection([]);
+            this.FieldsItemsSource.InsertCollection(labelsList);
+        }
+        else {
+            this.FieldsItemsSource = new ObservableCollection([]);
+            labelsList = this.loadedResults;
+            this.FieldsItemsSource.InsertCollection(labelsList);
+        }
     }
 
     CloseClicked() {

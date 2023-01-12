@@ -22,7 +22,7 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
     TextAreaInputCurrentPosition: number = 0;
     IsPreviewChanges: boolean = false;
 
-    public editorOptions = {theme: '', language: 'html'};
+    public editorOptions = { theme: '', language: 'html', validate: 'true' };
     CurrentTenantScreen: DigitalPortalScreenList;
     constructor() {
         this.Screens = [];
@@ -89,6 +89,7 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
     }
 
     GetHTMLText() {
+        this.CurrentSession.StartBusyIndicatorLoading();
         var objectTableId = this.SelectedItem.ObjectTableId;
         var screenCode = this.SelectedItem.ScreenCode;
         this.digitalCustomizationService.GetDigitalPortalScreens(objectTableId, screenCode).subscribe((myResult) => {
@@ -98,6 +99,7 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
                 if (screen != null)
                     this.hTMLEditor = screen.Content;
             }
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 
@@ -137,11 +139,21 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         logWindow.Title = "Insert Field";
         logWindow.WindowArgs = windowArgs;
         logWindow.Show('./SharedLogistics/Components/DigitalPortal/AddDigitalFieldCodeComponent');
-        logWindow.WindowClosed.subscribe(($event: any) => {
-            if ($event) {
-                var htmlField = "<LogContainer>\n<LogLabel field-code='" + $event + "' ></LogLabel>\n:\n<LogField field-code='" + $event + "'></LogField> \n</LogContainer>";
-                this.attachValue(htmlField);
-            }
+        logWindow.ComponentLoaded.subscribe(s => {
+            logWindow.WindowClosed.subscribe(($event: any) => {
+                if ($event) {
+                    var isAddingComponent = s.IsAddingComponent;
+                    var htmlField = "";
+                    if (isAddingComponent) {
+                        htmlField = "<LogContainer>\n<LogLabel field-code='" + $event + "' ></LogLabel>\n:\n<LogField field-code='" + $event + "'></LogField> \n</LogContainer>";
+                    }
+                    else {
+                        htmlField = $event;
+                    }
+
+                    this.attachValue(htmlField);
+                }
+            });
         });
     }
 
@@ -167,6 +179,10 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
                 });
             }
         });
+    }
+
+    LoadDraftLayoutClicked() {
+        this.hTMLEditor = this.CurrentTenantScreen.DraftContent;
     }
 
     PublichChangesClicked(isDraft) {
@@ -210,7 +226,6 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
                 this.IsPreviewChanges = false;
                 this.PreviewDigitalPortal();
             }
-            
         });
     }
 
@@ -231,24 +246,12 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
     myEditor : any;
     onInit(editor) {
         editor.onDidBlurEditorText(() => {
-            // const start = editor.getSelection().selectionStartColumn;//.target.selectionStart;
-            // var xx = editor;
-            //var line = editor.getPosition();
             this.myEditor = editor;
             this.myRange = editor.getSelection(); 
         });
-        // editor.onDidChangeCursorPosition((event) => {
-        //     /* column | lineNumber */
-        //     const start = event.position.column;//.target.selectionStart;
-        //     this.TextAreaInputCurrentPosition = start;
-        //     //var xx = editor;
-        // });
-
     }
 
     attachValue(selectedValue: string) {
-        // let patchedValue = this.HTMLEditor.substr(0, this.TextAreaInputCurrentPosition) + selectedValue + this.HTMLEditor.substr(this.TextAreaInputCurrentPosition, this.HTMLEditor.length);
-        // this.HTMLEditor = patchedValue;
             var id = { major: 1, minor: 1 };
             var text = selectedValue;
             var op = { identifier: id, range: this.myRange, text: text, forceMoveMarkers: true };

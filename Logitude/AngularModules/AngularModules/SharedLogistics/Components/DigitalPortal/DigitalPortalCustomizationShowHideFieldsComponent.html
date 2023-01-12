@@ -20,9 +20,14 @@
                                 <td>
                                     <div></div>
                                 </td>
-
                                 <td style="width: 100px;">
                                     <button class="Button" (click)="AddFieldClicked()">Add a field </button>
+                                </td>
+                                <td style="width: 5px;">
+                                    <div></div>
+                                </td>
+                                <td style="width: 400px;">
+                                    <SearchBox (TextChanged)="SearchText = $event"></SearchBox>
                                 </td>
                             </tr>
                         </table>
