@@ -93,12 +93,10 @@ export class AddDigitalLogitudeFieldComponent extends BaseComponent implements O
     }
 
     BuildColumns() {
-        var objectTableId = this.ObjectTableId;
-        this.ObjectFields = window.ObjectFields.filter(f =>  f.ObjectTableId == objectTableId);
         this.columns = [];
 
         this.columns.push({
-            FieldName: 'FieldCode',
+            FieldName: 'FullNameTextCodeDefaultText',
             DataTypeCode: 'String',
             Display: 'Default Name',
             Styles: { width: '200px' },
@@ -139,7 +137,7 @@ export class AddDigitalLogitudeFieldComponent extends BaseComponent implements O
         if (searchtext != null || searchtext != undefined) {
             
             this.timerToken = setTimeout(() => {
-                this.searchFieldFilter = new FilterItem("FieldCode", searchtext, null, null, "Contains", false, false, false, "string", false);
+                this.searchFieldFilter = new FilterItem("FullNameTextCodeDefaultText", searchtext, null, null, "Contains", false, false, false, "string", false);
                 this.ReloadScreen();
             }, 700);
 

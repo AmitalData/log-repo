@@ -315,7 +315,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     entityLists = entityLists.Take(queryOperations.PageSize);
                 }
 
-                List<ObjectFieldList> listResult = entityLists.ToList();
+                List<ObjectFieldList> listResult = entityLists.Where(a => !string.IsNullOrEmpty(a.FullNameTextCodeDefaultText)).ToList();
 
                 var helper = new DigitalFieldSecuritesHelper();
 
@@ -324,10 +324,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 foreach (var item in listResult)
                 {
-                    if(item.FieldCode == "Shipment.INTTRABookingTransStatusCode")
-                    {
-
-                    }
                     if(defaultData.Any(a => a.FieldCode.Equals(item.FieldCode))
                         || customData.Any(a => a.FieldCode.Equals(item.FieldCode)))
                     {

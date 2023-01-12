@@ -182,7 +182,7 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
     }
 
     LoadDraftLayoutClicked() {
-        this.HTMLEditor = this.CurrentTenantScreen.DraftContent;
+        this.hTMLEditor = this.CurrentTenantScreen.DraftContent;
     }
 
     PublichChangesClicked(isDraft) {
@@ -226,7 +226,6 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
                 this.IsPreviewChanges = false;
                 this.PreviewDigitalPortal();
             }
-            
         });
     }
 
@@ -247,24 +246,12 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
     myEditor : any;
     onInit(editor) {
         editor.onDidBlurEditorText(() => {
-            // const start = editor.getSelection().selectionStartColumn;//.target.selectionStart;
-            // var xx = editor;
-            //var line = editor.getPosition();
             this.myEditor = editor;
             this.myRange = editor.getSelection(); 
         });
-        // editor.onDidChangeCursorPosition((event) => {
-        //     /* column | lineNumber */
-        //     const start = event.position.column;//.target.selectionStart;
-        //     this.TextAreaInputCurrentPosition = start;
-        //     //var xx = editor;
-        // });
-
     }
 
     attachValue(selectedValue: string) {
-        // let patchedValue = this.HTMLEditor.substr(0, this.TextAreaInputCurrentPosition) + selectedValue + this.HTMLEditor.substr(this.TextAreaInputCurrentPosition, this.HTMLEditor.length);
-        // this.HTMLEditor = patchedValue;
             var id = { major: 1, minor: 1 };
             var text = selectedValue;
             var op = { identifier: id, range: this.myRange, text: text, forceMoveMarkers: true };
