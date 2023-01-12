@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-	<Sql Version="8">
+	<Sql Version="9">
       <![CDATA[	  
 	  
 		delete from DigitalPreDefinedComponents where id != ''
@@ -7,7 +7,7 @@
 		set @shipmentObjectId = (select Id from ObjectTables where [Name] = 'Shipment' and Tenant = 0 )
 		
 		declare @EntityId as varchar(15)
- 		EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPreDefinedComponents'
+ 		EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPreDefinedComponent'
 	
 		INSERT INTO DigitalPreDefinedComponents (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], Content) 
 	    values (@EntityId,
@@ -18,7 +18,7 @@
 				'Shipment status component for tablet',
 				'<ShipmentStatusInfoForTablet></ShipmentStatusInfoForTablet>')
 
- 		EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPreDefinedComponents'
+ 		EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPreDefinedComponent'
 	
 		INSERT INTO DigitalPreDefinedComponents (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, Name, Content) 
 	    values (@EntityId,
@@ -29,7 +29,7 @@
 				'Shipment horizontal timeline component',
 				'<HorizontalTimeline></HorizontalTimeline>');
 				
-	    EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPreDefinedComponents'
+	    EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPreDefinedComponent'
 	
 		INSERT INTO DigitalPreDefinedComponents (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, Name, Content) 
 	    values (@EntityId,
@@ -40,7 +40,7 @@
 				'Shipment status info component',
 				'<ShipmentStatusInfo></ShipmentStatusInfo>');
 				
-				EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPreDefinedComponents'
+				EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPreDefinedComponent'
 	
 		INSERT INTO DigitalPreDefinedComponents (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, Name, Content) 
 	    values (@EntityId,
