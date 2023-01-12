@@ -15,7 +15,7 @@
   <Column
     Name="PersonId"
     Type="varchar"
-    Size="15"> 
+    Size="15">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
@@ -78,6 +78,13 @@
   <Column
     Name="LastAccessedAt"
     Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int"
+    DefaultValue="0">
     <Constraints
       Nullable="false" />
   </Column>

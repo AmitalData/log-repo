@@ -186,7 +186,7 @@ namespace WebFreight.Web.WcfApi
                 {
 
                     var dbSignQueueService = new SignQueueHybridDbService();
-                    dbSignQueueService.UpsertSignStation(exportReqSignData.CurrentSignCertificate, exportReqSignData.isPersonalSignOn, exportReqSignData.isCompanySignOn);
+                    dbSignQueueService.UpsertSignStation(exportReqSignData.CurrentSignCertificate, exportReqSignData.isPersonalSignOn, exportReqSignData.isCompanySignOn, exportReqSignData.Tenant);
 
 
                 }

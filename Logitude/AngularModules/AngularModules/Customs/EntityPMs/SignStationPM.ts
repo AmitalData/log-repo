@@ -79,6 +79,11 @@ export class SignStationPM {
     public set LastAccessedAt(newValue: Date) { if (this.lastAccessedAt != newValue) { this.lastAccessedAt = newValue; this.MarkAsDirty("LastAccessedAt"); } }
        
 	 
+    private tenant: number;
+    public get Tenant() { return this.tenant; }
+    public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
+       
+	 
 
     public OldEntityPM: SignStationPM;
 		
