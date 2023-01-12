@@ -8,9 +8,9 @@ using System.Net.Http;
 using System.Web.Http;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityListQueryServices;
-using Logitude.Customs.Data.Repsitories;
 using Logitude.CustomsMessaging.RabbitMQ;
 using RabbitMQ.Client;
+using Logitude.Customs.BL.EntityQueryServices;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -26,7 +26,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
                 ICustomContext context = CustomContext.GetContext(tenant);
-                var summary = new InterfaceManagementRepository(context).GetQueueMessagesSatistic(tenant, includingFuture);
+                var summary = new InterfaceManagementQueryService(context).GetQueueMessagesSatistic(tenant, includingFuture);
 
                 return Request.CreateResponse(HttpStatusCode.OK, summary);
 

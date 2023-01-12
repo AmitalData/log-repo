@@ -13,12 +13,6 @@ namespace Logitude.Customs.Data.DataContracts
     {
         public int count { get; set; }
         public string InterfaceTypeName { get; set; }
-
-        public CustomsRequestsSheetSummary(string InterfaceTypeName, int count)
-        {
-            this.InterfaceTypeName = InterfaceTypeName;
-            this.count = count;
-        }
     }
 
 
