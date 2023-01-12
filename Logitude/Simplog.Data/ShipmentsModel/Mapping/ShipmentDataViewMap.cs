@@ -178,6 +178,7 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.AgentId).HasMaxLength(15).IsUnicode(false);            
             this.Property(t => t.DescriptionOfGoods).HasMaxLength(512).IsUnicode(false);
             this.Property(t => t.Notes).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.NotesSharedWithCustomer).HasMaxLength(2000).IsUnicode(true);
             this.Property(t => t.DirectionId).IsRequired().IsFixedLength().HasMaxLength(1).IsUnicode(false);
             this.Property(t => t.TransportModeId).IsRequired().IsFixedLength().HasMaxLength(1).IsUnicode(false);
             this.Property(t => t.ConsigneeAddressId).HasMaxLength(15).IsUnicode(false);
@@ -422,6 +423,8 @@ namespace Simplog.Data.ShipmentModel.Mapping
             // Table & Column Mappings
             this.ToTable("ShipmentDataView");
             this.Property(t => t.Id).HasColumnName("Id");
+            this.Property(t => t.IsCustomerArchived).HasColumnName("IsCustomerArchived");
+            this.Property(t => t.NotesSharedWithCustomer).HasColumnName("NotesSharedWithCustomer");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.ShipmentNumber).HasColumnName("ShipmentNumber");
             this.Property(t => t.ShipperReference1).HasColumnName("ShipperReference1");
