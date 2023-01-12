@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="28">
+  <Sql Version="29">
     <![CDATA[	
 	  delete from DigitalTextCodes where id != ''
 
@@ -8,7 +8,7 @@
 	  set @generalObjectTableId = (select Id from ObjectTables where [Name] = 'General' and Tenant = 0 )
 	  declare @customerProfileId as varchar(15)
 	  set @customerProfileId = (select Id from DigitalProfiles where [Name] = 'Customer' and Tenant = 0 )
- 	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCodes'
+ 	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCode'
 	  INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate,  ProfileId, Labels) 
 	  values (@NewEntityId, 0, @generalObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @customerProfileId,
 	  '[{
@@ -660,7 +660,7 @@
 	  declare @shipmentObjectTableId as varchar(15)
 	  set @shipmentObjectTableId = (select Id from ObjectTables where [Name] = 'Shipment' and Tenant = 0 )
 
- 	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCodes'
+ 	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCode'
 
 	  INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, Labels) 
 	  values (@NewEntityId, 0, @shipmentObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, @customerProfileId,
@@ -1832,7 +1832,7 @@
 	  
 	declare @invocieObjectTableId as varchar(15)
 	set @invocieObjectTableId = (select Id from ObjectTables where [Name] = 'ARInvoice' and Tenant = 0)
- 	EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCodes'
+ 	EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCode'
 
 	INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId,  Labels) 
 	values (@NewEntityId, 0, @invocieObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, @customerProfileId,
@@ -2110,7 +2110,7 @@
 	  declare @agentProfileId as varchar(15)
 	  set @agentProfileId = (select Id from DigitalProfiles where [Name] = 'Agent' and Tenant = 0 )
 
-	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCodes'
+	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCode'
 	  INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate,  ProfileId, Labels) 
 	  values (@NewEntityId, 0, @generalObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @agentProfileId,
 	  '[{
@@ -2759,7 +2759,7 @@
 			"FieldCode": ""
 		}]');
 
-	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCodes'
+	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCode'
 	  INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, Labels) 
 	  values (@NewEntityId, 0, @shipmentObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, @agentProfileId,
 	  '[{
@@ -3928,7 +3928,7 @@
 			"FieldCode": "Shipment.OnCarriageVesselName"
 		}]');
 	   
-	EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCodes'
+	EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCode'
 	INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId,  Labels) 
 	values (@NewEntityId, 0, @invocieObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, @agentProfileId,
 		  '[{
@@ -4205,7 +4205,7 @@
 			declare @packagesObjectTableId as varchar(15)
 		    set @packagesObjectTableId = (select Id from ObjectTables where [Name] = 'ShipmentPackage' and Tenant = 0)
 
-			EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCodes'
+			EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCode'
 			INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, Labels) 
 			values (@NewEntityId, 0, @packagesObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, @customerProfileId,
 			  '[{
@@ -4799,7 +4799,7 @@
 					"FieldCode": "ShipmentPackage.WarehouseLegActualEntryDate"
 				}]');
 			
-			EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCodes'
+			EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCode'
 			INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, Labels) 
 			values (@NewEntityId, 0, @packagesObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, @agentProfileId,
 			  '[{
@@ -5396,7 +5396,7 @@
 				
 			declare @shipmentPickUpDeliveryObjectTableId as varchar(15)
 		    set @shipmentPickUpDeliveryObjectTableId = (select Id from ObjectTables where [Name] = 'ShipmentPickUpDelivery' and Tenant = 0)
-			EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCodes'
+			EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCode'
 			INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, Labels) 
 			values (@NewEntityId, 0, @shipmentPickUpDeliveryObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, @customerProfileId,
 			'[{
@@ -5451,7 +5451,7 @@
 			}]');
 			
 			
-			EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCodes'
+			EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCode'
 			INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, Labels) 
 			values (@NewEntityId, 0, @shipmentPickUpDeliveryObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, @agentProfileId,
 			'[{
@@ -5508,7 +5508,7 @@
 			
 			declare @truckerObjectTableId as varchar(15)
 		    set @truckerObjectTableId = (select Id from ObjectTables where [Name] = 'Trucker' and Tenant = 0)
-			EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCodes'
+			EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCode'
 			INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, Labels) 
 			values (@NewEntityId, 0, @truckerObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, @customerProfileId,
 			'[{
@@ -5557,7 +5557,7 @@
 				"FieldCode": "Trucker.StateName"
 			}]');
 			
-			EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCodes'
+			EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCode'
 			INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, Labels) 
 			values (@NewEntityId, 0, @truckerObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, @agentProfileId,
 			'[{

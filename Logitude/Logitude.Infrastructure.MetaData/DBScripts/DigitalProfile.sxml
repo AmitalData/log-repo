@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="25">
+  <Sql Version="26">
       <![CDATA[	  
 	  delete from DigitalFieldSecurities where id != ''
 	  
@@ -8,7 +8,7 @@
 	   BEGIN
 		   IF NOT EXISTS (SELECT * FROM DigitalProfiles WHERE Name = 'Customer')
 		   BEGIN
-		       EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT, 'DigitalProfiles'
+		       EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT, 'DigitalProfile'
 			   INSERT INTO DigitalProfiles (Id, Tenant, CreateDate, UpdateDate,  Name) 
 			   values (@NewEntityId, 0, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, 'Customer')
 		   END
@@ -17,7 +17,7 @@
 		BEGIN
 		   IF NOT EXISTS (SELECT * FROM DigitalProfiles WHERE Name = 'Agent')
 		   BEGIN
-		       EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT, 'DigitalProfiles'
+		       EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT, 'DigitalProfile'
 			   INSERT INTO DigitalProfiles (Id, Tenant, CreateDate, UpdateDate,  Name) 
 			   values (@NewEntityId, 0, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, 'Agent')
 		   END
