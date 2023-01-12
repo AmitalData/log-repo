@@ -108,7 +108,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          AvailableInCustomization = a.AvailableInCustomization,
                                          ParentObjectTableId = a.ParentObjectTableId,
                                          IsCustom = a.IsCustom,
-                                         SupportSubEntity = a.SupportSubEntity
+                                         SupportSubEntity = a.SupportSubEntity,
+                                         NewMechanismForCustomFields = a.NewMechanismForCustomFields
                                      }).ToList();
             }
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -185,6 +186,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                     ParentObjectTableId = a.ParentObjectTableId,
                                     IsCustom = a.IsCustom,
                                     SupportSubEntity = a.SupportSubEntity
+                                    NewMechanismForCustomFields = a.NewMechanismForCustomFields
                                 }).ToList();
             }
 
@@ -268,7 +270,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                            AvailableInCustomization = a.AvailableInCustomization,
                                            ParentObjectTableId = a.ParentObjectTableId,
                                            IsCustom = a.IsCustom,
-                                           SupportSubEntity = a.SupportSubEntity
+                                           SupportSubEntity = a.SupportSubEntity,
+                                           NewMechanismForCustomFields = a.NewMechanismForCustomFields
+
                                        }).ToList();
             }
             if (tenant != 0)
@@ -346,7 +350,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                             AvailableInCustomization = a.AvailableInCustomization,
                                             ParentObjectTableId = a.ParentObjectTableId,
                                             IsCustom = a.IsCustom,
-                                            SupportSubEntity = a.SupportSubEntity
+                                            SupportSubEntity = a.SupportSubEntity,
+                                            NewMechanismForCustomFields = a.NewMechanismForCustomFields
                                         }).ToList();
                 }
             }
@@ -439,7 +444,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        IsTabsHidden = a.IsTabsHidden,
                                                        ParentObjectTableName = a.ParentObjectTableName,
                                                        AvailableInCustomization = a.AvailableInCustomization,
-                                                       SupportSubEntity = a.SupportSubEntity
+                                                       SupportSubEntity = a.SupportSubEntity,
+                                                       NewMechanismForCustomFields = a.NewMechanismForCustomFields
                                                    }).ToList();
                             scope.Complete();
                         }
@@ -523,7 +529,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    IsTabsHidden = a.IsTabsHidden,
                                                    ParentObjectTableName = a.ParentObjectTableName,
                                                    AvailableInCustomization = a.AvailableInCustomization,
-                                                   SupportSubEntity = a.SupportSubEntity
+                                                   SupportSubEntity = a.SupportSubEntity,
+                                                   NewMechanismForCustomFields = a.NewMechanismForCustomFields
                                                }).ToList();
                         scope.Complete();
                     }
@@ -606,7 +613,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    AvailableInCustomization = a.AvailableInCustomization,
                                                    ParentObjectTableId = a.ParentObjectTableId,
                                                    IsCustom = a.IsCustom,
-                                                   SupportSubEntity = a.SupportSubEntity
+                                                   SupportSubEntity = a.SupportSubEntity,
+                                                   NewMechanismForCustomFields = a.NewMechanismForCustomFields
                                                }).ToList();
 
                         scope.Complete();
@@ -694,7 +702,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                             AvailableInCustomization = a.AvailableInCustomization,
                                             ParentObjectTableId = a.ParentObjectTableId,
                                             IsCustom = a.IsCustom,
-                                            SupportSubEntity = a.SupportSubEntity
+                                            SupportSubEntity = a.SupportSubEntity,
+                                            NewMechanismForCustomFields = a.NewMechanismForCustomFields
                                         }).ToList();
 
 
@@ -849,7 +858,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      AvailableInCustomization = a.AvailableInCustomization,
                                                      ParentObjectTableId = a.ParentObjectTableId,
                                                      IsCustom = a.IsCustom,
-                                                     SupportSubEntity = a.SupportSubEntity
+                                                     SupportSubEntity = a.SupportSubEntity,
+                                                     NewMechanismForCustomFields = a.NewMechanismForCustomFields
                                                  };
             return result;
         }  
@@ -913,7 +923,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    AvailableInCustomization = a.AvailableInCustomization,
                                                    ParentObjectTableId = a.ParentObjectTableId,
                                                    IsCustom = a.IsCustom,
-                                                   SupportSubEntity = a.SupportSubEntity
+                                                   SupportSubEntity = a.SupportSubEntity,
+                                                   NewMechanismForCustomFields = a.NewMechanismForCustomFields
                                                }).FirstOrDefault();
 
 

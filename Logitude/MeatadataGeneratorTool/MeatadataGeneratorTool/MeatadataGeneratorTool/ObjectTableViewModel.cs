@@ -1765,6 +1765,13 @@ namespace MeatadataGeneratorTool
             set { supportSubEntity = value; FirePropertyChanged("SupportSubEntity"); }
         }
 
+        bool newMechanismForCustomFields;
+        public bool NewMechanismForCustomFields
+        {
+            get { return newMechanismForCustomFields; }
+            set { newMechanismForCustomFields = value; FirePropertyChanged("NewMechanismForCustomFields"); }
+        }
+
         bool hasShortTitle;
 
         public bool HasShortTitle

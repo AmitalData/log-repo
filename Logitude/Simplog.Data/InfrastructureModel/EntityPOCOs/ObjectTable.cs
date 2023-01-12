@@ -105,5 +105,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string ParentObjectTableId { get; set; }
         public bool IsCustom { get; set; }
         public bool SupportSubEntity { get; set; }
+        public bool NewMechanismForCustomFields { get; set; }
+
     }
 }

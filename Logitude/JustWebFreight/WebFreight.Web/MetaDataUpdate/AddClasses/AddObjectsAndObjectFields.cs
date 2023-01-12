@@ -165,6 +165,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 objectTable.IsLookUp = (!string.IsNullOrEmpty(objectTablesDetails.LookUp1) && !objectTablesDetails.IsComposition);
                 objectTable.AvailableInCustomization = objectTablesDetails.AvailableInCustomization;
                 objectTable.SupportSubEntity = objectTablesDetails.SupportSubEntity;
+                objectTable.NewMechanismForCustomFields = objectTablesDetails.NewMechanismForCustomFields;
 
                 return objectTable;
                 #endregion
@@ -322,6 +323,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 updatedObjectTable.IsTabsHidden = objectTablesDetails.IsTabsHidden;
                 updatedObjectTable.AvailableInCustomization = objectTablesDetails.AvailableInCustomization;
                 updatedObjectTable.SupportSubEntity = objectTablesDetails.SupportSubEntity;
+                updatedObjectTable.NewMechanismForCustomFields = objectTablesDetails.NewMechanismForCustomFields;
                 objectTableRepository.Update(updatedObjectTable);
                 return updatedObjectTable;
                 #endregion
