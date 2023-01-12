@@ -7,6 +7,7 @@ using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,10 +23,16 @@ namespace Logitude.Customs.BL.Messaging.Maman
         public static bool SuppressSend=false;
          public void Send2Masof(DeclarationPM drityEntityPM,bool pHaveChange, DeclarationPM dbPM,bool forceSend=false)
         {
+            var sb=new StringBuilder();
             try
             {
+                sb.Append($"{drityEntityPM.Id};CustomFileNo:{drityEntityPM.CustomFileNo};SuppressSend == {SuppressSend}")
+                    .Append(drityEntityPM.Consignments == null ? "NoConsignments" : "HaveConsignments")
+                    .Append(";").Append(drityEntityPM.ChangeSetOp.ToString()).Append(";")
+                    ;
                 if (SuppressSend == true)
                 {
+                    
                     return;
                 }
                 if (!drityEntityPM.IsCourierDeclaration)
@@ -41,11 +48,12 @@ namespace Logitude.Customs.BL.Messaging.Maman
                     return;
                 }
                 List<string> listStorageDefault = GetlistStorageDefault(drityEntityPM);
-                
+                sb.Append($";listStorageDefault={listStorageDefault.Count};");
                 if (listStorageDefault.Count == 0)
                 {
                     return;
                 }
+                sb.Append($";{string.Join(",",listStorageDefault.ToArray())};");
                 bool dataHaveChangeSendIt = false;
                 var myStorageSiteCode = drityEntityPM.Consignments
                     .Where(r => !string.IsNullOrWhiteSpace(r.StorageSiteCode))
@@ -73,14 +81,16 @@ namespace Logitude.Customs.BL.Messaging.Maman
                     if(prev_site != current_site)
                     {
                         dataHaveChangeSendIt = true;
+                        sb.AppendLine("site change-SEND!!!");
                     }
                 }
+                
                 string drityMessage = "";
                 string dbMessage = "";
 
                 if (listStorageDefault.Contains("ILMMN") && myStorageSiteCode == "ILMMN") // Maman
                 {
-
+                    sb.AppendLine("ILMMN!!!");
                     var courierGWMessageECTHRDataMamanService = new CourierGWMessageECTHRDataMamanRequestService();
                     drityMessage = courierGWMessageECTHRDataMamanService.GetMessage2Maman(drityEntityPM.Id, drityEntityPM.Tenant, drityEntityPM, null);
                     if (!dataHaveChangeSendIt && dbPM != null)
@@ -94,12 +104,14 @@ namespace Logitude.Customs.BL.Messaging.Maman
                             }))
                         {
                             dataHaveChangeSendIt = true;
+                            sb.AppendLine("Message:Changed-SEND!!!");
                         }
                         bool forceDueEcomUpsert = !string.IsNullOrWhiteSpace(drityEntityPM?.MyEcomInsert?.MyDeclarationCourierStatusPM?.DeclarationId);
 
                         if (forceSend || forceDueEcomUpsert)
                         {
                             dataHaveChangeSendIt = true;
+                            sb.AppendLine("forceSend || forceDueEcomUpsert-SEND!!!");
 
                         }
                     }
@@ -114,6 +126,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                         }
                         var res = courierGWMessageECTHRDataMamanService.BuildComm2Maman(drityEntityPM.Id, drityEntityPM.Tenant, drityMessage);
                         Debug.WriteLine(res);
+                        sb.AppendLine(res);
                     }
 
 
@@ -121,6 +134,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 }
                 else if (listStorageDefault.Contains("ILOVL") && myStorageSiteCode == "ILOVL") // OVS
                 {
+                    sb.AppendLine("ILOVL!!!");
                     var courierGWMessageECTHRDataMamanService = new CourierOVSECTHMessageRequestService();
                     drityMessage = courierGWMessageECTHRDataMamanService.GetMessageUpdateHawbStatus(drityEntityPM.Id, drityEntityPM.Tenant, drityEntityPM, null);
                     if (!dataHaveChangeSendIt && dbPM != null)
@@ -131,10 +145,13 @@ namespace Logitude.Customs.BL.Messaging.Maman
                         if (dbMessage != drityMessage)
                         {
                             dataHaveChangeSendIt = true;
+                            sb.AppendLine("dbMessage != drityMessage-SEND!!!");
+
                         }
                         bool forceDueEcomUpsert = !string.IsNullOrWhiteSpace(drityEntityPM?.MyEcomInsert?.MyDeclarationCourierStatusPM?.CrateNumber);
                         if (forceSend || forceDueEcomUpsert )
                         {
+                            sb.AppendLine("forceSend || forceDueEcomUpsert-SEND!!!");
                             dataHaveChangeSendIt = true;
 
                         }
@@ -150,6 +167,9 @@ namespace Logitude.Customs.BL.Messaging.Maman
                         }
                         var res = courierGWMessageECTHRDataMamanService.BuildUpdateHawbStatus(drityEntityPM.Id, drityEntityPM.Tenant, drityMessage);
                         Debug.WriteLine(res);
+                        
+                        sb.AppendLine(res);
+                        
                     }
 
                 }
@@ -157,6 +177,10 @@ namespace Logitude.Customs.BL.Messaging.Maman
             
               else if (listStorageDefault.Contains("ILSWS") && myStorageSiteCode == "ILSWS")
                 {
+                    
+                        
+                    sb.AppendLine("ILSWS!!!");
+                    
                     if (drityEntityPM.CourierCustomStatusCode != dbPM.CourierCustomStatusCode)
                     {
                         var courierECSWSTHRMessageRequestService = new CourierECSWSTHRMessageRequestService();
@@ -168,6 +192,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                             
                             if (dbMessage != null && dbMessage != drityMessage)
                             {
+                                sb.AppendLine("dbMessage != null && dbMessage != drityMessage-SEND!!!");
                                 dataHaveChangeSendIt = true;
                             }
                         }
@@ -183,6 +208,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                             var XMLdrityMessage = courierECSWSTHRMessageRequestService.DeserializeXmlNode(drityMessage);
                             var res = courierECSWSTHRMessageRequestService.BuildUpdateHawbStatus(drityEntityPM.Id, drityEntityPM.Tenant, XMLdrityMessage);
                             Debug.WriteLine(res);
+                            sb.AppendLine(res);
                         }
                     }
             }
@@ -192,12 +218,39 @@ namespace Logitude.Customs.BL.Messaging.Maman
             {
                 //e.SetMess
                 //throw;
+            }finally
+            {
+                if (GetStopLogAt()> DateTime.Now)
+                {
+                    Logger.LogMe(sb.ToString(), false, "Send2Masof");
+                }
+
             }
 
 
 
         }
+        public static DateTime GetStopLogAt()
+        {
+            DateTime stopLogAt = new DateTime(2023, 02, 01);
+            try
+            {
+                string UntilDateyyyyMMdd = System.Configuration.ConfigurationManager.AppSettings["20230112HDCall409236.LogUntilDateyyyyMMdd"];
+                if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+                {
+                    stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
+                                                        "yyyyMMdd",
+                                                        CultureInfo.InvariantCulture,
+                                                        style: DateTimeStyles.None);
+                }
+            }
+            catch (Exception)
+            {
 
+            }
+            return stopLogAt;
+
+        }
         private static List<string> GetlistStorageDefault(DeclarationPM drityEntityPM)
         {
             var amitalContext = AmitalContext.GetContext(drityEntityPM.Tenant);
