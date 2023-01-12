@@ -220,9 +220,9 @@
 
 
                             <!-- Balance -->
-                            <td style="width: 75px; " [style.width.px]="IsSalesmanRestricted?'185':'75'"  class="Label"
+                            <td style="width: 30px;" [style.width.px]="IsSalesmanRestricted?'130':'75'"  class="Label"
                                 text-start>
-                                <LogLabel [ObjectTableName]="'GLAccount'" [TextCode]="'GLAccount.O.Balance'"
+                                <LogLabel [ObjectTableName]="'GLAccount'" [TextCode]="'GLAccount.O.BalanceInHebrew'"
                                     [ObjectFieldName]="'NumberOfMonths'" [DataContext]="DataContext"></LogLabel>
                             </td>
                             <td style="width: 230px;"  [attr.colspan]="IsSalesmanRestricted ? '2' : '1'">
@@ -321,20 +321,20 @@
 
 
                             <!-- NumberOfMonths -->
-                            <td colspan="3" style="width: 140px; padding-right: 5px;" class="Label">
+                            <td colspan="3" style="width: 230px; " class="Label">
 
                                 <LogLabel style="padding-top: 3px;" [style.width.px]="IsSalesmanRestricted?'130':'205'"   float-start [ObjectTableName]="'GLAccount'" [TextCode]="'AgingReport.O.NumberMonthsBackwards'"
                                     [ObjectFieldName]="'NumberOfMonths'" [DataContext]="DataContext"></LogLabel>
 
-                                <div  style="width: 90px;" float-start>
+                                <div  style="width: 100px; " float-start>
                                     <LogTextBox [ObjectFieldName]="'NumberOfMonths'" [InputType]="'unsinteger'" [DataContext]="DataContext"
                                         [Text]="NumberOfMonths" [NoObjectField]="true" [ObjectTableName]="'GLAccount'" [HideColumns]="true">
                                     </LogTextBox>
                                 </div>
                             </td>
 
-                            <td>
-                                <div  colspan="3" style="width: 90px;">
+                            <td colspan="3" style="padding-right: 100px;">
+                                <div   style="width: 90px;">
                                     <button class="GreenButton" (click)="RunButtonClicked()">
                                         {{
                                         'AgingReport.O.RunReport' | TextCodeTranslationPipe
@@ -379,7 +379,7 @@
                              <td style="width: 120px; ">
                              <LogLabel [TextCode]="'Accounting.General.O.Currency'" [DataContext]="DataContext"></LogLabel>
                             </td>
-                            <td style="width: 230px;"  colspan="2">
+                            <td style="width: 201px;"  colspan="2">
                                 <ul class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL" float-start>
                                     <li float-start id="filter_OriginalCurr" (click)="CurrencyFilterClicked('filter_OriginalCurr')"
                                         style="height: 22px;width: 120px;"
@@ -392,7 +392,7 @@
                                         (click)="CurrencyFilterClicked('filter_LocalCurr')"
                                         style="height: 22px;width: 110px;"
                                         [class.SelectedFilter]="currencyFilterSelectedValue === 'filter_LocalCurr'">
-                                        {{ 'Accounting.General.O.Local' | TextCodeTranslationPipe }}
+                                        {{ 'GLAccount.O.LocalInHebrew' | TextCodeTranslationPipe }}
                                     </li>
                                 </ul>
                             </td>

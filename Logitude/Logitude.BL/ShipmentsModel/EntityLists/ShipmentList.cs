@@ -689,6 +689,10 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string SealNo { get; set; }
         public string HSCode { get; set; }
 
+        public bool IsCustomerArchived { get; set; }
+        public string NotesSharedWithCustomer { get; set; }
+        public double? Volume { get; set; }
+
     }
 
     public class TimeLineData
