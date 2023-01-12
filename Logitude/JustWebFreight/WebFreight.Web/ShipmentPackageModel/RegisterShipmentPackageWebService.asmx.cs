@@ -23,6 +23,7 @@ using System.Data.Entity.Core.Objects;
 using System.Data.Entity;
 using Logitude.BL.Helpers;
 using Simplog.Data.CommonDataModel;
+using WebFreight.Web.Services;
 
 namespace WebFreight.Web.ShipmentPackageModel
 {
@@ -40,15 +41,8 @@ namespace WebFreight.Web.ShipmentPackageModel
         public byte[] RegisterShipments(byte[] xmlFilters, int tenant, string partnerId)
         {
             RegisterShipmentPackageDataProvider data = this.BeginRegister(xmlFilters, tenant, partnerId);
+            return new ReportMemoryStreamService().Convert(data, typeof(RegisterShipmentPackageDataProvider), tenant);
 
-            XmlSerializer serializer = new XmlSerializer(typeof(RegisterShipmentPackageDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, data);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
-            return bytearray;
         }
 
         private RegisterShipmentPackageDataProvider BeginRegister(byte[] xmlFilters, int tenant, string partnerId)

@@ -9,6 +9,7 @@ using System.Web;
 using System.Xml.Serialization;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.DataProviders;
+using WebFreight.Web.Services;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 {
@@ -59,13 +60,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         public byte[] GetData()
         {
             ARinvoiceSequencesReportData dataProvider = BuildDataProvider();
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(ARinvoiceSequencesReportData));
-            MemoryStream memoryStream = new MemoryStream();
-            xmlSerializer.Serialize(memoryStream, dataProvider);
-            memoryStream.Seek(0, SeekOrigin.Begin);
-            byte[] bytearray = memoryStream.ToArray();
-
-            return bytearray;
+            return new ReportMemoryStreamService().Convert(dataProvider, typeof(ARinvoiceSequencesReportData), tenant);
         }
 
         private ARinvoiceSequencesReportData BuildDataProvider()

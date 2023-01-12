@@ -20,6 +20,7 @@ using System.Data.Entity;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using WebFreight.Web.Helpers;
+using WebFreight.Web.Services;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
 {
@@ -86,14 +87,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap
         public byte[] GetData()
         {
             this.LoadDataProvider();
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(BluesnapPaymentsDataProvider));
-            MemoryStream memoryStream = new MemoryStream();
-            xmlSerializer.Serialize(memoryStream, iDataProvider);
-            memoryStream.Seek(0, SeekOrigin.Begin);
-            StreamReader streamReader = new StreamReader(memoryStream);
-            string content = streamReader.ReadToEnd();
-            byte[] bytearray = memoryStream.ToArray();
-            return bytearray;
+            return new ReportMemoryStreamService().Convert(iDataProvider, typeof(BluesnapPaymentsDataProvider), tenant);
         }
 
         private void LoadDataProvider()

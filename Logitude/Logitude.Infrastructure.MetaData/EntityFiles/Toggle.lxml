@@ -41,7 +41,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;ec5c&quot;"
+  Code="&quot;6c1c&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -904,6 +904,11 @@
       Name="&quot;Customers API&quot;"
       SearchFields="&quot;CTI,Customers API&quot;"
       Description="&quot;Customers API&quot;" />
+    <Record
+      Code="&quot;DMS&quot;"
+      Name="&quot;Dispose Memory Stream&quot;"
+      SearchFields="&quot;DMS,Dispose Memory Stream&quot;"
+      Description="&quot;Dispose Memory Stream&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
