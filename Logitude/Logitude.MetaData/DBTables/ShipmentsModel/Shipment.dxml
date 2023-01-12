@@ -672,7 +672,7 @@
   </Column>
   <Column
     Name="ConsigneeName"
-    Type="varchar"
+    Type="nvarchar"
     Size="70">
     <Constraints
       Nullable="true" />
@@ -3181,7 +3181,7 @@
   </Column>
   <Column
     Name="PrivateLabelInvoiceNumber"
-    Type="varchar"
+    Type="nvarchar"
     Size="30">
     <Constraints
       Nullable="true" />
@@ -3710,6 +3710,41 @@
     Type="bit">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="shippingLine"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PlaceOfDelivery"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PickupPlace"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="HSCode"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SealNo"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="CountryForStatisticsId"

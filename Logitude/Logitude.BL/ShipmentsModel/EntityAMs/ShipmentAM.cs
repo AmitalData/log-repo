@@ -87,7 +87,11 @@ namespace Logitude.BL.ShipmentsModel.EntityAMs
         public bool IsDangerouseOfGoods { get; set; }
         public string AgentName { get; set; }
         public bool IsShipmentOrder { get; set; }
-
+        public string ShippingLine { get; set; }
+        public string PlaceOfDelivery { get; set; }
+        public string PickupPlace { get; set; }
+        public string SealNo { get; set; }
+        public string HSCode { get; set; }
 
         /*
         HasException , ExceptionDate , ExceptionDescription

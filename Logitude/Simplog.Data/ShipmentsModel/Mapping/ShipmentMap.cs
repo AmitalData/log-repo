@@ -399,6 +399,11 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.LastDeliveryFullAddress).HasMaxLength(1000).IsUnicode(false);
             this.Property(t => t.FirstPickupFullAddress).HasMaxLength(1000).IsUnicode(false);
             this.Property(t => t.PrivateLabelAgentName).HasMaxLength(70).IsUnicode(false);
+            this.Property(t => t.ShippingLine).HasMaxLength(30).IsUnicode(false);
+            this.Property(t => t.PlaceOfDelivery).HasMaxLength(30).IsUnicode(false);
+            this.Property(t => t.PickupPlace).HasMaxLength(30).IsUnicode(false);
+            this.Property(t => t.SealNo).HasMaxLength(30).IsUnicode(false);
+            this.Property(t => t.HSCode).HasMaxLength(30).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("Shipments");
@@ -910,6 +915,11 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.PartialStatusAmount).HasColumnName("PartialStatusAmount");
             this.Property(t => t.LastDeliveryFullAddress).HasColumnName("LastDeliveryFullAddress");
             this.Property(t => t.FirstPickupFullAddress).HasColumnName("FirstPickupFullAddress");
+            this.Property(t => t.ShippingLine).HasColumnName("ShippingLine");
+            this.Property(t => t.PlaceOfDelivery).HasColumnName("PlaceOfDelivery");
+            this.Property(t => t.PickupPlace).HasColumnName("PickupPlace");
+            this.Property(t => t.SealNo).HasColumnName("SealNo");
+            this.Property(t => t.HSCode).HasColumnName("HSCode");
 
             if (dbms == "oracle")
             {

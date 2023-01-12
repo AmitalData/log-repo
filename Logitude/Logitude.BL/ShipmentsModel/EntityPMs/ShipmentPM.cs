@@ -2063,6 +2063,11 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string PackageTypeId3 { get; set; }
         public string PackageTypeId4 { get; set; }
         public string PackageTypeId5 { get; set; }
+
+        public double? Weight1 { get; set; }
+        public double? Weight2 { get; set; }
+        public double? Weight3 { get; set; }
+        public double? Weight4 { get; set; }
         #endregion
         public string NewConcurrencyGUID { get; set; }
 
@@ -2999,6 +3004,13 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsINTTRAFROB { get; set; }
         public string MainCarriageFromStateId { get; set; }
         public string MainCarriageToStateId { get; set; }
+        public string ShippingLine { get; set; }
+        public string PlaceOfDelivery { get; set; }
+        public string PickupPlace { get; set; }
+        public string SealNo { get; set; }
+        public string HSCode { get; set; }
+        public string OrderNumber { get; set; }
+
     }
 
     public class TransshipmentLeg

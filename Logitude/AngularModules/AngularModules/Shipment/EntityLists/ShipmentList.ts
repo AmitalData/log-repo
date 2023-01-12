@@ -587,6 +587,11 @@ export class ShipmentList {
 		InlandDomesticFromTypeCode: string;
 		InlandDomesticFromCountryId: string;
 		InlandDomesticToCountryId: string;
+		ShippingLine: string;
+		PlaceOfDelivery: string;
+		PickupPlace: string;
+		SealNo: string;
+		HSCode: string;
 		Pickup: string;
 		MainCarriageFrom: string;
 		MainCarriageTo: string;
