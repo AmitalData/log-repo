@@ -684,6 +684,10 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string InlandDomesticFromCountryId { get; set; }
         public string InlandDomesticToCountryId { get; set; }
 
+        public bool IsCustomerArchived { get; set; }
+        public string NotesSharedWithCustomer { get; set; }
+        public double? Volume { get; set; }
+
     }
 
     public class TimeLineData
