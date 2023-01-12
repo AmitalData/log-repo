@@ -145,12 +145,17 @@ namespace WarehouseData.Helper
                 {
                     command.ExecuteNonQuery();
                     transaction.Commit();
+                    connection.Close();
+
                 }
                 catch (Exception exception)
                 {
                     transaction.Rollback();
+                    connection.Close();
                     throw exception;
                 }
+
+               
             }
         }
 
@@ -171,6 +176,7 @@ namespace WarehouseData.Helper
                 SqlDataReader reader = commandSourceData.ExecuteReader();
                 result.Load(reader);
                 reader.Close();
+                sourceConnection.Close();
 
             }
             return result;
@@ -362,11 +368,12 @@ namespace WarehouseData.Helper
                 {
                     count = (int)commandRowCount.ExecuteScalar();
 
+                    sourceConnection.Close();
 
                 }
                 catch (Exception ex)
                 {
-
+                    sourceConnection.Close();
                     MessageBox.Show(ex.Message);
                 }
 

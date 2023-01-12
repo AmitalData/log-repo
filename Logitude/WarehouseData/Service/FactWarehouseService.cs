@@ -86,6 +86,8 @@ namespace WarehouseData.Helper
                 {
                     RemoveOldRowsFromSingleDWFactTable(table, connectionString, sourceConnection);
                 }
+                sourceConnection.Close();
+
             }
         }
 

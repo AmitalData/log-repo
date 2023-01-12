@@ -32,6 +32,8 @@ namespace WarehouseData.Service
                 dataTable.Load(reader);
 
                 reader.Close();
+                sourceConnection.Close();
+
             }
 
             return dataTable;
@@ -54,6 +56,8 @@ namespace WarehouseData.Service
                                  .Select(r => (int)r["Tenant"])
                                  .ToList();
                 reader.Close();
+                sourceConnection.Close();
+
             }
 
             return result;
