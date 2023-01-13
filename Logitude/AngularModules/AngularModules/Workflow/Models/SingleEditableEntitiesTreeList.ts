@@ -37,11 +37,11 @@ export class SingleEditableEntitiesTreeList {
     private initializeGetRecordTreeSelectItems() {
         this.getSingleEditableGetRecordNodes().forEach((getRecordNode: any) => {
             let entity = getRecordNode.data["entity"];
-            let treeSelectItemLabel = getRecordNode.data["label"];
+            let treeSelectItemTitle = getRecordNode.data["label"] || null;
             let treeSelectItemName = getRecordNode.data["name"];
             let treeSelectItemKey = Formatter.getCodeFromName(treeSelectItemName);
             let childrenItems = this.getGetRecordTreeSelectItemChildren(treeSelectItemKey, entity);
-            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemLabel, false, false, false, false, childrenItems);
+            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemTitle || treeSelectItemName, false, false, false, false, childrenItems);
             this.Items.push(treeSelectItem);
         });
     }
@@ -51,7 +51,8 @@ export class SingleEditableEntitiesTreeList {
         Entities.Children.filter(c => c.Code !== "ARInvoice" && c.Code !== "APInvoice").filter(c => c.ParentEntityCode === entity)
             .forEach(childEntity => {
                 let itemData = { entity: childEntity.Code };
-                let treeSelectItem = new TreeSelectItem(treeItemPrefix + this.ItemKeySplitter + childEntity.Code, childEntity.Name, true, true, false, false, [], itemData);
+                let treeSelectItemKey = treeItemPrefix + this.ItemKeySplitter + childEntity.Code;
+                let treeSelectItem = new TreeSelectItem(treeSelectItemKey, childEntity.Name, true, true, false, false, [], itemData);
                 getRecordTreeSelectItemChildren.push(treeSelectItem);
             });
         return getRecordTreeSelectItemChildren;

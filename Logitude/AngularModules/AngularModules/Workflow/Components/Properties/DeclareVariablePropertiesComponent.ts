@@ -17,13 +17,13 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
 
     public DataContext: any = this;
     public Data: any;
+    public IsNew: boolean;
     public VariableName: string = null;
     public VariableType: string = null;
     public VariableValue: string = null;
     public RecordType: string = null;
     public IsCollectionVariable: boolean = false;
     public ValidationErrorsList: string[];
-    public IsNew: boolean;
     public VariableTypeChangedToggle: boolean = false;
     public DataTypesItems: ListItem[] = new DataTypesList().Items;
     public EntitiesTreeItems: TreeSelectItem[];
@@ -41,12 +41,11 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
     initialize() {
         this.IsNew = Object.keys(this.Data).length === 0;
 
-        let variableNameData = this.Data["variableName"];
         let variableTypeData = this.Data["variableType"];
         let variableValueData = this.Data["variableValue"];
         let recordTypeData = this.Data["recordType"];
 
-        this.VariableName = variableNameData || null;
+        this.VariableName = this.Data["label"] || this.Data["name"] || this.Data["variableName"] || null;
         this.VariableType = this.formatVariableType(variableTypeData);
         this.VariableValue = variableValueData || null;
         this.RecordType = recordTypeData || null;
@@ -64,11 +63,12 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
 
     updateVariableName(variableName: string) {
         if (this.IsNew) {
-            this.Data["name"] = Formatter.getCodeFromName(variableName);
+            this.Data["name"] = variableName;
+            this.Data["variableName"] = variableName;
+            this.Data["variableCode"] = Formatter.getCodeFromName(variableName);
         }
+
         this.Data["label"] = variableName;
-        this.Data["variableName"] = variableName;
-        this.Data["variableCode"] = Formatter.getCodeFromName(variableName);
         this.VariableName = variableName;
 
         this.setUIProperties();

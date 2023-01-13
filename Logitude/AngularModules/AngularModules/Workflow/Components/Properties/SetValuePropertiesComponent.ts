@@ -3,7 +3,6 @@ import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/Base
 import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
-import { Formatter } from "Workflow/Models/Formatter";
 import { SetValue } from "Workflow/Models/SetValue";
 
 @Component({
@@ -15,17 +14,14 @@ export class SetValuePropertiesComponent extends BaseComponent {
     public Name: string = null;
     public SetValues: SetValue[];
     public ObjectFieldsDictionary: any = {};
-
     public Data: any;
+    public IsNew: boolean;
     public FlowObject: any;
     public CurrentNodeId: string;
     public FlowObjectFields: ObjectFieldList[];
     public CurrentSession = SessionLocator.SelectedSession;
-
     public IsValidSetValues: boolean = true;
     public ValidationErrorsList: string[];
-
-    public IsNew: boolean = false;
 
     constructor() {
         super();
@@ -43,10 +39,7 @@ export class SetValuePropertiesComponent extends BaseComponent {
     initialize() {
         this.IsNew = Object.keys(this.Data).length === 0;
 
-        if(!this.Data["label"]){
-            this.Data["label"] = this.Data["name"]
-        }
-        this.Name = this.Data["label"] || null
+        this.Name = this.Data["label"] || this.Data["name"] || null;
         this.SetValues = this.Data["setValues"] || [];
 
         this.initializeSetValue();
@@ -62,12 +55,14 @@ export class SetValuePropertiesComponent extends BaseComponent {
         }
     }
 
-    updateName(name: any) {
+    updateName(name: string) {
         if(this.IsNew){
-            this.Data["name"] = Formatter.getCodeFromName(name);
+            this.Data["name"] = name;
         }
+
         this.Data["label"] = name;
         this.Name = name;
+
         this.setUIProperties();
     }
 
