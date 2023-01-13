@@ -66,6 +66,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             DeclarationPM declarationPM = declarationQueryService.GetSingle(declarationid, true, false);
             MyRequestSheetParam.RequestDescription = $"{declarationPM.DeclarationNumber} קליטת חשבונות יצואן מקובץ, הצהרה";
             string error = "";
+            string errorItems = "";
             foreach (var invoiceFromFile in fromFile)
             {
                 // create new invoice
@@ -140,7 +141,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 invoice.ChangeSetOp = ChangeSetOperation.Insert;
                 invoice.SupplierInvoiceItems = new List<SupplierInvoiceItemPM>();
-                CreateSupplierInvoiceItems(invoice, tenant, declarationid, invoiceFromFile, out error);
+                CreateSupplierInvoiceItems(invoice, tenant, declarationid, invoiceFromFile, out errorItems);
+                error += errorItems;
 
                 if (string.IsNullOrEmpty(error))
                     declarationPM.SupplierInvoices.Add(invoice);
@@ -165,9 +167,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
-        private void CreateSupplierInvoiceItems(SupplierInvoicePM invoice, int tenant, string declarationid, InvoiceFromFile invoiceFromFile,out string error)
+        private void CreateSupplierInvoiceItems(SupplierInvoicePM invoice, int tenant, string declarationid, InvoiceFromFile invoiceFromFile,out string errorItems)
         {
-            error = "";
+              errorItems = "";
             foreach (var invoiceItemFromFile in invoiceFromFile.SupplierInvoiceItems)
             {
                 var invoiceItem = new SupplierInvoiceItemPM
@@ -191,9 +193,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 if(invoiceItem.InvoiceQuantity== null || string.IsNullOrEmpty(invoiceItem.ClassificationCode) || invoiceItem.ItemPrice==null || string.IsNullOrEmpty(invoiceItemFromFile.OriginCountryCode))
                 {
-                    error = invoice.InvoiceNumber + ":some fields is required. \n";
+                    errorItems += invoice.InvoiceNumber + ":some fields is required. \n";
                     break;
                 }
+
+ 
                 invoiceItem.ChangeSetOp = ChangeSetOperation.Insert;
                 invoice.SupplierInvoiceItems.Add(invoiceItem);
             }
