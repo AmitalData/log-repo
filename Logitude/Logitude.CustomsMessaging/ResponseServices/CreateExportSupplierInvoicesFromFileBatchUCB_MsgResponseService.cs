@@ -129,7 +129,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                 }
 
-                if(invoice.InvoiceNumber == null || invoice.InvoiceAmount == null || string.IsNullOrEmpty (invoice.BuyerName) || string.IsNullOrEmpty(invoice.BuyerAddress) || string.IsNullOrEmpty(invoice.BuyerRoleCode)
+                if (string.IsNullOrEmpty(invoice.InvoiceNumber))
+                    error += "InvoiceNumber is required. n/";
+
+                if ( string.IsNullOrEmpty(invoice.InvoiceCurrencyTypeCode) || invoice.InvoiceAmount == null || string.IsNullOrEmpty (invoice.BuyerName) || string.IsNullOrEmpty(invoice.BuyerAddress) || string.IsNullOrEmpty(invoice.BuyerRoleCode)
                     || string.IsNullOrEmpty(invoice.BuyerRoleCode) || string.IsNullOrEmpty(invoice.PartyRelationshipCode) || !invoice.IssueDate.HasValue)
                 {
                     error += invoice.InvoiceNumber + ":some fields is required. n/";
@@ -186,7 +189,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 invoiceItem.InvoiceQuantityType = customsItemQueryService.GetQuantityTypeByClassificationCode(invoiceItem.ClassificationCode, tenant);
                 invoiceItem.StatisticQuantityType = invoiceItem.InvoiceQuantityType;
 
-                if(invoiceItem.InvoiceQuantity== null || string.IsNullOrEmpty(invoiceItem.ClassificationCode) || invoiceItem.ItemPrice==null || string.IsNullOrEmpty(invoiceItem.InvoiceQuantityType) || string.IsNullOrEmpty(invoiceItemFromFile.OriginCountryCode))
+                if(invoiceItem.InvoiceQuantity== null || string.IsNullOrEmpty(invoiceItem.ClassificationCode) || invoiceItem.ItemPrice==null || string.IsNullOrEmpty(invoiceItemFromFile.OriginCountryCode))
                 {
                     error = invoice.InvoiceNumber + ":some fields is required. n/";
                     break;
