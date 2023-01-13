@@ -58,18 +58,14 @@ export class GeneralPrintHelper {
 
         this.documentTypePMService = new DocumentTypePMExtendedService();
         this.documentOutPMService = new DocumentOutPMService();
-        var documentTypeListService = new DocumentTypeListService();
-
-        var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
-        apiQueryFilters.GetAll = true;
-        apiQueryFilters.Tenant = SessionInfo.LoggedUserTenant;
+       
 
     }
 
 
     ShowPrintControl(documentTypeTemplate: string = null) {
         if (this.IsStartPrint) return;
-            var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
+            let apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
             apiQueryFilters.GetAll = true;
             apiQueryFilters.Tenant = SessionInfo.LoggedUserTenant;
             let documentTypeListService = new DocumentTypeListService();
