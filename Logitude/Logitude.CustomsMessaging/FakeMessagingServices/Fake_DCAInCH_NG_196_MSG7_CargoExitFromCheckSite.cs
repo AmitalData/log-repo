@@ -1,12 +1,15 @@
 ﻿using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.CustomsMessaging.Common.RequestParams;
+using Logitude.Server.Tools.Helpers;
 using Newtonsoft.Json.Linq;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using UnifreightIIG.Common.MessageLib.PhysicalCheck;
 
 namespace Logitude.CustomsMessaging.FakeMessagingServices
@@ -74,7 +77,12 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
         }
         public void GetCheckEntity()
         {
-            _checkEntity = new CH_NG_196_MSG7_CargoExitFromCheckSiteCheckEntity
+            string currentIP = HttpContext.Current.Request.Headers[name: "X-Real-IP"];
+            currentIP += " 2= " + AuthenticationUtil.GetIP4Address();
+            currentIP += " 3= " + HttpContext.Current.Request.Headers[name: "Host"]; ;
+            currentIP += " 4= " + HttpContext.Current.Request.Headers[name: "X-Forwarded-For"]; ;
+
+           _checkEntity = new CH_NG_196_MSG7_CargoExitFromCheckSiteCheckEntity
             {
                 cargoIdentifier = new cargoIdentifier()
             };
@@ -94,7 +102,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             {
                 _checkEntity.cargoIdentifier.cargoIdentifierKey3 = _phy.CargoIdentifierKey3;
             }
-            _checkEntity.containerNumber = "11111";
+            _checkEntity.containerNumber = currentIP;
         }
         public void GetRequestContentHeader()
         {
