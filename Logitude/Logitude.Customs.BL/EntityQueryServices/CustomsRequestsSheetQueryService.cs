@@ -186,6 +186,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "2751T2", // תשובה להצהרת שטעון
 "UCADPE", // הזנה גורפת PENDING
 "DCACSIFF", // יצירת חשבון ספק מאקסל
+"DCACESIFF", // יצירת חשבון יצואן מאקסל
 "DCAInUCBApproveAllPending",//אישור PENDING
 "CourierMastersConnected", // קישור הצהרות לטיסה
 "8235T", // תיקון שטעון
@@ -335,6 +336,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "DCAUAC", // multi update 
 "DCACCFII",//יצירת אישור לפרטי מכס
 "DCACSIFF", // יצירת חשבון ספק מאקסל
+"DCACESIFF",//חשבונות יצואן מאקסל
 "2755T", // הגשת שטעון
 "2757T", // תשובה להגשת שטעון
 "2751T", // הצהרת שטעון
@@ -470,6 +472,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "DCAUAC",
 "DCACCFII",
 "DCACSIFF", // יצירת חשבון ספק מאקסל
+"DCACESIFF",//חשבונות יצואן מאקסל
 "2755T", // הגשת שטעון
 "2757T", // תשובה להגשת שטעון
 "2751T", // הצהרת שטעון

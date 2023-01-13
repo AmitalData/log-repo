@@ -1,4 +1,4 @@
-import {Component, OnInit, Output, EventEmitter, ChangeDetectorRef} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, ChangeDetectorRef, ViewChild, ElementRef} from '@angular/core';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {DeclarationPM} from '../../../../../Customs/EntityPMs/DeclarationPM';
 import {SupplierInvoiceExtendedPMService} from '../../../../../Customs/Services/ExtendedPMs/SupplierInvoiceExtendedPMService';
@@ -24,7 +24,11 @@ import {DeclarationPMService} from '../../../../../Customs/Services/StandardPMs/
 declare var window: any;
 import {FeatureLocator} from '../../../../../Infrastructure/Utilities/FeatureLocator';
 import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
-
+import { SupplierInvoiceService } from '../../../../../Customs/Services/Others/SupplierInvoiceService';
+import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
+import { ImageParameter } from '../../../../../Infrastructure/DataContracts/ImageParameter';
+import { Guid } from '../../../../../Infrastructure/Utilities/Guid';
+declare var attachmentUploader, ResultAsArray: any;
 
 @Component({
     selector: 'DeclarationSupplierInvoiceTabComponent',
@@ -41,7 +45,10 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
     public DataContext: any = this;
     public entityResourceService: EntityResourceService = new EntityResourceService();
     public declarationPMService: DeclarationPMService = new DeclarationPMService();
-
+    public UploadFileId: string = Guid.NewRandomString();
+    filterImageParameter: ImageParameter;
+    File: any;
+    FileData: number;
     supplierInvoiceExtendedPMService: SupplierInvoiceExtendedPMService;
     customsDocumentPointerService: CustomsDocumentPointerService;
     supplierInvoicePMService: SupplierInvoicePMService;
@@ -61,6 +68,7 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
     private CurrentSession = SessionLocator.SelectedSession;
     IsDisplayMessage: boolean;
     showMultiUpdateWindowBtn: boolean = false;
+    showUploadInvoicesFromCsvBtn: boolean = false;
     constructor(public entityArgs: EntityArgs, private CD: ChangeDetectorRef, public declarationExtendedListService: DeclarationExtendedListService) {
         super();
        // this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoice").subscribe((response:any) => {
@@ -130,6 +138,7 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
         });
 
         this.showMultiUpdateWindowBtn = FeatureLocator.HasFeaturePermession("Customs.Declaration", "MultiUpdateClassificationCodeWindow")
+        this.showUploadInvoicesFromCsvBtn = FeatureLocator.HasFeaturePermession("Customs.Declaration", "UploadExportInvoicesFromCsv")
     }
 
     IsAccumulatedMessageText: string;
@@ -606,6 +615,93 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
         logWindow.WindowClosed.subscribe(($event: any) => {
             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         });
+    }
+    OpenUpLoadFile() {
+        document.getElementById(this.UploadFileId).click();
+    }
+    UploadFile(event: any) {
+        var FileExtension: string
+        var file: any = attachmentUploader(this.UploadFileId);
+        if (file) {
+            var temp = file.name.split('.');
+            FileExtension = temp[temp.length - 1];
+            //this.FileName = file.name.replace("." + FileExtension, "");
+            this.File = file;
+            if (FileExtension != "csv") {
+                this.ShowMessage("חובה קובץ CSV");
+                return;
+            }
+
+
+            if (FileExtension && FileExtension.length > 10) {
+                this.ShowMessage("File extension should be less than or equal 10 characters");
+            }
+            else {
+
+                this.filterImageParameter = new ImageParameter();
+                this.filterImageParameter.Key = Guid.newGuid();
+                this.filterImageParameter.IsFirstTry = true;
+                this.filterImageParameter.Extension = FileExtension;
+                this.filterImageParameter.UploadMode = "Block";
+                this.filterImageParameter.FileSize = file.size;
+                this.filterImageParameter.Tenant = SessionLocator.Tenant;
+                this.ArrayBufferToBase64(file,this);
+
+            }
+        }
+        //file = null;
+    }
+
+    ArrayBufferToBase64(file: any, viewmodel: any) {
+        var reader: FileReader = new FileReader();
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var binary = '';
+            var bytes = new Uint8Array(ResultAsArray(e));
+            var len = bytes.byteLength;
+            for (var i = 0; i < len; i++) {
+                binary += String.fromCharCode(bytes[i]);
+            }
+            viewmodel.filterImageParameter.Base64String = window.btoa(binary);
+        };
+        reader.onabort = function (e) {
+            
+        };
+        reader.onloadend = function (e) {
+            viewmodel.CreateExportSupplierInviocesFromFile();
+
+        };
+        reader.onerror = function (e) {
+            console.log(e);
+        };
+        reader.readAsArrayBuffer(file);
+    }
+    CreateExportSupplierInviocesFromFile() {
+        var supplierInvoiceService = new SupplierInvoiceService();
+
+        supplierInvoiceService.PutExportSupplierInviocesFromFileRequest(this.filterImageParameter, SessionLocator.Tenant, this.EntityPM.Id)
+            .subscribe((myServiceResponse: ServiceResponse) => {
+
+            if (myServiceResponse.HasError) {
+                this.ShowMessage(myServiceResponse.ErrorsArray[0]);
+            }
+            else {
+                this.ShowMessage(myServiceResponse.Result);
+                }
+
+                this.DeleteFileButtonClicked();
+        });
+    }
+    @ViewChild('myInput')
+    myInputVariable: ElementRef;
+    DeleteFileButtonClicked() {
+        this.myInputVariable.nativeElement.value = "";
+        this.filterImageParameter = null;
+        this.File = null;
+    }
+    public ShowMessage(message: string) {
+        var messageWindow: MessageWindow = new MessageWindow();
+        messageWindow.Show(message);
     }
 
     Add() {
