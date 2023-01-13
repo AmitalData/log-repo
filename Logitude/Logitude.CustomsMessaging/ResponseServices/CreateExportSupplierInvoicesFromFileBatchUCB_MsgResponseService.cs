@@ -90,7 +90,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     CustomsCountryPM country = countryQueryService.GetSingle(invoice.BuyerCountryCode, false, true);
                    if(country == null)
                     {
-                        error += invoice.InvoiceNumber + ":BuyerCountryCode = " + invoiceFromFile.BuyerCountryCode + " could not translate to Logitude Id";
+                        error += invoice.InvoiceNumber + ":BuyerCountryCode = " + invoiceFromFile.BuyerCountryCode + " could not translate to Logitude Id \n;
 
                     }
                 }
@@ -102,7 +102,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     if (partyRelationship == null)
                     {
-                        error += invoice.InvoiceNumber + ":PartyRelationshipCode = " + invoiceFromFile.PartyRelationCode + " could not translate to Logitude Id n/";
+                        error += invoice.InvoiceNumber + ":PartyRelationshipCode = " + invoiceFromFile.PartyRelationCode + " could not translate to Logitude Id \n";
 
                     }
 
@@ -114,7 +114,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     CustomerRoleTypePM buyerRoleCode = buyerRoleCodeQueryService.GetSingle(invoice.BuyerRoleCode, false, true);
                     if (buyerRoleCode == null)
                     {
-                        error += invoice.InvoiceNumber + ":BuyerRoleCode = " + invoiceFromFile.BuyerRoleCode + " could not translate to Logitude Id n/";
+                        error += invoice.InvoiceNumber + ":BuyerRoleCode = " + invoiceFromFile.BuyerRoleCode + " could not translate to Logitude Id \n";
 
                     }
                 }
@@ -124,15 +124,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     var isSuccess = SetCurrencyTypeCode(tenant, invoiceFromFile.InvoiceCurrency, invoice);
                     if (!isSuccess)
                     {
-                        error += invoice.InvoiceNumber + ":InvoiceCurrencyTypeCode = " + invoiceFromFile.InvoiceCurrency + " could not translate to Logitude Id n/";
+                        error += invoice.InvoiceNumber + ":InvoiceCurrencyTypeCode = " + invoiceFromFile.InvoiceCurrency + " could not translate to Logitude Id \n";
                         LogMessagingUtil.Instance.AppendLine(error);
                     }
                 }
 
-                if(invoice.InvoiceNumber == null || invoice.InvoiceAmount == null || string.IsNullOrEmpty (invoice.BuyerName) || string.IsNullOrEmpty(invoice.BuyerAddress) || string.IsNullOrEmpty(invoice.BuyerRoleCode)
+                if (string.IsNullOrEmpty(invoice.InvoiceNumber))
+                    error += "InvoiceNumber is required. \n";
+
+                if ( string.IsNullOrEmpty(invoice.InvoiceCurrencyTypeCode) || invoice.InvoiceAmount == null || string.IsNullOrEmpty (invoice.BuyerName) || string.IsNullOrEmpty(invoice.BuyerAddress) || string.IsNullOrEmpty(invoice.BuyerRoleCode)
                     || string.IsNullOrEmpty(invoice.BuyerRoleCode) || string.IsNullOrEmpty(invoice.PartyRelationshipCode) || !invoice.IssueDate.HasValue)
                 {
-                    error += invoice.InvoiceNumber + ":some fields is required. n/";
+                    error += invoice.InvoiceNumber + ":some fields is required. \n";
 
                 }
                 invoice.ChangeSetOp = ChangeSetOperation.Insert;
@@ -186,9 +189,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 invoiceItem.InvoiceQuantityType = customsItemQueryService.GetQuantityTypeByClassificationCode(invoiceItem.ClassificationCode, tenant);
                 invoiceItem.StatisticQuantityType = invoiceItem.InvoiceQuantityType;
 
-                if(invoiceItem.InvoiceQuantity== null || string.IsNullOrEmpty(invoiceItem.ClassificationCode) || invoiceItem.ItemPrice==null || string.IsNullOrEmpty(invoiceItem.InvoiceQuantityType) || string.IsNullOrEmpty(invoiceItemFromFile.OriginCountryCode))
+                if(invoiceItem.InvoiceQuantity== null || string.IsNullOrEmpty(invoiceItem.ClassificationCode) || invoiceItem.ItemPrice==null || string.IsNullOrEmpty(invoiceItemFromFile.OriginCountryCode))
                 {
-                    error = invoice.InvoiceNumber + ":some fields is required. n/";
+                    error = invoice.InvoiceNumber + ":some fields is required. \n";
                     break;
                 }
                 invoiceItem.ChangeSetOp = ChangeSetOperation.Insert;
