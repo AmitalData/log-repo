@@ -90,7 +90,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     CustomsCountryPM country = countryQueryService.GetSingle(invoice.BuyerCountryCode, false, true);
                    if(country == null)
                     {
-                        error += invoice.InvoiceNumber + ":BuyerCountryCode = " + invoiceFromFile.BuyerCountryCode + " could not translate to Logitude Id \n;
+                        error += invoice.InvoiceNumber + ":BuyerCountryCode = " + invoiceFromFile.BuyerCountryCode + " could not translate to Logitude Id \n";
 
                     }
                 }
