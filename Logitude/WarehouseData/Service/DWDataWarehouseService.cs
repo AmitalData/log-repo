@@ -39,6 +39,8 @@ namespace WarehouseData.Service
 
                 dwObjectTable.Load(reader);
                 reader.Close();
+                sourceConnection.Close();
+
 
             }
             generalDataWarehouseService.ExecuteSql(CreateTABLE(table.Dw_TableName, dwObjectTable, table.ObjectFieldDBLists), destinationConnectionString);
@@ -539,6 +541,8 @@ namespace WarehouseData.Service
                         finally
                         {
                             reader.Close();
+                            destinationConnection.Close();
+                            sourceConnection.Close();
 
 
                         }
@@ -668,6 +672,8 @@ namespace WarehouseData.Service
                                 finally
                                 {
                                     reader.Close();
+                                    destinationConnection.Close();
+                                    sourceConnection.Close();
 
                                     if (table.DBTableName != "WaterMarks" && !buildDWArgs.IsChildentity)
                                     {
@@ -689,11 +695,17 @@ namespace WarehouseData.Service
 
 
                     }
+                    else
+                    {
+                        reader.Close();
+                        sourceConnection.Close();
+                    }
                 }
 
                 else
                 {
                     reader.Close();
+                    sourceConnection.Close();
                 }
             }
 
@@ -793,7 +805,7 @@ namespace WarehouseData.Service
                             if (datetime != null) result = GetFormatedLastUpdateDate(datetime.Value);
                         }
 
-                    }
+  }
 
 
 

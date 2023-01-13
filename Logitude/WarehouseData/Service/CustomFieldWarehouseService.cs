@@ -182,6 +182,8 @@ namespace WarehouseData.Helper
                 SqlCommand commandSourceData = new SqlCommand(sql, sourceConnection);
                 SqlDataReader reader = commandSourceData.ExecuteReader();
                 reader.Close();
+                sourceConnection.Close();
+
             }
         }
 
@@ -205,6 +207,8 @@ namespace WarehouseData.Helper
                     SqlDataReader reader = commandSourceData.ExecuteReader();
                     customObjectFields.Load(reader);
                     reader.Close();
+                    sourceConnection.Close();
+
                 }
 
                 var tenantLists = customObjectFields.AsEnumerable().GroupBy(row => row.Field<Int32>("Tenant").ToString()).Select(d => d.First().Field<Int32>("Tenant").ToString());
@@ -247,6 +251,8 @@ namespace WarehouseData.Helper
                 SqlDataReader reader = commandSourceData.ExecuteReader();
                 tenants.Load(reader);
                 reader.Close();
+                sourceConnection.Close();
+
             }
             tenantLists = (from rowfield in tenants.AsEnumerable()
                            select Int32.Parse(rowfield["Id"].ToString())).ToList();
@@ -269,6 +275,8 @@ namespace WarehouseData.Helper
                 SqlDataReader reader = commandSourceData.ExecuteReader();
                 customObjectFields.Load(reader);
                 reader.Close();
+                sourceConnection.Close();
+
             }
 
             return customObjectFields;
