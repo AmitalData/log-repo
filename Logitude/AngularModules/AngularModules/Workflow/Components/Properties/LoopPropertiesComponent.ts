@@ -4,7 +4,6 @@ import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { FlowVariablesTreeList } from "Workflow/Models/FlowVariablesTreeList";
-import { Formatter } from "Workflow/Models/Formatter";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 
 @Component({
@@ -15,23 +14,18 @@ export class LoopPropertiesComponent extends BaseComponent {
 
     public DataContext: any = this;
     public Data: any;
+    public IsNew: boolean;
     public Name: string = null;
     public CollectionVariable: string = null;
     public Direction: string = null;
-
     public FlowObject: any;
     public CurrentNodeId: string;
     public FlowObjectFields: ObjectFieldList[];
-
     public FlowVariablesTreeItems: TreeSelectItem[];
-
     public ValidationErrorsList: string[];
-
     public FirstToLastDirection = { Code: "FirstToLast", Name: "First item to last item" };
     public LastToFirstDirection = { Code: "LastToFirst", Name: "Last item to first item" };
-
     public CurrentSession = SessionLocator.SelectedSession;
-    public IsNew: boolean = false;
 
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
@@ -57,10 +51,7 @@ export class LoopPropertiesComponent extends BaseComponent {
     initialize() {
         this.IsNew = Object.keys(this.Data).length === 0;
 
-        if(!this.Data["label"]){
-            this.Data["label"] = this.Data["name"]
-        }
-        this.Name = this.Data["label"] || null
+        this.Name = this.Data["label"] || this.Data["name"] || null;
         this.CollectionVariable = this.Data["collectionVariable"] || null;
         this.Direction = this.Data["direction"] ? this.Data["direction"] : this.FirstToLastDirection.Code;
 
@@ -74,12 +65,14 @@ export class LoopPropertiesComponent extends BaseComponent {
         this.UIProperties.SetRequired("Collection_Variable", null, AppTool.IsNullOrEmpty(this.CollectionVariable));
     }
 
-    updateName(Name: any) {
+    updateName(name: string) {
         if(this.IsNew){
-            this.Data["name"] = Formatter.getCodeFromName(Name);
+            this.Data["name"] = name;
         }
-        this.Data["label"] = Name;
-        this.Name = Name;
+
+        this.Data["label"] = name;
+        this.Name = name;
+
         this.setUIProperties();
     }
 

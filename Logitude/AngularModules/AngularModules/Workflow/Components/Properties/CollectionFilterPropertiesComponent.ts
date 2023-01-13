@@ -8,7 +8,6 @@ import { SingleEditableEntitiesTreeList } from "Workflow/Models/SingleEditableEn
 import { Condition } from "Workflow/Models/Condition";
 import { ObjectTables } from "Workflow/Models/ObjectTables";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
-import { Formatter } from "Workflow/Models/Formatter";
 
 @Component({
     templateUrl: "./CollectionFilterPropertiesComponent.html"
@@ -21,10 +20,9 @@ export class CollectionFilterPropertiesComponent extends BaseComponent {
     public FlowObject: any;
     public CurrentNodeId: string;
     public FlowObjectFields: ObjectFieldList[];
-
     public SingleEditableEntitiesTreeItems: TreeSelectItem[];
-
     public Data: any;
+    public IsNew: boolean;
     public Name: string = null;
     public Entity: string = null;
     public EntityId: string = null;
@@ -35,7 +33,6 @@ export class CollectionFilterPropertiesComponent extends BaseComponent {
     public ValidationErrorsList: string[];
 
     public CurrentSession = SessionLocator.SelectedSession;
-    public IsNew: boolean = false;
 
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
@@ -52,10 +49,7 @@ export class CollectionFilterPropertiesComponent extends BaseComponent {
     initialize() {
         this.IsNew = Object.keys(this.Data).length === 0;
 
-        if(!this.Data["label"]){
-            this.Data["label"] = this.Data["name"]
-        }
-        this.Name = this.Data["label"] || null
+        this.Name = this.Data["label"] || this.Data["name"] || null;
         this.Collection = this.Data["collection"] || null;
         this.Entity = this.Data["entity"] || null;
 
@@ -87,8 +81,9 @@ export class CollectionFilterPropertiesComponent extends BaseComponent {
 
     updateName(name: string) {
         if(this.IsNew){
-            this.Data["name"] = Formatter.getCodeFromName(name);
+            this.Data["name"] = name;
         }
+
         this.Data["label"] = name;
         this.Name = name;
 
