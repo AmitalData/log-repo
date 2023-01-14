@@ -53,7 +53,7 @@
                                                 <td style="width: 30px;"><div></div></td>
 
                                                 <td *ngIf="selectedAmountOperator?.Code != 'Between'" style="width: 30px;" [style.text-align]="isRTL ? 'right' : 'left'">
-                                                    <LogTextBox [InputType]="'double'" [NoObjectField]="true"
+                                                    <LogTextBox [InputType]="'decimal'" [NoObjectField]="true"
                                                     [ObjectFieldName]="'Amount'" [Text]="Amount" [HideColumns]="true"
                                                     (ValueChanged)="AmountTextChanged($event)" [DebounceTime]="400"
                                                     [ObjectTableName]="'Reconciliation'" [DataContext]="this"></LogTextBox>
@@ -66,7 +66,7 @@
                                                 <LogTextBox
                                                     [NoObjectField]="true"
                                                     [HideColumns]="true"
-                                                    [InputType]="'double'"
+                                                    [InputType]="'decimal'"
                                                     [DataContext]="DataContext"
                                                     [DebounceTime]="400"
                                                     [ObjectFieldName]="'From'"
@@ -82,7 +82,7 @@
                                                 <LogTextBox
                                                     [NoObjectField]="true"
                                                     [HideColumns]="true"
-                                                    [InputType]="'double'"
+                                                    [InputType]="'decimal'"
                                                     [DataContext]="DataContext"
                                                     [DebounceTime]="400"
                                                     [ObjectFieldName]="'To'"
