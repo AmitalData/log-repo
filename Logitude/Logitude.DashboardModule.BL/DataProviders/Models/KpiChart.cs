@@ -13,5 +13,6 @@ namespace Logitude.DashboardModule.BL.DataProviders.Models
         public string Unit { get; set; }
         public object ComparisonValue { get; set; }
         public int Ratio { get; set; }
+        public string AbbreviationSymbol { get; set; }
     }
 }

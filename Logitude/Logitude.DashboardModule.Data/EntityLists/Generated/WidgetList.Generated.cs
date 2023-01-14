@@ -39,11 +39,13 @@ namespace Logitude.DashboardModule.Data.EntityLists
        [DataMember]
        public string Alignment  { get; set; }
        [DataMember]
-       public bool? ThousandSeparator  { get; set; }
+       public bool ThousandSeparator  { get; set; }
        [DataMember]
-       public bool? UseNumberAbbreviation  { get; set; }
+       public bool UseNumberAbbreviation  { get; set; }
        [DataMember]
        public int? DecimalPlaces  { get; set; }
+       [DataMember]
+       public string UseAbbreviationAfter  { get; set; }
    }
 
 }

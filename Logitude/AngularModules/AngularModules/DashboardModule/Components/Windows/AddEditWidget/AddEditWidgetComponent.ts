@@ -51,7 +51,10 @@ export class AddEditWidgetComponent extends BaseComponent {
     public IsDeleteGroupByVisible: boolean = false;
     public MeasureRenderList = [];
     public ImgWitdh: number = 0;
-
+    public Alignments = ['Left', 'Center'];
+    public Abbreviations = ['1k', '10k', '100k', '1M', '10M', '100M'];
+    public isMeasureNumber: boolean = false;
+    
     constructor() {
         super();
         this.WidgetMeasuresList = [];
@@ -83,13 +86,20 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.SetTimeOverTimeValue();
         this.SetUIForOperator();
         this.SetAdvanceSettingVisibleForTimeOverTime();
+        //this.SetDefaultValuesForDisplaySettings();
+       
     }
 
     SetUIProperties() {
         this.UIProperties.SetValidity("MaximumGrouping", this.ObjectTableName, true, "");
-
+        
         if (this.MaximumGrouping < 1 || this.MaximumGrouping > 50) {
             this.UIProperties.SetValidity("MaximumGrouping", this.ObjectTableName, false, "Maximum Grouping must be Greater Than 1 and Less Than 50");
+        }
+        this.UIProperties.SetValidity("DecimalPlaces", this.ObjectTableName, true, "");
+ 
+        if(this.DecimalPlaces < 0 || this.DecimalPlaces > 2){
+            this.UIProperties.SetValidity("DecimalPlaces", this.ObjectTableName, false, "Decimal Places must be Greater Than or Equal to 0 and Less than or Equal to 2");
         }
 
         this.UIProperties.SetEnabled("ComparisonPeriod", this.ObjectTableName, this.TimeOverTime);
@@ -100,7 +110,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.WidgetMeasuresList.forEach(item => {
             item.SetUIProperties();
         });
-       
+        this.SetUIProprtiesForDisplaySettings();
     }
 
     BuildQueryFilters() {
@@ -269,6 +279,7 @@ export class AddEditWidgetComponent extends BaseComponent {
             this.WidgetMeasuresList.forEach(item => {
                 item.FilterMeasureFields();
             });
+            //this.SetDefaultValuesForDisplaySettings();
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget Type Change ", Message: "Changed To" + this.EntityPM.TypeCode, DashboardId: this.DashboardPM?.Id });
             this.isAdvancedSettingLinkVisible = true;
         }
@@ -349,6 +360,27 @@ export class AddEditWidgetComponent extends BaseComponent {
         }
         else
             this.MaximumGrouping = null;
+    }
+    private SetDefaultValuesForDisplaySettings() {
+        if (this.TypeCode != "kpi" || !this.IsMeasureNumber){
+            this.Alignment = null;
+            this.ThousandSeparator = null;
+            this.UseNumberAbbreviation = null;
+            this.UseAbbreviationAfter = null;
+            this.DecimalPlaces = null; 
+            return;
+        }
+        this.Alignment = this.Alignment ? this.Alignment : "Center";
+        this.ThousandSeparator = this.ThousandSeparator ? this.ThousandSeparator : false;
+        this.UseNumberAbbreviation = !this.UseNumberAbbreviation ? this.UseNumberAbbreviation : true;
+        this.UseAbbreviationAfter = this.UseAbbreviationAfter ? this.UseAbbreviationAfter : "100k";
+        this.DecimalPlaces = this.DecimalPlaces ? this.DecimalPlaces : 0;
+
+    }
+    SetUIProprtiesForDisplaySettings() {
+        this.UIProperties.SetEnabled("DecimalPlaces", this.ObjectTableName, this.IsMeasureNumber);
+        this.UIProperties.SetEnabled("UseNumberAbbreviation", this.ObjectTableName, this.IsMeasureNumber);
+        this.UIProperties.SetEnabled("ThousandSeparator", this.ObjectTableName, this.IsMeasureNumber);
     }
 
 
@@ -552,6 +584,55 @@ export class AddEditWidgetComponent extends BaseComponent {
 
     }
 
+    get IsMeasureNumber() { return this.isMeasureNumber; }
+    set IsMeasureNumber(value: boolean) {
+        if (this.isMeasureNumber != value) {
+            this.isMeasureNumber = value;
+            this.SetUIProprtiesForDisplaySettings();
+            this.SetDefaultValuesForDisplaySettings();
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget IsMeasureNumber Value Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
+        }
+    }
+
+    get Alignment() { return this.EntityPM.Alignment; }
+    set Alignment(value: string) {
+        if (this.EntityPM.Alignment != value) {
+            this.EntityPM.Alignment = value;
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Alignment Value Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
+        }
+    }
+    get ThousandSeparator() { return this.EntityPM.ThousandSeparator; }
+    set ThousandSeparator(value: boolean) {
+        if (this.EntityPM.ThousandSeparator != value) {
+            this.EntityPM.ThousandSeparator = value;
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Thousand Separator Value Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
+        }
+    }
+    get UseNumberAbbreviation() { return this.EntityPM.UseNumberAbbreviation; }
+    set UseNumberAbbreviation(value: boolean) {
+        if (this.EntityPM.UseNumberAbbreviation != value) {
+            this.EntityPM.UseNumberAbbreviation = value;
+            this.SetUIProprtiesForDisplaySettings();
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Use Number Abbreviation Value Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
+        }
+    }
+    get UseAbbreviationAfter() { return this.EntityPM.UseAbbreviationAfter; }
+    set UseAbbreviationAfter(value: string) {
+        if (this.EntityPM.UseAbbreviationAfter != value) {
+            this.EntityPM.UseAbbreviationAfter = value;
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget UseAbbreviationAfter Value Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
+        }
+    }
+    get DecimalPlaces() { return this.EntityPM.DecimalPlaces; }
+    set DecimalPlaces(value: number) {
+        if (this.EntityPM.DecimalPlaces != value) {
+            this.EntityPM.DecimalPlaces = value;
+            this.SetUIProperties();
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget DecimalPlaces Value Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
+        }
+    }
+    
+
     SetDefaultSortByField() {
         if (!this.selectedGroupField) return;
         if (this.selectedGroupField.DataTypeCode == "DateTime" || this.selectedGroupField.DataTypeCode == 'Date') {
@@ -629,6 +710,10 @@ export class AddEditWidgetComponent extends BaseComponent {
         }
         if (this.IsSecondaryGroupByVisible && !this.SecondaryGroupById) {
             errors.push("Secondary Group Field is Required");
+        }
+
+        if(this.DecimalPlaces && (this.DecimalPlaces < 0 || this.DecimalPlaces > 2)){
+            errors.push("Decimal Places must be Greater Than or Equal to 0 and Less than or Equal to 2");
         }
 
         this.ValidateTimeOverTime(errors);
@@ -754,6 +839,11 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.myCloner.AddField('ToDate');
         this.myCloner.AddField('SecondaryGroupById');
         this.myCloner.AddField('SecondaryDateGroupCode');
+        this.myCloner.AddField('Alignment');
+        this.myCloner.AddField('ThousandSeparator');
+        this.myCloner.AddField('UseNumberAbbreviation');
+        this.myCloner.AddField('UseAbbreviationAfter');
+        this.myCloner.AddField('DecimalPlaces');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DashboardPM);
 
@@ -820,6 +910,9 @@ export class WidgetMeasureItem extends BaseComponent {
     public IsDeleteMeasureVisible: boolean = false;
     public FieldQueryFilters: ApiQueryFilters;
     public DashboardPM: DashboardPM;
+    private selectedField: AnalyticsFactsFieldsMetaDataList;
+     
+
 
     public get DefaultRender(): any {
         return this.fatherComponent?.MeasureRenderList?.find(x => x.code == this.RenderAs);
@@ -831,13 +924,15 @@ export class WidgetMeasureItem extends BaseComponent {
         this.Widget = fatherComponent.EntityPM;
         this.IsNew = isNew;
         this.DashboardPM = fatherComponent?.DashboardPM;
-        this.FilterMeasureFields();
+        this.FilterMeasureFields();  
+       
     }
 
     SetUIProperties() {
         this.UIProperties.SetEnabled("MeasureCode", this.ObjectTableName, !AppTool.IsNullOrEmpty(this.fatherComponent.EntityId));
         this.UIProperties.SetEnabled("MeasureFieldId", this.ObjectTableName, !AppTool.IsNullOrEmpty(this.fatherComponent.EntityId));
     }
+        
 
     public CheckMeasureDeleteVisiblity() {
         var index = this.fatherComponent.WidgetMeasuresList.indexOf(this);
@@ -873,6 +968,14 @@ export class WidgetMeasureItem extends BaseComponent {
         MixPanelLocator.PostDashboardAction({ ActionName: "Widget Measure Show as Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
     }
 
+    get SelectedField() { return this.selectedField; }
+    set SelectedField(value: AnalyticsFactsFieldsMetaDataList) {
+        if (this.selectedField != value) {
+            this.selectedField = value;
+            MixPanelLocator.PostDashboardAction({ ActionName: "Widget Measure Field Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
+        }
+    }
+
     FilterMeasureFields() {
         this.FieldQueryFilters = new ApiQueryFilters();
 
@@ -887,7 +990,7 @@ export class WidgetMeasureItem extends BaseComponent {
                 this.FieldQueryFilters.addAdditionalFilter("DataTypeCode", "Integer,Decimal", null, null, "InList", false, true, false, "string", false, true, true);
                 break;
 
-            case "Min":
+            case "Min": 
             case "Max":
                 this.FieldQueryFilters.addAdditionalFilter("DataTypeCode", "Integer,Decimal,DateTime,Date", null, null, "InList", false, true, false, "string", false, true, true);
                 break;
@@ -910,6 +1013,20 @@ export class WidgetMeasureItem extends BaseComponent {
 
         MixPanelLocator.PostDashboardAction({ ActionName: "Widget Measure Delete Click", DashboardId: this.DashboardPM?.Id });
         this.fatherComponent.CheckMeasureAddVisiblity();
+    }
+
+    FieldChanged(field: AnalyticsFactsFieldsMetaDataList) {
+        this.selectedField = field;
+        this.IsNumeric();
+        this.fatherComponent.SetUIProprtiesForDisplaySettings();
+    }
+
+    IsNumeric() {    
+        if(this.selectedField && (this.selectedField.DataTypeCode == "Integer" || this.selectedField.DataTypeCode == "Decimal")){
+            this.fatherComponent.IsMeasureNumber = true;
+            return;
+        }
+        this.fatherComponent.IsMeasureNumber = false; 
     }
 
 }

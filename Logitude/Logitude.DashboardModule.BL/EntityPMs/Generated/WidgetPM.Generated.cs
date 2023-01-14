@@ -653,12 +653,12 @@ namespace Logitude.DashboardModule.BL.EntityPMs
 			
 		 }
 	   }
-	  private bool? thousandSeparator ;
+	  private bool thousandSeparator ;
 	  	  
        
 	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
 	   [DataMember]
-       public bool? ThousandSeparator  
+       public bool ThousandSeparator  
 	   {
 	    
 	     get
@@ -669,19 +669,19 @@ namespace Logitude.DashboardModule.BL.EntityPMs
 		 {
 		   if(thousandSeparator != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ThousandSeparator",OldValue=thousandSeparator,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ThousandSeparator",OldValue=thousandSeparator,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   thousandSeparator=value;
 		   }
 			
 		 }
 	   }
-	  private bool? useNumberAbbreviation ;
+	  private bool useNumberAbbreviation ;
 	  	  
        
 	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
 	   [DataMember]
-       public bool? UseNumberAbbreviation  
+       public bool UseNumberAbbreviation  
 	   {
 	    
 	     get
@@ -692,7 +692,7 @@ namespace Logitude.DashboardModule.BL.EntityPMs
 		 {
 		   if(useNumberAbbreviation != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UseNumberAbbreviation",OldValue=useNumberAbbreviation,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UseNumberAbbreviation",OldValue=useNumberAbbreviation,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   useNumberAbbreviation=value;
 		   }
@@ -718,6 +718,29 @@ namespace Logitude.DashboardModule.BL.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DecimalPlaces",OldValue=decimalPlaces,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
 		   decimalPlaces=value;
+		   }
+			
+		 }
+	   }
+	  private string useAbbreviationAfter ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string UseAbbreviationAfter  
+	   {
+	    
+	     get
+		{
+		   return useAbbreviationAfter;
+		 }
+		 set
+		 {
+		   if(useAbbreviationAfter != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UseAbbreviationAfter",OldValue=useAbbreviationAfter,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   useAbbreviationAfter=value;
 		   }
 			
 		 }

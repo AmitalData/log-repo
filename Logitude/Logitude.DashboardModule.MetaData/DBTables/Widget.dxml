@@ -174,17 +174,24 @@
     Name="ThousandSeparator"
     Type="bit">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="UseNumberAbbreviation"
     Type="bit">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="DecimalPlaces"
     Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="UseAbbreviationAfter"
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>

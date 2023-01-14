@@ -76,6 +76,8 @@ namespace Logitude.DashboardModule.Data.EntityMapping
             this.Property(t => t.UseNumberAbbreviation).HasColumnName("UseNumberAbbreviation");
 
             this.Property(t => t.DecimalPlaces).HasColumnName("DecimalPlaces");
+
+            this.Property(t => t.UseAbbreviationAfter).HasColumnName("UseAbbreviationAfter").HasMaxLength(15).IsUnicode(false);
         }
     }
 }

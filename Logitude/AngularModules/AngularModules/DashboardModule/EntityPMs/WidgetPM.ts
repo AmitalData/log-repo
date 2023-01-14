@@ -207,6 +207,11 @@ export class WidgetPM {
     public set DecimalPlaces(newValue: number) { if (this.decimalPlaces != newValue) { this.decimalPlaces = newValue; this.MarkAsDirty("DecimalPlaces"); } }
        
 	 
+    private useAbbreviationAfter: string;
+    public get UseAbbreviationAfter() { return this.useAbbreviationAfter; }
+    public set UseAbbreviationAfter(newValue: string) { if (this.useAbbreviationAfter != newValue) { this.useAbbreviationAfter = newValue; this.MarkAsDirty("UseAbbreviationAfter"); } }
+       
+	 
 
     public OldEntityPM: WidgetPM;
 	
