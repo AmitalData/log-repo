@@ -341,6 +341,7 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
             newLine.Reference2 = selectedTransaction.Reference2;
             newLine.Reference3 = selectedTransaction.Reference3;
             newLine.Notes = selectedTransaction.Notes;
+            newLine.JournalNumber = selectedTransaction.JournalNumber;
             myReconciliationLines.push(newLine);
         }
     }
@@ -359,6 +360,7 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
             const confirmMsg = 'Leaving the accounting date / due date/ reference date/references/note empty will create adjustment journals with dates/references/note taken from the original ones. If you want to continue click ok. If not click cancel and fill the date/references/note fields';
             const confirmWindow = new ConfirmWindow();
             confirmWindow.Width = 400;
+            confirmWindow.Left = '25%';
             confirmWindow.Show(confirmMsg);
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
@@ -366,6 +368,7 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
                     confirmWindow.Close();
                 }
             });
+
         } else {
             this.Reconcile(reconciliationLines);
         }
