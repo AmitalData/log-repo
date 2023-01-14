@@ -59,6 +59,16 @@ export class DashboardGlobalPresetFilterPM {
     public set Sort(newValue: number) { if (this.sort != newValue) { this.sort = newValue; this.MarkAsDirty("Sort"); } }
        
 	 
+    private joinedTableDisplayField: string;
+    public get JoinedTableDisplayField() { return this.joinedTableDisplayField; }
+    public set JoinedTableDisplayField(newValue: string) { if (this.joinedTableDisplayField != newValue) { this.joinedTableDisplayField = newValue; this.MarkAsDirty("JoinedTableDisplayField"); } }
+       
+	 
+    private canSearch: boolean;
+    public get CanSearch() { return this.canSearch; }
+    public set CanSearch(newValue: boolean) { if (this.canSearch != newValue) { this.canSearch = newValue; this.MarkAsDirty("CanSearch"); } }
+       
+	 
 
     public OldEntityPM: DashboardGlobalPresetFilterPM;
 		

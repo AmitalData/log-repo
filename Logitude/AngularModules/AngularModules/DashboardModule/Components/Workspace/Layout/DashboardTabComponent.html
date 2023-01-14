@@ -110,7 +110,7 @@
         </table>
     </div>
 
-    <div *ngIf="SelectedDashboard" [hidden]="!IsGlobalFiltersOpened" class="dl-flobal-filter-container"  style="min-width: 1220px;">
+    <div *ngIf="SelectedDashboard" [hidden]="!IsGlobalFiltersOpened" class="dl-flobal-filter-container">
         <GlobalFilter [Dashboard]="SelectedDashboard" (ApplyFilters)="ApplyFilters($event)"></GlobalFilter>
     </div>
 

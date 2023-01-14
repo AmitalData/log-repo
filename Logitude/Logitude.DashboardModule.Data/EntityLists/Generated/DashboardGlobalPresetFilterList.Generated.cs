@@ -28,6 +28,10 @@ namespace Logitude.DashboardModule.Data.EntityLists
        public string JoinedTableName  { get; set; }
        [DataMember]
        public int? Sort  { get; set; }
+       [DataMember]
+       public string JoinedTableDisplayField  { get; set; }
+       [DataMember]
+       public bool CanSearch  { get; set; }
    }
 
 }

@@ -15,6 +15,8 @@ export class DashboardGlobalPresetFilterList {
 	IsMultiSelect: boolean;
 	JoinedTableName: string;
 	Sort: number;
+	JoinedTableDisplayField: string;
+	CanSearch: boolean;
 	
 }
  

@@ -1,0 +1,16 @@
+<div class="dl-global-filter-item-container" [ngStyle]="Position == 0 && {'margin-left': '0'}">
+    <p class="dl-global-filters-label">{{FilterItem.DisplayName}}:</p>
+
+    <div style="margin-left: 4px;">
+        <MultiSelectDropDown [ObjectTableName]="FilterItem.JoinedTableName"
+                             [DisplayName]="FilterItem.JoinedTableDisplayField"
+                             [CanSearch]="FilterItem.CanSearch"
+                             [CanSearch]="FilterItem.CanSearch"
+                             [Placeholder]="FilterItem.DisplayName"
+                             [IsMultiSelect]="FilterItem.IsMultiSelect"
+                             (SelectedItemChanged)="FilterItem.FieldValue"
+                             style="display: flex;"
+                             *ngIf="FilterItem.DataTypeCode == 'LookUp'">
+        </MultiSelectDropDown>
+    </div>
+</div>

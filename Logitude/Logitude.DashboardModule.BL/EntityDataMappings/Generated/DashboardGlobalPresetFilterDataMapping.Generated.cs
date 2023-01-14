@@ -28,7 +28,9 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         IsDisabled, 
 	         IsMultiSelect, 
 	         JoinedTableName, 
-	         Sort,
+	         Sort, 
+	         JoinedTableDisplayField, 
+	         CanSearch,
 	      }
 
 
@@ -41,7 +43,9 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 	         IsDisabled, 
 	         IsMultiSelect, 
 	         JoinedTableName, 
-	         Sort,
+	         Sort, 
+	         JoinedTableDisplayField, 
+	         CanSearch,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -78,6 +82,16 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Sort))
             {
 				entityPOCO.Sort = entityPM.Sort;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.JoinedTableDisplayField))
+            {
+				entityPOCO.JoinedTableDisplayField = entityPM.JoinedTableDisplayField;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CanSearch))
+            {
+				entityPOCO.CanSearch = entityPM.CanSearch;
 			}
 			}
 
@@ -119,6 +133,16 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 					entityPM.Sort = entityPOCO.Sort;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.JoinedTableDisplayField))
+            {
+					entityPM.JoinedTableDisplayField = entityPOCO.JoinedTableDisplayField;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CanSearch))
+            {
+					entityPM.CanSearch = entityPOCO.CanSearch;
+            }
+
 		}
 
 		public void PMToOldPM(DashboardGlobalPresetFilterPM entityPM, DashboardGlobalPresetFilterPM oldEntityPM)
@@ -153,6 +177,16 @@ namespace Logitude.DashboardModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Sort))
             {
                 oldEntityPM.Sort = entityPM.Sort;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.JoinedTableDisplayField))
+            {
+                oldEntityPM.JoinedTableDisplayField = entityPM.JoinedTableDisplayField;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CanSearch))
+            {
+                oldEntityPM.CanSearch = entityPM.CanSearch;
             }
 			
 		}

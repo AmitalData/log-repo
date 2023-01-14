@@ -36,6 +36,10 @@ namespace Logitude.DashboardModule.Data.EntityPOCOs
 	    public string JoinedTableName { get; set; }
         [Column("Sort")]
 	    public int? Sort { get; set; }
+        [Column("JoinedTableDisplayField")]
+	    public string JoinedTableDisplayField { get; set; }
+        [Column("CanSearch")]
+	    public bool CanSearch { get; set; }
     }
 }
 	 

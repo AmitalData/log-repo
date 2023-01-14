@@ -207,16 +207,17 @@
 }
 
 .dl-flobal-filter-container {
-    background: #FFFADC;
-    border: 1px solid #BABABA;
+    background: #FFFFFF;
+    border: 1px solid #F0F0F0;
     border-radius: 3px;
     -webkit-border-radius: 3px;
-    width: calc(100%-2px);
-    height: 150px;
-    margin-top: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
+    height: 80px;
+    margin-top: 12px;
+    margin-left: 12px;
+    margin-right: 11px;
     flex: 0 0 auto;
+    min-width: 1220px;
+    padding: 12px;
 }
 
 .dl-tab-container {
