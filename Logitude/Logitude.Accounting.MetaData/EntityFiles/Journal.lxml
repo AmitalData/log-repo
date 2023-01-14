@@ -5135,6 +5135,12 @@
       LocalDefaultText="&quot;תאריך חשבונאי הינו שדה חובה&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.RE.AccountingDateConfrimation&quot;"
+      DefaultText="&quot;Leaving the accounting date / due date/ reference date/references/note  empty will create adjustment journals with dates/references/note taken from the original ones. If you want to continue click ok. If not click cancel and fill the date/references/note fields&quot;"
+      LocalDefaultText="&quot;במידה ולא קיים ערך בשדות: תאריך חשבונאי\אסמכתא\פירעון אסמכתאות הערות הערכים ילקחו מהשורות שסומנו להתאמה. להמשיך הקש &quot;אישור&quot; לחזרה להשלמת הערכים הקש &quot;חזור&quot;&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
