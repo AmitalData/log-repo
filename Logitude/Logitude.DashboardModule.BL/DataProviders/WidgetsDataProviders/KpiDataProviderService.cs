@@ -39,7 +39,8 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             {
                 object comparsionObject = BuildKpiChartComparsionValue<T>(widgetMeasureField, query);
                 kpiChart.Ratio = GetRatio(kpiChart.Value, comparsionObject);
-                kpiChart.ComparisonValue = FormatComparisonValue(kpiChart.ComparisonValue);
+                kpiChart.ComparisonAbbreviationSymbol = GetAbbreviationSymbol(comparsionObject);
+                kpiChart.ComparisonValue = FormatKpiValue(comparsionObject, measureField?.DataTypeCode);
             }
             kpiChart.AbbreviationSymbol = GetAbbreviationSymbol(kpiChart.Value);
             kpiChart.Value = FormatKpiValue(kpiChart.Value, measureField?.DataTypeCode);
