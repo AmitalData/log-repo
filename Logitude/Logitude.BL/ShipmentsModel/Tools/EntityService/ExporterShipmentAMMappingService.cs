@@ -81,7 +81,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 AgentName = shipmentPM.PrivateLabelAgentName,
                 PlaceOfDelivery = shipmentPM.PlaceOfDelivery,
                 PickupPlace = shipmentPM.PickupPlace,
-                SealNo = shipmentPM.SealNo,
+                HSCode = shipmentPM.HSCode,
             };
         }
         

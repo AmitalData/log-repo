@@ -42,7 +42,7 @@ namespace Logitude.BL.ShipmentsModel.EntityAMs
         public CodeProperties Consignee { get; set; }
         public string PlaceOfDelivery { get; set; }
         public string PickupPlace { get; set; }
-        public string SealNo { get; set; }
+        public string HSCode { get; set; }
 
     }
 }
