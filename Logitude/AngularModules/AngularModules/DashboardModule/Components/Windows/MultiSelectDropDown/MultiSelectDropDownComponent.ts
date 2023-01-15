@@ -91,7 +91,7 @@ export class MultiSelectDropDownComponent implements OnInit {
         this.EntityListService.getAllFromCache(this.ObjectTableName, filters).then((res: any) => {
             res.subscribe((response: any) => {
                 if (!response.Result) return;
-                this.ItemsSource = response.Result;
+                this.ItemsSource = JSON.parse(JSON.stringify(response.Result));
                 this.Loading = false;
                 this.SetDisplayText();
             })
@@ -154,7 +154,7 @@ export class MultiSelectDropDownComponent implements OnInit {
 
         var keys = this.SelectedItems.map(a => a[this.KeyPropertyPath]);
 
-        var keysString = keys.join(", ")
+        var keysString = keys.join(",")
         this.SelectedItem = keysString;
         this.SelectedItemChanged.emit(keysString);
         this.SetDisplayText();

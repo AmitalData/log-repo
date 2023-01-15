@@ -19,6 +19,8 @@ import { DashboardPMExtendedService, PinnedDashboard } from '../../../../Dashboa
 import { DashboardListExtendedService } from '../../../../DashboardModule/Services/ExtendedLists/DashboardListExtendedService';
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 import { UserPinnedDashboardPM } from 'DashboardModule/EntityPMs/UserPinnedDashboardPM';
+import { AnalyticsFactsFieldsMetaDataPMExtendedService } from 'DashboardModule/Services/ExtendedPMs/AnalyticsFactsFieldsMetaDataExtendedService';
+import { AnalyticsFactsFieldsMetaDataPM } from 'DashboardModule/EntityPMs/AnalyticsFactsFieldsMetaDataPM';
 
 @Component({
     templateUrl: 'CustomDashboardComponent.html',
@@ -46,11 +48,16 @@ export class CustomDashboardComponent extends BaseComponent {
     public SelectedFromDashboardDropDown: boolean = false;
     public PinnedDashboards: DashboardList[];
     public UserPinnedDashboard: UserPinnedDashboardPM;
+    private DashboardListExtendedService: DashboardListExtendedService;
+    private AnalyticsFactsFieldsMetaDataPMExtendedService: AnalyticsFactsFieldsMetaDataPMExtendedService;
+    public PresetFilters: AnalyticsFactsFieldsMetaDataPM[];
 
     constructor() {
         super();
         this.DashboardListService = new DashboardListService();
         this.dashboardPMEstendedService = new DashboardPMExtendedService();
+        this.DashboardListExtendedService = new DashboardListExtendedService();
+        this.AnalyticsFactsFieldsMetaDataPMExtendedService = new AnalyticsFactsFieldsMetaDataPMExtendedService();
         this.GetData();
         this.BuildSectionsItemsSource();
     }
@@ -91,7 +98,8 @@ export class CustomDashboardComponent extends BaseComponent {
                     this._entityResourceService.getEntityResourceByTableName("AnalyticsFactsMetaData").subscribe((res3: any) => {
                         this._entityResourceService.getEntityResourceByTableName("AnalyticsFactsFieldsMetaData").subscribe((res4: any) => {
                             setTimeout(e => {
-                                this.LoadDashboardsForDropDown();
+                                this.GetPresetFilterFields();
+
                             }, 70);
                         });
                     });
@@ -100,9 +108,16 @@ export class CustomDashboardComponent extends BaseComponent {
         });
     }
 
+    GetPresetFilterFields() {
+        this.AnalyticsFactsFieldsMetaDataPMExtendedService.GetPresetFilters().subscribe((myResponse: ServiceResponse) => {
+            if (myResponse.HasError) return
+            this.PresetFilters = myResponse.Result ?? [];
+            this.LoadDashboardsForDropDown();
+        });
+    }
+
     private LoadDashboardsForDropDown() {
-        var service: DashboardListExtendedService = new DashboardListExtendedService();
-        service.GetDashboardsForDropDown().subscribe((myResponse: ServiceResponse) => {
+        this.DashboardListExtendedService.GetDashboardsForDropDown().subscribe((myResponse: ServiceResponse) => {
             if (myResponse.HasError) return
             this.ItemsSource = myResponse.Result ?? [];
             this.dashbaordCount = this.ItemsSource.length;

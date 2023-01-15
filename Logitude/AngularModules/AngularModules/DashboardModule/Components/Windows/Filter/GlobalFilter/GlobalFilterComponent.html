@@ -1,8 +1,10 @@
 <div style="height: 100%;">
     <div class="dl-global-filters-container">
-        <GlobalFilterItem style="display: inline-flex" *ngFor="let item of FilterItems; let i = index"
-            [(FilterItem)]="FilterItems[i]" [Position]="i">
-        </GlobalFilterItem>
+        <div *ngIf="ShowFilters">
+            <GlobalFilterItem style="display: inline-flex" *ngFor="let item of FilterItems; let i = index"
+                [(FilterItem)]="FilterItems[i]" [Position]="i">
+            </GlobalFilterItem>
+        </div>
     </div>
     <div class="dl-global-filter-btn-container">
         <p class="dl-apply-filter-text" (click)="ClearFiltersClick()">Clear Filters</p>

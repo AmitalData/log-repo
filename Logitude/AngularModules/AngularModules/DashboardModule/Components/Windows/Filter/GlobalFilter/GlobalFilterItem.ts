@@ -1,4 +1,7 @@
 export class GlobalFilterItem {
+    public FieldId: string;
+    public DataSetId: string;
+    public FieldName: string;
     public DisplayName: string;
     public DataTypeCode: string;
     public IsPreset: boolean;

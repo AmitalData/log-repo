@@ -30,6 +30,21 @@ namespace WebFreight.Web.Controllers.DashboardModel.Extended
             }
         }
 
+        public HttpResponseMessage GetPresetFilters()
+        {
+            try
+            {
+                int tenant = AuthenticatToken();
+                AnalyticsFactsFieldsMetaDataQueryService dashboardQueryService = new AnalyticsFactsFieldsMetaDataQueryService(tenant);
+                var result = dashboardQueryService.GetPresetFilters();
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         private static int AuthenticatToken()
         {
             string token = HttpContext.Current.Request.Headers["Token"];

@@ -9,7 +9,7 @@
                 [Placeholder]="FilterItem.DisplayName"
                 [IsMultiSelect]="FilterItem.IsMultiSelect"
                 [SelectedItem]="FilterItem.FieldValue"
-                (SelectedItemChanged)="FilterItem.FieldValue"
+                (SelectedItemChanged)="FilterItem.FieldValue = $event"
                 style="display: flex;"
                 *ngIf="FilterItem.DataTypeCode == 'LookUp'">
         </MultiSelectDropDown>

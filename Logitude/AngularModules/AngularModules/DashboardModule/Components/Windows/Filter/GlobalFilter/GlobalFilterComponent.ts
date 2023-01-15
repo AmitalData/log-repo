@@ -17,6 +17,7 @@ export class GlobalFilterComponent implements OnInit {
     public FilterItems: GlobalFilterItem[] = [];
 
     private DashboardGlobalPresetFilterListService: DashboardGlobalPresetFilterListService;
+    public ShowFilters: boolean = true;
 
     constructor() {
         this.DashboardGlobalPresetFilterListService = new DashboardGlobalPresetFilterListService();
@@ -36,6 +37,7 @@ export class GlobalFilterComponent implements OnInit {
     AddPresetFitlers(filters: DashboardGlobalPresetFilterList[]) {
         filters.forEach(presetFilter => {
             var filter = new GlobalFilterItem();
+            filter.FieldId = presetFilter.Code;
             filter.DataTypeCode = presetFilter.DataTypeCode;
             filter.DisplayName = presetFilter.DisplayName;
             filter.Operator = "";
@@ -51,48 +53,59 @@ export class GlobalFilterComponent implements OnInit {
 
 
     FilterExist(): boolean {
-        // if (this.CommonFilters && this.CommonFilters.length > 0) return true;
-        // if (this.DatasetFilters && this.DatasetFilters.length > 0) return true;
+        if (this.FilterItems && this.FilterItems.length > 0) return true;
         return false;
+    }
+
+    ClearFiltersClick() {
+        if (!this.FilterExist()) return;
+        if (this.FilterItems) this.FilterItems.forEach(element => { this.ClearFilter(element); });
+        this.ShowFilters = false;
+        setTimeout(() => {
+            this.ShowFilters = true
+        }, 10);
+        this.ApplyFilters.emit(null);
+    }
+
+    private ClearFilter(element: GlobalFilterItem) {
+        element.FieldValue = null;
+        element.FieldValue2 = null;
+        element.FieldValue3 = null;
+        element.DateGroupCode = null;
+        element.Operator = null;
+        element.CompareWithPrevious = false;
     }
 
     ApplyFiltersClick() {
         if (!this.FilterExist()) return;
         var filterItems = [];
-        // this.AddFilterItems(this.CommonFilters, filterItems, true);
-        // this.AddFilterItems(this.DatasetFilters, filterItems, false);
+        this.AddFilterItems(this.FilterItems, filterItems, true);
         this.ApplyFilters.emit(filterItems);
     }
 
     AddFilterItems(filters: GlobalFilterItem[], filterItems: any, isCommon: boolean = false): any {
         if (!filters || filters.length == 0) return filterItems;
         filters.forEach(element => {
+            this.SetPresetFilterOperator(element);
             if (this.FilterValueEmpty(element)) return;
-            filterItems.push(this.MapFilterToDashboardFilter(element, isCommon));
+            filterItems.push(element);
         });
         return filterItems;
     }
 
-    FilterValueEmpty(element: GlobalFilterItem): boolean {
-        // if (element.FilterOperator == "IsEmpty" || element.FilterOperator == "IsNotEmpty") return false;
-        // if (element.FilterOperator != "Previous" && element.FilterOperator != "Next" && element.FilterOperator != "Current" && (!element.FieldValue || element.FieldValue == "")) return true;
-        // if ((element.FilterOperator == "Previous" || element.FilterOperator == "Next") && (!element.FieldValue3 || element.FieldValue3 == "")) return true;
-        // if (element.FilterOperator == "Between" && (!element.FieldValue2 || element.FieldValue2 == "" || element.FieldValue2 <= element.FieldValue)) return true;
-        return false;
+    SetPresetFilterOperator(filterItem: GlobalFilterItem) {
+        if (!filterItem.IsPreset) return;
+        if (filterItem.DataTypeCode == "LookUp") {
+            if (filterItem.IsMultiSelect) filterItem.Operator = "InListExact";
+            else filterItem.Operator = "Equal";
+        }
     }
 
-    MapFilterToDashboardFilter(element: GlobalFilterItem, isCommon: boolean): any {
-        return {
-            // FieldId: element.DataSetFieldId,
-            // DataSetId: element.DataSetId,
-            // FieldName: isCommon ? element.CommonFilterField : element.EntityPM.FieldCode,
-            // IsCommon: isCommon,
-            // Operator: element.FilterOperator,
-            DateGroupCode: element.DateGroupCode,
-            FieldDataType: element.DataTypeCode,
-            FieldValue: element.FieldValue,
-            FieldValue2: element.FieldValue2,
-            FieldValue3: element.FieldValue3,
-        }
+    FilterValueEmpty(element: GlobalFilterItem): boolean {
+        if (element.Operator == "IsEmpty" || element.Operator == "IsNotEmpty") return false;
+        if (element.Operator != "Previous" && element.Operator != "Next" && element.Operator != "Current" && (!element.FieldValue || element.FieldValue == "")) return true;
+        if ((element.Operator == "Previous" || element.Operator == "Next") && (!element.FieldValue3 || element.FieldValue3 == "")) return true;
+        if (element.Operator == "Between" && (!element.FieldValue2 || element.FieldValue2 == "" || element.FieldValue2 <= element.FieldValue)) return true;
+        return false;
     }
 }
