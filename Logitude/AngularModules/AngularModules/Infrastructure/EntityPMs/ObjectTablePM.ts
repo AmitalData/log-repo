@@ -372,6 +372,10 @@ export class ObjectTablePM {
     public get SupportSubEntity() { return this.supportSubEntity; }
     public set SupportSubEntity(newValue: boolean) { if (this.supportSubEntity != newValue) { this.supportSubEntity = newValue; this.MarkAsDirty("SupportSubEntity"); } }
 
+    private newMechanismForCustomFields: boolean;
+    public get NewMechanismForCustomFields() { return this.newMechanismForCustomFields; }
+    public set NewMechanismForCustomFields(newValue: boolean) { if (this.newMechanismForCustomFields != newValue) { this.newMechanismForCustomFields = newValue; this.MarkAsDirty("NewMechanismForCustomFields"); } }
+
     public OldEntityPM: ObjectTablePM;
 		
     public IsDirty: boolean;

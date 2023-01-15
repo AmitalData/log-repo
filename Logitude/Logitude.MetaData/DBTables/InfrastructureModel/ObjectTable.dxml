@@ -478,6 +478,12 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="ApplyGenericCustomFields"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="HeaderScreenId"
     ReferencedTable="Screens"
