@@ -44,14 +44,14 @@
     }
 
     .set-value-field-row {
-        width: 220px;
+        width: 300px;
         margin-right: 5px;
     }
 
     .set-value-field-container {
         display: table-cell;
         vertical-align: middle;
-        width: 220px;
+        width: auto;
         padding-right: 5px;
     }
 
@@ -63,7 +63,7 @@
     .set-value-operator-container {
         display: table-cell;
         vertical-align: middle;
-        width: 150px;
+        width: 200px;
         padding-right: 5px;
     }
 
@@ -126,7 +126,7 @@
                         (SelectedItemChanged)="updateSetValueEntityField($event, setValueIndex)">
                     </LogLov>
 
-                    <TreeSelect *ngIf="!IsEntityField" [Items]="FlowVariablesTreeItems" [Width]="'220px'"
+                    <TreeSelect *ngIf="!IsEntityField" [Items]="FlowVariablesTreeItems" [Width]="'300px'"
                         [Value]="setValue.field" [ShowItem]="null | ShowEditableVariablesTreeItemPipe"
                         [IsDisabled]="setValue.isDisabled" [IsReturnedTreeSelectItem]="true"
                         (ValueChanged)="updateSetValueField($event, setValueIndex)">
@@ -158,13 +158,13 @@
                 </div>
                 <div *ngIf="(setValue.operator | IsFieldOperatorPipe)" class="set-value-value-container">
 
-                    <TreeSelect *ngIf="setValue.fieldChangedToggle" [Items]="FlowVariablesTreeItems" [Width]="'220px'"
+                    <TreeSelect *ngIf="setValue.fieldChangedToggle" [Items]="FlowVariablesTreeItems" [Width]="'300px'"
                         [Value]="setValue.value"
                         [ShowItem]="setValue | ShowFlowVariablesTreeItemPipe : FlowVariablesTreeList"
                         [IsDisabled]="setValue.isDisabled" (ValueChanged)="updateSetValue($event, setValueIndex)">
                     </TreeSelect>
 
-                    <TreeSelect *ngIf="!setValue.fieldChangedToggle" [Items]="FlowVariablesTreeItems" [Width]="'220px'"
+                    <TreeSelect *ngIf="!setValue.fieldChangedToggle" [Items]="FlowVariablesTreeItems" [Width]="'300px'"
                         [Value]="setValue.value"
                         [ShowItem]="setValue | ShowFlowVariablesTreeItemPipe : FlowVariablesTreeList"
                         [IsDisabled]="setValue.isDisabled" (ValueChanged)="updateSetValue($event, setValueIndex)">
