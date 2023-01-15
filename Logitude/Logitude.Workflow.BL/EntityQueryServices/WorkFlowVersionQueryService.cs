@@ -37,7 +37,8 @@ namespace Logitude.Workflow.BL.EntityQueryServices
                                                  WorkflowId = a.WorkflowId,
                                                  FlowJson = a.FlowJson,
                                                  Entity = a.Entity,
-                                                 Trigger = a.Trigger
+                                                 Trigger = a.Trigger,
+                                                 ActivatedDate = a.ActivatedDate
                                              }).ToList();
             return query;
         }

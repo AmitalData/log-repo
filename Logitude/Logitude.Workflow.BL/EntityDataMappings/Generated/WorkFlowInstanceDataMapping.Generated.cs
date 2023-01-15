@@ -54,7 +54,8 @@ namespace Logitude.Workflow.BL.EntityDataMappings
 	         BusinessKey, 
 	         Duration, 
 	         StatusName, 
-	         WorkFlowVersionId,
+	         WorkFlowVersionId, 
+	         WorkFlowVersionNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
