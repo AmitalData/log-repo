@@ -1793,11 +1793,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 return myDeclarationPM;
             }
+
             //If the Declaration doesn't exist and it is NOT a converted declaration - return empty
-            if (declarationNumber.Substring(2, 2) != "98" && declarationNumber.Substring(2, 2) != "99")
+            if (declarationNumber.Substring(2, 2) != "99")
             {
                 return myDeclarationPM;
             }
+
 
             //Convert the Declaration number into Reshimon number
             var reshimonNumber = LuhnAlgorithm.ConvertDeclartionToReshimon(declarationNumber);
