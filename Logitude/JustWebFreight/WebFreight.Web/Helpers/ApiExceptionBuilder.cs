@@ -1,5 +1,9 @@
 ﻿using Logitude.Server.Tools;
+using Marvin.JsonPatch.Exceptions;
+using Newtonsoft.Json;
 using System;
+using System.Text.RegularExpressions;
+
 namespace WebFreight.Web.Helpers
 {
     public class ApiExceptionBuilder
@@ -86,6 +90,31 @@ namespace WebFreight.Web.Helpers
             };
 
             return apiException;
+        }
+
+        public static object BuildJsonPatchException(JsonPatchException exception, string entityId, object jsonPatch)
+        {
+            string errorMessage = "Error Message: " + exception.Message + Environment.NewLine + 
+                                  "Entity Id: " + entityId + Environment.NewLine +
+                                  "Json Patch: " + JsonConvert.SerializeObject(jsonPatch);
+
+            string shortErrorMessage = "Some of the " + GetChildEntityName(exception) + " were deleted.";
+
+            return new APIException()
+            {
+                ErrorType = exception.GetType().Name,
+                ErrorMessage = errorMessage,
+                ShortErrorMessage = shortErrorMessage
+            };
+        }
+
+        private static string GetChildEntityName(JsonPatchException exception)
+        {
+            var failedOperation = exception.FailedOperation;
+            string entityNameInCamelCase = failedOperation.path.Split('/')[1];
+
+            string returnedEntityName = Regex.Replace(entityNameInCamelCase, @"\p{Lu}", m => " " + m.Value.ToLowerInvariant());
+            return returnedEntityName;
         }
     }
 }
