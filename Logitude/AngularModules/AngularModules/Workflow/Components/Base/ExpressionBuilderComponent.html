@@ -122,13 +122,15 @@
                                 [Width]="'350px'" [SetSelectedValue]="false" [IsReturnedTreeSelectItem]="true"
                                 [AllowClear]="false" [DisplayTitle]="false" [ShowExpand]="false"
                                 [Template]="expressionsTreeSelectTemplate" (ValueChanged)="updateExpression($event)"
-                                [ShowItem]="ExpressionCategory.Code | ShowExpressionTreeItemPipe">
+                                [ShowItem]="ExpressionCategory.Code | ShowExpressionTreeItemPipe"
+                                [PlaceHolder]="FunctionPlaceHolder">
                             </TreeSelect>
                             <TreeSelect *ngIf="!ExpressionCategoryChanged" [Items]="ExpressionsTreeItems"
                                 [Width]="'350px'" [SetSelectedValue]="false" [IsReturnedTreeSelectItem]="true"
                                 [AllowClear]="false" [DisplayTitle]="false" [ShowExpand]="false"
                                 [Template]="expressionsTreeSelectTemplate" (ValueChanged)="updateExpression($event)"
-                                [ShowItem]="ExpressionCategory.Code | ShowExpressionTreeItemPipe">
+                                [ShowItem]="ExpressionCategory.Code | ShowExpressionTreeItemPipe"
+                                [PlaceHolder]="FunctionPlaceHolder">
                             </TreeSelect>
                             <ng-template #expressionsTreeSelectTemplate let-item>
                                 <div class="item-container">
@@ -139,14 +141,16 @@
                         </div>
                         <div *ngIf="FlowVariablesTreeItems" class="variables-tree">
                             <TreeSelect [Items]="FlowVariablesTreeItems" [Width]="'180px'" [SetSelectedValue]="false"
-                                (ValueChanged)="selectVariable($event)" [AllowClear]="false" [DisplayTitle]="false">
+                                (ValueChanged)="selectVariable($event)" [AllowClear]="false" [DisplayTitle]="false"
+                                [PlaceHolder]="VariablePlaceHolder">
                             </TreeSelect>
                         </div>
 
                         <div class="operators-tree">
                             <TreeSelect [Items]="OperatorsTreeItems" [Width]="'180px'" [SetSelectedValue]="false"
                                 (ValueChanged)="selectOperator($event)" [AllowClear]="false" [DisplayTitle]="false"
-                                [IsReturnedTreeSelectItem]="true">
+                                [IsReturnedTreeSelectItem]="true"
+                                [PlaceHolder]="OperatorPlaceHolder">
                             </TreeSelect>
                         </div>
                     </div>

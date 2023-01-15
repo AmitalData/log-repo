@@ -47,6 +47,12 @@
     line-height: unset !important;
 }
 
+.ant-select-selection-placeholder {
+    display: flex !important;
+    align-items: center;
+    padding-left: 5px !important
+}
+
 .ant-select-arrow {
     right: 4px !important;
     transition: unset !important;
