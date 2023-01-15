@@ -14,6 +14,7 @@ import { Validator } from '../../../../../Validators/Validator';
 import { CustomFieldClass } from '../../../../../DataContracts/CustomFieldClass';
 import { ApiQueryFilters } from '../../../../../DataContracts/ApiQueryFilters';
 import { ScreenSectionListService } from '../../../../../Services/StandardLists/ScreenSectionListService';
+import { ClassLevelValidator } from '../../../../../Validators/ClassLevelValidator';
 declare var window;
 
 @Component({
@@ -146,7 +147,7 @@ export class AddEditChildEntityComponent extends BaseComponent implements OnInit
     OkButtonClicked() {
         this.ValidationErrorsList = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, this.ValidationErrorsList);
-
+        this.ValidationErrorsList  = this.ValidationErrorsList.concat( new ClassLevelValidator().ValidateCustomEntity(this.ObjectTableName, this.EntityPM));      
         if (this.ValidationErrorsList.length == 0) {
             this.Save();
         }
