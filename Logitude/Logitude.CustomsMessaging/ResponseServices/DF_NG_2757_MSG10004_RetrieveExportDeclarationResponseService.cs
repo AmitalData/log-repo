@@ -83,7 +83,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         if (this.MyRequestSheetParam == null)
                             this.MyRequestSheetParam = new RequestSheetParam();
 
-                        this.MyRequestSheetParam.CustomFileNo = GetValueIDType(customResponse.Response.Declaration.DMExtensions?.AgentFileReferenceID); ;
+                        this.MyRequestSheetParam.CustomFileNo = Strings.Right(GetValueIDType(customResponse.Response.Declaration.DMExtensions?.ExternalDeclarationID), 10).TrimStart('0');
 
                         xml = XmlGenericUtil<Declaration>.SerializeObject(customResponse.Response.Declaration);
                         _MyDefaultResponseData.ResponseStatusXML = xml;
@@ -282,9 +282,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (declaration.DMExtensions != null)
                 {
                     
-                    declarationPM.CustomFileNo = GetValueIDType(declaration.DMExtensions.AgentFileReferenceID);
+                    declarationPM.CustomFileNo = Strings.Right(GetValueIDType(declaration.DMExtensions.ExternalDeclarationID), 10).TrimStart('0');
 
-                    declarationPM.ExportFile = Strings.Right(GetValueIDType(declaration.DMExtensions.ExternalDeclarationID), 10).TrimStart('0');    
+                    declarationPM.ExportFile = GetValueIDType(declaration.DMExtensions.AgentFileReferenceID);    
                     declarationPM.ExternalDeclarationNumber = GetValueIDType(declaration.DMExtensions.ExternalDeclarationID);
                     declarationPM.DestinationCountryCode = GetValueCodeType(declaration.DMExtensions.DestinationCountry);                  
                     declarationPM.ExportAutonomyRegionTypeCode = GetValueIDType(declaration.DMExtensions.AutonomyRegionType);
