@@ -110,6 +110,32 @@ export class ClassLevelValidator {
         return errorsArray;
     }
 
+
+    public ValidateCustomEntity(objectTableName, entityPM) {
+
+        var errorsArray = [];
+        var translatedRequiredError: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+
+        var objectTable = window.ObjectTables.filter(x => x.Name === objectTableName)[0];
+        var objectFields = window.ObjectFields.filter(x => x.ObjectTableId === objectTable.Id);
+
+        objectFields.filter(d => d.IsRequiered).forEach((objectfield, key) => {
+            let fieldError = this.ValidateCustomField(entityPM, objectfield, translatedRequiredError);
+            if (fieldError) errorsArray.push(fieldError);
+        });
+
+        return errorsArray;
+    }
+
+
+    private ValidateCustomField(entityPM: any, objectfield: any, translatedRequiredError: string) {
+        let fieldValue = this.GetFieldValue(entityPM, objectfield);
+        if (!AppTool.IsNullOrEmpty(fieldValue)) return;
+        var fieldName: string = TextCodeTranslator.Translate(objectfield.FullNameTextCodeCode);
+        return translatedRequiredError.replace("%FieldName", fieldName);
+      
+    }
+
     private validateTextAndNumberDataTypes(entityPM: any, objectfield: any, errorsArray: any[]) {
         if (!entityPM[objectfield.FieldName]) return;
         
