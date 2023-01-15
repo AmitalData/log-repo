@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="31">
+  <Sql Version="32">
     <![CDATA[	
 	  delete from DigitalTextCodes where id != ''
 
@@ -600,13 +600,13 @@
 		},
 		{
 			"TextCode": "Dashboard.G.ShipmentInTransit",
-			"DefaultText": "In Transit",
+			"DefaultText": "In transit",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
 		{
 			"TextCode": "Dashboard.G.ShipmentAtDestination",
-			"DefaultText": "At Destination",
+			"DefaultText": "At destination",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
@@ -786,7 +786,7 @@
 		},
 		{
 			"TextCode": "General.G.ShowResults",
-			"DefaultText": "Show Results",
+			"DefaultText": "Show results",
 			"FieldCode": "",
 			"DisplayText": ""
 		}]');
@@ -3132,13 +3132,13 @@
 		},
 		{
 			"TextCode": "Dashboard.G.ShipmentInTransit",
-			"DefaultText": "In Transit",
+			"DefaultText": "In transit",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
 		{
 			"TextCode": "Dashboard.G.ShipmentAtDestination",
-			"DefaultText": "At Destination",
+			"DefaultText": "At destination",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
@@ -3318,7 +3318,7 @@
 		},
 		{
 			"TextCode": "General.G.ShowResults",
-			"DefaultText": "Show Results",
+			"DefaultText": "Show results",
 			"FieldCode": "",
 			"DisplayText": ""
 		}]');
