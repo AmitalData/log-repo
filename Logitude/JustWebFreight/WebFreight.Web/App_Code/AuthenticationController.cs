@@ -2379,13 +2379,31 @@ namespace WebFreight.Web
                     }
                     else
                     {
-                        isIpAuthenticated = false;
+                        var xforwardedfor = HttpContext.Current.Request.Headers[name: "X-Forwarded-For"];
+                        if (!string.IsNullOrEmpty(xforwardedfor))
+                        {
+                            var splitforwardedfor = xforwardedfor.Split(':');
+                            if (splitforwardedfor.Length > 0)
+                            {
+                                if (authenticatedIPs.Contains(splitforwardedfor[0]))
+                                {
+                                    isIpAuthenticated = true;
+                                }
+
+                            }
+
+                        }
+                        else
+                        {
+                            isIpAuthenticated = false;
+                        }
                     }
 
                 }
                 else
                 {
-                    isIpAuthenticated = true;//authenticatedIPs.Contains(HttpContext.Current.Request.UserHostAddress))
+                   isIpAuthenticated = true;//authenticatedIPs.Contains(HttpContext.Current.Request.UserHostAddress))
+                    
                 }
             }
             else
