@@ -109,6 +109,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
 
                         if (temp != null)
                         {
+                            temp.HasPermission = item.HasPermission;
                             continue;
                         }
                         else
