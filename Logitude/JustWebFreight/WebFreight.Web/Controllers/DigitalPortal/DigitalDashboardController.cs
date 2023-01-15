@@ -42,8 +42,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var invoices = aRInvoiceQuery.GetByFilters(newFilters);
 
                 var res = invoices.Where(r => !string.IsNullOrEmpty(r.PaidStatus))
-                                                      .GroupBy(r => r.PaidStatus)
-                                                      .ToDictionary(t => t.Key, t => t.Count());
+                                  .GroupBy(r => r.PaidStatus)
+                                  .ToDictionary(t => t.Key, t => t.Count());
 
                 return Request.CreateResponse(HttpStatusCode.OK, res);
             }
@@ -458,20 +458,28 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             var arrivedAtDestinationCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SARR").StatusWeight;
 
             var result = shipments.Where(r => allowedStatusCode.Contains(r.StatusCode))
-                                   .Select(a => new
-                                   {
-                                       a.TransportModeId,
-                                       Code = a.StatusWeight < departedCodeWeight
-                                               ? "Origin"
-                                               : (a.StatusWeight >= departedCodeWeight
-                                                  && a.StatusWeight < arrivedAtDestinationCodeWeight)
-                                                  ? "InTransit"
-                                                  : "dataAtDestination"
-                                   })
-                                   .GroupBy(a => a.Code)
-                                   .ToDictionary(a => a.Key, y => (object)y.GroupBy(x => x.TransportModeId)
-                                                                           .ToDictionary(b => b.Key, xx => xx.Count()));
-            return result;
+                       .Select(a => new
+                       {
+                           a.TransportModeId,
+                           Code = a.StatusWeight < departedCodeWeight
+                                   ? "Origin"
+                                   : (a.StatusWeight >= departedCodeWeight
+                                      && a.StatusWeight < arrivedAtDestinationCodeWeight)
+                                      ? "InTransit"
+                                      : "dataAtDestination"
+                       })
+                       .GroupBy(a => new { a.TransportModeId, a.Code})
+                       .Select(a => new
+                       {
+                           a.Key,
+                           count = a.Count()
+                       })
+                       .ToList();
+
+            return result.Select(a => new { a.Key.Code, a.Key.TransportModeId, a.count })
+                         .GroupBy(a => a.Code)
+                         .ToDictionary(x => x.Key, y => (object)y.Select(a => new { a.TransportModeId, a.count})
+                                                                 .ToDictionary(a => a.TransportModeId, p => p.count));
         }
 
         private string GetDigitalStatusName(string code, string exactStatusName)
