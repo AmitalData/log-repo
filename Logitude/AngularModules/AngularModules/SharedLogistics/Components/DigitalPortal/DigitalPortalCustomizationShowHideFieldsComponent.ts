@@ -136,7 +136,7 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
 
     loadedResults = [];
     BuildSearchItems() {
-        var labelsList: ProfileFieldsItem[] = [];
+        var labelsList = [];
         if (!AppTool.IsNullOrEmpty(this.SearchText)) {
             var data = this.loadedResults;
             data = data.filter(f =>
