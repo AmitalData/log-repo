@@ -2060,15 +2060,15 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             }
             if (this._MySupplierInvoicePM.IssueCountryCode == null && this._INVOICE.ISSUECOUNTRYCODE != null)
             {
-                string countryCode = "";
-                if (this._INVOICE.ISSUECOUNTRYCODE.Length > 2)
-                {
-                    countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", this._INVOICE.ISSUECOUNTRYCODE);
-                }
-                else
-                {
-                    countryCode = this._INVOICE.ISSUECOUNTRYCODE;
-                }
+                string countryCode = this.GetOriginCountry(_LogitudeCommDecFile.OriginCountryCode);
+                //if (this._INVOICE.ISSUECOUNTRYCODE.Length > 2)
+                //{
+                //    countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", this._INVOICE.ISSUECOUNTRYCODE);
+                //}
+                //else
+                //{
+                //    countryCode = this._INVOICE.ISSUECOUNTRYCODE;
+                //}
                 if (!string.IsNullOrWhiteSpace(countryCode)) this._MySupplierInvoicePM.IssueCountryCode = countryCode;
             }
             if (!_MyDeclarationPM.IsCourierDeclaration)
@@ -2820,7 +2820,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
         public string GetOriginCountry(string originCountry)
         {
-            string countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", _LogitudeCommDecFile.OriginCountryCode);
+            string countryCode = GetTranslationL2P(partnerID: "IIGC", "CTBCOUNTRY", _LogitudeCommDecFile.OriginCountryCode);
             if(countryCode == null)
             {
                 var myQueryService = new CustomsCountryQueryService(_context);
