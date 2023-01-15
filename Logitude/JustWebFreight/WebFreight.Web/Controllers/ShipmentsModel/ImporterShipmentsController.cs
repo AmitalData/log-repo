@@ -581,7 +581,12 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             entityPM.OrderIsDangerouseGoods = entityAM.IsDangerouseOfGoods;
             entityPM.PrivateLabelAgentName = entityAM.AgentName;
             entityPM.IsShipmentOrder = entityAM.IsShipmentOrder;
-            
+            entityPM.ShippingLine = entityAM.ShippingLine;
+            entityPM.PlaceOfDelivery = entityAM.PlaceOfDelivery;
+            entityPM.PickupPlace = entityAM.PickupPlace;
+            entityPM.SealNo = entityAM.SealNo;
+            entityPM.HSCode = entityAM.HSCode;
+
             if (!string.IsNullOrEmpty(entityAM.ForwardingPartnerTenant))
             {
                 int ForwardingPartnerTenant = int.Parse(entityAM.ForwardingPartnerTenant);
