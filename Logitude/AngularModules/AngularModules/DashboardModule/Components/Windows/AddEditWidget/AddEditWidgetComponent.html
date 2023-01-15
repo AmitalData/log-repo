@@ -428,7 +428,8 @@
                                         <td>
                                             <ComboBox (SelectedItemChanged)="Alignment = $event"
                                                       [ItemsSource]="Alignments"
-                                                      [SelectedItem]="Alignment">
+                                                      [SelectedItem]="Alignment"
+                                                      [IsDisabled]="this.TypeCode != 'kpi' || !this.EntityId">
                                             </ComboBox>
                                         </td>
                                         <td>
@@ -473,7 +474,7 @@
                                             <ComboBox (SelectedItemChanged)="UseAbbreviationAfter = $event"
                                                       [ItemsSource]="Abbreviations"
                                                       [SelectedItem]="UseAbbreviationAfter"
-                                                      [IsDisabled]="!IsMeasureNumber || !UseNumberAbbreviation">
+                                                      [IsDisabled]="(this.WidgetMeasuresList[0].MeasureCode == 'Count' && !UseNumberAbbreviation ) || (this.WidgetMeasuresList[0].MeasureCode != 'Count' && (!IsMeasureNumber || !UseNumberAbbreviation))">
                                             </ComboBox>
                                         </td>
                                         <td>
