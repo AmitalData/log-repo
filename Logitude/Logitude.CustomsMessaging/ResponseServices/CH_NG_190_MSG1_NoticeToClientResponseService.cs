@@ -222,6 +222,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 else
                 {
                     LogMessagingUtil.Instance.AppendLine("NoticeToClient.operationCode = " + NoticeToClient.operationCode.ToString());
+                    if (NoticeToClient.operationCode == 2) NoticeToClient.operationCode = 1;
                     switch (NoticeToClient.operationCode.ToString())
                     {
                         case "1":
