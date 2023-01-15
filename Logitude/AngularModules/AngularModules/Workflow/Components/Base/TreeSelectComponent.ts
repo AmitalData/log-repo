@@ -182,6 +182,7 @@ export class TreeSelectComponent implements OnInit, AfterViewInit {
 
     getDisplayTitle = (nzTreeItem: any) => {
         if (!this.DisplayTitle) {
+           this.NzTreeSelect.nzPlaceHolder = this.PlaceHolder
             return null
         }
         if (nzTreeItem) {
