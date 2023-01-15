@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class JournalUpdateClass
    {  		
-		public const string HashString = "29b7be5e319cea7f1daaa58873d53f39";
+		public const string HashString = "4bb312ec1d0c7780dea47866193995d3";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4125,10 +4125,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode JournalTextCode_JournalREAccountingDateRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.RE.AccountingDateRequired", DefaultText = "Accounting Date is Required",LocalDefaultText = @"תאריך חשבונאי הינו שדה חובה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-           TextCode JournalTextCode_JournalREAccountingDateConfrimation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.RE.AccountingDateConfrimation", DefaultText = "Leaving the accounting date / due date/ reference date/references/note  empty will create adjustment journals with dates/references/note taken from the original ones. If you want to continue click ok. If not click cancel and fill the date/references/note fields", LocalDefaultText = "במידה ולא קיים ערך בשדות: תאריך חשבונאי אסמכתא פירעון אסמכתאות הערות הערכים ילקחו מהשורות שסומנו להתאמה. להמשיך הקש ''אישור'' לחזרה להשלמת הערכים הקש ''חזור''", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode JournalTextCode_JournalREAccountingDateConfrimation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.RE.AccountingDateConfrimation", DefaultText = "Leaving the accounting date / due date/ reference date/references/note  empty will create adjustment journals with dates/references/note taken from the original ones. If you want to continue click ok. If not click cancel and fill the date/references/note fields",LocalDefaultText = "במידה ולא קיים ערך בשדות: תאריך חשבונאי/אסמכתא/פירעון אסמכתאות הערות הערכים ילקחו מהשורות שסומנו להתאמה. להמשיך הקש ''אישור'' לחזרה להשלמת הערכים הקש ''חזור", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-
-        }
+   
+	    
+}
 
     
 
