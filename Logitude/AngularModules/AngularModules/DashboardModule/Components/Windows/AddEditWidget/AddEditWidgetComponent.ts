@@ -85,9 +85,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.SetAdvanceSettingItems();
         this.SetTimeOverTimeValue();
         this.SetUIForOperator();
-        this.SetAdvanceSettingVisibleForTimeOverTime();
-       // this.SetDefaultValuesForDisplaySettings();
-       
+        this.SetAdvanceSettingVisibleForTimeOverTime(); 
     }
 
     SetUIProperties() {
