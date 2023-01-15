@@ -783,6 +783,12 @@
 			"DefaultText": "Actual",
 			"FieldCode": "",
 			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.ShowResults",
+			"DefaultText": "Show Results",
+			"FieldCode": "",
+			"DisplayText": ""
 		}]');
 
 	  declare @shipmentObjectTableId as varchar(15)
@@ -3307,6 +3313,12 @@
 		{
 			"TextCode": "Dashboard.G.Actual",
 			"DefaultText": "Actual",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.ShowResults",
+			"DefaultText": "Show Results",
 			"FieldCode": "",
 			"DisplayText": ""
 		}]');
