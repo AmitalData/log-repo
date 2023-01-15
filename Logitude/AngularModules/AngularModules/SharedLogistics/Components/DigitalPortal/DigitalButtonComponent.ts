@@ -66,9 +66,9 @@ export class DigitalButtonComponent {
         newField.ObjectTableId = this.objectTableId;
         newField.ProfileId = this.profileId;
         newField.FieldCode = this.rowData.FieldCode;
-        newField.DefaultText = this.rowData.FullNameTextCodeCode;
-        newField.TextCode = this.rowData.FullNameTextCodeCode;
-        newField.DisplayText = this.rowData.FieldName;
+        newField.DefaultText = this.rowData.FullNameTextCodeDefaultText;
+        newField.TextCode = this.rowData.FullNameTextCodeDefaultText;
+        newField.DisplayText = this.rowData.FullNameTextCodeDefaultText;
         newField.CreatedBy = SessionLocator.LoggedUserPM.EnglishName;
 
         this.digitalCustomizationService.AddCustomField(newField).subscribe((myResult) => {
