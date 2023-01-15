@@ -20104,8 +20104,8 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;ARInvoice.O.InterestInvoiceReconciledAlready&quot;"
-      DefaultText="&quot;The interest invoice made for this report has already been reconciled,\nIn order to cancel the report and the interest invoice, first cancel the reconciliation of the existing invoice.&quot;"
-      LocalDefaultText="&quot;חשבונית הריבית שבוצעה לדוח זה כבר הותאמה,\nעל מנת לבטל את הדוח ואת חשבונית הריבית יש לבטל תחילה את ההתאמה של החשבונית הקיימת.&quot;"
+      DefaultText="&quot;The interest invoice made for this report has already been reconciled. In order to cancel the report and the interest invoice, first cancel the reconciliation of the existing invoice.&quot;"
+      LocalDefaultText="&quot;חשבונית הריבית שבוצעה לדוח זה כבר הותאמה. על מנת לבטל את הדוח ואת חשבונית הריבית יש לבטל תחילה את ההתאמה של החשבונית הקיימת.&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
