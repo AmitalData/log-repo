@@ -202,7 +202,7 @@ export class DeclarationDisplayOnlyChecks {
                     var serviceResponse: ServiceResponse = new ServiceResponse();
                     var requestSheets:any = response;
                     if((requestSheets == null || requestSheets.length == 0)  || requestSheets[0].InterfaceTypeCode==null 
-                    && this.entityPM.ErrosXml.includes('Exception')){
+                    && this.entityPM?.ErrosXml?.includes('Exception')){
                          serviceResponse.Result = new DisplayOnlyCheckResult(false, "התקבלה הודעת שגיאה במסך תשובה לתיק");
                           this.CurrentSession.CurrentEditComponent.EditComponentController.MustRefreshMessage=serviceResponse.Result.DisplayOnlyMessage;
                         this.CurrentSession.CurrentEditComponent.EditComponentController.IsInBatchRequest=true;
