@@ -688,7 +688,7 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
             else {
                 this.ShowMessage(myServiceResponse.Result);
                 }
-
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                 this.DeleteFileButtonClicked();
         });
     }
