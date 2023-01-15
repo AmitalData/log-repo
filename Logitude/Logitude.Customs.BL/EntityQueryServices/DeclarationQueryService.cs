@@ -454,7 +454,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
             if (String.IsNullOrWhiteSpace(customFileNo)) return "";
             return repository.GetIdByCustomFileNo(customFileNo, tenant);
         }
-       
+
+        public string GetIdByCustomFileNoAndAmendmentDontDisplayInList(string customFileNo, int tenant , bool AmendmentDontDisplayInList)
+        {
+            if (String.IsNullOrWhiteSpace(customFileNo)) return "";
+            return repository.GetIdByCustomFileNoAndAmendmentDontDisplayInList(customFileNo, tenant, AmendmentDontDisplayInList);
+        }
+
 
         public string GetIdByExternalDeclarationNumber(string externalDeclarationNumber, int tenant)
         {
