@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class ObjectTableUpdateClass
    {  		
-		public const string HashString = "90d2981585a327232832fa8d5cd546a5";
+		public const string HashString = "d7649290ab26fef74205d811302b79fb";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -101,6 +101,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    HasCustomFields =  false,
 			      				    AvailableInCustomization =  false,
 			      				    SupportSubEntity =  false,
+			      				    ApplyGenericCustomFields =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -130,7 +131,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Object Table",
-			      				    Code =  "38a0",
+			      				    Code =  "0f78",
 			      				    Name =  "ObjectTable",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Infrastructure",
@@ -5138,7 +5139,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "NewMechanismForCustomFields",
+					 						FieldName =  "ApplyGenericCustomFields",
 					  						ObjectTableName =  "ObjectTable",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -5157,8 +5158,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "NewMechanismForCustomFields",
-					  						ListPropertyPath =  "NewMechanismForCustomFields",
+					  						PMPropertyPath =  "ApplyGenericCustomFields",
+					  						ListPropertyPath =  "ApplyGenericCustomFields",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -5175,12 +5177,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "NewMechanismForCustomFields",
-					  						DefaultText =  "NewMechanismForCustomFields",
-					  						FullLocalDefaultText =  "NewMechanismForCustomFields",
-					  						ListFieldLable =  "NewMechanismForCustomFieldsListLable",
-					  						ListLableDefaultText =  "NewMechanismForCustomFields",
-					  						ListLocalDefaultText =  "NewMechanismForCustomFields",
+					  						FullFieldLable =  "ApplyGenericCustomFields",
+					  						DefaultText =  "ApplyGenericCustomFields",
+					  						FullLocalDefaultText =  "ApplyGenericCustomFields",
+					  						ListFieldLable =  "ApplyGenericCustomFieldsListLable",
+					  						ListLableDefaultText =  "ApplyGenericCustomFields",
+					  						ListLocalDefaultText =  "ApplyGenericCustomFields",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  true,

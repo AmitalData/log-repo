@@ -77,7 +77,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string DefaultText { get; set; }
         public string DefaultTextPlural { get; set; }
         public bool SupportSubEntity { get; set; }
-        public bool NewMechanismForCustomFields { get; set; }
+        public bool ApplyGenericCustomFields { get; set; }
 
     }
 }

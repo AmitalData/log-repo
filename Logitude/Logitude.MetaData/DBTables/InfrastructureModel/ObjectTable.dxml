@@ -479,7 +479,7 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="NewMechanismForCustomFields"
+    Name="ApplyGenericCustomFields"
     Type="bit">
     <Constraints
       Nullable="false" />

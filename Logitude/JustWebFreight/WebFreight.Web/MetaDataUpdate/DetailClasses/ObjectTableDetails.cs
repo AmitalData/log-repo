@@ -93,7 +93,7 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public string ParentObjectTableName { get; set; }
         public bool AvailableInCustomization { get; set; }
         public bool SupportSubEntity { get; set; }
-        public bool NewMechanismForCustomFields { get; set; }
+        public bool ApplyGenericCustomFields { get; set; }
 
     }
 }

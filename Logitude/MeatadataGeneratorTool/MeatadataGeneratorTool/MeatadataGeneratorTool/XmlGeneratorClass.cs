@@ -1018,7 +1018,7 @@ namespace MeatadataGeneratorTool
             SetAttribute("HasCustomFields", table.HasCustomFields.ToString().ToLower(), entityElement);
             SetAttribute("AvailableInCustomization", table.AvailableInCustomization.ToString().ToLower(), entityElement);
             SetAttribute("SupportSubEntity", table.SupportSubEntity.ToString().ToLower(), entityElement);
-            SetAttribute("NewMechanismForCustomFields", table.NewMechanismForCustomFields.ToString().ToLower(), entityElement);
+            SetAttribute("ApplyGenericCustomFields", table.ApplyGenericCustomFields.ToString().ToLower(), entityElement);
 
             SetAttribute("HasHelper", table.HasHelper.ToString().ToLower(), entityElement);
             SetAttribute("HasShortTitle", table.HasShortTitle.ToString().ToLower(), entityElement);

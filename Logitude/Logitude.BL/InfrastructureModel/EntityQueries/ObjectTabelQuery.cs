@@ -109,7 +109,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          ParentObjectTableId = a.ParentObjectTableId,
                                          IsCustom = a.IsCustom,
                                          SupportSubEntity = a.SupportSubEntity,
-                                         NewMechanismForCustomFields = a.NewMechanismForCustomFields
+                                         ApplyGenericCustomFields = a.ApplyGenericCustomFields
                                      }).ToList();
             }
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -186,7 +186,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                     ParentObjectTableId = a.ParentObjectTableId,
                                     IsCustom = a.IsCustom,
                                     SupportSubEntity = a.SupportSubEntity,
-                                    NewMechanismForCustomFields = a.NewMechanismForCustomFields
+                                    ApplyGenericCustomFields = a.ApplyGenericCustomFields
                                 }).ToList();
             }
 
@@ -271,7 +271,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                            ParentObjectTableId = a.ParentObjectTableId,
                                            IsCustom = a.IsCustom,
                                            SupportSubEntity = a.SupportSubEntity,
-                                           NewMechanismForCustomFields = a.NewMechanismForCustomFields
+                                           ApplyGenericCustomFields = a.ApplyGenericCustomFields
 
                                        }).ToList();
             }
@@ -351,7 +351,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                             ParentObjectTableId = a.ParentObjectTableId,
                                             IsCustom = a.IsCustom,
                                             SupportSubEntity = a.SupportSubEntity,
-                                            NewMechanismForCustomFields = a.NewMechanismForCustomFields
+                                            ApplyGenericCustomFields = a.ApplyGenericCustomFields
                                         }).ToList();
                 }
             }
@@ -445,7 +445,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        ParentObjectTableName = a.ParentObjectTableName,
                                                        AvailableInCustomization = a.AvailableInCustomization,
                                                        SupportSubEntity = a.SupportSubEntity,
-                                                       NewMechanismForCustomFields = a.NewMechanismForCustomFields
+                                                       ApplyGenericCustomFields = a.ApplyGenericCustomFields
                                                    }).ToList();
                             scope.Complete();
                         }
@@ -530,7 +530,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    ParentObjectTableName = a.ParentObjectTableName,
                                                    AvailableInCustomization = a.AvailableInCustomization,
                                                    SupportSubEntity = a.SupportSubEntity,
-                                                   NewMechanismForCustomFields = a.NewMechanismForCustomFields
+                                                   ApplyGenericCustomFields = a.ApplyGenericCustomFields
                                                }).ToList();
                         scope.Complete();
                     }
@@ -614,7 +614,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    ParentObjectTableId = a.ParentObjectTableId,
                                                    IsCustom = a.IsCustom,
                                                    SupportSubEntity = a.SupportSubEntity,
-                                                   NewMechanismForCustomFields = a.NewMechanismForCustomFields
+                                                   ApplyGenericCustomFields = a.ApplyGenericCustomFields
                                                }).ToList();
 
                         scope.Complete();
@@ -703,7 +703,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                             ParentObjectTableId = a.ParentObjectTableId,
                                             IsCustom = a.IsCustom,
                                             SupportSubEntity = a.SupportSubEntity,
-                                            NewMechanismForCustomFields = a.NewMechanismForCustomFields
+                                            ApplyGenericCustomFields = a.ApplyGenericCustomFields
                                         }).ToList();
 
 
@@ -859,7 +859,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      ParentObjectTableId = a.ParentObjectTableId,
                                                      IsCustom = a.IsCustom,
                                                      SupportSubEntity = a.SupportSubEntity,
-                                                     NewMechanismForCustomFields = a.NewMechanismForCustomFields
+                                                     ApplyGenericCustomFields = a.ApplyGenericCustomFields
                                                  };
             return result;
         }  
@@ -924,7 +924,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    ParentObjectTableId = a.ParentObjectTableId,
                                                    IsCustom = a.IsCustom,
                                                    SupportSubEntity = a.SupportSubEntity,
-                                                   NewMechanismForCustomFields = a.NewMechanismForCustomFields
+                                                   ApplyGenericCustomFields = a.ApplyGenericCustomFields
                                                }).FirstOrDefault();
 
 

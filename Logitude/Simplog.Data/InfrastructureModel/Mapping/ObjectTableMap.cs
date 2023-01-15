@@ -121,7 +121,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.ParentObjectTableId).HasColumnName("ParentObjectTableId");
             this.Property(t => t.IsCustom).HasColumnName("IsCustom");
             this.Property(t => t.SupportSubEntity).HasColumnName("SupportSubEntity");
-            this.Property(t => t.NewMechanismForCustomFields).HasColumnName("NewMechanismForCustomFields");
+            this.Property(t => t.ApplyGenericCustomFields).HasColumnName("ApplyGenericCustomFields");
 
             // Relationships
             this.HasOptional(t => t.DescriptionTextCode).WithMany().HasForeignKey(d => d.DescriptionTextCodeId);
