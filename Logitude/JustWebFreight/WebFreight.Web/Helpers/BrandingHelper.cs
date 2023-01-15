@@ -24,13 +24,13 @@ namespace WebFreight.Web.Helpers
             }
 
             brandingData.MainColor = string.IsNullOrEmpty(tenantManagementPM.MainColor)
-                         ? "rgba(1,44,84,1)"
+                         ? "rgba(210,23,69,1)"
                          : tenantManagementPM.MainColor;
             brandingData.SecondaryColor = string.IsNullOrEmpty(tenantManagementPM.SecondaryColor)
-                                          ? "rgba(24,144,255,1)"
+                                          ? "rgba(23,105,170,1)"
                                           : tenantManagementPM.SecondaryColor;
             brandingData.TertiaryColor = string.IsNullOrEmpty(tenantManagementPM.TertiaryColor)
-                                         ? "rgba(255, 255, 255,1)"
+                                         ? "rgba(255,255,255,1)"
                                          : tenantManagementPM.TertiaryColor;
 
             if (!tenantManagementPM.EnableBranding)
