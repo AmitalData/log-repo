@@ -1,5 +1,4 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityQueries;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Linq;
@@ -17,7 +16,6 @@ using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.SystemLogs;
 using System.Net.Http;
 using System.Net;
-using Logitude.BL.InvoiceModel.EntityLists;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -359,7 +357,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         }
 
         [HttpPost]
-        [Route("DigitalDashboardController/GetDashboardSummary")]
+        [Route("DigitalDashboard/GetDashboardSummary")]
         public HttpResponseMessage GetDashboardSummary(GeneralFilters newFilters)
         {
             int tenant = 0;
@@ -374,21 +372,20 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 var dashboardSummary = new DigitalDashboardSummary();
                 var currentDateTime = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant).Date;
-                var currentWeek = currentDateTime.AddDays(30).Date;
+                var currentMonth = currentDateTime.AddDays(30).Date;
                 newFilters.Tenant = authToken.Tenant;
                 var shipmentQuery = new ShipmentQuery(authToken.Tenant);
                 var shipments = shipmentQuery.GetByFilters(newFilters);
 
                 dashboardSummary.TotalShipmentsByETACount = shipments.Where(d => d.MainCarriageETA >= currentDateTime
-                                                                                && d.MainCarriageETA <= currentWeek)
+                                                                                && d.MainCarriageETA <= currentMonth)
                                                                      .Count();
 
-                newFilters.Tenant = authToken.Tenant;
                 var aRInvoiceQuery = new ARInvoiceQuery(authToken.Tenant);
                 var invoices = aRInvoiceQuery.GetByFilters(newFilters);
 
                 dashboardSummary.TotalInvoicesByDueDateCount = invoices.Where(d => d.DueDate >= currentDateTime
-                                                                                    && d.DueDate <= currentWeek)
+                                                                                    && d.DueDate <= currentMonth)
                                                                        .Count();
 
                 return Request.CreateResponse(HttpStatusCode.OK, dashboardSummary);
