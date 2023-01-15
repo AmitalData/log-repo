@@ -54,6 +54,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     public Alignments = ['Left', 'Center'];
     public Abbreviations = ['1k', '10k', '100k', '1M', '10M', '100M'];
     public isMeasureNumber: boolean = false;
+    public IsDisplaySettingVisibile: boolean = false;
     
     constructor() {
         super();
@@ -86,6 +87,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.SetTimeOverTimeValue();
         this.SetUIForOperator();
         this.SetAdvanceSettingVisibleForTimeOverTime(); 
+        this.SetDisplaySettingVisibility();
     }
 
     SetUIProperties() {
@@ -110,6 +112,14 @@ export class AddEditWidgetComponent extends BaseComponent {
         });
         this.SetUIProprtiesForDisplaySettings();
         
+    }
+
+    SetDisplaySettingVisibility(){
+        if(this.isNew) return;
+        if(this.TimeOverTime || this.UseNumberAbbreviation || this.ThousandSeparator){
+            this.IsDisplaySettingVisibile = true;
+            this.isAdvancedSettingVisible = true;
+        } 
     }
 
     BuildQueryFilters() {
@@ -602,6 +612,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     set Alignment(value: string) {
         if (this.EntityPM.Alignment != value) {
             this.EntityPM.Alignment = value;
+            this.IsDisplaySettingVisibile = true;
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget Alignment Value Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
         }
     }
@@ -609,6 +620,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     set ThousandSeparator(value: boolean) {
         if (this.EntityPM.ThousandSeparator != value) {
             this.EntityPM.ThousandSeparator = value;
+            this.IsDisplaySettingVisibile = true;
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget Thousand Separator Value Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
         }
     }
@@ -616,6 +628,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     set UseNumberAbbreviation(value: boolean) {
         if (this.EntityPM.UseNumberAbbreviation != value) {
             this.EntityPM.UseNumberAbbreviation = value;
+            this.IsDisplaySettingVisibile = true;
             this.SetUIProprtiesForDisplaySettings();
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget Use Number Abbreviation Value Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
         }
@@ -631,6 +644,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     set DecimalPlaces(value: number) {
         if (this.EntityPM.DecimalPlaces != value) {
             this.EntityPM.DecimalPlaces = value;
+            this.IsDisplaySettingVisibile = true;
             this.SetUIProperties();
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget DecimalPlaces Value Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
         }
