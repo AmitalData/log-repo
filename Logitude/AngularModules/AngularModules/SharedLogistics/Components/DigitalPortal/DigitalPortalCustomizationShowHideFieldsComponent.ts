@@ -125,7 +125,7 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
         var profileId = this.SelectedProfileItem.Code;
         this.digitalTextService.GetFeildPermissionByFilters(null, objectTableId, profileId).subscribe((myResult) => {
             if (!myResult.HasError) {
-                this.loadedResults = myResult.Result;
+                this.loadedResults = myResult.Result.filter(a => !AppTool.IsNullOrEmpty(a.FieldCode));
                 myResult.Result.filter(a => !AppTool.IsNullOrEmpty(a.FieldCode)).forEach(item => {
                     profilesList.push(new ProfileFieldsItem(this, item));
                 });
@@ -153,7 +153,9 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
         }
         else {
             this.FieldsItemsSource = new ObservableCollection([]);
-            labelsList = this.loadedResults;
+            this.loadedResults.forEach(item => {
+                labelsList.push(new ProfileFieldsItem(this, item));
+            });
             this.FieldsItemsSource.InsertCollection(labelsList);
         }
     }
@@ -262,9 +264,6 @@ export class ProfileFieldsItem extends BaseComponent {
         this.hasPermission = item.HasPermission;
         this.fieldCode = item.FieldCode;
         var selelectField = father.loadedFieldsResults.filter(a => a['FieldCode'] == this.fieldCode)[0];
-        if (selelectField == null) {
-            var test = this.fieldCode;
-        }
         this.textCode = selelectField['TextCode'];
         this.defaultText = selelectField['DefaultText'];
         this.displayText = selelectField['DisplayText'];
