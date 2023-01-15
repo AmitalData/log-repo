@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
+import { UIProperties } from "Infrastructure/Components/LogitudeComponents/UIProperties";
+import { FieldValueResolver } from "Infrastructure/Utilities/FieldValueResolver";
 import { GlobalFilterItem } from "./GlobalFilterItem";
 
 @Component({
@@ -10,9 +12,156 @@ import { GlobalFilterItem } from "./GlobalFilterItem";
 export class GlobalFilterItemComponent implements OnInit {
     @Input() FilterItem: GlobalFilterItem;
     @Input() Position: number;
+    public Operators: any;
+    public DateGroupCodes = ['Day', 'Week', 'Month', 'Quarter', 'Year'];
+    public DataContext = this;
+    public UIProperties: UIProperties = new UIProperties;
 
     ngOnInit(): void {
-        
+        this.FillOperators();
     }
 
+    get SelectedOperator(): Operator {
+        return this.FilterItem.Operator ? null : this.Operators.filter(x => x.Code == this.FilterItem.Operator)[0];
+    }
+
+    FillOperators() {
+        this.Operators = [];
+        switch (this.FilterItem.DataTypeCode) {
+            case "DateTime":
+            case "Date":
+                this.Operators.push(new Operator("After", "GreaterThan"));
+                this.Operators.push(new Operator("Before", "LessThan"));
+                this.Operators.push(new Operator("Previous", "Previous"));
+                this.Operators.push(new Operator("Current", "Current"));
+                this.Operators.push(new Operator("Next", "Next"));
+                this.Operators.push(new Operator("Between", "Between"));
+                break;
+
+            case "Integer":
+            case "Decimal":
+            case "Double":
+                this.Operators.push(new Operator("Equal", "Equal"));
+                this.Operators.push(new Operator("Does Not Equal", "NotEqual"));
+                this.Operators.push(new Operator("Greater Than", "GreaterThan"));
+                this.Operators.push(new Operator("Less Than", "LessThan"));
+                this.Operators.push(new Operator("Greater Than Or Equal", "GreaterThanOrEqual"));
+                this.Operators.push(new Operator("Less Than Or Equal", "LessThanOrEqual"));
+                this.Operators.push(new Operator("Is Empty", "IsEmpty"));
+                this.Operators.push(new Operator("Is not Empty", "IsNotEmpty"));
+                break;
+
+            case "Boolean":
+                this.Operators.push(new Operator("Equal", "Equal"));
+                this.Operators.push(new Operator("Is Empty", "IsEmpty"));
+                this.Operators.push(new Operator("Is not Empty", "IsNotEmpty"));
+                break;
+
+            case "LookUp":
+                this.Operators.push(new Operator("Equal", "Equal"));
+                this.Operators.push(new Operator("Does Not Equal", "NotEqual"));
+                this.Operators.push(new Operator("Is Empty", "IsEmpty"));
+                this.Operators.push(new Operator("Is not Empty", "IsNotEmpty"));
+                break;
+            default:
+                this.Operators.push(new Operator("Equal", "Equal"));
+                this.Operators.push(new Operator("Does Not Equal", "NotEqual"));
+                this.Operators.push(new Operator("Contains", "Contains"));
+                this.Operators.push(new Operator("Does Not Contain", "NotContains"));
+                this.Operators.push(new Operator("Is Empty", "IsEmpty"));
+                this.Operators.push(new Operator("Is not Empty", "IsNotEmpty"));
+                break;
+        }
+    }
+
+    public OperatorChanged(operator : Operator) {
+        this.FilterItem.Operator = operator ? operator.Code : null;
+        this.GetDefaultFieldValue();
+        this.FilterItem.FieldValue2 = "";
+        this.FilterItem.CompareWithPrevious = false;
+        this.GetDefaultDateGroup();
+    }
+
+    private GetDefaultFieldValue() {
+        if ((this.FilterItem.DataTypeCode == 'Date' || this.FilterItem.DataTypeCode == 'DateTime') && (this.FilterItem.Operator == 'Next' || this.FilterItem.Operator == 'Previous')) {
+            this.FilterItem.FieldValue3 = 1;
+            this.FilterItem.FieldValue = "";
+        }
+        else {
+            this.FilterItem.FieldValue = "";
+            this.FilterItem.FieldValue3 = "";
+        }
+    }
+
+    private GetDefaultDateGroup() {
+        if (this.FilterItem.Operator == "Previous" || this.FilterItem.Operator == "Current" || this.FilterItem.Operator == "Next") this.FilterItem.DateGroupCode = "Day";
+        else this.FilterItem.DateGroupCode = null;
+    }
+
+    public get TextFieldValue(): string {
+        if (this.FilterItem.DataTypeCode == 'Date' || this.FilterItem.DataTypeCode == 'DateTime') return this.FilterItem.FieldValue3;
+        return this.FilterItem.FieldValue;
+    }
+
+    public TextBoxValueChange(newValue) {
+        if (this.FilterItem.DataTypeCode == 'Date' || this.FilterItem.DataTypeCode == 'DateTime') this.FilterItem.FieldValue3 = newValue;
+        else this.FilterItem.FieldValue = newValue;
+    }
+
+    public GetTextInputType() {
+        if (this.FilterItem.DataTypeCode == 'Date' || this.FilterItem.DataTypeCode == 'DateTime') return "Integer";
+        if (this.FilterItem.DataTypeCode == "Text") return "nText";
+        return this.FilterItem.DataTypeCode;
+    }
+
+    public ShowTextBox() {
+        return this.IsNotEmptyNotEmtyOperator(this.FilterItem) &&
+            (!this.FilterItem.DataTypeCode || this.FilterItem.DataTypeCode == '' ||
+                this.FilterItem.DataTypeCode == 'Text' || this.FilterItem.DataTypeCode == 'nText' ||
+                this.FilterItem.DataTypeCode == 'Integer' || this.FilterItem.DataTypeCode == 'Double' ||
+                this.FilterItem.DataTypeCode == 'SigDouble' || this.FilterItem.DataTypeCode == 'Decimal' ||
+                ((this.FilterItem.DataTypeCode == 'Date' || this.FilterItem.DataTypeCode == 'DateTime') && (this.FilterItem.Operator == 'Next' || this.FilterItem.Operator == 'Previous'))
+            )
+    }
+
+    public DatePickerCondationValueChange(date) {
+        this.FilterItem.FieldValue = date ? FieldValueResolver.ConvertUTCDateToString(date, "TreeFilter") : "";
+    }
+
+    public ShowFirstDatePicker() {
+        return this.IsNotEmptyNotEmtyOperator(this.FilterItem) && (this.FilterItem.DataTypeCode == 'DateTime' || this.FilterItem.DataTypeCode == 'Date') &&
+            (this.FilterItem.Operator == "GreaterThan" || this.FilterItem.Operator == "LessThan" || this.FilterItem.Operator == "Between");
+    }
+
+    public SecondDatePickerCondationValueChange(date) {
+        this.FilterItem.FieldValue2 = date ? FieldValueResolver.ConvertUTCDateToString(date, "TreeFilter") : "";
+    }
+
+    public ShowSecondDatePicker() {
+        return this.IsNotEmptyNotEmtyOperator(this.FilterItem) && (this.FilterItem.DataTypeCode == 'DateTime' || this.FilterItem.DataTypeCode == 'Date') && this.FilterItem.Operator == "Between";
+    }
+
+    public DateGroupCodeChange(DateGroupCode: string) {
+        this.FilterItem.DateGroupCode = DateGroupCode;
+    }
+
+    public  ShowDateGroups() {
+        return this.IsNotEmptyNotEmtyOperator(this.FilterItem) && (this.FilterItem.DataTypeCode == 'DateTime' || this.FilterItem.DataTypeCode == 'Date') &&
+            (this.FilterItem.Operator == "Previous" || this.FilterItem.Operator == "Current" || this.FilterItem.Operator == "Next");
+    }
+
+    public IsNotEmptyNotEmtyOperator(item: GlobalFilterItem) {
+        return item.Operator && item.Operator != 'IsEmpty' && item.Operator != 'IsNotEmpty';
+    }
+
+}
+
+export class Operator {
+    Code: string;
+    Name: string;
+
+    constructor(name: string, code: string) {
+        this.Code = code;
+        this.Name = name;
+    }
 }

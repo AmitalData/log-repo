@@ -2,15 +2,83 @@
     <p class="dl-global-filters-label">{{FilterItem.DisplayName}}:</p>
 
     <div style="margin-left: 4px;">
-        <MultiSelectDropDown [ObjectTableName]="FilterItem.JoinedTableName"
-                             [DisplayName]="FilterItem.JoinedTableDisplayField"
-                             [CanSearch]="FilterItem.CanSearch"
-                             [CanSearch]="FilterItem.CanSearch"
-                             [Placeholder]="FilterItem.DisplayName"
-                             [IsMultiSelect]="FilterItem.IsMultiSelect"
-                             (SelectedItemChanged)="FilterItem.FieldValue"
-                             style="display: flex;"
-                             *ngIf="FilterItem.DataTypeCode == 'LookUp'">
+        <MultiSelectDropDown 
+                [ObjectTableName]="FilterItem.JoinedTableName"
+                [DisplayName]="FilterItem.JoinedTableDisplayField"
+                [CanSearch]="FilterItem.CanSearch"
+                [Placeholder]="FilterItem.DisplayName"
+                [IsMultiSelect]="FilterItem.IsMultiSelect"
+                [SelectedItem]="FilterItem.FieldValue"
+                (SelectedItemChanged)="FilterItem.FieldValue"
+                style="display: flex;"
+                *ngIf="FilterItem.DataTypeCode == 'LookUp'">
         </MultiSelectDropDown>
+
+        <div class="dl-center-flex dl-global-filter-date-container" *ngIf="FilterItem.DataTypeCode == 'DateTime' || FilterItem.DataTypeCode == 'Date'">
+
+                <ComboBox 
+                    style="width:100px;" 
+                    [ItemsSource]="Operators"
+                    [SelectedItem]="SelectedOperator"
+                    [Binding]="'Name'"
+                    [WaterMark]="'Operator'" 
+                    (SelectedItemChanged)="OperatorChanged($event)">
+                </ComboBox>
+
+                <LogTextBox 
+                    style="width:50px;" 
+                    [NoValidation]="true" 
+                    [HideLastColumn]="true"
+                    [Text]="TextFieldValue" 
+                    [IsFreeText]="true"
+                    (ValueChanged)="TextBoxValueChange($event)"
+                    [DataContext]="DataContext"
+                    HideLastColumn="true"
+                    HideColumns="true"
+                    DontAllowAutoSelect="true"
+                    [InputType]="GetTextInputType()"
+                    *ngIf="ShowTextBox()">
+                </LogTextBox>
+
+                <LogDatePicker 
+                    style="width:100px;" 
+                    [InputType]="'date'" 
+                    [HideColumns]="true"
+                    [IsFreeValue]="true" 
+                    [NoValidation]="true"
+                    [SelectedDateValue]="FilterItem.FieldValue"
+                    (ValueChanged)="DatePickerCondationValueChange($event)"
+                    [DataContext]="DataContext"
+                    *ngIf="ShowFirstDatePicker()">
+                </LogDatePicker>
+
+                <LogDatePicker  
+                    style="width:100px;" 
+                    [InputType]="'date'" 
+                    [HideColumns]="true"
+                    [IsFreeValue]="true" 
+                    [NoValidation]="true"
+                    [SelectedDateValue]="FilterItem.FieldValue2"
+                    (ValueChanged)="SecondDatePickerCondationValueChange($event)"
+                    [DataContext]="DataContext"
+                    *ngIf="ShowSecondDatePicker()">
+                </LogDatePicker>
+
+                <ComboBox 
+                    style="width:70px;" 
+                    (SelectedItemChanged)="DateGroupCodeChange($event)"
+                    [ItemsSource]="DateGroupCodes" 
+                    [SelectedItem]="FilterItem.DateGroupCode"
+                    *ngIf="ShowDateGroups()">
+                </ComboBox>
+
+                <div class="dl-center-flex" style="gap: 4px;" *ngIf="FilterItem.Operator == 'Previous' || FilterItem.Operator == 'Between'">
+                    <CheckBox 
+                        [IsChecked]="FilterItem.CompareWithPrevious" 
+                        (Checked)="FilterItem.CompareWithPrevious = $event">
+                    </CheckBox>
+                    Compare with Previous Period
+                </div>
+        </div>
     </div>
 </div>
