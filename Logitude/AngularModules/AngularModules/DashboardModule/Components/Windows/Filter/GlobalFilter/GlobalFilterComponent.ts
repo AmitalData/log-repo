@@ -14,10 +14,15 @@ import { GlobalFilterItem } from './GlobalFilterItem';
 export class GlobalFilterComponent implements OnInit {
     @Input() public Dashboard: DashboardPM;
     @Output() ApplyFilters = new EventEmitter<any[]>();
-    public FilterItems: GlobalFilterItem[] = [];
+    @Output() ApplyFiltersCountChange = new EventEmitter<number>();
 
+    public FilterItems: GlobalFilterItem[] = [];
     private DashboardGlobalPresetFilterListService: DashboardGlobalPresetFilterListService;
     public ShowFilters: boolean = true;
+    private FiltersCount: number = 0;
+    private FilterValueExistItems: string[] = [];
+    private LastApplied: string[] = [];
+    public FilterHasChanges: boolean = false;
 
     constructor() {
         this.DashboardGlobalPresetFilterListService = new DashboardGlobalPresetFilterListService();
@@ -36,7 +41,8 @@ export class GlobalFilterComponent implements OnInit {
 
     AddPresetFitlers(filters: DashboardGlobalPresetFilterList[]) {
         filters.forEach(presetFilter => {
-            var filter = new GlobalFilterItem();
+            var filter = new GlobalFilterItem(this);
+            filter.Id = presetFilter.Code + this.RandomString(5);
             filter.FieldId = presetFilter.Code;
             filter.DataTypeCode = presetFilter.DataTypeCode;
             filter.DisplayName = presetFilter.DisplayName;
@@ -48,7 +54,6 @@ export class GlobalFilterComponent implements OnInit {
             filter.IsMultiSelect = presetFilter.IsMultiSelect;
             this.FilterItems.push(filter);
         })
-
     }
 
 
@@ -65,6 +70,8 @@ export class GlobalFilterComponent implements OnInit {
             this.ShowFilters = true
         }, 10);
         this.ApplyFilters.emit(null);
+        this.FilterHasChanges = false;
+        this.LastApplied = [];
     }
 
     private ClearFilter(element: GlobalFilterItem) {
@@ -81,6 +88,8 @@ export class GlobalFilterComponent implements OnInit {
         var filterItems = [];
         this.AddFilterItems(this.FilterItems, filterItems, true);
         this.ApplyFilters.emit(filterItems);
+        this.FilterHasChanges = false;
+        this.LastApplied = JSON.parse(JSON.stringify(this.FilterValueExistItems));
     }
 
     AddFilterItems(filters: GlobalFilterItem[], filterItems: any, isCommon: boolean = false): any {
@@ -105,7 +114,48 @@ export class GlobalFilterComponent implements OnInit {
         if (element.Operator == "IsEmpty" || element.Operator == "IsNotEmpty") return false;
         if (element.Operator != "Previous" && element.Operator != "Next" && element.Operator != "Current" && (!element.FieldValue || element.FieldValue == "")) return true;
         if ((element.Operator == "Previous" || element.Operator == "Next") && (!element.FieldValue3 || element.FieldValue3 == "")) return true;
+        if ((element.Operator == "Previous" || element.Operator == "Next" || element.Operator == "Current") && (!element.DateGroupCode || element.DateGroupCode == "")) return true;
         if (element.Operator == "Between" && (!element.FieldValue2 || element.FieldValue2 == "" || element.FieldValue2 <= element.FieldValue)) return true;
         return false;
     }
+
+    ValueChanged(filterItem: GlobalFilterItem) {
+        let valuIsEmpty = this.FilterValueEmpty(filterItem);
+        var existItem = this.FilterValueExistItems.find(x => x == filterItem.Id);
+        if (!valuIsEmpty) {
+            if (!existItem) {
+                this.FilterValueExistItems.push(filterItem.Id);
+                this.FilterHasChanges = true;
+            } else this.FilterHasChanges = true;
+        }
+        else {
+            if (existItem) {
+                const index = this.FilterValueExistItems.indexOf(filterItem.Id);
+                if (index > -1) this.FilterValueExistItems.splice(index, 1);
+                this.CheckHasChanges();
+            }
+        }
+
+        this.FiltersCount = this.FilterValueExistItems.length;
+        this.ApplyFiltersCountChange.emit(this.FiltersCount);
+    }
+
+    CheckHasChanges() {
+        if (this.LastApplied.toString() != this.FilterValueExistItems.toString()) {
+            this.FilterHasChanges = true;
+        } else {
+            this.FilterHasChanges = false;
+        }
+    }
+
+    RandomString(length: number) {
+        var result = '';
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for (var i = 0; i < length; i++) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
+    }
+
 }

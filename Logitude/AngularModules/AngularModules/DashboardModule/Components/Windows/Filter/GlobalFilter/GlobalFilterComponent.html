@@ -10,7 +10,12 @@
         <p class="dl-apply-filter-text" (click)="ClearFiltersClick()">Clear Filters</p>
 
         <div style="width: 89.31px">
-            <button class="TabButton Button" (click)="ApplyFiltersClick()">
+            <button *ngIf="!FilterHasChanges" class="TabButton Button" (click)="ApplyFiltersClick()">
+                <img style="width: 12px; height: 13px;" src="./Images/GrayTick.png" />
+                Apply filters
+            </button>
+
+            <button *ngIf="FilterHasChanges" class="TabButton_orange Button" (click)="ApplyFiltersClick()">
                 <img style="width: 12px; height: 13px;" src="./Images/GrayTick.png" />
                 Apply filters
             </button>

@@ -186,7 +186,26 @@
     background: linear-gradient(180deg, #F8FAFB 20.94%, #C9D5E4 77.13%);
     border: 1px solid #708197;
     border-radius: 4px;
+}
 
+.TabButton_orange {
+    font-size: 12px;
+    color: #46494A;
+    font-style: normal;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 5px 4px;
+    gap: 4px;
+    height: 22px;
+    background: -moz-linear-gradient(50% 0% -90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0, rgba(255, 255, 255, 1)), color-stop(1, rgba(237, 192, 147, 1)));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+    border: 1px solid #708197;
+    border-radius: 4px;
 }
 
 .Dashboard-create-button {

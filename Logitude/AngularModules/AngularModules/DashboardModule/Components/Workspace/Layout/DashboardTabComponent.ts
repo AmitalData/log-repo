@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, ViewChild } from '@angular/core';
 import { DashboardPM } from '../../../../DashboardModule/EntityPMs/DashboardPM';
 import { WidgetPM } from '../../../../DashboardModule/EntityPMs/WidgetPM';
 import { ReactWidgetPM } from 'logitude-dashboard-library/dist/types/widget';
@@ -20,6 +20,7 @@ import { DashboardCopyService } from 'DashboardModule/Tools/DashboardCopyService
 import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 import { GlobalFilterItem } from 'DashboardModule/Components/Windows/Filter/GlobalFilter/GlobalFilterItem';
 import { AnalyticsFactsFieldsMetaDataPM } from 'DashboardModule/EntityPMs/AnalyticsFactsFieldsMetaDataPM';
+import { GlobalFilterComponent } from 'DashboardModule/Components/Windows/Filter/GlobalFilter/GlobalFilterComponent';
 
 
 @Component({
@@ -50,6 +51,7 @@ export class DashboardTabComponent implements OnInit {
     private DashboardListService: DashboardListService;
     public ItemsSource: DashboardList[] = [];
     public CanCopy: boolean;
+    public FilterCount: number = 0;
 
     constructor() {
         this.dashboardPMService = new DashboardPMService();
@@ -427,7 +429,9 @@ export class DashboardTabComponent implements OnInit {
             this.HandlePresetFilter(item, widget, widgetFilters);
         });
         if (!widgetFilters || widgetFilters.length == 0) return null;
-        return JSON.stringify(widgetFilters);
+        return JSON.stringify(widgetFilters, function (key, val) {
+            if (key !== "Component") return val;
+        });
     }
 
     private HandlePresetFilter(item: GlobalFilterItem, widget: ReactWidgetPM, widgetFilters: any[]) {
@@ -490,6 +494,16 @@ export class DashboardTabComponent implements OnInit {
             });
         });
 
+    }
+
+    public ApplyFiltersCountChange(count: number) {
+        this.FilterCount = count;
+    }
+
+    public get HideShowFilterText(): string {
+        var countText = (!this.FilterCount || this.FilterCount == 0) ? "" : "(" + this.FilterCount + ")";
+        if (this.IsGlobalFiltersOpened) return "Hide filters" + countText;
+        return "Show filters" + countText;
     }
 
 }

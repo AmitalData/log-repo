@@ -84,7 +84,7 @@ export class GlobalFilterItemComponent implements OnInit {
 
     private GetDefaultFieldValue() {
         if ((this.FilterItem.DataTypeCode == 'Date' || this.FilterItem.DataTypeCode == 'DateTime') && (this.FilterItem.Operator == 'Next' || this.FilterItem.Operator == 'Previous')) {
-            this.FilterItem.FieldValue3 = 1;
+            this.FilterItem.FieldValue3 = "";
             this.FilterItem.FieldValue = "";
         }
         else {
