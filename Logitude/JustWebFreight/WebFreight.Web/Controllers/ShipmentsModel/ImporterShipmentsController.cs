@@ -586,6 +586,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             entityPM.PickupPlace = entityAM.PickupPlace;
             entityPM.SealNo = entityAM.SealNo;
             entityPM.HSCode = entityAM.HSCode;
+
             if (!string.IsNullOrEmpty(entityAM.ForwardingPartnerTenant))
             {
                 int ForwardingPartnerTenant = int.Parse(entityAM.ForwardingPartnerTenant);

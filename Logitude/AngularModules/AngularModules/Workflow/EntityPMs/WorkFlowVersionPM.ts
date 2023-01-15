@@ -99,6 +99,11 @@ export class WorkFlowVersionPM {
     public set Trigger(newValue: string) { if (this.trigger != newValue) { this.trigger = newValue; this.MarkAsDirty("Trigger"); } }
        
 	 
+    private activatedDate: Date;
+    public get ActivatedDate() { return this.activatedDate; }
+    public set ActivatedDate(newValue: Date) { if (this.activatedDate != newValue) { this.activatedDate = newValue; this.MarkAsDirty("ActivatedDate"); } }
+       
+	 
 
     public OldEntityPM: WorkFlowVersionPM;
 		

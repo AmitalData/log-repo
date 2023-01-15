@@ -71,7 +71,7 @@
                                 </td>
 
                                 <td style="width: 100px;">
-                                    <button class="Button" (click)="AddFieldCodesClicked()">Add Field Codes </button>
+                                    <button class="Button" (click)="AddFieldCodesClicked()">Add Field</button>
                                 </td>
 
                                 <td>
@@ -117,10 +117,19 @@
                                 <td style="width: 150px;">
                                     <button class="Button" (click)="RestoreDefaultLayoutClicked()">Restore Default Layout </button>
                                 </td>
+
+                                <td style="width: 3px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 150px;">
+                                    <button class="Button" (click)="LoadDraftLayoutClicked()">Load Draft </button>
+                                </td>
+
                                 <td>
                                     <div></div>
                                 </td>
-                               
+
                                 <td style="width: 100px;">
                                     <button id="{{ 'SaveBtn' | IdGeneratorAsyncPipe | async}}" *ngIf="!IsModified" class="Button" (click)="PublichChangesClicked(false)">
                                         <img class="LeftCenter" style="margin-left: 2px;" src="./Images/Buttons/Save.png" />

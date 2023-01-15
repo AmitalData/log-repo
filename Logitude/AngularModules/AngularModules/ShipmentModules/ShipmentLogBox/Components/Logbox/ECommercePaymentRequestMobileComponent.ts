@@ -143,7 +143,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                     }
                 }
                 else {
-                    var myMessage = "משלוח זה כבר שולם בתםריך";
+                    var myMessage = "משלוח זה כבר שולם בתאריך";
                     if (this.AdditionalData.PaymentDateTime != null) {
                         var formatedPaymentDateTime = this.datePipe.transform(this.AdditionalData.PaymentDateTime, 'dd/MM/yyyy');
                         myMessage = myMessage + " " + formatedPaymentDateTime;

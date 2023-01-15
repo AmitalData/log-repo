@@ -2,7 +2,9 @@
 using Logitude.Workflow.BL.EntityPMs;
 using Logitude.Workflow.Data.EntityPOCOs;
 using Logitude.Workflow.Data.Repositories;
+using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
+using System;
 using System.Linq;
 
 namespace Logitude.Workflow.BL.EntityUpdateServices
@@ -50,6 +52,8 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
                     activeWorkFlowVersion.StatusCode = "INVE";
                     workFlowVersionRepository.Update(activeWorkFlowVersion);
                 }
+                DateTime myDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+                entityPM.ActivatedDate = myDate;
                 workFlowVersionRepository.SubmitChanges();
 
                 UpdateWorkflow(entityPM);

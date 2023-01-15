@@ -9,7 +9,6 @@ import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 import { SetValue } from "Workflow/Models/SetValue";
 import { DeclaredRecordsTreeList } from "Workflow/Models/DeclaredRecordsTreeList";
 import { SetRecordFieldsTypes } from "Workflow/Constants/SetRecordFieldsTypes";
-import { Formatter } from "Workflow/Models/Formatter";
 
 @Component({
     templateUrl: "./AppendItemPropertiesComponent.html"
@@ -24,6 +23,7 @@ export class AppendItemPropertiesComponent extends BaseComponent {
     public SingleEditableEntitiesTreeItems: TreeSelectItem[];
     public DeclaredRecordsTreeItems: TreeSelectItem[];
     public Data: any;
+    public IsNew: boolean;
     public Name: string = null;
     public Entity: string = null;
     public EntityId: string = null;
@@ -37,7 +37,6 @@ export class AppendItemPropertiesComponent extends BaseComponent {
     public ExcludedEntities: string[] = ["Container"];
     public SetRecordFieldsTypes = SetRecordFieldsTypes;
     public CurrentSession = SessionLocator.SelectedSession;
-    public IsNew: boolean = false;
 
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
@@ -54,10 +53,7 @@ export class AppendItemPropertiesComponent extends BaseComponent {
     initialize() {
         this.IsNew = Object.keys(this.Data).length === 0;
 
-        if(!this.Data["label"]){
-            this.Data["label"] = this.Data["name"]
-        }
-        this.Name = this.Data["label"] || null
+        this.Name = this.Data["label"] || this.Data["name"] || null;
         this.Collection = this.Data["collection"] || null;
         this.Entity = this.Data["entity"] || null;
         this.SetValues = this.Data["setValues"] || [];
@@ -89,9 +85,10 @@ export class AppendItemPropertiesComponent extends BaseComponent {
     }
 
     updateName(name: string) {
-        if (this.IsNew) {
-            this.Data["name"] = Formatter.getCodeFromName(name);
+        if(this.IsNew){
+            this.Data["name"] = name;
         }
+
         this.Data["label"] = name;
         this.Name = name;
 

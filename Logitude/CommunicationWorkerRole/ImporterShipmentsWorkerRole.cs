@@ -610,6 +610,7 @@ namespace CommunicationWorkerRole
                                                             PickupPlace = Shipment.PickupPlace,
                                                             SealNo = Shipment.SealNo,
                                                             HSCode = Shipment.HSCode,
+
                                                             Agent = new CodeProperties()
                                                             {
                                                                 Code = AgentCode
@@ -859,6 +860,7 @@ namespace CommunicationWorkerRole
                                                             PickupPlace = Shipment.PickupPlace,
                                                             SealNo = Shipment.SealNo,
                                                             HSCode = Shipment.HSCode,
+
                                                             Agent = new CodeProperties()
                                                             {
                                                                 Code = AgentCode

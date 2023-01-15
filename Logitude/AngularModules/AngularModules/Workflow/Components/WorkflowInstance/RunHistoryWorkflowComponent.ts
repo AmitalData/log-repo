@@ -153,6 +153,14 @@ export class RunHistoryWorkflowComponent extends BaseComponent {
             Styles: { width: '400px' },
         });
         this.columns.push({
+            FieldName: 'WorkFlowVersionNumber',
+            DataTypeCode: 'String',
+            Display: "Version Number",
+            IsCustomTemplate: true,
+            Styles: { width: '400px' },
+            ServerSideSortable: true
+        });
+        this.columns.push({
             FieldName: 'StartTime',
             AdditionalDataCustom: this.ObjectTableName,
             DataTypeCode: 'Date',

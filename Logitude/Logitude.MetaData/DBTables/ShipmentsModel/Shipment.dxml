@@ -672,7 +672,7 @@
   </Column>
   <Column
     Name="ConsigneeName"
-    Type="nvarchar"
+    Type="varchar"
     Size="70">
     <Constraints
       Nullable="true" />
@@ -3181,7 +3181,7 @@
   </Column>
   <Column
     Name="PrivateLabelInvoiceNumber"
-    Type="nvarchar"
+    Type="varchar"
     Size="30">
     <Constraints
       Nullable="true" />

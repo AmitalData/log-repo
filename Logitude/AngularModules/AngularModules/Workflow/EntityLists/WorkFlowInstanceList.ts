@@ -22,6 +22,7 @@ export class WorkFlowInstanceList {
 	Duration: number;
 	StatusName: string;
 	WorkFlowVersionId: string;
+	WorkFlowVersionNumber: number;
 	
 }
  

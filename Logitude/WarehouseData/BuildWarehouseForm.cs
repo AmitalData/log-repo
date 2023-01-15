@@ -363,10 +363,11 @@ namespace WarehouseData
                     long countStart = System.Convert.ToInt32(
                         commandRowCount.ExecuteScalar());
                     DisplayCountValueToScreen(table, typeTable, countStart);
+                    sourceConnection.Close();
                 }
                 catch (Exception ex)
                 {
-
+                    sourceConnection.Close();
                     MessageBox.Show(ex.Message);
                 }
             }

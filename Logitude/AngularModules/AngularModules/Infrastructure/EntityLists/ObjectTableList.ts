@@ -63,5 +63,5 @@ export class ObjectTableList {
         ParentObjectTableId: string;
         IsCustom: boolean;
         SupportSubEntity: boolean;
-	
+        NewMechanismForCustomFields: boolean;
 }

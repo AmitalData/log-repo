@@ -15,6 +15,7 @@ export class AddDigitalFieldCodeComponent {
     digitalTextService: DigitalTextService;
     SelectedDigitalFieldCode: DigitalTextCodeObject;
     private CurrentSession = SessionLocator.SelectedSession;
+    IsAddingComponent = false;
 
     constructor() {
        
@@ -33,7 +34,10 @@ export class AddDigitalFieldCodeComponent {
             if (!myResult.HasError) {
                 var data = myResult.Result?.filter(a => !AppTool.IsNullOrEmpty(a.FieldCode));
                 if (!AppTool.IsNullOrEmpty(this.SearchText)) {
-                    data = data.filter(f => f.FieldCode.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1);
+                    data = data.filter(f =>
+                        (!AppTool.IsNullOrEmpty(f.FieldCode) && f.FieldCode.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1) ||
+                        (!AppTool.IsNullOrEmpty(f.DisplayText) && f.DisplayText.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1) ||
+                        (!AppTool.IsNullOrEmpty(f.DefaultText) && f.DefaultText.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1));
                 }
                 
                 this.LabelsItemsSource.InsertCollection(data);
@@ -55,7 +59,14 @@ export class AddDigitalFieldCodeComponent {
         this.SelectedDigitalFieldCode = item;
     }
 
+    AddFieldComponentClicked() {
+        this.IsAddingComponent = true;
+        var fieldcode = this.SelectedDigitalFieldCode?.FieldCode;
+        this.CurrentSession.CloseCurrentWindowEmit(fieldcode);
+    }
+
     AddFieldCodeClicked() {
+        this.IsAddingComponent = false;
         var fieldcode = this.SelectedDigitalFieldCode?.FieldCode;
         this.CurrentSession.CloseCurrentWindowEmit(fieldcode);
     }

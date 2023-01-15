@@ -92,7 +92,6 @@ namespace Logitude.BL.ShipmentsModel.EntityAMs
         public string PickupPlace { get; set; }
         public string SealNo { get; set; }
         public string HSCode { get; set; }
-
         /*
         HasException , ExceptionDate , ExceptionDescription
 ShipmentNumber

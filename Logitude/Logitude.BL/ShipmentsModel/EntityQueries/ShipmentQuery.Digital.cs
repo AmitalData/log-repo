@@ -1561,6 +1561,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                 {
                                     timeLineData.Pickup.City = myPartnerAddress.City;
                                     timeLineData.Pickup.CountryCode = myPartnerAddress.Country?.Code;
+                                    timeLineData.Pickup.CountryName = myPartnerAddress.Country?.EnglishName;
                                 }
                             }
                             else
@@ -1570,6 +1571,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                 {
                                     timeLineData.Pickup.City = myPartnerAddress.City;
                                     timeLineData.Pickup.CountryCode = myPartnerAddress.Country?.Code;
+                                    timeLineData.Pickup.CountryName = myPartnerAddress.Country?.EnglishName;
                                 }
                             }
                         }
@@ -1585,6 +1587,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             {
                                 timeLineData.Pickup.City = myPort.EnglishName;
                                 timeLineData.Pickup.CountryCode = myPort.CountryCode;
+                                timeLineData.Pickup.CountryName = myPort.CountryName;
                             }
                         }
                         break;
@@ -1594,6 +1597,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     {
                         timeLineData.Pickup.City = firstPickup.FromAddressCity;
                         timeLineData.Pickup.CountryCode = firstPickup.FromAddressCountry?.Code;
+                        timeLineData.Pickup.CountryName = firstPickup.FromAddressCountry?.EnglishName;
                         break;
                     }
             }
@@ -1634,6 +1638,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                 {
                                     timeLineData.Delivery.City = myPartnerAddress.City;
                                     timeLineData.Delivery.CountryCode = myPartnerAddress.Country?.Code;
+                                    timeLineData.Delivery.CountryName = myPartnerAddress.Country?.EnglishName;
                                 }
                             }
                             else
@@ -1643,6 +1648,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                 {
                                     timeLineData.Delivery.City = myPartnerAddress.City;
                                     timeLineData.Delivery.CountryCode = myPartnerAddress.Country?.Code;
+                                    timeLineData.Delivery.CountryName = myPartnerAddress.Country?.EnglishName;
                                 }
                             }
                         }
@@ -1659,6 +1665,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             {
                                 timeLineData.Delivery.City = myPort.EnglishName;
                                 timeLineData.Delivery.CountryCode = myPort.CountryCode;
+                                timeLineData.Delivery.CountryName = myPort.CountryName;
                             }
                         }
 
@@ -1669,6 +1676,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     {
                         timeLineData.Delivery.City = finalDelivery.ToAddressCity;
                         timeLineData.Delivery.CountryCode = finalDelivery.ToAddressCountry?.Code;
+                        timeLineData.Delivery.CountryName = finalDelivery.ToAddressCountry ?.EnglishName;
                         break;
                     }
             }
@@ -1764,6 +1772,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Title = "Terminal hub",
                     City = shipment.WarehouseLegAddressCity,
                     CountryCode = shipment.WarehouseLegAddressCountryCode,
+                    CountryName = shipment.WarehouseLegAddressCountryName,
                     Date = shipment.WarehouseLegActualEntryDate != null ? shipment.WarehouseLegActualEntryDate : shipment.WarehouseLegExpectedEntryDate,
                     DateType = shipment.WarehouseLegActualEntryDate != null ? "Actual" : (shipment.WarehouseLegExpectedEntryDate != null ? "Estimated" : null),
                     ATDDate = shipment.WarehouseLegActualEntryDate != null ? shipment.WarehouseLegActualEntryDate : shipment.WarehouseLegExpectedEntryDate,
@@ -1816,6 +1825,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Title = "Pre carriage",
                     City = shipment.PreCarriageFromPortName,
                     CountryCode = shipment.PreCarriageFromPortCountryCode,
+                    CountryName = shipment.PreCarriageFromPortCountryName,
                     Date = shipment.PreCarriageATD != null ? shipment.PreCarriageATD : shipment.PreCarriageETD,
                     DateType = shipment.PreCarriageATD != null ? "Actual" : (shipment.PreCarriageETD != null ? "Estimated" : null),
                     ATDDate = shipment.PreCarriageATD != null ? shipment.PreCarriageATD : shipment.PreCarriageETD,
@@ -1853,6 +1863,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 Title = shipment.TransportModeId == "A" ? "Gateway" : "Port of loading",
                 City = shipment.MainCarriageFromPortName,
                 CountryCode = isInlandDomesticShipment ? shipment.FromPartnerCountryCode : shipment.MainCarriageFromPortCountryCode,
+                CountryName = isInlandDomesticShipment ? shipment.FromPartnerCountryName : shipment.MainCarriageFromPortCountryName,
                 Date = shipment.MainCarriageATD != null ? shipment.MainCarriageATD : shipment.MainCarriageETD,
                 DateType = shipment.MainCarriageATD != null ? "Actual" : (shipment.MainCarriageETD != null ? "Estimated" : null),
                 ATDDate = shipment.MainCarriageATD != null ? shipment.MainCarriageATD : shipment.MainCarriageETD,
@@ -1890,6 +1901,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Title = "Transshipment 1 port",
                     City = shipment.Transshipment1FromPortName,
                     CountryCode = shipment.Transshipment1FromPortCountryCode,
+                    CountryName = shipment.Transshipment1FromPortCountryName,
                     Date = shipment.Transshipment1ATD != null ? shipment.Transshipment1ATD : shipment.Transshipment1ETD,
                     DateType = shipment.Transshipment1ATD != null ? "Actual" : (shipment.Transshipment1ETD != null ? "Estimated" : null),
                     ATDDate = shipment.Transshipment1ATD != null ? shipment.Transshipment1ATD : shipment.Transshipment1ETD,
@@ -1907,6 +1919,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Title = "Transshipment 2 port",
                     City = shipment.Transshipment2FromPortName,
                     CountryCode = shipment.Transshipment2FromPortCountryCode,
+                    CountryName = shipment.Transshipment2FromPortCountryName,
                     Date = shipment.Transshipment2ATD != null ? shipment.Transshipment2ATD : shipment.Transshipment2ETD,
                     DateType = shipment.Transshipment2ATD != null ? "Actual" : (shipment.Transshipment2ETD != null ? "Estimated" : null),
                     ATDDate = shipment.Transshipment2ATD != null ? shipment.Transshipment2ATD : shipment.Transshipment2ETD,
@@ -1924,6 +1937,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Title = "Transshipment 3 port",
                     City = shipment.Transshipment3FromPortName,
                     CountryCode = shipment.Transshipment3FromPortCountryCode,
+                    CountryName = shipment.Transshipment3FromPortCountryName,
                     Date = shipment.Transshipment3ATD != null ? shipment.Transshipment3ATD : shipment.Transshipment3ETD,
                     DateType = shipment.Transshipment3ATD != null ? "Actual" : (shipment.Transshipment3ETD != null ? "Estimated" : null),
                     ATDDate = shipment.Transshipment3ATD != null ? shipment.Transshipment3ATD : shipment.Transshipment3ETD,
@@ -1997,6 +2011,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 Title = shipment.TransportModeId == "A" ? "Destination" : "Discharge port",
                 City = shipment.MainCarriageFinalDestinationPortName,
                 CountryCode = isInlandDomesticShipment? shipment.ToPartnerCountryCode : shipment.MainCarriageFinalDestinationPortCountryCode,
+                CountryName = isInlandDomesticShipment ? shipment.ToPartnerCountryName : shipment.MainCarriageFinalDestinationPortCountryName,
                 ATADate = shipment.MainCarriageFinalDestinationATA != null ? shipment.MainCarriageFinalDestinationATA : shipment.MainCarriageFinalDestinationETA,
                 ATADateType = shipment.MainCarriageFinalDestinationATA != null ? "Actual" : (shipment.MainCarriageFinalDestinationETA != null ? "Estimated" : null),
                 Date = shipment.MainCarriageFinalDestinationATA != null ? shipment.MainCarriageFinalDestinationATA : shipment.MainCarriageFinalDestinationETA,
@@ -2185,6 +2200,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Title = "On carriage",
                     City = shipment.OnCarriageFromPortName,
                     CountryCode = shipment.OnCarriageFromPortCountryCode,
+                    CountryName = shipment.OnCarriageFromPortCountryName,
                     Date = shipment.OnCarriageATA != null ? shipment.OnCarriageATA : shipment.OnCarriageETA,
                     DateType = shipment.OnCarriageATA != null ? "Actual" : (shipment.OnCarriageETA != null ? "Estimated" : null),
                     ATADate = shipment.OnCarriageATA != null ? shipment.OnCarriageATA : shipment.OnCarriageETA,
@@ -2365,6 +2381,169 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         #endregion Transport & Subtypes
 
         #region Global Search 
+        public IQueryable<ShipmentList> GetOldByFilters(GeneralFilters newFilters)
+        {
+            var tenant = newFilters.Tenant;
+
+            var myTenantRepository = new TenantRepository(tenant);
+            var myTenant = myTenantRepository.GetSingleTenant(tenant);
+
+            var filters = new ApiQueryFilters()
+            {
+                Filter1Value = newFilters.CardId,
+                Filter2Value = newFilters.CardType
+            };
+
+            var queryOperations = new QueryOperations()
+            {
+                ObjectTableName = "Shipment",
+                PageIndex = newFilters.PageIndex,
+                PageSize = newFilters.PageSize,
+                QuerySection = "Shipments",
+                SortByColumnName = newFilters.SortBy,
+                SortDirectin = newFilters.SortDirection,
+                QueryFilterItems = new List<QueryFilterItem>(),
+            };
+
+            string partnerTypeName = string.Empty;
+            string shipmentLevelCodeValue = string.Empty;
+
+            if (newFilters.CardType == "CS")
+            {
+                shipmentLevelCodeValue = "D,H,A";
+                partnerTypeName = "CustomerId";
+            }
+            else if (newFilters.CardType == "AG")
+            {
+                shipmentLevelCodeValue = "D,C";
+                partnerTypeName = "AgentId";
+            }
+
+            if (!string.IsNullOrEmpty(newFilters.CardId))
+            {
+                queryOperations.SetFilter(partnerTypeName, newFilters.CardId, false, "InList", null, false);
+            }
+
+            if (!string.IsNullOrEmpty(shipmentLevelCodeValue))
+            {
+                queryOperations.SetFilter("ShipmentLevelCode", shipmentLevelCodeValue, false, "InListExact", null, false);
+            }
+
+            var ShipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Shipment", tenant);
+
+            foreach (var filter in newFilters.AdditionalFilters)
+            {
+                var field = ShipmentObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+
+                if (field != null)
+                {
+                    string valuestring1 = filter.FieldValue?.ToString();
+                    object value1 = Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+                    string valuestring2 = filter.FieldValue2?.ToString();
+                    object value2 = Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+                    string valuestring3 = filter.FieldValue3?.ToString();
+                    object value3 = Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring3);
+                    queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+                }
+                else
+                {
+                    queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.FieldValue3, filter.DisplayInList);
+                }
+            }
+
+            var shipmentRepository = new ShipmentRepository(tenant);
+
+            var customfilters = new ShipmentCustomFilter(tenant);
+
+            var shipments = shipmentRepository.GetShipmentViewsByTenant(tenant);
+
+            shipments = DigitalPortalCustomFilter.GetDigtalOldFilteredQuery(queryOperations, shipments, shipmentRepository, tenant);
+
+            var nonListQueryOperation = new QueryOperations
+            {
+                QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList()
+            };
+
+            var listQueryOperation = new QueryOperations
+            {
+                QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList()
+            };
+
+            var genericFilter = new Simplog.Server.Infrastructure.Helpers.GenericFilter();
+
+            shipments = genericFilter.GetFilteredQuery(nonListQueryOperation, shipments);
+
+            var myShipmentQuery = new ShipmentQuery(shipmentRepository);
+            var entityLists = myShipmentQuery.GetIQueryableShipmentList(shipments, tenant);
+            entityLists = genericFilter.GetFilteredQuery(listQueryOperation, entityLists);
+
+
+            if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+            {
+                var propInfo = typeof(ShipmentList).GetProperty(queryOperations.SortByColumnName);
+                var shipmentObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Shipment", tenant).ToList();
+
+                var objectField = shipmentObjectFields.FirstOrDefault(a => a.FieldName == queryOperations.SortByColumnName);
+
+                if (objectField != null)
+                {
+                    var sortClass = new Simplog.Server.Infrastructure.Helpers.GenericSort();
+
+                    if (!objectField.IsCustom)
+                    {
+                        switch (objectField.DataTypeCode.ToLower())
+                        {
+                            case "text":
+                                {
+                                    entityLists = sortClass.GetSorterQuery<ShipmentList, string>(queryOperations, entityLists);
+                                    break;
+                                }
+                            case "double":
+                                {
+                                    entityLists = sortClass.GetSorterQuery<ShipmentList, double>(queryOperations, entityLists);
+                                    break;
+                                }
+                            case "datetime":
+                                {
+                                    entityLists = sortClass.GetSorterQuery<ShipmentList, DateTime>(queryOperations, entityLists);
+                                    break;
+                                }
+                            case "integer":
+                                {
+                                    entityLists = sortClass.GetSorterQuery<ShipmentList, int>(queryOperations, entityLists);
+                                    break;
+                                }
+                            case "lookup":
+                                {
+                                    entityLists = sortClass.GetSorterQuery<ShipmentList, string>(queryOperations, entityLists);
+                                    break;
+                                }
+                            case "boolean":
+                                {
+                                    entityLists = sortClass.GetSorterQuery<ShipmentList, bool>(queryOperations, entityLists);
+                                    break;
+                                }
+                            default:
+                                {
+                                    entityLists = entityLists.OrderByDescending(d => d.CreateDateTime);
+                                    break;
+                                }
+                        }
+                    }
+                    else
+                    {
+                        entityLists = sortClass.GetSorterQuery<ShipmentList, string>(queryOperations, entityLists);
+                    }
+                }
+            }
+            else
+            {
+                entityLists = entityLists.OrderByDescending(d => d.CreateDateTime);
+            }
+
+            return entityLists;
+        }
+
         public Tuple<QueryOperations, IQueryable<DigitalShipmentList>>  GetByFiltersTuple(GeneralFilters newFilters)
         {
             var tenant = newFilters.Tenant;

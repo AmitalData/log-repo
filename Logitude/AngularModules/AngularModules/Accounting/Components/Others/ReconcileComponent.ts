@@ -953,6 +953,23 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
     }
 
+    onRowSelected($event) {
+        if($event) {
+            const row = $event.rowData;
+            const rowId = row.Id;
+            const RowIndex = $event.rowIndex;
+            const index = this.SelectedLines.Collection.findIndex(c => c.Id == row.Id);
+            if(index < 0) {
+
+                this.PushLine(row, RowIndex);
+                this.FireCheckBoxChecked.emit({ rowData: row, IsChecked: true , RowIndex: RowIndex });
+            } else {
+                this.PopLine(rowId);
+                this.FireCheckBoxChecked.emit({ rowData: row, IsChecked: false , RowIndex: RowIndex,ById : true });
+            }
+        }
+    }
+    
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }

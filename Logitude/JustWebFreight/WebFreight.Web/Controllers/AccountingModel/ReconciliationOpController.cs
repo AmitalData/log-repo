@@ -288,7 +288,7 @@ tenant);
 
         }
 
-      
+
         [HttpGet]
         public HttpResponseMessage GetReconciliationsByFilter(string gLAccountId, [FromUri] ApiQueryFilters filters)
         {
@@ -672,7 +672,7 @@ tenant);
                 var accountingContext = AccountingContext.GetContext(authToken.Tenant);
                 var createJournalReconcileService = new CreateJournalReconcileService();
                 var pm = createJournalReconcileService.Create(accountingContext, authToken.Tenant, ReconciliationLines, TheAccountId
-                    , AdjustAccountId,AccountDate, DueDate, RefDate, Ref1, Ref2, Ref3, Remarks);
+                    , AdjustAccountId, AccountDate, DueDate, RefDate, Ref1, Ref2, Ref3, Remarks);
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, pm);
                 return reponseMessage;
             }
@@ -687,7 +687,7 @@ tenant);
             List<ReconciliationLinePM> ReconciliationLines,
             string TheAccountId,
             string AdjustAccountId,
-            DateTime AccountDate,
+            DateTime? AccountDate,
             DateTime? DueDate,
             DateTime? RefDate,
             string Ref1,
@@ -703,12 +703,14 @@ tenant);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 int tenant = authToken.Tenant;
                 var accountingContext = AccountingContext.GetContext(authToken.Tenant);
+
                 var createJournalReconcileService = new CreateJournalReconcileService();
                 var journals = createJournalReconcileService
                     .CreateSplitJournals(accountingContext, authToken.Tenant, ReconciliationLines, TheAccountId, AdjustAccountId
-                    ,AccountDate, DueDate, RefDate, Ref1, Ref2, Ref3, Remarks);
-                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, journals);
-                return reponseMessage;
+                    , AccountDate, DueDate, RefDate, Ref1, Ref2, Ref3, Remarks);
+
+                HttpResponseMessage responseMessage = Request.CreateResponse(HttpStatusCode.OK, journals);
+                return responseMessage;
             }
             catch (Exception ex)
             {

@@ -15,7 +15,6 @@ import { EntitiesTreeList } from "Workflow/Models/EntitiesTreeList";
 import { ObjectTables } from "Workflow/Models/ObjectTables";
 import { ConditionOperators } from "Workflow/Constants/ConditionOperators";
 import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
-import { Formatter } from "Workflow/Models/Formatter";
 
 @Component({
     templateUrl: "./GetRecordPropertiesComponent.html"
@@ -25,6 +24,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
 
     public DataContext: any = this;
     public Data: any;
+    public IsNew: boolean;
     public Name: string = null;
     public Entity: string = null;
     public EntityId: string = null;
@@ -58,7 +58,6 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     public GetRecordLimits = GetRecordLimits;
     public GetRecordTypes = GetRecordTypes;
     public SortDirections = SortDirections;
-    public IsNew: boolean = false;
 
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
@@ -81,10 +80,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     initialize() {
         this.IsNew = Object.keys(this.Data).length === 0;
 
-        if(!this.Data["label"]){
-            this.Data["label"] = this.Data["name"]
-        }
-        this.Name = this.Data["label"] || null
+        this.Name = this.Data["label"] || this.Data["name"] || null;
         this.Entity = this.Data["entity"] || null;
         this.RecordsLimit = this.Data["recordsLimit"] ? this.Data["recordsLimit"] : GetRecordLimits.FirstRecord;
         this.RecordsType = this.Data["recordsType"] ? this.Data["recordsType"] : null;
@@ -159,12 +155,13 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         }
     }
 
-    updateName(Name: any) {
+    updateName(name: string) {
         if(this.IsNew){
-            this.Data["name"] = Formatter.getCodeFromName(Name);
+            this.Data["name"] = name;
         }
-        this.Data["label"] = Name;
-        this.Name = Name;
+
+        this.Data["label"] = name;
+        this.Name = name;
 
         this.setUIProperties();
     }

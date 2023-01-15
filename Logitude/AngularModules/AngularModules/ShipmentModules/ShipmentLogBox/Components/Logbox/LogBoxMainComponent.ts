@@ -1102,10 +1102,12 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         newWindow.WindowArgs = windowArgs;
         newWindow.Title = "Create New Shipment";
         windowArgs.IsCustomsActivated = this.IsCustomsActivated;
-        windowArgs.IsExportActivate = this.IsExportActivated
-
-        newWindowComponentPath = this.GetWindowComponentPath(newWindowComponentPath, newWindow);
-        newWindow.Show(newWindowComponentPath);
+        windowArgs.IsExportActivate = this.IsExportActivated;
+        this.entityResourceService.getEntityResourceByTableName("Shipment").subscribe((response: any) => {
+            newWindowComponentPath = this.GetWindowComponentPath(newWindowComponentPath, newWindow);
+            newWindow.Show(newWindowComponentPath);
+        });
+           
         newWindow.WindowClosed.subscribe(($event: any) => {
             if ($event == "MyShipmentAdded") {
                 this.MenuFiltersClicked('My Shipments', 'myShipment');
