@@ -5,16 +5,18 @@
     update Journals
 set AccountingEntityReference = er.ReconciliationNumber,
 AccountingEntityId = er.Id
-from ExternalReconciliations er
-join ExternalReconciliationLines erl on er.Id = erl.ReconciliationId and er.Tenant = erl.Tenant
-join LedgerTransactions lt on lt.Id = erl.LedgerTransactionId and lt.Tenant = erl.Tenant and lt.JournalLineNumber = 1
-join Journals j on lt.JournalId = j.Id and lt.Tenant = j.Tenant
+from ExternalReconciliations as er
+join ExternalReconciliationLines as erl on er.Id = erl.ReconciliationId and er.Tenant = erl.Tenant
+join LedgerTransactions as lt on lt.Id = erl.LedgerTransactionId and lt.Tenant = erl.Tenant and lt.JournalLineNumber = 1
+join Journals as j on lt.JournalId = j.Id and lt.Tenant = j.Tenant
 where $LastCounterWhere$ 
-and j.AccountingEntityCode = 12
-and
+and 
+j.AccountingEntityCode = 12
+and 
 (er.ReconciliationNumber <> j.AccountingEntityReference
 or er.Id <> j.AccountingEntityId
 or j.AccountingEntityReference is null)
+
 
     ]]>
   </Sql>
