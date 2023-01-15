@@ -1,11 +1,11 @@
 @font-face {
     font-family: 'Heebo';
-    src: url(/_Resources/Fonts/Heebo-VariableFont_wght.ttf) format('truetype');
+    src: url(./../../../../_Resources/Fonts/Heebo-VariableFont_wght.ttf) format('truetype');
 }
 
 @font-face {
     font-family: 'Montserrat';
-    src: url(/_Resources/Fonts/Montserrat-Black.ttf) format('truetype');    
+    src: url(./../../../../_Resources/Fonts/Montserrat-Black.ttf) format('truetype');    
 }
 
 :host ::ng-deep {
