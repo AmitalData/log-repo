@@ -66,7 +66,7 @@ export class DigitalButtonComponent {
         newField.ObjectTableId = this.objectTableId;
         newField.ProfileId = this.profileId;
         newField.FieldCode = this.rowData.FieldCode;
-        newField.DefaultText = this.rowData.FieldName;
+        newField.DefaultText = this.rowData.FullNameTextCodeCode;
         newField.TextCode = this.rowData.FullNameTextCodeCode;
         newField.DisplayText = this.rowData.FieldName;
         newField.CreatedBy = SessionLocator.LoggedUserPM.EnglishName;
