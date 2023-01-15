@@ -119,6 +119,11 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
                 }
             }
 
+            if (!singleApi)
+            {
+                defaultDigitalFieldSecurity = defaultDigitalFieldSecurity.Where(a => !unfoundFeilds.Contains(a.FieldCode)).ToList();
+            }
+
             if (!customDigitalFeildSecurityObject.Any())
             {
                 return defaultDigitalFieldSecurity;
