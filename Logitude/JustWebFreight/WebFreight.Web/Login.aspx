@@ -1506,7 +1506,7 @@
 
             }
 
-            let prodNewEnvTenants = [2889, 341, 1, 42, 1489, 0, 1688, 2655];
+            let prodNewEnvTenants = [2889, 341, 1, 42, 1489, 0, 1688, 2655, 2138, 3018];
             let testNewEnvTenants = [951, 1022];
 
             let newSystemTenant = getCookie("newSystemTenant");
