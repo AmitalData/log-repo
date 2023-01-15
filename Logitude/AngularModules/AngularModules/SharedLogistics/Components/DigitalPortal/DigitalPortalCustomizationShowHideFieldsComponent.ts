@@ -181,7 +181,7 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
                 newLabel.FieldCode = item.FieldCode;
                 newLabel.CreatedBy = SessionLocator.LoggedUserPM.EnglishName;
                 newLabel.CreatedOn = DateTool.GetCurrentDateAsUtc();
-                newLabel.HasPersmission = item.HasPermission;
+                newLabel.HasPermission = item.HasPermission;
                 this.ModifiedLables.DefaultSettings.push(newLabel);
             });
 

@@ -135,5 +135,5 @@ export class DigitalFeildSecurityUpdateModel {
     public FieldCode: string;
     public CreatedBy: string;
     public CreatedOn: Date;
-    public HasPersmission: boolean;
+    public HasPermission: boolean;
 }
