@@ -2836,7 +2836,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
         public string GetTranslationL2P(string partnerID, string tableID, string localCode)
         {
             string entityKeyString = $"GetGetTranslationL2P ({partnerID},{tableID},{localCode})";
-            return CacheHelper.GetFromCache(entityKeyString, () => {
+            return Logitude.Customs.BL.BL.CacheHelper.GetFromCache(entityKeyString, () => {
                 var rec = (from a in amitalContext.GTRTRANs
                            where a.PARTNERID == partnerID && a.TABLEID == tableID && a.LOCALCODE == localCode
                            select a).FirstOrDefault();
