@@ -59,6 +59,8 @@ namespace Logitude.Workflow.Data.EntityPOCOs
 	    public string Entity { get; set; }
         [Column("Trigger")]
 	    public string Trigger { get; set; }
+        [Column("ActivatedDate")]
+	    public DateTime? ActivatedDate { get; set; }
     }
 }
 	 

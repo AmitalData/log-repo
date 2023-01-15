@@ -53,7 +53,9 @@ namespace Logitude.Workflow.Data.EntityListQueryServices
 
 											 Trigger = a.Trigger,
 
-											 Entity = a.Entity
+											 Entity = a.Entity,
+
+											 ActivatedDate = a.ActivatedDate
 
 											});
             return query;

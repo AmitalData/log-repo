@@ -42,6 +42,8 @@ namespace Logitude.Workflow.Data.EntityLists
        public string StatusName  { get; set; }
        [DataMember]
        public string WorkFlowVersionId  { get; set; }
+       [DataMember]
+       public int WorkFlowVersionNumber  { get; set; }
    }
 
 }

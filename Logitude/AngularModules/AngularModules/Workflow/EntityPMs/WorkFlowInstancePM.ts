@@ -94,6 +94,11 @@ export class WorkFlowInstancePM {
     public set WorkFlowVersionId(newValue: string) { if (this.workFlowVersionId != newValue) { this.workFlowVersionId = newValue; this.MarkAsDirty("WorkFlowVersionId"); } }
        
 	 
+    private workFlowVersionNumber: number;
+    public get WorkFlowVersionNumber() { return this.workFlowVersionNumber; }
+    public set WorkFlowVersionNumber(newValue: number) { if (this.workFlowVersionNumber != newValue) { this.workFlowVersionNumber = newValue; this.MarkAsDirty("WorkFlowVersionNumber"); } }
+       
+	 
 
     public OldEntityPM: WorkFlowInstancePM;
 		
