@@ -65,12 +65,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var declarationQueryService = new DeclarationQueryService(context);
             DeclarationPM declarationPM = declarationQueryService.GetSingle(declarationid, true, false);
             MyRequestSheetParam.RequestDescription = $"{declarationPM.DeclarationNumber} קליטת חשבונות יצואן מקובץ, הצהרה";
-
+            string error = "";
+            string errorItems = "";
             foreach (var invoiceFromFile in fromFile)
             {
                 // create new invoice
                 var invoice = new SupplierInvoicePM
                 {
+                    AccountTypeCode="380",
                     InvoiceNumber = invoiceFromFile.InvoiceNumber,
                     InvoiceAmount = invoiceFromFile.InvoiceAmount,
                     BuyerName = invoiceFromFile.BuyerName,
@@ -83,23 +85,76 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     IssueDate = invoiceFromFile.IssueDate,
                 };
 
+                if (!string.IsNullOrWhiteSpace(invoice.BuyerCountryCode))
+                {
+                    CustomsCountryQueryService countryQueryService = new CustomsCountryQueryService(invoice.Tenant);
+                    CustomsCountryPM country = countryQueryService.GetSingle(invoice.BuyerCountryCode, false, true);
+                   if(country == null)
+                    {
+                        error += invoice.InvoiceNumber + ":BuyerCountryCode = " + invoiceFromFile.BuyerCountryCode + " could not translate to Logitude Id \n";
+
+                    }
+                }
+
+                if (!string.IsNullOrWhiteSpace(invoice.PartyRelationshipCode))
+                {
+                    PartyRelationshipTypeQueryService partyRelationshipQueryService = new PartyRelationshipTypeQueryService(invoice.Tenant);
+                    PartyRelationshipTypePM partyRelationship = partyRelationshipQueryService.GetSingle(invoice.PartyRelationshipCode, false, true);
+
+                    if (partyRelationship == null)
+                    {
+                        error += invoice.InvoiceNumber + ":PartyRelationshipCode = " + invoiceFromFile.PartyRelationCode + " could not translate to Logitude Id \n";
+
+                    }
+
+                }
+
+                if (!string.IsNullOrWhiteSpace(invoice.BuyerRoleCode))
+                {
+                    CustomerRoleTypeQueryService buyerRoleCodeQueryService = new CustomerRoleTypeQueryService(invoice.Tenant);
+                    CustomerRoleTypePM buyerRoleCode = buyerRoleCodeQueryService.GetSingle(invoice.BuyerRoleCode, false, true);
+                    if (buyerRoleCode == null)
+                    {
+                        error += invoice.InvoiceNumber + ":BuyerRoleCode = " + invoiceFromFile.BuyerRoleCode + " could not translate to Logitude Id \n";
+
+                    }
+                }
+
                 if (!string.IsNullOrWhiteSpace(invoiceFromFile.InvoiceCurrency))
                 {
                     var isSuccess = SetCurrencyTypeCode(tenant, invoiceFromFile.InvoiceCurrency, invoice);
                     if (!isSuccess)
                     {
-                        LogMessagingUtil.Instance.AppendLine("InvoiceCurrencyTypeCode = " + invoiceFromFile.InvoiceCurrency + " could not translate to Logitude Id");
+                        error += invoice.InvoiceNumber + ":InvoiceCurrencyTypeCode = " + invoiceFromFile.InvoiceCurrency + " could not translate to Logitude Id \n";
+                        LogMessagingUtil.Instance.AppendLine(error);
                     }
+                }
+
+                if (string.IsNullOrEmpty(invoice.InvoiceNumber))
+                    error += "InvoiceNumber is required. \n";
+
+                if ( string.IsNullOrEmpty(invoice.InvoiceCurrencyTypeCode) || invoice.InvoiceAmount == null || string.IsNullOrEmpty (invoice.BuyerName) || string.IsNullOrEmpty(invoice.BuyerAddress) || string.IsNullOrEmpty(invoice.BuyerRoleCode)
+                    || string.IsNullOrEmpty(invoice.BuyerRoleCode) || string.IsNullOrEmpty(invoice.PartyRelationshipCode) || !invoice.IssueDate.HasValue)
+                {
+                    error += invoice.InvoiceNumber + ":some fields is required. \n";
+
                 }
                 invoice.ChangeSetOp = ChangeSetOperation.Insert;
                 invoice.SupplierInvoiceItems = new List<SupplierInvoiceItemPM>();
-                CreateSupplierInvoiceItems(invoice, tenant, declarationid, invoiceFromFile);
-                declarationPM.SupplierInvoices.Add(invoice);
+                CreateSupplierInvoiceItems(invoice, tenant, declarationid, invoiceFromFile, out errorItems);
+                error += errorItems;
+
+                if (string.IsNullOrEmpty(error))
+                    declarationPM.SupplierInvoices.Add(invoice);
+                else
+                    this.MyResponseData.UserMessage += error;
+
+                error = "";
 
             }
             declarationPM.ChangeSetOp = ChangeSetOperation.Update;
             try
-            {
+            { 
                 LogMessagingUtil.Instance.AppendLine("===Start Saving declaration to DB===");
                 var myDeclarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), tenant);
                 myDeclarationUpdateService.Update(declarationPM, true);
@@ -112,8 +167,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
-        private void CreateSupplierInvoiceItems(SupplierInvoicePM invoice, int tenant, string declarationid, InvoiceFromFile invoiceFromFile)
+        private void CreateSupplierInvoiceItems(SupplierInvoicePM invoice, int tenant, string declarationid, InvoiceFromFile invoiceFromFile,out string errorItems)
         {
+              errorItems = "";
             foreach (var invoiceItemFromFile in invoiceFromFile.SupplierInvoiceItems)
             {
                 var invoiceItem = new SupplierInvoiceItemPM
@@ -127,22 +183,21 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     ItemPrice = invoiceItemFromFile.ItemPrice,
                     //ItemPriceCurrencyCode = invoice.InvoiceCurrencyTypeCode,
                     InvoiceNumber = invoiceFromFile.InvoiceNumber,
-                    ItemCode = invoiceItemFromFile.ItemDescription,
+                    // ItemCode = invoiceItemFromFile.ItemDescription,
+                    OriginCountryCode="IL"
                 };
                
                 CustomsItemQueryService customsItemQueryService = new CustomsItemQueryService(tenant);
                 invoiceItem.InvoiceQuantityType = customsItemQueryService.GetQuantityTypeByClassificationCode(invoiceItem.ClassificationCode, tenant);
                 invoiceItem.StatisticQuantityType = invoiceItem.InvoiceQuantityType;
 
-                if (!string.IsNullOrWhiteSpace(invoiceItemFromFile.OriginCountryCode))
+                if(invoiceItem.InvoiceQuantity== null || string.IsNullOrEmpty(invoiceItem.ClassificationCode) || invoiceItem.ItemPrice==null || string.IsNullOrEmpty(invoiceItemFromFile.OriginCountryCode))
                 {
-                    var isSuccess = SetCountry(tenant, invoiceItemFromFile.OriginCountryCode, invoiceItem);
-                    if (!isSuccess)
-                    {
-                        LogMessagingUtil.Instance.AppendLine("OriginCountryCode = " + invoiceItemFromFile.OriginCountryCode + " could not translate to Logitude Id");
-                    }
+                    errorItems += invoice.InvoiceNumber + ":some fields is required. \n";
+                    break;
                 }
 
+ 
                 invoiceItem.ChangeSetOp = ChangeSetOperation.Insert;
                 invoice.SupplierInvoiceItems.Add(invoiceItem);
             }
@@ -242,7 +297,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return false;
         }
 
-       
 
         private class InvoiceFromFile
         {
