@@ -361,7 +361,7 @@ public GetARInvoicePMWithLine(): ARInvoicePM {
     _ARInvoiceLinePM.ForiegnExchangeRate = _ARInvoiceLinePM.ForiegnCurrencyAmount / _ARInvoiceLinePM.LocalCurrencyAmount;
     _ARInvoiceLinePM.VatPercentage = this.GetVatTypePercentage(_ARInvoiceLinePM.VatTypeId);
       _ARInvoiceLinePM.VatTypeName = this.VatTypeName;
-      _ARInvoiceLinePM.LineActionCode = "1";
+      _ARInvoiceLinePM.LineActionCode = this.chargesTypeList.IsExpense==true?"2":"1";
       return  _ARInvoiceLinePM;
   }
 

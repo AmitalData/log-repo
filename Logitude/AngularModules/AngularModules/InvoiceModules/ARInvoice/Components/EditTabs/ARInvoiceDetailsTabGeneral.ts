@@ -1311,10 +1311,10 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         var line: ARInvoiceLinePM = new ARInvoiceLinePM(null);
         line.Tenant = SessionLocator.TenantPM.Id;
         line.ARInvoiceId = this.EntityPM.Id;
-       line.ForiegnCurrencyId = "";
+        line.ForiegnCurrencyId = "";
         line.ForiegnCurrencyCode = "";
         line.ForiegnExchangeRate = this.InvoiceCurrencyExchangeRate;
-        line.LineActionCode = "1";
+       
         line.InvoiceCurrencyCode = this.InvoiceCurrencyCode;
         var logWindow = new LogitudeWindow();
         logWindow.Title = TextCodeTranslator.Translate("ARInvoiceLine.O.EditInvoiceLine");
@@ -1568,6 +1568,8 @@ export class ARInvoiceLineItem extends BaseComponent {
                 this.Description = null;
                 this.LocalDescription = null;
                 this.VatTypeId = null;
+                this.LineActionCode=null;
+               
             }
 
             else {
@@ -1578,6 +1580,7 @@ export class ARInvoiceLineItem extends BaseComponent {
                             this.Description = this.chargesTypeList.EnglishName;
                             this.LocalDescription = this.chargesTypeList.LocalName;
                             this.VatTypeId = this.chargesTypeList.VatTypeId;
+                            this.LineActionCode=this.chargesTypeList.IsExpense==true?"2":"1";
                         }
                     }
                 });
@@ -1592,6 +1595,12 @@ export class ARInvoiceLineItem extends BaseComponent {
         }
     }
 
+    get LineActionCode() { return this.EntityPM.LineActionCode; }
+    set LineActionCode(newValue: string) {
+        if (this.EntityPM.LineActionCode != newValue) {
+            this.EntityPM.LineActionCode = newValue;
+        }
+    }
     get LocalDescription() { return this.EntityPM.LocalDescription; }
     set LocalDescription(newValue: string) {
         if (this.EntityPM.LocalDescription != newValue) {
