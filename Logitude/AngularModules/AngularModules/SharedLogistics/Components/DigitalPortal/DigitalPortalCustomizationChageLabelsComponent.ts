@@ -160,6 +160,7 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
                 this.customizationEditComponent.IsDirty = false;
                 this.ModifiedLables = new DigitalTextCodeUpdateModel();
                 this.CurrentSession.StopBusyIndicator();
+                this.BuildItemsSource();
                 if (this.customizationEditComponent.NewSelectedMenu) {
                     this.customizationEditComponent.SelectedMenu = this.customizationEditComponent.NewSelectedMenu;
                 }
