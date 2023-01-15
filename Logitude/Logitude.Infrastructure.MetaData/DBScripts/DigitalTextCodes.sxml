@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="30">
+  <Sql Version="31">
     <![CDATA[	
 	  delete from DigitalTextCodes where id != ''
 
@@ -781,6 +781,12 @@
 		{
 			"TextCode": "Dashboard.G.Actual",
 			"DefaultText": "Actual",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.ShowResults",
+			"DefaultText": "Show Results",
 			"FieldCode": "",
 			"DisplayText": ""
 		}]');
@@ -2190,6 +2196,12 @@
 			"DefaultText": "OnCarriage vessel name",
 			"FieldCode": "Shipment.OnCarriageVesselName",
 		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.InlandDomesticToCountryId",
+			"DefaultText": "Country",
+			"FieldCode": "Shipment.InlandDomesticToCountryId",
+		    "DisplayText": ""
 		}]');
 	  
 	declare @invocieObjectTableId as varchar(15)
@@ -3301,6 +3313,12 @@
 		{
 			"TextCode": "Dashboard.G.Actual",
 			"DefaultText": "Actual",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.ShowResults",
+			"DefaultText": "Show Results",
 			"FieldCode": "",
 			"DisplayText": ""
 		}]');
@@ -4704,6 +4722,12 @@
 			"TextCode": "Shipment.F.OnCarriageVesselName",
 			"DefaultText": "OnCarriage vessel name",
 			"FieldCode": "Shipment.OnCarriageVesselName",
+		    "DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.F.InlandDomesticToCountryId",
+			"DefaultText": "Country",
+			"FieldCode": "Shipment.InlandDomesticToCountryId",
 		    "DisplayText": ""
 		}]');
 	   
