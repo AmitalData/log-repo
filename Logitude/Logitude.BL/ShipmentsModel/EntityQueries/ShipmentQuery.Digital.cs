@@ -1561,6 +1561,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                 {
                                     timeLineData.Pickup.City = myPartnerAddress.City;
                                     timeLineData.Pickup.CountryCode = myPartnerAddress.Country?.Code;
+                                    timeLineData.Pickup.CountryName = myPartnerAddress.Country?.EnglishName;
                                 }
                             }
                             else
@@ -1570,6 +1571,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                 {
                                     timeLineData.Pickup.City = myPartnerAddress.City;
                                     timeLineData.Pickup.CountryCode = myPartnerAddress.Country?.Code;
+                                    timeLineData.Pickup.CountryName = myPartnerAddress.Country?.EnglishName;
                                 }
                             }
                         }
@@ -1585,6 +1587,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             {
                                 timeLineData.Pickup.City = myPort.EnglishName;
                                 timeLineData.Pickup.CountryCode = myPort.CountryCode;
+                                timeLineData.Pickup.CountryName = myPort.CountryName;
                             }
                         }
                         break;
@@ -1594,6 +1597,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     {
                         timeLineData.Pickup.City = firstPickup.FromAddressCity;
                         timeLineData.Pickup.CountryCode = firstPickup.FromAddressCountry?.Code;
+                        timeLineData.Pickup.CountryName = firstPickup.FromAddressCountry?.EnglishName;
                         break;
                     }
             }
@@ -1634,6 +1638,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                 {
                                     timeLineData.Delivery.City = myPartnerAddress.City;
                                     timeLineData.Delivery.CountryCode = myPartnerAddress.Country?.Code;
+                                    timeLineData.Delivery.CountryName = myPartnerAddress.Country?.EnglishName;
                                 }
                             }
                             else
@@ -1643,6 +1648,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                 {
                                     timeLineData.Delivery.City = myPartnerAddress.City;
                                     timeLineData.Delivery.CountryCode = myPartnerAddress.Country?.Code;
+                                    timeLineData.Delivery.CountryName = myPartnerAddress.Country?.EnglishName;
                                 }
                             }
                         }
@@ -1659,6 +1665,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             {
                                 timeLineData.Delivery.City = myPort.EnglishName;
                                 timeLineData.Delivery.CountryCode = myPort.CountryCode;
+                                timeLineData.Delivery.CountryName = myPort.CountryName;
                             }
                         }
 
@@ -1669,6 +1676,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     {
                         timeLineData.Delivery.City = finalDelivery.ToAddressCity;
                         timeLineData.Delivery.CountryCode = finalDelivery.ToAddressCountry?.Code;
+                        timeLineData.Delivery.CountryName = finalDelivery.ToAddressCountry ?.EnglishName;
                         break;
                     }
             }
@@ -1764,6 +1772,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Title = "Terminal hub",
                     City = shipment.WarehouseLegAddressCity,
                     CountryCode = shipment.WarehouseLegAddressCountryCode,
+                    CountryName = shipment.WarehouseLegAddressCountryName,
                     Date = shipment.WarehouseLegActualEntryDate != null ? shipment.WarehouseLegActualEntryDate : shipment.WarehouseLegExpectedEntryDate,
                     DateType = shipment.WarehouseLegActualEntryDate != null ? "Actual" : (shipment.WarehouseLegExpectedEntryDate != null ? "Estimated" : null),
                     ATDDate = shipment.WarehouseLegActualEntryDate != null ? shipment.WarehouseLegActualEntryDate : shipment.WarehouseLegExpectedEntryDate,
@@ -1816,6 +1825,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Title = "Pre carriage",
                     City = shipment.PreCarriageFromPortName,
                     CountryCode = shipment.PreCarriageFromPortCountryCode,
+                    CountryName = shipment.PreCarriageFromPortCountryName,
                     Date = shipment.PreCarriageATD != null ? shipment.PreCarriageATD : shipment.PreCarriageETD,
                     DateType = shipment.PreCarriageATD != null ? "Actual" : (shipment.PreCarriageETD != null ? "Estimated" : null),
                     ATDDate = shipment.PreCarriageATD != null ? shipment.PreCarriageATD : shipment.PreCarriageETD,
@@ -1853,6 +1863,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 Title = shipment.TransportModeId == "A" ? "Gateway" : "Port of loading",
                 City = shipment.MainCarriageFromPortName,
                 CountryCode = isInlandDomesticShipment ? shipment.FromPartnerCountryCode : shipment.MainCarriageFromPortCountryCode,
+                CountryName = isInlandDomesticShipment ? shipment.FromPartnerCountryName : shipment.MainCarriageFromPortCountryName,
                 Date = shipment.MainCarriageATD != null ? shipment.MainCarriageATD : shipment.MainCarriageETD,
                 DateType = shipment.MainCarriageATD != null ? "Actual" : (shipment.MainCarriageETD != null ? "Estimated" : null),
                 ATDDate = shipment.MainCarriageATD != null ? shipment.MainCarriageATD : shipment.MainCarriageETD,
@@ -1890,6 +1901,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Title = "Transshipment 1 port",
                     City = shipment.Transshipment1FromPortName,
                     CountryCode = shipment.Transshipment1FromPortCountryCode,
+                    CountryName = shipment.Transshipment1FromPortCountryName,
                     Date = shipment.Transshipment1ATD != null ? shipment.Transshipment1ATD : shipment.Transshipment1ETD,
                     DateType = shipment.Transshipment1ATD != null ? "Actual" : (shipment.Transshipment1ETD != null ? "Estimated" : null),
                     ATDDate = shipment.Transshipment1ATD != null ? shipment.Transshipment1ATD : shipment.Transshipment1ETD,
@@ -1907,6 +1919,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Title = "Transshipment 2 port",
                     City = shipment.Transshipment2FromPortName,
                     CountryCode = shipment.Transshipment2FromPortCountryCode,
+                    CountryName = shipment.Transshipment2FromPortCountryName,
                     Date = shipment.Transshipment2ATD != null ? shipment.Transshipment2ATD : shipment.Transshipment2ETD,
                     DateType = shipment.Transshipment2ATD != null ? "Actual" : (shipment.Transshipment2ETD != null ? "Estimated" : null),
                     ATDDate = shipment.Transshipment2ATD != null ? shipment.Transshipment2ATD : shipment.Transshipment2ETD,
@@ -1924,6 +1937,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Title = "Transshipment 3 port",
                     City = shipment.Transshipment3FromPortName,
                     CountryCode = shipment.Transshipment3FromPortCountryCode,
+                    CountryName = shipment.Transshipment3FromPortCountryName,
                     Date = shipment.Transshipment3ATD != null ? shipment.Transshipment3ATD : shipment.Transshipment3ETD,
                     DateType = shipment.Transshipment3ATD != null ? "Actual" : (shipment.Transshipment3ETD != null ? "Estimated" : null),
                     ATDDate = shipment.Transshipment3ATD != null ? shipment.Transshipment3ATD : shipment.Transshipment3ETD,
@@ -1997,6 +2011,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 Title = shipment.TransportModeId == "A" ? "Destination" : "Discharge port",
                 City = shipment.MainCarriageFinalDestinationPortName,
                 CountryCode = isInlandDomesticShipment? shipment.ToPartnerCountryCode : shipment.MainCarriageFinalDestinationPortCountryCode,
+                CountryName = isInlandDomesticShipment ? shipment.ToPartnerCountryName : shipment.MainCarriageFinalDestinationPortCountryName,
                 ATADate = shipment.MainCarriageFinalDestinationATA != null ? shipment.MainCarriageFinalDestinationATA : shipment.MainCarriageFinalDestinationETA,
                 ATADateType = shipment.MainCarriageFinalDestinationATA != null ? "Actual" : (shipment.MainCarriageFinalDestinationETA != null ? "Estimated" : null),
                 Date = shipment.MainCarriageFinalDestinationATA != null ? shipment.MainCarriageFinalDestinationATA : shipment.MainCarriageFinalDestinationETA,
@@ -2185,6 +2200,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Title = "On carriage",
                     City = shipment.OnCarriageFromPortName,
                     CountryCode = shipment.OnCarriageFromPortCountryCode,
+                    CountryName = shipment.OnCarriageFromPortCountryName,
                     Date = shipment.OnCarriageATA != null ? shipment.OnCarriageATA : shipment.OnCarriageETA,
                     DateType = shipment.OnCarriageATA != null ? "Actual" : (shipment.OnCarriageETA != null ? "Estimated" : null),
                     ATADate = shipment.OnCarriageATA != null ? shipment.OnCarriageATA : shipment.OnCarriageETA,

@@ -3072,6 +3072,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         [DataMember]
         public string Title { get; set; }
         [DataMember]
+        public string CountryName { get; set; }
+        [DataMember]
         public string CountryCode { get; set; }
         [DataMember]
         public string City { get; set; }
