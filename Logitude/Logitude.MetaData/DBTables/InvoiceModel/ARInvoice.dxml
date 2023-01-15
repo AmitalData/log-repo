@@ -195,7 +195,7 @@
     Name="AmountDue"
     Type="float">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="ExpectedPaymentDate"
