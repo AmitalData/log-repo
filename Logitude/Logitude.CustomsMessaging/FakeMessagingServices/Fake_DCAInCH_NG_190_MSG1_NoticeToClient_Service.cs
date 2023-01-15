@@ -1,6 +1,8 @@
-﻿using Logitude.Customs.BL.EntityQueryServices;
+﻿using DocumentFormat.OpenXml.Office2010.ExcelAc;
+using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.CustomsMessaging.Common.RequestParams;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +20,13 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             ConsignmentQueryService consignmentQueryService = new ConsignmentQueryService(requestParamsData.Tenant);
             DeclarationPM _dec = declarationQueryService.GetSingle(requestParamsData.AppicationId, false, false);
                         ConsignmentPM _con = consignmentQueryService.GetSingle(_dec.Id,1, false, false);
+            dynamic params1 = JObject.Parse(requestParamsData.TestCase.Param1);
+            var actionTypeCode = 1;
+            if (int.TryParse(params1.ActionTypeCode.Value, out int value))
+                actionTypeCode = value;
 
-            return new CH_NG_190_MSG1_NoticeToClient()
+
+                return new CH_NG_190_MSG1_NoticeToClient()
             {
                 RequestContentHeader = new RequestContentHeader()
                 {
@@ -27,7 +34,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
                 },
                 NoticeToClient = new CH_NG_190_MSG1_NoticeToClientNoticeToClient()
                 {
-                    operationCode = 1,
+                    operationCode = actionTypeCode,
                     statusMessage = 2,
                     entityType = 1,
                     checkId = int.Parse(DateTime.Now.ToString("MMddhhmm")),
