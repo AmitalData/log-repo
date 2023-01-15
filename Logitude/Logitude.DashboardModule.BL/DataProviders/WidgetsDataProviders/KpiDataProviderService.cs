@@ -141,7 +141,7 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
 
             int decimalPlaces = 2;
             double objectValue = Convert.ToDouble(value);
-            objectValue = Math.Round(objectValue * Math.Pow(10, decimalPlaces) / abbreviationAfter / Math.Pow(10, decimalPlaces), decimalPlaces);
+            objectValue = Math.Round((objectValue  / abbreviationAfter) , decimalPlaces);
             return objectValue;
 
         }
@@ -168,10 +168,16 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
 
             if (abbreviationValue > Math.Abs(objectValue)) return 0;
 
-            int abbreviationAfter = UseAbbreviaionAfter(abbreviationValue, objectValue) / 10;
-            if (!CheckAbbreviationAfterInRange(abbreviationAfter)) return 0;
- 
-            return abbreviationAfter;
+            int thousand = 1000;
+            int million = 1000000;
+           
+            if (Math.Abs(objectValue) >= thousand && Math.Abs(objectValue) < million) return thousand;
+            //else if (abbreviationValue > million)
+            //    return million;
+            //int abbreviationAfter = UseAbbreviaionAfter(abbreviationValue, objectValue) / 10;
+            //if (!CheckAbbreviationAfterInRange(abbreviationAfter)) return 0;
+
+            return million;
         }
           
         private int CaluculateValueOfAbbreviationSymbol(string userSelected)

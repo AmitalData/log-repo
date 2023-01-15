@@ -109,8 +109,9 @@ export class AddEditWidgetComponent extends BaseComponent {
 
         this.WidgetMeasuresList.forEach(item => {
             item.SetUIProperties();
+            item.SetUIProprtiesForDisplaySettings();
         });
-        this.SetUIProprtiesForDisplaySettings();
+        
     }
 
     BuildQueryFilters() {
@@ -377,11 +378,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.DecimalPlaces = this.DecimalPlaces ? this.DecimalPlaces : 0;
 
     }
-    SetUIProprtiesForDisplaySettings() {
-        this.UIProperties.SetEnabled("DecimalPlaces", this.ObjectTableName, this.IsMeasureNumber);
-        this.UIProperties.SetEnabled("UseNumberAbbreviation", this.ObjectTableName, this.IsMeasureNumber);
-        this.UIProperties.SetEnabled("ThousandSeparator", this.ObjectTableName, this.IsMeasureNumber);
-    }
+    
 
 
     InitView() {
@@ -588,7 +585,9 @@ export class AddEditWidgetComponent extends BaseComponent {
     set IsMeasureNumber(value: boolean) {
         if (this.isMeasureNumber != value) {
             this.isMeasureNumber = value;
-            this.SetUIProprtiesForDisplaySettings();
+            this.WidgetMeasuresList.forEach(item => {
+                item.SetUIProprtiesForDisplaySettings();
+            });
             this.SetDefaultValuesForDisplaySettings();
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget IsMeasureNumber Value Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
         }
@@ -612,7 +611,9 @@ export class AddEditWidgetComponent extends BaseComponent {
     set UseNumberAbbreviation(value: boolean) {
         if (this.EntityPM.UseNumberAbbreviation != value) {
             this.EntityPM.UseNumberAbbreviation = value;
-            this.SetUIProprtiesForDisplaySettings();
+            this.WidgetMeasuresList.forEach(item => {
+                item.SetUIProprtiesForDisplaySettings();
+            });
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget Use Number Abbreviation Value Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
         }
     }
@@ -932,6 +933,13 @@ export class WidgetMeasureItem extends BaseComponent {
         this.UIProperties.SetEnabled("MeasureCode", this.ObjectTableName, !AppTool.IsNullOrEmpty(this.fatherComponent.EntityId));
         this.UIProperties.SetEnabled("MeasureFieldId", this.ObjectTableName, !AppTool.IsNullOrEmpty(this.fatherComponent.EntityId));
     }
+
+    SetUIProprtiesForDisplaySettings() {
+        this.UIProperties.SetEnabled("DecimalPlaces", this.ObjectTableName, this.fatherComponent.IsMeasureNumber || this.MeasureCode == "Count");
+        this.UIProperties.SetEnabled("UseNumberAbbreviation", this.ObjectTableName, this.fatherComponent.IsMeasureNumber || this.MeasureCode == "Count");
+        this.UIProperties.SetEnabled("ThousandSeparator", this.ObjectTableName, this.fatherComponent.IsMeasureNumber || this.MeasureCode == "Count");
+        this.UIProperties.SetEnabled("UseAbbreviationAfter", this.ObjectTableName, this.MeasureCode == "Count");
+    }
         
 
     public CheckMeasureDeleteVisiblity() {
@@ -1018,7 +1026,7 @@ export class WidgetMeasureItem extends BaseComponent {
     FieldChanged(field: AnalyticsFactsFieldsMetaDataList) {
         this.selectedField = field;
         this.IsNumeric();
-        this.fatherComponent.SetUIProprtiesForDisplaySettings();
+        this.SetUIProprtiesForDisplaySettings();
     }
 
     IsNumeric() {    
