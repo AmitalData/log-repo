@@ -12038,13 +12038,13 @@ namespace WebFreight.Web.ReportsWebServices
 
         private void FilterChartOfAccountsAndTypes(RevenueExpenseDataProvider totalData, List<TrailReportM> trailReportMs) {
             // filter chart of account types
-            foreach (var item in totalData.ResultList.Where(x => x.Type == null).ToList())
-            {
-                if (!trailReportMs.Any(x => x != null && x.ChartOfAcountType == item.Id))
-                {
-                    totalData.ResultList.Remove(item);
-                }
-            }
+            //foreach (var item in totalData.ResultList.Where(x => x.Type == null).ToList())
+            //{
+            //    if (!trailReportMs.Any(x => x != null && x.ChartOfAcountType == item.Id))
+            //    {
+            //        totalData.ResultList.Remove(item);
+            //    }
+            //}
             // filter chart of accounts
             foreach (var item in totalData.ResultList.Where(x => x.Type == "ChartOfAccount").ToList())
             {
