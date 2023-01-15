@@ -90,14 +90,14 @@
                 <table>
 
 
-                   
+
                     <tr class="FormFieldRow">
                         <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
                             {{'Accounting.General.O.Difference' | TextCodeTranslationPipe}}
                         </td>
 
                         <td style="width: 180px;" text-start>
-                            <div style="font-size: 15px; color:#0f9776;" [class.red]="TotalCredit>TotalDebit" text-start>{{TotalDifference | NumbersPipe:'N2'}}</div>                            
+                            <div style="font-size: 15px; color:#0f9776;" [class.red]="TotalCredit>TotalDebit" text-start>{{TotalDifference | NumbersPipe:'N2'}}</div>
                         </td>
                         <td><div></div></td>
                     </tr>
@@ -125,7 +125,7 @@
                         </td>
                         <td style="width: 180px;" *ngIf="IsCustomerCare">
 
-                            
+
                             <LogLov [ObjectFieldName]="'GLAccountId'"
                                     [ObjectTableName]="ObjectTableName"
                                     [DataContext]="DataContext"
@@ -154,7 +154,7 @@
 
                         <td style="width: 180px;">
                             <LogDatePicker [ObjectFieldName]="'DueDate'" [ObjectTableName]="ObjectTableName"
-                                           [DataContext]="DataContext" [HideColumns]="true" [ForceFocus]="forceFocus"></LogDatePicker>
+                                           [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
                         </td>
                         <td><div></div></td>
                     </tr>
@@ -164,7 +164,7 @@
 
                         <td style="width: 180px;">
                             <LogDatePicker [ObjectFieldName]="'RefDate'" [ObjectTableName]="ObjectTableName"
-                                           [DataContext]="DataContext" [HideColumns]="true" [ForceFocus]="forceFocus"></LogDatePicker>
+                                           [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
                         </td>
                         <td><div></div></td>
                     </tr>
