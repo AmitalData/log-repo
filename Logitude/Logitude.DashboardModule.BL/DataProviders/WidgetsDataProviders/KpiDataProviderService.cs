@@ -106,9 +106,6 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             value = UseTousandSeperatorForValue(value, objectValue, dataTypeCode);
 
             return value;
-            //if (dataTypeCode == "Date" || dataTypeCode == "DateTime") return ((DateTime)value).ToString("yyyy-MM-dd");
-            //if (dataTypeCode == null || dataTypeCode == "Integer") return String.Format("{0:n0}", value);
-            //return String.Format("{0:n}", value);
         }
         private object UseTousandSeperatorForValue(object value, object objectValue, string dataTypeCode)
         {
@@ -172,11 +169,7 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             int million = 1000000;
            
             if (Math.Abs(objectValue) >= thousand && Math.Abs(objectValue) < million) return thousand;
-            //else if (abbreviationValue > million)
-            //    return million;
-            //int abbreviationAfter = UseAbbreviaionAfter(abbreviationValue, objectValue) / 10;
-            //if (!CheckAbbreviationAfterInRange(abbreviationAfter)) return 0;
-
+            
             return million;
         }
           
@@ -195,17 +188,7 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             return numberPart;
         }
 
-        private int UseAbbreviaionAfter(int abbreviation, double value)
-        {
-            if (abbreviation > Math.Abs(value)) return abbreviation;
-            return UseAbbreviaionAfter(abbreviation * 10, value);
-        }
-
-        private bool CheckAbbreviationAfterInRange(int abbreviationAfter)
-        {
-            if (abbreviationAfter <= 100000000) return true;
-            return false;
-        }
+        
         
         private object BuildKpiChartValue<T>(WidgetMeasurePM widgetMeasureField, IQueryable<T> query)
         {
