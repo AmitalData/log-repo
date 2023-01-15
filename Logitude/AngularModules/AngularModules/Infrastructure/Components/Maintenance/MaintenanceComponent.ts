@@ -18,6 +18,7 @@ import { SessionInfo } from '../../Utilities/SessionInfo';
 import { AmitalGatewayUtil } from '../../Utilities/AmitalGatewayUtil';
 import { ObjectTablePM } from '../../EntityPMs/ObjectTablePM';
 //import {RecallClientsForCutoms} from '../../../Customs/Components/CustomsRequests/GeneralRequests/RecallClientsForCutoms';
+import { TextCodeTranslationPipe } from '../../../Controls/Pipes/TextCodeTranslationPipe';
 
 @Component({
     
@@ -30,6 +31,7 @@ export class MaintenanceComponent {
     LayoutDirection: string = 'ltr';
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
+    private textCodeTranslationPipe: TextCodeTranslationPipe;
 
     public EntityStatusToggle: boolean = false;
     constructor() {
@@ -38,6 +40,7 @@ export class MaintenanceComponent {
         this.BuildPagesMenu();
         this.BuildMaintenanceMenu();
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
+        this.textCodeTranslationPipe = new TextCodeTranslationPipe();
     }
 
 
@@ -1699,6 +1702,11 @@ export class MaintenanceComponent {
                     break;
                 }
                 default: {
+                    let objectTable = window.ObjectTables.filter(d => d.Id == item.ObjectTableId)[0];
+                    if (objectTable && objectTable.IsCustom) {
+                        this.ShowCustomObject(objectTable);
+                        break;
+                    }
                     if (item.ObjectTableId) {
                         var allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === item.ObjectTableId).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
                         if (allQueries.length == 0) {
@@ -1773,7 +1781,19 @@ export class MaintenanceComponent {
             }
         }
     }
-    
+
+    private ShowCustomObject(objectTable: ObjectTablePM) {
+        let listArgs = new ListComponentArgs();
+        listArgs.ObjectTableName = objectTable.Name;
+        listArgs.BackButtonTitle = "Maintenance";
+        listArgs.DisplayTitle = this.textCodeTranslationPipe.transform(objectTable.Name);
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run(listArgs);
+            });
+    }
+
     private ShowCustomizationCustomFieldsWindow(logWindow: LogitudeWindow, windowArgs: any) {
         var logWindow = new LogitudeWindow();
         var windowArgs: any = {};
