@@ -580,7 +580,9 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
                 case "PrintDeclarationForm":
                     {
-                        this.PrintDeclarationFormMethod();//declarationViewModel);
+
+                        this.OnPrintDeclarationFormClick();
+                        //this.PrintDeclarationFormMethod();//declarationViewModel);
                         break;
                     }
 
@@ -1212,8 +1214,26 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
     _DocumentDeclarationId: string = null;
     _DeclarationNumberandVersionId: string = null;
+
+
+    private buttonDisabled = false;
+    /*async */OnPrintDeclarationFormClick() {
+        if (this.buttonDisabled) {
+            console.log("OnPrintDeclarationFormClick:abort")
+            return;
+        }
+        try {
+            this.buttonDisabled = true;
+            this.PrintDeclarationFormMethod();
+        } finally {
+            setTimeout(() => {
+                this.buttonDisabled = false;
+            }, 2000);
+        }
+    }
     private PrintDeclarationFormMethod()//DeclarationViewModel declarationViewModel)
     {
+        console.log("PrintDeclarationFormMethod()");
         if (!AppTool.IsNullOrEmpty(this._DocumentDeclarationId) && this._DeclarationNumberandVersionId == this.EntityPM.DeclarationNumberandVersionId) {
             this.ShowDocumentDeclaration();
             return
@@ -1249,7 +1269,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
             });
 
     }
-
+    _IsPrintGateIsClosed: boolean = false;
     private CheckBeforeSendPrintRequest() {
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
         declarationDisplayOnlyChecks.CheckIfGeneralRequestInProgress("8302", this.EntityPM.CustomFileNo, this.EntityPM.Tenant)
@@ -1271,8 +1291,19 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         messageWindow.Show("לא ניתן להציג טופס הצהרה ,קיימת בקשה דומה בתהליך ");
                         return;
                     }
+                    if (this._IsPrintGateIsClosed) {
+                        console.log("_IsPrintGateIsClosed:abort()")
+                        return; 
+                    }
+                    try {
+                        this._IsPrintGateIsClosed = true;
 
-                    this.SendPrintRequest();
+                        this.SendPrintRequest();
+                    } finally {
+                        setTimeout(() => { this._IsPrintGateIsClosed = false; }, 2000);
+                    }
+                    
+                    
                 }
             });
     }
