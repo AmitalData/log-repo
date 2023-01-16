@@ -46,6 +46,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     public ReturnPropertiesDataEventKey: string = "returnPropertiesDataEventKey_" + (Date.now())?.toString();
     public returnDeleteNodeConfirmationEventKey: string = "returnDeleteNodeConfirmationEventKey_" + (Date.now())?.toString();
     public HasChanges = false;
+    public IsFirstOpen: boolean = false;
 
     public WorkFlowPMService: WorkFlowPMService = new WorkFlowPMService();;
     private TabSelectedEvent: any = null;
@@ -56,6 +57,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         super();
         this.EntityPM = this.entityArgs.EntityPM;
         this.EntityId = this.entityArgs.EditComponent.EntityId;
+        this.IsFirstOpen = this.entityArgs.EditComponent.IsFirstOpen;
     }
 
     ngOnInit() {
@@ -81,7 +83,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
                     else if (clickedRowId) {
                         var version = this.EntityPM.WorkFlowVersions.find(e => e.Id == clickedRowId);
                         this.DisplayGivenVersion(version);
-                    } 
+                    }
                     // else {
                     //     ReactDOM.unmountComponentAtNode(this.containerRef.nativeElement);
                     //     this.loadWorkflow(true);
@@ -367,6 +369,33 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
 
     setReactFlowInstance(reactFlowInstance: any) {
         this.ReactFlowInstance = reactFlowInstance;
+        let flowObject = this.getCurrentFlowObject();
+        if (this.IsFirstOpen && flowObject) {
+            this.OpenConfigureStart(flowObject);
+        }
+    }
+
+    OpenConfigureStart(flowObject:any) {
+        let startNode = flowObject.nodes.filter(n => n.type === "startNode")[0];
+        let nodeObject = this.buildStartNodeObject(startNode);
+        if (nodeObject) {
+            this.IsFirstOpen = false;
+            this.handleOpenPropertiesEvent(nodeObject);
+        }
+    }
+
+    buildStartNodeObject(startNode:any) {
+        if (startNode) {
+            let nodeObject = {
+                isNewNode: true,
+                nodeId: startNode.id,
+                nodeType: startNode.type,
+                nodeData: startNode.data || {},
+                nodeLabel: startNode.data ? (startNode.data["label"] || startNode.data["name"]) : null
+            };
+            return nodeObject
+        }
+        return null;
     }
 
     handleOpenPropertiesEvent(openPropertiesEventObject: any) {
