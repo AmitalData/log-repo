@@ -4,7 +4,6 @@ import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { EditableRecordsTreeList } from "Workflow/Models/EditableRecordsTreeList";
-import { Formatter } from "Workflow/Models/Formatter";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 
 @Component({
@@ -14,20 +13,16 @@ import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 export class UpdateRecordPropertiesComponent extends BaseComponent {
 
     public DataContext: any = this;
-
     public FlowObject: any;
     public CurrentNodeId: string;
     public FlowObjectFields: ObjectFieldList[];
-
     public EditableRecordsTreeItems: TreeSelectItem[];
-
     public Data: any;
+    public IsNew: boolean;
     public Name: string = null;
     public Record: string;
     public ValidationErrorsList: string[];
-
     public CurrentSession = SessionLocator.SelectedSession;
-    public IsNew: boolean = false;
 
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
@@ -44,7 +39,7 @@ export class UpdateRecordPropertiesComponent extends BaseComponent {
     initialize() {
         this.IsNew = Object.keys(this.Data).length === 0;
 
-        this.Name = this.Data["label"] || null;
+        this.Name = this.Data["label"] || this.Data["name"] || null;
         this.Record = this.Data["record"] || null;
 
         this.setUIProperties();
@@ -56,8 +51,9 @@ export class UpdateRecordPropertiesComponent extends BaseComponent {
 
     updateName(name: string) {
         if(this.IsNew){
-            this.Data["name"] = Formatter.getCodeFromName(name);
+            this.Data["name"] = name;
         }
+
         this.Data["label"] = name;
         this.Name = name;
 

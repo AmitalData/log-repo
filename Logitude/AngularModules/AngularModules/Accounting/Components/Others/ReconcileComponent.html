@@ -293,7 +293,8 @@
                                [CheckBoxFilterChanged]="CheckBoxFilterChanged"
                                (SortInvoked)="OnSortInvoked($event)"
                                (DataLoaded)="onDataLoaded()"
-                               [ChangeCheckBoxesState]="ChangeCheckBoxesState">
+                               [ChangeCheckBoxesState]="ChangeCheckBoxesState"
+                               (rowSelectedEvent)="onRowSelected($event)">
                 </logitude-grid>
             </div>
         </td>

@@ -94,7 +94,7 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
 
     BuildItemsSource() {
         this.LabelsItemsSource = new ObservableCollection([]);
-        var labelsList: CustomizationLabelItem[] = [];
+        var labelsList = [];
         var objectTableId = this.SelectedObjectTableItem.Name;
         var profileId = this.SelectedProfileItem.Code;
         this.digitalTextService.GetTextCodesByFilters(null, objectTableId, profileId).subscribe((myResult) => {
@@ -126,7 +126,7 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
 
     loadedResults: CustomizationLabelItem[] = [];
     BuildSearchItems() {
-        var labelsList: CustomizationLabelItem[] = [];
+        var labelsList = [];
         if (!AppTool.IsNullOrEmpty(this.SearchText)) {
             var data = this.loadedResults;
             data = data.filter(f =>
@@ -142,7 +142,9 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
         }
         else {
             this.LabelsItemsSource = new ObservableCollection([]);
-            labelsList = this.loadedResults;
+            this.loadedResults.forEach(item => {
+                labelsList.push(new CustomizationLabelItem(this, item));
+            });
             this.LabelsItemsSource.InsertCollection(labelsList);
         }
     }
@@ -160,6 +162,7 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
                 this.customizationEditComponent.IsDirty = false;
                 this.ModifiedLables = new DigitalTextCodeUpdateModel();
                 this.CurrentSession.StopBusyIndicator();
+                this.BuildItemsSource();
                 if (this.customizationEditComponent.NewSelectedMenu) {
                     this.customizationEditComponent.SelectedMenu = this.customizationEditComponent.NewSelectedMenu;
                 }

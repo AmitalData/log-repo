@@ -1708,8 +1708,17 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             newDocument.SearchFields = newDocument.Code + "," + newDocument.DirectionCode + "," + loggedContact.EnglishName + "," + loggedContact.LocalName;
-            Create(newDocument, null);
 
+            if(string.IsNullOrEmpty(info.Id))
+            {
+                Create(newDocument, null);
+            }
+            else
+            {
+                newDocument.Id = info.Id;
+                Update(newDocument, true);
+            }
+           
             return newDocument?.Id;
         }
 

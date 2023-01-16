@@ -500,6 +500,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string CustomsDeclarationNumber { get; set; }
         public string AgentComputed { get; set; }
 
+        public bool IsCustomerArchived { get; set; }
+        public string NotesSharedWithCustomer { get; set; }
 
         #region Booking
         public double? OrderGrossWeight { get; set; }

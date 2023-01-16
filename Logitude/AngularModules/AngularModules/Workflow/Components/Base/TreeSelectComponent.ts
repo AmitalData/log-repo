@@ -18,6 +18,7 @@ export class TreeSelectComponent implements OnInit, AfterViewInit {
     @Input() IsReturnedTreeSelectItem: boolean = false;
     @Input() DisplayTitle: boolean = true;
     @Input() SetSelectedValue: boolean = true;
+    @Input() PlaceHolder: string | null = null;
     @Input() Template: any = null;
     @Input() ShowItem: (treeSelectItem: TreeSelectItem) => boolean = (_treeSelectItem: TreeSelectItem) => { return true };
 
@@ -61,7 +62,7 @@ export class TreeSelectComponent implements OnInit, AfterViewInit {
             return false;
         }
         let showItem = this.ShowItem(i);
-        if(i.children.length > 0 && !showItem){
+        if (i.children.length > 0 && !showItem) {
             i.selectable = false;
             return true;
         }
@@ -181,6 +182,7 @@ export class TreeSelectComponent implements OnInit, AfterViewInit {
 
     getDisplayTitle = (nzTreeItem: any) => {
         if (!this.DisplayTitle) {
+           this.NzTreeSelect.nzPlaceHolder = this.PlaceHolder
             return null
         }
         if (nzTreeItem) {
@@ -192,4 +194,5 @@ export class TreeSelectComponent implements OnInit, AfterViewInit {
         }
         return null;
     }
+
 }

@@ -183,7 +183,8 @@
                                                                 [DependencyFilter3Value]="EntityId"
                                                                 [HideColumns]="true"
                                                                 [DisplayMemberPath]="'DisplayName'"
-                                                                [QueryFilterItems]="item.FieldQueryFilters">
+                                                                [QueryFilterItems]="item.FieldQueryFilters"
+                                                                (SelectedItemChanged)="item.FieldChanged($event)">
                                                         </LogLov>
                                                     </td>
                                                 </tr>
@@ -227,7 +228,7 @@
 
                                     <tr class="FormFieldRow" *ngIf="isAdvancedSettingLinkVisible">
                                         <td>
-                                            <span class="LinkBtn" (click)="IsAdvancedSettingVisible = !IsAdvancedSettingVisible">  Advanced Settings</span>
+                                            <span class="LinkBtn" (click)="IsAdvancedSettingVisible = !IsAdvancedSettingVisible">  Display Settings</span>
                                         </td>
                                     </tr>
 
@@ -311,15 +312,15 @@
                         </tr>
 
                         <!--KPI Settings-->
-                        <tr style="height:1px; vertical-align: top;" *ngIf="IsAdvancedSettingVisible && isAdvancedSettingForKPI">
+                        <tr style="height:1px; vertical-align: top;" *ngIf="IsAdvancedSettingVisible && IsDisplaySettingVisibile">
                             <td colspan="2">
                                 <table>
                                     <tr class="FormFieldRow">
-                                        <td style="width:120px;">
+                                        <td style="width:160px;">
                                             <LogLabel [Text]="'Time Over Time'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
-                                        <td style="width:250px;">
+                                        <td style="width:200px;">
                                             <LogCheckBox [ObjectFieldName]="'TimeOverTime'" [Checked]="TimeOverTime" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                         </td>
 
@@ -414,6 +415,86 @@
                                                       [SelectedItem]="Increase"
                                                       [IsDisabled]="!TimeOverTime">
                                             </ComboBox>
+                                        </td>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                    <tr class="FormFieldRow">
+                                        <td>
+                                            <LogLabel [Text]="'Alignment'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td>
+                                            <ComboBox (SelectedItemChanged)="Alignment = $event"
+                                                      [ItemsSource]="Alignments"
+                                                      [SelectedItem]="Alignment"
+                                                      [IsDisabled]="this.TypeCode != 'kpi' || !this.EntityId">
+                                            </ComboBox>
+                                        </td>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="FormFieldRow">
+                                        <td>
+                                            <LogLabel [Text]="'Thousand Separator'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td>
+                                            <LogCheckBox [ObjectFieldName]="'ThousandSeparator'" [Checked]="ThousandSeparator" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="FormFieldRow">
+                                        <td>
+                                            <LogLabel [Text]="'Use Number Abbreviation'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td>
+                                            <LogCheckBox [ObjectFieldName]="'UseNumberAbbreviation'" [Checked]="UseNumberAbbreviation" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="FormFieldRow">
+                                        <td>
+                                            <LogLabel [Text]="'Use Abbreviation After'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td>
+                                            <ComboBox (SelectedItemChanged)="UseAbbreviationAfter = $event"
+                                                      [ItemsSource]="Abbreviations"
+                                                      [SelectedItem]="UseAbbreviationAfter"
+                                                      [IsDisabled]="(WidgetMeasuresList[0].MeasureCode == 'Count' && !UseNumberAbbreviation ) || (WidgetMeasuresList[0].MeasureCode != 'Count' && (!IsMeasureNumber || !UseNumberAbbreviation))">
+                                            </ComboBox>
+                                        </td>
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="FormFieldRow">
+                                        <td>
+                                            <LogLabel [Text]="'Decimal Places'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td>
+                                            <LogTextBox [ObjectFieldName]="'DecimalPlaces'"
+                                                        [DataContext]="DataContext"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [InputType]="'unsinteger'"
+                                                        [HideColumns]="true"
+                                                        [Text]="DecimalPlaces">
+                                            </LogTextBox>
                                         </td>
                                         <td>
                                             <div></div>

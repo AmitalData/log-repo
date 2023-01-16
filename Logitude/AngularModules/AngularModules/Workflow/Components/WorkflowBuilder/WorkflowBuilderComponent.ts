@@ -17,6 +17,9 @@ import { Formatter } from "Workflow/Models/Formatter";
 import { EntityArgs } from "Infrastructure/DataContracts/EntityArgs";
 import { AppTool } from "Infrastructure/Tools";
 import { WorkFlowVersionPM } from "Workflow/EntityPMs/WorkFlowVersionPM";
+import { ConfirmationMessageArgs } from "Infrastructure/DataContracts/ConfirmationMessageArgs";
+import { TextCodeTranslator } from "Infrastructure/Utilities/TextCodeTranslator";
+import { ConfirmWindow } from "Controls/Windows/ConfirmWindow";
 
 @Component({
     templateUrl: "./WorkflowBuilderComponent.html"
@@ -43,6 +46,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     public ReturnPropertiesDataEventKey: string = "returnPropertiesDataEventKey_" + (Date.now())?.toString();
     public returnDeleteNodeConfirmationEventKey: string = "returnDeleteNodeConfirmationEventKey_" + (Date.now())?.toString();
     public HasChanges = false;
+    public IsFirstOpen: boolean = false;
 
     public WorkFlowPMService: WorkFlowPMService = new WorkFlowPMService();;
     private TabSelectedEvent: any = null;
@@ -53,6 +57,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         super();
         this.EntityPM = this.entityArgs.EntityPM;
         this.EntityId = this.entityArgs.EditComponent.EntityId;
+        this.IsFirstOpen = this.entityArgs.EditComponent.IsFirstOpen;
     }
 
     ngOnInit() {
@@ -78,7 +83,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
                     else if (clickedRowId) {
                         var version = this.EntityPM.WorkFlowVersions.find(e => e.Id == clickedRowId);
                         this.DisplayGivenVersion(version);
-                    } 
+                    }
                     // else {
                     //     ReactDOM.unmountComponentAtNode(this.containerRef.nativeElement);
                     //     this.loadWorkflow(true);
@@ -200,6 +205,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
             var version = this.EntityPM.WorkFlowVersions.find(v => v.Id == this.CurrentVersionId)
             if (version.StatusCode == "DRFT") {
                 this.HasChanges = true;
+                this.EntityPM.IsDirty = true
                 this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, HasChanges: true }
                 this.entityArgs.SendMessage("RefreshWorkflowButtons");
             }
@@ -239,12 +245,29 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         if (nodeToDelete) {
             let validateNodeDelete = this.validateNodeDelete(nodeToDelete);
             if (validateNodeDelete.isValid) {
-                document.dispatchEvent(new CustomEvent(this.returnDeleteNodeConfirmationEventKey, { detail: true }));
+                this.ShowConfirmationMessageForDeleteNode();
             } else {
-                let nodeNameToDelete = nodeToDelete.data["name"] || nodeToDelete.id;
+                let nodeNameToDelete = nodeToDelete.data["label"] || nodeToDelete.id;
                 this.showDeleteNodeError(nodeNameToDelete, validateNodeDelete.usedInNodes);
             }
         }
+    }
+
+    private ShowConfirmationMessageForDeleteNode() {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 450;
+        confirmWindow.Height = 190;
+        confirmWindow.ShowNoButton = false
+        confirmWindow.ShowCancelButton = true;
+        confirmWindow.YesButtonText = "Ok";
+        confirmWindow.Title = "Delete Element"
+        confirmWindow.Show("Are you sure you want to delete this element?");
+
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                document.dispatchEvent(new CustomEvent(this.returnDeleteNodeConfirmationEventKey, { detail: true }));
+            }
+        });
     }
 
     showDeleteNodeError(nodeNameToDelete: string, usedInNodes: string[]) {
@@ -300,8 +323,8 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
 
     getNodeUsedData(node: any) {
         if (node.type === "declareVariableNode") {
-            let variableCode = node.data["variableCode"];
-            return variableCode ? ("declaredvariables_" + variableCode) : null;
+            let name = node.data["name"];
+            return name ? ("declaredvariables_" + name) : null;
         } else if (node.type === "getRecordNode") {
             let name = node.data["name"];
             return name ? (Formatter.getCodeFromName(name) + "_") : null;
@@ -316,14 +339,14 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         let isValid = true;
         let usedInNodes: string[] = []
         nodes.forEach((node: any) => {
-            let nodeName = node.data["name"] || node.id;
+            let nodeLabel = node.data["label"] || node.id;
             let nodeDataValues = node.data[dataKey] || [];
             nodeDataValues.forEach((dataValue: any) => {
                 let value = dataValue["value"] || null;
                 let field = dataValue["field"] || null;
                 if (value && field && (value.startsWith(nodeUsedData) || field.startsWith(nodeUsedData))) {
                     isValid = false;
-                    usedInNodes.push(nodeName);
+                    usedInNodes.push(nodeLabel);
                 }
             });
         });
@@ -334,11 +357,11 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         let isValid = true;
         let usedInNodes: string[] = []
         nodes.forEach((node: any) => {
-            let nodeName = node.data["name"] || node.id;
+            let nodeLabel = node.data["label"] || node.id;
             let collectionVariable = node.data["collectionVariable"] || null;
             if (collectionVariable && collectionVariable === nodeUsedData) {
                 isValid = false;
-                usedInNodes.push(nodeName);
+                usedInNodes.push(nodeLabel);
             }
         });
         return { isValid, usedInNodes };
@@ -346,6 +369,33 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
 
     setReactFlowInstance(reactFlowInstance: any) {
         this.ReactFlowInstance = reactFlowInstance;
+        let flowObject = this.getCurrentFlowObject();
+        if (this.IsFirstOpen && flowObject) {
+            this.OpenConfigureStart(flowObject);
+        }
+    }
+
+    OpenConfigureStart(flowObject:any) {
+        let startNode = flowObject.nodes.filter(n => n.type === "startNode")[0];
+        let nodeObject = this.buildPropertiesEventObjec(startNode);
+        if (nodeObject) {
+            this.IsFirstOpen = false;
+            this.handleOpenPropertiesEvent(nodeObject);
+        }
+    }
+
+    buildPropertiesEventObjec(startNode:any) {
+        if (startNode) {
+            let nodeObject = {
+                isNewNode: true,
+                nodeId: startNode.id,
+                nodeType: startNode.type,
+                nodeData: startNode.data || {},
+                nodeLabel: startNode.data ? (startNode.data["label"] || startNode.data["name"]) : null
+            };
+            return nodeObject
+        }
+        return null;
     }
 
     handleOpenPropertiesEvent(openPropertiesEventObject: any) {

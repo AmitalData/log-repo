@@ -166,7 +166,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                     if (temp != null)
                     {
-                        temp.DisplayText = item.DefaultText;
+                        temp.DisplayText = item.DisplayText;
                     }
                     else
                     {
@@ -212,7 +212,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     {
                         var existingKey = customCodesMappedObject.FirstOrDefault(a => a.TextCode.Equals(item.TextCode));
 
-                        if (string.IsNullOrWhiteSpace(item.DefaultText))
+                        if (string.IsNullOrWhiteSpace(item.DisplayText))
                         {
                             customCodesMappedObject.RemoveAll(a => a.TextCode == item.TextCode);
                         }
@@ -220,7 +220,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         {
                             if (existingKey != null)
                             {
-                                existingKey.DefaultText = item.DefaultText;
+                                existingKey.DisplayText = item.DisplayText;
                             }
                             else
                             {

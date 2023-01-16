@@ -33,6 +33,11 @@ export class DashboardMapping {
             myWidget.ToDate = widget.ToDate;
             myWidget.SecondaryGroupById = widget.SecondaryGroupById;
             myWidget.SecondaryDateGroupCode = widget.SecondaryDateGroupCode;
+            myWidget.Alighnment = widget.Alignment;
+            myWidget.ThousandSeparator = widget.ThousandSeparator;
+            myWidget.UseNumberAbbreviation = widget.UseNumberAbbreviation;
+            myWidget.UseAbbreviationAfter = widget.UseAbbreviationAfter;
+            myWidget.DecimalPlaces = widget.DecimalPlaces;
             myWidget.Layout = {
                 minH: 5,
                 minW: 3,

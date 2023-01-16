@@ -71,6 +71,7 @@
             <div *ngIf="dashbaordCount > 0 && SelectedDashboard && ShowDashboardTab" style="height: 100%;">
                 <dashboard-tab [DashboardId]="SelectedDashboard.Id"
                                [OpenEditLayout]="OpenEditLayout"
+                               [PresetFilters]="PresetFilters"
                                (DashboardDeleted)="RefreshTabsAfterDelete($event)"
                                (DashboardChanged)="DashboardChanged($event)"
                                (RefreshAfterCopy)="RefreshAfterCopy($event)"

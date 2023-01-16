@@ -23,9 +23,24 @@ namespace WebFreight.Web.Services
         {
             using (MemoryStream memoryStream = new MemoryStream())
             {
-                byte[] bytearray = SerializeData(memoryStream, dataprovider, type);
+                byte[] bytearray = SerializeDataWithUsingStreamReader(memoryStream, dataprovider, type);
                 memoryStream.Dispose();
                 memoryStream.Close();
+                return bytearray;
+            }
+        }
+
+        private byte[] SerializeDataWithUsingStreamReader(MemoryStream memoryStream, object dataprovider, Type type)
+        {
+            using (StreamReader reader = new StreamReader(memoryStream))
+            {
+                XmlSerializer serializer = new XmlSerializer(type);
+                serializer.Serialize(memoryStream, dataprovider);
+                memoryStream.Seek(0, SeekOrigin.Begin);
+                string content = reader.ReadToEnd();
+                byte[] bytearray = memoryStream.ToArray();
+                reader.Dispose();
+                reader.Close();
                 return bytearray;
             }
         }

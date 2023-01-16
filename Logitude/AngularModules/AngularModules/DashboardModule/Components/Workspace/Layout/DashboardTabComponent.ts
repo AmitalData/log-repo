@@ -1,10 +1,10 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, ViewChild } from '@angular/core';
 import { DashboardPM } from '../../../../DashboardModule/EntityPMs/DashboardPM';
 import { WidgetPM } from '../../../../DashboardModule/EntityPMs/WidgetPM';
 import { ReactWidgetPM } from 'logitude-dashboard-library/dist/types/widget';
 import { DashboardPMService } from '../../../../DashboardModule/Services/StandardPMs/DashboardPMService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
+import { AppTool } from '../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { DashboardMapping } from 'DashboardModule/Tools/DashboardMapping';
 import { DashboardDataBinding } from 'logitude-dashboard-library/dist/types/DashboardDataBinding';
@@ -14,13 +14,13 @@ import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { DashboardAnalyticsService } from '../../../../DashboardModule/Services/DashboardAnalyticsService';
-import { WidgetMeasurePM } from 'DashboardModule/EntityPMs/WidgetMeasurePM';
-import { DashboardSharedUserPM } from 'DashboardModule/EntityPMs/DashboardSharedUserPM';
-import { DashboardGlobalFilterPM } from 'DashboardModule/EntityPMs/DashboardGlobalFilterPM';
 import { DashboardListService } from '../../../../DashboardModule/Services/StandardLists/DashboardListService';
 import { DashboardList } from '../../../../DashboardModule/EntityLists/DashboardList';
 import { DashboardCopyService } from 'DashboardModule/Tools/DashboardCopyService';
 import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
+import { GlobalFilterItem } from 'DashboardModule/Components/Windows/Filter/GlobalFilter/GlobalFilterItem';
+import { AnalyticsFactsFieldsMetaDataPM } from 'DashboardModule/EntityPMs/AnalyticsFactsFieldsMetaDataPM';
+import { GlobalFilterComponent } from 'DashboardModule/Components/Windows/Filter/GlobalFilter/GlobalFilterComponent';
 
 
 @Component({
@@ -31,11 +31,13 @@ import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 export class DashboardTabComponent implements OnInit {
     @Input() DashboardId: string = null;
     @Input() OpenEditLayout: boolean = false;
+    @Input() PresetFilters: AnalyticsFactsFieldsMetaDataPM[];
     @Output() DashboardDeleted = new EventEmitter<string>();
     @Output() DashboardChanged = new EventEmitter<DashboardPM>();
     @Output() TabHasChanges = new EventEmitter<boolean>();
     @Output() DashboardEntity = new EventEmitter<DashboardPM>();
     @Output() RefreshAfterCopy = new EventEmitter<DashboardPM>();
+
     public SelectedDashboardName: string = null;
     public SelectedDashboard: DashboardPM;
     private dashboardPMService: DashboardPMService;
@@ -45,10 +47,11 @@ export class DashboardTabComponent implements OnInit {
     public newWidgetWidth = 3;
     public newWidgetHeight = 5;
     public CloneDashboardLayout: WidgetPM[];
-    public GlobalFilters: any[];
+    public GlobalFilters: GlobalFilterItem[];
     private DashboardListService: DashboardListService;
     public ItemsSource: DashboardList[] = [];
     public CanCopy: boolean;
+    public FilterCount: number = 0;
 
     constructor() {
         this.dashboardPMService = new DashboardPMService();
@@ -286,12 +289,14 @@ export class DashboardTabComponent implements OnInit {
         var behaviorSubject = new BehaviorSubject<{ StartPotistion: string, EndPosition: string }>(this.GetDefaultPosition());
         return behaviorSubject;
     }
+
     GetDefaultPosition() {
         var position = this.EvaluateNewWidgetPosition(this.newWidgetWidth, this.newWidgetHeight);
         var startPotistion = `${position.x},${position.y}`;
         var endPosition = `${position.w},${position.h}`;
         return { StartPotistion: startPotistion, EndPosition: endPosition };
     }
+
     GetWidgetPosition(myWidget: WidgetPM, numberOfGroup) {
         if (myWidget.TypeCode == "line") {
             if (numberOfGroup > 25)
@@ -315,6 +320,7 @@ export class DashboardTabComponent implements OnInit {
         }
         return this.GetPosition(this.newWidgetWidth, this.newWidgetHeight);
     }
+
     GetPosition(w, h) {
         var position = this.EvaluateNewWidgetPosition(w, h);
         var startPotistion = `${position.x},${position.y}`;
@@ -401,7 +407,7 @@ export class DashboardTabComponent implements OnInit {
         });
     }
 
-    ApplyFilters(filters: any[]) {
+    ApplyFilters(filters: GlobalFilterItem[]) {
         this.GlobalFilters = filters;
         for (const item of this.reactWidgetsLayout.lg) {
             this.ApplyGlobalFilterToWidget(item);
@@ -419,39 +425,52 @@ export class DashboardTabComponent implements OnInit {
         if (!this.GlobalFilters || this.GlobalFilters.length == 0) return null;
         var widgetFilters = [];
         this.GlobalFilters.forEach(item => {
-            if ((item.IsCommon || item.DataSetId == widget.EntityId))
-                widgetFilters.push(item);
+            if ((!item.IsPreset && item.DataSetId == widget.EntityId)) widgetFilters.push(item);
+            this.HandlePresetFilter(item, widget, widgetFilters);
         });
         if (!widgetFilters || widgetFilters.length == 0) return null;
-        return JSON.stringify(widgetFilters);
+        return JSON.stringify(widgetFilters, function (key, val) {
+            if (key !== "Component") return val;
+        });
     }
-    CopyDashboardClicked(){
+
+    private HandlePresetFilter(item: GlobalFilterItem, widget: ReactWidgetPM, widgetFilters: any[]) {
+        if (!item.IsPreset) return;
+        var field = this.PresetFilters.find(x => x.CommonFilterCode == item.FieldId && x.AnalyticsFactsMetaDataId == widget.EntityId);
+        if (!field) return;
+
+        item.FieldName = field.FieldCode;
+        item.DataTypeCode = field.DataTypeCode;
+        widgetFilters.push(item);
+    }
+
+    CopyDashboardClicked() {
         this.CopyDashboard();
     }
-    CopyDashboard(){
+
+    CopyDashboard() {
         var dashboardPM = DashboardCopyService.CopyDashboard(this.SelectedDashboard);
         this.CreateCopiedDashBoard(dashboardPM);
     }
 
-    CreateCopiedDashBoard(dashboardPM: DashboardPM){
+    CreateCopiedDashBoard(dashboardPM: DashboardPM) {
         this.dashboardPMService.insert(dashboardPM)
-        .subscribe((myResponse: ServiceResponse) => {            
-            this.ChangeToCopyDashborad(myResponse);            
-        });
+            .subscribe((myResponse: ServiceResponse) => {
+                this.ChangeToCopyDashborad(myResponse);
+            });
     }
-   
-    ChangeToCopyDashborad(myResponse: ServiceResponse){        
-            this.SelectedDashboard = myResponse.Result;
+
+    ChangeToCopyDashborad(myResponse: ServiceResponse) {
+        this.SelectedDashboard = myResponse.Result;
         if (this.SelectedDashboard) {
-               // this.EditDashboardClicked();
-                this.OpenEditDashboardWindowForCopiedDashboard();             
-            }
+            this.OpenEditDashboardWindowForCopiedDashboard();
+        }
 
-            else {
-                this.DashboardDataBinding.onGetLayouts.next(DashboardMapping.deepClone({ lg: [] }));
-            }
+        else {
+            this.DashboardDataBinding.onGetLayouts.next(DashboardMapping.deepClone({ lg: [] }));
+        }
 
-            this.CurrentSession.StopBusyIndicator();      
+        this.CurrentSession.StopBusyIndicator();
     }
 
     OpenEditDashboardWindowForCopiedDashboard() {
@@ -470,12 +489,21 @@ export class DashboardTabComponent implements OnInit {
                     else {
                         this.SelectedDashboardName = this.SelectedDashboard.Name;
                         this.RefreshAfterCopy.emit(this.SelectedDashboard);
-                        //this.DashboardChanged.emit(this.SelectedDashboard);
                     }
                 }
             });
         });
 
+    }
+
+    public ApplyFiltersCountChange(count: number) {
+        this.FilterCount = count;
+    }
+
+    public get HideShowFilterText(): string {
+        var countText = (!this.FilterCount || this.FilterCount == 0) ? "" : "(" + this.FilterCount + ")";
+        if (this.IsGlobalFiltersOpened) return "Hide filters" + countText;
+        return "Show filters" + countText;
     }
 
 }

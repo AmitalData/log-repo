@@ -347,7 +347,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                 entityPM.IsConnectToMasterShipment = entityMasterData != null ? true : false;
                 shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
-                shipmentBehaviourFacade.Handle();
+                shipmentBehaviourFacade.Handle(FieldChanges);
                 shipmentBehaviourFacade.HandleShipmentDigitalFields(shipmentDigitalFields);
 
                 shipmentBehaviourFacade.Save(); // Abed to make automation change to condation work fine
@@ -556,7 +556,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     entityPM.IsConnectToMasterShipment = entityMasterData != null ? true : false;
                     shipmentBehaviourFacade = new ShipmentBehaviourFacade(entityPM, objectContext, UpdatedShipmentComputedFields, isNewEntity);
-                    shipmentBehaviourFacade.Handle();
+                    shipmentBehaviourFacade.Handle(FieldChanges);
 
                     shipmentBehaviourFacade.HandleShipmentDigitalFields(shipmentDigitalFields);
 

@@ -109,6 +109,11 @@ export class AnalyticsFactsFieldsMetaDataPM {
     public set Unit(newValue: string) { if (this.unit != newValue) { this.unit = newValue; this.MarkAsDirty("Unit"); } }
        
 	 
+    private commonFilterCode: string;
+    public get CommonFilterCode() { return this.commonFilterCode; }
+    public set CommonFilterCode(newValue: string) { if (this.commonFilterCode != newValue) { this.commonFilterCode = newValue; this.MarkAsDirty("CommonFilterCode"); } }
+       
+	 
 
     public OldEntityPM: AnalyticsFactsFieldsMetaDataPM;
 		

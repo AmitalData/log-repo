@@ -56,7 +56,7 @@
     .condition-operator-container {
         display: table-cell;
         vertical-align: middle;
-        width: 150px;
+        width: 200px;
         padding-right: 5px;
     }
 
@@ -155,7 +155,7 @@
                             [DataCy]="'ConditionField_' + Condition.id">
                         </LogLov>
 
-                        <TreeSelect *ngIf="!IsEntityField" [Items]="FlowVariablesTreeItems" [Width]="'220px'"
+                        <TreeSelect *ngIf="!IsEntityField" [Items]="FlowVariablesTreeItems" [Width]="'300px'"
                             [IsDisabled]="Condition.disabled | ConditionDisabledPipe : 'f'"
                             [Value]="Condition.fieldCode" [IsReturnedTreeSelectItem]="true"
                             (ValueChanged)="updateConditionField($event, conditionIndex)"
@@ -245,7 +245,7 @@
                     <div *ngIf="!(Condition.operator | IsNoValueOperatorPipe) && (Condition.operator | IsFieldOperatorPipe) && !IsEntityFieldValue"
                         class="condition-value-container">
                         <div [attr.data-cy]="'ConditionFieldValue_' + Condition.id">
-                            <TreeSelect [Items]="FlowVariablesTreeItems" [Width]="'220px'" [Value]="Condition.value"
+                            <TreeSelect [Items]="FlowVariablesTreeItems" [Width]="'300px'" [Value]="Condition.value"
                                 [IsDisabled]="Condition.disabled | ConditionDisabledPipe : 'v'"
                                 [ShowItem]="Condition | ShowFlowVariablesTreeItemPipe : FlowVariablesTreeList"
                                 (ValueChanged)="updateConditionValue($event, conditionIndex)"

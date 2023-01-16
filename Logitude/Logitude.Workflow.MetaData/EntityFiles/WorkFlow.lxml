@@ -677,7 +677,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="1000"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     IsListFilter="false"
     MultiLine="true"
@@ -693,6 +693,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;WorkFlow&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -703,6 +704,8 @@
     DisplayLongName="false"
     FullFieldLable="&quot;Description&quot;"
     DefaultText="&quot;Description&quot;"
+    ListFieldLable="&quot;DescriptionListLable&quot;"
+    ListLableDefaultText="&quot;Description&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -1475,21 +1478,26 @@
       <QueryColumn
         QueryCode="&quot;All Workflows&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;OwnerName&quot;"
+        ObjectFieldName="&quot;Description&quot;"
         ColumnWidth="350" />
       <QueryColumn
         QueryCode="&quot;All Workflows&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;StatusName&quot;"
+        ObjectFieldName="&quot;OwnerName&quot;"
         ColumnWidth="350" />
       <QueryColumn
         QueryCode="&quot;All Workflows&quot;"
         IndexOrder="3"
-        ObjectFieldName="&quot;UpdateDate&quot;"
+        ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="350" />
       <QueryColumn
         QueryCode="&quot;All Workflows&quot;"
         IndexOrder="4"
+        ObjectFieldName="&quot;UpdateDate&quot;"
+        ColumnWidth="350" />
+      <QueryColumn
+        QueryCode="&quot;All Workflows&quot;"
+        IndexOrder="5"
         ObjectFieldName="&quot;UpdatedByUserName&quot;"
         ColumnWidth="350" />
     </QueryColumns>
@@ -1588,12 +1596,6 @@
   <MenuButtons
     MenuButtonGroupType="&quot;WorkFlowEdit&quot;"
     MenuButtonGroupName="&quot;WorkFlowEditButtonsGroup&quot;">
-    <MenuButton
-      EventCode="&quot;SaveDraft&quot;"
-      DefaultText="&quot;Save Draft&quot;"
-      MenuButtonType="&quot;button&quot;"
-      IndexOrder="0"
-      IsPackagable="true" />
     <MenuButton
       EventCode="&quot;NewVersion&quot;"
       DefaultText="&quot;New Version&quot;"

@@ -79,6 +79,15 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
         }
     }
 
+    private searchText: string = null;
+    public get SearchText() { return this.searchText; }
+    public set SearchText(value: string) {
+        if (this.searchText != value) {
+            this.searchText = value;
+            this.BuildSearchItems();
+        }
+    }
+
     private FillDigitalProfileFiltersList() {
         this.DigitalProfileFilterList = [];
         this.digitalTextService.GetDigitalProfileName().subscribe((myResult) => {
@@ -119,9 +128,38 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
                 myResult.Result.filter(a => !AppTool.IsNullOrEmpty(a.FieldCode)).forEach(item => {
                     profilesList.push(new ProfileFieldsItem(this, item));
                 });
+
+                this.loadedResults = profilesList;
                 this.FieldsItemsSource.InsertCollection(profilesList);
             }
         });
+    }
+
+    loadedResults = [];
+    BuildSearchItems() {
+        var labelsList = [];
+        if (!AppTool.IsNullOrEmpty(this.SearchText)) {
+            var data = this.loadedResults;
+            data = data.filter(f =>
+                (!AppTool.IsNullOrEmpty(f.FieldCode) && f.FieldCode.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1) ||
+                (!AppTool.IsNullOrEmpty(f.DisplayText) && f.DisplayText.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1) ||
+                (!AppTool.IsNullOrEmpty(f.DefaultText) && f.DefaultText.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1));
+
+            data.forEach(item => {
+                labelsList.push(new ProfileFieldsItem(this, item));
+            });
+
+            this.FieldsItemsSource = new ObservableCollection([]);
+           
+            this.FieldsItemsSource.InsertCollection(labelsList);
+        }
+        else {
+            this.FieldsItemsSource = new ObservableCollection([]);
+            this.loadedResults.forEach(item => {
+                labelsList.push(new ProfileFieldsItem(this, item));
+            });
+            this.FieldsItemsSource.InsertCollection(labelsList);
+        }
     }
 
     CloseClicked() {
@@ -147,7 +185,7 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
                 newLabel.FieldCode = item.FieldCode;
                 newLabel.CreatedBy = SessionLocator.LoggedUserPM.EnglishName;
                 newLabel.CreatedOn = DateTool.GetCurrentDateAsUtc();
-                newLabel.HasPersmission = item.HasPermission;
+                newLabel.HasPermission = item.HasPermission;
                 this.ModifiedLables.DefaultSettings.push(newLabel);
             });
 
@@ -180,7 +218,8 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
                 this.ModifiedFields.Lables = [];
                 this.StopBusyIndicator();
                 this.IsModifiedFields = false;
-                this.CurrentSession.SessionEvent.emit({ Name: "ReloadDigitalPortalLabels" }); 
+                this.CurrentSession.SessionEvent.emit({ Name: "ReloadDigitalPortalLabels" });
+                this.BuildItemsSource();
             });
         }
     }
@@ -228,9 +267,6 @@ export class ProfileFieldsItem extends BaseComponent {
         this.hasPermission = item.HasPermission;
         this.fieldCode = item.FieldCode;
         var selelectField = father.loadedFieldsResults.filter(a => a['FieldCode'] == this.fieldCode)[0];
-        if (selelectField == null) {
-            var test = this.fieldCode;
-        }
         this.textCode = selelectField['TextCode'];
         this.defaultText = selelectField['DefaultText'];
         this.displayText = selelectField['DisplayText'];

@@ -8,6 +8,7 @@ using Logitude.Server.Tools;
 using System.Collections.Generic;
 using System;
 using Simplog.Data.CommonDataModel.Repositories;
+using System.Text.RegularExpressions;
 
 namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
 {
@@ -38,9 +39,12 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             {
                 object comparsionObject = BuildKpiChartComparsionValue<T>(widgetMeasureField, query);
                 kpiChart.Ratio = GetRatio(kpiChart.Value, comparsionObject);
-                kpiChart.ComparisonValue = FormatComparisonValue(comparsionObject);
+                kpiChart.ComparisonAbbreviationSymbol = GetAbbreviationSymbol(comparsionObject);
+                kpiChart.ComparisonValue = FormatKpiValue(comparsionObject, measureField?.DataTypeCode);
             }
+            kpiChart.AbbreviationSymbol = GetAbbreviationSymbol(kpiChart.Value);
             kpiChart.Value = FormatKpiValue(kpiChart.Value, measureField?.DataTypeCode);
+            
             return kpiChart;
         }
 
@@ -55,12 +59,6 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             int diffValue = (value - comparsionValue);
             int ratio = Convert.ToInt32(((double)diffValue / Math.Abs(comparsionValue)) * 100);
             return ratio;
-        }
-
-        private string FormatComparisonValue(object comparsionObject)
-        {
-            if (ObjectIsNull(comparsionObject)) return "0";
-            return String.Format("{0:n0}", comparsionObject);
         }
 
         private string GetUnit()
@@ -95,10 +93,101 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             }
 
             if (dataTypeCode == "Date" || dataTypeCode == "DateTime") return ((DateTime)value).ToString("yyyy-MM-dd");
-            if (dataTypeCode == null || dataTypeCode == "Integer") return String.Format("{0:n0}", value);
-            return String.Format("{0:n}", value);
+
+            var objectValue = value;
+            value = GetAbbreviationValue(value);
+            value = UseDecimalPlaces(value, objectValue);
+            value = UseTousandSeperatorForValue(value, objectValue, dataTypeCode);
+
+            return value;
         }
 
+        private object UseTousandSeperatorForValue(object value, object objectValue, string dataTypeCode)
+        {
+            int numberOfDecimalPlaces = Convert.ToInt32(_Widget.DecimalPlaces);
+            int abbreviationAfter = UseAbbreviationNumber(objectValue);
+            if (abbreviationAfter != 0) numberOfDecimalPlaces = 2;
+            if (_Widget.ThousandSeparator)
+            {     
+                if (dataTypeCode == null || dataTypeCode == "Integer" || numberOfDecimalPlaces == 0) return String.Format("{0:n0}", value);
+                return String.Format($"{{0:n{numberOfDecimalPlaces}}}", Math.Round(Convert.ToDouble(value), numberOfDecimalPlaces));
+            }
+
+            string numberOfDecimals = "";
+            for (int i = 0; i < numberOfDecimalPlaces; i++) numberOfDecimals += "0";
+  
+            return Math.Round(Convert.ToDouble(value), numberOfDecimalPlaces).ToString("0." + numberOfDecimals);
+        }
+
+        private object UseDecimalPlaces(object value, object objectValue)
+        {
+            int abbreviationAfter = UseAbbreviationNumber(objectValue);
+            if (abbreviationAfter != 0) return Math.Round(Convert.ToDouble(value), 2);
+
+            int numberOfDecimalPlaces = Convert.ToInt32(_Widget.DecimalPlaces);
+            return Math.Round(Convert.ToDouble(value), numberOfDecimalPlaces);            
+        }
+
+        private object GetAbbreviationValue(object value)
+        {
+            int abbreviationAfter = UseAbbreviationNumber(value);
+            if (abbreviationAfter == 0) return value;
+
+            int decimalPlaces = 2;
+            double objectValue = Convert.ToDouble(value);
+            objectValue = Math.Round((objectValue  / abbreviationAfter) , decimalPlaces);
+            return objectValue;
+
+
+        }
+        private string GetAbbreviationSymbol(object value)
+        {
+            int abbreviationAfter = UseAbbreviationNumber(value);
+            if (abbreviationAfter == 0) return null;
+
+            int million = 1000000;
+
+            if (abbreviationAfter < million) return "k";
+            return "M";
+        }
+
+        private int UseAbbreviationNumber(object value)
+        {
+            if (!_Widget.UseNumberAbbreviation) return 0;
+            
+            double objectValue = Convert.ToDouble(value);
+           
+            string userSelected = _Widget.UseAbbreviationAfter;
+
+            int abbreviationValue = CaluculateValueOfAbbreviationSymbol(userSelected);
+
+            if (abbreviationValue > Math.Abs(objectValue)) return 0;
+
+            int thousand = 1000;
+            int million = 1000000;
+           
+            if (Math.Abs(objectValue) >= thousand && Math.Abs(objectValue) < million) return thousand;
+            
+            return million;
+        }
+          
+        private int CaluculateValueOfAbbreviationSymbol(string userSelected)
+        {
+            int numberPart = Convert.ToInt32(userSelected.Substring(0, userSelected.Length - 1));
+            string charPart = userSelected.Substring(userSelected.Length - 1);
+
+            if (charPart.Equals("k"))
+            {
+                numberPart = numberPart * Convert.ToInt32(Math.Pow(10, 3));
+                return numberPart;
+            }
+           
+            numberPart = numberPart * Convert.ToInt32(Math.Pow(10, 6));
+            return numberPart;
+        }
+
+        
+        
         private object BuildKpiChartValue<T>(WidgetMeasurePM widgetMeasureField, IQueryable<T> query)
         {
             query = new TreeFilterQueryService().Apply(query, new TreeFilterQueryArgs() { AdditionalTreeFilter = _Widget.Filters, ObjectTableName = "", Tenant = 0 });
@@ -124,13 +213,10 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
 
             if (_Widget.ComparisonOperator == "Between")
             {
-                var diffTowDates = (_Widget.ToDate).Value.Subtract(_Widget.FromDate.Value).TotalDays;
-                var diffTowDatesInt = Convert.ToInt32(diffTowDates);
-
-                return queryString + $@" where data.{GeteComparsionDate()} Between (Dateadd(Day, DateDiff(Day, cast('{_Widget.ToDate}' as DateTime), cast('{_Widget.FromDate}' as DateTime)), cast('{_Widget.FromDate}' as DateTime))) AND cast('{_Widget.FromDate}' as DateTime)";
+                return queryString + $@" where data.{GeteComparsionDate()} Between (Dateadd(Day, DateDiff(Day, cast('{_Widget.ToDate}' as Date), cast('{_Widget.FromDate}' as Date)), cast('{_Widget.FromDate}' as Date))) AND cast('{_Widget.FromDate}' as Date)";
             }
-            return queryString + $@" where data.{GeteComparsionDate()} Between dateadd ({_Widget.ComparisonDateGroup}, {-2 * _Widget.ComparisonPeriod}, cast(getDate() as DateTime))
-                             AND dateadd ({_Widget.ComparisonDateGroup}, {-_Widget.ComparisonPeriod}, cast(getDate() as DateTime))";
+            return queryString + $@" where data.{GeteComparsionDate()} Between dateadd ({_Widget.ComparisonDateGroup}, {-2 * _Widget.ComparisonPeriod}, cast(getDate() as Date))
+                             AND dateadd ({_Widget.ComparisonDateGroup}, {-_Widget.ComparisonPeriod}, cast(getDate() as Date))";
         }
 
         private string CreateQuery<T>(WidgetMeasurePM widgetMeasureField, IQueryable<T> resultQueryable)
@@ -145,7 +231,7 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
         {
             if (_Widget.ComparisonOperator != "Between")
             {
-                return $@" where data.{GeteComparsionDate()} Between dateadd ({_Widget.ComparisonDateGroup}, {-_Widget.ComparisonPeriod}, cast(getDate() as DateTime)) AND cast(getDate() as DateTime)";
+                return $@" where data.{GeteComparsionDate()} Between dateadd ({_Widget.ComparisonDateGroup}, {-_Widget.ComparisonPeriod}, cast(getDate() as Date)) AND cast(getDate() as Date)";
             }
             return $@" where data.{GeteComparsionDate()} Between '{_Widget.FromDate.Value}' AND '{_Widget.ToDate.Value}'";
         }

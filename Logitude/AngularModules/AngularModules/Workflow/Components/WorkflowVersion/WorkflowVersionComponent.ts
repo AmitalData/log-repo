@@ -141,6 +141,17 @@ export class WorkflowVersionComponent extends BaseComponent {
             IsCustomTemplate: true,
             Styles: { width: '400px' },
         });
+        this.columns.push({
+            FieldName: 'ActivatedDate',
+            DataTypeCode: 'Date',
+            Display: "Last Activated Date",
+            IsCustomTemplate: true,
+            Styles: { width: '400px' },
+            AdditionalDataCustom: this.ObjectTableName,
+            HtmlListComponentName: 'FieldTemplateComponent',
+            HtmlListComponentUrl: './Workflow/Components/Templates/FieldTemplateComponent',
+            ServerSideSortable: true
+        });
     }
 
     onRowSelected($event) {

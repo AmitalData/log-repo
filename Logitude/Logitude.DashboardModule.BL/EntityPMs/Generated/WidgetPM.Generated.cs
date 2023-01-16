@@ -630,6 +630,121 @@ namespace Logitude.DashboardModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private string alignment ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Alignment  
+	   {
+	    
+	     get
+		{
+		   return alignment;
+		 }
+		 set
+		 {
+		   if(alignment != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Alignment",OldValue=alignment,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   alignment=value;
+		   }
+			
+		 }
+	   }
+	  private bool thousandSeparator ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool ThousandSeparator  
+	   {
+	    
+	     get
+		{
+		   return thousandSeparator;
+		 }
+		 set
+		 {
+		   if(thousandSeparator != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ThousandSeparator",OldValue=thousandSeparator,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   thousandSeparator=value;
+		   }
+			
+		 }
+	   }
+	  private bool useNumberAbbreviation ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool UseNumberAbbreviation  
+	   {
+	    
+	     get
+		{
+		   return useNumberAbbreviation;
+		 }
+		 set
+		 {
+		   if(useNumberAbbreviation != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UseNumberAbbreviation",OldValue=useNumberAbbreviation,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   useNumberAbbreviation=value;
+		   }
+			
+		 }
+	   }
+	  private int? decimalPlaces ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? DecimalPlaces  
+	   {
+	    
+	     get
+		{
+		   return decimalPlaces;
+		 }
+		 set
+		 {
+		   if(decimalPlaces != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DecimalPlaces",OldValue=decimalPlaces,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   decimalPlaces=value;
+		   }
+			
+		 }
+	   }
+	  private string useAbbreviationAfter ;
+	  	  
+       
+	   [CustomValidation(typeof(DashboardModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string UseAbbreviationAfter  
+	   {
+	    
+	     get
+		{
+		   return useAbbreviationAfter;
+		 }
+		 set
+		 {
+		   if(useAbbreviationAfter != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UseAbbreviationAfter",OldValue=useAbbreviationAfter,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   useAbbreviationAfter=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

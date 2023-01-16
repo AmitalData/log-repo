@@ -7,7 +7,6 @@ import { FieldTypes } from "Workflow/Constants/FieldTypes";
 import { SetValueOperators } from "Workflow/Constants/SetValueOperators";
 import { Entities } from "Workflow/Models/Entities";
 import { EntitiesTreeList } from "Workflow/Models/EntitiesTreeList";
-import { Formatter } from "Workflow/Models/Formatter";
 import { ObjectTables } from "Workflow/Models/ObjectTables";
 import { SetValue } from "Workflow/Models/SetValue";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
@@ -20,6 +19,7 @@ export class CreateRecordPropertiesComponent extends BaseComponent {
 
     public DataContext: any = this;
     public Data: any;
+    public IsNew: boolean;
     public Name: string = null;
     public RecordsLimit: string = null;
     public Entity: string = null;
@@ -38,7 +38,6 @@ export class CreateRecordPropertiesComponent extends BaseComponent {
     public IsValidSetValues: boolean = true;
 
     public CurrentSession = SessionLocator.SelectedSession;
-    public IsNew: boolean = false;
 
     public ExcludedEntities: string[] = ["Customer", "User", "ShipmentStoragePricing", "Shipment.ARInvoice", "Shipment.APInvoice"];
 
@@ -59,7 +58,7 @@ export class CreateRecordPropertiesComponent extends BaseComponent {
     initialize() {
         this.IsNew = Object.keys(this.Data).length === 0;
 
-        this.Name = this.Data["label"] || null;
+        this.Name = this.Data["label"] || this.Data["name"] || null;
         this.RecordsLimit = this.Data["recordsLimit"] ? this.Data["recordsLimit"] : "One";
         this.Entity = this.Data["entity"] || null;
 
@@ -115,12 +114,13 @@ export class CreateRecordPropertiesComponent extends BaseComponent {
         this.IsValidSetValues = isValidSetValues;
     }
 
-    updateName(Name: any) {
+    updateName(name: string) {
         if(this.IsNew){
-            this.Data["name"] = Formatter.getCodeFromName(Name);
+            this.Data["name"] = name;
         }
-        this.Data["label"] = Name;
-        this.Name = Name;
+
+        this.Data["label"] = name;
+        this.Name = name;
 
         this.setUIProperties();
     }

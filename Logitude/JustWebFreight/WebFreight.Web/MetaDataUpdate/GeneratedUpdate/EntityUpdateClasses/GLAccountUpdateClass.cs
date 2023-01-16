@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "d9b6e38e38fff0608fa75e65f99ed7b1";
+		public const string HashString = "d0042bfcc8ef5cb66aca622c63b76263";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -13723,6 +13723,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLAccountOClosedBalanceInLocalCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.ClosedBalanceInLocalCurrency", DefaultText = "Closed balance in Local Currency",LocalDefaultText = @" סגירה יתרה במטבע מקומי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountOCollector = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Collector", DefaultText = "Collector",LocalDefaultText = @"גובה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOBalanceInHebrew = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.BalanceInHebrew", DefaultText = "Balance",LocalDefaultText = @"יתרה לפי יתרה לגביה בשח", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOLocalInHebrew = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.LocalInHebrew", DefaultText = "Local",LocalDefaultText = @"שח", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

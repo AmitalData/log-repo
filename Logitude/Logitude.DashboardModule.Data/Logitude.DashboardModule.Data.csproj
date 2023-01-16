@@ -73,6 +73,7 @@
     <Compile Include="EntityKeys\AnalyticsFactsFieldsMetaDataKeys.cs" />
     <Compile Include="EntityKeys\AnalyticsFactsMetaDataKeys.cs" />
     <Compile Include="EntityKeys\DashboardGlobalFilterKeys.cs" />
+    <Compile Include="EntityKeys\DashboardGlobalPresetFilterKeys.cs" />
     <Compile Include="EntityKeys\DashboardKeys.cs" />
     <Compile Include="EntityKeys\DashboardSharedUserKeys.cs" />
     <Compile Include="EntityKeys\MeasureTypeKeys.cs" />
@@ -84,11 +85,13 @@
     <Compile Include="EntityListQueryServices\AnalyticsFactsFieldsMetaDataListQueryService.cs" />
     <Compile Include="EntityListQueryServices\AnalyticsFactsMetaDataListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DashboardGlobalFilterListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\DashboardGlobalPresetFilterListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DashboardListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DashboardSharedUserListQueryService.cs" />
     <Compile Include="EntityListQueryServices\Generated\AnalyticsFactsFieldsMetaDataListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\AnalyticsFactsMetaDataListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DashboardGlobalFilterListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\DashboardGlobalPresetFilterListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DashboardListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DashboardSharedUserListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\MeasureTypeListQueryService.Generated.cs" />
@@ -106,6 +109,7 @@
     <Compile Include="EntityLists\Generated\AnalyticsFactsFieldsMetaDataList.Generated.cs" />
     <Compile Include="EntityLists\Generated\AnalyticsFactsMetaDataList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DashboardGlobalFilterList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\DashboardGlobalPresetFilterList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DashboardList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DashboardSharedUserList.Generated.cs" />
     <Compile Include="EntityLists\Generated\MeasureTypeList.Generated.cs" />
@@ -117,6 +121,7 @@
     <Compile Include="EntityMapping\AnalyticsFactsFieldsMetaDataMap.cs" />
     <Compile Include="EntityMapping\AnalyticsFactsMetaDataMap.cs" />
     <Compile Include="EntityMapping\DashboardGlobalFilterMap.cs" />
+    <Compile Include="EntityMapping\DashboardGlobalPresetFilterMap.cs" />
     <Compile Include="EntityMapping\DashboardMap.cs" />
     <Compile Include="EntityMapping\DashboardSharedUserMap.cs" />
     <Compile Include="EntityMapping\MeasureTypeMap.cs" />
@@ -129,6 +134,7 @@
     <Compile Include="EntityPOCOs\AnalyticsFactsMetaData.cs" />
     <Compile Include="EntityPOCOs\Dashboard.cs" />
     <Compile Include="EntityPOCOs\DashboardGlobalFilter.cs" />
+    <Compile Include="EntityPOCOs\DashboardGlobalPresetFilter.cs" />
     <Compile Include="EntityPOCOs\DashboardSharedUser.cs" />
     <Compile Include="EntityPOCOs\MeasureType.cs" />
     <Compile Include="EntityPOCOs\PermissionLevel.cs" />
@@ -141,11 +147,13 @@
     <Compile Include="Repositories\AnalyticsFactsFieldsMetaDataRepository.cs" />
     <Compile Include="Repositories\AnalyticsFactsMetaDataRepository.cs" />
     <Compile Include="Repositories\DashboardGlobalFilterRepository.cs" />
+    <Compile Include="Repositories\DashboardGlobalPresetFilterRepository.cs" />
     <Compile Include="Repositories\DashboardRepository.cs" />
     <Compile Include="Repositories\DashboardSharedUserRepository.cs" />
     <Compile Include="Repositories\Generated\AnalyticsFactsFieldsMetaDataRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\AnalyticsFactsMetaDataRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\DashboardGlobalFilterRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\DashboardGlobalPresetFilterRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\DashboardRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\DashboardSharedUserRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\MeasureTypeRepository.Generated.cs" />

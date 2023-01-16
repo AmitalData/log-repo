@@ -4,6 +4,7 @@ using Logitude.Infrastructure.Data;
 using Logitude.Infrastructure.Data.EntityLists;
 using Logitude.Infrastructure.Data.Repsitories;
 using Simplog.Server.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -73,7 +74,7 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
         {
             var objetTables = context.DigitalFieldSecurities
                                      .Include("ObjectTable")
-                                     .Where(a => a.Tenant == tenant).GroupBy(a => a.ObjectTable)
+                                     .Where(a => a.Tenant == tenant && !a.ObjectTable.Name.Equals("General",StringComparison.InvariantCultureIgnoreCase)).GroupBy(a => a.ObjectTable)
                                      .Select(a => new DigitalFieldSecurityList
                                      {
                                          ObjectTableId = a.Key.Id,

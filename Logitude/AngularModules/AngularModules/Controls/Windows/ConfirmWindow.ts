@@ -4,6 +4,8 @@ import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTranslator';
 
 export class ConfirmWindow {
+    public Top = '50%';
+    public Left = '50%';
     public Width: number = 320;
     public Height: number = 170;
     public Message: string = null;
@@ -78,15 +80,14 @@ export class ConfirmWindow {
         }
 
         this.InstanceComponent = null;
-    } 
-    
-   
+    }
+
+
 }
 
 @Component({
     selector: 'ConfirmWindow',
-    
-    templateUrl: "./ConfirmWindow.html",
+    templateUrl: './ConfirmWindow.html',
 })
 
 export class ConfirmWindowTemplateComponent implements AfterViewInit {
@@ -127,11 +128,12 @@ export class ConfirmWindowTemplateComponent implements AfterViewInit {
         this.Focus();
     }
 
-    private ConfirmWindow: ConfirmWindow
+    private ConfirmWindow: ConfirmWindow;
     public InjectWindowComponent(myWindow: ConfirmWindow) {
 
         this.CreateDynamicIds();
-
+        this.Top = myWindow.Top;
+        this.Left = myWindow.Left;
         this.ConfirmWindow = myWindow;
         this.Title = myWindow.Title;
         this.Message = myWindow.Message;

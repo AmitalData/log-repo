@@ -75,6 +75,8 @@ namespace Logitude.DashboardModule.Data
 	
             modelBuilder.Configurations.Add(new DashboardGlobalFilterMap());
 	
+            modelBuilder.Configurations.Add(new DashboardGlobalPresetFilterMap());
+	
             modelBuilder.Configurations.Add(new DashboardSharedUserMap());
 	
             modelBuilder.Configurations.Add(new MeasureTypeMap());
@@ -388,6 +390,12 @@ namespace Logitude.DashboardModule.Data
 	 }
 	
 	 public IDbSet<DashboardGlobalFilter> DashboardGlobalFilters 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<DashboardGlobalPresetFilter> DashboardGlobalPresetFilters 
 	 {
 	      get; set;
 	 

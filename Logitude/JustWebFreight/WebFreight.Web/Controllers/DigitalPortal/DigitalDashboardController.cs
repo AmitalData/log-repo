@@ -1,5 +1,4 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityQueries;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Linq;
@@ -17,7 +16,6 @@ using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.SystemLogs;
 using System.Net.Http;
 using System.Net;
-using Logitude.BL.InvoiceModel.EntityLists;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -42,8 +40,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var invoices = aRInvoiceQuery.GetByFilters(newFilters);
 
                 var res = invoices.Where(r => !string.IsNullOrEmpty(r.PaidStatus))
-                                                      .GroupBy(r => r.PaidStatus)
-                                                      .ToDictionary(t => t.Key, t => t.Count());
+                                  .GroupBy(r => r.PaidStatus)
+                                  .ToDictionary(t => t.Key, t => t.Count());
 
                 return Request.CreateResponse(HttpStatusCode.OK, res);
             }
@@ -242,8 +240,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                                           && !r.DirectionId.Equals("D"))
                                               .Select(a => new {
                                                   ObjectKey = "Expected&" + a.TransportModeId + "&" + a.DirectionId,
-                                                  a.MainCarriageFinalDestinationETA,
-                                                  a.MainCarriageFinalDestinationATA,
                                                   Data = a.MainCarriageFinalDestinationETA == currentDateTime 
                                                           ? "Today" 
                                                           : a.MainCarriageFinalDestinationETA == tomorrowDateTime
@@ -265,7 +261,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                                           && !r.DirectionId.Equals("D"))
                                               .Select(a => new {
                                                   ObjectKey = "Actual&" + a.TransportModeId + "&" + a.DirectionId,
-                                                  a.MainCarriageFinalDestinationATA,
                                                   Data = a.MainCarriageFinalDestinationATA == currentDateTime 
                                                          ? "Today" 
                                                          : "Last7Days"
@@ -323,12 +318,30 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 DateTime? currentDateTime = TenantServerConfigration.GetCurrentDateTime(newFilters.Tenant).Date;
 
-                var result = shipmentQuery.GetByFilters(newFilters)
-                                                  .Where(r => r.MainCarriageFinalDestinationETA.Value.Year == currentDateTime.Value.Year)
-                                                  .GroupBy(a => a.MainCarriageFinalDestinationETA.Value.Month)
-                                                  .OrderBy(a => a.Key)
-                                                  .ToDictionary( a => a.Key, y => y.GroupBy(a => a.TransportModeId)
-                                                                                   .ToDictionary(x => x.Key, q => q.Count()));
+                var resultList = shipmentQuery.GetByFilters(newFilters)
+                                            .Where(r => r.MainCarriageFinalDestinationETA.Value.Year == currentDateTime.Value.Year)
+                                            .Select(a => new
+                                            {
+                                                a.MainCarriageFinalDestinationETA.Value.Month,
+                                                a.TransportModeId
+                                            })
+                                            .GroupBy(a => new { a.Month, a.TransportModeId })
+                                            .OrderBy(a => a.Key)
+                                            .Select(a => new
+                                            {
+                                                a.Key,
+                                                Count = a.Count()
+                                            }).ToList();
+
+                var result = resultList.Select(a => new 
+                                        { 
+                                            a.Key.Month,
+                                            a.Key.TransportModeId,
+                                            a.Count 
+                                        })
+                                       .GroupBy(a => a.Month)
+                                       .ToDictionary(x => x.Key, y => (object)y.Select(a => new { a.TransportModeId, a.Count })
+                                                                                .ToDictionary(a => a.TransportModeId, p => p.Count));
 
                 return Request.CreateResponse(HttpStatusCode.OK, result); 
             }
@@ -344,7 +357,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
         }
 
         [HttpPost]
-        [Route("DigitalDashboardController/GetDashboardSummary")]
+        [Route("DigitalDashboard/GetDashboardSummary")]
         public HttpResponseMessage GetDashboardSummary(GeneralFilters newFilters)
         {
             int tenant = 0;
@@ -359,21 +372,20 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 var dashboardSummary = new DigitalDashboardSummary();
                 var currentDateTime = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant).Date;
-                var currentWeek = currentDateTime.AddDays(30).Date;
+                var currentMonth = currentDateTime.AddDays(30).Date;
                 newFilters.Tenant = authToken.Tenant;
                 var shipmentQuery = new ShipmentQuery(authToken.Tenant);
                 var shipments = shipmentQuery.GetByFilters(newFilters);
 
                 dashboardSummary.TotalShipmentsByETACount = shipments.Where(d => d.MainCarriageETA >= currentDateTime
-                                                                                && d.MainCarriageETA <= currentWeek)
+                                                                                && d.MainCarriageETA <= currentMonth)
                                                                      .Count();
 
-                newFilters.Tenant = authToken.Tenant;
                 var aRInvoiceQuery = new ARInvoiceQuery(authToken.Tenant);
                 var invoices = aRInvoiceQuery.GetByFilters(newFilters);
 
                 dashboardSummary.TotalInvoicesByDueDateCount = invoices.Where(d => d.DueDate >= currentDateTime
-                                                                                    && d.DueDate <= currentWeek)
+                                                                                    && d.DueDate <= currentMonth)
                                                                        .Count();
 
                 return Request.CreateResponse(HttpStatusCode.OK, dashboardSummary);
@@ -449,7 +461,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 {
                     { "Origin", 0 },
                     { "InTransit", 0 },
-                    { "dataAtDestination", 0 }
+                    { "AtDestination", 0 }
                 };
             }
 
@@ -458,20 +470,28 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             var arrivedAtDestinationCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SARR").StatusWeight;
 
             var result = shipments.Where(r => allowedStatusCode.Contains(r.StatusCode))
-                                   .Select(a => new
-                                   {
-                                       a.TransportModeId,
-                                       Code = a.StatusWeight < departedCodeWeight
-                                               ? "Origin"
-                                               : (a.StatusWeight >= departedCodeWeight
-                                                  && a.StatusWeight < arrivedAtDestinationCodeWeight)
-                                                  ? "InTransit"
-                                                  : "dataAtDestination"
-                                   })
-                                   .GroupBy(a => a.Code)
-                                   .ToDictionary(a => a.Key, y => (object)y.GroupBy(x => x.TransportModeId)
-                                                                           .ToDictionary(b => b.Key, xx => xx.Count()));
-            return result;
+                       .Select(a => new
+                       {
+                           a.TransportModeId,
+                           Code = a.StatusWeight < departedCodeWeight
+                                   ? "Origin"
+                                   : (a.StatusWeight >= departedCodeWeight
+                                      && a.StatusWeight < arrivedAtDestinationCodeWeight)
+                                      ? "InTransit"
+                                      : "AtDestination"
+                       })
+                       .GroupBy(a => new { a.TransportModeId, a.Code})
+                       .Select(a => new
+                       {
+                           a.Key,
+                           count = a.Count()
+                       })
+                       .ToList();
+
+            return result.Select(a => new { a.Key.Code, a.Key.TransportModeId, a.count })
+                         .GroupBy(a => a.Code)
+                         .ToDictionary(x => x.Key, y => (object)y.Select(a => new { a.TransportModeId, a.count})
+                                                                 .ToDictionary(a => a.TransportModeId, p => p.count));
         }
 
         private string GetDigitalStatusName(string code, string exactStatusName)

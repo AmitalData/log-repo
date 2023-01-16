@@ -46,6 +46,8 @@ namespace Logitude.DashboardModule.Data.EntityLists
        public bool HasUnit  { get; set; }
        [DataMember]
        public string Unit  { get; set; }
+       [DataMember]
+       public string CommonFilterCode  { get; set; }
    }
 
 }

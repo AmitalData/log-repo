@@ -2674,6 +2674,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 this.MapMainCarriageLegsForAPI(shipmentPM);
             }
 
+            shipmentPM.ShippingLine = shipment.ShippingLine;
+            shipmentPM.PlaceOfDelivery = shipment.PlaceOfDelivery;
+            shipmentPM.PickupPlace = shipment.PickupPlace;
+            shipmentPM.SealNo = shipment.SealNo;
+            shipmentPM.HSCode = shipment.HSCode;
             //ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
             //returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
 
@@ -4041,6 +4046,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.CustomerReference1 = shipment.CustomerReference1;
             shipmentPM.CustomerReference2 = shipment.CustomerReference2;
             shipmentPM.CustomerReference3 = shipment.CustomerReference3;
+            shipmentPM.ShippingLine = shipment.ShippingLine;
+            shipmentPM.PlaceOfDelivery = shipment.PlaceOfDelivery;
+            shipmentPM.PickupPlace = shipment.PickupPlace;
+            shipmentPM.SealNo = shipment.SealNo;
+            shipmentPM.HSCode = shipment.HSCode;
 
             ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
             returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
@@ -5268,6 +5278,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         PreForwardingToPortName = s.PreForwardingToPort != null ? s.PreForwardingToPort.EnglishName : null,
                                                         PreForwardingTransportModeId = s.PreForwardingTransportModeId,
                                                         PreForwardingVesselId = s.PreForwardingVesselId,
+                                                        ShippingLine = s.ShippingLine,
+                                                        PlaceOfDelivery = s.PlaceOfDelivery,
+                                                        PickupPlace = s.PickupPlace,
+                                                        SealNo = s.SealNo,
+                                                        HSCode = s.HSCode,
                                                     };
 
             List<ShipmentPM> securedShipmentPMs = new List<ShipmentPM>();
@@ -5854,6 +5869,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                                                         ValueOfGoods = s.ValueOfGoods,
                                                         ManifestLastSharingDate = s.ManifestLastSharingDate,
+
+                                                        ShippingLine = s.ShippingLine,
+                                                        PlaceOfDelivery = s.PlaceOfDelivery,
+                                                        PickupPlace = s.PickupPlace,
+                                                        SealNo = s.SealNo,
+                                                        HSCode = s.HSCode,
                                                     };
 
             List<ShipmentPM> securedShipmentPMs = new List<ShipmentPM>();
@@ -12747,6 +12768,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          IsHTSMissing = s.IsHTSMissing,
                                                          HasUnassignedData = s.HasUnassignedData,
                                                          IsShipmentOrder = s.IsShipmentOrder,
+                                                         ShippingLine = s.ShippingLine,
+                                                         PlaceOfDelivery = s.PlaceOfDelivery,
+                                                         PickupPlace = s.PickupPlace,
+                                                         SealNo = s.SealNo,
+                                                         HSCode = s.HSCode,
                                                      };
 
             return shipmentsList;
@@ -12971,6 +12997,32 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             var myResult = from f in shipments
                            select new ShipmentList()
                            {
+                               StatusCode = f.StatusCode,
+                               ChargeableWeightInKG = f.ChargeableWeightInKG,
+                               GrossWeightInKG = f.GrossWeightInKG,
+                               VolumeInCBM = f.VolumeInCBM,
+                               InlandDomesticFromCountryId = f.InlandDomesticFromCountryId,
+                               InlandDomesticToCountryId = f.InlandDomesticToCountryId,
+                               InlandDomesticFromTypeCode = f.InlandDomesticFromTypeCode,
+                               InlandDomesticToTypeCode = f.InlandDomesticToTypeCode,
+                               InlandDomesticFromCity = f.InlandDomesticFromCity,
+                               InlandDomesticToCity = f.InlandDomesticToCity,
+                               Transshipment1ATD = f.Transshipment1ATD,
+                               Transshipment1ATA = f.Transshipment1ATA,
+                               Transshipment1ETD = f.Transshipment1ETD,
+                               Transshipment1ETA = f.Transshipment1ETA,
+                               Transshipment2ATD = f.Transshipment2ATD,
+                               Transshipment2ATA = f.Transshipment2ATA,
+                               Transshipment2ETD = f.Transshipment2ETD,
+                               Transshipment2ETA = f.Transshipment2ETA,
+                               Transshipment3ATD = f.Transshipment3ATD,
+                               Transshipment3ATA = f.Transshipment3ATA,
+                               Transshipment3ETD = f.Transshipment3ETD,
+                               Transshipment3ETA = f.Transshipment3ETA,
+                               ChargeableWeight = f.ChargeableWeight,
+                               GrossWeight = f.GrossWeight,
+                               ValueOfGoods = f.ValueOfGoods,
+                               TruckNumber = f.TruckNumber,
                                MainCarriageFromAddressId = f.MainCarriageFromAddressId,
                                MainCarriageToAddressId = f.MainCarriageToAddressId,
                                ToCountryCode = !string.IsNullOrEmpty(f.MainCarriageFinalDestinationCountryCode) ? f.MainCarriageFinalDestinationCountryCode : f.ToPortCountryCode,
@@ -12985,6 +13037,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                CarrierLastStatusName = f.CarrierLastStatusName,
                                CarrierLastStatusCode = f.CarrierLastStatusCode,
                                ShipmentViewId = f.Id,
+                               IsCustomerArchived = f.IsCustomerArchived,
+                               NotesSharedWithCustomer = f.NotesSharedWithCustomer,
+                               Volume = f.Volume,
                                Id = f.Id,
                                Shipper = f.Shipper,
                                Consignee = f.Consignee,
@@ -13069,10 +13124,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                Field68 = f.Field68,
                                Field69 = f.Field69,
                                Field70 = f.Field70,
-                               CarrierTransportDocumentNumber = f.CarrierTransportDocumentNumber,
-                               ChargeableWeightInKG = f.ChargeableWeightInKG,
-                               ChargeableWeight = f.ChargeableWeight,
-                               GrossWeight = f.GrossWeight,
+                               CarrierTransportDocumentNumber = f.CarrierTransportDocumentNumber,                             
                                ShipperReference1 = f.ShipperReference1/*, Master = f.Master*/,
                                ShipperCountryCode = f.ShipperCountryCode,
                                ConsigneeCountryCode = f.ConsigneeCountryCode,
@@ -13116,7 +13168,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                BranchName = f.BranchName,
                                MoveTypeName = f.MoveTypeName,
                                CustomerName = f.CustomerName,
-                               GrossWeightInKG = f.GrossWeightInKG,
                                GrossWeightPerStorageDays = f.GrossWeightPerStorageDays,
                                GrossWeightPerTon = f.GrossWeightPerTon,
                                ShipmentLevelCode = f.ShipmentLevelCode,
@@ -13152,7 +13203,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                FinalArrivalDate = f.FinalArrivalDate,
                                EstimatedFinalArrivalDate = f.EstimatedFinalArrivalDate,
                                ActualFinalArrivalDate = f.ActualFinalArrivalDate,
-                               VolumeInCBM = f.VolumeInCBM,
                                TEU = f.TEU,
                                ProfitExchangeRate = f.ProfitExchangeRate,
                                LastFSRStatusRequestDate = f.LastFSRStatusRequestDate,
@@ -13256,7 +13306,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                ApprovedByUserName = f.ApprovedByUserName,
                                IsManifestSentToAgent = f.IsManifestSentToAgent,
                                AgentSharedManifestRef = f.AgentSharedManifestRef,
-                               ValueOfGoods = f.ValueOfGoods,
+
                                NumberOfHouses = f.NumberOfHouses,
                                LocalCustomsTransmissionsStatusCode = f.LocalCustomsTransmissionsStatusCode,
                                LocalCustomsTransmissionsStatusName = f.LocalCustomsTransmissionsStatusName,
@@ -13382,7 +13432,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                GrossWeightUnitCode = f.GrossWeightUnitCode,
                                AccrualsApprovalDate = f.AccrualsApprovalDate,
                                IsAccrualsApproved = f.IsAccrualsApproved,
-                               TruckNumber = f.TruckNumber,
+
                                ContainersNumbersandTypesArray = f.ContainersNumbersandTypesArray,
                                CustomerContactEmail = f.CustomerContactEmail,
                                CustomerContactName = f.CustomerContactName,
@@ -14962,7 +15012,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          StandalonePickupDeliveryId = s.StandalonePickupDeliveryId,
                                                          DestinationWarehouseId = s.DestinationWarehouseId,
                                                          DestinationWarehouseName = s.DestinationWarehouseCard != null ? s.DestinationWarehouseCard.EnglishName : null,
-
+                                                         ShippingLine = s.ShippingLine,
+                                                         PlaceOfDelivery = s.PlaceOfDelivery,
+                                                         PickupPlace = s.PickupPlace,
+                                                         SealNo = s.SealNo,
+                                                         HSCode = s.HSCode,
                                                      };
 
             return shipmentsList;

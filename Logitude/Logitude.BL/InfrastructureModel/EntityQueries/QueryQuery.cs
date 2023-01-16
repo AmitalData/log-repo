@@ -87,6 +87,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                  SpotlightModeActivated = a.SpotlightModeActivated,
                  FeatureUniqeCode = a.FeatureUniqeCode,
                  IsViewOnly = a.IsViewOnly,
+                 IsDefault = a.IsDefault,
              }).FirstOrDefault();
 
             if (result != null)
@@ -144,6 +145,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                  SharedByUserId = a.SharedByUserId,
                  FeatureUniqeCode = a.FeatureUniqeCode,
                  IsViewOnly = a.IsViewOnly,
+                 IsDefault = a.IsDefault,
 
              }).FirstOrDefault();
 
@@ -211,6 +213,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          SpotlightModeActivated = a.SpotlightModeActivated,
                                          FeatureUniqeCode = a.FeatureUniqeCode,
                                          IsViewOnly = a.IsViewOnly,
+                                         IsDefault = a.IsDefault,
 
                                      }).ToList();
 
@@ -277,6 +280,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                        SpotlightModeActivated = a.SpotlightModeActivated,
                        FeatureUniqeCode = a.FeatureUniqeCode,
                        IsViewOnly = a.IsViewOnly,
+                       IsDefault = a.IsDefault,
 
                    }).ToList();
             
@@ -286,7 +290,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         public List<QueryPM> GetQueries_Login(int tenant, string userid)
         {
             List<QueryPM> queries = (from a in repository.context.Queries.Include("ObjectTable").Include("QueryGroup").Include("NameTextCode")
-                                     where (a.Tenant == tenant && a.UserId == userid) || a.Tenant == 0 || a.SharedWithAll || a.SharedWithSpecificUsers
+                                     where (a.Tenant == tenant && (a.UserId == userid || a.UserId == null)) || a.Tenant == 0 || a.SharedWithAll || a.SharedWithSpecificUsers
                                      select new QueryPM()
                                      {
                                          Code = a.Code,
@@ -330,6 +334,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          SpotlightModeActivated = a.SpotlightModeActivated,
                                          FeatureUniqeCode = a.FeatureUniqeCode,
                                          IsViewOnly = a.IsViewOnly,
+                                         IsDefault = a.IsDefault,
 
                                      }).ToList();
 
@@ -406,6 +411,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          SpotlightModeActivated = a.SpotlightModeActivated,
                                          FeatureUniqeCode = a.FeatureUniqeCode,
                                          IsViewOnly = a.IsViewOnly,
+                                         IsDefault = a.IsDefault,
 
                                      }).ToList();
 
@@ -472,6 +478,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   SpotlightModeActivated = a.SpotlightModeActivated,
                                   FeatureUniqeCode = a.FeatureUniqeCode,
                                   IsViewOnly = a.IsViewOnly,
+                                  IsDefault = a.IsDefault,
 
                               }).FirstOrDefault();
 
@@ -544,6 +551,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                          SpotlightModeActivated = a.SpotlightModeActivated,
                          FeatureUniqeCode = a.FeatureUniqeCode,
                          IsViewOnly = a.IsViewOnly,
+                         IsDefault = a.IsDefault,
 
                      }).ToList();
 
@@ -595,6 +603,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                              SpotlightModeActivated = a.SpotlightModeActivated,
                              FeatureUniqeCode = a.FeatureUniqeCode,
                              IsViewOnly = a.IsViewOnly,
+                             IsDefault = a.IsDefault,
 
                          }).ToList();
 
@@ -661,6 +670,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          SpotlightModeActivated = a.SpotlightModeActivated,
                                          FeatureUniqeCode = a.FeatureUniqeCode,
                                          IsViewOnly = a.IsViewOnly,
+                                         IsDefault = a.IsDefault,
 
                                      }).ToList();
 

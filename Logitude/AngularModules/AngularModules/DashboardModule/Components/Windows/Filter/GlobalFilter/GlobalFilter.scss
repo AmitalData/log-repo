@@ -1,0 +1,57 @@
+.dl-global-filter-btn-container {
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    place-content: center flex-end;
+    align-items: center;
+    width: 100%;
+    gap: 4px;
+}
+
+.dl-global-filters-container {
+    height: calc(100% - 22px);
+}
+
+.dl-global-filters-label {
+    height: 16px;
+    font-family: 'Manrope';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+    color: #454545;
+}
+
+.dl-global-filter-item-container {
+    margin-left: 24px;
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    place-content: center flex-start;
+    align-items: center;
+}
+
+.dl-center-flex {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.dl-global-filter-date-container {
+    height: 22px;
+    gap: 8px;
+}
+
+.dl-apply-filter-text {
+    cursor: pointer;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 100%;
+    text-align: center;
+    color: #5FAFDA;
+    width: 64px;
+}

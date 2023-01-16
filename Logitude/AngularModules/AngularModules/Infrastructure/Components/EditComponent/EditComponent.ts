@@ -65,6 +65,7 @@ export class EditComponent implements OnDestroy {
     public HasShortTitle: boolean = false;
     public HasMenuButtons: boolean = false;
     public IsTabsHidden: boolean = false;
+    public IsFirstOpen: boolean = false;
 
     public IsEntityLoaded: boolean = false;
     public ComponentBackground: string = "white";
@@ -161,6 +162,7 @@ export class EditComponent implements OnDestroy {
         this.IsTabsHidden = this.ObjectTable.IsTabsHidden;
         this.NavigationIds = args['NavigationIds'];
         this.EntityFields = args['EntityFields'];
+        this.IsFirstOpen = args['IsFirstOpen'];
 
         if (this.NavigationIds) {
             this.NextPreviousVisible = true;
@@ -1564,7 +1566,7 @@ export class EditComponent implements OnDestroy {
                             this.EntityPM = myResponse.Result;
                             this.entityArgs.EntityPM = this.EntityPM;
 
-                            this.SaveDraftVersion();
+                            this.SaveDraftVersion(isClosing);
 
                             this.SaveAndCloseCompleted.emit(true);
 
@@ -1649,7 +1651,7 @@ export class EditComponent implements OnDestroy {
         }
 
         else if (this.ObjectTableName == "WorkFlow" && this.entityArgs?.EditComponentArgument?.HasChanges! == true){
-            this.SaveDraftVersion();
+            this.SaveDraftVersion(isClosing);
         }
 
         else {
@@ -1658,18 +1660,22 @@ export class EditComponent implements OnDestroy {
     }
 
     public WorkFlowVersionPMService: WorkFlowVersionPMService = new WorkFlowVersionPMService();
-    SaveDraftVersion() {
+    SaveDraftVersion(isClosing:boolean) {
         var CurrentDisplayedVersionId = this.entityArgs.EditComponentArgument?.CurrentDisplayedVersionId
         var version = this.EntityPM.WorkFlowVersions.find(v => v.Id == CurrentDisplayedVersionId);
 
         this.StartBusyIndicator("Saving ...");
 
-        this.WorkFlowVersionPMService.update(version).subscribe((serviceResponse: ServiceResponse) => { this.handleSaveDraftVersionResponse(serviceResponse); });
+        this.WorkFlowVersionPMService.update(version).subscribe((serviceResponse: ServiceResponse) => { this.handleSaveDraftVersionResponse(serviceResponse,isClosing); });
     }
-    handleSaveDraftVersionResponse(serviceResponse: ServiceResponse) {
+    handleSaveDraftVersionResponse(serviceResponse: ServiceResponse , isClosing:boolean) {
         if (!serviceResponse.HasError) {
             this.StopBusyIndicator();
-            this.Close();
+            this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, HasChanges: false }
+            this.entityArgs.SendMessage("RefreshWorkflowButtons");
+            if(isClosing){
+              this.Close();   
+            }
         }
     }
 

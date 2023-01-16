@@ -116,6 +116,8 @@ namespace WarehouseDataViews.Service
                 SqlDataReader reader = commandSourceData.ExecuteReader();
                 dataTable.Load(reader);
                 reader.Close();
+                sourceConnection.Close();
+
             }
 
             return dataTable;

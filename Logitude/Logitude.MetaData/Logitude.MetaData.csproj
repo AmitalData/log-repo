@@ -125,9 +125,11 @@
     <None Include="DBScripts\CommonModel\202212070128_AddSaleTextCodesQuotationTemplate.sxml" />
     <None Include="DBScripts\CommonModel\202217101053_UpdateLastLoginUserIP.sxml" />
     <None Include="DBScripts\CommonModel\FillCodeForCustomerSizes.sxml" />
+    <None Include="DBScripts\GlobalModel\2023010151536_AddWorkflowsEnginWR.sxml" />
     <None Include="DBScripts\GlobalModel\2022090261326_AddDigitalPortalExportWR.sxml" />
     <None Include="DBScripts\GlobalModel\202209271124_AddQboBaseUrl.sxml" />
     <None Include="DBScripts\GlobalModel\AddInProgressStatusToAnalyzeQueue.sxml" />
+    <None Include="DBScripts\InfrastructureModel\202301161230_InsertCustomObjectTableQueryGroup.sxml" />
     <None Include="DBScripts\InfrastructureModel\202212141022_FillRelatedScreenCodeInScreensTable.sxml" />
     <None Include="DBScripts\InfrastructureModel\202205100957_UpdateDoubleFieldDataTypeDisplayName.sxml" />
     <None Include="DBScripts\InfrastructureModel\202209101038_UpdateFieldDataTypesDefaults.sxml" />

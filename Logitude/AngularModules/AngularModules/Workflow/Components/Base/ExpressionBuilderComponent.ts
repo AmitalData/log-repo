@@ -54,6 +54,9 @@ export class ExpressionBuilderComponent extends BaseComponent {
 
     public IsSuggestionsPanelOpened: boolean = false;
     public SuggestionsConfig: MentionConfig;
+    public FunctionPlaceHolder: string = "Insert a function...";
+    public VariablePlaceHolder: string = "Insert a variable...";
+    public OperatorPlaceHolder: string = "Select an operator...";
 
     constructor() {
         super();

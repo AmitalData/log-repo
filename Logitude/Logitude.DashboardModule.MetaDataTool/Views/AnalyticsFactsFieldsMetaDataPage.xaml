@@ -133,6 +133,11 @@
                                 <TextBox  Margin="1 0 0 0" Width="220" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding Unit, Mode=TwoWay}" />
                             </StackPanel>
 
+                            <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
+                                <TextBlock Width="220" Grid.Row="0"  VerticalAlignment="Center" FontWeight="Bold" Text="Common Filter Code:" />
+                                <TextBox  Margin="1 0 0 0" Width="220" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding CommonFilterCode, Mode=TwoWay}" />
+                            </StackPanel>
+
 
                         </StackPanel>
 

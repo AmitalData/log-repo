@@ -339,6 +339,7 @@ namespace CommunicationWorkerRole
                                                     SendUpdatesToAgentEnabled = ForwarderShipment.SendUpdatesToAgentEnabled,
                                                     IsDangerouseOfGoods = ForwarderShipment.OrderIsDangerouseGoods,
                                                     AgentName = ForwarderShipment.PrivateLabelAgentName,
+
                                                     Customer = new CodeProperties()
                                                     {
                                                         Code = CustomerCode

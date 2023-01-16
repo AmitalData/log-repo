@@ -276,7 +276,12 @@ export class AddEditCustomFieldComponent extends BaseComponent {
     public set IsMultiline(value: boolean) {
         this.objectField.MultiLine = value;
     }
-
+    public get IsRequired() {
+        return this.objectField.IsRequiered;
+    }
+    public set IsRequired(value: boolean) {
+        this.objectField.IsRequiered = value;
+    }
     PickListItem: string;
     //public get PickListItem() {
     //    if (this.objectField.DataTypeCode == "PickList") {
@@ -374,6 +379,10 @@ export class AddEditCustomFieldComponent extends BaseComponent {
 
     onIsMultilineChange(event) {
         this.IsMultiline = event;
+    }
+
+    onIsRequiredChange(event) {
+        this.IsRequired = event;
     }
 
     lookUpTableName: string;

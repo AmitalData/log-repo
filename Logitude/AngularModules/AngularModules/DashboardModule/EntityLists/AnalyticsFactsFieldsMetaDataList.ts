@@ -24,6 +24,7 @@ export class AnalyticsFactsFieldsMetaDataList {
 	JoinedTableDBName: string;
 	HasUnit: boolean;
 	Unit: string;
+	CommonFilterCode: string;
 	
 }
  

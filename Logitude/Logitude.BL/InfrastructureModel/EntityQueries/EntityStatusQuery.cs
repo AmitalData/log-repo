@@ -310,7 +310,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                 : a.DisplayName,
                 Id = a.Id,
                 StatusWeight = a.StatusWeight,
-                Name = a.Name
+                Name = a.Name,
+                Code = a.Code
             })
             .OrderBy(a => a.StatusWeight)
             .ThenBy(a => a.Name)

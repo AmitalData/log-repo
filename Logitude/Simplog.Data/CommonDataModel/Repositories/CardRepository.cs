@@ -662,6 +662,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     select record);
         }
 
+        public IQueryable<Card> GetCustomerCards(int tenant)
+        {
+            return (from record in context.Cards
+                    where record.Tenant == tenant && record.PartnerTypeId == "CS"
+                    select record);
+        }
+
         public bool IsUploadingUniqueKeyExist(string uniqueCode)
         {
             return (from a in context.Cards

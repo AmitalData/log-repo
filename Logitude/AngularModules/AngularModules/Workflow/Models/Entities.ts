@@ -4,6 +4,7 @@ export class Entities {
 
     public static readonly Parents: Entity[] = [
         { Code: "Shipment", Name: "Shipment" },
+        { Code: "Container", Name: "Container" },
         { Code: "Customer", Name: "Customer" },
         { Code: "User", Name: "User" },
         { Code: "Opportunity", Name: "Opportunity" },
@@ -11,7 +12,6 @@ export class Entities {
     ];
 
     public static readonly Children: ChildEntity[] = [
-        { Code: "Container", Name: "Container", ParentEntityCode: "Shipment", ChildField: "ShipmentId" },
         { Code: "ShipmentPackage", Name: "Package", ParentEntityCode: "Shipment", ChildField: "ShipmentId" },
         { Code: "ARInvoice", Name: "AR Invoice", ParentEntityCode: "Shipment", ChildField: "MainEntityId" },
         { Code: "APInvoice", Name: "AP Invoice", ParentEntityCode: "Shipment", ChildField: "MainEntityId" },
