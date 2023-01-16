@@ -94,7 +94,7 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
 
     BuildItemsSource() {
         this.LabelsItemsSource = new ObservableCollection([]);
-        var labelsList: CustomizationLabelItem[] = [];
+        var labelsList = [];
         var objectTableId = this.SelectedObjectTableItem.Name;
         var profileId = this.SelectedProfileItem.Code;
         this.digitalTextService.GetTextCodesByFilters(null, objectTableId, profileId).subscribe((myResult) => {
@@ -126,7 +126,7 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
 
     loadedResults: CustomizationLabelItem[] = [];
     BuildSearchItems() {
-        var labelsList: CustomizationLabelItem[] = [];
+        var labelsList = [];
         if (!AppTool.IsNullOrEmpty(this.SearchText)) {
             var data = this.loadedResults;
             data = data.filter(f =>
