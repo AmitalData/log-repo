@@ -736,7 +736,9 @@
   <ItemGroup>
     <Compile Include="Controllers\AccountingModel\ChartOfAccountsTypesExtendedController.cs" />
     <Compile Include="Controllers\DashboardModel\Extended\DashboardListExtendedController.cs" />
+    <Compile Include="Controllers\DashboardModel\Generated\ListControllers\DashboardGlobalPresetFilterViewsController.Generated.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\ListControllers\UserPinnedDashboardViewsController.Generated.cs" />
+    <Compile Include="Controllers\DashboardModel\Generated\PMControllers\DashboardGlobalPresetFilterController.Generated.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\PMControllers\UserPinnedDashboardController.Generated.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalActivityController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalCustomizationController.cs" />
@@ -3450,6 +3452,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsPaymentTermUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsShipUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DashboardGlobalFilterUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DashboardGlobalPresetFilterUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DashboardSharedUserUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DashboardUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DBMigrationLineUpdateClass.cs" />

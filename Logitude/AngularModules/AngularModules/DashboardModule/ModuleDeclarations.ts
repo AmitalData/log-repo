@@ -11,6 +11,8 @@ import { ChooseUsersComponent } from './Components/Windows/Controls/ChooseUsersC
 import { CustomDashboardLayoutComponent } from './Components/Workspace/layout/CustomDashboardLayoutComponent';
 import { GlobalFilterComponent } from './Components/Windows/Filter/GlobalFilter/GlobalFilterComponent';
 import { GlobalFilterValueComponent } from './Components/Windows/Filter/GlobalFilter/GlobalFilterValueComponent';
+import { GlobalFilterItemComponent } from './Components/Windows/Filter/GlobalFilter/GlobalFilterItemComponent';
+import { MultiSelectDropDownComponent } from './Components/Windows/MultiSelectDropDown/MultiSelectDropDownComponent';
 
 export const Components =
     [
@@ -26,7 +28,9 @@ export const Components =
         DashboardTabComponent,
         DashboardDropDownComponent,
         GlobalFilterComponent,
-        GlobalFilterValueComponent
+        GlobalFilterValueComponent,
+        GlobalFilterItemComponent,
+        MultiSelectDropDownComponent,
     ];
 
 export class ModuleDeclarations {
@@ -48,6 +52,8 @@ export class ModuleDeclarations {
             case "CustomDashboardLayoutComponent": { myResult = CustomDashboardLayoutComponent; break; }
             case "GlobalFilterComponent": { myResult = GlobalFilterComponent; break; }
             case "GlobalFilterValueComponent": { myResult = GlobalFilterValueComponent; break; }
+            case "GlobalFilterItemComponent": { myResult = GlobalFilterItemComponent; break; }
+            case "MultiSelectDropDownComponent": { myResult = MultiSelectDropDownComponent; break; }
         }
 
         return myResult;

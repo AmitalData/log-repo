@@ -140,5 +140,15 @@ namespace Logitude.DashboardModule.MetaDataTool.Models.FieldModels
             }
         }
 
+        private string commonFilterCode;
+        public string CommonFilterCode
+        {
+            get { return commonFilterCode; }
+            set
+            {
+                commonFilterCode = value; FirePropertyChanged("CommonFilterCode");
+            }
+        }
+
     }
 }

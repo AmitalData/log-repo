@@ -81,11 +81,13 @@
     <Compile Include="EntityDataMappings\AnalyticsFactsMetaDataDataMapping.cs" />
     <Compile Include="EntityDataMappings\DashboardDataMapping.cs" />
     <Compile Include="EntityDataMappings\DashboardGlobalFilterDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DashboardGlobalPresetFilterDataMapping.cs" />
     <Compile Include="EntityDataMappings\DashboardSharedUserDataMapping.cs" />
     <Compile Include="EntityDataMappings\Generated\AnalyticsFactsFieldsMetaDataDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AnalyticsFactsMetaDataDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DashboardDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DashboardGlobalFilterDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DashboardGlobalPresetFilterDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DashboardSharedUserDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\MeasureTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PermissionLevelDataMapping.Generated.cs" />
@@ -102,6 +104,7 @@
     <Compile Include="EntityPMs\Generated\AnalyticsFactsFieldsMetaDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AnalyticsFactsMetaDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DashboardGlobalFilterPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DashboardGlobalPresetFilterPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DashboardPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DashboardSharedUserPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\MeasureTypePM.Generated.cs" />
@@ -115,6 +118,7 @@
     <Compile Include="EntityQueryServices\Generated\AnalyticsFactsFieldsMetaDataQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AnalyticsFactsMetaDataQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DashboardGlobalFilterQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DashboardGlobalPresetFilterQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DashboardQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DashboardSharedUserQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\MeasureTypeQueryService.Generated.cs" />

@@ -54,17 +54,10 @@
                     <div></div>
                 </td>
 
-                <td style="width: 87px; min-width: 87px; height: 22px;" *ngIf="!IsEditLayoutModeActive">
-                    <button class="TabButton Button" (click)="OpenFilterAreaClick()"
-                            *ngIf="IsGlobalFiltersOpened == false">
+                <td style="width: 87px;min-width: 87px; height: 22px;" *ngIf="!IsEditLayoutModeActive">
+                    <button class="TabButton Button" (click)="this.IsGlobalFiltersOpened = !this.IsGlobalFiltersOpened">
                         <img style="width: 12px; height: 13px;" src="./Images/FilterGrayTrans.png" />
-                        Show filters
-                    </button>
-
-                    <button class="TabButton Button" *ngIf="IsGlobalFiltersOpened == true"
-                            (click)="CloseFilterAreaClick()">
-                        <img style="width: 12px; height: 13px;" src="./Images/FilterGrayTrans.png" />
-                        Hide filters
+                        {{HideShowFilterText}}              
                     </button>
                 </td>
 
@@ -110,8 +103,8 @@
         </table>
     </div>
 
-    <div *ngIf="SelectedDashboard" [hidden]="!IsGlobalFiltersOpened" class="dl-flobal-filter-container"  style="min-width: 1220px;">
-        <GlobalFilter [Dashboard]="SelectedDashboard" (ApplyFilters)="ApplyFilters($event)"></GlobalFilter>
+    <div *ngIf="SelectedDashboard" [hidden]="!IsGlobalFiltersOpened" class="dl-flobal-filter-container">
+        <GlobalFilter [Dashboard]="SelectedDashboard" (ApplyFilters)="ApplyFilters($event)" (ApplyFiltersCountChange)="ApplyFiltersCountChange($event)"></GlobalFilter>
     </div>
 
     <div [hidden]="IsEmptyDashboardVisible" class="custom-layout-container">

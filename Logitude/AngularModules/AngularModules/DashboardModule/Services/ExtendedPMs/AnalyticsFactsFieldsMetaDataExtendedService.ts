@@ -35,6 +35,26 @@ export class AnalyticsFactsFieldsMetaDataPMExtendedService {
         });
     }
 
+    GetPresetFilters() {
+        var url = this._apiUrl + '/GetPresetFilters';
+
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var listJason = response;
+                var listMapped: Array<AnalyticsFactsFieldsMetaDataPM> = [];
+                for (var itemJeson in listJason) {
+                    var itemMapped: AnalyticsFactsFieldsMetaDataPM = this.MapAnalyticsFactsFieldsMetaDataPM(listJason[itemJeson]);
+                    listMapped.push(itemMapped);
+                }
+
+                var myResponse = new ServiceResponse();
+                myResponse.Result = listMapped;
+                return myResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+
     MapAnalyticsFactsFieldsMetaDataPM(jsonList: any) {
         var entityList: AnalyticsFactsFieldsMetaDataPM;
         entityList = new AnalyticsFactsFieldsMetaDataPM();

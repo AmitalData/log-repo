@@ -17,6 +17,11 @@ namespace Logitude.DashboardModule.BL.EntityQueryServices
             return context.AnalyticsFactsFieldsMetaDatas.Where(x => x.AnalyticsFactsMetaDataId == analyticsFactsMetaDataId).Select(MapPocoToPM()).ToList();
         }
 
+        public List<AnalyticsFactsFieldsMetaDataPM> GetPresetFilters()
+        {
+            return context.AnalyticsFactsFieldsMetaDatas.Where(x => x.CommonFilterCode != null && x.CommonFilterCode != "").Select(MapPocoToPM()).ToList();
+        }
+
         private static Expression<Func<AnalyticsFactsFieldsMetaData, AnalyticsFactsFieldsMetaDataPM>> MapPocoToPM()
         {
             return x => new AnalyticsFactsFieldsMetaDataPM
@@ -32,7 +37,8 @@ namespace Logitude.DashboardModule.BL.EntityQueryServices
                 DisplayNamePlural = x.DisplayNamePlural,
                 JoinedTableName = x.JoinedTableName,
                 JoinedTableKey = x.JoinedTableKey,
-                JoinedTableDisplayField = x.JoinedTableDisplayField
+                JoinedTableDisplayField = x.JoinedTableDisplayField,
+                CommonFilterCode = x.CommonFilterCode
             };
         }
     }
