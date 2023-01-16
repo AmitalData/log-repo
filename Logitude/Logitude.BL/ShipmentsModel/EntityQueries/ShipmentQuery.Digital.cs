@@ -2385,9 +2385,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             var tenant = newFilters.Tenant;
 
-            var myTenantRepository = new TenantRepository(tenant);
-            var myTenant = myTenantRepository.GetSingleTenant(tenant);
-
             var filters = new ApiQueryFilters()
             {
                 Filter1Value = newFilters.CardId,
@@ -2547,9 +2544,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public Tuple<QueryOperations, IQueryable<DigitalShipmentList>>  GetByFiltersTuple(GeneralFilters newFilters)
         {
             var tenant = newFilters.Tenant;
-
-            var myTenantRepository = new TenantRepository(tenant);
-            var myTenant = myTenantRepository.GetSingleTenant(tenant);
 
             var filters = new ApiQueryFilters()
             {
