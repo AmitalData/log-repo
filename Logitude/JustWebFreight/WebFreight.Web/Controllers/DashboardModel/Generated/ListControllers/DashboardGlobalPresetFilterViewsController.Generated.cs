@@ -59,8 +59,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("DashboardGlobalPresetFilter", "READ", authToken.Tenant);
-	                IDashboardContext MyContext = DashboardContext.GetContext(authToken.Tenant);
+                IDashboardContext MyContext = DashboardContext.GetContext(authToken.Tenant);
                 DashboardGlobalPresetFilterListQueryService dashboardGlobalPresetFilterQuery = new DashboardGlobalPresetFilterListQueryService(MyContext);
                 DashboardGlobalPresetFilterList dashboardGlobalPresetFilterList = dashboardGlobalPresetFilterQuery.GetSingle(code);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -82,8 +81,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("DashboardGlobalPresetFilter", "READ", authToken.Tenant);
-	                IDashboardContext MyContext = DashboardContext.GetContext(authToken.Tenant);
+                IDashboardContext MyContext = DashboardContext.GetContext(authToken.Tenant);
                 DashboardGlobalPresetFilterListQueryService dashboardGlobalPresetFilterQuery = new DashboardGlobalPresetFilterListQueryService(MyContext);
                 List<DashboardGlobalPresetFilterList> result = dashboardGlobalPresetFilterQuery.GetList(authToken.Tenant);
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -105,8 +103,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("DashboardGlobalPresetFilter", "READ", authToken.Tenant);
-	                
+                
 				int tenant = authToken.Tenant;
 
                 QueryOperations queryOperations = new QueryOperations()
