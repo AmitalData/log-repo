@@ -28,7 +28,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 entityPOCO.Id = entityPM.Id;
             }
 
-            entityPOCO.SearchFields = entityPM.TapagNumber.ToLower();
+            entityPOCO.SearchFields = entityPM.TapagNumber?.ToLower();
             
         }
 
