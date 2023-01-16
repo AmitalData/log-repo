@@ -65,6 +65,7 @@ export class EditComponent implements OnDestroy {
     public HasShortTitle: boolean = false;
     public HasMenuButtons: boolean = false;
     public IsTabsHidden: boolean = false;
+    public IsFirstOpen: boolean = false;
 
     public IsEntityLoaded: boolean = false;
     public ComponentBackground: string = "white";
@@ -161,6 +162,7 @@ export class EditComponent implements OnDestroy {
         this.IsTabsHidden = this.ObjectTable.IsTabsHidden;
         this.NavigationIds = args['NavigationIds'];
         this.EntityFields = args['EntityFields'];
+        this.IsFirstOpen = args['IsFirstOpen'];
 
         if (this.NavigationIds) {
             this.NextPreviousVisible = true;
@@ -1670,6 +1672,7 @@ export class EditComponent implements OnDestroy {
         if (!serviceResponse.HasError) {
             this.StopBusyIndicator();
             this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, HasChanges: false }
+            this.entityArgs.SendMessage("RefreshWorkflowButtons");
             if(isClosing){
               this.Close();   
             }
