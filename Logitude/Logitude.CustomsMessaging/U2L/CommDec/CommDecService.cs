@@ -425,7 +425,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
                     if (!String.IsNullOrWhiteSpace(_LogitudeCommDecFile.OriginCountryId))
                     {
-                        string countryCode = this.GetOriginCountry(_LogitudeCommDecFile.OriginCountryCode);
+                        string countryCode = this.GetOriginCountry(_LogitudeCommDecFile.OriginCountryId);
                         //if (_LogitudeCommDecFile.OriginCountryId.Length > 2)
                         //{
                         //    countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", _LogitudeCommDecFile.OriginCountryId);
@@ -2082,7 +2082,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             }
             if (this._MySupplierInvoicePM.IssueCountryCode == null && this._INVOICE.ISSUECOUNTRYCODE != null)
             {
-                string countryCode = this.GetOriginCountry(_LogitudeCommDecFile.OriginCountryCode);
+                string countryCode = this.GetOriginCountry(this._INVOICE.ISSUECOUNTRYCODE);
                 //if (this._INVOICE.ISSUECOUNTRYCODE.Length > 2)
                 //{
                 //    countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", this._INVOICE.ISSUECOUNTRYCODE);
@@ -2541,7 +2541,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 }
                 if (!string.IsNullOrWhiteSpace(invoiceItem.ITEMORIGINCOUNTRY))
                 {
-                    string countryCode = this.GetOriginCountry(_LogitudeCommDecFile.OriginCountryCode);
+                    string countryCode = this.GetOriginCountry(invoiceItem.ITEMORIGINCOUNTRY);
                     //if (invoiceItem.ITEMORIGINCOUNTRY.Length > 2)
                     //{
                     //    countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", invoiceItem.ITEMORIGINCOUNTRY);
