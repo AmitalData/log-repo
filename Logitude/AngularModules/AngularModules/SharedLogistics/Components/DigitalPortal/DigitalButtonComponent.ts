@@ -55,6 +55,7 @@ export class DigitalButtonComponent {
         if (!isDestroyed) {
             this.CD.detectChanges();
         }
+        this.CurrentSession.SessionEvent.emit({ Name: "ReloadDigitalPortalLabels" });
     }
 
     public FireEvent(eventArgs: any) {
@@ -67,7 +68,7 @@ export class DigitalButtonComponent {
         newField.ProfileId = this.profileId;
         newField.FieldCode = this.rowData.FieldCode;
         newField.DefaultText = this.rowData.FullNameTextCodeDefaultText;
-        newField.TextCode = this.rowData.FullNameTextCodeDefaultText;
+        newField.TextCode = this.rowData.FieldCode;
         newField.DisplayText = this.rowData.FullNameTextCodeDefaultText;
         newField.CreatedBy = SessionLocator.LoggedUserPM.EnglishName;
 

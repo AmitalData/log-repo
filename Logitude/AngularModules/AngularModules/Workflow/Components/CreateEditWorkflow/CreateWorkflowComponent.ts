@@ -118,7 +118,7 @@ export class CreateWorkflowComponent extends BaseComponent implements OnInit {
                             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     cmpRef.instance.ComponentRef = cmpRef;
-                                    cmpRef.instance.Run({ EntityId: entitypm.Id, EntityPM: entitypm, ObjectTableName: 'WorkFlow', BackButtonLabel: "WorkFlows" });
+                                    cmpRef.instance.Run({ EntityId: entitypm.Id, EntityPM: entitypm, ObjectTableName: 'WorkFlow', BackButtonLabel: "WorkFlows", IsFirstOpen: true });
                                 });
                         }
                     });

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "9a7177f8541e5c1606feaf45b4cc1cad";
+		public const string HashString = "e9782dccae1f0f0dfddaefffc40f0c18";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -99,6 +99,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTablePlural =  "Generals",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
+			      				    AvailableInCustomization =  false,
+			      				    SupportSubEntity =  false,
+			      				    ApplyGenericCustomFields =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -124,7 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "661a",
+			      				    Code =  "54a8",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -679,8 +682,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 		   Feature GeneralFeature_SubEntitiesCustomization = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SubEntitiesCustomization", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.SubEntitiesCustomization", NameTextCodeDefaultText = @"Sub Entities Customization" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
-
-
 		   Feature GeneralFeature_SupportUnitMeasurements = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SupportUnitMeasurements", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.SupportUnitMeasurements", NameTextCodeDefaultText = @"Support Select Unit of Measurements" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
 		   Feature GeneralFeature_CUSTOMDASHBOARD = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMDASHBOARD", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.CUSTOMDASHBOARD", NameTextCodeDefaultText = @"Custom Dashboard" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
@@ -692,6 +693,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 		   Feature GeneralFeature_General_Features_ChartOfAccountsTypesOrder = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "General.Features.ChartOfAccountsTypesOrder", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.General.Features.ChartOfAccountsTypesOrder", NameTextCodeDefaultText = @"Chart Of Accounts Types Order" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
 		   Feature GeneralFeature_Customization_DeploymentPackage = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customization.DeploymentPackage", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.Customization.DeploymentPackage", NameTextCodeDefaultText = @"Deployment Package" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
+
+		   Feature GeneralFeature_QueriesCustomization = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QueriesCustomization", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.QueriesCustomization", NameTextCodeDefaultText = @"Views" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
    
 	    
@@ -2704,6 +2707,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  		   TextCode GeneralTextCode_GeneralGSubmitBtn = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.SubmitBtn", DefaultText = "Submit",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralGDownloadAll = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.DownloadAll", DefaultText = "Download all",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_AccountingOChangeMadeToConnectedAccounts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ChangeMadeToConnectedAccounts", DefaultText = "A change was made in the connected accounts. The connected accounts must be returned to their state as it was when the original journal was prodiced. Line ",LocalDefaultText = @"בוצע שינוי בחיבור החשבונות. יש להחזיר את חיבור החשבונות למצבם כפי שהיה בעת רישום פקודת היומן המקורית. שורה ", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMCCustomizationCustomization = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Customization.Customization", DefaultText = "Customization",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

@@ -99,7 +99,6 @@ export class CustomDashboardComponent extends BaseComponent {
                         this._entityResourceService.getEntityResourceByTableName("AnalyticsFactsFieldsMetaData").subscribe((res4: any) => {
                             setTimeout(e => {
                                 this.GetPresetFilterFields();
-
                             }, 70);
                         });
                     });
@@ -169,7 +168,9 @@ export class CustomDashboardComponent extends BaseComponent {
     }
 
     ShowPredinedDashboards() {
-        var predineds = this.ItemsSource.filter(x => x.LoadedAutomatically && x.Tenant == 0);
+        var predineds = this.ItemsSource.filter(x => x.LoadedAutomatically && x.Tenant == 0).sort(function (a, b) {
+            return (a.PredefinedOrder ?? 1000) - (b.PredefinedOrder ?? 1000) || a.CreateDate.valueOf() - b.CreateDate.valueOf();
+        });
         if (predineds.length == 0) return;
 
         predineds = predineds.slice(0, this.MaxTabsCount);

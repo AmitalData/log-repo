@@ -1071,7 +1071,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         this.Queries = allQueries.filter(x => x.UserId == null && x.SystemLevel == true);
 
         if (!this.ObjectTable.IsClosed && !this.listArgs.DontCheckQueryFeature) {
-            this.Queries = allQueries.filter(x => FeatureLocator.IsFeatureGrantedByUniqeCode(x.FeatureUniqeCode));
+            this.Queries = allQueries.filter(x => (FeatureLocator.IsFeatureGrantedByUniqeCode(x.FeatureUniqeCode) || this.ObjectTable.IsCustom));
 
         }
         this.UserQueries = allQueries.filter(x => x.UserId != null && x.Tenant == SessionInfo.LoggedUserTenant);
@@ -1080,7 +1080,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             //this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Perspective == this.listArgs.Perspective)[0];
             this.SelectedQuery = allQueries.filter(f => f.Perspective == this.listArgs.Perspective)[0];
 
-            this.Queries = allQueries.filter(f => (f.UserId == null && FeatureLocator.IsFeatureGrantedByUniqeCode(f.FeatureUniqeCode) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
+            this.Queries = allQueries.filter(f => (f.UserId == null && (FeatureLocator.IsFeatureGrantedByUniqeCode(f.FeatureUniqeCode) || this.ObjectTable.IsCustom) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
         }
         else if (this.listArgs.Perspective != null && this.listArgs.IgnoreSelectedPerspective == true) {
             //this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Code == this.QueryCode)[0];
@@ -1203,7 +1203,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
     GetQueryColumns(queryCode, userId) {
         //var queryId = window.Queries.filter(x => x.Code === queryCode)[0].Id;
-        this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + this.Tenant + "&queryCode=" + queryCode + "&objecttableid=" + this.ObjectTable.Id + "&userid=" + userId)
+        this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + this.Tenant + "&queryCode=" + queryCode + "&objecttableid=" + this.ObjectTable.Id + "&userid=" + userId + "&getfromsystemlevel=false")
             .subscribe((response: any) => {
                 this.QueryColumns = response;
                 this.QueryColumns = this.QueryColumns.sort((a, b) => { return (a.IndexOrder > b.IndexOrder) ? 1 : (a.IndexOrder < b.IndexOrder) ? -1 : 0 });
@@ -3557,7 +3557,7 @@ ColumnResisedevent(Param) {
 
 SaveColNewChanges(Param: any) {
     var QColumns = null;
-    this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + this.Tenant + "&queryCode=" + Param.QueryCode + "&objecttableid=" + this.ObjectTable.Id + "&userid=" + SessionLocator.LoggedUserId)
+    this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + this.Tenant + "&queryCode=" + Param.QueryCode + "&objecttableid=" + this.ObjectTable.Id + "&userid=" + SessionLocator.LoggedUserId + "&getfromsystemlevel=false")
         .subscribe((response: any) => {
             QColumns = response;
             if (QColumns != null) {

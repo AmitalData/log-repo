@@ -94,20 +94,20 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
 
     BuildItemsSource() {
         this.LabelsItemsSource = new ObservableCollection([]);
-        var labelsList: CustomizationLabelItem[] = [];
+        var labelsList = [];
         var objectTableId = this.SelectedObjectTableItem.Name;
         var profileId = this.SelectedProfileItem.Code;
         this.digitalTextService.GetTextCodesByFilters(null, objectTableId, profileId).subscribe((myResult) => {
             if (!myResult.HasError) {
                 var data = myResult.Result;
-                this.loadedResults = data;
+                this.loadedResults = data.filter(a => !AppTool.IsNullOrEmpty(a['FieldCode']));
                 if (!AppTool.IsNullOrEmpty(this.SearchText)) {
                     data = data.filter(f =>
                         (!AppTool.IsNullOrEmpty(f.FieldCode) && f.FieldCode.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1) ||
                         (!AppTool.IsNullOrEmpty(f.DisplayText) && f.DisplayText.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1 )||
                         (!AppTool.IsNullOrEmpty(f.DefaultText) && f.DefaultText.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1));
                 }
-                data.forEach(item => {
+                data.filter(a => !AppTool.IsNullOrEmpty(a['FieldCode'])).forEach(item => {
                     labelsList.push(new CustomizationLabelItem(this, item));
                 });
                 this.LabelsItemsSource.InsertCollection(labelsList);
@@ -126,7 +126,7 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
 
     loadedResults: CustomizationLabelItem[] = [];
     BuildSearchItems() {
-        var labelsList: CustomizationLabelItem[] = [];
+        var labelsList = [];
         if (!AppTool.IsNullOrEmpty(this.SearchText)) {
             var data = this.loadedResults;
             data = data.filter(f =>
@@ -142,7 +142,9 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
         }
         else {
             this.LabelsItemsSource = new ObservableCollection([]);
-            labelsList = this.loadedResults;
+            this.loadedResults.forEach(item => {
+                labelsList.push(new CustomizationLabelItem(this, item));
+            });
             this.LabelsItemsSource.InsertCollection(labelsList);
         }
     }
