@@ -377,14 +377,14 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
 
     OpenConfigureStart(flowObject:any) {
         let startNode = flowObject.nodes.filter(n => n.type === "startNode")[0];
-        let nodeObject = this.buildStartNodeObject(startNode);
+        let nodeObject = this.buildPropertiesEventObjec(startNode);
         if (nodeObject) {
             this.IsFirstOpen = false;
             this.handleOpenPropertiesEvent(nodeObject);
         }
     }
 
-    buildStartNodeObject(startNode:any) {
+    buildPropertiesEventObjec(startNode:any) {
         if (startNode) {
             let nodeObject = {
                 isNewNode: true,
