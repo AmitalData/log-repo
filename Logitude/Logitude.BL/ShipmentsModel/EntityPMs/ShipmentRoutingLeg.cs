@@ -18,8 +18,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string DepartureDateType { get; set; }
         public DateTime? ArrivalDate { get; set; }
         public string ArrivalDateType { get; set; }
-        public string CountryCode { get; set; }
-        public string CountryName { get; set; }
     }
 
     public class MainRouteInformation : ShipmentRoutingLeg
