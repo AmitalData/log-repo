@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class WorkFlowUpdateClass
    {  		
-		public const string HashString = "69e392acd1b71e1cab7e30e1b1b26b43";
+		public const string HashString = "829fe1a6e3f7fc9cf4ae0e446d70d956";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1496,15 +1496,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable WorkFlowObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "WorkFlow" && d.Tenant == 0).FirstOrDefault();       
     
-			   Feature WorkFlowFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SaveDraft", ObjectTableId = WorkFlowObjectTable.Id, Tenant = 0, NameTextCodeCode = "WorkFlow.Features.SaveDraft", NameTextCodeDefaultText = "Save Draft", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WorkFlowObjectTable);
+			   Feature WorkFlowFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NewVersion", ObjectTableId = WorkFlowObjectTable.Id, Tenant = 0, NameTextCodeCode = "WorkFlow.Features.NewVersion", NameTextCodeDefaultText = "New Version", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WorkFlowObjectTable);
 
       
     
-			   Feature WorkFlowFeature_MB1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NewVersion", ObjectTableId = WorkFlowObjectTable.Id, Tenant = 0, NameTextCodeCode = "WorkFlow.Features.NewVersion", NameTextCodeDefaultText = "New Version", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WorkFlowObjectTable);
-
-      
-    
-			   Feature WorkFlowFeature_MB2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Activate", ObjectTableId = WorkFlowObjectTable.Id, Tenant = 0, NameTextCodeCode = "WorkFlow.Features.Activate", NameTextCodeDefaultText = "Activate", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WorkFlowObjectTable);
+			   Feature WorkFlowFeature_MB1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Activate", ObjectTableId = WorkFlowObjectTable.Id, Tenant = 0, NameTextCodeCode = "WorkFlow.Features.Activate", NameTextCodeDefaultText = "Activate", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,WorkFlowObjectTable);
 
  
 
@@ -1520,11 +1516,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    
 			   MenuButton WorkFlowMenuButton0 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
-						EventCode = "SaveDraft",
+						EventCode = "NewVersion",
 						Index = 0, 
 						IsActive = true,
-						LabelTextCodeCode = "WorkFlow.B.SaveDraft",
-						LabelTextCodeDefaultText = "Save Draft",
+						LabelTextCodeCode = "WorkFlow.B.NewVersion",
+						LabelTextCodeDefaultText = "New Version",
 						Tenant = 0,
 						MenuButtonGroupId = WorkFlowMenuButtonGroup.Id,
 						ObjectTableId = WorkFlowObjectTable.Id,
@@ -1540,26 +1536,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    
 			   MenuButton WorkFlowMenuButton1 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
-						EventCode = "NewVersion",
-						Index = 0, 
-						IsActive = true,
-						LabelTextCodeCode = "WorkFlow.B.NewVersion",
-						LabelTextCodeDefaultText = "New Version",
-						Tenant = 0,
-						MenuButtonGroupId = WorkFlowMenuButtonGroup.Id,
-						ObjectTableId = WorkFlowObjectTable.Id,
-						MenuButtonType = "button",
-						FeatureId = WorkFlowFeature_MB1.Id,
-						Style = null,
-						LocalDefaultText = null,
-						FeatureUniqeCode = WorkFlowFeature_MB1.FeatureUniqeCode,
-						HtmlComponentPath = null,
-						Width = 0,
-					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
-       
-   
-			   MenuButton WorkFlowMenuButton2 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
-					{
 						EventCode = "Activate",
 						Index = 0, 
 						IsActive = true,
@@ -1569,10 +1545,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonGroupId = WorkFlowMenuButtonGroup.Id,
 						ObjectTableId = WorkFlowObjectTable.Id,
 						MenuButtonType = "button",
-						FeatureId = WorkFlowFeature_MB2.Id,
+						FeatureId = WorkFlowFeature_MB1.Id,
 						Style = null,
 						LocalDefaultText = null,
-						FeatureUniqeCode = WorkFlowFeature_MB2.FeatureUniqeCode,
+						FeatureUniqeCode = WorkFlowFeature_MB1.FeatureUniqeCode,
 						HtmlComponentPath = null,
 						Width = 0,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);

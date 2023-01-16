@@ -203,6 +203,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
             var version = this.EntityPM.WorkFlowVersions.find(v => v.Id == this.CurrentVersionId)
             if (version.StatusCode == "DRFT") {
                 this.HasChanges = true;
+                this.EntityPM.IsDirty = true
                 this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, HasChanges: true }
                 this.entityArgs.SendMessage("RefreshWorkflowButtons");
             }
