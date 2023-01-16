@@ -86,6 +86,22 @@ export class GLAccountExtendedPMService {
 
     }
 
+    GetGLAReconcilationCount(accountId: string)
+    {
+     
+     var api = ServiceHelper.GetLogitudeURL() + 'api/GLAccounts';
+     return this.httpClient.get(api + '/GetGLAReconcilationCount?accountId=' + accountId,  ServiceHelper.GetHttpHeaders()).pipe(
+         map(response => {
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+
+            serviceResponse.Result = response;
+
+            return serviceResponse;
+         }),
+         catchError(ServiceHelper.HandleServiceError));
+    }
+
+
 
     GetARPyamentChequesListAsLedgerTransactions(accountId: string) {
 
