@@ -2820,7 +2820,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
         public string GetOriginCountry(string originCountry)
         {
-            string countryCode = GetTranslationL2P(partnerID: "IIGC", "CTBCOUNTRY", _LogitudeCommDecFile.OriginCountryCode);
+            string countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", _LogitudeCommDecFile.OriginCountryCode);
             if(countryCode == null)
             {
                 var myQueryService = new CustomsCountryQueryService(_context);
