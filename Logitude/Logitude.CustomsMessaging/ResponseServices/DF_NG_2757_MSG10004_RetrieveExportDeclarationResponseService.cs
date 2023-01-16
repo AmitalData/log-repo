@@ -628,6 +628,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             }
                         }
                     }
+                    if (string.IsNullOrEmpty(consignmentPM.ExportLoadingPortCode))
+                    {
+                        consignmentPM.ExportLoadingPortCode = consignmentPM.StorageSiteCode;
+                    }
                 }
 
                 if (consignment.DMExtensions.PackagesMeasure != null)
@@ -976,6 +980,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             supplierInvoiceItemPM.SupplierInvoiceItemVehicles = GetSupplierInvoiceItemVehicles(governmentAgencyGoodsItem, declaration, declarationId, tenant);
                       
                     }
+                    if (supplierInvoiceItemPM.WholeSaleItemPrice.HasValue || supplierInvoiceItemPM.AdditionalQuantity.HasValue || supplierInvoiceItemPM.StatisticQuantity.HasValue)
+                    {
+                        supplierInvoiceItemPM.ItemAdditionalStatus = true;
+                    }
                     supplierInvoiceItemPM.PreferenceDocumentNumber = GetValueIDType(governmentAgencyGoodsItem.DMExtensions.PreferenceDocumentNumber);
                     supplierInvoiceItemPM.ActualInvoiceLines = governmentAgencyGoodsItem.DMExtensions.InvoiceLineNumbers;
                     supplierInvoiceItemPM.SupplierInvoiceItemsMods = GetSupplierInvoiceItemsMods(governmentAgencyGoodsItem, declaration, declarationId, tenant);
@@ -985,8 +993,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     supplierInvoiceItemPM.SupplierInvoiceItemsProdIdents = GetSupplierInvoiceItemsProdIdents(governmentAgencyGoodsItem, declaration, declarationId, tenant);
                     supplierInvoiceItemPM.SupplierInvoiceItemsDescripts = GetSupplierInvoiceItemsDescript(governmentAgencyGoodsItem, declaration, declarationId, tenant);
                     supplierInvoiceItemPM.SupplierInvoiceItemLevies = GetSupplierInvoiceItemLevy(governmentAgencyGoodsItem, declaration, declarationId, tenant);
-                    supplierInvoiceItemPM.SupplierInvioceItemCertificats = GetSupplierInvioceItemCertificats(governmentAgencyGoodsItem, declaration, declarationId, tenant);
-                   
+                    supplierInvoiceItemPM.SupplierInvioceItemCertificats = GetSupplierInvioceItemCertificats(governmentAgencyGoodsItem, declaration, declarationId, tenant); 
+                 
                     supplierInvoiceItemPMs.Add(supplierInvoiceItemPM);
                 }
             }
