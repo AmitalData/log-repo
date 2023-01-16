@@ -1231,17 +1231,17 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             if (shipment.TransportModeId == "A")
             {
-                return "MAWB";
+                return "Shipment.O.Overview.MAWB";
             }
 
             if (shipment.TransportModeId == "O")
             {
-                return "OBL";
+                return "Shipment.G.OBL";
             }
 
             if (shipment.TransportModeId == "I")
             {
-                return "CMR/RWB#";
+                return "Shipment.G.CMR/RWB#";
             }
 
             return null;
