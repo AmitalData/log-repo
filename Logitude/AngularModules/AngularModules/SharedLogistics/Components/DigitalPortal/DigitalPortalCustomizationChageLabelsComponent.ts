@@ -142,7 +142,9 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
         }
         else {
             this.LabelsItemsSource = new ObservableCollection([]);
-            labelsList = this.loadedResults;
+            this.loadedResults.forEach(item => {
+                labelsList.push(new CustomizationLabelItem(this, item));
+            });
             this.LabelsItemsSource.InsertCollection(labelsList);
         }
     }
