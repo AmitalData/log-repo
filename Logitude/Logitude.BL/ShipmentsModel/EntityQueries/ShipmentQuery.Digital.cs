@@ -1080,6 +1080,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 Carrier = shipment.PreCarriageCarrierName,
                 CarrierNumber = shipment.PreCarriageCarrierNumber,
                 VesselName = shipment.PreCarriageTransportModeId == "O" ? shipment.PreCarriageVesselName : null,
+                CarrierNumberLabel = "Shipment.O.Routings.CarrierNo",
+                CarrierLabel = "Shipment.O.Routings.Carrier",
             };
 
             return preCarriageLeg;
@@ -1192,8 +1194,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 Carrier = shipment.OnCarriageCarrierName,
                 CarrierNumber = shipment.OnCarriageCarrierNumber,
                 VesselName = shipment.OnCarriageTransportModeId == "O" ? shipment.OnCarriageVesselName : null,
-                CarrierNumberLabel = "Trucker.F.TruckerNumber",
-                CarrierLabel = "Trucker.F.EnglishName",
+                CarrierNumberLabel = "Shipment.O.Routings.CarrierNo",
+                CarrierLabel = "Shipment.O.Routings.Carrier",
             };
 
             return onCarriageLeg;
@@ -1222,6 +1224,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 ArrivalDateType = finalDelivery.ATA != null ? "ATA" : (finalDelivery.ETA != null ? "ETA" : null),
                 Carrier = trucker?.EnglishName,
                 CarrierNumber = finalDelivery.CarrierNumber,
+                CarrierNumberLabel = "Trucker.F.TruckerNumber",
+                CarrierLabel = "Trucker.F.EnglishName",
             };
 
             return delivery;
