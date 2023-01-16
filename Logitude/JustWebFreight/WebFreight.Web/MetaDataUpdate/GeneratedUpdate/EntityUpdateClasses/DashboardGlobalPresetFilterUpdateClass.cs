@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DashboardGlobalPresetFilterUpdateClass
    {  		
-		public const string HashString = "e1673c41cc8623b4fe51175c17ac6e5e";
+		public const string HashString = "c647b4c41c317ab3c95f85cece59ee43";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -101,6 +101,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasCustomFields =  false,
 			      				    AvailableInCustomization =  false,
 			      				    SupportSubEntity =  false,
+			      				    ApplyGenericCustomFields =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -121,13 +122,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
 			      				    IsComposition =  false,
-			      				    EnableSecurity =  true,
+			      				    EnableSecurity =  false,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Dashboard Preset Filters",
-			      				    Code =  "0bb1",
+			      				    Code =  "b1f0",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "DashboardModule",
@@ -648,6 +649,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CanSearch",
 					  						ListPropertyPath =  "CanSearch",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

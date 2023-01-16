@@ -223,7 +223,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
             {
                 return $@" where data.{GeteComparsionDate()} Between '{_Widget.FromDate.Value}' AND '{_Widget.ToDate.Value}'";
             }
-            return $@" where data.{GeteComparsionDate()} Between dateadd ({_Widget.ComparisonDateGroup}, {-_Widget.ComparisonPeriod}, cast(getDate() as DateTime)) AND cast(getDate() as DateTime)";
+            return $@" where data.{GeteComparsionDate()} Between dateadd ({_Widget.ComparisonDateGroup}, {-_Widget.ComparisonPeriod}, cast(getDate() as Date)) AND cast(getDate() as Date)";
         }
 
         private string GeteComparsionDate()
