@@ -19,6 +19,7 @@ export class DashboardList {
 	Description: string;
 	PermissionLevelCode: string;
 	LoadedAutomatically: boolean;
+	PredefinedOrder: number;
 	
 }
  
