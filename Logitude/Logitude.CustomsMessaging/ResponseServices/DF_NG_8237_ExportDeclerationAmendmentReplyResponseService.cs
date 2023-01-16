@@ -683,6 +683,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 SendManifest(_MyDeclarationPM, requestParams);
             }
+            if (requestParams.IsExportClose && this._MyDeclarationPM?.Direction == "E")
+            {
+                AmitalInsertToQueueService.insertToQueue(this._MyDeclarationPM);
+            }
             this.MyResponseData.ApplicationID = requestParams.AppicationId;
             this.MyResponseData.Succeeded = true;
             this.MyResponseData.HasException = false;
@@ -700,7 +704,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 else
                     this.MyResponseData.UserMessage = "מענה לתיקון הצהרה " + this._MyDeclarationPM.DeclarationNumber + " נקלט בהצלחה";
             }
-
+           
             this.MyRequestSheetParam = new RequestSheetParam();
             this.MyRequestSheetParam.CustomFileNo = this._MyDeclarationPM.CustomFileNo;
             this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
