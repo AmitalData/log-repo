@@ -1419,7 +1419,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
         consignment.DeclarationId = this.EntityPM.Id;
         consignment.Tenant = SessionLocator.Tenant;
         consignment.IsLastReleaseFromWarehous = "F";
-        if (this.EntityPM.Direction == "E") { 
+        if (this.EntityPM.Direction == "E") {
             consignment.ConsignmentType = "E";
         }
         consignment.SequenceNumeric = ++this.consignmentIndex;
@@ -1465,19 +1465,19 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
                     this.EntityPM.RemoveConsignment(tab.EntityPM);
                     this.ConsigmentTabs.splice(index, 1);
 
-                    if(this.EntityPM.AmendmentDontDisplayInList != true) {
-                    //resequence consignments
-                       for (var i = 0; i < this.EntityPM.Consignments.length; i++) {
-                           var consignment = this.EntityPM.Consignments[i];
-                           consignment.SequenceNumeric = i + 1;
-                           //consignment.ConsignmentNumber = i + 1;
-                       }
-                       for (var i = 0; i < this.ConsigmentTabs.length; i++) {
-                           var consignment: ConsignmentPM = this.ConsigmentTabs[i].EntityPM;
-                           consignment.SequenceNumeric = i + 1;
-                           this.ConsigmentTabs[i].Code = consignment.SequenceNumeric.toString();
-                           this.ConsigmentTabs[i].Header = (consignment.ManifestNumber ? (consignment.ManifestNumber + '-') : '') + consignment.SequenceNumeric;
-                       }
+                    if (this.EntityPM.AmendmentDontDisplayInList != true) {
+                        //resequence consignments
+                        for (var i = 0; i < this.EntityPM.Consignments.length; i++) {
+                            var consignment = this.EntityPM.Consignments[i];
+                            consignment.SequenceNumeric = i + 1;
+                            //consignment.ConsignmentNumber = i + 1;
+                        }
+                        for (var i = 0; i < this.ConsigmentTabs.length; i++) {
+                            var consignment: ConsignmentPM = this.ConsigmentTabs[i].EntityPM;
+                            consignment.SequenceNumeric = i + 1;
+                            this.ConsigmentTabs[i].Code = consignment.SequenceNumeric.toString();
+                            this.ConsigmentTabs[i].Header = (consignment.ManifestNumber ? (consignment.ManifestNumber + '-') : '') + consignment.SequenceNumeric;
+                        }
                     }
 
                     // select the last tab
@@ -1522,7 +1522,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
     DisplayOnlyCheck() {
         this.DrawMe = true;
         this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
-        this.IsDisplayMessage=this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
+        this.IsDisplayMessage = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
         if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
             {
                 this.IsDisplayMessage = true;
@@ -1531,7 +1531,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
             }
         }
         else if (this.IsDisplayOnly) {
-             this.DisplayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
+            this.DisplayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
             this.SetScreenFieldsEditability();
             DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
             return;
@@ -1540,36 +1540,36 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
             this.ShowStorageStatusMessage = true;
             this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
         }
-       
-      
+
+
 
 
         var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
         declarationDisplayOnlyChecks.DeclarationViewDisplayOnlyChecks(this.EntityPM).subscribe((response: any) => {
-            
+
             var displayOnlyCheckResult: DisplayOnlyCheckResult = response.Result;
             this.IsDisplayOnly = displayOnlyCheckResult.IsDisplayOnly;
             if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
                 {
                     this.IsDisplayMessage = true;
-                    
+
                     this.DisplayOnlyMessage = this.EntityPM.AmendmentMessage;
                     if (this.EntityPM.IsAmendmentDisplayOnly) this.IsDisplayOnly = this.EntityPM.IsAmendmentDisplayOnly;
                 }
             }
             else if (this.IsDisplayOnly) {
-                                this.DisplayOnlyMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
+                this.DisplayOnlyMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
             }
             else if (this.EntityPM.StorageStatusCode) {
-                                this.ShowStorageStatusMessage = true;
+                this.ShowStorageStatusMessage = true;
                 this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
             }
 
             else if (this.CurrentSession.CurrentEditComponent.EditComponentController.IsInBatchRequest && !displayOnlyCheckResult.IsDisplayOnly) {
-                 this.DisplayOnlyMessage = displayOnlyCheckResult.DisplayOnlyMessage;
-                this.IsDisplayMessage=true;
+                this.DisplayOnlyMessage = displayOnlyCheckResult.DisplayOnlyMessage;
+                this.IsDisplayMessage = true;
             }
-          
+
             this.SetScreenFieldsEditability();
             DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
         });
@@ -1627,8 +1627,9 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
 
 
     async getExportStorageData() {
-        this.exportStorageConnectToDeclaration = await new DeclarationWebService().getExportStorageConnectToDeclaration(this.EntityPM.Id);
-        console.log(this.exportStorageConnectToDeclaration)
+        if (this.EntityPM.TransportModeId == 'O') {
+            this.exportStorageConnectToDeclaration = await new DeclarationWebService().getExportStorageConnectToDeclaration(this.EntityPM.Id);
+        }
     }
 
 }

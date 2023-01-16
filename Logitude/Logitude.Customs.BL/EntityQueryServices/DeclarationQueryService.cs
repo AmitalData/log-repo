@@ -2220,8 +2220,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
 
 
-        public ExportStorageConnectToDeclaration GetExportStorageConnectToDeclaration(string declarationId) =>
-            new DeclarationRepository(Tenant).GetExportStorageConnectToDeclaration(declarationId);
+        public ExportStorageConnectToDeclaration GetExportStorageConnectToDeclaration(string declarationId,int tenant) =>
+            new DeclarationRepository(Tenant).GetExportStorageConnectToDeclaration(declarationId, tenant);
 
 
 
