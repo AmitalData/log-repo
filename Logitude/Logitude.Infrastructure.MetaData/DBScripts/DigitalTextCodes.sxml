@@ -1171,14 +1171,50 @@
 			"DisplayText": ""
 		},
 		{
+			"TextCode": "Shipment.G.DeliveryInformation",
+			"DefaultText": "Delivery information",
+			"FieldCode" : "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.G.PickupInformation",
+			"DefaultText": "Pickup information",
+			"FieldCode" : "",
+			"DisplayText": ""
+		},
+		{
 			"TextCode": "Shipment.G.PortOfLoading",
 			"DefaultText": "Port of loading/Port of discharge",
 			"FieldCode" : "",
 			"DisplayText": ""
 		},
 		{
+			"TextCode": "Shipment.G.PortOfLoadingLable",
+			"DefaultText": "Port of loading",
+			"FieldCode" : "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.G.PortOfDischargeLable",
+			"DefaultText": "Port of discharge",
+			"FieldCode" : "",
+			"DisplayText": ""
+		},
+		{
 			"TextCode": "Shipment.G.GatewayDestinationLable",
 			"DefaultText": "Gateway/Destination",
+			"FieldCode" : "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.G.GatewayLable",
+			"DefaultText": "Gateway",
+			"FieldCode" : "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.G.DestinationLable",
+			"DefaultText": "Destination",
 			"FieldCode" : "",
 			"DisplayText": ""
 		},
@@ -1233,6 +1269,18 @@
 		{
 			"TextCode": "Shipment.G.FlightNumber",
 			"DefaultText": "Flight number",
+			"FieldCode" : "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.G.VoyageNumber",
+			"DefaultText": "Voyage number",
+			"FieldCode" : "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.G.TruckerNumber",
+			"DefaultText": "Trucker number",
 			"FieldCode" : "",
 			"DisplayText": ""
 		},
@@ -3699,14 +3747,50 @@
 			"DisplayText": ""
 		},
 		{
+			"TextCode": "Shipment.G.DeliveryInformation",
+			"DefaultText": "Delivery information",
+			"FieldCode" : "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.G.PickupInformation",
+			"DefaultText": "Pickup information",
+			"FieldCode" : "",
+			"DisplayText": ""
+		},
+		{
 			"TextCode": "Shipment.G.PortOfLoading",
 			"DefaultText": "Port of loading/Port of discharge",
 			"FieldCode" : "",
 			"DisplayText": ""
 		},
 		{
+			"TextCode": "Shipment.G.PortOfLoadingLable",
+			"DefaultText": "Port of loading",
+			"FieldCode" : "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.G.PortOfDischargeLable",
+			"DefaultText": "Port of discharge",
+			"FieldCode" : "",
+			"DisplayText": ""
+		},
+		{
 			"TextCode": "Shipment.G.GatewayDestinationLable",
 			"DefaultText": "Gateway/Destination",
+			"FieldCode" : "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.G.GatewayLable",
+			"DefaultText": "Gateway",
+			"FieldCode" : "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.G.DestinationLable",
+			"DefaultText": "Destination",
 			"FieldCode" : "",
 			"DisplayText": ""
 		},
@@ -3761,6 +3845,18 @@
 		{
 			"TextCode": "Shipment.G.FlightNumber",
 			"DefaultText": "Flight number",
+			"FieldCode" : "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.G.VoyageNumber",
+			"DefaultText": "Voyage number",
+			"FieldCode" : "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.G.TruckerNumber",
+			"DefaultText": "Trucker number",
 			"FieldCode" : "",
 			"DisplayText": ""
 		},
@@ -6632,6 +6728,12 @@
 				"DisplayText": ""
 			},
 			{
+				"TextCode": "Trucker.F.TruckerNumber",
+				"DefaultText": "Trucker number",
+				"FieldCode": "",
+				"DisplayText": ""
+			},
+			{
 				"TextCode": "Trucker.F.Code",
 				"DefaultText": "Trucker code",
 				"FieldCode": "Trucker.Code",
@@ -6687,6 +6789,12 @@
 				"TextCode": "Trucker.F.EnglishName",
 				"DefaultText": "Trucker name",
 				"FieldCode": "Trucker.EnglishName",
+				"DisplayText": ""
+			},
+			{
+				"TextCode": "Trucker.F.TruckerNumber",
+				"DefaultText": "Trucker number",
+				"FieldCode": "",
 				"DisplayText": ""
 			},
 			{
