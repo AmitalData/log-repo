@@ -217,16 +217,19 @@ using Simplog.Data.CommonDataModel;
 			       
 					   				   }
 				   
-				   temp.ReceivableExternalId = MyEntityPM.ReceivablesAccountingCard;
+				   temp.ReceivableExternalId = MyEntityPM.ReceivablesAccountingCard; 
 
-				CustomFieldQueryService customFieldService = new CustomFieldQueryService(Tenant, "Customer");
+				
+				CustomFieldQueryService customFieldService = new CustomFieldQueryService(Tenant,"Customer");
 				temp.CustomFields = customFieldService.CustomFieldCustomDataMapping(MyEntityPM, Tenant);
+				 
+				    
 
-
-				if (MyEntityPM.CustomerSizeId != null)
+			  
+				   if(MyEntityPM.CustomerSizeId != null)
 				   {
-					   CustomerSizeQueryService CustomerSizeService13 = new CustomerSizeQueryService(Tenant);
-					   					   temp.CustomerSize = CustomerSizeService13.GetCustomerSizeById(MyEntityPM.CustomerSizeId,Tenant,ComputingPartnerName); 
+					   CustomerSizeQueryService CustomerSizeService14 = new CustomerSizeQueryService(Tenant);
+					   					   temp.CustomerSize = CustomerSizeService14.GetCustomerSizeById(MyEntityPM.CustomerSizeId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
 				   					
@@ -345,11 +348,11 @@ using Simplog.Data.CommonDataModel;
 
 					if(MyEntity.Contacts != null && MyEntity.Contacts.Count > 0)
 					{
-						ContactQueryService ContactService14 = new ContactQueryService(Tenant);
+						ContactQueryService ContactService15 = new ContactQueryService(Tenant);
 						  
 						if(!IsUpdate)
 						{								
-							temp.Contacts = ContactService14.ContactCustomDataMappingAndValidatin(MyEntity,MyEntity.Contacts,Tenant,ComputingPartnerName,IsUpdate);
+							temp.Contacts = ContactService15.ContactCustomDataMappingAndValidatin(MyEntity,MyEntity.Contacts,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -623,18 +626,17 @@ using Simplog.Data.CommonDataModel;
 					{							
 						temp.ReceivablesAccountingCard = MyEntity.ReceivableExternalId;
 
-										}
+										}  
 
-
-
-				CustomFieldQueryService customFieldService = new CustomFieldQueryService(Tenant, "Customer");
+					
+				CustomFieldQueryService customFieldService = new CustomFieldQueryService(Tenant,"Customer");
 				if (MyEntity.CustomFields != null)
 				{
-					customFieldService.CustomFieldCustomDataMappingAndValidatin(MyEntity.CustomFields, temp, Tenant);
-				}
-
-
-				CustomerSizeQueryService CustomerSizeCustomerSizeService = new CustomerSizeQueryService(Tenant);
+					 customFieldService.CustomFieldCustomDataMappingAndValidatin(MyEntity.CustomFields, temp, Tenant);
+				}		
+			
+					
+					CustomerSizeQueryService CustomerSizeCustomerSizeService = new CustomerSizeQueryService(Tenant);
 					if(MyEntity.CustomerSize != null)
 					{
 						var myCustomerSizePM = CustomerSizeCustomerSizeService.CustomerSizeDataMappingAndValidatin(MyEntity.CustomerSize,Tenant,ComputingPartnerName,IsUpdate);
