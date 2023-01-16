@@ -758,7 +758,7 @@ export class ConsigmentTabContentComponent
                     {
                         this.ManifestNumberPlaceholder = "הזן ש.מ בלדר";
                         this.SecondCargoIDPlaceholder = "הזן ח.פ בלדר";
-                        this.ThirdCargoIdPlaceholder = "הזן תםריך הקמה";
+                        this.ThirdCargoIdPlaceholder = "הזן תאריך הקמה";
                         break;
                     }
                 case '20':
