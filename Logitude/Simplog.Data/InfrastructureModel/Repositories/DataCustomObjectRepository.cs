@@ -86,5 +86,9 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         {
             return context.DataCustomObjects.Where(d => d.Tenant == tenant);
         }
+        public IQueryable<DataCustomObject> GetDataCustomObjectsByObjectTableId(int tenant, string objectTableId)
+        {
+            return context.DataCustomObjects.Where(d => d.Tenant == tenant && d.ObjectTableId == objectTableId);
+        }
     }
 }

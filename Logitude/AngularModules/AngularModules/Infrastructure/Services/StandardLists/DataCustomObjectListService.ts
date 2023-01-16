@@ -91,8 +91,39 @@ export class DataCustomObjectListService {
 			
 					catchError(ServiceHelper.HandleServiceError));
 		});
-	}
-	
+    }
+
+    getAllByObjectTableId(objectTableId: string) {
+
+        var callTime = new Date();
+
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/getall/?' + 'objectTableId=' + objectTableId, ServiceHelper.GetHttpFullHeaders())
+                .pipe(
+                    map((response: HttpResponse<any>) => {
+
+                        var allLists = response.body;
+                        var _mappedListsArray: Array<DataCustomObjectList> = [];
+                        if (allLists) {
+                            for (var key in allLists) {
+                                var entity: DataCustomObjectList = this.MapJsonToEntityList(allLists[key]);
+                                _mappedListsArray.push(entity);
+                            }
+                        }
+
+                        var serviceResponse: ServiceResponse = new ServiceResponse();
+                        serviceResponse.Result = _mappedListsArray;
+                        serviceResponse.CallTime = callTime;
+
+                        var servertime = response.headers.get('ServerExecutionTime');
+                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DataCustomObject", "GetAllLists", "");
+
+                        return serviceResponse;
+                    }),
+
+                    catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 	getByFilters(filters: ApiQueryFilters) {
 
 		var callTime = new Date();		                        

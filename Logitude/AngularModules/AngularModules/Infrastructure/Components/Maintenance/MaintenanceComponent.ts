@@ -895,6 +895,7 @@ export class MaintenanceComponent {
         item.Icon = "list";
         item.ObjectTableId = objectTable.Id;
         item.ObjectTableName = objectTable.Name;
+        item.Code = "CustomObject"
         var maintenanceMenuItem = new MaintenanceMenuItem(item);
         maintenanceMenuItem.DescriptionText = objectTable.Description != null ? objectTable.Description : TextCodeTranslator.Translate(objectTable.DescriptionTextCodeCode);
         this.AllMaintenanceMenu.push(maintenanceMenuItem);
@@ -1701,12 +1702,11 @@ export class MaintenanceComponent {
                     this.ShowTranslateLabelsWindow();
                     break;
                 }
+                case "CustomObject":
+                    this.ShowCustomObject(item);
+                    break;
                 default: {
-                    let objectTable = window.ObjectTables.filter(d => d.Id == item.ObjectTableId)[0];
-                    if (objectTable && objectTable.IsCustom) {
-                        this.ShowCustomObject(objectTable);
-                        break;
-                    }
+                    
                     if (item.ObjectTableId) {
                         var allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === item.ObjectTableId).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
                         if (allQueries.length == 0) {
@@ -1782,14 +1782,17 @@ export class MaintenanceComponent {
         }
     }
 
-    private ShowCustomObject(objectTable: ObjectTablePM) {
+    private ShowCustomObject(item: any) {
+        let objectTable = window.ObjectTables.filter(d => d.Id == item.ObjectTableId)[0];
         let listArgs = new ListComponentArgs();
         listArgs.ObjectTableName = objectTable.Name;
         listArgs.BackButtonTitle = "Maintenance";
+        listArgs.ShowViews = true;
         listArgs.DisplayTitle = this.textCodeTranslationPipe.transform(objectTable.Name);
         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.IsCustomEntity = true;
                 cmpRef.instance.Run(listArgs);
             });
     }

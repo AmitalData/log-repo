@@ -60,7 +60,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                              CreatedBy = a.CreatedBy,
                              CreateDate = a.CreateDate,
                              UpdatedBy = a.UpdatedBy,
-                             UpdateDate = a.UpdateDate
+                             UpdateDate = a.UpdateDate,
+                             SearchFields = a.SearchFields,
                          };
 
             return result;
@@ -77,6 +78,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             dataCustomObjectPM.ObjectTableId = dataCustomObject.ObjectTableId;
             dataCustomObjectPM.IsCancelled = dataCustomObject.IsCancelled;
             dataCustomObjectPM.StatusId = dataCustomObject.StatusId;
+            dataCustomObjectPM.SearchFields = dataCustomObject.SearchFields;
+
             for (int i = 1; i <= numberOfCustomFields; i++)
             {
                 MapCustomFieldValue(("Field" + i.ToString()), dataCustomObject, dataCustomObjectPM);

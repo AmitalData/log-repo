@@ -59,7 +59,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                              CreateDate = a.CreateDate,
                              UpdatedBy = a.UpdatedBy,
                              UpdateDate = a.UpdateDate,
-                             InActive = a.InActive
+                             InActive = a.InActive,
+                             SearchFields = a.SearchFields,
                          };
 
             return result;
@@ -75,6 +76,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             referenceCustomObjectPM.UpdateDate = referenceCustomObject.UpdateDate;
             referenceCustomObjectPM.ObjectTableId = referenceCustomObject.ObjectTableId;
             referenceCustomObjectPM.InActive = referenceCustomObject.InActive;
+            referenceCustomObjectPM.SearchFields = referenceCustomObject.SearchFields;
+
             for (int i = 1; i <= numberOfCustomFields; i++)
             {
                 MapCustomFieldValue(("Field" + i.ToString()), referenceCustomObject, referenceCustomObjectPM);

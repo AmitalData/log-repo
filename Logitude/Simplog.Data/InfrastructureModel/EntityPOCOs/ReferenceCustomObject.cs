@@ -71,5 +71,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public bool InActive { get; set; }
         public virtual User CreatedByUser { get; set; }
         public virtual User UpdatedByUser { get; set; }
+        public string SearchFields { get; set; }
+
     }
 }

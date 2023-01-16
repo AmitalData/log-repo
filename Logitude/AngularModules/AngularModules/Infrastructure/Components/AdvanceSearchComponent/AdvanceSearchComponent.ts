@@ -349,7 +349,7 @@ export class AdvanceSearchComponent implements OnInit {
         entityPM.IsDirty = false;
         return entityPM;
     }
-    SelectedObjectFields: FilterField[];
+    SelectedObjectFields: FilterField[] = [];
     public AddFilterField(field: ObjectFieldPM) {
         if (this.SelectedObjectFields == undefined) {
             this.SelectedObjectFields = [];

@@ -19,5 +19,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public bool IsCancelled { get; set; }
         public string StatusId { get; set; }
         public ChangeSetOperation ChangeSetOp { get; set; }
+        public string SearchFields { get; set; }
+
     }
 }

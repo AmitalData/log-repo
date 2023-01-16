@@ -17,5 +17,5 @@ export class ReferenceCustomObjectList extends CustomFieldList{
 		CreateDate: Date;
 		UpdateDate: Date;
 		InActive: boolean;
-	
+        SearchFields: string;
 }

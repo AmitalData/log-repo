@@ -671,7 +671,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         }
         this.NewButtonId = "NewButton_" + this.ObjectTableName;
 
-        if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "NEW", false)) {
+        if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "NEW", false) && !this.ObjectTable.IsCustom) {
             this.IsNewEntityButtonDisabled = true;
         }
 
@@ -2733,7 +2733,7 @@ RefreshBookings() {
         }
 }
     private SetNewEntityButtonDisabled() {
-    var isEnabled = false;
+        var isEnabled = false;
 
     if (this.SelectedQuery != null) {
         if (this.SelectedQuery.IsAddNewEntityEnabled) {
@@ -2858,10 +2858,11 @@ HaveFeatureNewExportDeclararion(): boolean {
 
     return b1 && b2;
 }
-AddNewEntity() {
+    AddNewEntity() {
+    
     if (this.SelectedQuery != null) {
 
-        if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "NEW", true)) {
+        if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "NEW", true) && !this.ObjectTable.IsCustom) {
             return;
         }
 
@@ -2929,8 +2930,11 @@ AddNewEntity() {
                     else if (this.ObjectTableName == "Customs.DeclarationReferantData") {
                         this.RunNewCustomsFileWizard();
                     }
-
-
+                    else if (this.ObjectTable.IsCustom) {
+                        this.RunNewCustomObjectWizard();
+                        return;
+                    }
+                    
                     else {
 
                         this.RunNewGenaricEntity();
@@ -3347,7 +3351,7 @@ RunNewExportDeclaration() {
     });
 }
     private OnNewEntityWindowClosed($event: any) {
-    this.onQueryChangeEvent.emit({ QueryCode: this.SelectedQueryCode, Filters: this.CurrentQueryFilters });
+        this.onQueryChangeEvent.emit({ QueryCode: this.SelectedQueryCode, Filters: this.CurrentQueryFilters });
 }
 
 ShowIt: boolean = true;
@@ -3410,7 +3414,7 @@ DoRefresh() {
     if (this.CurrentQueryFilters == null) {
         this.CurrentQueryFilters = new ApiQueryFilters();
     }
-    if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "READ", true)) {
+    if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "READ", true) && !this.ObjectTable.IsCustom) {
         return;
     }
     else {
@@ -3666,7 +3670,23 @@ RunNewMasterWizard() {
     logWindow.NewWizardArgs = { IsNewEntity: true };
     logWindow.WindowClosed.subscribe(($event: any) => this.OnNewEntityWindowClosed($event));
     logWindow.Show(componentPath);
-}
+    }
+
+    private RunNewCustomObjectWizard() {
+        var componentPath: string = "./Infrastructure/Components/NewEntity/NewCustomObjectComponent";
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = this.NewEntityButtonLabel;
+        logWindow.Width = 860;
+        logWindow.Height = 530;
+
+        logWindow.WindowArgs = {
+            ObjectTablePM: this.ObjectTable,
+            FatherComponent: this,
+        }
+        logWindow.NewWizardArgs = { IsNewEntity: true };
+        logWindow.WindowClosed.subscribe(($event: any) => this.OnNewEntityWindowClosed($event));
+        logWindow.Show(componentPath);
+    }
 
 RunNewAccountingIntegrityCheckWizard() {
     var __entity: AccountingIntegrityCheckPM = new AccountingIntegrityCheckPM();

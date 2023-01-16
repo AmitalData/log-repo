@@ -319,6 +319,10 @@ export class ReferenceCustomObjectPM {
     public get Field50() { if (!this.field50) { this.field50 = new CustomFieldClass(null, "Field50", this.ObjectTableName); } return this.field50; }
     public set Field50(newValue: CustomFieldClass) { this.field50 = newValue; this.MarkAsDirty("Field50"); }
 
+    private searchFields: string;
+    public get SearchFields() { return this.searchFields; }
+    public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
+
 
     public OldEntityPM: ReferenceCustomObjectPM;
 		

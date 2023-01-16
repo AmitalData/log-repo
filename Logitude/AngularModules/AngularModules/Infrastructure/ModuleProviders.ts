@@ -115,7 +115,12 @@ import { DeploymentPackagePMService } from './Services/StandardPMs/DeploymentPac
 import { DeploymentPackageListService } from './Services/StandardLists/DeploymentPackageListService';
 import { CustomFieldsMainObjectPMService } from './Services/StandardPMs/CustomFieldsMainObjectsPMService';
 import { CustomFieldsMainObjectListService } from './Services/StandardLists/CustomFieldsMainObjectListService';
-import { DigitalCustomizationService } from './Services/WebServices/DigitalCustomizationService'; 
+import { DigitalCustomizationService } from './Services/WebServices/DigitalCustomizationService';
+import { ReferenceCustomObjectPMService } from './Services/StandardPMs/ReferenceCustomObjectPMService';
+import { ReferenceCustomObjectListService } from './Services/StandardLists/ReferenceCustomObjectListService';
+import { DataCustomObjectPMService } from './Services/StandardPMs/DataCustomObjectPMService';
+import { DataCustomObjectListService } from './Services/StandardLists/DataCustomObjectListService';
+import { ReferantTeamListService } from '../Customs/Services/StandardLists/ReferantTeamListService';
 
 export class ModuleProviders {
 
@@ -237,6 +242,10 @@ export class ModuleProviders {
             case "CustomFieldsMainObjectPMService": { myResult = new CustomFieldsMainObjectPMService(); break; }
             case "CustomFieldsMainObjectListService": { myResult = new CustomFieldsMainObjectListService(); break; }
             case "DigitalCustomizationService": { myResult = new DigitalCustomizationService(); break; }
+            case "DataCustomObjectPMService": { myResult = new DataCustomObjectPMService(); break; }
+            case "DataCustomObjectListService": { myResult = new DataCustomObjectListService(); break; }
+            case "ReferenceCustomObjectPMService": { myResult = new ReferenceCustomObjectPMService(); break; }
+            case "ReferenceCustomObjectListService": { myResult = new ReferenceCustomObjectListService(); break; }
         }
 
         return myResult;
