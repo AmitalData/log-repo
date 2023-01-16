@@ -825,7 +825,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                         }
                                     case "008":
                                         {
-                                            consignmentPM.ReceiverWarehouseCode = GetValueIDType(registeredFacility.ID);
+                                            consignmentPM.ExportRecieverWareHouseCode = GetValueIDType(registeredFacility.ID);
                                             break;
                                         }
                                     case "005":

@@ -2036,10 +2036,10 @@ namespace Logitude.CustomsMessaging.RequestServices
                 seqnum++;
                 registeredFacilitylist.Add(GetImportRegisteredFacility(consignmentPM.StorageSiteCode, "004", seqnum, consignmentPM));
             }
-            if (!String.IsNullOrWhiteSpace(consignmentPM.ReceiverWarehouseCode))
+            if (!String.IsNullOrWhiteSpace(consignmentPM.ExportRecieverWareHouseCode))
             {
                 seqnum++;
-                registeredFacilitylist.Add(GetImportRegisteredFacility(consignmentPM.ReceiverWarehouseCode, "008", seqnum, consignmentPM));
+                registeredFacilitylist.Add(GetImportRegisteredFacility(consignmentPM.ExportRecieverWareHouseCode, "008", seqnum, consignmentPM));
             }
             if (consignmentPM.ConsignmentInternalTransitions != null)
             {
