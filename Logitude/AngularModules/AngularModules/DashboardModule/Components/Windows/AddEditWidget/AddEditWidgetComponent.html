@@ -312,7 +312,7 @@
                         </tr>
 
                         <!--KPI Settings-->
-                        <tr style="height:1px; vertical-align: top;" *ngIf="IsAdvancedSettingVisible && IsDisplaySettingVisibile">
+                        <tr style="height:1px; vertical-align: top;" *ngIf="IsAdvancedSettingVisible && isAdvancedSettingForKPI">
                             <td colspan="2">
                                 <table>
                                     <tr class="FormFieldRow">
@@ -429,7 +429,7 @@
                                             <ComboBox (SelectedItemChanged)="Alignment = $event"
                                                       [ItemsSource]="Alignments"
                                                       [SelectedItem]="Alignment"
-                                                      [IsDisabled]="this.TypeCode != 'kpi' || !this.EntityId">
+                                                      [IsDisabled]="this.TypeCode != 'kpi'">
                                             </ComboBox>
                                         </td>
                                         <td>
