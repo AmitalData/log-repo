@@ -706,6 +706,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
     public class TimeLineStop
     {
         public string CountryCode { get; set; }
+        public string CountryName { get; set; }
         public string City { get; set; }
         public DateTime? Date { get; set; }
         public string DateType { get; set; }
