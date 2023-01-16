@@ -172,6 +172,7 @@
     <Content Include="WarehouseScript\BuildWarehouse\BuildAddressDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseScript\BuildWarehouse\BuildARInvoiceTransferStatusDimensionTable.sql" />
     <Content Include="WarehouseScript\BuildWarehouse\BuildBrancheDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -295,6 +296,7 @@
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateAddressDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateARInvoiceTransferStatusDimensionTable.sql" />
     <Content Include="WarehouseScript\IncrementalWarehouse\UpdateChargesTypeDimensionTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
