@@ -37,6 +37,7 @@ using Logitude.Accounting.BL.EntityQueryServices;
 using System.ComponentModel.DataAnnotations;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.Accounting.Data.Repositories;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
@@ -245,6 +246,27 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 List<CardList> connectedCards = query.GetConnectedCards(accountId, authToken.Tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, connectedCards);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetGLAReconcilationCount(string accountId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("GLAccount", "READ", authToken.Tenant);
+
+                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
+                LedgerTransactionRepository LedgerTransactionreop = new LedgerTransactionRepository(authToken.Tenant);
+                var reconcilationCount = LedgerTransactionreop.getRecoCount(accountId);
+
+                return Request.CreateResponse(HttpStatusCode.OK, reconcilationCount);
             }
             catch (Exception ex)
             {
