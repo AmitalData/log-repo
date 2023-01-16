@@ -1,14 +1,12 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-	<Sql Version="19">
+	<Sql Version="21">
       <![CDATA[	  
 	  
 		delete from DigitalPortalScreens where id != ''
 		declare @customerProfileId as varchar(15)
 		set @customerProfileId = (select Id from DigitalProfiles where [Name] = 'Customer' and Tenant = 0 )
-
 		declare @agentProfileId as varchar(15)
 		set @agentProfileId = (select Id from DigitalProfiles where [Name] = 'Agent' and Tenant = 0 )
-
 		declare @shipmentObjectId as varchar(15)
 		set @shipmentObjectId = (select Id from ObjectTables where [Name] = 'Shipment' and Tenant = 0 )
         declare @EntityId as varchar(15)

@@ -1,8 +1,7 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="32">
+  <Sql Version="34">
     <![CDATA[	
 	  delete from DigitalTextCodes where id != ''
-
       declare @NewEntityId as varchar(15)
 	  declare @generalObjectTableId as varchar(15)
 	  set @generalObjectTableId = (select Id from ObjectTables where [Name] = 'General' and Tenant = 0 )
@@ -19,6 +18,18 @@
 		{
 			"TextCode": "General.G.NoDataDefaultMSG",
 			"DefaultText": "You do not have any information here All information will be displayed here, when it will be added by the forwarder",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.NoDate",
+			"DefaultText": "No date",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.Arrived",
+			"DefaultText": "Arrived",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
@@ -2551,6 +2562,18 @@
 		{
 			"TextCode": "General.G.NoDataDefaultMSG",
 			"DefaultText": "You do not have any information here All information will be displayed here, when it will be added by the forwarder",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.NoDate",
+			"DefaultText": "No date",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.Arrived",
+			"DefaultText": "Arrived",
 			"FieldCode": "",
 			"DisplayText": ""
 		},

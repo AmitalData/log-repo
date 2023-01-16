@@ -29,6 +29,8 @@ namespace Logitude.Infrastructure.Data.EntityPOCOs
 	    public DateTime UpdateDate { get; set; }
         [Column("Name")]
 	    public string Name { get; set; }
+        [Column("Code")]
+	    public string Code { get; set; }
     }
 }
 	 

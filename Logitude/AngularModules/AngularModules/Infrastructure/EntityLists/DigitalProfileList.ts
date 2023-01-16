@@ -13,6 +13,7 @@ export class DigitalProfileList {
 	CreateDate: Date;
 	UpdateDate: Date;
 	Name: string;
+	Code: string;
 	
 }
  

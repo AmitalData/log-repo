@@ -21,12 +21,17 @@ namespace Logitude.Infrastructure.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-        public IQueryable<DigitalFieldSecurity> GetDigitalFieldSecurity(int tenant, string objectTableId, string profileId)
+        public IQueryable<DigitalFieldSecurity> GetDigitalFieldSecurity(int tenant, string objectTableId, string profileCode)
         {
             return context.DigitalFieldSecurities
                           .Where(a => a.Tenant == tenant
                                       && a.ObjectTableId.Equals(objectTableId)
-                                      && a.ProfileId.Equals(profileId));
+                                      && a.DigitalProfile.Code.Equals(profileCode));
+        }
+        
+        public IQueryable<DigitalFieldSecurity> GetDigitalFieldSecurityTenant0()
+        {
+            return context.DigitalFieldSecurities.Where(a => a.Tenant == 0);
         }
    }
 }

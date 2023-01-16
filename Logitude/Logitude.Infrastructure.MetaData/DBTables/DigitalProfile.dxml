@@ -37,4 +37,11 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="Code"
+    Type="nvarchar"
+    Size="255">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

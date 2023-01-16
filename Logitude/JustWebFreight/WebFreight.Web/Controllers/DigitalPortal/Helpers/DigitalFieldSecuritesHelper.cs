@@ -9,10 +9,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
 {
     public class DigitalFieldSecuritesHelper
     {
-        public List<DigitalFeildSecurityObject> GitDigitalSecuritesFeilds(string objectTableId, string profileId, int tenant, bool singleApi = true)
+        public List<DigitalFeildSecurityObject> GitDigitalSecuritesFeilds(string objectTableId, string profileCode, int tenant, bool singleApi = true)
         {
             var digitalFieldSecurityQuery = new DigitalFieldSecurityQueryService(tenant);
-            var digitalFieldSecurity = digitalFieldSecurityQuery.GetDigitalFieldSecurityQuery(0, objectTableId, profileId);
+            var digitalFieldSecurity = digitalFieldSecurityQuery.GetDigitalFieldSecurityQuery(0, objectTableId, profileCode);
             var defaultDigitalFieldSecurity = JsonConvert.DeserializeObject<List<DigitalFeildSecurityObject>>(digitalFieldSecurity.DefaultSettings);
             var customDigitalFeildSecurityObject = new List<DigitalFeildSecurityObject>();
 
@@ -97,7 +97,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
 
             if (tenant != 0)
             {
-                var customDigitalFieldSecurityList = digitalFieldSecurityQuery.GetDigitalFieldSecurityQuery(tenant, objectTableId, profileId);
+                var customDigitalFieldSecurityList = digitalFieldSecurityQuery.GetDigitalFieldSecurityQuery(tenant, objectTableId, profileCode);
 
                 if (customDigitalFieldSecurityList != null)
                 {
@@ -137,10 +137,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
         {
             var helper = new DigitalFieldSecuritesHelper();
             var defaultDigitalFieldSecurity = helper.GitDigitalSecuritesFeilds(checkObjectFieldExistenceRequest.ObjectTableId,
-                                                                               checkObjectFieldExistenceRequest.ProfileId, tenant);
+                                                                               checkObjectFieldExistenceRequest.ProfileCode, tenant);
 
             var defaultDigitalFieldTenant0 = helper.GitDigitalSecuritesFeilds(checkObjectFieldExistenceRequest.ObjectTableId,
-                                                                               checkObjectFieldExistenceRequest.ProfileId, 0);
+                                                                               checkObjectFieldExistenceRequest.ProfileCode, 0);
 
             var res = false;
 
