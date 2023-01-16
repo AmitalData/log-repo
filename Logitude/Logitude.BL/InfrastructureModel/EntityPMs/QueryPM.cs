@@ -52,7 +52,8 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string FeatureUniqeCode { get; set; }
         public string DisplayText { get; set; }
         public bool IsViewOnly { get; set; }
-
+        public bool IsDefault { get; set; }
+        public bool IsFromCustomObjectTable { get; set; }
 
         private List<SharedUserQueryPM> sharedUserQueries;
         [Include]

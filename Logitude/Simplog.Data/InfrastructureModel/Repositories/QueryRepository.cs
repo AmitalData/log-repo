@@ -79,7 +79,15 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                                         select a;
             return queries.OrderBy(d => d.IndexOrder);
         }
-     
+
+        public Query GetDefaultQueryByObjectTableIdAndTenant(string objectTableId, int tenant)
+        {
+            Query query = (from a in webFreightContext.Queries
+                                        where a.ObjectTableId == objectTableId && a.Tenant == tenant && a.SystemLevel && a.IsDefault
+                                         select a).FirstOrDefault();
+            return query;
+        }
+
         public void Add(Query entity)
         {
             context.Queries.Add(entity);
