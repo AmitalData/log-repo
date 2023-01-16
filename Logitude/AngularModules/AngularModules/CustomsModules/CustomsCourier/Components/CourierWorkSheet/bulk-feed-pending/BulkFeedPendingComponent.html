@@ -28,6 +28,7 @@
         <button style="text-align:right" (click)="OpenMultiUpdateWindow()">עדכון נתוני הצהרה</button>
         <button style="text-align:right" (click)="CreateInvoiceDocumentWindow()">צור מסמך חשבון ספק</button>
         <button style="text-align:right" (click)="Export2Excel()">הורדה לאקסל</button>
+        <button style="text-align:right" (click)="SendALLSVG(true)">בקרת סיווגים</button>
 
     </div>
 
@@ -129,7 +130,10 @@
         </span>
         <!--[QueryFilterItems]="LoadingContactFilterItems"-->
     </MultiSelectLOV>
-
+    <LogLabel [ObjectFieldName]="'CustomerName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        
+    <LogTextBox [ObjectFieldName]="'CustomerName'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                            [HideColumns]="true"></LogTextBox>
 
     <button class="Button" style="height:22px" (click)="search()">
         {{'Customs.General.O.Search' | TextCodeTranslationPipe}}

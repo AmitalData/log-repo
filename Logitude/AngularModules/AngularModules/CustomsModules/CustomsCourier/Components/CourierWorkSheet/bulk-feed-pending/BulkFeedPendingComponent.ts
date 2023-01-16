@@ -15,7 +15,9 @@ import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollect
 import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
+import { Observable } from 'rxjs';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
+import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { AppTool } from '../../../../../Infrastructure/Tools';
 import { DropdownMenuFilterComponent } from '../DropdownMenuFilterComponent';
 
@@ -354,9 +356,76 @@ export class BulkFeedPendingComponent extends BaseComponent {
     logitudeWindow.Title = TextCodeTranslator.Translate("General.B.ExportingDataToExcel");//"Exporting View Data List To Excel File";
     logitudeWindow.WindowArgs = windowArgs;
     logitudeWindow.Show('./Infrastructure/Components/Export2ExcelControl/Export2ExcelControl');
-  }
+    }
+
+    SendALLSVG(isAll: boolean) {
+
+        
+        this.Navigate();
+        
+    }
+
+    Navigate() {
+
+        //MyFilters.SortBy = this.currentSortingCol;
+        //MyFilters.SortDirection = this.currentSortingDir;
+
+        var filter = this.getFilter();
+        filter.GetAll = this._CourierWorksheetSharedDataService.connectedSelectAll;
 
 
+        filter.GetCount = false;
+        filter.PageIndex = 0;
+
+        filter.GetAll = true;
+        // MyFilters.PageSize = 100;
+
+        //this.CurrentQueryFilters = MyFilters;
+        var ids: string[] = [];
+        this._entityListService.getByFilters("Customs.DeclarationCourierStatus", filter, null).then((observable: Observable<any>) => {
+            observable.subscribe((response: ServiceResponse) => {
+                console.log(response);
+                response.Result.forEach((item) => {
+                    ids.push(item.DeclarationId);
+                });
+
+                console.log(ids);
+
+                var selectedEntityId = ids[0];
+
+                SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = true;
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
+                    .then(cmpRef => {
+                        var label = "מסך עבודה";//TextCodeTranslator.Translate(this.SelectedQuery.NameTextCodeCode);
+                        cmpRef.instance.ComponentRef = cmpRef;
+                        cmpRef.instance.Run({
+                            EntityId: selectedEntityId,///$event.rowData.Id
+                            BackButtonLabel: label,
+                            NavigationIds: ids,
+                            SelectedTabCode: "DCCF",
+                            ObjectTableName: "Customs.Declaration",
+                        });
+                        cmpRef.instance.BackCompleted.subscribe(bk => {
+                            if (SessionLocator.SelectedSession != null && SessionLocator.SelectedSession.CurrentWindow != null) {
+                                SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = false;
+                            }
+                            this.OnBackFromEdit(selectedEntityId, event);
+                        });                        //  if (SessionLocator.LoggedUserPM.Email == "mohammad@fnarsoft.com") {
+                        //this.DestroyMe = true;
+                        //}
+
+                    });
+            });
+
+        });
+
+
+    }
+
+    OnBackFromEdit(selectedEntityId, $event) {
+        this.MyScrollTop = $event.scrollTop;
+        this.RefreshButtonClicked();
+    }
   SetWindowArgs(args: any) {
     this.CourierMasterPM = args?.CourierMasterPM;
     this.GetPending();
@@ -600,7 +669,11 @@ export class BulkFeedPendingComponent extends BaseComponent {
   public set CasualSupplierName(newValue: string) {
     this.casualSupplierName = newValue;
   }
-
+    private customerName: string;
+    public get CustomerName() { return this.customerName; }
+    public set CustomerName(newValue: string) {
+        this.customerName = newValue;
+    }
   private weightFrom: number;
   public get WeightFrom() { return this.weightFrom; }
   public set WeightFrom(newValue: number) {
