@@ -1080,8 +1080,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 Carrier = shipment.PreCarriageCarrierName,
                 CarrierNumber = shipment.PreCarriageCarrierNumber,
                 VesselName = shipment.PreCarriageTransportModeId == "O" ? shipment.PreCarriageVesselName : null,
-                CarrierNumberLabel = "Shipment.O.Routings.CarrierNo",
-                CarrierLabel = "Shipment.O.Routings.Carrier",
             };
 
             return preCarriageLeg;
@@ -1194,8 +1192,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 Carrier = shipment.OnCarriageCarrierName,
                 CarrierNumber = shipment.OnCarriageCarrierNumber,
                 VesselName = shipment.OnCarriageTransportModeId == "O" ? shipment.OnCarriageVesselName : null,
-                CarrierNumberLabel = "Shipment.O.Routings.CarrierNo",
-                CarrierLabel = "Shipment.O.Routings.Carrier",
             };
 
             return onCarriageLeg;
