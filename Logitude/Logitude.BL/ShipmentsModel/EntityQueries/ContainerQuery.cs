@@ -289,6 +289,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     AdditionalReference3 = container.AdditionalReference3,
                     AdditionalReference4 = container.AdditionalReference4,
                     HasTransshipments = container.HasTransshipments,
+                    MainCarriageFromCountryId = container.ShipmentMainCarriageFromPort == null ? null : container.ShipmentMainCarriageFromPort.Country.Id,
+                    MainCarriageToCountryId = container.ShipmentMainCarriageToPort == null ? null : container.ShipmentMainCarriageToPort.Country.Id,
+                    MainCarriageFromCountryName = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CountryName: "",
+                    MainCarriageToCountryName = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryName: "",
+                    MainCarriageFromCountryCode = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CountryCode: "",
+                    MainCarriageToCountryCode = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryCode: "",
                 };
 
                 if (container.EntityStatus != null)
@@ -362,7 +368,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     .Include("ShipmentTransshipment1ToPort").Include("ShipmentTransshipment1FromPort").Include("ShipmentMainCarriageToPort").Include("ShipmentMainCarriageFromPort")
                     .Include("ShipmentPreCarriageToPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentEntityStatus").Include("TerminalCard").Include("TerminalCardAddress")
                     .Include("ShipmentOriginAgent").Include("ShipmentDestinationAgent").Include("ShipmentType").Include("CustomerCard").Include("Handler")
-                    .Include("EntityStatus").Include("TruckerCard")
+                    .Include("EntityStatus").Include("TruckerCard").Include("ShipmentMainCarriageToPort.Country").Include("ShipmentMainCarriageFromPort.Country").Include("ShipmentMainCarriageToPort.CountryName").Include("ShipmentMainCarriageFromPort.CountryName").Include("ShipmentMainCarriageToPort.CountryCode").Include("ShipmentMainCarriageFromPort.CountryCode")
                     where container.Id == id && container.Tenant == tenant
                     select new ContainerPM()
                     {
@@ -611,6 +617,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         OnCarriageGateOut = container.OnCarriageGateOut,
                         PreCarriageGateIn = container.PreCarriageGateIn,
                         UpdatedByPartner = container.UpdatedByPartner,
+                        
+                        MainCarriageFromCountryId = container.ShipmentMainCarriageFromPort == null ? null : container.ShipmentMainCarriageFromPort.Country.Id,
+                        MainCarriageToCountryId = container.ShipmentMainCarriageToPort == null ? null : container.ShipmentMainCarriageToPort.Country.Id,
+                        MainCarriageFromCountryName = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CountryName : "",
+                        MainCarriageToCountryName = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryName : "",
+                        MainCarriageFromCountryCode = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CountryCode : "",
+                        MainCarriageToCountryCode = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryCode : "",
                     }).ToList();
         }
 
@@ -621,7 +634,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     .Include("ShipmentTransshipment1ToPort").Include("ShipmentTransshipment1FromPort").Include("ShipmentMainCarriageToPort").Include("ShipmentMainCarriageFromPort")
                     .Include("ShipmentPreCarriageToPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentEntityStatus").Include("TerminalCard")
                     .Include("ShipmentOriginAgent").Include("ShipmentDestinationAgent").Include("ShipmentType").Include("CustomerCard").Include("Handler").Include("EntityStatus").Include("TruckerCard")
-                    .Include("ContainerType").Include("ShipmentMainCarriageFromPort.CountryName").Include("ShipmentMainCarriageToPort.CountryName").Include("ShipmentMainCarriageFromPort.CountryCode").Include("ShipmentMainCarriageToPort.CountryCode")
+                    .Include("ContainerType").Include("ShipmentMainCarriageToPort.Country").Include("ShipmentMainCarriageFromPort.Country").Include("ShipmentMainCarriageFromPort.CountryName").Include("ShipmentMainCarriageToPort.CountryName").Include("ShipmentMainCarriageFromPort.CountryCode").Include("ShipmentMainCarriageToPort.CountryCode")
                                                select new ContainerList()
                                                {
                                                    Id = container.Id,
@@ -884,10 +897,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    AdditionalReference3 = container.AdditionalReference3,
                                                    AdditionalReference4 = container.AdditionalReference4,
                                                    HasTransshipments = container.HasTransshipments,
-                                                   MainCarriageFromCountry = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CountryName : "",
-                                                   MainCarriageToCountry = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryName : "",
-                                                   MainCarriageFromCountryCode = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CountryCode : "",
-                                                   MainCarriageToCountryCode = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryCode : "",
                                                    Field11 = container.Field11,
                                                    Field12 = container.Field12,
                                                    Field13 = container.Field13,
@@ -918,6 +927,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    Field38 = container.Field38,
                                                    Field39 = container.Field39,
                                                    Field40 = container.Field40,
+                                                   MainCarriageFromCountryId = container.ShipmentMainCarriageFromPort == null ? null : container.ShipmentMainCarriageFromPort.Country.Id,
+                                                   MainCarriageToCountryId = container.ShipmentMainCarriageToPort == null ? null : container.ShipmentMainCarriageToPort.Country.Id,
+                                                   MainCarriageFromCountryName = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CountryName : "",
+                                                   MainCarriageToCountryName = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryName : "",
+                                                   MainCarriageFromCountryCode = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CountryCode : "",
+                                                   MainCarriageToCountryCode = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryCode : "",
+
                                                };
             return result;
         }
@@ -1174,6 +1190,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     AdditionalReference2 = container.AdditionalReference2,
                     AdditionalReference3 = container.AdditionalReference3,
                     AdditionalReference4 = container.AdditionalReference4,
+                    MainCarriageFromCountryId = container.ShipmentMainCarriageFromPort == null ? null : container.ShipmentMainCarriageFromPort.Country.Id,
+                    MainCarriageToCountryId = container.ShipmentMainCarriageToPort == null ? null : container.ShipmentMainCarriageToPort.Country.Id,
+                    MainCarriageFromCountryName = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CountryName : "",
+                    MainCarriageToCountryName = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryName : "",
+                    MainCarriageFromCountryCode = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CountryCode : "",
+                    MainCarriageToCountryCode = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryCode : "",
                 };
                 MapCustomFields(containerPM, container);
             }
@@ -1444,6 +1466,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     AdditionalReference2 = container.AdditionalReference2,
                     AdditionalReference3 = container.AdditionalReference3,
                     AdditionalReference4 = container.AdditionalReference4,
+                    MainCarriageFromCountryId = container.ShipmentMainCarriageFromPort == null ? null : container.ShipmentMainCarriageFromPort.Country.Id,
+                    MainCarriageToCountryId = container.ShipmentMainCarriageToPort == null ? null : container.ShipmentMainCarriageToPort.Country.Id,
+                    MainCarriageFromCountryName = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CountryName : "",
+                    MainCarriageToCountryName = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryName : "",
+                    MainCarriageFromCountryCode = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CountryCode : "",
+                    MainCarriageToCountryCode = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryCode : "",
                 };
             }
 
@@ -1702,6 +1730,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     AdditionalReference2 = container.AdditionalReference2,
                     AdditionalReference3 = container.AdditionalReference3,
                     AdditionalReference4 = container.AdditionalReference4,
+                    MainCarriageFromCountryId = container.ShipmentMainCarriageFromPort == null ? null : container.ShipmentMainCarriageFromPort.Country.Id,
+                    MainCarriageToCountryId = container.ShipmentMainCarriageToPort == null ? null : container.ShipmentMainCarriageToPort.Country.Id,
+                    MainCarriageFromCountryName = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CountryName : "",
+                    MainCarriageToCountryName = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryName : "",
+                    MainCarriageFromCountryCode = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CountryCode : "",
+                    MainCarriageToCountryCode = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryCode : "",
                 };
                 MapCustomFields(containerPM, container);
             }
@@ -1972,6 +2006,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     AdditionalReference2 = container.AdditionalReference2,
                     AdditionalReference3 = container.AdditionalReference3,
                     AdditionalReference4 = container.AdditionalReference4,
+                    MainCarriageFromCountryId = container.ShipmentMainCarriageFromPort == null ? null : container.ShipmentMainCarriageFromPort.Country.Id,
+                    MainCarriageToCountryId = container.ShipmentMainCarriageToPort == null ? null : container.ShipmentMainCarriageToPort.Country.Id,
+                    MainCarriageFromCountryName = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CountryName : "",
+                    MainCarriageToCountryName = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryName : "",
+                    MainCarriageFromCountryCode = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CountryCode : "",
+                    MainCarriageToCountryCode = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryCode : "",
                 };
             }
 

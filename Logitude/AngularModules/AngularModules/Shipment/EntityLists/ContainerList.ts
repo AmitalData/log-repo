@@ -269,8 +269,10 @@ export class ContainerList {
 		AdditionalReference3: string;
 		AdditionalReference4: string;
 		HasTransshipments: boolean;
-		MainCarriageFromCountry: string;
-		MainCarriageToCountry: string;
+		MainCarriageFromCountryId: string;
+		MainCarriageToCountryId: string;
+		MainCarriageFromCountryName: string;
+		MainCarriageToCountryName: string;
 		MainCarriageFromCountryCode: string;
 		MainCarriageToCountryCode: string;
 		Field11: string;

@@ -456,5 +456,11 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field40 { get; set; }
+        public string MainCarriageFromCountryId { get; set; }
+        public string MainCarriageToCountryId { get; set; }
+        public string MainCarriageFromCountryName { get; set; }
+        public string MainCarriageToCountryName { get; set; }
+        public string MainCarriageFromCountryCode { get; set; }
+        public string MainCarriageToCountryCode { get; set; }
     }
 }
