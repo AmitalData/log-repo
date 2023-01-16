@@ -21,15 +21,32 @@ namespace WebFreight.Web.Controllers.DigitalPortal
     {
         [HttpGet]
         [Route("DigitalTextCode/GetDigitalProfileName")]
-        public HttpResponseMessage GetDigitalProfileName()
+        public HttpResponseMessage GetDigitalProfileName(int tenant = 0)
         {
             string email = "";
-            int tenant = 0;
+            int defaultTenantNumber = 0;
             try
             {
-                var textCodeQuery = new DigitalProfileQueryService(tenant);
-                var digitalProfiles = textCodeQuery.GetDigitalProfileQuery(tenant);
-                return Request.CreateResponse(HttpStatusCode.OK, digitalProfiles);
+                var digitalProfileQuery = new DigitalProfileQueryService(defaultTenantNumber);
+                var tenantDigitalProfiles = digitalProfileQuery.GetDigitalProfileQuery(tenant);
+
+                if (!tenantDigitalProfiles.Any())
+                {
+                    var digitalProfiles = digitalProfileQuery.GetDigitalProfileQuery(defaultTenantNumber);
+
+                    foreach (var item in digitalProfiles)
+                    {
+                        digitalProfileQuery.UpdateDigitalProfile(new DigitalProfileList
+                        {
+                            Name = item.Name,
+                            Tenant = tenant,
+                            CreateDate = DateTime.UtcNow,
+                            UpdateDate = DateTime.UtcNow
+                        });
+                    }
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, tenantDigitalProfiles);
             }
             catch (AutenticationException ex)
             {

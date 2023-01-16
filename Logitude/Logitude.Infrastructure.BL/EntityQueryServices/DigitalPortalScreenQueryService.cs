@@ -4,11 +4,8 @@ using Logitude.Infrastructure.Data;
 using Logitude.Infrastructure.Data.EntityLists;
 using Logitude.Infrastructure.Data.Repsitories;
 using Simplog.Server.Infrastructure;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Logitude.Infrastructure.BL.EntityQueryServices
 {
@@ -29,7 +26,8 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                                                                         Content = x.Content,
                                                                         DraftContent = x.DraftContent,
                                                                         ScreenCode = x.ScreenCode,
-                                                                        ObjectTableId = x.ObjectTableId
+                                                                        ObjectTableId = x.ObjectTableId,
+                                                                        ProfileId = x.ProfileId
                                                                     })
                                                                     .ToList();
             return digitalPortalScreens;
@@ -48,7 +46,8 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                                                                         CreateDate = x.CreateDate,
                                                                         UpdateDate = x.UpdateDate,
                                                                         ScreenCode = x.ScreenCode,
-                                                                        ObjectTableId = x.ObjectTableId
+                                                                        ObjectTableId = x.ObjectTableId,
+                                                                        ProfileId = x.ProfileId
                                                                     })
                                                                     .ToList();
             return digitalPortalScreens;
@@ -67,7 +66,8 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                     Content = digitalPortalScreenUpdateObject.Content,
                     DraftContent = digitalPortalScreenUpdateObject.DraftContent,
                     CreateDate = digitalPortalScreenUpdateObject.CreateDate,
-                    UpdateDate = digitalPortalScreenUpdateObject.UpdateDate
+                    UpdateDate = digitalPortalScreenUpdateObject.UpdateDate,
+                    ProfileId = digitalPortalScreenUpdateObject.ProfileId
                 };
 
                 entityPm.ChangeSetOp = ChangeSetOperation.Insert;
@@ -87,7 +87,8 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                     DraftContent = digitalPortalScreenUpdateObject.DraftContent,               
                     ScreenCode = digitalPortalScreenUpdateObject.ScreenCode,
                     CreateDate = digitalPortalScreenUpdateObject.CreateDate,
-                    UpdateDate = digitalPortalScreenUpdateObject.UpdateDate                    
+                    UpdateDate = digitalPortalScreenUpdateObject.UpdateDate,
+                    ProfileId = digitalPortalScreenUpdateObject.ProfileId
                 };
 
                 var contextData = InfrastructureContext.GetContext(entityPm.Tenant);

@@ -69,6 +69,11 @@ export class DigitalPortalScreenPM {
     public set DraftContent(newValue: string) { if (this.draftContent != newValue) { this.draftContent = newValue; this.MarkAsDirty("DraftContent"); } }
        
 	 
+    private profileId: string;
+    public get ProfileId() { return this.profileId; }
+    public set ProfileId(newValue: string) { if (this.profileId != newValue) { this.profileId = newValue; this.MarkAsDirty("ProfileId"); } }
+       
+	 
 
     public OldEntityPM: DigitalPortalScreenPM;
 		
