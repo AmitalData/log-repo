@@ -1,6 +1,5 @@
-﻿using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
-using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
+﻿using Logitude.BL.InfrastructureModel.EntityLists;
+using Logitude.BL.InfrastructureModel.EntityQueries;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
@@ -29,25 +28,29 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                 {
                     if (item.FieldName == "InOrigin")
                     {
-                        EntityStatusRepository statusRepository = new EntityStatusRepository(_tenant);
-                        var departedCodeWeight = statusRepository.GetSingleEntityStatusByCode("SDEP", _tenant).StatusWeight;
-                        queryableData = queryableData.Where(a => a.StatusWeight < departedCodeWeight);
+                        var allStatuses = GetAllDigitalAllowedStatus(_tenant);
+                        var allowedStatusCode = allStatuses.Select(a => a.Code).ToList();
+                        var departedCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SDEP")?.StatusWeight;
+                        queryableData = queryableData.Where(a => allowedStatusCode.Contains(a.StatusCode) && a.StatusWeight < departedCodeWeight);
                     }
 
                     if (item.FieldName == "InTransit")
                     {
-                        EntityStatusRepository statusRepository = new EntityStatusRepository(_tenant);
-                        var departedCodeWeight = statusRepository.GetSingleEntityStatusByCode("SDEP", _tenant).StatusWeight;
-                        var arrivedAtDestinationCodeWeight = statusRepository.GetSingleEntityStatusByCode("SARR", _tenant).StatusWeight;
-                        queryableData = queryableData.Where(a => a.StatusWeight >= departedCodeWeight
+                        var allStatuses = GetAllDigitalAllowedStatus(_tenant);
+                        var allowedStatusCode = allStatuses.Select(a => a.Code).ToList();
+                        var departedCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SDEP")?.StatusWeight;
+                        var arrivedAtDestinationCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SARR")?.StatusWeight;
+
+                        queryableData = queryableData.Where(a => allowedStatusCode.Contains(a.StatusCode) && a.StatusWeight >= departedCodeWeight
                                                   && a.StatusWeight < arrivedAtDestinationCodeWeight);
                     }
 
                     if (item.FieldName == "AtDestination")
                     {
-                        EntityStatusRepository statusRepository = new EntityStatusRepository(_tenant);
-                        var arrivedAtDestinationCodeWeight = statusRepository.GetSingleEntityStatusByCode("SARR", _tenant).StatusWeight;
-                        queryableData = queryableData.Where(a => a.StatusWeight >= arrivedAtDestinationCodeWeight);
+                        var allStatuses = GetAllDigitalAllowedStatus(_tenant);
+                        var allowedStatusCode = allStatuses.Select(a => a.Code).ToList();
+                        var arrivedAtDestinationCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SARR")?.StatusWeight;
+                        queryableData = queryableData.Where(a => allowedStatusCode.Contains(a.StatusCode) && a.StatusWeight >= arrivedAtDestinationCodeWeight);
                     }
 
                     if (item.FieldName == "DigitalPortalSearchFields")
@@ -254,25 +257,29 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                 {
                     if (item.FieldName == "InOrigin")
                     {
-                        EntityStatusRepository statusRepository = new EntityStatusRepository(_tenant);
-                        var departedCodeWeight = statusRepository.GetSingleEntityStatusByCode("SDEP", _tenant).StatusWeight;
-                        queryableData = queryableData.Where(a=>a.StatusWeight < departedCodeWeight);
+                        var allStatuses = GetAllDigitalAllowedStatus(_tenant);
+                        var allowedStatusCode = allStatuses.Select(a => a.Code).ToList();
+                        var departedCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SDEP")?.StatusWeight;
+                        queryableData = queryableData.Where(a => allowedStatusCode.Contains(a.StatusCode) && a.StatusWeight < departedCodeWeight);
                     }
 
                     if (item.FieldName == "InTransit")
                     {
-                        EntityStatusRepository statusRepository = new EntityStatusRepository(_tenant);
-                        var departedCodeWeight = statusRepository.GetSingleEntityStatusByCode("SDEP", _tenant).StatusWeight;
-                        var arrivedAtDestinationCodeWeight = statusRepository.GetSingleEntityStatusByCode("SARR", _tenant).StatusWeight;
-                        queryableData = queryableData.Where(a => a.StatusWeight >= departedCodeWeight
+                        var allStatuses = GetAllDigitalAllowedStatus(_tenant);
+                        var allowedStatusCode = allStatuses.Select(a => a.Code).ToList();
+                        var departedCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SDEP")?.StatusWeight;
+                        var arrivedAtDestinationCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SARR")?.StatusWeight;
+
+                        queryableData = queryableData.Where(a => allowedStatusCode.Contains(a.StatusCode) && a.StatusWeight >= departedCodeWeight
                                                   && a.StatusWeight < arrivedAtDestinationCodeWeight);
                     }
 
                     if (item.FieldName == "AtDestination")
                     {
-                        EntityStatusRepository statusRepository = new EntityStatusRepository(_tenant);
-                        var arrivedAtDestinationCodeWeight = statusRepository.GetSingleEntityStatusByCode("SARR", _tenant).StatusWeight;
-                        queryableData = queryableData.Where(a => a.StatusWeight >= arrivedAtDestinationCodeWeight);
+                        var allStatuses = GetAllDigitalAllowedStatus(_tenant);
+                        var allowedStatusCode = allStatuses.Select(a => a.Code).ToList();
+                        var arrivedAtDestinationCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SARR")?.StatusWeight;
+                        queryableData = queryableData.Where(a => allowedStatusCode.Contains(a.StatusCode) && a.StatusWeight >= arrivedAtDestinationCodeWeight);
                     }
 
                     if (item.FieldName == "DigitalPortalSearchFields")
@@ -552,6 +559,14 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
             ShipmentSubTypeRepository shipmentSubTypeRepository = new ShipmentSubTypeRepository(context);
             IQueryable<ShipmentSubType> shipmentSubTypes = shipmentSubTypeRepository.GetShipmentSubTypes(tenant);
             return shipmentSubTypes?.ToList();
+        }
+
+        private static List<EntityStatusList> GetAllDigitalAllowedStatus(int tenant)
+        {
+            var entityStatusQuery = new EntityStatusQuery(tenant);
+            var allStatuses = entityStatusQuery.GetDigitalPortalActiveStatuses(tenant)
+                                               .ToList();
+            return allStatuses;
         }
     }
 }
