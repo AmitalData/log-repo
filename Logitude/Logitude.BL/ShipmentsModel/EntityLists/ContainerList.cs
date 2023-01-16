@@ -275,6 +275,10 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string AdditionalReference3 { get; set; }
         public string AdditionalReference4 { get; set; }
         public bool HasTransshipments { get; set; }
+        public string MainCarriageFromCountry { get; set; }
+        public string MainCarriageToCountry  { get; set; }
+        public string MainCarriageFromCountryCode { get; set; }
+        public string MainCarriageToCountryCode { get; set; }
         public string Field11 { get; set; }
         public string Field12 { get; set; }
         public string Field13 { get; set; }

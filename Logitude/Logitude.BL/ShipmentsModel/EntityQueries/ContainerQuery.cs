@@ -621,7 +621,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     .Include("ShipmentTransshipment1ToPort").Include("ShipmentTransshipment1FromPort").Include("ShipmentMainCarriageToPort").Include("ShipmentMainCarriageFromPort")
                     .Include("ShipmentPreCarriageToPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentPreCarriageFromPort").Include("ShipmentEntityStatus").Include("TerminalCard")
                     .Include("ShipmentOriginAgent").Include("ShipmentDestinationAgent").Include("ShipmentType").Include("CustomerCard").Include("Handler").Include("EntityStatus").Include("TruckerCard")
-                    .Include("ContainerType")
+                    .Include("ContainerType").Include("ShipmentMainCarriageFromPort.CountryName").Include("ShipmentMainCarriageToPort.CountryName").Include("ShipmentMainCarriageFromPort.CountryCode").Include("ShipmentMainCarriageToPort.CountryCode")
                                                select new ContainerList()
                                                {
                                                    Id = container.Id,
@@ -884,6 +884,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    AdditionalReference3 = container.AdditionalReference3,
                                                    AdditionalReference4 = container.AdditionalReference4,
                                                    HasTransshipments = container.HasTransshipments,
+                                                   MainCarriageFromCountry = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CountryName : "",
+                                                   MainCarriageToCountry = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryName : "",
+                                                   MainCarriageFromCountryCode = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CountryCode : "",
+                                                   MainCarriageToCountryCode = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryCode : "",
                                                    Field11 = container.Field11,
                                                    Field12 = container.Field12,
                                                    Field13 = container.Field13,
