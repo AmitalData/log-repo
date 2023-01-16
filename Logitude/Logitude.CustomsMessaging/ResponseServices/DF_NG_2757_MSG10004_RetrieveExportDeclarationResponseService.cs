@@ -1089,7 +1089,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
            
             if (governmentAgencyGoodsItem != null && governmentAgencyGoodsItem.DMExtensions.GoodsItemAmount != null)
             {
-                var arrAmountType = new string[] { "1", "3" };
+                var arrAmountType = new string[] { "1", "3","7" };
                 var cur = declaration.GoodsShipment[0].Invoice.DMExtensions.InvoiceAmount.currencyID.ToString();
                 foreach (var GoodsItemAmount in governmentAgencyGoodsItem.DMExtensions.GoodsItemAmount)
                 {
