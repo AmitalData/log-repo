@@ -55,6 +55,7 @@ export class DigitalButtonComponent {
         if (!isDestroyed) {
             this.CD.detectChanges();
         }
+        this.CurrentSession.SessionEvent.emit({ Name: "ReloadDigitalPortalLabels" });
     }
 
     public FireEvent(eventArgs: any) {
