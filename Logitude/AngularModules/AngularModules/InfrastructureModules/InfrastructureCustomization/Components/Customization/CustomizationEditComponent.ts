@@ -24,6 +24,7 @@ import { ScreenLayoutMainMenuItem } from './CustomizationMenuItems/ScreenLayoutM
 import { TabsMainMenuItem } from './CustomizationMenuItems/TabsMainMenuItem';
 import { RulesMainMenuItem } from './CustomizationMenuItems/RulesMainMenuItem';
 import { SubEntitiesMainMenuItem } from './CustomizationMenuItems/SubEntitiesMainMenuItem';
+import { QueriesMainMenuItem } from './CustomizationMenuItems/QueriesMainMenuItem';
 declare var window: any;
 
 @Component({
@@ -132,6 +133,7 @@ export class CustomizationEditComponent {
         myResult.push(new TabsMainMenuItem(args));
         myResult.push(new RulesMainMenuItem(args));
         myResult.push(new SubEntitiesMainMenuItem(args));
+        myResult.push(new QueriesMainMenuItem(args));
 
         return myResult;
     }

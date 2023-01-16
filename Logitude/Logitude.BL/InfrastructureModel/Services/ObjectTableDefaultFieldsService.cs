@@ -90,6 +90,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             objectField.HasTemplate = true;
             objectField.DisplayOnly = true;
             this.AddFullNameTextCode("Create Date", objectField);
+            AddListTextCode("Create Date", objectField);
             return objectField;
         }
         private ObjectField GetCreatedByObjectField()
@@ -100,6 +101,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             objectField.MaxLength = 15;
             objectField.SystemMaxLength = 15;
             objectField.CanFilter = true;
+            objectField.DisplayInList = true;
             objectField.Operator = "Equals";
             objectField.ValidForQuerySection1 = this.entityPM.Name;
             objectField.DisplayInEntityVariables = true;
@@ -107,6 +109,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             objectField.AutomationEmailRecipient = true;
             objectField.DisplayOnly = true;
             this.AddFullNameTextCode("Created By", objectField);
+            AddListTextCode("Created By", objectField);
             return objectField;
         }
         private ObjectField GetUpdateDateObjectField()
@@ -122,6 +125,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             objectField.HasTemplate = true;
             objectField.DisplayOnly = true;
             this.AddFullNameTextCode("Update Date", objectField);
+            AddListTextCode("Update Date", objectField);
             return objectField;
         }
         private ObjectField GetUpdatedByObjectField()
@@ -132,6 +136,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             objectField.MaxLength = 15;
             objectField.SystemMaxLength = 15;
             objectField.CanFilter = true;
+            objectField.DisplayInList = true;
             objectField.Operator = "Equals";
             objectField.ValidForQuerySection1 = this.entityPM.Name;
             objectField.DisplayInEntityVariables = true;
@@ -139,6 +144,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             objectField.AutomationEmailRecipient = true;
             objectField.DisplayOnly = true;
             this.AddFullNameTextCode("Updated By", objectField);
+            AddListTextCode("Updated By", objectField);
             return objectField;
         }
         private ObjectField GetNewObjectFieldInstance(string objectFieldName)
@@ -172,6 +178,21 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             objectField.FullNameTextCodeCode = textCode.Code;
             textCodeRepository.Add(textCode);
         }
-       
+
+        private void AddListTextCode(string defaultText, ObjectField objectField)
+        {
+            TextCode textCode = new TextCode();
+            textCode.Id = IdCounter.GetNumber("TextCode", this.entityPM.Tenant).ToString();
+            textCode.ObjectTableId = this.entityPM.Id;
+            textCode.Code = this.entityPM.Name + ".CH." + defaultText.Replace(" ","").Trim() + "ListLable";
+            textCode.DefaultText = defaultText;
+            textCode.Tenant = this.entityPM.Tenant;
+            textCode.TextCodeTypeCode = "CH";
+
+            objectField.ListTextCodeId = textCode.Id;
+            objectField.ListTextCodeCode = textCode.Code;
+            textCodeRepository.Add(textCode);
+        }
+
     }
 }
