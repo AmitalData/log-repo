@@ -321,40 +321,42 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 SupplierInvoiceItemPM itemPM = itemQueryService.GetSingle(connectedItem.DeclarationId, connectedItem.InvoiceCounterKey, connectedItem.LineNumber, true, false);
                 SupplierInvoiceItemsProdIdentUpdateService updateService = new SupplierInvoiceItemsProdIdentUpdateService(customContext, new Dictionary<string, IContext>(), tenant);
                 SupplierInvoiceItemUpdateService itemupdateService = new SupplierInvoiceItemUpdateService(customContext, new Dictionary<string, IContext>(), tenant);
-
+                
                 var identification = itemPM.SupplierInvoiceItemsProdIdents.Where(d => d.TypeCode == "MN").FirstOrDefault();
-                if (identification != null)
-                {
-                    identification.Identification = connectedItem.CatalogNumber;
-                    identification.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-                    updateService.Update(identification, true);
-                }
-                else
-                {
-                    int line = 0;
-                    if (itemPM.SupplierInvoiceItemsProdIdents.Count > 0)
+                if (connectedItem?.CatalogNumber != null) {
+                    if (identification != null)
                     {
-
-                        line = itemPM.SupplierInvoiceItemsProdIdents.Max(d => d.LineNumber);
-                       
+                        identification.Identification = connectedItem.CatalogNumber;
+                        identification.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                        updateService.Update(identification, true);
                     }
+                    else
+                    {
+                        int line = 0;
+                        if (itemPM.SupplierInvoiceItemsProdIdents.Count > 0)
+                        {
 
-                    line += 1;
-                    var item= new SupplierInvoiceItemsProdIdentPM();
+                            line = itemPM.SupplierInvoiceItemsProdIdents.Max(d => d.LineNumber);
 
-                    item.DeclarationId = connectedItem.DeclarationId;
-                    item.Tenant = tenant;
-                    item.InvoiceCounterKey = connectedItem.InvoiceCounterKey;
-                    item.InvoiceItemLineNumber = itemPM.LineNumber;
-                    item.LineNumber = line;
-                    item.Identification = connectedItem.CatalogNumber;
-                    item.TypeCode = "MN";
-                    item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
-                  //  updateService.Update(identification, true);
-                    itemPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-                    itemPM.SupplierInvoiceItemsProdIdents.Add(item);
-                    itemupdateService.Update(itemPM, true);
+                        }
 
+                        line += 1;
+                        var item = new SupplierInvoiceItemsProdIdentPM();
+
+                        item.DeclarationId = connectedItem.DeclarationId;
+                        item.Tenant = tenant;
+                        item.InvoiceCounterKey = connectedItem.InvoiceCounterKey;
+                        item.InvoiceItemLineNumber = itemPM.LineNumber;
+                        item.LineNumber = line;
+                        item.Identification = connectedItem.CatalogNumber;
+                        item.TypeCode = "MN";
+                        item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                        //  updateService.Update(identification, true);
+                        itemPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                        itemPM.SupplierInvoiceItemsProdIdents.Add(item);
+                        itemupdateService.Update(itemPM, true);
+
+                    }
                 }
                
 

@@ -163,6 +163,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             bool isValid = true;
             bool hasRequest = false;
+            DeclarationPM declarationPM = null;
             if (entityPM.ChangeSetOp == ChangeSetOperation.Delete)
             {
                 ICustomContext context = this.MainContext as CustomContext;
@@ -205,14 +206,16 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     DeclarationReferantDataUpdate(entityPM);
                 }
+
+                DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
+                 declarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, false, false);
+
                 if (entityPM.IsItemChanged && !string.IsNullOrWhiteSpace(entityPM.ItemCode))
                 {
                     //var setting = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
                     //if (setting != null)
                     //{
                     //if (!setting.IsConnectedToUniFreight)
-                    DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
-                    DeclarationPM declarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, false, false);
                     if (declarationPM == null || (declarationPM != null && !declarationPM.IsConnectedToUnifreight))
                     {
                         return;
@@ -269,11 +272,23 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     {
                         if (item.AttachmentTypeCode == "1" || item.AttachmentTypeCode == "2")
                         {
-                            if (string.IsNullOrEmpty(item.CertificateNumber) || string.IsNullOrEmpty(item.ReqConfirmationTypeCode) || string.IsNullOrEmpty(item.ResConfirmationTypeCode) || !string.IsNullOrEmpty(item.CertificateExemptionTypeCode) || !string.IsNullOrEmpty(item.CustomsAttachmentID))
+                            if (declarationPM?.Direction == "E")
                             {
-                                isValid = false;
-                                break;
+                                if (string.IsNullOrEmpty(item.CertificateNumber) || string.IsNullOrEmpty(item.ReqConfirmationTypeCode) || string.IsNullOrEmpty(item.ResConfirmationTypeCode) || !string.IsNullOrEmpty(item.CertificateExemptionTypeCode)  )
+                                {
+                                    isValid = false;
+                                    break;
+                                }
                             }
+                            else
+                            {
+                                if (string.IsNullOrEmpty(item.CertificateNumber) || string.IsNullOrEmpty(item.ReqConfirmationTypeCode) || string.IsNullOrEmpty(item.ResConfirmationTypeCode) || !string.IsNullOrEmpty(item.CertificateExemptionTypeCode) || !string.IsNullOrEmpty(item.CustomsAttachmentID))
+                                {
+                                    isValid = false;
+                                    break;
+                                }
+                            }
+                          
 
                         }
 
