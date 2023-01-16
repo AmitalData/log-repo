@@ -330,7 +330,16 @@ export class AddEditPrivateLabelShipmentComponent extends AddEditPrivateLabelCus
         this.UIProperties.SetEnabled("ShipperId", this.ObjectTableName, true);
         this.UIProperties.SetRequired("MainCarriageToPortId", this.ObjectTableName, false);
         this.UIProperties.SetRequired("MainCarriageFromPortId", this.ObjectTableName, false);
+        this.UIProperties.SetRequired("ConsigneeName", this.ObjectTableName, false);
+        this.UIProperties.SetRequired("HSCode", this.ObjectTableName, false);
+        this.SetUIProperties_OceanTransportMode();
+        this.SetUIProperties_Containers();
+    }
 
+    SetUIProperties_OceanTransportMode() {
+        if (this.TransportModeId != "O") return;
+        this.UIProperties.SetRequired("ShippingAgent", this.ObjectTableName, false);
+        this.UIProperties.SetRequired("ShippingLine", this.ObjectTableName, false);
     }
 
     SetUIProperties_Filters() {
@@ -430,19 +439,19 @@ export class AddEditPrivateLabelShipmentComponent extends AddEditPrivateLabelCus
     }
 
     private hasPackage4() {
-        return this.PackageTypeList4 != null && this.Quantity4 > 0;
+        return this.PackageTypeList4 != null && this.Quantity4 > 0 && this.Weight4 > 0;
     }
 
     private hasPackage3() {
-        return this.PackageTypeList3 != null && this.Quantity3 > 0;
+        return this.PackageTypeList3 != null && this.Quantity3 > 0 && this.Weight3 > 0;
     }
 
     private hasPackage2() {
-        return this.PackageTypeList2 != null && this.Quantity2 > 0;
+        return this.PackageTypeList2 != null && this.Quantity2 > 0 && this.Weight2 > 0;
     }
 
     private hasPackage1() {
-        return this.PackageTypeList1 != null && this.Quantity1 > 0;
+        return this.PackageTypeList1 != null && this.Quantity1 > 0 && this.Weight1 > 0;
     }
 
     CalculateNumberOfPackages(): number {
@@ -475,6 +484,7 @@ export class AddEditPrivateLabelShipmentComponent extends AddEditPrivateLabelCus
         item.PackageTypeId = this.PackageTypeId4;
         item.Tenant = SessionLocator.Tenant;
         item.ShipmentId = this.EntityPM.Id;
+        item.GrossWeight = this.EntityPM.Weight4;
         this.EntityPM.AddOrderPackage(item);
         return item;
     }
@@ -487,6 +497,7 @@ export class AddEditPrivateLabelShipmentComponent extends AddEditPrivateLabelCus
         item.PackageTypeId = this.PackageTypeId3;
         item.Tenant = SessionLocator.Tenant;
         item.ShipmentId = this.EntityPM.Id;
+        item.GrossWeight = this.EntityPM.Weight3;
         this.EntityPM.AddOrderPackage(item);
         return item;
     }
@@ -499,6 +510,7 @@ export class AddEditPrivateLabelShipmentComponent extends AddEditPrivateLabelCus
         item.PackageTypeId = this.PackageTypeId2;
         item.Tenant = SessionLocator.Tenant;
         item.ShipmentId = this.EntityPM.Id;
+        item.GrossWeight = this.EntityPM.Weight2;
         this.EntityPM.AddOrderPackage(item);
         return item;
     }
@@ -511,6 +523,7 @@ export class AddEditPrivateLabelShipmentComponent extends AddEditPrivateLabelCus
         item.PackageTypeId = this.PackageTypeId1;
         item.Tenant = SessionLocator.Tenant;
         item.ShipmentId = this.EntityPM.Id;
+        item.GrossWeight = this.EntityPM.Weight1;
         this.EntityPM.AddOrderPackage(item);
         return item;
     }
@@ -564,21 +577,29 @@ export class AddEditPrivateLabelShipmentComponent extends AddEditPrivateLabelCus
         this.UIProperties.SetEnabled("PackageTypeId2", this.ObjectTableName, this.Quantity2 > 0);
         this.UIProperties.SetEnabled("PackageTypeId3", this.ObjectTableName, this.Quantity3 > 0);
         this.UIProperties.SetEnabled("PackageTypeId4", this.ObjectTableName, this.Quantity4 > 0);
+        this.UIProperties.SetEnabled("Weight1", this.ObjectTableName, this.Quantity1 > 0);
+        this.UIProperties.SetEnabled("Weight2", this.ObjectTableName, this.Quantity2 > 0);
+        this.UIProperties.SetEnabled("Weight3", this.ObjectTableName, this.Quantity3 > 0);
+        this.UIProperties.SetEnabled("Weight4", this.ObjectTableName, this.Quantity4 > 0);
 
         if (AppTool.IsNullOrZero(this.Quantity1)) {
             this.PackageTypeId1 = null;
+            this.Weight1 = null;
         }
 
         if (AppTool.IsNullOrZero(this.Quantity2)) {
             this.PackageTypeId2 = null;
+            this.Weight2 = null;
         }
 
         if (AppTool.IsNullOrZero(this.Quantity3)) {
             this.PackageTypeId3 = null;
+            this.Weight3 = null;
         }
 
         if (AppTool.IsNullOrZero(this.Quantity4)) {
             this.PackageTypeId4 = null;
+            this.Weight4 = null;
         }
 
     }
@@ -607,6 +628,35 @@ export class AddEditPrivateLabelShipmentComponent extends AddEditPrivateLabelCus
         this.EntityPM.Quantity4 = newValue;
         this.SetUIProperties_Containers();
     }
+
+    get Weight1() { return this.EntityPM.Weight1; }
+    set Weight1(newValue: number) {
+        if (this.EntityPM.Weight1 == newValue) return;
+        this.EntityPM.Weight1 = newValue;
+        this.SetUIProperties_Containers();
+    }
+
+    get Weight2() { return this.EntityPM.Weight2; }
+    set Weight2(newValue: number) {
+        if (this.EntityPM.Weight2 == newValue) return;
+        this.EntityPM.Weight2 = newValue;
+        this.SetUIProperties_Containers();
+    }
+
+    get Weight3() { return this.EntityPM.Weight3; }
+    set Weight3(newValue: number) {
+        if (this.EntityPM.Weight3 == newValue) return;
+        this.EntityPM.Weight3 = newValue;
+        this.SetUIProperties_Containers();
+    }
+
+    get Weight4() { return this.EntityPM.Weight4; }
+    set Weight4(newValue: number) {
+        if (this.EntityPM.Weight4 == newValue) return;
+        this.EntityPM.Weight4 = newValue;
+        this.SetUIProperties_Containers();
+    }
+
     public PackageTypeList1: PackageTypeList = null;
     get PackageTypeId1() { return this.EntityPM.PackageTypeId1; }
     set PackageTypeId1(newValue: string) {
@@ -711,6 +761,10 @@ export class AddEditPrivateLabelShipmentComponent extends AddEditPrivateLabelCus
 
     private UpsertExportShipment() {
         this.ValidateReferenceNumber();
+        this.ValidateConsigneeNameField();
+        this.ValidatePickUpDeliveryFields();
+        this.ValidateHSCodeField();
+        this.ValidateSealNumberField();
         this.ValidateRequiredFields();
 
         if (this.ValidationErrorsList.length != 0) {
@@ -902,6 +956,40 @@ export class AddEditPrivateLabelShipmentComponent extends AddEditPrivateLabelCus
         return;
     }
 
+    private ValidateConsigneeNameField() {
+        if (AppTool.IsNullOrEmpty(this.ConsigneeName)) {
+            this.PushErrorMessage("Consignee/Importer Name");
+        }
+        if (!AppTool.IsNullOrEmpty(this.ConsigneeName) && this.ConsigneeName.length >= 30) {
+            this.ValidationErrorsList.push("Consignee/Importer Name Field Length must be less than 30");
+        }
+    }
+
+    private ValidatePickUpDeliveryFields() {
+        if (!AppTool.IsNullOrEmpty(this.PlaceOfDelivery) && this.PlaceOfDelivery.length >= 30) {
+            this.ValidationErrorsList.push("Place Of Delivery Field Length must be less than 30");
+        }
+        if (!AppTool.IsNullOrEmpty(this.PickupPlace) && this.PickupPlace.length >= 30) {
+            this.ValidationErrorsList.push("Pickup Place Field Length must be less than 30");
+        }
+    }
+
+    private ValidateHSCodeField() {
+        if (!this.OrderIsDangerouseGoods) return;
+        if (AppTool.IsNullOrEmpty(this.HSCode)) {
+            this.PushErrorMessage("HS/UN Code");
+        }
+        if (!AppTool.IsNullOrEmpty(this.HSCode) && this.HSCode.length >= 30) {
+            this.ValidationErrorsList.push("HS/UN Code Name Field Length must be less than 30");
+        }
+    }
+
+    private ValidateSealNumberField() {
+        if (this.TransportModeId != "O") return;
+        if (!AppTool.IsNullOrEmpty(this.SealNo) && this.SealNo.length >= 30) {
+            this.ValidationErrorsList.push("Seal No. Field Length must be less than 30");
+        }
+    }
     public ValidateContainerNumber(input: string) {
         this.WarningErrorsList = [];
         let result = FormatTool.ValidateContainerNumber(input);
@@ -927,6 +1015,22 @@ export class AddEditPrivateLabelShipmentComponent extends AddEditPrivateLabelCus
 
         if (AppTool.IsNullOrEmpty(this.IncotermId)) {
             this.PushErrorMessage("Incoterm");
+        }
+
+        if (AppTool.IsNullOrEmpty(this.ShippingAgent)) {
+            this.PushErrorMessage("Shipping Agent");
+        }
+
+        if (AppTool.IsNullOrEmpty(this.ShippingLine)) {
+            this.PushErrorMessage("Shipping Line");
+        }
+
+        if (!AppTool.IsNullOrEmpty(this.ShippingAgent) && this.ShippingAgent.length >= 30) {
+            this.ValidationErrorsList.push("Shipping Agent Field Length must be less than 30");
+        }
+
+        if (!AppTool.IsNullOrEmpty(this.ShippingLine) && this.ShippingLine.length >= 30) {
+            this.ValidationErrorsList.push("Shipping Line Field Length must be less than 30");
         }
 
         if (!AppTool.IsNullOrEmpty(this.RequestedFlightDate)) {
@@ -967,6 +1071,7 @@ export class AddEditPrivateLabelShipmentComponent extends AddEditPrivateLabelCus
 
         this.ValidateContainers();
         this.ValidatePackateTypes();
+        this.validateWeight();
     }
 
     ValidatePackateTypes() {
@@ -1010,6 +1115,20 @@ export class AddEditPrivateLabelShipmentComponent extends AddEditPrivateLabelCus
         }
         if (!AppTool.IsNullOrEmpty(this.ContainerNumber4)) {
             this.ShowContainerValidationMessage(this.ContainerNumber4);
+        }
+    }
+    private validateWeight() {
+        if (AppTool.IsNullOrEmpty(this.Weight1) && !AppTool.IsNullOrEmpty(this.Quantity1)) {
+            this.PushErrorMessage("Weight");
+        }
+        if (AppTool.IsNullOrEmpty(this.Weight2) && !AppTool.IsNullOrEmpty(this.Quantity2)) {
+            this.PushErrorMessage("Weight");
+        }
+        if (AppTool.IsNullOrEmpty(this.Weight3) && !AppTool.IsNullOrEmpty(this.Quantity3)) {
+            this.PushErrorMessage("Weight");
+        }
+        if (AppTool.IsNullOrEmpty(this.Weight4) && !AppTool.IsNullOrEmpty(this.Quantity4)) {
+            this.PushErrorMessage("Weight");
         }
     }
 
@@ -1169,6 +1288,20 @@ export class AddEditPrivateLabelShipmentComponent extends AddEditPrivateLabelCus
     public get ShippingAgent() { return this.EntityPM.ShippingAgent }
     public set ShippingAgent(newValue: string) { this.EntityPM.ShippingAgent = newValue; }
 
+    public get ShippingLine() { return this.EntityPM.ShippingLine }
+    public set ShippingLine(newValue: string) { this.EntityPM.ShippingLine = newValue; }
+
+    public get PlaceOfDelivery() { return this.EntityPM.PlaceOfDelivery }
+    public set PlaceOfDelivery(newValue: string) { this.EntityPM.PlaceOfDelivery = newValue; }
+
+    public get PickupPlace() { return this.EntityPM.PickupPlace }
+    public set PickupPlace(newValue: string) { this.EntityPM.PickupPlace = newValue; }
+
+    public get SealNo() { return this.EntityPM.SealNo }
+    public set SealNo(newValue: string) { this.EntityPM.SealNo = newValue; }
+
+    public get HSCode() { return this.EntityPM.HSCode }
+    public set HSCode(newValue: string) { this.EntityPM.HSCode = newValue; }
 
 
     get PrivateLabelInvoiceNumber() { return this.EntityPM.PrivateLabelInvoiceNumber; }
@@ -1361,6 +1494,12 @@ export class AddEditPrivateLabelShipmentComponent extends AddEditPrivateLabelCus
             this.FreightPrepaidCollectId = incotermList.Freight;
             this.OtherPrepaidCollectId = incotermList.OtherCharges;
         }
+    }
+
+    GetTableHeight() {
+        if (this.TransportModeId == "O" && !this.PrivateLabelIncludePickup && !this.PrivateLabelIncludeDelivery) return 590;
+        if (this.TransportModeId == "O" && (this.PrivateLabelIncludePickup || this.PrivateLabelIncludeDelivery)) return 622;
+        return 555;
     }
 
 }

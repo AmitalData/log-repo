@@ -267,7 +267,7 @@
                                     <td>
                                         <div class="ScrollViewer" style="padding: 10px; padding-top: 5px; top: 3px; right: 3px; bottom: 3px;">
                                             <div class="ScrollContent" [ngStyle]="{opacity: ScreenOpacity}">
-                                                <table *ngIf="DirectionId == 'E' && !ShowAddDocument" style="overflow: scroll; height: 555px; ">
+                                                <table *ngIf="DirectionId == 'E' && !ShowAddDocument" style="overflow: scroll;  "[style.height.px]="GetTableHeight()">
                                                     <tr style="height: 19px;">
                                                         <td>
                                                             <div class="ScrollViewer" style="padding: 10px; padding-top: 5px; top: 3px; right: 3px; bottom: 3px;">
@@ -343,7 +343,7 @@
                                                                         <div class="SectionTitle">
                                                                             <table>
                                                                                 <tr>
-                                                                                    <td>Consignee</td>
+                                                                                    <td>Consignee/Importer</td>
                                                                                 </tr>
                                                                             </table>
                                                                         </div>
@@ -352,13 +352,14 @@
 
                                                                             <tr class="FormFieldRow">
                                                                                 <td [style.width.px]="LabelColumnWidth">
-                                                                                    <label style="padding-left:10px;color: rgb(110, 113, 114);">
+                                                                                    <div class="RedPoint"></div>
+                                                                                    <label style="padding-left: 10px; color: rgb(110, 113, 114);">
                                                                                         Name:
                                                                                     </label>
                                                                                 </td>
 
                                                                                 <td [style.width.px]="ControlColumnWidth">
-                                                                                    <LogTextBox [ObjectFieldName]="'ConsigneeName'" [Text]="ConsigneeName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                    <LogTextBox [NoValidation]="true" [ObjectFieldName]="'ConsigneeName'" [Text]="ConsigneeName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                                                 </td>
 
                                                                                 <td style="width: 20px;">
@@ -407,7 +408,7 @@
 
 
 
-                                                    <tr *ngIf="TransportModeId=='O'" [style.height.px]="28">
+                                                    <tr *ngIf="TransportModeId=='O'" [style.height.px]="37">
                                                         <td>
                                                             <div class="ScrollViewer" style="padding: 10px; padding-top: 5px; top: 3px; right: 3px; bottom: 3px;">
                                                                 <div class="ScrollContent" [ngStyle]="{opacity: ScreenOpacity}">
@@ -472,6 +473,7 @@
 
 
                                                                                 <td [style.width.px]="LabelColumnWidth">
+                                                                                    <div class="RedPoint"></div>
                                                                                     <label style="padding-left: 10px; color: rgb(110, 113, 114); font-size: 11px;">
                                                                                         Shipping Agent:
                                                                                     </label>
@@ -479,16 +481,54 @@
                                                                                 </td>
 
                                                                                 <td [style.width.px]="ControlColumnWidth">
-                                                                                    <LogTextBox [ObjectFieldName]="'ShippingAgent'" [Text]="ShippingAgent" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                    <LogTextBox [NoValidation]="true" [ObjectFieldName]="'ShippingAgent'" [Text]="ShippingAgent" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                                                 </td>
 
                                                                                 <td style="width: 20px;">
                                                                                     <div></div>
                                                                                 </td>
 
+                                                                                <td [style.width.px]="LabelColumnWidth">
+                                                                                    <div class="RedPoint"></div>
+                                                                                    <div>
+                                                                                        <label style="padding-left: 10px; color: rgb(110, 113, 114); font-size: 11px;">
+                                                                                            Shipping Line:
+                                                                                        </label>
+                                                                                    </div>
+
+                                                                                </td>
+                                                                                <td [style.width.px]="ControlColumnWidth">
+                                                                                    <LogTextBox [NoValidation]="true" [ObjectFieldName]="'ShippingLine'" [Text]="ShippingLine" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                </td>
+
+                                                                                <td style="width: 20px;">
+                                                                                    <div></div>
+                                                                                </td>
 
                                                                             </tr>
 
+                                                                            <tr *ngIf="TransportModeId == 'O'" class="FormFieldRow">
+
+
+                                                                                <td [style.width.px]="LabelColumnWidth">
+                                                                                    <div style="width:7px"></div>
+                                                                                    <label style="padding-left: 10px; color: rgb(110, 113, 114); font-size: 11px;">
+                                                                                        Seal No.:
+                                                                                    </label>
+
+                                                                                </td>
+
+                                                                                <td [style.width.px]="ControlColumnWidth">
+                                                                                    <LogTextBox [NoValidation]="true" [ObjectFieldName]="'SealNo'" [Text]="SealNo" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                </td>
+
+                                                                                
+
+                                                                                <td style="width: 20px;">
+                                                                                    <div></div>
+                                                                                </td>
+
+                                                                            </tr>
 
                                                                         </table>
 
@@ -502,7 +542,7 @@
                                                     </tr>
 
 
-                                                    <tr style="height: 19px;">
+                                                    <tr [style.height.px]="!PrivateLabelIncludePickup && !PrivateLabelIncludeDelivery ? '19' : '30'">
                                                         <td>
                                                             <div class="ScrollViewer" style="padding: 10px; padding-top: 5px; top: 3px; right: 3px; bottom: 3px;">
                                                                 <div class="ScrollContent" [ngStyle]="{opacity: ScreenOpacity}">
@@ -527,7 +567,7 @@
 
                                                                             <tr class="FormFieldRow">
                                                                                 <td>
-                                                                                    <table>
+                                                                                    <table class="FixedTable">
                                                                                         <tr class="FormFieldRow">
                                                                                             <td [style.width.px]="LabelColumnWidth">
                                                                                                 <label style="padding-left:10px;color: rgb(110, 113, 114);">
@@ -554,6 +594,32 @@
                                                                                             </td>
 
                                                                                         </tr>
+                                                                                        <tr *ngIf="PrivateLabelIncludeDelivery || PrivateLabelIncludePickup" class="FormFieldRow">
+                                                                                            <td [style.width.px]="LabelColumnWidth">
+                                                                                                <label [style.visibility]="PrivateLabelIncludePickup ? 'visible':'collapse'"   style="padding-left:10px;color: rgb(110, 113, 114);">
+                                                                                                    Pickup Place:
+                                                                                                </label>
+                                                                                            </td>
+
+                                                                                            <td [style.width.px]="ControlColumnWidth">
+                                                                                                <LogTextBox  [style.visibility]="PrivateLabelIncludePickup ? 'visible':'collapse'"  [NoValidation]="true" [ObjectFieldName]="'PickupPlace'" [Text]="PickupPlace" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                            </td>
+
+                                                                                            <td style="width: 5px;">
+                                                                                                <div></div>
+                                                                                            </td>
+
+                                                                                            <td [style.width.px]="LabelColumnWidth">
+                                                                                                <label [style.visibility]="PrivateLabelIncludeDelivery ? 'visible':'collapse'"  style="padding-left:10px;color: rgb(110, 113, 114);">
+                                                                                                    Place Of Delivery:
+                                                                                                </label>
+                                                                                            </td>
+
+                                                                                            <td [style.width.px]="ControlColumnWidth">
+                                                                                                <LogTextBox [style.visibility]="PrivateLabelIncludeDelivery ? 'visible':'collapse'"  [NoValidation]="true" [ObjectFieldName]="'PlaceOfDelivery'" [Text]="PlaceOfDelivery" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                            </td>
+                                                                                        </tr>
+
                                                                                     </table>
                                                                                 </td>
                                                                             </tr>
@@ -617,7 +683,7 @@
                                                                                             [LookUpTableName]="'Incoterm'">
                                                                                     </LogLov>
                                                                                 </td>
-                                                                                <td style="width: 20px;">
+                                                                                <td style="width: 35px;">
                                                                                     <div></div>
                                                                                 </td>
 
@@ -631,7 +697,23 @@
                                                                                 </td>
 
                                                                                 <td [style.width.px]="ControlColumnWidth">
-                                                                                    <LogCheckBox [ObjectFieldName]="'OrderIsDangerouseGoods'" [Checked]="OrderIsDangerouseGoods" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                                    <div style="display:flex; flex-direction:row">
+                                                                                        <LogCheckBox [ObjectFieldName]="'OrderIsDangerouseGoods'" [Checked]="OrderIsDangerouseGoods" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                                        <table [style.opacity]="OrderIsDangerouseGoods ? '1' : '0.5'" [style.pointer-events]="OrderIsDangerouseGoods ? 'auto' : 'none'">
+                                                                                            <tr>
+                                                                                                <td style="padding-left:10px; padding-bottom:5px;">
+                                                                                                    <div class="RedPoint"></div>
+                                                                                                    <label style="padding-left: 10px; color: rgb(110, 113, 114);">
+                                                                                                        HS/UN Code:
+                                                                                                    </label>
+                                                                                                </td>
+                                                                                                <td style="padding-left:2px; padding-bottom:5px;">
+                                                                                                    <LogTextBox [ForceDisable]="!OrderIsDangerouseGoods" [HideColumns]="true" [NoValidation]="true" [ObjectFieldName]="'HSCode'" [Text]="HSCode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+
+                                                                                    </div>
                                                                                 </td>
 
 
@@ -672,14 +754,14 @@
                                                                                         <tr>
                                                                                             <td style="width: 330px; vertical-align: middle;">
 
-                                                                                                <div *ngIf="ShipmentTypeId == 'FCLD'" class="FillParent">
+                                                                                                <div *ngIf="ShipmentTypeId == 'FCLD'">
                                                                                                     <table>
                                                                                                         <tr>
                                                                                                             <td style="width: 10px;">
-                                                                                                                <div></div>
+                                                                                                                <div style="width: 7px;"></div>
                                                                                                             </td>
 
-                                                                                                            <td style="width: 60px;">
+                                                                                                            <td style="width: 50px; text-align:center">
                                                                                                                 <label class="Label">{{'Shipment.S.NewShipment.Quantity' | TextCodeTranslationPipe}}</label>
                                                                                                             </td>
 
@@ -687,23 +769,27 @@
                                                                                                                 <div></div>
                                                                                                             </td>
 
-                                                                                                            <td style="width: 140px;">
+                                                                                                            <td style="width: 115px; text-align: center">
                                                                                                                 <label class="Label">{{'Shipment.S.NewShipment.PackageType' | TextCodeTranslationPipe}}</label>
+                                                                                                            </td>
+
+                                                                                                            <td style="width: 2px;">
+                                                                                                                <div></div>
+                                                                                                            </td>
+
+                                                                                                            <td style="width: 58px; text-align: center">
+                                                                                                                <label class="Label">Weight</label>
                                                                                                             </td>
                                                                                                             <td style="width: 2px;">
                                                                                                                 <div></div>
                                                                                                             </td>
-                                                                                                            <td [style.padding-right]="isRTL ? '15px'  : 'initial'">
+                                                                                                            <td  style="text-align: center; width: 90px;">
                                                                                                                 <label class="Label">Container #</label>
                                                                                                             </td>
                                                                                                             <td style="width: 10px;">
                                                                                                                 <div></div>
                                                                                                             </td>
-                                                                                                            <td style="width: 40px; position: relative; left: 90px; top: 8px; " [ngStyle]="isRTL ? {'right.px': 370} : {}">
-                                                                                                                <label style="padding-left:10px;color: rgb(110, 113, 114);">
-                                                                                                                    Notes:
-                                                                                                                </label>
-                                                                                                            </td>
+                                                                                                            
                                                                                                         </tr>
                                                                                                     </table>
                                                                                                 </div>
@@ -719,140 +805,166 @@
                                                                                         <tr style="height: 30px;">
                                                                                             <td style="width: 330px; height: 30px">
 
+                                                                                                <div>
+                                                                                                    <table>
 
-                                                                                                <table>
-                                                                                                    <tr class="FormFieldRow">
-                                                                                                        <td style="width: 10px;">
-                                                                                                            <div class="RedPoint" style="position: relative; top: 0px;"></div>
-                                                                                                        </td>
+                                                                                                        <tr class="FormFieldRow">
+                                                                                                            <td style="width: 10px;">
+                                                                                                                <div class="RedPoint" style="position: relative; top: 0px;"></div>
+                                                                                                            </td>
 
-                                                                                                        <td [style.width.px]="LabelColumnWidth - 70">
-                                                                                                            <LogTextBox [ObjectFieldName]="'Quantity1'" [Text]="Quantity1" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                                                                                                        </td>
+                                                                                                            <td style="width: 50px;">
+                                                                                                                <LogTextBox [ObjectFieldName]="'Quantity1'" [Text]="Quantity1" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                                            </td>
 
-                                                                                                        <td style="width: 2px;">
-                                                                                                            <div></div>
-                                                                                                        </td>
+                                                                                                            <td style="width: 2px;">
+                                                                                                                <div></div>
+                                                                                                            </td>
 
-                                                                                                        <td [style.width.px]="ControlColumnWidth - 120">
-                                                                                                            <LogLov [ObjectFieldName]="'PackageTypeId1'"
-                                                                                                                    [SelectedValue]="PackageTypeId1"
-                                                                                                                    [ObjectTableName]="ObjectTableName"
-                                                                                                                    [DataContext]="DataContext"
-                                                                                                                    [LookUpTableName]="'PackageType'"
-                                                                                                                    [DependencyFilter2Value]="true"
-                                                                                                                    (SelectedItemChanged)="PackageTypeList1 = $event">
-                                                                                                            </LogLov>
-                                                                                                        </td>
+                                                                                                            <td style="width: 115px;">
+                                                                                                                <LogLov [ObjectFieldName]="'PackageTypeId1'"
+                                                                                                                        [SelectedValue]="PackageTypeId1"
+                                                                                                                        [ObjectTableName]="ObjectTableName"
+                                                                                                                        [DataContext]="DataContext"
+                                                                                                                        [LookUpTableName]="'PackageType'"
+                                                                                                                        [DependencyFilter2Value]="true"
+                                                                                                                        [HideColumns]="true"
+                                                                                                                        (SelectedItemChanged)="PackageTypeList1 = $event">
+                                                                                                                </LogLov>
+                                                                                                            </td>
+                                                                                                            <td style="width: 2px;">
+                                                                                                                <div></div>
+                                                                                                            </td>
+                                                                                                            <td style="width: 58px;">
+                                                                                                                <LogTextBox [ObjectFieldName]="'Weight1'" [Text]="Weight1" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                                            </td>
+                                                                                                            <td style="width: 2px;">
+                                                                                                                <div></div>
+                                                                                                            </td>
 
-                                                                                                        <td style="width: 2px;">
-                                                                                                            <div></div>
-                                                                                                        </td>
+                                                                                                            <td class="Container" style="width: 90px;">
+                                                                                                                <LogTextBox [ObjectFieldName]="'ContainerNumber1'" [Text]="ContainerNumber1" (LostFocus)="ValidateContainerNumber($event)" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                                            </td>
+                                                                                                        </tr>
 
-                                                                                                        <td class="Container" [style.width.px]="LabelColumnWidth - 30" [ngStyle]="isRTL ? {'right.px': -35} : {'right.px': 35}">
-                                                                                                            <LogTextBox [ObjectFieldName]="'ContainerNumber1'" [Text]="ContainerNumber1" (LostFocus)="ValidateContainerNumber($event)" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                                                                                                        </td>
-                                                                                                    </tr>
+                                                                                                        <tr class="FormFieldRow">
+                                                                                                            <td style="width: 10px;">
+                                                                                                                <div style="width:7px"></div>
+                                                                                                            </td>
 
-                                                                                                    <tr class="FormFieldRow">
-                                                                                                        <td style="width: 10px;">
-                                                                                                            <div></div>
-                                                                                                        </td>
+                                                                                                            <td style="width: 50px;">
+                                                                                                                <LogTextBox [ObjectFieldName]="'Quantity2'" [Text]="Quantity2" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                                            </td>
 
-                                                                                                        <td [style.width.px]="LabelColumnWidth - 120">
-                                                                                                            <LogTextBox [ObjectFieldName]="'Quantity2'" [Text]="Quantity2" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                                                                                                        </td>
+                                                                                                            <td style="width: 2px;">
+                                                                                                                <div></div>
+                                                                                                            </td>
 
-                                                                                                        <td style="width: 2px;">
-                                                                                                            <div></div>
-                                                                                                        </td>
+                                                                                                            <td style="width: 115px;">
+                                                                                                                <LogLov [ObjectFieldName]="'PackageTypeId2'"
+                                                                                                                        [SelectedValue]="PackageTypeId2"
+                                                                                                                        [ObjectTableName]="ObjectTableName"
+                                                                                                                        [DataContext]="DataContext"
+                                                                                                                        [LookUpTableName]="'PackageType'"
+                                                                                                                        [DependencyFilter2Value]="true"
+                                                                                                                        [HideColumns]="true"
+                                                                                                                        (SelectedItemChanged)="PackageTypeList2 = $event">
+                                                                                                                </LogLov>
+                                                                                                            </td>
+                                                                                                            <td style="width: 2px;">
+                                                                                                                <div></div>
+                                                                                                            </td>
+                                                                                                            <td style="width: 58px;">
+                                                                                                                <LogTextBox [ObjectFieldName]="'Weight2'" [Text]="Weight2" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                                            </td>
+                                                                                                            <td style="width: 2px;">
+                                                                                                                <div></div>
+                                                                                                            </td>
 
-                                                                                                        <td [style.width.px]="ControlColumnWidth - 40">
-                                                                                                            <LogLov [ObjectFieldName]="'PackageTypeId2'"
-                                                                                                                    [SelectedValue]="PackageTypeId2"
-                                                                                                                    [ObjectTableName]="ObjectTableName"
-                                                                                                                    [DataContext]="DataContext"
-                                                                                                                    [LookUpTableName]="'PackageType'"
-                                                                                                                    [DependencyFilter2Value]="true"
-                                                                                                                    (SelectedItemChanged)="PackageTypeList2 = $event">
-                                                                                                            </LogLov>
-                                                                                                        </td>
-                                                                                                        <td style="width: 2px;">
-                                                                                                            <div></div>
-                                                                                                        </td>
+                                                                                                            <td class="Container" style="width: 90px;">
+                                                                                                                <LogTextBox [ObjectFieldName]="'ContainerNumber2'" [Text]="ContainerNumber2" (LostFocus)="ValidateContainerNumber($event)" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                                            </td>
+                                                                                                        </tr>
 
-                                                                                                        <td class="Container" [style.width.px]="LabelColumnWidth - 30" [ngStyle]="isRTL ? {'right.px': -35} : {'right.px': 35}">
-                                                                                                            <LogTextBox [ObjectFieldName]="'ContainerNumber2'" [Text]="ContainerNumber2" (LostFocus)="ValidateContainerNumber($event)" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                                                                                                        </td>
-                                                                                                    </tr>
+                                                                                                        <tr class="FormFieldRow">
+                                                                                                            <td style="width: 10px;">
+                                                                                                                <div style="width:7px"></div>
+                                                                                                            </td>
 
+                                                                                                            <td style="width: 50px;">
+                                                                                                                <LogTextBox [ObjectFieldName]="'Quantity3'" [Text]="Quantity3" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                                            </td>
 
-                                                                                                    <tr class="FormFieldRow">
-                                                                                                        <td style="width: 10px;">
-                                                                                                            <div></div>
-                                                                                                        </td>
+                                                                                                            <td style="width: 2px;">
+                                                                                                                <div></div>
+                                                                                                            </td>
 
-                                                                                                        <td [style.width.px]="LabelColumnWidth - 120">
-                                                                                                            <LogTextBox [ObjectFieldName]="'Quantity3'" [Text]="Quantity3" (LostFocus)="ValidateContainerNumber($event)" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                                                                                                        </td>
+                                                                                                            <td style="width: 115px;">
+                                                                                                                <LogLov [ObjectFieldName]="'PackageTypeId3'"
+                                                                                                                        [SelectedValue]="PackageTypeId3"
+                                                                                                                        [ObjectTableName]="ObjectTableName"
+                                                                                                                        [DataContext]="DataContext"
+                                                                                                                        [LookUpTableName]="'PackageType'"
+                                                                                                                        [DependencyFilter2Value]="true"
+                                                                                                                        [HideColumns]="true"
+                                                                                                                        (SelectedItemChanged)="PackageTypeList3 = $event">
+                                                                                                                </LogLov>
+                                                                                                            </td>
+                                                                                                            <td style="width: 2px;">
+                                                                                                                <div></div>
+                                                                                                            </td>
+                                                                                                            <td style="width: 58px;">
+                                                                                                                <LogTextBox [ObjectFieldName]="'Weight3'" [Text]="Weight3" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                                            </td>
+                                                                                                            <td style="width: 2px;">
+                                                                                                                <div></div>
+                                                                                                            </td>
 
-                                                                                                        <td style="width: 2px;">
-                                                                                                            <div></div>
-                                                                                                        </td>
+                                                                                                            <td class="Container" style="width: 90px;">
+                                                                                                                <LogTextBox [ObjectFieldName]="'ContainerNumber3'" [Text]="ContainerNumber3" (LostFocus)="ValidateContainerNumber($event)" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                                            </td>
+                                                                                                        </tr>
 
-                                                                                                        <td [style.width.px]="ControlColumnWidth - 40">
-                                                                                                            <LogLov [ObjectFieldName]="'PackageTypeId3'"
-                                                                                                                    [SelectedValue]="PackageTypeId3"
-                                                                                                                    [ObjectTableName]="ObjectTableName"
-                                                                                                                    [DataContext]="DataContext"
-                                                                                                                    [LookUpTableName]="'PackageType'"
-                                                                                                                    [DependencyFilter2Value]="true"
-                                                                                                                    (SelectedItemChanged)="PackageTypeList3 = $event">
-                                                                                                            </LogLov>
-                                                                                                        </td>
-                                                                                                        <td style="width: 2px;">
-                                                                                                            <div></div>
-                                                                                                        </td>
+                                                                                                        <tr class="FormFieldRow">
+                                                                                                            <td style="width: 10px;">
+                                                                                                                <div style="width:7px"></div>
+                                                                                                            </td>
 
-                                                                                                        <td class="Container" [style.width.px]="LabelColumnWidth - 30" [ngStyle]="isRTL ? {'right.px': -35} : {'right.px': 35}">
-                                                                                                            <LogTextBox [ObjectFieldName]="'ContainerNumber3'" [Text]="ContainerNumber3" (LostFocus)="ValidateContainerNumber($event)" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                                                                                                        </td>
-                                                                                                    </tr>
+                                                                                                            <td style="width: 50px;">
+                                                                                                                <LogTextBox [ObjectFieldName]="'Quantity4'" [Text]="Quantity4" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                                            </td>
 
-                                                                                                    <tr class="FormFieldRow">
-                                                                                                        <td style="width: 10px;">
-                                                                                                            <div></div>
-                                                                                                        </td>
+                                                                                                            <td style="width: 2px;">
+                                                                                                                <div></div>
+                                                                                                            </td>
 
-                                                                                                        <td [style.width.px]="LabelColumnWidth - 120">
-                                                                                                            <LogTextBox [ObjectFieldName]="'Quantity4'" [Text]="Quantity4" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                                                                                                        </td>
+                                                                                                            <td style="width: 115px;">
+                                                                                                                <LogLov [ObjectFieldName]="'PackageTypeId4'"
+                                                                                                                        [SelectedValue]="PackageTypeId4"
+                                                                                                                        [ObjectTableName]="ObjectTableName"
+                                                                                                                        [DataContext]="DataContext"
+                                                                                                                        [LookUpTableName]="'PackageType'"
+                                                                                                                        [DependencyFilter2Value]="true"
+                                                                                                                        [HideColumns]="true"
+                                                                                                                        (SelectedItemChanged)="PackageTypeList4 = $event">
+                                                                                                                </LogLov>
+                                                                                                            </td>
+                                                                                                            <td style="width: 2px;">
+                                                                                                                <div></div>
+                                                                                                            </td>
+                                                                                                            <td style="width: 58px;">
+                                                                                                                <LogTextBox [ObjectFieldName]="'Weight4'" [Text]="Weight4" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                                            </td>
+                                                                                                            <td style="width: 2px;">
+                                                                                                                <div></div>
+                                                                                                            </td>
 
-                                                                                                        <td style="width: 2px;">
-                                                                                                            <div></div>
-                                                                                                        </td>
-
-                                                                                                        <td [style.width.px]="ControlColumnWidth - 40">
-                                                                                                            <LogLov [ObjectFieldName]="'PackageTypeId4'"
-                                                                                                                    [SelectedValue]="PackageTypeId4"
-                                                                                                                    [ObjectTableName]="ObjectTableName"
-                                                                                                                    [DataContext]="DataContext"
-                                                                                                                    [LookUpTableName]="'PackageType'"
-                                                                                                                    [DependencyFilter2Value]="true"
-                                                                                                                    (SelectedItemChanged)="PackageTypeList4 = $event">
-                                                                                                            </LogLov>
-                                                                                                        </td>
-                                                                                                        <td style="width: 2px;">
-                                                                                                            <div></div>
-                                                                                                        </td>
-
-                                                                                                        <td class="Container" [style.width.px]="LabelColumnWidth - 30" [ngStyle]="isRTL ? {'right.px': -35} : {'right.px': 35}">
-                                                                                                            <LogTextBox [ObjectFieldName]="'ContainerNumber4'" [Text]="ContainerNumber4" (LostFocus)="ValidateContainerNumber($event)" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                                                                                                        </td>
-                                                                                                    </tr>
-
-                                                                                                </table>
-
+                                                                                                            <td class="Container" style="width: 90px;">
+                                                                                                                <LogTextBox [ObjectFieldName]="'ContainerNumber4'" [Text]="ContainerNumber4" (LostFocus)="ValidateContainerNumber($event)" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                    </table>
+                                                                                                </div>
                                                                                             </td>
 
                                                                                             <td>
@@ -900,6 +1012,9 @@
 
                                                                                 <td style="width: 200px;">
                                                                                     <div style=" position: relative; bottom: 15px;">
+                                                                                        <label style="color: rgb(110, 113, 114);">
+                                                                                            Notes:
+                                                                                        </label>
                                                                                         <LogTextBox [ObjectFieldName]="'Notes'" [Text]="Notes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
                                                                                     </div>
                                                                                 </td>
@@ -1206,7 +1321,7 @@
 
                                                                             <tr style="height: 33px;">
                                                                                 <td style="height: 22px;">
-                                                                                    <LogTextBox [ObjectFieldName]="'CustomerReference3'" [DataContext]="DataContext"></LogTextBox>
+                                                                                    <LogTextBox [ObjectFieldName]="'CustomerReference3'" [Text]="CustomerReference3" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                                                 </td>
                                                                             </tr>
 

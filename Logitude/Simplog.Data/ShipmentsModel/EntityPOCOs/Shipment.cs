@@ -789,5 +789,11 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
         public DateTime? QuoteFreightExpirationDate { get; set; }
         public bool IsINTTRAFROB { get; set; }
+        public string ShippingLine { get; set; }
+        public string PlaceOfDelivery { get; set; }
+        public string PickupPlace { get; set; }
+        public string SealNo { get; set; }
+        public string HSCode { get; set; }
+
     }
 }
