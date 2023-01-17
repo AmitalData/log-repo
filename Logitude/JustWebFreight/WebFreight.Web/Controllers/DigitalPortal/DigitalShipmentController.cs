@@ -25,6 +25,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Linq.Dynamic.Core;
 using Logitude.BL.Helpers;
+using Logitude.Infrastructure.BL.EntityQueryServices;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -32,7 +33,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
     {
         [HttpGet]
         [Route("DigitalShipment/GetSingle")]
-        public HttpResponseMessage GetSingle(string id, string cardId, string objectTableId = "1-4", string profileCode = "CS")
+        public HttpResponseMessage GetSingle(string id, string cardId, string objectTableId, string profileCode = "CS")
         {
             int tenant = 0;
             string email = "";
@@ -41,7 +42,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 List<string> cards = new List<string>();
                 if (!string.IsNullOrWhiteSpace(cardId))
                 {
-                    cards = cardId?.Split(',').ToList<string>();
+                    cards = cardId?.Split(',').ToList();
                 }
 
                 string logKey = PerformanceLogger.LogCurrentTime();
@@ -60,22 +61,46 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                     var shipmentPMJson = JsonConvert.SerializeObject(shipmentPM);
-                    var helper = new DigitalFieldSecuritesHelper();
-                    var blockedFieldSecurites = helper.GitDigitalSecuritesFeilds(objectTableId, profileCode, tenant)
-                                                      .Where(a => !a.HasPermission)
-                                                      .Select(a => a.FieldCode)
+                    var textCodeQuery = new DigitalTextCodeQueryService(0);
+
+                    var allowedTableNames = new List<string> { "Trucker", "Shipment", "ShipmentPackage", "ShipmentPickUpDelivery" };
+
+                    var objectFieldIds = textCodeQuery.GetDigitalTextCodesObjetTables(0)
+                                                      .Where(a => allowedTableNames.Contains(a.ObjectTableName))
+                                                      .Select(a => new 
+                                                      {
+                                                          a.ObjectTableId,
+                                                          a.ObjectTableName 
+                                                      })
                                                       .ToList();
 
+                    var helper = new DigitalFieldSecuritesHelper();
+
+                    var fields = new Dictionary<string, List<string>>();
+
+                    foreach (var item in objectFieldIds)
+                    {
+                        var blockedFields = helper.GitDigitalSecuritesFeilds(item.ObjectTableId, profileCode, tenant)
+                                                          .Where(a => !a.HasPermission)
+                                                          .Select(a => a.FieldCode)
+                                                          .ToList();
+
+                        fields.Add(item.ObjectTableName, blockedFields);
+                    }
+
                     var temp = (JObject)JsonConvert.DeserializeObject(shipmentPMJson);
+
+                    foreach (var item in fields)
+                    {
+                        temp.Descendants()
+                        .OfType<JProperty>()
+                        .Where(attr => item.Value.Contains($"{item.Key}.{tenant}.{attr.Name}") 
+                                       ||  item.Value.Contains($"{item.Key}.{attr.Name}"))
+                        .ToList()
+                        .ForEach(attr => attr.Remove());
+                    }
                     
-                    temp.Descendants()
-                     .OfType<JProperty>()
-                     .Where(attr => blockedFieldSecurites.Contains($"Shipment.{tenant}.{attr.Name}") || blockedFieldSecurites.Contains($"Shipment.{attr.Name}"))
-                     .ToList()
-                     .ForEach(attr => attr.Remove());
-
                     var json = JsonConvert.SerializeObject(temp);
-
                     return Request.CreateResponse(HttpStatusCode.OK, json);
                 }
 
