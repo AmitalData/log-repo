@@ -28,6 +28,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Models
         public string CardType { get; set; }
         public string ObjectTableName { get; set; }
         public string ObjectTableId { get; set; }
+        public string ProfileCode { get; set; }
         public string ProfileId { get; set; }
         public List<AdditionalFilters> AdditionalFilters { get; set; }
     }

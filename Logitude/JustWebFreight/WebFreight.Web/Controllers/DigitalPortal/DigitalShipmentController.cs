@@ -32,7 +32,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
     {
         [HttpGet]
         [Route("DigitalShipment/GetSingle")]
-        public HttpResponseMessage GetSingle(string id, string cardId, string objectTableId = "1-4", string profileId = "1-5")
+        public HttpResponseMessage GetSingle(string id, string cardId, string objectTableId = "1-4", string profileCode = "cs")
         {
             int tenant = 0;
             string email = "";
@@ -61,7 +61,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                     var shipmentPMJson = JsonConvert.SerializeObject(shipmentPM);
                     var helper = new DigitalFieldSecuritesHelper();
-                    var blockedFieldSecurites = helper.GitDigitalSecuritesFeilds(objectTableId, profileId, tenant)
+                    var blockedFieldSecurites = helper.GitDigitalSecuritesFeilds(objectTableId, profileCode, tenant)
                                                       .Where(a => !a.HasPermission)
                                                       .Select(a => a.FieldCode)
                                                       .ToList();
