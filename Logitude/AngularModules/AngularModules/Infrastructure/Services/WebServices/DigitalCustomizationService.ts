@@ -176,6 +176,7 @@ export class DigitalPortalScreenUpdateModel {
     public DraftContent: string;
     public IsDraft: boolean;
     public ProfileId: string;
+    public ProfileCode: string;
 }
 
 export class AddCustomFieldRequest {

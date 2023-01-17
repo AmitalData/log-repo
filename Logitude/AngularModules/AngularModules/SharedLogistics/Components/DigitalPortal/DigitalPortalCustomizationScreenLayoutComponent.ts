@@ -241,7 +241,9 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         var name = this.SelectedItem.Name;
         this.ModifiedScreenData.ObjectTableId = objectTableId;
         var profileId = this.SelectedProfileItem.Code;
+        var profileCode = this.SelectedProfileItem.LocalName;
         this.ModifiedScreenData.ProfileId = profileId;
+        this.ModifiedScreenData.ProfileCode = profileCode;
         this.ModifiedScreenData.ScreenCode = screenCode;
         this.ModifiedScreenData.Name = name;
         this.ModifiedScreenData.IsDraft = isDraft;
