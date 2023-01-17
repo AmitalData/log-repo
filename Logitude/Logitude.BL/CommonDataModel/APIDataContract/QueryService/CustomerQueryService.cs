@@ -25,7 +25,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                 CustomerPM temp = this.MapAndValidate(MyEntity, Tenant, ComputingPartnerCode);
                 temp.Tenant = Tenant;
                 temp.PartnerTypeId = "CS";
-                temp.CustomerStatusCode = "ACT";
+                temp.CustomerStatusCode = MyEntity.IsPotential ? "POT" : "ACT";
                 temp.IsCustomer = true;
                 temp.CreateDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
                 temp.UpdateDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
@@ -45,7 +45,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
             }
         }
 
-        public CustomerPM MapAndValidate(Customer MyEntity, int Tenant, string ComputingPartnerName = "", bool isUpdate = false)
+        private CustomerPM MapAndValidate(Customer MyEntity, int Tenant, string ComputingPartnerName = "", bool isUpdate = false)
         {
 			try
 			{
@@ -73,9 +73,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 
 				myCustomer.Id = MyEntity.Id;
 				myCustomer.Code = MyEntity.Code;
-
-				//if (string.IsNullOrEmpty(myCustomer.Code))
-				//	myCustomer.Code = MyEntity.PartnerCode;
+				myCustomer.IsPotential = MyEntity.IsPotential;
 
 				if (!isUpdate)
 				{
@@ -88,9 +86,6 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 						myCustomer.LocalName = FormatHelper.ConvertFromBase64(MyEntity.LocalName);
 
 					myCustomer.PaymentTermId = this.GetPaymentTermId(MyEntity.PaymentTerm, Tenant, ComputingPartnerName);
-					//myCustomer.MainAddressId = this.GetAddressId(MyEntity.MainAddress, Tenant, ComputingPartnerName);
-					//myCustomer.BillingAddressId = this.GetAddressId(MyEntity.BillingAddress, Tenant, ComputingPartnerName);
-					//myCustomer.PickupDeliveryAddressId = this.GetAddressId(MyEntity.PickupDeliveryAddress, Tenant, ComputingPartnerName);
 					myCustomer.AccountManagerUserId = this.GetUserId(MyEntity.AccountManagerUser, Tenant, ComputingPartnerName);
 					myCustomer.SalesmanUserId = this.GetUserId(MyEntity.SalesmanUser, Tenant, ComputingPartnerName);
 					myCustomer.CollectorId = this.GetUserId(MyEntity.Collector, Tenant, ComputingPartnerName);

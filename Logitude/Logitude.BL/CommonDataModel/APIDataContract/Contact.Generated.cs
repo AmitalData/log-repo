@@ -39,6 +39,8 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
     public string BusinessPhone { get; set; }
     
     public string Mobile { get; set; }
+    
+    public bool IsPrimaryContact { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 
