@@ -63,7 +63,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                     CommodityId = a.CommodityId,
                                                     NumberOfInsidePackages = a.NumberOfInsidePackages,
                                                     NumberOfInsidePackagesDetails = a.NumberOfInsidePackagesDetails,
-                                                 }).ToList();
+                                                 }).OrderBy(a => a.Id).ToList();
 
             return myResult;
         }
@@ -331,7 +331,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        ContainerEntityId = a.ContainerEntityId,
                        ContainerStatusSourceCode = a.ContainerStatusSourceCode,
                        ContainerStrippedDate = a.ContainerStrippedDate,
-                   }).ToList();
+                   }).OrderBy(a => a.Id).ToList();
 
             var commonContext = CommonDataContext.GetContext(tenant);
             PackageTypeRepository PTypeRepo = new PackageTypeRepository(commonContext);
