@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "6379e91519bb032b38d947d2b4387899";
+		public const string HashString = "3d50ab79e40cbe955d41f387846b5808";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "634a",
+			      				    Code =  "b5ba",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2119,6 +2119,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOOpenNewDeclarationExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.OpenNewDeclarationExport", DefaultText = "Open new declaration export",LocalDefaultText = @"פתיחת הצהרת יצוא חדשה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOExportReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.ExportReport", DefaultText = "Export Report",LocalDefaultText = @"דוח יצוא", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralOCustomsItemDetailsQuery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CustomsItemDetailsQuery", DefaultText = "Customs Item Details Query",LocalDefaultText = @"שאילתא לנתוני פרט מכס ", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
