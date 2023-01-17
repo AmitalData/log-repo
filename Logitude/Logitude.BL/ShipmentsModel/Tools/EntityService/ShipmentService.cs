@@ -6060,11 +6060,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.CheckReceivableStatus(itemPM);
 
             // Ayman: we need this for the:IsBackToBack
-            if (string.IsNullOrEmpty(itemPM.Id))
-            {
-                itemPM.Id = IdCounter.GetNumber("ShipmentReceivable", tenant).ToString();
-            }
+            //if (string.IsNullOrEmpty(itemPM.Id))
+            //{
+            //    itemPM.Id = IdCounter.GetNumber("ShipmentReceivable", tenant).ToString();
+            //}
 
+            itemPM.Id = IdCounter.GetNumber("ShipmentReceivable", tenant).ToString();
             itemPM.ShipmentId = entityPM.Id;
             itemPM.Tenant = tenant;
 
