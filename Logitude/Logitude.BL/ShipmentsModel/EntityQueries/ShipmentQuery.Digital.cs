@@ -1211,8 +1211,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 Title = "Shipment.G.DeliveryInformation",
                 LegHeader = "Delivery",
-                FromPort = shipment.PreCarriageFromPortName + ", " + shipment.PreCarriageFromPortCountryCode,
-                ToPort = shipment.PreCarriageToPortName + ", " + shipment.PreCarriageToPortCountryCode,
+                FromPort = "",
+                ToPort = "",
                 TransportMode = GetTransportModeName("I"),
                 DepartureDate = finalDelivery.ATD != null ? finalDelivery.ATD : finalDelivery.ETD,
                 DepartureDateType = finalDelivery.ATD != null ? "ATD" : (finalDelivery.ETD != null ? "ETD" : null),
@@ -1227,6 +1227,63 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return delivery;
         }
 
+        private void FillRountingDeliveryCityAndCountry(ShipmentRoutingLeg leg, ShipmentPickUpDelivery finalDelivery, int tenant)
+        {
+            switch (finalDelivery.PickUpDeliveryToTypeCode)
+            {
+                case "PART":
+                    {
+                        if (!string.IsNullOrEmpty(finalDelivery.ToPartnerCardId))
+                        {
+                            if (!string.IsNullOrEmpty(finalDelivery.ToAddressId))
+                            {
+                                Address myPartnerAddress = addressRepository.GetSingleAddress(finalDelivery.ToAddressId, tenant);
+                                if (myPartnerAddress != null)
+                                {
+                                    leg.FromPort = myPartnerAddress.City + ", " + myPartnerAddress.Country?.Code;
+                                    leg.ToPort = myPartnerAddress.Country?.Code;
+                                }
+                            }
+                            else
+                            {
+                                Address myPartnerAddress = addressRepository.GetMainAddressByCardId(finalDelivery.ToPartnerCardId, tenant);
+                                if (myPartnerAddress != null)
+                                {
+                                    //leg.Delivery.City = myPartnerAddress.City;
+                                    //leg.Delivery.CountryCode = myPartnerAddress.Country?.Code;
+                                    //leg.Delivery.CountryName = myPartnerAddress.Country?.EnglishName;
+                                }
+                            }
+                        }
+
+                        break;
+                    }
+
+                case "PORT":
+                    {
+                        if (!string.IsNullOrEmpty(finalDelivery.ToPortId))
+                        {
+                            PortPM myPort = PortQuery.GetSinglePort(tenant, finalDelivery.ToPortId, true);
+                            if (myPort != null)
+                            {
+                                //leg.Delivery.City = myPort.EnglishName;
+                                //leg.Delivery.CountryCode = myPort.CountryCode;
+                                //leg.Delivery.CountryName = myPort.CountryName;
+                            }
+                        }
+
+                        break;
+                    }
+
+                case "CASL":
+                    {
+                        //leg.Delivery.City = finalDelivery.ToAddressCity;
+                        //leg.Delivery.CountryCode = finalDelivery.ToAddressCountry?.Code;
+                        //leg.Delivery.CountryName = finalDelivery.ToAddressCountry?.EnglishName;
+                        break;
+                    }
+            }
+        }
         private string GetMasterTextCode(ShipmentPM shipment)
         {
             if (shipment.TransportModeId == "A")
