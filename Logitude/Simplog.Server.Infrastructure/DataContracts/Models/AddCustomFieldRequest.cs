@@ -4,6 +4,7 @@
     {
         public string ObjectTableId { get; set; }
         public string ProfileId { get; set; }
+        public string ProfileCode { get; set; }
         public string FieldCode { get; set; }
         public string DefaultText { get; set; }
         public string DisplayText { get; set; }

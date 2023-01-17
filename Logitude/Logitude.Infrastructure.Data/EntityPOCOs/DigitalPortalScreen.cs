@@ -40,6 +40,11 @@ namespace Logitude.Infrastructure.Data.EntityPOCOs
 	    public string Content { get; set; }
         [Column("DraftContent")]
 	    public string DraftContent { get; set; }
+        [ForeignKey("DigitalProfile")]
+        [Column("ProfileId")]
+	    public string ProfileId { get; set; }
+	      
+        public virtual DigitalProfile DigitalProfile { get; set; }
     }
 }
 	 

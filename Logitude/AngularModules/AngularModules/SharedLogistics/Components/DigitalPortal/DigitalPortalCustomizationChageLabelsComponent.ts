@@ -53,11 +53,11 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
 
     private FillDigitalProfileFiltersList() {
         this.DigitalProfileFilterList = [];
-        this.digitalTextService.GetDigitalProfileName().subscribe((myResult) => {
+        this.digitalTextService.GetDigitalProfileName(SessionLocator.Tenant).subscribe((myResult) => {
             if (!myResult.HasError) {
                 var objectTables = myResult.Result;
                 objectTables.forEach(item => {
-                    this.DigitalProfileFilterList.push(new CodeNameClass(item.Id, item.Name));
+                    this.DigitalProfileFilterList.push(new CodeNameClass(item.Id, item.Name, item.Code));
                 });
 
                 this.selectedProfileItem = this.DigitalProfileFilterList[0];
@@ -96,8 +96,8 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
         this.LabelsItemsSource = new ObservableCollection([]);
         var labelsList = [];
         var objectTableId = this.SelectedObjectTableItem.Name;
-        var profileId = this.SelectedProfileItem.Code;
-        this.digitalTextService.GetTextCodesByFilters(null, objectTableId, profileId).subscribe((myResult) => {
+        var profileCode = this.SelectedProfileItem.LocalName;
+        this.digitalTextService.GetTextCodesByFilters(null, objectTableId, profileCode).subscribe((myResult) => {
             if (!myResult.HasError) {
                 var data = myResult.Result;
                 this.loadedResults = data.filter(a => !AppTool.IsNullOrEmpty(a['FieldCode']));
@@ -158,6 +158,7 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
             this.CurrentSession.StartBusyIndicatorLoading();
             this.ModifiedLables.ObjectTableId = this.SelectedObjectTableItem.Name;
             this.ModifiedLables.ProfileId = this.SelectedProfileItem.Code;
+            this.ModifiedLables.ProfileCode = this.SelectedProfileItem.LocalName;
             this.digitalTextService.UpdateDigitalTextCodes(this.ModifiedLables).subscribe((myResult) => {
                 this.customizationEditComponent.IsDirty = false;
                 this.ModifiedLables = new DigitalTextCodeUpdateModel();

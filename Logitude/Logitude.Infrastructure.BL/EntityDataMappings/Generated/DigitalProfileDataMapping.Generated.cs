@@ -26,7 +26,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         Tenant, 
 	         CreateDate, 
 	         UpdateDate, 
-	         Name,
+	         Name, 
+	         Code,
 	      }
 
 
@@ -37,7 +38,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         Tenant, 
 	         CreateDate, 
 	         UpdateDate, 
-	         Name,
+	         Name, 
+	         Code,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -64,6 +66,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Name))
             {
 				entityPOCO.Name = entityPM.Name;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Code))
+            {
+				entityPOCO.Code = entityPM.Code;
 			}
 			}
 
@@ -95,6 +102,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 					entityPM.Name = entityPOCO.Name;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Code))
+            {
+					entityPM.Code = entityPOCO.Code;
+            }
+
 		}
 
 		public void PMToOldPM(DigitalProfilePM entityPM, DigitalProfilePM oldEntityPM)
@@ -121,6 +133,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
                 oldEntityPM.Name = entityPM.Name;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Code))
+            {
+                oldEntityPM.Code = entityPM.Code;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(DigitalProfilePM entityPM)
@@ -133,6 +150,10 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.Name)) //T4 find type == nText 
             {
                 entityPM.Name = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Name));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.Code)) //T4 find type == nText 
+            {
+                entityPM.Code = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Code));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

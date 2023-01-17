@@ -24,8 +24,7 @@ namespace Logitude.Infrastructure.Data.Repsitories
         
         public IQueryable<DigitalPortalScreen> GetDigitalPortalScreenNames(int tenant)
         {
-            return context.DigitalPortalScreens
-                          .Where(a => a.Tenant == tenant);
+            return context.DigitalPortalScreens.Where(a => a.Tenant == tenant);
         }
 
 

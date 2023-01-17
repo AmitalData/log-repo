@@ -175,11 +175,13 @@ export class DigitalPortalScreenUpdateModel {
     public Content: string;
     public DraftContent: string;
     public IsDraft: boolean;
+    public ProfileId: string;
 }
 
 export class AddCustomFieldRequest {
     public ObjectTableId: string;
     public ProfileId: string;
+    public ProfileCode: string;
     public FieldCode: string;
     public DefaultText: string;
     public TextCode: string;
