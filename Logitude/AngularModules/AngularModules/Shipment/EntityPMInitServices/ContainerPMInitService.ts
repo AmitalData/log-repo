@@ -90,6 +90,12 @@ export class ContainerPMInitService {
             entityPM.UIProperties.SetEnabled("ShipmentOnCarriageTo", "Container", false);
             entityPM.UIProperties.SetEnabled("ShipmentLastDeliveryFrom", "Container", false);
             entityPM.UIProperties.SetEnabled("ShipmentLastDeliveryTo", "Container", false);
+            entityPM.UIProperties.SetEnabled("MainCarriageFromCountryId", "Container", false);
+            entityPM.UIProperties.SetEnabled("MainCarriageToCountryId", "Container", false);
+            entityPM.UIProperties.SetEnabled("MainCarriageFromCountryName", "Container", false);
+            entityPM.UIProperties.SetEnabled("MainCarriageFromCountryCode", "Container", false);
+            entityPM.UIProperties.SetEnabled("MainCarriageToCountryName", "Container", false);
+            entityPM.UIProperties.SetEnabled("MainCarriageToCountryCode", "Container", false);
 
             entityPM.UIProperties.SetEnabled("ShipmentNumber", "Container", false);
             entityPM.UIProperties.SetEnabled("ContainersCount", "Container", false);

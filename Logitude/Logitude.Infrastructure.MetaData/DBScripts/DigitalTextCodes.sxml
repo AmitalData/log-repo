@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="32">
+  <Sql Version="35">
     <![CDATA[	
 	  delete from DigitalTextCodes where id != ''
 
@@ -1275,12 +1275,6 @@
 		{
 			"TextCode": "Shipment.G.VoyageNumber",
 			"DefaultText": "Voyage number",
-			"FieldCode" : "",
-			"DisplayText": ""
-		},
-		{
-			"TextCode": "Shipment.G.TruckerNumber",
-			"DefaultText": "Trucker number",
 			"FieldCode" : "",
 			"DisplayText": ""
 		},
@@ -3851,12 +3845,6 @@
 		{
 			"TextCode": "Shipment.G.VoyageNumber",
 			"DefaultText": "Voyage number",
-			"FieldCode" : "",
-			"DisplayText": ""
-		},
-		{
-			"TextCode": "Shipment.G.TruckerNumber",
-			"DefaultText": "Trucker number",
 			"FieldCode" : "",
 			"DisplayText": ""
 		},

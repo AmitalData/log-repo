@@ -59,8 +59,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("DashboardGlobalPresetFilter", "READ", authToken.Tenant);
-	                
+                
                 IDashboardContext MyContext = DashboardContext.GetContext(authToken.Tenant);
                 DashboardGlobalPresetFilterQueryService dashboardGlobalPresetFilterQuery = new DashboardGlobalPresetFilterQueryService(MyContext);
 				dashboardGlobalPresetFilterQuery.InitializeSettings();

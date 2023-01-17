@@ -16,7 +16,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.UserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ObjectTableId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.OriginalQueryId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.QuerySection).HasMaxLength(40).IsUnicode(false);
+            this.Property(t => t.QuerySection).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.QueryGroupCode).IsRequired().HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.NameTextCodeId).HasMaxLength(30).IsUnicode(false);
             this.Property(t => t.DefaultSortColumn).HasMaxLength(40).IsUnicode(false);
@@ -71,6 +71,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.SpotlightModeActivated).HasColumnName("SpotlightModeActivated");
             this.Property(t => t.FeatureUniqeCode).HasColumnName("FeatureUniqeCode");
             this.Property(t => t.IsViewOnly).HasColumnName("IsViewOnly");
+            this.Property(t => t.IsDefault).HasColumnName("IsDefault");
 
             // Relationships
             //this.HasOptional(t => t.Feature).WithMany().HasForeignKey(d => d.FeatureId);

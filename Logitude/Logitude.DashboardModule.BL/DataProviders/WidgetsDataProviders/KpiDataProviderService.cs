@@ -61,12 +61,6 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             return ratio;
         }
 
-        private string FormatComparisonValue(object comparsionObject)
-        {
-            if (ObjectIsNull(comparsionObject)) return "0";
-            return String.Format("{0:n0}", comparsionObject);
-        }
-
         private string GetUnit()
         {
             if (measureField == null || !measureField.HasUnit || string.IsNullOrEmpty(measureField.Unit)) return null;
@@ -107,6 +101,7 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
 
             return value;
         }
+
         private object UseTousandSeperatorForValue(object value, object objectValue, string dataTypeCode)
         {
             int numberOfDecimalPlaces = Convert.ToInt32(_Widget.DecimalPlaces);
@@ -123,6 +118,7 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
   
             return Math.Round(Convert.ToDouble(value), numberOfDecimalPlaces).ToString("0." + numberOfDecimals);
         }
+
         private object UseDecimalPlaces(object value, object objectValue)
         {
             int abbreviationAfter = UseAbbreviationNumber(objectValue);
@@ -131,6 +127,7 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             int numberOfDecimalPlaces = Convert.ToInt32(_Widget.DecimalPlaces);
             return Math.Round(Convert.ToDouble(value), numberOfDecimalPlaces);            
         }
+
         private object GetAbbreviationValue(object value)
         {
             int abbreviationAfter = UseAbbreviationNumber(value);
@@ -140,6 +137,7 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             double objectValue = Convert.ToDouble(value);
             objectValue = Math.Round((objectValue  / abbreviationAfter) , decimalPlaces);
             return objectValue;
+
 
         }
         private string GetAbbreviationSymbol(object value)
@@ -215,13 +213,10 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
 
             if (_Widget.ComparisonOperator == "Between")
             {
-                var diffTowDates = (_Widget.ToDate).Value.Subtract(_Widget.FromDate.Value).TotalDays;
-                var diffTowDatesInt = Convert.ToInt32(diffTowDates);
-
-                return queryString + $@" where data.{GeteComparsionDate()} Between (Dateadd(Day, DateDiff(Day, cast('{_Widget.ToDate}' as DateTime), cast('{_Widget.FromDate}' as DateTime)), cast('{_Widget.FromDate}' as DateTime))) AND cast('{_Widget.FromDate}' as DateTime)";
+                return queryString + $@" where data.{GeteComparsionDate()} Between (Dateadd(Day, DateDiff(Day, cast('{_Widget.ToDate}' as Date), cast('{_Widget.FromDate}' as Date)), cast('{_Widget.FromDate}' as Date))) AND cast('{_Widget.FromDate}' as Date)";
             }
-            return queryString + $@" where data.{GeteComparsionDate()} Between dateadd ({_Widget.ComparisonDateGroup}, {-2 * _Widget.ComparisonPeriod}, cast(getDate() as DateTime))
-                             AND dateadd ({_Widget.ComparisonDateGroup}, {-_Widget.ComparisonPeriod}, cast(getDate() as DateTime))";
+            return queryString + $@" where data.{GeteComparsionDate()} Between dateadd ({_Widget.ComparisonDateGroup}, {-2 * _Widget.ComparisonPeriod}, cast(getDate() as Date))
+                             AND dateadd ({_Widget.ComparisonDateGroup}, {-_Widget.ComparisonPeriod}, cast(getDate() as Date))";
         }
 
         private string CreateQuery<T>(WidgetMeasurePM widgetMeasureField, IQueryable<T> resultQueryable)
@@ -236,7 +231,7 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
         {
             if (_Widget.ComparisonOperator != "Between")
             {
-                return $@" where data.{GeteComparsionDate()} Between dateadd ({_Widget.ComparisonDateGroup}, {-_Widget.ComparisonPeriod}, cast(getDate() as DateTime)) AND cast(getDate() as DateTime)";
+                return $@" where data.{GeteComparsionDate()} Between dateadd ({_Widget.ComparisonDateGroup}, {-_Widget.ComparisonPeriod}, cast(getDate() as Date)) AND cast(getDate() as Date)";
             }
             return $@" where data.{GeteComparsionDate()} Between '{_Widget.FromDate.Value}' AND '{_Widget.ToDate.Value}'";
         }
