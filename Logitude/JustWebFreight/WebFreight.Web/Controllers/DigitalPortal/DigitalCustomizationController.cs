@@ -392,14 +392,14 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         [HttpGet]
         [Route("DigitalCustomization/GetDigitalPortalScreenNames")]
-        public HttpResponseMessage GetDigitalPortalScreenNames()
+        public HttpResponseMessage GetDigitalPortalScreenNames(string profileCode)
         {
             int tenant = 0;
             string email = "";
             try
             {
                 var screenQueryService = new DigitalPortalScreenQueryService(tenant);
-                var digitalPortalScreens = screenQueryService.GetDigitalPortalScreenNamesQuery(tenant);
+                var digitalPortalScreens = screenQueryService.GetDigitalPortalScreenNamesQuery(tenant, profileCode);
                 return Request.CreateResponse(HttpStatusCode.OK, digitalPortalScreens);
             }
             catch (Exception ex)
@@ -411,7 +411,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         [HttpGet]
         [Route("DigitalCustomization/GetDigitalPortalScreens")]
-        public HttpResponseMessage GetDigitalPortalScreens(string objectTableId, string screenCode = "")
+        public HttpResponseMessage GetDigitalPortalScreens(string objectTableId, string screenCode = "", string profileCode = "")
         {
             int tenant = 0;
             string email = "";
@@ -439,7 +439,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 }
 
                 var screenQueryService = new DigitalPortalScreenQueryService(tenant);
-                var digitalPortalScreens = screenQueryService.GetDigitalPortalScreensQuery(tenant, objectTableId, screenCode);
+                var digitalPortalScreens = screenQueryService.GetDigitalPortalScreensQuery(tenant, objectTableId, screenCode, profileCode);
                 var data = digitalPortalScreens.FirstOrDefault(a => a.Tenant == tenant);
 
                 if (data != null)
@@ -503,7 +503,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 var tenantDigitalPortalScreen = digitalPreDefinedComponentQueryService.GetDigitalPortalScreensQuery(tenant, 
                                                                                                                     digitalPortalScreenUpdateModel.ObjectTableId,
-                                                                                                                    digitalPortalScreenUpdateModel.ScreenCode)
+                                                                                                                    digitalPortalScreenUpdateModel.ScreenCode,
+                                                                                                                    digitalPortalScreenUpdateModel.ProfileCode)
                                                                                       .FirstOrDefault(a => a.Tenant == tenant);
 
                 DigitalPortalScreenList defaultTenantDigitalPortalScreen = null;
@@ -512,7 +513,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 {
                      defaultTenantDigitalPortalScreen = digitalPreDefinedComponentQueryService.GetDigitalPortalScreensQuery(tenant,
                                                                                                                             digitalPortalScreenUpdateModel.ObjectTableId,
-                                                                                                                            digitalPortalScreenUpdateModel.ScreenCode)
+                                                                                                                            digitalPortalScreenUpdateModel.ScreenCode,
+                                                                                                                            digitalPortalScreenUpdateModel.ProfileCode)
                                                                                               .FirstOrDefault(a => a.Tenant == 0);
                 }
 
