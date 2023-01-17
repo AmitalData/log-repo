@@ -17,8 +17,6 @@ import { Formatter } from "Workflow/Models/Formatter";
 import { EntityArgs } from "Infrastructure/DataContracts/EntityArgs";
 import { AppTool } from "Infrastructure/Tools";
 import { WorkFlowVersionPM } from "Workflow/EntityPMs/WorkFlowVersionPM";
-import { ConfirmationMessageArgs } from "Infrastructure/DataContracts/ConfirmationMessageArgs";
-import { TextCodeTranslator } from "Infrastructure/Utilities/TextCodeTranslator";
 import { ConfirmWindow } from "Controls/Windows/ConfirmWindow";
 
 @Component({
@@ -62,7 +60,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
 
     ngOnInit() {
         this.loadWorkflow(true);
-        this.Listen()
+        this.listen()
     }
 
     ngOnDestroy() {
@@ -70,7 +68,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         AppTool.KillEventEmitter(this.TabSelectedEvent);
     }
 
-    private Listen() {
+    private listen() {
         if (this.entityArgs.EditComponent) {
             this.TabSelectedEvent = this.entityArgs.EditComponent.TabSelected.subscribe((tabCode: string) => {
                 if (tabCode == "WFFB") {
@@ -78,16 +76,12 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
                     var updatedVersionId = this.entityArgs.EditComponentArgument?.UpdatedVersion!
                     if (updatedVersionId) {
                         var version = this.EntityPM.WorkFlowVersions.find(e => e.Id == updatedVersionId);
-                        this.DisplayGivenVersion(version);
+                        this.displayGivenVersion(version);
                     }
                     else if (clickedRowId) {
                         var version = this.EntityPM.WorkFlowVersions.find(e => e.Id == clickedRowId);
-                        this.DisplayGivenVersion(version);
+                        this.displayGivenVersion(version);
                     }
-                    // else {
-                    //     ReactDOM.unmountComponentAtNode(this.containerRef.nativeElement);
-                    //     this.loadWorkflow(true);
-                    // }
                 }
             });
         }
@@ -132,11 +126,11 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         this.EntityPM.WorkFlowVersions = serviceResponse.Result.WorkFlowVersions
         var updatedVersion = this.entityArgs.EditComponentArgument?.UpdatedVersion!
         var version = this.EntityPM.WorkFlowVersions.find(e => e.Id == updatedVersion);
-        this.DisplayGivenVersion(version);
+        this.displayGivenVersion(version);
     }
 
 
-    DisplayGivenVersion(version: WorkFlowVersionPM) {
+    displayGivenVersion(version: WorkFlowVersionPM) {
         if (version) {
             this.ValidVersion = version;
             this.setCurrentDisplayedVersion(version.Id)
@@ -171,11 +165,13 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
                 returnPropertiesDataEventKey: this.ReturnPropertiesDataEventKey,
                 returnDeleteNodeConfirmationEventKey: this.returnDeleteNodeConfirmationEventKey,
                 setReactFlowInstance: (reactFlowInstance: any) => this.setReactFlowInstance(reactFlowInstance),
-                nodeExternalDataKeys: {
+                externalDataKeys: {
                     nodeName: "name",
+                    nodeLabel: "label",
                     startNodeEntity: "entity",
                     startNodeTrigger: "trigger",
-                    conditionNodeLabel: "conditionLabel"
+                    conditionNodeMetLabel: "metLabel",
+                    conditionNodeOtherwiseLabel: "otherwiseLabel"
                 }
             };
 
@@ -245,7 +241,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         if (nodeToDelete) {
             let validateNodeDelete = this.validateNodeDelete(nodeToDelete);
             if (validateNodeDelete.isValid) {
-                this.ShowConfirmationMessageForDeleteNode();
+                this.showConfirmationMessageForDeleteNode();
             } else {
                 let nodeNameToDelete = nodeToDelete.data["label"] || nodeToDelete.id;
                 this.showDeleteNodeError(nodeNameToDelete, validateNodeDelete.usedInNodes);
@@ -253,7 +249,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         }
     }
 
-    private ShowConfirmationMessageForDeleteNode() {
+    showConfirmationMessageForDeleteNode() {
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Width = 450;
         confirmWindow.Height = 190;
@@ -371,11 +367,11 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         this.ReactFlowInstance = reactFlowInstance;
         let flowObject = this.getCurrentFlowObject();
         if (this.IsFirstOpen && flowObject) {
-            this.OpenConfigureStart(flowObject);
+            this.openConfigureStart(flowObject);
         }
     }
 
-    OpenConfigureStart(flowObject:any) {
+    openConfigureStart(flowObject: any) {
         let startNode = flowObject.nodes.filter(n => n.type === "startNode")[0];
         let nodeObject = this.buildPropertiesEventObjec(startNode);
         if (nodeObject) {
@@ -384,7 +380,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         }
     }
 
-    buildPropertiesEventObjec(startNode:any) {
+    buildPropertiesEventObjec(startNode: any) {
         if (startNode) {
             let nodeObject = {
                 isNewNode: true,
