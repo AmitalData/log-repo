@@ -2157,7 +2157,50 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return declarations;
         }
 
+        public List<DeclarationList> GetDeclarationAmendmentsById_Cache(int tenant, string id, bool orderById = false)
+        {
+            string key = $"GetDeclarationAmendmentsById({tenant}, {id}, {orderById })";
+            var res = CacheManager.GetOrInsertNewObject<List<DeclarationList>>(key,
+                () =>
+                {
+                    return this.GetDeclarationAmendmentsById(tenant, id, orderById);
+                });
+            return res;
 
+        }
+        public List<DeclarationList> GetAllDeclarationPOCOs(int tenant, string customFileNo)
+        {
+
+            if (String.IsNullOrWhiteSpace(customFileNo)) return null;
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
+            var q =
+                  (
+                  from rec in this.context.Declarations
+
+                  join right in this.context.AmendmentStatuses on rec.AmendmentStatus equals right.Code into joined
+                  from j in joined.DefaultIfEmpty()
+
+                  where rec.CustomFileNo == customFileNo && rec.Tenant == tenant
+                  select
+                      new DeclarationList()
+                      {
+                          Id = rec.Id,
+                          Tenant = rec.Tenant,
+                          AmendmentRequestNumber = rec.AmendmentRequestNumber,
+                          DeclarationVersionId = rec.VersionId,
+                          AmendmentStatus = rec.AmendmentStatus,
+                          AmendmentOriginalDeclartation = rec.AmendmentOriginalDeclartation,
+                          AmendmentissueDate = rec.AmendmentissueDate,
+                          IsAmendment = rec.IsAmendment,
+                          AmedmentType = rec.AmedmentType,
+                          AmendmentStatusName = j == null ? "" : j.Name
+                      }
+                  )
+                  ;
+            return q.ToList();
+
+        }
         public List<DeclarationList> GetDeclarationAmendmentsById(int tenant, string id, bool orderById = false)
         {
 
