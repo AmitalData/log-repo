@@ -148,6 +148,7 @@ import { UpdateJournalLineComponent } from './Components/EditTabs/Journal/Update
 import { JournalCSVLoadComponent } from './Components/NewEntity/JournalCSVLoadComponent';
 
 import { GlAccountListTemplate } from './Components/ListTemplates/GlAccountListTemplate';
+import { GlAccountLineListTemplate } from './Components/ListTemplates/GlAccountLineListTemplate';
 import { CopyInvoiceComponent } from './Components/Others/CopyInvoiceComponent';
 import { TaxReportUploadLinesComponent } from './Components/Others/TaxReportUploadLinesComponent';
 import { CashbookTotalAdjustWindow } from './Components/EditTabs/CashBook/CashbookTotalAdjustWindow';
@@ -252,6 +253,7 @@ export const Components =
         GlAccountLedgerTransactionsListTemplate,
         GlAccountInterestTransactionsListTemplate,
         GlAccountListTemplate,
+        GlAccountLineListTemplate,
         ReconcileExternalPageListTemplate,
         ReconcileExternalPageLineListTemplate,
         FieldTemplateComponent,
@@ -424,6 +426,7 @@ export class ModuleDeclarations {
             case "GlAccountLedgerTransactionsListTemplate": { myResult = GlAccountLedgerTransactionsListTemplate; break; }
             case "GlAccountInterestTransactionsListTemplate": { myResult = GlAccountInterestTransactionsListTemplate; break; }
             case "GlAccountListTemplate": { myResult = GlAccountListTemplate; break; }
+            case "GlAccountLineListTemplate": { myResult = GlAccountLineListTemplate; break; }
             case "ReconcileExternalPageListTemplate": { myResult = ReconcileExternalPageListTemplate; break; }
             case "ReconcileExternalPageLineListTemplate": { myResult = ReconcileExternalPageLineListTemplate; break; }
             case "FieldTemplateComponent": { myResult = FieldTemplateComponent; break; }

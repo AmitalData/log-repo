@@ -1,0 +1,17 @@
+<div style="width: 50px;">
+ 
+       <IconButton [IsSmall]="true" [style.float]="isRTL ? 'left' : 'right'" [Name]="'Edit'"
+           (click)="OpenAccountingNote(null)"></IconButton>
+  
+ 
+        <img *ngIf="!isNotesLoading &&  accountingNotesList.length == 0"
+         style="padding-left: 1px;"
+          src="./Images/Notes_notexists.png" />
+        <CellTooltip *ngIf="!isNotesLoading && accountingNotesList.length > 0"
+             [IconPath]="'./Images/Notes_exists.png'" 
+             [Head]="'APInvoiceLine.F.Notes' | TextCodeTranslationPipe" >
+        </CellTooltip> 
+   
+
+
+</div>

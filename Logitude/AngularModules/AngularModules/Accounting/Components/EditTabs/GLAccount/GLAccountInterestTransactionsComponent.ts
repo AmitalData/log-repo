@@ -313,6 +313,19 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
         });
         this.QueryColumns.push(this.excelService.GetQueryColumn("IsCancelled", 'Boolean', TextCodeTranslator.Translate("InterestTransaction.F.IsCancelled")));
 
+        this.columns.push({
+            FieldName: 'InternalNotes',
+            DataTypeCode: 'string',
+            Display: TextCodeTranslator.Translate("ARInvoice.F.InternalNotes"),
+            Styles: { width: '90px' },
+            HtmlListComponentName: 'GlAccountLineListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLineListTemplate',
+            IsCustomTemplate: true,
+            ServerSideSortable: true
+        });
+        this.QueryColumns.push(this.excelService.GetQueryColumn("InternalNotes", 'string', TextCodeTranslator.Translate("ARInvoice.F.InternalNotes")));
+
+
 
     }
 
