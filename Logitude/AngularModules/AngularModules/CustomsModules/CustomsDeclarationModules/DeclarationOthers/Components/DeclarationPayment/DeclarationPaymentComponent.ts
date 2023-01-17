@@ -3365,9 +3365,9 @@ export class PaymentMethodModel extends BaseComponent {
                                 }
                                 // this.parent.PaymentMethodsList.Insert(this.methodPM);
                             }
-                            if (!this.parent.IsLoadedGoldPaymentMethodes && !usingCustomBank_ImporterMasav && !usingDsvPayKupa) {
+                            if (!this.parent.IsLoadedGoldPaymentMethodes && !usingCustomBank_ImporterMasav /*&& !usingDsvPayKupa*/) {
                                 this.parent.IsLoadedGoldPaymentMethodes = true;
-                                this.maximumAgentPaymentMethod();
+                                this.maximumAgentPaymentMethod(usingDsvPayKupa);
                             }
 
                         }
@@ -3381,60 +3381,79 @@ export class PaymentMethodModel extends BaseComponent {
 
 
     }
-    maximumAgentPaymentMethod() {///Feature 170339: ניצול העברת זהב - מסך הגשת תשלום
-        
+    maximumAgentPaymentMethod(usingDsvPayKupa: boolean) {
+        ///old:///Feature 170339: ניצול העברת זהב - מסך הגשת תשלום
+        //new://Feature 175382: ניצול העברת זהב - מסך הגשת תשלום
 
         if (AppTool.IsNullOrEmpty(this.parent.MyGoldPaymentDefaults.CompanyDefaultMaxPayMASAV_CGG_MAX_AGT_PAY)) {
             console.log("DefaultPaymentMethod-->קופהזה יהיה דיפולט כחול ואם לא הוגדר אז לא תהיה התייחסות לניצול העברת זהב וימשיך לעבוד כפי שעבר לפני השיפור ");
             return;
         }
         console.log("DefaultPaymentMethod-->");
-
         let maxTaxAgentPayDefault: number = +this.parent.MyGoldPaymentDefaults.CompanyDefaultMaxPayMASAV_CGG_MAX_AGT_PAY;
-        if (maxTaxAgentPayDefault > 0) {
-            console.log("DefaultPaymentMethod-->CompanyDefaultMaxPayMASAV_CGG_MAX_AGT_PAY:" + maxTaxAgentPayDefault + ";CustomerDefaultGoldPay_CIM_GOLD_PAY=" + this.parent.MyGoldPaymentDefaults.CustomerDefaultGoldPay_CIM_GOLD_PAY);
-            //3.1
-            if (this.parent.MyGoldPaymentDefaults.CustomerDefaultGoldPay_CIM_GOLD_PAY == "ALL") {
-                console.log("אם ללקוח מוגדר הדיפולט החדש 'תשלום בניצול העברת זהב לקוח' כל סכום3.1");
-                console.log("DefaultPaymentMethod-->ניצול העברת זהב -יבואן");
-                this.updateDefaultPaymentMethod(
-                    "79",/*ניצול העברת זהב*/
-                    "0" //יבואן / יצואן
-                );
-            }
-            //3.2
-            else if (
-                this.parent.MyGoldPaymentDefaults.CustomerDefaultGoldPay_CIM_GOLD_PAY == "ABOVE_MAX" && 
-                this.parent.DeclarationPM.TotalTax > maxTaxAgentPayDefault) {//this.methodPM.Amount = 
-                console.log("'3.2 שהדיפולט מוגדר רק סכום מעל סכום חסימה של המכס וסכום המיסים גדול מסכום שהוזן בדיפולט 'סכום מיסים מקסימלי");
-                console.log("DefaultPaymentMethod-->ניצול העברת זהב -יבואן");
-                this.updateDefaultPaymentMethod(
-                    "79",/*ניצול העברת זהב*/
-                    "0" //יבואן / יצואן
-                );
+        if (maxTaxAgentPayDefault <= 0) {
+            console.log("DefaultPaymentMethod-->maxTaxAgentPayDefault <= 0");
+            return;
+        }
 
-            }
-            //4
-            else if (
-                AppTool.IsNullOrEmpty(this.parent.MyGoldPaymentDefaults.CustomerDefaultGoldPay_CIM_GOLD_PAY) &&
-                this.parent.DeclarationPM.TotalTax > maxTaxAgentPayDefault) {
-                console.log("אם הדיפולט 'תשלום בניצול העברת זהב לקוח' לא הוגדר וסכום המיסים גדול מהסכום שהוזן  בדיפולט החדש -סכום מיסים לתשלום בניצול העברת זהב4 ");
-                console.log("DefaultPaymentMethod-->ניצול העברת זהב -סוכן");
-                this.updateDefaultPaymentMethod(
-                    "79",/*ניצול העברת זהב*/
-                    "3" //סוכן מכס
-                );
-            }
-            //5
-            else if (
-                this.parent.DeclarationPM.TotalTax <= maxTaxAgentPayDefault) {
-                console.log("אחרת סכום המיסים קטן שווה מהסכום שהוזן בדיפולט החדש -סכום מיסים לתשלום בניצול העברת זהב  5");
-                console.log("DefaultPaymentMethod-->מסב הכנסה -סוכן");
-                this.updateDefaultPaymentMethod(
-                    "1",//מס"ב הכנסה
-                    "3" //סוכן מכס
-                );
-            }
+        console.log("DefaultPaymentMethod-->CompanyDefaultMaxPayMASAV_CGG_MAX_AGT_PAY:" + maxTaxAgentPayDefault + ";CustomerDefaultGoldPay_CIM_GOLD_PAY=" + this.parent.MyGoldPaymentDefaults.CustomerDefaultGoldPay_CIM_GOLD_PAY);
+        //3.1
+        if (this.parent.MyGoldPaymentDefaults.CustomerDefaultGoldPay_CIM_GOLD_PAY == "ALL") {
+            ///console.log("אם ללקוח מוגדר הדיפולט החדש 'תשלום בניצול העברת זהב לקוח' כל סכום3.1");
+            console.log("DefaultPaymentMethod-->ניצול העברת זהב -יבואן");
+            this.updateDefaultPaymentMethod(
+                "79",/*ניצול העברת זהב*/
+                "0" //יבואן / יצואן
+            );
+        }
+        else if (usingDsvPayKupa) {
+            //already set
+            console.log("DefaultPaymentMethod-->קופה טווח 20,000 - 40,000 (ולא מוגדר ניצול העברת זהב - כל סכום)  == DSVKUPA");
+
+        }
+        //3.2
+        else if (
+            this.parent.MyGoldPaymentDefaults.CustomerDefaultGoldPay_CIM_GOLD_PAY == "ABOVE_MAX" &&
+            this.parent.DeclarationPM.TotalTax > maxTaxAgentPayDefault) {//this.methodPM.Amount = 
+            
+            console.log("DefaultPaymentMethod-->ניצול העברת זהב -יבואן");
+            this.updateDefaultPaymentMethod(
+                "79",/*ניצול העברת זהב*/
+                "0" //יבואן / יצואן
+            );
+
+        }
+        else if (//NEW ניצול העברת זהב/קופה - סכום מעל חסימה-קופה-קופה-יבואן
+            this.parent.MyGoldPaymentDefaults.CustomerDefaultGoldPay_CIM_GOLD_PAY == "KUPA" &&
+            this.parent.DeclarationPM.TotalTax > maxTaxAgentPayDefault) {
+
+            console.log("DefaultPaymentMethod-->ניצול העברת זהב -קופה");
+            this.updateDefaultPaymentMethod(
+                "2",/*קופה*/
+                "0" //יבואן / יצואן
+            );
+
+        }
+        //4
+        else if (
+            AppTool.IsNullOrEmpty(this.parent.MyGoldPaymentDefaults.CustomerDefaultGoldPay_CIM_GOLD_PAY) &&
+            this.parent.DeclarationPM.TotalTax > maxTaxAgentPayDefault) {
+            console.log("אם הדיפולט 'תשלום בניצול העברת זהב לקוח' לא הוגדר וסכום המיסים גדול מהסכום שהוזן  בדיפולט החדש -סכום מיסים לתשלום בניצול העברת זהב4 ");
+            console.log("DefaultPaymentMethod-->ניצול העברת זהב -סוכן");
+            this.updateDefaultPaymentMethod(
+                "79",/*ניצול העברת זהב*/
+                "3" //סוכן מכס
+            );
+        }
+        //5
+        else if (
+            this.parent.DeclarationPM.TotalTax <= maxTaxAgentPayDefault) {
+            console.log("אחרת סכום המיסים קטן שווה מהסכום שהוזן בדיפולט החדש -סכום מיסים לתשלום בניצול העברת זהב  5");
+            console.log("DefaultPaymentMethod-->מסב הכנסה -סוכן");
+            this.updateDefaultPaymentMethod(
+                "1",//מס"ב הכנסה
+                "3" //סוכן מכס
+            );
         }
 
 
