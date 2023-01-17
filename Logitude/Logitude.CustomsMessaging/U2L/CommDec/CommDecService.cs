@@ -34,6 +34,12 @@ using Logitude.CustomsMessaging.MessagingServices;
 using Unifreight.Data.AmitalModel.Repsitories;
 using Logitude.Customs.Data.EntityKeys;
 using Logitude.Server.Tools.Utils;
+using DocumentFormat.OpenXml.EMMA;
+using Simplog.Server.Infrastructure.Helpers;
+using Unifreight.Data.AmitalModel.EntityPOCOs;
+using Simplog.Server.Infrastructure.DataContracts;
+using System.Web.Caching;
+using UnifreightIIG.Common.MessageLib.Unifreight.Customs;
 
 namespace Logitude.CustomsMessaging.U2L.CommDec
 {
@@ -404,7 +410,12 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                         }
                         else
                         {
-                            countryCode = _LogitudeCommDecFile.OriginCountryCode;
+                            var myCustomsCountryQueryService = new CustomsCountryQueryService(_context);
+                            var countryCountryPM = myCustomsCountryQueryService.GetSingle(_LogitudeCommDecFile.OriginCountryCode, false, true);
+                            if (countryCountryPM != null)
+                            {
+                                countryCode= countryCountryPM.Code;
+                            }
                         }
                         if (!string.IsNullOrWhiteSpace(countryCode)) this._MyDeclarationPM.Consignments[0].OriginCountryCode = countryCode;
                     }
@@ -426,7 +437,12 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                         }
                         else
                         {
-                            countryCode = _LogitudeCommDecFile.OriginCountryId;
+                            var myCustomsCountryQueryService = new CustomsCountryQueryService(_context);
+                            var countryCountryPM = myCustomsCountryQueryService.GetSingle(_LogitudeCommDecFile.OriginCountryId, false, true);
+                            if (countryCountryPM != null)
+                            {
+                                countryCode = countryCountryPM.Code;
+                            }
                         }
                         if (!string.IsNullOrWhiteSpace(countryCode)) this._MyDeclarationPM.Consignments[0].OriginCountryCode = countryCode;
                     }
@@ -2061,7 +2077,12 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 }
                 else
                 {
-                    countryCode = this._INVOICE.ISSUECOUNTRYCODE;
+                    var myCustomsCountryQueryService = new CustomsCountryQueryService(_context);
+                    var countryCountryPM = myCustomsCountryQueryService.GetSingle(this._INVOICE.ISSUECOUNTRYCODE, false, true);
+                    if (countryCountryPM != null)
+                    {
+                        countryCode = countryCountryPM.Code;
+                    }
                 }
                 if (!string.IsNullOrWhiteSpace(countryCode)) this._MySupplierInvoicePM.IssueCountryCode = countryCode;
             }
@@ -2520,7 +2541,12 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     }
                     else
                     {
-                        countryCode = invoiceItem.ITEMORIGINCOUNTRY;
+                        var myCustomsCountryQueryService = new CustomsCountryQueryService(_context);
+                        var countryCountryPM = myCustomsCountryQueryService.GetSingle(invoiceItem.ITEMORIGINCOUNTRY, false, true);
+                        if (countryCountryPM != null)
+                        {
+                            countryCode = countryCountryPM.Code;
+                        }
                     }
                     if (!string.IsNullOrWhiteSpace(countryCode)) SupplierInvoiceItemPM.OriginCountryCode = countryCode;
                 }
@@ -2811,7 +2837,6 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
             return SupplierInvoiceItemVehicleAddPMList;
         }
-
 
         public string GetTranslationL2P(string partnerID, string tableID, string localCode)
         {
