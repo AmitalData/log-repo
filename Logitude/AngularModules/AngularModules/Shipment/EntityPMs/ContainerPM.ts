@@ -1561,6 +1561,36 @@ export class ContainerPM {
     public set Field40(newValue: CustomFieldClass) {  this.field40 = newValue; this.MarkAsDirty("Field40");  }
        
 	 
+    private mainCarriageFromCountryId: string;
+    public get MainCarriageFromCountryId() { return this.mainCarriageFromCountryId; }
+    public set MainCarriageFromCountryId(newValue: string) { if (this.mainCarriageFromCountryId != newValue) { this.mainCarriageFromCountryId = newValue; this.MarkAsDirty("MainCarriageFromCountryId"); } }
+       
+	 
+    private mainCarriageToCountryId: string;
+    public get MainCarriageToCountryId() { return this.mainCarriageToCountryId; }
+    public set MainCarriageToCountryId(newValue: string) { if (this.mainCarriageToCountryId != newValue) { this.mainCarriageToCountryId = newValue; this.MarkAsDirty("MainCarriageToCountryId"); } }
+       
+	 
+    private mainCarriageFromCountryName: string;
+    public get MainCarriageFromCountryName() { return this.mainCarriageFromCountryName; }
+    public set MainCarriageFromCountryName(newValue: string) { if (this.mainCarriageFromCountryName != newValue) { this.mainCarriageFromCountryName = newValue; this.MarkAsDirty("MainCarriageFromCountryName"); } }
+       
+	 
+    private mainCarriageToCountryName: string;
+    public get MainCarriageToCountryName() { return this.mainCarriageToCountryName; }
+    public set MainCarriageToCountryName(newValue: string) { if (this.mainCarriageToCountryName != newValue) { this.mainCarriageToCountryName = newValue; this.MarkAsDirty("MainCarriageToCountryName"); } }
+       
+	 
+    private mainCarriageFromCountryCode: string;
+    public get MainCarriageFromCountryCode() { return this.mainCarriageFromCountryCode; }
+    public set MainCarriageFromCountryCode(newValue: string) { if (this.mainCarriageFromCountryCode != newValue) { this.mainCarriageFromCountryCode = newValue; this.MarkAsDirty("MainCarriageFromCountryCode"); } }
+       
+	 
+    private mainCarriageToCountryCode: string;
+    public get MainCarriageToCountryCode() { return this.mainCarriageToCountryCode; }
+    public set MainCarriageToCountryCode(newValue: string) { if (this.mainCarriageToCountryCode != newValue) { this.mainCarriageToCountryCode = newValue; this.MarkAsDirty("MainCarriageToCountryCode"); } }
+       
+	 
 
     public OldEntityPM: ContainerPM;
 		

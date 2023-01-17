@@ -22,7 +22,7 @@ export class GlobalFilterItemComponent implements OnInit {
     }
 
     get SelectedOperator(): Operator {
-        return this.FilterItem.Operator ? null : this.Operators.filter(x => x.Code == this.FilterItem.Operator)[0];
+        return !this.FilterItem.Operator ? null : this.Operators.filter(x => x.Code == this.FilterItem.Operator)[0];
     }
 
     FillOperators() {

@@ -220,7 +220,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
                                     where a.Tenant == tenant
                                     && a.EntityId == shipmentId
                                     && (a.ObjectTable.Name == "Shipment" || a.ObjectTable.Name == "Master")
-                                    select a.ARInvoice).ToList();
+                                    select a.ARInvoice).OrderBy(a => a.Id).ToList();
             return list;
         }
 

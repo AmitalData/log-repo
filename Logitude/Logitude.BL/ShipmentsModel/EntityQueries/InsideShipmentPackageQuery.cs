@@ -76,7 +76,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                           IsMultiHarmonize = a.IsMultiHarmonize,
                                                           HorseName = a.Horse == null ? null : a.Horse.Name,
                                                           HorseId = a.HorseId,
-                                                      }).ToList();
+                                                      }).OrderBy(a => a.Id).ToList();
 
             foreach (InsideShipmentPackagePM package in myResult)
             {
