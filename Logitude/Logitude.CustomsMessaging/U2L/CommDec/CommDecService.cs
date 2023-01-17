@@ -403,15 +403,20 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
                     if (!String.IsNullOrWhiteSpace(_LogitudeCommDecFile.OriginCountryCode))
                     {
-                        string countryCode = this.GetOriginCountry(_LogitudeCommDecFile.OriginCountryCode);
-                        //if (_LogitudeCommDecFile.OriginCountryCode.Length > 2)
-                        //{
-                        //    countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", _LogitudeCommDecFile.OriginCountryCode);
-                        //}
-                        //else
-                        //{
-                        //    countryCode = _LogitudeCommDecFile.OriginCountryCode;
-                        //}
+                        string countryCode = "";
+                        if (_LogitudeCommDecFile.OriginCountryCode.Length > 2)
+                        {
+                            countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", _LogitudeCommDecFile.OriginCountryCode);
+                        }
+                        else
+                        {
+                            var myCustomsCountryQueryService = new CustomsCountryQueryService(_context);
+                            var countryCountryPM = myCustomsCountryQueryService.GetSingle(_LogitudeCommDecFile.OriginCountryCode, false, true);
+                            if (countryCountryPM != null)
+                            {
+                                countryCode= countryCountryPM.Code;
+                            }
+                        }
                         if (!string.IsNullOrWhiteSpace(countryCode)) this._MyDeclarationPM.Consignments[0].OriginCountryCode = countryCode;
                     }
                     else
@@ -425,15 +430,20 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
                     if (!String.IsNullOrWhiteSpace(_LogitudeCommDecFile.OriginCountryId))
                     {
-                        string countryCode = this.GetOriginCountry(_LogitudeCommDecFile.OriginCountryId);
-                        //if (_LogitudeCommDecFile.OriginCountryId.Length > 2)
-                        //{
-                        //    countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", _LogitudeCommDecFile.OriginCountryId);
-                        //}
-                        //else
-                        //{
-                        //    countryCode = _LogitudeCommDecFile.OriginCountryId;
-                        //}
+                        string countryCode = "";
+                        if (_LogitudeCommDecFile.OriginCountryId.Length > 2)
+                        {
+                            countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", _LogitudeCommDecFile.OriginCountryId);
+                        }
+                        else
+                        {
+                            var myCustomsCountryQueryService = new CustomsCountryQueryService(_context);
+                            var countryCountryPM = myCustomsCountryQueryService.GetSingle(_LogitudeCommDecFile.OriginCountryId, false, true);
+                            if (countryCountryPM != null)
+                            {
+                                countryCode = countryCountryPM.Code;
+                            }
+                        }
                         if (!string.IsNullOrWhiteSpace(countryCode)) this._MyDeclarationPM.Consignments[0].OriginCountryCode = countryCode;
                     }
                     if (!string.IsNullOrWhiteSpace(_LogitudeCommDecFile.WarehouseId)) this._MyDeclarationPM.Consignments[0].StorageSiteCode = TranslateDeliverySite(_LogitudeCommDecFile.WarehouseId);
@@ -2082,15 +2092,20 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             }
             if (this._MySupplierInvoicePM.IssueCountryCode == null && this._INVOICE.ISSUECOUNTRYCODE != null)
             {
-                string countryCode = this.GetOriginCountry(this._INVOICE.ISSUECOUNTRYCODE);
-                //if (this._INVOICE.ISSUECOUNTRYCODE.Length > 2)
-                //{
-                //    countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", this._INVOICE.ISSUECOUNTRYCODE);
-                //}
-                //else
-                //{
-                //    countryCode = this._INVOICE.ISSUECOUNTRYCODE;
-                //}
+                string countryCode = "";
+                if (this._INVOICE.ISSUECOUNTRYCODE.Length > 2)
+                {
+                    countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", this._INVOICE.ISSUECOUNTRYCODE);
+                }
+                else
+                {
+                    var myCustomsCountryQueryService = new CustomsCountryQueryService(_context);
+                    var countryCountryPM = myCustomsCountryQueryService.GetSingle(this._INVOICE.ISSUECOUNTRYCODE, false, true);
+                    if (countryCountryPM != null)
+                    {
+                        countryCode = countryCountryPM.Code;
+                    }
+                }
                 if (!string.IsNullOrWhiteSpace(countryCode)) this._MySupplierInvoicePM.IssueCountryCode = countryCode;
             }
             if (!_MyDeclarationPM.IsCourierDeclaration)
@@ -2541,15 +2556,20 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 }
                 if (!string.IsNullOrWhiteSpace(invoiceItem.ITEMORIGINCOUNTRY))
                 {
-                    string countryCode = this.GetOriginCountry(invoiceItem.ITEMORIGINCOUNTRY);
-                    //if (invoiceItem.ITEMORIGINCOUNTRY.Length > 2)
-                    //{
-                    //    countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", invoiceItem.ITEMORIGINCOUNTRY);
-                    //}
-                    //else
-                    //{
-                    //    countryCode = invoiceItem.ITEMORIGINCOUNTRY;
-                    //}
+                    string countryCode = "";
+                    if (invoiceItem.ITEMORIGINCOUNTRY.Length > 2)
+                    {
+                        countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", invoiceItem.ITEMORIGINCOUNTRY);
+                    }
+                    else
+                    {
+                        var myCustomsCountryQueryService = new CustomsCountryQueryService(_context);
+                        var countryCountryPM = myCustomsCountryQueryService.GetSingle(invoiceItem.ITEMORIGINCOUNTRY, false, true);
+                        if (countryCountryPM != null)
+                        {
+                            countryCode = countryCountryPM.Code;
+                        }
+                    }
                     if (!string.IsNullOrWhiteSpace(countryCode)) SupplierInvoiceItemPM.OriginCountryCode = countryCode;
                 }
                 SupplierInvoiceItemPM.PreferenceDocumentNumber = invoiceItem.PREFERENCEDOCUMENTNUMBER;
@@ -2840,44 +2860,16 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             return SupplierInvoiceItemVehicleAddPMList;
         }
 
-        public string GetOriginCountry(string originCountry)
-        {
-            string countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", originCountry);
-            if(countryCode == null)
-            {
-                var myQueryService = new CustomsCountryQueryService(_context);
-                var countryCountryPM = myQueryService.GetSingle(originCountry, false, true);
-                if(countryCountryPM != null)
-                {
-                    return countryCountryPM.Code;
-                } 
-
-            }
-            return countryCode;
-        }
-
         public string GetTranslationL2P(string partnerID, string tableID, string localCode)
         {
-            string entityKeyString = $"GetGetTranslationL2P ({partnerID},{tableID},{localCode})";
-            return Unifreight.BL.BL.CacheHelper.GetFromCache(entityKeyString, () => {
-                var rec = (from a in amitalContext.GTRTRANs
-                           where a.PARTNERID == partnerID && a.TABLEID == tableID && a.LOCALCODE == localCode
-                           select a).FirstOrDefault();
-                if (rec == null)
-                {
-                    return null;
-                }
-                return rec.PARTNERCODE;
-            });
-            
-            /* var rec = (from a in amitalContext.GTRTRANs
-                        where a.PARTNERID == partnerID && a.TABLEID == tableID && a.LOCALCODE == localCode
-                        select a).FirstOrDefault();
-             if (rec == null)
-             {
-                 return null;
-             }
-             return rec.PARTNERCODE;*/
+            var rec = (from a in amitalContext.GTRTRANs
+                       where a.PARTNERID == partnerID && a.TABLEID == tableID && a.LOCALCODE == localCode
+                       select a).FirstOrDefault();
+            if (rec == null)
+            {
+                return null;
+            }
+            return rec.PARTNERCODE;
         }
 
     }
