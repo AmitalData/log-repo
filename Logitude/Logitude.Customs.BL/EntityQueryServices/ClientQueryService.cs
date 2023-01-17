@@ -11,6 +11,7 @@ using Logitude.Server.Tools;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -84,6 +85,15 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return id;
         }
 
+        public ClientPM GetClientByCode_Cache(string code, int tenant)
+        {
+            string entityKeyString = $"GetClientByCode_Cache({code}, {tenant})";
+            var res = CacheManager
+                .GetOrInsertNewObject<ClientPM>(entityKeyString,
+                () => { return this.GetClientByCode(code, tenant); });
+            return res;
+
+        }
         public ClientPM GetClientByCode(string code, int tenant)
         {
             Client client = repository.GetSingleClientByCode(code, tenant);
