@@ -83,9 +83,9 @@ namespace Logitude.DashboardModule.Data.EntityPOCOs
         [Column("Alignment")]
 	    public string Alignment { get; set; }
         [Column("ThousandSeparator")]
-	    public bool ThousandSeparator { get; set; }
+	    public bool? ThousandSeparator { get; set; }
         [Column("UseNumberAbbreviation")]
-	    public bool UseNumberAbbreviation { get; set; }
+	    public bool? UseNumberAbbreviation { get; set; }
         [Column("DecimalPlaces")]
 	    public int? DecimalPlaces { get; set; }
         [Column("UseAbbreviationAfter")]

@@ -174,13 +174,13 @@
     Name="ThousandSeparator"
     Type="bit">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="UseNumberAbbreviation"
     Type="bit">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="DecimalPlaces"
