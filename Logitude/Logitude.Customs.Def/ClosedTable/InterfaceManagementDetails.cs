@@ -3323,6 +3323,33 @@ namespace Logitude.Customs.Def.ClosedTable
                 InterfaceType = "B",
             });
 
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "8314",
+                InOut = InOutEnum.O.ToString(),
+                Description = "נתוני פרט מכס",
+                DcaPrefixName = "",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = CONST_DefaultPriority,
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "8888",
+                InterfaceType = null,
+            });
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "8888",
+                InOut = InOutEnum.I.ToString(),
+                Description = "מסר תשובה נתוני פרט מכס",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = CONST_DefaultPriority,
+                DcaPrefixName = "",
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = null,
+            });
             //C:\LogitudeWorld\Amital\Logitude.Customs.BL\EntityPMs\InterfaceManagementPM.cs
             var pm = new Logitude.Customs.Def.EntityPMs.InterfaceManagementPM();
             var myRequestCode = pm.ResponseInterfaceCode;

@@ -190,6 +190,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "DCAInUCBApproveAllPending",//אישור PENDING
 "CourierMastersConnected", // קישור הצהרות לטיסה
 "8235T", // תיקון שטעון
+"8314",//נתוני פרט מכס
+"8888"// תשובה לנתוני פרט מכס
             };
 
             string[] intrefaceTypeListDisplayOnly = GetintrefaceTypeListDisplayOnly();
@@ -346,6 +348,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "CourierMastersConnected", // קישור הצהרות לטיסה
 "UCADPE", // add multi pending
 "8235T", // תיקון שטעון
+"8314",//נתוני פרט מכס
+"8888",// תשובה לנתוני פרט מכס
             };
 
             string[] intrefaceTypeListDisplayOnly = GetintrefaceTypeListDisplayOnly();
@@ -482,6 +486,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
 //"8302" //בקשה לטופס הצהרה
 "CourierMastersConnected", // קישור הצהרות לטיסה
 "8235T", // תיקון שטעון
+"8314", // נתוני פרט מכס
+"8888",//תשובה לנתוני פרט מכס
 };
 
 
