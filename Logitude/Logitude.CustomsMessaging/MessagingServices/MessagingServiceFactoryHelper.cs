@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using Logitude.SystemLogs;
 using System;
+using Logitude.CustomsMessaging.RequestServices;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
@@ -576,6 +577,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 SaveDF_MSG5002_DeclarationCancellationRequestMsgService>
                 ((new SaveDF_MSG5002_DeclarationCancellationRequestMsgService()).MainInterfaceCode);
 
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+               DCAInCB_MSG_8314_8888_CustomItemDetailsHeaderMessagingService>
+               ((new DCAInCB_MSG_8314_8888_CustomItemDetailsHeaderMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
 
