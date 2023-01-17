@@ -9,6 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
+using System.Data.Entity;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -48,7 +49,7 @@ namespace Logitude.Customs.Data.Repsitories
 
         public List<ExportStorage> GetExportStorageListByDeclarationIdAndExportFile(string declarationId, string exportFileNo, int tenant)
         {
-            var q = from a in context.ExportStorages
+            var q = from a in context.ExportStorages.Include("ExportLogisticPermitAction")
                     where
                     a.Tenant == tenant && (
                     a.ExportFileNo == exportFileNo
