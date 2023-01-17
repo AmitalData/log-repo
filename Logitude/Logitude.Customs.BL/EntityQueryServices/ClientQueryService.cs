@@ -11,6 +11,7 @@ using Logitude.Server.Tools;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
