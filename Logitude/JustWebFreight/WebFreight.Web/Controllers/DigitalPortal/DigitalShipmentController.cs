@@ -70,7 +70,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     
                     temp.Descendants()
                      .OfType<JProperty>()
-                     .Where(attr => blockedFieldSecurites.Contains($"Shipment.{attr.Name}"))
+                     .Where(attr => blockedFieldSecurites.Contains($"Shipment.{tenant}.{attr.Name}") || blockedFieldSecurites.Contains($"Shipment.{attr.Name}"))
                      .ToList()
                      .ForEach(attr => attr.Remove());
 
@@ -123,7 +123,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var helper = new DigitalFieldSecuritesHelper();
                 var allowedFieldSecurites = helper.GitDigitalSecuritesFeilds(newFilters.ObjectTableId, newFilters.ProfileCode, tenant, false)
                                                   .Where(a => a.HasPermission)
-                                                  .Select(a => a.FieldCode.Replace("Shipment.", ""))
+                                                  .Select(a => a.FieldCode.Replace($"Shipment.{tenant}.", ""))
+                                                  .Select(a => a.Replace("Shipment.", ""))
                                                   .ToList();
 
                 var fields = string.Join(",", allowedFieldSecurites);
