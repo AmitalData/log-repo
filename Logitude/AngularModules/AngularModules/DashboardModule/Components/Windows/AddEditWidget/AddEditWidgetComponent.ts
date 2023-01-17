@@ -380,7 +380,7 @@ export class AddEditWidgetComponent extends BaseComponent {
             this.Alignment = null;
             return;
         }
-        if (this.TypeCode != "kpi"){
+        if (this.TypeCode != "kpi" /*||  !this.IsMeasureNumber*/){
             this.ThousandSeparator = false;
             this.UseNumberAbbreviation = false;
             this.UseAbbreviationAfter = null;
@@ -389,8 +389,8 @@ export class AddEditWidgetComponent extends BaseComponent {
         }
         this.Alignment = this.Alignment ? this.Alignment : "Center";
         this.ThousandSeparator = this.ThousandSeparator ? this.ThousandSeparator : false;
-        this.UseNumberAbbreviation = this.UseNumberAbbreviation ? this.UseNumberAbbreviation : true;
-        //if(this.isNew) this.UseNumberAbbreviation = true;
+        //this.UseNumberAbbreviation = this.UseNumberAbbreviation ? this.UseNumberAbbreviation : true;
+        if(this.isNew) this.UseNumberAbbreviation = true;
         this.UseAbbreviationAfter = this.UseAbbreviationAfter ? this.UseAbbreviationAfter : "100k";
         this.DecimalPlaces = this.DecimalPlaces ? this.DecimalPlaces : 0;
 
@@ -400,7 +400,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     
     SetUIProprtiesForDisplaySettings() {
         if(this.WidgetMeasuresList[0].MeasureCode != "Count" && AppTool.IsNullOrEmpty(this.WidgetMeasuresList[0].MeasureFieldId)) return;
-        if(this.TypeCode != "kpi") return;
+        if(this.TypeCode != "kpi" ||  !this.IsMeasureNumber) return;
         this.UIProperties.SetEnabled("DecimalPlaces", this.ObjectTableName, this.IsMeasureNumber || this.WidgetMeasuresList[0].MeasureCode == "Count");
         this.UIProperties.SetEnabled("UseNumberAbbreviation", this.ObjectTableName, this.IsMeasureNumber || this.WidgetMeasuresList[0].MeasureCode == "Count");
         this.UIProperties.SetEnabled("ThousandSeparator", this.ObjectTableName, this.IsMeasureNumber || this.WidgetMeasuresList[0].MeasureCode == "Count");
@@ -849,7 +849,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.myCloner = new Cloner(this.DataContext);
         this.myCloner.AddField('Title');
         this.myCloner.AddField('TypeCode');
-        this.myCloner.AddField('GroupBy');
+        this.myCloner.AddField('GroupById');
         this.myCloner.AddField('StartPotistion');
         this.myCloner.AddField('EndPosition');
         this.myCloner.AddField('EntityId');

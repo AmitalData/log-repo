@@ -474,7 +474,7 @@
                                             <ComboBox (SelectedItemChanged)="UseAbbreviationAfter = $event"
                                                       [ItemsSource]="Abbreviations"
                                                       [SelectedItem]="UseAbbreviationAfter"
-                                                      [IsDisabled]="(WidgetMeasuresList[0].MeasureCode == 'Count' && !UseNumberAbbreviation ) || (WidgetMeasuresList[0].MeasureCode != 'Count' && (!IsMeasureNumber || !UseNumberAbbreviation))">
+                                                      [IsDisabled]="!UseNumberAbbreviation">
                                             </ComboBox>
                                         </td>
                                         <td>
