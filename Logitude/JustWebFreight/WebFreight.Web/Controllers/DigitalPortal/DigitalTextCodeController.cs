@@ -289,6 +289,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         {
                             data.DefaultText = item.DefaultText;
                         }
+                        else
+                        {
+                            defaultCodesObject.Add(item);
+                        }
                     }
                 }
 
