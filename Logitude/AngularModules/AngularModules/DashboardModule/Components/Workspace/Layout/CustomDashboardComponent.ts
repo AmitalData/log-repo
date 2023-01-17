@@ -419,12 +419,12 @@ export class CustomDashboardComponent extends BaseComponent {
 
     public get MainMessage(): string {
         if (this.dashbaordCount == 0) return "There are currently no dashboards.";
-        else return "There are currently no selected dashboards.";
+        else return "There are currently no dashboards open.";
     }
 
     public get MainSubMessage(): string {
         if (this.dashbaordCount == 0) return "It is time to add a new one";
-        else return "Please select dashboard";
+        else return "It's time to search for an existing dashboard or add a new one";
     }
 
     public get CanPinn(): boolean {

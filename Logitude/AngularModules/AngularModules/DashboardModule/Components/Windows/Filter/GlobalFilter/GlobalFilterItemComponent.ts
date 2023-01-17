@@ -34,7 +34,7 @@ export class GlobalFilterItemComponent implements OnInit {
                 this.Operators.push(new Operator("Before", "LessThan"));
                 this.Operators.push(new Operator("Previous", "Previous"));
                 this.Operators.push(new Operator("Current", "Current"));
-                this.Operators.push(new Operator("Next", "Next"));
+                if (this.FilterItem.FieldId != "CreateDate") this.Operators.push(new Operator("Next", "Next"));
                 this.Operators.push(new Operator("Between", "Between"));
                 break;
 
@@ -74,7 +74,7 @@ export class GlobalFilterItemComponent implements OnInit {
         }
     }
 
-    public OperatorChanged(operator : Operator) {
+    public OperatorChanged(operator: Operator) {
         this.FilterItem.Operator = operator ? operator.Code : null;
         this.GetDefaultFieldValue();
         this.FilterItem.FieldValue2 = "";
@@ -145,7 +145,7 @@ export class GlobalFilterItemComponent implements OnInit {
         this.FilterItem.DateGroupCode = DateGroupCode;
     }
 
-    public  ShowDateGroups() {
+    public ShowDateGroups() {
         return this.IsNotEmptyNotEmtyOperator(this.FilterItem) && (this.FilterItem.DataTypeCode == 'DateTime' || this.FilterItem.DataTypeCode == 'Date') &&
             (this.FilterItem.Operator == "Previous" || this.FilterItem.Operator == "Current" || this.FilterItem.Operator == "Next");
     }
