@@ -423,6 +423,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         propertiesWindow.RTL = false;
         propertiesWindow.Title = this.getPropertiesWindowTitle(openPropertiesEventObject.nodeLabel);
         propertiesWindow.WindowArgs = propertiesWindowArgs;
+        propertiesWindow.ShowFooterButtons = true;
         return propertiesWindow;
     }
 

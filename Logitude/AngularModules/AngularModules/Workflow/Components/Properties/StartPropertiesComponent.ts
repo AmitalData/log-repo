@@ -34,7 +34,18 @@ export class StartPropertiesComponent extends BaseComponent {
         this.Data = args.Data ? args.Data : {};
         this.FlowObjectFields = args.FlowObjectFields ? args.FlowObjectFields : [];
 
+        this.initializeWindowEvents();
         this.initialize();
+    }
+
+    initializeWindowEvents() {
+        this.CurrentSession.CurrentWindow.FooterButtonsClicked.subscribe((e: any) => {
+            if (e === "submit") {
+                this.saveButtonClicked();
+            } else {
+                this.cancelButtonClicked();
+            }
+        });
     }
 
     initialize() {
@@ -71,7 +82,7 @@ export class StartPropertiesComponent extends BaseComponent {
             let validationErrors = notValidUIProperties.map(t => { return t.ValidationError; });
             this.ValidationErrorsList = validationErrors;
 
-            if (!this.IsValidConditions){
+            if (!this.IsValidConditions) {
                 this.ValidationErrorsList.push("Invalid Conditions");
             }
         }

@@ -43,9 +43,13 @@ export class LogitudeWindow {
     public SuppressBusyIndicator: boolean = false;
     public IsHideWindowMargin: boolean = false;
     public EditComponentArguments: any = null;
+    public ShowFooterButtons: boolean = false;
+    public SubmitFooterButtonLabel: string | null = null;
+    public CancelFooterButtonLabel: string | null = null;
 
     @Output() WindowClosed: EventEmitter<any> = new EventEmitter();
     @Output() ComponentLoaded: EventEmitter<any> = new EventEmitter();
+    @Output() FooterButtonsClicked: EventEmitter<any> = new EventEmitter();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.LayoutDirection = Settings.LayoutDirection;
@@ -273,6 +277,9 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
     public ZIndex: number = 0;
     leftPadding: number = 0;
     public IsOverAll: boolean = false;
+    public ShowFooterButtons: boolean = false;
+    public SubmitFooterButtonLabel: string | null = null;
+    public CancelFooterButtonLabel: string | null = null;
     private CurrentSession = SessionLocator.SelectedSession;
     @ViewChild(ChildDirective) Child: ChildDirective;
     constructor() {
@@ -319,6 +326,9 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
         this.CustomTitleIcon = logWindow.CustomTitleIcon;
         this.BottomBorderForTitle = logWindow.BottomBorderForTitle;
         this.IsHideWindowMargin = logWindow.IsHideWindowMargin;
+        this.ShowFooterButtons = logWindow.ShowFooterButtons;
+        this.SubmitFooterButtonLabel = logWindow.SubmitFooterButtonLabel;
+        this.CancelFooterButtonLabel = logWindow.CancelFooterButtonLabel;
         this.SetWindowSize();
         this.isChildInjected = true;
         this.LoadChildComponent();
@@ -354,6 +364,9 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
         this.HelpText = logWindow.HelpText;
         this.RTL = logWindow.RTL;
         this.CustomTitleIcon = logWindow.CustomTitleIcon;
+        this.ShowFooterButtons = logWindow.ShowFooterButtons;
+        this.SubmitFooterButtonLabel = logWindow.SubmitFooterButtonLabel;
+        this.CancelFooterButtonLabel = logWindow.CancelFooterButtonLabel;
         this.SetWindowSize();
         this.isChildInjected = true;
         this.LoadChildComponent();
@@ -608,6 +621,10 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
         if (this.ComponentInstance && this.ComponentInstance.OnCTRL_S_HotKeyPressed) {
             this.ComponentInstance.OnCTRL_S_HotKeyPressed();
         }
+    }
+
+    FooterButtonsClicked(event: string){
+        this.logWindow.FooterButtonsClicked.emit(event);
     }
 }
 
