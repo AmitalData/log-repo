@@ -112,6 +112,8 @@
     <None Include="DBTables\BusinessProcessQueue.dxml" />
     <None Include="DBTables\BusinessRole.dxml" />
     <None Include="DBTables\DigitalFieldSecurity.dxml" />
+    <None Include="DBTables\DigitalPortalScreen.dxml" />
+    <None Include="DBTables\DigitalPreDefinedComponent.dxml" />
     <None Include="DBTables\DigitalProfile.dxml" />
     <None Include="DBTables\DigitalTextCode.dxml" />
     <None Include="DBTables\FeatureToggle.dxml" />
