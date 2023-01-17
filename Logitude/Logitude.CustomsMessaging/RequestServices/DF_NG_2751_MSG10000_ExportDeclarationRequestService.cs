@@ -1271,11 +1271,13 @@ namespace Logitude.CustomsMessaging.RequestServices
                 var supplierInvoiceItemPM = supplierInvoicePM.SupplierInvoiceItems[goodsItemSeq];
                 var declarationGoodsShipmentGovernmentAgencyGoodsItem = new DeclarationGoodsShipmentGovernmentAgencyGoodsItem();
                 declarationGoodsShipmentGovernmentAgencyGoodsItem.SequenceNumeric = supplierInvoiceItemPM.SequenceNumeric.Value; // moran 23.8.16 - changed from goodsItemSeq + 1;
-                                                                                                                                 // declarationGoodsShipmentGovernmentAgencyGoodsItem.SequenceNumericSpecified = true;
+                
+                if(!string.IsNullOrEmpty(supplierInvoiceItemPM.OriginCountryCode))                                                                                                   // declarationGoodsShipmentGovernmentAgencyGoodsItem.SequenceNumericSpecified = true;
                 declarationGoodsShipmentGovernmentAgencyGoodsItem.Origin = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemOrigin()
                 {
                     CountryCode = new OriginCountryCodeType() { Value = supplierInvoiceItemPM.OriginCountryCode }
                 };
+
                 declarationGoodsShipmentGovernmentAgencyGoodsItem.GovernmentProcedure = GetGoodsItemGovernmentProcedure(supplierInvoiceItemPM.SupplierInvoiceItemProcesTypes);
                 declarationGoodsShipmentGovernmentAgencyGoodsItem.Commodity = GetGoodsItemCommodity(supplierInvoiceItemPM);
                 declarationGoodsShipmentGovernmentAgencyGoodsItem.GoodsMeasure = GetGoodsMeasure(supplierInvoiceItemPM); // MUST
