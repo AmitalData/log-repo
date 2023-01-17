@@ -19,7 +19,11 @@ using RequestHeader = UnifreightIIG.Common.CustomItemDetailsServiceReference;
 namespace Logitude.CustomsMessaging.MessagingServices
 {
     public  class DCAInCB_MSG_8314_8888_CustomItemDetailsHeaderMessagingService: MessagingServiceBase<
+<<<<<<< HEAD
         CD_NG_8314_Web01_CustomsItemDetailsRequestParams,
+=======
+        GenericRequestParams,
+>>>>>>> 8ceed0c7db (#173177)
         INF_MSG_GenericResponseData,
          CB_NG_8314_CustomItemDetailsHeaderIn,
          CB_NG_8888_CustomsItemOut,
@@ -29,17 +33,26 @@ namespace Logitude.CustomsMessaging.MessagingServices
         >
     {
 
+<<<<<<< HEAD
         protected override CD_NG_8314_Web01_CustomsItemDetailsRequestParams CreateDefaultRequestParamsFromCustomsResponse(CB_NG_8888_CustomsItemOut customsResponse)
         {
             
 
             var myGenericRequestParams = new CD_NG_8314_Web01_CustomsItemDetailsRequestParams()
+=======
+        protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(CB_NG_8888_CustomsItemOut customsResponse)
+        {
+            
+
+            var myGenericRequestParams = new GenericRequestParams()
+>>>>>>> 8ceed0c7db (#173177)
             {
                 LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CustomsItem"),
                 //LoggingEntityId = customsResponse.DebtNotificationMessag.debtNotificationID.ToString()
             };
             return myGenericRequestParams;
         }
+<<<<<<< HEAD
         protected override CB_NG_8888_CustomsItemOut CallWS(CB_NG_8314_CustomItemDetailsHeaderIn customRequest, CD_NG_8314_Web01_CustomsItemDetailsRequestParams requestParams, out string exceptionMessage)
         {
             exceptionMessage = null;  
@@ -56,6 +69,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     out response);
             }
             return response;
+=======
+        protected override CB_NG_8888_CustomsItemOut CallWS(CB_NG_8314_CustomItemDetailsHeaderIn customRequest, GenericRequestParams requestParams, out string exceptionMessage)
+        {
+            exceptionMessage = null;  
+            return new CB_NG_8888_CustomsItemOut(); 
+>>>>>>> 8ceed0c7db (#173177)
         }
 
         public override string MainInterfaceCode
