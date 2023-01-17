@@ -45,6 +45,14 @@ namespace WebFreight.Web.CustomModel.DomainServices
             customContext = CustomContext.GetContext(tenant);
             DeclarationListQueryService listService = new DeclarationListQueryService(customContext);
             QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
+            // Sets the command timeout for all the commands
+            //if (queryOperations.GetAll)
+            {
+                (customContext as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext.CommandTimeout = 300;
+                //(customContext as System.Data.Entity.DbContext).Database.Connection.ConnectionTimeout = 300;
+            }
+
+
             return listService.GetList(queryOperations, tenant);
 
 
