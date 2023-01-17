@@ -166,7 +166,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 
                 digitalFeildSecurityObjectModel.Tenant = tenant;
                 var digitalFieldSecurityQuery = new DigitalFieldSecurityQueryService(tenant);
-                var customDigitalFieldSecurity = digitalFieldSecurityQuery.GetDigitalFieldSecurityQuery(digitalFeildSecurityObjectModel.Tenant, digitalFeildSecurityObjectModel.ObjectTableId, digitalFeildSecurityObjectModel.ProfileId);
+                var customDigitalFieldSecurity = digitalFieldSecurityQuery.GetDigitalFieldSecurityQuery(digitalFeildSecurityObjectModel.Tenant, digitalFeildSecurityObjectModel.ObjectTableId, digitalFeildSecurityObjectModel.ProfileCode);
 
                 if (customDigitalFieldSecurity != null)
                 {
