@@ -66,7 +66,8 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
 
     GetDefaultScreens() {
         this.Screens = [];
-        this.digitalCustomizationService.GetDigitalPortalScreenNames().subscribe((myResult) => {
+        var profileCode = this.SelectedProfileItem.LocalName;
+        this.digitalCustomizationService.GetDigitalPortalScreenNames(profileCode).subscribe((myResult) => {
             if (!myResult.HasError) {
                 this.Screens = myResult.Result;
                 if (this.Screens != null) {
@@ -121,7 +122,8 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         this.CurrentSession.StartBusyIndicatorLoading();
         var objectTableId = this.SelectedItem.ObjectTableId;
         var screenCode = this.SelectedItem.ScreenCode;
-        this.digitalCustomizationService.GetDigitalPortalScreens(objectTableId, screenCode).subscribe((myResult) => {
+        var profileCode = this.SelectedProfileItem.LocalName;
+        this.digitalCustomizationService.GetDigitalPortalScreens(objectTableId, screenCode, profileCode).subscribe((myResult) => { 
             if (!myResult.HasError) {
                 var screen = myResult.Result;
                 this.CurrentTenantScreen = screen;
@@ -239,7 +241,9 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         var name = this.SelectedItem.Name;
         this.ModifiedScreenData.ObjectTableId = objectTableId;
         var profileId = this.SelectedProfileItem.Code;
+        var profileCode = this.SelectedProfileItem.LocalName;
         this.ModifiedScreenData.ProfileId = profileId;
+        this.ModifiedScreenData.ProfileCode = profileCode;
         this.ModifiedScreenData.ScreenCode = screenCode;
         this.ModifiedScreenData.Name = name;
         this.ModifiedScreenData.IsDraft = isDraft;
