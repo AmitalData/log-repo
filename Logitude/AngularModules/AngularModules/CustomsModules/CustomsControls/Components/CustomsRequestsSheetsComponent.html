@@ -39,10 +39,6 @@
         margin-top: 6px;
     }
 
-    .Statistics {
-        text-align: right;
-    }
-
     .StatisticsTable {
         border-collapse: collapse;
         table-layout: fixed;
@@ -541,7 +537,7 @@
                 </tr>
             </table>
         </td>
-        <td *ngIf="StatisticsVisibility" class="StatisticsTable-td">
+        <td [style.display]="StatisticsVisibility ? 'inherit' : 'none'"  class="StatisticsTable-td">
             <label for="StatisticsTable">כולל עתידי<!-- {{'Customs.RequestSheet.O.IncludingFuture' | TextCodeTranslationPipe }} --></label>
             <CheckBox id="StatisticsTable" (Checked)="IncludingFuture = $event" [IsChecked]="IncludingFuture"></CheckBox>
             <div style="width:80%">
@@ -549,22 +545,19 @@
                     <thead style="width: 100%; display:table;">
                         <tr>
                             <th class="Statistics"><h2>סוג בקשה</h2></th>
-                            <th style="width:60px" class="Statistics"><h2 style="width: calc(100% - 30px)">כמות</h2></th>
+                            <th class="Statistics" [style.width.px]="customsRequestsSheetSummary?.length > 4 ? 76 : 60"><h2>כמות</h2></th>
                         </tr>
                     </thead>
-                    <tbody *ngIf="IsTherecustomsRequestsSheetSummary">
+                    <tbody [style.display]="IsTherecustomsRequestsSheetSummary ? 'block' : 'none'" #statisticsTableTbody>
                         <tr style="display: table; width: 100%; table-layout: fixed; height: 20px; border-bottom:1px solid #A7A9AC;" *ngFor="let item of customsRequestsSheetSummary">
-                            <td class="Statistics" [tooltip]="item.InterfaceTypeName" position="right" [show]="item.InterfaceTypeName.length > 29">{{item.InterfaceTypeName}}</td>
-                            <td class="Statistics count-td">{{item.count}}</td>
+                            <td class="Statistics" [tooltip]="item.InterfaceTypeName" position="right" [show]="item.InterfaceTypeName.length * 6 > statisticsTableTbody.clientWidth - 60"><p [style.display]="'none'">width {{firstCloWidthOfStatisticsTable}} length {{item.InterfaceTypeName.length}}</p>{{item.InterfaceTypeName}}</td>
+                            <td class="Statistics">{{item.count}}</td>
                         </tr>
-                    </tbody>
-                    <tbody *ngIf="!IsTherecustomsRequestsSheetSummary">
-                        <tr> <td> <div></div> </td> <td> <div></div></td></tr>
                     </tbody>
                     <tfoot  [ngStyle]="{'width':this.customsRequestsSheetSummary.length > 4 ?  'calc(100% - 18px)' : '100%' }" style="display: table;">
                         <tr>
                             <td class="Statistics"></td>
-                            <td class="Statistics count-td">
+                            <td class="Statistics">
                                 <span *ngIf="SumRequests > 0">{{SumRequests}}</span>
                             </td>
                         </tr>

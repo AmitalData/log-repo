@@ -12,11 +12,16 @@
 
     td {
         text-overflow: ellipsis;
-        overflow:hidden; 
-        white-space:nowrap; 
+        overflow: hidden;
+        white-space: nowrap;
+        text-indent: 5px;
     }
 
-    .count-td {
+    .Statistics {
+        text-align: right;
+    }
+
+    tbody tr td:last-child {
         width: 60px;
     }
 }
