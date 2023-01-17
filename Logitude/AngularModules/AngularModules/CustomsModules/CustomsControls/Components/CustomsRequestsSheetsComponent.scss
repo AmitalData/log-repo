@@ -21,7 +21,9 @@
         text-align: right;
     }
 
-    tbody tr td:last-child {
-        width: 60px;
+    tbody, tfoot {
+        tr td:last-child {
+            width: 60px;
+        } 
     }
 }
