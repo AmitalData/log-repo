@@ -280,9 +280,11 @@ namespace Logitude.Accounting.BL.CoreBL
                                                  }
                                );
                     var journalReconcileRepository = new JournalReconcileRepository(accountingContext);
-                    var existingJournalsReconcilies = journalReconcileRepository.GetJournalReconcilesByLedgerTransactionsIds(listJournalReconciles.Select(x => x.LedgerTransactionId).ToList());
-                    foreach (var item in existingJournalsReconcilies) {
-                        if (listJournalReconciles.Any(x => x.LedgerTransactionId == item.LedgerTransactionId && x.ReconciliationAmount == item.ReconciliationAmount)) {
+                    var existingReconciliationLines = journalReconcileRepository.GetReconciliationLinesByLedgerTransactionsIds(listJournalReconciles.Select(x => x.LedgerTransactionId).ToList());
+                    foreach (var item in existingReconciliationLines)
+                    {
+                        if (listJournalReconciles.Any(x => x.LedgerTransactionId == item.TransactionId && x.ReconciliationAmount == item.ReconciliationAmount))
+                        {
                             throw new ApplicationException("There is already journal reconciliation has been created");
                         }
                     }
