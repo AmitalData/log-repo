@@ -400,6 +400,13 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 query2 = query2.Where(x => x.CasualSupplierName.ToLower().Contains(casualSupplierName));
             }
 
+            var importerNameF = queryOperations.QueryFilterItems.Where(r => r.FieldName == "ImporterName").FirstOrDefault();
+            if (importerNameF != null && !string.IsNullOrEmpty(importerNameF.FieldValue?.ToString()))
+            {
+                string importerName = importerNameF.FieldValue.ToString().ToLower();
+                query2 = query2.Where(x => x.ImporterName.ToLower().Contains(importerName));
+            }
+
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(DeclarationCourierStatusList).GetProperty(queryOperations.SortByColumnName);

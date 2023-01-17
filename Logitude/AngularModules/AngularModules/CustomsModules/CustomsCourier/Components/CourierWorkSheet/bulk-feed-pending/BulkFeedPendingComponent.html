@@ -132,7 +132,7 @@
     </MultiSelectLOV>
     <LogLabel [ObjectFieldName]="'CustomerName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
         
-    <LogTextBox [ObjectFieldName]="'CustomerName'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+    <LogTextBox [ObjectFieldName]="'CustomerName'" [InputType]="'nText'" [IsFreeText]="true" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
                                             [HideColumns]="true"></LogTextBox>
 
     <button class="Button" style="height:22px" (click)="search()">

@@ -192,6 +192,9 @@ export class BulkFeedPendingComponent extends BaseComponent {
     if (!AppTool.IsNullOrEmpty(this.CasualSupplierName))
       filters.addAdditionalFilter("CasualSupplierName", this.CasualSupplierName, null, null, "Contains", true, false, false, "string");
 
+      if (!AppTool.IsNullOrEmpty(this.CustomerName))
+          filters.addAdditionalFilter("ImporterName", this.CustomerName, null, null, "Contains", true, false, false, "string");
+      
     switch (this._SelectedFastIndividualProcessValue) {
       case "F": {
         filters.addAdditionalFilter("FastIndividualProcessCode", "F", null, null, "Equals", false, false, false, "string");
