@@ -123,7 +123,7 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         var objectTableId = this.SelectedItem.ObjectTableId;
         var screenCode = this.SelectedItem.ScreenCode;
         var profileCode = this.SelectedProfileItem.LocalName;
-        this.digitalCustomizationService.GetDigitalPortalScreens(objectTableId, screenCode, profileCode).subscribe((myResult) => {
+        this.digitalCustomizationService.GetDigitalPortalScreens(objectTableId, screenCode, profileCode).subscribe((myResult) => { 
             if (!myResult.HasError) {
                 var screen = myResult.Result;
                 this.CurrentTenantScreen = screen;
