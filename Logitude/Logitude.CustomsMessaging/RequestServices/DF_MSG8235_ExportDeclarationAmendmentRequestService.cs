@@ -196,7 +196,7 @@ namespace Logitude.CustomsMessaging.RequestServices
         }
 
 
-        public override void PostGetRequest(DF_NG_8235_MSG14000_ExportDeclarationAmendmentRequestMsg customRequest, AmendminntRequestParams requestParams)
+        public override void PostGetRequest(DF_NG_8235_MSG14000_ExportDeclarationAmendmentRequestMsg customRequest, AmendmentRequestParams requestParams)
         {
             if (this._context == null)
             {
