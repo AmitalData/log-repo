@@ -212,7 +212,7 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
         if (this.IsModifiedFields) {
             this.ModifiedFields.ObjectTableId = this.SelectedObjectTableItem.Name;
             this.ModifiedFields.ProfileId = this.SelectedProfileItem.Code;
-            this.ModifiedLables.ProfileCode = this.SelectedProfileItem.LocalName;
+            this.ModifiedFields.ProfileCode = this.SelectedProfileItem.LocalName;
             this.digitalTextService.UpdateDigitalTextCodes(this.ModifiedFields).subscribe((myResult) => {
                 this.customizationEditComponent.IsDirty = false;
                 this.ModifiedFields = new DigitalTextCodeUpdateModel();
