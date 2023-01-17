@@ -1069,16 +1069,16 @@ namespace Logitude.Customs.Data.Repsitories
             DeclarationId res = myQ.Take(1).ToList().FirstOrDefault();
             return res;
         }
-        public ExportStorageConnectToDeclaration GetExportStorageConnectToDeclaration(string declarationId)
+        public ExportStorageConnectToDeclaration GetExportStorageConnectToDeclaration(string declarationId,int tenant)
         {
             var actionCodes = new List<string> { "4", "6", "8" };
 
             ExportStorageConnectToDeclaration res = new ExportStorageConnectToDeclaration();
            
             var q = (
-                from d in context.Declarations.Where(x => x.Id == declarationId)
+                from d in context.Declarations.Where(x => x.Id == declarationId && x.Tenant == tenant)
 
-                join e in context.ExportStorages on d.ExportFile equals e.ExportFileNo into ejoin
+                join e in context.ExportStorages.Where(x=>x.Tenant == tenant) on d.ExportFile equals e.ExportFileNo into ejoin
                 from ej in ejoin
 
                 select new
