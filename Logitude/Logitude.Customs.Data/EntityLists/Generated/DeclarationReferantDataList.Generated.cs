@@ -422,6 +422,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string FieldR19  { get; set; }
        [DataMember]
        public string FieldR20  { get; set; }
+       [DataMember]
+       public string DeclarationIdToDisplay  { get; set; }
    }
 
 }
