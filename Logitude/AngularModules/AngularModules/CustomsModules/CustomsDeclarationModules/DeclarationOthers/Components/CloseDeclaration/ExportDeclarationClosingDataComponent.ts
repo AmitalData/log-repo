@@ -84,9 +84,12 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     SetWindowArgs(args: any) {
         this.EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response: any) => {
             this.DecPM = args.EntityPM;
-            if (!this.DecPM.IsConnectedToUnifreight && AmitalGatewayUtil.Instance.AmitalBrowserInUse)
+            if (!this.DecPM.IsConnectedToUnifreight && AmitalGatewayUtil.Instance.AmitalBrowserInUse){
                 this.operationalDataFromUnifreight()
+            }
+            else{
             this.GetExportDeclarationClosingData(this.DecPM.Id);
+        }
             this.SetUIProperty();
             if (this.DecPM.IsExportClosed) {
                 this.DeclarationIsClosed = true
@@ -677,10 +680,14 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                         Mawb ? this.MainAWB = Mawb : '';
                         Hawb ? this.Smp = Hawb : '';
                         LoadPort ? this.ChargingSite = LoadPort : '';
+                        LoadPort? this.FinalLoadingSite = this.ChargingSite : this.FinalLoadingSite; 
                         FlightDate ? this.FlightDate = datetime : '';
+                        FlightDate? this.LoadingDateTime = this.FlightDate: this.LoadingDateTime;
 
                         SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
                     }
+                    this.GetExportDeclarationClosingData(this.DecPM.Id);
+
                 }
             );
 
