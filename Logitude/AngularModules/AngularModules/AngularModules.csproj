@@ -2169,6 +2169,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityPMs\BIReportFolderPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\BIReportPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\BIReportsTypePM.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityPMs\CustomFieldsMainObjectPMExtended.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\CustomFieldsMainObjectPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DataCustomObjectPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DeploymentPackageDetails.ts" />
