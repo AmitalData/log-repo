@@ -50,6 +50,10 @@ using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.DataContracts;
 using Logitude.BL.CommonDataModel.BusinessUnitFilters;
 using System.Data.Entity.Core;
+using Logitude.CRM.BL.EntityQueryServices;
+using Logitude.CRM.BL.EntityPMs;
+using Logitude.CRM.BL.EntityUpdateServices;
+using Logitude.CRM.Data;
 
 namespace WebFreight.Web.QuoteModel.DomainServices
 {
@@ -1346,8 +1350,10 @@ namespace WebFreight.Web.QuoteModel.DomainServices
             QuoteRepository myQuoteRepository = new QuoteRepository(tenant);
             IQueryable<Quote> myQuotes = myQuoteRepository.GetQuotes(tenant).Where(d => quotesIds.Contains(d.Id));
 
-            OpportunityRepository opportunityRepository = new OpportunityRepository(tenant);
-            Opportunity opportunity = opportunityRepository.GetSingle(opportunityId, tenant);
+            ICRMContext cRMContext = CRMContext.GetContext(tenant);
+            OpportunityUpdateService service = new OpportunityUpdateService(cRMContext, new Dictionary<string, IContext>(), tenant);
+            OpportunityQueryService opportunityQuery = new OpportunityQueryService(cRMContext);
+            var opportunity = opportunityQuery.GetSingle(opportunityId, false, false);
 
             if (opportunity != null)
             {
@@ -1376,10 +1382,12 @@ namespace WebFreight.Web.QuoteModel.DomainServices
                 });
 
                 myQuoteRepository.SubmitChanges();
-                opportunityRepository.SubmitChanges();
+                service.InitializeEntityPM(opportunity);
+                opportunity.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                service.Update(opportunity, true);
             }
         }
-        private void UpdateOpportunity(Opportunity opportunity)
+        private void UpdateOpportunity(OpportunityPM opportunity)
         {
             if (opportunity.NumberOfConnectedQuotes == null)
             {

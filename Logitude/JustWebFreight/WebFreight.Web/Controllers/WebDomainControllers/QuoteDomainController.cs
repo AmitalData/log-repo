@@ -234,21 +234,24 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
 
-                if (opportunityId == "null")
-                    opportunityId = null;
+                    if (opportunityId == "null")
+                        opportunityId = null;
 
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.CheckContactFeature("QuoteStage", "READ", authToken.Tenant);
 
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("QuoteStage", "READ", authToken.Tenant);
+                    QuotesDomainService domainService = new QuotesDomainService();
+                    string[] Ids = quotesIds.Split(':');
+                    domainService.ConnectQuotesToOpportunity(opportunityId, Ids.ToList(), authToken.Tenant);
 
-                QuotesDomainService domainService = new QuotesDomainService();
-                string[] Ids = quotesIds.Split(':');
-                domainService.ConnectQuotesToOpportunity(opportunityId, Ids.ToList(), authToken.Tenant);
-
-                return Request.CreateResponse(HttpStatusCode.OK, true);
+                    scope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK, true);
+                }
             }
             catch (Exception ex)
             {
