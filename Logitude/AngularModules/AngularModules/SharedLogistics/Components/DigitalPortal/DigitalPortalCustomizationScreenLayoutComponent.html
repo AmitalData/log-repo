@@ -28,27 +28,40 @@
     <tr>
         <!-- Left Sidebar -->
         <td style="width: 155px; border: solid 1px silver">
-            <div class="SimpleGridView MediaFillAbsolute">
-                <div class="SimpleGridViewHeader">
+            <div class="MediaFill">
+                <div style="height: 25px; width: 153px;">
                     <table>
-                        <tr>
-                            <td style="width: 135px; min-width: 135px; max-width: 135px; ">Screen Name</td>
-                        </tr>
-                    </table>
-                </div>
-
-                <div class="SimpleGridViewBody">
-                    <table>
-                        <tr class="SimpleGridViewRow" *ngFor="let item of Screens" (click)="SelectionChanged(item)" [class.Selected]="item == SelectedItem">
-                            <td [attr.data-cy]="item.Name">
-                                <div [attr.title]="item.Name" class="GridViewCell" style="width: 135px; min-width: 135px; max-width: 135px; font-size: 11px ">
-                                    {{item.Name}}
-                                </div>
+                        <tr style="height: 25px;">
+                            <td style="width: 153px;">
+                                <ComboBox style="width:153px;float:left;" [WaterMark]="'Select Profile'" (SelectedItemChanged)="SelectedProfileItem = $event" [ItemsSource]="DigitalProfileFilterList" [SelectedItem]="SelectedProfileItem" [Binding]="'Name'"></ComboBox>
                             </td>
                         </tr>
                     </table>
                 </div>
+
+                <div style="padding-top: 5px;" class="SimpleGridView MediaFillAbsolute">
+                    <div class="SimpleGridViewHeader">
+                        <table>
+                            <tr>
+                                <td style="width: 135px; min-width: 135px; max-width: 135px; ">Screen Name</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="SimpleGridViewBody">
+                        <table>
+
+                            <tr class="SimpleGridViewRow" *ngFor="let item of Screens" (click)="SelectionChanged(item)" [class.Selected]="item == SelectedItem">
+                                <td [attr.data-cy]="item.Name">
+                                    <div [attr.title]="item.Name" class="GridViewCell" style="width: 135px; min-width: 135px; max-width: 135px; font-size: 11px ">
+                                        {{item.Name}}
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
             </div>
+
         </td>
 
         <td style="width: 10px;">
@@ -159,7 +172,7 @@
                     </td>
                 </tr>
 
-               
+
             </table>
         </td>
     </tr>

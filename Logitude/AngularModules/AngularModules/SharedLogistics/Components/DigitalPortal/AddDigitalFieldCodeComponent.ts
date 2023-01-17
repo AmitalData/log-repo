@@ -16,6 +16,7 @@ export class AddDigitalFieldCodeComponent {
     SelectedDigitalFieldCode: DigitalTextCodeObject;
     private CurrentSession = SessionLocator.SelectedSession;
     IsAddingComponent = false;
+    ProfileCode: string;
 
     constructor() {
        
@@ -25,12 +26,13 @@ export class AddDigitalFieldCodeComponent {
         this.LabelsItemsSource = new ObservableCollection([]);
         this.digitalTextService = new DigitalTextService();
         this.ObjectTableId = args.ObjectTableId;
+        this.ProfileCode = args.ProfileCode;
         this.BuildItemsSource();
     }
 
     BuildItemsSource() {
         this.LabelsItemsSource = new ObservableCollection([]);
-        this.digitalTextService.GetTextCodesByFilters(null, this.ObjectTableId, null).subscribe((myResult) => {
+        this.digitalTextService.GetTextCodesByFilters(null, this.ObjectTableId, this.ProfileCode).subscribe((myResult) => {
             if (!myResult.HasError) {
                 var data = myResult.Result?.filter(a => !AppTool.IsNullOrEmpty(a.FieldCode));
                 if (!AppTool.IsNullOrEmpty(this.SearchText)) {

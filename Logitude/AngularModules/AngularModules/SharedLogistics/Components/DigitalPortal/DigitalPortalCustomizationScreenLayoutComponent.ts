@@ -6,6 +6,8 @@ import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
+import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
+import { DigitalTextService} from '../../../Infrastructure/Services/WebServices/DigitalTextService'
 
 @Component({
     templateUrl: './DigitalPortalCustomizationScreenLayoutComponent.html',
@@ -21,18 +23,45 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
     TextAreaInputId: string = Guid.newGuid();
     TextAreaInputCurrentPosition: number = 0;
     IsPreviewChanges: boolean = false;
+    private digitalTextService: DigitalTextService;
 
     public editorOptions = { theme: '', language: 'html', validate: 'true' };
     CurrentTenantScreen: DigitalPortalScreenList;
     constructor() {
-        this.Screens = [];
-        this.ModifiedScreenData = new DigitalPortalScreenUpdateModel();
-        this.digitalCustomizationService = new DigitalCustomizationService();
-        this.GetDefaultScreens();
+        
     }
 
     SetWindowArgs(args: any) {
+        this.Screens = [];
+        this.digitalTextService = new DigitalTextService();
+        this.ModifiedScreenData = new DigitalPortalScreenUpdateModel();
+        this.digitalCustomizationService = new DigitalCustomizationService();
+        this.FillDigitalProfileFiltersList();
+    }
 
+    public DigitalProfileFilterList: CodeNameClass[];
+    private selectedProfileItem: CodeNameClass;
+    get SelectedProfileItem() { return this.selectedProfileItem; }
+    set SelectedProfileItem(value: CodeNameClass) {
+        if (this.selectedProfileItem != value) {
+            this.selectedProfileItem = value;
+            this.GetDefaultScreens();
+        }
+    }
+
+    private FillDigitalProfileFiltersList() {
+        this.DigitalProfileFilterList = [];
+        this.digitalTextService.GetDigitalProfileName(SessionLocator.Tenant).subscribe((myResult) => {
+            if (!myResult.HasError) {
+                var objectTables = myResult.Result;
+                objectTables.forEach(item => {
+                    this.DigitalProfileFilterList.push(new CodeNameClass(item.Id, item.Name, item.Code));
+                });
+
+                this.selectedProfileItem = this.DigitalProfileFilterList[0];
+                this.GetDefaultScreens();
+            }
+        });
     }
 
     GetDefaultScreens() {
@@ -136,6 +165,8 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         logWindow.Height = 600;
         var windowArgs: any = {};
         windowArgs.ObjectTableId = this.SelectedItem.ObjectTableId;
+        var profileCode = this.SelectedProfileItem.LocalName;
+        windowArgs.ProfileCode = profileCode;
         logWindow.Title = "Insert Field";
         logWindow.WindowArgs = windowArgs;
         logWindow.Show('./SharedLogistics/Components/DigitalPortal/AddDigitalFieldCodeComponent');
@@ -207,6 +238,8 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         var screenCode = this.SelectedItem.ScreenCode;
         var name = this.SelectedItem.Name;
         this.ModifiedScreenData.ObjectTableId = objectTableId;
+        var profileId = this.SelectedProfileItem.Code;
+        this.ModifiedScreenData.ProfileId = profileId;
         this.ModifiedScreenData.ScreenCode = screenCode;
         this.ModifiedScreenData.Name = name;
         this.ModifiedScreenData.IsDraft = isDraft;

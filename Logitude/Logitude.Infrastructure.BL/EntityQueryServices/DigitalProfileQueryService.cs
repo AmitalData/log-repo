@@ -51,6 +51,7 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                 {
                     Tenant = digitalProfileList.Tenant,
                     Name = digitalProfileList.Name,
+                    Code = digitalProfileList.Code,
                     CreateDate = digitalProfileList.CreateDate,
                     UpdateDate = digitalProfileList.UpdateDate
                 };
@@ -67,6 +68,7 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                     Id = digitalProfileList.Id,
                     Tenant = digitalProfileList.Tenant,
                     Name = digitalProfileList.Name,
+                    Code = digitalProfileList.Code,
                     CreateDate = digitalProfileList.CreateDate,
                     UpdateDate = digitalProfileList.UpdateDate
                 };

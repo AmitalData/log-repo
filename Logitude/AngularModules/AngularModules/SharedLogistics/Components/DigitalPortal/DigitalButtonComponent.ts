@@ -22,6 +22,7 @@ export class DigitalButtonComponent {
     private objectTableId: string;
     private objectTableName: string;
     private profileId: string;
+    private profileCode: string;
 
     constructor(private CD: ChangeDetectorRef, private _entityListService: EntityListService) {
         this.TenantPM = InfraSettings.TenantPM;
@@ -35,6 +36,7 @@ export class DigitalButtonComponent {
         this.objectTableId = this.fieldName[0];
         this.objectTableName = this.fieldName[1];
         this.profileId = this.fieldName[2];
+        this.profileCode = this.fieldName[3];
 
         this.InUseVisibile = this.rowData.InUse;
         var isDestroyed: boolean = this.CD['destroyed'];
@@ -66,9 +68,10 @@ export class DigitalButtonComponent {
         var newField = new AddCustomFieldRequest();
         newField.ObjectTableId = this.objectTableId;
         newField.ProfileId = this.profileId;
+        newField.ProfileCode = this.profileCode;
         newField.FieldCode = this.rowData.FieldCode;
+        newField.TextCode = this.rowData.FullNameTextCodeCode;
         newField.DefaultText = this.rowData.FullNameTextCodeDefaultText;
-        newField.TextCode = this.rowData.FieldCode;
         newField.DisplayText = this.rowData.FullNameTextCodeDefaultText;
         newField.CreatedBy = SessionLocator.LoggedUserPM.EnglishName;
 

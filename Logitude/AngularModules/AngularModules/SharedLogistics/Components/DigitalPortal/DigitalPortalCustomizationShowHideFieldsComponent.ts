@@ -90,11 +90,11 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
 
     private FillDigitalProfileFiltersList() {
         this.DigitalProfileFilterList = [];
-        this.digitalTextService.GetDigitalProfileName().subscribe((myResult) => {
+        this.digitalTextService.GetDigitalProfileName(SessionLocator.Tenant).subscribe((myResult) => {
             if (!myResult.HasError) {
                 var objectTables = myResult.Result;
                 objectTables.forEach(item => {
-                    this.DigitalProfileFilterList.push(new CodeNameClass(item.Id, item.Name));
+                    this.DigitalProfileFilterList.push(new CodeNameClass(item.Id, item.Name, item.Code));
                 });
 
                 this.selectedProfileItem = this.DigitalProfileFilterList[0];
@@ -109,8 +109,8 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
 
     BuildFields() {
         var objectTableId = this.SelectedObjectTableItem.Name;
-        var profileId = this.SelectedProfileItem.Code;
-        this.digitalTextService.GetTextCodesByFilters(null, objectTableId, profileId).subscribe((myResult) => {
+        var profileCode = this.SelectedProfileItem.LocalName;
+        this.digitalTextService.GetTextCodesByFilters(null, objectTableId, profileCode).subscribe((myResult) => {
             if (!myResult.HasError) {
                 this.loadedFieldsResults = myResult.Result.filter(a => !AppTool.IsNullOrEmpty(a['FieldCode']));
                 this.BuildFieldsPremissions();
@@ -122,8 +122,8 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
         this.FieldsItemsSource = new ObservableCollection([]);
         var profilesList: ProfileFieldsItem[] = [];
         var objectTableId = this.SelectedObjectTableItem.Name;
-        var profileId = this.SelectedProfileItem.Code;
-        this.digitalTextService.GetFeildPermissionByFilters(null, objectTableId, profileId).subscribe((myResult) => {
+        var profileCode = this.SelectedProfileItem.LocalName;
+        this.digitalTextService.GetFeildPermissionByFilters(null, objectTableId, profileCode).subscribe((myResult) => {
             if (!myResult.HasError) {
                 myResult.Result.filter(a => !AppTool.IsNullOrEmpty(a.FieldCode)).forEach(item => {
                     profilesList.push(new ProfileFieldsItem(this, item));
@@ -246,7 +246,10 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
         logWindow.Height = 800;
         var windowArgs: any = {};
         windowArgs.ObjectTableId = this.SelectedObjectTableItem.Name;
-        windowArgs.ProfileId = this.SelectedProfileItem.Code;
+        var profileCode = this.SelectedProfileItem.LocalName;
+        var profileId = this.SelectedProfileItem.Code;
+        windowArgs.ProfileCode = profileCode;
+        windowArgs.ProfileId = profileId;
         logWindow.Title = "Add a field";
         logWindow.WindowArgs = windowArgs;
         logWindow.Show('./SharedLogistics/Components/DigitalPortal/AddDigitalLogitudeFieldComponent');
