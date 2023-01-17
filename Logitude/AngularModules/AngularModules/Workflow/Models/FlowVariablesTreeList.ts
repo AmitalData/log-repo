@@ -226,8 +226,9 @@ export class FlowVariablesTreeList {
         }
 
         this.getLoopNodes().forEach((loopNode: any) => {
-            let collectionVariable = loopNode.data["collectionVariable"] || null;
-            let isCollectionFilterVariable = loopNode.data["isCollectionFilterVariable"] || false;
+            let collectionVariable: string = loopNode.data["collectionVariable"] || null;
+            let isCollectionFilterVariable: boolean = loopNode.data["isCollectionFilterVariable"] || false;
+            let isTriggeringRecordChildEntity = collectionVariable?.startsWith(this.TriggeringRecordPrefix);
 
             let collectionNode: any;
 
@@ -235,6 +236,22 @@ export class FlowVariablesTreeList {
                 collectionNode = this.getCollectionFilterNodes().find(n => Formatter.getCodeFromName(n.data["name"]) === collectionVariable);
             } else {
                 collectionNode = this.getGetRecordNodes("AllRecords").find(n => Formatter.getCodeFromName(n.data["name"]) === collectionVariable);
+            }
+
+            if (!collectionNode && isTriggeringRecordChildEntity) {
+                let entity = collectionVariable?.split("_")[1];
+                let treeSelectItemName = loopNode.data["name"];
+                let isReadOnly = false;
+                let treeSelectItemKey = Formatter.getCodeFromName(treeSelectItemName);
+                let treeSelectItemChildren = this.getObjectFieldsItems(treeSelectItemKey, entity, null);
+                let loopNodeLabel = loopNode.data["label"] || null;
+                let treeSelectItemTitle = loopNodeLabel ? (this.LoopCurrentItemPrefix + loopNodeLabel) : null;
+                let treeSelectItemLoopName = this.LoopCurrentItemPrefix + treeSelectItemName;
+                let treeSelectItemSelectable = this.FlowVariablesTreeListProperties.IsObjectVariableSelectable;
+                let treeSelectItemData = { isReadOnlyVariable: isReadOnly, type: (entity || null) };
+                let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemTitle || treeSelectItemLoopName, false, treeSelectItemSelectable, false, false, treeSelectItemChildren, treeSelectItemData);
+                recordsVariablesItemChildren.push(treeSelectItem);
+                this.ItemsList.push(treeSelectItem);
             }
 
             if (collectionNode && !this.FlowVariablesTreeListProperties.OnlyCurrentLoopItemVariables) {

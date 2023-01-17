@@ -2,7 +2,7 @@
 
     <div class="db-drop-container" [ngStyle]="{ 'border-color': IsOpen ? '#5FAFDA': '#D9D9D9' }"
         (click)="OpenCloseDropDown()">
-        <p class="db-drop-selected-text" [title]="GetItemText(SelectedItem)">{{ GetItemText(SelectedItem) }}</p>
+        <p class="db-drop-selected-text" [title]="GetSelectedItemText(SelectedItem)" [ngStyle]="!SelectedItem && {'color': '#D9D9D9'}">{{ GetSelectedItemText(SelectedItem) }}</p>
         <span class="db-drop-pic" [ngClass]="IsOpen ? 'db-drop-arrow-up' : 'db-drop-arrow-down'"></span>
     </div>
 
@@ -22,7 +22,6 @@
                     <ng-container *ngIf="!Loading">
                         <li *ngFor="let item of GetSectionDisplayItemsSource(sectionItem.Code)" (click)="SelectItem(item)" [title]="GetItemText(item)">
                             <p class="db-drop-item-text">{{ GetItemText(item) }}</p>
-                            <p class="db-drop-open-text">Open</p>
                         </li>
                     </ng-container>
 

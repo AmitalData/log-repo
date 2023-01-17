@@ -71,6 +71,11 @@ export class DashboardDropDownComponent implements OnInit {
         this.SelectedItemChanged.emit(item);
     }
 
+    public GetSelectedItemText(item: any) {
+        if (item) return this.DisplayMemberPath ? item[this.DisplayMemberPath] : item;
+        return "Search for a Dashboard";
+    }
+
     public GetItemText(item: any) {
         if (item)
             return this.DisplayMemberPath ? item[this.DisplayMemberPath] : item;

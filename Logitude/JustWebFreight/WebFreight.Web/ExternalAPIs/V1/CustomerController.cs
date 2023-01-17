@@ -409,8 +409,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
         {
             if (!FeatureToggleHelper.HasFeatureToggle("CTI", tenant)) return;
             if (contacts == null || contacts.Count == 0) return;
+            if(contacts.Count(d => d.IsPrimaryContact) > 1) throw new ApplicationException("Only one contact allowed to be set primary");
 
-            foreach(var contact in contacts)
+            foreach (var contact in contacts)
             {
                 if(string.IsNullOrEmpty(contact.Email))
                     throw new ApplicationException("Contact email is required");
