@@ -124,6 +124,7 @@ export class CustomsRequestsSheetsComponent
     @Output() onQueryChangeEvent = new EventEmitter();
     isReAnAnalysis: boolean;
     private CurrentSession = SessionLocator.SelectedSession;
+    
     constructor(public entityArgs: EntityArgs, private _CD: ChangeDetectorRef, public customsRequestsSheetExtendedListService: CustomsRequestsSheetExtendedListService) {
         super();
         this._CustomsRequestsSheetStatusListService = new CustomsRequestsSheetStatusListService();
@@ -142,7 +143,6 @@ export class CustomsRequestsSheetsComponent
 
         }
     }
-
 
     SetEntityArgs(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
@@ -256,8 +256,8 @@ export class CustomsRequestsSheetsComponent
                         for (var request of (this.customsRequestsSheetSummary as any[])) {
                             this.SumRequests += request.count;
                             this.IsTherecustomsRequestsSheetSummary = true;
-                        }
-                    }
+                        }                        
+                    }                    
                 });
            // }
         });
