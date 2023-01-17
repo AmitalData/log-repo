@@ -18,6 +18,7 @@ import { SessionInfo } from '../../../../../../Infrastructure/Utilities/SessionI
 import { TextCodeTranslator } from '../../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ConnectedToItem } from '../../../../../CustomsDocuments/Components/ConnectedToItem';
 import { CustomsDocumentPM } from '../../../../../../Customs/EntityPMs/CustomsDocumentPM';
+import { AppTool, DateTool } from '../../../../../../Infrastructure/Tools';
 declare var window;
 
 export class ExportDeclarationClosingDataCustomsDocumentsController implements ICustomsDocumentsController {
@@ -253,6 +254,32 @@ export class ExportDeclarationClosingDataCustomsDocumentsController implements I
     }
 
     FillDefaultMetaData(customsDocumentsTicketViewModels: CustomsDocumentTicketViewModel[]) {
+        var docTypecodes: string[] = ["700", "707", "703", "700", "704", "705", "706", "707", "419"];
+        for (var i = 0; i < customsDocumentsTicketViewModels.length; i++)//customsDocumentsTicketViewModels.forEach((item) => 
+        {
+            var item = customsDocumentsTicketViewModels[i];
+            if (docTypecodes.indexOf(item.DocumentTypeCode) > -1)
+            {
+                if (this.declarationPM.Consignments.length > 0) {
+                    var cargoIdentifireMetaData: { [Code: string]: any; } = {};
+                    cargoIdentifireMetaData["99"] = this.declarationPM.Consignments[0].CargoTypeCode;
+                    cargoIdentifireMetaData["100"] = this.declarationPM.Consignments[0].ManifestNumber;
+                    cargoIdentifireMetaData["101"] = this.declarationPM.Consignments[0].SecondCargoID;
+                    cargoIdentifireMetaData["102"] = this.declarationPM.Consignments[0].ThirdCargoID;
+                    if (this.declarationPM.Consignments[0].ManifestDate != null) {
+                        var manifestDate: string = null;
+                        var manifestDateValue: Date = DateTool.GetDateParts(this.declarationPM.Consignments[0].ManifestDate).DateObject;
+                        var day: string = AppTool.PadLeft(manifestDateValue.getUTCDate() + "", 2, '0');
+                        var month: string = AppTool.PadLeft(manifestDateValue.getUTCMonth() + 1 + "", 2, '0');
+                        var year: string = manifestDateValue.getUTCFullYear() + "";
+                        manifestDate = day + "." + month + "." + year.substr(2, 2);
+                        cargoIdentifireMetaData["57"] = manifestDate;
+                    }
+
+                    item.SetCustomDocumentMetaData(cargoIdentifireMetaData);
+                }
+            }
+        };
 
     }
 

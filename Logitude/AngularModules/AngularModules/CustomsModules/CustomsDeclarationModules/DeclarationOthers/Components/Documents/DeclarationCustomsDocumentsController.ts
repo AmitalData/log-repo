@@ -831,7 +831,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
     }
 
     FillDefaultMetaData(customsDocumentsTicketViewModels: CustomsDocumentTicketViewModel[]) {
-        var docTypecodes: string[] = ["700", "707", "703", "700", "704", "705", "706", "707"];
+        var docTypecodes: string[] = ["700", "707", "703", "700", "704", "705", "706", "707","419"];
         for (var i = 0; i < customsDocumentsTicketViewModels.length; i++)//customsDocumentsTicketViewModels.forEach((item) => 
         {
             var item = customsDocumentsTicketViewModels[i];
