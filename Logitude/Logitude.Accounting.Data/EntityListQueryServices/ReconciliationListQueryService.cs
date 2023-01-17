@@ -92,6 +92,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
         private QueryOperations CreateReconciliationLinesQueryOperations(QueryFilterItem reconciliationAmountFieldOperations)
         {
+            decimal r;
             return new QueryOperations()
             {
                 GetAll = true,
@@ -100,9 +101,14 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                     new QueryFilterItem()
                     {
                         FieldName = reconciliationAmountFieldOperations.FieldName,
-                        FieldValue = decimal.Parse(reconciliationAmountFieldOperations.FieldValue.ToString()),
+                        FieldValue = decimal.TryParse(reconciliationAmountFieldOperations.FieldValue.ToString(),out r)?
+                        decimal.Parse(reconciliationAmountFieldOperations.FieldValue.ToString()):'0',
                         FieldValue2 = reconciliationAmountFieldOperations.FieldValue2 != null ? 
-                        decimal.Parse(reconciliationAmountFieldOperations.FieldValue2.ToString()) : reconciliationAmountFieldOperations.FieldValue2,
+                        (
+                        decimal.TryParse(reconciliationAmountFieldOperations.FieldValue2.ToString(),out r)?
+                        decimal.Parse(reconciliationAmountFieldOperations.FieldValue2.ToString()):'0'
+                        )
+                         : reconciliationAmountFieldOperations.FieldValue2,
                         Operator = reconciliationAmountFieldOperations.Operator
                     }
                 }
