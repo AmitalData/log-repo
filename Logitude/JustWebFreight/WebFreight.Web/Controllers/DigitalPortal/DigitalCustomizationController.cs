@@ -321,8 +321,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 var helper = new DigitalFieldSecuritesHelper();
 
-                var defaultData = helper.GitDigitalSecuritesFeilds(filters.ObjectTableId, filters.ProfileId, 0);
-                var customData = helper.GitDigitalSecuritesFeilds(filters.ObjectTableId, filters.ProfileId, authToken.Tenant);
+                var defaultData = helper.GitDigitalSecuritesFeilds(filters.ObjectTableId, filters.ProfileCode, 0);
+                var customData = helper.GitDigitalSecuritesFeilds(filters.ObjectTableId, filters.ProfileCode, authToken.Tenant);
 
                 foreach (var item in listResult)
                 {

@@ -47,7 +47,9 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                                                                         UpdateDate = x.UpdateDate,
                                                                         ScreenCode = x.ScreenCode,
                                                                         ObjectTableId = x.ObjectTableId,
-                                                                        ProfileId = x.ProfileId
+                                                                        ProfileId = x.ProfileId,
+                                                                        Content = x.Content,
+                                                                        DraftContent = x.DraftContent
                                                                     })
                                                                     .ToList();
             return digitalPortalScreens;
