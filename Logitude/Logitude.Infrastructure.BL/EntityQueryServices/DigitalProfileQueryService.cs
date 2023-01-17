@@ -20,6 +20,7 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                                                                  Id = x.Id,
                                                                  Tenant = x.Tenant,
                                                                  Name = x.Name,
+                                                                 Code = x.Code,
                                                                  CreateDate = x.CreateDate,
                                                                  UpdateDate = x.UpdateDate
                                                              })
