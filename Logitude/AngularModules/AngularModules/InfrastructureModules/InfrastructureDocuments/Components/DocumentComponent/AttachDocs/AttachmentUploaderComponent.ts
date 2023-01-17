@@ -18,6 +18,7 @@ import {Guid} from '../../../../../Infrastructure/Utilities/Guid';
 declare var attachmentUploader, ResultAsArray: any;
 import {AppTool, DateTool} from '../../../../../Infrastructure/Tools';
 import {ServiceLocator} from '../../../../../Infrastructure/Locators/ServiceLocator';
+import { Console } from 'console';
 
 @Component({
     
@@ -384,6 +385,7 @@ export class AttachmentUploaderComponent extends BaseComponent implements OnInit
                                             this.CurrentDocument.IsUpdateSharedDocument = true;
                                         }
                                     }
+                                    console.log("Rabaia - dublicate documentsFiling attachement")
                                     this.documentsFilingPMService.update(this.CurrentDocument).subscribe((myownResult: ServiceResponse) => {
 
                                         var pmResponse: ServiceResponse = myownResult;
