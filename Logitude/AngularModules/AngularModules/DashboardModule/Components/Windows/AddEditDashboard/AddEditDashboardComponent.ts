@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { Validator } from '../../../../Infrastructure/Validators/Validator';
@@ -19,7 +19,7 @@ import { DashboardSharedUserPM } from '../../../../DashboardModule/EntityPMs/Das
     templateUrl: './AddEditDashboardComponent.html',
 })
 
-export class AddEditDashboardComponent extends BaseComponent {
+export class AddEditDashboardComponent extends BaseComponent implements OnInit {
     public EntityPM: DashboardPM;
     private CurrentSession = SessionLocator.SelectedSession;
     public DataContext: AddEditDashboardComponent;
@@ -41,6 +41,10 @@ export class AddEditDashboardComponent extends BaseComponent {
         this.BuildPermissionLevelsList();
         this.BuildFilterTypesList();
         this.BuildCommonFilterFieldsList();
+    }
+
+    ngOnInit(): void {
+        this.UIProperties.SetEnabled("PredefinedOrder", this.ObjectTableName, this.LoadedAutomatically);
     }
 
     SetWindowArgs(windowArgs: any) {
@@ -103,6 +107,7 @@ export class AddEditDashboardComponent extends BaseComponent {
     set LoadedAutomatically(value: boolean) {
         if (this.EntityPM.LoadedAutomatically != value) {
             this.EntityPM.LoadedAutomatically = value;
+            this.UIProperties.SetEnabled("PredefinedOrder", this.ObjectTableName, this.LoadedAutomatically);
         }
     }
 
