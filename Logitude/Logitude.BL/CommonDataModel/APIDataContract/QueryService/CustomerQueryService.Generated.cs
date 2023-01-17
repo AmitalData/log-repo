@@ -232,7 +232,8 @@ using Simplog.Data.CommonDataModel;
 					   					   temp.CustomerSize = CustomerSizeService14.GetCustomerSizeById(MyEntityPM.CustomerSizeId,Tenant,ComputingPartnerName); 
 			       
 					   				   }
-				   					
+				   
+				   temp.IsPotential = MyEntityPM.IsPotential;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -656,6 +657,14 @@ using Simplog.Data.CommonDataModel;
 
 					}
 			
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.IsPotential = MyEntity.IsPotential;
+
+										}  
+
 										   
 					return temp;
 		    }

@@ -25,7 +25,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                 CustomerPM temp = this.MapAndValidate(MyEntity, Tenant, ComputingPartnerCode);
                 temp.Tenant = Tenant;
                 temp.PartnerTypeId = "CS";
-                temp.CustomerStatusCode = "ACT";
+                temp.CustomerStatusCode = MyEntity.IsPotential ? "POT" : "ACT";
                 temp.IsCustomer = true;
                 temp.CreateDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
                 temp.UpdateDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
@@ -45,7 +45,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
             }
         }
 
-        public CustomerPM MapAndValidate(Customer MyEntity, int Tenant, string ComputingPartnerName = "", bool isUpdate = false)
+        private CustomerPM MapAndValidate(Customer MyEntity, int Tenant, string ComputingPartnerName = "", bool isUpdate = false)
         {
 			try
 			{
@@ -73,6 +73,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 
 				myCustomer.Id = MyEntity.Id;
 				myCustomer.Code = MyEntity.Code;
+				myCustomer.IsPotential = MyEntity.IsPotential;
 
 				if (!isUpdate)
 				{
