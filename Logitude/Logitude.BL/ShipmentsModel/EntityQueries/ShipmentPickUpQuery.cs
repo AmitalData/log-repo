@@ -362,7 +362,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    ChildPickUpIndex = entityPOCO.ChildPickUpIndex,
                                                    StandaloneShipmentId = entityPOCO.StandaloneShipmentId,
                                                    StandaloneShipmentNumber = entityPOCO.StandaloneShipmentNumber,
-                                               }).ToList();
+                                               }).OrderBy(a => a.Id).ToList();
 
             if (dataList.Count > 0)
             {

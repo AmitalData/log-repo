@@ -81,7 +81,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         {
             List<FollowUp> followups = (from a in context.FollowUps.Include("EventType").Include("OwnerUser.Contact")
                                         where a.Tenant == tenant && a.ShipmentId == shipmentId
-                                        select a).ToList();
+                                        select a).OrderBy(a=>a.Id).ToList();
             return followups;
         }
 

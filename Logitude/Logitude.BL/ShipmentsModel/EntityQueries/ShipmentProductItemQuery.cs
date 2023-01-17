@@ -82,7 +82,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        Remarks = a.Remarks,
                        ShipperId = a.ShipperId,
                        ShipperName = a.Shipper == null ? null : a.Shipper.EnglishName,
-                   }).ToList();
+                   }).OrderBy(a => a.Id).ToList();
 
             return shipmentProductItems;
         }

@@ -31,7 +31,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                              PackageId = a.PackageId,
                                                              Harmonize = a.Harmonize,
                                                              InsidePackageId = a.InsidePackageId,
-                                                         }).ToList();
+                                                         }).OrderBy(a => a.Id).ToList();
 
             return myResult;
         }
@@ -47,7 +47,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                              PackageId = a.PackageId,
                                                              Harmonize = a.Harmonize,
                                                              InsidePackageId = a.InsidePackageId,
-                                                         }).ToList();
+                                                         }).OrderBy(a => a.Id).ToList();
 
             return myResult;
         }
