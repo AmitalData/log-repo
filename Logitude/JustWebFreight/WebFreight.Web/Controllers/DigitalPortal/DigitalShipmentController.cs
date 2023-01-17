@@ -74,10 +74,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                                       })
                                                       .ToList();
 
-                    var helper = new DigitalFieldSecuritesHelper();
-
                     var fields = new Dictionary<string, List<string>>();
-
+                    var helper = new DigitalFieldSecuritesHelper();
                     foreach (var item in objectFieldIds)
                     {
                         var blockedFields = helper.GitDigitalSecuritesFeilds(item.ObjectTableId, profileCode, tenant)
@@ -85,7 +83,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                                           .Select(a => a.FieldCode)
                                                           .ToList();
 
-                        fields.Add(item.ObjectTableName, blockedFields);
+                        if (blockedFields.Any())
+                        {
+                            fields.Add(item.ObjectTableName, blockedFields);
+                        }
                     }
 
                     var temp = (JObject)JsonConvert.DeserializeObject(shipmentPMJson);
