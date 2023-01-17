@@ -21,6 +21,8 @@ using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace Logitude.CRM.BL.EntityDataMappings
 {
@@ -166,6 +168,16 @@ namespace Logitude.CRM.BL.EntityDataMappings
             if (source != null)
             {
                 entityPM.LeadSourceName = source.Name;
+            }
+
+            //UserRepository userRepository = new UserRepository(entityPOCO.Tenant);
+           // UserPM userPM = 
+            User leadUser = userRepository.GetSingleUser(entityPOCO.LeadUserId, entityPOCO.Tenant, false);
+            if (leadUser != null)
+            {
+                UserQuery userQuery = new UserQuery(entityPM.Tenant);
+                UserPM userPM = userQuery.GetSinglePM(entityPM.LeadUserId, entityPM.Tenant);
+                entityPM.UserName = userPM.EnglishName;
             }
 
             //entityPM.Field1 = new CustomFieldClass("Field1", "Opportunity", entityPOCO.Field1);

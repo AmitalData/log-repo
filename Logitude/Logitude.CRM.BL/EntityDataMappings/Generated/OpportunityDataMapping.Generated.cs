@@ -213,7 +213,8 @@ namespace Logitude.CRM.BL.EntityDataMappings
 	         Field38, 
 	         Field39, 
 	         Field40, 
-	         NumberOfConnectedQuotes,
+	         NumberOfConnectedQuotes, 
+	         UserName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
