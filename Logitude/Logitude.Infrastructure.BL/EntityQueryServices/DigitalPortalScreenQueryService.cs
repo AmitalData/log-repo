@@ -11,11 +11,11 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
 {
     public partial class DigitalPortalScreenQueryService
     {
-        public List<DigitalPortalScreenList> GetDigitalPortalScreensQuery(int tenant, string objectTableId, string screenCode = "")
+        public List<DigitalPortalScreenList> GetDigitalPortalScreensQuery(int tenant, string objectTableId, string screenCode = "", string profileCode = "")
         {
             var digitalPortalScreenRepository = new DigitalPortalScreenRepository(tenant);
 
-            var digitalPortalScreens = digitalPortalScreenRepository.GetDigitalPortalScreens(tenant, objectTableId, screenCode)
+            var digitalPortalScreens = digitalPortalScreenRepository.GetDigitalPortalScreens(tenant, objectTableId, screenCode, profileCode)
                                                                     .Select(x => new DigitalPortalScreenList
                                                                     {
                                                                         Id = x.Id,
@@ -33,11 +33,33 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
             return digitalPortalScreens;
         }
         
-        public List<DigitalPortalScreenList> GetDigitalPortalScreenNamesQuery(int tenant)
+        public List<DigitalPortalScreenList> GetDigitalPortalScreenNamesQuery(int tenant, string profileCode)
         {
             var digitalPortalScreenRepository = new DigitalPortalScreenRepository(tenant);
 
-            var digitalPortalScreens = digitalPortalScreenRepository.GetDigitalPortalScreenNames(tenant)
+            var digitalPortalScreens = digitalPortalScreenRepository.GetDigitalPortalScreenNames(tenant, profileCode)
+                                                                    .Select(x => new DigitalPortalScreenList
+                                                                    {
+                                                                        Id = x.Id,
+                                                                        Tenant = x.Tenant,
+                                                                        Name = x.Name,
+                                                                        CreateDate = x.CreateDate,
+                                                                        UpdateDate = x.UpdateDate,
+                                                                        ScreenCode = x.ScreenCode,
+                                                                        ObjectTableId = x.ObjectTableId,
+                                                                        ProfileId = x.ProfileId,
+                                                                        Content = x.Content,
+                                                                        DraftContent = x.DraftContent
+                                                                    })
+                                                                    .ToList();
+            return digitalPortalScreens;
+        }
+        
+        public List<DigitalPortalScreenList> GetDigitalPortalScreenNamesTenant0()
+        {
+            var digitalPortalScreenRepository = new DigitalPortalScreenRepository(0);
+
+            var digitalPortalScreens = digitalPortalScreenRepository.GetDigitalPortalScreenNamesTenant0()
                                                                     .Select(x => new DigitalPortalScreenList
                                                                     {
                                                                         Id = x.Id,

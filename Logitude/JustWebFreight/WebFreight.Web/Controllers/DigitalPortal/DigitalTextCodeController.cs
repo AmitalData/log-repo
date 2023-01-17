@@ -87,7 +87,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     }
 
                     var screenQuery = new DigitalPortalScreenQueryService(tenant);
-                    var screens = screenQuery.GetDigitalPortalScreenNamesQuery(0).ToList();
+                    var screens = screenQuery.GetDigitalPortalScreenNamesTenant0().ToList();
 
                     foreach (var item in screens)
                     {

@@ -13,5 +13,6 @@ namespace Simplog.Server.Infrastructure.DataContracts.Models
         public string DraftContent { get; set; }
         public bool IsDraft { get; set; }
         public string ProfileId { get; set; }
+        public string ProfileCode { get; set; }
     }
 }
