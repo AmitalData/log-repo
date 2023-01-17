@@ -114,6 +114,7 @@ export class DigitalTextCodeUpdateModel {
     public ObjectTableId: string;
     public CardId: string;
     public ProfileId: string;
+    public ProfileCode: string;
     public Lables: DigitalTextCodeObject[];
 }
 
@@ -128,6 +129,7 @@ export class DigitalFeildSecurityObjectModel {
     public ObjectTableId: string;
     public CardId: string;
     public ProfileId: string;
+    public ProfileCode: string;
     public DefaultSettings: DigitalFeildSecurityUpdateModel[];
 }
 
