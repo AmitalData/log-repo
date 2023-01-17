@@ -125,6 +125,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
             }
         }
         static Dictionary<string, DateTime> UpdatedDocumentsFilingEntites = new Dictionary<string, DateTime>();
+        static Dictionary<string, int> UpdatedDocumentsFilingEntitesCounter = new Dictionary<string, int>();
 
 
         public HttpResponseMessage Put(DocumentsFilingPM entityPM)
@@ -134,19 +135,33 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                 try
                 {
                     string logKey = PerformanceLogger.LogCurrentTime();
-                    if (UpdatedDocumentsFilingEntites.Keys.Contains(entityPM.Id))
+                    if (UpdatedDocumentsFilingEntites.ContainsKey(entityPM.Id))
                     {
-                        DateTime lastEntityUpdate = UpdatedDocumentsFilingEntites[entityPM.Id];
-                        TimeSpan ts = DateTime.Now - lastEntityUpdate;
-                        if (ts.TotalSeconds < 5)
+                        if (UpdatedDocumentsFilingEntitesCounter.ContainsKey(entityPM.Id))
                         {
-                            Exception e = new Exception("Duplicate update for enitiy" + entityPM.Id);
-                            APIException aPIException = ApiExceptionBuilder.BuildException(e);
-                            ExceptionHandler.HandleException(new Exception("Duplicate update for enitiy" + entityPM.Id + " Tenant:" + entityPM.Tenant), DateTime.Now, 0, null, "Duplicate update for enitiy" + entityPM.Id + " Tenant:" + entityPM.Tenant, null, System.Environment.MachineName);
-                            return Request.CreateResponse(HttpStatusCode.BadRequest, aPIException);
+                            UpdatedDocumentsFilingEntitesCounter[entityPM.Id]++;
+                            DateTime lastEntityUpdate = UpdatedDocumentsFilingEntites[entityPM.Id];
+                            TimeSpan ts = DateTime.Now - lastEntityUpdate;
+                            if (ts.TotalSeconds < 5 && UpdatedDocumentsFilingEntitesCounter[entityPM.Id] > 1)
+                            {
+                                Exception e = new Exception("Duplicate update for enitiy " + entityPM.Id);
+                                APIException aPIException = ApiExceptionBuilder.BuildException(e);
+                                ExceptionHandler.HandleException(new Exception("Duplicate update for enitiy " + entityPM.Id + " Tenant:" + entityPM.Tenant), DateTime.Now, 0, null, "Duplicate update for enitiy" + entityPM.Id + " Tenant:" + entityPM.Tenant, null, System.Environment.MachineName);
+
+                                return Request.CreateResponse(HttpStatusCode.BadRequest, aPIException);
+                            }
                         }
                     }
                     UpdatedDocumentsFilingEntites[entityPM.Id] = DateTime.Now;
+                    if (UpdatedDocumentsFilingEntitesCounter.ContainsKey(entityPM.Id))
+                    {
+                        if (UpdatedDocumentsFilingEntitesCounter[entityPM.Id] > 1)
+                            UpdatedDocumentsFilingEntitesCounter[entityPM.Id] = 0;
+                    }
+                    else
+                    {
+                        UpdatedDocumentsFilingEntitesCounter[entityPM.Id] = 0;
+                    }
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
                         string token = HttpContext.Current.Request.Headers["Token"];
