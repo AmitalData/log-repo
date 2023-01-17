@@ -60,7 +60,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         LastStatusRemarks, 
 	         Mawb, 
 	         Hawb, 
-	         ImporterApproval,
+	         ImporterApproval, 
+	         DeclarationIdToDisplay,
 	      }
 
 
@@ -112,7 +113,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         LastStatusRemarks, 
 	         Mawb, 
 	         Hawb, 
-	         ImporterApproval,
+	         ImporterApproval, 
+	         DeclarationIdToDisplay,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -309,6 +311,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ImporterApproval))
             {
 				entityPOCO.ImporterApproval = entityPM.ImporterApproval;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationIdToDisplay))
+            {
+				entityPOCO.DeclarationIdToDisplay = entityPM.DeclarationIdToDisplay;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -512,6 +519,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ImporterApproval = entityPOCO.ImporterApproval;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeclarationIdToDisplay))
+            {
+					entityPM.DeclarationIdToDisplay = entityPOCO.DeclarationIdToDisplay;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationReferantDataPM entityPM, DeclarationReferantDataPM oldEntityPM)
@@ -706,6 +718,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ImporterApproval))
             {
                 oldEntityPM.ImporterApproval = entityPM.ImporterApproval;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationIdToDisplay))
+            {
+                oldEntityPM.DeclarationIdToDisplay = entityPM.DeclarationIdToDisplay;
             }
 			
 		}
