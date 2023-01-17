@@ -88,6 +88,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             //entityPM.ExporterCode = cardPM?.VatNumber;
             entityPM.ExporterCode = client?.Code;
             entityPM.StorageStatusIsOpen = entityPOCO.StorageStatus != null && entityPOCO.StorageStatus.ToLower() == "open";
+            entityPM.ActionName = entityPOCO.ExportLogisticPermitAction?.LocalName;
         }
 
         private void BuildSearchFields(ExportStoragePM entityPM, ExportStorage entityPOCO, bool isNewEntity)
