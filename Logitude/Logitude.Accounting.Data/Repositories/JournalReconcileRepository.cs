@@ -25,13 +25,13 @@ namespace Logitude.Accounting.Data.Repositories
                     select a).ToList();
         }
 
-        public List<JournalReconcile> GetJournalReconcilesByLedgerTransactionsIds(List<string> ledgerTransactionsIds)
+        public List<ReconciliationLine> GetReconciliationLinesByLedgerTransactionsIds(List<string> ledgerTransactionsIds)
         {
 
-            return (from a in context.JournalReconciles
-                    join jr in context.Journals on a.JournalId equals jr.Id
-                    where ledgerTransactionsIds.Contains(a.LedgerTransactionId) && jr.StatusCode != "3"
-                    select a).ToList();
+            return (from rl in context.ReconciliationLines
+                    join r in context.Reconciliations on rl.ReconciliationId equals r.Id
+                    where ledgerTransactionsIds.Contains(rl.TransactionId) && !r.IsCancelled
+                    select rl).ToList();
         }
     }
 
