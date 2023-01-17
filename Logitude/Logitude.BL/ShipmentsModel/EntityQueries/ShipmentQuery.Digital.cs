@@ -1310,7 +1310,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                 Address myPartnerAddress = addressRepository.GetSingleAddress(pickUpDelivery.FromAddressId, tenant);
                                 if (myPartnerAddress != null)
                                 {
-                                    leg.ToPort = myPartnerAddress.City + ", " + myPartnerAddress.Country?.Code;
+                                    leg.FromPort = myPartnerAddress.City + ", " + myPartnerAddress.Country?.Code;
                                 }
                             }
                             else
@@ -1318,7 +1318,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                 Address myPartnerAddress = addressRepository.GetMainAddressByCardId(pickUpDelivery.FromPartnerCardId, tenant);
                                 if (myPartnerAddress != null)
                                 {
-                                    leg.ToPort = myPartnerAddress.City + ", " + myPartnerAddress.Country?.Code;
+                                    leg.FromPort = myPartnerAddress.City + ", " + myPartnerAddress.Country?.Code;
                                 }
                             }
                         }
@@ -1332,7 +1332,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             PortPM myPort = PortQuery.GetSinglePort(tenant, pickUpDelivery.FromPortId, true);
                             if (myPort != null)
                             {
-                                leg.ToPort = myPort.EnglishName + ", " + myPort.CountryCode;
+                                leg.FromPort = myPort.EnglishName + ", " + myPort.CountryCode;
                             }
                         }
                         break;
@@ -1340,7 +1340,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                 case "CASL":
                     {
-                        leg.ToPort = pickUpDelivery.ToAddressCity + ", " + pickUpDelivery.ToAddressCountry?.Code;
+                        leg.FromPort = pickUpDelivery.ToAddressCity + ", " + pickUpDelivery.ToAddressCountry?.Code;
                         break;
                     }
             }
