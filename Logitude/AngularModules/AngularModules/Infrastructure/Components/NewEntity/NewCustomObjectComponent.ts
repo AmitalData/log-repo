@@ -49,6 +49,7 @@ export class NewCustomObjectComponent extends BaseComponent implements OnInit {
         this.EntityPM = this.ObjectTablePM.ObjectTableTypeCode == "BR" ? new DataCustomObjectPM("DataCustomObject") : new ReferenceCustomObjectPM("ReferenceCustomObject");
         this.FatherComponent = args["FatherComponent"];
         this.LoadGeneratedArea();
+        this.SetEntityPM();
     }
 
     private GeneratedComponent: any;
@@ -80,6 +81,7 @@ export class NewCustomObjectComponent extends BaseComponent implements OnInit {
             .then(cmpRef => {
                 this.GeneratedComponent = cmpRef.instance;
                 cmpRef.instance.HideLastColumn = true;
+                cmpRef.instance.BuildLighteningScreenAsClassicScreen = true;
                 cmpRef.instance.Run(this.EntityPM, this.ObjectTableName, this.ObjectTablePM.NewWizardControlName);
             });
     }
@@ -93,12 +95,12 @@ export class NewCustomObjectComponent extends BaseComponent implements OnInit {
         this.EntityPM.UpdatedBy = SessionLocator.LoggedUserId;
         this.EntityPM.Tenant = SessionLocator.Tenant;
         this.EntityPM.ObjectTableId = this.ObjectTablePM.Id;
+        this.EntityPM.IsDirty = false;
     }
 
     // Commands
 
     OkButtonClicked() {
-        this.SetEntityPM();
         this.ValidationErrorsList = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, this.ValidationErrorsList);
         //need to add additional validations

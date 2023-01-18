@@ -514,7 +514,7 @@ export class QueryColumnsEditComponent {
             var temp = this.queryColumnsList.filter(a => a.QueryCode == this.QueryCode && a.ObjectFieldCode == queryColumn.ObjectFieldCode && a.Tenant == SessionInfo.LoggedUserTenant && a.UserId == SessionInfo.LoggedUserId);
 
             if (temp.length == 0) {
-                temp = this.queryColumnsList.filter(a => a.QueryCode == this.QueryCode && a.ObjectFieldCode == queryColumn.ObjectFieldCode && a.Tenant == 0);
+                temp = this.queryColumnsList.filter(a => a.QueryCode == this.QueryCode && a.ObjectFieldCode == queryColumn.ObjectFieldCode && (a.Tenant == 0 || (a.Tenant == SessionInfo.LoggedUserTenant && a.UserId == null)));
             }
             if (temp.length == 0) {
                 temp = this.addedQueryColumnList.filter(a => a.ObjectFieldCode == queryColumn.ObjectFieldCode);

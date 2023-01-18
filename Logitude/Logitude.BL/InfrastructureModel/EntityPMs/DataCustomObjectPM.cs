@@ -20,6 +20,8 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string StatusId { get; set; }
         public ChangeSetOperation ChangeSetOp { get; set; }
         public string SearchFields { get; set; }
+        public string CreatedByUserName { get; set; }
+        public string UpdatedByUserName { get; set; }
 
     }
 }

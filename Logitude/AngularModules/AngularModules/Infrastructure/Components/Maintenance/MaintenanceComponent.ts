@@ -1789,12 +1789,23 @@ export class MaintenanceComponent {
         listArgs.BackButtonTitle = "Maintenance";
         listArgs.ShowViews = true;
         listArgs.DisplayTitle = this.textCodeTranslationPipe.transform(objectTable.Name);
+        listArgs.QueryCode = this.GetQueryCode(item);
+        listArgs.DontCheckQueryFeature = true;
         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.IsCustomEntity = true;
                 cmpRef.instance.Run(listArgs);
             });
+    }
+
+    private GetQueryCode(item: any) {
+        let allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === item.ObjectTableId).sort((a, b) => { return a.IndexOrder - b.IndexOrder; });
+        let SelectedQuery = allQueries.filter(query => query.IsDefault)[0];
+        if (allQueries.length > 0 && !SelectedQuery) {
+            SelectedQuery = allQueries[0];
+        }
+        return SelectedQuery?.Code;
     }
 
     private ShowCustomizationCustomFieldsWindow(logWindow: LogitudeWindow, windowArgs: any) {

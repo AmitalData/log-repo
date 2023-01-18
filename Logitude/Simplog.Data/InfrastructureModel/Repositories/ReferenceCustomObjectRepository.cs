@@ -2,6 +2,7 @@
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,7 +34,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public ReferenceCustomObject GetSingleReferenceCustomObject(string id, int tenant)
         {
-            return (from a in context.ReferenceCustomObjects
+            return (from a in context.ReferenceCustomObjects.Include("CreatedByUser.Contact").Include("UpdatedByUser.Contact")
                     where a.Tenant == tenant && a.Id == id
                     select a).FirstOrDefault();
         }

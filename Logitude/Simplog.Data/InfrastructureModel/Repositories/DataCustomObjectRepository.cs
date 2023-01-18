@@ -2,6 +2,7 @@
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,7 +36,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public List<DataCustomObject> GetByObjectTableId(int tenant, string objectTableId)
         {
-            return (from a in context.DataCustomObjects
+            return (from a in context.DataCustomObjects.Include("CreatedByUser.Contact").Include("UpdatedByUser.Contact")
                     where a.Tenant == tenant && a.ObjectTableId == objectTableId
                     select a).ToList();
         }

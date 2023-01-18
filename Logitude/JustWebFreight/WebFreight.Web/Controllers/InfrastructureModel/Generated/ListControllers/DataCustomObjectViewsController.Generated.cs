@@ -104,7 +104,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 
 				DataCustomObjectQuery dataCustomObjectQuery = new DataCustomObjectQuery(dataCustomObjectRepository);
 			    IQueryable<DataCustomObjectList> entityLists = dataCustomObjectQuery.GetIQueryableEntityList(entityPocos);
-				entityLists = entityLists.OrderBy(d => d.Id);
+				entityLists = entityLists.OrderBy(d => d.CreateDate);
 				List<DataCustomObjectList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 										
@@ -133,7 +133,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 
                 DataCustomObjectQuery dataCustomObjectQuery = new DataCustomObjectQuery(dataCustomObjectRepository);
                 IQueryable<DataCustomObjectList> entityLists = dataCustomObjectQuery.GetIQueryableEntityList(entityPocos);
-                entityLists = entityLists.OrderBy(d => d.Id);
+                entityLists = entityLists.OrderBy(d => d.CreateDate);
                 List<DataCustomObjectList> listResult = entityLists.ToList();
                 CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 customFieldResolver.SetCustomFieldsValues(objectTable.Name, authToken.Tenant, listResult.Cast<object>().ToList());
@@ -340,7 +340,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                             }
                         default:
                             {
-                                entityLists = entityLists.OrderBy(d => d.Id);
+                                entityLists = entityLists.OrderBy(d => d.CreateDate);
                                 break;
                             }
                     }

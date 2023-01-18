@@ -35,9 +35,9 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.entityPM.HasCustomFields = true;
             this.entityPM.MaxNumberOfCustomFields = 50;
             this.entityPM.AllowCustomFields = true;
+            this.entityPM.ClientModuleName = string.IsNullOrEmpty(entityPM.ClientModuleName)? "Infrastructure" : entityPM.ClientModuleName;
             if ((entityPM.IsCustom && string.IsNullOrEmpty(entityPM.ParentObjectTableId))) return;
             this.entityPM.IsComposition = true;
-            this.entityPM.ClientModuleName = "Infrastructure";
         }
         private void MapEntityName()
         {

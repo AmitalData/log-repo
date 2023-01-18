@@ -41,7 +41,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             ObjectTable objectTable = MyContext.ObjectTables.Where(d => d.Id == entityPM.ObjectTableId).FirstOrDefault();
 
             #region Custom Fields
-            List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName(objectTable.Name, entityPM.Tenant).Where(o => o.DataTypeCode == "Text" || o.DataTypeCode == "nText").ToList();
+            List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName(objectTable.Name, entityPM.Tenant).Where(o => o.DataTypeCode != "Decimal").ToList();
 
             CustomFieldResolver customFieldResolver = new CustomFieldResolver(entityPM.Tenant);
             foreach (ObjectField field in customFields)
