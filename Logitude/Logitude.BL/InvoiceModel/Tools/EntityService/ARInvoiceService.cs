@@ -1332,9 +1332,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             DateTime? expectedDueDate = this.GetExpectedDueDate();
 
-            if (entityPM.DueDate == null || expectedDueDate != entityPM.DueDate)
+            if (entityPM.DueDate == null || (expectedDueDate != null && expectedDueDate != entityPM.DueDate))
             {
-                entityPM.DueDate = expectedDueDate == null ? null : expectedDueDate.Value.Date;
+                entityPM.DueDate = expectedDueDate.Value.Date;
             }
         }
         private DateTime? GetExpectedDueDate()
