@@ -1654,8 +1654,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 ObjectTableRepository tableRep = new ObjectTableRepository(context);
 
                 List<TextCode> textCodes = TextCodeRepository.GetTenantTextCodesWithTenantZero(tenant);
-                List<ObjectTable> objectTables = tableRep.GetObjectsByTenant(tenant).ToList();
-
+                //List<ObjectTable> objectTables = tableRep.GetObjectsByTenant(tenant).ToList();
+                var objectTables = tableRep.GetObjectsByTenant(tenant)
+                    .Select (r=> new { r.Id,r.Name })
+                    .ToList();
                 foreach (ObjectFieldPM objectField in objectfields)
                 {
 					if (objectFieldModificationsDictionary.Count != 0 && tenant != 0)
