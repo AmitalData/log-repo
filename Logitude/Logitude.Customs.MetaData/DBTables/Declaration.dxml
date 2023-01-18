@@ -1280,7 +1280,7 @@
     Columns="AmendmentRequestNumber" />
   <Index
     Columns="Direction" />
-  <Index 
+  <Index
     Columns="Tenant,AmendmentOriginalDeclartation" />
   <Index
     Columns="Tenant,PaymentDate" />
@@ -1291,6 +1291,5 @@
   <Index
     Columns="Tenant,TaxationDateTime" />
   <Index
-    Columns="Tenant,IsCancelled,IsClose,AmendmentDontDisplayInList,Direction"
-  />
+    Columns="Tenant,IsCancelled,IsClose,AmendmentDontDisplayInList,Direction" />
 </Table>
