@@ -18,6 +18,7 @@ import { RequestDetailsComponent } from './Components/DeclarationRequests/Reques
 import { ReleaseGoodsComponent } from './Components/DeclarationRequests/ReleaseGoodsComponent'; 
 import { StorageEntranceComponent } from './Components/Courier/StorageEntranceComponent';
 import { CargoSealsQueryComponent } from './Components/DeclarationRequests/CargoSealsQueryComponent';
+import { ExportOrImportDeclarationDataComponent } from './Components/DeclarationRequests/ExportOrImportDeclarationDataComponent';
 
 
 
@@ -43,6 +44,7 @@ export const Components =
         RequestDetailsComponent,
         ReleaseGoodsComponent,
         CargoSealsQueryComponent,
+        ExportOrImportDeclarationDataComponent
     ];
 
 export class ModuleDeclarations {
@@ -71,6 +73,8 @@ export class ModuleDeclarations {
             case "RequestDetailsComponent": { myResult = RequestDetailsComponent; break; }
             case "ReleaseGoodsComponent": { myResult = ReleaseGoodsComponent; break; }
             case "CargoSealsQueryComponent": { myResult = CargoSealsQueryComponent; break; } 
+            case "ExportOrImportDeclarationDataComponent": { myResult = ExportOrImportDeclarationDataComponent; break; }
+
         }
 
         return myResult;
