@@ -33,7 +33,9 @@ export class StartPropertiesComponent extends BaseComponent {
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
         this.FlowObjectFields = args.FlowObjectFields ? args.FlowObjectFields : [];
+    }
 
+    ngOnInit() {
         this.initializeWindowEvents();
         this.initialize();
     }

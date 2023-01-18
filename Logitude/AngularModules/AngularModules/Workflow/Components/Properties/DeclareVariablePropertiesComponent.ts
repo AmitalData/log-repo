@@ -33,9 +33,22 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
 
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
+    }
 
+    ngOnInit() {
+        this.initializeWindowEvents();
         this.initialize();
         this.initializeEntitiesTreeItems();
+    }
+
+    initializeWindowEvents() {
+        this.CurrentSession.CurrentWindow.FooterButtonsClicked.subscribe((e: any) => {
+            if (e === "submit") {
+                this.saveButtonClicked();
+            } else {
+                this.cancelButtonClicked();
+            }
+        });
     }
 
     initialize() {

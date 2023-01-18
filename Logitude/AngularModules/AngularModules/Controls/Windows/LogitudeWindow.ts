@@ -43,6 +43,7 @@ export class LogitudeWindow {
     public SuppressBusyIndicator: boolean = false;
     public IsHideWindowMargin: boolean = false;
     public EditComponentArguments: any = null;
+    public IsViewMode: boolean = false;
     public ShowFooterButtons: boolean = false;
     public SubmitFooterButtonLabel: string | null = null;
     public CancelFooterButtonLabel: string | null = null;
@@ -277,6 +278,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
     public ZIndex: number = 0;
     leftPadding: number = 0;
     public IsOverAll: boolean = false;
+    public IsViewMode: boolean = false;
     public ShowFooterButtons: boolean = false;
     public SubmitFooterButtonLabel: string | null = null;
     public CancelFooterButtonLabel: string | null = null;
@@ -326,6 +328,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
         this.CustomTitleIcon = logWindow.CustomTitleIcon;
         this.BottomBorderForTitle = logWindow.BottomBorderForTitle;
         this.IsHideWindowMargin = logWindow.IsHideWindowMargin;
+        this.IsViewMode = logWindow.IsViewMode;
         this.ShowFooterButtons = logWindow.ShowFooterButtons;
         this.SubmitFooterButtonLabel = logWindow.SubmitFooterButtonLabel;
         this.CancelFooterButtonLabel = logWindow.CancelFooterButtonLabel;
@@ -364,6 +367,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
         this.HelpText = logWindow.HelpText;
         this.RTL = logWindow.RTL;
         this.CustomTitleIcon = logWindow.CustomTitleIcon;
+        this.IsViewMode = logWindow.IsViewMode;
         this.ShowFooterButtons = logWindow.ShowFooterButtons;
         this.SubmitFooterButtonLabel = logWindow.SubmitFooterButtonLabel;
         this.CancelFooterButtonLabel = logWindow.CancelFooterButtonLabel;
