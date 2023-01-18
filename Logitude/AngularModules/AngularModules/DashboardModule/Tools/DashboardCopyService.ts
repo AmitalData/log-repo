@@ -59,6 +59,11 @@ export class DashboardCopyService {
             widget.GlobalFilters = sourceWidget.GlobalFilters;
             widget.SecondaryGroupById = sourceWidget.SecondaryGroupById;
             widget.SecondaryDateGroupCode = sourceWidget.SecondaryDateGroupCode;
+            widget.Alignment = sourceWidget.Alignment;
+            widget.ThousandSeparator = sourceWidget.ThousandSeparator;
+            widget.UseNumberAbbreviation = sourceWidget.UseNumberAbbreviation;
+            widget.UseAbbreviationAfter = sourceWidget.UseAbbreviationAfter;
+            widget.DecimalPlaces = sourceWidget.DecimalPlaces;
             dashboard.Widgets.push(widget);
 
         });

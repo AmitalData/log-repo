@@ -690,7 +690,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     private ValidateDisplaySettings(errors: string[]){
         if(this.TypeCode != "kpi") return;
         if(!this.Alignment){
-            errors.push ("Use Alignment Field is Required");
+            errors.push ("Alignment Field is Required");
         }
         if (!this.WidgetMeasuresList[0].IsNumeric) return;
         if(!this.UseAbbreviationAfter){
