@@ -34,6 +34,7 @@ using System.Data.Entity;
 using Logitude.Customs.BL.NotificationBL;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.CustomsMessaging.MessagingServices;
+using Logitude.Customs.BL.Messaging.Customs;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -248,7 +249,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                     if (declarationPM.Direction == "E")
                     {
+                        if (customResponse.GeneralData.ReleaseMessageCode == 4 || customResponse.GeneralData.ReleaseMessageCode == 8)
+                        {
+                            SendDeclarationStatusRequest(declarationPM);
+                        }
+
                         SendDeclarationPrint(declarationPM, requestParams);
+                        
                     }
                     requestParams.LoggingEntityId = declarationPM.Id;
                     this.MyResponseData = new ReleaseGoodsResponseData()
@@ -498,6 +505,43 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             LogMessagingUtil.Instance.AppendLine("Declaration Print Request Succeeded " + resData.CustomsRequestsSheetId);
             return true;
+        }
+
+        void SendDeclarationStatusRequest(DeclarationPM myDeclarationPM)
+        {
+           
+
+            var newSearchDeclarationStatusRequestParams = new DeclarationStatusRequestParams()
+            {
+                LoggingEnabled = true,
+                CustomFileNo = myDeclarationPM.CustomFileNo,
+                DeclarationNumber = myDeclarationPM.DeclarationNumber,
+                Tenant = myDeclarationPM.Tenant,
+                RequestName = "Declaration Status " + myDeclarationPM.DeclarationNumber,
+                ResponseName = "Declaration Status " + myDeclarationPM.DeclarationNumber,
+                RequestVIA = SendRequestVIA.WebServiceBatch,
+                InterfaceTypeCode = "8250",
+                LoggingEntityId = myDeclarationPM.Id,
+                LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
+                LoggingUserId = AuthenticationUtil.ResolveUserId(myDeclarationPM.Tenant),
+            };
+
+
+
+            try
+            {
+                SBQMessageService.CreateSheetSBQMessage<Logitude.CustomsMessaging.Common.RequestParams.DeclarationStatusRequestParams>(newSearchDeclarationStatusRequestParams
+                    , false
+                    );
+            }
+            catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
+            {
+                if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
+                {
+                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("8250 RequestInProgress stop create a new one !! ");
+                }
+                // throw;
+            }
         }
 
     }
