@@ -34,7 +34,7 @@ export class CustomizationQueriesComponent extends BaseComponent{
     public DataContext = this;
     public ScreenLayoutComponent: ScreenLayoutComponent;
     NewScreenFilterItems: ApiQueryFilters;
-    private newScreens: any[] = [];
+    private newScreenList: any[] = [];
     constructor() {
         super();
         this.CustomQueriesCollection = new ObservableCollection([]);
@@ -45,7 +45,7 @@ export class CustomizationQueriesComponent extends BaseComponent{
         this.QueriesPMService.setServiceArgs(serviceArgs);
     }
     private NewWizardControlNameValue;
-    NewScreensSelectionChanged(selectedNewScreen: any) {
+    NewScreenListSelectionChanged(selectedNewScreen: any) {
         if (!selectedNewScreen) return;
         if (this.SelectedScreen?.Code == selectedNewScreen.Code) return;
         this.NewWizardControlNameValue = selectedNewScreen ? selectedNewScreen.Code : "";
@@ -53,7 +53,7 @@ export class CustomizationQueriesComponent extends BaseComponent{
     }
 
     get SelectedScreen() {
-        return this.newScreens.filter(screen => screen.Code == this.ObjectTable.NewWizardControlName)[0];
+        return this.newScreenList.filter(screen => screen.Code == this.ObjectTable.NewWizardControlName)[0];
     }
 
     public SelectedNewScreenId: string;
@@ -68,7 +68,7 @@ export class CustomizationQueriesComponent extends BaseComponent{
     }
 
     FillNewScreenList() {
-        this.newScreens = window.Screens.filter(screen => screen.ObjectTableId == this.ObjectTableId && !screen.Inactive && screen.Tenant == SessionLocator.Tenant);
+        this.newScreenList = window.Screens.filter(screen => screen.ObjectTableId == this.ObjectTableId && !screen.Inactive && screen.Tenant == SessionLocator.Tenant);
     }
 
     private NewWizardControlNameOldValue: string;
