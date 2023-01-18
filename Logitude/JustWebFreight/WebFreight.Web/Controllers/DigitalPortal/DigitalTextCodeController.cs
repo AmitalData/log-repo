@@ -163,7 +163,17 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 email = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, digitalFeildSecurityObjectModel.CardId);
-                
+
+                var textCodeQuery = new DigitalTextCodeQueryService(0);
+                var generalObjectTableId = textCodeQuery.GetDigitalTextCodesObjetTables(0)
+                                                   .Where(a => a.ObjectTableName.Equals("General"))
+                                                   .FirstOrDefault();
+
+                if (generalObjectTableId.Equals(digitalFeildSecurityObjectModel.ObjectTableId))
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, "Sorry, this operation isn't allowed for general fields");
+                }
+
                 digitalFeildSecurityObjectModel.Tenant = tenant;
                 var digitalFieldSecurityQuery = new DigitalFieldSecurityQueryService(tenant);
                 var customDigitalFieldSecurity = digitalFieldSecurityQuery.GetDigitalFieldSecurityQuery(digitalFeildSecurityObjectModel.Tenant, digitalFeildSecurityObjectModel.ObjectTableId, digitalFeildSecurityObjectModel.ProfileCode);
