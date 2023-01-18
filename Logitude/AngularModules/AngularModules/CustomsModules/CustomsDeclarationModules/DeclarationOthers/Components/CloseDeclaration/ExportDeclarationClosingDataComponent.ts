@@ -39,7 +39,7 @@ import { SupplierInvoiceItemList } from 'Customs/EntityLists/Extended/SupplierIn
 
 export class ExportDeclarationClosingDataComponent extends BaseComponent {
     public DataContext: any = this;
-=    public DecPM: DeclarationPM;
+    public DecPM: DeclarationPM;
     public DeclarationIsClosed: boolean = false;
     public ObjectTableName: string = "Customs.ExportDeclarationClosingData";
     public IsReady: boolean = false;
