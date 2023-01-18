@@ -158,6 +158,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
         private QueryOperations CreateReconciliationLinesQueryOperations(QueryFilterItem reconciliationAmountFieldOperations, string fieldName)
         {
+            
             return new QueryOperations()
             {
                 GetAll = true,
@@ -166,17 +167,25 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                     new QueryFilterItem()
                     {
                         FieldName = fieldName,
-                        FieldValue = decimal.Parse(reconciliationAmountFieldOperations.FieldValue.ToString()),
+                        FieldValue = TryParseStrigToDecimal(reconciliationAmountFieldOperations.FieldValue.ToString()),
                         FieldValue2 = reconciliationAmountFieldOperations.FieldValue2 != null ?
-                        decimal.Parse(reconciliationAmountFieldOperations.FieldValue2.ToString()) : reconciliationAmountFieldOperations.FieldValue2,
+                        TryParseStrigToDecimal(reconciliationAmountFieldOperations.FieldValue2.ToString())
+                         : reconciliationAmountFieldOperations.FieldValue2,
                         Operator = reconciliationAmountFieldOperations.Operator
                     }
                 }
             };
         }
+        
         private IQueryable<ExternalReconciliation> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<ExternalReconciliation> iQueryable, int tenant)
         {
             return iQueryable;
+        }
+        private decimal TryParseStrigToDecimal(string inputString)
+        {
+            var result = 0.0M;
+            decimal.TryParse(inputString, out result);
+            return result;
         }
 
     }
