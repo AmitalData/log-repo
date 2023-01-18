@@ -60,6 +60,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                     .Where(r => listStorageDefault.Contains(r.StorageSiteCode))
                     .Select(r => r.StorageSiteCode)
                     .FirstOrDefault();
+                sb.Append("myStorageSiteCode={myStorageSiteCode} IS NUL ???");
                 if (dbPM==null)
                 {
                     var qs = new DeclarationQueryService(drityEntityPM.Tenant);
