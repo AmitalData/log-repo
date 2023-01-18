@@ -197,9 +197,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         else
                         {   
                             Tenant myTenant = MyContext.Tenants.Where(d => d.Id == authToken.Tenant).FirstOrDefault();
-                            this.ValidateAddress_TenantSettings(myTenant, entity.MainAddress, "Main");
-                            this.ValidateAddress_TenantSettings(myTenant, entity.BillingAddress, "Billing");
-                            this.ValidateAddress_TenantSettings(myTenant, entity.PickupDeliveryAddress, "Pickup/Delivery");                            
+                            this.ValidateAddress_TenantSettings(myTenant, entity.MainAddress, "Main", entity.IsPotential);
+                            this.ValidateAddress_TenantSettings(myTenant, entity.BillingAddress, "Billing", entity.IsPotential);
+                            this.ValidateAddress_TenantSettings(myTenant, entity.PickupDeliveryAddress, "Pickup/Delivery", entity.IsPotential);                            
                         }
 
                         if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
@@ -394,16 +394,27 @@ namespace WebFreight.Web.ExternalAPIs.V1
             if (address.City == null)
                 throw new ApplicationException(addressType + " address city is required");
         }
-        private void ValidateAddress_TenantSettings(Tenant myTenant, Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Address address, string addressType)
+        private void ValidateAddress_TenantSettings(Tenant myTenant, Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Address address, string addressType, bool isPotential)
         {
             if (address == null) return;
 
-            if (myTenant.IsCustomerTelRequired && string.IsNullOrEmpty(address.PhoneNumber))
-                throw new ApplicationException(addressType + " address phone Number is required");
+            if (isPotential)
+            {
+                if (myTenant.IsPotentialTelRequired && string.IsNullOrEmpty(address.PhoneNumber))
+                    throw new ApplicationException(addressType + " address phone Number is required");
 
+                if (myTenant.IsPotentialFaxRequired && string.IsNullOrEmpty(address.FaxNumber))
+                    throw new ApplicationException(addressType + " address fax Number is required");
+            }
 
-            if (myTenant.IsCustomerFaxRequired && string.IsNullOrEmpty(address.FaxNumber))
-                throw new ApplicationException(addressType + " address fax Number is required");   
+            else
+            {
+                if (myTenant.IsCustomerTelRequired && string.IsNullOrEmpty(address.PhoneNumber))
+                    throw new ApplicationException(addressType + " address phone Number is required");
+
+                if (myTenant.IsCustomerFaxRequired && string.IsNullOrEmpty(address.FaxNumber))
+                    throw new ApplicationException(addressType + " address fax Number is required");
+            }
         }
         private void ValidateContacts(List<Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Contact> contacts, int tenant)
         {
