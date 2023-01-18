@@ -147,7 +147,6 @@ export class AddEditChildEntityComponent extends BaseComponent implements OnInit
     OkButtonClicked() {
         this.ValidationErrorsList = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, this.ValidationErrorsList);
-        this.ValidationErrorsList  = this.ValidationErrorsList.concat( new ClassLevelValidator().ValidateCustomEntity(this.ObjectTableName, this.EntityPM));      
         if (this.ValidationErrorsList.length == 0) {
             this.Save();
         }
