@@ -9,7 +9,10 @@
           src="./Images/Notes_notexists.png" />
         <CellTooltip *ngIf="!isNotesLoading && accountingNotesList.length > 0"
              [IconPath]="'./Images/Notes_exists.png'" 
-             [Head]="'APInvoiceLine.F.Notes' | TextCodeTranslationPipe" >
+             [Head]="'APInvoiceLine.F.Notes' | TextCodeTranslationPipe" 
+             
+              [Body]=""
+             >
         </CellTooltip> 
    
 

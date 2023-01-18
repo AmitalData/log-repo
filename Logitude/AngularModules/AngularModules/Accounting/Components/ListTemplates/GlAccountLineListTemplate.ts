@@ -42,47 +42,46 @@ export class GlAccountLineListTemplate {
         {
             this.isUsedOutside = true;
         }
-        this.Listen();
-       
+        //this.Listen();  
     }
 
-    private SaveCompletedEvent: any = null;
-    private LoadCompletedEvent: any = null;
-    private TabSelectedEvent: any = null;
-    Listen() {
-        if (this.CurrentSession.CurrentEditComponent != null) {
-            if (this.SaveCompletedEvent == null) {
-                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                    if (isSaveSuccess) {
-                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+    // private SaveCompletedEvent: any = null;
+    // private LoadCompletedEvent: any = null;
+    // private TabSelectedEvent: any = null;
+    // Listen() {
+    //     if (this.CurrentSession.CurrentEditComponent != null) {
+    //         if (this.SaveCompletedEvent == null) {
+    //             this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+    //                 if (isSaveSuccess) {
+    //                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+    //                     this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         
-                    }
-                });
-            }
+    //                 }
+    //             });
+    //         }
 
-            if (this.LoadCompletedEvent == null) {
-                this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
-                    if (isLoadSuccess) {
-                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                        console.log("Entity Reloaded");
+    //         if (this.LoadCompletedEvent == null) {
+    //             this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+    //                 if (isLoadSuccess) {
+    //                     this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+    //                     console.log("Entity Reloaded");
                       
-                    }
-                });
-            }
+    //                 }
+    //             });
+    //         }
 
 
            
-            if (this.TabSelectedEvent == null) {
-                this.TabSelectedEvent = this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
-                    if (tabCode == "GAOV") {
-                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+    //         if (this.TabSelectedEvent == null) {
+    //             this.TabSelectedEvent = this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+    //                 if (tabCode == "GAOV") {
+    //                     this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         
-                    }
-                });
-            }
-        }
-    }
+    //                 }
+    //             });
+    //         }
+    //     }
+    // }
    
    
 
@@ -108,6 +107,7 @@ export class GlAccountLineListTemplate {
                     }else{
                         var notesList = res.Result;
                         this.accountingNotesList = notesList;
+                        
                     }
                 });
             // }, 2000);
@@ -133,38 +133,38 @@ export class GlAccountLineListTemplate {
         });
 
     }
-    ItemEditButton(_noteList: AccountingNoteList){
+    // ItemEditButton(_noteList: AccountingNoteList){
 
-        this.CurrentSession.StartBusyIndicatorLoading();
+    //     this.CurrentSession.StartBusyIndicatorLoading();
 
-        this._AccountingNotePMService.get(_noteList.Id)
-            .subscribe((myResult:any) => {
-                var mm: ServiceResponse = myResult;
-                if (!mm.HasError) {
-                    var _notePM = mm.Result;
-                    this.OpenAccountingNote(_notePM);
-                    this.CurrentSession.StopBusyIndicator();
-
-
-                }
-                else {
-                    this.CurrentSession.StopBusyIndicator();
-                }
-            });
+    //     this._AccountingNotePMService.get(_noteList.Id)
+    //         .subscribe((myResult:any) => {
+    //             var mm: ServiceResponse = myResult;
+    //             if (!mm.HasError) {
+    //                 var _notePM = mm.Result;
+    //                 this.OpenAccountingNote(_notePM);
+    //                 this.CurrentSession.StopBusyIndicator();
 
 
-    }
+    //             }
+    //             else {
+    //                 this.CurrentSession.StopBusyIndicator();
+    //             }
+    //         });
+
+
+    // }
     
-    txt_updatedBy: string = TextCodeTranslator.Translate("AccountingNote.F.UpdatedByUserName");
-    GetNoteTitle(note:AccountingNoteList){
-        var result = "";
-        if(note){
-            var myFormats = DateTool.GetDateFormats(note.UpdateDate);
-            var formatedDate = myFormats.DateString + " " + myFormats.ShortTimeString;
-            result = this.txt_updatedBy + ' ' + note.UpdatedByUserName + ' (' + formatedDate + ') ';
-        }
-        return result;
-    }
+    // txt_updatedBy: string = TextCodeTranslator.Translate("AccountingNote.F.UpdatedByUserName");
+    // GetNoteTitle(note:AccountingNoteList){
+    //     var result = "";
+    //     if(note){
+    //         var myFormats = DateTool.GetDateFormats(note.UpdateDate);
+    //         var formatedDate = myFormats.DateString + " " + myFormats.ShortTimeString;
+    //         result = this.txt_updatedBy + ' ' + note.UpdatedByUserName + ' (' + formatedDate + ') ';
+    //     }
+    //     return result;
+    // }
     //#endregion
 
 }
