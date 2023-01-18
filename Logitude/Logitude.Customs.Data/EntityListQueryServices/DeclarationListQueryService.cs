@@ -382,7 +382,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      DeclarationStatusTypeCode = a.DeclarationStatusTypeCode,
                                                      DeclarationOfficeCode = a.DeclarationOfficeCode,
                                                      DeclarationOfficeNameForExport = a.DeclarationOffice == null ? null : a.DeclarationOffice.LocalName,
-                                                     ExportDeclarationOfficeCode = a.ExportDeclarationOfficeCode,
+                                                     ExportDeclarationOfficeCode = a.ExportDeclarationOffice.LocalName,
                                                      ExportAutonomyRegionTypeCode = a.ExportAutonomyRegionTypeCode,
                                                      DepartmentId = a.DepartmentId,
                                                      DepartmentName = a.Department.LocalName,
