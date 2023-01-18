@@ -101,18 +101,20 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                     new QueryFilterItem()
                     {
                         FieldName = reconciliationAmountFieldOperations.FieldName,
-                        FieldValue = decimal.TryParse(reconciliationAmountFieldOperations.FieldValue.ToString(),out r)?
-                        decimal.Parse(reconciliationAmountFieldOperations.FieldValue.ToString()):'0',
-                        FieldValue2 = reconciliationAmountFieldOperations.FieldValue2 != null ? 
-                        (
-                        decimal.TryParse(reconciliationAmountFieldOperations.FieldValue2.ToString(),out r)?
-                        decimal.Parse(reconciliationAmountFieldOperations.FieldValue2.ToString()):'0'
-                        )
+                        FieldValue = TryParseStrigToDecimal(reconciliationAmountFieldOperations.FieldValue.ToString()),
+                        FieldValue2 = reconciliationAmountFieldOperations.FieldValue2 != null ?
+                        TryParseStrigToDecimal(reconciliationAmountFieldOperations.FieldValue2.ToString())
                          : reconciliationAmountFieldOperations.FieldValue2,
                         Operator = reconciliationAmountFieldOperations.Operator
                     }
                 }
             };
+        }
+        private decimal TryParseStrigToDecimal(string inputString)
+        {
+            var result = 0.0M;
+            decimal.TryParse(inputString, out result);
+            return result;
         }
 
         private IQueryable<Reconciliation> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<Reconciliation> iQueryable,int tenant)
