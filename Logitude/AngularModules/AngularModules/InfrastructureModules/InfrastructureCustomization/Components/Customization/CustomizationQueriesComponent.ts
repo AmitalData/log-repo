@@ -45,7 +45,7 @@ export class CustomizationQueriesComponent extends BaseComponent{
         this.QueriesPMService.setServiceArgs(serviceArgs);
     }
     private NewWizardControlNameValue;
-    NewScreenListSelectionChanged(selectedNewScreen: any) {
+    NewScreensSelectionChanged(selectedNewScreen: any) {
         if (!selectedNewScreen) return;
         if (this.SelectedScreen?.Code == selectedNewScreen.Code) return;
         this.NewWizardControlNameValue = selectedNewScreen ? selectedNewScreen.Code : "";
