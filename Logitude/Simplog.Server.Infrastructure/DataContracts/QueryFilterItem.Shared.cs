@@ -32,6 +32,7 @@ namespace Simplog.Server.Infrastructure.DataContracts
         public bool IsListFilter { get; set; }
         [DataMember]
         public bool IsAnalyticsMetadatas { get; set; }
+        public bool CompareWithPrevious { get; set; }
 
 
         [DataMember]

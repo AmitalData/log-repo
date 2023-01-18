@@ -314,7 +314,7 @@
                                         </td>
                                     </tr>
 
-                                    <tr class="FormFieldRow" *ngIf="IsKpi">
+                                    <tr class="FormFieldRow" *ngIf="IsTimeOverTimeVisible">
                                         <td style="width:160px;">
                                             <LogLabel [Text]="'Time Over Time'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
                                         </td>
@@ -329,7 +329,7 @@
                                     </tr>
 
 
-                                    <tr class="FormFieldRow" *ngIf="IsKpi">
+                                    <tr class="FormFieldRow" *ngIf="IsTimeOverTimeVisible">
                                         <td>
                                             <LogLabel [Text]="'Comparison Period'" [NoObjectField]="true" [DataContext]="DataContext" style="width: 80px;"></LogLabel>
                                         </td>
@@ -403,7 +403,7 @@
                                         </td>
                                     </tr>
 
-                                    <tr class="FormFieldRow" *ngIf="IsKpi">
+                                    <tr class="FormFieldRow" *ngIf="IsTimeOverTimeVisible">
                                         <td>
                                             <LogLabel [Text]="'Increase'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
                                         </td>
@@ -421,11 +421,11 @@
                                     </tr>
                                     
                                     <tr class="FormFieldRow" *ngIf="IsKpi">
-                                        <td>
+                                        <td style="width: 160px;">
                                             <LogLabel [Text]="'Alignment'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
-                                        <td>
+                                        <td style="width: 250px;">
                                             <ComboBox (SelectedItemChanged)="Alignment = $event"
                                                       [ItemsSource]="Alignments"
                                                       [SelectedItem]="Alignment">

@@ -52,6 +52,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     public Abbreviations = ['1k', '10k', '100k', '1M', '10M', '100M'];
     public isMeasureNumber: boolean = false;
     public IsDisplaySettingVisibile: boolean = false;
+    public IsTimeOverTimeVisible: boolean = false;
 
     constructor() {
         super();

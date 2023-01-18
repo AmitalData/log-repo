@@ -79,6 +79,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
             queryFilterItem.FieldValue = globalQueryFilterItem.FieldValue;
             queryFilterItem.FieldValue2 = globalQueryFilterItem.FieldValue2;
             queryFilterItem.FieldValue3 = globalQueryFilterItem.FieldValue3;
+            queryFilterItem.CompareWithPrevious = globalQueryFilterItem.CompareWithPrevious;
             return queryFilterItem;
         }
 
@@ -101,6 +102,8 @@ namespace Logitude.DashboardModule.BL.DataProviders
             public string DataSetId { get; set; }
             public bool IsCommon { get; set; }
             public bool IsPreset { get; set; }
+
+            public bool CompareWithPrevious { get; set; }
         }
     }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { DashboardGlobalPresetFilterList } from 'DashboardModule/EntityLists/DashboardGlobalPresetFilterList';
 import { DashboardPM } from 'DashboardModule/EntityPMs/DashboardPM';
 import { DashboardGlobalPresetFilterListService } from 'DashboardModule/Services/StandardLists/DashboardGlobalPresetFilterListService';
@@ -11,7 +11,7 @@ import { GlobalFilterItem } from './GlobalFilterItem';
     styleUrls: ['./GlobalFilter.scss']
 })
 
-export class GlobalFilterComponent implements OnInit {
+export class GlobalFilterComponent implements OnInit, AfterViewInit {
     @Input() public Dashboard: DashboardPM;
     @Output() ApplyFilters = new EventEmitter<any[]>();
     @Output() ApplyFiltersCountChange = new EventEmitter<number>();
@@ -23,15 +23,19 @@ export class GlobalFilterComponent implements OnInit {
     private FilterValueExistItems: string[] = [];
     private LastApplied: string[] = [];
     public FilterHasChanges: boolean = false;
-    public hasKpiChart: boolean = false;
+    public HasKpiChart: boolean = false;
 
     constructor() {
         this.DashboardGlobalPresetFilterListService = new DashboardGlobalPresetFilterListService();
     }
 
     ngOnInit() {
-        this.GetPresetFitlers();
-        this.hasKpiChart = (this.Dashboard.Widgets?.find(x => x.TypeCode == "kpi") != null);
+        this.GetPresetFitlers();        
+    }
+
+    ngAfterViewInit() {
+        if(this.Dashboard)
+            this.HasKpiChart = this.Dashboard.Widgets?.find(x => x.TypeCode == "kpi") != null;
     }
 
     GetPresetFitlers() {
