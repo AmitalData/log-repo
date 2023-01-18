@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "6379e91519bb032b38d947d2b4387899";
+		public const string HashString = "68a1bc06ed80932586a533e1bf39980c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "634a",
+			      				    Code =  "f798",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2119,6 +2119,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOOpenNewDeclarationExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.OpenNewDeclarationExport", DefaultText = "Open new declaration export",LocalDefaultText = @"פתיחת הצהרת יצוא חדשה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOExportReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.ExportReport", DefaultText = "Export Report",LocalDefaultText = @"דוח יצוא", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsGeneralODecDataQuery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.DecDataQuery", DefaultText = "Query for export/import declaration data",LocalDefaultText = @"שאילתא לנתוני הצהרת יצוא/יבוא", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsExpOrImpDeclarationDataQueryFDeclarationNubmer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExpOrImpDeclarationDataQuery.F.DeclarationNubmer", DefaultText = "Declaration Nubmer",LocalDefaultText = @"מספר הצהרה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsExpOrImpDeclarationDataQueryODeclarationNubmerMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExpOrImpDeclarationDataQuery.O.DeclarationNubmerMandatory", DefaultText = "Declaration Nubmer field is mandatory",LocalDefaultText = @"מספר הצהרה הוא שדה חובה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
