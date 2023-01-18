@@ -22,11 +22,13 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
                         ConsignmentPM _con = consignmentQueryService.GetSingle(_dec.Id,1, false, false);
             dynamic params1 = JObject.Parse(requestParamsData.TestCase.Param1);
             var actionTypeCode = 1;
+            var checkId = int.Parse(DateTime.Now.ToString("MMddhhmm"));
             if (int.TryParse(params1.ActionTypeCode.Value, out int value))
                 actionTypeCode = value;
+            if (int.TryParse(params1.checkId.Value, out int value1))
+                checkId = value1;
 
-
-                return new CH_NG_190_MSG1_NoticeToClient()
+            return new CH_NG_190_MSG1_NoticeToClient()
             {
                 RequestContentHeader = new RequestContentHeader()
                 {
@@ -37,7 +39,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
                     operationCode = actionTypeCode,
                     statusMessage = 2,
                     entityType = 1,
-                    checkId = int.Parse(DateTime.Now.ToString("MMddhhmm")),
+                    checkId = checkId,
                     customsAgent = 1111,
                     importerNumber = 111,
                     storageSiteNumber = _con.StorageSiteCode,
