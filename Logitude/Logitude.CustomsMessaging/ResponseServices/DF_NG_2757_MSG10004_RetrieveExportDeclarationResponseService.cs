@@ -33,7 +33,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         public override void Update(DF_NG_2757_MSG10004_ExportDeclarationResponse customResponse, DeclarationRestoreRequestParams requestParams)
         {
+            if (requestParams.ShowData)
+            {
+                GetDeclarationDataRespons(customResponse, requestParams.Tenant);
+                return;
 
+            }
 
             if (string.IsNullOrEmpty(requestParams.DeclarationId)) { //declaration not exits in db
                 if (customResponse.Response != null && customResponse.Response.Declaration != null) 
@@ -178,7 +183,167 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var xml = XmlGenericUtil<GeneralMessage>.SerializeObject(myDummyXml);
             return xml;
         }
-       
+        public void GetDeclarationDataRespons(DF_NG_2757_MSG10004_ExportDeclarationResponse customResponse,int Tenant)
+        {
+
+            this.MyResponseData = new DeclarationRestoreResponseData();
+            this.MyResponseData.exportDeclarationDataResponseData=new ExportDeclarationDataResponseData();
+            this.MyResponseData.Succeeded = true;
+            if (customResponse.ResponseContentHeader.Exception != null)
+            {
+                this.MyResponseData.HasException = true;
+                this.MyResponseData.UserMessage = customResponse.ResponseContentHeader.Exception.FirstOrDefault().ExeptionDescription;
+                return;
+            }
+   
+
+            if (customResponse.Response.Declaration != null)
+            {
+                this.MyResponseData.exportDeclarationDataResponseData.Title = customResponse.Response.Declaration.ID.Value;
+ 
+                this.MyResponseData.exportDeclarationDataResponseData.CalculationDate = Convert.ToDateTime(customResponse.Response.Declaration.IssueDateTime).ToString("dd/MM/yyyy");
+                if (customResponse.Response.Declaration.Agent != null && customResponse.Response.Declaration.Agent.Count() > 0)
+                {
+                    var agent = customResponse.Response.Declaration.Agent.FirstOrDefault();
+                    if (agent != null)
+                    {
+                        this.MyResponseData.exportDeclarationDataResponseData.AgentCustomerExternalID = GetValueIDType(agent.ID);
+                    }
+                }
+
+
+                if (customResponse.Response.Declaration.GoodsShipment != null)
+                {
+                    this.MyResponseData.exportDeclarationDataResponseData.InvoiceList = new List<Invoice>();
+                    foreach (var invoiceItem in customResponse.Response.Declaration.GoodsShipment.OrderBy(x => x.SequenceNumeric))
+                    {
+                        Invoice invoiceResult = new Invoice();
+                        invoiceResult.InvoiceId = GetValueIDType(invoiceItem.Invoice.ID) + invoiceItem.SequenceNumeric.ToString();
+                        invoiceResult.SequenceNumber = invoiceItem.SequenceNumeric.ToString();
+                        invoiceResult.ExternalID = GetValueIDType(invoiceItem.Invoice.ID);
+                        invoiceResult.InvoiceAmount = GetValueAmountType(invoiceItem.Invoice.DMExtensions.InvoiceAmount).ToString();
+                        invoiceResult.InvoiceAmountCurrency = GetValueAmountType(invoiceItem.Invoice.DMExtensions.InvoiceAmount).ToString(); ;
+
+                            invoiceResult.InvoiceCurrency = invoiceItem.Invoice.DMExtensions.InvoiceAmount.currencyID.ToString();
+                            invoiceResult.InvoiceAmountCurrency += " (" + invoiceResult.InvoiceAmountCurrency + ")";
+                
+                        this.MyResponseData.exportDeclarationDataResponseData.InvoiceList.Add(invoiceResult);
+
+                        //GoodsItem
+                        if (invoiceItem.GovernmentAgencyGoodsItem != null)
+                        {
+                            if (this.MyResponseData.exportDeclarationDataResponseData.RequestList == null)
+                            {
+                                this.MyResponseData.exportDeclarationDataResponseData.RequestList = new List<Request>();
+                            }
+                            foreach (var governmentAgencyGoodsItem in invoiceItem.GovernmentAgencyGoodsItem)
+                            {
+                                Request requestResult = new Request();
+                                requestResult.InvoiceId = GetValueIDType(invoiceItem.Invoice.ID) + invoiceItem.SequenceNumeric.ToString();
+                                requestResult.SequenceNumber = governmentAgencyGoodsItem.SequenceNumeric.ToString();
+                                var classification2 = governmentAgencyGoodsItem.Commodity.Classification.FirstOrDefault(x => x != null && GetValueCodeType(x.IdentificationTypeCode) == "HS");
+
+                                if (classification2 != null)
+                                {
+                                    requestResult.CustomsItem = GetValueIDType(classification2.ID);//.Replace("/", "");
+                                }
+                               
+                               
+                                    foreach (var goodsMeasure in governmentAgencyGoodsItem.GoodsMeasure)
+                                    {
+                                        if (goodsMeasure.DMExtensions != null && goodsMeasure.TariffQuantity != null)
+                                        {
+                                            switch (goodsMeasure.DMExtensions.MeasureQualifier.Value)
+                                            {
+                                        
+                                                case "2":
+                                                    {
+                                                        requestResult.ValueQuantity  = goodsMeasure.TariffQuantity.Value.ToString();
+                                                        break;
+                                                    }
+                                               
+                                            }
+                                        }
+                                    }
+
+
+                               
+                                if (governmentAgencyGoodsItem.Origin != null)
+                                {
+                                    requestResult.OriginCountry = GetValueCodeType(governmentAgencyGoodsItem.Origin.CountryCode).ToString();
+                                }
+
+                                if (governmentAgencyGoodsItem != null && governmentAgencyGoodsItem.DMExtensions.GoodsItemAmount != null)
+                                {
+                                   
+                               
+                                    var cur = customResponse.Response.Declaration.GoodsShipment[0].Invoice.DMExtensions.InvoiceAmount.currencyID.ToString();
+                                    var GoodsItemAmount = governmentAgencyGoodsItem.DMExtensions.GoodsItemAmount.Where(x=>x.AmountType.Value=="1").FirstOrDefault();
+                                    if (GoodsItemAmount != null) { 
+                                       requestResult.ForeignAmount = GetValueAmountType(GoodsItemAmount.CustomsValueAmount).ToString();
+                                       requestResult.ForeignCurrency = GoodsItemAmount.CustomsValueAmount.currencyID.ToString();
+                                       requestResult.ForeignCurrencyAmount = GetValueAmountType(GoodsItemAmount.CustomsValueAmount).ToString();;
+                                       int i = 0;
+                                       int.TryParse(GetValueCodeType(GoodsItemAmount.AmountType), out i);
+                                       if (/*requestItem.CurrencyTypeID*/ i > 0)
+                                       {
+                                           requestResult.ForeignCurrencyAmount += " (" + GoodsItemAmount.CustomsValueAmount.currencyID.ToString() + ")";
+                                       }
+                                    }
+                                }
+                                //GovernmentProcedure
+                                requestResult.GovernmentProcedureList = new List<GovernmentProcedure>();
+                                if (governmentAgencyGoodsItem.GovernmentProcedure != null)
+                                {
+                                    foreach (var governmentProcedureItem in governmentAgencyGoodsItem.GovernmentProcedure)
+                                    {
+                                        if (governmentProcedureItem.CurrentCode != null )
+                                        {
+                                            GovernmentProcedure governmentProcedureResult = new GovernmentProcedure();
+                                            governmentProcedureResult.ItemGovernmentProcedureType = governmentProcedureItem.CurrentCode.Value.ToString();
+                                            if (!string.IsNullOrEmpty(governmentProcedureResult.ItemGovernmentProcedureType)) // Table 1422
+                                            {
+                                                ItemGovernmentProcedureTypeQueryService itemGovernmentProcedureTypeQueryService = new ItemGovernmentProcedureTypeQueryService(Tenant);
+                                                ItemGovernmentProcedureTypePM itemGovernmentProcedureTypePM = itemGovernmentProcedureTypeQueryService.GetSingle(governmentProcedureResult.ItemGovernmentProcedureType, false, true);
+                                                if (itemGovernmentProcedureTypePM != null)
+                                                {
+                                                    governmentProcedureResult.ItemGovernmentProcedureName = itemGovernmentProcedureTypePM.LocalName;
+                                                }
+                                            }
+                                            requestResult.GovernmentProcedureList.Add(governmentProcedureResult);
+                                        }
+                                    }
+                                }
+
+                                //Vehicle
+                                requestResult.VehicleList = new List<Vehicle>();
+                                if (governmentAgencyGoodsItem.DMExtensions.Vehicle != null)
+                                {
+                                    foreach (var vehicleItem in governmentAgencyGoodsItem.DMExtensions.Vehicle)
+                                    {
+                                        Vehicle vehicleResult = new Vehicle();
+                              
+                                            vehicleResult.CargoIdentityQualifierID = vehicleItem.IDTypeCode.Value.ToString();
+                             
+                                        vehicleResult.RichbitNumber = vehicleItem.ID.Value;
+                                        requestResult.VehicleList.Add(vehicleResult);
+                                    }
+                                }
+
+                                this.MyResponseData.exportDeclarationDataResponseData.RequestList.Add(requestResult);
+                            }
+                        }
+                    }
+                }
+
+
+            }
+
+            this.MyResponseData.HasException = false;
+            this.MyResponseData.UserMessage = "ניתוח בוצע בהצלחה";
+
+            return;
+        }
         public void CreateDeclarationFromResponse(Declaration declaration, int tenant, DF_NG_2757_MSG10004_ExportDeclarationResponse customResponse)
         {
            
