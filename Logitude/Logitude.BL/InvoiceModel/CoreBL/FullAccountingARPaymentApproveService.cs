@@ -647,7 +647,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
                 );
                 if (AutoReconcileRecordList.Count > 0)
                 {
-                    AutoReconcileARPaymentServiceExt.InitMust(paymentGLAccount, journal, AutoReconcileRecordList);
+                    AutoReconcileARPaymentServiceExt.InitMust(paymentGLAccount, journal, AutoReconcileRecordList, "2"); // ARInvoice
                     AutoReconcileARPaymentServiceExt.InsertJournalReconcile();
                 }
 
