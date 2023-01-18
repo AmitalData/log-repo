@@ -6765,15 +6765,11 @@ User/Pass",
                         {
                             if (myPaymentTerm.EndOfMonth)
                             {
-                                myComparativeDate = myComparativeDate.Value.AddMonths(1);
+                                int year = myComparativeDate.Value.Year;
+                                int month = myComparativeDate.Value.Month;
+                                int daysInMonth = DateTime.DaysInMonth(year, month);
 
-                                int dateYear = myComparativeDate.Value.Year;
-                                int dateMonth = myComparativeDate.Value.Month;
-                                int dateHour = myComparativeDate.Value.Hour;
-                                int dateMinute = myComparativeDate.Value.Minute;
-                                int dateSecond = myComparativeDate.Value.Second;
-
-                                myComparativeDate = new DateTime(dateYear, dateMonth, 1, dateHour, dateMinute, dateSecond);
+                                myComparativeDate = new DateTime(year, month, daysInMonth, 0, 0, 0);
                             }
 
                             myComparativeDate = myComparativeDate.Value.AddDays(Convert.ToDouble(myPaymentTerm.Days));

@@ -1330,85 +1330,81 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         }
         private void InitializeDueDate()
         {
-            if (entityPM.DueDate == null)
+            DateTime? expectedDueDate = this.GetExpectedDueDate();
+
+            if (entityPM.DueDate == null || expectedDueDate != entityPM.DueDate)
             {
-                if (string.IsNullOrEmpty(entityPM.PaymentTermId))
-                {
-                    entityPM.DueDate = entityPM.InvoiceDate;
-                }
+                entityPM.DueDate = expectedDueDate == null ? null : expectedDueDate.Value.Date;
+            }
+        }
+        private DateTime? GetExpectedDueDate()
+        {
+            DateTime? dueDate = null;
 
-                else
-                {
-                    PaymentTermRepository paymentTermRepository = new PaymentTermRepository(myCommonContext);
-                    PaymentTerm myPaymentTerm = paymentTermRepository.GetSinglePaymentTerm(entityPM.PaymentTermId, tenant);
+            if (string.IsNullOrEmpty(entityPM.PaymentTermId))
+            {
+                dueDate = entityPM.InvoiceDate;
+            }
 
-                    if (myPaymentTerm != null)
+            else
+            {
+                PaymentTermRepository paymentTermRepository = new PaymentTermRepository(myCommonContext);
+                PaymentTerm myPaymentTerm = paymentTermRepository.GetSinglePaymentTerm(entityPM.PaymentTermId, tenant);
+
+                if (myPaymentTerm != null)
+                {
+                    if (myPaymentTerm.IsManuallySet)
                     {
-                        if (myPaymentTerm.IsManuallySet)
+                        dueDate = null;
+                    }
+
+                    else
+                    {
+                        DateTime? myComparativeDate = null;
+
+                        if (entityPM.IsConsolidationInvoice)
                         {
-                            entityPM.DueDate = null;
+                            myComparativeDate = entityPM.InvoiceDate;
                         }
 
                         else
                         {
-                            DateTime? myComparativeDate = null;
-
-                            if (entityPM.IsConsolidationInvoice)
+                            if (myPaymentTerm.FromDateTypeCode == "SHI")
                             {
-                                myComparativeDate = entityPM.InvoiceDate;
-                            }
+                                myComparativeDate = entityPM.OperationalDate;
 
-                            else
-                            {
-                                if (myPaymentTerm.FromDateTypeCode == "SHI")
-                                {
-                                    myComparativeDate = entityPM.OperationalDate;
-
-                                    if (myComparativeDate == null)
-                                    {
-                                        myComparativeDate = entityPM.InvoiceDate;
-                                    }
-                                }
-
-                                else
+                                if (myComparativeDate == null)
                                 {
                                     myComparativeDate = entityPM.InvoiceDate;
                                 }
                             }
 
-                            if (myComparativeDate != null)
+                            else
                             {
-                                if (myPaymentTerm.EndOfMonth)
-                                {
-                                    myComparativeDate = myComparativeDate.Value.AddMonths(1);
-
-                                    int dateYear = myComparativeDate.Value.Year;
-                                    int dateMonth = myComparativeDate.Value.Month;
-                                    int dateDay = myComparativeDate.Value.Day;
-                                    int dateHour = myComparativeDate.Value.Hour;
-                                    int dateMinute = myComparativeDate.Value.Minute;
-                                    int dateSecond = myComparativeDate.Value.Second;
-
-                                    myComparativeDate = new DateTime(dateYear, dateMonth, 1, dateHour, dateMinute, dateSecond);
-                                }
-
-                                DateTime? date = myComparativeDate.Value.AddDays(Convert.ToDouble(myPaymentTerm.Days));
-
-                                if (entityPM.DueDate != date)
-                                {
-                                    entityPM.DueDate = date;
-                                }
+                                myComparativeDate = entityPM.InvoiceDate;
                             }
+                        }
+
+                        if (myComparativeDate != null)
+                        {
+                            if (myPaymentTerm.EndOfMonth)
+                            {
+                                int year = myComparativeDate.Value.Year;
+                                int month = myComparativeDate.Value.Month;
+                                int daysInMonth = DateTime.DaysInMonth(year, month);
+
+                                myComparativeDate = new DateTime(year, month, daysInMonth, 0, 0, 0);
+                            }
+
+                            dueDate = myComparativeDate.Value.AddDays(Convert.ToDouble(myPaymentTerm.Days));
                         }
                     }
                 }
             }
 
-            if (entityPM.DueDate != null)
-            {
-                entityPM.DueDate = entityPM.DueDate.Value.Date;
-            }
+            return dueDate;
         }
+
         private void InitializeBranchField()
         {
             if (string.IsNullOrEmpty(entityPM.BranchId))
