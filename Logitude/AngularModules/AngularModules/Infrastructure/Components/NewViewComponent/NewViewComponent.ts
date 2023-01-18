@@ -163,7 +163,7 @@ export class NewViewComponent {
             this.EntityPM = new QueryPM();
         }
 
-        if (FeatureLocator.HasFeaturePermession("User", "User.Feature.ViewsSharing")) {
+        if (FeatureLocator.HasFeaturePermession("User", "User.Feature.ViewsSharing") && !this.IsFromCustomization) {
             this.ShareTabIsVisible = true;
         }
 
