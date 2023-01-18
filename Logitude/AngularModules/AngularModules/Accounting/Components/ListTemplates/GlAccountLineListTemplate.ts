@@ -11,6 +11,7 @@ import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { MessageWindow } from './../../../Controls/Windows/MessageWindow';
 import { DateTool } from './../../../Infrastructure/Tools';
+import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 
 @Component({
 
@@ -22,14 +23,65 @@ export class GlAccountLineListTemplate {
     public showLocal: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
     private CurrentSession = SessionLocator.SelectedSession;
     public EntityPM: GLAccountPM = null;
+    public isUsedOutside: boolean = false; // when view tab inside customer ..
 
     _AccountingNotePMService: AccountingNotePMService = new AccountingNotePMService();
     _AccountingNoteExtendedListService: AccountingNoteExtendedListService = new AccountingNoteExtendedListService();
 
-    constructor(private CD: ChangeDetectorRef) {
+    constructor(private entityArgs: EntityArgs,private CD: ChangeDetectorRef) {
         if (ObjectsLocator.GlobalSetting)
             this.isRTL = ObjectsLocator.GlobalSetting.LayoutDirection == "rtl";
+
+        // Set Entity
+        if(entityArgs && entityArgs.ObjectTableName == "GLAccount")
+        {
+            this.EntityPM = entityArgs.EntityPM;
             
+        }
+        else
+        {
+            this.isUsedOutside = true;
+        }
+        this.Listen();
+       
+    }
+
+    private SaveCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null;
+    private TabSelectedEvent: any = null;
+    Listen() {
+        if (this.CurrentSession.CurrentEditComponent != null) {
+            if (this.SaveCompletedEvent == null) {
+                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        
+                    }
+                });
+            }
+
+            if (this.LoadCompletedEvent == null) {
+                this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                    if (isLoadSuccess) {
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        console.log("Entity Reloaded");
+                      
+                    }
+                });
+            }
+
+
+           
+            if (this.TabSelectedEvent == null) {
+                this.TabSelectedEvent = this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                    if (tabCode == "GAOV") {
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        
+                    }
+                });
+            }
+        }
     }
    
    
