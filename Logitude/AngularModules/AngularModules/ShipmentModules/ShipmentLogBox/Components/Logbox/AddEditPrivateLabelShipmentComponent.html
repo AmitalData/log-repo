@@ -1747,7 +1747,7 @@
                                                         </td>
                                                     </tr>
                                                 </table>
-                                                <table *ngIf="DirectionId == 'C' || ShowAddDocument" style="height:55%">
+                                                <table *ngIf="(DirectionId == 'C' || ShowAddDocument) && !HideDocumentSection" style="height:55%">
                                                     <tr style="height:33px;" *ngIf="!IsDSVTenant || ShowAddDocument">
 
                                                         <td>
@@ -1908,7 +1908,7 @@
                         <div></div>
                     </td>
 
-                    <td *ngIf="DirectionId == 'E' && !IsDSVTenant" style="width: 57px;">
+                    <td *ngIf="DirectionId == 'E' && !IsDSVTenant && !HideDocumentSection" style="width: 57px;">
                         <button [ngClass]="ShowAddDocument ?  'Button' : 'RedButton'" (click)="NextButtonClicked()" id="{{'ShipmentCreatebtn' | IdGeneratorAsyncPipe | async}}">{{ChangePageButton}}</button>
                     </td>
 
@@ -1916,7 +1916,7 @@
                         <div></div>
                     </td>
 
-                    <td *ngIf="DirectionId != 'E' || ShowAddDocument || IsDSVTenant" style="width: 57px;">
+                    <td *ngIf="DirectionId != 'E' || ShowAddDocument || IsDSVTenant || HideDocumentSection" style="width: 57px;">
                         <button class="RedButton" (click)="OkButtonClicked()" id="{{'ShipmentCreatebtn' | IdGeneratorAsyncPipe | async}}">{{IsNew ? 'Create' : 'Update'}}</button>
                     </td>
                 </tr>

@@ -52,6 +52,7 @@ export class AddEditPrivateLabelCustomsShipmentComponent extends BaseComponent i
     public PLShortName: string = "";
     public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService;
     public _LogBoxSignatureClientService: LogBoxSignatureClientService;
+    public HideDocumentSection: boolean = false;
 
     private messageWindow: MessageWindow = new MessageWindow();
     private _entityResourceService: EntityResourceService = new EntityResourceService();
@@ -430,6 +431,7 @@ export class AddEditPrivateLabelCustomsShipmentComponent extends BaseComponent i
 
     public SetCustomsShipmentArgs(args: any) {
         this.IsNew = args.IsNew;
+        if (args.HideDocumentSection) this.HideDocumentSection = true;
         this._PackageTypeListService.getAll().subscribe((myResult: any) => {
             if (!myResult.HasError) {
                 this.UnAssignedPackageTypeId = myResult.Result.filter(a => a.Tenant == SessionLocator.Tenant && a.Code == '---')[0]?.Id;
@@ -741,7 +743,7 @@ export class AddEditPrivateLabelCustomsShipmentComponent extends BaseComponent i
                 this.ValidationErrorsList.push("Supplier Name can't be more than 50 characters");
             }
 
-            if (!this.documentsFilings || this.documentsFilings.filter(d => d.IsSharedWithForwarder == true).length == 0) {
+            if (!this.HideDocumentSection && (!this.documentsFilings || this.documentsFilings.filter(d => d.IsSharedWithForwarder == true).length == 0)) {
                 this.ValidationErrorsList.push("You should have at least one document shared with agent");
             }
         }
