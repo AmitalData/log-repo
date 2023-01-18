@@ -221,6 +221,7 @@ export class DeclarationList {
 	PhysicalCheckName: string;
 	ReleaseStatusTypeCode: string;
 	ReferentUserName: string;
+	ExportDeclarationOfficeName: string;
 	
 }
  
