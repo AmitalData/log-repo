@@ -339,13 +339,13 @@ export class AddEditWidgetComponent extends BaseComponent {
     }
 
     SetUIProprtiesForDisplaySettings() {
-        if (this.WidgetMeasuresList[0].MeasureCode != "Count" && AppTool.IsNullOrEmpty(this.WidgetMeasuresList[0].MeasureFieldId) || !this.WidgetMeasuresList[0].IsNumeric) {
+        if (this.TypeCode != "kpi" || (this.WidgetMeasuresList[0].MeasureCode != "Count" && (AppTool.IsNullOrEmpty(this.WidgetMeasuresList[0].MeasureFieldId) || !this.WidgetMeasuresList[0].IsNumeric))) {
             this.UIProperties.SetEnabled("DecimalPlaces", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("UseNumberAbbreviation", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("ThousandSeparator", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("UseAbbreviationAfter", this.ObjectTableName, false);
         }
-        if (this.TypeCode != "kpi" || !this.WidgetMeasuresList[0].IsNumeric) return;
+        //if (this.TypeCode != "kpi" || !this.WidgetMeasuresList[0].IsNumeric) return;
 
         this.UIProperties.SetEnabled("DecimalPlaces", this.ObjectTableName, this.WidgetMeasuresList[0].IsNumeric || this.WidgetMeasuresList[0].MeasureCode == "Count");
         this.UIProperties.SetEnabled("UseNumberAbbreviation", this.ObjectTableName, this.WidgetMeasuresList[0].IsNumeric || this.WidgetMeasuresList[0].MeasureCode == "Count");

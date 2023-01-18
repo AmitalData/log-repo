@@ -12,6 +12,8 @@ import { GlobalFilterItem } from "./GlobalFilterItem";
 export class GlobalFilterItemComponent implements OnInit {
     @Input() FilterItem: GlobalFilterItem;
     @Input() Position: number;
+    @Input() HasKpiChart: boolean;
+    
     public Operators: any;
     public DateGroupCodes = ['Day', 'Week', 'Month', 'Quarter', 'Year'];
     public DataContext = this;

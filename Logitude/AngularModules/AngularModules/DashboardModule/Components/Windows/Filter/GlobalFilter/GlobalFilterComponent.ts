@@ -23,6 +23,7 @@ export class GlobalFilterComponent implements OnInit {
     private FilterValueExistItems: string[] = [];
     private LastApplied: string[] = [];
     public FilterHasChanges: boolean = false;
+    public hasKpiChart: boolean = false;
 
     constructor() {
         this.DashboardGlobalPresetFilterListService = new DashboardGlobalPresetFilterListService();
@@ -30,6 +31,7 @@ export class GlobalFilterComponent implements OnInit {
 
     ngOnInit() {
         this.GetPresetFitlers();
+        this.hasKpiChart = (this.Dashboard.Widgets?.find(x => x.TypeCode == "kpi") != null);
     }
 
     GetPresetFitlers() {

@@ -50,8 +50,8 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
 
         private int GetRatio(object valueObject, object comparsionObject)
         {
-            var comparsionValue = Convert.ToInt32(ObjectIsNull(comparsionObject) ? 0 : comparsionObject);
-            var value = Convert.ToInt32(ObjectIsNull(valueObject) ? 0 : valueObject);
+            var comparsionValue = Convert.ToInt32((ObjectIsNull(comparsionObject) || comparsionObject == DBNull.Value) ? 0 : comparsionObject);
+            var value = Convert.ToInt32((ObjectIsNull(valueObject) || valueObject == DBNull.Value) ? 0 : valueObject);
 
             if (comparsionValue == 0 && value == 0) return 0;
             if (comparsionValue == 0 && value != 0) return 100;
@@ -86,7 +86,7 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
 
         private object FormatKpiValue(object value, string dataTypeCode)
         {
-            if (ObjectIsNull(value))
+            if (ObjectIsNull(value) || value == DBNull.Value)
             {
                 if (dataTypeCode == "Date" || dataTypeCode == "DateTime") return null;
                 return "0";
@@ -143,7 +143,7 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
         private string GetAbbreviationSymbol(object value)
         {
             int abbreviationAfter = UseAbbreviationNumber(value);
-            if (abbreviationAfter == 0) return null;
+            if (abbreviationAfter == 0) return "";
 
             int million = 1000000;
 
