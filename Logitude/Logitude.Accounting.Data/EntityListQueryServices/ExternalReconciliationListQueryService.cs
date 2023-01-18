@@ -158,7 +158,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
         private QueryOperations CreateReconciliationLinesQueryOperations(QueryFilterItem reconciliationAmountFieldOperations, string fieldName)
         {
-            decimal r ;
+            
             return new QueryOperations()
             {
                 GetAll = true,
