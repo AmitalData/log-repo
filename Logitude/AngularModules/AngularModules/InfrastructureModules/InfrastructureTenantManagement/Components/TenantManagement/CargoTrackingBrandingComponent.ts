@@ -289,7 +289,6 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         if (AppTool.IsNullOrEmpty(this.TertiaryColorCode))
             hex = '#ffffff';
         this.EntityTertiaryColor = this.ConvertHexToRGBColor(hex, this.TertiaryColorOpacity);
-        this.EntityTertiaryColor = this.ConvertHexToRGBColor(this.TertiaryColorCode, this.TertiaryColorOpacity);
     }
 
     public get TertiaryColorCode(): string {
