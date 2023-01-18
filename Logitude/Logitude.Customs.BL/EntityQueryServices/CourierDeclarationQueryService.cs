@@ -26,6 +26,16 @@ namespace Logitude.Customs.BL.EntityQueryServices
         //    });
         //    return res;
         //}
+        public CourierDeclarationPM GetCourierDeclarationByDeclarationId_Cache(string declarationId, int tenant)
+        {
+            string key = $"GetCourierDeclarationByDeclarationId_Cache({declarationId}, {tenant})";
+            var res = CacheManager.GetOrInsertNewObject<CourierDeclarationPM>(key,
+                () =>
+                {
+                    return this.GetCourierDeclarationByDeclarationId(declarationId, tenant);
+                });
+            return res;
+        }
         public CourierDeclarationPM GetCourierDeclarationByDeclarationId(string declarationId, int tenant)
         {
             CourierDeclarationRepository courierDeclarationRepository = new CourierDeclarationRepository(context);

@@ -36,6 +36,26 @@ namespace Logitude.Customs.Data.Repsitories
                     select a).FirstOrDefault();
         }
 
+        public string GetPrefixMAWBByDeclarationId(string declarationId, int tenant)
+        {
+            var q = (from cd in context.CourierDeclarations
+                     join m in context.CourierMasters on cd.CourierMasterId equals m.Id
+                     join al in context.CustomsAirlines on m.AirlineId equals al.Id into outerLeftAI
+                     from joinAL in outerLeftAI.DefaultIfEmpty()
+                     where cd.DeclarationId == declarationId && cd.Tenant == tenant
+                     select new
+                     {
+                         MyAirlinePrefix= joinAL == null ? "" : joinAL.AirlinePrefix,
+                         MAWB = m.MAWB
+                     });
+            var res=q.FirstOrDefault();
+            if (res==null)
+            {
+                return null;
+            }
+            return res.MyAirlinePrefix + "-" + res.MAWB;
+
+        }
         public CourierMaster GetCourierMaster(string airlineId, string HAWB, string MAWB, int tenant)
         {
             if (String.IsNullOrWhiteSpace(HAWB))
