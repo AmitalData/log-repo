@@ -325,7 +325,7 @@ export class AddEditWidgetComponent extends BaseComponent {
         if (this.TypeCode != "kpi") this.Alignment = null;
         if (this.TypeCode != "kpi" || (this.WidgetMeasuresList[0].MeasureCode != "Count" && !AppTool.IsNullOrEmpty(this.WidgetMeasuresList[0].MeasureFieldId) && !this.WidgetMeasuresList[0].IsNumeric)) {
             this.ThousandSeparator = false;
-            this.UseNumberAbbreviation = false;
+            this.UseNumberAbbreviation = null;
             this.UseAbbreviationAfter = null;
             this.DecimalPlaces = null;
             return;
@@ -333,20 +333,19 @@ export class AddEditWidgetComponent extends BaseComponent {
         
         this.Alignment = this.Alignment ? this.Alignment : "Center";
         this.ThousandSeparator = this.ThousandSeparator ? this.ThousandSeparator : false;
-        this.UseNumberAbbreviation = this.UseNumberAbbreviation ? this.UseNumberAbbreviation : true;
+        this.UseNumberAbbreviation = (this.UseNumberAbbreviation != null) ? this.UseNumberAbbreviation : true;
         this.UseAbbreviationAfter = this.UseAbbreviationAfter ? this.UseAbbreviationAfter : "100k";
         this.DecimalPlaces = this.DecimalPlaces ? this.DecimalPlaces : 0;
     }
 
     SetUIProprtiesForDisplaySettings() {
-        if (this.WidgetMeasuresList[0].MeasureCode != "Count" && AppTool.IsNullOrEmpty(this.WidgetMeasuresList[0].MeasureFieldId) || !this.WidgetMeasuresList[0].IsNumeric) {
+        if (this.TypeCode != "kpi" || (this.WidgetMeasuresList[0].MeasureCode != "Count" && !AppTool.IsNullOrEmpty(this.WidgetMeasuresList[0].MeasureFieldId) && !this.WidgetMeasuresList[0].IsNumeric)) {
             this.UIProperties.SetEnabled("DecimalPlaces", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("UseNumberAbbreviation", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("ThousandSeparator", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("UseAbbreviationAfter", this.ObjectTableName, false);
         }
-        if (this.TypeCode != "kpi" || !this.WidgetMeasuresList[0].IsNumeric) return;
-
+    
         this.UIProperties.SetEnabled("DecimalPlaces", this.ObjectTableName, this.WidgetMeasuresList[0].IsNumeric || this.WidgetMeasuresList[0].MeasureCode == "Count");
         this.UIProperties.SetEnabled("UseNumberAbbreviation", this.ObjectTableName, this.WidgetMeasuresList[0].IsNumeric || this.WidgetMeasuresList[0].MeasureCode == "Count");
         this.UIProperties.SetEnabled("ThousandSeparator", this.ObjectTableName, this.WidgetMeasuresList[0].IsNumeric || this.WidgetMeasuresList[0].MeasureCode == "Count");
@@ -354,8 +353,11 @@ export class AddEditWidgetComponent extends BaseComponent {
     }
 
     CompareDisplaySettingWithDefaultValue(){
-        
-        if (!this.isNew && (this.Alignment != "Center" || this.ThousandSeparator == true || this.UseNumberAbbreviation == false ||
+        if(!this.isNew && (!this.WidgetMeasuresList[0].IsNumeric && this.Alignment != "Center")){
+            this.IsDisplaySettingVisibile = true;
+            return;
+        }
+        if (!this.isNew && (this.WidgetMeasuresList[0].MeasureCode == "Count"|| this.WidgetMeasuresList[0].IsNumeric) && (this.Alignment != "Center" || this.ThousandSeparator == true || this.UseNumberAbbreviation == false ||
          (this.UseNumberAbbreviation == true && this.UseAbbreviationAfter != "100k") || this.DecimalPlaces != 0)) {
             this.IsDisplaySettingVisibile = true;
             return;
@@ -1005,6 +1007,7 @@ export class WidgetMeasureItem extends BaseComponent {
         this.selectedField = field;
         this.fatherComponent.SetDefaultValuesForDisplaySettings();
         this.fatherComponent.SetUIProprtiesForDisplaySettings();
+        this.fatherComponent.CompareDisplaySettingWithDefaultValue();
     }
 
     get IsNumeric(): boolean {
