@@ -87,8 +87,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
             this.DecPM = args.EntityPM;
             this.GetExportDeclarationClosingData(this.DecPM.Id);
 
-            if (!this.DecPM.IsConnectedToUnifreight && AmitalGatewayUtil.Instance.AmitalBrowserInUse)
-                this.operationalDataFromUnifreight()
+           
             
     
             this.SetUIProperty();
@@ -123,6 +122,8 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         if (id != null) {
 
             this.exportDeclarationClosingDatasExtendPMService.GetSingleWithEFIFILEMData(id).subscribe((response: any) => {
+                if (!this.DecPM.IsConnectedToUnifreight && AmitalGatewayUtil.Instance.AmitalBrowserInUse)
+                this.operationalDataFromUnifreight()
                 this.EntityPM = response.Result;
                 if (this.EntityPM)
 
