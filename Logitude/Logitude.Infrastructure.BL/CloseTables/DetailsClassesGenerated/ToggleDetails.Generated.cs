@@ -836,6 +836,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "DMS,Dispose Memory Stream", 
                 Description = "Dispose Memory Stream", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "CXE", 
+                Name = "Cargo Tracking Excel sheet export features", 
+                SearchFields = "CXE,Cargo Tracking Excel sheet export features", 
+                Description = "Cargo Tracking Excel sheet export features", 
+			});
 			
             return all;
        }

@@ -196,11 +196,11 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("ArrivalEstimationDate", 'DateTime', 'ETA'));
         this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("DepartureDate", 'DateTime', 'ATD'));
         this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("DepartureEstimationDate", 'DateTime', 'ETD'));
-        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("GrossWeight", 'Number', 'Weight'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("GrossWeight", 'Double', 'Weight'));
         this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("HasException", 'Text', 'Has Exception'));
         this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("CurrentMilestoneExceptions", 'Text', 'Exception Description'));
         this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("IsOrder", 'Text', 'Is Order'));
-        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("NumberOfPackages", 'Number', 'Quantity'));
+        this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("NumberOfPackages", 'Integer', 'Quantity'));
         this.QueryColumns.push(this.logitudeGridExportToExcelService.GetQueryColumn("IncotermName", 'Text', 'Incoterm'));
     }
 
