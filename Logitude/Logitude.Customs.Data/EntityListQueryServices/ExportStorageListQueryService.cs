@@ -21,62 +21,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
         private IQueryable<ExportStorageList> GetIqueryableList(IQueryable<ExportStorage> iQueryable)
         {
-            IQueryable<ExportStorageList> query = (from en in iQueryable
-
-                                                   join d in context.Declarations.Select(r => new { r.Id, r.DeclarationStatusTypeCode, r.CustomFileNo, r.DeclarationNumber, r.GovernmentProcedureCurrent, r.ProcedureCurrentCode })
-                                                   on en.DeclarationId equals d.Id
-                                                   into dj
-                                                   from declaration in dj.DefaultIfEmpty()
-
-                                                   join s in context.DeclarationStatusTypes.Select(r => new { r.Code, r.LocalName })
-                                                   on declaration.DeclarationStatusTypeCode equals s.Code
-                                                   into sj
-                                                   from status in sj.DefaultIfEmpty()
-
-                                                   join ct in context.CargoTypes.Select(r => new { r.Code, r.LocalName })
-                                                   on en.CargoType equals ct.Code
-                                                   into ctj
-                                                   from cargoType in ctj.DefaultIfEmpty()
-
-                                                   join ss in context.CargoStatuses.Select(r => new { r.Code, r.LocalName })
-                                                   on en.CustomsStatus equals ss.Code
-                                                   into ssj
-                                                   from cargoStatus in ssj.DefaultIfEmpty()
-
-
-                                                   join el in context.ExportLogisticPermitActions.Select(r => new { r.Code, r.LocalName })
-                                                   on en.ActionCode equals el.Code
-                                                   into elpa
-                                                   from exportLogisticPermitActions in elpa.DefaultIfEmpty()
-
-
-
-
-
-                                                   from client in context.Clients
-                                                   .Where(c => c.Code == en.ExporterID || c.Id == en.ExporterID)
-                                                   .Select(r => new { r.Id, r.FullName, r.Code })
-                                                   .DefaultIfEmpty()
-
-                                                       //join c in context.Cards.Select( r=> new {r.Id, r.LocalName, r.VatNumber})
-                                                       //on en.ExporterID equals c.Id
-                                                       //into cj
-                                                       //from card in cj.DefaultIfEmpty()
-
-                                                   join cs in context.CustomsShips.Select(r => new { r.Code, r.LocalName })
-                                                   on en.ShipCode equals cs.Code
-                                                   into csj
-                                                   from customsShip in csj.DefaultIfEmpty()
-
-                                                   join ci in context.CargoIdentifireTypes.Select(r => new { r.Code, r.LocalName })
-                                                   on en.CargoTypeCode equals ci.Code
-                                                   into cij
-                                                   from cargoIdentifireType in cij.DefaultIfEmpty()
-
-                                                   join us in context.UnloadingSiteType.Select(r => new { r.Code, r.LocalName })
-                                                  on en.ExportLoadingPortcode equals us.Code
-                                                  into ulst
-                                                   from unloadingSiteType in ulst.DefaultIfEmpty()
+            IQueryable<ExportStorageList> query = (from en in iQueryable.Include("Declaration").Include("DeclarationStatusType").Include("CargoType").Include("CargoStatuse")
+                                                   .Include("ExportLogisticPermitAction").Include("Client").Include("CustomsShip").Include("CargoIdentifireType")
+                                                   .Include("CargoIdentifireType").Include("UnloadingSiteType")
+ 
 
 
                                                    select new ExportStorageList()
@@ -87,7 +35,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                        SearchFields = en.SearchFields,
 
-                                                       DeclarationId = declaration.CustomFileNo,
+                                                       DeclarationId = en.DeclarationEntity!= null? en.DeclarationEntity.CustomFileNo : "",
 
                                                        ExportFileNo = en.ExportFileNo,
 
@@ -111,23 +59,16 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                        ThirdCargoID = en.ThirdCargoID,
 
-                                                       DeclarationStatusTypeName = status.LocalName,
-                                                      
-                                                       //DeclarationStatusTypeName = 
-                                                       //(
-                                                       // from status in context.DeclarationStatusTypes
-                                                       // where status.Code == (from Declaration in context.Declarations where Declaration.Id == en.DeclarationId select new { Declaration.DeclarationStatusTypeCode }).FirstOrDefault().DeclarationStatusTypeCode
-                                                       // select new  { status.LocalName }
-                                                       //).FirstOrDefault().LocalName,
+                                                       DeclarationStatusTypeName = en.DeclarationEntity != null && en.DeclarationEntity.DeclarationStatusType!=null ? en.DeclarationEntity.DeclarationStatusType.LocalName:"",
 
-                                                       CargoTypeName = cargoType.LocalName,
+ 
+                                                       CargoTypeName = en.CargoTypeEntity!=null? en.CargoTypeEntity.LocalName:"",
 
-                                                       CustomStatusName = cargoStatus.LocalName,
+                                                       CustomStatusName = en.CustomsCargoStatus.LocalName,
 
-                                                       //ExporterName = card.LocalName,
-                                                       ExporterName = client.FullName,
+                                                        ExporterName = en.DeclarationEntity!= null && en.DeclarationEntity.Importer !=null ? en.DeclarationEntity.Importer.FullName:"",
 
-                                                       ShipName = customsShip.LocalName,
+                                                       ShipName = en.CustomsShipCode!=null? en.CustomsShipCode.LocalName:"",
 
                                                        StorErrorXML = en.StorErrorXML,
 
@@ -135,32 +76,31 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                        ExportDealIdentification = en.ExportDealIdentification,
 
-                                                       CargoTypeCodeName = cargoIdentifireType.LocalName,
+                                                       CargoTypeCodeName = en.CargoIdentifireType.LocalName,
 
-                                                       DeclarationStatusTypeCode = declaration.DeclarationStatusTypeCode,
+                                                       DeclarationStatusTypeCode = en.DeclarationEntity!=null? en.DeclarationEntity.DeclarationStatusTypeCode:"",
 
                                                        Declaration_ID = en.DeclarationId,
 
-                                                       DeclarationCustomFileNo = declaration.CustomFileNo,
+                                                       DeclarationCustomFileNo = en.DeclarationEntity != null ? en.DeclarationEntity.CustomFileNo:"",
 
-                                                       DeclarationNumber = declaration.DeclarationNumber,
+                                                       DeclarationNumber = en.DeclarationEntity != null ? en.DeclarationEntity.DeclarationNumber:"",
 
-                                                       //ExporterCode = card.VatNumber
-                                                       ExporterCode = client.Code,
+                                                        ExporterCode = en.DeclarationEntity != null && en.DeclarationEntity.Importer != null ? en.DeclarationEntity.Importer.Code : "",//client.Code,
 
                                                        StorageStatusIsOpen = en.StorageStatus != null && en.StorageStatus.ToLower() == "open",
 
-                                                       ExportLoadingPortcode=en.ExportLoadingPortcode,
+                                                       ExportLoadingPortcode = en.ExportLoadingPortcode,
 
-                                                       ExportLoadingPortName = unloadingSiteType.LocalName,
+                                                       ExportLoadingPortName = en.InternationalSiteS!=null? en.InternationalSiteS.LocalName :"",
 
                                                        ActionCode = en.ActionCode,
-                                                       ActionName = en.ExportLogisticPermitAction.LocalName,
-                                                       ProcedureCurrentName = declaration.GovernmentProcedureCurrent.LocalName,
+                                                       ActionName = en.ExportLogisticPermitAction!=null ? en.ExportLogisticPermitAction.LocalName:"",
+                                                       ProcedureCurrentName = en.DeclarationEntity != null && en.DeclarationEntity.GovernmentProcedureCurrent!=null ? en.DeclarationEntity.GovernmentProcedureCurrent.LocalName :"",
                                                        StorageSiteCode = en.StorageSiteCode,
-                                                       StorageStatusName= en.StorageStatus
+                                                       StorageStatusName = en.StorageStatus
 
-                                                   });
+                                                   });// ;
             return query;
         }
 
