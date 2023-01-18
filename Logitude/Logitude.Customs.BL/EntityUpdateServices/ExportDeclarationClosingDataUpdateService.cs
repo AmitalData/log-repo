@@ -20,5 +20,19 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             (Repository as Logitude.Customs.Data.Repsitories.ExportDeclarationClosingDataRepository).FastDeleteMulti(entityKeyFields);
         }
+        protected override void OnUpdating(ExportDeclarationClosingDataPM entityPM, ExportDeclarationClosingData entityPOCO)
+        {
+            if(entityPM.FinalLoadingSite != null)
+            {
+                ICustomContext context = MainContext as CustomContext;
+                var query = new LoadingSiteTypeQueryService(context);
+                var site = query.GetSingle(entityPM.FinalLoadingSite,false,true);
+                if(site == null)
+                {
+                    entityPM.FinalLoadingSite = null;
+                }
+
+            }
+        }
     }
 }

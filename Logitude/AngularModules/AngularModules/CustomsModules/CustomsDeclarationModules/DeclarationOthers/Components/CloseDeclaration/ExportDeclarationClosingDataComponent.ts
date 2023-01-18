@@ -39,7 +39,6 @@ import { SupplierInvoiceItemList } from 'Customs/EntityLists/Extended/SupplierIn
 
 export class ExportDeclarationClosingDataComponent extends BaseComponent {
     public DataContext: any = this;
-    public EntityPM: ExportDeclarationClosingDataPM;
     public DecPM: DeclarationPM;
     public DeclarationIsClosed: boolean = false;
     public ObjectTableName: string = "Customs.ExportDeclarationClosingData";
@@ -84,9 +83,11 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     SetWindowArgs(args: any) {
         this.EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response: any) => {
             this.DecPM = args.EntityPM;
-            if (!this.DecPM.IsConnectedToUnifreight && AmitalGatewayUtil.Instance.AmitalBrowserInUse)
-                this.operationalDataFromUnifreight()
             this.GetExportDeclarationClosingData(this.DecPM.Id);
+
+           
+            
+    
             this.SetUIProperty();
             if (this.DecPM.IsExportClosed) {
                 this.DeclarationIsClosed = true
@@ -119,6 +120,8 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         if (id != null) {
 
             this.exportDeclarationClosingDatasExtendPMService.GetSingleWithEFIFILEMData(id).subscribe((response: any) => {
+                if (!this.DecPM.IsConnectedToUnifreight && AmitalGatewayUtil.Instance.AmitalBrowserInUse)
+                this.operationalDataFromUnifreight()
                 this.EntityPM = response.Result;
                 if (this.EntityPM)
 
@@ -151,10 +154,6 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                     this.setWarningValues();
                 }
 
-                if (AppTool.IsNullOrEmpty(this.EntityPM.FinalManifestNumber) && this.DecPM.Direction == 'E' && this.DecPM.TransportModeId == 'A' && !AppTool.IsNullOrEmpty(this.EntityPM.MAIN_AWB)) {
-                    this.EntityPM.IsDirty = true;
-                    this.EntityPM ? this.EntityPM.FinalManifestNumber = this.EntityPM.MAIN_AWB : null;
-                }
 
                 if (AppTool.IsNullOrEmpty(this.EntityPM.FinalCargoTypeCode) && this.DecPM.Direction == 'E' && this.DecPM.TransportModeId == 'A') {
                     this.EntityPM.IsDirty = true;
@@ -674,11 +673,22 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                         let Hawb = UnifreightMessageM.GetStringValue(mess, "Hawb");
                         let FlightDate = UnifreightMessageM.GetStringValue(mess, "FlightDate");
                         var datetime = new Date(Number(FlightDate.substring(0, 4)), Number(FlightDate.substring(4, 6)) - 1, Number(FlightDate.substring(6, 8)), 2, 2, 2);
-                        Mawb ? this.MainAWB = Mawb : '';
+                        if(Mawb != null && this.EntityPM != null){
+                            this.MainAWB = Mawb;
+                            if (AppTool.IsNullOrEmpty(this.EntityPM.FinalManifestNumber) && this.DecPM.Direction == 'E' && this.DecPM.TransportModeId == 'A'){
+                                this.EntityPM.IsDirty = true;
+                                this.EntityPM ? this.EntityPM.FinalManifestNumber = this.EntityPM.MAIN_AWB : null;
+                            }
+                        }
                         Hawb ? this.Smp = Hawb : '';
-                        LoadPort ? this.ChargingSite = LoadPort : '';
-                        FlightDate ? this.FlightDate = datetime : '';
-
+                        if(LoadPort != null){
+                            this.ChargingSite = LoadPort;
+                            this.FinalLoadingSite = LoadPort;
+                        }
+                        if(datetime != null){
+                            this.FlightDate=datetime;
+                            this.LoadingDateTime=datetime;
+                        }
                         SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
                     }
                 }
