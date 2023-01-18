@@ -13,36 +13,76 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { CachedDataManager } from '../../../../Infrastructure/Utilities/CachedDataManager';
 import { QueryPM } from '../../../../Infrastructure/EntityPMs/QueryPM';
+import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ScreenLayoutComponent } from './ScreenLayoutComponent';
+import { ObjectTablePMService } from '../../../../Infrastructure/Services/StandardPMs/ObjectTablePMService';
 declare var window: any;
 
 @Component({
     templateUrl: './CustomizationQueriesComponent.html',
 })
 
-export class CustomizationQueriesComponent {
+export class CustomizationQueriesComponent extends BaseComponent{
     public CustomQueriesCollection: ObservableCollection;
     private QueriesPMService: QueriesPMService;
+    private ObjectTablePMService: ObjectTablePMService;
     private AllQueries: QueryPM[] = [];
     public IsAddButtonEnabled: boolean = true;
     public AllowQueries: boolean = true;
     public customizationEditComponent: CustomizationEditComponent;
     private CurrentSession = SessionLocator.SelectedSession;
-
+    public DataContext = this;
+    public ScreenLayoutComponent: ScreenLayoutComponent;
+    NewScreenFilterItems: ApiQueryFilters;
+    private newScreenList: any[] = [];
     constructor() {
+        super();
         this.CustomQueriesCollection = new ObservableCollection([]);
         this.QueriesPMService = new QueriesPMService();
+        this.ObjectTablePMService = new ObjectTablePMService();
         let serviceArgs = new ServiceArgs();
         serviceArgs.http = ServiceHelper.HttpClient;
         this.QueriesPMService.setServiceArgs(serviceArgs);
     }
+    private NewWizardControlNameValue;
+    NewScreenListSelectionChanged(selectedNewScreen: any) {
+        if (!selectedNewScreen) return;
+        if (this.SelectedScreen?.Code == selectedNewScreen.Code) return;
+        this.NewWizardControlNameValue = selectedNewScreen ? selectedNewScreen.Code : "";
+        this.customizationEditComponent.IsDirty = true;
+    }
 
+    get SelectedScreen() {
+        return this.newScreenList.filter(screen => screen.Code == this.ObjectTable.NewWizardControlName)[0];
+    }
+
+    public SelectedNewScreenId: string;
+    SetSelectedNewScreen() {
+        this.SelectedNewScreenId = this.SelectedScreen?.Id;
+    }
+
+    InitLOVFilters() {
+        this.NewScreenFilterItems = new ApiQueryFilters();
+        this.NewScreenFilterItems.addAdditionalFilter("ObjectTableId", this.ObjectTableId, null, null, "Equals", true, false, false, "string");
+        this.NewScreenFilterItems.Tenant = SessionLocator.Tenant;
+    }
+
+    FillNewScreenList() {
+        this.newScreenList = window.Screens.filter(screen => screen.ObjectTableId == this.ObjectTableId && !screen.Inactive && screen.Tenant == SessionLocator.Tenant);
+    }
+
+    private NewWizardControlNameOldValue: string;
     private ObjectTableId: string;
     private ObjectTable: any;
     SetWindowArgs(args: any) {
         this.ObjectTableId = args['ObjectTableId'];
         this.ObjectTable = window.ObjectTables.filter(d => d.Id === this.ObjectTableId)[0];
         if (!this.ObjectTable) return;
+        this.NewWizardControlNameOldValue = this.ObjectTable.NewWizardControlName;
         this.LoadCustomQueries();
+        this.FillNewScreenList();
+        this.InitLOVFilters();
+        this.SetSelectedNewScreen();
     }
 
     public LoadCustomQueries() {
@@ -146,13 +186,39 @@ export class CustomizationQueriesComponent {
         });
     }
 
+    private OkClicked() {
+        if (this.NewWizardControlNameValue == this.NewWizardControlNameOldValue) return;
+        this.CurrentSession.StartBusyIndicatorSaving();
+        this.ObjectTable.NewWizardControlName = this.NewWizardControlNameValue;
+        this.ObjectTablePMService.update(this.ObjectTable)
+            .subscribe(arg => {
+                this.CurrentSession.StopBusyIndicator();
+                this.customizationEditComponent.IsDirty = false;
+                }, error => {
+                alert("error happened!");
+                });
+        if (this.customizationEditComponent.NewSelectedMenu) {
+            this.customizationEditComponent.SelectedMenu = this.customizationEditComponent.NewSelectedMenu;
+        }
+    }
     Save() {
-        if (!this.customizationEditComponent.IsSaveAndClose) return;
-        this.customizationEditComponent.CurrentSession.CloseCurrentWindow();
-        this.customizationEditComponent.IsSaveAndClose = false;
+        if (!this.customizationEditComponent.IsDirty) return;
+        this.OkClicked();
+        if (this.customizationEditComponent.IsSaveAndClose) {
+            this.customizationEditComponent.CurrentSession.CloseCurrentWindow();
+            this.customizationEditComponent.IsSaveAndClose = false;
+        }
     }
 
     Cancel() {
+        if (this.customizationEditComponent.NewSelectedMenu) {
+            this.UndoChanges();
+            this.customizationEditComponent.SelectedMenu = this.customizationEditComponent.NewSelectedMenu;
+        }
+    }
 
+    private UndoChanges() {
+        this.customizationEditComponent.IsDirty = false;
+        this.SetSelectedNewScreen();
     }
 }
