@@ -134,7 +134,7 @@ export class NewViewComponent {
         this.IsNew = args.IsNew;
         this.SelectedDefaultViewName = args.SelectedDefaultViewName;
         this.CreateWithoutOriginalQuery = args.CreateWithoutOriginalQuery;
-        this.IsFromCustomization = args.IsFromCustomization;
+        this.IsFromCustomization = args.IsFromCustomization ? true : false;
         this.pubSubAdvanceQueryFiltersService = args.pubSubAdvanceQueryFiltersService;
 
         this.QueryId = args.queryId;
@@ -442,6 +442,7 @@ export class NewViewComponent {
         newQueryPM.QuerySection = this.ObjectTable.Name;
         let customObjectTableQueryGroupCode = "CUOB";
         newQueryPM.QueryGroupCode = customObjectTableQueryGroupCode;
+        newQueryPM.IsAddNewEntityEnabled = true;
         return newQueryPM;
     }
 
@@ -1313,7 +1314,7 @@ export class NewViewComponent {
     }
 
     private GetNewQueryIndexOrder(maxIndex: any): number {
-        if (!this.IsFromCustomization) return maxIndex.IndexOrder + 1;
+        if (!this.CreateWithoutOriginalQuery) return maxIndex.IndexOrder + 1;
 
         let objectTableQueries = window.Queries.filter(q => q.ObjectTableId == this.ObjectTableId && q.SystemLevel);
         if (objectTableQueries && objectTableQueries.length > 0) {

@@ -319,6 +319,19 @@ export class ReferenceCustomObjectPM {
     public get Field50() { if (!this.field50) { this.field50 = new CustomFieldClass(null, "Field50", this.ObjectTableName); } return this.field50; }
     public set Field50(newValue: CustomFieldClass) { this.field50 = newValue; this.MarkAsDirty("Field50"); }
 
+    private searchFields: string;
+    public get SearchFields() { return this.searchFields; }
+    public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
+
+    private createdByUserName: string;
+    public get CreatedByUserName() { return this.createdByUserName; }
+    public set CreatedByUserName(newValue: string) { if (this.createdByUserName != newValue) { this.createdByUserName = newValue; this.MarkAsDirty("CreatedByUserName"); } }
+
+
+    private updatedByUserName: string;
+    public get UpdatedByUserName() { return this.updatedByUserName; }
+    public set UpdatedByUserName(newValue: string) { if (this.updatedByUserName != newValue) { this.updatedByUserName = newValue; this.MarkAsDirty("UpdatedByUserName"); } }
+
 
     public OldEntityPM: ReferenceCustomObjectPM;
 		

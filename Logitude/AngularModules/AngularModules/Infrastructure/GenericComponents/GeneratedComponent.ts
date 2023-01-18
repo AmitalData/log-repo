@@ -32,6 +32,7 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
     public ScreenColumns: ScreenColumn[];
     public LabelWidth: number = 190;
     public IsFromGrid: boolean;
+    public BuildLighteningScreenAsClassicScreen: boolean;
     public IsNewEntityCall: boolean;
     public ShowNoFieldsText: boolean = false;
     ShowTitle: boolean = false;
@@ -65,6 +66,7 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
         this.ChildObjectTableName = childObjectTableName;
         this.ChildObjectTableId = window.ObjectTables.filter((x: any) => x.Name === this.ChildObjectTableName)[0]?.Id;
         this.objectTableTab = window.ObjectTableTabs.filter((x: any) => x.Code === this.entityArgs.SelectedTabCode)[0];
+        this.BuildLighteningScreenAsClassicScreen = this.IsFromGrid ? true : this.BuildLighteningScreenAsClassicScreen;
 
         this.BuildScreen();
         this.Listen();
@@ -107,7 +109,7 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
     BuildScreen(fireEmit: boolean = false) {
         let selectedScreen = this.GetSelectedScreen();
         let gridScreenTypeCode = "Grid";
-        if (this.IsFromGrid && selectedScreen && selectedScreen.Type != gridScreenTypeCode) {
+        if (this.BuildLighteningScreenAsClassicScreen && selectedScreen && selectedScreen.Type != gridScreenTypeCode) {
             this.BuildLighteningScreen(fireEmit, selectedScreen);
             return;
         }
@@ -170,7 +172,7 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
 
     private GetClassicScreenColumns(myScreen: any, myScreenFields: any, myObjectFields: any) {
 
-        if (this.IsFromGrid) {
+        if (this.BuildLighteningScreenAsClassicScreen) {
             return this.GetClassicGridScreenColumns(myScreen, myScreenFields, myObjectFields);
         }
 
@@ -236,7 +238,7 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
     private isScreenEnabled: boolean = true;
     private BuildScreenSections(screen: ScreenPM, fireEmit: any)
     {
-        this.CurrentSession.StartBusyIndicator("Loading...");
+        //this.CurrentSession.StartBusyIndicator("Loading...");
         this.GetScreenSections(screen)
             .subscribe(response =>
             {

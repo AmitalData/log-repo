@@ -79,6 +79,15 @@
                     </div>
 
                 </div>
+
+                <!-- Custom Objects -->
+                <div *ngIf="IsCustomObjectTable">
+
+                    <div *ngIf="FieldName == 'CreateDate'||FieldName == 'UpdateDate'">
+                        <div [style.text-align]="isRTL ? 'right' : 'left'">{{FieldValue | DateTimePipe:'D'}}</div>
+                    </div>
+
+                </div>
             </div>
         </td>
     </tr>

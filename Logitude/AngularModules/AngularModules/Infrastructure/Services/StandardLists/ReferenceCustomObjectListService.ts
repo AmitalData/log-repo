@@ -91,6 +91,37 @@ export class ReferenceCustomObjectListService {
 			
 					catchError(ServiceHelper.HandleServiceError));
 		});
+    }
+    getAllByObjectTableId(objectTableId: string) {
+
+        var callTime = new Date();
+
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/getall/?' + 'objectTableId=' + objectTableId, ServiceHelper.GetHttpFullHeaders())
+                .pipe(
+					map((response: HttpResponse<any>) => {
+
+						var allLists = response.body;
+						var _mappedListsArray: Array<ReferenceCustomObjectList> = [];
+						if (allLists) {
+							for (var key in allLists) {				
+								var entity: ReferenceCustomObjectList = this.MapJsonToEntityList(allLists[key]);
+								_mappedListsArray.push(entity);
+							}
+						}
+
+						var serviceResponse: ServiceResponse = new ServiceResponse(); 
+						serviceResponse.Result = _mappedListsArray;
+						serviceResponse.CallTime = callTime;
+
+						var servertime = response.headers.get('ServerExecutionTime');
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ReferenceCustomObject", "GetAllLists", ""); 
+
+						return serviceResponse;
+					}),
+			
+					catchError(ServiceHelper.HandleServiceError));
+		});
 	}
 	
 	getByFilters(filters: ApiQueryFilters) {
