@@ -147,6 +147,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                     }
 
                     else {
+
                         this.setIdentifiersPlaceHolders();
                     }
 
@@ -159,7 +160,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
                 if (AppTool.IsNullOrEmpty(this.EntityPM.FinalCargoTypeCode) && this.DecPM.Direction == 'E' && this.DecPM.TransportModeId == 'A') {
                     this.EntityPM.IsDirty = true;
-                    this.EntityPM.FinalCargoTypeCode = "1";
+                    this.EntityPM.FinalCargoTypeCode = "36";
                 }
 
 
