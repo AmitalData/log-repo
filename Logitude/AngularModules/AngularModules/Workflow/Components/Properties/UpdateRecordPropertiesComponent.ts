@@ -32,8 +32,19 @@ export class UpdateRecordPropertiesComponent extends BaseComponent {
     }
 
     ngOnInit() {
+        this.initializeWindowEvents();
         this.initialize();
         this.initializeEditableRecordsTreeItems();
+    }
+
+    initializeWindowEvents() {
+        this.CurrentSession.CurrentWindow.FooterButtonsClicked.subscribe((e: any) => {
+            if (e === "submit") {
+                this.saveButtonClicked();
+            } else {
+                this.cancelButtonClicked();
+            }
+        });
     }
 
     initialize() {
