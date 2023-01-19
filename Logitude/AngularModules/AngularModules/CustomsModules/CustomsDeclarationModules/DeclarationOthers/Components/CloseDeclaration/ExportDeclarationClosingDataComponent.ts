@@ -675,7 +675,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                         var datetime = new Date(Number(FlightDate.substring(0, 4)), Number(FlightDate.substring(4, 6)) - 1, Number(FlightDate.substring(6, 8)), 2, 2, 2);
                         if(Mawb != null && this.EntityPM != null){
                             this.MainAWB = Mawb;
-                            if (AppTool.IsNullOrEmpty(this.EntityPM.FinalManifestNumber) && this.DecPM.Direction == 'E' && this.DecPM.TransportModeId == 'A'){
+                            if (AppTool.IsNullOrEmpty(this.EntityPM.FinalManifestNumber) && this.DecPM.Direction == 'E'){
                                 this.EntityPM.IsDirty = true;
                                 this.EntityPM ? this.EntityPM.FinalManifestNumber = this.EntityPM.MAIN_AWB : null;
                             }
