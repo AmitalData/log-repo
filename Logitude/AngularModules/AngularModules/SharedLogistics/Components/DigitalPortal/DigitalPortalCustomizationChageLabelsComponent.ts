@@ -100,14 +100,14 @@ export class DigitalPortalCustomizationChageLabelsComponent extends BaseComponen
         this.digitalTextService.GetTextCodesByFilters(null, objectTableId, profileCode).subscribe((myResult) => {
             if (!myResult.HasError) {
                 var data = myResult.Result;
-                this.loadedResults = data.filter(a => !AppTool.IsNullOrEmpty(a['FieldCode']));
+                this.loadedResults = data;
                 if (!AppTool.IsNullOrEmpty(this.SearchText)) {
                     data = data.filter(f =>
                         (!AppTool.IsNullOrEmpty(f.FieldCode) && f.FieldCode.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1) ||
                         (!AppTool.IsNullOrEmpty(f.DisplayText) && f.DisplayText.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1 )||
                         (!AppTool.IsNullOrEmpty(f.DefaultText) && f.DefaultText.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1));
                 }
-                data.filter(a => !AppTool.IsNullOrEmpty(a['FieldCode'])).forEach(item => {
+                data.forEach(item => {
                     labelsList.push(new CustomizationLabelItem(this, item));
                 });
                 this.LabelsItemsSource.InsertCollection(labelsList);
