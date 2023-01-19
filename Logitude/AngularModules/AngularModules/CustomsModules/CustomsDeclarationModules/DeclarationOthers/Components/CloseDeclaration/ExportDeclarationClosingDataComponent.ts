@@ -85,9 +85,9 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
             this.DecPM = args.EntityPM;
             this.GetExportDeclarationClosingData(this.DecPM.Id);
 
-           
-            
-    
+
+
+
             this.SetUIProperty();
             if (this.DecPM.IsExportClosed) {
                 this.DeclarationIsClosed = true
@@ -121,7 +121,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
             this.exportDeclarationClosingDatasExtendPMService.GetSingleWithEFIFILEMData(id).subscribe((response: any) => {
                 if (!this.DecPM.IsConnectedToUnifreight && AmitalGatewayUtil.Instance.AmitalBrowserInUse)
-                this.operationalDataFromUnifreight()
+                    this.operationalDataFromUnifreight()
                 this.EntityPM = response.Result;
                 if (this.EntityPM)
 
@@ -342,7 +342,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     }
 
     ViewDocumentsComponent() {
-        
+
         var windowArgs: any = {};
         windowArgs.EntityPM = this.DecPM;
         windowArgs.ClosingData = this.EntityPM;
@@ -382,34 +382,37 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         }
     }
     CheckDocuments() {
-        
+
         var custDocsTicketWebService: CustDocsTicketWebService = new CustDocsTicketWebService();
         var custDocsMetadataWebService: CustDocMetaDataValuesWebService = new CustDocMetaDataValuesWebService();
         var customsDocTickets: string = "";
         var MetadataValues: CustomsDocumentMetaDataValuePM[];
         var CustomsDocumentsTickets: CustomsDocumentsTicketPM[];
-        
-        var SupplierInvoiceNumberList=""
-        this.SupplierInvoiceItemList=[];
-         this.supplierInvoiceExtendedListService.GetPreferenceDocumentNumberSupplierInvoiceItemByDeclarationId(this.DecPM.Id).subscribe((response: any) => {
+        var CustomsDocumentsTickets954: CustomsDocumentsTicketPM[];
+
+        var SupplierInvoiceNumberList = ""
+        this.SupplierInvoiceItemList = [];
+        this.supplierInvoiceExtendedListService.GetPreferenceDocumentNumberSupplierInvoiceItemByDeclarationId(this.DecPM.Id).subscribe((response: any) => {
             if (response) {
-                
+
                 response.Result.forEach(element => {
                     if (!AppTool.IsNullOrEmpty(element.PreferenceDocumentNumber))
                         this.SupplierInvoiceItemList.push(element)
                 });
-                
-            
+
                 if (this.SupplierInvoiceItemList.length > 0) {
                     custDocsTicketWebService.GetCustomsDocumentsTicketsByEntityIdAndChilds(this.DecPM.Id, null, null, null, "ExportDeclarationClosingData", false).subscribe((response: ServiceResponse) => {
                         CustomsDocumentsTickets = response.Result;
-                        CustomsDocumentsTickets = CustomsDocumentsTickets.filter(c => c.DocumentTypeCode == 'IL_184'   || c.DocumentTypeCode == 'IL_329');
+                        CustomsDocumentsTickets=CustomsDocumentsTickets.filter(c=>!AppTool.IsNullOrEmpty(c.CustomsDocId))
+                        CustomsDocumentsTickets954 = CustomsDocumentsTickets.filter(c => c.DocumentTypeCode == '954');
+                        CustomsDocumentsTickets = CustomsDocumentsTickets.filter(c => c.DocumentTypeCode == 'IL_184' || c.DocumentTypeCode == 'IL_329');
+
                         if (CustomsDocumentsTickets.length == 0) {
                             this.SupplierInvoiceItemList.forEach(supplierInvoiceItem => {
-                                SupplierInvoiceNumberList=this.DecPM.SupplierInvoices.find(s=>s.InvoiceCounterKey==supplierInvoiceItem.CounterKey).InvoiceNumber;
+                                SupplierInvoiceNumberList = this.DecPM.SupplierInvoices.find(s => s.InvoiceCounterKey == supplierInvoiceItem.CounterKey).InvoiceNumber;
                             });
                             this.ShowWarnningMessage(SupplierInvoiceNumberList)
-                            
+
                         }
 
                         else {
@@ -424,16 +427,21 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                                 this.SupplierInvoiceItemList.forEach(element => {
                                     index = metaDataTypesCode.findIndex(t => t.MetaDataValue == element.PreferenceDocumentNumber);
                                     if (index < 0) {
-                                         SupplierInvoiceNumberList=SupplierInvoiceNumberList+',' + this.DecPM.SupplierInvoices.find(s=>s.InvoiceCounterKey==element.CounterKey).InvoiceNumber;
-                                     }
+                                        if (CustomsDocumentsTickets954.length > 0)
+                                            CustomsDocumentsTickets954.splice(0, 1);
+                                        else {
+                                            SupplierInvoiceNumberList = SupplierInvoiceNumberList + ',' + this.DecPM.SupplierInvoices.find(s => s.InvoiceCounterKey == element.CounterKey).InvoiceNumber;
+
+                                        }
+
+                                    }
 
                                 });
-                                if(SupplierInvoiceNumberList.length>0)
-                                {
+                                if (SupplierInvoiceNumberList.length > 0) {
                                     this.ShowWarnningMessage(SupplierInvoiceNumberList);
-                                    SupplierInvoiceNumberList="";
+                                    SupplierInvoiceNumberList = "";
                                 }
-                                else{
+                                else {
                                     this.Send("ok")
                                 }
                             })
@@ -521,9 +529,9 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         });
 
     }
-    ShowWarnningMessage(error: string){
+    ShowWarnningMessage(error: string) {
         this.CurrentSession.StopBusyIndicator();
-        this.ValidationErrors.push("לא אותרה צרופה מתאימה למסמך העדפה שצויין בחשבון" +" "+`${error}`)
+        this.ValidationErrors.push("לא אותרה צרופה מתאימה למסמך העדפה שצויין בחשבון" + " " + `${error}`)
         var windowArgs: any = {};
         windowArgs.Errors = this.ValidationErrors;
         windowArgs.ComponentHeight = '328px';
@@ -673,21 +681,21 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                         let Hawb = UnifreightMessageM.GetStringValue(mess, "Hawb");
                         let FlightDate = UnifreightMessageM.GetStringValue(mess, "FlightDate");
                         var datetime = new Date(Number(FlightDate.substring(0, 4)), Number(FlightDate.substring(4, 6)) - 1, Number(FlightDate.substring(6, 8)), 2, 2, 2);
-                        if(Mawb != null && this.EntityPM != null){
+                        if (Mawb != null && this.EntityPM != null) {
                             this.MainAWB = Mawb;
-                            if (AppTool.IsNullOrEmpty(this.EntityPM.FinalManifestNumber) && this.DecPM.Direction == 'E' && this.DecPM.TransportModeId == 'A'){
+                            if (AppTool.IsNullOrEmpty(this.EntityPM.FinalManifestNumber) && this.DecPM.Direction == 'E' && this.DecPM.TransportModeId == 'A') {
                                 this.EntityPM.IsDirty = true;
                                 this.EntityPM ? this.EntityPM.FinalManifestNumber = this.EntityPM.MAIN_AWB : null;
                             }
                         }
                         Hawb ? this.Smp = Hawb : '';
-                        if(LoadPort != null){
+                        if (LoadPort != null) {
                             this.ChargingSite = LoadPort;
                             this.FinalLoadingSite = LoadPort;
                         }
-                        if(datetime != null){
-                            this.FlightDate=datetime;
-                            this.LoadingDateTime=datetime;
+                        if (datetime != null) {
+                            this.FlightDate = datetime;
+                            this.LoadingDateTime = datetime;
                         }
                         SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
                     }
