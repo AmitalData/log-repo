@@ -15,5 +15,8 @@ namespace Logitude.DashboardModule.BL.DataProviders.Models
         public int Ratio { get; set; }
         public string AbbreviationSymbol { get; set; }
         public string ComparisonAbbreviationSymbol { get; set; }
+        public bool CompareWithPrevious { get; set; }
+        public string Increase { get; set; }
+        
     }
 }

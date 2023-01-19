@@ -2,7 +2,7 @@
     <div class="dl-global-filters-container">
         <div *ngIf="ShowFilters">
             <GlobalFilterItem style="display: inline-flex" *ngFor="let item of FilterItems; let i = index"
-                [(FilterItem)]="FilterItems[i]" [Position]="i">
+                [(FilterItem)]="FilterItems[i]" [Position]="i" [HasKpiChart]="HasKpiChart">
             </GlobalFilterItem>
         </div>
     </div>
