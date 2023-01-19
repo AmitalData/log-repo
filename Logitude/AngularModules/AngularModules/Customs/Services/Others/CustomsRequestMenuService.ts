@@ -25,7 +25,7 @@ export class CustomsRequestMenuService {
             this.buildCustomsList();
         }
     }
-    private buildReportsList(){
+    private buildReportsList() {
         this._CustomsRequestMenuItems = [];
         this._CustomsRequestMenuItems.push(new CustomsMenuItem("דוח SLA", "SLAReport", './CustomsModules/CustomsReport/Components/Reports/SLAReportComponent', 400, 300, "1111"));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem("דוח הפצה", "LastMileReport", './CustomsModules/CustomsReport/Components/Reports/LastMileReportComponent', 500, 300, "1112"));
@@ -35,141 +35,145 @@ export class CustomsRequestMenuService {
         this._CustomsRequestMenuItems = [];
         //TextCodeTranslator.Translate("Customs.General.O.CopyDeclaration")
         // <!> Abdullah: Fill 'CustomsMenuItem.ObjectTableName' if you want to open a query screen
-        if (FeatureLocator.HasFeaturePermession("CustomsGeneral", "EXPORTTENANT0")) {
-          
-            this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.ExportReport"), "ExportReport", './CustomsModules/CustomsReport/Components/Reports/ExportReportComponent', 500, 300, "1112"));
-        }
 
-        // this._CustomsRequestMenuItems.push(new CustomsMenuItem("תור חשבוניות - זמני", "InvoiceQueue", './CustomsModules/InvoiceQueue/Components/InvoiceQueueComponent', 1600, 800, "1111"));
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.DeclarationRestoreQuery"), "DeclarationRestoreQuery", './CustomsModules/CustomsRequests/Components/DeclarationRestoreComponent', 850, 500, "8373"));
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.MorningMessageQuery"), "MorningMessage", './CustomsModules/CustomsGeneralRequests/Components/MorningMessageComponent', 800, 600, "0102"));
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.Declaration.O.SendRequest"), "DeclarationStatusQuery", './CustomsModules/CustomsRequests/Components/DeclarationRequests/DeclarationStatusComponent', 550, 650, "8250"));
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CourierBOLQuery"), "CourierBOLQuery", './CustomsModules/CustomsGeneralRequests/Components/CourierBOLQueryComponent', 750, 500, "9022"));
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.GuaranteeCertificateFilterQuery"), "GuaranteeCertificateQuery", './CustomsModules/CustomsRequests/Components/TapagRequests/GuaranteeCertificateComponent', 850, 670, "8306"));
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.FaultQuery"), "FaultQuery", './CustomsModules/CustomsRequests/Components/TapagRequests/FaultQueryComponent', 750, 680, "8332"));
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.WarehouseBlockBalance"), "WarehouseBlockBalanceQuery", './CustomsModules/CustomsRequests/Components/DeclarationRequests/WarehouseBlockBalanceComponent', 850, 720, "8328"));
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.MasterBOLQuery"), "MasterBOLQuery", './CustomsModules/CustomsGeneralRequests/Components/MasterBOLQueryComponent', 600, 590, "9020"));
+        this.EntityResourceService.getEntityResourceByTableName("Customs.General").subscribe((response: any) => {
+            if (FeatureLocator.HasFeaturePermession("CustomsGeneral", "EXPORTTENANT0")) {
 
-        let my8347 = new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CurrencyExchangeRateQuery"), "ExchangeRateQuery", './CustomsModules/CustomsGeneralRequests/Components/ExchangeRatesQueryComponent', 650, 590, "8347")
-        my8347.CanExportExcel = true;
-        this._CustomsRequestMenuItems.push(my8347);
+                this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.ExportReport"), "ExportReport", './CustomsModules/CustomsReport/Components/Reports/ExportReportComponent', 500, 300, "1112"));
+            }
+            // this._CustomsRequestMenuItems.push(new CustomsMenuItem("תור חשבוניות - זמני", "InvoiceQueue", './CustomsModules/InvoiceQueue/Components/InvoiceQueueComponent', 1600, 800, "1111"));
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.DeclarationRestoreQuery"), "DeclarationRestoreQuery", './CustomsModules/CustomsRequests/Components/DeclarationRestoreComponent', 850, 500, "8373"));
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.MorningMessageQuery"), "MorningMessage", './CustomsModules/CustomsGeneralRequests/Components/MorningMessageComponent', 800, 600, "0102"));
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.Declaration.O.SendRequest"), "DeclarationStatusQuery", './CustomsModules/CustomsRequests/Components/DeclarationRequests/DeclarationStatusComponent', 550, 650, "8250"));
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CourierBOLQuery"), "CourierBOLQuery", './CustomsModules/CustomsGeneralRequests/Components/CourierBOLQueryComponent', 750, 500, "9022"));
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.GuaranteeCertificateFilterQuery"), "GuaranteeCertificateQuery", './CustomsModules/CustomsRequests/Components/TapagRequests/GuaranteeCertificateComponent', 850, 670, "8306"));
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.FaultQuery"), "FaultQuery", './CustomsModules/CustomsRequests/Components/TapagRequests/FaultQueryComponent', 750, 680, "8332"));
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.WarehouseBlockBalance"), "WarehouseBlockBalanceQuery", './CustomsModules/CustomsRequests/Components/DeclarationRequests/WarehouseBlockBalanceComponent', 850, 720, "8328"));
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.MasterBOLQuery"), "MasterBOLQuery", './CustomsModules/CustomsGeneralRequests/Components/MasterBOLQueryComponent', 600, 590, "9020"));
 
-
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CustomItemLegalDemandsQuery"), "CustomItemLegalDemandsQuery", './CustomsModules/CustomsGeneralRequests/Components/CustomItemLegalDemandsQueryComponent', 950, 630, "8316"));
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.DeclarationPrintQuery"), "DeclarationPrintQuery", './CustomsModules/CustomsRequests/Components/DeclarationRequests/PrintRequestComponent', 500, 490, "8302"));
-
-        // Vendors
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.Vendor.O.Vendors"), "Vendors", '', 850, 500, "", "", null, "Customs.CustomsVendor"));
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.Vendor.O.NewVendor"), "NewVendor", '', 850, 500, ""));
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.Vendor.O.SearchVendors"), "SearchVendor", '', 850, 500, ""));
-
-        // Clientsd
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.Client.O.Clients"), "Clients", '', 850, 500, "", "", null, "Customs.Client"));
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.Vendor.O.NewClient"), "NewClient", './CustomsModules/CustomsClient/Components/NewClient/NewClientComponent', 850, 500, "Customs.Client")); //3610
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.ClientSearchByIDQuery"), "ClientSearchByID", './CustomsModules/CustomsGeneralRequests/Components/ClientSearchByIDComponent', 850, 800, "8343"));
-
-        var item8330 = new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.BlockListInWarehouseQuery"), "BlockList", './CustomsModules/CustomsRequests/Components/DeclarationRequests/BlockListInWarehouseComponent', 900, 520, "8330");
-        item8330.CanExportExcel = true;
-        this._CustomsRequestMenuItems.push(item8330);
-        //this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CargoQuery"), "MainfestStatus", '', 850, 500, ""));
-
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CargoQuery"), "MainfestStatus", './CustomsModules/CustomsGeneralRequests/Components/CargoQueryRequestComponent', 1010, 680, "8240"));
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.Declaration.O.RestoreMessage"), "RestoreMessage", './CustomsModules/CustomsGeneralRequests/Components/CustomsRestoreMessagesComponent', 540, 380, ""));// 9010 or 9011
-
-        var item8326 = new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.ImporterDeclarationQuery"), "ImporterDeclarationQuery", './CustomsModules/CustomsGeneralRequests/Components/ImporterDeclarationComponent', 850, 800, "8326")
-        item8326.CanExportExcel = true;
-        this._CustomsRequestMenuItems.push(item8326);
-
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.BankAccountToRefundQuery"), "BankAccountToRefundQuery", './CustomsModules/CustomsPaymentOrder/Components/EditTabs/Tapag/Deposit/BankAccountToRefundComponent', 600, 420, "2018"));
-
-        if (FeatureLocator.HasFeaturePermession("General", "RECALLSUPPLIER")) {
-            this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.RecallSuppliersFromFile"), "RecallSuppliersFromFile",'./CustomsModules/CustomsGeneralRequests/Components/RecallSuppliersFromFileComponent', 850, 500, ""));
-        }
+            let my8347 = new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CurrencyExchangeRateQuery"), "ExchangeRateQuery", './CustomsModules/CustomsGeneralRequests/Components/ExchangeRatesQueryComponent', 650, 590, "8347")
+            my8347.CanExportExcel = true;
+            this._CustomsRequestMenuItems.push(my8347);
 
 
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.DeficitFileFilterQuery"), "DeficitFileFilterQuery", './CustomsModules/CustomsGeneralRequests/Components/DeficitFileFilterComponent', 850, 8304, "8304"));
-        //this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.MasavPaymentsToAgentQuery"), "MasavPaymentsToAgentQuery", './CustomsModules/CustomsRequests/Components/PaymentOrderRequests/MasavPaymentsToAgentComponent', 830, 650, "8368"));
-        var my8368 = new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.MasavPaymentsToAgentQuery"), "MasavPaymentsToAgentQuery", './CustomsModules/CustomsRequests/Components/PaymentOrderRequests/MasavPaymentsToAgentComponent', 830, 650, "8368")
-        my8368.CanExportExcel = true;
-        //CustomMessageProgressComponent
-        //    .ShowProgressBar(this.CurrentSession,currRequestParams.PBId, "שליחת שאילתא לשערי מטבע", true)
-        //    .then((res) => {
-        //        this.MyLastCustomsRequestSheetId = currRequestParams.PBId;
-        //    }
-        //    ).catch((err) => {
-        //        this.ValidationErrorsList.push(err);
-        //    });
-        this._CustomsRequestMenuItems.push(my8368);
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CustomItemLegalDemandsQuery"), "CustomItemLegalDemandsQuery", './CustomsModules/CustomsGeneralRequests/Components/CustomItemLegalDemandsQueryComponent', 950, 630, "8316"));
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.DeclarationPrintQuery"), "DeclarationPrintQuery", './CustomsModules/CustomsRequests/Components/DeclarationRequests/PrintRequestComponent', 500, 490, "8302"));
+
+            // Vendors
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.Vendor.O.Vendors"), "Vendors", '', 850, 500, "", "", null, "Customs.CustomsVendor"));
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.Vendor.O.NewVendor"), "NewVendor", '', 850, 500, ""));
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.Vendor.O.SearchVendors"), "SearchVendor", '', 850, 500, ""));
+
+            // Clientsd
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.Client.O.Clients"), "Clients", '', 850, 500, "", "", null, "Customs.Client"));
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.Vendor.O.NewClient"), "NewClient", './CustomsModules/CustomsClient/Components/NewClient/NewClientComponent', 850, 500, "Customs.Client")); //3610
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.ClientSearchByIDQuery"), "ClientSearchByID", './CustomsModules/CustomsGeneralRequests/Components/ClientSearchByIDComponent', 850, 800, "8343"));
+
+            var item8330 = new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.BlockListInWarehouseQuery"), "BlockList", './CustomsModules/CustomsRequests/Components/DeclarationRequests/BlockListInWarehouseComponent', 900, 520, "8330");
+            item8330.CanExportExcel = true;
+            this._CustomsRequestMenuItems.push(item8330);
+            //this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CargoQuery"), "MainfestStatus", '', 850, 500, ""));
+
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CargoQuery"), "MainfestStatus", './CustomsModules/CustomsGeneralRequests/Components/CargoQueryRequestComponent', 1010, 680, "8240"));
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.Declaration.O.RestoreMessage"), "RestoreMessage", './CustomsModules/CustomsGeneralRequests/Components/CustomsRestoreMessagesComponent', 540, 380, ""));// 9010 or 9011
+
+            var item8326 = new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.ImporterDeclarationQuery"), "ImporterDeclarationQuery", './CustomsModules/CustomsGeneralRequests/Components/ImporterDeclarationComponent', 850, 800, "8326")
+            item8326.CanExportExcel = true;
+            this._CustomsRequestMenuItems.push(item8326);
+
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.BankAccountToRefundQuery"), "BankAccountToRefundQuery", './CustomsModules/CustomsPaymentOrder/Components/EditTabs/Tapag/Deposit/BankAccountToRefundComponent', 600, 420, "2018"));
+
+            if (FeatureLocator.HasFeaturePermession("General", "RECALLSUPPLIER")) {
+                this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.RecallSuppliersFromFile"), "RecallSuppliersFromFile", './CustomsModules/CustomsGeneralRequests/Components/RecallSuppliersFromFileComponent', 850, 500, ""));
+            }
 
 
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.NewPaymentOrder"), "NewPaymentOrder", './CustomsModules/CustomsPaymentOrder/Components/NewEntity/NewPaymentOrderComponent', 420, 300, "3053"));
-        var myCustomsMenuItem8305 = new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.GuaranteeFileFilterQuery"), "GuaranteeFileFilterQuery", './CustomsModules/CustomsRequests/Components/TapagRequests/GuaranteeFileFilterQueryComponent', 900, 670, "8305")
-        myCustomsMenuItem8305.CanExportExcel = true;
-        this._CustomsRequestMenuItems.push(myCustomsMenuItem8305);
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.DeclarationFilterQuery"), "DeclarationFilterQuery", './CustomsModules/CustomsRequests/Components/TapagRequests/DeclarationFilterComponent', 850, 620, ""));
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.DeclarationReshimonConversion"), "DeclarationReshimonConversion", './CustomsModules/CustomsGeneralRequests/Components/DeclarationReshimonConversionComponent', 400, 300, ""));
-
-        //string uri = Simplog.Infrastructure.App.Current.Host.Source.AbsoluteUri;
-        //if (!uri.StartsWith("http://amitaliis.cloudapp.net/unifreightIIG/")) {
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CreditQuery"), "CreditQuery", './CustomsModules/CustomsGeneralRequests/Components/CreditLimitQueryComponent', 650, 610, "8289"));
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem("שאילתא לתקרת זהב", "CreditGoldQuery", './CustomsModules/CustomsGeneralRequests/Components/GoldCreditLimitQueryComponent', 850, 610, "8289Z"));
-        const my8285 = new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.PaymentQuery"), "Payments", './CustomsModules/CustomsRequests/Components/PaymentOrderRequests/PaymentOrderQueryComponent', 950, 650, "8285")
-        my8285.CanExportExcel = true;
-        this._CustomsRequestMenuItems.push(my8285);
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.SpecialActivityRequestHeader"), "SpecialActivityRequest", './CustomsModules/CustomsGeneralRequests/Components/SpecialActivityRequestComponent', 920, 680, "40"));
-        //this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.SendClaim"), "SendClaim", '', 850, 500, "")); // Task 29851
-        //}
-       // this._CustomsRequestMenuItems.push(new CustomsMenuItem("שאילתא להצהרה יצוא", "ExportDeclarationDataRequest", './CustomsModules/CustomsRequests/Components/DeclarationRequests/ExportDeclarationDataComponent', 700, 680, "9070"));
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.DecDataQuery"), "ExportDeclarationDataRequest", './CustomsModules/CustomsRequests/Components/DeclarationRequests/ExportOrImportDeclarationDataComponent', 700, 680, "9070"));
-
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.ClaimFileFilterQuery"), "ClaimFileFilter", './CustomsModules/CustomsRequests/Components/ClaimRequests/ClaimFileFilterComponent', 870, 720, "8244"));
-
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CustomsBookQuery"), "CustomsBookQuery", './CustomsModules/CustomsGeneralRequests/Components/CustomsBookQueryComponent', 850, 500, "8361"));
-
-        if (FeatureLocator.HasFeaturePermession("Customs.Declaration", "DECLARATIONCARGOSEAL")) {
-
-            this._CustomsRequestMenuItems.push(new CustomsMenuItem("עדכון סגרים", "CargoSealsQuery", './CustomsModules/CustomsRequests/Components/DeclarationRequests/CargoSealsQueryComponent', 820, 550, "6001"));
-        }
-        //TextCodeTranslator.Translate("Customs.General.O.CargoSealsQuery")
-        //this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.RecallSuppliersFromFile"), "RecallSuppliersFromFile", './CustomsModules/CustomsGeneralRequests/Components/RecallSuppliersFromFileComponent', 500, 400, ""));
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.DeficitFileFilterQuery"), "DeficitFileFilterQuery", './CustomsModules/CustomsGeneralRequests/Components/DeficitFileFilterComponent', 850, 8304, "8304"));
+            //this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.MasavPaymentsToAgentQuery"), "MasavPaymentsToAgentQuery", './CustomsModules/CustomsRequests/Components/PaymentOrderRequests/MasavPaymentsToAgentComponent', 830, 650, "8368"));
+            var my8368 = new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.MasavPaymentsToAgentQuery"), "MasavPaymentsToAgentQuery", './CustomsModules/CustomsRequests/Components/PaymentOrderRequests/MasavPaymentsToAgentComponent', 830, 650, "8368")
+            my8368.CanExportExcel = true;
+            //CustomMessageProgressComponent
+            //    .ShowProgressBar(this.CurrentSession,currRequestParams.PBId, "שליחת שאילתא לשערי מטבע", true)
+            //    .then((res) => {
+            //        this.MyLastCustomsRequestSheetId = currRequestParams.PBId;
+            //    }
+            //    ).catch((err) => {
+            //        this.ValidationErrorsList.push(err);
+            //    });
+            this._CustomsRequestMenuItems.push(my8368);
 
 
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem("שליחת צרופה"
-            , "AddAttachmentResponse",
-            './CustomsModules/CustomsGeneralRequests/Components/AddAttachmentResponseComponent',
-            430, 300, "2715", null, null, null, true
-        ));
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(""
-            , "PaymentOrderReply",
-            './CustomsModules/CustomsRequests/Components/PaymentOrderRequests/PaymentOrderReplyComponent',
-            730, 550, "3050", null, null, null, true));
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.NewPaymentOrder"), "NewPaymentOrder", './CustomsModules/CustomsPaymentOrder/Components/NewEntity/NewPaymentOrderComponent', 420, 300, "3053"));
+            var myCustomsMenuItem8305 = new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.GuaranteeFileFilterQuery"), "GuaranteeFileFilterQuery", './CustomsModules/CustomsRequests/Components/TapagRequests/GuaranteeFileFilterQueryComponent', 900, 670, "8305")
+            myCustomsMenuItem8305.CanExportExcel = true;
+            this._CustomsRequestMenuItems.push(myCustomsMenuItem8305);
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.DeclarationFilterQuery"), "DeclarationFilterQuery", './CustomsModules/CustomsRequests/Components/TapagRequests/DeclarationFilterComponent', 850, 620, ""));
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.DeclarationReshimonConversion"), "DeclarationReshimonConversion", './CustomsModules/CustomsGeneralRequests/Components/DeclarationReshimonConversionComponent', 400, 300, ""));
 
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(""
-            , "RequiredDocument",
-            './CustomsModules/CustomsGeneralRequests/Components/RequiredDocumentComponent',
-            400, 410, "8227", null, null, null, true
-        ));
+            //string uri = Simplog.Infrastructure.App.Current.Host.Source.AbsoluteUri;
+            //if (!uri.StartsWith("http://amitaliis.cloudapp.net/unifreightIIG/")) {
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CreditQuery"), "CreditQuery", './CustomsModules/CustomsGeneralRequests/Components/CreditLimitQueryComponent', 650, 610, "8289"));
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem("שאילתא לתקרת זהב", "CreditGoldQuery", './CustomsModules/CustomsGeneralRequests/Components/GoldCreditLimitQueryComponent', 850, 610, "8289Z"));
+            const my8285 = new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.PaymentQuery"), "Payments", './CustomsModules/CustomsRequests/Components/PaymentOrderRequests/PaymentOrderQueryComponent', 950, 650, "8285")
+            my8285.CanExportExcel = true;
+            this._CustomsRequestMenuItems.push(my8285);
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.SpecialActivityRequestHeader"), "SpecialActivityRequest", './CustomsModules/CustomsGeneralRequests/Components/SpecialActivityRequestComponent', 920, 680, "40"));
+            //this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.SendClaim"), "SendClaim", '', 850, 500, "")); // Task 29851
+            //}
+            // this._CustomsRequestMenuItems.push(new CustomsMenuItem("שאילתא להצהרה יצוא", "ExportDeclarationDataRequest", './CustomsModules/CustomsRequests/Components/DeclarationRequests/ExportDeclarationDataComponent', 700, 680, "9070"));
 
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(""
-            , "RequiredDocument",
-            './CustomsModules/CustomsGeneralRequests/Components/RequiredDocumentComponent',
-            400, 410, "8228", null, null, null, true
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.DecDataQuery"), "ExportDeclarationDataRequest", './CustomsModules/CustomsRequests/Components/DeclarationRequests/ExportOrImportDeclarationDataComponent', 700, 680, "9070"));
 
-        ));
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.ClaimFileFilterQuery"), "ClaimFileFilter", './CustomsModules/CustomsRequests/Components/ClaimRequests/ClaimFileFilterComponent', 870, 720, "8244"));
 
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem("סיום בדיקה פיזית"
-            , "EndPhysicalCheck",
-            './CustomsModules/CustomsGeneralRequests/Components/EndPhysicalCheckComponent',
-            1010, 450, "196", null, null, null, true
-        ));
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem("בדיקה פיזית"
-            , "PhysicalCheck",
-            './CustomsModules/CustomsGeneralRequests/Components/PhysicalCheckComponent',
-            1010, 450, "190", null, null, null, true
-        ));
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem("קליטת זמינויות", "StorageEntranceComponent", './CustomsModules/CustomsRequests/Components/Courier/StorageEntranceComponent', 800, 500, ""));
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CustomsBookQuery"), "CustomsBookQuery", './CustomsModules/CustomsGeneralRequests/Components/CustomsBookQueryComponent', 850, 500, "8361"));
 
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem("מסר התרה לתיק", "ReleaseGoods", './CustomsModules/CustomsRequests/Components/DeclarationRequests/ReleaseGoodsComponent', 1010, 610, "2470", null, null, null, true));
+            if (FeatureLocator.HasFeaturePermession("Customs.Declaration", "DECLARATIONCARGOSEAL")) {
+
+                this._CustomsRequestMenuItems.push(new CustomsMenuItem("עדכון סגרים", "CargoSealsQuery", './CustomsModules/CustomsRequests/Components/DeclarationRequests/CargoSealsQueryComponent', 820, 550, "6001"));
+            }
+            //TextCodeTranslator.Translate("Customs.General.O.CargoSealsQuery")
+            //this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.RecallSuppliersFromFile"), "RecallSuppliersFromFile", './CustomsModules/CustomsGeneralRequests/Components/RecallSuppliersFromFileComponent', 500, 400, ""));
+
+
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem("שליחת צרופה"
+                , "AddAttachmentResponse",
+                './CustomsModules/CustomsGeneralRequests/Components/AddAttachmentResponseComponent',
+                430, 300, "2715", null, null, null, true
+            ));
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem(""
+                , "PaymentOrderReply",
+                './CustomsModules/CustomsRequests/Components/PaymentOrderRequests/PaymentOrderReplyComponent',
+                730, 550, "3050", null, null, null, true));
+
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem(""
+                , "RequiredDocument",
+                './CustomsModules/CustomsGeneralRequests/Components/RequiredDocumentComponent',
+                400, 410, "8227", null, null, null, true
+            ));
+
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem(""
+                , "RequiredDocument",
+                './CustomsModules/CustomsGeneralRequests/Components/RequiredDocumentComponent',
+                400, 410, "8228", null, null, null, true
+
+            ));
+
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem("סיום בדיקה פיזית"
+                , "EndPhysicalCheck",
+                './CustomsModules/CustomsGeneralRequests/Components/EndPhysicalCheckComponent',
+                1010, 450, "196", null, null, null, true
+            ));
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem("בדיקה פיזית"
+                , "PhysicalCheck",
+                './CustomsModules/CustomsGeneralRequests/Components/PhysicalCheckComponent',
+                1010, 450, "190", null, null, null, true
+            ));
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem("קליטת זמינויות", "StorageEntranceComponent", './CustomsModules/CustomsRequests/Components/Courier/StorageEntranceComponent', 800, 500, ""));
+
+            this._CustomsRequestMenuItems.push(new CustomsMenuItem("מסר התרה לתיק", "ReleaseGoods", './CustomsModules/CustomsRequests/Components/DeclarationRequests/ReleaseGoodsComponent', 1010, 610, "2470", null, null, null, true));
+        });
+
     }
     public ShowModalByIdAndIntreface(id: string, InterfaceTypeCode: string, RequestDescription: string) {
         if (AppTool.IsNullOrEmpty(id)) {
