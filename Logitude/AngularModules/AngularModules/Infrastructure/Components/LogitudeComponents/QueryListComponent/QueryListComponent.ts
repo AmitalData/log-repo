@@ -401,6 +401,7 @@ export class QueryListComponent implements OnInit, AfterViewInit {
                         window.Queries = window.Queries.filter(a => a.UniqueCode != query.UniqueCode);
                         var ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
                         var Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.IndexOrder == 0)[0];
+                        if (!Query) Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id)[0];
                         this.UserItemSource = this.UserItemSource.filter(a => a.UniqueCode != query.UniqueCode);
                         this.ComputeListHeight(this.ItemsSource.length + this.UserItemSource.length);
                         this.FillUserItemSource_Share();

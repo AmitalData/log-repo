@@ -50,6 +50,7 @@ import { IsMultiPrintValid } from 'Infrastructure/Helpers/MultiPrintHelper';
 import { WorkFlowPMService } from 'Workflow/Services/StandardPMs/WorkFlowPMService';
 import { WorkFlowPM } from 'Workflow/EntityPMs/WorkFlowPM';
 import { TextCodeTranslationPipe } from '../../../Controls/Pipes/TextCodeTranslationPipe';
+import { QueryPM } from '../../EntityPMs/QueryPM';
 
 @Component({
     templateUrl: './ListComponent.html',
@@ -1470,6 +1471,12 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
     EnableSpotLight: boolean = false;
     QueriesChangedEvent(Args) {
+        if (!Args) {
+            this.SelectedQuery = null;
+            this.SelectedQueryCode = null;
+            this.onSelectedQueryChangeEvent.emit(new QueryPM());
+            return;
+        }
         //alert("Hi");
         this.AdvanceFilters = new ApiQueryFilters();
         this.QueryCode = Args.UniqueCode;
