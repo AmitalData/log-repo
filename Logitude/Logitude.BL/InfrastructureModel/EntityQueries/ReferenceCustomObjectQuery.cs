@@ -54,11 +54,13 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 result = from a in iQueryable.Include("CreatedByUser.Contact").Include("UpdatedByUser.Contact")
                          select new ReferenceCustomObjectList()
                          {
+                             Id = a.Id,
                              Tenant = a.Tenant,
                              CreateDate = a.CreateDate,
                              UpdateDate = a.UpdateDate,
                              InActive = a.InActive,
                              SearchFields = a.SearchFields,
+                             ObjectTableId= a.ObjectTableId,
                              Field1 = a.Field1,
                              Field2 = a.Field2,
                              Field3 = a.Field3,
@@ -125,8 +127,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             referenceCustomObjectPM.ObjectTableId = referenceCustomObject.ObjectTableId;
             referenceCustomObjectPM.InActive = referenceCustomObject.InActive;
             referenceCustomObjectPM.SearchFields = referenceCustomObject.SearchFields;
-            referenceCustomObjectPM.CreatedBy = (referenceCustomObject.CreatedByUser != null && referenceCustomObject.CreatedByUser.Contact != null) ? referenceCustomObject.CreatedByUser.Contact.EnglishName : null;
-            referenceCustomObjectPM.UpdatedBy = (referenceCustomObject.UpdatedByUser != null && referenceCustomObject.UpdatedByUser.Contact != null) ? referenceCustomObject.UpdatedByUser.Contact.EnglishName : null;
+            referenceCustomObjectPM.CreatedBy = referenceCustomObject.CreatedBy;
+            referenceCustomObjectPM.UpdatedBy = referenceCustomObject.UpdatedBy;
 
             for (int i = 1; i <= numberOfCustomFields; i++)
             {

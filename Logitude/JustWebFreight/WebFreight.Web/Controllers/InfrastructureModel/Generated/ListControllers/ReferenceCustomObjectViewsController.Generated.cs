@@ -76,8 +76,13 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 				    entityList = iQueryableEntityList.FirstOrDefault();
 
 			    }
-
-				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
+                if (entityList != null)
+                {
+                    string objectTableName = ObjectTableRepository.GetNameById(entityList.ObjectTableId, entityList.Tenant);
+                    CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+                    customFieldResolver.SetCustomFieldsValues(objectTableName, authToken.Tenant, new List<ReferenceCustomObjectList> { entityList }.Cast<object>().ToList());
+                }
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 				               
                 return Request.CreateResponse(HttpStatusCode.OK,  entityList);
             }

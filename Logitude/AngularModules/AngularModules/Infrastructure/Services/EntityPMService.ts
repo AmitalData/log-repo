@@ -68,7 +68,7 @@ export class EntityPMService {
     private GetServiceLink(table: any) {
         let objectTableName = table.Name;
         let type = table.ObjectTableTypeCode == "MD" ? "Reference" : "Data";
-        if (table.IsCustom) {
+        if (table?.IsCustom) {
             return './Infrastructure/Services/StandardPMs/' + type + 'CustomObjectPMService';
         }
         if (objectTableName.indexOf('Customs.') > -1) {
