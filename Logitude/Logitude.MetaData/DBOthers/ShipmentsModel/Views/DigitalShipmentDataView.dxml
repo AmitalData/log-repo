@@ -142,6 +142,7 @@
     InlandDomesticToState.EnglishName AS InlandDomesticToStateName, 
     InlandDomesticFromState.EnglishName AS InlandDomesticFromStateName,
     ShipmentComputedFields.Transshipments as Transshipments,
+    ShipmentComputedFields.RequestedDocumentsCount,
 	ShipmentDigitalFields.IsCustomerArchived as IsCustomerArchived,
     dbo.Incoterms.Code AS IncotermCode,
 	FinalDestinationCountries.Code AS MainCarriageFinalDestinationCountryCode,

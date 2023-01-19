@@ -160,6 +160,10 @@ export class SearchTextBox implements OnInit {
     }
 
     GetObjectTableName(theObjectTableName: string) {
+        let objectTable = window.ObjectTables.filter(obejctTable => obejctTable.Name == theObjectTableName)[0];
+        if (objectTable && objectTable.IsCustom && AppTool.IsNullOrEmpty(objectTable.ParentObjectTableId)){
+            return this.GetCustomObjectRelatedTableName(objectTable);
+        }
         var cardTables = ["customer", "agent", "shippingagent", "customagent", "vendor", "airline", "trucker", "shippingline", "warehouse"];
 
         if (cardTables.indexOf(theObjectTableName.toLowerCase()) > -1) {
@@ -168,6 +172,10 @@ export class SearchTextBox implements OnInit {
         else {
             return theObjectTableName;
         }
+    }
+    GetCustomObjectRelatedTableName(objectTable: any) {
+        if (objectTable.ObjectTableTypeCode == "MD") return "ReferenceCustomObject";
+        return "DataCustomObject";
     }
 
     textValueStyle: any;

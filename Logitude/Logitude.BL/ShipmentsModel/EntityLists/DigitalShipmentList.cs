@@ -237,5 +237,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string Field6 { get; set; }
         public string Field7 { get; set; }
         public string Field8 { get; set; }
+        public int RequestedDocumentsCount { get; set; }
+
     }
 }

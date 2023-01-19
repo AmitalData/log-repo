@@ -42,8 +42,19 @@ export class CollectionFilterPropertiesComponent extends BaseComponent {
     }
 
     ngOnInit() {
+        this.initializeWindowEvents();
         this.initialize();
         this.initializeSingleEditableEntitiesTree();
+    }
+
+    initializeWindowEvents() {
+        this.CurrentSession.CurrentWindow.FooterButtonsClicked.subscribe((e: any) => {
+            if (e === "submit") {
+                this.saveButtonClicked();
+            } else {
+                this.cancelButtonClicked();
+            }
+        });
     }
 
     initialize() {

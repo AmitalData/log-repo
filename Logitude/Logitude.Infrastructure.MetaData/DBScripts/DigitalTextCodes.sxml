@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="36">
+  <Sql Version="38">
     <![CDATA[	
 	  delete from DigitalTextCodes where id != ''
       declare @NewEntityId as varchar(15)
@@ -831,6 +831,12 @@
 			"TextCode": "Shipment.G.Inprogress",
 			"DefaultText": "In progress",
 			"FieldCode": "",
+			"DisplayText": ""
+		},
+    {
+			"TextCode": "Shipment.F.RequestedDocumentsCount",
+			"DefaultText": "Requested Documents Count",
+			"FieldCode": "Shipment.RequestedDocumentsCount",
 			"DisplayText": ""
 		},
 		{
@@ -3413,6 +3419,12 @@
 			"TextCode": "Shipment.G.Inprogress",
 			"DefaultText": "In progress",
 			"FieldCode": "",
+			"DisplayText": ""
+		},
+    {
+			"TextCode": "Shipment.F.RequestedDocumentsCount",
+			"DefaultText": "Requested Documents Count",
+			"FieldCode": "Shipment.RequestedDocumentsCount",
 			"DisplayText": ""
 		},
 		{

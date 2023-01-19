@@ -32,8 +32,21 @@ export class SetValuePropertiesComponent extends BaseComponent {
         this.FlowObject = args.FlowObject ? args.FlowObject : null;
         this.CurrentNodeId = args.CurrentNodeId ? args.CurrentNodeId : null;
         this.FlowObjectFields = args.FlowObjectFields ? args.FlowObjectFields : [];
+    }
 
+    ngOnInit() {
+        this.initializeWindowEvents();
         this.initialize();
+    }
+
+    initializeWindowEvents() {
+        this.CurrentSession.CurrentWindow.FooterButtonsClicked.subscribe((e: any) => {
+            if (e === "submit") {
+                this.saveButtonClicked();
+            } else {
+                this.cancelButtonClicked();
+            }
+        });
     }
 
     initialize() {

@@ -1,6 +1,6 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-	<Sql Version="32">
-		<![CDATA[	  
+  <Sql Version="33">
+      <![CDATA[	  
 	  delete from DigitalFieldSecurities where id != ''
 	  declare @NewEntityId as varchar(15)
  
@@ -108,6 +108,14 @@
 	  INSERT INTO DigitalFieldSecurities (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, DefaultSettings) 
 	  values (@newDigitalFieldEntityId, 0, @shipmentObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @customerProfileId, 
 		'[{
+			"FieldCode": "Shipment.RequestedDocumentsCount",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+    {
 			"FieldCode": "Shipment.TransportModeId",
 			"CreatedBy": "system",
 			"ModifiedBy": "system",
@@ -1571,6 +1579,14 @@
 	  INSERT INTO DigitalFieldSecurities (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, DefaultSettings) 
 	  values (@newDigitalFieldEntityId, 0, @shipmentObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @agentProfileId, 
 		'[{
+			"FieldCode": "Shipment.RequestedDocumentsCount",
+			"CreatedBy": "system",
+			"ModifiedBy": "system",
+			"CreatedOn": "", 
+			"ModifiedOn": "",
+			"HasPermission": true
+		},
+    	{
 			"FieldCode": "Shipment.TransportModeId",
 			"CreatedBy": "system",
 			"ModifiedBy": "system",

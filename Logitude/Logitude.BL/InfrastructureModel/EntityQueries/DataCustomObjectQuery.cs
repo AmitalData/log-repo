@@ -54,12 +54,14 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 result = from a in iQueryable.Include("CreatedByUser.Contact").Include("UpdatedByUser.Contact")
                          select new DataCustomObjectList()
                          {
+                             Id = a.Id,
                              Tenant = a.Tenant,
                              IsCancelled = a.IsCancelled,
                              StatusId = a.StatusId,
                              CreateDate = a.CreateDate,
                              UpdateDate = a.UpdateDate,
                              SearchFields = a.SearchFields,
+                             ObjectTableId = a.ObjectTableId,
                              Field1 = a.Field1,
                              Field2 = a.Field2,
                              Field3 = a.Field3,
@@ -127,9 +129,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             dataCustomObjectPM.IsCancelled = dataCustomObject.IsCancelled;
             dataCustomObjectPM.StatusId = dataCustomObject.StatusId;
             dataCustomObjectPM.SearchFields = dataCustomObject.SearchFields;
-            dataCustomObjectPM.CreatedBy = (dataCustomObject.CreatedByUser != null && dataCustomObject.CreatedByUser.Contact != null) ? dataCustomObject.CreatedByUser.Contact.EnglishName : null ;
-            dataCustomObjectPM.UpdatedBy = (dataCustomObject.UpdatedByUser != null && dataCustomObject.UpdatedByUser.Contact != null) ? dataCustomObject.UpdatedByUser.Contact.EnglishName : null;
-            
+            dataCustomObjectPM.CreatedBy = dataCustomObject.CreatedBy;
+            dataCustomObjectPM.UpdatedBy = dataCustomObject.UpdatedBy;
             for (int i = 1; i <= numberOfCustomFields; i++)
             {
                 MapCustomFieldValue(("Field" + i.ToString()), dataCustomObject, dataCustomObjectPM);

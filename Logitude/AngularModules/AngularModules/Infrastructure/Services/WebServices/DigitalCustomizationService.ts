@@ -88,11 +88,11 @@ export class DigitalCustomizationService {
         });
     }
 
-    GetDefaultScreenLayout(objectTableId: string, screenCode: string) {
+    GetDefaultScreenLayout(objectTableId: string, screenCode: string, profileCode: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetDefaultScreenLayout?objectTableId=' + objectTableId + "&screenCode=" + screenCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetDefaultScreenLayout?objectTableId=' + objectTableId + "&screenCode=" + screenCode + "&profileCode=" + profileCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();

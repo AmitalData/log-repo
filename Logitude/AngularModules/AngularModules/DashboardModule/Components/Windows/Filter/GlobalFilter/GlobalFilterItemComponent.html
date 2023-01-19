@@ -49,7 +49,9 @@
                     [SelectedDateValue]="FilterItem.FieldValue"
                     (ValueChanged)="DatePickerCondationValueChange($event)"
                     [DataContext]="DataContext"
-                    *ngIf="ShowFirstDatePicker()">
+                    *ngIf="ShowFirstDatePicker()"
+                    [ObjectFieldName]="'FieldValue'"
+                    [ObjectTableName]="ObjectTableName">
                 </LogDatePicker>
 
                 <LogDatePicker  
@@ -61,7 +63,9 @@
                     [SelectedDateValue]="FilterItem.FieldValue2"
                     (ValueChanged)="SecondDatePickerCondationValueChange($event)"
                     [DataContext]="DataContext"
-                    *ngIf="ShowSecondDatePicker()">
+                    *ngIf="ShowSecondDatePicker()"
+                    [ObjectFieldName]="'FieldValue2'"
+                    [ObjectTableName]="ObjectTableName">
                 </LogDatePicker>
 
                 <ComboBox 

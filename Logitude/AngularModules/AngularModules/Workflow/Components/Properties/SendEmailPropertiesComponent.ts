@@ -17,11 +17,26 @@ export class SendEmailPropertiesComponent extends BaseComponent {
         this.Data = args.Data ? args.Data : {};
     }
 
+    ngOnInit() {
+        this.initializeWindowEvents();
+    }
+
+    initializeWindowEvents() {
+        this.CurrentSession.CurrentWindow.FooterButtonsClicked.subscribe((e: any) => {
+            if (e === "submit") {
+                this.saveButtonClicked();
+            } else {
+                this.cancelButtonClicked();
+            }
+        });
+    }
+
     cancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
 
     saveButtonClicked() {
+        //console.log(this.Data);
         this.CurrentSession.CurrentWindow.Close(this.Data);
     }
 }

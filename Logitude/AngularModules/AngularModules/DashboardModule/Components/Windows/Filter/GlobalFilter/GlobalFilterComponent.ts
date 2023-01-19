@@ -86,18 +86,18 @@ export class GlobalFilterComponent implements OnInit {
     ApplyFiltersClick() {
         if (!this.FilterExist()) return;
         var filterItems = [];
-        this.AddFilterItems(this.FilterItems, filterItems, true);
+        this.AddFilterItems(this.FilterItems, filterItems);
         this.ApplyFilters.emit(filterItems);
         this.FilterHasChanges = false;
         this.LastApplied = JSON.parse(JSON.stringify(this.FilterValueExistItems));
     }
 
-    AddFilterItems(filters: GlobalFilterItem[], filterItems: any, isCommon: boolean = false): any {
+    AddFilterItems(filters: GlobalFilterItem[], filterItems: any): any {
         if (!filters || filters.length == 0) return filterItems;
         filters.forEach(element => {
             this.SetPresetFilterOperator(element);
             if (this.FilterValueEmpty(element)) return;
-            filterItems.push(element);
+            filterItems.push( Object.assign({}, element));
         });
         return filterItems;
     }

@@ -33,8 +33,19 @@ export class DeleteItemPropertiesComponent extends BaseComponent {
     }
 
     ngOnInit() {
+        this.initializeWindowEvents();
         this.initialize();
         this.initializeFlowVariablesTreeItems();
+    }
+
+    initializeWindowEvents() {
+        this.CurrentSession.CurrentWindow.FooterButtonsClicked.subscribe((e: any) => {
+            if (e === "submit") {
+                this.saveButtonClicked();
+            } else {
+                this.cancelButtonClicked();
+            }
+        });
     }
 
     initialize() {
