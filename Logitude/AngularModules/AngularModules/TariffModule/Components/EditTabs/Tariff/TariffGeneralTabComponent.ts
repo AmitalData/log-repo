@@ -211,7 +211,7 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
             this.MeasurementsQueryFilters.addAdditionalFilter("Code", "FIXD", null, null, "Equals", false, false, false, "string", false, true, true);
         }
         else {
-            this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "NotContains", false, false, false, "string", false, true, true);
+            this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "Exclude", false, false, false, "string", false, true, true);
         }
 
         this.ChargeTypesQueryFilters = new ApiQueryFilters();
