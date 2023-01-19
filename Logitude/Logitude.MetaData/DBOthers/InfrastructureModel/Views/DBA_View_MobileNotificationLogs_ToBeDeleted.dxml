@@ -1,4 +1,4 @@
-<View DBType="Main" Name="DBA_View_MobileNotificationLogs_ToBeDeleted" Schema="dbo" Module="Infrastructure">
+<View DBType="Global" Name="DBA_View_MobileNotificationLogs_ToBeDeleted" Schema="dbo" Module="Infrastructure">
   <SqlScript>
     <![CDATA[
 	CREATE VIEW [dbo].[DBA_View_MobileNotificationLogs_ToBeDeleted]

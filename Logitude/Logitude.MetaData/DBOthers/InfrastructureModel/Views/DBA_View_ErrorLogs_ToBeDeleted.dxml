@@ -1,4 +1,4 @@
-<View DBType="Main" Name="DBA_View_ErrorLogs_ToBeDeleted" Schema="dbo" Module="Infrastructure">
+<View DBType="SystemLogs" Name="DBA_View_ErrorLogs_ToBeDeleted" Schema="dbo" Module="Infrastructure">
   <SqlScript>
     <![CDATA[
 	create VIEW [dbo].[DBA_View_ErrorLogs_ToBeDeleted] AS
