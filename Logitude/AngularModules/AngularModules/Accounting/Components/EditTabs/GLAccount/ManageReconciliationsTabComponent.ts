@@ -123,7 +123,8 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
         }
     }
     AmountOperatorChanged($event){
-        this.selectedAmountOperator = $event
+        this.selectedAmountOperator = $event;
+        this.Amount=null;
         this.AmountTextChanged(this.Amount);
     }
     AmountTextChanged(num) {
@@ -131,7 +132,7 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
             var amountFieldName = 'TransactionAmount';
             this.timerToken = setTimeout(() => {
                 if (!AppTool.IsNullOrEmpty(num) && !AppTool.IsNullOrEmpty(this.amount)) {
-                    this.amountFieldFilter = new FilterItem(amountFieldName, Math.abs(num), null, null, this.selectedAmountOperator.Code, true, false, false, "number", false);
+                    this.amountFieldFilter = new FilterItem(amountFieldName, num, null, null, this.selectedAmountOperator.Code, true, false, false, "number", false);
                     this.RefreshButtonClicked();
                 } else {
                     this.amountFieldFilter = null;
@@ -160,7 +161,7 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
             var amountFieldName = 'TransactionAmount';
             this.timerToken = setTimeout(() => {
                 if (!AppTool.IsNullOrEmpty(this.amountFrom) && !AppTool.IsNullOrEmpty(this.amountTo)) {
-                    this.amountFieldFilter = new FilterItem(amountFieldName,Math.abs(this.amountFrom), Math.abs(this.amountTo), null, this.selectedAmountOperator.Code, true, false, false, "number", false);
+                    this.amountFieldFilter = new FilterItem(amountFieldName,this.amountFrom, this.amountTo, null, this.selectedAmountOperator.Code, true, false, false, "number", false);
                     this.RefreshButtonClicked();
                 } else {
                     this.amountFieldFilter = null;

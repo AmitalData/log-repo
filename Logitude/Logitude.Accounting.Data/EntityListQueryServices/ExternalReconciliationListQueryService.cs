@@ -95,7 +95,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 SearchFields = a.SearchFields,
                 CreditAmount = a.CreditAmount,
                 DebitAmount = a.DebitAmount,
-                Amount = a.CreditAmount != 0 ? Math.Abs( a.CreditAmount ):Math.Abs( a.DebitAmount),
+                Amount = a.CreditAmount != 0 ?a.CreditAmount : a.DebitAmount,
                 Notes = a.Notes,
                 ReconcileExternalPageId = a.ReconcileExternalPageId,
                 Id = a.Id,
@@ -135,7 +135,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                
                 ForeignAmountCredit = a.ForeignAmountCredit,
                 ForeignAmountDebit = a.ForeignAmountDebit,
-                ForeignAmount = a.ForeignAmountDebit == 0 ? Math.Abs( a.ForeignAmountCredit) : Math.Abs(a.ForeignAmountDebit),
+                ForeignAmount = a.ForeignAmountDebit == 0 ?  a.ForeignAmountCredit :a.ForeignAmountDebit,
 
                 JournalLineNumber = a.JournalLineNumber,
                 LocalAmountCredit = a.LocalAmountCredit,
@@ -158,6 +158,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
         private QueryOperations CreateReconciliationLinesQueryOperations(QueryFilterItem reconciliationAmountFieldOperations, string fieldName)
         {
+            
             return new QueryOperations()
             {
                 GetAll = true,
@@ -166,17 +167,25 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                     new QueryFilterItem()
                     {
                         FieldName = fieldName,
-                        FieldValue = decimal.Parse(reconciliationAmountFieldOperations.FieldValue.ToString()),
+                        FieldValue = TryParseStrigToDecimal(reconciliationAmountFieldOperations.FieldValue.ToString()),
                         FieldValue2 = reconciliationAmountFieldOperations.FieldValue2 != null ?
-                        decimal.Parse(reconciliationAmountFieldOperations.FieldValue2.ToString()) : reconciliationAmountFieldOperations.FieldValue2,
+                        TryParseStrigToDecimal(reconciliationAmountFieldOperations.FieldValue2.ToString())
+                         : reconciliationAmountFieldOperations.FieldValue2,
                         Operator = reconciliationAmountFieldOperations.Operator
                     }
                 }
             };
         }
+        
         private IQueryable<ExternalReconciliation> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<ExternalReconciliation> iQueryable, int tenant)
         {
             return iQueryable;
+        }
+        private decimal TryParseStrigToDecimal(string inputString)
+        {
+            var result = 0.0M;
+            decimal.TryParse(inputString, out result);
+            return result;
         }
 
     }

@@ -62,7 +62,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 _AllVendorGLAccountCards = GetQAllVendorGLAccountCards(accountingContext, tenant);
 
-                using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(180)))
+                using (var scope = TransactionFactory.CreateTransactionScope(TimeSpan.FromMinutes(30)))
                 {
                     foreach (VendorLineDTO vendorLineDTO in _VendorLinesDTO)
                     {

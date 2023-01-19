@@ -3185,12 +3185,18 @@ namespace WebFreight.Web.ReportsWebServices
 
                         if (billToCard.PartnerTypeId == "CS")
                         {
-                            CustomerQuery customerQuery = new CustomerQuery(tenant);
-                            CustomerPM customerPM = customerQuery.GetSinglePM(billToCard.Id, tenant);
-                            if (customerPM != null)
+                            CustomerRepository customerRepository = new CustomerRepository(tenant);
+                            Customer customer = customerRepository.GetSingleCustomer(billToCard.Id, tenant);
+                            if (customer != null)
                             {
-                                customFieldResolver.SetDataProviderCustomFieldsValues("Customer", tenant, customerPM, invoiceDataProvider);
-                                invoiceDataProvider.BillToIndustry = customerPM.IndustryName;
+                                customFieldResolver.SetDataProviderCustomFieldsValues("Customer", tenant, customer, invoiceDataProvider);
+
+                                if (!string.IsNullOrEmpty(customer.IndustryId))
+                                {
+                                    Industry industry = commonContext.Industries.Where(d => d.Id == customer.IndustryId).FirstOrDefault();
+                                    if (industry != null)
+                                        invoiceDataProvider.BillToIndustry = industry.Name;
+                                }
                             }
                         }
 

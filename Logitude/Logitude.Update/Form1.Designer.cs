@@ -285,9 +285,16 @@
             this.getContainersListView = new System.Windows.Forms.ListView();
             this.getContainersButton = new System.Windows.Forms.Button();
             this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.UpdateDueDateButton = new System.Windows.Forms.Button();
+            this.ComputeDueDateButton = new System.Windows.Forms.Button();
+            this.paymentTermTenantTextBox = new System.Windows.Forms.TextBox();
+            this.label29 = new System.Windows.Forms.Label();
             this.logsLabel = new System.Windows.Forms.Label();
             this.excelListView = new System.Windows.Forms.ListView();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.label28 = new System.Windows.Forms.Label();
+            this.updateAllUSTenantsCheckBox = new System.Windows.Forms.CheckBox();
             this.portsStatesLabel = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
             this.portsStatesTenantTextBox = new System.Windows.Forms.TextBox();
@@ -295,8 +302,7 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.OITimer = new System.Windows.Forms.Timer(this.components);
-            this.updateAllUSTenantsCheckBox = new System.Windows.Forms.CheckBox();
-            this.label28 = new System.Windows.Forms.Label();
+            this.invoiceDueDateLabel = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -315,6 +321,7 @@
             this.tabPage6.SuspendLayout();
             this.tabPage7.SuspendLayout();
             this.tabPage8.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -3139,6 +3146,7 @@
             // 
             // tabPage8
             // 
+            this.tabPage8.Controls.Add(this.groupBox6);
             this.tabPage8.Controls.Add(this.logsLabel);
             this.tabPage8.Controls.Add(this.excelListView);
             this.tabPage8.Controls.Add(this.groupBox5);
@@ -3148,6 +3156,56 @@
             this.tabPage8.TabIndex = 7;
             this.tabPage8.Text = "Excel Updates";
             this.tabPage8.UseVisualStyleBackColor = true;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.invoiceDueDateLabel);
+            this.groupBox6.Controls.Add(this.UpdateDueDateButton);
+            this.groupBox6.Controls.Add(this.ComputeDueDateButton);
+            this.groupBox6.Controls.Add(this.paymentTermTenantTextBox);
+            this.groupBox6.Controls.Add(this.label29);
+            this.groupBox6.Location = new System.Drawing.Point(308, 15);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(241, 133);
+            this.groupBox6.TabIndex = 3;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Payment Term \\ Due Date";
+            // 
+            // UpdateDueDateButton
+            // 
+            this.UpdateDueDateButton.Location = new System.Drawing.Point(103, 96);
+            this.UpdateDueDateButton.Name = "UpdateDueDateButton";
+            this.UpdateDueDateButton.Size = new System.Drawing.Size(75, 23);
+            this.UpdateDueDateButton.TabIndex = 3;
+            this.UpdateDueDateButton.Text = "Update";
+            this.UpdateDueDateButton.UseVisualStyleBackColor = true;
+            this.UpdateDueDateButton.Click += new System.EventHandler(this.UpdateDueDateButton_Click);
+            // 
+            // ComputeDueDateButton
+            // 
+            this.ComputeDueDateButton.Location = new System.Drawing.Point(7, 96);
+            this.ComputeDueDateButton.Name = "ComputeDueDateButton";
+            this.ComputeDueDateButton.Size = new System.Drawing.Size(75, 23);
+            this.ComputeDueDateButton.TabIndex = 2;
+            this.ComputeDueDateButton.Text = "Compute";
+            this.ComputeDueDateButton.UseVisualStyleBackColor = true;
+            this.ComputeDueDateButton.Click += new System.EventHandler(this.ComputeDueDateButton_Click);
+            // 
+            // paymentTermTenantTextBox
+            // 
+            this.paymentTermTenantTextBox.Location = new System.Drawing.Point(67, 30);
+            this.paymentTermTenantTextBox.Name = "paymentTermTenantTextBox";
+            this.paymentTermTenantTextBox.Size = new System.Drawing.Size(100, 20);
+            this.paymentTermTenantTextBox.TabIndex = 1;
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(19, 30);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(41, 13);
+            this.label29.TabIndex = 0;
+            this.label29.Text = "Tenant";
             // 
             // logsLabel
             // 
@@ -3180,6 +3238,25 @@
             this.groupBox5.TabIndex = 0;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Update Ports States";
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(7, 30);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(56, 13);
+            this.label28.TabIndex = 5;
+            this.label28.Text = "Update All";
+            // 
+            // updateAllUSTenantsCheckBox
+            // 
+            this.updateAllUSTenantsCheckBox.AutoSize = true;
+            this.updateAllUSTenantsCheckBox.Location = new System.Drawing.Point(72, 30);
+            this.updateAllUSTenantsCheckBox.Name = "updateAllUSTenantsCheckBox";
+            this.updateAllUSTenantsCheckBox.Size = new System.Drawing.Size(15, 14);
+            this.updateAllUSTenantsCheckBox.TabIndex = 4;
+            this.updateAllUSTenantsCheckBox.UseVisualStyleBackColor = true;
+            this.updateAllUSTenantsCheckBox.CheckedChanged += new System.EventHandler(this.updateAllUSTenantsCheckBox_CheckedChanged);
             // 
             // portsStatesLabel
             // 
@@ -3227,24 +3304,14 @@
             this.OITimer.Interval = 1000;
             this.OITimer.Tick += new System.EventHandler(this.OITimer_Tick);
             // 
-            // updateAllUSTenantsCheckBox
+            // invoiceDueDateLabel
             // 
-            this.updateAllUSTenantsCheckBox.AutoSize = true;
-            this.updateAllUSTenantsCheckBox.Location = new System.Drawing.Point(72, 30);
-            this.updateAllUSTenantsCheckBox.Name = "updateAllUSTenantsCheckBox";
-            this.updateAllUSTenantsCheckBox.Size = new System.Drawing.Size(15, 14);
-            this.updateAllUSTenantsCheckBox.TabIndex = 4;
-            this.updateAllUSTenantsCheckBox.UseVisualStyleBackColor = true;
-            this.updateAllUSTenantsCheckBox.CheckedChanged += new System.EventHandler(this.updateAllUSTenantsCheckBox_CheckedChanged);
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(7, 30);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(56, 13);
-            this.label28.TabIndex = 5;
-            this.label28.Text = "Update All";
+            this.invoiceDueDateLabel.AutoSize = true;
+            this.invoiceDueDateLabel.Location = new System.Drawing.Point(7, 65);
+            this.invoiceDueDateLabel.Name = "invoiceDueDateLabel";
+            this.invoiceDueDateLabel.Size = new System.Drawing.Size(16, 13);
+            this.invoiceDueDateLabel.TabIndex = 4;
+            this.invoiceDueDateLabel.Text = "...";
             // 
             // Form1
             // 
@@ -3294,6 +3361,8 @@
             this.tabPage7.PerformLayout();
             this.tabPage8.ResumeLayout(false);
             this.tabPage8.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
@@ -3583,6 +3652,12 @@
         private System.Windows.Forms.Button deleteContactsButton;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.CheckBox updateAllUSTenantsCheckBox;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Button UpdateDueDateButton;
+        private System.Windows.Forms.Button ComputeDueDateButton;
+        private System.Windows.Forms.TextBox paymentTermTenantTextBox;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.Label invoiceDueDateLabel;
     }
 }
 
