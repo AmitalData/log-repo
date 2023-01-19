@@ -394,7 +394,7 @@ namespace CommunicationWorkerRole
 						payment.TransmissionError = null;
 						this.SaveARPayment(payment);
 
-						sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(payment, comprobante.Complemento.Any[0], arInvoiceRepository, arPaymentRepository);
+						sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(payment.Id, tenant, comprobante.Complemento.Any[0], arInvoiceRepository, arPaymentRepository);
 
 						Encoding encoding = Encoding.UTF8;
 						byte[] xmlfile = encoding.GetBytes(resultadoTimbre.Xml);
@@ -535,7 +535,7 @@ namespace CommunicationWorkerRole
 						payment.TransmissionError = null;
 						this.SaveARPayment(payment);
 
-						sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(payment, paymentComprobante.Complemento.Any[0], arInvoiceRepository, arPaymentRepository);
+						sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(payment.Id, tenant, paymentComprobante.Complemento.Any[0], arInvoiceRepository, arPaymentRepository);
 
 						Encoding encoding = Encoding.UTF8;
 						byte[] xmlfile = encoding.GetBytes(resultadoConsulta.Xml);
@@ -1019,7 +1019,7 @@ namespace CommunicationWorkerRole
 						payment.TransmissionError = null;
 						this.SaveARPayment(payment);
 
-						sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(payment, comprobanteDetails.ComplementoAny[0], arInvoiceRepository, arPaymentRepository);
+						sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(payment.Id, tenant, comprobanteDetails.ComplementoAny[0], arInvoiceRepository, arPaymentRepository);
 
 					}
 					else

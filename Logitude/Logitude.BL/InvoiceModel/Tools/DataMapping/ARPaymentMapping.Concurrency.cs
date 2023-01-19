@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 
 namespace Logitude.BL.InvoiceModel.Tools.DataMapping
 {
-    public partial class ARInvoiceMapping
+    public partial class ARPaymentMapping
     {
-        private static void MapConcurrencyFields(ARInvoicePM entityPM, ARInvoice entity, bool isNewState)
+        private const string sATSolvedManualStatusCode = "SM";
+        private static void MapConcurrencyFields(ARPaymentPM entityPM, ARPayment entity, bool isNewState)
         {
             if (isNewState)
             {
                 MapConcurrencyFields_QBO(entityPM, entity);
-                MapConcurrencyFields_SAT(entityPM, entity, isNewState);
-                MapConcurrencyFields_Print(entityPM, entity);
+                MapConcurrencyFields_SAT(entityPM, entity);
                 MapConcurrencyFields_Client(entityPM, entity);
             }
 
@@ -27,10 +27,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                     MapConcurrencyFields_QBO(entityPM, entity);
 
                 else if (entityPM.IsUpdatedBySAT)
-                    MapConcurrencyFields_SAT(entityPM, entity, isNewState);
-
-                else if (entityPM.IsUpdatedByPrint)
-                    MapConcurrencyFields_Print(entityPM, entity);
+                    MapConcurrencyFields_SAT(entityPM, entity);
 
                 else
                 {
@@ -39,7 +36,8 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 }
             }
         }
-        private static void MapConcurrencyFields_QBO(ARInvoicePM entityPM, ARInvoice entity)
+
+        private static void MapConcurrencyFields_QBO(ARPaymentPM entityPM, ARPayment entity)
         {
             entity.TransferStatusCode = entityPM.TransferStatusCode;
             entity.IsTransferStarted = entityPM.IsTransferStarted;
@@ -54,24 +52,19 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entityPM.TransferError = transferError;
             entity.TransferError = transferError;
         }
-        private static void MapConcurrencyFields_SAT(ARInvoicePM entityPM, ARInvoice entity, bool isNewState)
-        {
-            if (isNewState)
-                entity.SATInvoiceStatusCode = entityPM.SATInvoiceStatusCode;
 
-            entity.SATTransferStatusCode = entityPM.SATTransferStatusCode;
+        private static void MapConcurrencyFields_SAT(ARPaymentPM entityPM, ARPayment entity)
+        {
+            if (entityPM.SATTransferStatusCode == sATSolvedManualStatusCode)            
+                entity.SATTransferStatusCode = entityPM.SATTransferStatusCode;
+           
             entity.SATApprovalDate = entityPM.SATApprovalDate;
             entity.SATXML = entityPM.SATXML;
             entity.TransmissionError = entityPM.TransmissionError;
             entity.SATAdditionalFieldsXML = entityPM.SATAdditionalFieldsXML;
         }
-        private static void MapConcurrencyFields_Print(ARInvoicePM entityPM, ARInvoice entity)
-        {
-            entity.PrintByUserId = entityPM.PrintByUserId;
-            entity.PrintDate = entityPM.PrintDate;
-            entity.IsPrinted = entityPM.IsPrinted;
-        }
-        private static void MapConcurrencyFields_OnEdited(ARInvoicePM entityPM, ARInvoice entity)
+
+        private static void MapConcurrencyFields_OnEdited(ARPaymentPM entityPM, ARPayment entity)
         {
             var transferStatusCode = ConcurrencyFieldHelper.GetConcurrencyFieldValue_String(entityPM.TransferStatusCode_Original, entityPM.TransferStatusCode, entity.TransferStatusCode);
             entity.TransferStatusCode = transferStatusCode;
@@ -85,10 +78,11 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
 
             entity.TransferError = transferError;
         }
-        private static void MapConcurrencyFields_Client(ARInvoicePM entityPM, ARInvoice entity)
+
+        private static void MapConcurrencyFields_Client(ARPaymentPM entityPM, ARPayment entity)
         {
-            entityPM.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
-            entity.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
-        }        
+            //entityPM.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
+            //entity.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
+        }
     }
 }

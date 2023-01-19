@@ -712,7 +712,6 @@ namespace CommunicationWorkerRole
                 APInvoicePM invoice = apInvoiceQuery.GetSinglePM(Id, tenant);
                 if (invoice != null)
                 {
-                    //invoice.IsUpdatedByQBO = true;
                     invoice.TransferError = null;
                     invoice.TransferStatusCode = "ET";
                     invoice.IsTransferStarted = false;
@@ -728,7 +727,7 @@ namespace CommunicationWorkerRole
                 ARPaymentPM payment = arPaymentQuery.GetSinglePM(communicationLog.EntityId, tenant);
                 if (payment != null)
                 {
-                    //payment.IsUpdatedByQBO = true;
+                    payment.IsUpdatedByQBO = true;
                     payment.TransferError = null;
                     payment.TransferStatusCode = "ET";
                     payment.IsTransferStarted = false;
@@ -745,7 +744,6 @@ namespace CommunicationWorkerRole
                 APPaymentPM payment = apPaymentQuery.GetSinglePM(communicationLog.EntityId, tenant);
                 if (payment != null)
                 {
-                    //payment.IsUpdatedByQBO = true;
                     payment.TransferError = null;
                     payment.TransferStatusCode = "ET";
 
@@ -801,7 +799,6 @@ namespace CommunicationWorkerRole
                     APInvoicePM invoice = apInvoiceQuery.GetSinglePM(Id, tenant);
                     if (invoice != null)
                     {
-                        //invoice.IsUpdatedByQBO = true;
                         invoice.TransferError = null;
                         invoice.TransferStatusCode = "TR";
                         invoice.IsTransferStarted = false;
@@ -838,7 +835,7 @@ namespace CommunicationWorkerRole
                     ARPaymentPM payment = arPaymentQuery.GetSinglePM(communicationLog.EntityId, tenant);
                     if (payment != null)
                     {
-                        //payment.IsUpdatedByQBO = true;
+                        payment.IsUpdatedByQBO = true;
                         payment.TransferError = null;
                         payment.TransferStatusCode = "TR";
                         payment.IsTransferStarted = false;
@@ -857,7 +854,6 @@ namespace CommunicationWorkerRole
                     APPaymentPM payment = apPaymentQuery.GetSinglePM(communicationLog.EntityId, tenant);
                     if (payment != null)
                     {
-                        //payment.IsUpdatedByQBO = true;
                         payment.TransferError = null;
                         payment.TransferStatusCode = "TR";
 
