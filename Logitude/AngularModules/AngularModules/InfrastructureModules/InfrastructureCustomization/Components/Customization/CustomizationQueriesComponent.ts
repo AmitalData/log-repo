@@ -196,7 +196,8 @@ export class CustomizationQueriesComponent extends BaseComponent{
                 this.customizationEditComponent.IsDirty = false;
                 }, error => {
                 alert("error happened!");
-                });
+            });
+        this.NewWizardControlNameOldValue = this.NewWizardControlNameValue;
         if (this.customizationEditComponent.NewSelectedMenu) {
             this.customizationEditComponent.SelectedMenu = this.customizationEditComponent.NewSelectedMenu;
         }

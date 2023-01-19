@@ -7,7 +7,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { SubEntitiesComponent } from './SubEntitiesComponent';
 import { ObjectFieldPMExtendedService } from '../../../../Infrastructure/Services/ExtendedPMs/ObjectFieldPMExtendedService';
 import { CachedDataManager } from '../../../../Infrastructure/Utilities/CachedDataManager';
-import { AppTool } from '../../../../Infrastructure/Tools';
+import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { CustomizationMainComponent } from './CustomizationMainComponent';
 import { LoginService } from '../../../../Infrastructure/Services/LoginService';
 
@@ -166,7 +166,7 @@ export class AddCustomObjectComponent extends BaseComponent {
         this.objectTablePM.ClientModuleName = this.parentObjectTable?.ClientModuleName;
         this.objectTablePM.IsCustom = true;
         this.objectTablePM.Tenant = SessionLocator.Tenant;
-
+        this.objectTablePM.LastUpdateDate = DateTool.GetCurrentDateTimeAsUtc();
         this.objectTablePM.Name = this.objectTableName;
         this.objectTablePM.DefaultText = this.DisplayLabelSingular;
         this.objectTablePM.DefaultTextPlural = this.DisplayLabelPlural;
