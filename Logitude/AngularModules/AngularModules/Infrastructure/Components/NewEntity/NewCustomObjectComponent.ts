@@ -12,6 +12,7 @@ import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 import { DataCustomObjectPMService } from '../../Services/StandardPMs/DataCustomObjectPMService';
 import { ReferenceCustomObjectPMService } from '../../Services/StandardPMs/ReferenceCustomObjectPMService';
 import { ListComponent } from '../ListComponent/ListComponent';
+import { ClassLevelValidator } from '../../Validators/ClassLevelValidator';
 
 
 @Component({
@@ -103,7 +104,7 @@ export class NewCustomObjectComponent extends BaseComponent implements OnInit {
     OkButtonClicked() {
         this.ValidationErrorsList = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, this.ValidationErrorsList);
-        //need to add additional validations
+        this.ValidationErrorsList = this.ValidationErrorsList.concat(new ClassLevelValidator().ValidateCustomEntity(this.ObjectTableName, this.EntityPM));
         if (this.ValidationErrorsList.length == 0) {
             this.Save();
         }

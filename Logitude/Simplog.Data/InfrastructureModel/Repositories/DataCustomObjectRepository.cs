@@ -29,7 +29,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public DataCustomObject GetSingleDataCustomObject(string id, int tenant)
         {
-            return (from a in context.DataCustomObjects
+            return (from a in context.DataCustomObjects.Include("CreatedByUser.Contact").Include("UpdatedByUser.Contact")
                     where a.Tenant == tenant && a.Id == id
                     select a).FirstOrDefault();
         }

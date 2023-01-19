@@ -196,7 +196,7 @@ export class EditComponent implements OnDestroy {
         }
 
 
-        this.IsSaveBtnVisible = this.ObjectTable.IsSaveButtonVisible;
+            this.IsSaveBtnVisible = this.ObjectTable.IsSaveButtonVisible || (this.ObjectTable.IsCustom && AppTool.IsNullOrEmpty(this.ObjectTable.ParentObjectTableId));
 
         // Split Component
         var feature = FeatureLocator.Features.filter(d => d.Code == "SPLIT")[0];

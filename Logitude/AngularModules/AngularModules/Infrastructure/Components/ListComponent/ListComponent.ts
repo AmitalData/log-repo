@@ -673,7 +673,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         }
         this.NewButtonId = "NewButton_" + this.ObjectTableName;
 
-        if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "NEW", false) && !this.ObjectTable.IsCustom) {
+        if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "NEW", false) && !this.ObjectTable?.IsCustom) {
             this.IsNewEntityButtonDisabled = true;
         }
 
@@ -1084,7 +1084,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             //this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Perspective == this.listArgs.Perspective)[0];
             this.SelectedQuery = allQueries.filter(f => f.Perspective == this.listArgs.Perspective)[0];
 
-            this.Queries = allQueries.filter(f => (f.UserId == null && (FeatureLocator.IsFeatureGrantedByUniqeCode(f.FeatureUniqeCode) || this.ObjectTable.IsCustom) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
+            this.Queries = allQueries.filter(f => (f.UserId == null && (FeatureLocator.IsFeatureGrantedByUniqeCode(f.FeatureUniqeCode) || this.ObjectTable?.IsCustom) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
         }
         else if (this.listArgs.Perspective != null && this.listArgs.IgnoreSelectedPerspective == true) {
             //this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Code == this.QueryCode)[0];
@@ -2863,13 +2863,13 @@ export class ListComponent implements OnInit, AfterViewInit {
         return b1 && b2;
     }
     AddNewEntity() {
-        if (this.ObjectTable.IsCustom && AppTool.IsNullOrEmpty(this.ObjectTable.ParentObjectTableId) && AppTool.IsNullOrEmpty(this.ObjectTable.NewWizardControlName)) {
+        if (this.ObjectTable?.IsCustom && AppTool.IsNullOrEmpty(this.ObjectTable.ParentObjectTableId) && AppTool.IsNullOrEmpty(this.ObjectTable.NewWizardControlName)) {
             this.ShowAddNewEntityValidationMsg();
             return;
         }
         if (this.SelectedQuery != null) {
 
-            if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "NEW", true) && !this.ObjectTable.IsCustom) {
+            if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "NEW", true) && !this.ObjectTable?.IsCustom) {
                 return;
             }
 
@@ -2937,7 +2937,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                         else if (this.ObjectTableName == "Customs.DeclarationReferantData") {
                             this.RunNewCustomsFileWizard();
                         }
-                        else if (this.ObjectTable.IsCustom) {
+                        else if (this.ObjectTable?.IsCustom) {
                             this.RunNewCustomObjectWizard();
                             return;
                         }
@@ -3427,7 +3427,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         if (this.CurrentQueryFilters == null) {
             this.CurrentQueryFilters = new ApiQueryFilters();
         }
-        if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "READ", true) && !this.ObjectTable.IsCustom) {
+        if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "READ", true) && !this.ObjectTable?.IsCustom) {
             return;
         }
         else {
