@@ -118,7 +118,7 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         this.GetHTMLText();
     }
 
-    GetHTMLText() {
+    GetHTMLText(isDraft: boolean = false) {
         this.CurrentSession.StartBusyIndicatorLoading();
         var objectTableId = this.SelectedItem.ObjectTableId;
         var screenCode = this.SelectedItem.ScreenCode;
@@ -128,7 +128,7 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
                 var screen = myResult.Result;
                 this.CurrentTenantScreen = screen;
                 if (screen != null)
-                    this.hTMLEditor = screen.Content;
+                    isDraft == true ? this.hTMLEditor = this.CurrentTenantScreen.DraftContent: this.hTMLEditor = screen.Content;
             }
             this.CurrentSession.StopBusyIndicator();
         });
@@ -201,7 +201,8 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
                 confirm.Close();
                 var objectTableId = this.SelectedItem.ObjectTableId;
                 var screenCode = this.SelectedItem.ScreenCode;
-                this.digitalCustomizationService.GetDefaultScreenLayout(objectTableId, screenCode).subscribe((myResult) => {
+                var profileCode = this.SelectedProfileItem.LocalName;
+                this.digitalCustomizationService.GetDefaultScreenLayout(objectTableId, screenCode, profileCode).subscribe((myResult) => {
                     if (!myResult.HasError) {
                         var screen = myResult.Result;
                         if (this.Screens != null) {
@@ -215,7 +216,7 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
     }
 
     LoadDraftLayoutClicked() {
-        this.hTMLEditor = this.CurrentTenantScreen.DraftContent;
+        this.GetHTMLText(true);
     }
 
     PublichChangesClicked(isDraft) {

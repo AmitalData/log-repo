@@ -568,7 +568,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         [HttpGet]
         [Route("DigitalCustomization/GetDefaultScreenLayout")]
-        public HttpResponseMessage GetDefaultScreenLayout(string objectTableId, string screenCode)
+        public HttpResponseMessage GetDefaultScreenLayout(string objectTableId, string screenCode, string profileCode = "")
         {
             int tenant = 0;
             string email = "";
@@ -580,7 +580,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 var digitalPreDefinedComponentQueryService = new DigitalPortalScreenQueryService(tenant);
 
-                var allScreens = digitalPreDefinedComponentQueryService.GetDigitalPortalScreensQuery(tenant, objectTableId, screenCode);
+                var allScreens = digitalPreDefinedComponentQueryService.GetDigitalPortalScreensQuery(tenant, objectTableId, screenCode, profileCode);
                 var defaultDisgitalPortalScreen = allScreens.FirstOrDefault(a => a.Tenant == 0);
                 var tenantDigitalPortalScreen = allScreens.FirstOrDefault(a => a.Tenant == tenant);
 
