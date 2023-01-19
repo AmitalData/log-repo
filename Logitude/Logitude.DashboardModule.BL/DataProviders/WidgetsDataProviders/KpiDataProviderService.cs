@@ -113,7 +113,7 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             int numberOfDecimalPlaces = Convert.ToInt32(_Widget.DecimalPlaces);
             int abbreviationAfter = UseAbbreviationNumber(objectValue);
             if (abbreviationAfter != 0) numberOfDecimalPlaces = 2;
-            if (_Widget.ThousandSeparator != null && _Widget.ThousandSeparator == true)
+            if (_Widget.ThousandSeparator == true)
             {     
                 if (dataTypeCode == null || numberOfDecimalPlaces == 0) return String.Format("{0:n0}", value);
                 return String.Format($"{{0:n{numberOfDecimalPlaces}}}", Math.Round(Convert.ToDouble(value), numberOfDecimalPlaces));
