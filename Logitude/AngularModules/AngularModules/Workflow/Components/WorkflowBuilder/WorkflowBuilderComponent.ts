@@ -47,7 +47,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     public IsFirstOpen: boolean = false;
     public IsViewMode: boolean = false;
 
-    public WorkFlowPMService: WorkFlowPMService = new WorkFlowPMService();;
+    public WorkFlowPMService: WorkFlowPMService = new WorkFlowPMService();
     private TabSelectedEvent: any = null;
 
     @Output() BackCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -101,7 +101,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
 
     loadWorkflow(isNewWorkflow: boolean) {
         if (this.EntityId) {
-            this.startBusyIndicator("Loading ...");
+            this.startLoading();
             this.WorkFlowPMService.get(this.EntityId).subscribe((serviceResponse: ServiceResponse) => { this.handleGetWorkflowResponse(serviceResponse, isNewWorkflow); });
         }
     }
@@ -186,7 +186,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     loadObjectFields() {
         if (ObjectFields.isLoaded()) {
             this.FlowObjectFields = ObjectFields.getAll();
-            this.stopBusyIndicator();
+            this.stopLoading();
         } else {
             let objectFieldListService = new ObjectFieldListService();
             let apiQueryFilters = ApiQueryFiltersBuilder.getObjectFieldsApiQueryFilters(null, null, null, true);
@@ -195,7 +195,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
                     ObjectFields.set(serviceResponse.Result);
                     this.FlowObjectFields = ObjectFields.getAll();
                 }
-                this.stopBusyIndicator();
+                this.stopLoading();
             });
         }
     }
@@ -369,25 +369,30 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
 
     setReactFlowInstance(reactFlowInstance: any) {
         this.ReactFlowInstance = reactFlowInstance;
+    }
+
+    openStartConfiguration() {
+        if (this.IsFirstOpen) {
+            this.openStartPropertiesWindow();
+        }
+    }
+
+    openStartPropertiesWindow() {
         let flowObject = this.getCurrentFlowObject();
-        if (this.IsFirstOpen && flowObject) {
-            this.openConfigureStart(flowObject);
+        if (flowObject) {
+            let startNode = flowObject.nodes.filter((n: any) => n.type === "startNode")[0];
+            let openPropertiesEventObject = this.buildOpenPropertiesEventObject(startNode, true);
+            if (openPropertiesEventObject) {
+                this.IsFirstOpen = false;
+                this.handleOpenPropertiesEvent(openPropertiesEventObject);
+            }
         }
     }
 
-    openConfigureStart(flowObject: any) {
-        let startNode = flowObject.nodes.filter((n: any) => n.type === "startNode")[0];
-        let openPropertiesEventObject = this.buildOpenPropertiesEventObject(startNode);
-        if (openPropertiesEventObject) {
-            this.IsFirstOpen = false;
-            this.handleOpenPropertiesEvent(openPropertiesEventObject);
-        }
-    }
-
-    buildOpenPropertiesEventObject(node: any) {
+    buildOpenPropertiesEventObject(node: any, isNewNode: boolean) {
         if (node) {
             let nodeObject = {
-                isNewNode: true,
+                isNewNode: isNewNode,
                 nodeId: node.id,
                 nodeType: node.type,
                 nodeData: node.data || {},
@@ -491,13 +496,15 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         }
     }
 
-    startBusyIndicator(message: string) {
+    startLoading(message: string = "Loading ...") {
         this.BusyIndicatorText = message;
         this.ShowBusyIndicator = true;
     }
 
-    stopBusyIndicator() {
+    stopLoading() {
         this.BusyIndicatorText = null;
         this.ShowBusyIndicator = false;
+
+        this.openStartConfiguration();
     }
 }
