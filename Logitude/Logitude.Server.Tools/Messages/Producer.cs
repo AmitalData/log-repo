@@ -1,4 +1,6 @@
 ﻿using Confluent.Kafka;
+using Dropbox.Api.Sharing;
+using Logitude.Server.Tools.QueueService;
 using Simplog.Server.Infrastructure;
 using System.Threading.Tasks;
 
@@ -8,18 +10,7 @@ namespace Logitude.Server.Tools.Messages
     {
         public IProducer<long, string> ProducerBuilder { get; set; }
         public IProducer<long, string> TestingProducer { get; set; }
-
-        private static Producer producerInstatnce;
-
-        public static Producer GetInstatnce()
-        {
-            if (producerInstatnce == null)
-            {
-                producerInstatnce = new Producer();
-            }
-            return producerInstatnce;
-        }
-
+       
         public Producer()
         {
             KafkaCredentials.SetEventHubConfigurations();
