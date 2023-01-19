@@ -235,8 +235,8 @@ export class CustomizationLabelItem extends BaseComponent {
         var newLabel = new DigitalTextCodeObject();
         newLabel.TextCode = this.textCode;
         newLabel.FieldCode = this.fieldCode;
-        newLabel.DefaultText = newValue;
-        newLabel.DisplayText = this.displayText;
+        newLabel.DefaultText = this.defaultText; 
+        newLabel.DisplayText = newValue;
         this.father.ModifiedLables.Lables.push(newLabel);
     }
 

@@ -374,7 +374,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                         if (data != null)
                         {
-                            data.DefaultText = item.DefaultText;
+                            data.DisplayText = item.DisplayText;
                         }
                         else
                         {
