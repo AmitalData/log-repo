@@ -1,4 +1,5 @@
-﻿using Logitude.Infrastructure.BL.EntityQueryServices;
+﻿using Logitude.BL.Helpers;
+using Logitude.Infrastructure.BL.EntityQueryServices;
 using Logitude.Infrastructure.Data.EntityLists;
 using Logitude.SystemLogs;
 using Newtonsoft.Json;
