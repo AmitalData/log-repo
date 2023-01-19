@@ -923,6 +923,7 @@ export class AddEditPrivateLabelShipmentComponent extends AddEditPrivateLabelCus
         this['ContainerNumber' + fieldNumber] = shipmentOrderPackage.ContainerNumber;
         this['Quantity' + fieldNumber] = shipmentOrderPackage.Quantity;
         this['PackageTypeId' + fieldNumber] = shipmentOrderPackage.PackageTypeId;
+        this['Weight' + fieldNumber] = shipmentOrderPackage.GrossWeight;
     }
 
     CalculateShipmentOrderPackageVolume(shipmentOrderPackage: ShipmentOrderPackagePM): ShipmentOrderPackagePM {
