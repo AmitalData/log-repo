@@ -530,21 +530,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private List<DeclarationExportRecipientPM> GetRecipients(Declaration declaration, int tenant, DeclarationPM declarationPM, ICustomContext context)
         {
             List<DeclarationExportRecipientPM> recipientPMs = new List<DeclarationExportRecipientPM>();
-            if (declaration.GoodsShipment != null && declaration.GoodsShipment.Count() > 0)
+            if (declaration.DMExtensions.RecipientDetails != null && declaration.DMExtensions.RecipientDetails.Count() > 0)
             {
-
-                if ( declaration.GoodsShipment[0]?.Invoice?.DMExtensions?.BuyerDetails!=null)
+                foreach (var declarationExportRecipient in declaration.DMExtensions.RecipientDetails)
                 {
-                    var declarationBuyerDetails = declaration.GoodsShipment[0].Invoice.DMExtensions.BuyerDetails;
-
-                        DeclarationExportRecipientPM recipientPM = new DeclarationExportRecipientPM();
-                        recipientPM.Tenant = tenant;
-                        recipientPM.RecipientName = declarationBuyerDetails.Name;
-                        recipientPM.RecipientAddress = declarationBuyerDetails.Address?.Length>35? declarationBuyerDetails.Address.Substring(0,35): declarationBuyerDetails.Address.Trim();
-                        recipientPM.RecipientIssueCountryCode = GetValueCodeType(declarationBuyerDetails.IssueLocation);
-                        recipientPM.ChangeSetOp = ChangeSetOperation.Insert;
-                        recipientPMs.Add(recipientPM);
-                 
+                    DeclarationExportRecipientPM recipientPM = new DeclarationExportRecipientPM();
+                    recipientPM.Tenant = tenant;
+                    recipientPM.RecipientName = declarationExportRecipient.Name;
+                    recipientPM.RecipientAddress = declarationExportRecipient.Address;
+                    recipientPM.RecipientIssueCountryCode = GetValueCodeType(declarationExportRecipient.IssueLocation);
+                    recipientPM.ChangeSetOp = ChangeSetOperation.Insert;
+                    recipientPMs.Add(recipientPM);
                 }
             }
             return recipientPMs;
@@ -591,8 +587,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 if (consignment.DMExtensions != null)
                 {
-                   
-                    consignmentPM.CargoDescription = GetValueTextType(consignment.DMExtensions.PackagesMeasure[0]?.MarksNumbers);
+
+                    consignmentPM.CargoDescription = GetValueTextType(consignment.DMExtensions.CargoDescription);
                     consignmentPM.FinalDestinationPortCode = consignment.DMExtensions.FinalDestinationPort?.Value;
                     consignmentPM.ShipCode = consignment.DMExtensions.ShipID?.Value;
                   
