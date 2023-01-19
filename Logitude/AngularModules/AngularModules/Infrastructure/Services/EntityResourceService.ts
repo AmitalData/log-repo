@@ -41,7 +41,7 @@ export class EntityResourceService {
       //  });
       //}
         let objectTable = window.ObjectTables.filter(d => d.Name == objectTableName)[0];
-        if (objectTable.IsCustom) {
+        if (objectTable && objectTable.IsCustom) {
           return Observable.create(observer => {
           observer.next(objectTableName);
         });
