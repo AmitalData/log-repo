@@ -15,7 +15,7 @@ using Logitude.Accounting.Def.EntityPMs;
 
 namespace Logitude.BL.InvoiceModel.Tools.DataMapping
 {
-    public class ARInvoiceMapping
+    public partial class ARInvoiceMapping
     {
         private const string sATSolvedManualStatusCode = "SM";
 
@@ -55,11 +55,8 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 entity.Description = entityPM.Description;
                 entity.IsConstituentInvoice = entityPM.IsConstituentInvoice;
                 entity.IsConsolidationInvoice = entityPM.IsConsolidationInvoice;
-                entity.SATInvoiceStatusCode = entityPM.SATInvoiceStatusCode;
-                entity.SATTransferStatusCode = entityPM.SATTransferStatusCode;
             }
 
-            entity.SATTransferStatusCode = entityPM.SATTransferStatusCode;
             entity.ProfitCurrencyExchangeRate = entityPM.ProfitCurrencyExchangeRate;
             entity.BranchId = entityPM.BranchId;
             entity.DueDate = entityPM.DueDate;
@@ -87,9 +84,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.IsExternalEntity = entityPM.IsExternalEntity;
             entity.IsGeneralInvoice = entityPM.IsGeneralInvoice;
             entity.SalesmanUserId = entityPM.SalesmanUserId;
-            entity.IsCustomsChargesOnly = entityPM.IsCustomsChargesOnly;
-            if (!string.IsNullOrEmpty(entityPM.ExternalAccountingEntityId))
-                entity.ExternalAccountingEntityId = entityPM.ExternalAccountingEntityId;
+            entity.IsCustomsChargesOnly = entityPM.IsCustomsChargesOnly;           
             entity.IsFromInterestBatchInvoice = entityPM.IsFromInterestBatchInvoice;
             entity.PartnerId = entityPM.PartnerId;
             entity.ShipmentsNumbers = entityPM.ShipmentsNumbers;
@@ -170,11 +165,8 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.IsAutoCredit = entityPM.IsAutoCredit;
             entity.IsCancelled = entityPM.IsCancelled;
             entity.CancelledByARInvoiceId = entityPM.CancelledByARInvoiceId;
-            entity.CreditedByARInvoiceId = entityPM.CreditedByARInvoiceId;
-            entity.IsPrinted = entityPM.IsPrinted;
-            entity.PrintNotes = entityPM.PrintNotes;
-            entity.PrintByUserId = entityPM.PrintByUserId;
-            entity.PrintDate = entityPM.PrintDate;
+            entity.CreditedByARInvoiceId = entityPM.CreditedByARInvoiceId;            
+            entity.PrintNotes = entityPM.PrintNotes;            
             entity.InternalNotes = entityPM.InternalNotes;
             entity.PaymentTermExternalId = entityPM.PaymentTermExternalId;
             entity.Field1 = entityPM.Field1 != null ? entityPM.Field1.Value : null;
@@ -189,14 +181,11 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.Field10 = entityPM.Field10 != null ? entityPM.Field10.Value : null;
             entity.DebitAccount = entityPM.DebitAccount;
             entity.TransferTries = entityPM.TransferTries;
-            entity.IsTransferStarted = entityPM.IsTransferStarted;
-            entity.TransferStatusCode = entityPM.TransferStatusCode;
             entity.AccountingExternalCode = entityPM.AccountingExternalCode;
             entity.ConsolidationInvoiceId = entityPM.ConsolidationInvoiceId;
             entity.ApprovedDate = entityPM.ApprovedDate;
             entity.ApprovedByUserId = entityPM.ApprovedByUserId;
-            entity.SATPaymentMethodCode = entityPM.SATPaymentMethodCode;
-            entity.TransmissionError = entityPM.TransmissionError;
+            entity.SATPaymentMethodCode = entityPM.SATPaymentMethodCode;            
             entity.MetodoPagoCode = entityPM.MetodoPagoCode;
             entity.RelatedInvoice = entityPM.RelatedInvoice;
             entity.Intercompany = entityPM.Intercompany;
@@ -225,20 +214,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             if (entityPM.TotaVatableAmountForTaxReport == null)
                 entityPM.TotaVatableAmountForTaxReport = 0;
 
-            entity.TotalExamptFortaxReport = entityPM.TotalAmountForTaxReport - entityPM.TotaVatableAmountForTaxReport;
-
-            string transferError = entityPM.TransferError;
-
-            if (!string.IsNullOrEmpty(transferError))
-            {
-                if (transferError.Length > 250)
-                {
-                    transferError = transferError.Substring(0, 250);
-                }
-            }
-
-            entityPM.TransferError = transferError;
-            entity.TransferError = transferError;
+            entity.TotalExamptFortaxReport = entityPM.TotalAmountForTaxReport - entityPM.TotaVatableAmountForTaxReport;            
 
             //Full Accounting 
             TenantRepository tenantRepository = new TenantRepository(entityPM.Tenant);
@@ -280,6 +256,8 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.PaidDate = entityPM.PaidDate;
             entity.PaidStatus= entityPM.PaidStatus;
             entity.DocumentTemplateId = entityPM.DocumentTemplateId;
+
+            MapConcurrencyFields(entityPM, entity, isNewState);
         }
 
         public static void MapInvoiceLine(ARInvoiceLinePM entityPM, ARInvoiceLine entity, bool isNewState)

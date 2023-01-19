@@ -51,7 +51,7 @@
     "fast-json-patch": "^3.1.1",
     "lodash.clonedeep": "^4.5.0",
     "logitude-dashboard-library": "^1.4.30",
-    "logitude-workflow": "latest",
+    "logitude-workflow": "^1.0.66",
     "mochawesome-report-generator": "^5.1.0",
     "ng-zorro-antd": "^9.3.0",
     "ngx-monaco-editor": "^9.0.0",

@@ -2072,7 +2072,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     IsDigitalDueDateColorRed = (entityPOCO.DueDate == null || entityPOCO.PaidStatus == "Paid") ? false : (entityPOCO.DueDate.Value < todayDate ? true : false),
                     TotalEquation = entityPOCO.TotalEquation,
                     SATXML = entityPOCO.SATXML,
-                    DocumentTemplateId = entityPOCO.DocumentTemplateId
+                    DocumentTemplateId = entityPOCO.DocumentTemplateId,
+                    TransferStatusCode_Original = entityPOCO.TransferStatusCode,
+                    IsTransferStarted_Original = entityPOCO.IsTransferStarted,
+                    TransferError_Original = entityPOCO.TransferError,
                 };
 
                 entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;

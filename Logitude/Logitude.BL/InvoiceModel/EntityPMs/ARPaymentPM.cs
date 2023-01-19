@@ -259,5 +259,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string BillToCode { get; set; }
 
+        public bool IsUpdatedBySAT { get; set; }
+        public string SATAdditionalFieldsXML { get; set; }
     }
 }

@@ -2348,7 +2348,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
         #endregion
 
-        public void UpdatePaymentInvoicesSATStatus(ARPayment payment, XmlElement comprobanteXmlPagos, ARInvoiceRepository arinvoiceRep, ARPaymentRepository arpaymentRep)
+        public void UpdatePaymentInvoicesSATStatus(ARPaymentPM payment, XmlElement comprobanteXmlPagos, ARInvoiceRepository arinvoiceRep, ARPaymentRepository arpaymentRep)
         {
             int tenant = payment.Tenant;
             SATInterfaceSettingRepository sATInterfaceSettingRepository = new SATInterfaceSettingRepository(tenant);
