@@ -42,11 +42,8 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
                 kpiChart.ComparisonAbbreviationSymbol = GetAbbreviationSymbol(comparsionObject);
                 kpiChart.ComparisonValue = FormatKpiValue(comparsionObject, measureField?.DataTypeCode);
             }
-            if (measureField?.DataTypeCode != null && measureField?.DataTypeCode != "Date" && measureField?.DataTypeCode != "DateTime")
-            {
-                kpiChart.AbbreviationSymbol = GetAbbreviationSymbol(kpiChart.Value);
-            }
-            
+           
+            kpiChart.AbbreviationSymbol = GetAbbreviationSymbol(kpiChart.Value);
             kpiChart.Value = FormatKpiValue(kpiChart.Value, measureField?.DataTypeCode);
             
             return kpiChart;
