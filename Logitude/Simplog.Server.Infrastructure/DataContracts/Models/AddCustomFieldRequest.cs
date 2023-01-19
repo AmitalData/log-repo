@@ -10,5 +10,6 @@
         public string DisplayText { get; set; }
         public string TextCode { get; set; }
         public string CreatedBy { get; set; }
+        public string ModifiedBy { get; set; }
     }
 }
