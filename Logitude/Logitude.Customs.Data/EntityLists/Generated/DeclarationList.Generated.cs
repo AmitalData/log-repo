@@ -440,6 +440,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string ReleaseStatusTypeCode  { get; set; }
        [DataMember]
        public string ReferentUserName  { get; set; }
+       [DataMember]
+       public string ExportDeclarationOfficeName  { get; set; }
    }
 
 }
