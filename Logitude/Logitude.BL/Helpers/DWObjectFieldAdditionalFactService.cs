@@ -44,9 +44,9 @@ namespace Logitude.BL.Helpers
             if (IsHaveAddAdditionalFactFields)
             {
                 var additionalFactDWObjectFieldPMs = groupedByCategory ? dWObjectFieldQuery.GetDWObjectFieldPMsByDWObjectTabelAndTenantGroupedByCategory(0, DwObjectTable.AdditionalFactCode, DwObjectTable.RecordType) : dWObjectFieldQuery.GetDWObjectFieldByDWObjectTableCode(0, DwObjectTable.AdditionalFactCode).Where(d => string.IsNullOrEmpty(d.RecordType) || (!string.IsNullOrEmpty(d.RecordType) && d.RecordType.IndexOf(DwObjectTable.RecordType) > -1)).ToList();
-                foreach (DWObjectFieldPM additionalFactField in additionalFactDWObjectFieldPMs.Where(d => (d.IsMeasurement == false || IsShipmentProfit(d)) && (d.DisplayInQueryBuilder || (d.IsCustom && !DwObjectTable.HasCustomFields))))
+                foreach (DWObjectFieldPM additionalFactField in additionalFactDWObjectFieldPMs.Where(d => (d.IsMeasurement == false || IsShipmentProfitField(d)) && (d.DisplayInQueryBuilder || (d.IsCustom && !DwObjectTable.HasCustomFields))))
                 {
-                    if (IsShipmentProfit(additionalFactField))
+                    if (IsShipmentProfitField(additionalFactField))
                         additionalFactField.AggregationTypeCode = "MAX";
 
                     var dwObjectField = !string.IsNullOrEmpty(additionalFactField.OriginalObjectFieldCode) ? factDWObjectFieldPMs.Where(d => d.OriginalObjectFieldCode == additionalFactField.OriginalObjectFieldCode && d.DisplayInQueryBuilder).FirstOrDefault() : null;
@@ -66,9 +66,9 @@ namespace Logitude.BL.Helpers
             DWObjectFieldPMs = DWObjectFieldPMs.Concat(factDWObjectFieldPMs).ToList();
         }
 
-        private bool IsShipmentProfit(DWObjectFieldPM Field)
+        private bool IsShipmentProfitField(DWObjectFieldPM Field)
         {
-            return (Field.Name == "Profit" || Field.Name == "Profit ( Local )") && factTableCode == "Fact_ARInvoices" && Field.DWObjectTableCode == "Fact_Shipments";
+            return (Field.Code == "[Profit]" || Field.Code == "[Profit ( Local )]") && factTableCode == "Fact_ARInvoices" && Field.DWObjectTableCode == "Fact_Shipments";
         }
 
         private bool ContainTableRecordType(DWObjectFieldPM additionalFactField) 

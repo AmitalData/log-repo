@@ -700,10 +700,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
         var myCurrentItem = this.SelectedFieldsDataSource.filter(a => a.DisplayName == this.SelectedItem.DisplayName);
 
         if (!this.IsValidToAddMeasurementFactARInvoiceField(item)) {
-            if (this.IsShipmentProfitField(item))
-                this.ShowValidateFactARInvoicesMessage(item.DisplayName, "column", "Shipment Number");
-            else
-                this.ShowValidateFactARInvoicesMessage(item.DisplayName, "column", "Invoice Number");
+            this.ShowValidationMessage(item);
             return;
         }
 
@@ -724,7 +721,15 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
     }
 
     private IsShipmentProfitField(item: any) {
-        return item.dWObjectTableCode == "Fact_Shipments" && (item.Name == "Profit ( Local )" || item.Name == "Profit");
+        return item.dWObjectTableCode == "Fact_Shipments" && (item.Code == "[Profit ( Local )]" || item.Code == "[Profit]");
+    }
+
+    private ShowValidationMessage(item: any) {
+        if (this.IsShipmentProfitField(item))
+            this.ShowValidateFactARInvoicesMessage(item.DisplayName, "column", "Shipment Number");
+        else
+            this.ShowValidateFactARInvoicesMessage(item.DisplayName, "column", "Invoice Number");
+        return;
     }
 
     private ValidateQuereyFields() {
