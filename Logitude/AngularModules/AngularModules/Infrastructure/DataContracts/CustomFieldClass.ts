@@ -5,13 +5,29 @@ import {AppTool, DateTool} from '../Tools';
 import { FieldValidator } from '../Validators/FieldValidator';
 export class CustomFieldClass {
 
-    constructor(public Value: string, public FieldName: string, public TableName: string) {
+    constructor(value: string, public FieldName: string, public TableName: string) {
+        this.Value = value;
     }
 
     private isNotValid: boolean;
     public get IsNotValid() { return this.isNotValid; }
     public set IsNotValid(newValue: boolean) {
         this.isNotValid = newValue;
+    }
+
+    private isChange: boolean;
+    public get IsChange() { return this.isChange; }
+    public set IsChange(newValue: boolean) {
+        this.isChange = newValue;
+    }
+
+    private value: string;
+    public get Value() { return this.value; }
+    public set Value(newValue: string) {
+        if (this.value != newValue) {
+            this.IsChange = true;
+        }
+        this.value = newValue;
     }
 
     private resolvedValue: any;
@@ -278,7 +294,7 @@ export class CustomFieldClass {
         if (field != null && value != null) {
             if (AppTool.IsNullOrEmpty(value+"")) {
             return null;
-        }
+            }
         switch (field.DataTypeCode.trim()) {
             case "Text":
             case "nText":

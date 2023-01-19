@@ -1318,9 +1318,9 @@ export class NewViewComponent {
 
         let objectTableQueries = window.Queries.filter(q => q.ObjectTableId == this.ObjectTableId && q.SystemLevel);
         if (objectTableQueries && objectTableQueries.length > 0) {
-            return objectTableQueries.length + 1;
+            return objectTableQueries.length;
         }
-        return 1;
+        return 0;
     }
 
     AddFiltersAndColumns(newQuery) {
