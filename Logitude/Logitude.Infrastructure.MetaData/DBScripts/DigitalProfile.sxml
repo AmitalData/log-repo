@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="33">
+  <Sql Version="34">
       <![CDATA[	  
 	  delete from DigitalFieldSecurities where id != ''
 	  declare @NewEntityId as varchar(15)
