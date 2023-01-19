@@ -622,12 +622,10 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         SessionLocator.SelectedSession.CloseCurrentWindowEmit("Cancel");
     }
     OkButtonClicked() {
-
         if (this.ValidationErrors.length > 0)
             this.FillValidationErrors("Errors");
-
-
         this.CurrentSession.CurrentEditComponent.StartBusyIndicator("שמירה");
+        
         if (this.IsNew) {
             this.exportDeclarationClosingDataPMService.insert(this.EntityPM).subscribe((response: ServiceResponse) => {
                 this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
