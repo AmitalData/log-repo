@@ -26,7 +26,6 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
         internal KpiChart GetData<T>(IQueryable<T> query)
         {
             var kpiChart = new KpiChart();
-            //QueryFilterItem widgetFilter = MapQueryFilterItemToFilterObject();
 
             var widgetMeasureField = _Widget?.WidgetMeasures.FirstOrDefault();
             if (widgetMeasureField == null) return kpiChart;
@@ -90,7 +89,7 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
 
         private object FormatKpiValue(object value, string dataTypeCode)
         {
-            if (ObjectIsNull(value) || value == DBNull.Value)
+            if (ObjectIsNull(value))
             {
                 if (dataTypeCode == "Date" || dataTypeCode == "DateTime") return null;
                 return "0";
@@ -141,8 +140,6 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             double objectValue = Convert.ToDouble(value);
             objectValue = Math.Round((objectValue  / abbreviationAfter) , decimalPlaces);
             return objectValue;
-
-
         }
         private string GetAbbreviationSymbol(object value, string dataTypeCode)
         {
@@ -163,10 +160,7 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             if (_Widget.UseNumberAbbreviation == false || ObjectIsNull(value)) return 0;
             
             double objectValue = Convert.ToDouble(value);
-           
-            string userSelected = _Widget.UseAbbreviationAfter;
-
-            int abbreviationValue = CaluculateValueOfAbbreviationSymbol(userSelected);
+            int abbreviationValue = CaluculateValueOfAbbreviationSymbol();
 
             if (abbreviationValue > Math.Abs(objectValue)) return 0;
 
@@ -178,10 +172,10 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             return million;
         }
           
-        private int CaluculateValueOfAbbreviationSymbol(string userSelected)
+        private int CaluculateValueOfAbbreviationSymbol()
         {
-            int numberPart = Convert.ToInt32(userSelected.Substring(0, userSelected.Length - 1));
-            string charPart = userSelected.Substring(userSelected.Length - 1);
+            int numberPart = Convert.ToInt32(_Widget.UseAbbreviationAfter.Substring(0, _Widget.UseAbbreviationAfter.Length - 1));
+            string charPart = _Widget.UseAbbreviationAfter.Substring(_Widget.UseAbbreviationAfter.Length - 1);
 
             if (charPart.Equals("k"))
             {
@@ -192,14 +186,6 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             numberPart = numberPart * Convert.ToInt32(Math.Pow(10, 6));
             return numberPart;
         }
-
-        private QueryFilterItem MapQueryFilterItemToFilterObject()
-        {
-            QueryFilterItem widgetFilters = new QueryFilterItem();
-            widgetFilters = _Widget.Filters != null ? Newtonsoft.Json.JsonConvert.DeserializeObject<QueryFilterItem>(_Widget.Filters) : null;
-            return widgetFilters;
-        }
-
 
         private object BuildKpiChartValue<T>(WidgetMeasurePM widgetMeasureField, IQueryable<T> query)
         {
@@ -220,8 +206,6 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
 
         private string CreateComparsionQuery<T>(WidgetMeasurePM widgetMeasureField, IQueryable<T> resultQueryable)
         {
-            //FromDate : FieldValue
-            //ToDate : FieldValue2
             var query = BuildSelectQuery(widgetMeasureField);
             var queryString = $@"select {query} as result
                              From ({resultQueryable.ToQueryStringWithParameter()}) as data";
