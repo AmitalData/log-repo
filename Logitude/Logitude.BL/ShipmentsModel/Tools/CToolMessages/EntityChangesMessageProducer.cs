@@ -37,8 +37,8 @@ namespace Logitude.Server.Tools.CToolWorkflows
                     var shipmentCreateMessageProducer = Producer.GetInstatnce();
                     var result = shipmentCreateMessageProducer.Produce(KafkaTopics.ShipmentsCreateTopic, 
                         KakaMessageTypes.ShipmentCreate, serializedCToolWorkflowMessage);
-                    shipmentCreateMessageProducer.ProducerBuilder.Flush();
-                    shipmentCreateMessageProducer.ProducerBuilder.Dispose();
+                    //shipmentCreateMessageProducer.ProducerBuilder.Flush();
+                    //shipmentCreateMessageProducer.ProducerBuilder.Dispose();
                 }
             }
             catch(Exception ex)
@@ -74,8 +74,8 @@ namespace Logitude.Server.Tools.CToolWorkflows
                     var shipmentUpdateMessageProducer = Producer.GetInstatnce();
                     var result = shipmentUpdateMessageProducer.Produce(KafkaTopics.ShipmentsUpdateTopic,
                         KakaMessageTypes.ShipmentUpdate, serializedCToolWorkflowMessage);
-                    shipmentUpdateMessageProducer.ProducerBuilder.Flush();
-                    shipmentUpdateMessageProducer.ProducerBuilder.Dispose();
+                    //shipmentUpdateMessageProducer.ProducerBuilder.Flush();
+                    //shipmentUpdateMessageProducer.ProducerBuilder.Dispose();
                 }
             }
             catch (Exception ex)
@@ -103,11 +103,11 @@ namespace Logitude.Server.Tools.CToolWorkflows
 
                 var serializedCToolWorkflowMessage = JsonConvert.SerializeObject(ctoolWorkflowMessage, Formatting.Indented);
 
-                var shipmentUpdateMessageProducer = new Producer();
+                var shipmentUpdateMessageProducer = Producer.GetInstatnce();
                 var result = shipmentUpdateMessageProducer.Produce(KafkaTopics.ShipmentsUpdateTopic,
                     KakaMessageTypes.ShipmentUpdate, serializedCToolWorkflowMessage);
-                shipmentUpdateMessageProducer.ProducerBuilder.Flush();
-                shipmentUpdateMessageProducer.ProducerBuilder.Dispose();
+                //shipmentUpdateMessageProducer.ProducerBuilder.Flush();
+                //shipmentUpdateMessageProducer.ProducerBuilder.Dispose();
             }
             catch (Exception ex)
             {
@@ -119,15 +119,15 @@ namespace Logitude.Server.Tools.CToolWorkflows
         {
             try
             {
-                Producer sendEmailProducer = new Producer();
+                Producer sendEmailProducer = Producer.GetInstatnce();
                 var serializedSendEmailMessage = JsonConvert.SerializeObject(communicationLog, Formatting.Indented,
                     new JsonSerializerSettings
                     {
                         ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                     });
                 var result = sendEmailProducer.Produce(KafkaTopics.LookupsTopic, KakaMessageTypes.CommunicationLog, serializedSendEmailMessage);
-                sendEmailProducer.ProducerBuilder.Flush();
-                sendEmailProducer.ProducerBuilder.Dispose();                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+                //sendEmailProducer.ProducerBuilder.Flush();
+                //sendEmailProducer.ProducerBuilder.Dispose();                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
             }
             catch (Exception ex)
             {
