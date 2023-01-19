@@ -107,8 +107,10 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 
 					if (mainAddress != null)
 					{
-						if (MyEntity.IsPotential) this.SetPotentialAddressFieldsOnCustomer(myCustomer, mainAddress);
-						myCustomer.Addresses.Add(mainAddress);
+						if (MyEntity.IsPotential) 
+							this.SetPotentialAddressFieldsOnCustomer(myCustomer, mainAddress);
+						else 
+							myCustomer.Addresses.Add(mainAddress);
 					}
 
 					if (billingAddress != null) myCustomer.Addresses.Add(billingAddress);
@@ -288,8 +290,11 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 			myCustomer.City_Potential = mainAddress.City;
 			myCustomer.CountryId_Potential = mainAddress.CountryId;
 			myCustomer.Address1_Potential = mainAddress.Address1;
-			myCustomer.CountryId_Potential = mainAddress.CountryId;
 			myCustomer.StateId_Potential = mainAddress.StateId;
+			myCustomer.Address2_Potential = mainAddress.Address2;
+			myCustomer.ZipCode_Potential = mainAddress.ZipCode;
+			myCustomer.FaxNumber_Potential = mainAddress.FaxNumber;
+			myCustomer.PhoneNumber_Potential = mainAddress.PhoneNumber;
 		}
 	}
 }
