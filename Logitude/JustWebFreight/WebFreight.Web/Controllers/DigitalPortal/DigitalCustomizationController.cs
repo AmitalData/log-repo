@@ -76,6 +76,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         FieldCode = addCustomFieldRequest.FieldCode,
                         CreatedBy = addCustomFieldRequest.CreatedBy,
                         CreatedOn = DateTime.UtcNow,
+                        ModifiedBy = addCustomFieldRequest.ModifiedBy,
+                        ModifiedOn = DateTime.UtcNow,
                         HasPermission = true
                     });
 
@@ -98,6 +100,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         FieldCode = addCustomFieldRequest.FieldCode,
                         CreatedBy = addCustomFieldRequest.CreatedBy,
                         CreatedOn = DateTime.UtcNow,
+                        ModifiedBy = addCustomFieldRequest.ModifiedBy,
+                        ModifiedOn = DateTime.UtcNow,
                         HasPermission = true
                     });
 
