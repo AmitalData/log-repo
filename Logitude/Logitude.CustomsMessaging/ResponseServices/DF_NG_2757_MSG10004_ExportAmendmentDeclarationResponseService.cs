@@ -437,7 +437,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
             declarationUpdateService.DeclarationConsignmentsFastDelete(declarationPM, context);
             declarationUpdateService.DeclarationRecipientFastDelete(declarationPM, context);
             declarationUpdateService.DeclarationClosingDataFastDelete(declarationPM, context);
-            declarationUpdateService.DeclarationSupplierInvoicesFastDelete(declarationPM, context);
 
             var mySupplierInvoiceItemsTaxUpdateService = new SupplierInvoiceItemsTaxUpdateService(context, new Dictionary<string, IContext>(), tenant);
             var mySupplierInvoiceItemVehicleModUpdateService = new SupplierInvoiceItemVehicleModUpdateService(context, new Dictionary<string, IContext>(), tenant); // moran 20.10.15 - Task 17209 
@@ -465,6 +464,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             mySupplierInvoiceItemsProdIdentUpdateService.FastDeleteComposition(myDeclarationKeys);
             mySupplierInvoiceItemsSerialNumUpdateService.FastDeleteComposition(myDeclarationKeys);
             mySuppInvoiceItemsAbachStatementUpdateService.FastDeleteComposition(myDeclarationKeys);
+            declarationUpdateService.DeclarationSupplierInvoicesFastDelete(declarationPM, context);
 
             (context as DbContextBase).SaveChanges();
         }

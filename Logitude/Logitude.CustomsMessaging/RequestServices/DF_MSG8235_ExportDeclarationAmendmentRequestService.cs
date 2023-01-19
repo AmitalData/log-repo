@@ -2027,7 +2027,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
                                                                                                                                                                              //SetIDTypeValue<PreferenceDocumentNumberType>("11"); //                                                                                                                                                            // SetIDTypeValue<PreferenceDocumentNumberType>("11"); //
             DMExtensions.PreferenceDocumentNumber = SetIDTypeValue<PreferenceDocumentNumberType>(supplierInvoiceItemPM.PreferenceDocumentNumber);
-            DMExtensions.InvoiceLineNumbers = "1";// supplierInvoiceItemPM.ActualInvoiceLines;
+            DMExtensions.InvoiceLineNumbers =  supplierInvoiceItemPM.ActualInvoiceLines;
             DMExtensions.TransactionNatureCode = SetCodeTypeValue<DeclarationGoodsShipmentGovernmentAgencyGoodsItemDMExtensionsTransactionNatureCode>(supplierInvoiceItemPM.TransactionNatureCode);
             DMExtensions.ClaimReasonCode = SetCodeTypeValue<DeclarationGoodsShipmentGovernmentAgencyGoodsItemDMExtensionsClaimReasonCode>(supplierInvoiceItemPM.ClaimReasonCode);
             DMExtensions.ValuationAdjustment = GetGoodsItemValuationAdjustment(supplierInvoiceItemPM);
