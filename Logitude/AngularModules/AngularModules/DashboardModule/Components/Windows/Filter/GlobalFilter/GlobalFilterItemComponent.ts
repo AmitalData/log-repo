@@ -17,7 +17,7 @@ export class GlobalFilterItemComponent implements OnInit {
     public DateGroupCodes = ['Day', 'Week', 'Month', 'Quarter', 'Year'];
     public DataContext = this;
     public UIProperties: UIProperties = new UIProperties;
-    private ObjectTableName: string = 'GlobalFilterItem';
+    public ObjectTableName: string = 'GlobalFilterItem';
 
     ngOnInit(): void {
         this.FillOperators();
