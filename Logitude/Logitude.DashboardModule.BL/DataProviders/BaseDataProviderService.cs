@@ -16,16 +16,19 @@ using System.Linq;
 namespace Logitude.DashboardModule.BL.DataProviders
 {
     public abstract class BaseDataProviderService
-    {
+    {   
         internal WidgetPM _Widget;
         internal AnalyticsFactsMetaData _Entity;
         internal Dictionary<string, AnalyticsFactsFieldsMetaData> _EntityFields;
         private AnalyticsFactsFieldsMetaDataRepository analyticsFactsFieldsMetaDataRepository;
         private string[] Months = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+        internal GlobalFilterService.GlobalQueryFilterItem compareWithPreviousFilterItem;
 
         protected BaseDataProviderService(WidgetPM widget, AnalyticsFactsMetaData entity)
         {
-            widget.Filters = new GlobalFilterService(widget, entity).AddGlobalFilters();
+            var globalFilterService = new GlobalFilterService(widget, entity, widget.TypeCode);
+            widget.Filters = globalFilterService.AddGlobalFilters();
+            this.compareWithPreviousFilterItem = globalFilterService.compareWithPreviousFilterItem;
             this._Widget = widget;
             this._Entity = entity;
             analyticsFactsFieldsMetaDataRepository = new AnalyticsFactsFieldsMetaDataRepository(0);

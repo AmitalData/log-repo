@@ -52,6 +52,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     public Abbreviations = ['1k', '10k', '100k', '1M', '10M', '100M'];
     public isMeasureNumber: boolean = false;
     public IsDisplaySettingVisibile: boolean = false;
+    public IsTimeOverTimeVisible: boolean = false;
 
     constructor() {
         super();
@@ -339,7 +340,7 @@ export class AddEditWidgetComponent extends BaseComponent {
     }
 
     SetUIProprtiesForDisplaySettings() {
-        if (this.TypeCode != "kpi" || (this.WidgetMeasuresList[0].MeasureCode != "Count" && !AppTool.IsNullOrEmpty(this.WidgetMeasuresList[0].MeasureFieldId) && !this.WidgetMeasuresList[0].IsNumeric)) {
+        if (this.TypeCode != "kpi" || (this.WidgetMeasuresList[0].MeasureCode != "Count" && (AppTool.IsNullOrEmpty(this.WidgetMeasuresList[0].MeasureFieldId) || !this.WidgetMeasuresList[0].IsNumeric))) {
             this.UIProperties.SetEnabled("DecimalPlaces", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("UseNumberAbbreviation", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("ThousandSeparator", this.ObjectTableName, false);

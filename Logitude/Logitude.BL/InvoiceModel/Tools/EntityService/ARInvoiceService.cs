@@ -1330,12 +1330,26 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         }
         private void InitializeDueDate()
         {
+            var isFullAccountingActivated = IsFullAccountingActivated(entityPM.Tenant);
             DateTime? expectedDueDate = this.GetExpectedDueDate();
-
-            if (entityPM.DueDate == null || (expectedDueDate != null && expectedDueDate != entityPM.DueDate))
+            if (isFullAccountingActivated)
             {
-                entityPM.DueDate = expectedDueDate.Value.Date;
+                if (entityPM.DueDate == null)
+                {
+                    entityPM.DueDate = expectedDueDate.Value.Date;
+                }
+                else
+                {
+                    entityPM.DueDate = entityPM.DueDate.Value.Date;
+                }
             }
+            else {
+                if (entityPM.DueDate == null || (expectedDueDate != null && expectedDueDate != entityPM.DueDate))
+                {
+                    entityPM.DueDate = expectedDueDate.Value.Date;
+                }
+            }
+            
         }
         private DateTime? GetExpectedDueDate()
         {

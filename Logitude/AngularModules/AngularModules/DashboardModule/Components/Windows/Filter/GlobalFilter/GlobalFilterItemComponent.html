@@ -76,7 +76,7 @@
                     *ngIf="ShowDateGroups()">
                 </ComboBox>
 
-                <div class="dl-center-flex" style="gap: 4px;" *ngIf="FilterItem.Operator == 'Previous' || FilterItem.Operator == 'Between'">
+                <div class="dl-center-flex" style="gap: 4px;" *ngIf="HasKpiChart && (FilterItem.Operator == 'Previous' || FilterItem.Operator == 'Between')">
                     <CheckBox 
                         [IsChecked]="FilterItem.CompareWithPrevious" 
                         (Checked)="FilterItem.CompareWithPrevious = $event">
