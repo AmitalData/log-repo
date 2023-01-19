@@ -348,6 +348,8 @@ export class SupplierInvoiceItemCertificatesComponent extends BaseComponent {
         var errors: string[] = [];
         this.isValid = true;
         this.inValid = false;
+        const decPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
+        const isExport: boolean = decPM.direction == 'E'
 
         for (let item of this.invoiceItemPM.SupplierInvioceItemCertificats) {
             if (!AppTool.IsNullOrEmpty(item.ApprovalRequestNumber)) {
@@ -372,7 +374,7 @@ export class SupplierInvoiceItemCertificatesComponent extends BaseComponent {
                         this.isValid = false;
                         this.inValid = true;
                     }
-                    if (!AppTool.IsNullOrEmpty(item.CertificateExemptionTypeCode) || !AppTool.IsNullOrEmpty(item.CustomsAttachmentID)) {
+                    if (!AppTool.IsNullOrEmpty(item.CertificateExemptionTypeCode) || (!isExport && !AppTool.IsNullOrEmpty(item.CustomsAttachmentID))) {
                         this.inValid = true;
                         this.notMandatoryIsNotEmpty = true;
                     }
@@ -386,7 +388,7 @@ export class SupplierInvoiceItemCertificatesComponent extends BaseComponent {
                             this.inValid = true;
                         }
 
-                        if (!AppTool.IsNullOrEmpty(item.CertificateNumber) || !AppTool.IsNullOrEmpty(item.ResConfirmationTypeCode) || !AppTool.IsNullOrEmpty(item.CustomsAttachmentID)) {
+                        if (!AppTool.IsNullOrEmpty(item.CertificateNumber) || !AppTool.IsNullOrEmpty(item.ResConfirmationTypeCode) || (!isExport && !AppTool.IsNullOrEmpty(item.CustomsAttachmentID))) {
                             this.inValid = true;
                             this.notMandatoryIsNotEmpty = true;
 
