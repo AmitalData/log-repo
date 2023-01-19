@@ -144,6 +144,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     declarationPM.AgentRoleCode = declarationOrg.AgentRoleCode;
                     declarationPM.LoadingFactor = declarationOrg.LoadingFactor;
                     declarationPM.DealValue = declarationOrg.DealValue;
+                    declarationPM.IsConvertedDeclaration = declarationOrg.IsConvertedDeclaration;
                     declarationPM.CIFValue = declarationOrg.CIFValue;
                     declarationPM.TotalTax = declarationOrg.TotalTax;
                     declarationPM.DealValueWithFactor = declarationOrg.DealValueWithFactor;
