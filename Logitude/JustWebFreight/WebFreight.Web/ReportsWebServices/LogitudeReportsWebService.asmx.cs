@@ -3554,6 +3554,7 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicesRecored.AmountDueInLocalCurrency = apInvoice.AmountDueInLocalCurrency;
                 expenseChargesInLocalCurrency = expenseInvoiceLines.Sum(s => s.LocalCurrencyAmount);
                 invoicesRecored.PaidDate = apInvoice.PaidDate;
+                invoicesRecored.DueDate = apInvoice.DueDate.Value;
 
                 Card vendorCard = CardRepository.GetSingleCard(apInvoice.VendorId, tenant, false);
                 if(vendorCard != null)
