@@ -145,6 +145,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                     }
 
                     else {
+
                         this.setIdentifiersPlaceHolders();
                     }
 
@@ -157,7 +158,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
                 if (AppTool.IsNullOrEmpty(this.EntityPM.FinalCargoTypeCode) && this.DecPM.Direction == 'E' && this.DecPM.TransportModeId == 'A') {
                     this.EntityPM.IsDirty = true;
-                    this.EntityPM.FinalCargoTypeCode = "1";
+                    this.EntityPM.FinalCargoTypeCode = "36";
                 }
 
 
@@ -673,7 +674,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                         var datetime = new Date(Number(FlightDate.substring(0, 4)), Number(FlightDate.substring(4, 6)) - 1, Number(FlightDate.substring(6, 8)), 2, 2, 2);
                         if(Mawb != null && this.EntityPM != null){
                             this.MainAWB = Mawb;
-                            if (AppTool.IsNullOrEmpty(this.EntityPM.FinalManifestNumber) && this.DecPM.Direction == 'E' && this.DecPM.TransportModeId == 'A'){
+                            if (AppTool.IsNullOrEmpty(this.EntityPM.FinalManifestNumber) && this.DecPM.Direction == 'E' && (this.DecPM.TransportModeId == 'A' || this.DecPM.TransportModeId == 'O')){
                                 this.EntityPM.IsDirty = true;
                                 this.EntityPM ? this.EntityPM.FinalManifestNumber = this.EntityPM.MAIN_AWB : null;
                             }
