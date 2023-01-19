@@ -302,6 +302,7 @@ Dashboard-menu-oneRow {
     padding-top: 4px;
     padding-left: 8px;
     padding-bottom: 2px;
+    width: 100%;
 }
 
 .dl-tab-text {
@@ -309,4 +310,17 @@ Dashboard-menu-oneRow {
     font-weight: 500;
     font-size: 11px;
     font-family: 'Manrope';
+}
+
+.dl-tab-exit-container {
+    width: 8px;
+    min-width: 8px;
+    max-width: 8px;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 1200px) {
+    .dl-tab-exit-container {
+        display: none;
+    }
 }

@@ -8,6 +8,7 @@ using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
 {
@@ -93,7 +94,7 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
         {
             var groupByParts = BuildGroupsParts();
             var value = GetValueQuery(measure.MeasureCode, measureField);
-
+            var searchQuery = GetSearchQuery<T>(resultQueryable);
             return $@"select  {BuildGroupsSelectQuery(groupByParts)}
                               {value} as Value 
                               From {_Entity.TableName} as data
@@ -101,7 +102,24 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
                                    {CreateFirstGroupSortedQuery<T>(measure, measureField, resultQueryable, groupByParts[0])}
                               ) sortedData On {groupByParts[0].GroupById} = sortedData.Id
                               {BuildGroupsJoinQuery(groupByParts)}
+                              WHERE {searchQuery}
                               group by {BuildGroupsGroupQuery(groupByParts)},sortedData.indx order by sortedData.indx";
+        }
+
+        private string GetSearchQuery<T>(IQueryable<T> resultQueryable)
+        {
+            var s = resultQueryable.ToQueryStringWithParameter();
+            var after = "WHERE ";
+            int ix = s.IndexOf(after);
+            s = s.Substring(ix + after.Length);
+            s = " " + s;
+
+            int pFrom = s.IndexOf("[") + "[".Length;
+            int pTo = s.IndexOf("].");
+            String replacedString = s.Substring(pFrom, pTo - pFrom);
+
+            string replace = "data";
+            return Regex.Replace(s, replacedString, replace);
         }
 
         private string CreateFirstGroupSortedQuery<T>(WidgetMeasurePM measure, AnalyticsFactsFieldsMetaData measureField, IQueryable<T> resultQueryable, GroupByFieldQueryParts part)
