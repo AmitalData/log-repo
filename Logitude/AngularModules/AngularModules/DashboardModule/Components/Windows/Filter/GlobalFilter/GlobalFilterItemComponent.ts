@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { UIProperties } from "Infrastructure/Components/LogitudeComponents/UIProperties";
+import { DateTool } from "Infrastructure/Tools";
 import { FieldValueResolver } from "Infrastructure/Utilities/FieldValueResolver";
 import { GlobalFilterItem } from "./GlobalFilterItem";
 
@@ -16,6 +17,7 @@ export class GlobalFilterItemComponent implements OnInit {
     public DateGroupCodes = ['Day', 'Week', 'Month', 'Quarter', 'Year'];
     public DataContext = this;
     public UIProperties: UIProperties = new UIProperties;
+    private ObjectTableName: string = 'GlobalFilterItem';
 
     ngOnInit(): void {
         this.FillOperators();
@@ -126,6 +128,7 @@ export class GlobalFilterItemComponent implements OnInit {
 
     public DatePickerCondationValueChange(date) {
         this.FilterItem.FieldValue = date ? FieldValueResolver.ConvertUTCDateToString(date, "TreeFilter") : "";
+        this.ValidateDate();
     }
 
     public ShowFirstDatePicker() {
@@ -135,6 +138,7 @@ export class GlobalFilterItemComponent implements OnInit {
 
     public SecondDatePickerCondationValueChange(date) {
         this.FilterItem.FieldValue2 = date ? FieldValueResolver.ConvertUTCDateToString(date, "TreeFilter") : "";
+        this.ValidateDate();
     }
 
     public ShowSecondDatePicker() {
@@ -153,6 +157,16 @@ export class GlobalFilterItemComponent implements OnInit {
     public IsNotEmptyNotEmtyOperator(item: GlobalFilterItem) {
         return item.Operator && item.Operator != 'IsEmpty' && item.Operator != 'IsNotEmpty';
     }
+
+    ValidateDate() {
+        if (this.FilterItem.Operator == "Between" && this.FilterItem.FieldValue && this.FilterItem.FieldValue2 && this.FilterItem.FieldValue > this.FilterItem.FieldValue2) {
+            this.UIProperties.SetValidity("FieldValue2", this.ObjectTableName, false, "To date must be larger than from date");
+        }
+        else {
+            this.UIProperties.SetValidity("FieldValue2", this.ObjectTableName, true, null);
+        }
+    }
+
 
 }
 
