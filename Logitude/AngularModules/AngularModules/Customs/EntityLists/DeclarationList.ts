@@ -206,7 +206,6 @@ export class DeclarationList {
 	ImporterNameForExport: string;
 	ExportTaxationDateTime: Date;
 	ExporterImporterCode: string;
-	DeclarationOfficeNameForExport: string;
 	AmedmentType: string;
 	AmendmentTypeName: string;
 	IsHatraDateNull: boolean;
@@ -221,6 +220,8 @@ export class DeclarationList {
 	PhysicalCheckName: string;
 	ReleaseStatusTypeCode: string;
 	ReferentUserName: string;
+	ExportDeclarationOfficeName: string;
+	DeclarationOfficeNameForExport: string;
 	
 }
  
