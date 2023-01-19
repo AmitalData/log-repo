@@ -170,15 +170,6 @@ namespace Logitude.CRM.BL.EntityDataMappings
                 entityPM.LeadSourceName = source.Name;
             }
 
-            //UserRepository userRepository = new UserRepository(entityPOCO.Tenant);
-           // UserPM userPM = 
-            User leadUser = userRepository.GetSingleUser(entityPOCO.LeadUserId, entityPOCO.Tenant, false);
-            if (leadUser != null)
-            {
-                UserQuery userQuery = new UserQuery(entityPM.Tenant);
-                UserPM userPM = userQuery.GetSinglePM(entityPM.LeadUserId, entityPM.Tenant);
-                entityPM.UserName = userPM.EnglishName;
-            }
 
             //entityPM.Field1 = new CustomFieldClass("Field1", "Opportunity", entityPOCO.Field1);
             //entityPM.Field2 = new CustomFieldClass("Field2", "Opportunity", entityPOCO.Field2);

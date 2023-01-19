@@ -34,7 +34,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                 iQueryable = filter.RunFilter(iQueryable);
             }
 
-            IQueryable<OpportunityList> query = (from a in iQueryable.Include("Customer").Include("LeadPartner").Include("Rating").Include("Stage").Include("Owner").Include("NextActivityType").Include("ActivityType").Include("BusinessUnit").Include("Contact").Include("OpportunityClosingReason").Include("LeadSource").Include("OpportunityType").Include("LastStage")
+            IQueryable<OpportunityList> query = (from a in iQueryable.Include("Customer").Include("LeadPartner").Include("Rating").Include("Stage").Include("Owner").Include("NextActivityType").Include("ActivityType").Include("BusinessUnit").Include("Contact").Include("OpportunityClosingReason").Include("LeadSource").Include("OpportunityType").Include("LastStage").Include("LeadUser")
                                                  select new OpportunityList()
                                                  {
                                                      Id = a.Id,
@@ -139,6 +139,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                      NumberOfConnectedQuotes = a.NumberOfConnectedQuotes,
                                                      LastStageIdBeforeClosure = a.LastStageIdBeforeClosure,
                                                      LastStageBeforeClosureName = a.LastStage == null ? "" : a.LastStage.Name,
+                                                     UserName = a.LeadUser == null ? null : a.LeadUser.Contact.EnglishName,
                                                  });
             return query;
 		}
