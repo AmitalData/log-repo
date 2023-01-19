@@ -9,6 +9,16 @@ namespace Logitude.Server.Tools.Messages
         public IProducer<long, string> ProducerBuilder { get; set; }
         public IProducer<long, string> TestingProducer { get; set; }
 
+        private static Producer producerInstatnce;
+
+        public static Producer GetInstatnce()
+        {
+            if (producerInstatnce == null)
+            {
+                producerInstatnce = new Producer();
+            }
+            return producerInstatnce;
+        }
 
         public Producer()
         {
