@@ -22,7 +22,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
         protected override void OnUpdating(ExportDeclarationClosingDataPM entityPM, ExportDeclarationClosingData entityPOCO)
         {
-            if(entityPM.FinalLoadingSite != null)
+
+            entityPM.FinalManifestNumber = !string.IsNullOrEmpty(entityPM.FinalManifestNumber) ? entityPM.FinalManifestNumber.Trim() : "";
+            entityPM.FinalSecondCargoId = !string.IsNullOrEmpty(entityPM.FinalSecondCargoId) ? entityPM.FinalSecondCargoId.Trim() : "";
+            entityPM.FinalThirdCargoId = !string.IsNullOrEmpty(entityPM.FinalThirdCargoId) ? entityPM.FinalThirdCargoId.Trim() : "";
+            if (entityPM.FinalLoadingSite != null)
             {
                 ICustomContext context = MainContext as CustomContext;
                 var query = new LoadingSiteTypeQueryService(context);
