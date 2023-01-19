@@ -31,6 +31,7 @@ import { CustDocMetaDataValuesWebService } from 'Customs/Services/WebServices/Cu
 import { CustomsDocumentMetaDataValuePM } from 'Customs/EntityPMs/CustomsDocumentMetaDataValuePM';
 import { SupplierInvoiceItemLine } from '../DeclarationPayment/SupplierInvoiceSelectionComponent';
 import { SupplierInvoiceItemList } from 'Customs/EntityLists/Extended/SupplierInvoiceItemList';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
     selector: 'ExportDeclarationClosingDataComponent',
@@ -407,7 +408,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                         CustomsDocumentsTickets954 = CustomsDocumentsTickets.filter(c => c.DocumentTypeCode == '954');
                         CustomsDocumentsTickets = CustomsDocumentsTickets.filter(c => c.DocumentTypeCode == 'IL_184' || c.DocumentTypeCode == 'IL_329');
 
-                        if (CustomsDocumentsTickets.length == 0) {
+                        if (CustomsDocumentsTickets.length == 0 && CustomsDocumentsTickets954.length==0) {
                             this.SupplierInvoiceItemList.forEach(supplierInvoiceItem => {
                                 SupplierInvoiceNumberList = this.DecPM.SupplierInvoices.find(s => s.InvoiceCounterKey == supplierInvoiceItem.CounterKey).InvoiceNumber;
                             });
@@ -419,6 +420,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                             for (var i = 0; i < CustomsDocumentsTickets.length; i++) {
                                 customsDocTickets = customsDocTickets + "," + CustomsDocumentsTickets[i].DocumentsFilingId;
                             }
+                            
                             customsDocTickets = customsDocTickets.substr(1, customsDocTickets.length - 1);
                             custDocsMetadataWebService.GetCustomsDocumentMetaDataValuesByCustomsDocumentFilingIds(customsDocTickets).subscribe((response2: ServiceResponse) => {
                                 MetadataValues = response2.Result;
@@ -531,7 +533,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     }
     ShowWarnningMessage(error: string) {
         this.CurrentSession.StopBusyIndicator();
-        this.ValidationErrors.push("לא אותרה צרופה מתאימה למסמך העדפה שצויין בחשבון" + " " + `${error}`)
+        this.ValidationErrors.push(TextCodeTranslator.Translate("Customs.ExportClosindData.O.NoFindTrufaToPreferenceDocument") + " " + `${error}`)
         var windowArgs: any = {};
         windowArgs.Errors = this.ValidationErrors;
         windowArgs.ComponentHeight = '328px';
