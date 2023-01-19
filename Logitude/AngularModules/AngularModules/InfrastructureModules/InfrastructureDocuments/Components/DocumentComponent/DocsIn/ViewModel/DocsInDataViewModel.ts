@@ -601,7 +601,7 @@ export class DocsInDataViewModel extends BaseComponent{
     ShowAttachExternal() {
  
 
-
+        this.FirstTime = true;
         this.IsEnableLinkAttachExternal = false;
         var windowArgs: any = {};
         windowArgs.EntityId = this.EntityId;

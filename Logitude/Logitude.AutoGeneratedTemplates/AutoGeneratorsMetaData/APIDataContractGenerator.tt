@@ -307,7 +307,7 @@ using <#=myspacestring#>
 				   }
 <#+}else{#>
 				
-				CustomFieldQueryService customFieldService = new CustomFieldQueryService(Tenant,"<#=ObjectTableName#>");
+				CustomFieldQueryService customFieldService = new CustomFieldQueryService(Tenant,"<#+if(ObjectTableName == "Card"){#><#=DCName #><#+}else{#><#=ObjectTableName#><#+}#>");
 				temp.CustomFields = customFieldService.CustomFieldCustomDataMapping(MyEntityPM, Tenant);
 				 
 <#+}#>
@@ -588,7 +588,7 @@ using <#=myspacestring#>
 					}
 <#+}else{#>
 
-				CustomFieldQueryService customFieldService = new CustomFieldQueryService(Tenant,"<#=ObjectTableName#>");
+				CustomFieldQueryService customFieldService = new CustomFieldQueryService(Tenant,"<#+if(ObjectTableName == "Card"){#><#=DCName #><#+}else{#><#=ObjectTableName#><#+}#>");
 				if (<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#> != null)
 				{
 					 customFieldService.CustomFieldCustomDataMappingAndValidatin(MyEntity.CustomFields, temp, Tenant);

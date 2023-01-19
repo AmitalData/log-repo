@@ -69,6 +69,8 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
     public List<CustomField> CustomFields { get; set; }
     
     public CustomerSize CustomerSize { get; set; }
+    
+    public bool IsPotential { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

@@ -1036,7 +1036,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private ShipmentRoutingLeg AddPickUpLeg(ShipmentPM shipment)
         {
-            var firstPickup = shipment.ShipmentPickUps.OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
+            var shipmentPickUpDeliveries = repository.context
+                                                    .ShipmentPickUpDeliveries
+                                                    .Include("FromAddressCountry")
+                                                    .Include("ToAddressCountry")
+                                                    .Where(a => a.ShipmentId == shipment.Id);
+
+            var firstPickup = shipmentPickUpDeliveries?.Where(d => d.PickUpDeliveryTypeCode == "PICK")
+                                                       .OrderBy(s => s.PickUpDeliveryNumber)
+                                                       .FirstOrDefault();
+           
             if (firstPickup == null)
             {
                 return null;
@@ -1048,8 +1057,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 Title = "Shipment.G.PickupInformation",
                 LegHeader = "Pickup",
-                FromPort = shipment.PreCarriageFromPortName + ", " + shipment.PreCarriageFromPortCountryCode,
-                ToPort = shipment.PreCarriageToPortName + ", " + shipment.PreCarriageToPortCountryCode,
+                FromPort = "",
+                ToPort = "",
                 TransportMode = GetTransportModeName("I"),
                 DepartureDate = firstPickup.ATD != null ? firstPickup.ATD : firstPickup.ETD,
                 ArrivalDate = firstPickup.ATA != null ? firstPickup.ATA : firstPickup.ETA,
@@ -1060,7 +1069,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 CarrierNumberLabel = "Trucker.F.TruckerNumber",
                 CarrierLabel = "Trucker.F.EnglishName",
             };
-
+            FillRountingPickUpDeliveryFromPortAndCountry(pickUp, firstPickup, shipment.Tenant);
+            FillRountingPickUpDeliveryToPortAndCountry(pickUp, firstPickup, shipment.Tenant);
             return pickUp;
         }
 
@@ -1199,7 +1209,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private ShipmentRoutingLeg AddDeliveryLeg(ShipmentPM shipment)
         {
-            ShipmentDeliveryPM finalDelivery = shipment.ShipmentDeliveries.Where(d => d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+            var shipmentPickUpDeliveries = repository.context
+                                                     .ShipmentPickUpDeliveries
+                                                     .Include("FromAddressCountry")
+                                                     .Include("ToAddressCountry")
+                                                     .Where(a => a.ShipmentId == shipment.Id);
+
+            var finalDelivery = shipmentPickUpDeliveries?.Where(d => d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+       
             if (finalDelivery == null)
             {
                 return null;
@@ -1211,8 +1228,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 Title = "Shipment.G.DeliveryInformation",
                 LegHeader = "Delivery",
-                FromPort = shipment.PreCarriageFromPortName + ", " + shipment.PreCarriageFromPortCountryCode,
-                ToPort = shipment.PreCarriageToPortName + ", " + shipment.PreCarriageToPortCountryCode,
+                FromPort = "",
+                ToPort = "",
                 TransportMode = GetTransportModeName("I"),
                 DepartureDate = finalDelivery.ATD != null ? finalDelivery.ATD : finalDelivery.ETD,
                 DepartureDateType = finalDelivery.ATD != null ? "ATD" : (finalDelivery.ETD != null ? "ETD" : null),
@@ -1224,7 +1241,109 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 CarrierLabel = "Trucker.F.EnglishName",
             };
 
+            FillRountingPickUpDeliveryFromPortAndCountry(delivery, finalDelivery, shipment.Tenant);
+            FillRountingPickUpDeliveryToPortAndCountry(delivery, finalDelivery, shipment.Tenant);
             return delivery;
+        }
+
+        private void FillRountingPickUpDeliveryToPortAndCountry(ShipmentRoutingLeg leg, ShipmentPickUpDelivery pickUpDelivery, int tenant)
+        {
+            switch (pickUpDelivery.PickUpDeliveryToTypeCode)
+            {
+                case "PART":
+                    {
+                        if (!string.IsNullOrEmpty(pickUpDelivery.ToPartnerCardId))
+                        {
+                            if (!string.IsNullOrEmpty(pickUpDelivery.ToAddressId))
+                            {
+                                Address myPartnerAddress = addressRepository.GetSingleAddress(pickUpDelivery.ToAddressId, tenant);
+                                if (myPartnerAddress != null)
+                                {
+                                    leg.ToPort = myPartnerAddress.City + ", " + myPartnerAddress.Country?.Code;
+                                }
+                            }
+                            else
+                            {
+                                Address myPartnerAddress = addressRepository.GetMainAddressByCardId(pickUpDelivery.ToPartnerCardId, tenant);
+                                if (myPartnerAddress != null)
+                                {
+                                    leg.ToPort = myPartnerAddress.City + ", " + myPartnerAddress.Country?.Code;
+                                }
+                            }
+                        }
+
+                        break;
+                    }
+
+                case "PORT":
+                    {
+                        if (!string.IsNullOrEmpty(pickUpDelivery.ToPortId))
+                        {
+                            PortPM myPort = PortQuery.GetSinglePort(tenant, pickUpDelivery.ToPortId, true);
+                            if (myPort != null)
+                            {
+                                leg.ToPort = myPort.EnglishName + ", " + myPort.CountryCode;
+                            }
+                        }
+
+                        break;
+                    }
+
+                case "CASL":
+                    {
+                        leg.ToPort = pickUpDelivery.ToAddressCity + ", " + pickUpDelivery.ToAddressCountry?.Code;
+                        break;
+                    }
+            }
+        }
+
+        private void FillRountingPickUpDeliveryFromPortAndCountry(ShipmentRoutingLeg leg, ShipmentPickUpDelivery pickUpDelivery, int tenant)
+        {
+            switch (pickUpDelivery.PickUpDeliveryFromTypeCode)
+            {
+                case "PART":
+                    {
+                        if (!string.IsNullOrEmpty(pickUpDelivery.FromPartnerCardId))
+                        {
+                            if (!string.IsNullOrEmpty(pickUpDelivery.FromAddressId))
+                            {
+                                Address myPartnerAddress = addressRepository.GetSingleAddress(pickUpDelivery.FromAddressId, tenant);
+                                if (myPartnerAddress != null)
+                                {
+                                    leg.FromPort = myPartnerAddress.City + ", " + myPartnerAddress.Country?.Code;
+                                }
+                            }
+                            else
+                            {
+                                Address myPartnerAddress = addressRepository.GetMainAddressByCardId(pickUpDelivery.FromPartnerCardId, tenant);
+                                if (myPartnerAddress != null)
+                                {
+                                    leg.FromPort = myPartnerAddress.City + ", " + myPartnerAddress.Country?.Code;
+                                }
+                            }
+                        }
+                        break;
+                    }
+
+                case "PORT":
+                    {
+                        if (!string.IsNullOrEmpty(pickUpDelivery.FromPortId))
+                        {
+                            PortPM myPort = PortQuery.GetSinglePort(tenant, pickUpDelivery.FromPortId, true);
+                            if (myPort != null)
+                            {
+                                leg.FromPort = myPort.EnglishName + ", " + myPort.CountryCode;
+                            }
+                        }
+                        break;
+                    }
+
+                case "CASL":
+                    {
+                        leg.FromPort = pickUpDelivery.ToAddressCity + ", " + pickUpDelivery.ToAddressCountry?.Code;
+                        break;
+                    }
+            }
         }
 
         private string GetMasterTextCode(ShipmentPM shipment)

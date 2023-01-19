@@ -57,7 +57,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        ReplacedDataId = a.ReplacedDataId,
                        ObjectTableId = a.ObjectTableId,
                        ComputingPartnrCode = a.ComputingPartnrCode,
-                   }).ToList();
+                   }).OrderBy(a => a.Id).ToList();
 
             return shipmentUnassignedFields;
         }

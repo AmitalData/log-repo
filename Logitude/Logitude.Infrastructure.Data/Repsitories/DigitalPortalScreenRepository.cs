@@ -14,18 +14,23 @@ namespace Logitude.Infrastructure.Data.Repsitories
 {
    public partial class DigitalPortalScreenRepository:IRepository<DigitalPortalScreen>
    {
-        public IQueryable<DigitalPortalScreen> GetDigitalPortalScreens(int tenant, string objectTableId, string screenCode)
+        public IQueryable<DigitalPortalScreen> GetDigitalPortalScreens(int tenant, string objectTableId, string screenCode, string profileCode = "")
         {
             return context.DigitalPortalScreens
                           .Where(a => (a.Tenant == tenant || a.Tenant == 0)
                                       && a.ObjectTableId.Equals(objectTableId)
-                                      && (string.IsNullOrEmpty(screenCode) || a.ScreenCode.Equals(screenCode)));
+                                      && (string.IsNullOrEmpty(screenCode) || a.ScreenCode.Equals(screenCode))
+                                      && (a.DigitalProfile.Code.Equals(profileCode)));
         }
         
-        public IQueryable<DigitalPortalScreen> GetDigitalPortalScreenNames(int tenant)
+        public IQueryable<DigitalPortalScreen> GetDigitalPortalScreenNames(int tenant, string profileCode)
         {
-            return context.DigitalPortalScreens
-                          .Where(a => a.Tenant == tenant);
+            return context.DigitalPortalScreens.Where(a => a.Tenant == tenant && a.DigitalProfile.Code.Equals(profileCode));
+        }
+        
+        public IQueryable<DigitalPortalScreen> GetDigitalPortalScreenNamesTenant0()
+        {
+            return context.DigitalPortalScreens.Where(a => a.Tenant == 0);
         }
 
 

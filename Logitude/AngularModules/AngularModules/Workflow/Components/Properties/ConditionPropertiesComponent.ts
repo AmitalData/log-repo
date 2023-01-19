@@ -19,7 +19,8 @@ export class ConditionPropertiesComponent extends BaseComponent {
     public IsNew: boolean;
     public WorkflowEntity: string;
     public Name: string = null;
-    public ConditionLabel:  string = null;
+    public MetLabel: string = null;
+    public OtherwiseLabel: string = null;
     public Conditions: Condition[];
     public ConditionsOperation: string;
     public IsValidConditions: boolean = true;
@@ -29,7 +30,7 @@ export class ConditionPropertiesComponent extends BaseComponent {
     public FlowObject: any;
     public CurrentNodeId: string;
     public FlowObjectFields: ObjectFieldList[];
-    
+
     public CurrentSession = SessionLocator.SelectedSession;
 
     SetWindowArgs(args: any) {
@@ -38,7 +39,7 @@ export class ConditionPropertiesComponent extends BaseComponent {
         this.FlowObject = args.FlowObject ? args.FlowObject : null;
         this.CurrentNodeId = args.CurrentNodeId ? args.CurrentNodeId : null;
         this.FlowObjectFields = args.FlowObjectFields ? args.FlowObjectFields : [];
-        
+
         this.initialize();
     }
 
@@ -49,17 +50,21 @@ export class ConditionPropertiesComponent extends BaseComponent {
             this.setWorkflowEntityTable();
 
             this.Name = this.Data["label"] || this.Data["name"] || null;
-            this.ConditionLabel = this.Data["conditionLabel"] || null;
-    
+            this.MetLabel = this.Data["metLabel"] || "TRUE";
+            this.Data["metLabel"] = this.MetLabel;
+
+            this.OtherwiseLabel = this.Data["otherwiseLabel"] || "FALSE";
+            this.Data["otherwiseLabel"] = this.OtherwiseLabel;
+
             this.Conditions = this.Data["conditions"] || [];
             this.ConditionsOperation = this.Data["conditionsOperation"] || ConditionOperations.And;
-    
+
             if (this.Conditions.length == 0) {
                 this.IsValidConditions = false;
                 let condition = new Condition();
                 this.Conditions.push(condition);
             }
-    
+
             this.setUIProperties();
         }
         else {
@@ -77,7 +82,7 @@ export class ConditionPropertiesComponent extends BaseComponent {
     }
 
     updateName(name: string) {
-        if(this.IsNew){
+        if (this.IsNew) {
             this.Data["name"] = name;
         }
 
@@ -87,9 +92,16 @@ export class ConditionPropertiesComponent extends BaseComponent {
         this.setUIProperties();
     }
 
-    updateConditionLabel(conditionLabel: string) {
-        this.Data["conditionLabel"] = conditionLabel;
-        this.ConditionLabel = conditionLabel;
+    updateMetLabel(metLabel: string) {
+        this.Data["metLabel"] = metLabel;
+        this.MetLabel = metLabel;
+
+        this.setUIProperties();
+    }
+
+    updateOtherwiseLabel(otherwiseLabel: string) {
+        this.Data["otherwiseLabel"] = otherwiseLabel;
+        this.OtherwiseLabel = otherwiseLabel;
 
         this.setUIProperties();
     }
@@ -100,7 +112,8 @@ export class ConditionPropertiesComponent extends BaseComponent {
 
     setUIProperties() {
         this.UIProperties.SetRequired("Name", null, AppTool.IsNullOrEmpty(this.Name));
-        this.UIProperties.SetRequired("ConditionLabel", null, AppTool.IsNullOrEmpty(this.ConditionLabel));
+        this.UIProperties.SetRequired("MetLabel", null, AppTool.IsNullOrEmpty(this.MetLabel));
+        this.UIProperties.SetRequired("OtherwiseLabel", null, AppTool.IsNullOrEmpty(this.OtherwiseLabel));
     }
 
     cancelButtonClicked() {
@@ -113,13 +126,13 @@ export class ConditionPropertiesComponent extends BaseComponent {
             let notValidUIProperties = this.UIProperties.UIPropertyList.filter(u => !u.ValidValue);
             if (notValidUIProperties.length === 0 && this.IsValidConditions) {
                 this.setConditionsData();
-    
+
                 this.CurrentSession.CurrentWindow.Close(this.Data);
             } else {
                 let validationErrors = notValidUIProperties.map(t => { return t.ValidationError; });
                 this.ValidationErrorsList = validationErrors;
-    
-                if (!this.IsValidConditions) 
+
+                if (!this.IsValidConditions)
                     this.ValidationErrorsList.push("Invalid Conditions");
             }
         }

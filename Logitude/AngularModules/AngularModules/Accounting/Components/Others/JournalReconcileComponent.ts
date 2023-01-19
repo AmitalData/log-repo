@@ -357,12 +357,13 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
         this.BuildReconciliationLines(reconciliationLines);
 
         if (isSplitJournal && AppTool.IsNullOrEmpty(this.AccountingDate)) {
+            this.DropdowndisplayToggle();
             const confirmMsg = TextCodeTranslator.Translate('Journal.RE.AccountingDateConfrimation');
             const confirmWindow = new ConfirmWindow();
             confirmWindow.Width = 400;
             confirmWindow.Left = '25%';
             confirmWindow.YesButtonText = TextCodeTranslator.Translate('Customs.General.B.OK');
-            confirmWindow.NoButtonText = TextCodeTranslator.Translate('Customs.General.B.Cancel');
+            confirmWindow.NoButtonText = TextCodeTranslator.Translate('Journal.RE.AccountingDateCancellation');
             confirmWindow.Show(confirmMsg);
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {

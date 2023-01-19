@@ -17,11 +17,11 @@ export class DigitalCustomizationService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/DigitalCustomization';
     }
 
-    public GetDigitalPortalScreens(objectTableId: string, screenCode: string) {
+    public GetDigitalPortalScreens(objectTableId: string, screenCode: string, profileCode: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetDigitalPortalScreens?objectTableId='  + objectTableId + "&screenCode=" + screenCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetDigitalPortalScreens?objectTableId=' + objectTableId + "&screenCode=" + screenCode + "&profileCode=" + profileCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -32,11 +32,11 @@ export class DigitalCustomizationService {
     }
 
 
-    public GetDigitalPortalScreenNames() {
+    public GetDigitalPortalScreenNames(profileCode: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetDigitalPortalScreenNames?', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetDigitalPortalScreenNames?profileCode=' + profileCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -175,11 +175,14 @@ export class DigitalPortalScreenUpdateModel {
     public Content: string;
     public DraftContent: string;
     public IsDraft: boolean;
+    public ProfileId: string;
+    public ProfileCode: string;
 }
 
 export class AddCustomFieldRequest {
     public ObjectTableId: string;
     public ProfileId: string;
+    public ProfileCode: string;
     public FieldCode: string;
     public DefaultText: string;
     public TextCode: string;

@@ -50,7 +50,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 if (helper.CheckIfFieldInuse(new CheckObjectFieldExistenceRequest 
                                              { 
                                                  FieldCode = addCustomFieldRequest.FieldCode, 
-                                                 ProfileId = addCustomFieldRequest.ProfileId, 
+                                                 ProfileCode = addCustomFieldRequest.ProfileCode, 
                                                  ObjectTableId = addCustomFieldRequest.ObjectTableId
                                              }, tenant))
                 {
@@ -60,14 +60,14 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var digitalFieldSecurityQuery = new DigitalFieldSecurityQueryService(tenant);
                 var customDigitalFieldSecurity = digitalFieldSecurityQuery.GetDigitalFieldSecurityQuery(tenant, 
                                                                                                         addCustomFieldRequest.ObjectTableId,
-                                                                                                        addCustomFieldRequest.ProfileId);
+                                                                                                        addCustomFieldRequest.ProfileCode);
 
                 var items = new List<DigitalFeildSecurityObject>();
                 if (customDigitalFieldSecurity == null)
                 {
                     var defaultDigitalFieldSecurity = digitalFieldSecurityQuery.GetDigitalFieldSecurityQuery(0,
                                                                                          addCustomFieldRequest.ObjectTableId,
-                                                                                         addCustomFieldRequest.ProfileId);
+                                                                                         addCustomFieldRequest.ProfileCode);
 
                     items = JsonConvert.DeserializeObject<List<DigitalFeildSecurityObject>>(defaultDigitalFieldSecurity.DefaultSettings);
 
@@ -110,13 +110,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var textCodeQuery = new DigitalTextCodeQueryService(tenant);
                 var customTextCodes = textCodeQuery.GetDigitalTextCodesQuery(tenant,
                                                                              addCustomFieldRequest.ObjectTableId,
-                                                                             addCustomFieldRequest.ProfileId);
+                                                                             addCustomFieldRequest.ProfileCode);
 
                 if (customTextCodes == null)
                 {
                     var defaultTextCodes = textCodeQuery.GetDigitalTextCodesQuery(0,
                                                                                   addCustomFieldRequest.ObjectTableId,
-                                                                                  addCustomFieldRequest.ProfileId);
+                                                                                  addCustomFieldRequest.ProfileCode);
 
                     var customCodesMappedObject = JsonConvert.DeserializeObject<List<DigitalTextCodeUpdateObject>>(defaultTextCodes.Labels);
 
@@ -184,15 +184,15 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 email = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                if (checkObjectFieldExistenceRequest.ProfileId == null)
+                if (checkObjectFieldExistenceRequest.ProfileCode == null)
                 {
                     var digitalProfileQueryService = new DigitalProfileQueryService(tenant);
-                    checkObjectFieldExistenceRequest.ProfileId = digitalProfileQueryService.GetDigitalProfileByName(tenant, "Customer").Id;
+                    checkObjectFieldExistenceRequest.ProfileCode = digitalProfileQueryService.GetDigitalProfileByName(tenant, "Customer").Code;
                 }
 
                 var helper = new DigitalFieldSecuritesHelper();
-
-                return Request.CreateResponse(HttpStatusCode.OK, helper.CheckIfFieldInuse(checkObjectFieldExistenceRequest, tenant));
+                var res = helper.CheckIfFieldInuse(checkObjectFieldExistenceRequest, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, res);
             }
             catch (AutenticationException ex)
             {
@@ -321,8 +321,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 var helper = new DigitalFieldSecuritesHelper();
 
-                var defaultData = helper.GitDigitalSecuritesFeilds(filters.ObjectTableId, filters.ProfileId, 0);
-                var customData = helper.GitDigitalSecuritesFeilds(filters.ObjectTableId, filters.ProfileId, authToken.Tenant);
+                var defaultData = helper.GitDigitalSecuritesFeilds(filters.ObjectTableId, filters.ProfileCode, 0);
+                var customData = helper.GitDigitalSecuritesFeilds(filters.ObjectTableId, filters.ProfileCode, authToken.Tenant);
 
                 foreach (var item in listResult)
                 {
@@ -392,14 +392,14 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         [HttpGet]
         [Route("DigitalCustomization/GetDigitalPortalScreenNames")]
-        public HttpResponseMessage GetDigitalPortalScreenNames()
+        public HttpResponseMessage GetDigitalPortalScreenNames(string profileCode)
         {
             int tenant = 0;
             string email = "";
             try
             {
                 var screenQueryService = new DigitalPortalScreenQueryService(tenant);
-                var digitalPortalScreens = screenQueryService.GetDigitalPortalScreenNamesQuery(tenant);
+                var digitalPortalScreens = screenQueryService.GetDigitalPortalScreenNamesQuery(tenant, profileCode);
                 return Request.CreateResponse(HttpStatusCode.OK, digitalPortalScreens);
             }
             catch (Exception ex)
@@ -411,7 +411,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
         [HttpGet]
         [Route("DigitalCustomization/GetDigitalPortalScreens")]
-        public HttpResponseMessage GetDigitalPortalScreens(string objectTableId, string screenCode = "")
+        public HttpResponseMessage GetDigitalPortalScreens(string objectTableId, string screenCode = "", string profileCode = "")
         {
             int tenant = 0;
             string email = "";
@@ -439,7 +439,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 }
 
                 var screenQueryService = new DigitalPortalScreenQueryService(tenant);
-                var digitalPortalScreens = screenQueryService.GetDigitalPortalScreensQuery(tenant, objectTableId, screenCode);
+                var digitalPortalScreens = screenQueryService.GetDigitalPortalScreensQuery(tenant, objectTableId, screenCode, profileCode);
                 var data = digitalPortalScreens.FirstOrDefault(a => a.Tenant == tenant);
 
                 if (data != null)
@@ -501,15 +501,21 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 var digitalPreDefinedComponentQueryService = new DigitalPortalScreenQueryService(tenant);
 
-                var tenantDigitalPortalScreen = digitalPreDefinedComponentQueryService.GetDigitalPortalScreensQuery(tenant, digitalPortalScreenUpdateModel.ObjectTableId, digitalPortalScreenUpdateModel.ScreenCode)
+                var tenantDigitalPortalScreen = digitalPreDefinedComponentQueryService.GetDigitalPortalScreensQuery(tenant, 
+                                                                                                                    digitalPortalScreenUpdateModel.ObjectTableId,
+                                                                                                                    digitalPortalScreenUpdateModel.ScreenCode,
+                                                                                                                    digitalPortalScreenUpdateModel.ProfileCode)
                                                                                       .FirstOrDefault(a => a.Tenant == tenant);
 
                 DigitalPortalScreenList defaultTenantDigitalPortalScreen = null;
 
                 if (digitalPortalScreenUpdateModel.IsDraft && string.IsNullOrEmpty(digitalPortalScreenUpdateModel.Content))
                 {
-                     defaultTenantDigitalPortalScreen = digitalPreDefinedComponentQueryService.GetDigitalPortalScreensQuery(tenant, digitalPortalScreenUpdateModel.ObjectTableId, digitalPortalScreenUpdateModel.ScreenCode)
-                                                                      .FirstOrDefault(a => a.Tenant == 0);
+                     defaultTenantDigitalPortalScreen = digitalPreDefinedComponentQueryService.GetDigitalPortalScreensQuery(tenant,
+                                                                                                                            digitalPortalScreenUpdateModel.ObjectTableId,
+                                                                                                                            digitalPortalScreenUpdateModel.ScreenCode,
+                                                                                                                            digitalPortalScreenUpdateModel.ProfileCode)
+                                                                                              .FirstOrDefault(a => a.Tenant == 0);
                 }
 
 
@@ -524,6 +530,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                  : digitalPortalScreenUpdateModel.Content,
                         DraftContent =  digitalPortalScreenUpdateModel.DraftContent,
                         Tenant = tenant,
+                        ProfileId = digitalPortalScreenUpdateModel.ProfileId,
                         ScreenCode = digitalPortalScreenUpdateModel.ScreenCode,
                         ObjectTableId = digitalPortalScreenUpdateModel.ObjectTableId,
                         CreateDate = DateTime.UtcNow,

@@ -30,7 +30,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             IQueryable<ShipmentReceivable> iQueryable = (from a in repository.context.ShipmentReceivables
                                                          where a.ShipmentId == shipmentId && a.Tenant == tenant
-                                                         select a);
+                                                         select a).OrderBy(a => a.Id);
 
             List<ShipmentReceivablePM> shipmentReceivables = this.MapPocoToPM(iQueryable);
 
@@ -38,7 +38,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 IQueryable<ShipmentReceivable> iQueryableChilds = (from a in repository.context.ShipmentReceivables
                                                                      where a.ShipmentReceivableParentId == item.Id && a.Tenant == tenant
-                                                                     select a);
+                                                                     select a).OrderBy(a => a.Id);
 
                 item.ChildShipmentReceivables = this.MapPocoToPM(iQueryableChilds);
             }

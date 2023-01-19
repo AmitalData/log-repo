@@ -63,7 +63,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        Amount = a.Amount,
                        LineNumber = a.LineNumber,
                        ChargeableDays = a.ChargeableDays,
-                   }).ToList();
+                   }).OrderBy(a => a.Id).ToList();
 
             return storagePricings;
         }

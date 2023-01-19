@@ -166,14 +166,16 @@ import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
-import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClassAAA';
 <#+ if(entity.SupportSubEntity.ToString() == "true") {#>import { CustomChildEntity } from '../../Infrastructure/EntityPMs/CustomChildEntity';
+<#+}#>
+<#+ if(entity.ApplyGenericCustomFields.ToString() == "true") {#>import { CustomFieldsMainObjectPM } from '../../Infrastructure/EntityPMs/CustomFieldsMainObjectPMExtended';
 <#+}#>
 <#+ if(hasCompstionCustomField){#> import { ChildEntitiesCustomFieldPM } from '../../Infrastructure/EntityPMs/ChildEntitiesCustomFieldPMExtended';<#+}#>
 
-export class <#=tableName #>PM<#+ if(hasCompstionCustomField){#> extends ChildEntitiesCustomFieldPM<#+}#> {
+export class <#=tableName #>PM<#+ if(hasCompstionCustomField){#> extends ChildEntitiesCustomFieldPM<#+}#><#+ if(entity.ApplyGenericCustomFields.ToString() == "true"){#> extends CustomFieldsMainObjectPM<#+}#> {
 
-      @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
+      
       public UIProperties: UIProperties;
 	  <#+
 if(hasParent)
@@ -193,6 +195,8 @@ if(hasCompstionCustomField)
 }
 else{
 #>
+		        <#+ if(entity.ApplyGenericCustomFields.ToString() == "true"){#>super("<#=tableName #>");
+<#+}#>
                 this.EntityParentPM = _entityParentPM;
                 this.UIProperties = new UIProperties(this);
                 this.IsDirty = false;
@@ -205,6 +209,8 @@ else{
 }
 else{
 #>constructor() {
+          <#+ if(entity.ApplyGenericCustomFields.ToString() == "true"){#>super("<#=tableName #>");
+<#+}#>
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }

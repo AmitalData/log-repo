@@ -24,6 +24,8 @@ namespace Logitude.Infrastructure.Data.EntityLists
        public DateTime UpdateDate  { get; set; }
        [DataMember]
        public string Name  { get; set; }
+       [DataMember]
+       public string Code  { get; set; }
    }
 
 }

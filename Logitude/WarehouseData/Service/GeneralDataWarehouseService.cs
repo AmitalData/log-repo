@@ -254,6 +254,7 @@ namespace WarehouseData.Helper
  
             tableNameLists.Add(new TableClass() { TableName = "Container", DBTableName = "Containers", Dw_TableName = "dw_Containers", KeyName = "Id", DispayInScreen = true, HasConstraint = true, RelatedFactTables = new List<string> { "Fact_Containers" } });
             tableNameLists.Add(new TableClass() { TableName = "PackageType", DBTableName = "PackageTypes", Dw_TableName = "dw_PackageTypes", KeyName = "Id", HasNotSpecifiedValue = true, HasDimensionTable = true, DWObjectTableCode = "DIM_PackageTypes", BuildScriptName = "BuildPackageTypesDimensionTable", IncrementalScriptName = "UpdatePackageTypesDimensionTable", RelatedFactTables = GetAllFactTableLists(), DispayInScreen = true });
+            tableNameLists.Add(new TableClass() { IsCloseTable = true, TableName = "ARInvoiceTransferStatus", DBTableName = "ARInvoiceTransferStatus", Dw_TableName = "dw_ARInvoiceTransferStatus", KeyName = "Name", HasDimensionTable = true, DWObjectTableCode = "DIM_ARInvoiceTransferStatus", BuildScriptName = "BuildARInvoiceTransferStatusDimensionTable", IncrementalScriptName = "UpdateARInvoiceTransferStatusDimensionTable", HasConstraint = true, DispayInScreen = true, RelatedFactTables = new List<string> { "Fact_Charges", "Fact_Invoices", "Fact_ARInvoices" } });
 
 
             //Fact Table

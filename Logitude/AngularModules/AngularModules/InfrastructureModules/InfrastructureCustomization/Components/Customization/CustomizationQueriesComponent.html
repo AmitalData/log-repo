@@ -61,8 +61,40 @@
                                     </ng-template>
                                 </log-column>
                             </logitude-edit-grid>
-                    </div>
-</td>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div style="font-weight:bold;height:30px">Advanced Settings:</div>
+                        <table>
+                            <tr>
+                                <td style="width:10px;"></td>
+                                <td style="width:80px;">
+                                    New Screen:
+                                </td>
+                                <td style="width:200px;">
+                                    <LogLov (SelectedItemChanged)="NewScreensSelectionChanged($event)"
+                                            [ObjectFieldName]="'SelectedNewScreenId'"
+                                            [ObjectTableName]="'Screen'"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Screen'"
+                                            [SelectedValue]="SelectedNewScreenId"
+                                            [NoValidation]="true"
+                                            [IsFreeText]="true"
+                                            [HideColumns]="true"
+                                            [HideLastColumn]="true"
+                                            [DisplayMemberPath]="'Name'"
+                                            [QueryFilterItems]="NewScreenFilterItems">
+                                    </LogLov>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr style="height: 35px;">
+                    <td></td>
                 </tr>
                 <tr *ngIf="!AllowQueries">
                     <td style="vertical-align: top">

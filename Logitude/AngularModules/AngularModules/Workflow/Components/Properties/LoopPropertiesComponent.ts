@@ -3,7 +3,9 @@ import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/Base
 import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
+import { EntitiesTreeList } from "Workflow/Models/EntitiesTreeList";
 import { FlowVariablesTreeList } from "Workflow/Models/FlowVariablesTreeList";
+import { SingleEditableEntitiesTreeList } from "Workflow/Models/SingleEditableEntitiesTreeList";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 
 @Component({
@@ -22,6 +24,7 @@ export class LoopPropertiesComponent extends BaseComponent {
     public CurrentNodeId: string;
     public FlowObjectFields: ObjectFieldList[];
     public FlowVariablesTreeItems: TreeSelectItem[];
+    public SingleEditableEntitiesTreeItems: TreeSelectItem[];
     public ValidationErrorsList: string[];
     public FirstToLastDirection = { Code: "FirstToLast", Name: "First item to last item" };
     public LastToFirstDirection = { Code: "LastToFirst", Name: "Last item to first item" };
@@ -46,6 +49,8 @@ export class LoopPropertiesComponent extends BaseComponent {
             IsObjectVariableSelectable: false
         };
         this.FlowVariablesTreeItems = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId, props).Items;
+        this.SingleEditableEntitiesTreeItems = new SingleEditableEntitiesTreeList(this.FlowObject, this.CurrentNodeId).Items;
+        this.FlowVariablesTreeItems = this.SingleEditableEntitiesTreeItems.concat(this.FlowVariablesTreeItems);
     }
 
     initialize() {

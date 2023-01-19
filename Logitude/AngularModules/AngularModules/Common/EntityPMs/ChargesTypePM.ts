@@ -15,13 +15,15 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+import { CustomFieldsMainObjectPM } from '../../Infrastructure/EntityPMs/CustomFieldsMainObjectPMExtended';
 
 
-export class ChargesTypePM {
+export class ChargesTypePM extends CustomFieldsMainObjectPM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
+		  super("ChargesType");
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }

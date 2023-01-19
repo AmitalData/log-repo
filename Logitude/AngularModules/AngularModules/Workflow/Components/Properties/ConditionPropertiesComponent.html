@@ -40,17 +40,11 @@
         padding-right: 10px;
     }
 
-    .select-entity-label {
-        padding-bottom: 4px;
-    }
-
     .entity-list-container {
         height: 30px;
     }
 
-    .select-entity-label,
-    .set-conditions-label,
-    .select-trigger-label {
+    .label {
         font-weight: bold;
     }
 
@@ -63,13 +57,14 @@
         width: 80px;
     }
 
-    .start-conditions-container {
+    .conditions-container {
         overflow: auto;
         width: 936px;
-        height: 337px;
+        max-height: 337px;
+        padding-bottom: 16px;
     }
 
-    .min-start-conditions-container {
+    .min-conditions-container {
         height: 285px;
     }
 </style>
@@ -112,39 +107,15 @@
     <tr *ngIf="WorkflowEntity != null" class="table-row">
         <td class="table-row-cell">
             <div class="table-row-cell-block">
-                <div class="select-trigger-label">Route Details</div>
-            </div>
-        </td>
-    </tr>
-
-    <tr *ngIf="WorkflowEntity != null" class="table-row">
-        <td class="table-row-cell">
-            <div>
-                <LogLabel [NoObjectField]="true" [Text]="'Label'" [ObjectFieldName]="'ConditionLabel'"
-                    [DataContext]="DataContext"></LogLabel>
-            </div>
-            <div class="table-row-cell-block entity-list-container">
-                <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [DataContext]="DataContext"
-                    [Text]="ConditionLabel" [NoValidation]="true" [HideColumns]="true"
-                    [ObjectFieldName]="'ConditionLabel'" (ValueChanged)="updateConditionLabel($event)"
-                    [DataCy]="'decision-label'">
-                </LogTextBox>
-            </div>
-        </td>
-    </tr>
-
-    <tr *ngIf="WorkflowEntity != null" class="table-row">
-        <td class="table-row-cell">
-            <div class="table-row-cell-block">
-                <div class="set-conditions-label">Condition Requirments</div>
+                <div class="label">Condition Requirments</div>
             </div>
         </td>
     </tr>
 
     <tr *ngIf="WorkflowEntity != null" class="table-row">
         <td>
-            <div class="table-row-cell-block start-conditions-container"
-                [ngClass]="{'min-start-conditions-container': (ValidationErrorsList != null && ValidationErrorsList.length > 0)}">
+            <div class="table-row-cell-block conditions-container"
+                [ngClass]="{'min-conditions-container': (ValidationErrorsList != null && ValidationErrorsList.length > 0)}">
 
                 <Conditions *ngIf="Conditions && Conditions.length > 0" [EntityId]="this.WorkflowEntityTable.Id"
                     [ShowChangedOperator]="false" [AtLeastOneCondition]="true"
@@ -153,6 +124,60 @@
                     [FlowObjectFields]="FlowObjectFields" [CurrentNodeId]="CurrentNodeId">
                 </Conditions>
 
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="WorkflowEntity != null" class="table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr *ngIf="WorkflowEntity != null" class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+                <div class="label">Label if the condition is met</div>
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="WorkflowEntity != null" class="table-row">
+        <td class="table-row-cell">
+            <div>
+                <LogLabel [NoObjectField]="true" [Text]="'Label'" [ObjectFieldName]="'MetLabel'"
+                    [DataContext]="DataContext"></LogLabel>
+            </div>
+            <div class="table-row-cell-block entity-list-container">
+                <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [DataContext]="DataContext"
+                    [Text]="MetLabel" [NoValidation]="true" [HideColumns]="true"
+                    [ObjectFieldName]="'MetLabel'" (ValueChanged)="updateMetLabel($event)"
+                    [DataCy]="'met-label'">
+                </LogTextBox>
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="WorkflowEntity != null" class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+                <div class="label">Otherwise</div>
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="WorkflowEntity != null" class="table-row">
+        <td class="table-row-cell">
+            <div>
+                <LogLabel [NoObjectField]="true" [Text]="'Label'" [ObjectFieldName]="'OtherwiseLabel'"
+                    [DataContext]="DataContext"></LogLabel>
+            </div>
+            <div class="table-row-cell-block entity-list-container">
+                <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [DataContext]="DataContext"
+                    [Text]="OtherwiseLabel" [NoValidation]="true" [HideColumns]="true"
+                    [ObjectFieldName]="'OtherwiseLabel'" (ValueChanged)="updateOtherwiseLabel($event)"
+                    [DataCy]="'otherwise-label'">
+                </LogTextBox>
             </div>
         </td>
     </tr>

@@ -225,33 +225,8 @@
                                             <div></div>
                                         </td>
                                     </tr>
-
-                                    <tr class="FormFieldRow" *ngIf="isAdvancedSettingLinkVisible">
-                                        <td>
-                                            <span class="LinkBtn" (click)="IsAdvancedSettingVisible = !IsAdvancedSettingVisible">  Display Settings</span>
-                                        </td>
-                                    </tr>
-
-                                    <tr class="FormFieldRow" *ngIf="IsAdvancedSettingVisible && isMaximumGroupingVisible">
-                                        <td>
-                                            <LogLabel [ObjectFieldName]="'MaximumGrouping'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" style="width: 2px;"></LogLabel>
-                                        </td>
-                                        <td>
-
-                                            <LogTextBox [ObjectFieldName]="'MaximumGrouping'"
-                                                        [InputType]="'integer'"
-                                                        [DataContext]="DataContext"
-                                                        [ObjectTableName]="ObjectTableName" [HideColumns]="true" style="width: 2px;">
-                                            </LogTextBox>
-                                        </td>
-
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
                                 </table>
                             </td>
-
                             <td style="vertical-align:top">
                                 <img width="ImgWitdh" height="96px" style="max-height: 96px;" [attr.src]="ChartImageSrc" />
                                 
@@ -311,11 +286,35 @@
                             </td>
                         </tr>
 
-                        <!--KPI Settings-->
-                        <tr style="height:1px; vertical-align: top;" *ngIf="IsAdvancedSettingVisible && IsDisplaySettingVisibile">
+                        <tr class="FormFieldRow" *ngIf="TypeCode">
+                            <td>
+                                <span class="LinkBtn" (click)="IsDisplaySettingVisibile = !IsDisplaySettingVisibile">Display Settings</span>
+                            </td>
+                        </tr>
+
+                        <tr style="height:1px; vertical-align: top;" *ngIf="IsDisplaySettingVisibile && TypeCode">              
                             <td colspan="2">
                                 <table>
-                                    <tr class="FormFieldRow">
+                                    <tr class="FormFieldRow" *ngIf="IsMaximumGrouping">
+                                        <td style="width: 120px;">
+                                            <LogLabel [ObjectFieldName]="'MaximumGrouping'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" style="width: 2px;"></LogLabel>
+                                        </td>
+                                        <td style="width: 250px;">
+        
+                                            <LogTextBox [ObjectFieldName]="'MaximumGrouping'"
+                                                        [InputType]="'integer'"
+                                                        [DataContext]="DataContext"
+                                                        [ObjectTableName]="ObjectTableName" 
+                                                        [HideColumns]="true">
+                                            </LogTextBox>
+                                        </td>
+        
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="FormFieldRow" *ngIf="IsKpi">
                                         <td style="width:160px;">
                                             <LogLabel [Text]="'Time Over Time'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
                                         </td>
@@ -330,7 +329,7 @@
                                     </tr>
 
 
-                                    <tr class="FormFieldRow">
+                                    <tr class="FormFieldRow" *ngIf="IsKpi">
                                         <td>
                                             <LogLabel [Text]="'Comparison Period'" [NoObjectField]="true" [DataContext]="DataContext" style="width: 80px;"></LogLabel>
                                         </td>
@@ -404,7 +403,7 @@
                                         </td>
                                     </tr>
 
-                                    <tr class="FormFieldRow">
+                                    <tr class="FormFieldRow" *ngIf="IsKpi">
                                         <td>
                                             <LogLabel [Text]="'Increase'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
                                         </td>
@@ -420,7 +419,8 @@
                                             <div></div>
                                         </td>
                                     </tr>
-                                    <tr class="FormFieldRow">
+                                    
+                                    <tr class="FormFieldRow" *ngIf="IsKpi">
                                         <td>
                                             <LogLabel [Text]="'Alignment'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
                                         </td>
@@ -428,8 +428,7 @@
                                         <td>
                                             <ComboBox (SelectedItemChanged)="Alignment = $event"
                                                       [ItemsSource]="Alignments"
-                                                      [SelectedItem]="Alignment"
-                                                      [IsDisabled]="this.TypeCode != 'kpi' || !this.EntityId">
+                                                      [SelectedItem]="Alignment">
                                             </ComboBox>
                                         </td>
                                         <td>
@@ -437,7 +436,7 @@
                                         </td>
                                     </tr>
 
-                                    <tr class="FormFieldRow">
+                                    <tr class="FormFieldRow" *ngIf="IsKpi">
                                         <td>
                                             <LogLabel [Text]="'Thousand Separator'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
                                         </td>
@@ -451,7 +450,7 @@
                                         </td>
                                     </tr>
 
-                                    <tr class="FormFieldRow">
+                                    <tr class="FormFieldRow" *ngIf="IsKpi">
                                         <td>
                                             <LogLabel [Text]="'Use Number Abbreviation'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
                                         </td>
@@ -465,7 +464,7 @@
                                         </td>
                                     </tr>
 
-                                    <tr class="FormFieldRow">
+                                    <tr class="FormFieldRow" *ngIf="IsKpi">
                                         <td>
                                             <LogLabel [Text]="'Use Abbreviation After'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
                                         </td>
@@ -474,7 +473,7 @@
                                             <ComboBox (SelectedItemChanged)="UseAbbreviationAfter = $event"
                                                       [ItemsSource]="Abbreviations"
                                                       [SelectedItem]="UseAbbreviationAfter"
-                                                      [IsDisabled]="(WidgetMeasuresList[0].MeasureCode == 'Count' && !UseNumberAbbreviation ) || (WidgetMeasuresList[0].MeasureCode != 'Count' && (!IsMeasureNumber || !UseNumberAbbreviation))">
+                                                      [IsDisabled]="!UseNumberAbbreviation || (WidgetMeasuresList[0].MeasureCode != 'Count' && !WidgetMeasuresList[0].MeasureFieldId) || (WidgetMeasuresList[0].MeasureCode != 'Count' && !WidgetMeasuresList[0].IsNumeric)">
                                             </ComboBox>
                                         </td>
                                         <td>
@@ -482,7 +481,7 @@
                                         </td>
                                     </tr>
 
-                                    <tr class="FormFieldRow">
+                                    <tr class="FormFieldRow" *ngIf="IsKpi">
                                         <td>
                                             <LogLabel [Text]="'Decimal Places'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
                                         </td>

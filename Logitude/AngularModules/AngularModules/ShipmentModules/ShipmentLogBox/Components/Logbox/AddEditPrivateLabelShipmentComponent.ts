@@ -77,6 +77,7 @@ export class AddEditPrivateLabelShipmentComponent extends AddEditPrivateLabelCus
     public ToPortTextCode: string;
     public isRTL: boolean = false;
     public IsNew: boolean = false;
+    public HideDocumentSection: boolean = false;
 
     constructor() {
         super();
@@ -280,6 +281,7 @@ export class AddEditPrivateLabelShipmentComponent extends AddEditPrivateLabelCus
 
     private SetArgs(args: any) {
         this.IsNew = args.IsNew;
+        if (args.HideDocumentSection) this.HideDocumentSection = true;
         this.SetIsCustomsActivated(args);
         this.args = args;
         if (args.EntityPM) {
@@ -1049,6 +1051,7 @@ export class AddEditPrivateLabelShipmentComponent extends AddEditPrivateLabelCus
     }
 
     private ValidateOceanShipmentDocuments() {
+        if (this.HideDocumentSection) return false;
         let AllowCreateOceanExportShipmentsWithoutDocuments = this.AllowCreateOceanShipmentsWithoutDocuments && this.DirectionId == "E" && this.TransportModeId == "O";
         return !this.IsDSVTenant && !AllowCreateOceanExportShipmentsWithoutDocuments && (!this.documentsFilings || this.documentsFilings.filter(d => d.IsSharedWithForwarder == true).length == 0);
     }
@@ -1184,6 +1187,7 @@ export class AddEditPrivateLabelShipmentComponent extends AddEditPrivateLabelCus
     }
 
     private ValidateAirShipmentDocuments() {
+        if (this.HideDocumentSection) return false;
         let AllowCreateAirExportShipmentsWithoutDocuments = this.AllowCreateAirShipmentsWithoutDocuments && this.DirectionId == "E" && this.TransportModeId == "A";
         return !this.IsDSVTenant && !AllowCreateAirExportShipmentsWithoutDocuments && (!this.documentsFilings || this.documentsFilings.filter(d => d.IsSharedWithForwarder == true).length == 0);
     }
