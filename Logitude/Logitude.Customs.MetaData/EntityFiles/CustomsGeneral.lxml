@@ -5507,6 +5507,12 @@
       LocalDefaultText="&quot;שאילתא לנתוני פרט מכס &quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.ExportClosindData.O.NoFindTrufaToPreferenceDocument&quot;"
+      DefaultText="&quot;No Find Trufa To Preference Document&quot;"
+      LocalDefaultText="&quot;לא אותרה צרופה מתאימה למסמך העדפה שצויין בחשבון&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
