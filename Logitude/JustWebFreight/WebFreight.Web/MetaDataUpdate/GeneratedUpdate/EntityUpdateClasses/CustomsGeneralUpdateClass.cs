@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "3d50ab79e40cbe955d41f387846b5808";
+		public const string HashString = "05d9ac3f19c811c57a20797459fb04e9";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2121,6 +2121,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOExportReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.ExportReport", DefaultText = "Export Report",LocalDefaultText = @"דוח יצוא", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOCustomsItemDetailsQuery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.CustomsItemDetailsQuery", DefaultText = "Customs Item Details Query",LocalDefaultText = @"שאילתא לנתוני פרט מכס ", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
  		   TextCode CustomsGeneralTextCode_CustomsExportClosindDataONoFindTrufaToPreferenceDocument = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExportClosindData.O.NoFindTrufaToPreferenceDocument", DefaultText = "No Find Trufa To Preference Document",LocalDefaultText = @"לא אותרה צרופה מתאימה למסמך העדפה שצויין בחשבון", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
