@@ -43,8 +43,7 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
                 kpiChart.Ratio = GetRatio(kpiChart.Value, comparsionObject);
                 kpiChart.ComparisonAbbreviationSymbol = GetAbbreviationSymbol(comparsionObject, measureField?.DataTypeCode);
                 kpiChart.ComparisonValue = FormatKpiValue(comparsionObject, measureField?.DataTypeCode);
-            }    
-            
+            }
             kpiChart.AbbreviationSymbol = GetAbbreviationSymbol(kpiChart.Value, measureField?.DataTypeCode);
             kpiChart.Value = FormatKpiValue(kpiChart.Value, measureField?.DataTypeCode);
             
@@ -157,8 +156,10 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
 
         private int UseAbbreviationNumber(object value)
         {
+
             if (_Widget.UseNumberAbbreviation == false || ObjectIsNull(value)) return 0;
-            
+            if (_Widget.UseNumberAbbreviation != null && _Widget.UseNumberAbbreviation == false) return 0;
+
             double objectValue = Convert.ToDouble(value);
             int abbreviationValue = CaluculateValueOfAbbreviationSymbol();
 
