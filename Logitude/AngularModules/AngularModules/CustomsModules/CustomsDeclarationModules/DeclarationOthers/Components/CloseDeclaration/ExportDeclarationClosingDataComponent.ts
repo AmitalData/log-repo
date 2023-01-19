@@ -415,7 +415,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                 if (this.SupplierInvoiceItemList.length > 0) {
                     custDocsTicketWebService.GetCustomsDocumentsTicketsByEntityIdAndChilds(this.DecPM.Id, null, null, null, "ExportDeclarationClosingData", false).subscribe((response: ServiceResponse) => {
                         CustomsDocumentsTickets = response.Result;
-                        CustomsDocumentsTickets = CustomsDocumentsTickets.filter(c => c.DocumentTypeCode == 'IL_184' || c.DocumentTypeCode == '954' || c.DocumentTypeCode == 'IL_329');
+                        CustomsDocumentsTickets = CustomsDocumentsTickets.filter(c => c.DocumentTypeCode == 'IL_184'   || c.DocumentTypeCode == 'IL_329');
                         if (CustomsDocumentsTickets.length == 0) {
                             this.SupplierInvoiceItemList.forEach(supplierInvoiceItem => {
                                 SupplierInvoiceNumberList=this.DecPM.SupplierInvoices.find(s=>s.InvoiceCounterKey==supplierInvoiceItem.CounterKey).InvoiceNumber;

@@ -23,6 +23,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 entityPOCO.Code = entityPM.Code;
             }            
+
+
+
         }
 
         public void CustomPOCOToPM(TradeAgreementPM entityPM, TradeAgreement entityPOCO)
