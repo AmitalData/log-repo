@@ -139,6 +139,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     declarationPM.IsExportClosed = declarationOrg.IsExportClosed;
                     declarationPM.ExportDeclarationOfficeCode = GetValueIDType(declaration.ExportDeclarationOfficeID);
                     declarationPM.ExportFile = declarationOrg.ExportFile;
+                    declarationPM.CustomFileNo = declarationOrg.CustomFileNo;
                     declarationPM.DeclarationTypeCode = GetValueCodeType(declaration.TypeCode);
                     declarationPM.AgentRoleCode = declarationOrg.AgentRoleCode;
                     declarationPM.LoadingFactor = declarationOrg.LoadingFactor;
@@ -233,7 +234,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     declarationPM.DeclarationExportRecipients = GetRecipients(declaration, tenant, declarationPM, context);
                     declarationPM.AmedmentType = isClose ? "2" : "1";
                     //declarationPM.ExportDeclarationClosingDatas = GetClosingDetails(declaration, tenant, declarationPM, context);
-                    declarationPM.CustomFileNo = GetValueIDType(declaration.DMExtensions.AgentFileReferenceID);
+                    //declarationPM.CustomFileNo = GetValueIDType(declaration.DMExtensions.AgentFileReferenceID);
                     //declarationPM.ExternalDeclarationNumber = GetValueIDType(declaration.DMExtensions.AgentFileReferenceID) + DateTime.Now.Year;
                     declarationPM.ExternalDeclarationNumber = GetValueIDType(declaration.DMExtensions.ExternalDeclarationID);
                     declarationPM.DestinationCountryCode = GetValueCodeType(declaration.DMExtensions.DestinationCountry);
