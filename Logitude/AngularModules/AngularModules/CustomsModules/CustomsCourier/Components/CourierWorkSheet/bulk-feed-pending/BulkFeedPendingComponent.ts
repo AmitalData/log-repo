@@ -258,11 +258,13 @@ export class BulkFeedPendingComponent extends BaseComponent {
 
   RefreshButtonClicked() {
     this._CourierWorksheetSharedDataService._SelectedItems.Clear();
+    this._CourierWorksheetSharedDataService.connectedSelectAll = false;
     this.RefreshList();
     this.GetPending();
   }
 
   OpenMultiUpdateWindow() {
+
     if (!this._CourierWorksheetSharedDataService._SelectedItems?.Collection?.length && !this._CourierWorksheetSharedDataService.connectedSelectAll)
       return new MessageWindow().Show(TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.O.NotCheckDeclarations"));
 
@@ -627,9 +629,10 @@ export class BulkFeedPendingComponent extends BaseComponent {
     this.IsSelectedNot = true;
 
     this._CourierWorksheetSharedDataService.connectedSelectAll = true;
-    this._CourierWorksheetSharedDataService._SelectedItems.Clear()
-      ;
+    this._CourierWorksheetSharedDataService._SelectedItems.Clear();
+    this._CourierWorksheetSharedDataService._UnSelectedItems.Clear();
 
+   
     this.RefreshList();
     //this._CourierMasterService.disconnectedSelectAll = true;
     //this.CourierMasterPM.ConnectedDeclarations = "ALL";
@@ -641,7 +644,11 @@ export class BulkFeedPendingComponent extends BaseComponent {
   OnNoneBtnClickedNot() {
 
     this._CourierWorksheetSharedDataService.connectedSelectAll = false;
+  
     this._CourierWorksheetSharedDataService._UnSelectedItems.Clear();
+    this._CourierWorksheetSharedDataService._SelectedItems.Clear();
+
+
     this.RefreshList();
 
     this.IsSelectedNot = false;
