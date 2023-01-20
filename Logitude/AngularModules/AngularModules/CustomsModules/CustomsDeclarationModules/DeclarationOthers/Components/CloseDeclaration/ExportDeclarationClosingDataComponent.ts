@@ -410,7 +410,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
                         if (CustomsDocumentsTickets.length == 0 && CustomsDocumentsTickets954.length==0) {
                             this.SupplierInvoiceItemList.forEach(supplierInvoiceItem => {
-                                SupplierInvoiceNumberList = this.DecPM.SupplierInvoices.find(s => s.InvoiceCounterKey == supplierInvoiceItem.CounterKey).InvoiceNumber;
+                                SupplierInvoiceNumberList =SupplierInvoiceNumberList+','+ this.DecPM.SupplierInvoices.find(s => s.InvoiceCounterKey == supplierInvoiceItem.CounterKey).InvoiceNumber;
                             });
                             this.ShowWarnningMessage(SupplierInvoiceNumberList)
 
