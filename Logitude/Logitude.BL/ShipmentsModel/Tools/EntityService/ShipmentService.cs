@@ -62,7 +62,7 @@ using System.Transactions;
 using System.Web;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.BL.Security;
-using Simplog.Data.AnalyticTableServices;
+using Logitude.BL.AnalyticTableServices;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {

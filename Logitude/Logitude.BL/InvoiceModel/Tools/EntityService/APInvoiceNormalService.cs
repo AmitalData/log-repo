@@ -42,6 +42,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.Behaviours.APInvoiceBehaviours;
 using Logitude.BL.Resolvers;
+using Logitude.BL.AnalyticTableServices;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -190,7 +191,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.RunStoredProcedures();
             }
             entityAutomationService.RunAutomationThatDependencyOnLastEntityUpdate();
-
+            new APInvoiceAnalyticTableService(initializer.Context.GetActiveDbContext()).AddUpdate(invoice);
 
         }
 
@@ -537,6 +538,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 this.RunStoredProcedures();
             }
+
+            new APInvoiceAnalyticTableService(initializer.Context.GetActiveDbContext()).AddUpdate(invoice);
         }
 
         private void UpdatePaidDate()

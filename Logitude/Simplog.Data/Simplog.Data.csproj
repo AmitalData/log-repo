@@ -153,7 +153,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnalyticTableServices\ShipmentAnalyticTableService.cs" />
     <Compile Include="Azure\IErrorLogsRepository.cs" />
     <Compile Include="Azure\Repositories\CommunicationLogsRepository.cs" />
     <Compile Include="CommonDataModel\CommonDataContext.cs" />

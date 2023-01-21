@@ -4,7 +4,7 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.AnalyticTableServices;
 using System.Data.Entity;
 
-namespace Simplog.Data.AnalyticTableServices
+namespace Logitude.BL.AnalyticTableServices
 {
     public class ShipmentAnalyticTableService : AnalyticTableService<Shipment, ShipmentAnalytic>
     {
