@@ -625,6 +625,7 @@
     <Compile Include="InfrastructureModel\EntityPMs\EntityStatusTypePM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\ImageLibraryPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\MultiEntityUpdateLogPM.cs" />
+    <Compile Include="InfrastructureModel\EntityPMs\ObjectCustomFieldPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\QuoteChargesGroupPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\DeploymentPackagePM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\ReferenceCustomObjectPM.cs" />
