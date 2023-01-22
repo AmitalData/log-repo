@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "6379e91519bb032b38d947d2b4387899";
+		public const string HashString = "83537ec0192a23c738c73e250dcb59ec";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "634a",
+			      				    Code =  "4d35",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2119,6 +2119,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOOpenNewDeclarationExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.OpenNewDeclarationExport", DefaultText = "Open new declaration export",LocalDefaultText = @"פתיחת הצהרת יצוא חדשה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsGeneralOExportReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.General.O.ExportReport", DefaultText = "Export Report",LocalDefaultText = @"דוח יצוא", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsDeclarationPaymentOPaymentDateDifferentFromCurrentDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationPayment.O.PaymentDateDifferentFromCurrentDate", DefaultText = "payment date different from current date",LocalDefaultText = @"שים לב התאריך שונה מתאריך נוכחי , ההגשה תטופל בתאריך שצויין , האם להמשיך ?", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
