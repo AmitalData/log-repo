@@ -844,6 +844,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "CXE,Cargo Tracking Excel sheet export features", 
                 Description = "Cargo Tracking Excel sheet export features", 
 			});
+
+            all.Add(new ToggleDetails()
+            {    
+                Code = "INU", 
+                Name = "Invoice Concurrency", 
+                SearchFields = "INU, Invoice Concurrency", 
+                Description = "", 
+			});
 			
             return all;
        }
