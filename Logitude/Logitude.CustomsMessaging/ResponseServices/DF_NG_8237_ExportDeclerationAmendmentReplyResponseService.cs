@@ -30,6 +30,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Customs.BL.Messaging.Maman;
 using Logitude.Customs.BL.Messaging.Customs;
 using UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference;
+using Simplog.Data.CommonDataModel;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -888,6 +889,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
             string decNum = this._MyDeclarationPMOrg != null ? this._MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber;
             var decNumList = new List<string>();
             decNumList.Add(decNum);
+
+            string LoggingUserId = requestParams.LoggingUserId;
+            ICommonDataContext commonDbContext = CommonDataContext.GetContext(requestParams.Tenant);
+            UserRepository userRepository = new UserRepository(commonDbContext);
+            var user = userRepository.GetSingleUserByCode("MEHES", requestParams.Tenant, true);
+            if (user != null)
+            {
+                LoggingUserId = user.Id;
+            }
+
             DF_NG_8302_Web03_DeclarationPrintRequestParams searchParams = new DF_NG_8302_Web03_DeclarationPrintRequestParams()
             {
                 LoggingEnabled = true,
@@ -900,7 +911,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 RequestVIA = SendRequestVIA.WebServiceBatch,
 
 
-                LoggingUserId = requestParams.LoggingUserId ,//HD CALL#298426
+                LoggingUserId = LoggingUserId //requestParams.LoggingUserId ,//HD CALL#298426
             }; 
 
              var myRequestMessagingService = new DF_NG_8302_Web03_DeclarationPrintMessagingService();

@@ -248,7 +248,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             SendDeclarationStatusRequest(declarationPM);
                         }
 
-                        SendDeclarationPrint(declarationPM, requestParams);
+                        SendDeclarationPrintExport(declarationPM, requestParams);
                         
                     }
                     requestParams.LoggingEntityId = declarationPM.Id;
@@ -466,12 +466,21 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
-        public bool SendDeclarationPrint(DeclarationPM myDeclarationPM, GenericRequestParams requestParams)
+        public bool SendDeclarationPrintExport(DeclarationPM myDeclarationPM, GenericRequestParams requestParams)
         {
             LogMessagingUtil.Instance.AppendLine("SendDeclarationPrint");
             string decNum = myDeclarationPM.DeclarationNumber;
             var decNumList = new List<string>();
             decNumList.Add(decNum);
+
+            string LoggingUserId = requestParams.LoggingUserId;
+            ICommonDataContext commonDbContext = CommonDataContext.GetContext(requestParams.Tenant);
+            UserRepository userRepository = new UserRepository(commonDbContext);
+            var user = userRepository.GetSingleUserByCode("MEHES", requestParams.Tenant, true);
+            if (user != null)
+            {
+                LoggingUserId= user.Id;
+            }
             DF_NG_8302_Web03_DeclarationPrintRequestParams searchParams = new DF_NG_8302_Web03_DeclarationPrintRequestParams()
             {
                 LoggingEnabled = true,
@@ -484,7 +493,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 RequestVIA = SendRequestVIA.WebServiceBatch,
 
 
-                LoggingUserId = requestParams.LoggingUserId,
+                LoggingUserId = LoggingUserId//requestParams.LoggingUserId,
             };
 
             var myRequestMessagingService = new DF_NG_8302_Web03_DeclarationPrintMessagingService();
