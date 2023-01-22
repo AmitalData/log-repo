@@ -442,7 +442,7 @@
                                         </td>
 
                                         <td>
-                                            <LogCheckBox [ObjectFieldName]="'ThousandSeparator'" [Checked]="ThousandSeparator" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                            <LogCheckBox [ObjectFieldName]="'ThousandSeparator'" [Checked]="ThousandSeparator != null && ThousandSeparator" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                         </td>
 
                                         <td>
@@ -456,7 +456,7 @@
                                         </td>
 
                                         <td>
-                                            <LogCheckBox [ObjectFieldName]="'UseNumberAbbreviation'" [Checked]="UseNumberAbbreviation" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                            <LogCheckBox [ObjectFieldName]="'UseNumberAbbreviation'" [Checked]="UseNumberAbbreviation != null && UseNumberAbbreviation" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                         </td>
 
                                         <td>
