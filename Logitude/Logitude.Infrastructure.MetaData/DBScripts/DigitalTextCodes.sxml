@@ -833,7 +833,7 @@
 			"FieldCode": "",
 			"DisplayText": ""
 		},
-    {
+		{
 			"TextCode": "Shipment.F.RequestedDocumentsCount",
 			"DefaultText": "Upload required documents",
 			"FieldCode": "Shipment.RequestedDocumentsCount",
@@ -3421,7 +3421,7 @@
 			"FieldCode": "",
 			"DisplayText": ""
 		},
-    {
+		{
 			"TextCode": "Shipment.F.RequestedDocumentsCount",
 			"DefaultText": "Upload required documents",
 			"FieldCode": "Shipment.RequestedDocumentsCount",
