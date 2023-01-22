@@ -97,8 +97,10 @@ private void BuildClass(string filesDirecotyPath,string className)
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+<#+ if(entity.ApplyGenericCustomFields.ToString() == "true") {#>import { CustomFieldList } from '../../Infrastructure/EntityLists/CustomFieldList';
+<#+}#>
 
-export class <#=className #> {
+export class <#=className #><#+ if(entity.ApplyGenericCustomFields.ToString() == "true"){#> extends CustomFieldList<#+}#> {
    <#+
 	#>
 	<#+

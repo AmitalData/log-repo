@@ -320,6 +320,8 @@ using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure.DataContracts;
 <#+ if(entity.SupportSubEntity.ToString() == "true") {#>using Logitude.BL.InfrastructureModel.Tools.EntityService;
 <#+}#>
+<#+ if(entity.ApplyGenericCustomFields.ToString() == "true") {#>using Logitude.Server.Tools.CustomFields;
+<#+}#>
 using <#= pocosspacestring #>
 using <#= pmsspacestring #> 
 using <#= dataprojectnamespace #>
@@ -429,6 +431,12 @@ namespace <#= mapnamespacestring #>
          
 		 }
 
+		 if(entity.ApplyGenericCustomFields.ToString() == "true"){
+		 #>
+
+			new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "<#=tableName #>", Tenant = entityPM.Tenant, Type = "PM", Entities = new List<<#=tableName #>PM> { entityPM }.Cast<object>().ToList() }).Update();
+		 <#+
+		 }
 		 if(entity.SupportSubEntity.ToString() == "true"){
 		 #>
 
@@ -488,6 +496,13 @@ namespace <#= mapnamespacestring #>
 		 }
          
 		 }
+		 }
+		 if(entity.ApplyGenericCustomFields.ToString() == "true"){
+		 #>
+
+			new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "<#=tableName #>", Tenant = entityPM.Tenant, Type = "PM", Entities = new List<<#=tableName #>PM> { entityPM }.Cast<object>().ToList() }).Set();
+
+		 <#+
 		 }
 		 if(entity.SupportSubEntity.ToString() == "true"){
 		 #>
