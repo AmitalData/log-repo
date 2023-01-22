@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class ReferenceCustomObjectUpdateClass
    {  		
-		public const string HashString = "cef2a18a43fa1f25fa15eb4528b9c0151";
+		public const string HashString = "1611571e61c0201362043313d3bc6d9b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -100,7 +100,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    AvailableInCustomization =  false,
-			      				    SupportSubEntity =  false,
+			      				    SupportSubEntity =  true,
 			      				    ApplyGenericCustomFields =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
@@ -128,7 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  50,
 			      				    DefaultText =  "Reference Custom Object",
-			      				    Code =  "86aa",
+			      				    Code =  "5ff2",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Infrastructure",
