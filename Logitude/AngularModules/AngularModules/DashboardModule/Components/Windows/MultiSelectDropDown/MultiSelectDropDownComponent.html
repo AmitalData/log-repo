@@ -1,8 +1,8 @@
 <div style="position: relative;display: inline-block;">
 
-    <div class="db-m-drop-container" [ngStyle]="{ 'border-color': IsOpen ? '#5FAFDA': '#D9D9D9' }"
+    <div class="db-m-drop-container" [ngStyle]="{ 'border-color': IsOpen ? '#5FAFDA': '#AAAAAA' }"
         (click)="OpenCloseDropDown()">
-        <p class="db-m-drop-selected-text" [title]="DisplayText" [ngStyle]="!SelectedItem && {'color': '#D9D9D9'}">
+        <p class="db-m-drop-selected-text" [title]="DisplayText" [ngStyle]="!SelectedItem && {'color': '#6E7172'}">
             {{DisplayText }}</p>
         <span class="db-m-drop-pic" [ngClass]="IsOpen ? 'db-m-drop-arrow-up' : 'db-m-drop-arrow-down'"></span>
     </div>
