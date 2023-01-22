@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Logitude.BL.Helpers.CustomFieldsResolver;
+using Logitude.Server.Tools.CustomFields;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -33,6 +34,12 @@ namespace Logitude.BL.Helpers
 
         public void SetCustomFieldsValues(string objectTableName, int tenant, List<object> listQuery)
         {
+
+            if (ObjectTableRepository.IsApplyGenericCustomFields(objectTableName, tenant))
+            {
+                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = objectTableName, Tenant = tenant, Type = "List", Entities = listQuery }).Set();
+            }
+
             CustomFieldMultiSetter.SetCustomFieldsValues(objectTableName, tenant, listQuery);
         }
 
