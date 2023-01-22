@@ -836,6 +836,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "DMS,Dispose Memory Stream", 
                 Description = "Dispose Memory Stream", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "INU", 
+                Name = "Invoice Concurrency", 
+                SearchFields = "INU, Invoice Concurrency", 
+                Description = "", 
+			});
 			
             return all;
        }

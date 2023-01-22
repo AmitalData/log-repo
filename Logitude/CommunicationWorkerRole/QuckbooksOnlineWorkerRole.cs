@@ -34,6 +34,7 @@ using System.Transactions;
 using System.Xml.Serialization;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
+using Logitude.Server.Tools.Helpers;
 
 namespace CommunicationWorkerRole
 {
@@ -42,6 +43,10 @@ namespace CommunicationWorkerRole
         private DbQueueService queueservice;
         private ICommonDataContext commonContext;
         private IInvoiceContext invoiceContext;
+        private ARInvoiceRepository arInvoiceRepository;
+        private APInvoiceRepository apInvoiceRepository;
+        private ARPaymentRepository arPaymentRepository;
+        private APPaymentRepository apPaymentRepository;
         private ARInvoiceQuery arInvoiceQuery;
         private APInvoiceQuery apInvoiceQuery;        
         private ARPaymentQuery arPaymentQuery;
@@ -59,6 +64,7 @@ namespace CommunicationWorkerRole
         private string communicationLogId;
         private int tenant = 0;
         private byte[] dataInByte = null;
+        private bool isConcurrencyToggleEnabled = false;
         public override bool OnStart()
         {
             ThreadId = Guid.NewGuid().ToString();
@@ -137,14 +143,16 @@ namespace CommunicationWorkerRole
         }
         private void Initialize()
         {
+            isConcurrencyToggleEnabled = FeatureToggleHelper.HasFeatureToggle("INU", tenant);
+
             commonContext = CommonDataContext.GetContext(tenant);
             invoiceContext = InvoiceContext.GetContext(tenant);
             communicationLogRep = new CommunicationLogRepository(commonContext);
 
-            ARInvoiceRepository arInvoiceRepository = new ARInvoiceRepository(invoiceContext);
-            APInvoiceRepository apInvoiceRepository = new APInvoiceRepository(invoiceContext);
-            ARPaymentRepository arPaymentRepository = new ARPaymentRepository(invoiceContext);
-            APPaymentRepository apPaymentRepository = new APPaymentRepository(invoiceContext);
+            arInvoiceRepository = new ARInvoiceRepository(invoiceContext);
+            apInvoiceRepository = new APInvoiceRepository(invoiceContext);
+            arPaymentRepository = new ARPaymentRepository(invoiceContext);
+            apPaymentRepository = new APPaymentRepository(invoiceContext);
 
             arInvoiceQuery = new ARInvoiceQuery(arInvoiceRepository);
             apInvoiceQuery = new APInvoiceQuery(apInvoiceRepository);
@@ -587,9 +595,6 @@ namespace CommunicationWorkerRole
             return null;
         }
 
-
-
-
         // // // // // 
         private void SetNextTryDateTime()
         {
@@ -702,74 +707,17 @@ namespace CommunicationWorkerRole
             commLogrepository.Update(communicationLog);
             commLogrepository.SubmitChanges();
 
-            if (type == "APInvoice" || type == "VendorCredit")
-            {
-                if (Id == null)
-                {
-                    Id = communicationLog.EntityId;
-                }
-
-                APInvoicePM invoice = apInvoiceQuery.GetSinglePM(Id, tenant);
-                if (invoice != null)
-                {
-                    invoice.TransferError = null;
-                    invoice.TransferStatusCode = "ET";
-                    invoice.IsTransferStarted = false;
-                    if (!string.IsNullOrEmpty(QBOId))
-                        invoice.ExternalAccountingEntityId = QBOId;
-
-                    this.SaveAPInvoice(invoice);
-                }
-            }
-
+            if (type == "APInvoice" || type == "VendorCredit")            
+                this.SaveEntity("APInvoice", QBOId, false);               
+            
             else if (type == "ARPayment" || type == "ARPaymentVoid")
-            {
-                ARPaymentPM payment = arPaymentQuery.GetSinglePM(communicationLog.EntityId, tenant);
-                if (payment != null)
-                {
-                    payment.IsUpdatedByQBO = true;
-                    payment.TransferError = null;
-                    payment.TransferStatusCode = "ET";
-                    payment.IsTransferStarted = false;
-
-                    if (!string.IsNullOrEmpty(QBOId))
-                        payment.ExternalAccountingEntityId = QBOId;
-
-                    this.SaveARPayment(payment);
-                }
-            }
+                this.SaveEntity("ARPayment", QBOId, false); 
 
             else if (type == "APPayment")
-            {
-                APPaymentPM payment = apPaymentQuery.GetSinglePM(communicationLog.EntityId, tenant);
-                if (payment != null)
-                {
-                    payment.TransferError = null;
-                    payment.TransferStatusCode = "ET";
-
-                    if (QBOId != null)
-                        payment.ExternalAccountingEntityId = QBOId;
-
-                    this.SaveAPPayment(payment);
-                }
-            }
+                this.SaveEntity("APPayment", QBOId, false);    
 
             else
-            {
-                ARInvoicePM invoice = arInvoiceQuery.GetSingleInvoiceByInvoiceNumber(communicationLog.EntityReference, tenant);
-                if (invoice != null)
-                {
-                    invoice.IsUpdatedByQBO = true;
-                    invoice.TransferError = null;
-                    invoice.TransferStatusCode = "ET";
-                    invoice.IsTransferStarted = false;
-
-                    if (QBOId != null)
-                        invoice.ExternalAccountingEntityId = QBOId;
-
-                    this.SaveARInvoice(invoice);
-                }
-            }
+                this.SaveEntity("ARInvoice", QBOId, false);   
 
             queueservice.Complete();
             QBOIDSuccess = null;
@@ -796,21 +744,7 @@ namespace CommunicationWorkerRole
                 if (type == "APInvoice" || type == "VendorCredit")
                 {
                     bool WasErrorInTransfer = oldTransferStatusCode == "ET" ? true : false;
-                    APInvoicePM invoice = apInvoiceQuery.GetSinglePM(Id, tenant);
-                    if (invoice != null)
-                    {
-                        invoice.TransferError = null;
-                        invoice.TransferStatusCode = "TR";
-                        invoice.IsTransferStarted = false;
-
-                        if (!string.IsNullOrEmpty(QBOId))
-                            invoice.ExternalAccountingEntityId = QBOId;
-
-                        else if (!string.IsNullOrEmpty(QBOIDSuccess))
-                            invoice.ExternalAccountingEntityId = QBOIDSuccess;
-
-                        this.SaveAPInvoice(invoice);
-                    }
+                    this.SaveEntity("APInvoice", QBOId, true);
 
                     if (WasErrorInTransfer)
                     {
@@ -832,58 +766,18 @@ namespace CommunicationWorkerRole
 
                 else if (type == "ARPayment" || type == "ARPaymentVoid")
                 {
-                    ARPaymentPM payment = arPaymentQuery.GetSinglePM(communicationLog.EntityId, tenant);
-                    if (payment != null)
-                    {
-                        payment.IsUpdatedByQBO = true;
-                        payment.TransferError = null;
-                        payment.TransferStatusCode = "TR";
-                        payment.IsTransferStarted = false;
-
-                        if (!string.IsNullOrEmpty(QBOId))
-                            payment.ExternalAccountingEntityId = QBOId;
-                        else if (!string.IsNullOrEmpty(QBOIDSuccess))
-                            payment.ExternalAccountingEntityId = QBOIDSuccess;
-
-                        this.SaveARPayment(payment);
-                    }
+                    this.SaveEntity("ARPayment", QBOId, true);                    
                 }
 
                 else if (type == "APPayment")
                 {
-                    APPaymentPM payment = apPaymentQuery.GetSinglePM(communicationLog.EntityId, tenant);
-                    if (payment != null)
-                    {
-                        payment.TransferError = null;
-                        payment.TransferStatusCode = "TR";
-
-                        if (QBOId != null)
-                            payment.ExternalAccountingEntityId = QBOId;
-                        else if (QBOIDSuccess != null)
-                            payment.ExternalAccountingEntityId = QBOIDSuccess;
-
-                        this.SaveAPPayment(payment);
-                    }
+                    this.SaveEntity("APPayment", QBOId, true);                    
                 }
 
                 else
                 {
                     bool WasErrorInTransfer = oldTransferStatusCode == "ET" ? true : false;
-                    ARInvoicePM invoice = arInvoiceQuery.GetSingleInvoiceByInvoiceNumber(communicationLog.EntityReference, tenant);
-                    if (invoice != null)
-                    {
-                        invoice.IsUpdatedByQBO = true;
-                        invoice.TransferError = null;
-                        invoice.TransferStatusCode = "TR";
-                        invoice.IsTransferStarted = false;
-
-                        if (QBOId != null)
-                            invoice.ExternalAccountingEntityId = QBOId;
-                        else if (QBOIDSuccess != null)
-                            invoice.ExternalAccountingEntityId = QBOIDSuccess;
-
-                        this.SaveARInvoice(invoice);
-                    }
+                    this.SaveEntity("ARInvoice", QBOId, true);
 
                     if (WasErrorInTransfer)
                     {
@@ -986,7 +880,285 @@ namespace CommunicationWorkerRole
             }
         }
 
-        // // // // // 
+        // // // // //
+        private void SaveEntity(string type, string QBOId, bool isSuccess)
+        {
+            if (isConcurrencyToggleEnabled)
+                this.SaveEntity_UpdateService(type, QBOId, isSuccess);
+
+            else
+                this.SaveEntity_Repository(type, QBOId, isSuccess);
+        }
+        private void SaveEntity_UpdateService(string type, string QBOId, bool isSuccess)
+        {
+            switch (type)
+            {
+                case "ARInvoice":
+                    {
+                        ARInvoicePM invoice = arInvoiceQuery.GetSingleInvoiceByInvoiceNumber(communicationLog.EntityReference, tenant);
+                        if (invoice != null)
+                        {
+                            if (isSuccess)
+                            {
+                                invoice.IsUpdatedByQBO = true;
+                                invoice.TransferError = null;
+                                invoice.TransferStatusCode = "TR";
+                                invoice.IsTransferStarted = false;
+
+                                if (QBOId != null)
+                                    invoice.ExternalAccountingEntityId = QBOId;
+                                else if (QBOIDSuccess != null)
+                                    invoice.ExternalAccountingEntityId = QBOIDSuccess;
+                            }
+
+                            else
+                            {
+                                invoice.IsUpdatedByQBO = true;
+                                invoice.TransferError = null;
+                                invoice.TransferStatusCode = "ET";
+                                invoice.IsTransferStarted = false;
+
+                                if (QBOId != null)
+                                    invoice.ExternalAccountingEntityId = QBOId;
+                            }
+
+                            this.SaveARInvoice(invoice);
+                        }
+                        break;
+                    }
+
+                case "APInvoice":
+                    {
+                        APInvoicePM invoice = apInvoiceQuery.GetSinglePM(communicationLog.EntityId, tenant);
+                        if (invoice != null)
+                        {
+                            if (isSuccess)
+                            {
+                                invoice.TransferError = null;
+                                invoice.TransferStatusCode = "TR";
+                                invoice.IsTransferStarted = false;
+
+                                if (!string.IsNullOrEmpty(QBOId))
+                                    invoice.ExternalAccountingEntityId = QBOId;
+
+                                else if (!string.IsNullOrEmpty(QBOIDSuccess))
+                                    invoice.ExternalAccountingEntityId = QBOIDSuccess;
+                            }
+
+                            else
+                            {
+                                invoice.TransferError = null;
+                                invoice.TransferStatusCode = "ET";
+                                invoice.IsTransferStarted = false;
+                                if (!string.IsNullOrEmpty(QBOId))
+                                    invoice.ExternalAccountingEntityId = QBOId;
+                            }
+
+                            this.SaveAPInvoice(invoice);
+                        }
+                        break;
+                    }
+
+                case "ARPayment":
+                    {
+                        ARPaymentPM payment = arPaymentQuery.GetSinglePM(communicationLog.EntityId, tenant);
+                        if (payment != null)
+                        {
+                            if (isSuccess)
+                            {
+                                payment.IsUpdatedByQBO = true;
+                                payment.TransferError = null;
+                                payment.TransferStatusCode = "TR";
+                                payment.IsTransferStarted = false;
+
+                                if (!string.IsNullOrEmpty(QBOId))
+                                    payment.ExternalAccountingEntityId = QBOId;
+                                else if (!string.IsNullOrEmpty(QBOIDSuccess))
+                                    payment.ExternalAccountingEntityId = QBOIDSuccess;
+                            }
+
+                            else
+                            {
+                                payment.IsUpdatedByQBO = true;
+                                payment.TransferError = null;
+                                payment.TransferStatusCode = "ET";
+                                payment.IsTransferStarted = false;
+
+                                if (!string.IsNullOrEmpty(QBOId))
+                                    payment.ExternalAccountingEntityId = QBOId;
+                            }
+
+                            this.SaveARPayment(payment);
+                        }
+                        break;
+                    }
+
+                case "APPayment":
+                    {
+                        APPaymentPM payment = apPaymentQuery.GetSinglePM(communicationLog.EntityId, tenant);
+                        if (payment != null)
+                        {
+                            if (isSuccess)
+                            {
+                                payment.TransferError = null;
+                                payment.TransferStatusCode = "TR";
+
+                                if (QBOId != null)
+                                    payment.ExternalAccountingEntityId = QBOId;
+                                else if (QBOIDSuccess != null)
+                                    payment.ExternalAccountingEntityId = QBOIDSuccess;
+                            }
+
+                            else
+                            {
+                                payment.TransferError = null;
+                                payment.TransferStatusCode = "ET";
+
+                                if (QBOId != null)
+                                    payment.ExternalAccountingEntityId = QBOId;
+                            }
+
+                            this.SaveAPPayment(payment);
+                        }
+                        break;
+                    }
+            }
+        }
+        private void SaveEntity_Repository(string type, string QBOId, bool isSuccess)
+        {
+            switch (type)
+            {
+                case "ARInvoice":
+                    {
+                        ARInvoice invoice = arInvoiceRepository.GetARInvoiceByInvoiceNumber(tenant, communicationLog.EntityReference);
+                        if (invoice != null)
+                        {
+                            if (isSuccess)
+                            {
+                                invoice.TransferError = null;
+                                invoice.TransferStatusCode = "TR";
+                                invoice.IsTransferStarted = false;
+
+                                if (QBOId != null)
+                                    invoice.ExternalAccountingEntityId = QBOId;
+                                else if (QBOIDSuccess != null)
+                                    invoice.ExternalAccountingEntityId = QBOIDSuccess;
+                            }
+
+                            else
+                            {
+                                invoice.TransferError = null;
+                                invoice.TransferStatusCode = "ET";
+                                invoice.IsTransferStarted = false;
+
+                                if (QBOId != null)
+                                    invoice.ExternalAccountingEntityId = QBOId;
+                            }
+
+                            arInvoiceRepository.Update(invoice);
+                            arInvoiceRepository.SubmitChanges();
+                        }
+                        break;
+                    }
+
+                case "APInvoice":
+                    {
+                        APInvoice invoice = apInvoiceRepository.GetSingleAPInvoice(communicationLog.EntityId, tenant);
+                        if (invoice != null)
+                        {
+                            if (isSuccess)
+                            {
+                                invoice.TransferError = null;
+                                invoice.TransferStatusCode = "TR";
+                                invoice.IsTransferStarted = false;
+
+                                if (!string.IsNullOrEmpty(QBOId))
+                                    invoice.ExternalAccountingEntityId = QBOId;
+
+                                else if (!string.IsNullOrEmpty(QBOIDSuccess))
+                                    invoice.ExternalAccountingEntityId = QBOIDSuccess;
+                            }
+
+                            else
+                            {
+                                invoice.TransferError = null;
+                                invoice.TransferStatusCode = "ET";
+                                invoice.IsTransferStarted = false;
+                                if (!string.IsNullOrEmpty(QBOId))
+                                    invoice.ExternalAccountingEntityId = QBOId;
+                            }
+
+                            apInvoiceRepository.Update(invoice);
+                            apInvoiceRepository.SubmitChanges();
+                        }
+                        break;
+                    }
+
+                case "ARPayment":
+                    {
+                        ARPayment payment = arPaymentRepository.GetSingleARPayment(communicationLog.EntityId, tenant);
+                        if (payment != null)
+                        {
+                            if (isSuccess)
+                            {
+                                payment.TransferError = null;
+                                payment.TransferStatusCode = "TR";
+                                payment.IsTransferStarted = false;
+
+                                if (!string.IsNullOrEmpty(QBOId))
+                                    payment.ExternalAccountingEntityId = QBOId;
+                                else if (!string.IsNullOrEmpty(QBOIDSuccess))
+                                    payment.ExternalAccountingEntityId = QBOIDSuccess;
+                            }
+
+                            else
+                            {
+                                payment.TransferError = null;
+                                payment.TransferStatusCode = "ET";
+                                payment.IsTransferStarted = false;
+
+                                if (!string.IsNullOrEmpty(QBOId))
+                                    payment.ExternalAccountingEntityId = QBOId;
+                            }
+
+                            arPaymentRepository.Update(payment);
+                            arPaymentRepository.SubmitChanges();
+                        }
+                        break;
+                    }
+
+                case "APPayment":
+                    {
+                        APPayment payment = apPaymentRepository.GetSingleAPPayment(communicationLog.EntityId, tenant);
+                        if (payment != null)
+                        {
+                            if (isSuccess)
+                            {
+                                payment.TransferError = null;
+                                payment.TransferStatusCode = "TR";
+
+                                if (QBOId != null)
+                                    payment.ExternalAccountingEntityId = QBOId;
+                                else if (QBOIDSuccess != null)
+                                    payment.ExternalAccountingEntityId = QBOIDSuccess;
+                            }
+
+                            else
+                            {
+                                payment.TransferError = null;
+                                payment.TransferStatusCode = "ET";
+
+                                if (QBOId != null)
+                                    payment.ExternalAccountingEntityId = QBOId;
+                            }
+
+                            apPaymentRepository.Update(payment);
+                            apPaymentRepository.SubmitChanges();
+                        }
+                        break;
+                    }
+            }
+        }
         private void SaveARInvoice(ARInvoicePM invoice)
         {
             ARInvoiceService invoiceService = new ARInvoiceService(invoiceContext, tenant);

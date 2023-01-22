@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.Helpers;
 using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
@@ -13,31 +14,68 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
     {
         private static void MapConcurrencyFields(ARInvoicePM entityPM, ARInvoice entity, bool isNewState)
         {
-            if (isNewState)
+            bool isConcurrencyToggleEnabled = FeatureToggleHelper.HasFeatureToggle("INU", entityPM.Tenant);
+
+            if (!isConcurrencyToggleEnabled)
             {
-                MapConcurrencyFields_QBO(entityPM, entity);
-                MapConcurrencyFields_SAT(entityPM, entity, isNewState);
-                MapConcurrencyFields_Print(entityPM, entity);
-                MapConcurrencyFields_Client(entityPM, entity);
+                MapConcurrencyFields_MapAllFields(entityPM, entity, isNewState);
             }
 
-            else
+            else 
             {
-                if (entityPM.IsUpdatedByQBO)
+                if (isNewState)
+                {
                     MapConcurrencyFields_QBO(entityPM, entity);
-
-                else if (entityPM.IsUpdatedBySAT)
                     MapConcurrencyFields_SAT(entityPM, entity, isNewState);
-
-                else if (entityPM.IsUpdatedByPrint)
                     MapConcurrencyFields_Print(entityPM, entity);
+                    MapConcurrencyFields_Client(entityPM, entity);
+                }
 
                 else
                 {
-                    MapConcurrencyFields_OnEdited(entityPM, entity);
-                    MapConcurrencyFields_Client(entityPM, entity);
+                    if (entityPM.IsUpdatedByQBO)
+                        MapConcurrencyFields_QBO(entityPM, entity);
+
+                    else if (entityPM.IsUpdatedBySAT)
+                        MapConcurrencyFields_SAT(entityPM, entity, isNewState);
+
+                    else if (entityPM.IsUpdatedByPrint)
+                        MapConcurrencyFields_Print(entityPM, entity);
+
+                    else
+                    {
+                        MapConcurrencyFields_OnEdited(entityPM, entity);
+                        MapConcurrencyFields_Client(entityPM, entity);
+                    }
                 }
             }
+        }
+        private static void MapConcurrencyFields_MapAllFields(ARInvoicePM entityPM, ARInvoice entity, bool isNewState)
+        {
+            if (isNewState)
+                entity.SATInvoiceStatusCode = entityPM.SATInvoiceStatusCode;
+
+            entity.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
+            entity.TransferStatusCode = entityPM.TransferStatusCode;
+            entity.IsTransferStarted = entityPM.IsTransferStarted;
+            entity.SATTransferStatusCode = entityPM.SATTransferStatusCode;
+            entity.SATApprovalDate = entityPM.SATApprovalDate;
+            entity.SATXML = entityPM.SATXML;
+            entity.TransmissionError = entityPM.TransmissionError;
+            entity.SATAdditionalFieldsXML = entityPM.SATAdditionalFieldsXML;
+            entity.PrintByUserId = entityPM.PrintByUserId;
+            entity.PrintDate = entityPM.PrintDate;
+            entity.IsPrinted = entityPM.IsPrinted;
+
+            if (!string.IsNullOrEmpty(entityPM.ExternalAccountingEntityId))
+                entity.ExternalAccountingEntityId = entityPM.ExternalAccountingEntityId;
+
+            string transferError = entityPM.TransferError;
+            if (!string.IsNullOrEmpty(transferError) && transferError.Length > 250)
+                transferError = transferError.Substring(0, 250);
+
+            entityPM.TransferError = transferError;
+            entity.TransferError = transferError;
         }
         private static void MapConcurrencyFields_QBO(ARInvoicePM entityPM, ARInvoice entity)
         {
