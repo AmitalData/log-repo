@@ -258,7 +258,7 @@
                                             
                                                     <td class="FooterCell">
                                                         <button class="Button" (click)="FooterButtonsClicked('cancel')" [disabled]="false"
-                                                            [attr.data-cy]="'CancelButton'">{{CancelFooterButtonLabel || 'Cancel'}}</button>
+                                                            [attr.data-cy]="'CancelButton'">{{(IsViewMode ? 'Close' : CancelFooterButtonLabel) || 'Cancel'}}</button>
                                                     </td>
                                             
                                                     <td *ngIf="!IsViewMode" class="FooterSplit">
