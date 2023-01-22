@@ -339,7 +339,7 @@ export class QueryListComponent implements OnInit, AfterViewInit {
         windowArgs.currentObjectTable = this.ObjectTableName;
         windowArgs.IsNew = true;
         windowArgs.pubSubAdvanceQueryFiltersService = this.pubSubAdvanceQueryFiltersService;
-        windowArgs.CreateWithoutOriginalQuery = this.ItemsSource.length == 0;
+        windowArgs.CreateWithoutOriginalQuery = this.ItemsSource.length + this.UserItemSource.length == 0;
 
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 960;
@@ -348,8 +348,12 @@ export class QueryListComponent implements OnInit, AfterViewInit {
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./Infrastructure/Components/NewViewComponent/NewViewComponent');
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
-            var ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
-            if ($event != this.SelectedItem?.UniqueCode) {
+
+            let ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
+            let newSelectedQuery = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id)[0];
+            if (!$event) $event = this.SelectedItem ? this.SelectedItem.UniqueCode : newSelectedQuery?.UniqueCode;
+
+            if ($event != this.SelectedItem?.UniqueCode) { 
                 CachedDataManager.RefreshTenantTextCodes().subscribe((response:any) => {
                     var Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.UniqueCode == $event)[0];
                     this.UserItemSource.push(Query);
@@ -504,7 +508,11 @@ export class QueryListComponent implements OnInit, AfterViewInit {
             logitudeWindow.WindowArgs = windowArgs;
             logitudeWindow.Show('./Infrastructure/Components/NewViewComponent/NewViewComponent');
             logitudeWindow.WindowClosed.subscribe(($event: any) => {
-                var ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
+
+                let ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
+                let newSelectedQuery = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id)[0];
+                if (!$event) $event = this.SelectedItem ? this.SelectedItem.UniqueCode : newSelectedQuery?.UniqueCode;
+
                 var Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.UniqueCode == $event)[0];
 
                 if (!Query) {
