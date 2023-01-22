@@ -6,6 +6,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 import { CustomFieldList } from '../../Infrastructure/EntityLists/CustomFieldList';
+
 export class WarehouseEntryList extends CustomFieldList {
    
 	Id: string;
