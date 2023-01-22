@@ -853,6 +853,14 @@ namespace Logitude.Infrastructure.BL
                 Description = "", 
 			});
 			
+            all.Add(new ToggleDetails()
+            {
+                Code = "SKP",
+                Name = "Use synch kafka producer",
+                SearchFields = "SKP,Use synch kafka producer",
+                Description = "Use synch kafka producer",
+            });
+
             return all;
        }
 

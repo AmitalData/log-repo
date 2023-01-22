@@ -26,19 +26,35 @@ namespace Logitude.Server.Tools.CToolWorkflows
 
         private static Producer producerInstatnce;
 
-        public static Producer GetInstatnce()
+        public static Producer GetInstatnce(int tenant)
         {
+            if (UseSyncProducer(tenant))
+            {
+                return new Producer();
+            }
             var instance = producerQueueService.TryDequeue();
             if (instance != null)
             {
                 return instance;
             }
-            return new Producer(); ;
+            return new Producer();
         }
 
-        public static void AddProducerToQueue(Producer producer)
+        public static void AddProducerToQueue(Producer producer,int tenant)
         {
+            if (UseSyncProducer(tenant))
+            {
+                producer.ProducerBuilder.Flush();
+                producer.ProducerBuilder.Dispose();
+                return;
+            }
             producerQueueService.Enqueue(producer);
+
+        }
+
+        private static bool UseSyncProducer(int tenant)
+        {
+            return FeatureToggleHelper.HasFeatureToggle("SKP", tenant);
         }
         #region Shipment
         public static void ProduceShipmentCreateMessage(Shipment entityPoco, ShipmentPM entityPM)
@@ -55,10 +71,10 @@ namespace Logitude.Server.Tools.CToolWorkflows
 
                     var serializedCToolWorkflowMessage = JsonConvert.SerializeObject(ctoolWorkflowMessage, Formatting.Indented);
 
-                    var shipmentCreateMessageProducer = GetInstatnce();
+                    var shipmentCreateMessageProducer = GetInstatnce(entityPM.Tenant);
                     var result = shipmentCreateMessageProducer.Produce(KafkaTopics.ShipmentsCreateTopic, 
-                        KakaMessageTypes.ShipmentCreate, serializedCToolWorkflowMessage);
-                    AddProducerToQueue(shipmentCreateMessageProducer);
+                        KakaMessageTypes.ShipmentCreate, serializedCToolWorkflowMessage, UseSyncProducer(entityPM.Tenant));
+                    AddProducerToQueue(shipmentCreateMessageProducer, entityPM.Tenant);
                     //shipmentCreateMessageProducer.ProducerBuilder.Flush();
                     //shipmentCreateMessageProducer.ProducerBuilder.Dispose();
                 }
@@ -93,10 +109,10 @@ namespace Logitude.Server.Tools.CToolWorkflows
 
                     var serializedCToolWorkflowMessage = JsonConvert.SerializeObject(ctoolWorkflowMessage, Formatting.Indented);
 
-                    var shipmentUpdateMessageProducer = GetInstatnce();
+                    var shipmentUpdateMessageProducer = GetInstatnce(entityPM.Tenant);
                     var result = shipmentUpdateMessageProducer.Produce(KafkaTopics.ShipmentsUpdateTopic,
-                        KakaMessageTypes.ShipmentUpdate, serializedCToolWorkflowMessage);
-                    AddProducerToQueue(shipmentUpdateMessageProducer);
+                        KakaMessageTypes.ShipmentUpdate, serializedCToolWorkflowMessage, UseSyncProducer(entityPM.Tenant));
+                    AddProducerToQueue(shipmentUpdateMessageProducer, entityPM.Tenant);
                     //shipmentUpdateMessageProducer.ProducerBuilder.Flush();
                     //shipmentUpdateMessageProducer.ProducerBuilder.Dispose();
                 }
@@ -126,10 +142,10 @@ namespace Logitude.Server.Tools.CToolWorkflows
 
                 var serializedCToolWorkflowMessage = JsonConvert.SerializeObject(ctoolWorkflowMessage, Formatting.Indented);
 
-                var shipmentUpdateMessageProducer = GetInstatnce();
+                var shipmentUpdateMessageProducer = GetInstatnce(tenant);
                 var result = shipmentUpdateMessageProducer.Produce(KafkaTopics.ShipmentsUpdateTopic,
-                    KakaMessageTypes.ShipmentUpdate, serializedCToolWorkflowMessage);
-                AddProducerToQueue(shipmentUpdateMessageProducer);
+                    KakaMessageTypes.ShipmentUpdate, serializedCToolWorkflowMessage, UseSyncProducer(tenant));
+                AddProducerToQueue(shipmentUpdateMessageProducer,tenant);
                 //shipmentUpdateMessageProducer.ProducerBuilder.Flush();
                 //shipmentUpdateMessageProducer.ProducerBuilder.Dispose();
             }
@@ -143,14 +159,14 @@ namespace Logitude.Server.Tools.CToolWorkflows
         {
             try
             {
-                Producer sendEmailProducer = GetInstatnce();
+                Producer sendEmailProducer = GetInstatnce(communicationLog.Tenant);
                 var serializedSendEmailMessage = JsonConvert.SerializeObject(communicationLog, Formatting.Indented,
                     new JsonSerializerSettings
                     {
                         ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                     });
-                var result = sendEmailProducer.Produce(KafkaTopics.LookupsTopic, KakaMessageTypes.CommunicationLog, serializedSendEmailMessage);
-                AddProducerToQueue(sendEmailProducer);  
+                var result = sendEmailProducer.Produce(KafkaTopics.LookupsTopic, KakaMessageTypes.CommunicationLog, serializedSendEmailMessage, UseSyncProducer(communicationLog.Tenant));
+                AddProducerToQueue(sendEmailProducer,communicationLog.Tenant);  
                 //sendEmailProducer.ProducerBuilder.Flush();
                 //sendEmailProducer.ProducerBuilder.Dispose();                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
             }
@@ -203,10 +219,10 @@ namespace Logitude.Server.Tools.CToolWorkflows
 
                     var serializedCToolWorkflowMessage = JsonConvert.SerializeObject(ctoolWorkflowMessage, Formatting.Indented);
 
-                    var containerCreateMessageProducer = GetInstatnce();
+                    var containerCreateMessageProducer = GetInstatnce(containerPm.Tenant);
                     var result = containerCreateMessageProducer.Produce(KafkaTopics.ContainerCreateTopic,
-                        KakaMessageTypes.ContainerCreate, serializedCToolWorkflowMessage);
-                    AddProducerToQueue(containerCreateMessageProducer);
+                        KakaMessageTypes.ContainerCreate, serializedCToolWorkflowMessage,UseSyncProducer(containerPm.Tenant));
+                    AddProducerToQueue(containerCreateMessageProducer,containerPm.Tenant);
                     //containerCreateMessageProducer.ProducerBuilder.Flush();
                     //containerCreateMessageProducer.ProducerBuilder.Dispose();
                 }
@@ -233,10 +249,10 @@ namespace Logitude.Server.Tools.CToolWorkflows
 
                     var serializedCToolWorkflowMessage = JsonConvert.SerializeObject(ctoolWorkflowMessage, Formatting.Indented);
 
-                    var containerUpdateMessageProducer = GetInstatnce();
+                    var containerUpdateMessageProducer = GetInstatnce(containerPm.Tenant);
                     var result = containerUpdateMessageProducer.Produce(KafkaTopics.ContainerUpdateTopic,
-                        KakaMessageTypes.ContainerUpdate, serializedCToolWorkflowMessage);
-                    AddProducerToQueue(containerUpdateMessageProducer);
+                        KakaMessageTypes.ContainerUpdate, serializedCToolWorkflowMessage,UseSyncProducer(containerPm.Tenant));
+                    AddProducerToQueue(containerUpdateMessageProducer,containerPm.Tenant);
                     //containerUpdateMessageProducer.ProducerBuilder.Flush();
                     //containerUpdateMessageProducer.ProducerBuilder.Dispose();
                 }

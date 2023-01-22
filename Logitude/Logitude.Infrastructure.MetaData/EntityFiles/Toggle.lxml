@@ -920,6 +920,11 @@
       Name="&quot;Invoice Concurrency&quot;"
       SearchFields="&quot;INU, Invoice Concurrency&quot;"
       Description="&quot;&quot;" />
+	<Record
+	 Code="&quot;SKP&quot;"
+	 Name="&quot;Use synch kafka producer&quot;"
+	 SearchFields="&quot;SKP,Use synch kafka producer&quot;"
+	 Description="&quot;Use synch kafka producer&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
