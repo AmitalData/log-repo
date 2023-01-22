@@ -13,6 +13,7 @@ export class WorkFlowShortTitleComponent {
     public EntityPM: WorkFlowPM;
     public ValidVersion: WorkFlowVersionPM;
     public WarningErrorsList: string[] = [];
+    public WarningErrorTitle: string;
 
     constructor(public entityArgs: EntityArgs) {
     }
@@ -47,9 +48,9 @@ export class WorkFlowShortTitleComponent {
 
     setWarningErrorMessage() {
         var warnings: string[] = [];
-
+        this.WarningErrorTitle = "This version is currently active or was activated at least once. To make changes create a new version."
         if (this.ValidVersion.StatusCode != "DRFT") {
-            warnings.push("This version is currently active or was activated at least once. To make changes create a new version.");
+            warnings.push(this.WarningErrorTitle);
         }
 
         this.WarningErrorsList = warnings;
