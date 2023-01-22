@@ -63,6 +63,7 @@ import { DeclarationExtendedListService } from '../../../../../Customs/Services/
 import { Observable } from 'rxjs';
 import { SupplierInvoiceExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/SupplierInvoiceExtendedPMService';
 import { CustomsRequiredFieldExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsRequiredFieldExtendedListService';
+import { formatDate } from '@angular/common';
 @Component({
 
     templateUrl: './DeclarationPaymentExportComponent.html',
@@ -870,7 +871,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
             this.SendButtonEnabled = true;
         }
 
-        if (entityPM.IsSubmitDeclaration==true) {
+        if (entityPM.IsSubmitDeclaration == true) {
             this.IsDisplayOnly = true;
             this.OkButtonEnabled = false;
             this.SendButtonEnabled = false;
@@ -928,7 +929,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
     public ShowStorageStatusMessage: boolean;
 
     DisplayOnlyCheck() {
-     
+
         var declarationDisplayOnly: boolean = false;
         this.DrawMe = true;
         this.ShowStorageStatusMessage = false;
@@ -992,26 +993,26 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
             }
 
             else if (declarationDisplayOnly2) {
-                
+
                 // if(displayOnlyCheckResult.DisplayOnlyMessage=="אילוץ אושר")
                 // {
                 //     this.IsDisplayOnly = false;
                 //     this.ErrorMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
-    
+
                 //     this.IsDisplayOnly = false;
                 //     this.OkButtonEnabled = true;
                 //     this.SendButtonEnabled = true;
                 // }
-               
+
                 // else{
-                    this.IsDisplayOnly = true;
-                    this.ErrorMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
-    
-                    this.IsDisplayOnly = true;
-                    this.OkButtonEnabled = false;
-                    this.SendButtonEnabled = false;
+                this.IsDisplayOnly = true;
+                this.ErrorMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
+
+                this.IsDisplayOnly = true;
+                this.OkButtonEnabled = false;
+                this.SendButtonEnabled = false;
                 // }
-               
+
             }
             else if (this.DeclarationPM.StorageStatusCode && !this.ErrorMessage) {
                 this.ShowStorageStatusMessage = true;
@@ -1106,7 +1107,11 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
             return true;
         }
     }
+    StopMyBusyIndicator() {
 
+        this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+
+    }
     OkButtonClicked() {
 
         var isPaymentDateValid = this.IsPaymentDateValid();
@@ -1120,6 +1125,49 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
 
         }
         else {
+            var date = formatDate(new Date(), 'yyyy-MM-dd', 'en_US');
+            var payment = formatDate(this.PaymentDate, 'yyyy-MM-dd', 'en_US');
+            if (date != payment) {
+                this.StopMyBusyIndicator();
+                var windowArgs: any = {};
+                var worningsList = []
+                worningsList.push("שים לב התאריך שונה מתאריך נוכחי , ההגשה תטופל בתאריך שצויין , האם להמשיך ?")
+                windowArgs.Errors = worningsList;
+                windowArgs.CancelButtonVisibility = true;
+                windowArgs.CancelButtonText = "בטל";
+                windowArgs.OkButtonClicked = "המשך"
+                windowArgs.ComponentHeight = '328px';
+                var windowTitle = TextCodeTranslator.Translate("Customs.General.O.ExportTaxationDateTime");
+
+
+
+                var logWindow = new LogitudeWindow(this.CurrentSession);
+                logWindow.Width = 600;
+                logWindow.Height = 400;
+                logWindow.Title = windowTitle;
+                logWindow.ShowCloseButton = false;
+                logWindow.WindowArgs = windowArgs;
+                logWindow.WindowClosed.subscribe(($event: any) => {
+                    debugger
+                    if ($event == "ok") {
+                        this.ValidationErrorsList = [];
+                        this.ActivateUnifreightInstructionOK();
+                    }
+                    else {
+                        return;
+                    }
+
+                });
+
+                logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
+
+            }
+            else {
+                this.ValidationErrorsList = [];
+                this.ActivateUnifreightInstructionOK();
+            }
+
+
             /*this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAY_BLK_RNG", "NON", "NON", SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
                 let obj = response.Result;
                if (obj) {
@@ -1160,12 +1208,10 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
                     });
                 }
             });*/
-            this.ValidationErrorsList = [];
-            this.ActivateUnifreightInstructionOK();
+
         }
 
     }
-
 
 
     CheckIdDateBetween2Times(times: any, date1: Date) {
@@ -1273,7 +1319,9 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
     customSendOptions: CustomSendOptionsArgs;
     Option: string;
     // Before send
+
     SendButtonClicked(event) {
+        debugger
         if (event.TestCase) {
 
             let windowArgs = { "SincroScreen": "SincroSendDeclarationPayment" };
@@ -1309,6 +1357,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
     }
 
     SendButtonClickedStart(event) {
+        debugger;
         if (this._CourierWorksheet != null && this._CourierWorksheet.CourierPendingReasonErrorPlace == "1" /*=="בתשלום"*/) {
             var myMessageWindow = new MessageWindow
             myMessageWindow.Show(/*"לם ניתן לבצע הגשת תשלום כםשר יש השהייה מסוג עצירת תשלום. "*/
@@ -1317,8 +1366,9 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
         }
         this.customSendOptions = event;
         this.Option = event.Option;
-
-        if (this.ValidationErrorsList.length > 0) return;
+        var dateNow = formatDate(new Date(), 'yyyy-MM-dd', 'en_US');
+        var payment = formatDate(this.PaymentDate, 'yyyy-MM-dd', 'en_US');
+        // if (this.ValidationErrorsList.length > 0) return;
 
         var isPaymentDateValid = this.IsPaymentDateValid();
         if (isPaymentDateValid) {
@@ -1332,7 +1382,52 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
 
         if (this.ValidationErrorsList.length > 0) return;
 
-        var isBlockTime = false;
+
+        if (dateNow != payment) {
+            this.StopMyBusyIndicator();
+            var windowArgs: any = {};
+            var worningsList = []
+            worningsList.push("שים לב התאריך שונה מתאריך נוכחי , ההגשה תטופל בתאריך שצויין , האם להמשיך ?")
+            windowArgs.Errors = worningsList;
+            windowArgs.CancelButtonVisibility = true;
+            windowArgs.CancelButtonText = "בטל";
+            windowArgs.OkButtonClicked = "המשך"
+            windowArgs.ComponentHeight = '328px';
+            var windowTitle = TextCodeTranslator.Translate("Customs.General.O.ExportTaxationDateTime");
+
+
+
+            var logWindow = new LogitudeWindow(this.CurrentSession);
+            logWindow.Width = 600;
+            logWindow.Height = 400;
+            logWindow.Title = windowTitle;
+            logWindow.ShowCloseButton = false;
+            logWindow.WindowArgs = windowArgs;
+            logWindow.WindowClosed.subscribe(($event: any) => {
+
+                if ($event == "ok") {
+                    var isBlockTime = false;
+                    this.PaymentDate = new Date(Date.parse(this.PaymentDate + "")); // sometimes this variable contains string value of date, so convert it to date
+                    var paymentDate = new Date(this.PaymentDate.getFullYear(), this.PaymentDate.getMonth(), this.PaymentDate.getDate(), 0, 0, 0);
+                    this.SendMethodStep1();
+                }
+                else {
+                    return false
+                }
+
+            });
+
+            logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
+
+        }
+        else {
+            var isBlockTime = false;
+            this.PaymentDate = new Date(Date.parse(this.PaymentDate + "")); // sometimes this variable contains string value of date, so convert it to date
+            var paymentDate = new Date(this.PaymentDate.getFullYear(), this.PaymentDate.getMonth(), this.PaymentDate.getDate(), 0, 0, 0);
+            this.SendMethodStep1();
+        }
+
+
 
 
         /* this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAY_BLK_RNG", "NON", "NON", SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
@@ -1380,9 +1475,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
                  });
              }
          });*/
-        this.PaymentDate = new Date(Date.parse(this.PaymentDate + "")); // sometimes this variable contains string value of date, so convert it to date
-        var paymentDate = new Date(this.PaymentDate.getFullYear(), this.PaymentDate.getMonth(), this.PaymentDate.getDate(), 0, 0, 0);
-        this.SendMethodStep1();
+
 
     }
 
@@ -1559,7 +1652,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
                 this.OnlySendPayment(params);
             }
             else {
-         this.CheckCustomFileCreditThenSendPayment(params);
+                this.CheckCustomFileCreditThenSendPayment(params);
             }
             return;
         }
@@ -1568,7 +1661,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
     CheckCustomFileCreditThenSendPayment(params: CustomFileCreditRequestParams) {
         var myCustomMessageProgressHelper = new CustomMessageProgressHelper(this.CurrentSession);
         myCustomMessageProgressHelper.BasicResponse = true;
-       // myCustomMessageProgressHelper.StartProgress(params.PBId, 5, true);
+        // myCustomMessageProgressHelper.StartProgress(params.PBId, 5, true);
 
         //this.declarationMessagesService.PostCheckCustomFileCreditOnly(params)
         //    .subscribe((myServiceResponse: ServiceResponse) => {
@@ -1613,7 +1706,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
         //            }
 
 
-               
+
 
         //        }
         //    });
@@ -1673,6 +1766,8 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
         }
 
     }
+
+
 
     private Send2755(params: CustomFileCreditRequestParams) {
         let myShowProgressBarParams = new ShowProgressBarParams();

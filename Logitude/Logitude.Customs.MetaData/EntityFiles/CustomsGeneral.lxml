@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;CustomsGeneral&quot;"
-  Code="&quot;b5ba&quot;"
+  Code="&quot;4d35&quot;"
   Name="&quot;CustomsGeneral&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -5511,6 +5511,12 @@
       Code="&quot;Customs.ExportClosindData.O.NoFindTrufaToPreferenceDocument&quot;"
       DefaultText="&quot;No Find Trufa To Preference Document&quot;"
       LocalDefaultText="&quot;לא אותרה צרופה מתאימה למסמך העדפה שצויין בחשבון&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.DeclarationPayment.O.PaymentDateDifferentFromCurrentDate&quot;"
+      DefaultText="&quot;payment date different from current date&quot;"
+      LocalDefaultText="&quot;שים לב התאריך שונה מתאריך נוכחי , ההגשה תטופל בתאריך שצויין , האם להמשיך ?&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
