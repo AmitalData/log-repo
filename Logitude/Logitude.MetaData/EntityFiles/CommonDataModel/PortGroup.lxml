@@ -93,6 +93,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Id&quot;"
     ListPropertyPath="&quot;Id&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -165,6 +166,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Tenant&quot;"
     ListPropertyPath="&quot;Tenant&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -237,6 +239,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;SearchFields&quot;"
     ListPropertyPath="&quot;SearchFields&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -292,7 +295,7 @@
     MaxLength="4"
     IsRequired="true"
     CopyToDW="false"
-    DisplayOnLookUp="false"
+    DisplayOnLookUp="true"
     DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
@@ -308,6 +311,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Code&quot;"
     ListPropertyPath="&quot;Code&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -365,7 +369,7 @@
     MaxLength="150"
     IsRequired="true"
     CopyToDW="false"
-    DisplayOnLookUp="false"
+    DisplayOnLookUp="true"
     DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
@@ -381,9 +385,10 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Name&quot;"
     ListPropertyPath="&quot;Name&quot;"
+    DisplayInLookUpIndex="1"
     AutomaticField="false"
     UniqueField="false"
-    DisplayInSearchWindowListIndex="0"
+    DisplayInSearchWindowListIndex="1"
     IsMulti="false"
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
@@ -454,6 +459,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Inactive&quot;"
     ListPropertyPath="&quot;Inactive&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -578,6 +584,26 @@
         ScreenName="Header Screen" />
     </ScreenFields>
   </Screen>
+  <Tab
+    TabName="&quot;General&quot;"
+    ObjectTableName="&quot;PortGroup&quot;"
+    Code="&quot;PGGL&quot;"
+    ControlPath="&quot;Simplog.Infrastructure.GeneralControls.GeneralTabControl&quot;"
+    TextCode="&quot;PortGroup.TH.General&quot;"
+    IsPackagable="true"
+    IndexOrder="0"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Events&quot;"
+    ObjectTableName="&quot;PortGroup&quot;"
+    Code="&quot;PGEV&quot;"
+    ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;"
+    TextCode="&quot;PortGroup.TH.Events&quot;"
+    IsPackagable="true"
+    IndexOrder="1"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -606,6 +632,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <Records />
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />

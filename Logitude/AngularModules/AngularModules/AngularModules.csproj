@@ -477,6 +477,7 @@
     <TypeScriptCompile Include="Common\EntityLists\RegimenFiscalList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\ReportExecutionLogList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\UnassignedEntityList.ts" />
+    <TypeScriptCompile Include="Common\EntityPMInitServices\PortGroupPMInitService.ts" />
     <TypeScriptCompile Include="Common\EntityPMInitServices\PortTimeZonePMInitService.ts" />
     <TypeScriptCompile Include="Common\EntityPMInitServices\ReportExecutionLogPMInitService.ts" />
     <TypeScriptCompile Include="Common\EntityPMInitServices\ShippingLinePMInitService.ts" />

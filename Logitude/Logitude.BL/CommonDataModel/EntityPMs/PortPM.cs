@@ -155,5 +155,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public string PortTimeZoneCode { get; set; }
+        public string PortGroupId { get; set; }
     }
 }
