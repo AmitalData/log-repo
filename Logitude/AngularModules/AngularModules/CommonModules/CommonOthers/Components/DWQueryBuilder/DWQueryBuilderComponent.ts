@@ -709,7 +709,6 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
             this.ClearData();
         }
     }
-
     private IsValidToAddMeasurementFactARInvoiceField(item: any) {
         if (this.FactTableName == "Fact_ARInvoices" && item.IsMeasurement && this.IsShipmentProfitField(item)) {
             return this.haveShipmentNumberField();
@@ -721,7 +720,7 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
     }
 
     private IsShipmentProfitField(item: any) {
-        return item.dWObjectTableCode == "Fact_Shipments" && (item.Code == "[Profit ( Local )]" || item.Code == "[Profit]");
+        return item.dWObjectTableCode == "Fact_Shipments" && (item.Code == "[Profit ( Local )]" || item.Code == "[Profit]" || item.Code == "[Accounted Profit]" || item.Code == "[Accounted Profit(Local)]");
     }
 
     private ShowValidationMessage(item: any) {
