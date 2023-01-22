@@ -54,7 +54,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             //DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
 
             entityPM.InvoiceHasFreight = supplierInvoiceService.DoesAnyInvoiceHasFreight(entityPM.Id, entityPM.Tenant);
-             //******getting all compositionTables for response service purposes only *****///
+            //******getting all compositionTables for response service purposes only *****///
             entityPM.Consignments = consignmentService.GetMulti(declarationKeys, true);
             // if (LoadSupplierInvoices)
             var DeclarationExportRecipientQueryService = new DeclarationExportRecipientQueryService(context);
@@ -262,7 +262,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
         {
             if (String.IsNullOrWhiteSpace(customFileNo)) return null;
             string entityKeyString = $"GetSingleByCustomFileNoFromCache{customFileNo}";
-            var res=CacheManager.GetOrInsertNewObject(entityKeyString,()=>{ 
+            var res = CacheManager.GetOrInsertNewObject(entityKeyString, () =>
+            {
                 return repository.GetDeclarationByCustomFileNo(customFileNo, tenant);
             });
             return res;
@@ -290,7 +291,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
 
 
-        public DeclarationPM GetSingleByDecNoAndVersion(string decNo,string version ,  int tenant)
+        public DeclarationPM GetSingleByDecNoAndVersion(string decNo, string version, int tenant)
         {
             if (String.IsNullOrWhiteSpace(decNo)) return null;
             if (String.IsNullOrWhiteSpace(version)) return null;
@@ -348,15 +349,15 @@ namespace Logitude.Customs.BL.EntityQueryServices
             if (String.IsNullOrWhiteSpace(declarationNumber)) return "";
             return repository.GetIdByDeclarationNumber(declarationNumber, tenant);
         }
-        public (string id, string direction,string declarationTypeCode) GetMinDeclarationByDeclarationNumber(string declarationNumber, int tenant)
+        public (string id, string direction, string declarationTypeCode) GetMinDeclarationByDeclarationNumber(string declarationNumber, int tenant)
         {
-            
+
             return repository.GetMinDeclarationByDeclarationNumber(declarationNumber, tenant);
         }
 
-        public DeclarationPM GetDeclarationByfunctionalReferenceID( string functionalReferenceID,  int tenant)
+        public DeclarationPM GetDeclarationByfunctionalReferenceID(string functionalReferenceID, int tenant)
         {
-             if (String.IsNullOrWhiteSpace(functionalReferenceID)) return null;
+            if (String.IsNullOrWhiteSpace(functionalReferenceID)) return null;
 
             var declaration = repository.GetDeclarationByFunctionalReferenceID(functionalReferenceID, tenant);
             DeclarationPM declarationPM = new DeclarationPM();
@@ -374,8 +375,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         public DeclarationPM GetDeclarationNotAmendmentDontDisplayInList(string id, string amendmentOriginalDeclartation, int tenant)
         {
-  
-            var declaration = repository.GetDeclarationNotAmendmentDontDisplayInList(id, amendmentOriginalDeclartation,  tenant);
+
+            var declaration = repository.GetDeclarationNotAmendmentDontDisplayInList(id, amendmentOriginalDeclartation, tenant);
             DeclarationPM declarationPM = new DeclarationPM();
             DeclarationDataMapping mapping = new DeclarationDataMapping();
             if (declaration == null) return null;
@@ -446,7 +447,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             if (String.IsNullOrWhiteSpace(customFileNo)) return "";
             return repository.GetIdByCustomFileNo(customFileNo, tenant);
         }
-       
+
 
         public string GetIdByExternalDeclarationNumber(string externalDeclarationNumber, int tenant)
         {
@@ -460,7 +461,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         }
 
-        public List<DeclarationErrorView> GetDeclarationErrors(string declarationId, int tenant, string listVersionId, string courierFilter = "Declaration",bool IsAmendmentErrors=false, bool IsExportCloseErrors = false)
+        public List<DeclarationErrorView> GetDeclarationErrors(string declarationId, int tenant, string listVersionId, string courierFilter = "Declaration", bool IsAmendmentErrors = false, bool IsExportCloseErrors = false)
         {
             ICustomContext context = MainContext as CustomContext;
             Declaration declaration = Repository.GetSingle(new DeclarationKeys() { Id = declarationId });
@@ -619,7 +620,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                             {
                                 errorview.EntityName = "Declaration";
                             }
-                            if (errorview.EntityName== "SupplierInvioceItemsCertificate")
+                            if (errorview.EntityName == "SupplierInvioceItemsCertificate")
                             {
                                 errorview.EntityName = "SupplierInvioceItemCertificat";
                             }
@@ -1002,14 +1003,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         {
                             errorview.EntityName = "Declaration";
                         }
-                        if(declaration.Direction=="E" && errorview.EntityName== "Declaration")
+                        if (declaration.Direction == "E" && errorview.EntityName == "Declaration")
                         {
                             errorview.TableNameTextCode = "Customs.Declaration.O.Export";
-                          //  errorview.EntityName = "Customs.Declaration.O.Export";
+                            //  errorview.EntityName = "Customs.Declaration.O.Export";
 
                         }
                         else
-                        errorview.TableNameTextCode = "Customs." + errorview.EntityName;
+                            errorview.TableNameTextCode = "Customs." + errorview.EntityName;
                         declarationErrors.Add(errorview);
                     }
 
@@ -1083,14 +1084,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         if (errorview.EntityName == "SupplierInvioceItemsCertificate")
                         {
                             errorview.EntityName = "SupplierInvioceItemCertificat";
-                            if (errorview.Field== "ClassificationCode")
+                            if (errorview.Field == "ClassificationCode")
                             {
                                 errorview.EntityName = "SupplierInvoiceItem";
 
                             }
-                         }
+                        }
 
-                        if(errorview.Field == "CargoTypeCode" && declaration.Direction == "E")
+                        if (errorview.Field == "CargoTypeCode" && declaration.Direction == "E")
                         {
                             errorview.FieldNameTextCode = "Customs.Declaration.O.CargoTypeCode";
 
@@ -1104,7 +1105,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         if (declaration.Direction == "E" && errorview.EntityName == "Declaration")
                         {
                             errorview.TableNameTextCode = "Customs.Declaration.O.Export";
-                            errorview.FieldNameTextCode ="Customs.Declaration.O.Export";
+                            errorview.FieldNameTextCode = "Customs.Declaration.O.Export";
 
                         }
                         else
@@ -1266,7 +1267,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 .Where(rec =>
                    ///rec.Tenant == tenant &&
                    //rec.CreateDateTime.Value > lst30 &&
-                   rec.UpdateDateTime.Value > lst30 
+                   rec.UpdateDateTime.Value > lst30
                    );
             if (keys != null)
             {
@@ -1300,7 +1301,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 DeclarationCorrection declarationCorrection = (DeclarationCorrection)serializer.Deserialize(memorystream);
                 correctionView = new DeclarationCorrectionView() { Id = Guid.NewGuid().ToString(), DeclarationId = declaration.Id };
                 correctionView.GeneralDataViews = new List<GeneralDataView>();
-             
+
 
 
                 foreach (General item in declarationCorrection.GeneralData)
@@ -1322,9 +1323,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         {
                             information.StatmentName = statement.LocalName;
                         }
-                        
-                        if(additional.StatementTypeCode != "27")
-                        generalData.AdditionalInformation.Add(information);
+
+                        if (additional.StatementTypeCode != "27")
+                            generalData.AdditionalInformation.Add(information);
 
 
                     }
@@ -1340,7 +1341,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         LogisticsReferenceTypePM logisticsReferenceType = logisticsReferenceTypeQueryService.GetSingle(reference.ReferenceType, false, false);
                         if (logisticsReferenceType != null)
                         {
-                            referenceView.ReferenceTypeName  = logisticsReferenceType.LocalName;
+                            referenceView.ReferenceTypeName = logisticsReferenceType.LocalName;
                         }
 
                         ReferenceStatusQueryService referenceStatusQueryService = new ReferenceStatusQueryService(tenant);
@@ -1436,7 +1437,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                             amendment.FieldNameTextCode = "Customs." + amendment.EntityName + ".F." + amendment.Field;
                             amendment.TableNameTextCode = "Customs." + amendment.EntityName;
                             AmendmentFieldStatusTypeQueryService amendmentFieldStatusTypeQueryService = new AmendmentFieldStatusTypeQueryService(tenant);
-                            AmendmentFieldStatusTypePM amendmentFieldStatusTypePM = amendmentFieldStatusTypeQueryService.GetSingle(field.AmendmentFieldStatus,false,true);
+                            AmendmentFieldStatusTypePM amendmentFieldStatusTypePM = amendmentFieldStatusTypeQueryService.GetSingle(field.AmendmentFieldStatus, false, true);
                             if (amendmentFieldStatusTypePM != null)
                             {
                                 amendment.AmendmentFieldStatus = amendmentFieldStatusTypePM.LocalName;
@@ -1760,7 +1761,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
 
         //<--- Yuval Chalup 19.11.2015 TASK-17450
-        public DeclarationPM GetSingleDeclarationByNumber(string number, int tenant, bool getComposition=false)
+        public DeclarationPM GetSingleDeclarationByNumber(string number, int tenant, bool getComposition = false)
         {
             if (String.IsNullOrWhiteSpace(number)) return null;
             var q = repository.GetSingleDeclarationPMByNumber(number, tenant);
@@ -1816,8 +1817,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
             return declarationPMs;
         }
-        
-        public List<DeclarationPM> GetByConsigmentExportContainerizationID(string containerizationId,int tenant)
+
+        public List<DeclarationPM> GetByConsigmentExportContainerizationID(string containerizationId, int tenant)
         {
             var query = repository.GetByConsigmentExportContainerizationID(containerizationId, tenant);
             List<Declaration> declarations = query.ToList();
@@ -1979,7 +1980,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
             foreach (var doc in documentTypePMs)
             {
-                List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(myDeclarationPM.Id, "", "", "", myDeclarationPM.Tenant, "Declaration").Where(r => r.DocumentTypeCode == doc.Code && r.DocumentsFilingId!=null).ToList();
+                List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(myDeclarationPM.Id, "", "", "", myDeclarationPM.Tenant, "Declaration").Where(r => r.DocumentTypeCode == doc.Code && r.DocumentsFilingId != null).ToList();
                 if (customsDocumentsTicketPMList == null || customsDocumentsTicketPMList.Count() < 1)
                     return true;
             }
@@ -2125,7 +2126,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return isFreight;
         }
 
-          //public List<DeclarationList> GetDeclarationAmendmentsByIdCache(int Tenant, string id, bool orderById = false)
+        //public List<DeclarationList> GetDeclarationAmendmentsByIdCache(int Tenant, string id, bool orderById = false)
         //{
 
         //    string entityKeyString = $"GetDeclarationAmendmentsByIdCache({id},{Tenant},{orderById})";
@@ -2142,7 +2143,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             DeclarationPM decPm = new DeclarationPM();
             var decs = repository.GetDeclarationAmendmentsById(tenant, id);
 
-            var dec= decs.FirstOrDefault(x => x.AmendmentRequestNumber == requestNumber);
+            var dec = decs.FirstOrDefault(x => x.AmendmentRequestNumber == requestNumber);
 
             mapping.CustomPOCOToPM(decPm, dec);
             mapping.POCOToPM(decPm, dec);
@@ -2159,7 +2160,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         public List<DeclarationList> GetDeclarationAmendmentsById_Cache(int tenant, string id, bool orderById = false)
         {
-            string key = $"GetDeclarationAmendmentsById({tenant}, {id}, {orderById })";
+            string key = $"GetDeclarationAmendmentsById({tenant}, {id}, {orderById})";
             var res = CacheManager.GetOrInsertNewObject<List<DeclarationList>>(key,
                 () =>
                 {
@@ -2168,13 +2169,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return res;
 
         }
-        public List<DeclarationList> GetAllDeclarationPOCOs(int tenant, string customFileNo)
+        public List<DeclarationList> GetAllDeclarationPOCOs(int tenant, string customFileNo, string direction)
         {
-
             if (String.IsNullOrWhiteSpace(customFileNo)) return null;
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
-
-            var q =
+            if (direction != "E")
+            {
+                return
                   (
                   from rec in this.context.Declarations
 
@@ -2196,9 +2197,34 @@ namespace Logitude.Customs.BL.EntityQueryServices
                           AmedmentType = rec.AmedmentType,
                           AmendmentStatusName = j == null ? "" : j.Name
                       }
-                  )
-                  ;
-            return q.ToList();
+                  ).ToList();
+            }
+            else
+            {
+                return
+                (
+                from rec in this.context.Declarations
+
+                join right in this.context.AmendmentRequestStatuses on rec.AmendmentStatus equals right.Code into joined
+                from j in joined.DefaultIfEmpty()
+
+                where rec.CustomFileNo == customFileNo && rec.Tenant == tenant
+                select
+                    new DeclarationList()
+                    {
+                        Id = rec.Id,
+                        Tenant = rec.Tenant,
+                        AmendmentRequestNumber = rec.AmendmentRequestNumber,
+                        DeclarationVersionId = rec.VersionId,
+                        AmendmentStatus = rec.AmendmentStatus,
+                        AmendmentOriginalDeclartation = rec.AmendmentOriginalDeclartation,
+                        AmendmentissueDate = rec.AmendmentissueDate,
+                        IsAmendment = rec.IsAmendment,
+                        AmedmentType = rec.AmedmentType,
+                        AmendmentStatusName = j == null ? "" : j.LocalName
+                    }
+                ).ToList();
+            }
 
         }
         public List<DeclarationList> GetDeclarationAmendmentsById(int tenant, string id, bool orderById = false)
@@ -2225,7 +2251,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                     AmendmentStatus = item.AmendmentStatus,
                     AmendmentOriginalDeclartation = item.AmendmentOriginalDeclartation,
                     AmendmentissueDate = item.AmendmentissueDate,
-                    IsAmendment=item.IsAmendment,
+                    IsAmendment = item.IsAmendment,
                     AmedmentType = item.AmedmentType
                 };
                 if (item.AmendmentCorrectedByUserId != null) declarationList.AmendmentCorrectedByUserName = users.FirstOrDefault(x => x.Id == item.AmendmentCorrectedByUserId).Code;
@@ -2247,7 +2273,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
             if (orderById)
             {
-                declarationLists = declarationLists.OrderBy(x =>x.Id).ToList();
+                declarationLists = declarationLists.OrderBy(x => x.Id).ToList();
                 declarationLists.ForEach(x => { x.AmendmentNumber = i; i++; });
 
                 return declarationLists.ToList();
@@ -2256,19 +2282,19 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
             declarationLists = declarationLists.OrderByDescending(x => x.AmendmentissueDate).ToList();
 
-            declarationLists.ForEach(x => { x.AmendmentNumber = i; i++; }) ;
+            declarationLists.ForEach(x => { x.AmendmentNumber = i; i++; });
 
             return declarationLists.ToList();
 
         }
 
 
-        public ExportStorageConnectToDeclaration GetExportStorageConnectToDeclaration(string declarationId,int tenant) =>
+        public ExportStorageConnectToDeclaration GetExportStorageConnectToDeclaration(string declarationId, int tenant) =>
             new DeclarationRepository(Tenant).GetExportStorageConnectToDeclaration(declarationId, tenant);
 
 
 
-        public string GetHatraDateForDecId(string decId,int tenant)
+        public string GetHatraDateForDecId(string decId, int tenant)
         {
             return repository.GetHatraDateForDecId(decId, tenant);
         }
@@ -2277,14 +2303,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
         {
             return this.repository.GetContainerizationUniqueConsignment(declarationList);
         }
-        public string GetDeclarationByDeclarationNum(string decNumber,int tenant)
+        public string GetDeclarationByDeclarationNum(string decNumber, int tenant)
         {
             return repository.GetDeclarationByDeclarationNum(decNumber, tenant);
         }
 
         public List<ExportReport1> GetReportDeclarationForExportReport1(DateTime? ExportFrom, DateTime? ExportTo)
         {
-           
+
             var ExportReportData = this.repository.GetReportDeclarationForExportReport1(ExportFrom, ExportTo);
             return ExportReportData;
         }
