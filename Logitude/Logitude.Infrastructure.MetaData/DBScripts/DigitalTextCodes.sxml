@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="38">
+  <Sql Version="40">
     <![CDATA[	
 	  delete from DigitalTextCodes where id != ''
       declare @NewEntityId as varchar(15)
@@ -800,6 +800,18 @@
 			"DefaultText": "Show results",
 			"FieldCode": "",
 			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.ResetMsg1",
+			"DefaultText": "Please check your email address",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.ResetMsg2",
+			"DefaultText": "and follow the instructions to reset your password.",
+			"FieldCode": "",
+			"DisplayText": ""
 		}]');
 
 	  declare @shipmentObjectTableId as varchar(15)
@@ -833,9 +845,9 @@
 			"FieldCode": "",
 			"DisplayText": ""
 		},
-    {
+		{
 			"TextCode": "Shipment.F.RequestedDocumentsCount",
-			"DefaultText": "Requested Documents Count",
+			"DefaultText": "Upload required documents",
 			"FieldCode": "Shipment.RequestedDocumentsCount",
 			"DisplayText": ""
 		},
@@ -3392,6 +3404,18 @@
 			"DefaultText": "Show results",
 			"FieldCode": "",
 			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.ResetMsg1",
+			"DefaultText": "Please check your email address",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.ResetMsg2",
+			"DefaultText": "and follow the instructions to reset your password.",
+			"FieldCode": "",
+			"DisplayText": ""
 		}]');
 
 	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCode'
@@ -3421,9 +3445,9 @@
 			"FieldCode": "",
 			"DisplayText": ""
 		},
-    {
+		{
 			"TextCode": "Shipment.F.RequestedDocumentsCount",
-			"DefaultText": "Requested Documents Count",
+			"DefaultText": "Upload required documents",
 			"FieldCode": "Shipment.RequestedDocumentsCount",
 			"DisplayText": ""
 		},
