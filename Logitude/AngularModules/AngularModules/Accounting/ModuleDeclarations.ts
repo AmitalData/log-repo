@@ -1,6 +1,6 @@
 import { GLAccountsPageComponent } from './Components/Workspaces/GLAccounts/GLAccountsPageComponent';
 import { AccountingNoteComponent } from './Components/Others/AccountingNoteComponent';
-import { InterestTransactionNoteComponent } from './Components/Others/InterestTransactionNoteComponent';
+import { InterestTransactionNotesComponent } from './Components/Others/InterestTransactionNotesComponent';
 import { IntegrityCheckTabComponent } from './Components/EditTabs/AccountingIntegrityCheck/IntegrityCheckTabComponent';
 import {AccountingWorkspaceComponent} from './Components/Workspaces/AccountingWorkspaceComponent';
 import {MainPageComponent} from './Components/Workspaces/Main/MainPageComponent';
@@ -292,7 +292,7 @@ export const Components =
         NewTaxDeductionReportComponent,
         IntegrityCheckTabComponent,
         AccountingNoteComponent,
-        InterestTransactionNoteComponent,
+        InterestTransactionNotesComponent,
         NewIntegrityCheckComponent,
         AddEditInterestBasesPeriodComponent,
         InterestBasesTypeShortTitleComponent,
@@ -478,7 +478,7 @@ export class ModuleDeclarations {
             case "AccountingFlatFileDownloadComponent": { myResult = AccountingFlatFileDownloadComponent; break; }
             case "IntegrityCheckTabComponent": { myResult = IntegrityCheckTabComponent; break; }
             case "AccountingNoteComponent": { myResult = AccountingNoteComponent; break; }
-            case "InterestTransactionNoteComponent": { myResult = InterestTransactionNoteComponent; break; }
+            case "InterestTransactionNotesComponent": { myResult = InterestTransactionNotesComponent; break; }
             case "NewIntegrityCheckComponent": { myResult = NewIntegrityCheckComponent; break; }
             case "AddEditInterestBasesPeriodComponent": { myResult = AddEditInterestBasesPeriodComponent; break; }
             case "InterestBasesTypeShortTitleComponent": { myResult = InterestBasesTypeShortTitleComponent; break; }

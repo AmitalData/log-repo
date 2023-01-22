@@ -73,7 +73,7 @@ export class GlAccountInterestTransactionsNotesTemplate {
         logWindow.Height = 350;
         logWindow.Title = TextCodeTranslator.Translate("InterestTransaction Note");
         logWindow.WindowArgs = { interestTransaction: line };
-        logWindow.Show('./Accounting/Components/Others/InterestTransactionNoteComponent');
+        logWindow.Show('./Accounting/Components/Others/InterestTransactionNotesComponent');
         logWindow.WindowClosed.subscribe(($event: any) => {
             this.GetInterestTransactionNotes();
         });
