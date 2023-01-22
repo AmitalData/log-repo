@@ -2722,8 +2722,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_GeneralMCCustomizationDeploymentPackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Customization.DeploymentPackage", DefaultText = "Deployment Package",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_AccountingOChangeMadeToConnectedAccounts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ChangeMadeToConnectedAccounts", DefaultText = "A change was made in the connected accounts. The connected accounts must be returned to their state as it was when the original journal was prodiced. Line ",LocalDefaultText = @"בוצע שינוי בחיבור החשבונות. יש להחזיר את חיבור החשבונות למצבם כפי שהיה בעת רישום פקודת היומן המקורית. שורה ", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
 
    
 	    
