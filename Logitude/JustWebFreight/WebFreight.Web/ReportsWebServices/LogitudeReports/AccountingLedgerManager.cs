@@ -633,6 +633,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         accountingLedgerRecord.ShipperReference2 = shipment.ShipperReference2;
                         accountingLedgerRecord.ShipmentNumber = shipment.ShipmentNumber;
                         accountingLedgerRecord.ProjectNumber = shipment.ProjectNumber;
+                        accountingLedgerRecord.CustomerReference1 = shipment.CustomerReference1;
+                        accountingLedgerRecord.CustomerReference2 = shipment.CustomerReference2;
                     }
                 }
 
@@ -740,6 +742,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         accountingLedgerRecord.ShipperReference2 = shipment.ShipperReference2;
                         accountingLedgerRecord.ShipmentNumber = shipment.ShipmentNumber;
                         accountingLedgerRecord.ProjectNumber = shipment.ProjectNumber;
+                        accountingLedgerRecord.CustomerReference1 = shipment.CustomerReference1;
+                        accountingLedgerRecord.CustomerReference2 = shipment.CustomerReference2;
                     }
                 }
 
@@ -788,6 +792,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 accountingLedgerRecord.ReferenceType = "A\\R Payment";
                 accountingLedgerRecord.CustomerId = arPayment.BillToId;
                 accountingLedgerRecord.PartnerId = arPayment.PartnerId;
+                
 
                 if (arPayment.BranchId != null)
                 {
@@ -1088,6 +1093,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         currencyRecord.HouseNumber = ledger.HouseNumber;
                         currencyRecord.Description = ledger.Description;
                         currencyRecord.ProjectNumber = ledger.ProjectNumber;
+                        currencyRecord.CustomerReference1 = ledger.CustomerReference1;
+                        currencyRecord.CustomerReference2 = ledger.CustomerReference2;
                         customerRecord.AccountingLedgerList.Add(currencyRecord);
                     }
                 }
