@@ -787,7 +787,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "DCS,Disable Storage Cache", 
                 Description = "Disable Storage Cache", 
 			});
-			
+            all.Add(new ToggleDetails()
+            {
+                Code = "SKP",
+                Name = "Use synch kafka producer",
+                SearchFields = "SKP,Use synch kafka producer",
+                Description = "Use synch kafka producer",
+            });
+
             return all;
        }
 
