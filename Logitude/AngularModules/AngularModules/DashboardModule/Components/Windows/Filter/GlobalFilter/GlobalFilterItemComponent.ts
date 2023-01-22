@@ -20,6 +20,7 @@ export class GlobalFilterItemComponent implements OnInit {
     public DataContext = this;
     public UIProperties: UIProperties = new UIProperties;
     public ObjectTableName: string = 'GlobalFilterItem';
+    public DatesVisable: boolean = true;
 
     ngOnInit(): void {
         this.FillOperators();
@@ -81,19 +82,24 @@ export class GlobalFilterItemComponent implements OnInit {
     public OperatorChanged(operator: Operator) {
         this.FilterItem.Operator = operator ? operator.Code : null;
         this.GetDefaultFieldValue();
-        this.FilterItem.FieldValue2 = "";
+        this.FilterItem.FieldValue2 = null;
         this.FilterItem.CompareWithPrevious = false;
         this.GetDefaultDateGroup();
+
+        this.DatesVisable = false;
+        setTimeout(() => {
+            this.DatesVisable = true
+        }, 10);
     }
 
     private GetDefaultFieldValue() {
         if ((this.FilterItem.DataTypeCode == 'Date' || this.FilterItem.DataTypeCode == 'DateTime') && (this.FilterItem.Operator == 'Next' || this.FilterItem.Operator == 'Previous')) {
-            this.FilterItem.FieldValue3 = "";
-            this.FilterItem.FieldValue = "";
+            this.FilterItem.FieldValue3 = null;
+            this.FilterItem.FieldValue = null;
         }
         else {
-            this.FilterItem.FieldValue = "";
-            this.FilterItem.FieldValue3 = "";
+            this.FilterItem.FieldValue = null;
+            this.FilterItem.FieldValue3 = null;
         }
     }
 
@@ -163,9 +169,11 @@ export class GlobalFilterItemComponent implements OnInit {
     ValidateDate() {
         if (this.FilterItem.Operator == "Between" && this.FilterItem.FieldValue && this.FilterItem.FieldValue2 && this.FilterItem.FieldValue > this.FilterItem.FieldValue2) {
             this.UIProperties.SetValidity("FieldValue2", this.ObjectTableName, false, "To date must be larger than from date");
+            this.UIProperties.SetValidity("FieldValue", this.ObjectTableName, false, "To date must be larger than from date");
         }
         else {
             this.UIProperties.SetValidity("FieldValue2", this.ObjectTableName, true, null);
+            this.UIProperties.SetValidity("FieldValue", this.ObjectTableName, true, null);
         }
     }
 
