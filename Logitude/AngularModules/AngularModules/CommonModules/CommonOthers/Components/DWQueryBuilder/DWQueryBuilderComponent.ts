@@ -493,9 +493,11 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
 
     GetIdWithoutSpecialCharacters(value: string){
         let specialCharacters = ['/','(',')'];
-        specialCharacters.forEach(ch => {
-            value = value.replace(ch,'');
-        });
+        if(value){
+            specialCharacters.forEach(ch => {
+                value = value.replace(ch,'');
+            });
+        } 
         return value;
     }
 
