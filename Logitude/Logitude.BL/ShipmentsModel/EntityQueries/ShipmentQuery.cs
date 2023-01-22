@@ -13482,7 +13482,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                            select new DigitalShipmentList()
                            {
                                TruckContainerNumber = "",
-                               //TruckContainerNumber = f.TransportModeId == "O" ? Regex.Replace(f.ContainersNumbersandTypesArray, "(\\[.*?\\])", "") : (f.DirectionId == "D" && f.TransportModeId == "I") ? f.TruckNumber : f.CarrierNumber,
                                RequestedDocumentsCount = f.RequestedDocumentsCount,
                                ChargeableWeightInKG = f.ChargeableWeightInKG,
                                GrossWeightInKG = f.GrossWeightInKG,
