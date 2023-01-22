@@ -134,7 +134,7 @@
                                                 [HideColumns]="true"
                                                 [DisplayMemberPath]="'DisplayName'"
                                                 (SelectedItemChanged)="SelectedSecondaryGroupField = $event"
-                                                [QueryFilterItems]="GroupByQueryFilters">
+                                                [QueryFilterItems]="SecondaryGroupByQueryFilters">
                                             </LogLov>
                                         </td>      
                                     </tr>
@@ -204,7 +204,8 @@
                                                         <ComboBox (SelectedItemChanged)="SortBy = $event.Code"
                                                                   [ItemsSource]="SortByCodes"
                                                                   [SelectedItem]="GetSelectedSort()"
-                                                                  [Binding]="'Text'">
+                                                                  [Binding]="'Text'"
+                                                                  [IsDisabled]="!CanSort">
                                                         </ComboBox>
                                                     </td>
                                                     <td style="width: 2px;">
@@ -214,7 +215,8 @@
                                                         <ComboBox (SelectedItemChanged)="SortDirection = $event.code"
                                                                   [ItemsSource]="SortByDirections"
                                                                   [SelectedItem]="GetSelectedSortDirection()"
-                                                                  [Binding]="'name'">
+                                                                  [Binding]="'name'"
+                                                                  [IsDisabled]="!CanSort">
                                                         </ComboBox>
                                                     </td>
                                                 </tr>
