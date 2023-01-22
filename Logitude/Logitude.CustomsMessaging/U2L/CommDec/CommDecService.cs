@@ -1307,6 +1307,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     {
                         sbWhyDecNotConnected2Master.AppendLine($"_CourierDeclarationPM == null;");
                         AppendLogLine("CourierDeclarationPM not found for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id);
+                        LogitudeSettings.HandleLogMe(" CourierDeclarationPM not found for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id, false, "CheckMasterToUpdate", stopLogAt);
                         if (!this._MyDeclarationPM.HatraDate.HasValue)
                         {
                             sbWhyDecNotConnected2Master.AppendLine($"this._MyDeclarationPM.HatraDate.HasValue");
@@ -1314,6 +1315,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                             if (_CourierDeclarationPMPMDiferentMaster != null)
                             {
                                 AppendLogLine("try to delete CourierDeclaration with Diferent Master (id: " + _CourierDeclarationPMPMDiferentMaster.CourierMasterId + "  found for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id);
+                                LogitudeSettings.HandleLogMe(" try to delete CourierDeclaration with Diferent Master (id: " + _CourierDeclarationPMPMDiferentMaster.CourierMasterId + "  found for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id, false, "CheckMasterToUpdate", stopLogAt);
                                 _CourierDeclarationPMPMDiferentMaster.ChangeSetOp = ChangeSetOperation.Delete;
                                 try
                                 {
@@ -1336,6 +1338,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                                 {
                                     sbWhyDecNotConnected2Master.AppendLine(e.ToString());
                                     AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
+                                    LogitudeSettings.HandleLogMe(" ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------", false, "CheckMasterToUpdate", stopLogAt);
                                     return;
                                 }
 
@@ -1373,11 +1376,13 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                                         {
                                             var FormatedException = ExceptionFormatUtil.GetFormated(ex);
                                             AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
+                                            LogitudeSettings.HandleLogMe(" ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------", false, "CheckMasterToUpdate", stopLogAt);
                                             return;
                                         }
                                         catch (Exception e)
                                         {
                                             AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
+                                            LogitudeSettings.HandleLogMe(" ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------", false, "CheckMasterToUpdate", stopLogAt);
                                             return;
                                         }
                                     }
@@ -1426,6 +1431,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
                     }
                     AppendLogLine("try to update CourierDeclaration for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id);
+                    LogitudeSettings.HandleLogMe(" try to update CourierDeclaration for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id, false, "CheckMasterToUpdate", stopLogAt);
                     try
                     {
                         sbWhyDecNotConnected2Master.AppendLine($"2-if (!_MyDeclarationPM.HatraDate.HasValue);");
@@ -1441,6 +1447,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     {
                         var FormatedException = ExceptionFormatUtil.GetFormated(ex);
                         AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
+                        LogitudeSettings.HandleLogMe(" ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------", false, "CheckMasterToUpdate", stopLogAt);
                         sbWhyDecNotConnected2Master.AppendLine(ex.ToString());
                         return;
                     }
@@ -1448,6 +1455,8 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     {
                         sbWhyDecNotConnected2Master.AppendLine(e.ToString());
                         AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
+                        LogitudeSettings.HandleLogMe(" ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------", false, "CheckMasterToUpdate", stopLogAt);
+
                         return;
                     }
                 }
