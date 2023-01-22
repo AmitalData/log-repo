@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Logitude.BL.InfrastructureModel.EntityLists;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Logitude.BL.CommonDataModel.EntityLists
 {
-    public class ChargesTypeList
+    public class ChargesTypeList: CustomFieldList
     {
         public string Code { get; set; }
 

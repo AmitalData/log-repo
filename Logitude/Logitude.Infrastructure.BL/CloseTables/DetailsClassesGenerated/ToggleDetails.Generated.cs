@@ -844,7 +844,23 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "CXE,Cargo Tracking Excel sheet export features", 
                 Description = "Cargo Tracking Excel sheet export features", 
 			});
+
+            all.Add(new ToggleDetails()
+            {    
+                Code = "INU", 
+                Name = "Invoice Concurrency", 
+                SearchFields = "INU, Invoice Concurrency", 
+                Description = "", 
+			});
 			
+            all.Add(new ToggleDetails()
+            {
+                Code = "SKP",
+                Name = "Use synch kafka producer",
+                SearchFields = "SKP,Use synch kafka producer",
+                Description = "Use synch kafka producer",
+            });
+
             return all;
        }
 

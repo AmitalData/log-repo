@@ -16,8 +16,17 @@ export class GlobalFilterItem {
     public JoinedTableDisplayField: string;
     public CanSearch: boolean;
     public IsMultiSelect: boolean;
-    public CompareWithPrevious: boolean;
     public JoinedTableName: string;
+
+    private compareWithPrevious: boolean;
+    public get CompareWithPrevious(): boolean {
+        return this.compareWithPrevious;
+    }
+    public set CompareWithPrevious(value: boolean) {
+        this.compareWithPrevious = value;
+        if (this.Component) this.Component.ValueChanged(this);
+    }
+
 
     private dateGroupCode: string;
     public get DateGroupCode(): string {

@@ -38,7 +38,7 @@ export class ForwarderChooseShipmentsComponent extends BaseComponent implements 
     public IsPrivateLabelCustomsActivated: boolean = false;
     public IsExportActivated: boolean = false;
     public IsCustomsActivated: boolean = false;
-    public ShowDirectionFilters: boolean = false;
+    public IsPrivateLabelWithMoreThanOneDirectionFilter: boolean = false;
     private messageWindow: MessageWindow = new MessageWindow();
     DataContext: ForwarderChooseShipmentsComponent = this;
     public _PortExtendedPMService: PortExtendedPMService;
@@ -78,19 +78,51 @@ export class ForwarderChooseShipmentsComponent extends BaseComponent implements 
     private SetCustomerTenantAccessRequest(CustomerTenantAccessRequestPartner: any) {
         this.IsCustomsActivated = (CustomerTenantAccessRequestPartner.IsCustoms && this.IsPrivateLabelCustomsActivated);
         this.IsExportActivated = (CustomerTenantAccessRequestPartner.IsExport && this.IsPrivateLabelExportActivated);
-        this.ShowDirectionFilters = this.HaveDirectionFilters();
+        this.IsPrivateLabelWithMoreThanOneDirectionFilter = this.HaveDirectionFilters();
+        this.SetPrivateLabelDirectionFilters();
     }
 
     HaveDirectionFilters() {
-        if (this.IsPrivateLabel && this.HasOneDirectionFilter()) {
+        if (this.IsPrivateLabel && this.HasTwoDirectionFilter()) {
             return false;
         }
 
         return true;
     }
 
-    private HasOneDirectionFilter() {
+    private HasTwoDirectionFilter() {
         return !(this.IsExportActivated && this.IsCustomsActivated);
+    }
+
+    private SetPrivateLabelDirectionFilters() {
+        this.SetPrivateLabelDriectionId();
+
+        if (!this.IsCustomsActivated && !this.IsExportActivated) {
+            this.SetDefalutFilter();
+        }
+    }
+
+    private SetPrivateLabelDriectionId() {
+        this.SetCustomShipmentFilters();
+        this.SetExportShipmentFilters();
+    }
+
+    private SetCustomShipmentFilters() {
+        if (this.IsCustomsActivated && !this.IsExportActivated) {
+            this.SelectedDirectionFilter = "C";
+        }
+    }
+
+    private SetExportShipmentFilters() {
+        if (this.IsExportActivated && !this.IsCustomsActivated) {
+            this.SelectedDirectionFilter = "E";
+        }
+    }
+
+    private SetDefalutFilter() {
+        this.IsCustomsActivated = true;
+        this.SelectedDirectionFilter = "C";
+        this.IsPrivateLabelWithMoreThanOneDirectionFilter = false;
     }
 
     ngOnInit() {

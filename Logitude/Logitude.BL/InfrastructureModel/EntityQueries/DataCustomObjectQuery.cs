@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
@@ -135,6 +136,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             {
                 MapCustomFieldValue(("Field" + i.ToString()), dataCustomObject, dataCustomObjectPM);
             }
+            new CustomChildEntityService(new CustomChildEntityArgs() { ParentEntity = dataCustomObjectPM, ParentEntityId = dataCustomObjectPM.Id, ParentObjectTableId = dataCustomObjectPM.ObjectTableId, Tenant = tenant }).Set();
             return dataCustomObjectPM;
         }
 

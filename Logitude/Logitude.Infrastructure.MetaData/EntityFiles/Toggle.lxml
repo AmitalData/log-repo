@@ -42,7 +42,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;3647&quot;"
+  Code="&quot;063f&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -915,6 +915,16 @@
       Name="&quot;Cargo Tracking Excel sheet export features&quot;"
       SearchFields="&quot;CXE,Cargo Tracking Excel sheet export features&quot;"
       Description="&quot;Cargo Tracking Excel sheet export features&quot;" />
+    <Record
+      Code="&quot;INU&quot;"
+      Name="&quot;Invoice Concurrency&quot;"
+      SearchFields="&quot;INU, Invoice Concurrency&quot;"
+      Description="&quot;&quot;" />
+	<Record
+	 Code="&quot;SKP&quot;"
+	 Name="&quot;Use synch kafka producer&quot;"
+	 SearchFields="&quot;SKP,Use synch kafka producer&quot;"
+	 Description="&quot;Use synch kafka producer&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

@@ -96,19 +96,18 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
 
             if (dataTypeCode == "Date" || dataTypeCode == "DateTime") return ((DateTime)value).ToString("yyyy-MM-dd");
 
-            var objectValue = value;
+            
             value = GetAbbreviationValue(value);
-            value = UseDecimalPlaces(value, objectValue);
-            value = UseTousandSeperatorForValue(value, objectValue, dataTypeCode);
+            value = UseDecimalPlaces(value);
+            value = UseTousandSeperatorForValue(value, dataTypeCode);
 
             return value;
         }
 
-        private object UseTousandSeperatorForValue(object value, object objectValue, string dataTypeCode)
+        private object UseTousandSeperatorForValue(object value, string dataTypeCode)
         {
             int numberOfDecimalPlaces = Convert.ToInt32(_Widget.DecimalPlaces);
-            int abbreviationAfter = UseAbbreviationNumber(objectValue);
-            if (abbreviationAfter != 0) numberOfDecimalPlaces = 2;
+          
             if (_Widget.ThousandSeparator == true)
             {     
                 if (dataTypeCode == null || numberOfDecimalPlaces == 0) return String.Format("{0:n0}", value);
@@ -121,11 +120,9 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             return Math.Round(Convert.ToDouble(value), numberOfDecimalPlaces).ToString("0." + numberOfDecimals);
         }
 
-        private object UseDecimalPlaces(object value, object objectValue)
+        private object UseDecimalPlaces(object value)
         {
-            int abbreviationAfter = UseAbbreviationNumber(objectValue);
-            if (abbreviationAfter != 0) return Math.Round(Convert.ToDouble(value), 2);
-
+          
             int numberOfDecimalPlaces = Convert.ToInt32(_Widget.DecimalPlaces);
             return Math.Round(Convert.ToDouble(value), numberOfDecimalPlaces);            
         }

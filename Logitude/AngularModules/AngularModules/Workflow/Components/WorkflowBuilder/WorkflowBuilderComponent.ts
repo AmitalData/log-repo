@@ -176,6 +176,9 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
                     startNodeTrigger: "trigger",
                     conditionNodeMetLabel: "metLabel",
                     conditionNodeOtherwiseLabel: "otherwiseLabel"
+                },
+                flowSettings: {
+                    isViewMode: this.IsViewMode
                 }
             };
 
@@ -383,9 +386,13 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
             let startNode = flowObject.nodes.filter((n: any) => n.type === "startNode")[0];
             let openPropertiesEventObject = this.buildOpenPropertiesEventObject(startNode, true);
             if (openPropertiesEventObject) {
-                this.IsFirstOpen = false;
                 this.handleOpenPropertiesEvent(openPropertiesEventObject);
+                this.IsFirstOpen = false;
             }
+        } else {
+            setTimeout(() => {
+                this.openStartPropertiesWindow();
+            }, 100);
         }
     }
 
