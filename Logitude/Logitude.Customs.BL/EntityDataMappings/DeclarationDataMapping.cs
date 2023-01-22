@@ -181,7 +181,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 }
             }
 
-            else if (entityPOCO.IsAmendment == false)
+            else if (entityPOCO.IsAmendment != true)
             {
                 /*if (!string.IsNullOrEmpty(entityPOCO.ExportClosedErrorXML) && !entityPOCO.IsExportClosed)
                 {
