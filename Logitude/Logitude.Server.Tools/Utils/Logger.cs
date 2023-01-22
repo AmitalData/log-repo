@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -462,5 +463,40 @@ namespace Logitude.Server.Tools.Utils
 
         public static string WorkingDir = "";
         public static string OverrideExecutablePath = "";
+
+
+
+        public static bool ToLogUntilDateyyyyMMdd(string appSettingsLogUntilDateyyyyMMdd, DateTime? graceTimeUntill = null)
+        {
+
+            try
+            {
+                if (graceTimeUntill.HasValue && 
+                    DateTime.Now < graceTimeUntill.Value)
+                {
+                    return true;
+                }
+                string untilDateyyyyMMdd = System.Configuration.ConfigurationManager.AppSettings[appSettingsLogUntilDateyyyyMMdd];
+                //["20230112HDCall409236.LogUntilDateyyyyMMdd"];
+                if (!string.IsNullOrWhiteSpace(untilDateyyyyMMdd))
+                {
+                    DateTime stopLogAt = DateTime.ParseExact(untilDateyyyyMMdd,
+                                                        "yyyyMMdd",
+                                                        CultureInfo.InvariantCulture,
+                                                        style: DateTimeStyles.None);
+                    bool tolog= (DateTime.Now < stopLogAt);
+                    return (DateTime.Now < stopLogAt);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+        }
     }
 }

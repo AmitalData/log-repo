@@ -40,6 +40,7 @@ using Unifreight.Data.AmitalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
 using System.Web.Caching;
 using UnifreightIIG.Common.MessageLib.Unifreight.Customs;
+using System.Text;
 
 namespace Logitude.CustomsMessaging.U2L.CommDec
 {
@@ -1290,247 +1291,179 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 }
 
             }
-            if (_CourierMasterPM != null)
+            var sbWhyDecNotConnected2Master = new StringBuilder();
+            try
             {
-                var myCourierDeclarationQueryService = new CourierDeclarationQueryService(_context);
-                var myCourierDeclarationUpdateService = new CourierDeclarationUpdateService(_context, new Dictionary<string, IContext>(), _tenant);
-                _CourierDeclarationPM = myCourierDeclarationQueryService.GetSingle(_MyDeclarationPM.Id, _CourierMasterPM.Id, false, true);
-                if (_CourierDeclarationPM == null)
+                sbWhyDecNotConnected2Master.Append($"DeclarationId:{_MyDeclarationPM?.Id};")
+                    .Append($"CustomFileNo:{_MyDeclarationPM?.CustomFileNo};")
+                    .Append($"CourierMasterPM:{_CourierMasterPM?.Id};");
+                if (_CourierMasterPM != null)
                 {
-                    AppendLogLine("CourierDeclarationPM not found for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id);
-                    LogitudeSettings.HandleLogMe(" CourierDeclarationPM not found for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id, false, "CheckMasterToUpdate", stopLogAt);
-                    if (!this._MyDeclarationPM.HatraDate.HasValue)
+                    sbWhyDecNotConnected2Master.Append($"_CourierMasterPM != null;");
+                    var myCourierDeclarationQueryService = new CourierDeclarationQueryService(_context);
+                    var myCourierDeclarationUpdateService = new CourierDeclarationUpdateService(_context, new Dictionary<string, IContext>(), _tenant);
+                    _CourierDeclarationPM = myCourierDeclarationQueryService.GetSingle(_MyDeclarationPM.Id, _CourierMasterPM.Id, false, true);
+                    if (_CourierDeclarationPM == null)
                     {
-                        CourierDeclarationPM _CourierDeclarationPMPMDiferentMaster = myCourierDeclarationQueryService.GetCourierDeclarationByDeclarationId(_MyDeclarationPM.Id, _tenant);
-                        if (_CourierDeclarationPMPMDiferentMaster != null)
+                        sbWhyDecNotConnected2Master.AppendLine($"_CourierDeclarationPM == null;");
+                        AppendLogLine("CourierDeclarationPM not found for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id);
+                        if (!this._MyDeclarationPM.HatraDate.HasValue)
                         {
-                            AppendLogLine("try to delete CourierDeclaration with Diferent Master (id: " + _CourierDeclarationPMPMDiferentMaster.CourierMasterId + "  found for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id);
-                            LogitudeSettings.HandleLogMe(" try to delete CourierDeclaration with Diferent Master (id: " + _CourierDeclarationPMPMDiferentMaster.CourierMasterId + "  found for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id, false, "CheckMasterToUpdate", stopLogAt);
-                            _CourierDeclarationPMPMDiferentMaster.ChangeSetOp = ChangeSetOperation.Delete;
-                            try
+                            sbWhyDecNotConnected2Master.AppendLine($"this._MyDeclarationPM.HatraDate.HasValue");
+                            CourierDeclarationPM _CourierDeclarationPMPMDiferentMaster = myCourierDeclarationQueryService.GetCourierDeclarationByDeclarationId(_MyDeclarationPM.Id, _tenant);
+                            if (_CourierDeclarationPMPMDiferentMaster != null)
                             {
-
-
-                                myCourierDeclarationUpdateService.Update(_CourierDeclarationPMPMDiferentMaster, true);
-
-
-                                if (false)
+                                AppendLogLine("try to delete CourierDeclaration with Diferent Master (id: " + _CourierDeclarationPMPMDiferentMaster.CourierMasterId + "  found for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id);
+                                _CourierDeclarationPMPMDiferentMaster.ChangeSetOp = ChangeSetOperation.Delete;
+                                try
                                 {
 
+                                    sbWhyDecNotConnected2Master.AppendLine($"myCourierDeclarationUpdateService.Update:_CourierDeclarationPMPMDiferentMaster-{_CourierDeclarationPMPMDiferentMaster.CourierMasterId}");
 
-                                    CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(_context);
-                                    List<CustomsRequestsSheetPM> customsRequestsSheetPMList = customsRequestsSheetQueryService.GetRequestInProgress(_tenant, "UCUDO", "", "", null, null, _CourierDeclarationPMPMDiferentMaster.CourierMasterId, true);
+                                    myCourierDeclarationUpdateService.Update(_CourierDeclarationPMPMDiferentMaster, true);
+                                    sbWhyDecNotConnected2Master.AppendLine($"myCourierDeclarationUpdateService.Update(_CourierDeclarationPMPMDiferentMaster, true)-done");
 
-                                    if (customsRequestsSheetPMList == null || customsRequestsSheetPMList.Count == 0)
+                                    
+                                }
+                                catch (DbEntityValidationException ex)
+                                {
+                                    sbWhyDecNotConnected2Master.AppendLine(ex.ToString());
+                                    var FormatedException = ExceptionFormatUtil.GetFormated(ex);
+                                    AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
+                                    return;
+                                }
+                                catch (Exception e)
+                                {
+                                    sbWhyDecNotConnected2Master.AppendLine(e.ToString());
+                                    AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
+                                    return;
+                                }
+
+                                string prevVal = null;
+                                string currvVal = null;
+                                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
+                                currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+                                if (currentDeclarationCourierStatusPM != null)
+                                {
+                                    CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(_MyDeclarationPM, _MyDeclarationPM.Id, _MyDeclarationPM.Tenant);
+                                    prevVal = currentDeclarationCourierStatusPM.CourierManifestStatusCode;
+                                    if (prevVal == "V")
                                     {
-                                        AppendLogLine("open UCUDO  ??");
+                                        currvVal = "R";
+                                    }
+                                    else
+                                    {
+                                        calculateDeclarationCourierStatus.CalcCourierManifestStatusCode(currentDeclarationCourierStatusPM);
+                                        currvVal = currentDeclarationCourierStatusPM.CourierManifestStatusCode;
+                                    }
 
-                                        string GeneralKey = GetGeneralLockKey(_CourierDeclarationPMPMDiferentMaster.CourierMasterId);
-                                        var concurrentKiller = new ConcurrentKiller();
-                                        concurrentKiller.FreeLockIfCreated15MinOld(GeneralKey, _CourierDeclarationPMPMDiferentMaster.Tenant);
-                                        bool haveUCUDOInProgress = false;
+                                    if (_MyDeclarationPM.PaymentDate.HasValue)
+                                        currvVal = currentDeclarationCourierStatusPM.CourierManifestStatusCode = "R";
+
+                                    if (prevVal != currvVal)
+                                    {
+                                        DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                                        currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                                        AppendLogLine("try to update declarationCourierStatus for DeclarationPM.Id: " + _MyDeclarationPM.Id);
                                         try
                                         {
-                                            concurrentKiller.LockOrCrashOnCommitDueUnique(GeneralKey, _CourierDeclarationPMPMDiferentMaster.Tenant);
-                                            haveUCUDOInProgress = false;
-                                            AppendLogLine("UCUDO:concurrentKiller: Ok");
-                                            LogitudeSettings.HandleLogMe(" UCUDO:concurrentKiller: Ok", false, "CheckMasterToUpdate", stopLogAt);
+                                            declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
                                         }
-                                        catch (Exception)
+                                        catch (DbEntityValidationException ex)
                                         {
-                                            AppendLogLine("UCUDO:concurrentKiller:Have in the middle in the last 15 min- not open  UCUDO");
-                                            LogitudeSettings.HandleLogMe(" UCUDO:concurrentKiller:Have in the middle in the last 15 min- not open  UCUDO", false, "CheckMasterToUpdate", stopLogAt);
-                                            haveUCUDOInProgress = true;
+                                            var FormatedException = ExceptionFormatUtil.GetFormated(ex);
+                                            AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
+                                            return;
                                         }
-
-                                        // customsRequestsSheetPMList = customsRequestsSheetQueryService.GetRequestInProgress(_tenant, "UCUW2L", "", "", null, null, _CourierDeclarationPMPMDiferentMaster.CourierMasterId, true);
-                                        //customsRequestsSheetPMList = customsRequestsSheetPMList.Where(x => x.Id != _PBId).ToList();
-                                        //  if (customsRequestsSheetPMList == null || customsRequestsSheetPMList.Count == 0)
-                                        //  {
-                                        if (!haveUCUDOInProgress)
+                                        catch (Exception e)
                                         {
-                                            var messagingService = new DCAInUCUDO_UpdateOpenDeclarationsMessagingService();
-                                            UpdateOpenDeclarationsRequestParams requestParams2 = new UpdateOpenDeclarationsRequestParams()
-                                            {
-
-                                                LoggingUserId = Curruser,
-                                                Tenant = _tenant,
-                                                LoggingEntityId = _CourierDeclarationPMPMDiferentMaster.CourierMasterId,
-
-                                            };
-
-                                            string message = messagingService.CreateCRS(_tenant, Curruser, requestParams2);
-
+                                            AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
+                                            return;
                                         }
-                                        //}
                                     }
                                 }
+                                this.UpsertActionConst = String.Concat(UpsertActionConst, "+CourierMasterChange");
                             }
-                            catch (DbEntityValidationException ex)
-                            {
-                                var FormatedException = ExceptionFormatUtil.GetFormated(ex);
-                                AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
-                                LogitudeSettings.HandleLogMe(" ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------", false, "CheckMasterToUpdate", stopLogAt);
-                                return;
-                            }
-                            catch (Exception e)
-                            {
-                                AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
-                                LogitudeSettings.HandleLogMe(" ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------", false, "CheckMasterToUpdate", stopLogAt);
-                                return;
-                            }
-
-                            string prevVal = null;
-                            string currvVal = null;
-                            DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
-                            currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
-                            if (currentDeclarationCourierStatusPM != null)
-                            {
-                                CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(_MyDeclarationPM, _MyDeclarationPM.Id, _MyDeclarationPM.Tenant);
-                                prevVal = currentDeclarationCourierStatusPM.CourierManifestStatusCode;
-                                if (prevVal == "V")
-                                {
-                                    currvVal = "R";
-                                }
-                                else
-                                {
-                                    calculateDeclarationCourierStatus.CalcCourierManifestStatusCode(currentDeclarationCourierStatusPM);
-                                    currvVal = currentDeclarationCourierStatusPM.CourierManifestStatusCode;
-                                }
-
-                                if(_MyDeclarationPM.PaymentDate.HasValue)
-                                    currvVal = currentDeclarationCourierStatusPM.CourierManifestStatusCode = "R";
-
-                                if (prevVal != currvVal)
-                                {
-                                    DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
-                                    currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                                    AppendLogLine("try to update declarationCourierStatus for DeclarationPM.Id: " + _MyDeclarationPM.Id);
-                                    try
-                                    {
-                                        declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
-                                    }
-                                    catch (DbEntityValidationException ex)
-                                    {
-                                        var FormatedException = ExceptionFormatUtil.GetFormated(ex);
-                                        AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
-                                        LogitudeSettings.HandleLogMe(" ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------", false, "CheckMasterToUpdate", stopLogAt);
-                                        return;
-                                    }
-                                    catch (Exception e)
-                                    {
-                                        AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
-                                        LogitudeSettings.HandleLogMe(" ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------", false, "CheckMasterToUpdate", stopLogAt);
-                                        return;
-                                    }
-                                }
-                            }
-                            this.UpsertActionConst = String.Concat(UpsertActionConst, "+CourierMasterChange");
                         }
+                        _CourierDeclarationPM = new CourierDeclarationPM();
+                        _CourierDeclarationPM.ChangeSetOp = ChangeSetOperation.Insert;
+                        _CourierDeclarationPM.DeclarationId = _MyDeclarationPM.Id;
+                        _CourierDeclarationPM.CourierMasterId = _CourierMasterPM.Id;
+                        sbWhyDecNotConnected2Master.AppendLine($"_CourierDeclarationPM.ChangeSetOp = ChangeSetOperation.Insert;");
+
+
                     }
-                    _CourierDeclarationPM = new CourierDeclarationPM();
-                    _CourierDeclarationPM.ChangeSetOp = ChangeSetOperation.Insert;
-                    _CourierDeclarationPM.DeclarationId = _MyDeclarationPM.Id;
-                    _CourierDeclarationPM.CourierMasterId = _CourierMasterPM.Id;
+                    else
+                    {
+
+                        sbWhyDecNotConnected2Master.AppendLine($"_CourierDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;");
+                        _CourierDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
 
 
 
+                    }
+                    if (_CourierDeclarationPM.SequenceNumeric == null)
+                    {
+                        int? sequenceNumericMax = myCourierDeclarationQueryService.GetCourierMasterMaxSequenceNumeric(_CourierDeclarationPM.CourierMasterId, _tenant);
+                        if (sequenceNumericMax == null)
+                        {
+                            sequenceNumericMax = 0;
+                        }
+                        _CourierDeclarationPM.SequenceNumeric = sequenceNumericMax + 1;
+                    }
+                    _CourierDeclarationPM.Tenant = _tenant;
+
+                    _context = CustomContext.GetContext(ResolvedTenant());
+
+                    CourierMasterRepository courierMasterRepository = new CourierMasterRepository(_context);
+
+                    if (courierMasterRepository != null)
+
+                    {
+
+
+                        
+
+                    }
+                    AppendLogLine("try to update CourierDeclaration for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id);
+                    try
+                    {
+                        sbWhyDecNotConnected2Master.AppendLine($"2-if (!_MyDeclarationPM.HatraDate.HasValue);");
+                        if (!_MyDeclarationPM.HatraDate.HasValue)// ELISHIVA  + MORAN Task 156294: חסימת מעבר משלוחים בין טיסות בלדרות
+                        {
+                            sbWhyDecNotConnected2Master.AppendLine($"myCourierDeclarationUpdateService.Update...{_CourierDeclarationPM?.CourierMasterId}");
+                            myCourierDeclarationUpdateService.Update(_CourierDeclarationPM, true);
+                        }
+                        sbWhyDecNotConnected2Master.AppendLine($"2-myCourierDeclarationUpdateService.Update(_CourierDeclarationPM, true)");
+
+                    }
+                    catch (DbEntityValidationException ex)
+                    {
+                        var FormatedException = ExceptionFormatUtil.GetFormated(ex);
+                        AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
+                        sbWhyDecNotConnected2Master.AppendLine(ex.ToString());
+                        return;
+                    }
+                    catch (Exception e)
+                    {
+                        sbWhyDecNotConnected2Master.AppendLine(e.ToString());
+                        AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
+                        return;
+                    }
                 }
                 else
                 {
-
-                    _CourierDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
-
-
-
-                }
-                if (_CourierDeclarationPM.SequenceNumeric == null)
-                {
-                    int? sequenceNumericMax = myCourierDeclarationQueryService.GetCourierMasterMaxSequenceNumeric(_CourierDeclarationPM.CourierMasterId, _tenant);
-                    if (sequenceNumericMax == null)
-                    {
-                        sequenceNumericMax = 0;
-                    }
-                    _CourierDeclarationPM.SequenceNumeric = sequenceNumericMax + 1;
-                }
-                _CourierDeclarationPM.Tenant = _tenant;
-
-                _context = CustomContext.GetContext(ResolvedTenant());
-
-                CourierMasterRepository courierMasterRepository = new CourierMasterRepository(_context);
-
-                if (courierMasterRepository != null)
-
-                {
-
-
-                    if (false)
-                    {
-                        CourierMaster courierMaster = courierMasterRepository.GetSingle(new CourierMasterKeys() { Id = _CourierMasterPM.Id });
-
-                        if (courierMaster != null)
-
-                        {
-                            if (false)
-                            {
-
-                                DeclarationCourierStatusRepository rep = new DeclarationCourierStatusRepository(_context);
-
-                                DeclarationCourierStatus decCourier = rep.GetDeclarationsById(_CourierDeclarationPM.DeclarationId, _CourierDeclarationPM.Tenant);
-
-                                if ((decCourier != null && !decCourier.IsClosedForFollowUp && _CourierDeclarationPM.ChangeSetOp == ChangeSetOperation.Insert) || (_IsNewDeclaration == true && courierMaster.IsOpen == false))
-
-                                {
-
-                                    //DateTime stopLogAt = new DateTime(2021, 11, 01);
-
-                                    string logData = "";
-
-                                    //var loggedUser = AuthenticationUtil.ResolveUserIdentityName(_CourierDeclarationPM.Tenant);
-
-                                    logData = $"_CourierDeclarationPM.DeclarationId={_CourierDeclarationPM.DeclarationId}, ChangeSetOp={_CourierDeclarationPM.ChangeSetOp}, decCourier.IsClosedForFollowUp={decCourier.IsClosedForFollowUp},OpenDeclarations ={courierMaster.OpenDeclarations}before update1";
-
-                                    //LogitudeSettings.HandleLogMe("OpenDeclarations " + logData, false, "time", stopLogAt);
-                                    LogitudeSettings.HandleLogMe(logData, false, "CheckMasterToUpdate", stopLogAt);
-
-                                    if (_IsNewDeclaration == true && courierMaster.IsOpen == false) courierMaster.IsOpen = true;
-                                    courierMaster.OpenDeclarations += 1;
-
-                                    courierMasterRepository.Update(courierMaster);
-
-                                    courierMasterRepository.SubmitChanges();
-                                }
-
-                            }
-
-                        }
-                    }
-
-                }
-                AppendLogLine("try to update CourierDeclaration for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id);
-                LogitudeSettings.HandleLogMe(" try to update CourierDeclaration for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id, false, "CheckMasterToUpdate", stopLogAt);
-                try
-                {
-                    if (!_MyDeclarationPM.HatraDate.HasValue)// ELISHIVA  + MORAN Task 156294: חסימת מעבר משלוחים בין טיסות בלדרות
-                    {
-                        myCourierDeclarationUpdateService.Update(_CourierDeclarationPM, true);
-                    }
-
-                }
-                catch (DbEntityValidationException ex)
-                {
-                    var FormatedException = ExceptionFormatUtil.GetFormated(ex);
-                    AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
-                    LogitudeSettings.HandleLogMe(" ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------", false, "CheckMasterToUpdate", stopLogAt);
-                    return;
-                }
-                catch (Exception e)
-                {
-                    AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
-                    LogitudeSettings.HandleLogMe(" ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------", false, "CheckMasterToUpdate", stopLogAt);
-                    return;
+                    sbWhyDecNotConnected2Master.AppendLine("_CourierMasterPM == null- DEC B4 FILE ");
                 }
             }
+            finally
+            {
+                if (Logger.ToLogUntilDateyyyyMMdd("20230122HD409236.LogUntilDateyyyyMMdd")){
+                    Logger.LogMe(sbWhyDecNotConnected2Master.ToString() + Environment.NewLine + base.GetLog(), false, "Connect2Master");
+                }
+                
+            }
+
         }
 
         public static string GetGeneralLockKey(string courierMasterId)

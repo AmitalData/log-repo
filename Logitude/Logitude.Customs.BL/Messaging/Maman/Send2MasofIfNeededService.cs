@@ -221,7 +221,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 //throw;
             }finally
             {
-                if (GetStopLogAt()> DateTime.Now)
+                if (Logger.ToLogUntilDateyyyyMMdd("20230112HDCall409236.LogUntilDateyyyyMMdd"))
                 {
                     Logger.LogMe(sb.ToString(), false, "Send2Masof");
                 }
