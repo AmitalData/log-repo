@@ -574,6 +574,76 @@ namespace Logitude.Accounting.Def.EntityPMs
 
 			}
 		}
+		private string notes;
+
+
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public string Notes
+		{
+
+			get
+			{
+				return notes;
+			}
+			set
+			{
+				if (notes != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "Notes", OldValue = notes, NewValue = value, PropertyType = "string" };
+					NotifyPropertyChanged(values);
+					notes = value;
+				}
+
+			}
+		}
+		private string createdByUserId;
+
+
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public string CreatedByUserId
+		{
+
+			get
+			{
+				return createdByUserId;
+			}
+			set
+			{
+				if (createdByUserId != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "CreatedByUserId", OldValue = createdByUserId, NewValue = value, PropertyType = "string" };
+					NotifyPropertyChanged(values);
+					createdByUserId = value;
+				}
+
+			}
+		}
+		private string updatedByUserId;
+
+
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public string UpdatedByUserId
+		{
+
+			get
+			{
+				return updatedByUserId;
+			}
+			set
+			{
+				if (updatedByUserId != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "UpdatedByUserId", OldValue = updatedByUserId, NewValue = value, PropertyType = "string" };
+					NotifyPropertyChanged(values);
+					updatedByUserId = value;
+				}
+
+			}
+		}
+
 	}
 
 }

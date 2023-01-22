@@ -138,7 +138,20 @@ export class InterestTransactionPM {
     public get IsCancelled() { return this.isCancelled; }
     public set IsCancelled(newValue: boolean) { if (this.isCancelled != newValue) { this.isCancelled = newValue; this.MarkAsDirty("IsCancelled"); } }
        
+    private notes: string;
+    public get Notes() { return this.notes; }
+    public set Notes(newValue: string) { if (this.notes != newValue) { this.notes = newValue; this.MarkAsDirty("notes"); } }
+       
 	 
+    private createdByUserId: string;
+    public get CreatedByUserId() { return this.createdByUserId; }
+    public set CreatedByUserId(newValue: string) { if (this.createdByUserId != newValue) { this.createdByUserId = newValue; this.MarkAsDirty("CreatedByUserId"); } }
+       
+	 
+    private updatedByUserId: string;
+    public get UpdatedByUserId() { return this.updatedByUserId; }
+    public set UpdatedByUserId(newValue: string) { if (this.updatedByUserId != newValue) { this.updatedByUserId = newValue; this.MarkAsDirty("UpdatedByUserId"); } }
+       
 
     public OldEntityPM: InterestTransactionPM;
 		
@@ -167,4 +180,4 @@ export class InterestTransactionPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

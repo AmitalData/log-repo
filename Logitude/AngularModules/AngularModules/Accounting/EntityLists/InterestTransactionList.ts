@@ -36,5 +36,8 @@ export class InterestTransactionList {
 	SourceTypeCode: string;
 	SourceId: string;
 	SourceType: string;
+	Notes: string;
+	CreatedByUserId: string;
+	UpdatedByUserId: string;
 
 }

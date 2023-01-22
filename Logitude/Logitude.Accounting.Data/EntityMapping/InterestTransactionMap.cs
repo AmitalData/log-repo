@@ -54,6 +54,22 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.IsClosed).HasColumnName("IsClosed");
 
             this.Property(t => t.IsCancelled).HasColumnName("IsCancelled");
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+                this.Property(t => t.Notes).HasMaxLength(2000);
+            }
+            else
+            {
+                this.Property(t => t.Notes).HasMaxLength(4000);
+            }
+
+
+            this.Property(t => t.Notes).HasColumnName("Notes").IsUnicode(true);
+
+            this.Property(t => t.CreatedByUserId).HasColumnName("CreatedByUserId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.UpdatedByUserId).HasColumnName("UpdatedByUserId").HasMaxLength(15).IsUnicode(false);
         }
     }
 }

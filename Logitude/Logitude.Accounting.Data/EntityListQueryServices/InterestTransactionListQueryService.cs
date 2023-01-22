@@ -79,6 +79,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                        SourceTypeCode = journal.AccountingEntityCode,
                        SourceId = journal.AccountingEntityId,
                        AccountingEntityCode = interestTransaction.AccountingEntityCode,
+                       Notes=interestTransaction.Notes,
+                       CreatedByUserId=interestTransaction.CreatedByUserId,
+                       UpdatedByUserId= interestTransaction.UpdatedByUserId,
                    }).Union(interestTransactionsForAdustmentsAndRevaluationJournals).Union(interestTransactionsForARPayments);
             return query;
         }
@@ -130,7 +133,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                             SourceType = journal.AccountingEntity == null ? null : journal.AccountingEntity.EnglishName,
                             SourceTypeCode = journal.AccountingEntityCode,
                             SourceId = journal.AccountingEntityId,
-                            AccountingEntityCode = interestTransaction.AccountingEntityCode
+                            AccountingEntityCode = interestTransaction.AccountingEntityCode,
+                            Notes = interestTransaction.Notes,
+                            CreatedByUserId = interestTransaction.CreatedByUserId,
+                            UpdatedByUserId = interestTransaction.UpdatedByUserId,
                         };
         }
         private IQueryable<InterestTransactionList> GetInterestTransactionsForARPayments(IQueryable<InterestTransaction> interestTransactionQuery)
@@ -187,7 +193,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                        SourceType = journal.AccountingEntity == null ? null : journal.AccountingEntity.EnglishName,
                        SourceTypeCode = journal.AccountingEntityCode,
                        SourceId = journal.AccountingEntityId,
-                       AccountingEntityCode = interestTransaction.AccountingEntityCode
+                       AccountingEntityCode = interestTransaction.AccountingEntityCode,
+                       Notes = interestTransaction.Notes,
+                       CreatedByUserId = interestTransaction.CreatedByUserId,
+                       UpdatedByUserId = interestTransaction.UpdatedByUserId,
                    };
         }
         public List<InterestTransactionList> MapListQuery(List<InterestTransactionList> interestTransactions, int tenant, bool? exportToExcell = null)
@@ -224,6 +233,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                        SourceType = interestTransaction.SourceType,
                        SourceId = interestTransaction.SourceId,
                        AccountingDate = interestTransaction.AccountingDate,
+                       Notes = interestTransaction.Notes,
+                       CreatedByUserId = interestTransaction.CreatedByUserId,
+                       UpdatedByUserId = interestTransaction.UpdatedByUserId,
 
                    }).ToList();
 
@@ -353,7 +365,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 Source = journal?.AccountingEntityReference,
                 SourceType = journal?.AccountingEntity == null ? null : journal.AccountingEntity.EnglishName,
                 SourceTypeCode = journal?.AccountingEntityCode,
-                SourceId = journal?.AccountingEntityId
+                SourceId = journal?.AccountingEntityId,
+                Notes = interestTransaction.Notes,
+                CreatedByUserId = interestTransaction.CreatedByUserId,
+                UpdatedByUserId = interestTransaction.UpdatedByUserId,
 
             };
         }

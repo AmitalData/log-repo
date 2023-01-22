@@ -38,7 +38,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         InterestReportId, 
 	         IsClosed, 
 	         IsCancelled,
-	      }
+			 Notes,
+			 CreatedByUserId,
+			 UpdatedByUserId,
+		}
 
 
 	      public enum PMPropertyNames
@@ -67,7 +70,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         JournalId, 
 	         AccountEntityCode, 
 	         IsCancelled,
-	      }
+			 Notes,
+			 CreatedByUserId,
+			 UpdatedByUserId,
+		}
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
@@ -149,8 +155,23 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
 				entityPOCO.IsCancelled = entityPM.IsCancelled;
 			}
-			
-				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Notes))
+			{
+				entityPOCO.Notes = entityPM.Notes;
+			}
+
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedByUserId))
+			{
+				entityPOCO.CreatedByUserId = entityPM.CreatedByUserId;
+			}
+
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdatedByUserId))
+			{
+				entityPOCO.UpdatedByUserId = entityPM.UpdatedByUserId;
+			}
+
+
+			BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
 
 		public void POCOToPM(InterestTransactionPM entityPM, InterestTransaction entityPOCO)
@@ -235,7 +256,20 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
 					entityPM.IsCancelled = entityPOCO.IsCancelled;
             }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Notes))
+			{
+				entityPM.Notes = entityPOCO.Notes;
+			}
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreatedByUserId))
+			{
+				entityPM.CreatedByUserId = entityPOCO.CreatedByUserId;
+			}
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UpdatedByUserId))
+			{
+				entityPM.UpdatedByUserId = entityPOCO.UpdatedByUserId;
+			}
 		}
 
 		public void PMToOldPM(InterestTransactionPM entityPM, InterestTransactionPM oldEntityPM)
@@ -316,7 +350,21 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 oldEntityPM.IsCancelled = entityPM.IsCancelled;
             }
-			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Notes))
+			{
+				oldEntityPM.Notes = entityPM.Notes;
+			}
+
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedByUserId))
+			{
+				oldEntityPM.CreatedByUserId = entityPM.CreatedByUserId;
+			}
+
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdatedByUserId))
+			{
+				oldEntityPM.UpdatedByUserId = entityPM.UpdatedByUserId;
+			}
+
 		}
 
 	    public void EncodeBase64NVARCHARFields(InterestTransactionPM entityPM)
@@ -330,7 +378,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
             }
-            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+			if (!String.IsNullOrWhiteSpace(entityPM.Notes)) //T4 find type == nText 
+			{
+				entityPM.Notes = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Notes));
+			}
+			entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
 
 

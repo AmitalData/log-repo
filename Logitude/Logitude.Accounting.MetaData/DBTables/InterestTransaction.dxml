@@ -120,7 +120,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="InternalNotes"
+    Name="Notes"
+    OldNames="InternalNotes"
     Type="nvarchar"
     Size="4000">
     <Constraints
