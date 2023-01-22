@@ -98,7 +98,17 @@ export class CustomerMenuButtonsHandler {
                 for (var i = 0; i < menuButtons.length; i++) {
                     var button = menuButtons[i];
                     switch (button.EventCode) {
-
+                        case "InviteCustomerContacts":
+                        case "LoginToCustomerPortal":
+                            {
+                                if (this.EntityPM.CustomerStatusCode !== "ACT" || !this.TenantPM.IsDigitalPortalAccessActivated) {
+                                    button.IsDisabled = true;
+                                }
+                                else {
+                                    button.IsDisabled = false;
+                                }
+                                break;
+                            }
                         case "SetAsPotential":
                             {
                                 if (this.TenantPM.IsHybrid) {
@@ -376,6 +386,14 @@ export class CustomerMenuButtonsHandler {
 
             case "Disconnect": {
                 this.DisconnectGLAccount();
+                break;
+            }
+            case "InviteCustomerContacts": {
+                this.InviteCustomerContacts();
+                break;
+            }
+            case "LoginToCustomerPortal": {
+                this.RedirctToDigital();
                 break;
             }
         }
@@ -682,9 +700,27 @@ export class CustomerMenuButtonsHandler {
 
     }
 
+    private RedirctToDigital() {
+        window.open(`https://${SessionLocator.TenantManagementJS.CustomerURL}/online-visibility?securitykey=${ServiceHelper.GetLoggedUserToken()}&cid=${this.EntityPM.Id}&ctype=${this.EntityPM.PartnerTypeId}`, "_blank");
+    }
+
+    private InviteCustomerContacts() {
+        var windowArgs: any = {};
+        windowArgs.IsDigitalPortal = true;
+        windowArgs.CurrentEntity = this.EntityPM;
+        windowArgs.IsFromCustomerEdit = true;
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 1100;
+        logWindow.Height = 570;
+        logWindow.Title = this.ObjectTableName == "Card" ? "Invite Partners" : "Invite Customers";
+        logWindow.WindowArgs = windowArgs;
+        logWindow.IsShowCloseButton = true;
+        logWindow.Show('./SharedLogistics/Components/InviteCustomersComponent');
+        logWindow.WindowClosed.subscribe(($event1: any) => {
 
 
-
+        });
+    }
 
 
     private StartBusyIndicator(message: string) {

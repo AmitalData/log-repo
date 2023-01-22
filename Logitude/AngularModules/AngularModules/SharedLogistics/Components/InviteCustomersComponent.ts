@@ -29,7 +29,7 @@ import { ServiceHelper } from '../../Infrastructure/Utilities/ServiceHelper';
 })
 export class InviteCustomersComponent implements OnInit, OnDestroy {
 
-    CurrentEntity: CustomerList;
+    CurrentEntity: any;
     IsCargoTrackingMenuClicked: boolean;
     NoContactsVisibility: boolean;
     public SharedLogisticCustomerLineList: CustomerLineViewModel[];
@@ -38,6 +38,7 @@ export class InviteCustomersComponent implements OnInit, OnDestroy {
     CustomerCode: string;
     InvitationStatus: string;
     IsLoginToOnlineVisibility: boolean = false;
+    IsFromCustomerEdit: boolean = false;
 
     DocumentTypeTemplates: DocumentTypeTemplatePM[];
     CanChangeTemplate: boolean = false;
@@ -276,6 +277,9 @@ export class InviteCustomersComponent implements OnInit, OnDestroy {
             logWindow.Height = 570;
             logWindow.Title = title;
             logWindow.DataContext = itemComponent;
+            var windowArgs: any = {};
+            windowArgs.IsFromCustomerEdit = true;
+            logWindow.WindowArgs = windowArgs;
             logWindow.Show('./CommonModules/CommonPartners/Components/AddEdit/AddEditContactComponent');
             logWindow.WindowClosed.subscribe(($event: any) => this.LoadData());
 
