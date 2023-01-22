@@ -704,21 +704,10 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
             return;
         }
 
-        if (!this.IsValidToAddMeasurementFactShipmentField(item)) {
-            this.ShowValidationMessage(item);
-            return;
-        }
-
         if (this.MatchAddColumnConditions(myCurrentItem) && this.ValidateQuereyFields()) {
             this.AddSelectedField();
             this.ClearData();
         }
-    }
-    private IsValidToAddMeasurementFactShipmentField(item: any) {
-        if (this.FactTableName == "Fact_Shipments" && item.IsMeasurement && this.IsShipmentAccountedProfitField(item)) {
-            return this.haveShipmentNumberField();
-        }
-        return true;
     }
     private IsValidToAddMeasurementFactARInvoiceField(item: any) {
         if (this.FactTableName == "Fact_ARInvoices" && item.IsMeasurement && this.IsShipmentProfitField(item)) {
@@ -728,10 +717,6 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
             return this.haveInvoiceNumberField();
         }
         return true;
-    }
-
-    private IsShipmentAccountedProfitField(item: any) {
-        return item.Code == "[Accounted Profit]" || item.Code == "[Accounted Profit(Local)]";
     }
 
     private IsShipmentProfitField(item: any) {
