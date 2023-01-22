@@ -435,5 +435,12 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string TotalEquation { get; set; }
         public bool IsFromAutomation { get; set; }
         public string DocumentTemplateId { get; set; }
+
+        public bool IsUpdatedByQBO { get; set; }
+        public bool IsUpdatedBySAT { get; set; }
+        public bool IsUpdatedByPrint { get; set; }
+        public string TransferStatusCode_Original { get; set; }
+        public bool IsTransferStarted_Original { get; set; }
+        public string TransferError_Original { get; set; }
     }
 }

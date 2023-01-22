@@ -2348,19 +2348,20 @@ namespace Logitude.BL.InvoiceModel.Tools
 
         #endregion
 
-        public void UpdatePaymentInvoicesSATStatus(ARPayment payment, XmlElement comprobanteXmlPagos, ARInvoiceRepository arinvoiceRep, ARPaymentRepository arpaymentRep)
+        public void UpdatePaymentInvoicesSATStatus(string paymentId, int tenant, XmlElement comprobanteXmlPagos, ARInvoiceRepository arinvoiceRep, ARPaymentRepository arpaymentRep)
         {
-            int tenant = payment.Tenant;
+            ARPaymentQuery paymentQuery = new ARPaymentQuery(tenant);
+            ARPaymentPM entityPM = paymentQuery.GetSinglePM(paymentId, tenant);
+
             SATInterfaceSettingRepository sATInterfaceSettingRepository = new SATInterfaceSettingRepository(tenant);
             SATInterfaceSetting satSetting = sATInterfaceSettingRepository.GetSingleSATInterfaceSetting(tenant);
             if (satSetting != null && satSetting.SATInterfaceCode == "PROF40")
             {
-                SATPaymentProfact40Service sATPaymentProfact40Service = new SATPaymentProfact40Service(payment, comprobanteXmlPagos, arinvoiceRep);
+                SATPaymentProfact40Service sATPaymentProfact40Service = new SATPaymentProfact40Service(entityPM, comprobanteXmlPagos, arinvoiceRep);
                 sATPaymentProfact40Service.UpdateStatus();
                 return;
             }
-            ARPaymentQuery paymentQuery = new ARPaymentQuery(tenant);
-            ARPaymentPM entityPM = paymentQuery.GetSinglePM(payment.Id, tenant);
+            
 
             List<string> invoiceIds = entityPM.PaymentInvoices.Select(f => f.ARInvoiceId).ToList();
 

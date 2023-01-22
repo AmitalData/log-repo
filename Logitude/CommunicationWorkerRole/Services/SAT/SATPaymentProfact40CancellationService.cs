@@ -65,7 +65,7 @@ namespace CommunicationWorkerRole.Services.SAT
 						arPaymentRep.Update(payment);
 						arPaymentRep.SubmitChanges();
 
-						sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(payment, comprobanteDetails.ComplementoAny[0], arInvoiceRep, arPaymentRep);
+						sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(payment.Id, waitingCommLog.Tenant, comprobanteDetails.ComplementoAny[0], arInvoiceRep, arPaymentRep);
 
 					}
 					else

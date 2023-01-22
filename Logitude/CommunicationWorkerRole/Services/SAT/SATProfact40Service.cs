@@ -83,7 +83,7 @@ namespace CommunicationWorkerRole.Services.SAT
 						payment.TransmissionError = null;
 						arpaymentRep.Update(payment);
 						arpaymentRep.SubmitChanges();
-						sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(payment, comprobante.Complemento.Any[0], arinvoiceRep, arpaymentRep);
+						sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(payment.Id, payment.Tenant, comprobante.Complemento.Any[0], arinvoiceRep, arpaymentRep);
 
 						Encoding encoding = Encoding.UTF8;
 						byte[] xmlfile = encoding.GetBytes(resultadoTimbre.Xml);
@@ -232,7 +232,7 @@ namespace CommunicationWorkerRole.Services.SAT
 						payment.TransmissionError = null;
 						arpaymentRep.Update(payment);
 						arpaymentRep.SubmitChanges();
-						sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(payment, paymentComprobante.Complemento.Any[0], arinvoiceRep, arpaymentRep);
+						sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(payment.Id, waitingCommLog.Tenant, paymentComprobante.Complemento.Any[0], arinvoiceRep, arpaymentRep);
 
 						Encoding encoding = Encoding.UTF8;
 						byte[] xmlfile = encoding.GetBytes(resultadoConsulta.Xml);

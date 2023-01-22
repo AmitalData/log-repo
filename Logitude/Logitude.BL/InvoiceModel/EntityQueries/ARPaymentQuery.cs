@@ -151,6 +151,9 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        PaymentCurrencySign= a.PaymentCurrency.Sign,
                                        PartnerId = a.PartnerId,
                                        InvoiceNumbers = a.InvoiceNumbers,
+                                       TransferStatusCode_Original = a.TransferStatusCode,
+                                       IsTransferStarted_Original = a.IsTransferStarted,
+                                       TransferError_Original = a.TransferError,
                                    }).FirstOrDefault();
 
 
