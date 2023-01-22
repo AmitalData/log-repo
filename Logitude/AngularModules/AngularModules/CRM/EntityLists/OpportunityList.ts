@@ -119,6 +119,7 @@ export class OpportunityList {
 	Field40: string;
 	NumberOfConnectedQuotes: number;
 	LastStageBeforeClosureName: string;
+	UserName: string;
 	
 }
  

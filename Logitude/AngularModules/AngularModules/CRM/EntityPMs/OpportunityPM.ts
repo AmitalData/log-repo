@@ -649,6 +649,11 @@ export class OpportunityPM {
     public set NumberOfConnectedQuotes(newValue: number) { if (this.numberOfConnectedQuotes != newValue) { this.numberOfConnectedQuotes = newValue; this.MarkAsDirty("NumberOfConnectedQuotes"); } }
        
 	 
+    private userName: string;
+    public get UserName() { return this.userName; }
+    public set UserName(newValue: string) { if (this.userName != newValue) { this.userName = newValue; this.MarkAsDirty("UserName"); } }
+       
+	 
 
     public OldEntityPM: OpportunityPM;
 		
