@@ -835,12 +835,6 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
             return;
         }
 
-        if (!this.IsValidToAddMeasurementFactShipmentField(item)) {
-            if (item.DWObjectTableCode == "Fact_Shipments")
-                this.ShowValidateFactARInvoicesMessage(item.DisplayName, "filter", "Shipment Number");
-            return;
-        }
-
         var view = new DWObjectFieldsDetails(item.BaseDWObjectField, this);
         if (item.HasTree && item.DataTypeCode != "DateTime") {
             var defaultItem: any = this.DWObjectFields.filter(d => d.DWObjectTableCode == (view.DWObjectTableCode) && d.Code == '[Code]')[0];
