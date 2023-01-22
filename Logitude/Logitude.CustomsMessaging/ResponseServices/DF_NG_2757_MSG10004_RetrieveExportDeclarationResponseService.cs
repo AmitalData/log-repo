@@ -39,7 +39,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
             if (string.IsNullOrEmpty(requestParams.DeclarationId)) { //declaration not exits in db
-                if (customResponse.Response != null && customResponse.Response.Declaration != null) 
+                var declarationqueryService = new DeclarationQueryService(requestParams.Tenant);
+                var decId = declarationqueryService.GetIdByDeclarationNumber(requestParams.DeclarationNumber, requestParams.Tenant);
+                if (customResponse.Response != null && customResponse.Response.Declaration != null && string.IsNullOrEmpty(decId)) 
                    CreateDeclarationFromResponse(customResponse.Response.Declaration, requestParams.Tenant,  customResponse);                                  
             }
            
