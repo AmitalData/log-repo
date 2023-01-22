@@ -64,6 +64,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
         }
         private string GetDayFormat(string label)
         {
+            if (label == null) return label;
             var dateparts = label.Split('/');
             var month = GetMonthName(dateparts[1]);
 
@@ -71,6 +72,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
         }
         private string GetMonthFormat(string label)
         {
+            if (label == null) return label;
             var dateparts = label.Split('/');
             var month = GetMonthName(dateparts[1]);
 
@@ -78,6 +80,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
         }
         private string GetYearFormat(string label)
         {
+            if (label == null) return label;
             var dateparts = label.Split('/');
             return $"{dateparts[0]}";
         }

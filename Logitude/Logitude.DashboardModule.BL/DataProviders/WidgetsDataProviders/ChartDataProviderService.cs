@@ -318,7 +318,7 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
 
         private List<string> BuildDateList(List<SeriesMeasureValue> seriesMeasureVulues)
         {
-            List<DateTime> listDates = seriesMeasureVulues.Select(x => DateTime.ParseExact(x.GroupById, "yyyy/MM/dd", null)).ToList();
+            List<DateTime> listDates = seriesMeasureVulues.Where(x => x.GroupById != null).Select(x => DateTime.ParseExact(x.GroupById, "yyyy/MM/dd", null)).ToList();
             DateTime minDate = listDates.Min();
             DateTime maxDate = listDates.Max();
 
