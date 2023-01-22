@@ -740,6 +740,8 @@
     <Compile Include="Controllers\DashboardModel\Generated\ListControllers\UserPinnedDashboardViewsController.Generated.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\PMControllers\DashboardGlobalPresetFilterController.Generated.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\PMControllers\UserPinnedDashboardController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\PortGroupViewsController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\PortGroupController.Generated.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalActivityController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalCustomizationController.cs" />
     <Compile Include="Controllers\DigitalPortal\Helpers\DigitalFieldSecuritesHelper.cs" />
@@ -3298,6 +3300,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\PaymentGatewayPartnerUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\PaymentTermDateTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\PaymentTermUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\PortGroupUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\PortTimeZoneUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\PortUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\PostalCodeUpdateClass.cs" />
