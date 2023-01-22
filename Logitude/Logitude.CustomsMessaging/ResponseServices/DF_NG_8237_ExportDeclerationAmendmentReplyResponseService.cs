@@ -616,7 +616,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     UnifreightIIG.Common.ExportDeclarationServiceReference.DF_NG_2757_MSG10004_ExportDeclarationResponse dec_2757 = new UnifreightIIG.Common.ExportDeclarationServiceReference.DF_NG_2757_MSG10004_ExportDeclarationResponse();
                     dec_2757.Response = new UnifreightIIG.Common.ExportDeclarationServiceReference.Response();
                     dec_2757.Response.Declaration = CastDeclaration(customResponse.Response.Declaration);
-                    dec_2757.Response.Status = new UnifreightIIG.Common.ExportDeclarationServiceReference.ResponseStatus[] { CastStatus(customResponse.Response.Status[0]) };
+                    dec_2757.Response.Status = new UnifreightIIG.Common.ExportDeclarationServiceReference.ResponseStatus[] { CastStatus(customResponse.Response.Status?[0]) };
 
                     if (customResponse.Response.Error != null)
                         dec_2757.Response.Error = CastError(customResponse.Response.Error);
