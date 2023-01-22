@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="39">
+  <Sql Version="40">
     <![CDATA[	
 	  delete from DigitalTextCodes where id != ''
       declare @NewEntityId as varchar(15)
@@ -798,6 +798,18 @@
 		{
 			"TextCode": "General.G.ShowResults",
 			"DefaultText": "Show results",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.ResetMsg1",
+			"DefaultText": "Please check your email address",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.ResetMsg2",
+			"DefaultText": "and follow the instructions to reset your password.",
 			"FieldCode": "",
 			"DisplayText": ""
 		}]');
@@ -3390,6 +3402,18 @@
 		{
 			"TextCode": "General.G.ShowResults",
 			"DefaultText": "Show results",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.ResetMsg1",
+			"DefaultText": "Please check your email address",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.ResetMsg2",
+			"DefaultText": "and follow the instructions to reset your password.",
 			"FieldCode": "",
 			"DisplayText": ""
 		}]');
