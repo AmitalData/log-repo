@@ -210,10 +210,13 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             var query = BuildSelectQuery(widgetMeasureField);
             var queryString = $@"select {query} as result
                              From ({resultQueryable.ToQueryStringWithParameter()}) as data";
+           
 
             if (compareWithPreviousFilterItem.Operator == "Between")
             {
-                return queryString + $@" where data.{GeteComparsionDate()} Between (dateadd(Day, DateDiff(Day, cast('{compareWithPreviousFilterItem.FieldValue2}' as Date), cast('{compareWithPreviousFilterItem.FieldValue}' as Date)), cast('{compareWithPreviousFilterItem.FieldValue}' as Date))) AND cast('{compareWithPreviousFilterItem.FieldValue}' as Date)";
+                var fromDate = DateTime.ParseExact(compareWithPreviousFilterItem.FieldValue.ToString(), "yyyyMMdd", null);
+                var toDate = DateTime.Parse(compareWithPreviousFilterItem.FieldValue2.ToString());
+                return queryString + $@" where data.{GeteComparsionDate()} Between (dateadd(Day, DateDiff(Day, cast('{toDate}' as Date), cast('{fromDate}' as Date)), cast('{fromDate}' as Date))) AND cast('{fromDate}' as Date)";
             }
             var FieldValue3 = Convert.ToInt32(compareWithPreviousFilterItem.FieldValue3);
             return queryString + $@" where data.{GeteComparsionDate()} Between dateadd ({compareWithPreviousFilterItem.DateGroupCode}, {-2 * FieldValue3}, cast(getDate() as Date))
@@ -234,7 +237,10 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             {
                 return $@" where data.{GeteComparsionDate()} Between dateadd ({compareWithPreviousFilterItem.DateGroupCode}, {-Convert.ToInt32(compareWithPreviousFilterItem.FieldValue3)}, cast(getDate() as Date)) AND cast(getDate() as Date)";
             }
-            return $@" where data.{GeteComparsionDate()} Between '{compareWithPreviousFilterItem.FieldValue}' AND '{compareWithPreviousFilterItem.FieldValue2}'";
+
+            var fromDate = System.Convert.ToDateTime(compareWithPreviousFilterItem.FieldValue.ToString());
+            var toDate = DateTime.Parse(compareWithPreviousFilterItem.FieldValue2.ToString());
+            return $@" where data.{GeteComparsionDate()} Between '{fromDate}' AND '{toDate}'";
         }
 
         private string GeteComparsionDate()
