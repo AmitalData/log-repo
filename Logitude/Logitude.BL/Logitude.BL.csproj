@@ -597,6 +597,7 @@
     <Compile Include="Helpers\ConcurrencyFieldHelper.cs" />
     <Compile Include="Helpers\ContainersExternal.cs" />
     <Compile Include="Helpers\ContainerStatusesHelper.cs" />
+    <Compile Include="Helpers\DigitalFieldSecuritesHelper.cs" />
     <Compile Include="Helpers\DWObjectFieldsGroupedService.cs" />
     <Compile Include="Helpers\ObjectFieldPropertyGetter.cs" />
     <Compile Include="Helpers\PayablesLinesVatAmounts.cs" />
