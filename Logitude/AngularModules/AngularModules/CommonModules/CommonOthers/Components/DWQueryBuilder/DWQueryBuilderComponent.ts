@@ -704,12 +704,22 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
             return;
         }
 
+        if (!this.IsValidToAddMeasurementFactShipmentField(item)) {
+            this.ShowValidationMessage(item);
+            return;
+        }
+
         if (this.MatchAddColumnConditions(myCurrentItem) && this.ValidateQuereyFields()) {
             this.AddSelectedField();
             this.ClearData();
         }
     }
-
+    private IsValidToAddMeasurementFactShipmentField(item: any) {
+        if (this.FactTableName == "Fact_Shipments" && item.IsMeasurement && this.IsShipmentAccountedProfitField(item)) {
+            return this.haveShipmentNumberField();
+        }
+        return true;
+    }
     private IsValidToAddMeasurementFactARInvoiceField(item: any) {
         if (this.FactTableName == "Fact_ARInvoices" && item.IsMeasurement && this.IsShipmentProfitField(item)) {
             return this.haveShipmentNumberField();
@@ -720,8 +730,12 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
         return true;
     }
 
+    private IsShipmentAccountedProfitField(item: any) {
+        return item.Code == "[Accounted Profit]" || item.Code == "[Accounted Profit(Local)]";
+    }
+
     private IsShipmentProfitField(item: any) {
-        return item.dWObjectTableCode == "Fact_Shipments" && (item.Code == "[Profit ( Local )]" || item.Code == "[Profit]");
+        return item.dWObjectTableCode == "Fact_Shipments" && (item.Code == "[Profit ( Local )]" || item.Code == "[Profit]" || item.Code == "[Accounted Profit]" || item.Code == "[Accounted Profit(Local)]");
     }
 
     private ShowValidationMessage(item: any) {
@@ -833,6 +847,12 @@ export class DWQueryBuilderComponent extends DWQueryBuilderBaseComponent {
                 this.ShowValidateFactARInvoicesMessage(item.DisplayName, "filter", "Shipment Number");
             else
                 this.ShowValidateFactARInvoicesMessage(item.DisplayName, "filter", "Invoice Number");
+            return;
+        }
+
+        if (!this.IsValidToAddMeasurementFactShipmentField(item)) {
+            if (item.DWObjectTableCode == "Fact_Shipments")
+                this.ShowValidateFactARInvoicesMessage(item.DisplayName, "filter", "Shipment Number");
             return;
         }
 

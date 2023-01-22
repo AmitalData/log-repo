@@ -68,7 +68,7 @@ namespace Logitude.BL.Helpers
 
         private bool IsShipmentProfitField(DWObjectFieldPM Field)
         {
-            return (Field.Code == "[Profit]" || Field.Code == "[Profit ( Local )]") && factTableCode == "Fact_ARInvoices" && Field.DWObjectTableCode == "Fact_Shipments";
+            return (Field.Code == "[Profit]" || Field.Code == "[Profit ( Local )]"|| Field.Code == "[Accounted Profit]" || Field.Code == "[Accounted Profit(Local)]") && factTableCode == "Fact_ARInvoices" && Field.DWObjectTableCode == "Fact_Shipments";
         }
 
         private bool ContainTableRecordType(DWObjectFieldPM additionalFactField) 
