@@ -176,6 +176,9 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
                     startNodeTrigger: "trigger",
                     conditionNodeMetLabel: "metLabel",
                     conditionNodeOtherwiseLabel: "otherwiseLabel"
+                },
+                flowSettings: {
+                    isViewMode: this.IsViewMode
                 }
             };
 
