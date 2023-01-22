@@ -65,6 +65,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         declarationId = myDeclarationPM.Id;
                         declarationCustomerId = myDeclarationPM.CustomerId;
                     }
+                    else
+                    {
+                        this.MyResponseData = new INF_MSG_GenericResponseData();
+                        this.MyResponseData.Succeeded = false;
+                        this.MyResponseData.HasException = true;
+                        this.MyResponseData.UserMessage = "Declaration not found";
+                        return;
+                    }
                     //Yuval Chalup 19.11.2015 TASK-17450 --->
                 }
 
@@ -84,6 +92,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         declarationId = myDeclarationPM.Id;
                         declarationCustomerId = myDeclarationPM.CustomerId;
                     }
+                    else
+                    {
+                        this.MyResponseData = new INF_MSG_GenericResponseData();
+                        this.MyResponseData.Succeeded = false;
+                        this.MyResponseData.HasException = true;
+                        this.MyResponseData.UserMessage = "Declaration not found";
+                        return;
+                    }
+                       
                 }
 
                 if (string.IsNullOrWhiteSpace(declarationCustomerId) && customResponse.NoticeToClient.importerNumber!=null)
