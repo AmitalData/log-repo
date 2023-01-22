@@ -1234,7 +1234,6 @@
     <Compile Include="ShipmentsModel\Repositories\INTTRADocumentTypeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\INTTRASIStatusRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\INTTRAStatusRepository.cs" />
-    <Compile Include="ShipmentsModel\Repositories\ShipmentAnalyticRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\OBLTypeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\OceanInsightsRequestsCountRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\OceanInsightsStatusesRepository.cs" />

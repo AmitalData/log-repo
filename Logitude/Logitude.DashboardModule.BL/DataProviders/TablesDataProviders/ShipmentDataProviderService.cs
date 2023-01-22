@@ -5,7 +5,6 @@ using Logitude.DashboardModule.BL.EntityPMs;
 using Logitude.DashboardModule.Data.EntityPOCOs;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
-using Simplog.Data.ShipmentsModel.Repositories;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -21,22 +20,20 @@ namespace Logitude.DashboardModule.BL.DataProviders.TablesDataProviders
 
         public override List<SeriesMeasure> GetChartData()
         {
-            IShipmentsContext MyContext = ShipmentsContext.GetContext(tenant);
-            ShipmentAnalyticRepository shipmentAnalyticRepository = new ShipmentAnalyticRepository(MyContext);
-            var shipmentAnalyticIQueryable = shipmentAnalyticRepository.GetAll();
-            shipmentAnalyticIQueryable = shipmentAnalyticIQueryable.Where(e => e.Tenant == tenant);
-            var result = new ChartDataProviderService(_Widget, _Entity).GetData(shipmentAnalyticIQueryable);
+            IShipmentsContext myContext = ShipmentsContext.GetContext(tenant);
+            var data = myContext.ShipmentAnalytics.AsQueryable();
+            data = data.Where(e => e.Tenant == tenant);
+            var result = new ChartDataProviderService(_Widget, _Entity).GetData(data);
             return result;
         }
 
         public override AnalyticData GeChartDataPart(WidgetArguments widgetPartArguments)
         {
-            IShipmentsContext MyContext = ShipmentsContext.GetContext(tenant);
-            ShipmentAnalyticRepository shipmentAnalyticRepository = new ShipmentAnalyticRepository(MyContext);
-            var shipmentAnalyticIQueryable = shipmentAnalyticRepository.GetAll();
-            shipmentAnalyticIQueryable = shipmentAnalyticIQueryable.Where(e => e.Tenant == tenant);
+            IShipmentsContext myContext = ShipmentsContext.GetContext(tenant);
+            var data = myContext.ShipmentAnalytics.AsQueryable();
+            data = data.Where(e => e.Tenant == tenant);
             List<string> analyticTableFields = GetSelectFields();
-            var result = new ChartDataProviderService(_Widget, _Entity).GetDataPart<ShipmentAnalytic>(shipmentAnalyticIQueryable, analyticTableFields, widgetPartArguments);
+            var result = new ChartDataProviderService(_Widget, _Entity).GetDataPart<ShipmentAnalytic>(data, analyticTableFields, widgetPartArguments);
             return result;
         }
 
@@ -50,11 +47,10 @@ namespace Logitude.DashboardModule.BL.DataProviders.TablesDataProviders
 
         public override KpiChart GetKpiData()
         {
-            IShipmentsContext MyContext = ShipmentsContext.GetContext(tenant);
-            ShipmentAnalyticRepository shipmentAnalyticRepository = new ShipmentAnalyticRepository(MyContext);
-            var shipmentAnalyticIQueryable = shipmentAnalyticRepository.GetAll();
-            shipmentAnalyticIQueryable = shipmentAnalyticIQueryable.Where(e => e.Tenant == tenant);
-            return new KpiDataProviderService(_Widget, _Entity, tenant).GetData(shipmentAnalyticIQueryable);
+            IShipmentsContext myContext = ShipmentsContext.GetContext(tenant);
+            var data = myContext.ShipmentAnalytics.AsQueryable();
+            data = data.Where(e => e.Tenant == tenant);
+            return new KpiDataProviderService(_Widget, _Entity, tenant).GetData(data);
         }
     }
 }

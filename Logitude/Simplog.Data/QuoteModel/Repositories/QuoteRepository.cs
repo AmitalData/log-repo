@@ -159,7 +159,6 @@ namespace Simplog.Data.QuoteModel.Repositories
 
         public void Add(Quote entity)
         {
-            //AddFromQuote(entity);
             context.Quotes.Add(entity);
         }
 
@@ -173,7 +172,6 @@ namespace Simplog.Data.QuoteModel.Repositories
         {
             try
             {
-                //UpdateFromQuote(entity);
                 context.Quotes.Attach(entity);
             }
             catch { }
@@ -249,37 +247,6 @@ namespace Simplog.Data.QuoteModel.Repositories
             return from a in context.Quotes
                    where a.CustomerId == customerId && a.Tenant == tenant
                    select a;
-        }
-
-        public void AddFromQuote(Quote entity)
-        {
-            var quoteAnalytic = Map<QuoteAnalytic>(entity);
-            context.QuoteAnalytics.Add(quoteAnalytic);
-        }
-        internal void UpdateFromQuote(Quote entity)
-        {
-            var quoteAnalytic = Map<QuoteAnalytic>(entity);
-            if (context.QuoteAnalytics.Any(e => e.Id == quoteAnalytic.Id)) 
-            {
-                context.QuoteAnalytics.Attach(quoteAnalytic);
-                context.SetAsModified(quoteAnalytic);
-            } 
-            else AddFromQuote(entity);
-        }
-        private T Map<T>(Quote from) where T : new()
-        {
-
-            var toPropes = typeof(T).GetProperties();
-            var fromPropes = from.GetType().GetProperties().ToDictionary(e => e.Name, e => e);
-            var to = new T();
-            foreach (var item in toPropes)
-            {
-                if (fromPropes.ContainsKey(item.Name))
-                {
-                    item.SetValue(to, fromPropes[item.Name].GetValue(from));
-                }
-            }
-            return to;
         }
     }
 }

@@ -48,6 +48,7 @@ using Logitude.BL.ExternalService;
 using Logitude.BL.InvoiceModel.CloseTables;
 using Logitude.BL.InvoiceModel.Tools.Behaviours.ARInvoiceBehaviours;
 using Logitude.BL.InvoiceModel.Tools.Behaviours;
+using Logitude.BL.AnalyticTableServices;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -344,6 +345,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.UpdateInterestReportFields(entityPM);
                 this.UpdateInterestReportsConnectedInvoice(entityPM);
             }
+
+            new ARInvoiceAnalyticTableService(objectContext.GetActiveDbContext()).AddUpdate(invoice);
 
             entityAutomationService.RunAutomationThatDependencyOnLastEntityUpdate();
 
@@ -663,6 +666,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     entityAutomationService.RunAutomation();
                 }
+
+                new ARInvoiceAnalyticTableService(objectContext.GetActiveDbContext()).AddUpdate(invoice);
             }
 
 

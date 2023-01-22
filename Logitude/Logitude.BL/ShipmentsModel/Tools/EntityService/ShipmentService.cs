@@ -62,6 +62,7 @@ using System.Transactions;
 using System.Web;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.BL.Security;
+using Logitude.BL.AnalyticTableServices;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {
@@ -340,8 +341,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.ComputeAgentComputed(entityPM, entityPoco);
                 this.ComputeETAAndETDHouseFields();
 
-                new ShipmentAnalyticRepository(objectContext).AddFromShipment(entityPoco, entityMasterData);
-
+               
                 entityRepository.Add(entityPoco);
                 entityRepository.SubmitChanges();
 
@@ -351,6 +351,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 shipmentBehaviourFacade.HandleShipmentDigitalFields(shipmentDigitalFields);
 
                 shipmentBehaviourFacade.Save(); // Abed to make automation change to condation work fine
+
+                new ShipmentAnalyticTableService(objectContext.GetActiveDbContext()).AddUpdate(entityPoco);
 
                 if (!string.IsNullOrEmpty(entityPM.MasterCreatedFromHouseId))
                 {
@@ -610,6 +612,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     shipmentAdditionalCloudDataRepository.SubmitChanges();
                     followUpRepository.SubmitChanges();
                     shipmentPickUpDeliveryRepository.SubmitChanges();
+                    new ShipmentAnalyticTableService(objectContext.GetActiveDbContext()).AddUpdate(entityPoco);
 
                     if (entityPM.IsStandalonePickupDelivery)
                     {
