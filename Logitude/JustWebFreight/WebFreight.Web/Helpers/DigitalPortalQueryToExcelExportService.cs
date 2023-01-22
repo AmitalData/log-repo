@@ -29,6 +29,7 @@ using System.Linq.Dynamic.Core;
 using Newtonsoft.Json.Linq;
 using System.Linq;
 using Logitude.BL.ShipmentsModel.EntityLists;
+using Microsoft.VisualStudio.Services.Common;
 
 namespace WebFreight.Web.Helpers
 {
@@ -362,7 +363,7 @@ namespace WebFreight.Web.Helpers
                     row[3] = item.MainCarriageFromPortName + ", " + item.MainCarriageToPortName;
                     row[4] = item.MainCarriageATD?.ToString("dd MMM yyyy", CultureInfo.InvariantCulture);
                     row[5] = item.MainCarriageATA?.ToString("dd MMM yyyy", CultureInfo.InvariantCulture);
-                    row[6] = item.Master;
+                    row[6] = item.LongMaster;
                     row[7] = item.ShipperName;
                     row[8] = item.ConsigneeName;
                     row[9] = item.ShipmentTypeName;
@@ -391,7 +392,7 @@ namespace WebFreight.Web.Helpers
             return memory.ToArray();
         }
 
-        private byte[] DigitalPortalInvoiceExportToExcel(List<dynamic> invoices)
+        private byte[] DigitalPortalInvoiceExportToExcel(List<ARInvoiceList> invoices)
         {
             ExcelEngine excelEngine = new ExcelEngine();
             IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
@@ -514,10 +515,12 @@ namespace WebFreight.Web.Helpers
                     var shipmentData = shipmentQuery.GetByFilters(args.QueryFilters);
 
                    
-                    var allowedShipmentsFieldSecurites = helper.GitDigitalSecuritesFeilds(args.QueryFilters.ObjectTableId, args.QueryFilters.ProfileId, tenant, false)
+                    var allowedShipmentsFieldSecurites = helper.GitDigitalSecuritesFeilds(args.QueryFilters.ObjectTableId, args.QueryFilters.ProfileCode, tenant, false)
                                                       .Where(a => a.HasPermission)
                                                       .Select(a => a.FieldCode.Replace("Shipment.", ""))
                                                       .ToList();
+
+                    allowedShipmentsFieldSecurites.AddRange(new List<String>() { "ValueOfGoods", "TruckContainerNumber", "ContainersNumbersandTypesArray", "MainCarriageToPortName","MainCarriageFromPortName","DirectionName","TransportModeName", "MainCarriageATA",  "TruckNumber" });
 
                     var shipmentsFields = string.Join(",", allowedShipmentsFieldSecurites);
                     var shipmentsDynamicData = shipmentData.Select("new { " + shipmentsFields + " }").ToDynamicList();
@@ -528,16 +531,8 @@ namespace WebFreight.Web.Helpers
                     break;
                 case "DigitalInvoice":
                     var aRInvoiceQuery = new ARInvoiceQuery(args.QueryFilters.Tenant);
-                    var invoiceData = aRInvoiceQuery.GetByFilters(args.QueryFilters);
-                    var allowedInvoicesFieldSecurites = helper.GitDigitalSecuritesFeilds(args.QueryFilters.ObjectTableId, args.QueryFilters.ProfileId, tenant, false)
-                                                      .Where(a => a.HasPermission)
-                                                      .Select(a => a.FieldCode.Replace("ARInvoice.", ""))
-                                                      .ToList();
-
-                    var invoicesFields = string.Join(",", allowedInvoicesFieldSecurites);
-                    var invoicesDynamicData = invoiceData.Select("new { " + invoicesFields + " }").ToDynamicList();
-
-                    data = DigitalPortalInvoiceExportToExcel(invoicesDynamicData);
+                    var invoiceData = aRInvoiceQuery.GetByFilters(args.QueryFilters).ToList();
+                    data = DigitalPortalInvoiceExportToExcel(invoiceData);
 
                     break;
                 default:
