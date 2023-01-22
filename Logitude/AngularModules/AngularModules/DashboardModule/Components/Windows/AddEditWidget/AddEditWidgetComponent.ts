@@ -905,7 +905,6 @@ export class WidgetMeasureItem extends BaseComponent {
     public FieldQueryFilters: ApiQueryFilters;
     public DashboardPM: DashboardPM;
     private selectedField: AnalyticsFactsFieldsMetaDataList;
-    public Isnumeric: boolean;
 
 
 
@@ -1013,7 +1012,6 @@ export class WidgetMeasureItem extends BaseComponent {
         this.selectedField = field;
         this.fatherComponent.SetDefaultValuesForDisplaySettings();
         this.fatherComponent.SetUIProprtiesForDisplaySettings();
-        //this.fatherComponent.CompareDisplaySettingWithDefaultValue();
     }
 
     get IsNumeric(): boolean {
