@@ -4,12 +4,13 @@ using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Microsoft.AspNet.SignalR.Messaging;
 using Simplog.Server.Infrastructure;
+using System;
 using System.Threading.Tasks;
 using static Confluent.Kafka.ConfigPropertyNames;
 
 namespace Logitude.Server.Tools.Messages
 {
-    public class Producer
+    public class Producer : IDisposable
     {
         public IProducer<long, string> ProducerBuilder { get; set; }
         public IProducer<long, string> TestingProducer { get; set; }
