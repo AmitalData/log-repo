@@ -309,6 +309,204 @@
                     <div class="TabControlBody" style="background: white;">
                         <div class="MediaFillAbsolute">
                             <div style="height: 100%;padding: 15px;" [ngSwitch]="SelectedTab">
+                                <div *ngSwitchCase="'Details'" style="height: 100%;">
+                                    <table *ngIf="EntityPM">
+
+                                        <!--Disble Alert-->
+                                        <tr *ngIf="IsDisplayOnly" style="height: 28px;">
+                                            <td colspan="3">
+                                                <div style="width: 100%;text-align:center">
+                                                    <div class="DisbleBox">
+                                                        {{DisplayOnlyMessage}}
+                                                        <span style="padding: 0px 16px;">-</span>
+                                                        <span class="hyperlink" (click)="RefreshEntity()"
+                                                            style="font-size:12px;">רענן</span>
+
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr *ngIf="(!IsDisplayOnly) && DisplayOnlyMessage" style="height: 28px;">
+                                            <td colspan="3">
+                                                <div style="width: 100%;text-align:center">
+                                                    <div class="DisbleBox">
+                                                        {{DisplayOnlyMessage}}
+
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr style="height: 28px;">
+                                            <td colspan="8" class="subTitle">{{'Customs.Declaration.O.Amendments' |
+                                                TextCodeTranslationPipe}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="8" style="border: 1px solid gray;">
+                                                <logitude-edit-grid GridWidth="100%" GridHeight="100%"
+                                                    [ItemSource]="AmendmentViewsList" [UseVirtuallization]="true"
+                                                    [IsDarkHeader]="true" (SelectedItemChanged)="OpenAmendment($event)">
+
+
+                                                    <!-- TableNameTextCode -->
+                                                    <log-column
+                                                        [header]="'Customs.Declaration.O.Entity' | TextCodeTranslationPipe"
+                                                        [width]="'200'" [Alignment]="'right'" [binding]="'Description'">
+
+                                                        <ng-template let-item>
+                                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                                <div style="text-align: right;" class="TextTrimming">
+                                                                    <span>{{item.TableNameTextCode |
+                                                                        TextCodeTranslationPipe}}</span>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </ng-template>
+
+                                                    </log-column>
+
+                                                    <!-- Field -->
+                                                    <log-column
+                                                        [header]="'Customs.Declaration.O.Field' | TextCodeTranslationPipe"
+                                                        [width]="'120'" [Alignment]="'right'"
+                                                        [binding]="'FieldNameTextCode'">
+
+                                                        <ng-template let-item>
+                                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                                <div style="text-align: right;" class="TextTrimming">
+                                                                    <span>{{ GetFieldName(item) }}</span>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </ng-template>
+
+                                                    </log-column>
+
+                                                    <!-- Line -->
+                                                    <log-column
+                                                        [header]="'Customs.Declaration.O.Line' | TextCodeTranslationPipe"
+                                                        [width]="'80'" [Alignment]="'right'" [binding]="'LineNumber'">
+
+                                                        <ng-template let-item>
+                                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                                <div style="text-align: right;" class="TextTrimming">
+                                                                    <span>{{item.LineNumber}}</span>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </ng-template>
+
+                                                    </log-column>
+
+                                                    <!-- ErrorType -->
+                                                    <log-column
+                                                        [header]="'Customs.Declaration.O.ErrorType' | TextCodeTranslationPipe"
+                                                        [width]="'80'" [Alignment]="'right'" [binding]="'ErrorType'">
+
+                                                        <ng-template let-item>
+                                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                                <div style="text-align: right;" class="TextTrimming">
+                                                                    <span>{{item.ErrorType}}</span>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </ng-template>
+
+                                                    </log-column>
+
+                                                    <!-- MessageError -->
+                                                    <log-column
+                                                        [header]="'Customs.General.O.MessageError' | TextCodeTranslationPipe"
+                                                        [width]="'300'" [Alignment]="'right'"
+                                                        [binding]="'MessageError'">
+
+                                                        <ng-template let-item>
+                                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                                <div style="text-align: right;" class="TextTrimming">
+                                                                    <span>{{item.MessageError}}</span>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </ng-template>
+
+                                                    </log-column>
+
+                                                    <!-- OldValue -->
+                                                    <log-column
+                                                        [header]="'Customs.General.O.OldValue' | TextCodeTranslationPipe"
+                                                        [width]="'200'" [Alignment]="'right'"
+                                                        [binding]="'MessageError'">
+
+                                                        <ng-template let-item>
+                                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                                <div style="text-align: right;" class="TextTrimming">
+                                                                    <span>{{item.OldValue}}</span>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </ng-template>
+
+                                                    </log-column>
+
+                                                    <!-- NewValue -->
+                                                    <log-column
+                                                        [header]="'Customs.General.O.NewValue' | TextCodeTranslationPipe"
+                                                        [width]="'200'" [Alignment]="'right'" [binding]="'NewValue'">
+
+                                                        <ng-template let-item>
+                                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                                <div style="text-align: right;" class="TextTrimming">
+                                                                    <span>{{item.NewValue}}</span>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </ng-template>
+
+                                                    </log-column>
+
+
+                                                    <!-- NewValue -->
+                                                    <log-column
+                                                        [header]="'Customs.Declaration.O.AmendmentFieldStatus' | TextCodeTranslationPipe"
+                                                        [width]="'200'" [Alignment]="'right'"
+                                                        [binding]="'AmendmentFieldStatus'">
+
+                                                        <ng-template let-item>
+                                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                                <div style="text-align: right;" class="TextTrimming">
+                                                                    <span>{{item.AmendmentFieldStatus}}</span>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </ng-template>
+
+                                                    </log-column>
+                                                    <log-column
+                                                        [header]="'Customs.Declaration.O.AmendmentRequestInitiatorType' | TextCodeTranslationPipe"
+                                                        [width]="'200'" [Alignment]="'right'"
+                                                        [binding]="'AmendmentRequestInitiatorType'">
+
+                                                        <ng-template let-item>
+                                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                                <div style="text-align: right;" class="TextTrimming">
+                                                                    <span>{{item.AmendmentRequestInitiatorType}}</span>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </ng-template>
+
+                                                    </log-column>
+                                                    <log-column
+                                                        [header]="'Customs.Declaration.O.FieldAmendmentRejectReasonRemarks' | TextCodeTranslationPipe"
+                                                        [width]="'200'" [Alignment]="'right'"
+                                                        [binding]="'FieldAmendmentRejectReasonRemarks'">
+
+                                                        <ng-template let-item>
+                                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                                <div style="text-align: right;" class="TextTrimming">
+                                                                    <span>{{item.FieldAmendmentRejectReasonRemarks}}</span>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </ng-template>
+
+                                                    </log-column>
+                                                </logitude-edit-grid>
+                                            </td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+
                                 <div *ngSwitchCase="'References'" style="height: 100%;">
                                     <table>
                                         <tr>

@@ -387,6 +387,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                 List<error> systemMessagesList = new List<error>();
                                                 this._MyDeclarationPM.CorrectionsXml = myDeclarationCorrectionsPointerService.AnalyzeCorrectionsPointerExport(this._MyDeclarationPM.CorrectionsXml, importDeclarationServiceReferenceResponse, systemMessagesList, requestParams.Tenant, customResponse.ReferencesListMsg);
                                             }
+                                            else
+                                            {
+                                                var customResponseResponseXml = XmlGenericUtil<Response>.SerializeObject(customResponse.Response);
+                                                var importDeclarationServiceReferenceResponse = XmlGenericUtil<Response>.DeSerializeObject(customResponseResponseXml);
+                                                List<error> systemMessagesList = new List<error>();
+                                                this._MyDeclarationPM.ClosingXml = myDeclarationCorrectionsPointerService.AnalyzeCorrectionsPointerExport(this._MyDeclarationPM.ClosingXml, importDeclarationServiceReferenceResponse, systemMessagesList, requestParams.Tenant, customResponse.ReferencesListMsg);
+                                            }
                                             break;
                                         case "2":
                                             //_MyDeclarationPM.AmendmentStatus = "6";

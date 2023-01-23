@@ -138,6 +138,7 @@ export class ExportDeclarationClosureComponent extends BaseComponent {
     }
     BuildTabs() {
         this.SelectedTab = "Errors";
+        this.TabsSource.push({ Name: "Details", isSelected: false, Header: TextCodeTranslator.Translate("Customs.Declaration.O.CorrectionStatement") });
         this.TabsSource.push({ Name: "References", isSelected: false, Header: TextCodeTranslator.Translate("Customs.Declaration.O.References") });
         this.TabsSource.push({ Name: "Errors", isSelected: false, Header: TextCodeTranslator.Translate("Customs.Declaration.O.Errors") });
     }
@@ -202,7 +203,7 @@ export class ExportDeclarationClosureComponent extends BaseComponent {
         this.CurrentSession.StartBusyIndicatorLoading();
 
         //[1] GetDeclarationCorrections();
-        this.declarationWebService.GetDeclarationCorrection(this.EntityPM.Id).subscribe((myServiceResponse: ServiceResponse) => {
+        this.declarationWebService.GetDeclarationCorrection(this.EntityPM.Id,true).subscribe((myServiceResponse: ServiceResponse) => {
             console.log("[Response] GetDeclarationConstraints : ", myServiceResponse.Result);
             var res: DeclarationCorrectionView = myServiceResponse.Result;
 

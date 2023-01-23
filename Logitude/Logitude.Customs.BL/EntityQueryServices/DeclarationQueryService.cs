@@ -1294,12 +1294,19 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return pmList;
         }
 
-        public DeclarationCorrectionView GetDeclarationCorrection(string declarationId, int tenant)
+        public DeclarationCorrectionView GetDeclarationCorrection(string declarationId, int tenant,bool isExportClose)
         {
             ICustomContext context = MainContext as CustomContext;
             Declaration declaration = Repository.GetSingle(new DeclarationKeys() { Id = declarationId });
-            string CorrectionXML = declaration.CorrectionsXml;
-
+            string CorrectionXML;
+            if (isExportClose)
+            {
+                 CorrectionXML = declaration.ClosingXml;
+            }
+            else
+            {
+                 CorrectionXML = declaration.CorrectionsXml;
+            }
 
             List<DeclarationStatementTypeList> statementTypes = new List<DeclarationStatementTypeList>();
             DeclarationStatementTypeListQueryService declarationStatementTypeQueryService = new DeclarationStatementTypeListQueryService(context);

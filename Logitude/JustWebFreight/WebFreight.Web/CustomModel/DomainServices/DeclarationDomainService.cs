@@ -328,11 +328,11 @@ namespace WebFreight.Web.CustomModel.DomainServices
             }
         }
 
-        public DeclarationCorrectionView GetDeclarationCorrection(string declarationId, int tenant)
+        public DeclarationCorrectionView GetDeclarationCorrection(string declarationId, int tenant,bool isExportClose=false)
         {
             customContext = CustomContext.GetContext(tenant);
             declarationQuery = new DeclarationQueryService(customContext);
-            return declarationQuery.GetDeclarationCorrection(declarationId, tenant);
+            return declarationQuery.GetDeclarationCorrection(declarationId, tenant, isExportClose);
 
         }
 
