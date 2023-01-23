@@ -146,7 +146,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             LogMessagingUtil.Instance.AppendLine($"!!!!B4:GetByexternalentityreference");
             _documentsFilingQuery = new DocumentsFilingQuery(requestParams.Tenant);
             var documentsFilingIdsList = _documentsFilingQuery.GetByexternalentityreference("CFIFILEM", customFileNo, requestParams.Tenant).ToList();
-            LogMessagingUtil.Instance.AppendLine($"!!!!after:GetByexternalentityreference {sw.ElapsedMilliseconds}");
+            LogMessagingUtil.Instance.AppendLine($"!!!!after:GetByexternalentityreference {sw.ElapsedMilliseconds}");sw.Restart();
             var documentsFilingIds = documentsFilingIdsList
             .Where(r => r.EntityId == null || r.EntityId.Trim() == string.Empty)
             .Select(r => r.Id).ToList();
@@ -154,6 +154,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 LogMessagingUtil.Instance.AppendLine($"ConnectDocumentsfilingService.Connect:GetByexternalentityreference:{customFileNo}.Where(r => r.EntityId == null || r.EntityId.Trim() == string.Empty) not found any !!");
 
+                documentsFilingIds = GetByCourierRef(DeclarationId, requestParams.Tenant);
 
             }
             foreach (string documentsFilingId in documentsFilingIds)
@@ -166,6 +167,27 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         }
 
+        private static List<string> GetByCourierRef(string DeclarationId, int Tenant)
+        {
+            List<string> documentsFilingIds = new List<string>();
+            var sw = Stopwatch.StartNew();
+            var decRepo = new DeclarationRepository(Tenant);
+            string courierhawb = decRepo.GetCourierhawbFromId(DeclarationId, Tenant);
+            if (!string.IsNullOrWhiteSpace(courierhawb))
+            {
+                var gDMREFRepository = new GDMREFRepository(Tenant);
+                //gDMREFRepository
+                const string CARFI = "CARFI";
+                //courierhawb
+                var q = gDMREFRepository.GetByRef(REFID: CARFI, REFERENCE: courierhawb).Select(r => r.COMID);
+                documentsFilingIds = q.ToList();
+                string remark = $"Took:{sw.ElapsedMilliseconds};gDMREFWhere(REFID == CARFI&REFERENCE == {courierhawb}).count={documentsFilingIds.Count}";
+                LogMessagingUtil.Instance.AppendLine(remark);
+
+            }
+
+            return documentsFilingIds;
+        }
 
         private void UpdatePaymentDocument(string documentsFilingId, string DeclarationId, int Tenant, string LoggedUserId)
         {
