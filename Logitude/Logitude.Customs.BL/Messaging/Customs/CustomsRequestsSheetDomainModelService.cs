@@ -205,7 +205,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
 
 
                     this.CreateNewComm();
-                    this.CreateNewRequestSheet();
+                    this.CreateNewRequestSheet(requestParams);
                     this.BuildSteps();
 
                     requestParams.CustomsRequestsSheetId = this._MyCustomsRequestsSheetPM.Id;
@@ -1449,6 +1449,11 @@ After that Remove file  from DCA  .. ");
 
 
         }
+        public void SetTenantPriority(int? _TenantPriority)
+        {
+            MyCustomsRequestsSheetPM.TenantPriority = _TenantPriority;
+
+        }
         public void SetCorrelationId(string _CorrelationId)
         {
             MyCustomsRequestsSheetPM.CorrelationId = _CorrelationId;
@@ -2280,7 +2285,7 @@ After that Remove file  from DCA  .. ");
             return subject.ToString();
         }
 
-        private void CreateNewRequestSheet()
+        private void CreateNewRequestSheet(TRequestParams requestParams)
         {
             if (MyCustomsRequestsSheetPM != null)
             {
@@ -2293,7 +2298,12 @@ After that Remove file  from DCA  .. ");
             //Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("selectedFile =" + selectedFile);
             //string externalId = "";// GetExternalId(selectedFile);
 
-
+            CustomsRequestsSheet currCustomsRequestsSheet = null;
+            if (requestParams != null)
+            {
+                var customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(this._Tenant);
+                currCustomsRequestsSheet = customsRequestsSheetQueryService.GetTenantPriorityByEntityID(requestParams.ParentId, this._Tenant);
+            }
             MyCustomsRequestsSheetPM = new CustomsRequestsSheetPM()
             {
                 ChangeSetOp = ChangeSetOperation.Insert,
@@ -2307,7 +2317,7 @@ After that Remove file  from DCA  .. ");
                 RequestStatusEnum = SheetStatusEnum.Created,
                 RequestComminicationId = _CommunicationLog.Id,
                 //CustomFileNo = GetCustomFileNo(RequestParams)
-
+                TenantPriority= currCustomsRequestsSheet?.TenantPriority
             };
 
             MyCustomsRequestsSheetPM.Id = RequestParams.PBId;//GUID 

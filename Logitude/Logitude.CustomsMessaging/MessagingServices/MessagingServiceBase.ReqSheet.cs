@@ -39,6 +39,7 @@ using System.Linq;
 using System.Configuration;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.CustomsMessaging.Testers.Messages;
+using Logitude.Customs.Data.EntityPOCOs;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
@@ -1093,7 +1094,18 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 }
             }
         }
-
+        void SetTenantPriority(string ParentId,int tenant )
+        {
+            CustomsRequestsSheet currCustomsRequestsSheet = null;
+            if (ParentId != null)
+            {
+                var customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(tenant);
+                currCustomsRequestsSheet = customsRequestsSheetQueryService.GetTenantPriorityByEntityID(ParentId, tenant);
+                if (currCustomsRequestsSheet != null) {
+                 _CustomsRequestsSheetService.SetTenantPriority(currCustomsRequestsSheet.TenantPriority);
+                }
+            }
+        }
         void SetCorrelationId(string CorrelationId, TCustomsRequest customsRequest)
         {
             _CustomsRequestsSheetService.SetCorrelationId(_CorrelationId);
@@ -1721,7 +1733,7 @@ Exception:" + ee.Message
                 RequestSheetParam reqSheetDetails = this.GetSheetDetailsFromRequestParam(defaultRequestParamsFromCustomsResponse);//itzik for Sivug Batch
                 //var debug = selectedDCAFile.DebugCreateNew;
                 CustomsRequestsSheetDomainModelService<TRequestParams>.Seed(dcaReceivedService.ExternalId, tenant, defaultRequestParamsFromCustomsResponse, out _CustomsRequestsSheetService, dm, true, reqSheetDetails);
- 
+         
                 var queueSendModel = new QueueSendModel()
                 {
                     Tenant = tenant,
@@ -1831,7 +1843,8 @@ Exception:" + ee.Message
                 this._ResponseService = this._ResponseService ?? new TResponseService();
                 //_CustomsRequestsSheetService.SetCorrelationId(_CorrelationId); TryShrinkBlobFiles(null);                
                 SetCorrelationId(_CorrelationId, null);
-                var dcaReceivedController = this.GetDcaReceivedController(dcaReceivedService.CustomsResponse, _CustomsRequestsSheetService.GetRequestParams<TRequestParams>());
+                SetTenantPriority(selectedDCAFile?.ParentId,tenant);
+              var dcaReceivedController = this.GetDcaReceivedController(dcaReceivedService.CustomsResponse, _CustomsRequestsSheetService.GetRequestParams<TRequestParams>());
                 if (dcaReceivedController != null && !String.IsNullOrWhiteSpace(dcaReceivedController.DcaAnalyzeAggregateKey))
                 {
                     dcaReceivedController.DcaAnalyzeAggregateKey = JsonValidate(dcaReceivedController.DcaAnalyzeAggregateKey);

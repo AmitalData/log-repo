@@ -185,7 +185,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             LoggingUserId = requestParams.LoggingUserId,
                             RequestVIA = SendRequestVIA.WebServiceBatch,
                             UnifreightListOnServerOnly = UnifreightListOnServerOnly_BankeId,
-
+                            ParentId = requestParams.CustomsRequestsSheetId,
                         };
 
                         SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false);

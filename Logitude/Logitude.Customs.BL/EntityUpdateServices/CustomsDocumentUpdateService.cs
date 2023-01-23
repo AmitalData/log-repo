@@ -751,7 +751,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     LoggingObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.CustomsDocument"),//task10676 
                     LoggingEntityId2 = entityPM.DocumentsFilingId,
                     FutureSendDateTime = date,
-                    RequestVIAChangeDue = date.HasValue ? string.Concat("נרשמה בקשה מתוזמנת לשעה ", date.GetValueOrDefault().ToShortTimeString()) : ""
+                    RequestVIAChangeDue = date.HasValue ? string.Concat("נרשמה בקשה מתוזמנת לשעה ", date.GetValueOrDefault().ToShortTimeString()) : "",
+                    ParentId = entityPM.ParentRequestId
 
                 };
                 if (String.IsNullOrWhiteSpace(declarationId) && !String.IsNullOrWhiteSpace(entityPM.ClaimId))
