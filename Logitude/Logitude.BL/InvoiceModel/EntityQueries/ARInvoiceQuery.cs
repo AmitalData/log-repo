@@ -1482,7 +1482,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             GlobalTaxCalculation = a.GlobalTaxCalculation,
                             PaymentReferences = a.PaymentReferences,
                             SATCancelReasonCode = a.SATCancelReasonCode,
-                            TotalAmountNotForTaxReport = (a.SubTotalInLocalCurrency) - (double?)(a.TotalVAT) - ((double?)(a.TotalAmountForTaxReport)??0),
+                            TotalAmountNotForTaxReport = (a.SubTotalInLocalCurrency ?? 0) - (double)a.TotalVAT - (double)(a.TotalAmountForTaxReport??0)
                         };
 
             return query;
@@ -1640,7 +1640,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              SATCancelReasonCode = entity.SATCancelReasonCode,
                              TotalExamptFortaxReport = entity.TotalExamptFortaxReport,
                              DocumentTemplateId = entity.DocumentTemplateId,
-                             TotalAmountNotForTaxReport= entity.SubTotalInLocalCurrency-(double?)(entity.TotalVAT)-((double?)(entity.TotalAmountForTaxReport)??0),
+                             TotalAmountNotForTaxReport = entity.SubTotalInLocalCurrency ?? 0 - (double)entity.TotalVAT - (double)(entity.TotalAmountForTaxReport ?? 0),
                          };
 
             return result;
@@ -2308,7 +2308,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              PaymentReferences = entity.PaymentReferences,
                              SATCancelReasonCode = entity.SATCancelReasonCode,
                              DocumentTemplateId = entity.DocumentTemplateId,
-                             TotalAmountNotForTaxReport = entity.SubTotalInLocalCurrency - (double?)(entity.TotalVAT) - ((double?)(entity.TotalAmountForTaxReport)??0),
+                             TotalAmountNotForTaxReport = (entity.SubTotalInLocalCurrency??0) - (double?)(entity.TotalVAT) - ((double?)(entity.TotalAmountForTaxReport??0)),
                          };
 
             return result;
