@@ -63,7 +63,7 @@ export class LoopPropertiesComponent extends BaseComponent {
             IsObjectVariableSelectable: false
         };
         this.FlowVariablesTreeItems = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId, props).Items;
-        this.SingleEditableEntitiesTreeItems = new SingleEditableEntitiesTreeList(this.FlowObject, this.CurrentNodeId).Items;
+        this.SingleEditableEntitiesTreeItems = new SingleEditableEntitiesTreeList(this.FlowObject, this.CurrentNodeId, true).Items;
         this.FlowVariablesTreeItems = this.SingleEditableEntitiesTreeItems.concat(this.FlowVariablesTreeItems);
     }
 

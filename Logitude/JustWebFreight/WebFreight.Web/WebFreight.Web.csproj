@@ -735,6 +735,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountingModel\ChartOfAccountsTypesExtendedController.cs" />
+    <Compile Include="Controllers\CommonDataModel\ApiHelpers\ChargesTypeAPiHelper.cs" />
     <Compile Include="Controllers\DashboardModel\Extended\DashboardListExtendedController.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\ListControllers\DashboardGlobalPresetFilterViewsController.Generated.cs" />
     <Compile Include="Controllers\DashboardModel\Generated\ListControllers\UserPinnedDashboardViewsController.Generated.cs" />
@@ -744,7 +745,6 @@
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\PortGroupController.Generated.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalActivityController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalCustomizationController.cs" />
-    <Compile Include="Controllers\DigitalPortal\Helpers\DigitalFieldSecuritesHelper.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\DeploymentPackageExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\AuditLogViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\CustomFieldsMainObjectsViewsController.Generated.cs" />

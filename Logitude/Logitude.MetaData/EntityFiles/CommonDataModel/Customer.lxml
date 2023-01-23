@@ -12,6 +12,7 @@
   HasCustomFields="true"
   AvailableInCustomization="true"
   SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
   HasHelper="true"
   HasShortTitle="true"
   HasFiltersMenu="false"
@@ -19669,6 +19670,20 @@
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="0"
         LocalDefaultText="&quot;נתק כרטיס&quot;"
+        IsPackagable="false" />
+      <MenuItem
+        EventCode="&quot;InviteCustomerContacts&quot;"
+        DefaultText="&quot;Invite Customer's Contacts&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="12"
+        LocalDefaultText="&quot;Invite Customer's Contacts&quot;"
+        IsPackagable="false" />
+      <MenuItem
+        EventCode="&quot;LoginToCustomerPortal&quot;"
+        DefaultText="&quot;Login to Customer Portal&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="13"
+        LocalDefaultText="&quot;Login to Customer Portal&quot;"
         IsPackagable="false" />
     </MenuButton>
   </MenuButtons>

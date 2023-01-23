@@ -35,6 +35,7 @@ using Logitude.BL.InvoiceModel.EntityOtherServices;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.Accounting.Data;
 using Logitude.BL.InvoiceModel.Tools.Behaviours;
+using Logitude.Accounting.Def.BLExt;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -1106,7 +1107,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (theEntityPm.ReconcileInternalTrans == null)
                 return;
 
-            journal.JournalReconciles = GetInternalJournalReconciles(theEntityPm.ReconcileInternalTrans, journal);
+             var internalJournalReconciles = GetInternalJournalReconciles(theEntityPm.ReconcileInternalTrans, journal);
+            if (internalJournalReconciles.Count > 0) {
+                journal.JournalReconciles.AddRange(internalJournalReconciles);
+            }
         }
 
         private static List<JournalReconcilePM> GetInternalJournalReconciles(List<LedgerTransactionPM> ledgerTransactions, JournalPM journal) {
@@ -1133,11 +1137,61 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             AddCreditJournalLineForBankGLAccount(paymentPM, journal);
 
             AddDebitJournalLineForVendorGLAccount(paymentPM, journal);
+            CreateAutomaticReconcileForJournal(paymentPM, journal);
             AutoInternalReconcileAPPaymentLines(paymentPM, journal);
             if (paymentPM.TaxDeductionLocalAmount != 0 || paymentPM.VendorAddressId == tenantPOCO.AddressId)
                 AddCreditJournalLineForTaxGLAccount(paymentPM, paymentPM.Tenant, tenantPOCO, journal);
             AddAccountingEntitieJournal(journal, AccountingEntityJournalActions.APPaymentApprove);
             SubmitJournal(journal);
+        }
+
+        private void CreateAutomaticReconcileForJournal(APPaymentPM paymentPM, JournalPM journal)
+        {
+
+            if (paymentPM.PaymentInvoices.Any())
+            {
+
+                var paymentGLAccount = GetGLAccountByCard(entityPM);
+                var AutoReconcileARPaymentServiceExt = ContainerAccessor.Container.Resolve(typeof(IAutoReconcileServiceExt), "AutoReconcileServiceExt", new ParameterOverride("", 1)) as IAutoReconcileServiceExt;
+                var AutoReconcileRecordList = new List<AutoReconcileRecord>();
+                paymentPM.PaymentInvoices.ForEach(r =>
+                {
+
+                    var arInvoiceCanBeReconcilied = CheckIfAPInvoiceCanBeReconcilied(paymentGLAccount, r.APInvoiceId, tenant);
+                    if (arInvoiceCanBeReconcilied)
+                    {
+                        var item = new AutoReconcileRecord()
+                        {
+                            AccountingEntityId = r.APInvoiceId,
+                            LocalAmountToReconcile = Convert.ToDecimal(r.LocalAmount.GetValueOrDefault()) * -1,
+                            ForeignAmountToReconcile = Convert.ToDecimal(r.ForeignAmount.GetValueOrDefault()),
+                            ForeignCurrencyIdReconcile = r.ForeignCurrencyId,
+
+
+                        };
+                        AutoReconcileRecordList.Add(item);
+                    }
+                }
+                );
+                if (AutoReconcileRecordList.Count > 0)
+                {
+                    AutoReconcileARPaymentServiceExt.InitMust(paymentGLAccount, journal, AutoReconcileRecordList, "4");// APInvoice
+                    AutoReconcileARPaymentServiceExt.InsertJournalReconcile();
+                }
+
+            }
+        }
+
+        private bool CheckIfAPInvoiceCanBeReconcilied(GLAccountPM paymentGLAccount, string aRInvoiceId, int tenant)
+        {
+            var aPInvoiceLineRepository = new APInvoiceLineRepository(tenant);
+            if (paymentGLAccount.IsMultiCurrency == true)
+            {
+                var apinvoiceLines = aPInvoiceLineRepository.GetInvoiceLinesByInvoiceId(aRInvoiceId, tenant);
+                var apinvoiceLinesCurrencies = apinvoiceLines.Select(x => x.ForiegnCurrencyId).Distinct().ToList();
+                return apinvoiceLinesCurrencies.Count > 1 ? false : true;
+            }
+            return true;
         }
 
         private void AddAccountingEntitieJournal(JournalPM entityPM, string action, string ChildEntityId = null)

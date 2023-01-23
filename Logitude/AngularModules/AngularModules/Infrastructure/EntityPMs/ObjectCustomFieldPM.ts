@@ -4,7 +4,7 @@ import { Output, EventEmitter } from '@angular/core';
 import { PropertyChangedArgs } from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import { CustomFieldClass } from '../../Infrastructure/DataContracts/CustomFieldClass';
 
-export class CustomFieldsMainObjectPM {
+export class ObjectCustomFieldPM {
     @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
     public UIProperties: UIProperties;
     private objectTableName: string;

@@ -26,6 +26,7 @@ using Newtonsoft.Json.Linq;
 using System.Linq.Dynamic.Core;
 using Logitude.BL.Helpers;
 using Logitude.Infrastructure.BL.EntityQueryServices;
+using Logitude.BL.ShipmentsModel.EntityPMs;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -54,6 +55,9 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 var shipmentQuery = new ShipmentQuery(tenant);
                 var shipmentPM = shipmentQuery.GetSinglePM(id, tenant, cardId);
+
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+                customFieldResolver.SetCustomFieldsValues("Shipment", tenant, new List<ShipmentPM> { shipmentPM }.Cast<object>().ToList());
 
                 if (string.IsNullOrWhiteSpace(cardId) || cards.Contains(shipmentPM.CustomerId) || cards.Contains(shipmentPM.AgentId))
                 {

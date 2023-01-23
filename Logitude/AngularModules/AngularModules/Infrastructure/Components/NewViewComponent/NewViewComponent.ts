@@ -1316,7 +1316,7 @@ export class NewViewComponent {
     private GetNewQueryIndexOrder(maxIndex: any): number {
         if (!this.CreateWithoutOriginalQuery) return maxIndex.IndexOrder + 1;
 
-        let objectTableQueries = window.Queries.filter(q => q.ObjectTableId == this.ObjectTableId && q.SystemLevel);
+        let objectTableQueries = window.Queries.filter(q => q.ObjectTableId == this.ObjectTableId);
         if (objectTableQueries && objectTableQueries.length > 0) {
             return objectTableQueries.length;
         }

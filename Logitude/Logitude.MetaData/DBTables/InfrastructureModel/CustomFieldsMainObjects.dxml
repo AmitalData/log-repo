@@ -382,7 +382,11 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Relation
+  <Index
+	 Columns="Tenant,EntityId,ObjectTableId" />
+  <Index
+	Columns="Tenant,ObjectTableId" />
+ <Relation
     ForeignKeyColumn="ObjectTableId"
     ReferencedTable="ObjectTables"
     ReferencedColumn="Id"

@@ -43,7 +43,8 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                                                                          DefaultSettings = x.DefaultSettings,
                                                                          CreateDate = x.CreateDate,
                                                                          UpdateDate = x.UpdateDate,
-                                                                         ProfileId = x.ProfileId
+                                                                         ProfileId = x.ProfileId,
+                                                                         ProfileCode = x.DigitalProfile.Code
                                                                      })
                                                                      .ToList();
             return digitalFieldSecurity;

@@ -1,4 +1,5 @@
-﻿using Logitude.BL.InfrastructureModel.CustomFilters;
+﻿using Logitude.BL.Helpers;
+using Logitude.BL.InfrastructureModel.CustomFilters;
 using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
