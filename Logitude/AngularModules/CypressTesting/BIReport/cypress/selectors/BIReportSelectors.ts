@@ -19,6 +19,7 @@ export class BIReportSelectors extends RegexSelectors {
  public static readonly EditBackbutton ='#EditBackbutton_1';
  public static readonly MasterEditBackbutton ='#EditBackbutton_2';
  public static readonly ARInvoicesEditBackbutton ='#EditBackbutton_3';
+ public static readonly QuoteEditBackbutton ='#EditBackbutton_4';
 
  
  //#region QueryBuilder
@@ -57,5 +58,11 @@ public static readonly AddQBRootColumnCustomer = '#AddQBRootColumnCustomer';
  public static readonly AddQBRootColumnInvoiceBranch = '#AddQBRootColumnInvoiceBranch';
  public static readonly AddQBRootFilterInvoiceBranch = '#AddQBRootFilterInvoiceBranch';
 
+  //#region add QuoteNumber
+  public static readonly AddQBRootColumnQuoteNumber = '#AddQBRootColumnQuoteNumber';
+  public static readonly AddQBRootFilterQuoteNumber = '#AddQBRootFilterQuoteNumber';
 
+    //#region add Is Quote Data External
+ public static readonly AddQBRootColumnIsQuoteDataExternal = '#AddQBRootColumnIsQuoteDataExternal';
+ public static readonly AddQBRootFilterIsQuoteDataExternal = '#AddQBRootFilterIsQuoteDataExternal';
 }

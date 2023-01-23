@@ -35,7 +35,7 @@ Then("the folder will created successfully", () => {
     //  BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
 });
 
-
+//ShipmentsFact
 //#region to Create Bi Report
 Given("User open the folder to add Shipment BI Report", () => {
     BIActions.SearchBIFolder(BIReportFolderName)
@@ -43,7 +43,7 @@ Given("User open the folder to add Shipment BI Report", () => {
 
 Given("a Shipment BI Report with the following details", (dataTable) => {
     let BiReportDetails = Assists.CreateInstance<BIReportDetails>(dataTable);
-    var RandomBIReportName = gr.GenerateRandomNumberAndString(2);
+    var RandomBIReportName = gr.GenerateRandomNumberAndString(1);
     BiReportDetails.Name = BiReportDetails.Name + RandomBIReportName;
     BIActions.FillBIReportDetails(BiReportDetails)
 });
@@ -66,7 +66,7 @@ When("add filter and cloumn user save changes", () => {
 });
 
 Then("the Shipment Report will create successfully with all details", () => {
-    //  BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
+   
 });
 //#endregion
 
@@ -80,7 +80,7 @@ When("add new filter and cloumn user save changes", () => {
 });
 
 Then("the Shipment Report will edit successfully with all details", () => {
-    //  BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
+
 });
 //#region Download the Report to Excel file
 When("User Click On Download To Excel file Button", () => {
@@ -90,6 +90,7 @@ Then("The Shipment report will download successfully", () => {
 });
 //#endregion
 
+//ShipmentChargesFact
 //#region Add Shipment Charges BI Report to the folder
 Given("User open the folder to add Shipment Charges BI Report", () => {
     BIActions.OpenBIFolder();
@@ -107,7 +108,7 @@ When("Create BI Report", () => {
 });
 
 Then("the Shipment Charges Report will created successfully", () => {
-    //  BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
+    
 });
 
 //#region Add Columns and Filters to ShipmentCharges Report
@@ -120,7 +121,7 @@ When("add filter and cloumn to Shipment Charges user save changes", () => {
 });
 
 Then("the Shipment Charges Report will create successfully with all details", () => {
-    //  BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
+   
 });
 //#endregion
 
@@ -134,10 +135,12 @@ When("add new filter and cloumn user save changes", () => {
 });
 
 Then("the Shipment Charges Report will edit successfully with all details", () => {
-    //  BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
+  
 });
+//#endregion
 
 
+//MasterChargesFact
 //#region Add Master BI Report to the folder
 Given("User open the folder to add Master BI Report", () => {
     BIActions.OpenMasterBIFolder();
@@ -155,10 +158,10 @@ When("Create Master BI Report", () => {
 });
 
 Then("the Master Report will created successfully", () => {
-    //  BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
+   
 });
 
-//#region Add Columns and Filters to ShipmentCharges Report
+//#region Add Columns and Filters to MasterCharges Report
 Given("User open QueryBuilder and add {string} column and filter to Master", (Master) => {
     BIActions.AddCoulmnAndFilterMaster(Master)
 });
@@ -168,11 +171,11 @@ When("add filter and cloumn to Master user save changes", () => {
 });
 
 Then("the Master Report will create successfully with all details", () => {
-    //  BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
+   
 });
 //#endregion
 
-//#region Edit ShipmentCharges Report
+//#region Edit MasterCharges Report
 Given("User click on Edit Query to edit and add {string} column and filter to Master", (MasterShipmentNumber) => {
     BIActions.EditCoulmnAndFilterMaster(MasterShipmentNumber);
 });
@@ -182,10 +185,11 @@ When("add new filter and cloumn user save changes", () => {
 });
 
 Then("the Master Report will edit successfully with all details", () => {
-    //  BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
+    
 });
+//#endregion
 
-
+//ARInvoiceFact
 //#region Add ARInvoices BI Report to the folder
 Given("User open the folder to add ARInvoices BI Report", () => {
     BIActions.OpenARInvoicesBIFolder();
@@ -203,10 +207,9 @@ When("Create ARInvoices BI Report", () => {
 });
 
 Then("the ARInvoices Report will created successfully", () => {
-    //  BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
+   
 });
-
-//#region Add Columns and Filters to ShipmentCharges Report
+//#region Add Columns and Filters to ARInvoice Report
 Given("User open QueryBuilder and add {string} column and filter to ARInvoices", (ARInvoiceType) => {
     BIActions.AddCoulmnAndFilterARInvoices(ARInvoiceType)
 });
@@ -216,11 +219,11 @@ When("add filter and cloumn to ARInvoices user save changes", () => {
 });
 
 Then("the ARInvoices Report will create successfully with all details", () => {
-    //  BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
+    //
 });
 //#endregion
 
-//#region Edit ShipmentCharges Report
+//#region Edit ARInvoice Report
 Given("User click on Edit Query to edit and add {string} column and filter to ARInvoices", (InvoiceBranch) => {
     BIActions.EditCoulmnAndFilterARInvoices(InvoiceBranch);
 });
@@ -230,8 +233,52 @@ When("add new filter and cloumn user save changes", () => {
 });
 
 Then("the ARInvoices Report will edit successfully with all details", () => {
-    //  BaseAssertion.AssertElementNotExist(BaseSelectors.LogitudeWindow);
 });
 
+//QuoteFact
+//#region Add Quote BI Report to the folder
+Given("User open the folder to add Quote BI Report", () => {
+    BIActions.OpenQuoteBIFolder();
+});
 
+Given("a Quote BI Report with the following details", (dataTable) => {
+    let BiReportDetails = Assists.CreateInstance<BIReportDetails>(dataTable);
+    var RandomBIReportName = gr.GenerateRandomNumberAndString(2);
+    BiReportDetails.Name = BiReportDetails.Name + RandomBIReportName;
+    BIActions.FillBIReportDetails(BiReportDetails)
+});
 
+When("Create Quote BI Report", () => {
+    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
+});
+
+Then("the Quote Report will created successfully", () => {
+});
+
+//#region Add Columns and Filters to Quote Report
+Given("User open QueryBuilder and add {string} column and filter to Quote", (QuoteNumber) => {
+    BIActions.AddCoulmnAndFilterQuote(QuoteNumber)
+});
+
+When("add filter and cloumn to Quote user save changes", () => {
+    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainSave);
+});
+
+Then("the Quote Report will create successfully with all details", () => {
+   
+});
+//#endregion
+
+//#region Edit Quote Report
+Given("User click on Edit Query to edit and add {string} column and filter to Quote", (IsQuoteDataExternal) => {
+    BIActions.EditCoulmnAndFilterQuote(IsQuoteDataExternal);
+});
+
+When("add new filter and cloumn user save changes", () => {
+    cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainSave);
+});
+
+Then("the Quote Report will edit successfully with all details", () => {
+   
+});
+//#endregion
