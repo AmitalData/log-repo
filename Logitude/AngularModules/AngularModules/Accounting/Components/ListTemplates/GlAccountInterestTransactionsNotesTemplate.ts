@@ -4,9 +4,7 @@ import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
-import {
-    InterestTransactionExtendedListService
-} from '../../Services/ExtendedLists/InterestTransactionExtendedListService';
+import {InterestTransactionExtendedListService} from '../../Services/ExtendedLists/InterestTransactionExtendedListService';
 import {ObservableCollection} from '../../../Infrastructure/Utilities/ObservableCollection';
 import {JournalExtendedListService} from '../../Services/ExtendedLists/JournalExtendedListService';
 import {ARPaymentExtendedListService} from '../../../Invoice/Services/ExtendedLists/ARPaymentExtendedListService';

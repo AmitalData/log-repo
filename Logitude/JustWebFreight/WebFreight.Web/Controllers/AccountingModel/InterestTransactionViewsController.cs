@@ -89,6 +89,27 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        public HttpResponseMessage PutInterestTransactionNotes(InterestTransactionPM interestTransactionPM)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("InterestTransaction", interestTransactionPM.Tenant, authToken.Tenant);
+                SecurityUtility.CheckContactFeature("InterestTransaction", "UPDATE", authToken.Tenant);
+                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
+                InterestTransactionListQueryService interestTransactionQuery = new InterestTransactionListQueryService(MyContext);
+                interestTransactionPM = interestTransactionQuery.Put(interestTransactionPM, tenant, MyContext);
+                return Request.CreateResponse(HttpStatusCode.OK, interestTransactionPM);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
         public HttpResponseMessage GetCheckRecentReports(DateTime interestDate, string customerId)
         {
             try

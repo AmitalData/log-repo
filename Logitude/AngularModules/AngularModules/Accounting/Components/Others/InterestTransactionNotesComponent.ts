@@ -77,6 +77,7 @@ export class InterestTransactionNotesComponent extends BaseComponent {
         this.CurrentSession.CurrentEditComponent.EntityPM = this.EntityPM;
         this.CurrentSession.CurrentEditComponent.EntityId = this.EntityPM.Id;
         this.CurrentSession.CurrentEditComponent.ObjectTableName = this.ObjectTableName;
+        this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = true;
     }
 
     //#endregion
