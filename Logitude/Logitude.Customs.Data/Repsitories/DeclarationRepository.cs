@@ -553,8 +553,10 @@ namespace Logitude.Customs.Data.Repsitories
                     where query.Contains(a.Id) && a.Tenant == tenant && a.AmendmentDontDisplayInList != true
                     select a);
         }
+        
 
-        public Declaration GetDeclarationByFunctionalReferenceIDagentFileReferenceID(string functionalReferenceID,string agentFileReferenceID, int tenant)
+
+public Declaration GetDeclarationByFunctionalReferenceIDagentFileReferenceID(string functionalReferenceID,string agentFileReferenceID, int tenant)
         {
             //Declaration declarationParent = (from a in context.Declarations
             //                           where declarationNumber == a.DeclarationNumber
@@ -569,17 +571,33 @@ namespace Logitude.Customs.Data.Repsitories
             return declaration;
 
         }
-        public List<Declaration> GetDeclarationByFunctionalReferenceID(string functionalReferenceID, int tenant)
+        public Declaration GetDeclarationByFunctionalReferenceID(string functionalReferenceID, int tenant, bool isExportClose)
         {
-         
+            //Declaration declarationParent = (from a in context.Declarations
+            //                           where declarationNumber == a.DeclarationNumber
+            //                           select a).FirstOrDefault();
 
-            List<Declaration> declaration = (from a in context.Declarations
+            if (isExportClose)
+            {
+                Declaration declaration = (from a in context.Declarations
+                                           where functionalReferenceID == a.ExportCloseAmendmentRequestNumber && a.Tenant == tenant
+                                           select a).FirstOrDefault();
+
+                return declaration;
+            }
+            else
+            {
+                 List<Declaration> declaration = (from a in context.Declarations
                                        where functionalReferenceID == a.AmendmentRequestNumber && a.Tenant == tenant 
                                        select a).ToList();
 
             return declaration;
 
         }
+        }
+           
+
+        
 
         public List<Declaration> GetDeclarationsThatCanResend(int tenant, int take)
         {
