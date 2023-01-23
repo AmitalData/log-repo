@@ -46,6 +46,8 @@ using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.BL.CommonDataModel.CustomFilters;
 		  
+using WebFreight.Web.Controllers.CommonDataModel.ApiHelpers;
+		  
 namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 { 
 
@@ -80,6 +82,13 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				    entityList = iQueryableEntityList.FirstOrDefault();
 
 			    }
+				if (entityList != null)
+				{
+                	CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+                	customFieldResolver.SetCustomFieldsValues("ChargesType",  authToken.Tenant, new List<ChargesTypeList> { entityList }.Cast<object>().ToList());
+ 	
+					entityList = ChargesTypeAPiHelper.ApplyFilters(entityList, authToken.Tenant);
+				}
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 				               
@@ -219,6 +228,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 }
 
 
+                ChargesTypeAPiHelper.AddFilters(queryOperations, tenant);
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
                 
@@ -246,7 +256,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				                
 				ChargesTypeCustomFilter customfilters = new ChargesTypeCustomFilter(tenant);
                 entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
-	
+	            entityPocos = ChargesTypeAPiHelper.ApplyFilters(entityPocos, tenant);
+
                 entityPocos = genericFilter.GetFilteredQuery<ChargesType>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
                 IQueryable<ChargesTypeList> entityLists = chargesTypeQuery.GetIQueryableEntityList(entityPocos);

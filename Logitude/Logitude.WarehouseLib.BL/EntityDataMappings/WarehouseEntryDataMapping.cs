@@ -21,6 +21,9 @@ using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.WarehouseLib.BL.Service;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Logitude.BL.Helpers;
 
 namespace Logitude.WarehouseLib.BL.EntityDataMappings
 {
@@ -154,14 +157,27 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
                     MethodHelper.AddToSearchFields(ref mySearchFields, myCard.EnglishName);
                 }
             }
-
+            mySearchFields = AddCustomFieldsToSearchFields(entityPM, mySearchFields);
             entityPM.SearchFields = mySearchFields;
         }
 
+        private string AddCustomFieldsToSearchFields(WarehouseEntryPM entityPM, string mySearchFields)
+        {
+            #region Custom Fields
+            List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("WarehouseEntry", entityPM.Tenant).Where(o => o.DataTypeCode != "Decimal").ToList();
 
-
-
-
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(entityPM.Tenant);
+            foreach (ObjectField field in customFields)
+            {
+                object value = customFieldResolver.GetFieldValue(entityPM, field, entityPM.Tenant);
+                if (value != null)
+                {
+                    MethodHelper.AddToSearchFields(ref mySearchFields, value.ToString());
+                }
+            }
+            #endregion
+            return mySearchFields;
+        }
     }
 }
    
