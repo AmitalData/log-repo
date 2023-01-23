@@ -35,5 +35,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
             base.GetComposition(entityKeys, entityPM);
         }
+
+        public int  GetAutomaticPayment(string declarationid)
+        {
+            return this.repository.GetAutomaticPayment(declarationid);
+        }
     }
 }
