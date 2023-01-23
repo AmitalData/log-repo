@@ -65,7 +65,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
 
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() {ObjectTableName = "ChargeType" , EntityId = entityPM.Id , Tenant = entityPM.Tenant , Type = "PM" , Entities = new List<ChargesTypePM> { entityPM }.Cast<object>().ToList() }).Update();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() {ObjectTableName = "ChargesType", EntityId = entityPM.Id , Tenant = entityPM.Tenant , Type = "PM" , Entities = new List<ChargesTypePM> { entityPM }.Cast<object>().ToList() }).Update();
 
             TableLastUpdateClass.UpdateTableHistory(tenant, "ChargesType");
         }
@@ -94,7 +94,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             ChargesTypeMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "ChargeType", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<ChargesTypePM> { entityPM }.Cast<object>().ToList() }).Update();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "ChargesType", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<ChargesTypePM> { entityPM }.Cast<object>().ToList() }).Update();
 
             TableLastUpdateClass.UpdateTableHistory(tenant, "ChargesType");
         }

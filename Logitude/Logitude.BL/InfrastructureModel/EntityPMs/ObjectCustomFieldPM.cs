@@ -7,11 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 namespace Logitude.BL.InfrastructureModel.EntityPMs
 {
-   public class ObjectCustomFieldPM
-    {
-
+   
         [CustomValidation(typeof(Validators.ClassLevelValidator), "ValidateClass")]
-        public class ChildEntitiesCustomFieldPM
+        public class ObjectCustomFieldPM
         {
             [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
             public CustomFieldClass Field1 { get; set; }
@@ -134,5 +132,5 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
             [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
             public CustomFieldClass Field50 { get; set; }
         }
-    }
+
 }
