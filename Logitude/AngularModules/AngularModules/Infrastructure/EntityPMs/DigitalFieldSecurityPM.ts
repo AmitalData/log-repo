@@ -12,14 +12,14 @@ import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
-import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClassAAA';
 
 export class DigitalFieldSecurityPM {
 
-      @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
+      
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+                    this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -67,6 +67,11 @@ export class DigitalFieldSecurityPM {
     private objectTableName: string;
     public get ObjectTableName() { return this.objectTableName; }
     public set ObjectTableName(newValue: string) { if (this.objectTableName != newValue) { this.objectTableName = newValue; this.MarkAsDirty("ObjectTableName"); } }
+       
+	 
+    private profileCode: string;
+    public get ProfileCode() { return this.profileCode; }
+    public set ProfileCode(newValue: string) { if (this.profileCode != newValue) { this.profileCode = newValue; this.MarkAsDirty("ProfileCode"); } }
        
 	 
 

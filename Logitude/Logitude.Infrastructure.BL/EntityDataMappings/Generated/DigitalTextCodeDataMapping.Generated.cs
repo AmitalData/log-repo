@@ -42,7 +42,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         ObjectTableId, 
 	         Labels, 
 	         ObjectTableName, 
-	         ProfileId,
+	         ProfileId, 
+	         ProfileCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
