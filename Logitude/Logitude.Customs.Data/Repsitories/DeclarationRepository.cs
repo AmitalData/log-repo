@@ -48,15 +48,15 @@ namespace Logitude.Customs.Data.Repsitories
         }
 
         public Declaration GetDeclarationByConsignment(string cargoTypeCode, string manifestNumber, string secondCargoID, string thirdCargoID)
-        { 
-             var  query= (
-                    from d in context.Declarations
-                    join a in context.Consignments
-                     on d.Id equals a.DeclarationId
-                    where a.CargoTypeCode.ToLower() == cargoTypeCode.ToLower() & a.ManifestNumber.ToLower() == manifestNumber.ToLower()
-                 & a.SecondCargoID.ToLower() == secondCargoID.ToLower() & a.ThirdCargoID.ToLower() == thirdCargoID.ToLower()
-                    select d
-                        ).ToList().FirstOrDefault();
+        {
+            var query = (
+                   from d in context.Declarations
+                   join a in context.Consignments
+                    on d.Id equals a.DeclarationId
+                   where a.CargoTypeCode.ToLower() == cargoTypeCode.ToLower() & a.ManifestNumber.ToLower() == manifestNumber.ToLower()
+                & a.SecondCargoID.ToLower() == secondCargoID.ToLower() & a.ThirdCargoID.ToLower() == thirdCargoID.ToLower()
+                   select d
+                       ).ToList().FirstOrDefault();
             return query;
         }
 
@@ -65,10 +65,10 @@ namespace Logitude.Customs.Data.Repsitories
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
 
             var res = (from a in context.Declarations
-                    where a.CustomFileNo == customFileNo 
-                    && a.AmendmentDontDisplayInList == false
-                    && a.Tenant == tenant
-                    select a.Id);
+                       where a.CustomFileNo == customFileNo
+                       && a.AmendmentDontDisplayInList == false
+                       && a.Tenant == tenant
+                       select a.Id);
 
             return res.FirstOrDefault();
         }
@@ -103,8 +103,8 @@ namespace Logitude.Customs.Data.Repsitories
         .Where(r => r.Id == id)
         .Where(r => r.Tenant == tenant)
         .Select(r => r.CustomFileNo);
-                    string customFileNo= qCustomFileNo.FirstOrDefault();
-                    if (string.IsNullOrWhiteSpace( customFileNo ))
+                    string customFileNo = qCustomFileNo.FirstOrDefault();
+                    if (string.IsNullOrWhiteSpace(customFileNo))
                     {
                         throw new Exception($"CustomFileNo is missing (Declaration  id ={id})");
                     }
@@ -505,9 +505,9 @@ namespace Logitude.Customs.Data.Repsitories
                   .FirstOrDefault();
         }
 
-        public (string id, string direction,string declarationTypeCode) GetMinDeclarationByDeclarationNumber(string declarationNumber, int tenant)
+        public (string id, string direction, string declarationTypeCode) GetMinDeclarationByDeclarationNumber(string declarationNumber, int tenant)
         {
-            if (String.IsNullOrWhiteSpace(declarationNumber)) return (id: "", direction: "", declarationTypeCode:"1");// tuple literal
+            if (String.IsNullOrWhiteSpace(declarationNumber)) return (id: "", direction: "", declarationTypeCode: "1");// tuple literal
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
 
             var res =
@@ -517,7 +517,7 @@ namespace Logitude.Customs.Data.Repsitories
                   select new { rec.Id, rec.Direction, rec.DeclarationTypeCode }
                   )
                   .FirstOrDefault();
-            return (id: res.Id, direction: res.Direction,declarationTypeCode:res.DeclarationTypeCode);// tuple literal
+            return (id: res.Id, direction: res.Direction, declarationTypeCode: res.DeclarationTypeCode);// tuple literal
         }
 
         public List<Declaration> GetDeclarationsById(List<string> declarationIds)
@@ -547,16 +547,16 @@ namespace Logitude.Customs.Data.Repsitories
         {
             var query = (from b in context.Consignments
                          where b.ExportContainerizationID == exportContainerizationID && b.Tenant == tenant
-                        select b).Select(c=>c.DeclarationId).ToList();
+                         select b).Select(c => c.DeclarationId).ToList();
 
             return (from a in context.Declarations
                     where query.Contains(a.Id) && a.Tenant == tenant && a.AmendmentDontDisplayInList != true
                     select a);
         }
-        
 
 
-public Declaration GetDeclarationByFunctionalReferenceIDagentFileReferenceID(string functionalReferenceID,string agentFileReferenceID, int tenant)
+
+        public Declaration GetDeclarationByFunctionalReferenceIDagentFileReferenceID(string functionalReferenceID, string agentFileReferenceID, int tenant)
         {
             //Declaration declarationParent = (from a in context.Declarations
             //                           where declarationNumber == a.DeclarationNumber
@@ -564,14 +564,15 @@ public Declaration GetDeclarationByFunctionalReferenceIDagentFileReferenceID(str
 
 
             Declaration declaration = (from a in context.Declarations
-                                       where functionalReferenceID == a.AmendmentRequestNumber   && a.Tenant == tenant && a.CustomFileNo == agentFileReferenceID
+                                       where functionalReferenceID == a.AmendmentRequestNumber && a.Tenant == tenant && a.CustomFileNo == agentFileReferenceID
 
                                        select a).FirstOrDefault();
 
             return declaration;
 
         }
-        public Declaration GetDeclarationByFunctionalReferenceID(string functionalReferenceID, int tenant, bool isExportClose)
+        public List<Declaration> GetDeclarationByFunctionalReferenceID(string functionalReferenceID, int tenant, bool isExportClose = true)
+
         {
             //Declaration declarationParent = (from a in context.Declarations
             //                           where declarationNumber == a.DeclarationNumber
@@ -579,25 +580,25 @@ public Declaration GetDeclarationByFunctionalReferenceIDagentFileReferenceID(str
 
             if (isExportClose)
             {
-                Declaration declaration = (from a in context.Declarations
+                var declaration = (from a in context.Declarations
                                            where functionalReferenceID == a.ExportCloseAmendmentRequestNumber && a.Tenant == tenant
-                                           select a).FirstOrDefault();
-
+                                           select a).ToList();
                 return declaration;
+
             }
             else
-            {
-                 List<Declaration> declaration = (from a in context.Declarations
-                                       where functionalReferenceID == a.AmendmentRequestNumber && a.Tenant == tenant 
-                                       select a).ToList();
+             {
+                  List<Declaration> declaration = (from a in context.Declarations
+                                        where functionalReferenceID == a.AmendmentRequestNumber && a.Tenant == tenant 
+                                        select a).ToList();
 
-            return declaration;
+             return declaration;
 
+         }
         }
-        }
-           
 
-        
+
+
 
         public List<Declaration> GetDeclarationsThatCanResend(int tenant, int take)
         {
@@ -862,7 +863,7 @@ public Declaration GetDeclarationByFunctionalReferenceIDagentFileReferenceID(str
             return myQ.ToList();
 
         }
-            public List<Declaration> GetDeclarationAmendmentsById(int tenant, string id)
+        public List<Declaration> GetDeclarationAmendmentsById(int tenant, string id)
         {
 
             if (String.IsNullOrWhiteSpace(id)) return null;
@@ -1064,21 +1065,21 @@ public Declaration GetDeclarationByFunctionalReferenceIDagentFileReferenceID(str
 
         public DeclarationConsignments GetDeclarationConsignment(string exportFile)
         {
-            var declarationsQ = (from d in context.Declarations                      
-                       where d.ExportFile == exportFile                       
-                       select d
+            var declarationsQ = (from d in context.Declarations
+                                 where d.ExportFile == exportFile
+                                 select d
                        );
             List<Declaration> declarations = declarationsQ.ToList();
 
-              var consignmentsQ = (from d in context.Declarations
+            var consignmentsQ = (from d in context.Declarations
 
-                                   join c in context.Consignments
-                                   on d.Id equals c.DeclarationId into cjoin
-                                   from cj in cjoin.DefaultIfEmpty()
+                                 join c in context.Consignments
+                                 on d.Id equals c.DeclarationId into cjoin
+                                 from cj in cjoin.DefaultIfEmpty()
 
-                                   where d.ExportFile == exportFile
-                                   select cj
-                                );
+                                 where d.ExportFile == exportFile
+                                 select cj
+                              );
             List<Consignment> consignments = consignmentsQ.ToList();
 
             var myQ2 = (from d in context.Declarations.Where(d => d.ExportFile == exportFile).Take(1)
@@ -1090,7 +1091,7 @@ public Declaration GetDeclarationByFunctionalReferenceIDagentFileReferenceID(str
                     );
             List<ConsignmentPackagesShort> ConsignmentPackages = myQ2.ToList();
 
-            return new DeclarationConsignments { ConsignmentPackages = ConsignmentPackages, Declarations = declarations, Consignments = consignments};
+            return new DeclarationConsignments { ConsignmentPackages = ConsignmentPackages, Declarations = declarations, Consignments = consignments };
         }
 
         public DeclarationId GetDeclarationId(string exportFileNo, string exporterNumber, string transportmodeId, string cargoIdentifierType, string cargoIdentifierKey1, string cargoIdentifierKey2, string cargoIdentifierKey3)
@@ -1111,16 +1112,16 @@ public Declaration GetDeclarationByFunctionalReferenceIDagentFileReferenceID(str
             DeclarationId res = myQ.Take(1).ToList().FirstOrDefault();
             return res;
         }
-        public ExportStorageConnectToDeclaration GetExportStorageConnectToDeclaration(string declarationId,int tenant)
+        public ExportStorageConnectToDeclaration GetExportStorageConnectToDeclaration(string declarationId, int tenant)
         {
             var actionCodes = new List<string> { "4", "6", "8" };
 
             ExportStorageConnectToDeclaration res = new ExportStorageConnectToDeclaration();
-           
+
             var q = (
                 from d in context.Declarations.Where(x => x.Id == declarationId && x.Tenant == tenant)
 
-                join e in context.ExportStorages.Where(x=>x.Tenant == tenant) on d.ExportFile equals e.ExportFileNo into ejoin
+                join e in context.ExportStorages.Where(x => x.Tenant == tenant) on d.ExportFile equals e.ExportFileNo into ejoin
                 from ej in ejoin
 
                 select new
@@ -1139,84 +1140,86 @@ public Declaration GetDeclarationByFunctionalReferenceIDagentFileReferenceID(str
                 });
             if (q.ToList().FirstOrDefault() != null)
             {
-                 res = q.ToList().FirstOrDefault();
+                res = q.ToList().FirstOrDefault();
             }
 
             return res;
         }
-  
-      public List<ContainerizationUniqueConsignment> GetContainerizationUniqueConsignment(List<string> declarationList)
+
+        public List<ContainerizationUniqueConsignment> GetContainerizationUniqueConsignment(List<string> declarationList)
         {
-            try { 
-               var query = (from a in context.Declarations
-                           where declarationList.Contains(a.Id) 
-                           select a);
-                var query1 = (from a in context.Consignments
-                            where declarationList.Contains(a.DeclarationId) && a.ExportContainerizationID==null && !string.IsNullOrEmpty(a.CargoTypeCode) && !string.IsNullOrEmpty(a.ManifestNumber)
+            try
+            {
+                var query = (from a in context.Declarations
+                             where declarationList.Contains(a.Id)
                              select a);
-               var query2 = (from b in context.Containerizations
-                          select b).Select(t=>new ContainerizationKey {
-                              Id =t.Id  ,
-                              Key = t.CargoTypeCode + t.ManifestNumber + t.SecondCargoID + t.ThirdCargoID,
-                          });
+                var query1 = (from a in context.Consignments
+                              where declarationList.Contains(a.DeclarationId) && a.ExportContainerizationID == null && !string.IsNullOrEmpty(a.CargoTypeCode) && !string.IsNullOrEmpty(a.ManifestNumber)
+                              select a);
+                var query2 = (from b in context.Containerizations
+                              select b).Select(t => new ContainerizationKey
+                              {
+                                  Id = t.Id,
+                                  Key = t.CargoTypeCode + t.ManifestNumber + t.SecondCargoID + t.ThirdCargoID,
+                              });
 
-               List<ContainerizationKey> ck1 = new List<ContainerizationKey>();
-               ck1 =query2.Where(t => t.Key != null).ToList();
+                List<ContainerizationKey> ck1 = new List<ContainerizationKey>();
+                ck1 = query2.Where(t => t.Key != null).ToList();
 
-               var q1 = query1.GroupBy(cont => new { ManifestNumber = cont.ManifestNumber, CargoTypeCode = cont.CargoTypeCode, SecondCargoID = cont.SecondCargoID, ThirdCargoID = cont.ThirdCargoID }) 
-                .ToList();
-               //òãëåï äîëìä
-               var q2 = q1.Where(x => x.Count() >= 1 && x.Any(u => (ck1.Any(g=>g.Key.Contains(u.CargoTypeCode?.ToLower() + u.ManifestNumber?.ToLower() + u.SecondCargoID?.ToLower() + u.ThirdCargoID?.ToLower())))));
-               
-               //äåñôú äîëìä çãùä
-               var q3 = q1.Where(x => x.Count() >= 1 && !(x.Any(u => (ck1.Any(g => g.Key.Contains(u.CargoTypeCode?.ToLower() + u.ManifestNumber?.ToLower() + u.SecondCargoID?.ToLower() + u.ThirdCargoID?.ToLower()))))));
-               
-               var q4 = q2.SelectMany(x => x.Select(cont => new ContainerizationUniqueConsignment
-                 {
-                     DeclarationId = cont.DeclarationId,
-                     CargoTypeCode = cont.CargoTypeCode,
-                     ManifestNumber = cont.ManifestNumber,
-                     SecondCargoId = cont.SecondCargoID,
-                     ThirdCargoId = cont.ThirdCargoID,
-                     IsNew=false,
-                     Id= ck1.Where(f=>f.Key.Contains(cont.CargoTypeCode?.ToLower() + cont.ManifestNumber?.ToLower() + cont.SecondCargoID?.ToLower() + cont.ThirdCargoID?.ToLower())).Select(y=>y.Id).FirstOrDefault().ToString(),
-                  
-               })).ToList();
-               
-               var q5 = q3.SelectMany(x => x.Select(cont => new ContainerizationUniqueConsignment
-               {
-                   DeclarationId = cont.DeclarationId,
-                   CargoTypeCode = cont.CargoTypeCode,
-                   ManifestNumber = cont.ManifestNumber,
-                   SecondCargoId = cont.SecondCargoID,
-                   ThirdCargoId = cont.ThirdCargoID,
-                   IsNew = true,
-                   TransportModeId = query.Where(t => t.Id == cont.DeclarationId).Select(y => y.TransportModeId).FirstOrDefault().ToString(),
-               })).ToList();
-               
-               return q4.Union(q5).ToList();
+                var q1 = query1.GroupBy(cont => new { ManifestNumber = cont.ManifestNumber, CargoTypeCode = cont.CargoTypeCode, SecondCargoID = cont.SecondCargoID, ThirdCargoID = cont.ThirdCargoID })
+                 .ToList();
+                //òãëåï äîëìä
+                var q2 = q1.Where(x => x.Count() >= 1 && x.Any(u => (ck1.Any(g => g.Key.Contains(u.CargoTypeCode?.ToLower() + u.ManifestNumber?.ToLower() + u.SecondCargoID?.ToLower() + u.ThirdCargoID?.ToLower())))));
+
+                //äåñôú äîëìä çãùä
+                var q3 = q1.Where(x => x.Count() >= 1 && !(x.Any(u => (ck1.Any(g => g.Key.Contains(u.CargoTypeCode?.ToLower() + u.ManifestNumber?.ToLower() + u.SecondCargoID?.ToLower() + u.ThirdCargoID?.ToLower()))))));
+
+                var q4 = q2.SelectMany(x => x.Select(cont => new ContainerizationUniqueConsignment
+                {
+                    DeclarationId = cont.DeclarationId,
+                    CargoTypeCode = cont.CargoTypeCode,
+                    ManifestNumber = cont.ManifestNumber,
+                    SecondCargoId = cont.SecondCargoID,
+                    ThirdCargoId = cont.ThirdCargoID,
+                    IsNew = false,
+                    Id = ck1.Where(f => f.Key.Contains(cont.CargoTypeCode?.ToLower() + cont.ManifestNumber?.ToLower() + cont.SecondCargoID?.ToLower() + cont.ThirdCargoID?.ToLower())).Select(y => y.Id).FirstOrDefault().ToString(),
+
+                })).ToList();
+
+                var q5 = q3.SelectMany(x => x.Select(cont => new ContainerizationUniqueConsignment
+                {
+                    DeclarationId = cont.DeclarationId,
+                    CargoTypeCode = cont.CargoTypeCode,
+                    ManifestNumber = cont.ManifestNumber,
+                    SecondCargoId = cont.SecondCargoID,
+                    ThirdCargoId = cont.ThirdCargoID,
+                    IsNew = true,
+                    TransportModeId = query.Where(t => t.Id == cont.DeclarationId).Select(y => y.TransportModeId).FirstOrDefault().ToString(),
+                })).ToList();
+
+                return q4.Union(q5).ToList();
             }
             catch (Exception ex)
             {
-                var mess= ex.Message.ToString();
+                var mess = ex.Message.ToString();
                 return null;
             }
 
 
         }
-        public string GetDeclarationByDeclarationNum(string decNumber,int tenant)
+        public string GetDeclarationByDeclarationNum(string decNumber, int tenant)
         {
-            var query =(from a 
+            var query = (from a
                         in context.Declarations
-                        where a.DeclarationNumber == decNumber && a.Tenant== tenant
-                        select a.Id).FirstOrDefault();
+                         where a.DeclarationNumber == decNumber && a.Tenant == tenant
+                         select a.Id).FirstOrDefault();
             return query;
         }
 
 
-   
+
         public List<ExportReport1> GetReportDeclarationForExportReport1(DateTime? ExportFrom, DateTime? ExportTo)
-        {          
+        {
             List<ExportReport1> ExportReports = new List<ExportReport1>();
             string strConnString = TenantServerConfigration.GetDbConnection(0);
             using (SqlConnection cn = new SqlConnection(strConnString))
@@ -1243,7 +1246,7 @@ public Declaration GetDeclarationByFunctionalReferenceIDagentFileReferenceID(str
 
                 SqlDataReader reader = cmd.ExecuteReader();
 
-              
+
                 ExportReport1 exportReport = null;
 
                 while (reader.Read())
@@ -1262,10 +1265,10 @@ public Declaration GetDeclarationByFunctionalReferenceIDagentFileReferenceID(str
             }
 
             return ExportReports;
-          
+
         }
 
-   
+
         public List<ExportReport2> GetReportDeclarationForExportReport2(DateTime? ExportFrom, DateTime? ExportTo)
         {
 
@@ -1273,24 +1276,24 @@ public Declaration GetDeclarationByFunctionalReferenceIDagentFileReferenceID(str
             string strConnString = TenantServerConfigration.GetDbConnection(0);
             using (SqlConnection cn = new SqlConnection(strConnString))
             {
-           
-                    SqlParameter pFrom = new SqlParameter("@pFrom", SqlDbType.Date);
-                    SqlParameter pTo = new SqlParameter("@pTo", SqlDbType.Date);
 
-                    pFrom.Direction = ParameterDirection.Input;
-                    pTo.Direction = ParameterDirection.Input;
+                SqlParameter pFrom = new SqlParameter("@pFrom", SqlDbType.Date);
+                SqlParameter pTo = new SqlParameter("@pTo", SqlDbType.Date);
 
-                    pFrom.Value = ExportFrom;
-                    pTo.Value = ExportTo.Value.AddDays(1);
+                pFrom.Direction = ParameterDirection.Input;
+                pTo.Direction = ParameterDirection.Input;
 
-                    SqlCommand cmd = new SqlCommand("dbo.usp_ExportReport2", cn);
-                    cmd.CommandType = CommandType.StoredProcedure;
+                pFrom.Value = ExportFrom;
+                pTo.Value = ExportTo.Value.AddDays(1);
 
-                    cmd.Parameters.Add(pFrom);
-                    cmd.Parameters.Add(pTo);
+                SqlCommand cmd = new SqlCommand("dbo.usp_ExportReport2", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add(pFrom);
+                cmd.Parameters.Add(pTo);
 
 
-                    cn.Open();
+                cn.Open();
 
 
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -1304,7 +1307,7 @@ public Declaration GetDeclarationByFunctionalReferenceIDagentFileReferenceID(str
                     exportReport.company = reader["company"].ToString();
                     exportReport.localname = reader["localname"].ToString();
                     exportReport.count = int.Parse(reader["count"].ToString());
-              
+
                     ExportReports2.Add(exportReport);
                 }
 
@@ -1316,7 +1319,7 @@ public Declaration GetDeclarationByFunctionalReferenceIDagentFileReferenceID(str
 
         }
     }
-public class ExportReport1
+    public class ExportReport1
     {
         public string company { get; set; }
         public int submit { get; set; }
@@ -1326,17 +1329,17 @@ public class ExportReport1
         public int notSubmit { get; set; }
 
     }
-public class ExportReport2
-{
-    public string company { get; set; }
-    public string localname { get; set; }
-    public int count { get; set; }
-
-   
-}
+    public class ExportReport2
+    {
+        public string company { get; set; }
+        public string localname { get; set; }
+        public int count { get; set; }
 
 
-public class ContainerizationKey
+    }
+
+
+    public class ContainerizationKey
     {
         public string Id { get; set; }
         public string Key { get; set; }
@@ -1359,7 +1362,7 @@ public class ContainerizationKey
     {
         public List<ConsignmentPackagesShort> ConsignmentPackages { get; set; }
         public List<Declaration> Declarations { get; set; }
-        public List<Consignment> Consignments { get; set; }        
+        public List<Consignment> Consignments { get; set; }
     }
 
 
@@ -1424,7 +1427,7 @@ public class ContainerizationKey
             IncotermCode = incotermCode;
         }
     }
-    
+
 
     public class ExportStorageConnectToDeclaration
     {
@@ -1453,7 +1456,7 @@ public class ContainerizationKey
         public string DeclarationId { get; set; }
         public bool IsNew { get; set; }
         public string Id { get; set; }
-        public string TransportModeId { get; set; }    
+        public string TransportModeId { get; set; }
 
     }
 

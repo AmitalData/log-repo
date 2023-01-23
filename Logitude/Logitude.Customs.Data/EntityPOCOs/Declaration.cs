@@ -462,9 +462,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string ClosingXml { get; set; }
      
 	    public string ExportCloseAmendmentRequestNumber { get; set; }
-        [ForeignKey("AmazedSaint.Elastic.Lib.ElasticObject")]
+        [ForeignKey("AmendmentRequestStatus")]
         [Column("ExportCloseAmendmentStatus")]
 	    public string ExportCloseAmendmentStatus { get; set; }
+	      
+        public virtual AmendmentRequestStatus AmendmentRequestStatus { get; set; }
     }
 }
 	 

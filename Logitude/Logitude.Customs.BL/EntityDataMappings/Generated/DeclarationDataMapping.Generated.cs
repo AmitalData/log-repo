@@ -174,7 +174,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ExportClosedErrorXML, 
 	         ExportLoadingPortCode, 
 	         ReleaseStatusTypeCode, 
-	         ClosingXml,
+	         ClosingXml, 
 	         ExportCloseAmendmentRequestNumber, 
 	         ExportCloseAmendmentStatus,
 	      }
@@ -421,7 +421,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         PhysicalCheckName, 
 	         ReleaseStatusTypeCode, 
 	         ReferentUserName, 
-	         ClosingXml,
+	         ClosingXml, 
 	         ExportCloseAmendmentRequestNumber, 
 	         ExportCloseAmendmentStatus,
 	      }
@@ -1187,15 +1187,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.ReleaseStatusTypeCode = entityPM.ReleaseStatusTypeCode;
 			}
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClosingXml))
+            {
+				entityPOCO.ClosingXml = entityPM.ClosingXml;
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportCloseAmendmentRequestNumber))
             {
 				entityPOCO.ExportCloseAmendmentRequestNumber = entityPM.ExportCloseAmendmentRequestNumber;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClosingXml))
-            {
-				entityPOCO.ClosingXml = entityPM.ClosingXml;
-			}
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportCloseAmendmentStatus))
             {
 				entityPOCO.ExportCloseAmendmentStatus = entityPM.ExportCloseAmendmentStatus;
@@ -1967,6 +1968,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ReleaseStatusTypeCode = entityPOCO.ReleaseStatusTypeCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ClosingXml))
+            {
+					entityPM.ClosingXml = entityPOCO.ClosingXml;
+            }
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportCloseAmendmentRequestNumber))
             {
 					entityPM.ExportCloseAmendmentRequestNumber = entityPOCO.ExportCloseAmendmentRequestNumber;
@@ -1975,13 +1981,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportCloseAmendmentStatus))
             {
 					entityPM.ExportCloseAmendmentStatus = entityPOCO.ExportCloseAmendmentStatus;
-		}
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ClosingXml))
-            {
-					entityPM.ClosingXml = entityPOCO.ClosingXml;
             }
-
 
 		}
 

@@ -328,6 +328,7 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.ReleaseStatusTypeCode).HasColumnName("ReleaseStatusTypeCode").HasMaxLength(2).IsUnicode(false);
 
             this.Property(t => t.ClosingXml).HasColumnName("ClosingXml").HasMaxLength(1000).IsUnicode(true);
+
             dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {

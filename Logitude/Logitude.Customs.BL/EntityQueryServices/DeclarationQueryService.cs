@@ -355,16 +355,16 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return repository.GetMinDeclarationByDeclarationNumber(declarationNumber, tenant);
         }
 
-        public DeclarationPM GetDeclarationByfunctionalReferenceID( string functionalReferenceID,  int tenant, bool isExportClose = false)
+        public DeclarationPM GetDeclarationByfunctionalReferenceID( string functionalReferenceID, string agentFileReferenceID, int tenant, bool isExportClose = false)
         {
             if (String.IsNullOrWhiteSpace(functionalReferenceID)) return null;
 
-            var declaration = repository.GetDeclarationByFunctionalReferenceID(functionalReferenceID, tenant, isExportClose);
+            var declaration = repository.GetDeclarationByFunctionalReferenceIDagentFileReferenceID(functionalReferenceID, agentFileReferenceID, tenant);
             DeclarationPM declarationPM = new DeclarationPM();
             DeclarationDataMapping mapping = new DeclarationDataMapping();
             if (declaration == null)
             {
-                var declarations = repository.GetDeclarationByFunctionalReferenceID(functionalReferenceID, tenant);
+                var declarations = repository.GetDeclarationByFunctionalReferenceID(functionalReferenceID, tenant, isExportClose);
                 if (declarations!=null && declarations.Count() == 1)
                     declaration = declarations[0];
                 else

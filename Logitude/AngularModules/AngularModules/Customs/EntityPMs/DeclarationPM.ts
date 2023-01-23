@@ -1472,6 +1472,8 @@ export class DeclarationPM {
     private closingXml: string;
     public get ClosingXml() { return this.closingXml; }
     public set ClosingXml(newValue: string) { if (this.closingXml != newValue) { this.closingXml = newValue; this.MarkAsDirty("ClosingXml"); } }
+       
+	 
     private exportCloseAmendmentRequestNumber: string;
     public get ExportCloseAmendmentRequestNumber() { return this.exportCloseAmendmentRequestNumber; }
     public set ExportCloseAmendmentRequestNumber(newValue: string) { if (this.exportCloseAmendmentRequestNumber != newValue) { this.exportCloseAmendmentRequestNumber = newValue; this.MarkAsDirty("ExportCloseAmendmentRequestNumber"); } }
@@ -1510,4 +1512,4 @@ export class DeclarationPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

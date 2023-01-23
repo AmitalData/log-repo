@@ -125,7 +125,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             _MyDeclarationPM = dF_NG_2757_MSG10004_ExportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, id, out error, false);
                         }
                         fromMehes = true;
-                        isExportCloseFromMehes = myDeclarationQueryService.GetDeclarationByfunctionalReferenceID(functionalReferenceID, requestParams.Tenant,true) != null;
+                        isExportCloseFromMehes = myDeclarationQueryService.GetDeclarationByfunctionalReferenceID(functionalReferenceID, agentFileReferenceID,requestParams.Tenant,true) != null;
                     }
                 }
             }
@@ -136,8 +136,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     functionalReferenceID = customResponse.Response.FunctionalReferenceID.Value;
                 else
                     functionalReferenceID = "";
+                string agentFileReferenceID = "";
+                if (customResponse.Response?.Declaration?.DMExtensions?.AgentFileReferenceID != null)
+                    agentFileReferenceID = customResponse.Response.Declaration.DMExtensions.AgentFileReferenceID.Value.ToString();
+                else
+                    agentFileReferenceID = "";
 
-                var declaration = myDeclarationQueryService.GetDeclarationByfunctionalReferenceID(functionalReferenceID, requestParams.Tenant, true);
+                var declaration = myDeclarationQueryService.GetDeclarationByfunctionalReferenceID(functionalReferenceID, agentFileReferenceID,requestParams.Tenant, true);
 
                 _MyDeclarationPM = declaration;
                 if (_MyDeclarationPM == null && customResponse.Response.Declaration != null)
