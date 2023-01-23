@@ -21,7 +21,15 @@ namespace Logitude.Customs.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-   }
+        public int GetAutomaticPayment(string declarationid)
+        {
+            var q = this.context.DeclarationPayments
+                .Where(r => r.DeclarationId == declarationid)
+                .Select(r => r.AutomaticPayment);
+
+            return q.FirstOrDefault();
+        }
+    }
 
 }
    
