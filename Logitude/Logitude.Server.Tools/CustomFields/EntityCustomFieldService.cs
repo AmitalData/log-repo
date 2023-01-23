@@ -136,7 +136,8 @@ namespace Logitude.Server.Tools.CustomFields
             {
                 return prop.GetValue(obj);
             }
-            return "";
+
+            return null;
         }
 
     }
