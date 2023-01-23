@@ -1131,7 +1131,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
                 this.StopMyBusyIndicator();
                 var windowArgs: any = {};
                 var worningsList = []
-                worningsList.push("שים לב התאריך שונה מתאריך נוכחי , ההגשה תטופל בתאריך שצויין , האם להמשיך ?")
+                worningsList.push(TextCodeTranslator.Translate("Customs.DeclarationPayment.O.PaymentDateDifferentFromCurrentDate"))
                 windowArgs.Errors = worningsList;
                 windowArgs.CancelButtonVisibility = true;
                 windowArgs.CancelButtonText = "בטל";
@@ -1387,7 +1387,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
             this.StopMyBusyIndicator();
             var windowArgs: any = {};
             var worningsList = []
-            worningsList.push("שים לב התאריך שונה מתאריך נוכחי , ההגשה תטופל בתאריך שצויין , האם להמשיך ?")
+            worningsList.push(TextCodeTranslator.Translate("Customs.DeclarationPayment.O.PaymentDateDifferentFromCurrentDate"))
             windowArgs.Errors = worningsList;
             windowArgs.CancelButtonVisibility = true;
             windowArgs.CancelButtonText = "בטל";
