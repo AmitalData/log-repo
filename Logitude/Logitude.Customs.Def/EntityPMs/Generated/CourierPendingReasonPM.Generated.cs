@@ -319,6 +319,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool? requiresPayment ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? RequiresPayment  
+	   {
+	    
+	     get
+		{
+		   return requiresPayment;
+		 }
+		 set
+		 {
+		   if(requiresPayment != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RequiresPayment",OldValue=requiresPayment,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   requiresPayment=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

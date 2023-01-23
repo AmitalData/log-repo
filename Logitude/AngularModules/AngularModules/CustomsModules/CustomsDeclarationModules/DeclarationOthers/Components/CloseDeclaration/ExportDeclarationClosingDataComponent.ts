@@ -54,8 +54,8 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     public SupplierInvoiceItemList: SupplierInvoiceItemList[] = [];
     public IsNew: boolean = false;
     private exportDeclarationClosingWebService: ExportDeclarationClosingWebService = new ExportDeclarationClosingWebService();
-    public ActualSailingDate: string = "תםריך הפלגה בפועל";
-    public ActualTakeOffDate: string = "תםריך המרםה בפועל";
+    public ActualSailingDate: string = "תאריך הפלגה בפועל";
+    public ActualTakeOffDate: string = "תאריך המראה בפועל";
 
     ManifestNumberPlaceholder: string = '';
     SecondCargoIdPlaceholder: string = '';

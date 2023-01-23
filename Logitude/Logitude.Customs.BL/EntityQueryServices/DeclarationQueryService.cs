@@ -2181,8 +2181,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
                     return this.GetDeclarationAmendmentsById(tenant, id, orderById);
                 });
             return res;
-
         }
+
+      
+
+        
         public List<DeclarationList> GetAllDeclarationPOCOs(int tenant, string customFileNo, string direction)
         {
             if (String.IsNullOrWhiteSpace(customFileNo)) return null;

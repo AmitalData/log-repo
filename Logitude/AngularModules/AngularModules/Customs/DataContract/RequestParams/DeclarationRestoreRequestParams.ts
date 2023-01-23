@@ -6,5 +6,6 @@ export class DeclarationRestoreRequestParams extends GenericRequestParams {
     public DeclarationNumber: string;
     public DeclarationId: string;
     public IsUpdateDB:boolean;
+    public ShowData:boolean;
 
 }

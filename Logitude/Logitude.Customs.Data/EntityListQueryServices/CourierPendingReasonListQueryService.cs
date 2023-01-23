@@ -37,7 +37,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 												MamanSuspendedCode=a.MamanSuspendedCode,
 												RequiresApproval = a.RequiresApproval,
 												SwissportSuspendedCode=a.SwissportSuspendedCode,
-												
+
+												RequiresPayment = a.RequiresPayment,	
 		                    	            });
             return query;
 		}
