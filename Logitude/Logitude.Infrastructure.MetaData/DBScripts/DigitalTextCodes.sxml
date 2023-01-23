@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="40">
+  <Sql Version="41">
     <![CDATA[	
 	  delete from DigitalTextCodes where id != ''
       declare @NewEntityId as varchar(15)
