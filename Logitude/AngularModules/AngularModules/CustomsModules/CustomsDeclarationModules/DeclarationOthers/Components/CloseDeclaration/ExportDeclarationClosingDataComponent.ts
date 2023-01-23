@@ -371,16 +371,36 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     }
     SendButtonClicked(event: CustomSendOptionsArgs) {
 
-
-        if (AppTool.IsNullOrEmpty(this.EntityPM.LoadingDateTime)) {
-            var msg = " שדה תםריך טעינה שדה חובה";
+        if (AppTool.IsNullOrEmpty(this.EntityPM.FinalCargoTypeCode)) {
+            var msg = " שדה סוג מזהה מטען שדה חובה";
             this.ValidationErrors.push(msg);
             this.FillValidationErrors("Errors");
         }
         else {
-            this.CheckDocuments();
+            if (AppTool.IsNullOrEmpty(this.EntityPM.FinalManifestNumber)) {
+                var msg = " שדה מזהה מטען רםשון שדה חובה";
+                this.ValidationErrors.push(msg);
+                this.FillValidationErrors("Errors");
+            }
+            else {
+                if (AppTool.IsNullOrEmpty(this.FinalSecondCargoId) && !AppTool.IsNullOrEmpty(this.SecondCargoIdPlaceholder)) {
+                    var msg = " שדה מזהה מטען שני שדה חובה";
+                    this.ValidationErrors.push(msg);
+                    this.FillValidationErrors("Errors");
+                }
+                else {
 
-
+                
+                    if (AppTool.IsNullOrEmpty(this.EntityPM.LoadingDateTime)) {
+                        var msg = " שדה תםריך טעינה שדה חובה";
+                        this.ValidationErrors.push(msg);
+                        this.FillValidationErrors("Errors");
+                    }
+                    else {
+                        this.CheckDocuments();
+                    }
+                }
+            }
         }
     }
     CheckDocuments() {
