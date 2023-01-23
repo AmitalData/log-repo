@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="40">
+  <Sql Version="41">
     <![CDATA[	
 	  delete from DigitalTextCodes where id != ''
       declare @NewEntityId as varchar(15)
@@ -2224,12 +2224,6 @@
 			"TextCode": "Shipment.F.AirlinePrefix",
 			"DefaultText": "Airline prefix",
 			"FieldCode": "Shipment.AirlinePrefix",
-		    "DisplayText": ""
-		},
-		{
-			"TextCode": "Shipment.F.Master",
-			"DefaultText": "Master",
-			"FieldCode": "Shipment.Master",
 		    "DisplayText": ""
 		},
 		{
@@ -4823,12 +4817,6 @@
 			"TextCode": "Shipment.F.AirlinePrefix",
 			"DefaultText": "Airline prefix",
 			"FieldCode": "Shipment.AirlinePrefix",
-		    "DisplayText": ""
-		},
-		{
-			"TextCode": "Shipment.F.Master",
-			"DefaultText": "Master",
-			"FieldCode": "Shipment.Master",
 		    "DisplayText": ""
 		},
 		{
