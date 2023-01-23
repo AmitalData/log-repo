@@ -1314,7 +1314,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         line.ForiegnCurrencyId = "";
         line.ForiegnCurrencyCode = "";
         line.ForiegnExchangeRate = this.InvoiceCurrencyExchangeRate;
-       
+
         line.InvoiceCurrencyCode = this.InvoiceCurrencyCode;
         var logWindow = new LogitudeWindow();
         logWindow.Title = TextCodeTranslator.Translate("ARInvoiceLine.O.EditInvoiceLine");
@@ -1351,7 +1351,7 @@ export class ARInvoiceLineItem extends BaseComponent {
     public EntityPM: ARInvoiceLinePM = null;
     public ObjectTableName = "ARInvoiceLine";
     public DataContext = this;
-   
+
     constructor(entityPM: ARInvoiceLinePM, public fatherComponent: ARInvoiceDetailsTabGeneral, public AddNewLineMode ) {
         super();
         this.EntityPM = entityPM;
@@ -1360,7 +1360,7 @@ export class ARInvoiceLineItem extends BaseComponent {
         this.ReadVatTypeData();
         this.ComputeRelativeRateDate();
         this.SetUIProperties();
-       
+
         if (this.EntityPM.ForiegnCurrencyCode != null) {
             this.AmountForiegnLabel = TextCodeTranslator.Translate("ARInvoiceLine.F.ForiegnCurrencyAmount").replace("%ForiegnCurrencyCode", this.EntityPM.ForiegnCurrencyCode);
         } else {
@@ -1569,7 +1569,7 @@ export class ARInvoiceLineItem extends BaseComponent {
                 this.LocalDescription = null;
                 this.VatTypeId = null;
                 this.LineActionCode=null;
-               
+
             }
 
             else {
@@ -1580,7 +1580,7 @@ export class ARInvoiceLineItem extends BaseComponent {
                             this.Description = this.chargesTypeList.EnglishName;
                             this.LocalDescription = this.chargesTypeList.LocalName;
                             this.VatTypeId = this.chargesTypeList.VatTypeId;
-                            this.LineActionCode=this.chargesTypeList.IsExpense==true?"2":"1";
+                            this.LineActionCode = this.chargesTypeList.IsExpense ? '2' : '1';
                         }
                     }
                 });
