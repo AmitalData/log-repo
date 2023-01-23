@@ -39,6 +39,7 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel;
+using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
@@ -111,6 +112,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				entityLists = entityLists.OrderBy(d => d.Code);
 				List<ChargesTypeList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+                customFieldResolver.SetCustomFieldsValues("ChargesType", authToken.Tenant, listResult.Cast<object>().ToList());
 										
 				return Request.CreateResponse(HttpStatusCode.OK, listResult);
             }
@@ -336,6 +339,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
 				}
 			   List<ChargesTypeList> listResult = entityLists.ToList();
+               CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+               customFieldResolver.SetCustomFieldsValues("ChargesType", authToken.Tenant, listResult.Cast<object>().ToList());
 
                response.Result = listResult;
 			   HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);

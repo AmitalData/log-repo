@@ -11,6 +11,7 @@ using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure.DataContracts;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
+using Logitude.Server.Tools.CustomFields;
 using Logitude.WarehouseLib.Data.EntityPOCOs;
 using Logitude.WarehouseLib.BL.EntityPMs; 
 using Logitude.WarehouseLib.Data;
@@ -477,6 +478,8 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 				entityPOCO.ConnectedToReferenceNumber = entityPM.ConnectedToReferenceNumber;
 			}
 			
+			new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "WarehouseEntry", Tenant = entityPM.Tenant, Type = "PM", Entities = new List<WarehouseEntryPM> { entityPM }.Cast<object>().ToList() }).Update();
+		 
 			new CustomChildEntityService(new CustomChildEntityArgs() { ParentEntity = entityPM, ParentEntityId = entityPM.Id, ParentObjectTableName = "WarehouseEntry", Tenant = entityPM.Tenant }).Update();
 		 
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -795,6 +798,9 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 					entityPM.ConnectedToReferenceNumber = entityPOCO.ConnectedToReferenceNumber;
             }
 
+			new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "WarehouseEntry", Tenant = entityPM.Tenant, Type = "PM", Entities = new List<WarehouseEntryPM> { entityPM }.Cast<object>().ToList() }).Set();
+
+		 
 			new CustomChildEntityService(new CustomChildEntityArgs() { ParentEntity = entityPM, ParentEntityId = entityPM.Id, ParentObjectTableName = "WarehouseEntry", Tenant = entityPM.Tenant }).Set();
 		 
 		}
