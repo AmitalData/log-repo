@@ -679,7 +679,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 }
             }
             entityPM.SearchFields = result.ToLower();
-            poco.SearchFields = entityPM.SearchFields;
+            poco.SearchFields = !string.IsNullOrEmpty( entityPM.SearchFields) && entityPM.SearchFields.Length >=1000 ? entityPM.SearchFields.Substring(0,1000): entityPM.SearchFields;
         }
 
         private static void BuildCourierSearchFields(DeclarationPM entityPM, Declaration poco, bool isNewEntity)
