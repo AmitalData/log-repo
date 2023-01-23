@@ -326,6 +326,19 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.ExportLoadingPortCode).HasColumnName("ExportLoadingPortCode").HasMaxLength(10).IsUnicode(false);
 
             this.Property(t => t.ReleaseStatusTypeCode).HasColumnName("ReleaseStatusTypeCode").HasMaxLength(2).IsUnicode(false);
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.ExportCloseAmendmentRequestNumber).HasColumnName("ExportCloseAmendmentRequestNum").HasMaxLength(9).IsUnicode(false);
+			}
+			else
+			{
+              this.Property(t => t.ExportCloseAmendmentRequestNumber).HasColumnName("ExportCloseAmendmentRequestNumber").HasMaxLength(9).IsUnicode(false);
+			}
+
+
+            this.Property(t => t.ExportCloseAmendmentStatus).HasColumnName("ExportCloseAmendmentStatus").HasMaxLength(3).IsUnicode(false);
         }
     }
 }

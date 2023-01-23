@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "901ac66a07a3b7ff854efbee14fa69e1";
+		public const string HashString = "c9c51311648e0c507643c4f0865f44a8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -16515,7 +16515,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
-					 
+					 				 
 					 						FieldName =  "DeclarationOfficeNameForExport",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
@@ -16568,6 +16568,127 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInAutomationAsEnitity =  false,
 					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+				   FieldName = "ExportCloseAmendmentRequestNumber",
+				   ObjectTableName = "Customs.Declaration",
+				   FieldsDataType = "Text",
+				   MinLength = 0,
+				   MaxLength = 9,
+				   IsRequired = false,
+				   CopyToDW = false,
+				   DisplayOnLookUp = false,
+				   DisplayOnLookUpLocal = false,
+				   CanFilter = false,
+				   DisplayOnly = false,
+				   SystemRequired = false,
+				   SystemMaxLength = 9,
+				   DisplayInList = true,
+				   IsCustomFilter = false,
+				   MultiLine = false,
+				   IsTimeFrameFilter = false,
+				   DisplayInSearchWindowList = false,
+				   PMPropertyPath = "ExportCloseAmendmentRequestNumber",
+				   ListPropertyPath = "ExportCloseAmendmentRequestNumber",
+				   DisplayInLookUpIndex = 0,
+				   AutomaticField = false,
+				   UniqueField = false,
+				   DisplayInSearchWindowListIndex = 0,
+				   IsMulti = false,
+				   DependencyFilter1IsList = false,
+				   DependencyFilter2IsList = false,
+				   DependencyFilter3IsList = false,
+				   ValidForQuerySection1 = "Customs.Declaration",
+				   IsRestrictable = false,
+				   DisplayInEntityVariables = false,
+				   AllowedInCustomerFieldsSettings = false,
+				   DisplayInSearchWindowFilters = false,
+				   DisplayInSearchWindowFiltersIndex = 0,
+				   DisplayInDocumentReferences = false,
+				   InActive = false,
+				   DisplayLongName = false,
+				   FullFieldLable = "ExportCloseAmendmentRequestNumber",
+				   DefaultText = "Export Close Amendment Request Number",
+				   FullLocalDefaultText = "מס' בקשה לסגירה",
+				   ListFieldLable = "ExportCloseAmendmentRequestNumberListLable",
+				   ListLableDefaultText = "Export Close Amendment Request Number",
+				   ListLocalDefaultText = "מס' בקשה לסגירה",
+				   IsMaxLength = false,
+				   IsFixedLength = false,
+				   EnableAutoFill = false,
+				   IncludeInSearchField = false,
+				   AllowedinAutomationConditions = false,
+				   AutomationEmailRecipient = false,
+				   CanAutomateSetValue = false,
+				   DisplayInAutomationAsEnitity = false,
+				   DisplayInRequiredFields = false,
+				   HasTemplate = false,
+				   IsCustom = false,
+				   EnableFullscreenTextBox = false,
+
+			   }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes, objectTables, addedFields, addedTextCodes);
+
+
+			AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+			{
+
+				FieldName =  "ExportCloseAmendmentStatus",
+					  						ObjectTableName =  "Customs.Declaration",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "AmendmentRequestStatus",
+					  						MinLength =  0,
+					  						MaxLength =  3,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  2,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ExportCloseAmendmentStatus",
+					  						ListPropertyPath =  "ExportCloseAmendmentStatus",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ExportCloseAmendmentStatus",
+					  						DefaultText =  "Export Close Amendment Status",
+					  						FullLocalDefaultText =  "סטטוס סגירה",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
+					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		

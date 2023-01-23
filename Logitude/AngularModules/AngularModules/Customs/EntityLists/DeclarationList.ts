@@ -222,6 +222,8 @@ export class DeclarationList {
 	ReferentUserName: string;
 	ExportDeclarationOfficeName: string;
 	DeclarationOfficeNameForExport: string;
+	ExportCloseAmendmentRequestNumber: string;
+	ExportCloseAmendmentStatus: string;
 	
 }
  

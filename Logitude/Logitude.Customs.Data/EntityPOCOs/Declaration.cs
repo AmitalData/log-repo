@@ -458,6 +458,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string ReleaseStatusTypeCode { get; set; }
 	      
         public virtual ReleaseMessageType ReleaseMessageTypeCode { get; set; }
+     
+	    public string ExportCloseAmendmentRequestNumber { get; set; }
+        [ForeignKey("AmazedSaint.Elastic.Lib.ElasticObject")]
+        [Column("ExportCloseAmendmentStatus")]
+	    public string ExportCloseAmendmentStatus { get; set; }
     }
 }
 	 
