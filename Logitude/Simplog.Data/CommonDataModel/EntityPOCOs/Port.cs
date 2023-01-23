@@ -66,5 +66,10 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string PortTimeZoneCode { get; set; }
         [ForeignKey("PortTimeZoneCode")]
         public virtual PortTimeZone PortTimeZone { get; set; }
+
+        public string PortGroupId { get; set; }
+
+        [ForeignKey("PortGroupId")]
+        public virtual PortGroup PortGroup { get; set; }
     }
 }

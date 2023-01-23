@@ -84,6 +84,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       StateCode = a.StateCode,
                                       StateName = a.StateName,
                                       PortTimeZoneCode = a.PortTimeZoneCode,
+                                      PortGroupId = a.PortGroupId,
                                   }).FirstOrDefault();
 
                         if (entity != null)
@@ -140,6 +141,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   StateName = a.StateName,
                                   StateCode = a.StateCode,
                                   PortTimeZoneCode = a.PortTimeZoneCode,
+                                  PortGroupId = a.PortGroupId,
                               }).FirstOrDefault();
                 }
 
