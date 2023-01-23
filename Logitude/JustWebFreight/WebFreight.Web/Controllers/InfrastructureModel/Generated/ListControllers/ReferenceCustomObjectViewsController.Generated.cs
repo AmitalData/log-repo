@@ -252,7 +252,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 
 
                 GenericFilter genericFilter = new GenericFilter();
-                GenericSort sortClass = new GenericSort();
+                GenericSort sortClass = new GenericSort(tenant);
                 
                 TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
                  { 
