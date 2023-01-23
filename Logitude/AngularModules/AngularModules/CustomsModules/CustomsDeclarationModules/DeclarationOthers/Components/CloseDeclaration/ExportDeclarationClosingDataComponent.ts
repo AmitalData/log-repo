@@ -701,7 +701,6 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                         let Mawb = UnifreightMessageM.GetStringValue(mess, "Mawb");
                         let Hawb = UnifreightMessageM.GetStringValue(mess, "Hawb");
                         let FlightDate = UnifreightMessageM.GetStringValue(mess, "FlightDate");
-                        var datetime = new Date(Number(FlightDate.substring(0, 4)), Number(FlightDate.substring(4, 6)) - 1, Number(FlightDate.substring(6, 8)), 2, 2, 2);
                         if (Mawb != null && this.EntityPM != null) {
                             this.MainAWB = Mawb;
                             if (AppTool.IsNullOrEmpty(this.EntityPM.FinalManifestNumber) && this.DecPM.Direction == 'E' && this.DecPM.TransportModeId == 'A') {
@@ -714,9 +713,8 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                             this.ChargingSite = LoadPort;
                             this.FinalLoadingSite = LoadPort;
                         }
-                        if (datetime != null) {
-                            this.FlightDate = datetime;
-                            this.LoadingDateTime = datetime;
+                        if (!AppTool.IsNullOrEmpty(FlightDate)) {
+                            this.FlightDate = this.LoadingDateTime = new Date(Number(FlightDate.substring(0, 4)), Number(FlightDate.substring(4, 6)) - 1, Number(FlightDate.substring(6, 8)), 2, 2, 2);;
                         }
                         SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
                     }
