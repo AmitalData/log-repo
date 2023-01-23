@@ -278,8 +278,7 @@ export class AddEditWidgetComponent extends BaseComponent {
                 item.FilterMeasureFields();
             });
             this.SetDefaultValuesForDisplaySettings();
-            //this.SetDisplaySettingsDefaultsForKpiAndMeasureCode();
-            //this.SetUIProprtiesForDisplaySettings();
+            this.SetUIProprtiesForDisplaySettings();
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget Type Change ", Message: "Changed To" + this.EntityPM.TypeCode, DashboardId: this.DashboardPM?.Id });
         }
     }
@@ -369,19 +368,6 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.UIProperties.SetEnabled("UseNumberAbbreviation", this.ObjectTableName, true);
         this.UIProperties.SetEnabled("ThousandSeparator", this.ObjectTableName, true);
         this.UIProperties.SetEnabled("UseAbbreviationAfter", this.ObjectTableName, this.UseNumberAbbreviation);
-
-
-        // if (this.TypeCode != "kpi" || (this.WidgetMeasuresList[0].MeasureCode != "Count" && (AppTool.IsNullOrEmpty(this.WidgetMeasuresList[0].MeasureFieldId) || !this.WidgetMeasuresList[0].IsNumeric))) {
-        //     this.UIProperties.SetEnabled("DecimalPlaces", this.ObjectTableName, false);
-        //     this.UIProperties.SetEnabled("UseNumberAbbreviation", this.ObjectTableName, false);
-        //     this.UIProperties.SetEnabled("ThousandSeparator", this.ObjectTableName, false);
-        //     this.UIProperties.SetEnabled("UseAbbreviationAfter", this.ObjectTableName, false);
-        // }
-
-        // this.UIProperties.SetEnabled("DecimalPlaces", this.ObjectTableName, this.WidgetMeasuresList[0].IsNumeric || this.WidgetMeasuresList[0].MeasureCode == "Count");
-        // this.UIProperties.SetEnabled("UseNumberAbbreviation", this.ObjectTableName, this.WidgetMeasuresList[0].IsNumeric || this.WidgetMeasuresList[0].MeasureCode == "Count");
-        // this.UIProperties.SetEnabled("ThousandSeparator", this.ObjectTableName, this.WidgetMeasuresList[0].IsNumeric || this.WidgetMeasuresList[0].MeasureCode == "Count");
-        // this.UIProperties.SetEnabled("UseAbbreviationAfter", this.ObjectTableName, (this.WidgetMeasuresList[0].MeasureCode == "Count" || this.WidgetMeasuresList[0].IsNumeric) && this.UseNumberAbbreviation);
     }
 
     CompareDisplaySettingWithDefaultValue() {
