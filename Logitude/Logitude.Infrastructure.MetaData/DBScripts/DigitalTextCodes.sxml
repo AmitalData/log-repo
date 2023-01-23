@@ -2227,12 +2227,6 @@
 		    "DisplayText": ""
 		},
 		{
-			"TextCode": "Shipment.F.Master",
-			"DefaultText": "Master",
-			"FieldCode": "Shipment.Master",
-		    "DisplayText": ""
-		},
-		{
 			"TextCode": "Shipment.F.OnCarriageFromPortName",
 			"DefaultText": "OnCarriage from port name",
 			"FieldCode": "Shipment.OnCarriageFromPortName",
@@ -4823,12 +4817,6 @@
 			"TextCode": "Shipment.F.AirlinePrefix",
 			"DefaultText": "Airline prefix",
 			"FieldCode": "Shipment.AirlinePrefix",
-		    "DisplayText": ""
-		},
-		{
-			"TextCode": "Shipment.F.Master",
-			"DefaultText": "Master",
-			"FieldCode": "Shipment.Master",
 		    "DisplayText": ""
 		},
 		{
