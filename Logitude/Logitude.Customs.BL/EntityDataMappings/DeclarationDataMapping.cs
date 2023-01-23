@@ -51,7 +51,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.SearchFields);
             BuildSearchFields(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
-            entityPOCO.SearchFields = entityPM.SearchFields;
+            entityPOCO.SearchFields = !string.IsNullOrEmpty(entityPM.SearchFields) && entityPM.SearchFields.Length >= 1000 ? entityPM.SearchFields.Substring(0, 999) : entityPM.SearchFields;
 
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.CourierSearchFields);
             BuildCourierSearchFields(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -679,7 +679,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 }
             }
             entityPM.SearchFields = result.ToLower();
-            poco.SearchFields = !string.IsNullOrEmpty( entityPM.SearchFields) && entityPM.SearchFields.Length >=1000 ? entityPM.SearchFields.Substring(0,1000): entityPM.SearchFields;
+            poco.SearchFields = entityPM.SearchFields;
         }
 
         private static void BuildCourierSearchFields(DeclarationPM entityPM, Declaration poco, bool isNewEntity)
