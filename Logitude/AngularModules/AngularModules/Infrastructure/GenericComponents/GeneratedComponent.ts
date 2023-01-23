@@ -423,7 +423,7 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
         });
     }
     public ShowSectionName(screenSection: any) {
-        return screenSection.Type != 'Grid' && screenSection.Title && screenSection.ScreenColumns && screenSection.ScreenColumns.length > 0 && !(this.ScreenSections && screenSection == this.ScreenSections[0] && this.IsFromGrid)
+        return screenSection.Type != 'Grid' && screenSection.Title && screenSection.ScreenColumns && screenSection.ScreenColumns.length > 0 && !(this.ScreenSections && screenSection == this.ScreenSections[0] && this.BuildLighteningScreenAsClassicScreen)
     }
 }
 
