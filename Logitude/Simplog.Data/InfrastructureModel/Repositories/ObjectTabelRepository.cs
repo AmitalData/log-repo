@@ -324,6 +324,14 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     select a.Id).FirstOrDefault();
         }
 
+        public string GetObjectTableIdByName(string tablename , int tenant)
+        {
+            return (from a in context.ObjectTables
+                    where a.Name == tablename && (a.Tenant ==tenant || a.Tenant == 0)
+                    select a.Id).FirstOrDefault();
+        }
+
+
         public List<ObjectTable> GetAllCacheOnClient(int tenant)
         {
             
@@ -356,7 +364,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
 
             return (from a in webFreightContext.ObjectTables
-                             where a.Name == name 
+                             where a.Name == name  && !a.IsCustom 
                              select a.AllowCustomFields).Any();
          
         }

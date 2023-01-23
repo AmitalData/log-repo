@@ -28,7 +28,7 @@ namespace Logitude.Server.Tools.CustomFields
 
         public EntityCustomFieldService(EntityCustomFieldServiceArgs entityCustomFieldServiceArgs)
         {
-            objectTableId = ObjectTableRepository.GetObjectTableByName(entityCustomFieldServiceArgs.ObjectTableName);
+            objectTableId = new ObjectTableRepository(entityCustomFieldServiceArgs.Tenant).GetObjectTableIdByName(entityCustomFieldServiceArgs.ObjectTableName, entityCustomFieldServiceArgs.Tenant);
             entityId = entityCustomFieldServiceArgs.EntityId;
             tenant = entityCustomFieldServiceArgs.Tenant;
             objectTableName = entityCustomFieldServiceArgs.ObjectTableName;
