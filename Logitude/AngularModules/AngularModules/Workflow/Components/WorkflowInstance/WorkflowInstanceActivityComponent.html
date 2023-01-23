@@ -44,7 +44,7 @@
     <tr>
         <td style="vertical-align:top">
             <div class="MediaFill">
-                <logitude-edit-grid *ngIf="!IsActivityLoading" GridWidth="100%" GridHeight="100%"
+                <logitude-edit-grid *ngIf="!IsActivityLoading" GridWidth="100%" GridHeight="100%" [UseVirtuallization]="true"
                     [ItemSource]="ActivityItemsSource" (RowDataLoaded)="OnRowLoaded($event)"
                     [EnableExpandCollapseAll]="'true'" [IsDarkHeader]="'true'">
 
