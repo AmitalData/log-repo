@@ -20,8 +20,9 @@ import {PerformanceLogger} from '../../Utilities/PerformanceLogger';
 import {CustomFieldClass} from '../../DataContracts/CustomFieldClass'
 
 import {DataCustomObjectPM} from '../../EntityPMs/DataCustomObjectPM';
+import { CustomChildObjectPMService } from '../ExtendedPMs/CustomChildObjectPMService';
 
-
+declare var window;
 @Injectable()
 
 export class DataCustomObjectPMService {
@@ -64,12 +65,12 @@ export class DataCustomObjectPMService {
 	insert(entityPM: DataCustomObjectPM) {
  
 		var callTime = new Date();  
-		
+        let objecttable = this.GetObjectTableById(entityPM.ObjectTableId);
 		return defer(() => {
 
 			var serviceResponse: ServiceResponse = new ServiceResponse();
 			var validator: ClassLevelValidator = new ClassLevelValidator();                
-			var errorsArray = validator.Validate("DataCustomObject", entityPM);
+            var errorsArray = validator.Validate(objecttable.Name, entityPM);
 
 
 			if (errorsArray.length == 0) {
@@ -103,15 +104,19 @@ export class DataCustomObjectPMService {
 		});
 	}
 
+    GetObjectTableById(objectTableId: string) {
+        return window.ObjectTables.filter(o => o.Id == objectTableId)[0];
+    }
 	update(entityPM: DataCustomObjectPM) {
 
-		var callTime = new Date();     
-		
+        var callTime = new Date();
+        let objecttable = this.GetObjectTableById(entityPM.ObjectTableId);
+
 		return defer(() => {
 
 			var serviceResponse: ServiceResponse = new ServiceResponse();
 			var validator: ClassLevelValidator = new ClassLevelValidator();               
-			var errorsArray = validator.Validate("DataCustomObject", entityPM);
+            var errorsArray = validator.Validate(objecttable.Name, entityPM);
 
 
 			if (errorsArray.length == 0) {
@@ -180,9 +185,11 @@ export class DataCustomObjectPMService {
                 entityPM[property] = jsonPM[property];
             }
                  
-            }
-			
-			 
+          }
+          let objecttable = window.ObjectTables.filter(o => o.Id == entityPM.ObjectTableId)[0];
+          let customChildObjectPMService: CustomChildObjectPMService = new CustomChildObjectPMService(entityPM, objecttable.Name);
+          customChildObjectPMService.MapCustomChildEntities(jsonPM, mapParent);
+
             
 
 		if (mapParent) {

@@ -9,7 +9,7 @@
   ObjectTablePlural="&quot;Charges Types&quot;"
   DescriptionDefaultText="&quot;Add and maintain the services you use or provide, both for receivable and payable transactions. Define properties for billing and printing on AWB.&quot;"
   HasCustomFilter="true"
-  HasCustomFields="false"
+  HasCustomFields="true"
   AvailableInCustomization="true"
   SupportSubEntity="false"
   ApplyGenericCustomFields="true"

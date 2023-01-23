@@ -1,0 +1,13 @@
+<View DBType="Main" Name="DBA_View_AuthenticationTokens_ToBeDeleted" Schema="dbo" Module="Common">
+  <SqlScript>
+    <![CDATA[
+    create VIEW [dbo].[DBA_View_AuthenticationTokens_ToBeDeleted] AS
+    SELECT TOP 1000 *
+    FROM [dbo].[AuthenticationTokens]
+    where ExpirationDate < DATEADD(Month, -1, GETDATE())
+    ORDER BY ExpirationDate;
+    ]]>
+  </SqlScript>
+  <OracleScript>
+  </OracleScript>
+</View>

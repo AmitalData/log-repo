@@ -56,6 +56,8 @@ namespace Logitude.DashboardModule.Data.EntityMapping
             this.Property(t => t.Unit).HasColumnName("Unit").HasMaxLength(100).IsUnicode(false);
 
             this.Property(t => t.CommonFilterCode).HasColumnName("CommonFilterCode").HasMaxLength(100).IsUnicode(false);
+
+            this.Property(t => t.CanSecondaryGroup).HasColumnName("CanSecondaryGroup");
         }
     }
 }

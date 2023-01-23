@@ -20,7 +20,13 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         public CustomChildEntityService(CustomChildEntityArgs customChildEntityArgs)
         {
             this.customChildEntityArgs = customChildEntityArgs;
-            parentObjectTableId = new ObjectTableQuery(customChildEntityArgs.Tenant).GetObjectTableIdByName(customChildEntityArgs.ParentObjectTableName);
+            parentObjectTableId = customChildEntityArgs.ParentObjectTableId;
+
+            if (!string.IsNullOrEmpty( customChildEntityArgs.ParentObjectTableName))
+            {
+                parentObjectTableId = new ObjectTableQuery(customChildEntityArgs.Tenant).GetObjectTableIdByName(customChildEntityArgs.ParentObjectTableName);
+            }
+
             webFreightContext =  WebFreightContext.GetContext(customChildEntityArgs.Tenant); 
 
         }
@@ -104,7 +110,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         public string ParentEntityId { get; set; }
 
         public string ParentObjectTableName { get; set; }
-
+        public string ParentObjectTableId { get; set; }
         public object ParentEntity { get; set; }
 
     }

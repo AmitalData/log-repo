@@ -62,6 +62,7 @@ import { HorseListService } from '../../Common/Services/StandardLists/HorseListS
 import { PortTimeZoneListService } from '../../Common/Services/StandardLists/PortTimeZoneListService';
 import { CustomerTeamListService } from '../../Common/Services/StandardLists/CustomerTeamListService';
 import { CarrierServiceLineListService } from '../../Common/Services/StandardLists/CarrierServiceLineListService';
+import { PortGroupListService } from '../../Common/Services/StandardLists/PortGroupListService';
 
 //customs
 import {InternationalSiteListService} from '../../Customs/Services/StandardLists/InternationalSiteListService'; 
@@ -251,6 +252,7 @@ export class CachedDataManagerServices {
             case "PortTimeZoneListService": { myResult = new PortTimeZoneListService(); break; }
             case "CustomerTeamListService": { myResult = new CustomerTeamListService(); break; }
             case "CarrierServiceLineListService": { myResult = new CarrierServiceLineListService(); break; }
+            case "PortGroupListService": { myResult = new PortGroupListService(); break; }
 
             default: {
 

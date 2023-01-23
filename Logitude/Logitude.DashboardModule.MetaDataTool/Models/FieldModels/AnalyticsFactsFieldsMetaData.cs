@@ -44,6 +44,16 @@ namespace Logitude.DashboardModule.MetaDataTool.Models.FieldModels
             }
         }
 
+        private bool canSecondaryGroup;
+        public bool CanSecondaryGroup
+        {
+            get { return canSecondaryGroup; }
+            set
+            {
+                canSecondaryGroup = value; FirePropertyChanged("CanSecondaryGroup");
+            }
+        }
+
 
         private string fieldCode;
         public string FieldCode

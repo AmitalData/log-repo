@@ -499,12 +499,14 @@
     <TypeScriptCompile Include="Common\EntityLists\CustomerTeamList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\HorseGenderList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\MentionList.ts" />
+    <TypeScriptCompile Include="Common\EntityLists\PortGroupList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\PortTimeZoneList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\PostalCodeList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\ProductItemList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\RegimenFiscalList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\ReportExecutionLogList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\UnassignedEntityList.ts" />
+    <TypeScriptCompile Include="Common\EntityPMInitServices\PortGroupPMInitService.ts" />
     <TypeScriptCompile Include="Common\EntityPMInitServices\PortTimeZonePMInitService.ts" />
     <TypeScriptCompile Include="Common\EntityPMInitServices\ReportExecutionLogPMInitService.ts" />
     <TypeScriptCompile Include="Common\EntityPMInitServices\ShippingLinePMInitService.ts" />
@@ -512,6 +514,7 @@
     <TypeScriptCompile Include="Common\EntityPMs\CustomerTeamPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\HTSCodePM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\MentionPM.ts" />
+    <TypeScriptCompile Include="Common\EntityPMs\PortGroupPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\PortTimeZonePM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\PostalCodePM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\ProductItemPM.ts" />
@@ -524,6 +527,7 @@
     <TypeScriptCompile Include="Common\Services\StandardLists\CustomerTeamListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\HorseGenderListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\MentionListService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardLists\PortGroupListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\PortTimeZoneListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\PostalCodeListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\ProductItemListService.ts" />
@@ -532,6 +536,7 @@
     <TypeScriptCompile Include="Common\Services\StandardPMs\CarrierServiceLinePMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomerTeamPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\MentionPMService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardPMs\PortGroupPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\PortTimeZonePMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\PostalCodePMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\ReportExecutionLogPMService.ts" />
@@ -2140,6 +2145,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityLists\BusinessProcessQueueList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\BusinessRoleList.ts" />
     <TypeScriptCompile Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWQueryBuilderComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityLists\CustomFieldList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\CustomFieldsMainObjectList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\DataCustomObjectList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\DeploymentPackageList.ts" />
@@ -2171,7 +2177,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityPMs\BIReportFolderPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\BIReportPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\BIReportsTypePM.ts" />
-    <TypeScriptCompile Include="Infrastructure\EntityPMs\CustomFieldsMainObjectPMExtended.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityPMs\ObjectCustomFieldPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\CustomFieldsMainObjectPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DataCustomObjectPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DeploymentPackageDetails.ts" />

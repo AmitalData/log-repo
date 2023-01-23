@@ -119,7 +119,7 @@ export class GlobalFilterItemComponent implements OnInit {
     }
 
     public GetTextInputType() {
-        if (this.FilterItem.DataTypeCode == 'Date' || this.FilterItem.DataTypeCode == 'DateTime') return "Integer";
+        if (this.FilterItem.DataTypeCode == 'Date' || this.FilterItem.DataTypeCode == 'DateTime') return "unsinteger";
         if (this.FilterItem.DataTypeCode == "Text") return "nText";
         return this.FilterItem.DataTypeCode;
     }

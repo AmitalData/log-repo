@@ -1,8 +1,5 @@
-﻿using Logitude.BL.InvoiceModel.CustomFilters;
-using Logitude.BL.InvoiceModel.EntityLists;
+﻿using Logitude.BL.InvoiceModel.EntityLists;
 using Logitude.BL.InvoiceModel.EntityQueries;
-using Logitude.BL.ShipmentsModel.CustomFilters;
-using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
@@ -14,12 +11,6 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InvoiceModel;
-using Simplog.Data.InvoiceModel.Repositories;
-using Simplog.Data.ShipmentsModel.EntityPOCOs;
-using Simplog.Data.ShipmentsModel.Repositories;
-using Simplog.Server.Infrastructure.DataContracts;
-using Simplog.Server.Infrastructure.Helpers;
 using Syncfusion.XlsIO;
 using System;
 using System.Collections.Generic;
@@ -27,15 +18,18 @@ using System.Data;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using WebFreight.Web.Controllers.DigitalPortal.Models;
-using WebFreight.Web.Controllers.InvoiceModel.ApiHelpers;
-using WebFreight.Web.Controllers.ShipmentsModel.ApiHelpers;
 using WebFreight.Web.Security;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.DataMapping;
+using Logitude.BL.Helpers;
+using System.Linq.Dynamic.Core;
+using Newtonsoft.Json.Linq;
+using System.Linq;
+using Logitude.BL.ShipmentsModel.EntityLists;
+using Microsoft.VisualStudio.Services.Common;
 
 namespace WebFreight.Web.Helpers
 {
@@ -159,7 +153,7 @@ namespace WebFreight.Web.Helpers
             return mappedFileName + "_" + DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss");
         }
 
-        private byte[] DigitalPortalShipmentExportToExcel(List<DigitalShipmentList> digitalShipmentLists, bool showMultiUnitsOfMeasurements)
+        private byte[] DigitalPortalShipmentExportToExcel(List<dynamic> digitalShipmentLists, bool showMultiUnitsOfMeasurements)
         {
             var excelEngine = new ExcelEngine();
             IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
@@ -369,7 +363,7 @@ namespace WebFreight.Web.Helpers
                     row[3] = item.MainCarriageFromPortName + ", " + item.MainCarriageToPortName;
                     row[4] = item.MainCarriageATD?.ToString("dd MMM yyyy", CultureInfo.InvariantCulture);
                     row[5] = item.MainCarriageATA?.ToString("dd MMM yyyy", CultureInfo.InvariantCulture);
-                    row[6] = item.Master;
+                    row[6] = item.LongMaster;
                     row[7] = item.ShipperName;
                     row[8] = item.ConsigneeName;
                     row[9] = item.ShipmentTypeName;
@@ -494,6 +488,7 @@ namespace WebFreight.Web.Helpers
 
         private DigitalXslExportResult GetFileInfo(DigitalExportQueryToExcelArgs args)
         {
+            var helper = new DigitalFieldSecuritesHelper();
             var queryFilters = args.QueryFilters;
             int tenant = (int)queryFilters.Tenant;
             string ObjectTableName = queryFilters.ObjectTableName.Replace("Customs.", "");
@@ -517,14 +512,28 @@ namespace WebFreight.Web.Helpers
                         showMultiUnitsOfMeasurements = tenantObject.ShowMultiUnitsOfMeasurements;
                     }
 
-                    var shipmentData = shipmentQuery.GetByFilters(args.QueryFilters).ToList();
-                    FillContainerNumbers(shipmentData);
-                    data = DigitalPortalShipmentExportToExcel(shipmentData, showMultiUnitsOfMeasurements);
+                    var shipmentData = shipmentQuery.GetByFilters(args.QueryFilters);
+
+                   
+                    var allowedShipmentsFieldSecurites = helper.GitDigitalSecuritesFeilds(args.QueryFilters.ObjectTableId, args.QueryFilters.ProfileCode, tenant, false)
+                                                      .Where(a => a.HasPermission)
+                                                      .Select(a => a.FieldCode.Replace("Shipment.", ""))
+                                                      .ToList();
+
+                    allowedShipmentsFieldSecurites.AddRange(new List<String>() { "ValueOfGoods", "TruckContainerNumber", "ContainersNumbersandTypesArray", "MainCarriageToPortName","MainCarriageFromPortName","DirectionName","TransportModeName", "MainCarriageATA",  "TruckNumber" });
+
+                    var shipmentsFields = string.Join(",", allowedShipmentsFieldSecurites);
+                    var shipmentsDynamicData = shipmentData.Select("new { " + shipmentsFields + " }").ToDynamicList();
+
+                    FillContainerNumbers(shipmentsDynamicData);
+                    data = DigitalPortalShipmentExportToExcel(shipmentsDynamicData, showMultiUnitsOfMeasurements);
+
                     break;
                 case "DigitalInvoice":
                     var aRInvoiceQuery = new ARInvoiceQuery(args.QueryFilters.Tenant);
                     var invoiceData = aRInvoiceQuery.GetByFilters(args.QueryFilters).ToList();
                     data = DigitalPortalInvoiceExportToExcel(invoiceData);
+
                     break;
                 default:
                     break;
@@ -546,7 +555,7 @@ namespace WebFreight.Web.Helpers
             };
         }
 
-        private void FillContainerNumbers(List<DigitalShipmentList> listQuery)
+        private void FillContainerNumbers(List<dynamic> listQuery)
         {
             listQuery.ForEach(shipment =>
             {

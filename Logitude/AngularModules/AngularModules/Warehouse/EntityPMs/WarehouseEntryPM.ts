@@ -15,12 +15,14 @@ import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 import { CustomChildEntity } from '../../Infrastructure/EntityPMs/CustomChildEntity';
+import { ObjectCustomFieldPM } from '../../Infrastructure/EntityPMs/ObjectCustomFieldPM';
 
-export class WarehouseEntryPM {
-
+export class WarehouseEntryPM extends ObjectCustomFieldPM {
+      
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
+          super("WarehouseEntry");
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }

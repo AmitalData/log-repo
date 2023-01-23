@@ -74,7 +74,7 @@
                     </td>
 
                     <td style="width: 90px; vertical-align: middle; position:relative;">
-                        <DirectionsFilter *ngIf="ShowDirectionFilters  && !IsLogbox" [HideExport]="IsLogbox || !IsExportActivated" [ShowCustomFilter]="IsLogbox|| IsCustomsActivated" [HideImportDomistic]="IsLogbox|| IsPrivateLabel" [HideAMANACFilters]="true" [SelectedValue]="SelectedDirectionFilter" [Width]="90" (SelectedValueChanged)="SelectedDirectionFilter = $event"></DirectionsFilter>
+                        <DirectionsFilter *ngIf="IsPrivateLabelWithMoreThanOneDirectionFilter  && !IsLogbox" [HideExport]="IsLogbox || !IsExportActivated" [ShowCustomFilter]="IsLogbox|| IsCustomsActivated" [HideImportDomistic]="IsLogbox|| IsPrivateLabel" [HideAMANACFilters]="true" [SelectedValue]="SelectedDirectionFilter" [Width]="90" (SelectedValueChanged)="SelectedDirectionFilter = $event"></DirectionsFilter>
                     </td>
 
                     <td style="width: 3px;">

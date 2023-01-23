@@ -216,6 +216,11 @@ export class PortPM {
     public set PortTimeZoneCode(newValue: string) { if (this.portTimeZoneCode != newValue) { this.portTimeZoneCode = newValue; this.MarkAsDirty("PortTimeZoneCode"); } }
        
 	 
+    private portGroupId: string;
+    public get PortGroupId() { return this.portGroupId; }
+    public set PortGroupId(newValue: string) { if (this.portGroupId != newValue) { this.portGroupId = newValue; this.MarkAsDirty("PortGroupId"); } }
+       
+	 
 
     public OldEntityPM: PortPM;
 		

@@ -351,6 +351,15 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     select a.Name).FirstOrDefault();
         }
 
+        public static bool  IsApplyGenericCustomFields(string name , int tenant)
+        {
+            IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
+
+            return (from a in webFreightContext.ObjectTables
+                             where a.Name == name 
+                             select a.AllowCustomFields).Any();
+         
+        }
 
     }
 

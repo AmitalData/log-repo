@@ -13,6 +13,7 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+import { CustomChildEntity } from './CustomChildEntity';
 
 export class DataCustomObjectPM {
     @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
@@ -586,6 +587,19 @@ export class DataCustomObjectPM {
     public get UpdatedByUserName() { return this.updatedByUserName; }
     public set UpdatedByUserName(newValue: string) { if (this.updatedByUserName != newValue) { this.updatedByUserName = newValue; this.MarkAsDirty("UpdatedByUserName"); } }
 
+    private customChildEntities: CustomChildEntity[];
+    get CustomChildEntities() {
+        if (this.customChildEntities == null) {
+            this.customChildEntities = [];
+        }
+
+        return this.customChildEntities;
+    }
+    set CustomChildEntities(newValue: CustomChildEntity[]) {
+        if (this.customChildEntities != newValue) {
+            this.customChildEntities = newValue;
+        }
+    }
 
     public OldEntityPM: DataCustomObjectPM;
 		

@@ -182,6 +182,18 @@ namespace <#= pmnamespacestring #>
 	  if(entity.SupportSubEntity.ToString() == "true") {WriteSubEntityProperty();}
 
 	 #>
+	 <#+
+	 if(entity.ApplyGenericCustomFields.ToString() == "true"){
+		 int maxNumberOfCustomFields;
+		 if(String.IsNullOrEmpty(entity.MaxNumberOfCustomFields)) maxNumberOfCustomFields = 0;
+		 else maxNumberOfCustomFields = Int32.Parse(entity.MaxNumberOfCustomFields);
+		 if(maxNumberOfCustomFields > 0){
+			 for(int customFieldNumber = 1; customFieldNumber<=maxNumberOfCustomFields;customFieldNumber++){
+				WriteGenericCustomFieldProperty(customFieldNumber);
+			 }
+		 }
+	 }
+	 #>
    }
    
 }
@@ -245,7 +257,33 @@ else
   
  }
 
-
+public void WriteGenericCustomFieldProperty(int customFieldNumber){
+#>
+	   <#+
+	string privatepropname = FirstCharacterToLower("Field" + customFieldNumber.ToString().Trim('"'));#>
+private CustomFieldClass <#= privatepropname #>;
+	   [CustomValidation(typeof(<#= validationclassname #>), "ValidateClass")]
+	   [DataMember]
+       public CustomFieldClass Field<#= customFieldNumber.ToString().Trim('"') #>  
+	   {
+	    
+	     get
+		{
+		   return <#= privatepropname #>;
+		 }
+		 set
+		 {
+		   if(<#= privatepropname #> != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Field<#= customFieldNumber.ToString().Trim('"') #>",OldValue=<#= privatepropname #>,NewValue=value,PropertyType="CustomFieldClass"};
+		    NotifyPropertyChanged(values);
+		   <#= privatepropname #>=value;
+		   }
+			
+		 }
+	   }
+<#+
+}
 
 public void WritePMProperty(dynamic field)
 {

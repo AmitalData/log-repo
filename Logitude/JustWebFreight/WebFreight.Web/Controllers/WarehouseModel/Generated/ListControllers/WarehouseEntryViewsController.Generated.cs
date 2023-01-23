@@ -38,6 +38,7 @@ using Logitude.WarehouseLib.Data.EntityPOCOs;
 using Logitude.WarehouseLib.BL.EntityPMs;
 using Logitude.WarehouseLib.Data;
 using Logitude.WarehouseLib.BL;
+using Logitude.BL.Helpers;
 using Logitude.WarehouseLib.Data.EntityLists;
 using Logitude.WarehouseLib.BL.EntityUpdateServices;
 using Logitude.WarehouseLib.Data.EntityListQueryServices;
@@ -63,6 +64,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 	                IWarehouseContext MyContext = WarehouseContext.GetContext(authToken.Tenant);
                 WarehouseEntryListQueryService warehouseEntryQuery = new WarehouseEntryListQueryService(MyContext);
                 WarehouseEntryList warehouseEntryList = warehouseEntryQuery.GetSingle(id);
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+                customFieldResolver.SetCustomFieldsValues("WarehouseEntry",  authToken.Tenant, new List<WarehouseEntryList> { warehouseEntryList }.Cast<object>().ToList());
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
                 return Request.CreateResponse(HttpStatusCode.OK,  warehouseEntryList);
@@ -86,6 +89,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 	                IWarehouseContext MyContext = WarehouseContext.GetContext(authToken.Tenant);
                 WarehouseEntryListQueryService warehouseEntryQuery = new WarehouseEntryListQueryService(MyContext);
                 List<WarehouseEntryList> result = warehouseEntryQuery.GetList(authToken.Tenant);
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+                customFieldResolver.SetCustomFieldsValues("WarehouseEntry",  authToken.Tenant, result.Cast<object>().ToList());
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -218,6 +223,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 }
 
                 response.Result = entityLists;
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+                customFieldResolver.SetCustomFieldsValues("WarehouseEntry",  authToken.Tenant, entityLists.Cast<object>().ToList());
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
