@@ -173,7 +173,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsExportClosed, 
 	         ExportClosedErrorXML, 
 	         ExportLoadingPortCode, 
-	         ReleaseStatusTypeCode,
+	         ReleaseStatusTypeCode, 
+	         ClosingXml,
 	      }
 
 
@@ -417,7 +418,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ExportLoadingPortCode, 
 	         PhysicalCheckName, 
 	         ReleaseStatusTypeCode, 
-	         ReferentUserName,
+	         ReferentUserName, 
+	         ClosingXml,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -1179,6 +1181,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReleaseStatusTypeCode))
             {
 				entityPOCO.ReleaseStatusTypeCode = entityPM.ReleaseStatusTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClosingXml))
+            {
+				entityPOCO.ClosingXml = entityPM.ClosingXml;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1947,6 +1954,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ReleaseStatusTypeCode = entityPOCO.ReleaseStatusTypeCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ClosingXml))
+            {
+					entityPM.ClosingXml = entityPOCO.ClosingXml;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationPM entityPM, DeclarationPM oldEntityPM)
@@ -2708,6 +2720,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.ReleaseStatusTypeCode = entityPM.ReleaseStatusTypeCode;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClosingXml))
+            {
+                oldEntityPM.ClosingXml = entityPM.ClosingXml;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(DeclarationPM entityPM)
@@ -2824,6 +2841,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.ExportClosedErrorXML)) //T4 find type == nText 
             {
                 entityPM.ExportClosedErrorXML = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ExportClosedErrorXML));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ClosingXml)) //T4 find type == nText 
+            {
+                entityPM.ClosingXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ClosingXml));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

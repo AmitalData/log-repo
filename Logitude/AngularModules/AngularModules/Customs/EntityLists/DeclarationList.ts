@@ -222,6 +222,7 @@ export class DeclarationList {
 	ReferentUserName: string;
 	ExportDeclarationOfficeName: string;
 	DeclarationOfficeNameForExport: string;
+	ClosingXml: string;
 	
 }
  

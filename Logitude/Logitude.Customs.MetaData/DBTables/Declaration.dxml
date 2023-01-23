@@ -1043,6 +1043,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ClosingXml"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Cards"
