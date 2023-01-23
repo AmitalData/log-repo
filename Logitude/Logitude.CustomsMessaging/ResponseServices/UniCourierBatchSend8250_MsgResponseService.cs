@@ -143,7 +143,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             //DeclarationNumber = declarationPM.DeclarationNumber,
                             DeclarationRadio = true,
                             TesterSendOption = customResponse.TesterSendOption,
-                            CourierMaster = customResponse.MyMoreParams
+                            CourierMaster = customResponse.MyMoreParams,
+                            ParentId = requestParams.CustomsRequestsSheetId,
                         };
 
                         SBQMessageService.CreateSheetSBQMessage<DeclarationStatusRequestParams>(requestParams8250, false);

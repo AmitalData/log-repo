@@ -51,7 +51,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 mess.AppendLine($"מפוצל כבר !!!");
                 listPoco = repo.GetDeclarationsByIds(customResponse.ServerSplitDeclarationsList, requestParams.Tenant);
                 bool isCreateNewDocumentVersion = customResponse.IsCreateNewDocumentVersion;
-                Send2715WhereDocumentStatusCodeIs2(mess, context, /*myCustomsDocumentUpdateService,*/ listPoco, isCreateNewDocumentVersion);
+                Send2715WhereDocumentStatusCodeIs2(mess, context, /*myCustomsDocumentUpdateService,*/ listPoco, requestParams.CustomsRequestsSheetId, isCreateNewDocumentVersion);
             }
             else
             {
@@ -105,7 +105,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private static void Send2715WhereDocumentStatusCodeIs2(StringBuilder mess, ICustomContext context, 
             //CustomsDocumentUpdateService myCustomsDocumentUpdateService, 
-            List<DeclarationCourierStatus> listPoco, bool IsCreateNewDocumentVersion = false)
+            List<DeclarationCourierStatus> listPoco,string ParentId, bool IsCreateNewDocumentVersion = false)
         {
             foreach (var itemPoco in listPoco)
             {
@@ -140,7 +140,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                                 customsDocumentPMItem.ChangeSetOp = ChangeSetOperation.Update;
                                 customsDocumentPMItem.IsSendToQueue = true;
-                                myCustomsDocumentUpdateService.IgnoreSendFailure = true;
+                                customsDocumentPMItem.ParentRequestId = ParentId;
+                               myCustomsDocumentUpdateService.IgnoreSendFailure = true;
                                 myCustomsDocumentUpdateService.Update(customsDocumentPMItem, true);
                                 LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({itemPoco.DeclarationId})");
                                 mess.AppendLine($" CreateSheetSBQMessage({itemPoco.DeclarationId})");
