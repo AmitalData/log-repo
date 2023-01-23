@@ -468,8 +468,20 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 //}
             }
             DeclarationPaymentQueryService declarationPaymentQueryService = new DeclarationPaymentQueryService(entityPOCO.Tenant);
-            DeclarationPaymentPM declarationPaymentPM = declarationPaymentQueryService.GetSingle(entityPOCO.Id, false, true);
-         if(declarationPaymentPM!=null)   entityPM.AutomaticPayment = declarationPaymentPM.AutomaticPayment;
+
+            bool automaticPaymentMustBeAccurate = true;
+            if (automaticPaymentMustBeAccurate)
+            {
+                
+                entityPM.AutomaticPayment = declarationPaymentQueryService.GetAutomaticPayment(declarationid:entityPOCO.Id);
+            }
+            else
+            {
+                DeclarationPaymentPM declarationPaymentPM = declarationPaymentQueryService.GetSingle(entityPOCO.Id, false, true);
+                if (declarationPaymentPM != null) entityPM.AutomaticPayment = declarationPaymentPM.AutomaticPayment;
+            }
+
+            
 
             if (!String.IsNullOrWhiteSpace( entityPOCO.WeightValue))
             {
