@@ -12,14 +12,14 @@ import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
-import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClassAAA';
 
 export class DigitalPortalScreenPM {
 
-      @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
+      
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+                    this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -72,6 +72,11 @@ export class DigitalPortalScreenPM {
     private profileId: string;
     public get ProfileId() { return this.profileId; }
     public set ProfileId(newValue: string) { if (this.profileId != newValue) { this.profileId = newValue; this.MarkAsDirty("ProfileId"); } }
+       
+	 
+    private profileCode: string;
+    public get ProfileCode() { return this.profileCode; }
+    public set ProfileCode(newValue: string) { if (this.profileCode != newValue) { this.profileCode = newValue; this.MarkAsDirty("ProfileCode"); } }
        
 	 
 
