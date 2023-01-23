@@ -442,6 +442,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string ExportDeclarationOfficeName  { get; set; }
        [DataMember]
        public string DeclarationOfficeNameForExport  { get; set; }
+       [DataMember]
+       public string ClosingXml  { get; set; }
    }
 
 }

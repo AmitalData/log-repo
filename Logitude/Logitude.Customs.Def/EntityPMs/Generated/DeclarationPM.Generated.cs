@@ -5803,6 +5803,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string closingXml ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ClosingXml  
+	   {
+	    
+	     get
+		{
+		   return closingXml;
+		 }
+		 set
+		 {
+		   if(closingXml != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClosingXml",OldValue=closingXml,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   closingXml=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
