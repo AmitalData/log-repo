@@ -277,7 +277,8 @@ export class AddEditWidgetComponent extends BaseComponent {
             this.WidgetMeasuresList.forEach(item => {
                 item.FilterMeasureFields();
             });
-            this.SetDisplaySettingsDefaultsForKpiAndMeasureCode();
+            this.SetDefaultValuesForDisplaySettings();
+            //this.SetDisplaySettingsDefaultsForKpiAndMeasureCode();
             //this.SetUIProprtiesForDisplaySettings();
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget Type Change ", Message: "Changed To" + this.EntityPM.TypeCode, DashboardId: this.DashboardPM?.Id });
         }
@@ -336,7 +337,6 @@ export class AddEditWidgetComponent extends BaseComponent {
         this.UseNumberAbbreviation = false;
         this.UseAbbreviationAfter = null;
         this.DecimalPlaces = null;
-        if (this.TypeCode != "kpi") this.Alignment = null;
 
         if (this.TypeCode == "kpi" && (this.WidgetMeasuresList[0].MeasureFieldId == null || this.WidgetMeasuresList[0].IsNumeric)) {
             this.ThousandSeparator = true;
