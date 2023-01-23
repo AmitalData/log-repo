@@ -105,12 +105,10 @@ export class DeclarationExportStorageComponent extends BaseComponent implements 
 
     private LoadDeclarationExportStorages() {
         this.DeclarationExportStorageList = new ObservableCollection([]);
-        debugger
-        //this.DeclarationCargoSplitWebService.GetDeclarationCargoSplitByDeclarationIdLists(this.EntityPM.Id, this.EntityPM.Tenant)
+          //this.DeclarationCargoSplitWebService.GetDeclarationCargoSplitByDeclarationIdLists(this.EntityPM.Id, this.EntityPM.Tenant)
         this._DeclarationWebService.GetDeclarationExportStoragesByDeclarationIdAndExportFile(this.EntityPM.Id, this.EntityPM.ExportFile, this.EntityPM.Tenant)
             .subscribe((myResponse: ServiceResponse) => {
-                debugger;
-                SessionLocator.SelectedSession.StopBusyIndicator();
+                 SessionLocator.SelectedSession.StopBusyIndicator();
 
                 this.GetDeclarationExportStorageListsOp_Completed(myResponse, false);
 

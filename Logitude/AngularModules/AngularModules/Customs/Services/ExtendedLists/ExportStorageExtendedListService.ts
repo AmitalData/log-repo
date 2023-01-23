@@ -23,17 +23,17 @@ export class ExportStorageExtendedListService {
     public disconnectedSelectAll: boolean;
     public isNotDirty: boolean;
     public ConnectedExportStorage: string;
+    public disconnectedExportStorage: string;
     public SelectedExportStorage: boolean;
     public AllExportStorage: string;
     public IsDirectCharging: string;
 
     getPromiseByFilters(filters: ApiQueryFilters) {
 
-        return new Promise((resolve, reject) => {
 
-            resolve(this.getByFilters(filters));
+        this.getByFilters(filters);
 
-        });
+       
     }
 
     getByFilters(filters: ApiQueryFilters) {
@@ -68,7 +68,6 @@ export class ExportStorageExtendedListService {
 
         return defer(() => {
             return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map((response: any) => {
-
                 var serviceResponse: ServiceResponse;
                 serviceResponse = response;
                 var _mappedListsArray: Array<ExportStorageList> = [];
