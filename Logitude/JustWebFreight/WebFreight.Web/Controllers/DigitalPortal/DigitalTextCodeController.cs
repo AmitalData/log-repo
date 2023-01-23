@@ -86,6 +86,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         {
                             Tenant = tenant,
                             Name = item.Name,
+                            ScreenCode = item.ScreenCode,
                             Content = item.Content,
                             DraftContent = item.DraftContent,
                             ObjectTableId = item.ObjectTableId,
