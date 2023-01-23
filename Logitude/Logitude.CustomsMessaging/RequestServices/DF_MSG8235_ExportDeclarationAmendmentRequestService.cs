@@ -314,16 +314,23 @@ namespace Logitude.CustomsMessaging.RequestServices
                 this.MyRequestSheetParam.RequestDescription = "תיקון הצהרת יצוא" + _DeclarationPMOrg.DeclarationNumber + " " + _DeclarationPMOrg.VersionId;
             }
 
-            //if (!isExportClose)
-            //{
+            if (!isExportClose)
+            {
                 req.Response.FunctionalReferenceID = new ResponseFunctionalReferenceIDType
                 {
-                    Value = string.IsNullOrEmpty(_DeclarationPM.AmendmentRequestNumber) ?  CodeCounter.GetNumber("AmendmentRequestNumber", _DeclarationPMOrg.Tenant).ToString() : _DeclarationPM.AmendmentRequestNumber
+                    Value = string.IsNullOrEmpty(_DeclarationPM.AmendmentRequestNumber) ? CodeCounter.GetNumber("AmendmentRequestNumber", _DeclarationPMOrg.Tenant).ToString() : _DeclarationPM.AmendmentRequestNumber
                 };
-                functionalReferenceID = req.Response.FunctionalReferenceID.Value;
+            }
+            else
+            {
+                req.Response.FunctionalReferenceID = new ResponseFunctionalReferenceIDType
+                {
+                    Value = string.IsNullOrEmpty(_DeclarationPM.ExportCloseAmendmentRequestNumber) ? CodeCounter.GetNumber("ExportCloseAmendmentRequestNumber", _DeclarationPMOrg.Tenant).ToString() : _DeclarationPM.ExportCloseAmendmentRequestNumber
+                };
+            }
+            functionalReferenceID = req.Response.FunctionalReferenceID.Value;
 
-                req.Response.IssueDateTime = DataTypeConvertorUtil.Convert(DateTime.Now);
-           // }
+            req.Response.IssueDateTime = DataTypeConvertorUtil.Convert(DateTime.Now);
             
             req.Response.AdditionalInformation = AdditionalInformation();
 
@@ -339,7 +346,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             }
              LogMessagingUtil.Instance.AppendLine("declaration build" + requestParams.AppicationId);
 
-            if(!isExportClose)
+            //if(!isExportClose)
              UpdateDeclaration(req.Response, requestParams.LoggingUserId);
 
 
@@ -351,6 +358,13 @@ namespace Logitude.CustomsMessaging.RequestServices
         private void UpdateDeclaration(UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference.Response response ,string LoggingUserId)
         {
             DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), _DeclarationPM.Tenant);
+            if (isExportClose)
+            {
+                _DeclarationPM.ExportCloseAmendmentRequestNumber = response.FunctionalReferenceID.Value;
+                _DeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                declarationUpdateService.Update(_DeclarationPM, true);
+                return;
+            }
             _DeclarationPM.AmendmentissueDate = DateTime.Now;
             if (!isExportClose) _DeclarationPM.AmendmentRequestNumber = response.FunctionalReferenceID.Value;
 
