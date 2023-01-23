@@ -693,7 +693,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                             this.ChargingSite = LoadPort;
                             this.FinalLoadingSite = LoadPort;
                         }
-                        if (AppTool.IsNullOrEmpty(FlightDate)) {
+                        if (!AppTool.IsNullOrEmpty(FlightDate)) {
                             this.FlightDate = this.LoadingDateTime = new Date(Number(FlightDate.substring(0, 4)), Number(FlightDate.substring(4, 6)) - 1, Number(FlightDate.substring(6, 8)), 2, 2, 2);;
                         }
                         SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
