@@ -161,6 +161,15 @@ namespace Logitude.Customs.Data.Repsitories
 
         }
 
+        public string GetCourierhawbFromId(string declarationId, int tenant)
+        {
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+            return (from a in context.Declarations
+                    where a.Id == declarationId
+                    where a.Tenant == tenant
+                    select a.CourierHAWB).FirstOrDefault();
+
+        }
 
         public Declaration GetAcceptDeclarationAmendmentByCustomsFile(string customFileNo, int tenant)
         {
