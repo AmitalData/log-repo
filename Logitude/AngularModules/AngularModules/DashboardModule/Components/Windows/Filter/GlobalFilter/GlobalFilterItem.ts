@@ -1,8 +1,13 @@
+import { UIProperties } from "Infrastructure/Components/LogitudeComponents/UIProperties";
+
 export class GlobalFilterItem {
     private Component: any;
+    public UIProperties: UIProperties;
     constructor(component?: any) {
         this.Component = component
+        this.UIProperties = new UIProperties;
     }
+
 
     public Id: string;
     public FieldId: string;
