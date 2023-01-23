@@ -43,7 +43,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 item.ChildShipmentPayables = this.MapPocoToPM(iQueryableChilds);
             }
 
-            shipmentPayables = shipmentPayables.OrderBy(d => d.ViewOrder).ThenBy(d => d.ChargesTypeCode).ToList();
+            shipmentPayables = shipmentPayables.OrderBy(d => d.Id).ToList();
 
 
             new ChildEntitiesCustomFieldService().Set(new ChildEntitiesCustomFieldArgs()
