@@ -183,7 +183,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                                 }
                             }
-                            declarationPM.IsClose = true;
+                          if(declarationPM.Direction!="E")  declarationPM.IsClose = true;
                             MyRequestSheetParam.RequestDescription = "התרה לתיק. מספר הצהרה: " + declarationNumber;//eitan h 26/2/15 task 11525
                             break;
                         case 4 when declarationPM.Direction == "E":
