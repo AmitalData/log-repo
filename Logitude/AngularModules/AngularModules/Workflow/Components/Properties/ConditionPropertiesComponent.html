@@ -151,7 +151,7 @@
             </div>
             <div class="table-row-cell-block entity-list-container">
                 <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [DataContext]="DataContext" [Text]="MetLabel"
-                    [NoValidation]="true" [HideColumns]="true" [ObjectFieldName]="'MetLabel'" [Placeholder]="'TRUE'"
+                    [NoValidation]="true" [HideColumns]="true" [ObjectFieldName]="'MetLabel'"
                     (ValueChanged)="updateMetLabel($event)" [DataCy]="'met-label'">
                 </LogTextBox>
             </div>
@@ -175,8 +175,8 @@
             <div class="table-row-cell-block entity-list-container">
                 <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [DataContext]="DataContext"
                     [Text]="OtherwiseLabel" [NoValidation]="true" [HideColumns]="true"
-                    [ObjectFieldName]="'OtherwiseLabel'" [Placeholder]="'FALSE'"
-                    (ValueChanged)="updateOtherwiseLabel($event)" [DataCy]="'otherwise-label'">
+                    [ObjectFieldName]="'OtherwiseLabel'" (ValueChanged)="updateOtherwiseLabel($event)"
+                    [DataCy]="'otherwise-label'">
                 </LogTextBox>
             </div>
         </td>

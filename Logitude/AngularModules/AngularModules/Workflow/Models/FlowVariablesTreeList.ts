@@ -217,7 +217,7 @@ export class FlowVariablesTreeList {
                 let treeSelectItemName = getRecordNode.data["name"];
                 let isReadOnly = getRecordNode.data["recordsType"] === GetRecordTypes.ReadOnly;
                 let treeSelectItemKey = Formatter.getCodeFromName(treeSelectItemName);
-                let treeSelectItemChildren = this.getObjectFieldsItems(treeSelectItemKey, entity, returnedFieldsCodes);
+                let treeSelectItemChildren = this.getObjectFieldsItems(treeSelectItemKey, entity, returnedFieldsCodes, isReadOnly);
                 let itemData = { isReadOnlyVariable: isReadOnly };
                 let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemTitle || treeSelectItemName, false, false, false, false, treeSelectItemChildren, itemData);
                 recordsVariablesItemChildren.push(treeSelectItem);
@@ -239,17 +239,18 @@ export class FlowVariablesTreeList {
             }
 
             if (!collectionNode && isTriggeringRecordChildEntity) {
+                let onlyCurrentLoopItem = this.FlowVariablesTreeListProperties.OnlyCurrentLoopItemVariables;
                 let entity = collectionVariable?.split("_")[1];
                 let treeSelectItemName = loopNode.data["name"];
                 let isReadOnly = false;
                 let treeSelectItemKey = Formatter.getCodeFromName(treeSelectItemName);
-                let treeSelectItemChildren = this.getObjectFieldsItems(treeSelectItemKey, entity, null);
+                let treeSelectItemChildren = onlyCurrentLoopItem ? [] : this.getObjectFieldsItems(treeSelectItemKey, entity, null, isReadOnly);
                 let loopNodeLabel = loopNode.data["label"] || null;
                 let treeSelectItemTitle = loopNodeLabel ? (this.LoopCurrentItemPrefix + loopNodeLabel) : null;
                 let treeSelectItemLoopName = this.LoopCurrentItemPrefix + treeSelectItemName;
                 let treeSelectItemSelectable = this.FlowVariablesTreeListProperties.IsObjectVariableSelectable;
                 let treeSelectItemData = { isReadOnlyVariable: isReadOnly, type: (entity || null) };
-                let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemTitle || treeSelectItemLoopName, false, treeSelectItemSelectable, false, false, treeSelectItemChildren, treeSelectItemData);
+                let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemTitle || treeSelectItemLoopName, onlyCurrentLoopItem, onlyCurrentLoopItem || treeSelectItemSelectable, false, false, treeSelectItemChildren, treeSelectItemData);
                 recordsVariablesItemChildren.push(treeSelectItem);
                 this.ItemsList.push(treeSelectItem);
             }
@@ -261,7 +262,7 @@ export class FlowVariablesTreeList {
                 let treeSelectItemName = loopNode.data["name"];
                 let isReadOnly = isCollectionFilterVariable ? false : (collectionNode.data["recordsType"] === GetRecordTypes.ReadOnly);
                 let treeSelectItemKey = Formatter.getCodeFromName(treeSelectItemName);
-                let treeSelectItemChildren = this.getObjectFieldsItems(treeSelectItemKey, entity, returnedFieldsCodes);
+                let treeSelectItemChildren = this.getObjectFieldsItems(treeSelectItemKey, entity, returnedFieldsCodes, isReadOnly);
                 let loopNodeLabel = loopNode.data["label"] || null;
                 let treeSelectItemTitle = loopNodeLabel ? (this.LoopCurrentItemPrefix + loopNodeLabel) : null;
                 let treeSelectItemLoopName = this.LoopCurrentItemPrefix + treeSelectItemName;
@@ -438,7 +439,7 @@ export class FlowVariablesTreeList {
         return [];
     }
 
-    private getObjectFieldsItems(itemsKeyPrefix: string, entity: string, returnedFieldsCodes: string[] | null) {
+    private getObjectFieldsItems(itemsKeyPrefix: string, entity: string, returnedFieldsCodes: string[] | null, isReadOnlyFields: boolean = false) {
         let objectFieldsItems: TreeSelectItem[] = [];
 
         if (returnedFieldsCodes && returnedFieldsCodes.length === 0) {
@@ -452,7 +453,8 @@ export class FlowVariablesTreeList {
                 type: objectField.DataTypeCode,
                 lookupType: (objectField.DataTypeCode === FieldTypes.LookUp ? ObjectTables.getNameById(objectField.LookUpTableId) : null),
                 picklistType: (objectField.DataTypeCode === FieldTypes.PickList ? objectField.CustomPickListCode : null),
-                fieldCode: objectField.FieldCode
+                fieldCode: objectField.FieldCode,
+                isReadOnlyVariable: isReadOnlyFields
             };
             let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemName, true, true, false, false, [], data);
             objectFieldsItems.push(treeSelectItem);

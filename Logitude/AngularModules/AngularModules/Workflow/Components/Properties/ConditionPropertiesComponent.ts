@@ -63,8 +63,13 @@ export class ConditionPropertiesComponent extends BaseComponent {
             this.setWorkflowEntityTable();
 
             this.Name = this.Data["label"] || this.Data["name"] || null;
-            this.MetLabel = this.Data["metLabel"] || null;
-            this.OtherwiseLabel = this.Data["otherwiseLabel"] || null;
+
+            this.MetLabel = this.Data["metLabel"] || "True";
+            this.Data["metLabel"] = this.MetLabel;
+
+            this.OtherwiseLabel = this.Data["otherwiseLabel"] || "False";
+            this.Data["otherwiseLabel"] = this.OtherwiseLabel;
+
             this.Conditions = this.Data["conditions"] || [];
             this.ConditionsOperation = this.Data["conditionsOperation"] || ConditionOperations.And;
 
