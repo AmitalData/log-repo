@@ -430,7 +430,7 @@ export class DashboardTabComponent implements OnInit {
         });
         if (!widgetFilters || widgetFilters.length == 0) return null;
         return JSON.stringify(widgetFilters, function (key, val) {
-            if (key !== "Component") return val;
+            if (key !== "Component" && key !== "UIProperties") return val;
         });
     }
 
