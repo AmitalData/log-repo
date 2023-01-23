@@ -2517,6 +2517,29 @@ namespace Logitude.CRM.BL.EntityPMs
 			
 		 }
 	   }
+	  private string userName ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string UserName  
+	   {
+	    
+	     get
+		{
+		   return userName;
+		 }
+		 set
+		 {
+		   if(userName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UserName",OldValue=userName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   userName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

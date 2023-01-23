@@ -236,6 +236,8 @@ namespace Logitude.CRM.Data.EntityLists
        public int? NumberOfConnectedQuotes  { get; set; }
        [DataMember]
        public string LastStageBeforeClosureName  { get; set; }
+       [DataMember]
+       public string UserName  { get; set; }
    }
 
 }
