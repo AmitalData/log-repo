@@ -151,8 +151,15 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentNumber { get; set; }
         public string ShipmentDirection { get; set; }
         public string ContainersNumbersArray { get; set; }
-
         public string ProjectNumber { get; set; }
+        public double? DebitSubtotalInvoiceCurrency { get; set; }
+        public double? DebitVATAmountInvoiceCurrency { get; set; }
+        public double? CreditSubtotalInvoiceCurrency { get; set; }
+        public double? CreditVATAmountInvoiceCurrency { get; set; }
+        public double? DebitSubtotalLocalCurrency { get; set; }
+        public double? DebitVATAmountLocalCurrency { get; set; }
+        public double? CreditSubtotalLocalCurrency { get; set; }
+        public double? CreditVATAmountLocalCurrency { get; set; }
     }
 
     public class StatmentAging
