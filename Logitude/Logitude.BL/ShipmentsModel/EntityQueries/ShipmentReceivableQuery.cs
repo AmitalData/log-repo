@@ -54,7 +54,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             });
 
 
-            return shipmentReceivables.OrderBy(d => d.ViewOrder).ThenBy(d => d.ChargesTypeCode).ToList();
+            return shipmentReceivables.OrderBy(d => d.Id).ToList();
         }
 
         private List<ShipmentReceivablePM> MapPocoToPM(IQueryable<ShipmentReceivable> iQueryable)
