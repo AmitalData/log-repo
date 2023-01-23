@@ -48,6 +48,9 @@ export class CustomsExportStorageListTemplate {
     }
 
     BuildDeclarationsCheckBox() {
+        if (AppTool.IsNullOrEmpty(this._exportStorageExtendedListService.disconnectedExportStorage))
+            this._exportStorageExtendedListService.disconnectedExportStorage = "";
+
         this.IsConnectedExportStorageChecked = false;
         if (this.entityPM.StorageNo && this.entityPM.Id != null && !this._exportStorageExtendedListService.connectedSelectAll) {
             this._exportStorageExtendedListService.ConnectedExportStorage = this.entityPM.StorageNo;
@@ -70,12 +73,14 @@ export class CustomsExportStorageListTemplate {
             let res = ConnectedExportStorage.filter(r => r == this.rowData.Id)[0];
             this.IsConnectedExportStorageChecked = !AppTool.IsNullOrEmpty(res);
         }
-        if (this._exportStorageExtendedListService.connectedSelectAll == true) {
+        if (this._exportStorageExtendedListService.connectedSelectAll == true && !this._exportStorageExtendedListService.disconnectedExportStorage.includes(this.rowData.Id) ) {
             this.IsConnectedExportStorageChecked = true;
         }
     }
 
     OnConnectedCheckBoxChecked($event) {
+
+ 
         this._exportStorageExtendedListService.disconnectedSelectAll = false;
          if ($event) {
              if (!this._exportStorageExtendedListService.ConnectedExportStorage.includes(this.rowData.Id)) {
@@ -85,15 +90,35 @@ export class CustomsExportStorageListTemplate {
                  this.rowData.ProcedureCurrentName.includes("טעינה ישירה")) {
                  this._exportStorageExtendedListService.IsDirectCharging = this._exportStorageExtendedListService.IsDirectCharging + this.rowData.Id + ",";
              }
+
+             if (this._exportStorageExtendedListService.connectedSelectAll) {
+                 if (!this._exportStorageExtendedListService.ConnectedExportStorage.includes(this.rowData.Id)) {
+                     this._exportStorageExtendedListService.ConnectedExportStorage = this._exportStorageExtendedListService.ConnectedExportStorage + this.rowData.Id + ",";
+                 }
+             }
+
+             if (this._exportStorageExtendedListService.connectedSelectAll) {
+                 if (this._exportStorageExtendedListService.disconnectedExportStorage.includes(this.rowData.Id)) {
+                     this._exportStorageExtendedListService.disconnectedExportStorage = this._exportStorageExtendedListService.disconnectedExportStorage.replace(this.rowData.Id + ",", "");
+                 }
+             }
          }
          else {
+
+             if (this._exportStorageExtendedListService.connectedSelectAll) {
+                 if (!this._exportStorageExtendedListService.disconnectedExportStorage.includes(this.rowData.Id)) {
+                     this._exportStorageExtendedListService.disconnectedExportStorage = this._exportStorageExtendedListService.disconnectedExportStorage + this.rowData.Id + ",";
+                 }
+             }
+
              if (this._exportStorageExtendedListService.ConnectedExportStorage.includes(this.rowData.Id)) {
                  this._exportStorageExtendedListService.ConnectedExportStorage = this._exportStorageExtendedListService.ConnectedExportStorage.replace(this.rowData.Id + ",", "");
-                 this._exportStorageExtendedListService.connectedSelectAll = false;
+ 
              }
              if (this._exportStorageExtendedListService.IsDirectCharging.includes(this.rowData.Id)) {
                  this._exportStorageExtendedListService.IsDirectCharging = this._exportStorageExtendedListService.IsDirectCharging.replace(this.rowData.Id + ",", "");
              }
+
          }
         if (AppTool.IsNullOrEmpty(this._exportStorageExtendedListService.ConnectedExportStorage)) {
             this._exportStorageExtendedListService.SelectedExportStorage = false;

@@ -27,6 +27,7 @@ import { ConsignmentPM } from 'Customs/EntityPMs/ConsignmentPM';
 import { DeclarationPMService } from 'Customs/Services/StandardPMs/DeclarationPMService';
 import { InternationalSiteListService } from 'Customs/Services/StandardLists/InternationalSiteListService';
 import { DeliverySiteTypeListService } from 'Customs/Services/StandardLists/DeliverySiteTypeListService';
+import { ExportStorageList } from '../../../../../Customs/EntityLists/ExportStorageList';
 @Component({
 
     templateUrl: './ExportStorageDeclerationComponent.html',
@@ -144,9 +145,10 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
         },
     };
 
-    getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
+
+    getFilters(getAll, sortingCol, sortingDir) {
         var filters = new ApiQueryFilters;
-        //filters.addAdditionalFilter("DeclarationId", "123", null, null, "IsNull", false, false, false, "string");
+
         filters.addAdditionalFilter("StorageStatusName", "Open", "Close", null, "Equal", false, false, false, "string");
         filters.addAdditionalFilter("DeclarationIdAndProcedureCurrentName", this.declarationPM.Id, null, null, "Contains", true, false, false, "string");
         filters.addAdditionalFilter("IsExportFileNo", this.ExportFile, null, null, "Contains", true, false, false, "string");
@@ -161,11 +163,18 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
 
         filters.PageSize = 2000;
         filters.PageIndex = 0; // decremented 1 in the service
-        filters.GetAll = false;
+        filters.GetAll = getAll;
         filters.GetCount = true;
         filters.SortBy = sortingCol;
         filters.SortDirection = sortingDir;
 
+        return filters;
+    }
+
+    getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null, getAll: boolean = false) {
+        //filters.addAdditionalFilter("DeclarationId", "123", null, null, "IsNull", false, false, false, "string");
+
+        var filters = this.getFilters(getAll, sortingCol, sortingDir);
         var myout = this.entityListService
             .getExtendedByFilters("Customs.ExportStorage", filters);
         myout.then(res => {
@@ -308,13 +317,39 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
 
 
     async SendButtonClicked() {
-
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.Saving"));
-        //this.InternationalSiteService.getAll().subscribe(Response=>{
-        //    this.listSite=Response.Result;
-        //}) ;
+ 
+ 
+        let  ArrayExportStorageId = [];
+        if (this.exportStorageExtendedListService.connectedSelectAll) {
+            var filters = this.getFilters(true, "OpenDate", "Decending");
 
-        let ArrayExportStorageId = this.exportStorageExtendedListService.ConnectedExportStorage.split(',');
+            this.exportStorageExtendedListService.getByFilters(filters).subscribe(x => {
+
+                ArrayExportStorageId = (x.Result as ExportStorageList[]).map(x => x.Id);
+                this.saveConnections(ArrayExportStorageId);
+
+            })
+
+
+
+        }
+        else {
+            ArrayExportStorageId=this.exportStorageExtendedListService.ConnectedExportStorage.split(',');
+            this.saveConnections(ArrayExportStorageId);
+        }
+
+      
+    }
+
+    
+    async saveConnections(ArrayExportStorageId) {
+ 
+        if (!AppTool.IsNullOrEmpty(this.exportStorageExtendedListService.disconnectedExportStorage))
+            ArrayExportStorageId = ArrayExportStorageId.filter(item => !this.exportStorageExtendedListService.disconnectedExportStorage.split(',').find(x => x == item));
+
+
+ 
         let ConsignmentNumber = this.declarationPM.Consignments.length > 0 ? this.declarationPM.Consignments[this.declarationPM.Consignments.length - 1].ConsignmentNumber : 0;
         let SequenceNumeric = this.declarationPM.Consignments[this.declarationPM.Consignments.length - 1].SequenceNumeric;
         this.declarationPM = this.CurrentSession.CurrentEditComponent.EntityPM;
@@ -325,16 +360,16 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
                 return new Promise<void>((resolve, reject) => {
                     if (!AppTool.IsNullOrEmpty(ExportStorageId) && !AppTool.IsNullOrEmpty(this.declarationPM)) {
                         this.exportStoragePMService.get(ExportStorageId).toPromise().then(res => {
-                            this.exportStorage = res
+                             this.exportStorage = res
                             if (!AppTool.IsNullOrEmpty(this.exportStorage.Result)) {
 
                                 var isConsignment = this.declarationPM.Consignments.find(x => x?.CargoTypeCode == this.exportStorage.Result?.cargoTypeCode
                                     && x.ManifestNumber == this.exportStorage.Result?.firstCargoID
                                     && x.SecondCargoID == this.exportStorage.Result?.secondCargoID);
-                                var emptyConsignment = this.declarationPM.Consignments.find(y => (y.ManifestNumber == null ||y.ManifestNumber.length === 0 ) && (y.SecondCargoID == null||y.SecondCargoID.length === 0));
+                                var emptyConsignment = this.declarationPM.Consignments.find(y => (y.ManifestNumber == null || y.ManifestNumber.length === 0) && (y.SecondCargoID == null || y.SecondCargoID.length === 0));
                                 if (isConsignment != undefined) {
 
-                                    this.exportStorage.Result.DeclarationId = AppTool.IsNullOrEmpty(this.exportStorage.Result.DeclarationId ) ?  this.declarationPM.Id:this.exportStorage.Result.DeclarationId ;
+                                    this.exportStorage.Result.DeclarationId = AppTool.IsNullOrEmpty(this.exportStorage.Result.DeclarationId) ? this.declarationPM.Id : this.exportStorage.Result.DeclarationId;
                                     this.exportStoragePMService.update(this.exportStorage.Result).subscribe((response: ServiceResponse) => {
                                         var index1 = this.declarationPM.Consignments.findIndex(u => u == isConsignment)
                                         this.declarationPM.Consignments[index1].ExportStoragesId = ExportStorageId;
@@ -355,8 +390,8 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
                                     consignment.CargoDescription = this.exportStorage.Result.MarksNumbers;
                                     consignment.StorageSiteCode = this.checkStorageSiteCode(this.exportStorage.Result.StorageSiteCode) ? this.exportStorage.Result.StorageSiteCode : null;
                                     consignment.IsDangerousGoods = this.exportStorage.Result.IsDangerousGoods == null ? null : this.exportStorage.Result.IsDangerousGoods;
-                                    consignment.ExportUnloadingPortCode =  this.exportStorage.Result.ExportUnloadingPortCode  //this.exportStorage.Result.ExportUnloadingPortCode;
-                                    consignment.ExportLoadingPortCode =  this.exportStorage.Result.ExportLoadingPortcode  //this.exportStorage.Result.ExportLoadingPortCode;
+                                    consignment.ExportUnloadingPortCode = this.exportStorage.Result.ExportUnloadingPortCode  //this.exportStorage.Result.ExportUnloadingPortCode;
+                                    consignment.ExportLoadingPortCode = this.exportStorage.Result.ExportLoadingPortcode  //this.exportStorage.Result.ExportLoadingPortCode;
                                     consignment.ConsignmentType = "E";
                                     consignment.DeclarationId = this.declarationPM.Id;
                                     ConsignmentNumber++;
@@ -397,7 +432,7 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
                                         this.exportStorage.Result.DeclarationId = this.declarationPM.Id;
                                         this.exportStoragePMService.update(this.exportStorage.Result).subscribe();
                                     }
-                                  
+
                                 }
                             }
 
@@ -424,7 +459,6 @@ export class ExportStorageDeclerationComponent extends BaseComponent {
 
 
     }
-
     async checkStorageSiteCode(StorageSiteCode: any) {
 
         await this.DeliverySiteTypeService.getSingle(StorageSiteCode).subscribe(res => {
