@@ -56,9 +56,6 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var shipmentQuery = new ShipmentQuery(tenant);
                 var shipmentPM = shipmentQuery.GetSinglePM(id, tenant, cardId);
 
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
-                customFieldResolver.SetCustomFieldsValues("Shipment", tenant, new List<ShipmentPM> { shipmentPM }.Cast<object>().ToList());
-
                 if (string.IsNullOrWhiteSpace(cardId) || cards.Contains(shipmentPM.CustomerId) || cards.Contains(shipmentPM.AgentId))
                 {
                     shipmentPM.TimeLineData = shipmentQuery.MapVerticalTimeLine(shipmentPM, tenant);
