@@ -1300,7 +1300,7 @@ namespace Logitude.Customs.Data.Repsitories
                     )
                     select d.Id;
 
-            return q.ToList();
+            return q.Distinct().ToList();
         }
     }
 public class ExportReport1

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, Observable, of } from 'rxjs';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
@@ -20,7 +20,7 @@ export class DeclarationsBulkFeedWebService {
 
     checkDeclarationsInDisplayOnly(declarationIdsList: string [], allWithoutdeclarationIdsList: string[], checkboxAll: boolean, filter: ApiQueryFilters) : Promise<any[]> {
         const ajax: Observable<any> = this._http.post(
-            this._apiUrl + "checkDeclarationsInDisplayOnly",
+            this._apiUrl + "checkDeclarationsInDisplayOnly?" + this.logtuideTableDataService.apiQueryFilterToQueryString(filter),
             {
                 declarationIdsList: declarationIdsList, 
                 allWithoutdeclarationIdsList: allWithoutdeclarationIdsList, 
@@ -28,7 +28,6 @@ export class DeclarationsBulkFeedWebService {
             },
             {
                 headers: ServiceHelper.GetHttpHeaders().headers,
-                params: {filter: this.logtuideTableDataService.apiQueryFilterToQueryString(filter)}
             }
         );
 
