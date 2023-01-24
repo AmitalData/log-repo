@@ -235,8 +235,13 @@ export class AddEditInterfaceManagementComponent
 
     set SendTime(value) 
     {
-        var isoDateString = new Date(value).toISOString();
+        if(AppTool.IsNullOrEmpty(value))
+            this.entityPM.SendTime = value
+        else{
+            var isoDateString = new Date(value).toISOString();
             this.entityPM.SendTime =  isoDateString.substring(11,19);
+        }
+        
     }
 
     //#endregion
