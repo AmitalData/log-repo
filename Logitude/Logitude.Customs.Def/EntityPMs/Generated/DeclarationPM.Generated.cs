@@ -5803,6 +5803,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string exportDecWithoutRelease ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExportDecWithoutRelease  
+	   {
+	    
+	     get
+		{
+		   return exportDecWithoutRelease;
+		 }
+		 set
+		 {
+		   if(exportDecWithoutRelease != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportDecWithoutRelease",OldValue=exportDecWithoutRelease,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   exportDecWithoutRelease=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

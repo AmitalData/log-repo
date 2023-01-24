@@ -32,7 +32,13 @@ namespace Logitude.Customs.Data.CustomFilters
 
                 }
 
-               if (item.FieldName == "PaidDeclarationWithoutRelease")
+                if (item.FieldName == "ExportDecWithoutRelease")
+                {
+                    queryableData = queryableData.Where(d => (d.IsExportClosed == false));
+
+                }
+
+                if (item.FieldName == "PaidDeclarationWithoutRelease")
                {
                    queryableData = queryableData.Where(d => (d.PaymentDate != null) && (d.HatraDate == null));
                }
