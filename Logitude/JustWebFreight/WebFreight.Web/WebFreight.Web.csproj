@@ -735,6 +735,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountingModel\ChartOfAccountsTypesExtendedController.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\AddressTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\PortGroupViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\PortGroupController.Generated.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalActivityController.cs" />
