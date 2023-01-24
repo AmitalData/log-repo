@@ -14,6 +14,7 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+import { CustomChildEntity } from '../../Infrastructure/EntityPMs/CustomChildEntity';
 
 
 export class ContainerPM {
@@ -1591,6 +1592,10 @@ export class ContainerPM {
     public set MainCarriageToCountryCode(newValue: string) { if (this.mainCarriageToCountryCode != newValue) { this.mainCarriageToCountryCode = newValue; this.MarkAsDirty("MainCarriageToCountryCode"); } }
        
 	 
+    private customChildEntities: CustomChildEntity[];
+    public get CustomChildEntities() { return this.customChildEntities; }
+    public set CustomChildEntities(newValue: CustomChildEntity[]) { if (this.customChildEntities != newValue) { this.customChildEntities = newValue; this.MarkAsDirty("CustomChildEntities"); } }
+
 
     public OldEntityPM: ContainerPM;
 		
