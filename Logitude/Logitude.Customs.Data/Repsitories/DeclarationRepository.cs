@@ -1066,13 +1066,14 @@ namespace Logitude.Customs.Data.Repsitories
             return res;
         }
 
-        public List<string> GetDisplayOnly(string[] declarationsId, int tenant, string[] sheetStatusInProcessId, QueryOperations filter)
+        public List<string> GetDisplayOnly(string[] declarationsId, int tenant, string[] sheetStatusInProcessId)
         {
-            var q = from d in context.Declarations.Where(x => declarationsId.Contains(x.Id))
+            var q = from d in context.Declarations
                     join c in context.CustomsRequestsSheets on d.CustomFileNo equals c.CustomFileNo into cJoin
                     from cd in cJoin.DefaultIfEmpty()
 
-                    where d.Tenant == tenant &&
+                    where d.Tenant == tenant &&                        
+                        declarationsId.Contains(d.Id) &&
                         cd.Tenant == tenant &&
                     (
                         d.PaymentDate.HasValue == true
@@ -1082,9 +1083,6 @@ namespace Logitude.Customs.Data.Repsitories
                         || new string[] { "2750", "2754", "2755", "8211", "8212", "8214", "8215", "8216", "8227", "US2L01" }.Contains(cd.InterfaceTypeCode)
                     )
                     select d.Id;
-
-            new GenericFilter().GetFilteredQuery<DeclarationCourierStatus>(filter, q);
-
 
             return q.ToList();
         }

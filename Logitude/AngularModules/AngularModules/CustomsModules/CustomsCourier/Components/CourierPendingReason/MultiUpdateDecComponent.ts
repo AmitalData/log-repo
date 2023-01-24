@@ -392,7 +392,7 @@ export class MultiUpdateDecComponent extends BaseComponent {
     showMassageExistDeclarationsDisplayOnly() {
         if(!this.declarationsDisplayOnly?.length) return;
 
-        new MessageWindow().Show('');
+        new MessageWindow().Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.DisplayOnly"));
 
         if(this.checkboxAll)
             this.allWithoutdeclarationIdsList = this.allWithoutdeclarationIdsList.concat(this.declarationsDisplayOnly)
