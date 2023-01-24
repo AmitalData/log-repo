@@ -1469,6 +1469,11 @@ export class DeclarationPM {
     public set ReferentUserName(newValue: string) { if (this.referentUserName != newValue) { this.referentUserName = newValue; this.MarkAsDirty("ReferentUserName"); } }
        
 	 
+    private exportDecWithoutRelease: string;
+    public get ExportDecWithoutRelease() { return this.exportDecWithoutRelease; }
+    public set ExportDecWithoutRelease(newValue: string) { if (this.exportDecWithoutRelease != newValue) { this.exportDecWithoutRelease = newValue; this.MarkAsDirty("ExportDecWithoutRelease"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		
