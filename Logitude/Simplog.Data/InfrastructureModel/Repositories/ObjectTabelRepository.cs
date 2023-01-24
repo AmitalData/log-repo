@@ -364,8 +364,8 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
 
             return (from a in webFreightContext.ObjectTables
-                             where a.Name == name  && !a.IsCustom 
-                             select a.AllowCustomFields).Any();
+                        where a.Name == name  && !a.IsCustom 
+                        select a.ApplyGenericCustomFields).FirstOrDefault();
          
         }
 
