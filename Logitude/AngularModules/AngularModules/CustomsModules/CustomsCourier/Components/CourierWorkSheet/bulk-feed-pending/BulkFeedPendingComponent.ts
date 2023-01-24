@@ -259,6 +259,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
   RefreshButtonClicked() {
     this._CourierWorksheetSharedDataService._SelectedItems.Clear();
     this._CourierWorksheetSharedDataService.connectedSelectAll = false;
+
     this.RefreshList();
     this.GetPending();
   }
@@ -632,7 +633,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
     this._CourierWorksheetSharedDataService._SelectedItems.Clear();
     this._CourierWorksheetSharedDataService._UnSelectedItems.Clear();
 
-   
+
     this.RefreshList();
     //this._CourierMasterService.disconnectedSelectAll = true;
     //this.CourierMasterPM.ConnectedDeclarations = "ALL";
