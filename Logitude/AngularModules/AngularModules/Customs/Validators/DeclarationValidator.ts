@@ -517,7 +517,7 @@ export class DeclarationValidator {
     public CheckIsConvertedDeclaration() {
 
         if (this._DeclarationPM != null) {
-            if (this._DeclarationPM.IsConvertedDeclaration == true) {
+            if (this._DeclarationPM.IsConvertedDeclaration == true && this._DeclarationPM.IsAmendment !=true) {
                 var errorMessage = "Customs.General.O.IsConvertedDeclaration";
                 if (!AppTool.IsNullOrEmpty(errorMessage)) {
                     this.ValidationErrorMessageCodes.push(errorMessage);
