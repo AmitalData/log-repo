@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Customs.Data.DataContracts;
 using Simplog.Data.InfrastructureModel;
+using Unifreight.BL.BL;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -211,11 +212,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return allPM;
         }
 
+        public List<InterfaceManagement> GetAllFromCache() => CacheHelper.GetFromCache("InterfaceManagementGetAll", () => repository.GetAll().ToList());
+
         public List<CustomsRequestsSheetSummary> GetQueueMessagesSatistic(int tenant, bool includingFuture)
         {
             var summry = new List<CustomsRequestsSheetSummary>();
             var dateTimeNow = DateTime.Now;
-            List<InterfaceManagement> interfaceManagements = repository.GetAllFromCache();
+            List<InterfaceManagement> interfaceManagements = GetAllFromCache();
             var webFreightContext = WebFreightContext.GetContext(tenant);
 
             var summryQ = (from qm in webFreightContext.QueueMessages
