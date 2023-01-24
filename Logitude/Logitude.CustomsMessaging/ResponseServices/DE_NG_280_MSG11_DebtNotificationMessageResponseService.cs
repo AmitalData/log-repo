@@ -62,8 +62,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         public override void Update(DE_NG_280_MSG11_DebtNotificationMessage customResponse, GenericRequestParams requestParams)
         {
-            //Analyze message 280- Debt Notification
-            this._MyDeficitTenant = requestParams.Tenant;
+            var setting = CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant);
+
+            if (setting.IsConnectedToUniFreight != true)
+            {
+                this.MyResponseData = new INF_MSG_GenericResponseData();
+                this.MyResponseData.Succeeded = true;
+                this.MyResponseData.HasException = false;
+                this.MyResponseData.UserMessage = "בקשה חוזרת להודעת חיוב " + customResponse.DebtNotificationMessag.debtNotificationID + "(לא נותח - סביבת יצוא)";
+                return;
+            }
+
+
+                //Analyze message 280- Debt Notification
+                this._MyDeficitTenant = requestParams.Tenant;
             this.myDbContext = CustomContext.GetContext(this._MyDeficitTenant);
 
             var deficitQueryService = new DeficitQueryService(this.myDbContext);
