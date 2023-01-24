@@ -22,7 +22,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             {
                 int tenant = GetTanent();
                 QueryOperations queryOperations = CourierDeclarationPendingListExtendedController.CreateQueryOperations(filter, tenant, "Customs.DeclarationCourierStatus");
-                List<string> res = new DeclarationQueryService(tenant).CheckDeclarationsInDisplayOnly(paramas.declarationIdsList, paramas.allWithoutdeclarationIdsList, paramas.checkboxAll, queryOperations);
+                List<string> res = new DeclarationQueryService(tenant).CheckDeclarationsInDisplayOnly(paramas.declarationIdsList, paramas.allWithoutdeclarationIdsList, paramas.checkboxAll, queryOperations, tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, res);
             }

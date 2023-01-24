@@ -2352,17 +2352,17 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return "";
         }
 
-        public List<string> CheckDeclarationsInDisplayOnly(string[] declarationIdsList, string[] allWithoutdeclarationIdsList, bool checkboxAll, QueryOperations filter)
+        public List<string> CheckDeclarationsInDisplayOnly(string[] declarationIdsList, string[] allWithoutdeclarationIdsList, bool checkboxAll, QueryOperations filter, int tenant)
         {
             if (checkboxAll)
-                declarationIdsList = new DeclarationCourierStatusListQueryService(context).GetDeclarationCourierStatusListPendingBulk(filter, Tenant).Select(x => x.DeclarationId).ToArray();
+                declarationIdsList = new DeclarationCourierStatusListQueryService(context).GetDeclarationCourierStatusListPendingBulk(filter, tenant).Select(x => x.DeclarationId).ToArray();
 
             if (checkboxAll && allWithoutdeclarationIdsList != null)
                 declarationIdsList = declarationIdsList.Where(x => !allWithoutdeclarationIdsList.Contains(x)).ToArray();
 
             string[] sheetStatusInProcessId = Enum.GetValues(typeof(SheetStatusInProcessEnum)).OfType<object>().Select(o => o.ToString()).ToArray();
 
-            List<string> res = repository.GetDisplayOnly(declarationIdsList, Tenant, sheetStatusInProcessId);
+            List<string> res = repository.GetDisplayOnly(declarationIdsList, tenant, sheetStatusInProcessId);
 
             return res;
         }
