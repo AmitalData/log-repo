@@ -27,6 +27,7 @@ export function FillBIFoldertDetails(BifolderDetails: BIfolderDetails) {
 }
 
 export const SearchBIFolder = (BIReportFolderName) => {
+    cy.wait(1000)
     cy.FillLogTextBox(BIReportSelectors.FolderSearch, BIReportFolderName);
     cy.Click(BIReportSelectors.SearchBIReportFolder, null, true);
 }
