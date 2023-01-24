@@ -711,7 +711,7 @@ export class AddEditWidgetComponent extends BaseComponent {
             errors.push("Decimal Places must be Greater Than or Equal to 0 and Less than or Equal to 2");
         }
 
-        if (!this.DecimalPlaces) {
+        if (!this.DecimalPlaces && this.DecimalPlaces != 0) {
             errors.push("Decimal Places Field is Required");
         }
     }
@@ -1037,6 +1037,7 @@ export class WidgetMeasureItem extends BaseComponent {
         if (this.FielHasOldValue) {
             this.FielHasOldValue = false;
             this.selectedField = field;
+            if(!this.isNumericType(this.selectedField?.DataTypeCode)) this.fatherComponent.SetDefaultValuesForDisplaySettings();
             this.fatherComponent.SetUIProprtiesForDisplaySettings();
             return;
         }
