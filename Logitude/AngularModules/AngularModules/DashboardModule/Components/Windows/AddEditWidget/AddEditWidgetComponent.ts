@@ -712,6 +712,10 @@ export class AddEditWidgetComponent extends BaseComponent {
         if (this.DecimalPlaces && (this.DecimalPlaces < 0 || this.DecimalPlaces > 2)) {
             errors.push("Decimal Places must be Greater Than or Equal to 0 and Less than or Equal to 2");
         }
+
+        if (!this.DecimalPlaces) {
+            errors.push("Decimal Places Field is Required");
+        }
     }
     private ValidateTimeOverTime(errors: string[]) {
 
@@ -969,7 +973,8 @@ export class WidgetMeasureItem extends BaseComponent {
         this.EntityPM.MeasureCode = value;
         this.MeasureFieldId = null;
         this.FilterMeasureFields();
-
+        this.fatherComponent.SetUIProprtiesForDisplaySettings();
+        this.fatherComponent.SetDefaultValuesForDisplaySettings()
     }
 
     get RenderAs() { return this.EntityPM.RenderAs; }
@@ -1033,7 +1038,8 @@ export class WidgetMeasureItem extends BaseComponent {
             this.fatherComponent.SetUIProprtiesForDisplaySettings();
             return;
         }
-        var typeChange = this.isNumericType(this.selectedField?.DataTypeCode) != this.isNumericType(field?.DataTypeCode);
+         
+        var typeChange = this.selectedField == null || this.isNumericType(this.selectedField?.DataTypeCode) != this.isNumericType(field?.DataTypeCode);
         this.selectedField = field;
         this.fatherComponent.SetUIProprtiesForDisplaySettings();
         if (typeChange || this.MeasureCode == "Count") this.fatherComponent.SetDefaultValuesForDisplaySettings();
