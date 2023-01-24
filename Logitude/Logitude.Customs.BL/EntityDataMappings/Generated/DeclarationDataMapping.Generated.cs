@@ -423,7 +423,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ReferentUserName, 
 	         ClosingXml, 
 	         ExportCloseAmendmentRequestNumber, 
-	         ExportCloseAmendmentStatus,
+	         ExportCloseAmendmentStatus, 
 	         ExportDecWithoutRelease,
 	      }
 

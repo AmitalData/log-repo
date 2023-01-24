@@ -1482,6 +1482,8 @@ export class DeclarationPM {
     private exportCloseAmendmentStatus: string;
     public get ExportCloseAmendmentStatus() { return this.exportCloseAmendmentStatus; }
     public set ExportCloseAmendmentStatus(newValue: string) { if (this.exportCloseAmendmentStatus != newValue) { this.exportCloseAmendmentStatus = newValue; this.MarkAsDirty("ExportCloseAmendmentStatus"); } }
+       
+	 
     private exportDecWithoutRelease: string;
     public get ExportDecWithoutRelease() { return this.exportDecWithoutRelease; }
     public set ExportDecWithoutRelease(newValue: string) { if (this.exportDecWithoutRelease != newValue) { this.exportDecWithoutRelease = newValue; this.MarkAsDirty("ExportDecWithoutRelease"); } }
@@ -1515,4 +1517,4 @@ export class DeclarationPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
