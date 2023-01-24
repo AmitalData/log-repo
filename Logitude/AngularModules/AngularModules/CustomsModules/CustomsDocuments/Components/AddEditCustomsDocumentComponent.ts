@@ -1125,7 +1125,8 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
             this.MetaDataViewModels.push(metaDataViewModel);
 
         });
-        if(this.EntityPM.Direction=="E" && this.EntityPM.transportModeId=="O" && docType.Code=="707"){
+        
+        if(this.EntityPM.Direction=="E" && (this.EntityPM.transportModeId=="O"||  this.EntityPM.transportModeId=="A")&& (docType.Code=="707" || docType.Code=="419")){
             var FinalCargoTypeCode= this.MetaDataViewModels.find(x=>x.MetaDataType.MetaDataTypeCode=="99")   
             var FinalManifestNumber= this.MetaDataViewModels.find(x=>x.MetaDataType.MetaDataTypeCode=="100") 
             if(AppTool.IsNullOrEmpty(FinalCargoTypeCode.MetaDataValue.MetaDataValue))FinalCargoTypeCode.MetaDataValue.MetaDataValue=this.ClosingData.FinalCargoTypeCode;
