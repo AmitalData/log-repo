@@ -54,8 +54,8 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     public SupplierInvoiceItemList: SupplierInvoiceItemList[] = [];
     public IsNew: boolean = false;
     private exportDeclarationClosingWebService: ExportDeclarationClosingWebService = new ExportDeclarationClosingWebService();
-    public ActualSailingDate: string = "×ª×�×¨×™×š ×”×¤×œ×’×” ×‘×¤×•×¢×œ";
-    public ActualTakeOffDate: string = "×ª×�×¨×™×š ×”×ž×¨×�×” ×‘×¤×•×¢×œ";
+    public ActualSailingDate: string = "תאריך הפלגה בפועל";
+    public ActualTakeOffDate: string = "תאריך המראה בפועל";
 
     ManifestNumberPlaceholder: string = '';
     SecondCargoIdPlaceholder: string = '';
@@ -374,19 +374,19 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     SendButtonClicked(event: CustomSendOptionsArgs) {
 
         if (AppTool.IsNullOrEmpty(this.EntityPM.FinalCargoTypeCode)) {
-            var msg = " ×©×“×” ×¡×•×’ ×ž×–×”×” ×ž×˜×¢×Ÿ ×©×“×” ×—×•×‘×”";
+            var msg = " שדה סוג מזהה מטען שדה חובה";
             this.ValidationErrors.push(msg);
             this.FillValidationErrors("Errors");
         }
         else {
             if (AppTool.IsNullOrEmpty(this.EntityPM.FinalManifestNumber)) {
-                var msg = " ×©×“×” ×ž×–×”×” ×ž×˜×¢×Ÿ ×¨×�×©×•×Ÿ ×©×“×” ×—×•×‘×”";
+                var msg = " שדה מזהה מטען ראשון שדה חובה";
                 this.ValidationErrors.push(msg);
                 this.FillValidationErrors("Errors");
             }
             else {
                 if (AppTool.IsNullOrEmpty(this.FinalSecondCargoId) && !AppTool.IsNullOrEmpty(this.SecondCargoIdPlaceholder)) {
-                    var msg = " ×©×“×” ×ž×–×”×” ×ž×˜×¢×Ÿ ×©× ×™ ×©×“×” ×—×•×‘×”";
+                    var msg = " שדה מזהה מטען שני שדה חובה";
                     this.ValidationErrors.push(msg);
                     this.FillValidationErrors("Errors");
                 }
@@ -394,7 +394,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
                 
                     if (AppTool.IsNullOrEmpty(this.EntityPM.LoadingDateTime)) {
-                        var msg = " ×©×“×” ×ª×�×¨×™×š ×˜×¢×™× ×” ×©×“×” ×—×•×‘×”";
+                        var msg =  " שדה תאריך טעינה שדה חובה";
                         this.ValidationErrors.push(msg);
                         this.FillValidationErrors("Errors");
                     }
@@ -490,7 +490,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
     SendAmendmentCloseDeclaration(event: CustomSendOptionsArgs) {
 
-        this.CurrentSession.StartBusyIndicator("×©×œ×™×—×ª ×ž×¡×¨ ×¡×’×™×¨×ª ×”×¦×”×¨×”");
+        this.CurrentSession.StartBusyIndicator("שליחת מסר סגירת הצהרה");
         var searchParams: AmendmentRequestParams = new AmendmentRequestParams();
         searchParams.Tenant = SessionLocator.Tenant;
         searchParams.AppicationId = this.EntityPM.DeclarationId;
@@ -562,7 +562,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         windowArgs.Errors = this.ValidationErrors;
         windowArgs.ComponentHeight = '328px';
         windowArgs.CancelButtonVisibility = true
-        var windowTitle = "×‘×“×™×§×ª ×¦×™×¨×•×£ ×ª×¢×•×“×•×ª ×ž×§×•×¨";
+        var windowTitle = "בדיקת צירוף תעודות מקור";
         var logWindow = new LogitudeWindow();
         logWindow.Width = 600;
         logWindow.Height = 400;
@@ -637,7 +637,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     OkButtonClicked() {
         if (this.ValidationErrors.length > 0)
             this.FillValidationErrors("Errors");
-        this.CurrentSession.CurrentEditComponent.StartBusyIndicator("×©×ž×™×¨×”");
+        this.CurrentSession.CurrentEditComponent.StartBusyIndicator("שמירה");
         
         if (this.IsNew) {
             this.exportDeclarationClosingDataPMService.insert(this.EntityPM).subscribe((response: ServiceResponse) => {
@@ -734,7 +734,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
             "BFIHMAIN.LogitudeTask",
             "CustomExportCloseFile",
             unifreightMessageM,
-            "× ×ª×•× ×™×� ×ª×¤×¢×•×œ×™×� ×‘×¡×’×™×¨×ª ×”×¦×”×¨×”");
+            "נתונים תפעולים בסגירת הצהרה");
 
     }
 
