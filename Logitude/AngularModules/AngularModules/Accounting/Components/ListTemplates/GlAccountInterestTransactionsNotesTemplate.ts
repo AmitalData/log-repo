@@ -65,32 +65,25 @@ export class GlAccountInterestTransactionsNotesTemplate {
         logWindow.WindowArgs = {interestTransaction: line};
         logWindow.Show('./Accounting/Components/Others/InterestTransactionNotesComponent');
         logWindow.WindowClosed.subscribe(($event: any) => {
-            this.GetInterestTransactionNotes();
+           // this.GetInterestTransactionNotes();
         });
 
     }
 
-    GetInterestTransactionNotes() {
-        // if(this.EntityPM.CardId){
-        //     this.accountingNotesList = [];
-        //     this.isNotesLoading = true;
-        //     // setTimeout(() => {
-
-        //     this._AccountingNoteExtendedListService.GetNotesByCard(this.EntityPM.CardId)
-        //         .subscribe((res:ServiceResponse) =>
-        //         {
-        //                 this.isNotesLoading = false;
+    // GetInterestTransactionNotes() {
+    //      if(this.EntityPM.Id){
+    //         this.myService.GetNotesByCard(this.EntityPM)
+    //             .subscribe((res:ServiceResponse) =>
+    //             {
+    //                     this.isNotesLoading = false;
 
 
-        //             if(res.HasError){
-        //                 var msg = new MessageWindow();
-        //                 msg.Show("Get Accounting Note error: " + res.ErrorsArray[0]);
-        //             }else{
-        //                 var notesList = res.Result;
-        //                 this.accountingNotesList = notesList;
-        //             }
-        //         });
-        // }
-    }
+                 
+    //                      var notesList = res.Result;
+    //                     this.accountingNotesList = notesList;
+    //                 }
+    //              });
+    //      }
+    // }
 
 }

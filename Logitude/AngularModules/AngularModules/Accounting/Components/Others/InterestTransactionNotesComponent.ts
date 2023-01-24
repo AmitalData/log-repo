@@ -4,6 +4,8 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {InterestTransactionPM} from '../../EntityPMs/InterestTransactionPM';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { InterestTransactionExtendedListService } from '../../Services/ExtendedLists/InterestTransactionExtendedListService';
 
 
 @Component({
@@ -13,6 +15,8 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 })
 
 export class InterestTransactionNotesComponent extends BaseComponent {
+
+     public InterestTransactionService: InterestTransactionExtendedListService;
 
     private CurrentSession = SessionLocator.SelectedSession;
     public isRTL: boolean = false;
@@ -31,6 +35,7 @@ export class InterestTransactionNotesComponent extends BaseComponent {
         if (ObjectsLocator.GlobalSetting) {
             this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         }
+        this.InterestTransactionService = new InterestTransactionExtendedListService();
     }
 
 
@@ -51,24 +56,33 @@ export class InterestTransactionNotesComponent extends BaseComponent {
         this.CurrentSession.CloseCurrentWindow();
     }
 
-    //#endregion
-
-    //#region Buttons Handlers
     OkButtonClicked() {
         this.SetInterestTransactionNotes();
 
-        this.CurrentSession.CurrentEditComponent.SaveChanges();
-
-        const SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-            SaveCompletedEvent.unsubscribe();
-            if (isSaveSuccess) {
-
-                this.CurrentSession.StopBusyIndicator();
-
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.InterestTransactionService.PutInterestTransactionNotes(this.EntityPM,this.EntityPM.Notes).subscribe((myResult: ServiceResponse) => {
+            this.CurrentSession.StopBusyIndicator();
+            var mm: ServiceResponse = myResult;
+            if (!mm.HasError) {
+                this.EntityPM = mm.Result;
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
             }
+            this.CurrentSession.CloseCurrentWindow();
         });
 
-        this.CurrentSession.CloseCurrentWindow();
+        // this.CurrentSession.CurrentEditComponent.SaveChanges();
+
+        // const SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+        //     SaveCompletedEvent.unsubscribe();
+        //     if (isSaveSuccess) {
+
+        //         this.CurrentSession.StopBusyIndicator();
+
+        //     }
+        // });
+
+        // this.CurrentSession.CloseCurrentWindow();
 
     }
 
@@ -80,6 +94,5 @@ export class InterestTransactionNotesComponent extends BaseComponent {
         this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = true;
     }
 
-    //#endregion
 
 }

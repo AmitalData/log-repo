@@ -101,9 +101,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.AuthenticationOnEntityTenant("InterestTransaction", interestTransactionPM.Tenant, authToken.Tenant);
                 SecurityUtility.CheckContactFeature("InterestTransaction", "UPDATE", authToken.Tenant);
                 IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
-                InterestTransactionListQueryService interestTransactionQuery = new InterestTransactionListQueryService(MyContext);
-                interestTransactionPM = interestTransactionQuery.Put(interestTransactionPM, tenant, MyContext);
-                return Request.CreateResponse(HttpStatusCode.OK, interestTransactionPM);
+                InterestTransactionQueryService interestTransactionQuery = new InterestTransactionQueryService(MyContext);
+                var interestTransaction = interestTransactionQuery.MapInterestTransactionNotes(interestTransactionPM);
+                return Request.CreateResponse(HttpStatusCode.OK, interestTransaction);
             }
             catch (Exception ex)
             {

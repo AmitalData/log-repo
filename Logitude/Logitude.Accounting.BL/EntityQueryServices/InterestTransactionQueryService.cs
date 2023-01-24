@@ -152,6 +152,49 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         }
 
+        public InterestTransaction MapInterestTransactionNotes(InterestTransactionPM interestTransaction)
+        {
+            InterestTransactionRepository interestTransactionRepository = new InterestTransactionRepository(interestTransaction.Tenant);
+           var r= new InterestTransaction()
+            {
+
+                Id = interestTransaction.Id,
+                Tenant = interestTransaction.Tenant,
+                CreateDateTime = interestTransaction.CreateDateTime,
+                UpdateDateTime = interestTransaction.UpdateDateTime,
+                SearchFields = interestTransaction.SearchFields,
+                GLAccountId = interestTransaction.GLAccountId,
+                InterestEntityTypeCode = interestTransaction.InterestEntityTypeCode,
+                EntityId = interestTransaction.EntityId,
+                OriginalEntityLineNumber = interestTransaction.OriginalEntityLineNumber,
+                LocalAmount = interestTransaction.LocalAmount,
+                ForeignAmount = interestTransaction.ForeignAmount,
+                CurrencyId = interestTransaction.CurrencyId,
+                InterestValueDate = interestTransaction.InterestValueDate,
+                InterestReportId = interestTransaction.InterestReportId,
+                IsClosed = interestTransaction.IsClosed,
+                IsCancelled = interestTransaction.IsCancelled,
+                //InterestReportNumber = report?.ReportNumber,
+                //JournalId = journal?.Id,
+                //JournalNumber = journal?.JournalNumber,
+                //AccountingDate = journal?.AccountingDate ?? DateTime.MinValue,
+                //Source = journal?.AccountingEntityReference,
+                //SourceType = journal?.AccountingEntity == null ? null : journal.AccountingEntity.EnglishName,
+                //SourceTypeCode = journal?.AccountingEntityCode,
+                //SourceId = journal?.AccountingEntityId,
+                AccountingEntityCode= interestTransaction.AccountingEntityCode,
+                Notes = interestTransaction.Notes,
+                CreatedByUserId = interestTransaction.CreatedByUserId,
+                UpdatedByUserId = interestTransaction.UpdatedByUserId,
+
+            };
+            interestTransactionRepository.Update(r);
+            interestTransactionRepository.SubmitChanges();
+
+
+            return r;
+        }
+
 
     }
 }
