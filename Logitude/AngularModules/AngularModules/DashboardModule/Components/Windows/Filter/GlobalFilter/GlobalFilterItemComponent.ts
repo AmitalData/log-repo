@@ -1,6 +1,4 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { UIProperties } from "Infrastructure/Components/LogitudeComponents/UIProperties";
-import { DateTool } from "Infrastructure/Tools";
 import { FieldValueResolver } from "Infrastructure/Utilities/FieldValueResolver";
 import { GlobalFilterItem } from "./GlobalFilterItem";
 
@@ -14,11 +12,10 @@ export class GlobalFilterItemComponent implements OnInit {
     @Input() FilterItem: GlobalFilterItem;
     @Input() Position: number;
     @Input() HasKpiChart: boolean;
-    
+
     public Operators: any;
     public DateGroupCodes = ['Day', 'Week', 'Month', 'Quarter', 'Year'];
-    public DataContext = this;
-    public UIProperties: UIProperties = new UIProperties;
+
     public ObjectTableName: string = 'GlobalFilterItem';
     public DatesVisable: boolean = true;
 
@@ -81,7 +78,8 @@ export class GlobalFilterItemComponent implements OnInit {
 
     public OperatorChanged(operator: Operator) {
         this.FilterItem.Operator = operator ? operator.Code : null;
-        this.GetDefaultFieldValue();
+        this.FilterItem.FieldValue3 = null;
+        this.FilterItem.FieldValue = null;
         this.FilterItem.FieldValue2 = null;
         this.FilterItem.CompareWithPrevious = false;
         this.GetDefaultDateGroup();
@@ -90,17 +88,6 @@ export class GlobalFilterItemComponent implements OnInit {
         setTimeout(() => {
             this.DatesVisable = true
         }, 10);
-    }
-
-    private GetDefaultFieldValue() {
-        if ((this.FilterItem.DataTypeCode == 'Date' || this.FilterItem.DataTypeCode == 'DateTime') && (this.FilterItem.Operator == 'Next' || this.FilterItem.Operator == 'Previous')) {
-            this.FilterItem.FieldValue3 = null;
-            this.FilterItem.FieldValue = null;
-        }
-        else {
-            this.FilterItem.FieldValue = null;
-            this.FilterItem.FieldValue3 = null;
-        }
     }
 
     private GetDefaultDateGroup() {
@@ -119,7 +106,7 @@ export class GlobalFilterItemComponent implements OnInit {
     }
 
     public GetTextInputType() {
-        if (this.FilterItem.DataTypeCode == 'Date' || this.FilterItem.DataTypeCode == 'DateTime') return "Integer";
+        if (this.FilterItem.DataTypeCode == 'Date' || this.FilterItem.DataTypeCode == 'DateTime') return "unsinteger";
         if (this.FilterItem.DataTypeCode == "Text") return "nText";
         return this.FilterItem.DataTypeCode;
     }
@@ -168,12 +155,12 @@ export class GlobalFilterItemComponent implements OnInit {
 
     ValidateDate() {
         if (this.FilterItem.Operator == "Between" && this.FilterItem.FieldValue && this.FilterItem.FieldValue2 && this.FilterItem.FieldValue > this.FilterItem.FieldValue2) {
-            this.UIProperties.SetValidity("FieldValue2", this.ObjectTableName, false, "To date must be larger than from date");
-            this.UIProperties.SetValidity("FieldValue", this.ObjectTableName, false, "To date must be larger than from date");
+            this.FilterItem.UIProperties.SetValidity("FieldValue2", this.ObjectTableName, false, "To date must be larger than from date");
+            this.FilterItem.UIProperties.SetValidity("FieldValue", this.ObjectTableName, false, "To date must be larger than from date");
         }
         else {
-            this.UIProperties.SetValidity("FieldValue2", this.ObjectTableName, true, null);
-            this.UIProperties.SetValidity("FieldValue", this.ObjectTableName, true, null);
+            this.FilterItem.UIProperties.SetValidity("FieldValue2", this.ObjectTableName, true, null);
+            this.FilterItem.UIProperties.SetValidity("FieldValue", this.ObjectTableName, true, null);
         }
     }
 

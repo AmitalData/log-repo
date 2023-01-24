@@ -1061,6 +1061,7 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<CarrierServiceLine> CarrierServiceLines { get; set; }
         public IDbSet<HorseGender> HorseGenders { get; set; }
         public IDbSet<DigitalContactLastSetting> DigitalContactLastSettings { get; set; }
+        public IDbSet<PortGroup> PortGroups { get; set; }
 
         public DbConnection GetConnection()
         {

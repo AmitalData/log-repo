@@ -15,7 +15,7 @@ $border-color: #ddd;
     gap: 4px;
     width: 180px;
     height: 22px;
-    border: 1px solid #D9D9D9;
+    border: 1px solid #AAAAAA;
     border-radius: 4px;
     flex: none;
     order: 1;
@@ -33,13 +33,13 @@ $border-color: #ddd;
 .db-m-drop-arrow-up {
     border-left: 3.5px solid transparent;
     border-right: 3.5px solid transparent;
-    border-bottom: 4px solid #D9D9D9;
+    border-bottom: 4px solid #9C9DA0;
 }
 
 .db-m-drop-arrow-down {
     border-left: 3.5px solid transparent;
     border-right: 3.5px solid transparent;
-    border-top: 4px solid #D9D9D9;
+    border-top: 4px solid #9C9DA0;
 }
 
 .db-m-drop-selected-text {
@@ -50,7 +50,7 @@ $border-color: #ddd;
     font-weight: 500;
     font-size: 11px;
     line-height: 100%;
-    color: #292D30;
+    color: #6E7172;
     flex: none;
     order: 0;
     flex-grow: 0;
@@ -275,13 +275,6 @@ $border-color: #ddd;
 .db-m-dropdown-scroll::-webkit-scrollbar-thumb:hover {
     background: #979797;
 }
-
-
-// .db-m-dropdown-scroll:hover::-webkit-scrollbar {
-//         width: 6px;
-//         height: 100px;
-//         background: #D2D2D2;  
-// }
 
 @keyframes pulse {
     0% {

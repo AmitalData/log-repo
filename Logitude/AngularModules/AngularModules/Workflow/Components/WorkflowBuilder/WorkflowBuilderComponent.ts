@@ -18,6 +18,7 @@ import { EntityArgs } from "Infrastructure/DataContracts/EntityArgs";
 import { AppTool } from "Infrastructure/Tools";
 import { WorkFlowVersionPM } from "Workflow/EntityPMs/WorkFlowVersionPM";
 import { ConfirmWindow } from "Controls/Windows/ConfirmWindow";
+import { FieldTypes } from "Workflow/Constants/FieldTypes";
 
 @Component({
     templateUrl: "./WorkflowBuilderComponent.html"
@@ -244,130 +245,102 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         }
     }
 
-    confirmDeleteNodeEvent(nodeToDelete: any) {
-        if (nodeToDelete) {
-            let validateNodeDelete = this.validateNodeDelete(nodeToDelete);
-            if (validateNodeDelete.isValid) {
-                this.showConfirmationMessageForDeleteNode();
+    confirmDeleteNodeEvent(deletedNode: any) {
+        if (deletedNode) {
+            let deletedNodeDisplayName = this.getNodeDisplayName(deletedNode);
+            let usedInNodes = this.validateDeleteNode(deletedNode);
+            if (usedInNodes && usedInNodes.length === 0) {
+                this.handleDeleteNode(deletedNodeDisplayName);
             } else {
-                let nodeNameToDelete = nodeToDelete.data["label"] || nodeToDelete.id;
-                this.showDeleteNodeError(nodeNameToDelete, validateNodeDelete.usedInNodes);
+                this.showDeleteNodeWarning(deletedNodeDisplayName, usedInNodes);
             }
         }
     }
 
-    showConfirmationMessageForDeleteNode() {
-        var confirmWindow = new ConfirmWindow();
-        confirmWindow.Width = 450;
-        confirmWindow.Height = 190;
-        confirmWindow.ShowNoButton = false
+    handleDeleteNode(deletedNodeName: string) {
+        let confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 400;
+        confirmWindow.Height = 200;
+        confirmWindow.ShowNoButton = false;
         confirmWindow.ShowCancelButton = true;
         confirmWindow.YesButtonText = "Ok";
-        confirmWindow.Title = "Delete Element"
-        confirmWindow.Show("Are you sure you want to delete this element?");
-
-        confirmWindow.WindowClosed.subscribe((event: any) => {
+        confirmWindow.Title = "Delete Element";
+        confirmWindow.Show("Are you sure to delete element " + deletedNodeName + " ?");
+        confirmWindow.WindowClosed.subscribe(() => {
             if (confirmWindow.Yes) {
                 document.dispatchEvent(new CustomEvent(this.returnDeleteNodeConfirmationEventKey, { detail: true }));
             }
         });
     }
 
-    showDeleteNodeError(nodeNameToDelete: string, usedInNodes: string[]) {
+    showDeleteNodeWarning(deletedNodeName: string, usedInNodes: string[] | null) {
         let deleteNodeErrorWindow = new LogitudeWindow();
         let deleteNodeErrorWindowArgs: any = {
-            NodeNameToDelete: nodeNameToDelete,
+            NodeNameToDelete: deletedNodeName,
             UsedInNodes: usedInNodes
         };
-        deleteNodeErrorWindow.Width = 460;
-        deleteNodeErrorWindow.Height = 220;
+        deleteNodeErrorWindow.Width = 500;
+        deleteNodeErrorWindow.Height = 300;
         deleteNodeErrorWindow.RTL = false;
-        deleteNodeErrorWindow.Title = "Can't delete " + nodeNameToDelete;
+        deleteNodeErrorWindow.Title = "Cannot delete " + deletedNodeName;
         deleteNodeErrorWindow.WindowArgs = deleteNodeErrorWindowArgs;
-
         deleteNodeErrorWindow.Show("./Workflow/Components/Messages/DeleteNodeWarningComponent");
-        deleteNodeErrorWindow.WindowClosed.subscribe((_event: any) => { });
     }
 
-    validateNodeDelete(nodeToDelete: any) {
-        let flowObject = this.getCurrentFlowObject();
-        if (flowObject) {
-            let isValid = true;
-            let usedInNodes: string[] = [];
-            let getRecordNodes = FlowReader.getNodes(flowObject, "getRecordNode");
-            let conditionNodes = FlowReader.getNodes(flowObject, "conditionNode");
-            let setValueNodes = FlowReader.getNodes(flowObject, "setValueNode");
-            let createRecordNodes = FlowReader.getNodes(flowObject, "createRecordNode");
-            let loopNodes = FlowReader.getNodes(flowObject, "loopNode");
-
-            let nodeUsedData = this.getNodeUsedData(nodeToDelete);
-            if (nodeUsedData) {
-                let getRecordStatus = this.validateNodesUsedData(getRecordNodes, "conditions", nodeUsedData);
-                let conditionStatus = this.validateNodesUsedData(conditionNodes, "conditions", nodeUsedData);
-                let setValueStatus = this.validateNodesUsedData(setValueNodes, "setValues", nodeUsedData);
-                let createRecordStatus = this.validateNodesUsedData(createRecordNodes, "setValues", nodeUsedData);
-                let loopStatus = this.validateLoopNodesUsedData(loopNodes, nodeUsedData);
-                usedInNodes = usedInNodes
-                    .concat(getRecordStatus.usedInNodes)
-                    .concat(conditionStatus.usedInNodes)
-                    .concat(setValueStatus.usedInNodes)
-                    .concat(createRecordStatus.usedInNodes)
-                    .concat(loopStatus.usedInNodes);
-
-                usedInNodes = usedInNodes.filter((v, i, a) => a.indexOf(v) === i);
-                isValid = getRecordStatus.isValid && conditionStatus.isValid && setValueStatus.isValid && createRecordStatus.isValid && loopStatus.isValid;
-                return { isValid, usedInNodes };
-            }
-
-            return { isValid: true, usedInNodes: [] };
+    validateDeleteNode(deletedNode: any) {
+        let deletedNodeCode = this.getNodeCode(deletedNode);
+        if (deletedNodeCode === null) {
+            return [];
         }
-        return { isValid: false, usedInNodes: [] };
-    }
-
-    getNodeUsedData(node: any) {
-        if (node.type === "declareVariableNode") {
-            let name = node.data["name"];
-            return name ? ("declaredvariables_" + name) : null;
-        } else if (node.type === "getRecordNode") {
-            let name = node.data["name"];
-            return name ? (Formatter.getCodeFromName(name) + "_") : null;
-        } else if (node.type === "loopNode") {
-            let name = node.data["name"];
-            return name ? (Formatter.getCodeFromName(name) + "_") : null;
+        if (deletedNode) {
+            let flowObject = this.getCurrentFlowObject();
+            if (flowObject) {
+                let usedInNodes = [];
+                FlowReader.getNodes(flowObject).filter((n: any) => n.id !== deletedNode.id).forEach((node: any) => {
+                    let clonedNode = JSON.parse(JSON.stringify(node)) || {};
+                    let clonedNodeData = clonedNode.data || {};
+                    clonedNodeData["name"] = null;
+                    clonedNodeData["label"] = null;
+                    let clonedNodeDataJson = JSON.stringify(clonedNodeData) || "";
+                    let dataStringValues = clonedNodeDataJson.match(/\:"(.*?)\"/g);
+                    if (dataStringValues && dataStringValues.length > 0) {
+                        let values = dataStringValues.map(v => v ? v.replace(":\"", "").replace("\"", "") : null).filter(v => v !== null);
+                        if (values.some(value => value.toString().includes(deletedNodeCode)) || (deletedNodeCode.toString().startsWith("declaredrecordvariables_") && clonedNodeDataJson.toString().includes("\"record\":\"" + deletedNodeCode.split("_")[1] + "\""))) {
+                            let usedNode = this.getNodeDisplayName(node);
+                            usedInNodes.push(usedNode);
+                        }
+                    }
+                });
+                return usedInNodes;
+            }
         }
         return null;
     }
 
-    validateNodesUsedData(nodes: any, dataKey: string, nodeUsedData: string) {
-        let isValid = true;
-        let usedInNodes: string[] = []
-        nodes.forEach((node: any) => {
-            let nodeLabel = node.data["label"] || node.id;
-            let nodeDataValues = node.data[dataKey] || [];
-            nodeDataValues.forEach((dataValue: any) => {
-                let value = dataValue["value"] || null;
-                let field = dataValue["field"] || null;
-                if (value && field && (value.startsWith(nodeUsedData) || field.startsWith(nodeUsedData))) {
-                    isValid = false;
-                    usedInNodes.push(nodeLabel);
-                }
-            });
-        });
-        return { isValid, usedInNodes };
+    getNodeCode(node: any) {
+        if (node) {
+            switch (node.type) {
+                case "getRecordNode":
+                case "collectionFilterNode":
+                case "loopNode":
+                    return Formatter.getCodeFromName(node.data["name"]);
+                case "declareVariableNode":
+                    let variableCode = node.data["variableCode"] || null;
+                    let variableType = node.data["variableType"] || null;
+                    if (variableCode && variableType) {
+                        let isRecordVariableType = variableType.toString().startsWith(FieldTypes.Record);
+                        return (isRecordVariableType ? "declaredrecordvariables" : "declaredvariables") + "_" + variableCode;
+                    }
+                    return null;
+                default:
+                    return null;
+            }
+        }
+        return null;
     }
 
-    validateLoopNodesUsedData(nodes: any, nodeUsedData: string) {
-        let isValid = true;
-        let usedInNodes: string[] = []
-        nodes.forEach((node: any) => {
-            let nodeLabel = node.data["label"] || node.id;
-            let collectionVariable = node.data["collectionVariable"] || null;
-            if (collectionVariable && collectionVariable === nodeUsedData) {
-                isValid = false;
-                usedInNodes.push(nodeLabel);
-            }
-        });
-        return { isValid, usedInNodes };
+    getNodeDisplayName(node: any) {
+        return node && node.data ? (node.data["label"] || node.data["name"] || "Unknown") : "Unknown";
     }
 
     setReactFlowInstance(reactFlowInstance: any) {
@@ -386,9 +359,13 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
             let startNode = flowObject.nodes.filter((n: any) => n.type === "startNode")[0];
             let openPropertiesEventObject = this.buildOpenPropertiesEventObject(startNode, true);
             if (openPropertiesEventObject) {
-                this.IsFirstOpen = false;
                 this.handleOpenPropertiesEvent(openPropertiesEventObject);
+                this.IsFirstOpen = false;
             }
+        } else {
+            setTimeout(() => {
+                this.openStartPropertiesWindow();
+            }, 100);
         }
     }
 

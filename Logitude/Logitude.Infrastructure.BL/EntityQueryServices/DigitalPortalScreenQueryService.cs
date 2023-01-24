@@ -71,7 +71,8 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                                                                         ObjectTableId = x.ObjectTableId,
                                                                         ProfileId = x.ProfileId,
                                                                         Content = x.Content,
-                                                                        DraftContent = x.DraftContent
+                                                                        DraftContent = x.DraftContent,
+                                                                        ProfileCode = x.DigitalProfile.Code
                                                                     })
                                                                     .ToList();
             return digitalPortalScreens;

@@ -48,6 +48,8 @@ namespace Logitude.DashboardModule.Data.EntityLists
        public string Unit  { get; set; }
        [DataMember]
        public string CommonFilterCode  { get; set; }
+       [DataMember]
+       public bool CanSecondaryGroup  { get; set; }
    }
 
 }

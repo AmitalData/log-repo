@@ -1,4 +1,5 @@
-﻿using Logitude.Infrastructure.BL.EntityQueryServices;
+﻿using Logitude.BL.Helpers;
+using Logitude.Infrastructure.BL.EntityQueryServices;
 using Logitude.Infrastructure.Data.EntityLists;
 using Logitude.SystemLogs;
 using Newtonsoft.Json;
@@ -47,43 +48,34 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     }
 
                     tenantDigitalProfiles = digitalProfileQuery.GetDigitalProfileQuery(tenant);
-
                     var textCodeQuery = new DigitalTextCodeQueryService(tenant);
                     var textCodes = textCodeQuery.GetDigitalTextCodesTenant0();
-
                     foreach (var item in textCodes)
                     {
-                        foreach (var profile in tenantDigitalProfiles)
+                        textCodeQuery.UpdateDigitalTextCodes(new DigitalTextCodeList
                         {
-                            textCodeQuery.UpdateDigitalTextCodes(new DigitalTextCodeList
-                            {
-                                Tenant = tenant,
-                                Labels = item.Labels,
-                                ObjectTableId = item.ObjectTableId,
-                                ProfileId = profile.Id,
-                                CreateDate = DateTime.UtcNow,
-                                UpdateDate = DateTime.UtcNow
-                            });
-                        }
+                            Tenant = tenant,
+                            Labels = item.Labels,
+                            ObjectTableId = item.ObjectTableId,
+                            ProfileId = tenantDigitalProfiles.Where(a=>a.Code == item.ProfileCode).Select(a=>a.Id).FirstOrDefault(),
+                            CreateDate = DateTime.UtcNow,
+                            UpdateDate = DateTime.UtcNow
+                        });
                     }
 
                     var filedsQuery = new DigitalFieldSecurityQueryService(tenant);
                     var fields = filedsQuery.GetDigitalFieldSecurityQueryTenant0();
-
                     foreach (var item in fields)
                     {
-                        foreach (var profile in tenantDigitalProfiles)
+                        filedsQuery.UpdateDigitalFieldSecurity(new DigitalFieldSecurityList
                         {
-                            filedsQuery.UpdateDigitalFieldSecurity(new DigitalFieldSecurityList
-                            {
-                                Tenant = tenant,
-                                DefaultSettings = item.DefaultSettings,
-                                ObjectTableId = item.ObjectTableId,
-                                ProfileId = profile.Id,
-                                CreateDate = DateTime.UtcNow,
-                                UpdateDate = DateTime.UtcNow
-                            });
-                        }
+                            Tenant = tenant,
+                            DefaultSettings = item.DefaultSettings,
+                            ObjectTableId = item.ObjectTableId,
+                            ProfileId = tenantDigitalProfiles.Where(a => a.Code == item.ProfileCode).Select(a => a.Id).FirstOrDefault(),
+                            CreateDate = DateTime.UtcNow,
+                            UpdateDate = DateTime.UtcNow
+                        });
                     }
 
                     var screenQuery = new DigitalPortalScreenQueryService(tenant);
@@ -91,19 +83,18 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                     foreach (var item in screens)
                     {
-                        foreach (var profile in tenantDigitalProfiles)
+                        screenQuery.UpdateDigitalPortalScreen(new DigitalPortalScreenList
                         {
-                            screenQuery.UpdateDigitalPortalScreen(new DigitalPortalScreenList
-                            {
-                                Tenant = tenant,
-                                Content = item.Content,
-                                DraftContent = item.DraftContent,
-                                ObjectTableId = item.ObjectTableId,
-                                ProfileId = profile.Id,
-                                CreateDate = DateTime.UtcNow,
-                                UpdateDate = DateTime.UtcNow
-                            });
-                        }
+                            Tenant = tenant,
+                            Name = item.Name,
+                            ScreenCode = item.ScreenCode,
+                            Content = item.Content,
+                            DraftContent = item.DraftContent,
+                            ObjectTableId = item.ObjectTableId,
+                            ProfileId = tenantDigitalProfiles.Where(a => a.Code == item.ProfileCode).Select(a => a.Id).FirstOrDefault(),
+                            CreateDate = DateTime.UtcNow,
+                            UpdateDate = DateTime.UtcNow
+                        });
                     }
                 }
 

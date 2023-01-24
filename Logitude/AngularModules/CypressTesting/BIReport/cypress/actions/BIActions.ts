@@ -34,7 +34,7 @@ export const SearchBIFolder = (BIReportFolderName) => {
 export function FillBIReportDetails(BiReportDetails: BIReportDetails) {
     cy.Click(BIReportSelectors.NewButtonBIReport, null, true);
     cy.FillLogTextBox(BIReportSelectors.BIReportName, BiReportDetails.Name)
-    cy.SelectComboDropDownListItem(BIReportSelectors.BIReportFact, BiReportDetails.FactTable, 2)
+    cy.SelectComboDropDownListItem(BIReportSelectors.BIReportFact, BiReportDetails.FactTable, 0)
 }
 
 
@@ -119,3 +119,27 @@ export function OpenARInvoicesBIFolder() {
     cy.Click(BIReportSelectors.ARInvoicesEditBackbutton, null, true);
 }
 
+//Quotes
+export function FillQuoteBIReportDetails(BiReportDetails: BIReportDetails) {
+    cy.Click(BIReportSelectors.NewButtonBIReport, null, true);
+    cy.FillLogTextBox(BIReportSelectors.BIReportName, BiReportDetails.Name)
+    // cy.get(BIReportSelectors.BIReportFact).click({force: true});
+    cy.SelectComboDropDownListItem(BIReportSelectors.BIReportFact, BiReportDetails.FactTable, 0)
+}
+
+export function AddCoulmnAndFilterQuote(columnName) {
+    AddColumn(columnName, BIReportSelectors.AddQBRootColumnQuoteNumber,
+        BIReportSelectors.AddQBRootFilterQuoteNumber, 8)
+}
+
+export function EditCoulmnAndFilterQuote(columnName) {
+    cy.wait(10000)
+    cy.Click(BIReportSelectors.EditQueryBuilder, null, true)
+    AddColumn(columnName, BIReportSelectors.AddQBRootColumnIsQuoteDataExternal,
+        BIReportSelectors.AddQBRootFilterIsQuoteDataExternal, 9)
+}
+
+export function OpenQuoteBIFolder() {
+    cy.wait(5000)
+    cy.Click(BIReportSelectors.QuoteEditBackbutton, null, true);
+}

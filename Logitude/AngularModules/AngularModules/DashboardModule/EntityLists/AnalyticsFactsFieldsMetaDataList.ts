@@ -25,6 +25,7 @@ export class AnalyticsFactsFieldsMetaDataList {
 	HasUnit: boolean;
 	Unit: string;
 	CommonFilterCode: string;
+	CanSecondaryGroup: boolean;
 	
 }
  

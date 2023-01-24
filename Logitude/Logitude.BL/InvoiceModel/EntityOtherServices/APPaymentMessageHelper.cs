@@ -148,7 +148,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 paymentElement.DocumentType = "APPAY";
                 paymentElement.PaymentNumber = item.PaymentNo;
                 paymentElement.RegisterDate = item.RegisterDate;
-                paymentElement.PaymentCurrency = item.PaymentCurrency != null ? item.PaymentCurrency.Code: null;
+                paymentElement.PaymentCurrency = item.PaymentCurrency != null ? item.PaymentCurrency.Code : null;
                 paymentElement.PaymentMethod = myPaymentMethodCode;
                 paymentElement.PaymentAmount = item.AmountInPaymentCurrency;
                 paymentElement.ExchngeRate = item.PaymentCurrencyExchangeRate;
@@ -169,6 +169,11 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 paymentElement.BankCode = item.Bank;
                 paymentElement.BankBranch = item.BankBranch;
                 paymentElement.BankAccount = item.Account;
+                paymentElement.BankName = item.VendorBankName;
+                paymentElement.AccountNumber = item.VendorBankAccountNumber;
+                paymentElement.BankAddress = item.VendorBankAddress;
+                paymentElement.SWIFTCode = item.VendorSwift;
+                paymentElement.IBANNumber = item.VendorIBANNumber;
                 #endregion
 
                 #region Card
@@ -221,7 +226,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                         //InvoiceType = lineType,
                         InvoiceNumber = myline.InvoiceNumber,
                         PaidAmount = linePaidAmount,
-                    };             
+                    };
 
                     paymentElement.Invoices.Add(invoiceElement);
                 }
@@ -389,6 +394,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public double? PaymentAmount { get; set; }
         public double? ExchngeRate { get; set; }
         public double? PaymentAmountInLocalCurrency { get; set; }
+
         [XmlElement(DataType = "date")]
         public DateTime? ValueDate { get; set; }
         public string PaymentRef { get; set; }
@@ -399,6 +405,11 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public string BankBranch { get; set; }
         public string BankAccount { get; set; }
         public int Tenant { get; set; }
+        public string BankName { get; set; }
+        public string AccountNumber { get; set; }
+        public string BankAddress { get; set; }
+        public string SWIFTCode { get; set; }
+        public string IBANNumber { get; set; }
 
         [XmlElement(ElementName = "Vendor")]
         public APPaymnetCardElement Card { get; set; }

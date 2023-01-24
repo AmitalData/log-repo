@@ -463,12 +463,12 @@ namespace Logitude.Accounting.Data.Repositories
 
             return journals;
         }
-        public IQueryable<Journal> GetByJournalsAccountingEntityIds(List<string> entityIdS, int tenant)
+        public IQueryable<Journal> GetByJournalsAccountingEntityIds(List<string> entityIdS, int tenant, string accountingEntityCode)
         {
             var journals = (from a in context.Journals.Include("JournalStatusType")
                             where a.Tenant == tenant
                             where entityIdS.Contains(a.AccountingEntityId)
-                                    && a.AccountingEntityCode == "2"
+                                    && a.AccountingEntityCode == accountingEntityCode
                             select a);
 
             return journals;

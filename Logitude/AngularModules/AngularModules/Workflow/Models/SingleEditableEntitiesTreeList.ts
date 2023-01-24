@@ -8,23 +8,27 @@ import { TreeSelectItem } from "./TreeSelectItem";
 export class SingleEditableEntitiesTreeList {
     private FlowObject: any;
     private CurrentNodeId: string;
+    private OnlyTriggeringRecord: boolean;
     private ItemKeySplitter: string = "_";
 
     public Items: TreeSelectItem[] = [];
 
-    constructor(flowObject: any, currentNodeId: string) {
-        this.initialize(flowObject, currentNodeId);
+    constructor(flowObject: any, currentNodeId: string, onlyTriggeringRecord: boolean = false) {
+        this.initialize(flowObject, currentNodeId, onlyTriggeringRecord);
         this.initializeTreeItems();
     }
 
-    private initialize(flowObject: any, currentNodeId: string) {
+    private initialize(flowObject: any, currentNodeId: string, onlyTriggeringRecord: boolean) {
         this.FlowObject = flowObject;
         this.CurrentNodeId = currentNodeId;
+        this.OnlyTriggeringRecord = onlyTriggeringRecord;
     }
 
     private initializeTreeItems() {
         this.initializeTriggerRecordTreeSelectItem();
-        this.initializeGetRecordTreeSelectItems();
+        if (!this.OnlyTriggeringRecord) {
+            this.initializeGetRecordTreeSelectItems();
+        }
     }
 
     private initializeTriggerRecordTreeSelectItem() {

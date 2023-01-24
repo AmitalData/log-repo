@@ -8,13 +8,13 @@ import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 export class DeleteNodeWarningComponent {
 
     public NodeNameToDelete: string;
-    public UsedInNodes: string[];
+    public UsedInNodes: string[] | null;
 
     public CurrentSession = SessionLocator.SelectedSession;
 
     SetWindowArgs(args: any) {
         this.NodeNameToDelete = args.NodeNameToDelete ? args.NodeNameToDelete : "";
-        this.UsedInNodes = args.UsedInNodes ? args.UsedInNodes : [];
+        this.UsedInNodes = args.UsedInNodes;
     }
 
     cancelButtonClicked() {

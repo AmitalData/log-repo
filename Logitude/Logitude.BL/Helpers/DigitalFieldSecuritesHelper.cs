@@ -1,24 +1,27 @@
-﻿using Logitude.Infrastructure.BL.EntityQueryServices;
+﻿using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
+using Logitude.Infrastructure.Data.EntityLists;
+using Logitude.Infrastructure.Data.Repsitories;
 using Newtonsoft.Json;
+using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
+namespace Logitude.BL.Helpers
 {
     public class DigitalFieldSecuritesHelper
     {
         public List<DigitalFeildSecurityObject> GitDigitalSecuritesFeilds(string objectTableId, string profileCode, int tenant, bool singleApi = true)
         {
-            var digitalFieldSecurityQuery = new DigitalFieldSecurityQueryService(tenant);
-            var digitalFieldSecurity = digitalFieldSecurityQuery.GetDigitalFieldSecurityQuery(0, objectTableId, profileCode);
+            var digitalFieldSecurity = GetDigitalFieldSecurityQuery(0, objectTableId, profileCode);
             var defaultDigitalFieldSecurity = JsonConvert.DeserializeObject<List<DigitalFeildSecurityObject>>(digitalFieldSecurity.DefaultSettings);
             var customDigitalFeildSecurityObject = new List<DigitalFeildSecurityObject>();
+            var objectTableName = ObjectTableRepository.GetNameById(objectTableId, tenant);
 
             if (tenant != 0)
             {
-                var customDigitalFieldSecurityList = digitalFieldSecurityQuery.GetDigitalFieldSecurityQuery(tenant, objectTableId, profileCode);
+                var customDigitalFieldSecurityList = GetDigitalFieldSecurityQuery(tenant, objectTableId, profileCode);
 
                 if (customDigitalFieldSecurityList != null)
                 {
@@ -41,7 +44,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
                 }
             }
 
-            if (!singleApi)
+            if (!singleApi && objectTableName.Equals("Shipment", StringComparison.InvariantCultureIgnoreCase))
             {
                 var unfoundFeilds = new List<string>
                 {
@@ -129,10 +132,29 @@ namespace WebFreight.Web.Controllers.DigitalPortal.Helpers
             {
                 return defaultDigitalFieldSecurity;
             }
-            
+
             return defaultDigitalFieldSecurity;
         }
-    
+
+        public DigitalFieldSecurityList GetDigitalFieldSecurityQuery(int tenant, string objectTableId, string profileCode)
+        {
+            DigitalFieldSecurityRepository digitalFieldSecurityRepository = new DigitalFieldSecurityRepository(tenant);
+            var digitalFieldSecurity = digitalFieldSecurityRepository.GetDigitalFieldSecurity(tenant, objectTableId, profileCode)
+                                                                     .Select(x => new DigitalFieldSecurityList
+                                                                     {
+                                                                         Id = x.Id,
+                                                                         ObjectTableId = x.ObjectTableId,
+                                                                         Tenant = x.Tenant,
+                                                                         DefaultSettings = x.DefaultSettings,
+                                                                         CreateDate = x.CreateDate,
+                                                                         UpdateDate = x.UpdateDate,
+                                                                         ProfileId = x.ProfileId
+                                                                     })
+                                                                     .FirstOrDefault();
+            return digitalFieldSecurity;
+        }
+
+
         public bool CheckIfFieldInuse(CheckObjectFieldExistenceRequest checkObjectFieldExistenceRequest, int tenant)
         {
             var helper = new DigitalFieldSecuritesHelper();

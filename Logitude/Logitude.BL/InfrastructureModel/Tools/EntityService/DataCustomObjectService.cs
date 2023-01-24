@@ -54,6 +54,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.entityPM.UpdatedBy = this.loggedContact != null ? this.loggedContact.Id : this.entityPM.UpdatedBy;
             this.entityPM.CreatedBy = this.loggedContact != null ? this.loggedContact.Id : this.entityPM.CreatedBy;
             this.Poco = new DataCustomObject();
+            new CustomChildEntityService(new CustomChildEntityArgs() { ParentEntity = entityPM, ParentEntityId = entityPM.Id, ParentObjectTableId = entityPM.ObjectTableId, Tenant = tenant }).Update();
             DataCustomObjectMapping.MapEntity(dataCustomObjectPM, Poco, isNewEntity);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
@@ -67,6 +68,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.entityPM.UpdatedBy = this.loggedContact != null ? this.loggedContact.Id : this.entityPM.UpdatedBy;
             this.Poco = entityRepository.GetSingleDataCustomObject(dataCustomObjectPM.Id, dataCustomObjectPM.Tenant);
             if (this.Poco == null) return;
+            new CustomChildEntityService(new CustomChildEntityArgs() { ParentEntity = entityPM, ParentEntityId = entityPM.Id, ParentObjectTableId = entityPM.ObjectTableId, Tenant = tenant }).Update();
             DataCustomObjectMapping.MapEntity(dataCustomObjectPM, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();

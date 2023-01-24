@@ -161,5 +161,6 @@ export class ARInvoiceList {
 		DigitalPortalSearchFields: string;
 		TotalExamptFortaxReport: number;
 		DocumentTemplateId: string;
+		TotalAmountNotForTaxReport: number;
 	
 }

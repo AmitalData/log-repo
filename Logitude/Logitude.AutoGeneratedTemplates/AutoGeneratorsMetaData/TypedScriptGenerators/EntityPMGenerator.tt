@@ -166,16 +166,16 @@ import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
-import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClassAAA';
+import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 <#+ if(entity.SupportSubEntity.ToString() == "true") {#>import { CustomChildEntity } from '../../Infrastructure/EntityPMs/CustomChildEntity';
 <#+}#>
-<#+ if(entity.ApplyGenericCustomFields.ToString() == "true") {#>import { CustomFieldsMainObjectPM } from '../../Infrastructure/EntityPMs/CustomFieldsMainObjectPMExtended';
+<#+ if(entity.ApplyGenericCustomFields.ToString() == "true") {#>import { ObjectCustomFieldPM } from '../../Infrastructure/EntityPMs/ObjectCustomFieldPM';
 <#+}#>
 <#+ if(hasCompstionCustomField){#> import { ChildEntitiesCustomFieldPM } from '../../Infrastructure/EntityPMs/ChildEntitiesCustomFieldPMExtended';<#+}#>
 
-export class <#=tableName #>PM<#+ if(hasCompstionCustomField){#> extends ChildEntitiesCustomFieldPM<#+}#><#+ if(entity.ApplyGenericCustomFields.ToString() == "true"){#> extends CustomFieldsMainObjectPM<#+}#> {
-
+export class <#=tableName #>PM<#+ if(hasCompstionCustomField){#> extends ChildEntitiesCustomFieldPM<#+}#><#+ if(entity.ApplyGenericCustomFields.ToString() == "true"){#> extends ObjectCustomFieldPM<#+}#> {
       
+      @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  <#+
 if(hasParent)

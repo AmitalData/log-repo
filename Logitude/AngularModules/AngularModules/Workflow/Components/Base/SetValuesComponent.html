@@ -72,9 +72,9 @@
     }
 
     .set-value-value-container {
-        display: table-cell;
+        display: table;
         vertical-align: middle;
-        width: 220px;
+        width: 300px;
     }
 
     .add-buttons-container {
@@ -193,7 +193,7 @@
                     <Expression [CurrentValue]="setValue.expressionValue"
                         (ValueChanged)="updateSetValueExpression($event, setValueIndex)" [FlowObject]="FlowObject"
                         [FlowObjectFields]="FlowObjectFields" [CurrentNodeId]="CurrentNodeId"
-                        [IsDisabled]="setValue.isDisabled" [Width]="'220px'">
+                        [IsDisabled]="setValue.isDisabled" [Width]="'300px'">
                     </Expression>
                 </div>
             </div>

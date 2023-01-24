@@ -40,6 +40,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         private AddressRepository addressRepository;
         private CustomFieldResolver customFieldResolver;
         private StatementDataProvider dataProvider;
+        private ARInvoiceTotalVATRepository arInvoiceTotalVATRepository;
+        private APInvoiceTotalVATRepository apInvoiceTotalVATRepository;
 
         public StatementReportManager(byte[] xmlFilters, int tenant)
         {
@@ -332,6 +334,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             ARPaymentRepository aRPaymentRepository = new ARPaymentRepository(invoiceContext);
             APPaymentRepository aPPaymentRepository = new APPaymentRepository(invoiceContext);
             APInvoiceRepository aPInvoiceRepository = new APInvoiceRepository(invoiceContext);
+            arInvoiceTotalVATRepository = new ARInvoiceTotalVATRepository(invoiceContext);
+            apInvoiceTotalVATRepository = new APInvoiceTotalVATRepository(invoiceContext);
 
             List<StatementRecord> list_ARInvoices = new List<StatementRecord>();
             List<StatementRecord> list_APInvoices = new List<StatementRecord>();
@@ -958,7 +962,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         private List<StatementRecord> BuildList_ARInvoice(IQueryable<ARInvoice> iQueryable)
         {
             List<StatementRecord> myList = new List<StatementRecord>();
-            List<ARInvoice> iQueryableList = iQueryable.ToList();
+            List<ARInvoice> iQueryableList = iQueryable.ToList();           
             foreach (ARInvoice d in iQueryableList)
             {
                 StatementRecord item = new StatementRecord();
@@ -986,7 +990,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 item.BranchId = d.BranchId;
                 item.ShipmentNumber = d.MainEntityReference;
                 item.OriginalAmount = d.AmountInInvoiceCurrency;
-                
+
+                item.DebitSubtotalInvoiceCurrency = d.SubTotalInInvoiceCurrency == null ? null : ((d.ARInvoiceTypeCode == "CD" || d.ARInvoiceTypeCode == "CC") ? null : d.SubTotalInInvoiceCurrency);
+                item.DebitSubtotalLocalCurrency = d.SubTotalInLocalCurrency == null ? null : ((d.ARInvoiceTypeCode == "CD" || d.ARInvoiceTypeCode == "CC") ? null : d.SubTotalInLocalCurrency);
+                item.CreditSubtotalInvoiceCurrency = d.SubTotalInInvoiceCurrency == null ? null : ((d.ARInvoiceTypeCode != "CD" && d.ARInvoiceTypeCode != "CC") ? null : d.SubTotalInInvoiceCurrency);
+                item.CreditSubtotalLocalCurrency = d.SubTotalInLocalCurrency == null ? null : ((d.ARInvoiceTypeCode != "CD" && d.ARInvoiceTypeCode != "CC") ? null : d.SubTotalInLocalCurrency);
+                this.ComputeARTotalVATs(item, d);
+
                 customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, d, item);
 
                 myList.Add(item);
@@ -994,6 +1004,22 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
             return myList;
         }
+        private void ComputeARTotalVATs(StatementRecord item, ARInvoice invoice)
+        {
+            IQueryable<ARInvoiceTotalVAT> totalVATs = arInvoiceTotalVATRepository.GetInvoiceTotalVatsForInvoice(invoice.Id, invoice.Tenant);
+
+            if (totalVATs != null)
+            {
+                double? totalVATs_Invoice = totalVATs.Sum(s => s.InvoiceCurrencyVATAmount);
+                double? totalVATs_Local = totalVATs.Sum(s => s.LocalVATAmount);               
+
+                item.DebitVATAmountInvoiceCurrency = totalVATs_Invoice == null ? null : ((invoice.ARInvoiceTypeCode == "CD" || invoice.ARInvoiceTypeCode == "CC") ? null : totalVATs_Invoice);
+                item.DebitVATAmountLocalCurrency = totalVATs_Local == null ? null : ((invoice.ARInvoiceTypeCode == "CD" || invoice.ARInvoiceTypeCode == "CC") ? null : totalVATs_Local);
+                item.CreditVATAmountInvoiceCurrency = totalVATs_Invoice == null ? null : ((invoice.ARInvoiceTypeCode != "CD" && invoice.ARInvoiceTypeCode != "CC") ? null : totalVATs_Invoice);
+                item.CreditVATAmountLocalCurrency = totalVATs_Local == null ? null : ((invoice.ARInvoiceTypeCode != "CD" && invoice.ARInvoiceTypeCode != "CC") ? null : totalVATs_Local);
+            }
+        }
+
         private List<StatementRecord> BuildList_APInvoice(IQueryable<APInvoice> iQueryable)
         {
             List<StatementRecord> myList = new List<StatementRecord>();
@@ -1025,10 +1051,30 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 item.BranchId = d.BranchId;
                 item.ShipmentNumber = d.MainEntityReference;
                 item.OriginalAmount = d.AmountInInvoiceCurrency;
+                item.DebitSubtotalInvoiceCurrency = d.SubTotalInInvoiceCurrency == null ? null : (d.SubTotalInInvoiceCurrency > 0 ? null : d.SubTotalInInvoiceCurrency);
+                item.DebitSubtotalLocalCurrency = d.SubTotalInLocalCurrency == null ? null : (d.SubTotalInLocalCurrency > 0 ? null : d.SubTotalInLocalCurrency);
+                item.CreditSubtotalInvoiceCurrency = d.SubTotalInInvoiceCurrency == null ? null : (d.SubTotalInInvoiceCurrency > 0 ? d.SubTotalInInvoiceCurrency : null);
+                item.CreditSubtotalLocalCurrency = d.SubTotalInLocalCurrency == null ? null : (d.SubTotalInLocalCurrency > 0 ? d.SubTotalInLocalCurrency : null);
+                this.ComputeAPTotalVATs(item, d);
                 myList.Add(item);
             }
 
             return myList;
+        }
+        private void ComputeAPTotalVATs(StatementRecord item, APInvoice invoice)
+        {
+            IQueryable<APInvoiceTotalVAT> totalVATs = apInvoiceTotalVATRepository.GetInvoiceTotalVatsByInvoiceId(invoice.Id, invoice.Tenant);
+
+            if (totalVATs != null)
+            {
+                double? totalVATs_Invoice = totalVATs.Sum(s => s.InvoiceCurrencyVATAmount);
+                double? totalVATs_Local = totalVATs.Sum(s => s.LocalVATAmount);
+
+                item.DebitVATAmountInvoiceCurrency = totalVATs_Invoice == null ? null : (totalVATs_Invoice > 0 ? null : totalVATs_Invoice);
+                item.DebitVATAmountLocalCurrency = totalVATs_Local == null ? null : (totalVATs_Local > 0 ? null : totalVATs_Local);
+                item.CreditVATAmountInvoiceCurrency = totalVATs_Invoice == null ? null : (totalVATs_Invoice > 0 ? totalVATs_Invoice : null);
+                item.CreditVATAmountLocalCurrency = totalVATs_Local == null ? null : (totalVATs_Local > 0 ? totalVATs_Local : null);
+            }
         }
         private List<StatementRecord> BuildList_ARPayment(IQueryable<ARPayment> iQueryable)
         {

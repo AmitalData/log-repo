@@ -100,6 +100,12 @@
                                 <CheckBox  Margin="1 0 0 0" Width="220" Height="22" VerticalAlignment="Center" IsChecked="{Binding CanGroup, Mode=TwoWay}" IsThreeState="False"/>
                             </StackPanel>
 
+                            <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
+                                <TextBlock Width="220"   VerticalAlignment="Center" FontWeight="Bold" Text="Can Secondary Group:" />
+                                <CheckBox  Margin="1 0 0 0" Width="220" Height="22" VerticalAlignment="Center" IsChecked="{Binding CanSecondaryGroup, Mode=TwoWay}" IsThreeState="False"/>
+                            </StackPanel>
+
+
 
                             <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
                                 <TextBlock Width="220" Grid.Row="0"  VerticalAlignment="Center" FontWeight="Bold" Text="Joined Table Name:" />

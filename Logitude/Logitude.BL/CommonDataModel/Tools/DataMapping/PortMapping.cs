@@ -49,6 +49,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             port.CountryCode = portPM.CountryCode;
             port.CountryName = portPM.CountryName;
             port.PortTimeZoneCode = portPM.PortTimeZoneCode;
+            port.PortGroupId = portPM.PortGroupId;
 
             BuildSearchFields(portPM, port);
         }
