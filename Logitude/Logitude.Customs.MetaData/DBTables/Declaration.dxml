@@ -1060,7 +1060,7 @@
   <Column
     Name="ExportCloseAmendmentStatus"
     Type="varchar"
-    Size="3">
+    Size="2">
     <Constraints
       Nullable="true" />
   </Column>
