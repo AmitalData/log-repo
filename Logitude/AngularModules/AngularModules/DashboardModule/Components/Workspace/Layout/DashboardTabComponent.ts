@@ -52,6 +52,7 @@ export class DashboardTabComponent implements OnInit {
     public ItemsSource: DashboardList[] = [];
     public CanCopy: boolean;
     public FilterCount: number = 0;
+    public DateRangeLabel: string;
 
     constructor() {
         this.dashboardPMService = new DashboardPMService();
@@ -409,16 +410,73 @@ export class DashboardTabComponent implements OnInit {
 
     ApplyFilters(filters: GlobalFilterItem[]) {
         this.GlobalFilters = filters;
-        for (const item of this.reactWidgetsLayout.lg) {
-            this.ApplyGlobalFilterToWidget(item);
+        this.SetDateRangeForCompareWithPrevious();
+        for (const widget of this.reactWidgetsLayout.lg) {
+            this.ApplyGlobalFilterToWidget(widget);
         }
     }
 
-    private ApplyGlobalFilterToWidget(item: ReactWidgetPM) {
-        var widgetGlobalFilters = this.GetWidgetGlobalFilters(item);
-        if (item.GlobalFilters == widgetGlobalFilters) return;
-        item.GlobalFilters = widgetGlobalFilters;
-        this.DashboardDataBinding.onEditWidget.next(item);
+    SetDateRangeForCompareWithPrevious() {
+        if (!this.GlobalFilters || this.GlobalFilters.length == 0) {
+            this.DateRangeLabel = "";
+            return;
+        }
+        var compareItem: GlobalFilterItem = this.GlobalFilters.find(x => x.CompareWithPrevious);
+
+        if(compareItem.Operator && compareItem.Operator == "Between")
+            this.DateRangeLabel = compareItem.FieldValue2 + " - " + compareItem.FieldValue3;
+    }
+
+    private ApplyGlobalFilterToWidget(widget: ReactWidgetPM) {
+        var widgetGlobalFilters = this.GetWidgetGlobalFilters(widget);
+        if (!this.WidgetFilterChanged(widget, widget.GlobalFilters, widgetGlobalFilters)) return;
+        widget.GlobalFilters = widgetGlobalFilters;
+        this.DashboardDataBinding.onEditWidget.next(widget);
+    }
+
+    private WidgetFilterChanged(widget: ReactWidgetPM, oldFilterString: string, newFilterString: string): boolean {
+        if (oldFilterString == newFilterString) return false;
+        let oldFitlers: GlobalFilterItem[] = JSON.parse(oldFilterString ?? "[]") ?? [];
+        let newFilters: GlobalFilterItem[] = JSON.parse(newFilterString ?? "[]") ?? [];
+
+        var hasChanges = false;
+        if (oldFitlers.length != newFilters.length) return true;
+        newFilters.forEach(newFilterItem => {
+            hasChanges = this.WidgetFilterItemChanged(widget, oldFitlers, newFilterItem);
+            if (hasChanges) return;
+        });
+
+        if (!hasChanges) {
+            oldFitlers.forEach(oldFilterItem => {
+                this.WidgetFilterItemDeleted(newFilters, oldFilterItem);
+            });
+        }
+        return hasChanges;
+    }
+    WidgetFilterItemDeleted(newFilters: GlobalFilterItem[], oldFilterItem: GlobalFilterItem): boolean {
+        var newFilterItem = newFilters.find(x => x.FieldId == oldFilterItem.FieldId);
+        if (!newFilterItem) {
+            return true;
+        }
+        return false;
+    }
+
+    WidgetFilterItemChanged(widget: ReactWidgetPM, oldFilters: GlobalFilterItem[], newFilterItem: GlobalFilterItem): boolean {
+        var oldFilterItem = oldFilters.find(x => x.FieldId == newFilterItem.FieldId);
+        if (!oldFilterItem) {
+            return true;
+        }
+
+        if (oldFilterItem.FieldValue != newFilterItem.FieldValue ||
+            oldFilterItem.FieldValue2 != newFilterItem.FieldValue2 ||
+            oldFilterItem.FieldValue3 != newFilterItem.FieldValue3) {
+            return true;
+        }
+
+        if (widget.TypeCode == 'kpi' && oldFilterItem.CompareWithPrevious != newFilterItem.CompareWithPrevious) {
+            return true;
+        }
+        return false;
     }
 
     GetWidgetGlobalFilters(widget: ReactWidgetPM): string {
