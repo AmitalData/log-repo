@@ -233,7 +233,7 @@
                                         <tr>
                                             <td style="width:140px">
 
-                                                <SearchBox *ngIf="TapagNumberTypesFilter && EntityPM.EntityParentPM.direction == 'E'" [ObjectTableName]="'Customs.ClientsTapag'"
+                                                <SearchBox *ngIf="TapagNumberTypesFilter && EntityPM.EntityParentPM.Direction == 'E'" [ObjectTableName]="'Customs.ClientsTapag'"
                                                     [IsQuickSearch]="true"
                                                     [DropDownWidth]="125"
                                                     [ItemHeight]="20"
@@ -250,7 +250,7 @@
 
                                                 </SearchBox>
 
-                                                <LogTextBox *ngIf="EntityPM.EntityParentPM.direction != 'E'" [ObjectFieldName]="'CustomsTapgFile'" [ObjectTableName]="ObjectTableName" [Text]="CustomsTapgFile"
+                                                <LogTextBox *ngIf="EntityPM.EntityParentPM.Direction != 'E'" [ObjectFieldName]="'CustomsTapgFile'" [ObjectTableName]="ObjectTableName" [Text]="CustomsTapgFile"
                                                 [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
 
                                
