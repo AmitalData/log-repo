@@ -1101,6 +1101,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ServersNameController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\SchedulerParamController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\InterfaceTenantDefinitionWebServiceController.cs" />
+    <Compile Include="Controllers\CustomsModel\WebServices\DeclarationWebServiceController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\ExportDeclarationClosingController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\CustomsItemWebServiceController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\LogisticActionRequestWebServiceController.cs" />
@@ -2012,7 +2013,7 @@
     <Compile Include="Controllers\CustomsModel\WebServices\CustDocsTicketWebServiceController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\CustDocTypeMetaDataWebServiceController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\DeclarationCourierStatusWebServiceController.cs" />
-    <Compile Include="Controllers\CustomsModel\WebServices\DeclarationWebServiceController.cs" />
+    <Compile Include="Controllers\CustomsModel\WebServices\DeclarationsBulkFeedWebServiceController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\NotificationWebServiceController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\OpenAccessController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\PaymentOrderWebServiceController.cs" />

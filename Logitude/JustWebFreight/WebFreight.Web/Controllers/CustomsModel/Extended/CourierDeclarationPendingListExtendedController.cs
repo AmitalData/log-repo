@@ -55,7 +55,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 if (filters.Tenant != null)
                     tenant = tenant;
 
-                QueryOperations queryOperations = CreateQueryOperationsPendingBulk(filters, tenant);
+                QueryOperations queryOperations = CreateQueryOperations(filters, tenant, "Customs.DeclarationCourierStatus");
                 ICustomContext MyContext = CustomContext.GetContext(tenant);
                 DeclarationCourierStatusListQueryService declarationListQueryService = new DeclarationCourierStatusListQueryService(MyContext);
                 List<DeclarationCourierStatusList> entityLists = declarationListQueryService.GetDeclarationCourierStatusListPendingBulk(queryOperations, tenant);
@@ -78,20 +78,20 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-        public static QueryOperations CreateQueryOperationsPendingBulk(ApiQueryFilters filters, int tenant)
+        public static QueryOperations CreateQueryOperations(ApiQueryFilters filters, int tenant, string table)
         {
             QueryOperations queryOperations = new QueryOperations()
             {
-                ObjectTableName = "Customs.DeclarationCourierStatus",
+                ObjectTableName = table,
                 PageIndex = filters.PageIndex,
                 PageSize = filters.PageSize,
-                QuerySection = "Customs.DeclarationCourierStatus",
+                QuerySection = table,
                 SortByColumnName = filters.SortBy,
                 SortDirectin = filters.SortDirection,
                 GetAll = filters.GetAll,
             };
 
-            List<ObjectField> DeclarationCourierStatusObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.DeclarationCourierStatus", tenant);
+            List<ObjectField> objectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName(table, tenant);
             List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
 
             for (int i = 1; i <= 10; i++)
@@ -106,7 +106,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                     string filterName = filterNameProp.ToString();
                     string filterOperator = filterOperatorProp != null ? filterOperatorProp.ToString() : "Equals";
 
-                    ObjectField field = DeclarationCourierStatusObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+                    ObjectField field = objectFields.FirstOrDefault(f => f.FieldName == filterName);
                     if (field != null)
                     {
                         string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
@@ -128,7 +128,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 foreach (QueryFilterItem filter in filters_list)
                 {
-                    ObjectField field = DeclarationCourierStatusObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                    ObjectField field = objectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
                     if (field != null)
                     {
                         string valuestring1 = filter.FieldValue != null ? filter.FieldValue.ToString() : null;
