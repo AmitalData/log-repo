@@ -50,16 +50,16 @@ export class DigitalPortalCustomizationMainComponent {
         var myResult: CustomizationMainMenuItem[] = [];
 
         var args = new CustomizationMainMenuItem();
-        args.TextCode = "Change Labels";
+        args.TextCode = "Labels Management";
         args.Code = "ChageLabels";
         args.ComponentPath = "./SharedLogistics/Components/DigitalPortal/DigitalPortalCustomizationChageLabelsComponent";
         myResult.push(args);
 
-        args = new CustomizationMainMenuItem();
-        args.TextCode = "Translate Labels";
-        args.Code = "TranslateLabels";
-        args.ComponentPath = "./SharedLogistics/Components/DigitalPortal/DigitalPortalCustomizationTranslateLabelsComponent";
-        myResult.push(args);
+        //args = new CustomizationMainMenuItem();
+        //args.TextCode = "Translate Labels";
+        //args.Code = "TranslateLabels";
+        //args.ComponentPath = "./SharedLogistics/Components/DigitalPortal/DigitalPortalCustomizationTranslateLabelsComponent";
+        //myResult.push(args);
 
         args = new CustomizationMainMenuItem();
         args.TextCode = "Fields Management";

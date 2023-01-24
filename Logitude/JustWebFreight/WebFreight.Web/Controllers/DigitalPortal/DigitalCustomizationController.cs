@@ -289,7 +289,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 IWebFreightContext MyContext = WebFreightContext.GetContext(tenant);
                 ObjectFieldRepository objectFieldRepository = new ObjectFieldRepository(MyContext);
-                IQueryable<ObjectField> entityPocos = objectFieldRepository.GetObjectFieldsFromTenanZeroAndMyTenant(authToken.Tenant, true);
+                IQueryable<ObjectField> entityPocos = objectFieldRepository.GetDigitalObjectFieldsFromTenanZeroAndMyTenant(authToken.Tenant, true);
 
                 ObjectFieldQuery objectFieldQuery = new ObjectFieldQuery(objectFieldRepository);
 
