@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "c9c51311648e0c507643c4f0865f44a8";
+		public const string HashString = "c50d0cb34df4ce0772d342a69e50444a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -16515,7 +16515,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
-					 				 
+					 
 					 						FieldName =  "DeclarationOfficeNameForExport",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
@@ -16576,74 +16576,75 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
-				   FieldName = "ExportCloseAmendmentRequestNumber",
-				   ObjectTableName = "Customs.Declaration",
-				   FieldsDataType = "Text",
-				   MinLength = 0,
-				   MaxLength = 9,
-				   IsRequired = false,
-				   CopyToDW = false,
-				   DisplayOnLookUp = false,
-				   DisplayOnLookUpLocal = false,
-				   CanFilter = false,
-				   DisplayOnly = false,
-				   SystemRequired = false,
-				   SystemMaxLength = 9,
-				   DisplayInList = true,
-				   IsCustomFilter = false,
-				   MultiLine = false,
-				   IsTimeFrameFilter = false,
-				   DisplayInSearchWindowList = false,
-				   PMPropertyPath = "ExportCloseAmendmentRequestNumber",
-				   ListPropertyPath = "ExportCloseAmendmentRequestNumber",
-				   DisplayInLookUpIndex = 0,
-				   AutomaticField = false,
-				   UniqueField = false,
-				   DisplayInSearchWindowListIndex = 0,
-				   IsMulti = false,
-				   DependencyFilter1IsList = false,
-				   DependencyFilter2IsList = false,
-				   DependencyFilter3IsList = false,
-				   ValidForQuerySection1 = "Customs.Declaration",
-				   IsRestrictable = false,
-				   DisplayInEntityVariables = false,
-				   AllowedInCustomerFieldsSettings = false,
-				   DisplayInSearchWindowFilters = false,
-				   DisplayInSearchWindowFiltersIndex = 0,
-				   DisplayInDocumentReferences = false,
-				   InActive = false,
-				   DisplayLongName = false,
-				   FullFieldLable = "ExportCloseAmendmentRequestNumber",
-				   DefaultText = "Export Close Amendment Request Number",
-				   FullLocalDefaultText = "מס' בקשה לסגירה",
-				   ListFieldLable = "ExportCloseAmendmentRequestNumberListLable",
-				   ListLableDefaultText = "Export Close Amendment Request Number",
-				   ListLocalDefaultText = "מס' בקשה לסגירה",
-				   IsMaxLength = false,
-				   IsFixedLength = false,
-				   EnableAutoFill = false,
-				   IncludeInSearchField = false,
-				   AllowedinAutomationConditions = false,
-				   AutomationEmailRecipient = false,
-				   CanAutomateSetValue = false,
-				   DisplayInAutomationAsEnitity = false,
-				   DisplayInRequiredFields = false,
-				   HasTemplate = false,
-				   IsCustom = false,
-				   EnableFullscreenTextBox = false,
+					 
+					 						FieldName =  "ExportCloseAmendmentRequestNumber",
+					  						ObjectTableName =  "Customs.Declaration",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  9,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  9,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ExportCloseAmendmentRequestNumber",
+					  						ListPropertyPath =  "ExportCloseAmendmentRequestNumber",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.Declaration",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ExportCloseAmendmentRequestNumber",
+					  						DefaultText =  "Export Close Amendment Request Number",
+					  						FullLocalDefaultText =  "מס' בקשה לסגירה",
+					  						ListFieldLable =  "ExportCloseAmendmentRequestNumberListLable",
+					  						ListLableDefaultText =  "Export Close Amendment Request Number",
+					  						ListLocalDefaultText =  "מס' בקשה לסגירה",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 
-			   }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes, objectTables, addedFields, addedTextCodes);
-
-
-			AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-			{
-
-				FieldName =  "ExportCloseAmendmentStatus",
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ExportCloseAmendmentStatus",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "AmendmentRequestStatus",
 					  						MinLength =  0,
-					  						MaxLength =  3,
+					  						MaxLength =  2,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
