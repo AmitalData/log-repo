@@ -1,5 +1,5 @@
 declare var window: any;
-import {Input, Output, Component, OnInit, OnChanges, EventEmitter, QueryList, AfterViewInit, OnDestroy, ChangeDetectorRef, ViewChild, ViewChildren} from '@angular/core';
+import {Input, Output, Component, OnInit, OnChanges, EventEmitter, QueryList, AfterViewInit, OnDestroy, ChangeDetectorRef, ViewChild, ViewChildren, SimpleChanges} from '@angular/core';
 import {BaseComponent} from './BaseComponent';
 import {SessionComponent} from '../Session/SessionComponent';
 import {SessionLocator} from '../../Utilities/SessionLocator';
@@ -13,8 +13,9 @@ import { debounceTime, mapTo, startWith, throttleTime } from 'rxjs/operators';
     
     selector: 'LogTabs',
     templateUrl: "./LogTabsComponent.html",
+    styleUrls: ["./LogTabsComponent.scss"],
 })
-export class LogTabsComponent implements AfterViewInit {
+export class LogTabsComponent implements AfterViewInit, OnInit, OnChanges {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     @ViewChild('tabs') tabs: any = null;
 
@@ -37,6 +38,11 @@ export class LogTabsComponent implements AfterViewInit {
         if (ObjectsLocator.GlobalSetting != undefined) {
             this.IsRTL = ObjectsLocator.GlobalSetting.LayoutDirection == "rtl" ? true : false;
         }
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if(changes['TabsSource'])
+            this.checkIfShowButton()
     }
 
     ngOnInit() {
@@ -160,11 +166,25 @@ export class LogTabsComponent implements AfterViewInit {
     }
 
     scrollRight() {
-        this.tabs.nativeElement.scrollLeft -= 93
+        this.tabs.nativeElement.scrollLeft -= 95
+        this.NextTab()
     }
     
     scrollleft() {
-        this.tabs.nativeElement.scrollLeft += 93
+        this.tabs.nativeElement.scrollLeft += 95
+        this.BackTab()
+    }
+
+    scrollToStart() {
+        this.tabs.nativeElement.scrollLeft = 0;
+        this.SelectedTab = this.TabsSource[0];
+    }
+    
+    scrollToEnd() {
+        this.tabs.nativeElement.scrollRight = 0;
+        this.SelectedTab = this.TabsSource[this.TabsSource.length - 1];
+        this.cd.detectChanges();
+        this.scrollRight()        
     }
         
     subscribeWindowsResize() {
