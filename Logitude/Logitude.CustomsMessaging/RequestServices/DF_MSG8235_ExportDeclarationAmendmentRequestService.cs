@@ -323,10 +323,20 @@ namespace Logitude.CustomsMessaging.RequestServices
             }
             else
             {
-                req.Response.FunctionalReferenceID = new ResponseFunctionalReferenceIDType
+                if (!string.IsNullOrWhiteSpace(_DeclarationPM.ExportCloseAmendmentStatus))
                 {
-                    Value = string.IsNullOrEmpty(_DeclarationPM.ExportCloseAmendmentRequestNumber) ? CodeCounter.GetNumber("ExportCloseAmendmentRequestNumber", _DeclarationPMOrg.Tenant).ToString() : _DeclarationPM.ExportCloseAmendmentRequestNumber
-                };
+                    req.Response.FunctionalReferenceID = new ResponseFunctionalReferenceIDType
+                    {
+                        Value =  CodeCounter.GetNumber("AmendmentRequestNumber", _DeclarationPMOrg.Tenant).ToString()
+                    };
+                }
+                else
+                {
+                    req.Response.FunctionalReferenceID = new ResponseFunctionalReferenceIDType
+                    {
+                        Value = string.IsNullOrEmpty(_DeclarationPM.ExportCloseAmendmentRequestNumber) ? CodeCounter.GetNumber("AmendmentRequestNumber", _DeclarationPMOrg.Tenant).ToString() : _DeclarationPM.ExportCloseAmendmentRequestNumber
+                    };
+                }
             }
             functionalReferenceID = req.Response.FunctionalReferenceID.Value;
 
