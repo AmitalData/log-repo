@@ -5,7 +5,6 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
-using Logitude.Customs.BL.BL;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -25,7 +24,5 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.Code == keys.Code
                     select a).FirstOrDefault();
         }
-
-        public List<InterfaceManagement> GetAllFromCache() => CacheHelper.GetFromCache("InterfaceManagementGetAll", ()=> GetAll().ToList());
     }
 }
