@@ -1,24 +1,23 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-	<Sql Version="13">
+	<Sql Version="15">
       <![CDATA[	  
 	  
 		delete from DigitalPreDefinedComponents where id != ''
 		declare @shipmentObjectId as varchar(15)
 		set @shipmentObjectId = (select Id from ObjectTables where [Name] = 'Shipment' and Tenant = 0 )
 		declare @EntityId as varchar(15)
- 		EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPreDefinedComponent'
-	
+
+ 		EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPreDefinedComponent'	
 		INSERT INTO DigitalPreDefinedComponents (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], Content) 
 	    values (@EntityId,
 				0,
 				@shipmentObjectId,
 				CURRENT_TIMESTAMP,
 				CURRENT_TIMESTAMP,
-				'Shipment status component for tablet',
+				'Shipment status for tablet component',
 				'<ShipmentStatusInfoForTablet></ShipmentStatusInfoForTablet>')
 
- 		EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPreDefinedComponent'
-	
+ 		EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPreDefinedComponent'	
 		INSERT INTO DigitalPreDefinedComponents (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, Name, Content) 
 	    values (@EntityId,
 				0,
@@ -28,8 +27,7 @@
 				'Shipment horizontal timeline component',
 				'<HorizontalTimeline></HorizontalTimeline>');
 				
-	    EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPreDefinedComponent'
-	
+	    EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPreDefinedComponent'	
 		INSERT INTO DigitalPreDefinedComponents (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, Name, Content) 
 	    values (@EntityId,
 				0,
@@ -39,21 +37,61 @@
 				'Shipment status info component',
 				'<ShipmentStatusInfo></ShipmentStatusInfo>');
 				
-				EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPreDefinedComponent'
-	
+		EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPreDefinedComponent'
 		INSERT INTO DigitalPreDefinedComponents (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, Name, Content) 
 	    values (@EntityId,
 				0,
 				@shipmentObjectId,
 				CURRENT_TIMESTAMP,
 				CURRENT_TIMESTAMP,
-				'Field Template',
+				'Field template component',
 				'<!-- You can add more then one field by seprating them by comma -->
 <LogFieldContainer>
 <LogLabel field-code='''' ></LogLabel>
 :
 <LogField field-code=''''></LogField> 
-</LogFieldContainer>');				
-		]]>
+</LogFieldContainer>');		
+
+    EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPreDefinedComponent'
+	INSERT INTO DigitalPreDefinedComponents (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, Name, Content) 
+	values (@EntityId,
+			0,
+			@shipmentObjectId,
+			CURRENT_TIMESTAMP,
+			CURRENT_TIMESTAMP,
+			'Log table component',
+			'<LogTable></LogTable>');
+
+	EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPreDefinedComponent'
+	INSERT INTO DigitalPreDefinedComponents (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, Name, Content) 
+	values (@EntityId,
+			0,
+			@shipmentObjectId,
+			CURRENT_TIMESTAMP,
+			CURRENT_TIMESTAMP,
+			'Log row component',
+			'<LogRow></LogRow>');
+
+	EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPreDefinedComponent'
+	INSERT INTO DigitalPreDefinedComponents (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, Name, Content) 
+	values (@EntityId,
+			0,
+			@shipmentObjectId,
+			CURRENT_TIMESTAMP,
+			CURRENT_TIMESTAMP,
+			'Log column component',
+			'<LogColumn></LogColumn>');
+
+	EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPreDefinedComponent'
+	INSERT INTO DigitalPreDefinedComponents (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, Name, Content) 
+	values (@EntityId,
+			0,
+			@shipmentObjectId,
+			CURRENT_TIMESTAMP,
+			CURRENT_TIMESTAMP,
+			'Log icon component',
+			'<LogIcon code=''''></LogIcon>');
+			
+			]]>
 </Sql>
 </Script>
