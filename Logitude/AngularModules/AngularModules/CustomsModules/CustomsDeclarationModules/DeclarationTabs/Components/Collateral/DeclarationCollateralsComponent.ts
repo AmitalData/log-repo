@@ -406,6 +406,8 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
         var windowArgs: any = {};
         
         windowArgs.DeclarationId = this.EntityPM.Id;
+        windowArgs.Direction = this.EntityPM.Direction;
+        windowArgs.ImporterId = this.EntityPM.ImporterId;
         windowArgs.collateralToSendlist = this._customsCollateralAnswerSharedDataService._SelectedItems.Collection;
         windowArgs.collateralToNotSendlist = this._customsCollateralAnswerSharedDataService._UnSelectedItems.Collection;
         windowArgs.selectAll = this.IsSelectedNot;
