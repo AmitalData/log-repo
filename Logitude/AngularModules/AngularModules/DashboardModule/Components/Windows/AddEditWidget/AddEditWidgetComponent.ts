@@ -56,8 +56,8 @@ export class AddEditWidgetComponent extends BaseComponent {
     public isMeasureNumber: boolean = false;
     public IsDisplaySettingVisibile: boolean = false;
     public IsTimeOverTimeVisible: boolean = false;
-    public CanSort: boolean = false;
     public analyticFieldListService: AnalyticsFactsFieldsMetaDataListService;
+
     constructor() {
         super();
         this.WidgetMeasuresList = [];
@@ -626,12 +626,10 @@ export class AddEditWidgetComponent extends BaseComponent {
         if (this.selectedGroupField.DataTypeCode == "DateTime" || this.selectedGroupField.DataTypeCode == 'Date') {
             this.SortBy = null;
             this.SortDirection = "asc";
-            this.CanSort = false;
             return;
         }
         this.SortBy = 1;
         this.SortDirection = "desc";
-        this.CanSort = true;
     }
 
     CancelButtonClicked() {
@@ -908,6 +906,10 @@ export class AddEditWidgetComponent extends BaseComponent {
 
         return false;
     }
+
+    public get CanSort(): boolean {
+        return this.SelectedGroupField && (this.SelectedGroupField.DataTypeCode != "DateTime" && this.SelectedGroupField.DataTypeCode != 'Date');
+    }
 }
 
 export class WidgetMeasureItem extends BaseComponent {
@@ -957,7 +959,7 @@ export class WidgetMeasureItem extends BaseComponent {
         if (this.EntityPM.MeasureFieldId != value) {
             this.EntityPM.MeasureFieldId = value;
             MixPanelLocator.PostDashboardAction({ ActionName: "Widget Measure Field Change", Message: "Changed To " + value, DashboardId: this.DashboardPM?.Id });
-            if(!value) this.FieldChanged(null);
+            if (!value) this.FieldChanged(null);
         }
     }
 
@@ -1026,7 +1028,7 @@ export class WidgetMeasureItem extends BaseComponent {
         this.fatherComponent.CheckMeasureAddVisiblity();
     }
 
-    FieldChanged(field: AnalyticsFactsFieldsMetaDataList) { 
+    FieldChanged(field: AnalyticsFactsFieldsMetaDataList) {
         if (this.FielHasOldValue) {
             this.FielHasOldValue = false;
             this.selectedField = field;
