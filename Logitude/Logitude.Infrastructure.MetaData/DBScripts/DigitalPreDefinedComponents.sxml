@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-	<Sql Version="10">
+	<Sql Version="13">
       <![CDATA[	  
 	  
 		delete from DigitalPreDefinedComponents where id != ''
@@ -49,7 +49,11 @@
 				CURRENT_TIMESTAMP,
 				'Field Template',
 				'<!-- You can add more then one field by seprating them by comma -->
-<FieldTemplate field-code=''''></FieldTemplate>');				
+<LogFieldContainer>
+<LogLabel field-code='''' ></LogLabel>
+:
+<LogField field-code=''''></LogField> 
+</LogFieldContainer>');				
 		]]>
 </Sql>
 </Script>
