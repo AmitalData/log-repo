@@ -14,6 +14,8 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity;
+using Simplog.Server.Infrastructure.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -1062,6 +1064,29 @@ namespace Logitude.Customs.Data.Repsitories
             ExportStorageConnectToDeclaration res = q.ToList().FirstOrDefault();
             
             return res;
+        }
+
+        public List<string> GetDisplayOnly(string[] declarationsId, int tenant, string[] sheetStatusInProcessId, QueryOperations filter)
+        {
+            var q = from d in context.Declarations.Where(x => declarationsId.Contains(x.Id))
+                    join c in context.CustomsRequestsSheets on d.CustomFileNo equals c.CustomFileNo into cJoin
+                    from cd in cJoin.DefaultIfEmpty()
+
+                    where d.Tenant == tenant &&
+                        cd.Tenant == tenant &&
+                    (
+                        d.PaymentDate.HasValue == true
+                        || d.IsConvertedDeclaration == true
+                        || new string[] { "10", "11" }.Contains(d.DeclarationStatusTypeCode)
+                        || sheetStatusInProcessId.Contains(cd.RequestStatusCode)
+                        || new string[] { "2750", "2754", "2755", "8211", "8212", "8214", "8215", "8216", "8227", "US2L01" }.Contains(cd.InterfaceTypeCode)
+                    )
+                    select d.Id;
+
+            new GenericFilter().GetFilteredQuery<DeclarationCourierStatus>(filter, q);
+
+
+            return q.ToList();
         }
     }
 
