@@ -802,9 +802,9 @@
       Description="&quot;HTML Editor Style Fixed&quot;" />
     <Record
       Code="&quot;VIP&quot;"
-      Name="&quot;Vizion - Pilot Customer&quot;"
-      SearchFields="&quot;VIP,Vizion - Pilot Customer&quot;"
-      Description="&quot;Vizion - Pilot Customer&quot;" />
+      Name="&quot;Container Tracking - Pilot Customer&quot;"
+      SearchFields="&quot;VIP,Container Tracking - Pilot Customer&quot;"
+      Description="&quot;Container Tracking - Pilot Customer&quot;" />
     <Record
       Code="&quot;SCD&quot;"
       Name="&quot;Second context DB&quot;"

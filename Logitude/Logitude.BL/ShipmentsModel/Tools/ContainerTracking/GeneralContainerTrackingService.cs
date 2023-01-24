@@ -302,7 +302,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Vizion Update Container Status Fail", null, null);
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Container Tracking Status Fail", null, null);
             }
         }
         private void InitializeContext()

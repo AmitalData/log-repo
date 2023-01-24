@@ -3383,7 +3383,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             return new BatchTaskExecutionPM()
             {
-                Subject = "Vizion - Pilot Customer",
+                Subject = "Container Tracking - Pilot Customer",
                 Tenant = myTenant,
                 ChangeSetOp = ChangeSetOperation.Insert,
                 ClassName = "WebFreight.Web.Helpers.VizionPilotCustomerDataGenerator,WebFreight.Web",

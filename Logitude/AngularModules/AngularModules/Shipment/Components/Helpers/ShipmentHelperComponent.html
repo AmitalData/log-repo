@@ -51,7 +51,7 @@
             <button class="Button" (click)="AWBImportButtonClicked()">{{AWBImportWizardButtonLabel}}</button>
         </td>
         <td style="padding-right: 5px;" *ngIf="IsVisionRequestStatus" >
-            <button class="Button" (click)="VizionStatusClicked()">Vizion Container Statuses</button>
+            <button class="Button" (click)="VizionStatusClicked()">Track Container</button>
         </td>
         <td *ngIf="NotesSharedWithCustomerActivated" style="padding-left: 5px; padding-right: 0px;">
             <HelperNotes [IconCode]="'R'" [Title]="'Notes Shared with Customer'" [IsCustom]="true" [Text]="NotesSharedWithCustomer" (TextChanged)="NotesSharedWithCustomer = $event" [ShipmentPM]="EntityPM"></HelperNotes>

@@ -222,7 +222,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 updatedByPartner = "Ocean Insights";
             }else if (entityPM.IsUpdatedVizionAnalyzer)
             {
-                updatedByPartner = "Vizion";
+                updatedByPartner = "Container Tracker";
             }
             else
             {
