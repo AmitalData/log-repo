@@ -98,7 +98,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        ActionName = en.ExportLogisticPermitAction!=null ? en.ExportLogisticPermitAction.LocalName:"",
                                                        ProcedureCurrentName = en.DeclarationEntity != null && en.DeclarationEntity.GovernmentProcedureCurrent!=null ? en.DeclarationEntity.GovernmentProcedureCurrent.LocalName :"",
                                                        StorageSiteCode = en.StorageSiteCode,
-                                                       StorageStatusName = en.StorageStatus
+                                                       StorageStatusName = en.StorageStatus,
+                                                       MarksNumbers=en.MarksNumbers,
 
                                                    });// ;
             return query;
@@ -112,7 +113,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             {
                 IQueryable<ConsignmentList> query = (from a in context.Consignments.Where(y => y.DeclarationId == filter.FieldValue.ToString()).Select(r => new { r.ExportStoragesId })select new ConsignmentList { ExportStoragesId=a.ExportStoragesId });
                 iQueryable = iQueryable.Where(x => x.DeclarationId == null ||
-                (x.DeclarationEntity.GovernmentProcedureCurrent.LocalName.Contains("äîëìä") 
+                (x.DeclarationEntity.GovernmentProcedureCurrent.LocalName.Contains("ï¿½ï¿½ï¿½ï¿½ï¿½") 
                     &&  !query.Any(t => t.ExportStoragesId == x.Id)));             
             }
             var filter2 = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "IsExportFileNo");
