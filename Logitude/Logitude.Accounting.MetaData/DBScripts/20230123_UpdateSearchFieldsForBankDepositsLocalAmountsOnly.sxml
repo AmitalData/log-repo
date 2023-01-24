@@ -1,0 +1,33 @@
+﻿<Script DBType="Main" Module="Accounting" AOT="true" TargetTableName="BankDeposits" Env="test,cloud">
+	<Sql Version="1">
+		<![CDATA[
+
+ 
+with q AS (
+  SELECT 
+x.Tenant Tenant,
+x.DepositNumber DepositNumber,
+STRING_AGG(x.ChequeNumber, ',') ChequeNumber,
+STRING_AGG(x.LocalAmount, ',') LocalAmount,
+STRING_AGG(x.ForeignAmount, ',') ForeignAmount
+from (
+select  bd.Tenant , bd.SearchFields,bd.DepositNumber ,  c.LocalAmount, c.ChequeNumber, c.ForeignAmount 
+  FROM BankDeposits as bd
+  join BankDepositLines bdl on bd.Id = bdl.DepositId and bd.Tenant = bd.Tenant
+  join ARPaymentCheques c on c.Id = bdl.ARPaymentChequeId and c.Tenant = bdl.Tenant
+  where  c.LocalAmount = c.ForeignAmount 
+  group by bd.SearchFields,bd.DepositNumber ,  c.LocalAmount , c.ChequeNumber, c.ForeignAmount , bd.Tenant
+) x
+GROUP BY x.DepositNumber , x.Tenant
+  )
+  UPDATE BankDeposits
+  SET SearchFields = CONCAT(q.DepositNumber , ',' , q.ChequeNumber , ',' , q.LocalAmount )
+  FROM q
+  where q.DepositNumber = BankDeposits.DepositNumber and q.Tenant = BankDeposits.Tenant and $LastCounterWhere$
+
+
+
+
+    ]]>       
+  </Sql>
+</Script>
