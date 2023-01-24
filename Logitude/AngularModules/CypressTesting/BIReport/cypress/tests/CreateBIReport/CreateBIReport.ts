@@ -38,6 +38,7 @@ Then("the folder will created successfully", () => {
 //ShipmentsFact
 //#region to Create Bi Report
 Given("User open the folder to add Shipment BI Report", () => {
+    cy.wait(1000)
     BIActions.SearchBIFolder(BIReportFolderName)
 });
 
