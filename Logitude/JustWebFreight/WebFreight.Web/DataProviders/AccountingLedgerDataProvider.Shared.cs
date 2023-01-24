@@ -76,5 +76,7 @@ namespace WebFreight.Web.DataProviders
         public double? CreditInLocalCurrency { get; set; }
         public double? AccountBalanceInLocalCurrency { get; set; }
         public string ProjectNumber { get; set; }
+        public string CustomerReference1 { get; set; }
+        public string CustomerReference2 { get; set; }
     }
 }

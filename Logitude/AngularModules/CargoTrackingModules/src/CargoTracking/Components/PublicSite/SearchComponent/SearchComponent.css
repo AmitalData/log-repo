@@ -569,7 +569,8 @@ li a {
         width: 45% !important;
     }
     .record-row {
-        height: 210px !important;
+        height: 240px !important;
+        overflow-y: auto;
     }
     .info-text {
         margin: 0 auto;
