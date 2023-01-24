@@ -222,7 +222,9 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             {
                 var name = GetProperty(shipmentPM, partnerCardMetaData.NameFieldName);
                 var address = GetPartnerAddress(id);
-                if (partnerCardMetaData.SkipIfEmpty && (string.IsNullOrEmpty(name) || name.Equals("---")) && string.IsNullOrEmpty(address))
+                if (partnerCardMetaData.SkipIfEmpty && 
+                    (string.IsNullOrEmpty(name) || name.Equals("---")) &&
+                    (string.IsNullOrEmpty(address) || address.Equals(",")))
                     return;
 
                 partnerCards.Add(new PartnerCard()
