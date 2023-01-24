@@ -1,4 +1,4 @@
-import { OnInit, Component, ChangeDetectorRef } from '@angular/core';
+﻿import { OnInit, Component, ChangeDetectorRef } from '@angular/core';
 import { ExportDeclarationClosingDataPM } from '../../../../../Customs/EntityPMs/ExportDeclarationClosingDataPM';
 import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -54,8 +54,8 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     public SupplierInvoiceItemList: SupplierInvoiceItemList[] = [];
     public IsNew: boolean = false;
     private exportDeclarationClosingWebService: ExportDeclarationClosingWebService = new ExportDeclarationClosingWebService();
-    public ActualSailingDate: string = "תאריך הפלגה בפועל";
-    public ActualTakeOffDate: string = "תאריך המראה בפועל";
+    public ActualSailingDate: string = "×ª×�×¨×™×š ×”×¤×œ×’×” ×‘×¤×•×¢×œ";
+    public ActualTakeOffDate: string = "×ª×�×¨×™×š ×”×ž×¨×�×” ×‘×¤×•×¢×œ";
 
     ManifestNumberPlaceholder: string = '';
     SecondCargoIdPlaceholder: string = '';
@@ -373,21 +373,20 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     }
     SendButtonClicked(event: CustomSendOptionsArgs) {
 
-
         if (AppTool.IsNullOrEmpty(this.EntityPM.FinalCargoTypeCode)) {
-            var msg = " שדה סוג מזהה מטען שדה חובה";
+            var msg = " ×©×“×” ×¡×•×’ ×ž×–×”×” ×ž×˜×¢×Ÿ ×©×“×” ×—×•×‘×”";
             this.ValidationErrors.push(msg);
             this.FillValidationErrors("Errors");
         }
         else {
             if (AppTool.IsNullOrEmpty(this.EntityPM.FinalManifestNumber)) {
-                var msg = " שדה מזהה מטען רםשון שדה חובה";
+                var msg = " ×©×“×” ×ž×–×”×” ×ž×˜×¢×Ÿ ×¨×�×©×•×Ÿ ×©×“×” ×—×•×‘×”";
                 this.ValidationErrors.push(msg);
                 this.FillValidationErrors("Errors");
             }
             else {
                 if (AppTool.IsNullOrEmpty(this.FinalSecondCargoId) && !AppTool.IsNullOrEmpty(this.SecondCargoIdPlaceholder)) {
-                    var msg = " שדה מזהה מטען שני שדה חובה";
+                    var msg = " ×©×“×” ×ž×–×”×” ×ž×˜×¢×Ÿ ×©× ×™ ×©×“×” ×—×•×‘×”";
                     this.ValidationErrors.push(msg);
                     this.FillValidationErrors("Errors");
                 }
@@ -395,7 +394,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
                 
                     if (AppTool.IsNullOrEmpty(this.EntityPM.LoadingDateTime)) {
-                        var msg = " שדה תםריך טעינה שדה חובה";
+                        var msg = " ×©×“×” ×ª×�×¨×™×š ×˜×¢×™× ×” ×©×“×” ×—×•×‘×”";
                         this.ValidationErrors.push(msg);
                         this.FillValidationErrors("Errors");
                     }
@@ -491,7 +490,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
     SendAmendmentCloseDeclaration(event: CustomSendOptionsArgs) {
 
-        this.CurrentSession.StartBusyIndicator("שליחת מסר סגירת הצהרה");
+        this.CurrentSession.StartBusyIndicator("×©×œ×™×—×ª ×ž×¡×¨ ×¡×’×™×¨×ª ×”×¦×”×¨×”");
         var searchParams: AmendmentRequestParams = new AmendmentRequestParams();
         searchParams.Tenant = SessionLocator.Tenant;
         searchParams.AppicationId = this.EntityPM.DeclarationId;
@@ -509,7 +508,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         //searchParams.TestCase = event.TestCase;
         let myShowProgressBarParams: ShowProgressBarParams = null;
 
-        CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession, searchParams.PBId, "שליחת מסר סגירה", false, myShowProgressBarParams)
+        CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession, searchParams.PBId, "×©×œ×™×—×ª ×ž×¡×¨ ×¡×’×™×¨×”", false, myShowProgressBarParams)
             .then((res) => {
 
 
@@ -563,13 +562,13 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         windowArgs.Errors = this.ValidationErrors;
         windowArgs.ComponentHeight = '328px';
         windowArgs.CancelButtonVisibility = true
-        var windowTitle = "בדיקת צירוף תעודות מקור";
+        var windowTitle = "×‘×“×™×§×ª ×¦×™×¨×•×£ ×ª×¢×•×“×•×ª ×ž×§×•×¨";
         var logWindow = new LogitudeWindow();
         logWindow.Width = 600;
         logWindow.Height = 400;
         logWindow.Title = windowTitle;
         logWindow.ShowCloseButton = true;
-        windowArgs.SaveButtonText = "שלח";
+        windowArgs.SaveButtonText = "×©×œ×—";
 
         logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) =>
@@ -638,7 +637,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     OkButtonClicked() {
         if (this.ValidationErrors.length > 0)
             this.FillValidationErrors("Errors");
-        this.CurrentSession.CurrentEditComponent.StartBusyIndicator("שמירה");
+        this.CurrentSession.CurrentEditComponent.StartBusyIndicator("×©×ž×™×¨×”");
         
         if (this.IsNew) {
             this.exportDeclarationClosingDataPMService.insert(this.EntityPM).subscribe((response: ServiceResponse) => {
@@ -735,7 +734,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
             "BFIHMAIN.LogitudeTask",
             "CustomExportCloseFile",
             unifreightMessageM,
-            "נתונים תפעולים בסגירת הצהרה");
+            "× ×ª×•× ×™×� ×ª×¤×¢×•×œ×™×� ×‘×¡×’×™×¨×ª ×”×¦×”×¨×”");
 
     }
 

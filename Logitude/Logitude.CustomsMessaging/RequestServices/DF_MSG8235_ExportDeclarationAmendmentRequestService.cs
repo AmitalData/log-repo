@@ -1124,11 +1124,11 @@ namespace Logitude.CustomsMessaging.RequestServices
                     string consignmentType = declarationPM.Consignments[consignmentSeq].ConsignmentType;
                     if (supplierInvoicePM.SequenceNumeric.Value == 1 && !declarationPM.ExcludeConsignment && consignmentType == "I") // I=Import
                     {
-                        declarationGoodsShipment.ImportConsignment = GetDeclarationImportConsignment(declarationPM.Consignments[consignmentSeq], consignmentSeq, declarationPM.ProcedureCurrentCode).ToArray();
+                        declarationGoodsShipment.ImportConsignment = GetDeclarationImportConsignment(declarationPM.Consignments[consignmentSeq], declarationPM.ProcedureCurrentCode).ToArray();
                     }
                     else if (supplierInvoicePM.SequenceNumeric.Value == 1 && !declarationPM.ExcludeConsignment)
                     {
-                        declarationConsignmentList.AddRange(GetDeclarationExportConsignment(declarationPM.Consignments[consignmentSeq], consignmentSeq));
+                        declarationConsignmentList.AddRange(GetDeclarationExportConsignment(declarationPM.Consignments[consignmentSeq]));
                     }
                 }
                 declarationGoodsShipment.ExportConsignment = declarationConsignmentList.ToArray();
@@ -1277,12 +1277,12 @@ namespace Logitude.CustomsMessaging.RequestServices
             return registeredFacility;
         }
 
-        private List<DeclarationGoodsShipmentExportConsignment> GetDeclarationExportConsignment(ConsignmentPM consignmentPM, int consignmentSeq)
+        private List<DeclarationGoodsShipmentExportConsignment> GetDeclarationExportConsignment(ConsignmentPM consignmentPM)
         {
             var declarationConsignmentList = new List<DeclarationGoodsShipmentExportConsignment>();
             var declarationConsignment = new DeclarationGoodsShipmentExportConsignment()
             {
-                SequenceNumeric = consignmentSeq + 1
+                SequenceNumeric = Convert.ToDecimal(consignmentPM?.SequenceNumeric)
             };
             declarationConsignment.TransportContractDocument = new DeclarationGoodsShipmentExportConsignmentTransportContractDocument()
             {
@@ -1338,12 +1338,12 @@ namespace Logitude.CustomsMessaging.RequestServices
 
 
 
-        private List<DeclarationGoodsShipmentImportConsignment> GetDeclarationImportConsignment(ConsignmentPM consignmentPM, int consignmentSeq, string ProcedureCurrentCode)
+        private List<DeclarationGoodsShipmentImportConsignment> GetDeclarationImportConsignment(ConsignmentPM consignmentPM, string ProcedureCurrentCode)
         {
             var declarationConsignmentList = new List<DeclarationGoodsShipmentImportConsignment>();
             var declarationConsignment = new DeclarationGoodsShipmentImportConsignment()
             {
-                SequenceNumeric = consignmentSeq + 1
+                SequenceNumeric = Convert.ToDecimal(consignmentPM?.SequenceNumeric)
             };
             declarationConsignment.DMExtensions = GetImportConsignmentDMExtensions(consignmentPM, ProcedureCurrentCode);
             declarationConsignment.LoadingLocation = new DeclarationGoodsShipmentImportConsignmentLoadingLocation
