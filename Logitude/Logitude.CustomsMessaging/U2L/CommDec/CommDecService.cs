@@ -646,6 +646,10 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     {
                         UpdateDeclarationPending("901");
                     }
+                    if (_MyDeclarationPM.CasualImporterCountry!="IL" && this._AmitalCustomsFile.CreatedByUserId=="RMXORN")
+                    {
+                         UpdateDeclarationPending("905");
+                    }
                     if (currentDeclarationCourierStatusPM != null && currentDeclarationCourierStatusPM.CrateNumber != _LogitudeCommDecFile.CrateNumber)
                     {
                         currentDeclarationCourierStatusPM.CrateNumber = _LogitudeCommDecFile.CrateNumber;
