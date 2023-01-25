@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ClientsPoaUpdateClass
    {  		
-		public const string HashString = "b79fa49f03e4d9eacfbf2cff4ab2ac68";
+		public const string HashString = "e21de51f8ac5d390742cb37d96e65726";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -128,7 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "Clients Power Of Attorney",
 			      				    DefaultText =  "Clients Power Of Attorney",
-			      				    Code =  "654a",
+			      				    Code =  "2b98",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",

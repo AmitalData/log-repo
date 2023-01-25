@@ -21,7 +21,7 @@ namespace Logitude.Customs.Data.Repsitories
             ClientsPoaKeys clientKeys = entityKeys as ClientsPoaKeys;
 
             return (from a in context.ClientsPoas
-                    where a.ClientId == clientKeys.ClientId && a.Tenant == clientKeys.Tenant
+                    where a.ClientId == clientKeys.ClientId 
                     select a).ToList();
         }
 

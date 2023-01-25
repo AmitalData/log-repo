@@ -50,7 +50,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 		
 		protected override EntityKeyFields GetKeys(ClientsPoaPM entityPM)
         {
-            ClientsPoaKeys entityKeys = new ClientsPoaKeys() { Id = entityPM.Id, Tenant = entityPM.Tenant, ClientId = entityPM.ClientId };
+            ClientsPoaKeys entityKeys = new ClientsPoaKeys() { Id = entityPM.Id, ClientId = entityPM.ClientId };
             return entityKeys;
         }
 

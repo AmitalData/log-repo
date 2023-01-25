@@ -21,7 +21,6 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Key]
         [Column("Id")]
 	    public string Id { get; set; }
-     [Key]
         [Column("Tenant")]
 	    public int Tenant { get; set; }
         [Column("SearchFields")]
