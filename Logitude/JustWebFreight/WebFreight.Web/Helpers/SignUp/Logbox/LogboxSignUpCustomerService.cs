@@ -149,6 +149,7 @@ namespace WebFreight.Web.Helpers.SignUp.Logbox
             customerPM.LocalName = contactPM.LocalName;
             customerPM.ExistedContactId = contactPM.Id;
 
+            customerPM.Addresses.Add(GetNewAddressPM(signUpInfoClass, tenant));
             customerPM.Contacts.Add(contactPM);
 
             CustomerService CustomerService = new CustomerService(commonContext, customerPM, contactPM.Id);
