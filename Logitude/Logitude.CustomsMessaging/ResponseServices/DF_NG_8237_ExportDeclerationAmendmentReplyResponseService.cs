@@ -332,7 +332,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                     {
                                                         _MyDeclarationPM.IsExportClosed = true;
                                                         _MyDeclarationPM.IsClose = true;
+                                                        SendDeclarationPrint(requestParams);
                                                     }
+                                                }
+                                            else if (_MyDeclarationPM.IsExportClosed == true)
+                                                {
+                                                    SendDeclarationPrint(requestParams);
                                                 }
                                             }
                                             else
@@ -341,6 +346,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                 {
                                                     _MyDeclarationPM.IsExportClosed = true;
                                                     _MyDeclarationPM.IsClose = true;
+                                                    SendDeclarationPrint(requestParams);
                                                 }
                                                     
                                                 MyResponseData.IsExportCloseApprove = true;
@@ -610,14 +616,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                         this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                         myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
-                        if(this._MyDeclarationPM.HatraDate != null)
-                        {
-                            bool sendDeclarationPrintSync = false;
-                            if (sendDeclarationPrintSync)
-                                SendDeclarationPrintSync(requestParams);
-                            else
-                                SendDeclarationPrint(requestParams);
-                        }
+                        
                        
 
                         if (customResponse.CollateralRequests != null)
@@ -885,43 +884,43 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
-        bool SendDeclarationPrintSync(GenericRequestParams requestParams)
-        {
+        //bool SendDeclarationPrintSync(GenericRequestParams requestParams)
+        //{
 
-            bool SendDeclarationPrintDone = false;
-            // Use this line to throw UnauthorizedAccessException, which we handle.
-            Task<bool> task1 = Task<bool>.Factory.StartNew(() => SendDeclarationPrint(requestParams));
+        //    bool SendDeclarationPrintDone = false;
+        //    // Use this line to throw UnauthorizedAccessException, which we handle.
+        //    Task<bool> task1 = Task<bool>.Factory.StartNew(() => SendDeclarationPrint(requestParams));
 
-            // Use this line to throw an exception that is not handled. 
-            //  Task task1 = Task.Factory.StartNew(() => { throw new IndexOutOfRangeException(); } ); 
-            try
-            {
-                task1.Wait();
-                SendDeclarationPrintDone = task1.Result;
-            }
-            catch (AggregateException ae)
-            {
-                if (true)
-                {
-                    throw ae.Flatten();
-                }
+        //    // Use this line to throw an exception that is not handled. 
+        //    //  Task task1 = Task.Factory.StartNew(() => { throw new IndexOutOfRangeException(); } ); 
+        //    try
+        //    {
+        //        task1.Wait();
+        //        SendDeclarationPrintDone = task1.Result;
+        //    }
+        //    catch (AggregateException ae)
+        //    {
+        //        if (true)
+        //        {
+        //            throw ae.Flatten();
+        //        }
 
-                ae.Handle((x) =>
-                {
-                    if (x is UnauthorizedAccessException) // This we know how to handle.
-                    {
-                        Console.WriteLine("You do not have permission to access all folders in this path.");
-                        Console.WriteLine("See your network administrator or try another path.");
-                        return true;
-                    }
-                    return false; // Let anything else stop the application.
-                });
+        //        ae.Handle((x) =>
+        //        {
+        //            if (x is UnauthorizedAccessException) // This we know how to handle.
+        //            {
+        //                Console.WriteLine("You do not have permission to access all folders in this path.");
+        //                Console.WriteLine("See your network administrator or try another path.");
+        //                return true;
+        //            }
+        //            return false; // Let anything else stop the application.
+        //        });
 
-            }
+        //    }
 
-            Console.WriteLine("task1 has completed.");
-            return SendDeclarationPrintDone;
-        }
+        //    Console.WriteLine("task1 has completed.");
+        //    return SendDeclarationPrintDone;
+        //}
 
         public override ExportDeclarationAmendmentResponseData GetResponse(DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg customResponse, AmendmentRequestParams requestParams)
         {
