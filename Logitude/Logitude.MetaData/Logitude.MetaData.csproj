@@ -118,6 +118,13 @@
     <None Include="DBOthers\InfrastructureModel\Procedures\ResetFullTextSearchIndexChangeTracking.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\usp_GetNextTableNumberValueSupportBranchCounterCodeWithSnapshot.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\usp_GetNextTableNumberValueWithSnapshotView.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Views\DBA_View_AnalyzeQueues_ToBeDeleted.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Views\DBA_View_BIReportsExecutionLogs_ToBeDeleted.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Views\DBA_View_DocumentsExecutionLogs_ToBeDeleted.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Views\DBA_View_ErrorLogs_ToBeDeleted.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Views\DBA_View_MobileNotificationLogs_ToBeDeleted.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Views\DBA_View_PerformanceLogs_ToBeDeleted.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Views\DBA_View_ReportsExecutionLogs_ToBeDeleted.dxml" />
     <None Include="DBOthers\InvoiceModel\Views\DigitalInvoicesCounterDataView.dxml" />
     <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdatePayablesData.dxml" />
     <None Include="DBOthers\ShipmentsModel\Views\DigitalShipmentDataView.dxml" />
