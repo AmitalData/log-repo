@@ -528,7 +528,7 @@ export class MaintenanceComponent {
                 item.CategoryTypeCode = "CMS";
                 item.Icon = "Settings"
                 item.Code = "VIZN";
-                item.ObjectTableName = "Vizion - Pilot Customer";
+                item.ObjectTableName = "Container Tracking - Pilot Customer";
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
         }
@@ -1671,7 +1671,7 @@ export class MaintenanceComponent {
 
                 case "VIZN": {
                     var logitudeWindow = new LogitudeWindow();
-                    logitudeWindow.Title = "Vizion - Pilot Customers";
+                    logitudeWindow.Title = "Container Tracking - Pilot Customers";
                     logitudeWindow.Width = 1000;
                     logitudeWindow.Height = 600;
                     logitudeWindow.Show('./InfrastructureModules/InfrastructureOthers/Components/Vizion/VizionAutomaticRequestComponent');
