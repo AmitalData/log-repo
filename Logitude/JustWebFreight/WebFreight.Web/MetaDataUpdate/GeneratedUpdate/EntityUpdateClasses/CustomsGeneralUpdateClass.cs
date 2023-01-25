@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "68a1bc06ed80932586a533e1bf39980c";
+		public const string HashString = "1aaede96cf09ad51df697c8f19cceac0";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "f798",
+			      				    Code =  "5510",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2125,6 +2125,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsExpOrImpDeclarationDataQueryFDeclarationNubmer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExpOrImpDeclarationDataQuery.F.DeclarationNubmer", DefaultText = "Declaration Nubmer",LocalDefaultText = @"מספר הצהרה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsExpOrImpDeclarationDataQueryODeclarationNubmerMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExpOrImpDeclarationDataQuery.O.DeclarationNubmerMandatory", DefaultText = "Declaration Nubmer field is mandatory",LocalDefaultText = @"מספר הצהרה הוא שדה חובה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsExpOrImpDeclarationDataQueryFDeclarationData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExpOrImpDeclarationDataQuery.F.DeclarationData", DefaultText = "Declaration Data",LocalDefaultText = @"נתוני הצהרת יצוא/יבוא", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
