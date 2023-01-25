@@ -48,9 +48,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping = new ClientsPoaDataMapping();
         }
 		 
-		public  ClientsPoaPM GetSingle(string id, string clientid,bool getComposition, bool getFromCache)
+		public  ClientsPoaPM GetSingle(string id, int tenant, string clientid,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new ClientsPoaKeys(){ Id = id, ClientId = clientid };
+             EntityKeys = new ClientsPoaKeys(){ Id = id, Tenant = tenant, ClientId = clientid };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
@@ -58,7 +58,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
        
 	    protected override EntityKeyFields GetKeys(ClientsPoa entityPOCO)
         {
-            ClientsPoaKeys entityKeys = new ClientsPoaKeys() { Id = entityPOCO.Id, ClientId = entityPOCO.ClientId,  };
+            ClientsPoaKeys entityKeys = new ClientsPoaKeys() { Id = entityPOCO.Id, Tenant = entityPOCO.Tenant, ClientId = entityPOCO.ClientId,  };
             return entityKeys;
         }
      
