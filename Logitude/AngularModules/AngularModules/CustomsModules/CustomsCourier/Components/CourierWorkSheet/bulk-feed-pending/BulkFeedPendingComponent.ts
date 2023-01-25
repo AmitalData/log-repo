@@ -93,7 +93,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
 
 
   constructor(
-    private _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, private pendingWebService: PendingWebService
+    public _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, private pendingWebService: PendingWebService
   ) {
     super();
     var objectFieldPMExtendedService: ObjectFieldPMExtendedService = new ObjectFieldPMExtendedService();
