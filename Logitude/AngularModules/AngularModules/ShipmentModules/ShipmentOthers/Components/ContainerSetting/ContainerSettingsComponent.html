@@ -27,7 +27,7 @@
                                 <p style="font-size: 14px; color: #1B90CB;">{{SelectedTabCode ==
                                     'G'?'General Settings' : 'Automatic Requests'}} </p>
                                 <HelpIcon *ngIf="SelectedTabCode == 'R'" [HideHeader]="true"
-                                    [Text]="'commodity is temperature sensitive'"></HelpIcon>
+                                    [Text]="'The definitions in this section will determine which containers to automatically send requests for.'"></HelpIcon>
                             </div>
 
                             <table [hidden]="SelectedTabCode != 'G'">
