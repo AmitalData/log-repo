@@ -267,6 +267,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             var DeclarationPaymentQueryService = new DeclarationPaymentQueryService(this.dbContext);
             var declarationPaymentsPM = DeclarationPaymentQueryService.GetSingle(requestParams.AppicationId, true, false);
 
+
             myDF_NG_2755_MSG12001_SubmitDeclaration.GeneralData = GetSubmitDeclarationGeneralData(declarationPaymentsPM);
             myDF_NG_2755_MSG12001_SubmitDeclaration.AnswerForCollateralRequest = GetSubmitDeclarationCollateralAnswer(declarationPaymentsPM);
 
@@ -281,6 +282,14 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             var declarationQueryService = new DeclarationQueryService(this.dbContext);
             var declarationPM = declarationQueryService.GetSingle(myDeclarationPaymentsPM.DeclarationId, false, false);
+
+            declarationPM.TaxationDateTime = myDeclarationPaymentsPM.PaymentDate;
+            var myDeclarationPM = new DeclarationUpdateService(this.dbContext, new Dictionary<string, IContext>(), declarationPM.Tenant);
+            declarationPM.ChangeSetOp = ChangeSetOperation.Update;
+            myDeclarationPM.Update(declarationPM, true);
+
+
+
 
             this.MyRequestSheetParam = new RequestSheetParam();
             this.MyRequestSheetParam.CustomFileNo = declarationPM.CustomFileNo;
