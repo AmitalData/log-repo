@@ -22,8 +22,9 @@ namespace Logitude.Customs.Def.Validators
            System.ComponentModel.DataAnnotations.ValidationContext context)
         {
             bool valid = true;
+           
+           if (declaration.Direction == "E") return null;
 
-            
             CustomsHouseTypePM houseType = GetHouseTypewithAdditional(declaration.DeclarationOfficeCode, declaration.Tenant);
 
             if (houseType != null && declaration.TransportModeId != null && houseType.TransportModeId != null && houseType.TransportModeId != declaration.TransportModeId)
