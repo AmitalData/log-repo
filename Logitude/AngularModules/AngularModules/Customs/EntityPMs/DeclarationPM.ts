@@ -1469,9 +1469,11 @@ export class DeclarationPM {
     public set ReferentUserName(newValue: string) { if (this.referentUserName != newValue) { this.referentUserName = newValue; this.MarkAsDirty("ReferentUserName"); } }
        
 	 
-    private exportCloseAmendmentRequestNumber: string;
-    public get ExportCloseAmendmentRequestNumber() { return this.exportCloseAmendmentRequestNumber; }
-    public set ExportCloseAmendmentRequestNumber(newValue: string) { if (this.exportCloseAmendmentRequestNumber != newValue) { this.exportCloseAmendmentRequestNumber = newValue; this.MarkAsDirty("ExportCloseAmendmentRequestNumber"); } }
+ 
+	 
+    private exportCloseAmendRequestNumber: string;
+    public get ExportCloseAmendRequestNumber() { return this.exportCloseAmendRequestNumber; }
+    public set ExportCloseAmendRequestNumber(newValue: string) { if (this.exportCloseAmendRequestNumber != newValue) { this.exportCloseAmendRequestNumber = newValue; this.MarkAsDirty("ExportCloseAmendRequestNumber"); } }
        
 	 
     private exportCloseAmendmentStatus: string;

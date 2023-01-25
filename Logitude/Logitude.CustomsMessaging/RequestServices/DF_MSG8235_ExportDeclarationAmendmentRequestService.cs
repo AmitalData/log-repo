@@ -334,7 +334,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 {
                     req.Response.FunctionalReferenceID = new ResponseFunctionalReferenceIDType
                     {
-                        Value = string.IsNullOrEmpty(_DeclarationPM.ExportCloseAmendmentRequestNumber) ? CodeCounter.GetNumber("AmendmentRequestNumber", _DeclarationPMOrg.Tenant).ToString() : _DeclarationPM.ExportCloseAmendmentRequestNumber
+                        Value = string.IsNullOrEmpty(_DeclarationPM.ExportCloseAmendRequestNumber) ? CodeCounter.GetNumber("AmendmentRequestNumber", _DeclarationPMOrg.Tenant).ToString() : _DeclarationPM.ExportCloseAmendRequestNumber
                     };
                 }
             }
@@ -370,7 +370,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), _DeclarationPM.Tenant);
             if (isExportClose)
             {
-                _DeclarationPM.ExportCloseAmendmentRequestNumber = response.FunctionalReferenceID.Value;
+                _DeclarationPM.ExportCloseAmendRequestNumber = response.FunctionalReferenceID.Value;
                 _DeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                 declarationUpdateService.Update(_DeclarationPM, true);
                 return;

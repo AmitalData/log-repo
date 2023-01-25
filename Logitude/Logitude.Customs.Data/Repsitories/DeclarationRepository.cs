@@ -532,7 +532,7 @@ namespace Logitude.Customs.Data.Repsitories
         {
             var query = (from b in context.Consignments
                          where b.ExportContainerizationID == exportContainerizationID && b.Tenant == tenant
-                        select b).Select(c=>c.DeclarationId).ToList();
+                         select b).Select(c=>c.DeclarationId).ToList();
 
             return (from a in context.Declarations
                     where query.Contains(a.Id) && a.Tenant == tenant && a.AmendmentDontDisplayInList != true
@@ -550,9 +550,8 @@ namespace Logitude.Customs.Data.Repsitories
             if (isExportClose)
             {
                 Declaration declaration = (from a in context.Declarations
-                                           where functionalReferenceID == a.ExportCloseAmendmentRequestNumber && a.Tenant == tenant
+                                           where functionalReferenceID == a.ExportCloseAmendRequestNumber && a.Tenant == tenant
                                            select a).FirstOrDefault();
-
                 return declaration;
             }
             else
