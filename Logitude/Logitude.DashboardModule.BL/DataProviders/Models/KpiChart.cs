@@ -17,6 +17,10 @@ namespace Logitude.DashboardModule.BL.DataProviders.Models
         public string ComparisonAbbreviationSymbol { get; set; }
         public bool CompareWithPrevious { get; set; }
         public string Increase { get; set; }
-        
+        public string CompareFromDate { get; set; }
+        public string CompareToDate { get; set; }
+        public string FromDate { get; set; }
+        public string ToDate { get; set; }
+
     }
 }
