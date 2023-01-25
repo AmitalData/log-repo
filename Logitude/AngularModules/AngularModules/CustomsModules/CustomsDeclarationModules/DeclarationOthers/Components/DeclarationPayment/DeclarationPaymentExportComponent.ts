@@ -181,6 +181,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
 
     public get TotalTax() { return this.DeclarationPM.TotalTax; }
     public set TotalTax(newValue: number) {
+
         this.DeclarationPM.TotalTax = newValue;
     }
 
@@ -435,8 +436,6 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
             this.entityCreated = true;
         }
 
-        this.PostSendCreditToGetBank();
-
         this.CheckRequireds();
 
         //this.CurrentEntity = this.paymentPM;
@@ -461,69 +460,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
 
     }
 
-    private PostSendCreditToGetBank() {
-
-        if (this.DeclarationPM.PaymentDate) {
-            return;
-        }
-
-        let objecttable: ObjectTablePM = window.ObjectTables.filter(d => d.Name == "Customs.Declaration")[0];
-        let searchParams = new CustomFileCreditRequestParams();
-        {
-            searchParams.Tenant = SessionLocator.Tenant;
-            searchParams.AppicationId = this.DeclarationPM.Id;//this.entityParent.DeclarationId;
-            searchParams.LoggingEnabled = true;
-            searchParams.LoggingEntityId = this.DeclarationPM.Id; //entityParent.DeclarationId;
-            searchParams.LoggingObjectTableId = objecttable.Id;
-            searchParams.LoggingUserId = SessionLocator.LoggedUserId;
-            searchParams.RequestName = "Send Credit to Get Bank Request";
-            searchParams.ResponseName = "Get Credit to Get Bank Response";
-            searchParams.Mode = "GetBank";
-        }
-
-        searchParams.RequestVIA = SendRequestVIA.Default;
-        var myIIGGeneralMessagesService = new IIGGeneralMessagesService();
-        SessionLocator.SelectedSession.StartBusyIndicator("");
-
-        myIIGGeneralMessagesService.PostCustomFileCredit(searchParams)
-            .subscribe((myServiceResponse: ServiceResponse) => {
-
-                let customFileCreditResponseData: CustomFileCreditResponseData = myServiceResponse.Result as CustomFileCreditResponseData;
-                var newDate = DateTool.GetCurrentDateTimeAsUtc();
-                var currentDate: Date = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate(), newDate.getHours(), newDate.getMinutes(), 0); // last of today
-                var paymentDate: Date = DateTool.GetDateFromDate(this.PaymentDate);
-
-                if (customFileCreditResponseData.PaymentDateTime == null) {
-                    customFileCreditResponseData.PaymentDateTime = currentDate;
-                }
-                var paymentDateTime: Date = DateTool.GetDateFromDate(customFileCreditResponseData.PaymentDateTime);
-
-                if (paymentDateTime <= currentDate) {
-                    if (paymentDate > currentDate) {
-                        this.PaymentDate = paymentDate;
-                    }
-                    else {
-                        this.PaymentDate = customFileCreditResponseData.PaymentDateTime;
-                    }
-
-                }
-                else {
-                    this.PaymentDate = currentDate;
-                }
-                if (!AppTool.IsNullOrEmpty(customFileCreditResponseData.BankCode)) {
-                    var customBankListService: CustomBankListService = new CustomBankListService();
-                    customBankListService.getAll().subscribe((response: ServiceResponse) => {
-                        let allCustomBankList: CustomBankList[] = response.Result;
-                        let bank: CustomBankList = allCustomBankList.filter(d => d.InternalCode == customFileCreditResponseData.BankCode && !d.InActive)[0];
-                        if (!AppTool.IsNullOrEmpty(bank)) {
-                            this.GetCreditInternalBankId = bank.Id;
-                        }
-                    });
-                }
-
-                SessionLocator.SelectedSession.StopBusyIndicator();
-            });
-    }
+    
 
     FillSignData() {
 
@@ -2061,13 +1998,11 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
 
     initDates() {
         //Task 36380: Update Payment Date & Time when Entering Payment screen
-        if (!this.IsDisplayOnly) {
-            var currentDate: Date = DateTool.GetCurrentDateTimeAsUtc();
             var paymentDate: Date = DateTool.GetDateFromDate(this.PaymentDate);
-            if (paymentDate <= currentDate) {
-                this.paymentPM.PaymentDate = DateTool.GetCurrentDateTimeAsUtc();
-            }
-        }
+            if(AppTool.IsNullOrEmpty(paymentDate))
+                this.PaymentDate = DateTool.GetCurrentDateTimeAsUtc();
+            else
+                this.PaymentDate = paymentDate
     }
 
 

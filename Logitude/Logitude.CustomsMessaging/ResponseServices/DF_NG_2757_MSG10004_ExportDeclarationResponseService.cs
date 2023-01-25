@@ -541,9 +541,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
             float.TryParse(_MyDeclarationPM.VersionId, out version);
             if (version >= 1.0)
             {
-                if(_MyDeclarationPM.Direction=="E")
-                AmitalInsertToQueueService.insertToQueue(_MyDeclarationPM);
+                
                 _MyDeclarationPM.IsSubmitDeclaration = true;
+                if (_MyDeclarationPM.Direction == "E")
+                {
+                    AmitalInsertToQueueService.insertToQueue(_MyDeclarationPM);
+                    if(!string.IsNullOrEmpty(customResponse.Response.Declaration.DMExtensions.ReferenceDateTime))
+                        _MyDeclarationPM.TaxationDateTime = Convert.ToDateTime(customResponse.Response.Declaration.DMExtensions.ReferenceDateTime);
+                }
+                    
             }
 
             if (customResponse.Response.Declaration.DMExtensions.TransshipmentApprovalDateTime != null)
