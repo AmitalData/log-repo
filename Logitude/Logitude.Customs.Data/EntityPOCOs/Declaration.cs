@@ -462,6 +462,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string ClosingXml { get; set; }
         [Column("ExportCloseAmendRequestNumber")]
 	    public string ExportCloseAmendRequestNumber { get; set; }
+
         [ForeignKey("AmendmentRequestStatus")]
         [Column("ExportCloseAmendmentStatus")]
 	    public string ExportCloseAmendmentStatus { get; set; }

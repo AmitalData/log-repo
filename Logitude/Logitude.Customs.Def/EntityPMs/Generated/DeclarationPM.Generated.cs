@@ -5803,17 +5803,21 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  
 	  private string closingXml ;
+
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
        public string ClosingXml  
+
 	   {
 	    
 	     get
 		{
 		   return closingXml;
+
 		 }
 		 set
 		 {
@@ -5841,6 +5845,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 set
 		 {
 		   if(exportCloseAmendRequestNumber != value)
+
 		  {
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportCloseAmendRequestNumber",OldValue=exportCloseAmendRequestNumber,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);

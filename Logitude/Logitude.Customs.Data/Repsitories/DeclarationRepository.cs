@@ -551,6 +551,7 @@ namespace Logitude.Customs.Data.Repsitories
                          where b.ExportContainerizationID == exportContainerizationID && b.Tenant == tenant
                          select b).Select(c => c.DeclarationId).ToList();
 
+
             return (from a in context.Declarations
                     where query.Contains(a.Id) && a.Tenant == tenant && a.AmendmentDontDisplayInList != true
                     select a);
@@ -568,8 +569,8 @@ namespace Logitude.Customs.Data.Repsitories
             Declaration declaration = (from a in context.Declarations
                                        where functionalReferenceID == a.AmendmentRequestNumber && a.Tenant == tenant && a.CustomFileNo == agentFileReferenceID
 
-                                       select a).FirstOrDefault();
 
+                                       select a).FirstOrDefault();
             return declaration;
 
         }

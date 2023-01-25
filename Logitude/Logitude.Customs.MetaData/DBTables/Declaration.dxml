@@ -1053,6 +1053,7 @@
 
   <Column
     Name="ExportCloseAmendRequestNumber"
+
     Type="varchar"
     Size="9">
     <Constraints
