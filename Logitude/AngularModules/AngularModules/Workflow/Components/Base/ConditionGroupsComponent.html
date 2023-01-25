@@ -61,7 +61,7 @@
     }
 
     .condition-value-container {
-        display: table;
+        display: table-cell;
         vertical-align: middle;
         width: 300px;
     }
@@ -248,7 +248,7 @@
                             <TreeSelect [Items]="FlowVariablesTreeItems" [Width]="'300px'" [Value]="Condition.value"
                                 [IsDisabled]="Condition.disabled | ConditionDisabledPipe : 'v'"
                                 [ShowItem]="Condition | ShowFlowVariablesTreeItemPipe : FlowVariablesTreeList"
-                                (ValueChanged)="updateConditionValue($event, conditionIndex)"
+                                [IsReturnedTreeSelectItem]="true" (ValueChanged)="updateConditionValue(($event ? $event.key : null), conditionIndex, ($event && $event.data ? ($event.data.nodeId || null) : null))"
                                 [DataCy]="'ConditionFieldValue_' + Condition.id">
                             </TreeSelect>
                         </div>

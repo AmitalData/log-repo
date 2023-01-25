@@ -29,7 +29,7 @@ export class DeclaredRecordsTreeList {
             let treeSelectItemTitle = recordDeclareVariableNode.data["label"] || null;
             let treeSelectItemName = variableName;
             let treeSelectItemKey = Formatter.getCodeFromName(treeSelectItemName);
-            let treeSelectItemData = { type: Formatter.getEntity(recordType) };
+            let treeSelectItemData = { type: Formatter.getEntity(recordType), nodeId: recordDeclareVariableNode.id };
             let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemTitle || treeSelectItemName, false, true, false, false, [], treeSelectItemData);
             this.Items.push(treeSelectItem);
         });

@@ -70,7 +70,7 @@ export class DeleteItemPropertiesComponent extends BaseComponent {
     }
 
     updateName(name: string) {
-        if(this.IsNew){
+        if (this.IsNew) {
             this.Data["name"] = name;
         }
 
@@ -80,9 +80,12 @@ export class DeleteItemPropertiesComponent extends BaseComponent {
         this.setUIProperties();
     }
 
-    updateRecord(record: string) {
+    updateRecord(recordItem: TreeSelectItem) {
+        let record = recordItem ? recordItem.key : null;
         this.Record = record;
         this.Data["record"] = record;
+
+        this.Data["recordUsedFrom"] = recordItem && recordItem.data && recordItem.data["nodeId"] ? recordItem.data["nodeId"] : null;
 
         this.setUIProperties();
     }

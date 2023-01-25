@@ -113,6 +113,12 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
                     let objectField = this.getObjectField(field);
                     this.updateConditionFieldByObjectField(objectField, conditionIndex, field);
                 }
+
+                if (fieldItem && fieldItem.data && fieldItem.data["nodeId"]) {
+                    this.Conditions[conditionIndex].fieldUsedFrom = fieldItem.data["nodeId"];
+                } else {
+                    this.Conditions[conditionIndex].fieldUsedFrom = null;
+                }
             } else {
                 this.resetConditionField(conditionIndex);
             }
@@ -157,6 +163,8 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
         this.Conditions[conditionIndex].valueCode = null;
         this.Conditions[conditionIndex].valueExpression = null;
         this.Conditions[conditionIndex].fieldChangedToggle = !this.Conditions[conditionIndex].fieldChangedToggle;
+        this.Conditions[conditionIndex].fieldUsedFrom = null;
+        this.Conditions[conditionIndex].valueUsedFrom = null;
     }
 
     updateConditionOperator(operatorCode: string, conditionIndex: number) {
@@ -189,9 +197,12 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
         this.emitConditionsChanged();
     }
 
-    updateConditionValue(value: string, conditionIndex: number) {
+    updateConditionValue(value: string, conditionIndex: number, nodeId: string | null = null) {
         if (value !== this.Conditions[conditionIndex]?.value) {
             this.Conditions[conditionIndex].value = value ? value.toString() : null;
+
+            this.Conditions[conditionIndex].valueUsedFrom = nodeId;
+
             this.emitConditionsChanged();
         }
     }

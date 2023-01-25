@@ -85,7 +85,7 @@ export class LoopPropertiesComponent extends BaseComponent {
     }
 
     updateName(name: string) {
-        if(this.IsNew){
+        if (this.IsNew) {
             this.Data["name"] = name;
         }
 
@@ -103,6 +103,9 @@ export class LoopPropertiesComponent extends BaseComponent {
         this.Data["isCollectionFilterVariable"] = isCollectionFilterVariable;
         this.Data["isDeclaredCollectionVariable"] = isDeclaredCollectionVariable;
         this.CollectionVariable = collectionVariable;
+
+        this.Data["collectionUsedFrom"] = collectionVariableItem && collectionVariableItem.data && collectionVariableItem.data["nodeId"] ? collectionVariableItem.data["nodeId"] : null;
+
         this.setUIProperties();
     }
 

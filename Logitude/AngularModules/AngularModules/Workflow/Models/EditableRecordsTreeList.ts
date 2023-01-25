@@ -33,7 +33,8 @@ export class EditableRecordsTreeList {
             let treeSelectItemTitle = getRecordNode.data["label"] || null;
             let treeSelectItemName = getRecordNode.data["name"];
             let treeSelectItemKey = Formatter.getCodeFromName(treeSelectItemName);
-            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemTitle || treeSelectItemName, true, true, false, false, []);
+            let data = { nodeId: getRecordNode.id };
+            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemTitle || treeSelectItemName, true, true, false, false, [], data);
             this.Items.push(treeSelectItem);
         });
     }

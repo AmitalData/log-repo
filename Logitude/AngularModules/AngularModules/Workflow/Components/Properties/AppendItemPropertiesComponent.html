@@ -91,8 +91,8 @@
             </div>
             <div class="table-row-cell-block">
                 <TreeSelect [Items]="SingleEditableEntitiesTreeItems" [Width]="'300px'" [Value]="Collection"
-                    [ShowItem]="ExcludedEntities | ShowEntitiesTreeItemPipe : false"
-                    (ValueChanged)="updateCollection($event)" [IsReturnedTreeSelectItem]="true">
+                    [ShowItem]="ExcludedEntities | ShowEntitiesTreeItemPipe : false" [IsReturnedTreeSelectItem]="true"
+                    (ValueChanged)="updateCollection($event)">
                 </TreeSelect>
             </div>
         </td>
@@ -163,12 +163,12 @@
             <div class="table-row-cell-block">
                 <TreeSelect *ngIf="CollectionChanged" [Items]="DeclaredRecordsTreeItems" [Width]="'300px'"
                     [Value]="Record" [ShowExpand]="false" [ShowItem]="Entity | ShowTreeItemPipe : 'type'"
-                    (ValueChanged)="updateRecord($event)">
+                    [IsReturnedTreeSelectItem]="true" (ValueChanged)="updateRecord($event)">
                 </TreeSelect>
 
                 <TreeSelect *ngIf="!CollectionChanged" [Items]="DeclaredRecordsTreeItems" [Width]="'300px'"
                     [Value]="Record" [ShowExpand]="false" [ShowItem]="Entity | ShowTreeItemPipe : 'type'"
-                    (ValueChanged)="updateRecord($event)">
+                    [IsReturnedTreeSelectItem]="true" (ValueChanged)="updateRecord($event)">
                 </TreeSelect>
             </div>
         </td>

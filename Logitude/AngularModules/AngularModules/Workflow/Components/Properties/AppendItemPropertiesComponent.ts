@@ -96,7 +96,7 @@ export class AppendItemPropertiesComponent extends BaseComponent {
     }
 
     updateName(name: string) {
-        if(this.IsNew){
+        if (this.IsNew) {
             this.Data["name"] = name;
         }
 
@@ -118,6 +118,8 @@ export class AppendItemPropertiesComponent extends BaseComponent {
         this.Data["collection"] = collectionName;
         this.Data["entity"] = collectionEntity;
 
+        this.Data["collectionUsedFrom"] = collectionItem && collectionItem.data && collectionItem.data["nodeId"] ? collectionItem.data["nodeId"] : null;
+
         if (isCollectionChanged) {
             this.updateSetRecordFieldsType(SetRecordFieldsTypes.UseRecord);
             this.CollectionChanged = !this.CollectionChanged;
@@ -137,9 +139,12 @@ export class AppendItemPropertiesComponent extends BaseComponent {
         this.setUIProperties();
     }
 
-    updateRecord(record: string) {
+    updateRecord(recordItem: TreeSelectItem) {
+        let record = recordItem ? recordItem.key : null;
         this.Data["record"] = record;
         this.Record = record;
+
+        this.Data["recordUsedFrom"] = recordItem && recordItem.data && recordItem.data["nodeId"] ? recordItem.data["nodeId"] : null;
 
         this.setUIProperties();
     }

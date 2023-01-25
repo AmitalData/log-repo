@@ -64,15 +64,14 @@
         display: table-cell;
         vertical-align: middle;
         width: 200px;
-        padding-right: 5px;
     }
 
     .set-value-value-row {
-        width: 220px;
+        width: 300px;
     }
 
     .set-value-value-container {
-        display: table;
+        display: table-cell;
         vertical-align: middle;
         width: 300px;
     }
@@ -161,13 +160,15 @@
                     <TreeSelect *ngIf="setValue.fieldChangedToggle" [Items]="FlowVariablesTreeItems" [Width]="'300px'"
                         [Value]="setValue.value"
                         [ShowItem]="setValue | ShowFlowVariablesTreeItemPipe : FlowVariablesTreeList"
-                        [IsDisabled]="setValue.isDisabled" (ValueChanged)="updateSetValue($event, setValueIndex)">
+                        [IsDisabled]="setValue.isDisabled" [IsReturnedTreeSelectItem]="true"
+                        (ValueChanged)="updateSetValue(($event ? $event.key : null), setValueIndex, ($event && $event.data ? ($event.data.nodeId || null) : null))">
                     </TreeSelect>
 
                     <TreeSelect *ngIf="!setValue.fieldChangedToggle" [Items]="FlowVariablesTreeItems" [Width]="'300px'"
                         [Value]="setValue.value"
                         [ShowItem]="setValue | ShowFlowVariablesTreeItemPipe : FlowVariablesTreeList"
-                        [IsDisabled]="setValue.isDisabled" (ValueChanged)="updateSetValue($event, setValueIndex)">
+                        [IsDisabled]="setValue.isDisabled" [IsReturnedTreeSelectItem]="true"
+                        (ValueChanged)="updateSetValue(($event ? $event.key : null), setValueIndex, ($event && $event.data ? ($event.data.nodeId || null) : null))">
                     </TreeSelect>
 
                 </div>
