@@ -488,9 +488,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
                
                         cmpRef.instance.Run(listArgs);
                         cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-                            this.filters.AdditionalFilters = this.filters.AdditionalFilters.filter(x => x.FieldName == "TransportModeId" || x.FieldName == "ReferentUserId" || x.FieldName == "DepartmentName" || x.FieldName == "ReferantUserName" || x.FieldName == "DepartmentId");
-                            this.LoadAllScreenData();
-                            this.GetFilterForQueriesCount();
+                            this.UpdateOnReturnFromQuery();
                             this._declarationReferantDataWebService.GetQueriesCounts(this.RefId, this.DepId, this.TransportModeId).subscribe(
                                 (data: any) => {
                                     this.counters = data.Result;
@@ -500,6 +498,12 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
                     });
             });
         }
+    }
+
+    private UpdateOnReturnFromQuery() {
+        this.filters.AdditionalFilters = this.filters.AdditionalFilters.filter(x => x.FieldName == "TransportModeId" || x.FieldName == "ReferentUserId" || x.FieldName == "DepartmentName" || x.FieldName == "ReferantUserName" || x.FieldName == "DepartmentId");
+        this.LoadAllScreenData();
+        this.GetFilterForQueriesCount();
     }
 
     public GetFilterForQueriesCount() {
@@ -520,7 +524,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
     }
 
     onUserQueriesBackComplete(event) {
-        this.LoadAllScreenData();
+        this.UpdateOnReturnFromQuery();
     }
 
     BuildFiltersForQuery(filters: ApiQueryFilters = null) {
