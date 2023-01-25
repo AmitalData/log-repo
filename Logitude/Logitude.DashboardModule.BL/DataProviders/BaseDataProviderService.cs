@@ -4,6 +4,7 @@ using Logitude.DashboardModule.Data;
 using Logitude.DashboardModule.Data.EntityPOCOs;
 using Logitude.DashboardModule.Data.Repositories;
 using Logitude.Server.Tools;
+using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.TreeFilterQuery;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
@@ -214,7 +215,7 @@ namespace Logitude.DashboardModule.BL.DataProviders
                      {BuildQueryJoins(columns)}
                      {BuildQueryStatment(groupByField, widgetPartArguments.GroupByValue, groupByFieldsec, widgetPartArguments.GroupBySecValue)} ";
 
-            if (_Widget.TypeCode == "kpi" && _Widget.TimeOverTime)
+            if (_Widget.TypeCode == "kpi" && compareWithPreviousFilterItem != null && compareWithPreviousFilterItem.CompareWithPrevious)
             {
                 return queryString + CheckComparisonOperator();
             }
@@ -225,11 +226,14 @@ namespace Logitude.DashboardModule.BL.DataProviders
         }
         private string CheckComparisonOperator()
         {
-            if (_Widget.ComparisonOperator == "Between")
+            if (compareWithPreviousFilterItem.Operator == "Between")
             {
-                return $@" where data.{GeteComparsionDate()} Between '{_Widget.FromDate.Value}' AND '{_Widget.ToDate.Value}'";
+                var fromDate = FieldValueResolver.ConvertToDate(compareWithPreviousFilterItem.FieldValue.ToString());
+                var toDate = FieldValueResolver.ConvertToDate(compareWithPreviousFilterItem.FieldValue2.ToString());
+                return $@" where data.{GeteComparsionDate()} Between '{fromDate}' AND '{toDate}'";
             }
-            return $@" where data.{GeteComparsionDate()} Between dateadd ({_Widget.ComparisonDateGroup}, {-_Widget.ComparisonPeriod}, cast(getDate() as Date)) AND cast(getDate() as Date)";
+            var FieldValue3 = Convert.ToInt32(compareWithPreviousFilterItem.FieldValue3);
+            return $@" where data.{GeteComparsionDate()} Between dateadd ({compareWithPreviousFilterItem.DateGroupCode}, {-FieldValue3}, cast(getDate() as Date)) AND cast(getDate() as Date)";
         }
 
         private string GeteComparsionDate()

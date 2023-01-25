@@ -44,10 +44,6 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
                 kpiChart.Ratio = GetRatio(kpiChart.Value, comparsionObject);
                 kpiChart.ComparisonAbbreviationSymbol = GetAbbreviationSymbol(comparsionObject, measureField?.DataTypeCode);
                 kpiChart.ComparisonValue = FormatKpiValue(comparsionObject, measureField?.DataTypeCode);
-                kpiChart.CompareFromDate = GetCompareFromDate<T>();
-                kpiChart.CompareToDate = GetFromDate<T>();
-                kpiChart.FromDate = GetFromDate<T>();
-                kpiChart.ToDate = GetToDate<T>();
             }
             kpiChart.AbbreviationSymbol = GetAbbreviationSymbol(kpiChart.Value, measureField?.DataTypeCode);
             kpiChart.Value = FormatKpiValue(kpiChart.Value, measureField?.DataTypeCode);
@@ -224,109 +220,6 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             return queryString + $@" where data.{GeteComparsionDate()} Between dateadd ({compareWithPreviousFilterItem.DateGroupCode}, {-2 * FieldValue3}, cast(getDate() as Date))
                              AND dateadd ({compareWithPreviousFilterItem.DateGroupCode}, {- FieldValue3}, cast(getDate() as Date))";
         }
-
-        private string GetFromDate<T>()
-        {
-            string fromDate = "";
-            if (compareWithPreviousFilterItem.Operator == "Between")
-            {
-                fromDate = FieldValueResolver.ConvertToDate(compareWithPreviousFilterItem.FieldValue.ToString()).ToString();
-                return fromDate;
-            }
-
-            var number = Convert.ToInt32(compareWithPreviousFilterItem.FieldValue3);
-            DateTime toDate = GetStartDateByDateGroupCode();
-
-            fromDate = ConvertDateByDateGroupCode(toDate, compareWithPreviousFilterItem.DateGroupCode, number * -1).ToString();
-
-            return fromDate;
-        }
-
-        private string GetToDate<T>()
-        {
-            string toDate = "";
-            if (compareWithPreviousFilterItem.Operator == "Between")
-            {
-                toDate = FieldValueResolver.ConvertToDate(compareWithPreviousFilterItem.FieldValue2.ToString()).ToString();
-                return toDate;
-            }
-            toDate = GetStartDateByDateGroupCode().ToString();
-            //toDateString = toDate.ToString();
-
-            return toDate;
-        }
-
-        private string GetCompareFromDate<T>()
-        {
-            string compareFromDate = "";
-            if (compareWithPreviousFilterItem.Operator == "Between")
-            {
-                var fromDate = FieldValueResolver.ConvertToDate(compareWithPreviousFilterItem.FieldValue.ToString());
-                var toDate = FieldValueResolver.ConvertToDate(compareWithPreviousFilterItem.FieldValue2.ToString());
-                int numberOfDays = toDate.Value.Subtract(fromDate.Value).Days;
-                compareFromDate = ConvertDateByDateGroupCode(fromDate.Value, "Day", numberOfDays * -1).ToString();
-
-                return compareFromDate;
-            }
-
-            var period = Convert.ToInt32(compareWithPreviousFilterItem.FieldValue3);
-
-            //DateTime fromDatePrevious = Convert.ToDateTime(HandelCalculatedOperator());
-            DateTime fromDatePrevious = GetStartDateByDateGroupCode();
-            //DateTime endDate = ConvertDateByDateGroupCode(startDate, compareWithPreviousFilterItem.DateGroupCode, number * -1);
-            compareFromDate = ConvertDateByDateGroupCode(fromDatePrevious, compareWithPreviousFilterItem.DateGroupCode, period * -2).ToString();
-            //queryString = $@"select dateadd ({compareWithPreviousFilterItem.DateGroupCode}, {-2 * FieldValue3}, cast(getDate() as Date))";
-
-            return compareFromDate;
-        }
-
-        private string HandelCalculatedOperator()
-        {
-           
-            var number = int.Parse(compareWithPreviousFilterItem.FieldValue3.ToString());
-
-            DateTime startDate = GetStartDateByDateGroupCode();
-
-            string endDate = ConvertDateByDateGroupCode(startDate, compareWithPreviousFilterItem.DateGroupCode, number * -1).ToString();
-            return endDate;
-
-        }
-
-        private DateTime GetStartDateByDateGroupCode()
-        {
-
-            switch (compareWithPreviousFilterItem.DateGroupCode)
-            {
-                case "Day":
-                    return DateTime.Now.Date;
-                case "Month":
-                    return new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-                case "Year":
-                    return new DateTime(DateTime.Now.Year, 1, 1);
-                case "Quarter":
-                    return new DateTime(DateTime.Now.Year, Convert.ToInt32(Math.Ceiling(DateTime.Now.Month / 3.0) * 3 - 2), 1);
-                default:
-                    return DateTime.Now.Date;
-            }
-        }
-        private DateTime ConvertDateByDateGroupCode(DateTime date, string dateGroupCode, int factor = 1)
-        {
-            switch (dateGroupCode)
-            {
-                case "Day":
-                    return date.AddDays(1 * factor);
-                case "Month":
-                    return date.AddMonths(1 * factor);
-                case "Year":
-                    return date.AddYears(1 * factor);
-                case "Quarter":
-                    return date.AddMonths(3 * factor);
-                default:
-                    return date;
-            }
-
-        }
-
 
         private string CreateQuery<T>(WidgetMeasurePM widgetMeasureField, IQueryable<T> resultQueryable)
         {
