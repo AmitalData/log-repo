@@ -84,6 +84,8 @@
 
         private string lastStatusRemarksField;
 
+        public string CollectorUserId { get; set; }
+
         /// <remarks/>
         public string Id
         {
