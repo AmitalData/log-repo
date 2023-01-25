@@ -44,7 +44,9 @@ namespace Logitude.Customs.Def.EntityPMs
 		 }
 	   }
 	  private int tenant ;
-	  	  
+	  
+       [Key]
+	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
