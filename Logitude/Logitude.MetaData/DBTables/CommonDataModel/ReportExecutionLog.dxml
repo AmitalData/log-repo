@@ -105,6 +105,8 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Index
+	Columns="CreateDate" />
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
