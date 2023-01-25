@@ -175,7 +175,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ExportLoadingPortCode, 
 	         ReleaseStatusTypeCode, 
 	         ClosingXml, 
-	         ExportCloseAmendmentRequestNumber, 
+	         ExportCloseAmendRequestNumber, 
 	         ExportCloseAmendmentStatus,
 	      }
 
@@ -422,7 +422,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ReleaseStatusTypeCode, 
 	         ReferentUserName, 
 	         ClosingXml, 
-	         ExportCloseAmendmentRequestNumber, 
+	         ExportCloseAmendRequestNumber, 
 	         ExportCloseAmendmentStatus, 
 	         ExportDecWithoutRelease,
 	      }
@@ -1193,9 +1193,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.ClosingXml = entityPM.ClosingXml;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportCloseAmendmentRequestNumber))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportCloseAmendRequestNumber))
             {
-				entityPOCO.ExportCloseAmendmentRequestNumber = entityPM.ExportCloseAmendmentRequestNumber;
+				entityPOCO.ExportCloseAmendRequestNumber = entityPM.ExportCloseAmendRequestNumber;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportCloseAmendmentStatus))
@@ -1974,9 +1974,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ClosingXml = entityPOCO.ClosingXml;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportCloseAmendmentRequestNumber))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportCloseAmendRequestNumber))
             {
-					entityPM.ExportCloseAmendmentRequestNumber = entityPOCO.ExportCloseAmendmentRequestNumber;
+					entityPM.ExportCloseAmendRequestNumber = entityPOCO.ExportCloseAmendRequestNumber;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportCloseAmendmentStatus))
@@ -2750,9 +2750,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.ClosingXml = entityPM.ClosingXml;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportCloseAmendmentRequestNumber))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportCloseAmendRequestNumber))
             {
-                oldEntityPM.ExportCloseAmendmentRequestNumber = entityPM.ExportCloseAmendmentRequestNumber;
+                oldEntityPM.ExportCloseAmendRequestNumber = entityPM.ExportCloseAmendRequestNumber;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportCloseAmendmentStatus))

@@ -583,7 +583,7 @@ namespace Logitude.Customs.Data.Repsitories
             if (isExportClose)
             {
                 var declaration = (from a in context.Declarations
-                                           where functionalReferenceID == a.ExportCloseAmendmentRequestNumber && a.Tenant == tenant
+                                           where functionalReferenceID == a.ExportCloseAmendRequestNumber && a.Tenant == tenant
                                            select a).ToList();
                 return declaration;
 

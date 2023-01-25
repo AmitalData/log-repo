@@ -1474,9 +1474,9 @@ export class DeclarationPM {
     public set ClosingXml(newValue: string) { if (this.closingXml != newValue) { this.closingXml = newValue; this.MarkAsDirty("ClosingXml"); } }
        
 	 
-    private exportCloseAmendmentRequestNumber: string;
-    public get ExportCloseAmendmentRequestNumber() { return this.exportCloseAmendmentRequestNumber; }
-    public set ExportCloseAmendmentRequestNumber(newValue: string) { if (this.exportCloseAmendmentRequestNumber != newValue) { this.exportCloseAmendmentRequestNumber = newValue; this.MarkAsDirty("ExportCloseAmendmentRequestNumber"); } }
+    private exportCloseAmendRequestNumber: string;
+    public get ExportCloseAmendRequestNumber() { return this.exportCloseAmendRequestNumber; }
+    public set ExportCloseAmendRequestNumber(newValue: string) { if (this.exportCloseAmendRequestNumber != newValue) { this.exportCloseAmendRequestNumber = newValue; this.MarkAsDirty("ExportCloseAmendRequestNumber"); } }
        
 	 
     private exportCloseAmendmentStatus: string;
