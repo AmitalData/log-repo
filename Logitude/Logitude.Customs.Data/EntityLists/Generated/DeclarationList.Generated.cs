@@ -446,7 +446,6 @@ namespace Logitude.Customs.Data.EntityLists
        public string ClosingXml  { get; set; }
        [DataMember]
        public string ExportCloseAmendRequestNumber  { get; set; }
-
        [DataMember]
        public string ExportCloseAmendmentStatus  { get; set; }
    }

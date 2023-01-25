@@ -176,7 +176,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ReleaseStatusTypeCode, 
 	         ClosingXml, 
 	         ExportCloseAmendRequestNumber, 
-
 	         ExportCloseAmendmentStatus,
 	      }
 
@@ -424,7 +423,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ReferentUserName, 
 	         ClosingXml, 
 	         ExportCloseAmendRequestNumber, 
-
 	         ExportCloseAmendmentStatus, 
 	         ExportDecWithoutRelease,
 	      }
@@ -1195,7 +1193,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.ClosingXml = entityPM.ClosingXml;
 			}
 			
-
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportCloseAmendRequestNumber))
             {
 				entityPOCO.ExportCloseAmendRequestNumber = entityPM.ExportCloseAmendRequestNumber;
@@ -1972,14 +1969,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ReleaseStatusTypeCode = entityPOCO.ReleaseStatusTypeCode;
             }
 
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ClosingXml))
             {
 					entityPM.ClosingXml = entityPOCO.ClosingXml;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportCloseAmendRequestNumber))
-
             {
 					entityPM.ExportCloseAmendRequestNumber = entityPOCO.ExportCloseAmendRequestNumber;
             }
@@ -2755,7 +2750,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.ClosingXml = entityPM.ClosingXml;
             }
 			
-
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportCloseAmendRequestNumber))
             {
                 oldEntityPM.ExportCloseAmendRequestNumber = entityPM.ExportCloseAmendRequestNumber;
