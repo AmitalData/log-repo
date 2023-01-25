@@ -16,6 +16,7 @@
     Name="Tenant"
     Type="int">
     <Constraints
+      PrimaryKey="true"
       Nullable="false" />
   </Column>
   <Column

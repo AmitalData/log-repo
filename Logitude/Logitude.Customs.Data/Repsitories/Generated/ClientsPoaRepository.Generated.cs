@@ -28,10 +28,10 @@ namespace Logitude.Customs.Data.Repsitories
 
 		 
 		
-		public  ClientsPoa GetSingle(string id, string clientid, int tenant)
+		public  ClientsPoa GetSingle(string id, int tenant, string clientid, int tenant)
         {
             return (from a in context.ClientsPoas
-                    where a.Id == id && a.ClientId == clientid && a.Tenant == tenant
+                    where a.Id == id && a.Tenant == tenant && a.ClientId == clientid && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
@@ -46,7 +46,7 @@ namespace Logitude.Customs.Data.Repsitories
         {
             ClientsPoaKeys keys = entityKeys as ClientsPoaKeys;
             return (from a in context.ClientsPoas
-                    where a.Id == keys.Id && a.ClientId == keys.ClientId
+                    where a.Id == keys.Id && a.Tenant == keys.Tenant && a.ClientId == keys.ClientId
                     select a).FirstOrDefault();
         }
 		         

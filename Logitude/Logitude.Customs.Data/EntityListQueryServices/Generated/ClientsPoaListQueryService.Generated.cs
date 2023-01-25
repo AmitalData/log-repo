@@ -130,10 +130,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public ClientsPoaList GetSingle(string id, string clientid)
+        public ClientsPoaList GetSingle(string id, int tenant, string clientid)
         {
             IQueryable<ClientsPoa> ClientsPoaQuery = (from a in context.ClientsPoas
-                                                       where a.Id == id && a.ClientId == clientid
+                                                       where a.Id == id && a.Tenant == tenant && a.ClientId == clientid
                                                        select a);
 
              

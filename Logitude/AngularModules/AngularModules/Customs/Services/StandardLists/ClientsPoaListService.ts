@@ -32,12 +32,12 @@ export class ClientsPoaListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/clientspoaviews';  
     }
 
-	getSingle(id: string, clientid: string) {
+	getSingle(id: string, tenant: number, clientid: string) {
 	   
 		var callTime = new Date();
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id+'&'+'clientid=' + clientid, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id+'&'+'tenant=' + tenant+'&'+'clientid=' + clientid, ServiceHelper.GetHttpFullHeaders())
 				.pipe(			
 					map((response: HttpResponse<any>) => {
 
@@ -52,7 +52,7 @@ export class ClientsPoaListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ClientsPoa", "GetSingleList", 'id=' + id+'&'+'clientid=' + clientid); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ClientsPoa", "GetSingleList", 'id=' + id+'&'+'tenant=' + tenant+'&'+'clientid=' + clientid); 
 
 						return serviceResponse;
 					}),

@@ -16,6 +16,10 @@ namespace Logitude.Customs.Data.EntityKeys
 	  
 				 
 	    			   
+	  public int Tenant  { get; set; }
+	  
+				 
+	    			   
 	  public string ClientId  { get; set; }
 	  
 				 
@@ -24,7 +28,7 @@ namespace Logitude.Customs.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-                 return Id+'_'+ClientId ;
+                 return Id+'_'+Tenant+'_'+ClientId ;
                  
       }
 
