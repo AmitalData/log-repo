@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ContainerUpdateClass
    {  		
-		public const string HashString = "8177307c261903c7a439b1352ec0ca78";
+		public const string HashString = "e9fbfe5d5a11129144b6d4009e6274b8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -18071,7 +18071,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 		       
 	      
 
-	         Screen ContainerContainerHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Container.HeaderScreen", Name = "ContainerHeaderScreen", ObjectTableId = ContainerObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 4, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen ContainerContainerHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Container.HeaderScreen", Name = "ContainerHeaderScreen", ObjectTableId = ContainerObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 3, IsReadOnly = true }, screensRepository, tenantScreens);
       
              ScreenField ContainerContainerHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ContainerContainerHeaderScreenScreen0.Id,ScreenCode = ContainerContainerHeaderScreenScreen0.Code, ObjectFieldCode = "Container.ContainerNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
@@ -18096,8 +18096,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
              ScreenField ContainerContainerHeaderScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ScreenId = ContainerContainerHeaderScreenScreen0.Id,ScreenCode = ContainerContainerHeaderScreenScreen0.Code, ObjectFieldCode = "Container.ShipmentMainCarriageFrom", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
              ScreenField ContainerContainerHeaderScreenScreenField11 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 2, ScreenId = ContainerContainerHeaderScreenScreen0.Id,ScreenCode = ContainerContainerHeaderScreenScreen0.Code, ObjectFieldCode = "Container.ShipmentMainCarriageTo", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-	          
-             ScreenField ContainerContainerHeaderScreenScreenField12 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 3, ScreenId = ContainerContainerHeaderScreenScreen0.Id,ScreenCode = ContainerContainerHeaderScreenScreen0.Code, ObjectFieldCode = "Container.ShipmentMainCarriageFromId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          	
 		    ContainerObjectTable.HeaderScreenId = ContainerContainerHeaderScreenScreen0.Id;
 		    ContainerObjectTable.HeaderScreenCode = ContainerContainerHeaderScreenScreen0.Code;

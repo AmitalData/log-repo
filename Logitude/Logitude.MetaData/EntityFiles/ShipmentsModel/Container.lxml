@@ -24516,7 +24516,7 @@
     IsReadOnly="true"
     IsHeaderScreen="true"
     NumberOfColumns="4"
-    NumberOfRows="4">
+    NumberOfRows="3">
     <ScreenFields>
       <ScreenField
         Column="0"
@@ -24577,11 +24577,6 @@
         Column="3"
         Row="2"
         ObjectFieldName="&quot;ShipmentMainCarriageTo&quot;"
-        ScreenName="ContainerHeaderScreen" />
-      <ScreenField
-        Column="3"
-        Row="3"
-        ObjectFieldName="&quot;ShipmentMainCarriageFromId&quot;"
         ScreenName="ContainerHeaderScreen" />
     </ScreenFields>
   </Screen>
