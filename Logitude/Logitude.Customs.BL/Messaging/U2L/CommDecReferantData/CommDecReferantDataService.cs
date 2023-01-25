@@ -176,6 +176,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDecReferantData
                 if (_DeclarationReferantDataPM.Tenant < 1) _DeclarationReferantDataPM.Tenant = ResolvedTenant();
                 if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.ClassifiedUserId)) _DeclarationReferantDataPM.ClassifiedUserId = TranslateUser(_LogitudeDeclarationReferantData.ClassifiedUserId);
                 if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.ControllerUserId)) _DeclarationReferantDataPM.ControllerUserId = TranslateUser(_LogitudeDeclarationReferantData.ControllerUserId);
+                if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.CollectorUserId)) _DeclarationReferantDataPM.CollectorUserId = TranslateUser(_LogitudeDeclarationReferantData.CollectorUserId);
                 if (_LogitudeDeclarationReferantData.FileStatus == "OPT") _DeclarationReferantDataPM.NewFile = false;
                 if (!string.IsNullOrWhiteSpace(_LogitudeDeclarationReferantData.LastStatusName))
                 {
