@@ -47,11 +47,12 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 string loggedUserEmail = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
-                //List<SignStationList> entityLists = GetAllStation(searchfields, tenant);
+                
+                List<MySignStationList> entityLists;
+                
 
-                List<MySignStationList> entityLists /*= GetAllStation(searchfields, tenant)*/;
-                //if (!CustomsSettingQueryService.GetSettingByTenant(tenant).IsConnectedToUniFreight)
-                if (SignQueueHybridDbService.IsCloudExport(tenant))
+                var signQueueHSMService = new SignQueueHSMService();
+                if (signQueueHSMService.IsHSMSign_IsOn(tenant))
                 {
                     entityLists = GetSignStationDBHSM(searchfields, tenant);
 
@@ -116,13 +117,13 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 string loggedUserEmail = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
-                //List<SignStationList> entityLists = GetAllStation(searchfields, tenant);
+
                 List<MySignStationList> entityLists = new List<MySignStationList>(); /*= GetAllStation(searchfields, tenant)*/;
-                //if (!CustomsSettingQueryService.GetSettingByTenant(tenant).IsConnectedToUniFreight)
-                if (SignQueueHybridDbService.IsCloudExport(tenant))
+
+                var signQueueHSMService = new SignQueueHSMService();
+                if (signQueueHSMService.IsHSMSign_IsOn(tenant))
+
                 {
-                    //var dbSignQueueService = new SignQueueHybridDbService();
-                    //entityLists = dbSignQueueService.GetAllStation(searchfields, tenant);
                     entityLists = GetSignStationDBHSM(searchfields, tenant);
                 }
                 else
@@ -225,22 +226,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 }
                 );
 
-            //for (int i = 0; i < 30; i++)
-            //{
-            //    entityLists.Add(new Extended.SignStationList() {
-            //        PersonId = "PersonId" + i.ToString(),
-            //        MachineName = "MachineName" + i.ToString(),
-            //        SignerName = "sign 11",
-            //        CustomsAgentId = "vart1",
-            //        IsCompanySignOn = (i % 2 == 0),
-            //        IsPersonalSignOn = (i % 4 == 0),
-            //         LastSignAt = DateTime.Now,
-            //          MachineUser = "MachineUser",
-            //           Status ="Ok !!!"
-
-
-            //    });
-            //}
+            
             if (!String.IsNullOrWhiteSpace(searchfields))
             {
                 entityLists = entityLists

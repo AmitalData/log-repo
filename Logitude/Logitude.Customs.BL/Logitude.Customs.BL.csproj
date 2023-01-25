@@ -2224,6 +2224,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Messaging\Customs\CustomsRequestsSheetDomainModelServiceException.cs" />
+    <Compile Include="Messaging\Customs\SignQueueBL\CourierForceSignService.cs" />
     <Compile Include="Messaging\Customs\SignQueueBL\HSMActiveSignCardService.cs" />
     <Compile Include="Messaging\Customs\SignQueueBL\HSMSignFileService.cs" />
     <Compile Include="Messaging\Customs\SignQueueBL\CreateSignQueueHSMDBService.cs" />
