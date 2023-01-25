@@ -170,7 +170,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (customResponse.Response.Declaration != null)
             {
-               
+                if (this.MyRequestSheetParam == null)
+                    this.MyRequestSheetParam = new RequestSheetParam();
+
+                this.MyRequestSheetParam.CustomFileNo = GetValueIDType(customResponse.Response.Declaration.DMExtensions?.AgentFileReferenceID);
                 this.MyResponseData.exportDeclarationDataResponseData.Title = customResponse.Response.Declaration.ID.Value;
        
                 this.MyResponseData.exportDeclarationDataResponseData.CalculationDate = Convert.ToDateTime(customResponse.Response.Declaration.IssueDateTime).ToString("dd/MM/yyyy");
