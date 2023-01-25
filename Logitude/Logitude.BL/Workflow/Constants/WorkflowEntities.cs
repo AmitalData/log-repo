@@ -3,5 +3,6 @@
     public static class WorkflowEntities
     {
         public const string Shipment = "Shipment";
+        public const string Container = "Container";
     }
 }
