@@ -1617,7 +1617,9 @@ export class MaintenanceComponent {
 
                 case "ContainerSettings": {
                     var logitudeWindow = new LogitudeWindow();
-                    logitudeWindow.Height = 400;
+                    logitudeWindow.ShowCloseButton = true;
+                    logitudeWindow.Width = 1200;
+                    logitudeWindow.Height = 600;
                     logitudeWindow.Title = "Container Settings";
                     logitudeWindow.Show('./ShipmentModules/ShipmentOthers/Components/ContainerSetting/ContainerSettingsComponent');
                     break;

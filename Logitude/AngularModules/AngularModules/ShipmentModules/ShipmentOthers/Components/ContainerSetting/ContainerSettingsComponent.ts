@@ -11,6 +11,7 @@ import { AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
     templateUrl: './ContainerSettingsComponent.html',
+    styleUrls: ['./ContainerSettingsComponent.scss']
 })
 
 export class ContainerSettingsComponent extends BaseComponent implements OnInit {
@@ -23,6 +24,8 @@ export class ContainerSettingsComponent extends BaseComponent implements OnInit 
     public reloadingTranslation: boolean;
     public ClosingContainerToolTipMessage: string = "How many days after the Actual Empty Return Date to wait before automatically closing the container.";
     public ShipmentATADateComboList: Array<CodeNameClass>;
+    public SelectedTabCode: string = "G";
+
     constructor() {
         super();
     }
