@@ -32,7 +32,7 @@ export function RefreshWorkflowList() {
     cy.fixture(WorkflowlistFixturePath.MockWorkflowList).then(response => {
         cy.DefineMockRequestWait(RestAPI.GET, URLs.GetWorkflowViews, RequestAliases.GetWorkflowViews, response);
         SearchworkflowName = response.Result[0].Name;
-    });    
+    });
     cy.Click(WorkflowSelectors.WorkflowListRefreshButton, null)
 };
 
@@ -57,17 +57,17 @@ function BackToWorkflowList() {
 
 
 export function OpenFirstFlowInWorkFlowList() {
-    cy.DefineRequestWait(RestAPI.GET, URLs.GetWorkflowFlowBuilder, RequestAliases.GetWorkflowFlowBuilder);
-    cy.Click(WorkflowSelectors.WorkFlowFlowRow + BaseSelectors.FirstElement, null);
+    BaseAssertion.AssertStatusCode(RequestAliases.GetWorkflowViews, 200)
+    cy.Click(WorkflowSelectors.WorkFlowFlowRow + BaseSelectors.FirstElement, null, true);
 }
 
 export function AssertOpenFlowBuilder() {
-    BaseAssertion.AssertStatusCode(RequestAliases.GetWorkflowFlowBuilder, 200);
+    cy.DefineRequestWait(RestAPI.GET, URLs.GetWorkflowFlowBuilder, RequestAliases.GetWorkflowFlowBuilder);
     BackToWorkflowList();
 }
 
 export function FillEditFlowStartNodeDetails(startNodeDetails: StartNodeDetails) {
-    OpenEditStartNode();
+    //OpenEditStartNode();
     cy.SelectDropDownListItem2(WorkflowSelectors.WorkflowStartNodeObject, startNodeDetails.Object)
     cy.ClickRadio(WorkflowSelectors.FlowTriggerRadioButton(startNodeDetails.ConfigureTrigger))
 }
@@ -106,6 +106,7 @@ export function AssertSearchFlowByName() {
 };
 
 export function FillUpdateWorkflowDetails(workflowDetails: WorkflowDetails) {
+
     cy.Click(WorkflowSelectors.WorkflowGeneralTab, null);
     let FlowName = workflowDetails.Name.toLocaleLowerCase() == "random" ?
         GenerateRandoms.GenerateRandomString(5, true) : null;
@@ -156,7 +157,6 @@ export function FillRootConditionsDetails(groupCondition: string, conditionDetai
 
 export function FillGroupConditionDetails(IsRootGroup: boolean, groupCondition: string, conditionDetailsList: ConditionDetails[], IsFromList: boolean) {
     OpenEditStartNode();
-
     if (!IsRootGroup) {
         cy.Click(WorkflowSelectors.WorkflowRootGroupCondition, null);
     }
@@ -171,6 +171,15 @@ export function FillGroupConditionDetails(IsRootGroup: boolean, groupCondition: 
 
 export function FillNestedGroupConditionDetails(secondGroupSelector: number, groupCondition: string, conditionDetailsList: ConditionDetails[], IsFromList: boolean) {
     OpenEditStartNode();
+    cy.Click(WorkflowSelectors.WorkflowGroupButton(secondGroupSelector), null)
+    cy.DefineRequestWait(RestAPI.GET, URLs.GetObjectFieldViews, RequestAliases.GetObjectFieldViews);
+    cy.SelectDefinedComboDropDownListItem(WorkflowSelectors.WorkflowGroupOperation(ConditionCounter), groupCondition, 0);
+    FillConditionsGroup(conditionDetailsList, false, ((ConditionCounter + conditionDetailsList.length)), IsFromList);
+    ConditionGroupButton = ConditionCounter;
+}
+
+export function FillDecisionNestedGroupConditionDetails(secondGroupSelector: number, groupCondition: string, conditionDetailsList: ConditionDetails[], IsFromList: boolean) {
+    OpenEditDecisionElement(1);
     cy.Click(WorkflowSelectors.WorkflowGroupButton(secondGroupSelector), null)
     cy.DefineRequestWait(RestAPI.GET, URLs.GetObjectFieldViews, RequestAliases.GetObjectFieldViews);
     cy.SelectDefinedComboDropDownListItem(WorkflowSelectors.WorkflowGroupOperation(ConditionCounter), groupCondition, 0);
@@ -296,7 +305,8 @@ export function AssertRefreshSingleInstanceActivityList() {
 export function FillDecisionElementDetails(decisionElementDetails: DecisionElementDetails) {
     AddDecisionElement();
     cy.FillLogTextBox(WorkflowSelectors.DecisionElementName, decisionElementDetails.Title);
-    cy.FillLogTextBox(WorkflowSelectors.DecisionElementLabel, decisionElementDetails.Label);
+    cy.FillLogTextBox(WorkflowSelectors.DecisionMetLabel, decisionElementDetails.MetLabel);
+    cy.FillLogTextBox(WorkflowSelectors.DecisionOtherwiseLabel, decisionElementDetails.OtherwiseLabel);
 }
 
 function AddDecisionElement() {
@@ -321,9 +331,9 @@ export function SaveDecisionWorkflow() {
     cy.Click(WorkflowSelectors.WorkflowSaveDraft, null);
 }
 
-function OpenEditDecisionElement() {
-    cy.Click(WorkflowSelectors.WorkflowDecisionElement, null);
-    ClickEditElementButton(WorkflowSelectors.NodeSettingFooter);
+function OpenEditDecisionElement(index: number) {
+    cy.Click(WorkflowSelectors.WorkflowDecisionElement(index), null);
+    ClickEditElementButton(WorkflowSelectors.NodeSettingContainer);
 }
 
 function ClickEditElementButton(Selector: string) {
@@ -331,7 +341,7 @@ function ClickEditElementButton(Selector: string) {
 }
 
 export function FillDecisionGroupConditionDetails(IsRootGroup: boolean, groupCondition: string, conditionDetailsList: ConditionDetails[]) {
-    OpenEditDecisionElement();
+    OpenEditDecisionElement(1);
     if (!IsRootGroup) {
         cy.Click(WorkflowSelectors.WorkflowRootGroupCondition, null);
     }

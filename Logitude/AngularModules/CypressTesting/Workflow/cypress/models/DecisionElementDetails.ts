@@ -1,4 +1,5 @@
 export interface DecisionElementDetails {
     Title: string,
-    Label: string,
+    MetLabel: string,
+    OtherwiseLabel: string
 }

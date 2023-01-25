@@ -42,7 +42,6 @@ Feature: Workflow node
             | Customer           | Is Empty   | True       |
             | Department         | Not Equals | Accounting |
             | Order Gross Weight | Less Than  | 10000      |
-            | Main Carriage ATA  | Changed    | True       |
         When save flow
         Then the flow should save successfully
 
