@@ -27,6 +27,7 @@ namespace Logitude.BL.InfrastructureModel.Services
         private DocumentRepository documentrepository;
         DeploymentPackagesVersionService deploymentPackagesVersionService;
         DeploymentPackagesVersionQuery deploymentPackagesVersionQuery;
+        DeploymentPackageZipFileService deploymentPackageZipFileService;
         public DeploymentPackageVersionInitializerService(DeploymentPackagePM deploymentPackagePM, IWebFreightContext iWebFreightContext)
         {
             this.deploymentPackagePM = deploymentPackagePM;
@@ -34,11 +35,12 @@ namespace Logitude.BL.InfrastructureModel.Services
             documentrepository = new DocumentRepository(deploymentPackagePM.Tenant);
             deploymentPackagesVersionService = new DeploymentPackagesVersionService(iWebFreightContext, deploymentPackagePM.Tenant);
             deploymentPackagesVersionQuery = new DeploymentPackagesVersionQuery(deploymentPackagePM.Tenant);
+            deploymentPackageZipFileService = new DeploymentPackageZipFileService(deploymentPackagePM.Tenant);
         }
         public DeploymentPackagesVersionPM Create()
         {
-            CreateDocument();
-            deploymentPackagesVersionPM.DocumentId = document.Id;
+            var documentId = deploymentPackageZipFileService.Create(deploymentPackagePM.DeploymentPackageDetails);
+            deploymentPackagesVersionPM.DocumentId = documentId;
             deploymentPackagesVersionPM.DeploymentPackageID = deploymentPackagePM.Id;
             deploymentPackagesVersionPM.Tenant = deploymentPackagePM.Tenant;
             deploymentPackagesVersionService.Create(deploymentPackagesVersionPM, false);

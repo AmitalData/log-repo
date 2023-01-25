@@ -686,6 +686,8 @@
     <Compile Include="InfrastructureModel\EntityQueries\RuleUpdateHistoryQuery.cs" />
     <Compile Include="InfrastructureModel\Services\DeploymentPackageVersionInitializerService.cs" />
     <Compile Include="InfrastructureModel\Services\CustomObjectDefaultMetaDataService.cs" />
+    <Compile Include="InfrastructureModel\Services\DeploymentPackage\DeploymentPackageZipFileDetailsService.cs" />
+    <Compile Include="InfrastructureModel\Services\DeploymentPackage\DeploymentPackageZipFileService.cs" />
     <Compile Include="InfrastructureModel\Services\DeploymentPackage\DeploymentPackageDependienciesService.cs" />
     <Compile Include="InfrastructureModel\Services\DeploymentPackage\DeploymentPackageObjectFieldDependienciesService.cs" />
     <Compile Include="InfrastructureModel\Services\DeploymentPackage\IDeploymentPackageDependiency.cs" />

@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -92,8 +93,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         {
             if (deploymentPackagePM.DocumentId == null) return;
             StorageDataArgs storageDataArgs = GetStorageDataArgs(deploymentPackagePM, tenant);
-            byte[] deploymentPackageDetailsBytes = StorageDataService.ReadFileFromStorage(storageDataArgs);
-            deploymentPackagePM.DeploymentPackageDetails = JsonSerializer.Deserialize<DeploymentPackageDetails>(deploymentPackageDetailsBytes);
+            byte[] deploymentPackageZipFileDetailsBytes = StorageDataService.ReadFileFromStorage(storageDataArgs);
+            deploymentPackagePM.DeploymentPackageDetails = new DeploymentPackageZipFileService(deploymentPackagePM.Tenant).GetDeserializedZipFileDetails(deploymentPackageZipFileDetailsBytes);
         }
 
         private StorageDataArgs GetStorageDataArgs(DeploymentPackagePM deploymentPackagePM, int tenant)

@@ -49,7 +49,6 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string ObjectTableName { get; set; }
         public string LookUpTableName { get; set; }
         public string HelpText { get; set; }
-        public string SearchFields { get; set; }
         public string CustomPickListCode { get; set; }
         public int NumberOfDigits { get; set; }
         public int DigitsAfterPoint { get; set; }
