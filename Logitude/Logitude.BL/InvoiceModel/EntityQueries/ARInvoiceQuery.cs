@@ -2308,7 +2308,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              PaymentReferences = entity.PaymentReferences,
                              SATCancelReasonCode = entity.SATCancelReasonCode,
                              DocumentTemplateId = entity.DocumentTemplateId,
-                             TotalAmountNotForTaxReport = entity.SubTotalInLocalCurrency - (double?)(entity.TotalVAT) - ((double?)(entity.TotalAmountForTaxReport)??0),
+                             TotalAmountNotForTaxReport = (entity.SubTotalInLocalCurrency??0) - (double?)(entity.TotalVAT) - ((double?)(entity.TotalAmountForTaxReport??0)),
                          };
 
             return result;
