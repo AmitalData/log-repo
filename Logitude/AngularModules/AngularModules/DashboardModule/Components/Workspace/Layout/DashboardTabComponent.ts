@@ -426,7 +426,7 @@ export class DashboardTabComponent implements OnInit {
             return;
         }
         var compareItem = this.GlobalFilters.find((x: any) => x.compareWithPrevious) as any;
-        
+
         if(!compareItem?.compareWithPrevious){
             this.DateRangeLabel = "";
             return;
@@ -438,9 +438,6 @@ export class DashboardTabComponent implements OnInit {
         }
 
         if (compareItem?.Operator == "Previous"){
-            // const format = 'yyyy/MM/dd';
-            // const locale = 'en-US';
-            // const formattedDate = formatDate(new Date(Date.now()), format, locale);
             let formattedDate = this.FormatDate(new Date(Date.now()));
             this.DateRangeLabel = this.GetFromDateForPrevious(compareItem) + " - " + formattedDate
              +" vs "+ this.GetCompareFromDateForPrevious(compareItem, this.GetFromDateForPrevious(compareItem)) 
@@ -463,10 +460,6 @@ export class DashboardTabComponent implements OnInit {
         let numberOfDays = Math.floor((Date.UTC(dateTo.getFullYear(), dateTo.getMonth(), dateTo.getDate()) - Date.UTC(dateFrom.getFullYear(), dateFrom.getMonth(), dateFrom.getDate()) ) /(1000 * 60 * 60 * 24));
 
         dateFrom.setDate(dateFrom.getDate() - numberOfDays);
-        // const format = 'yyyy/MM/dd';
-        // const locale = 'en-US';
-        // const formattedDate = formatDate(dateFrom, format, locale);
-        // return formattedDate;
         let formattedDate = this.FormatDate(dateFrom);
         return formattedDate;
 
@@ -476,10 +469,6 @@ export class DashboardTabComponent implements OnInit {
         let dateFrom = new Date (this.ParseDateFormat(fieldValue));
         
         dateFrom.setDate(dateFrom.getDate() - 1);
-        // const format = 'yyyy/MM/dd';
-        // const locale = 'en-US';
-        // const formattedDate = formatDate(dateFrom, format, locale);
-        // return formattedDate;
         let formattedDate = this.FormatDate(dateFrom);
         return formattedDate;
 
@@ -490,28 +479,9 @@ export class DashboardTabComponent implements OnInit {
        
         let stringPeriod = compareItem.fieldValue3;
         var numberPeriod: number = +stringPeriod;
-        // if(compareItem.dateGroupCode == 'Day'){
-        //     dateFrom.setDate(dateFrom.getDate() - numberPeriod);
-        // }
-        // if(compareItem.dateGroupCode == 'Week'){
-        //     dateFrom.setDate(dateFrom.getDate() - (7 * numberPeriod));
-        // }
-        // if(compareItem.dateGroupCode == 'Month'){
-        //     dateFrom.setMonth(dateFrom.getMonth() - numberPeriod);
-        // }
-        // if(compareItem.dateGroupCode == 'Quarter'){
-        //     dateFrom.setMonth(dateFrom.getMonth() - (3 * numberPeriod));
-        // }
-        // if(compareItem.dateGroupCode == 'Year'){
-        //     dateFrom.setFullYear(dateFrom.getFullYear() - numberPeriod);
-        // }
         dateFrom = this.SetDateFromAccordingDateGroupCode(compareItem, dateFrom, numberPeriod);
         let formattedDate = this.FormatDate(dateFrom);
         return formattedDate;
-        // const format = 'yyyy/MM/dd';
-        // const locale = 'en-US';
-        // const formattedDate = formatDate(dateFrom, format, locale);
-        // return formattedDate;
     }
 
     GetCompareFromDateForPrevious(compareItem: any, dateFrom : any){
@@ -521,11 +491,6 @@ export class DashboardTabComponent implements OnInit {
         dateFromHere = this.SetDateFromAccordingDateGroupCode(compareItem, dateFromHere, numberPeriod);
         let formattedDate = this.FormatDate(dateFromHere);
         return formattedDate;
-        // const format = 'yyyy/MM/dd';
-        // const locale = 'en-US';
-        // const formattedDate = formatDate(dateFromHere, format, locale);
-        // return formattedDate;
-
     }
     SetDateFromAccordingDateGroupCode(compareItem: any, dateFromHere: Date, numberPeriod: number) : Date{
         if(compareItem.dateGroupCode == 'Day'){
