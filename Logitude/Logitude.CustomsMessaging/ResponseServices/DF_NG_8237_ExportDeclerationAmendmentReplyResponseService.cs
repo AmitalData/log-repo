@@ -75,14 +75,22 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //if (customResponse.Response !=null  && customResponse.Response.Status != null && customResponse.Response.Status[0].NameCode.Value == "36")
             if(requestParams.IsExportClose)
                 isExportClose = true;
+            
+            string functionalReferenceID = "";
+            if (customResponse.Response.FunctionalReferenceID != null)
+                functionalReferenceID = customResponse.Response.FunctionalReferenceID.Value;
+            else
+                functionalReferenceID = "";
+            if (!isExportClose)
+            {
+                isExportCloseFromMehes = myDeclarationQueryService.GetDeclarationByfunctionalReferenceID(functionalReferenceID, requestParams.Tenant, true) != null;
+                var status = customResponse.Response.AdditionalInformation.FirstOrDefault(x => x.Content != null && x.StatementTypeCode.Value == "32").Content.Value;
+                if (isExportCloseFromMehes && status == "4")
+                    isExportClose = true;
+            }
 
             if (!isExportClose)
             {
-                string functionalReferenceID = "";
-                if (customResponse.Response.FunctionalReferenceID != null)
-                    functionalReferenceID = customResponse.Response.FunctionalReferenceID.Value;
-                else
-                    functionalReferenceID = "";
 
                 string agentFileReferenceID = "";
                 if (customResponse.Response?.Declaration?.DMExtensions?.AgentFileReferenceID != null)
@@ -125,7 +133,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             _MyDeclarationPM = dF_NG_2757_MSG10004_ExportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, id, out error, false);
                         }
                         fromMehes = true;
-                        isExportCloseFromMehes = myDeclarationQueryService.GetDeclarationByfunctionalReferenceID(functionalReferenceID, agentFileReferenceID,requestParams.Tenant,true) != null;
+                        //isExportCloseFromMehes = myDeclarationQueryService.GetDeclarationByfunctionalReferenceID(functionalReferenceID, requestParams.Tenant,true) != null;
                     }
                 }
             }
