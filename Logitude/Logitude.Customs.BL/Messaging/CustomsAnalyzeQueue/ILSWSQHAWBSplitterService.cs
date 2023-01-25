@@ -15,9 +15,9 @@ using System.Xml.Linq;
 
 namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 {
-    public class ILSWSQHAWBService : CustomAnalyzerQueueBase
+    public class ILSWSQHAWBSplitterService : CustomAnalyzerQueueBase
     {
-        public ILSWSQHAWBService(InterfaceDetails MyInterfaceDetails)
+        public ILSWSQHAWBSplitterService(InterfaceDetails MyInterfaceDetails)
             : base(MyInterfaceDetails)
         {
 

@@ -31,10 +31,9 @@ using System.Xml.Linq;
 namespace Logitude.Customs.BL.Messaging.ILSWS
 
 {
-    public class CourierECSWSTHRMessageResponseService : CustomAnalyzerQueueBase
+    public class ILSWSQHAWBQService : CustomAnalyzerQueueBase
     {
-
-        public CourierECSWSTHRMessageResponseService(InterfaceDetails MyInterfaceDetails)
+        public ILSWSQHAWBQService(InterfaceDetails MyInterfaceDetails)
            : base(MyInterfaceDetails)
         {
 
