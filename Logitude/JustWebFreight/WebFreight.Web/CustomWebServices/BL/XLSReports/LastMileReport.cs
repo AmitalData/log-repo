@@ -58,6 +58,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSReports
         }
         private DataTable ExportData(List<LastMileReportData> lastMileReportDataList, DataTable dt,int MawbCountr)
         {
+
             lastMileReportDataList.ForEach(r =>
             {
                 var newrow = dt.NewRow();
@@ -69,7 +70,8 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSReports
                 newrow[5] = r.LastMileStatusDate;
                 newrow[6] = r.EstimatedArrivalDate;
                 newrow[7] = r.HatraDate;
-                newrow[8] = r.TerminalReleaseDate;
+                newrow[8] = r.TerminalReleaseDate ;
+
 
                 dt.Rows.Add(newrow);
             });            
@@ -93,7 +95,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSReports
             settingCol.Columns.Add(GetColumn(4, "LastMileServiceType", "LastMileServiceType", "string", 150));
             settingCol.Columns.Add(GetColumn(5, "LastMileStatusName", "LastMileStatusName", "string", 150));
             settingCol.Columns.Add(GetColumn(6, "LastMileStatusDate", "LastMileStatusDate", "DateTime?", 150));
-            settingCol.Columns.Add(GetColumn(7, "EstimatedArrivalDate", "EstimatedArrivalDate", "DateTime", 150));
+            settingCol.Columns.Add(GetColumn(7, "EstimatedArrivalDate", "EstimatedArrivalDate", "DateTime?", 150));
             settingCol.Columns.Add(GetColumn(8, "HatraDate", "HatraDate", "string", 150));
             settingCol.Columns.Add(GetColumn(9, "TerminalReleaseDate", "TerminalReleaseDate", "string", 150));
 
@@ -108,7 +110,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSReports
             dt.Columns.Add(GetDataColumn("סוג שירות", "LastMileServiceType", "System.String"));
             dt.Columns.Add(GetDataColumn("שם סטטוס אחרון", "LastMileStatusName", "System.String"));
             dt.Columns.Add(GetDataColumn("תאריך ושעת הסטטוס", "LastMileStatusDate", "System.String"));
-            dt.Columns.Add(GetDataColumn("תאריך הגעה משוער", "EstimatedArrivalDate", "System.DateTime"));
+            dt.Columns.Add(GetDataColumn("תאריך הגעה משוער", "EstimatedArrivalDate", "System.String"));
             dt.Columns.Add(GetDataColumn("תאריך התרה", "HatraDate", "System.String"));
             dt.Columns.Add(GetDataColumn("תאריך יציאה ממסוף", "TerminalReleaseDate", "System.String"));
             return dt;
