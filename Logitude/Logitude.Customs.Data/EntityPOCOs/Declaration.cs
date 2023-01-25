@@ -453,6 +453,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string ExportLoadingPortCode { get; set; }
 	      
         public virtual LoadingSiteType ExportLoadingPort { get; set; }
+        [Column("CasualImporterCountry")]
+	    public string CasualImporterCountry { get; set; }
     }
 }
 	 
