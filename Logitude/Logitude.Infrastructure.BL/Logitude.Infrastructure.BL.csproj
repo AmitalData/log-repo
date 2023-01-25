@@ -75,6 +75,7 @@
     <Compile Include="EntityDataMappings\BIReportsTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\BusinessProcessQueueDataMapping.cs" />
     <Compile Include="EntityDataMappings\BusinessRoleDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ContainerSettingDataMapping.cs" />
     <Compile Include="EntityDataMappings\DigitalFieldSecurityDataMapping.cs" />
     <Compile Include="EntityDataMappings\DigitalPortalScreenDataMapping.cs" />
     <Compile Include="EntityDataMappings\DigitalPreDefinedComponentDataMapping.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="EntityDataMappings\Generated\BIReportsTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\BusinessProcessQueueDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\BusinessRoleDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ContainerSettingDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DigitalFieldSecurityDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DigitalPortalScreenDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DigitalPreDefinedComponentDataMapping.Generated.cs" />
@@ -121,6 +123,7 @@
     <Compile Include="EntityPMs\Generated\BIReportsTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\BusinessProcessQueuePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\BusinessRolePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ContainerSettingPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DigitalFieldSecurityPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DigitalPortalScreenPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DigitalPreDefinedComponentPM.Generated.cs" />
@@ -152,6 +155,7 @@
     <Compile Include="EntityQueryServices\Generated\BIReportsTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\BusinessProcessQueueQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\BusinessRoleQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ContainerSettingQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DigitalFieldSecurityQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DigitalPortalScreenQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DigitalPreDefinedComponentQueryService.Generated.cs" />
@@ -173,6 +177,7 @@
     <Compile Include="EntityUpdateServices\BIReportFolderUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\AuditLogUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\BIFoldersPermissionUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ContainerSettingUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DigitalFieldSecurityUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DigitalPortalScreenUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DigitalPreDefinedComponentUpdateService.Generated.cs" />

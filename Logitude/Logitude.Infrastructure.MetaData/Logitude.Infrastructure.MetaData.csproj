@@ -136,6 +136,7 @@
     <None Include="EntityFiles\BIReportsType.lxml" />
     <None Include="EntityFiles\BusinessProcessQueue.lxml" />
     <None Include="EntityFiles\BusinessRole.lxml" />
+    <None Include="EntityFiles\ContainerSetting.lxml" />
     <None Include="EntityFiles\DigitalFieldSecurity.lxml" />
     <None Include="EntityFiles\DigitalPortalScreen.lxml" />
     <None Include="EntityFiles\DigitalPreDefinedComponent.lxml" />
