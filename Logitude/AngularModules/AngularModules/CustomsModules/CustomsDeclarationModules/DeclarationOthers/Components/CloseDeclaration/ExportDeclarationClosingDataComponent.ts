@@ -390,7 +390,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                 }
                 else {
 
-                
+
                     if (AppTool.IsNullOrEmpty(this.EntityPM.LoadingDateTime)) {
                         var msg = " שדה תםריך טעינה שדה חובה";
                         this.ValidationErrors.push(msg);
@@ -425,50 +425,49 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                 if (this.SupplierInvoiceItemList.length > 0) {
                     custDocsTicketWebService.GetCustomsDocumentsTicketsByEntityIdAndChilds(this.DecPM.Id, null, null, null, "ExportDeclarationClosingData", false).subscribe((response: ServiceResponse) => {
                         CustomsDocumentsTickets = response.Result;
-                        CustomsDocumentsTickets=CustomsDocumentsTickets.filter(c=>!AppTool.IsNullOrEmpty(c.CustomsDocId))
+                        CustomsDocumentsTickets = CustomsDocumentsTickets.filter(c => !AppTool.IsNullOrEmpty(c.CustomsDocId))
                         CustomsDocumentsTickets954 = CustomsDocumentsTickets.filter(c => c.DocumentTypeCode == '954');
                         CustomsDocumentsTickets = CustomsDocumentsTickets.filter(c => c.DocumentTypeCode == 'IL_184' || c.DocumentTypeCode == 'IL_329');
-
-                        if (CustomsDocumentsTickets.length == 0 && CustomsDocumentsTickets954.length==0) {
-                            this.SupplierInvoiceItemList.forEach(supplierInvoiceItem => {
-                                SupplierInvoiceNumberList =SupplierInvoiceNumberList+','+ this.DecPM.SupplierInvoices.find(s => s.InvoiceCounterKey == supplierInvoiceItem.CounterKey).InvoiceNumber;
-                            });
-                            this.ShowWarnningMessage(SupplierInvoiceNumberList)
-
-                        }
-
+                        if (CustomsDocumentsTickets954.length > 0)
+                            this.Send("ok")
                         else {
-                            for (var i = 0; i < CustomsDocumentsTickets.length; i++) {
-                                customsDocTickets = customsDocTickets + "," + CustomsDocumentsTickets[i].DocumentsFilingId;
+                            if (CustomsDocumentsTickets.length == 0) {
+                                this.SupplierInvoiceItemList.forEach(supplierInvoiceItem => {
+                                    SupplierInvoiceNumberList = SupplierInvoiceNumberList + ',' + this.DecPM.SupplierInvoices.find(s => s.InvoiceCounterKey == supplierInvoiceItem.CounterKey).InvoiceNumber;
+                                });
+                                this.ShowWarnningMessage(SupplierInvoiceNumberList)
+
                             }
-                            
-                            customsDocTickets = customsDocTickets.substr(1, customsDocTickets.length - 1);
-                            custDocsMetadataWebService.GetCustomsDocumentMetaDataValuesByCustomsDocumentFilingIds(customsDocTickets).subscribe((response2: ServiceResponse) => {
-                                MetadataValues = response2.Result;
-                                var metaDataTypesCode = MetadataValues.filter(c => c.MetaDataTypeCode == '35' || c.MetaDataTypeCode == '46')
-                                var index = 0
-                                this.SupplierInvoiceItemList.forEach(element => {
-                                    index = metaDataTypesCode.findIndex(t => t.MetaDataValue == element.PreferenceDocumentNumber);
-                                    if (index < 0) {
-                                        if (CustomsDocumentsTickets954.length > 0)
-                                            CustomsDocumentsTickets954.splice(0, 1);
-                                        else {
+
+                            else {
+                                for (var i = 0; i < CustomsDocumentsTickets.length; i++) {
+                                    customsDocTickets = customsDocTickets + "," + CustomsDocumentsTickets[i].DocumentsFilingId;
+                                }
+
+                                customsDocTickets = customsDocTickets.substr(1, customsDocTickets.length - 1);
+                                custDocsMetadataWebService.GetCustomsDocumentMetaDataValuesByCustomsDocumentFilingIds(customsDocTickets).subscribe((response2: ServiceResponse) => {
+                                    MetadataValues = response2.Result;
+                                    var metaDataTypesCode = MetadataValues.filter(c => c.MetaDataTypeCode == '35' || c.MetaDataTypeCode == '46')
+                                    var index = 0
+                                    this.SupplierInvoiceItemList.forEach(element => {
+                                        index = metaDataTypesCode.findIndex(t => t.MetaDataValue == element.PreferenceDocumentNumber);
+                                        if (index < 0) {
                                             SupplierInvoiceNumberList = SupplierInvoiceNumberList + ',' + this.DecPM.SupplierInvoices.find(s => s.InvoiceCounterKey == element.CounterKey).InvoiceNumber;
 
                                         }
 
+                                    });
+                                    if (SupplierInvoiceNumberList.length > 0) {
+                                        this.ShowWarnningMessage(SupplierInvoiceNumberList);
+                                        SupplierInvoiceNumberList = "";
                                     }
-
-                                });
-                                if (SupplierInvoiceNumberList.length > 0) {
-                                    this.ShowWarnningMessage(SupplierInvoiceNumberList);
-                                    SupplierInvoiceNumberList = "";
-                                }
-                                else {
-                                    this.Send("ok")
-                                }
-                            })
+                                    else {
+                                        this.Send("ok")
+                                    }
+                                })
+                            }
                         }
+
                     });
                 }
                 else {
@@ -635,7 +634,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
         if (this.ValidationErrors.length > 0)
             this.FillValidationErrors("Errors");
         this.CurrentSession.CurrentEditComponent.StartBusyIndicator("שמירה");
-        
+
         if (this.IsNew) {
             this.exportDeclarationClosingDataPMService.insert(this.EntityPM).subscribe((response: ServiceResponse) => {
                 this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
