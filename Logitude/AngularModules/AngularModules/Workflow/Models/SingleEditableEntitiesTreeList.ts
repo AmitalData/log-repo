@@ -33,7 +33,7 @@ export class SingleEditableEntitiesTreeList {
 
     private initializeTriggerRecordTreeSelectItem() {
         let triggeringRecordEntity = FlowReader.getStartNodeEntity(this.FlowObject);
-        let triggeringRecordchildrenItem = this.getGetRecordTreeSelectItemChildren("triggeringrecord", triggeringRecordEntity);
+        let triggeringRecordchildrenItem = this.getGetRecordTreeSelectItemChildren("triggeringrecord", triggeringRecordEntity, null);
         let triggeringrecordItem = new TreeSelectItem("triggeringrecord", "Triggering record", false, false, false, false, triggeringRecordchildrenItem);
         this.Items.push(triggeringrecordItem);
     }
@@ -44,17 +44,18 @@ export class SingleEditableEntitiesTreeList {
             let treeSelectItemTitle = getRecordNode.data["label"] || null;
             let treeSelectItemName = getRecordNode.data["name"];
             let treeSelectItemKey = Formatter.getCodeFromName(treeSelectItemName);
-            let childrenItems = this.getGetRecordTreeSelectItemChildren(treeSelectItemKey, entity);
-            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemTitle || treeSelectItemName, false, false, false, false, childrenItems);
+            let childrenItems = this.getGetRecordTreeSelectItemChildren(treeSelectItemKey, entity, getRecordNode.id);
+            let data = { nodeId: getRecordNode.id };
+            let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemTitle || treeSelectItemName, false, false, false, false, childrenItems, data);
             this.Items.push(treeSelectItem);
         });
     }
 
-    private getGetRecordTreeSelectItemChildren(treeItemPrefix: string, entity: string) {
+    private getGetRecordTreeSelectItemChildren(treeItemPrefix: string, entity: string, nodeId: string | null) {
         let getRecordTreeSelectItemChildren = [];
         Entities.Children.filter(c => c.Code !== "ARInvoice" && c.Code !== "APInvoice").filter(c => c.ParentEntityCode === entity)
             .forEach(childEntity => {
-                let itemData = { entity: childEntity.Code };
+                let itemData = { entity: childEntity.Code, nodeId: nodeId };
                 let treeSelectItemKey = treeItemPrefix + this.ItemKeySplitter + childEntity.Code;
                 let treeSelectItem = new TreeSelectItem(treeSelectItemKey, childEntity.Name, true, true, false, false, [], itemData);
                 getRecordTreeSelectItemChildren.push(treeSelectItem);

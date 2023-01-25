@@ -18,6 +18,8 @@ export class Condition {
     public conditions: Condition[];
     public disabled: ConditionDisabled;
     public fieldChangedToggle: boolean;
+    public fieldUsedFrom: string | null;
+    public valueUsedFrom: string | null;
 
     constructor(isGroup: boolean = false) {
         this.id = null;
@@ -35,5 +37,7 @@ export class Condition {
         this.conditions = isGroup ? [] : null;
         this.disabled = null;
         this.fieldChangedToggle = false;
+        this.fieldUsedFrom = null;
+        this.valueUsedFrom = null;
     }
 }

@@ -94,7 +94,7 @@
             </div>
             <div class="table-row-cell-block">
                 <TreeSelect [Items]="EditableRecordsTreeItems" [Width]="'300px'" [Value]="Record" [ShowExpand]="false"
-                    (ValueChanged)="updateRecord($event)">
+                    [IsReturnedTreeSelectItem]="true" (ValueChanged)="updateRecord($event)">
                 </TreeSelect>
             </div>
         </td>

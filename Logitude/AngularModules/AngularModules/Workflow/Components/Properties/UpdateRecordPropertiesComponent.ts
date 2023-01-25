@@ -61,7 +61,7 @@ export class UpdateRecordPropertiesComponent extends BaseComponent {
     }
 
     updateName(name: string) {
-        if(this.IsNew){
+        if (this.IsNew) {
             this.Data["name"] = name;
         }
 
@@ -71,9 +71,12 @@ export class UpdateRecordPropertiesComponent extends BaseComponent {
         this.setUIProperties();
     }
 
-    updateRecord(record: string) {
-        this.Record = record || null;
-        this.Data["record"] = record || null;
+    updateRecord(recordItem: TreeSelectItem) {
+        let record = recordItem ? recordItem.key : null;
+        this.Record = record;
+        this.Data["record"] = record;
+
+        this.Data["recordUsedFrom"] = recordItem && recordItem.data && recordItem.data["nodeId"] ? recordItem.data["nodeId"] : null;
 
         this.setUIProperties();
     }
