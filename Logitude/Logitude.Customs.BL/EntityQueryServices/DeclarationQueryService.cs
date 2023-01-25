@@ -2315,7 +2315,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             if (checkboxAll && allWithoutdeclarationIdsList != null)
                 declarationIdsList = declarationIdsList.Where(x => !allWithoutdeclarationIdsList.Contains(x)).ToArray();
 
-            string[] sheetStatusInProcessId = Enum.GetValues(typeof(SheetStatusInProcessEnum)).OfType<object>().Select(o => o.ToString()).ToArray();
+            string[] sheetStatusInProcessId = Enum.GetNames(typeof(SheetStatusInProcessEnum));
 
             List<string> res = repository.GetDisplayOnly(declarationIdsList, tenant, sheetStatusInProcessId);
 
