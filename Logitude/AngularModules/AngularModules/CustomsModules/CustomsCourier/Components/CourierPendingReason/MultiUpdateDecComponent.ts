@@ -399,7 +399,7 @@ export class MultiUpdateDecComponent extends BaseComponent {
         if(this.checkboxAll)
             this.allWithoutdeclarationIdsList = this.allWithoutdeclarationIdsList.concat(this.declarationsDisplayOnly)
         else
-            this.declarationIdsList = this.declarationIdsList.filter(x => !this.declarationsDisplayOnly.concat(x));
+            this.declarationIdsList = this.declarationIdsList.filter(x => !this.declarationsDisplayOnly.includes(x));
     }
 
     async SendMultiUpdate() {

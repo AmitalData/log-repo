@@ -1336,8 +1336,11 @@ namespace Logitude.Customs.Data.Repsitories
                         d.PaymentDate.HasValue == true
                         || d.IsConvertedDeclaration == true
                         || new string[] { "10", "11" }.Contains(d.DeclarationStatusTypeCode)
-                        || sheetStatusInProcessId.Contains(cd.RequestStatusCode)
-                        || new string[] { "2750", "2754", "2755", "8211", "8212", "8214", "8215", "8216", "8227", "US2L01" }.Contains(cd.InterfaceTypeCode)
+                        || 
+                        (
+                            sheetStatusInProcessId.Contains(cd.RequestStatusCode)
+                            && new string[] { "2750", "2754", "2755", "8211", "8212", "8214", "8215", "8216", "8227", "US2L01" }.Contains(cd.InterfaceTypeCode)
+                        )
                     )
                     select d.Id;
 

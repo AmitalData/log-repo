@@ -257,8 +257,8 @@ export class BulkFeedPendingComponent extends BaseComponent {
   }
 
   RefreshButtonClicked() {
-    this._CourierWorksheetSharedDataService._SelectedItems.Clear();
-    this._CourierWorksheetSharedDataService.connectedSelectAll = false;
+    // this._CourierWorksheetSharedDataService._SelectedItems.Clear();
+    // this._CourierWorksheetSharedDataService.connectedSelectAll = false;
 
     this.RefreshList();
     this.GetPending();
@@ -422,8 +422,8 @@ export class BulkFeedPendingComponent extends BaseComponent {
   }
 
   search() {
-    this.declarationIdsList = []
-    this._CourierWorksheetSharedDataService._SelectedItems.Clear();
+    // this.declarationIdsList = []
+    // this._CourierWorksheetSharedDataService._SelectedItems.Clear();
     this.RefreshList();
   }
 
