@@ -5826,25 +5826,25 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string exportCloseAmendmentRequestNumber ;
+	  private string exportCloseAmendRequestNumber ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string ExportCloseAmendmentRequestNumber  
+       public string ExportCloseAmendRequestNumber  
 	   {
 	    
 	     get
 		{
-		   return exportCloseAmendmentRequestNumber;
+		   return exportCloseAmendRequestNumber;
 		 }
 		 set
 		 {
-		   if(exportCloseAmendmentRequestNumber != value)
+		   if(exportCloseAmendRequestNumber != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportCloseAmendmentRequestNumber",OldValue=exportCloseAmendmentRequestNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportCloseAmendRequestNumber",OldValue=exportCloseAmendRequestNumber,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   exportCloseAmendmentRequestNumber=value;
+		   exportCloseAmendRequestNumber=value;
 		   }
 			
 		 }

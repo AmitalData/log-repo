@@ -14,6 +14,7 @@ import { PendingWebService } from "../../../../Customs/Services/WebServices/Pend
 import { ApiQueryFilters } from "../../../../Infrastructure/DataContracts/ApiQueryFilters";
 import { customsItemsService } from "QuoteOPM/Utilities/customsItems.service";
 import { combineLatest, forkJoin } from "rxjs";
+import { DeclarationsBulkFeedWebService } from "Customs/Services/WebServices/DeclarationsBulkFeedWebService";
 
 @Component({
 
@@ -57,7 +58,7 @@ export class MultiUpdateDecComponent extends BaseComponent {
         //this.UIProperties.SetEnabled("ClassificationCode", "Customs.SupplierInvoiceItem", false);
     }
 
-    SetWindowArgs(args: any) {
+    async SetWindowArgs(args: any) {
         this.notUpdateSelf = args.notUpdateSelf;
         this.declarationIdsList = args.declarationIdsList;
         this.allWithoutdeclarationIdsList = args.allWithoutdeclarationIdsList;
@@ -65,8 +66,11 @@ export class MultiUpdateDecComponent extends BaseComponent {
         this.filter = args.filter;
         this.courierMasterId = args.courierMasterId;
         this.IsDisplayOnly = args.IsDisplayOnly;
+        
+        this.checkDeclarationsInDisplayOnly();
     }
 
+    declarationsDisplayOnly: string[];
     customsItemTextValue: string;
     procedureCurrentCode: string;
     taxExemptCode: string;
@@ -116,6 +120,10 @@ export class MultiUpdateDecComponent extends BaseComponent {
         }
     }
 
+    async checkDeclarationsInDisplayOnly() {        
+        this.declarationsDisplayOnly = await new DeclarationsBulkFeedWebService()
+            .checkDeclarationsInDisplayOnly(this.declarationIdsList, this.allWithoutdeclarationIdsList, this.checkboxAll, this.filter);
+    }    
     
     CustomsItemTextChanged(text: string) {
         this.CustomsItemTextValue = text;
@@ -375,12 +383,25 @@ export class MultiUpdateDecComponent extends BaseComponent {
             confirm.Show("שינוי יבצע עדכון גורף של קוד תהליך בהצהרות,\n ועדכון קוד הנחה פטור לכל שורות פרטי המכס");
             confirm.WindowClosed.subscribe((event: any) => {
                 if (confirm.Yes) {
+                    this.showMassageExistDeclarationsDisplayOnly();
                     this.SendMultiUpdate();
                 }
                 confirm.Close();
             });
         }
     }
+
+    showMassageExistDeclarationsDisplayOnly() {
+        if(!this.declarationsDisplayOnly?.length) return;
+
+        new MessageWindow().Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.DisplayOnly"));
+
+        if(this.checkboxAll)
+            this.allWithoutdeclarationIdsList = this.allWithoutdeclarationIdsList.concat(this.declarationsDisplayOnly)
+        else
+            this.declarationIdsList = this.declarationIdsList.filter(x => !this.declarationsDisplayOnly.concat(x));
+    }
+
     async SendMultiUpdate() {
         var currRequestParams = new SendMultiUpdateRequestParams();
         currRequestParams.LoggingEnabled = true;

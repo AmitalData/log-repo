@@ -113,7 +113,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             {
                 IQueryable<ConsignmentList> query = (from a in context.Consignments.Where(y => y.DeclarationId == filter.FieldValue.ToString()).Select(r => new { r.ExportStoragesId })select new ConsignmentList { ExportStoragesId=a.ExportStoragesId });
                 iQueryable = iQueryable.Where(x => x.DeclarationId == null ||
-                (x.DeclarationEntity.GovernmentProcedureCurrent.LocalName.Contains("�����") 
+                (x.DeclarationEntity.GovernmentProcedureCurrent.LocalName.Contains("המכלה") 
                     &&  !query.Any(t => t.ExportStoragesId == x.Id)));             
             }
             var filter2 = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "IsExportFileNo");

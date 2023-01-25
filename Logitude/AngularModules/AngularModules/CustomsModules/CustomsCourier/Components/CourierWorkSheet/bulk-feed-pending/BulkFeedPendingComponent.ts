@@ -93,7 +93,7 @@ export class BulkFeedPendingComponent extends BaseComponent {
 
 
   constructor(
-    private _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, private pendingWebService: PendingWebService
+    public _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, private pendingWebService: PendingWebService
   ) {
     super();
     var objectFieldPMExtendedService: ObjectFieldPMExtendedService = new ObjectFieldPMExtendedService();
@@ -258,6 +258,8 @@ export class BulkFeedPendingComponent extends BaseComponent {
 
   RefreshButtonClicked() {
     this._CourierWorksheetSharedDataService._SelectedItems.Clear();
+    this._CourierWorksheetSharedDataService.connectedSelectAll = false;
+
     this.RefreshList();
     this.GetPending();
   }
@@ -627,8 +629,9 @@ export class BulkFeedPendingComponent extends BaseComponent {
     this.IsSelectedNot = true;
 
     this._CourierWorksheetSharedDataService.connectedSelectAll = true;
-    this._CourierWorksheetSharedDataService._SelectedItems.Clear()
-      ;
+    this._CourierWorksheetSharedDataService._SelectedItems.Clear();
+    this._CourierWorksheetSharedDataService._UnSelectedItems.Clear();
+
 
     this.RefreshList();
     //this._CourierMasterService.disconnectedSelectAll = true;
@@ -642,6 +645,8 @@ export class BulkFeedPendingComponent extends BaseComponent {
 
     this._CourierWorksheetSharedDataService.connectedSelectAll = false;
     this._CourierWorksheetSharedDataService._UnSelectedItems.Clear();
+    this._CourierWorksheetSharedDataService._SelectedItems.Clear();
+
     this.RefreshList();
 
     this.IsSelectedNot = false;

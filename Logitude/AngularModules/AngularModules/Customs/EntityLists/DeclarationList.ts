@@ -223,7 +223,7 @@ export class DeclarationList {
 	ExportDeclarationOfficeName: string;
 	DeclarationOfficeNameForExport: string;
 	ClosingXml: string;
-	ExportCloseAmendmentRequestNumber: string;
+	ExportCloseAmendRequestNumber: string;
 	ExportCloseAmendmentStatus: string;
 	
 }

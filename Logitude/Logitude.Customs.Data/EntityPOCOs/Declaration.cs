@@ -460,8 +460,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual ReleaseMessageType ReleaseMessageTypeCode { get; set; }
         [Column("ClosingXml")]
 	    public string ClosingXml { get; set; }
-     
-	    public string ExportCloseAmendmentRequestNumber { get; set; }
+        [Column("ExportCloseAmendRequestNumber")]
+	    public string ExportCloseAmendRequestNumber { get; set; }
         [ForeignKey("AmendmentRequestStatus")]
         [Column("ExportCloseAmendmentStatus")]
 	    public string ExportCloseAmendmentStatus { get; set; }

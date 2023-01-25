@@ -55,7 +55,7 @@ namespace WebFreight.Web.Controllers.WebServices
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
 
-                QueryOperations queryOperations = CourierDeclarationPendingListExtendedController.CreateQueryOperationsPendingBulk(filters, authToken.Tenant);
+                QueryOperations queryOperations = CourierDeclarationPendingListExtendedController.CreateQueryOperations(filters, authToken.Tenant, "Customs.DeclarationCourierStatus");
                 string res = new DCAInUCBUCADPE_MsgMessagingService().CreateCRS(authToken.Tenant, requestParamsData, queryOperations);
                 //TestPending(authToken.Tenant, requestParamsData, queryOperations);
                 //string res = "aa";
@@ -79,7 +79,7 @@ namespace WebFreight.Web.Controllers.WebServices
                 int tenant = authToken.Tenant;
                 string loggedUserEmail = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(tenant);
-                QueryOperations queryOperations = CourierDeclarationPendingListExtendedController.CreateQueryOperationsPendingBulk(filters, authToken.Tenant);
+                QueryOperations queryOperations = CourierDeclarationPendingListExtendedController.CreateQueryOperations(filters, authToken.Tenant, "Customs.DeclarationCourierStatus");
 
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
                 var messagingService = new DCAInUCBMultiUpdate_MsgMessagingService();

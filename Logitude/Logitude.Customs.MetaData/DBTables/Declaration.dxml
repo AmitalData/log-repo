@@ -1050,8 +1050,9 @@
     <Constraints
       Nullable="true" />
   </Column>
+
   <Column
-    Name="ExportCloseAmendmentRequestNumber"
+    Name="ExportCloseAmendRequestNumber"
     Type="varchar"
     Size="9">
     <Constraints
