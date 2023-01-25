@@ -1,7 +1,6 @@
 import { Entities } from "./Entities";
 import { TreeSelectItem } from "./TreeSelectItem";
-
-type EntitiesType = "all" | "parent" | "child";
+import { EntitiesType } from "./Types";
 
 export class EntitiesTreeList {
     public Items: TreeSelectItem[] = [];
