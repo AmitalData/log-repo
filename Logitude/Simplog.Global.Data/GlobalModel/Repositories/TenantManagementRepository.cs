@@ -192,6 +192,20 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
            return isExist ;
         }
 
+        public bool CheckSubDomainTenantManagement(string subDomain, int tenant)
+        {
+            bool isExist = false;
+            TenantManagement myTenant = (from a in context.TenantManagements
+                                         where a.CustomerURL == subDomain && a.Id != tenant
+                                         select a).FirstOrDefault();
+            if (myTenant != null)
+            {
+                isExist = true;
+            }
+
+            return isExist;
+        }
+
         public TenantManagement GetSingleTenantManagementPMByListOfEmails(List<string> emails)
         {
             TenantManagement myTenant = new TenantManagement();
