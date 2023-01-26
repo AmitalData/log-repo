@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-	<Sql Version="22">
+	<Sql Version="23">
       <![CDATA[	  
 	  
 		delete from DigitalPortalScreens where id != ''
@@ -13,7 +13,7 @@
  		
 		EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPortalScreen'
 		INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, ProfileId, Content, DraftContent) 
-		values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Shipment list card item', 'SLCI', @customerProfileId,
+		values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Shipment list card item - Desktop & Tablets', 'SLCI', @customerProfileId,
  		'<LogTable>
 		<LogRow log-class=''list-item-first-row''>
 			<LogColumn log-class=''p-d-flex list-item-first-col''>
@@ -275,7 +275,7 @@
 		
 		EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPortalScreen'
 		INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, ProfileId, Content, DraftContent) 
-	    values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Shipment list card item', 'SLCI', @agentProfileId,
+	    values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Shipment list card item - Desktop & Tablets', 'SLCI', @agentProfileId,
  		'<LogTable>
 		<LogRow log-class=''list-item-first-row''>
 			<LogColumn log-class=''p-d-flex list-item-first-col''>
@@ -536,7 +536,7 @@
 
  		EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPortalScreen'
 		INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode,ProfileId, Content, DraftContent) 
-	    values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Single Shipment card item', 'SSHGI', @customerProfileId, 
+	    values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Single Shipment card item - Desktop & Tablets', 'SSHGI', @customerProfileId, 
  			'<LogTable>
 			<LogRow log-class=''dp-font-weight-600 dp-font-size-16 dp-color-black-3''>
 				<LogColumn>
@@ -716,7 +716,7 @@
 			
 		EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPortalScreen'
 		INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode,ProfileId, Content, DraftContent) 
-	    values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Single Shipment card item', 'SSHGI', @agentProfileId, 
+	    values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Single Shipment card item - Desktop & Tablets', 'SSHGI', @agentProfileId, 
  		   '<LogTable>
 			<LogRow log-class=''dp-font-weight-600 dp-font-size-16 dp-color-black-3''>
 				<LogColumn>

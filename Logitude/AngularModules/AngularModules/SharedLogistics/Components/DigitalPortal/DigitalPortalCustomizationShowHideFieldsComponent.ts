@@ -141,6 +141,7 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
         if (!AppTool.IsNullOrEmpty(this.SearchText)) {
             var data = this.loadedResults;
             data = data.filter(f =>
+                (!AppTool.IsNullOrEmpty(f.TextCode) && f.TextCode.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1) ||
                 (!AppTool.IsNullOrEmpty(f.FieldCode) && f.FieldCode.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1) ||
                 (!AppTool.IsNullOrEmpty(f.DisplayText) && f.DisplayText.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1) ||
                 (!AppTool.IsNullOrEmpty(f.DefaultText) && f.DefaultText.toLowerCase().indexOf(this.SearchText.toLowerCase()) > -1));
