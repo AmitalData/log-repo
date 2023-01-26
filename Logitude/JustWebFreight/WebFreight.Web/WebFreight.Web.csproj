@@ -7330,6 +7330,10 @@
       <Project>{f0039dbe-4a1a-4755-8f37-e4005ea74746}</Project>
       <Name>Logitude.CustomsMessaging.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Logitude.CustomsMessaging\Logitude.CustomsMessaging.csproj">
+      <Project>{7994D6F2-00A7-4C0D-A7D3-FD7D5304B665}</Project>
+      <Name>Logitude.CustomsMessaging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Logitude.DatabaseMigration\Logitude.DatabaseMigration.csproj">
       <Project>{160CFF77-92DB-4578-BD3D-BF78A9258B00}</Project>
       <Name>Logitude.DatabaseMigration</Name>
