@@ -45,8 +45,7 @@ export class InterestTransactionNotesComponent extends BaseComponent {
             this.Notes=this.EntityPM.Notes;
             this.EntityPM.CreateDateTime = new Date();
             this.EntityPM.UpdateDateTime = new Date();
-            this.EntityPM.CreatedByUserId = loggedContact.Id;
-            this.EntityPM.UpdatedByUserId = loggedContact.Id;
+            this.EntityPM.UpdatedByUserName = loggedContact.DontShowLocal ? loggedContact.EnglishName : (loggedContact.LocalName||loggedContact.EnglishName);
             this.IsResourcesReady = true;
         });
 

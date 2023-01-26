@@ -597,52 +597,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 
 			}
 		}
-		private string createdByUserId;
-
+		private string updatedByUserName;
 
 		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 		[DataMember]
-		public string CreatedByUserId
+		public string UpdatedByUserName
 		{
 
 			get
 			{
-				return createdByUserId;
+				return updatedByUserName;
 			}
 			set
 			{
-				if (createdByUserId != value)
+				if (updatedByUserName != value)
 				{
-					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "CreatedByUserId", OldValue = createdByUserId, NewValue = value, PropertyType = "string" };
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "UpdatedByUserName", OldValue = updatedByUserName, NewValue = value, PropertyType = "string" };
 					NotifyPropertyChanged(values);
-					createdByUserId = value;
+					updatedByUserName = value;
 				}
 
 			}
 		}
-		private string updatedByUserId;
 
-
-		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-		[DataMember]
-		public string UpdatedByUserId
-		{
-
-			get
-			{
-				return updatedByUserId;
-			}
-			set
-			{
-				if (updatedByUserId != value)
-				{
-					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "UpdatedByUserId", OldValue = updatedByUserId, NewValue = value, PropertyType = "string" };
-					NotifyPropertyChanged(values);
-					updatedByUserId = value;
-				}
-
-			}
-		}
 
 	}
 

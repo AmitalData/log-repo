@@ -60,21 +60,10 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public bool IsClosed { get; set; }
         [Column("IsCancelled")]
 	    public bool IsCancelled { get; set; }
-
         [Column("AccountingEntityCode")]
-        public string AccountingEntityCode { get; set; }
+	    public string AccountingEntityCode { get; set; }
         [Column("Notes")]
-        public string Notes { get; set; }
-        [ForeignKey("CreatedByUser")]
-        [Column("CreatedByUserId")]
-        public string CreatedByUserId { get; set; }
-
-        public virtual User CreatedByUser { get; set; }
-        [ForeignKey("UpdatedByUser")]
-        [Column("UpdatedByUserId")]
-        public string UpdatedByUserId { get; set; }
-
-        public virtual User UpdatedByUser { get; set; }
+	    public string Notes { get; set; }
     }
 }
 	 

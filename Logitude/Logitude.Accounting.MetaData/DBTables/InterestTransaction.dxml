@@ -127,20 +127,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="CreatedByUserId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="UpdatedByUserId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
   <Relation
     ForeignKeyColumn="GLAccountId"
     ReferencedTable="GLAccounts"
@@ -154,16 +140,6 @@
   <Relation
     ForeignKeyColumn="CurrencyId"
     ReferencedTable="Currencies"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="CreatedByUserId"
-    ReferencedTable="Users"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="UpdatedByUserId"
-    ReferencedTable="Users"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index

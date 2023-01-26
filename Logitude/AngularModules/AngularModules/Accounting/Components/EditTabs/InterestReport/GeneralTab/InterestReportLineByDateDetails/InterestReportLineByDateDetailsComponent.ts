@@ -125,11 +125,22 @@ export class InterestReportLineByDateDetailsComponent {
         logWindow.Height = 350;
         logWindow.Title = TextCodeTranslator.Translate("InterestTransactionNote");
         logWindow.WindowArgs = { interestTransaction: line };
+       
         logWindow.Show('./Accounting/Components/Others/InterestTransactionNotesComponent');
         logWindow.WindowClosed.subscribe(($event: any) => {
+            this.GetAccountingNotes(line);
             this.CurrentSession.StopBusyIndicator();
             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         });
+
+    }
+    GetAccountingNotes(line: any){
+        if(line.InterestTransactionId){
+            this.myService.GetSingle(line.InterestTransactionId)
+                .subscribe((res:ServiceResponse) =>
+                {
+                }); 
+        }
 
     }
 }

@@ -7,7 +7,7 @@
 //------------------------------------------------------------------------------
 
 export class InterestTransactionList {
-
+   
 	Id: string;
 	Tenant: number;
 	CreateDateTime: Date;
@@ -37,7 +37,6 @@ export class InterestTransactionList {
 	SourceId: string;
 	SourceType: string;
 	Notes: string;
-	CreatedByUserId: string;
-	UpdatedByUserId: string;
-
+	UpdatedByUserName: string;
+	
 }

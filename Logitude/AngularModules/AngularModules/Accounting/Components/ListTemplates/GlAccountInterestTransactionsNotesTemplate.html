@@ -1,25 +1,27 @@
-<style>
-      .LogitudeCellTooltip {
-          position:fixed;
-          display:inline-block;
-          padding-left: 10 !important;
-          z-index:99999 !important;
-          font-size: larger;        
-       }
-</style>
 
-     <div style="width: 45px; height: 12px;" class="CenterCenter,MediaFill">
-          <img *ngIf="!rowData.Notes" src="./Images/Notes_notexists.png" style="vertical-align: middle; display: block;" />
-                    <CellTooltip class="LogitudeCellTooltip" *ngIf="rowData.Notes" [IconPath]="'./Images/Notes_exists.png'"
-                    [Head]="'APInvoiceLine.F.Notes' | TextCodeTranslationPipe" [Body]="rowData.Notes" [Height] = "735" [Width] ="100">
-                    </CellTooltip>
+     <table>
+          <tr>
+               <td float-start>
+                    <span class="CellSeparator"></span>
+               </td>
+               <td style="width:16px;">
+                    <img *ngIf="!rowData.Notes" style="vertical-align: middle; display: block;"
+                         src="./Images/Notes_notexists.png" />
+                    <CellTooltip *ngIf="rowData.Notes" [IconPath]="'./Images/Notes_exists.png'"
+                         [Head]="'APInvoiceLine.F.Notes' | TextCodeTranslationPipe" [Body]="rowData.Notes"
+                         [Height]="750" [Width]="100"></CellTooltip>
+               </td>
+               <td style="width:5px;">
+                    <div></div>
+               </td>
 
-          <IconButton [IsSmall]="true" [style.float]="isRTL ? 'left' : 'right'" [Name]="'Edit'"
-               (click)="OpenInterestTransactionNote(rowData)">
-          </IconButton>
-          
-                    
-          
-     </div>
+               <td style="width:20px;height:20px;padding-left:1px;">
+                    <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3"
+                         (click)="OpenInterestTransactionNote(rowData)"></IconButton>
+               </td>
 
-<!-- [Height] = "700" [Width] ="700"  -->
+               <td>
+                    <div></div>
+               </td>
+          </tr>
+     </table>

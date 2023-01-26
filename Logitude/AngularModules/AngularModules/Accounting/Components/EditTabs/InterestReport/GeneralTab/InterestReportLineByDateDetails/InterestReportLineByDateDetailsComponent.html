@@ -177,17 +177,34 @@
                     </log-column>
 
                     <!--Notes-->
-                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'" [header]="InterestTransactionNotes">
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'80'" [header]="InterestTransactionNotes">
                         <ng-template let-item>
                         <log-cell-template   #logcelltemplate>
-                                <img *ngIf="!item.Notes" src="./Images/Notes_notexists.png" style="vertical-align: middle; display: block;" />
-                                <CellTooltip class="LogitudeCellTooltip" *ngIf="item.Notes" [IconPath]="'./Images/Notes_exists.png'"
-                                [Head]="'APInvoiceLine.F.Notes' | TextCodeTranslationPipe" [Body]="item.Notes" [Height] = "735" [Width] ="100">
-                                </CellTooltip>
-            
-                                <IconButton [IsSmall]="true" [style.float]="isRTL ? 'left' : 'right'" [Name]="'Edit'"
-                                    (click)="OpenInterestTransactionNote(item)">
-                                </IconButton>
+                            <table>
+                                <tr>
+                                    <td float-start>
+                                        <span class="CellSeparator"></span>
+                                    </td>
+                                    <td style="width:5px;">
+                                        <div></div>
+                                    </td>
+                                    <td style="width:16px;">
+                                        <img *ngIf="!item.Notes" style="vertical-align: middle; display: block;" src="./Images/Notes_notexists.png" />
+                                        <CellTooltip *ngIf="item.Notes" [IconPath]="'./Images/Notes_exists.png'" [Head]="'APInvoiceLine.F.Notes' | TextCodeTranslationPipe" [Body]="item.Notes"></CellTooltip>
+                                    </td>
+                                    <td style="width:5px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width:20px;height:20px;padding-left:1px;">
+                                        <IconButton [Name]="'Edit'" [IsSmall]="true"  [Left]="3" (click)="OpenInterestTransactionNote(item)"></IconButton>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                               </tr>
+                            </table>
                         </log-cell-template>
                         </ng-template>
                     </log-column>
