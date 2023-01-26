@@ -41,6 +41,7 @@ import { ContainerHelperComponent } from './Components/Helpers/ContainerHelperCo
 import { SupplierConsigneeListTemplate } from './Components/ListTemplates/SupplierConsigneeListTemplate';
 import { UpdateUnassigedDataComponent } from './Components/UnassigedData/UpdateUnassigedDataComponent';
 import { ContainerShortTitleComponent } from './Components/ShortTitles/ContainerShortTitleComponent';
+import { ContainerComponent } from './Components/Workspaces/ContainerComponent';
 
 export const Components =
     [
@@ -84,7 +85,8 @@ export const Components =
         CustomsTransferHeaderHelperComponent,
         SupplierConsigneeListTemplate,
         UpdateUnassigedDataComponent,
-        ContainerShortTitleComponent
+        ContainerShortTitleComponent,
+        ContainerComponent
     ];
 
 export const ControlsComponents =
@@ -140,6 +142,7 @@ export class ModuleDeclarations {
             case "SupplierConsigneeListTemplate": { myResult = SupplierConsigneeListTemplate; break; } 
             case "UpdateUnassigedDataComponent": { myResult = UpdateUnassigedDataComponent; break; }
             case "ContainerShortTitleComponent": { myResult = ContainerShortTitleComponent; break; }
+            case "ContainerComponent": { myResult = ContainerComponent; break; }
         }
 
         return myResult;
