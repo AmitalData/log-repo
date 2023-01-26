@@ -41,7 +41,7 @@ namespace WebFreight.Web.ContainerTracking
         private int? logitudeTenant = null;
         private string trackingSource;
         private ContainerUpdatedFields containerUpdatedFields;
-        private PortRepository portRepository;
+        private ContainerTrackingHelper containerTrackingHelper;
         public ContainerTrackingGeneralAnalyzer(string trackingSource, AnalyzeQueue analyzeQueue, AnalyzeQueueRepository analyzeQueueRepository)
         {
             if (analyzeQueue != null)
@@ -180,7 +180,7 @@ namespace WebFreight.Web.ContainerTracking
 
             try
             {
-                portRepository = new PortRepository(containerTrackingRequest.Tenant);
+                containerTrackingHelper = new ContainerTrackingHelper(containerTrackingRequest.Tenant);
                 var analyz = false;
 
                 ContainerPM container = GetContainerPM(containerTrackingRequest);
@@ -203,58 +203,28 @@ namespace WebFreight.Web.ContainerTracking
             }
         }
 
-
         private bool IsUpdateContainerAllowed(ContainerPM container)
         {
-            if (!IsTheSamePOLLocation(container.POLLocationPortId, container.Tenant))
-            {
+            if (!containerTrackingHelper.IsSameLocation(container.POLLocationPortId, containerUpdatedFields.POLLocation))            
                 return false;
-            }
-            if (!IsTheSamePODLocation(container.PODLocationPortId, container.Tenant))
-            {
-                return false;
-            }
+            
+            if (!containerTrackingHelper.IsSameLocation(container.PODLocationPortId, containerUpdatedFields.PODLocation))            
+                return false;            
 
             return true;
         }
         private bool IsUpdateShipmentAllowed(ShipmentPM shipment)
         {
-            if (shipment.IsOperationalClosed)
-            {
+            if (shipment.IsOperationalClosed)            
                 return false;
-            }
-            if (!IsTheSamePOLLocation(shipment.MainCarriageFromPortId, shipment.Tenant))
-            {
+            
+            if (!containerTrackingHelper.IsSameLocation(shipment.MainCarriageFromPortId, containerUpdatedFields.POLLocation))            
                 return false;
-            }
-            if (!IsTheSamePODLocation(shipment.MainCarriageFinalDestinationPortId, shipment.Tenant))
-            {
-                return false;
-            }
+            
+            if (!containerTrackingHelper.IsSameLocation(shipment.MainCarriageFinalDestinationPortId, containerUpdatedFields.PODLocation))            
+                return false;            
             
             return true;
-        }
-        private bool IsTheSamePOLLocation(string polPortId, int tenant)
-        {
-            var updatedPortId = this.GetPortId(containerUpdatedFields.POLLocation, tenant);
-            if(string.IsNullOrEmpty(polPortId))            
-                return true;
-            
-            else if (polPortId == updatedPortId)            
-                return true;            
-
-            return false;
-        }
-        private bool IsTheSamePODLocation(string podPortId, int tenant)
-        {
-            var updatedPortId = this.GetPortId(containerUpdatedFields.PODLocation, tenant);
-            if (string.IsNullOrEmpty(podPortId))            
-                return true;
-            
-            else if (podPortId == updatedPortId)            
-                return true;            
-
-            return false;
         }
         private bool IsValidToAnalyze(ShipmentPM shipment, ContainerPM container, ContainerTrackingRequest containerTrackingRequest)
         {
@@ -266,20 +236,7 @@ namespace WebFreight.Web.ContainerTracking
                     !container.IsCancelled &&
                     !container.IsClosed;
         }
-        private string GetPortId(string portCode, int tenant)
-        {
-            Port port = portRepository.GetOceanPortByCombinedCode(portCode, tenant);
-            string portId = null;
-            if (port != null)
-            {
-                portId = port.Id;
-            }
-            else
-            {
-                //portId = this.CopyPortCopyToCurrentTenant(portCode);
-            }
-            return portId;
-        }
+
         private void HandleExceptionOnUpdate(CommunicationLog comunicationLog, Exception exception)
         {
             comunicationLog.WasAnalyzed = false;
