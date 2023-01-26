@@ -30,6 +30,7 @@ import { ObjectTableTabPM } from 'Infrastructure/EntityPMs/ObjectTableTabPM';
 import { CloneDeep } from 'Infrastructure/Helpers/LodashClone';
 import { WorkFlowVersionPMService } from 'Workflow/Services/StandardPMs/WorkFlowVersionPMService';
 //import { CloneEntityPM } from 'Infrastructure/Helpers/SafeCloneDeep';
+import { GlobalDomainService } from '../../../Common/Services/GlobalDomainService';
 
 
 const InterestTransactionTabCode = 'GLIT';
@@ -95,7 +96,7 @@ export class EditComponent implements OnDestroy {
     public CurrentSession = SessionLocator.SelectedSession;
     public IsReloadNeeded: boolean = false;
     tabsService = new TableTabService();
-
+    public IsDigitalAddsOn: boolean = false;
 
 
     constructor(private entityPMService: EntityPMService, private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private _totangoService: TotangoService, private cd: ChangeDetectorRef) {
@@ -146,6 +147,8 @@ export class EditComponent implements OnDestroy {
     private QuerySection: string;
     private EntityFields: any[] = null;
     public Run(args: any) {
+
+
         this.EntityId = args['EntityId'];
         this.EntityPM = args['EntityPM'];
         this.EntityParentPM = args['EntityParentPM'];
@@ -332,39 +335,55 @@ export class EditComponent implements OnDestroy {
     private BuildComponent() {
         if (this.EntityPM) {
             this.IsEntityLoaded = true;
+            this.CheckDigtialPortalAddsOnPackage();
+        }
+    }
 
-            this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {
-                this.GetControllerByTableName(this.ObjectTableName).then(EditComponentController => {
-                    //this.EditComponentController = EditComponentController as IEditComponentController;
-                    this.CurrentSession.AddEditComponent(this);
-                    this.EditComponentController = EditComponentController as IEditComponentController;
-                    this.EditComponentController.OnFirstTimeAfterSingleDataLoaded(this.EntityPM).then((isLock) => {
-                        this.OnFirstTimeAfterSingleDataLoaded.emit(".EditComponentController.OnFirstTimeAfterSingleDataLoaded");
-                        if (this.EditComponentController.ToCancell) {
-                            this.Close();
-                        }
+    CheckDigtialPortalAddsOnPackage() {
+        this.IsDigitalAddsOn = false;
+        var globalDomainService = new GlobalDomainService();
+        globalDomainService.CheckDigitalPortalAddsOn(this.EntityPM.Id).subscribe((result: any) => {
+            var addOnPackage = result.Result;
+            if (addOnPackage != null) {
+                this.IsDigitalAddsOn = true;
+            }
 
-                        else {
+            this.ContinueBuildComponent();
+        });
+    }
 
-                            this._SubEditComponentDefaultController =
-                                this.SaveCompleted.subscribe(isSaved => {
-                                    if (isSaved) {
-                                        this.EditComponentController.HaveSaved = true;
-                                        this._SubEditComponentDefaultController.unsubscribe();
-                                        this._SubEditComponentDefaultController == null;
-                                    }
-                                });
+    private ContinueBuildComponent() {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response: any) => {
+            this.GetControllerByTableName(this.ObjectTableName).then(EditComponentController => {
+                //this.EditComponentController = EditComponentController as IEditComponentController;
+                this.CurrentSession.AddEditComponent(this);
+                this.EditComponentController = EditComponentController as IEditComponentController;
+                this.EditComponentController.OnFirstTimeAfterSingleDataLoaded(this.EntityPM).then((isLock) => {
+                    this.OnFirstTimeAfterSingleDataLoaded.emit(".EditComponentController.OnFirstTimeAfterSingleDataLoaded");
+                    if (this.EditComponentController.ToCancell) {
+                        this.Close();
+                    }
 
-                            // if (this.CurrentNavigatedIndex ==0) {
-                            this.BuildEditTabs();
-                            //}
-                            this.RunComponent();
-                            this.StopBusyIndicator();
-                        }
-                    });
+                    else {
+
+                        this._SubEditComponentDefaultController =
+                            this.SaveCompleted.subscribe(isSaved => {
+                                if (isSaved) {
+                                    this.EditComponentController.HaveSaved = true;
+                                    this._SubEditComponentDefaultController.unsubscribe();
+                                    this._SubEditComponentDefaultController == null;
+                                }
+                            });
+
+                        // if (this.CurrentNavigatedIndex ==0) {
+                        this.BuildEditTabs();
+                        //}
+                        this.RunComponent();
+                        this.StopBusyIndicator();
+                    }
                 });
             });
-        }
+        });
     }
 
     private isLoaderReady: boolean = false;
@@ -881,7 +900,7 @@ export class EditComponent implements OnDestroy {
         }
 
         myTabsSorted.forEach(item => {
-            var itemTab: TabItem = new TabItem(item, this.EntityId);
+            var itemTab: TabItem = new TabItem(item, this.EntityId, this);
             itemTab.IsDisabled = this.EditComponentController.IsDisabled(itemTab.Code)
             if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
                 if (item.ControlPath.indexOf("Doc") > -1) {
@@ -2157,7 +2176,7 @@ export class TabItem {
     public TextCode: string;
     public IsDisabled: boolean = false;
     private entityId: string;
-    constructor(itemPM: any, entityId: any) {
+    constructor(itemPM: any, entityId: any, public fatherComponent: EditComponent) {
         this.Code = itemPM.Code;
         this.EntityPM = itemPM;
         this.entityId = entityId;
@@ -2166,22 +2185,23 @@ export class TabItem {
 
     private GetTextCode(itemPM: any) {
         var textCode = itemPM.TabNameTextCodeCode;
-        if (FeatureLocator.HasFeaturePermession("General", "SHLOGDIGITALPORTAL") && itemPM.TabNameTextCodeCode == "TenantManagement.TH.CargoTrackingBranding") {
-            textCode = this.GetTextCodeOfCargoTrackingBranding(itemPM);
+
+        if (itemPM.TabNameTextCodeCode == "TenantManagement.TH.CargoTrackingBranding") {
+            return this.CheckDigtialPortalAddsOnPackage(itemPM);
         }
+
         return textCode;
     }
 
-    private GetTextCodeOfCargoTrackingBranding(itemPM: any) {
+    CheckDigtialPortalAddsOnPackage(itemPM: any): string {
         var textCode = itemPM.TabNameTextCodeCode;
-        var digitalPortalBrandingToggleFeatureForTenantZero = SessionLocator.TenantZeroFeatureToggles.filter(d => d.ToggleCode == "DPB")[0];
-        var digitalPortalBrandingToggleFeatureForCurrentTenant = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "DPB" && d.TenantNumber == +this.entityId)[0];
-        if (digitalPortalBrandingToggleFeatureForTenantZero || digitalPortalBrandingToggleFeatureForCurrentTenant) {
+        if (this.fatherComponent.IsDigitalAddsOn) {
             textCode = "TenantManagement.TH.LogitudeDigitalBranding";
         }
 
         return textCode;
     }
+
 }
 class LoadedTabItem {
     public Code: string;
