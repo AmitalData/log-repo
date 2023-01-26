@@ -52,15 +52,33 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     var textCodes = textCodeQuery.GetDigitalTextCodesTenant0();
                     foreach (var item in textCodes)
                     {
-                        textCodeQuery.UpdateDigitalTextCodes(new DigitalTextCodeList
+                        if (item.ObjectTableName.Equals("general", StringComparison.InvariantCultureIgnoreCase))
                         {
-                            Tenant = tenant,
-                            Labels = item.Labels,
-                            ObjectTableId = item.ObjectTableId,
-                            ProfileId = tenantDigitalProfiles.Where(a=>a.Code == item.ProfileCode).Select(a=>a.Id).FirstOrDefault(),
-                            CreateDate = DateTime.UtcNow,
-                            UpdateDate = DateTime.UtcNow
-                        });
+                            textCodeQuery.UpdateDigitalTextCodes(new DigitalTextCodeList
+                            {
+                                Tenant = tenant,
+                                Labels = item.Labels,
+                                ObjectTableId = item.ObjectTableId,
+                                ProfileId = tenantDigitalProfiles.Where(a => a.Code == item.ProfileCode).Select(a => a.Id).FirstOrDefault(),
+                                CreateDate = DateTime.UtcNow,
+                                UpdateDate = DateTime.UtcNow
+                            });
+                        }
+                        else
+                        {
+                            textCodeQuery.UpdateDigitalTextCodes(new DigitalTextCodeList
+                            {
+                                Tenant = tenant,
+                                Labels = item.Labels,
+                                ObjectTableId = item.ObjectTableId,
+                                ProfileId = tenantDigitalProfiles.Where(a => a.Code == item.ProfileCode 
+                                                                             && !a.Code.Equals("CM"))
+                                                                 .Select(a => a.Id)
+                                                                 .FirstOrDefault(),
+                                CreateDate = DateTime.UtcNow,
+                                UpdateDate = DateTime.UtcNow
+                            });
+                        }
                     }
 
                     var filedsQuery = new DigitalFieldSecurityQueryService(tenant);
@@ -72,7 +90,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                             Tenant = tenant,
                             DefaultSettings = item.DefaultSettings,
                             ObjectTableId = item.ObjectTableId,
-                            ProfileId = tenantDigitalProfiles.Where(a => a.Code == item.ProfileCode).Select(a => a.Id).FirstOrDefault(),
+                            ProfileId = tenantDigitalProfiles.Where(a => a.Code == item.ProfileCode
+                                                                         && !a.Code.Equals("CM"))
+                                                             .Select(a => a.Id)
+                                                             .FirstOrDefault(),
                             CreateDate = DateTime.UtcNow,
                             UpdateDate = DateTime.UtcNow
                         });
@@ -91,7 +112,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                             Content = item.Content,
                             DraftContent = item.DraftContent,
                             ObjectTableId = item.ObjectTableId,
-                            ProfileId = tenantDigitalProfiles.Where(a => a.Code == item.ProfileCode).Select(a => a.Id).FirstOrDefault(),
+                            ProfileId = tenantDigitalProfiles.Where(a => a.Code == item.ProfileCode
+                                                                         && !a.Code.Equals("CM"))
+                                                             .Select(a => a.Id)
+                                                             .FirstOrDefault(),
                             CreateDate = DateTime.UtcNow,
                             UpdateDate = DateTime.UtcNow
                         });
