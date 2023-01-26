@@ -1,4 +1,4 @@
-<div style="height: 100%;width: 100%;">
+<div style="height: 100%;width: 100%;display: flex;flex-direction: column;">
     <div style="margin-left: 10px;">
         <div class="container-setting-directions-container">
             <div class="container-setting-directions-single-container">
@@ -35,15 +35,19 @@
         <SearchTextBox style="width: 200px;margin-left:auto;" [ObjectTableName]="ObjectTableName"
             [PlaceHolder]="'Search'" (SearchTextChangeEvent)="OnSearchTextChangeEvent($event)"></SearchTextBox>
     </div>
-    <div class="SimpleGridView">
+    <div class="SimpleGridView" style="overflow-x: hidden;">
         <div class="SimpleGridViewHeader">
             <table>
                 <tr>
                     <td style="width:100px; min-width:100px;max-width:100px;">Code</td>
                     <td style="width:100px; min-width:100px;max-width:100px;">SCAC Code</td>
                     <td style="width:100%; min-width:100%;max-width:100%">Name</td>
-                    <td style="width:200px; min-width:200px; max-width:200px;">Supports Container Tracking</td>
-                    <td style="width:200px; min-width:200px; max-width:200px;">Automatic Requests Sent</td>
+                    <td style="width:207px; min-width:207px; max-width:207px;" *ngIf="!IsVisibleForTenantZero">Allowed
+                        Supports Container Tracking</td>
+                    <td style="width:163px; min-width:163px; max-width:163px;">Supports Container Tracking</td>
+                    <td style="width:187px; min-width:187px; max-width:187px;" *ngIf="!IsVisibleForTenantZero">Allowed
+                        Automatic Requests Sent</td>
+                    <td style="width:143px; min-width:143px; max-width:143px;">Automatic Requests Sent</td>
                 </tr>
             </table>
         </div>
@@ -53,7 +57,7 @@
                 <tr style="height: 1px;">
                     <td>
                         <table>
-                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ShippingLinesLists">
+                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ShippingLines">
                                 <td>
                                     <table>
                                         <tr style="height:25px;">
@@ -66,48 +70,49 @@
                                                 {{item.SCACCode}}
                                             </td>
 
-                                            <td class="GridViewCell"
-                                                style="width:100%; min-width:100%; max-width:100%;">
+                                            <td class="GridViewCell rmcll" [ngStyle]="!IsVisibleForTenantZero && {'width': '260px','min-width': '260px','max-width': '260px'}">
                                                 {{item.Name}}
                                             </td>
 
                                             <td class="GridViewCell"
-                                                style="width:200px; min-width:200px; max-width:200px; padding:0;">
+                                                style="width:207px; min-width:207px; max-width:207px; padding:0;"
+                                                [ngStyle]="IsVisibleForTenantZero && {'width': '163px','min-width': '163px','max-width': '163px'}">
                                                 <div class="CenterCenter" style="width: 16px;">
                                                     <CheckBox [IsEnabled]="IsVisibleForTenantZero"
-                                                        [IsChecked]="item.TenantZeroIsSendingByContainer"
-                                                        (Checked)="item.TenantZeroIsSendingByContainer = $event">
+                                                        [IsChecked]="item.IsSupportsContainerTrackingZero"
+                                                        (Checked)="item.IsSupportsContainerTrackingZero = $event">
                                                     </CheckBox>
                                                 </div>
                                             </td>
 
                                             <td class="GridViewCell"
-                                                style="width:200px; min-width:200px; max-width:200px; padding:0;"
+                                                style="width:163px; min-width:163px; max-width:163px; padding:0;"
                                                 *ngIf="!IsVisibleForTenantZero">
                                                 <div class="CenterCenter" style="width: 16px;">
-                                                    <CheckBox [IsEnabled]="item.IsSendingByContainerEnabled"
-                                                        [IsChecked]="item.IsSendingByContainer"
-                                                        (Checked)="item.IsSendingByContainer = $event"></CheckBox>
+                                                    <CheckBox [IsEnabled]="item.IsSupportsContainerTrackingEnabled"
+                                                        [IsChecked]="item.IsSupportsContainerTracking"
+                                                        (Checked)="item.IsSupportsContainerTracking = $event"></CheckBox>
                                                 </div>
                                             </td>
 
                                             <td class="GridViewCell"
-                                                style="width:170px; min-width:170px; max-width:170px; padding:0;">
+                                                style="width:187px; min-width:187px; max-width:187px; padding:0;"
+                                                [ngStyle]="IsVisibleForTenantZero && {'width': '143px','min-width': '143px','max-width': '143px'}">
                                                 <div class="CenterCenter" style="width: 16px;">
                                                     <CheckBox [IsEnabled]="IsVisibleForTenantZero"
-                                                        [IsChecked]="item.TenantZeroIsSendingByBillOfLading"
-                                                        (Checked)="item.TenantZeroIsSendingByBillOfLading = $event">
+                                                        [IsChecked]="item.IsAutomaticRequestsSentZero"
+                                                        (Checked)="item.IsAutomaticRequestsSentZero = $event">
                                                     </CheckBox>
                                                 </div>
                                             </td>
 
                                             <td class="GridViewCell"
-                                                style="width:170px; min-width:170px; max-width:170px; padding:0;"
+                                                style="width:143px; min-width:143px; max-width:143px; padding:0;"
                                                 *ngIf="!IsVisibleForTenantZero">
                                                 <div class="CenterCenter" style="width: 16px;">
-                                                    <CheckBox [IsEnabled]="item.IsSendingByBillOfLadingEnabled"
-                                                        [IsChecked]="item.IsSendingByBillOfLading"
-                                                        (Checked)="item.IsSendingByBillOfLading = $event"></CheckBox>
+                                                    <CheckBox [IsEnabled]="item.IsAutomaticRequestsSentEnabled"
+                                                        [IsChecked]="item.IsAutomaticRequestsSent"
+                                                        (Checked)="item.IsAutomaticRequestsSent = $event"></CheckBox>
                                                 </div>
                                             </td>
                                         </tr>

@@ -22,8 +22,7 @@
                     </div>
                     <div class="TabControlBody">
                         <div class="container-setting-tab-body-container">
-                            <div
-                                style="width: 100%;margin-left: 10px;flex-direction: row; box-sizing: border-box;display: flex;place-content: center flex-start;align-items: center;gap: 10px;">
+                            <div class="container-setting-tab-header-container">
                                 <p style="font-size: 14px; color: #1B90CB;">{{SelectedTabCode ==
                                     'G'?'General Settings' : 'Automatic Requests'}} </p>
                                 <HelpIcon *ngIf="SelectedTabCode == 'R'" [HideHeader]="true"
@@ -133,7 +132,8 @@
                                 </tr>
 
                             </table>
-                            <ContainerSettingsRequest *ngIf="Loaded" [DataContext]="DataContext" [hidden]="SelectedTabCode != 'R'">
+                            <ContainerSettingsRequest style="flex: 1 1 auto;margin-bottom: 10px;" *ngIf="Loaded" [DataContext]="DataContext"
+                                [hidden]="SelectedTabCode != 'R'" [ShippingLines]="ShippingLines">
                             </ContainerSettingsRequest>
                         </div>
 
