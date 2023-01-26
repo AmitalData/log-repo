@@ -32,9 +32,6 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
 
     public class DeploymentPackageDetails
     {
-        public string Name { get; set; }
-        public string Code { get; set; }
-        public string Description { get; set; }
         public List<CustomFields> CustomFields { get; set; }
        public List<CustomPickListItem> CustomPickLists { get; set; }
     }

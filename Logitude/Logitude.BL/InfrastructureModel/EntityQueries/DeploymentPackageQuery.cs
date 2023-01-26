@@ -94,7 +94,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             if (deploymentPackagePM.DocumentId == null) return;
             StorageDataArgs storageDataArgs = GetStorageDataArgs(deploymentPackagePM, tenant);
             byte[] deploymentPackageZipFileDetailsBytes = StorageDataService.ReadFileFromStorage(storageDataArgs);
-            deploymentPackagePM.DeploymentPackageDetails = new DeploymentPackageZipFileService(deploymentPackagePM.Tenant).GetDeserializedZipFileDetails(deploymentPackageZipFileDetailsBytes);
+            deploymentPackagePM.DeploymentPackageDetails = new DeploymentPackageExtractDetailsService().Extract(deploymentPackageZipFileDetailsBytes);
         }
 
         private StorageDataArgs GetStorageDataArgs(DeploymentPackagePM deploymentPackagePM, int tenant)

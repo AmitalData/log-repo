@@ -4,16 +4,11 @@ import { ObjectFieldPM } from "./ObjectFieldPM";
 
 export class DeploymentPackageDetails {
 
-    public Name: string;
-    public Code: string;
-    public Description: string;
     public CustomFields: Array<CustomFields>;
     public CustomPickLists: Array<CustomPickListItem>;
     constructor() {
-        this.Name = "";
-        this.Code = "";
-        this.Description = "";
         this.CustomFields = [];
+        this.CustomPickLists = [];
     }
 
 }
