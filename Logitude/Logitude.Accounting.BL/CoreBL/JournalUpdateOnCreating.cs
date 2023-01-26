@@ -1,4 +1,5 @@
 ﻿using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.BL.Validators;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
@@ -37,8 +38,19 @@ namespace Logitude.Accounting.BL.CoreBL
         public void OnCreating(JournalPM entityPM, EntityPM entityParentPM)
         {
 
-
-
+            if (!String.IsNullOrWhiteSpace(entityPM.ExternalNo) && !String.IsNullOrWhiteSpace(entityPM.ExternalSystem))
+            {
+                JournalQueryService journalQuery = new JournalQueryService(entityPM.Tenant);
+                String oldjournalNumber = "";
+                if (journalQuery.CheckIfExternalNoAndSystemExist(entityPM.ExternalNo, entityPM.ExternalSystem, out oldjournalNumber, entityPM.Tenant))
+                {
+                    string basic_text_ExternalExist =
+                        //"There is a Journal ("+ journalNumber + ") with the same ExternalNo And ExternalSystem";
+                        JournalValidator.M_ExternalNoAlreadyExists_1 + oldjournalNumber + JournalValidator.M_ExternalNoAlreadyExists_2;
+                    throw new Exception(basic_text_ExternalExist);
+                }
+            }
+    
             entityPM.Id = //IdCounter.GetNumber(
 
                 // new IdCounterWrapper().GetNumber(
