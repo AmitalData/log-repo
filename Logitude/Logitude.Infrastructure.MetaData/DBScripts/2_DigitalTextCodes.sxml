@@ -1,13 +1,823 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-  <Sql Version="42">
-    <![CDATA[	
-	  delete from DigitalTextCodes where id != ''
+  <Sql Version="3">
+    <![CDATA[
       declare @NewEntityId as varchar(15)
 	  declare @generalObjectTableId as varchar(15)
 	  set @generalObjectTableId = (select Id from ObjectTables where [Name] = 'General' and Tenant = 0 )
+	  declare @commonProfileId as varchar(15)
+	  set @commonProfileId = (select Id from DigitalProfiles where [Name] = 'Common' and Tenant = 0 )
+	  
+	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCode'
+	  INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate,  ProfileId, Labels) 
+	  values (@NewEntityId, 0, @generalObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @commonProfileId,
+	  '[{
+			"TextCode": "Dashboard.G.ShipmentsToArriveWithinOneMonth",
+			"DefaultText": "Excepted shipments to arrive within one month",
+			"FieldCode": ""
+		},
+		{
+			"TextCode": "General.G.NoDataDefaultMSG",
+			"DefaultText": "You do not have any information here All information will be displayed here, when it will be added by the forwarder",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.NoDate",
+			"DefaultText": "No date",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.Arrived",
+			"DefaultText": "Arrived",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.DragAndDropMsg",
+			"DefaultText": "Drag and drop files here to upload.",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Dashboard.G.AirLabel",
+			"DefaultText": "Air",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Dashboard.G.OceanLabel",
+			"DefaultText": "Ocean",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Dashboard.G.InlandLabel",
+			"DefaultText": "Inland",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Dashboard.G.InvoiceDueDateWithinOneMonth",
+			"DefaultText": "Total number invoices due date is within one month",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.O.Filters",
+			"DefaultText": "Filters",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Dashboard.G.TotalShipmentByStatus",
+			"DefaultText": "Total Shipments By Stages",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Dashboard.G.TotalInvoiceByStatus",
+			"DefaultText": "Total Invoices by Due Date",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Dashboard.G.ShipmentsCalendarMSG",
+			"DefaultText": "Shipments Calendar",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Dashboard.G.TotalShipmentsPerMonthMSG",
+			"DefaultText": "Total Shipments per month",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Menu.G.GeneralSearch",
+			"DefaultText": "Search by Invoice No/ Shipment No",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Menu.G.Reports",
+			"DefaultText": "Reports",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Menu.G.Quotes",
+			"DefaultText": "Quotes",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Menu.G.Shipment",
+			"DefaultText": "Shipments",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Menu.G.Invoice",
+			"DefaultText": "Invoicing",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Menu.G.Dashboard",
+			"DefaultText": "Dashboard",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.B.DownloadExcel",
+			"DefaultText": "Download Excel",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Menu.G.HelpCenter",
+			"DefaultText": "Help center",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.RefreshMSG",
+			"DefaultText": "Some data might have been changed, please refresh the page to see the updated information.",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.RefreshBtn",
+			"DefaultText": "Refresh page",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.G.ShowLoginMsg",
+			"DefaultText": "Login to view more information about this shipment.",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.G.LoginHereBtn",
+			"DefaultText": "Login Here",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.SessionExpired",
+			"DefaultText": "Your session has been expired",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Shipment.G.LoginAgainMsg",
+			"DefaultText": "Please, login again to continue.",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.LoginBtn",
+			"DefaultText": "Log in",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.LoginBtn2",
+			"DefaultText": "Login",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.O.Settings",
+			"DefaultText": "Settings",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Contact.G.GeneralInformation",
+			"DefaultText": "General information",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Contact.G.PersonalInformation",
+			"DefaultText": "Personal information",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Contact.G.PersonalInformationFullName",
+			"DefaultText": "Full name",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.Description",
+			"DefaultText": "Description",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Contact.F.Position",
+			"DefaultText": "Position",
+			"FieldCode": "Position",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Contact.G.PersonalInformationDateOfBirth",
+			"DefaultText": "Date of birth",
+			"FieldCode": "Contact.Birthday",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.TimeZone",
+			"DefaultText": "Time Zone",
+			"FieldCode": "Tenant.TimeZoneOffset",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Contact.O.Contacts",
+			"DefaultText": "Contacts",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Contact.F.BusinessPhone",
+			"DefaultText": "Business phone",
+			"FieldCode": "Contact.BusinessPhone",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Contact.F.Mobile",
+			"DefaultText": "Mobile",
+			"FieldCode": "Contact.Mobile",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Contact.F.Password",
+			"DefaultText": "Password",
+			"FieldCode": "Contact.Password",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Contact.G.ConfirmPassword",
+			"DefaultText": "Confirm your current password",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Contact.O.CurrentPassword",
+			"DefaultText": "Current password",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Contact.G.EnterNewPassword",
+			"DefaultText": "Set a new password",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.Download",
+			"DefaultText": "Download",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Contact.G.NewPassword",
+			"DefaultText": "New password",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Contact.G.ReTypePassword",
+			"DefaultText": "Repeat new password",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.B.Cancel",
+			"DefaultText": "Cancel",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Contact.G.SaveChangesBtn",
+			"DefaultText": "Save changes",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Contact.G.ChangePassword",
+			"DefaultText": "Change password",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Contact.G.LogoutBtn",
+			"DefaultText": "Logout",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Contact.G.ConfirmLogoutBtn",
+			"DefaultText": "Confirm logout",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Contact.G.ConfirmLogoutMsg",
+			"DefaultText": "Are you sure you want to logout?",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.B.Confirm",
+			"DefaultText": "Confirm",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.PasswordChange",
+			"DefaultText": "Password change",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.CreatePassword",
+			"DefaultText": "Create password",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.ConfirmPassword",
+			"DefaultText": "Confirm password",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.PasswordInfo1",
+			"DefaultText": "8 or more characters",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.PasswordInfo2",
+			"DefaultText": "Upper & lowercase letters",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.PasswordInfo3",
+			"DefaultText": "At least one number",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.PasswordInfo4",
+			"DefaultText": "Not more than 3 consecutive repeating characters",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.LoginMsg",
+			"DefaultText": "Enter your credentials to access your account.",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Contact.F.Email",
+			"DefaultText": "Email",
+			"FieldCode": "Contact.Email",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.EmailPlaceholder",
+			"DefaultText": "email@example.com",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.PasswordPlaceholder",
+			"DefaultText": "password",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.ResetPassword",
+			"DefaultText": "Reset Password",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.ForgetPasswordMsg",
+			"DefaultText": "Please enter your Email and press submit.",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Contact.F.E-mail",
+			"DefaultText": "E-mail",
+			"FieldCode": "Contact.Email",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.ForgetPasswwordTroubleLogging",
+			"DefaultText": "Have trouble logging in?",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.CopiedToClipboard",
+			"DefaultText": "Copied to your clipboard",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.DownloadExcel",
+			"DefaultText": "Download Excel",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.ApplyFilter",
+			"DefaultText": "Apply filter",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.EditFilters",
+			"DefaultText": "Edit filter",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.MultiShipments",
+			"DefaultText": "Multi shipments",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.NoMatchingResultsFound",
+			"DefaultText": "No matching results found",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.OnlineViewLoginDirective",
+			"DefaultText": "Login now to view all information about events, documents and more",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.InformationAvailablilityMsg",
+			"DefaultText": "This information is only available to logged-in users",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.O.LastLogin",
+			"DefaultText": "Last login",
+			"FieldCode": "Contact.LastLoginDate",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.ClosingViewMode",
+			"DefaultText": "Closing view mode",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.ViewModeLogoutMsg",
+			"DefaultText": "Are you sure you want to logout from view mode?",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.ViewModeMsg",
+			"DefaultText": "You are viewing digital portal as an Owner",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.CloseViewMode",
+			"DefaultText": "Close view mode",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.SaveChangesMsg",
+			"DefaultText": "Your changes have been successfully saved!",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.PasswordIssueMsg",
+			"DefaultText": "The current password is wrong!",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Contact.G.PositionValidationMsg",
+			"DefaultText": "Position is required.",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Contact.G.FullNameValidationMsg",
+			"DefaultText": "Full name is required.",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.CurrentPasswordValidationMsg",
+			"DefaultText": "Current password is required.",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.NewPasswordValidationMsg",
+			"DefaultText": "New password is required.",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.ContactUs",
+			"DefaultText": "Contact us",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.BackToLogin",
+			"DefaultText": "Back to login page",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.NewPasswordValidationErrorMsg",
+			"DefaultText": "New password does not meet the below conditions.",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.ConfirmNewPasswordValidationErrorMsg",
+			"DefaultText": "The passwords you entered do not match.",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.VerificationCode",
+			"DefaultText": "Verification code",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.ForgotPasswordMsg",
+			"DefaultText": "Forgot your password?",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Dashboard.G.PartiallyPaidPayments",
+			"DefaultText": "Partially paid payments",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Dashboard.G.OverduePayments",
+			"DefaultText": "Overdue payments",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Dashboard.G.ViewShipments",
+			"DefaultText": "View shipments",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Dashboard.G.ViewInvoices",
+			"DefaultText": "View invoices",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Dashboard.G.ShipmentInOrigin",
+			"DefaultText": "In origin",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Dashboard.G.ShipmentInTransit",
+			"DefaultText": "In transit",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Dashboard.G.ShipmentAtDestination",
+			"DefaultText": "At destination",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.MultiTenantCustomer",
+			"DefaultText": "Select Customer",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.MultiTenantAllCustomerOption",
+			"DefaultText": "All Customers",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.CapatchPlaceholder",
+			"DefaultText": "Type the text you see",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.SubmitBtn",
+			"DefaultText": "Submit",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.SaveBtn",
+			"DefaultText": "Save",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.ClearFilter",
+			"DefaultText": "Clear filters",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.DownloadAll",
+			"DefaultText": "Download all",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.SortBy",
+			"DefaultText": "Sort by",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.DownloadDataSuccessMSG",
+			"DefaultText": "Done!",
+			"FieldCode" : "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.DownloadDataSuccessMSG2",
+			"DefaultText": "Done",
+			"FieldCode" : "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.DownloadDataPreparing",
+			"DefaultText": "Preparing data...",
+			"FieldCode" : "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.DownloadDataMSG",
+			"DefaultText": "Preparing data for downloading. This may take several seconds. Please, do not refresh the page or close this window.",
+			"FieldCode" : "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.NoInfoAvailableParentMsg",
+			"DefaultText": "You don’t have any information here",
+			"FieldCode" : "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.NoInfoAvailableMsg",
+			"DefaultText": "All information will be displayed here, when it will be added by the forwarder.",
+			"FieldCode" : "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.DownloadData",
+			"DefaultText": "Download data",
+			"FieldCode" : "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.AllTime",
+			"DefaultText": "All Time",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.Last30Days",
+			"DefaultText": "Last 30 Days",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.ThisMonth",
+			"DefaultText": "This Month",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.LastMonth",
+			"DefaultText": "Last Month",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.ThisQuarter",
+			"DefaultText": "This Quarter",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.ThisYear",
+			"DefaultText": "This Year",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.SetPeriod",
+			"DefaultText": "Set period",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.Today",
+			"DefaultText": "Today",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.ThisWeek",
+			"DefaultText": "This week",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.Tomorrow",
+			"DefaultText": "Tomorrow",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Dashboard.G.Last7Days",
+			"DefaultText": "Last 7 days",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Dashboard.G.Next7days",
+			"DefaultText": "Next 7 days",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Dashboard.G.Expected",
+			"DefaultText": "Expected",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "Dashboard.G.Actual",
+			"DefaultText": "Actual",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.ShowResults",
+			"DefaultText": "Show results",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.ResetMsg1",
+			"DefaultText": "Please check your email address",
+			"FieldCode": "",
+			"DisplayText": ""
+		},
+		{
+			"TextCode": "General.G.ResetMsg2",
+			"DefaultText": "and follow the instructions to reset your password.",
+			"FieldCode": "",
+			"DisplayText": ""
+		}]');
+		
 	  declare @customerProfileId as varchar(15)
 	  set @customerProfileId = (select Id from DigitalProfiles where [Name] = 'Customer' and Tenant = 0 )
- 	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCode'
+ 	  
+	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCode'
 	  INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate,  ProfileId, Labels) 
 	  values (@NewEntityId, 0, @generalObjectTableId, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP, @customerProfileId,
 	  '[{
@@ -694,13 +1504,13 @@
 			"DisplayText": ""
 		},
 		{
-			"TextCode": "general.G.NoInfoAvailableParentMsg",
+			"TextCode": "General.G.NoInfoAvailableParentMsg",
 			"DefaultText": "You don’t have any information here",
 			"FieldCode" : "",
 			"DisplayText": ""
 		},
 		{
-			"TextCode": "general.G.NoInfoAvailableMsg",
+			"TextCode": "General.G.NoInfoAvailableMsg",
 			"DefaultText": "All information will be displayed here, when it will be added by the forwarder.",
 			"FieldCode" : "",
 			"DisplayText": ""
@@ -818,7 +1628,6 @@
 	  set @shipmentObjectTableId = (select Id from ObjectTables where [Name] = 'Shipment' and Tenant = 0 )
 
  	  EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'DigitalTextCode'
-
 	  INSERT INTO DigitalTextCodes (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, ProfileId, Labels) 
 	  values (@NewEntityId, 0, @shipmentObjectTableId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, @customerProfileId,
 	  '[{
@@ -3292,13 +4101,13 @@
 			"DisplayText": ""
 		},
 		{
-			"TextCode": "general.G.NoInfoAvailableParentMsg",
+			"TextCode": "General.G.NoInfoAvailableParentMsg",
 			"DefaultText": "You don’t have any information here",
 			"FieldCode" : "",
 			"DisplayText": ""
 		},
 		{
-			"TextCode": "general.G.NoInfoAvailableMsg",
+			"TextCode": "General.G.NoInfoAvailableMsg",
 			"DefaultText": "All information will be displayed here, when it will be added by the forwarder.",
 			"FieldCode" : "",
 			"DisplayText": ""

@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-	<Sql Version="16">
+	<Sql Version="1">
       <![CDATA[	  
 	  
 		delete from DigitalPreDefinedComponents where id != ''

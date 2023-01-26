@@ -1,16 +1,16 @@
 ﻿<Script DBType="Main" Module="Infrastructure">
-	<Sql Version="23">
-      <![CDATA[	  
-	  
-		delete from DigitalPortalScreens where id != ''
+	<Sql Version="2">
+      <![CDATA[
 		declare @customerProfileId as varchar(15)
 		set @customerProfileId = (select Id from DigitalProfiles where [Name] = 'Customer' and Tenant = 0 )
 		declare @agentProfileId as varchar(15)
 		set @agentProfileId = (select Id from DigitalProfiles where [Name] = 'Agent' and Tenant = 0 )
+		declare @commonProfileId as varchar(15)
+	    set @commonProfileId = (select Id from DigitalProfiles where [Name] = 'Common' and Tenant = 0 )
 		declare @shipmentObjectId as varchar(15)
 		set @shipmentObjectId = (select Id from ObjectTables where [Name] = 'Shipment' and Tenant = 0 )
+		
 		declare @EntityId as varchar(15)
- 		
 		EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPortalScreen'
 		INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, ProfileId, Content, DraftContent) 
 		values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Shipment list card item - Desktop & Tablets', 'SLCI', @customerProfileId,
@@ -141,8 +141,267 @@
 				</div>
 			</LogColumn>
 		</LogRow>
-	</LogTable>
-	'
+	</LogTable>'
+	 ,'<LogTable>
+		<LogRow log-class=''list-item-first-row''>
+			<LogColumn log-class=''p-d-flex list-item-first-col''>
+				<LogTable>
+					<LogRow log-class=''p-d-flex p-pb-0 p-mb-0''>
+						<LogColumn log-class=''p-d-flex p-ai-center p-jc-start''>
+							<div class=''transport-direction margin-top-3''>
+								<LogIcon icon-class=''p-mr-1 branded-icon'' dp-if=''{Shipment.DirectionId}===[I]''
+									code=''Import''>
+								</LogIcon>
+								<LogIcon icon-class=''p-mr-1 branded-icon'' dp-if=''{Shipment.DirectionId}===[E]''
+									code=''Export''>
+								</LogIcon>
+								<LogIcon icon-class=''p-mr-1 branded-icon'' dp-if=''{Shipment.DirectionId}===[D]''
+									code=''Domestic''>
+								</LogIcon>
+								<LogIcon icon-class=''p-mr-1 branded-icon'' dp-if=''{Shipment.DirectionId}===[R]'' code=''Drop''>
+								</LogIcon>
+							</div>
+						</LogColumn>
+						<LogColumn log-class=''p-d-flex p-ai-center p-jc-start''>
+							<LogElement type=''separator''></LogElement>
+							<LogIcon dp-if=''{Shipment.TransportModeId}===[A]'' code=''Air''></LogIcon>
+							<LogIcon dp-if=''{Shipment.TransportModeId}===[O]'' code=''Ocean''></LogIcon>
+							<LogIcon icon-class=''p-ml-1'' dp-if=''{Shipment.TransportModeId}===[I]'' code=''Inland''></LogIcon>
+						</LogColumn>
+						<LogColumn log-class=''shipment-number-container p-d-flex p-ai-center p-jc-start''>
+							<div
+								class=''shipment-type p-ml-1 dp-border-radius-4px dp-font-size-12 dp-color-black-3 dp-font-weight-400 p-p-1 dp-bg-color-gray-4 p-mr-1''>
+								<LogElement type=''badge'' field-code=''Shipment.shipment-type''></LogElement>
+							</div>
+
+							<LogElement type=''separator'' dp-if=''{Shipment.RequestedDocumentsCount} > [0]''></LogElement>
+							<LogIcon icon-class=''pi pi-exclamation-circle color-dp-primary p-ml-1'' tooltip=''true''
+								field-code=''Shipment.RequestedDocumentsCount''
+								dp-if=''{Shipment.RequestedDocumentsCount} > [0]'' code=''RequiredDocument''>
+							</LogIcon>
+
+							<div class=''shipment-number p-ml-1 dp-font-size-16 dp-font-weight-600 dp-color-black-3''>
+								<span class=''shipment-number-label dp-position-relative''><LogField field-code=''Shipment.ShipmentNumber''></LogField></span>
+							</div>
+						</LogColumn>
+					</LogRow>
+					<LogRow
+						log-class=''p-mt-2 p-pb-0 p-mb-0 dp-font-weight-400 dp-font-size-14 p-d-flex p-ai-start p-jc-start''>
+						<LogColumn log-class=''white-space-nowrap''>
+							<FieldTemplate tooltip=''true''
+								field-code=''Shipment.CustomerReference1,Shipment.CustomerReference2''>
+							</FieldTemplate>
+						</LogColumn>
+
+					</LogRow>
+					<LogRow dp-if=''{Shipment.TransportModeId}===[A]''
+						log-class=''p-mt-2 p-pb-0 p-mb-0 dp-font-weight-400 dp-font-size-14 p-d-flex p-ai-start p-jc-start''>
+						<LogColumn log-class=''white-space-nowrap''>
+							<FieldTemplate dp-if=''{Shipment.TransportModeId}===[A]'' field-code=''Shipment.LongMaster''>
+							</FieldTemplate>
+						</LogColumn>
+
+					</LogRow>
+					<LogRow dp-if=''{Shipment.TransportModeId}!==[A]''
+						log-class=''p-mt-2 p-pb-0 p-mb-0 dp-font-weight-400 dp-font-size-14 p-d-flex p-ai-start p-jc-start''>
+						<LogColumn log-class=''white-space-nowrap''>
+							<FieldTemplate dp-if=''{Shipment.TransportModeId}===[O]'' field-code=''Shipment.Master''>
+							</FieldTemplate>
+							<FieldTemplate dp-if=''{Shipment.TransportModeId}===[I]'' field-code=''Shipment.Master''>
+							</FieldTemplate>
+						</LogColumn>
+					</LogRow>
+					<LogRow
+						log-class=''display-lg-flex-none p-mt-2 p-pb-0 dp-font-weight-400 dp-font-size-14 p-ai-start p-jc-start''>
+						<LogColumn log-class=''white-space-nowrap''>
+							<FieldTemplate field-code=''Shipment.CustomerName''></FieldTemplate>
+						</LogColumn>
+
+					</LogRow>
+					<LogRow log-class=''p-pb-0 p-mb-0 p-mt-2 display-lg-block dp-font-weight-400 dp-font-size-14''>
+						<LogColumn log-class=''white-space-nowrap''>
+							<FieldTemplate field-code=''Shipment.StatusDate'' disable-copy=''true'' is-date-time=''true''>
+							</FieldTemplate>
+						</LogColumn>
+					</LogRow>
+					<LogRow
+						dp-if=''{Shipment.NotesSharedWithCustomer}!== undefined && {Shipment.NotesSharedWithCustomer}!== null''
+						log-class=''p-mt-2 p-pb-1 p-mb-0 dp-font-weight-400 dp-font-size-14 p-d-flex p-ai-start p-jc-start''>
+						<LogColumn log-class=''white-space-nowrap''>
+							<FieldTemplate tooltip=''true'' field-code=''Shipment.NotesSharedWithCustomer''></FieldTemplate>
+						</LogColumn>
+					</LogRow>
+				</LogTable>
+			</LogColumn>
+			<LogColumn log-class=''list-item-timeline-container''>
+				<ShipmentStatusInfoForTablet></ShipmentStatusInfoForTablet>
+				<HorizontalTimeline></HorizontalTimeline>
+			</LogColumn>
+			<LogColumn log-class=''list-item-third-col p-d-flex p-flex-column p-jc-end p-ai-end''>
+				<ShipmentStatusInfo></ShipmentStatusInfo>
+				<div class=''dp-font-weight-400 dp-font-size-14 p-mb-0 p-d-flex p-ai-start p-jc-end''>
+					<FieldTemplate container-classes=''p-mr-0'' field-code=''Shipment.StatusDate'' disable-copy=''true''
+						is-date-time=''true''></FieldTemplate>
+				</div>
+			</LogColumn>
+		</LogRow>
+		<LogRow
+			log-class=''p-p-0 p-m-0 list-item-second-row p-d-flex p-ai-center p-jc-between p-flex-wrap p-mt-2 dp-font-weight-400 dp-font-size-14''>
+			<LogColumn
+				log-class=''white-space-nowrap w--100 display-lg-block dp-font-weight-400 dp-font-size-14 p-mb-2 display-flex p-ai-start p-jc-start''>
+				<div class=''p-mt-2 dp-font-weight-400 dp-font-size-14 p-mb-0 p-d-flex p-ai-start p-jc-start''>
+					<FieldTemplate field-code=''Shipment.CustomerName''></FieldTemplate>
+				</div>
+			</LogColumn>
+			<LogColumn log-class=''description-of-goods p-d-inline-flex p-ai-center p-jc-start''>
+				<LogContainer
+					class=''dp-position-relative text-cut p-mt-1 dp-font-weight-400 dp-font-size-14 dp-color-gray-3 p-d-flex p-ai-start p-jc-start''>
+					<LogLabel tooltip=''true'' field-code=''Shipment.DescriptionOfGoods''></LogLabel>: <LogField tooltip=''true''
+						field-code=''Shipment.DescriptionOfGoods''></LogField>
+				</LogContainer>
+			</LogColumn>
+			<LogColumn log-class=''consignee-shipper-info p-d-inline-flex p-ai-center p-jc-start''>
+				<div class=''text-cut p-mt-1 dp-font-weight-400 dp-font-size-14 p-d-flex p-ai-center p-jc-start''>
+					<FieldTemplate dp-if=''{Shipment.DirectionId}!==[I]'' tooltip=''true'' field-code=''Shipment.ConsigneeName''
+						flag-field=''ConsigneeCountryCode''></FieldTemplate>
+					<FieldTemplate dp-if=''{Shipment.DirectionId}===[I]'' tooltip=''true'' field-code=''Shipment.ShipperName''
+						flag-field=''ShipperCountryCode''></FieldTemplate>
+				</div>
+			</LogColumn>
+		</LogRow>
+	</LogTable>');
+	
+		EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPortalScreen'
+		INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode, ProfileId, Content, DraftContent) 
+		values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Shipment list card item', 'SLCI', @commonProfileId,
+ 		'<LogTable>
+		<LogRow log-class=''list-item-first-row''>
+			<LogColumn log-class=''p-d-flex list-item-first-col''>
+				<LogTable>
+					<LogRow log-class=''p-d-flex p-pb-0 p-mb-0''>
+						<LogColumn log-class=''p-d-flex p-ai-center p-jc-start''>
+							<div class=''transport-direction margin-top-3''>
+								<LogIcon icon-class=''p-mr-1 branded-icon'' dp-if=''{Shipment.DirectionId}===[I]''
+									code=''Import''>
+								</LogIcon>
+								<LogIcon icon-class=''p-mr-1 branded-icon'' dp-if=''{Shipment.DirectionId}===[E]''
+									code=''Export''>
+								</LogIcon>
+								<LogIcon icon-class=''p-mr-1 branded-icon'' dp-if=''{Shipment.DirectionId}===[D]''
+									code=''Domestic''>
+								</LogIcon>
+								<LogIcon icon-class=''p-mr-1 branded-icon'' dp-if=''{Shipment.DirectionId}===[R]'' code=''Drop''>
+								</LogIcon>
+							</div>
+						</LogColumn>
+						<LogColumn log-class=''p-d-flex p-ai-center p-jc-start''>
+							<LogElement type=''separator''></LogElement>
+							<LogIcon dp-if=''{Shipment.TransportModeId}===[A]'' code=''Air''></LogIcon>
+							<LogIcon dp-if=''{Shipment.TransportModeId}===[O]'' code=''Ocean''></LogIcon>
+							<LogIcon icon-class=''p-ml-1'' dp-if=''{Shipment.TransportModeId}===[I]'' code=''Inland''></LogIcon>
+						</LogColumn>
+						<LogColumn log-class=''shipment-number-container p-d-flex p-ai-center p-jc-start''>
+							<div
+								class=''shipment-type p-ml-1 dp-border-radius-4px dp-font-size-12 dp-color-black-3 dp-font-weight-400 p-p-1 dp-bg-color-gray-4 p-mr-1''>
+								<LogElement type=''badge'' field-code=''Shipment.shipment-type''></LogElement>
+							</div>
+
+							<LogElement type=''separator'' dp-if=''{Shipment.RequestedDocumentsCount} > [0]''></LogElement>
+							<LogIcon icon-class=''pi pi-exclamation-circle color-dp-primary p-ml-1'' tooltip=''true''
+								field-code=''Shipment.RequestedDocumentsCount''
+								dp-if=''{Shipment.RequestedDocumentsCount} > [0]'' code=''RequiredDocument''>
+							</LogIcon>
+
+							<div class=''shipment-number p-ml-1 dp-font-size-16 dp-font-weight-600 dp-color-black-3''>
+								<span class=''shipment-number-label dp-position-relative''><LogField field-code=''Shipment.ShipmentNumber''></LogField></span>
+							</div>
+						</LogColumn>
+					</LogRow>
+					<LogRow
+						log-class=''p-mt-2 p-pb-0 p-mb-0 dp-font-weight-400 dp-font-size-14 p-d-flex p-ai-start p-jc-start''>
+						<LogColumn log-class=''white-space-nowrap''>
+							<FieldTemplate tooltip=''true''
+								field-code=''Shipment.CustomerReference1,Shipment.CustomerReference2''>
+							</FieldTemplate>
+						</LogColumn>
+
+					</LogRow>
+					<LogRow dp-if=''{Shipment.TransportModeId}===[A]''
+						log-class=''p-mt-2 p-pb-0 p-mb-0 dp-font-weight-400 dp-font-size-14 p-d-flex p-ai-start p-jc-start''>
+						<LogColumn log-class=''white-space-nowrap''>
+							<FieldTemplate dp-if=''{Shipment.TransportModeId}===[A]'' field-code=''Shipment.LongMaster''>
+							</FieldTemplate>
+						</LogColumn>
+
+					</LogRow>
+					<LogRow dp-if=''{Shipment.TransportModeId}!==[A]''
+						log-class=''p-mt-2 p-pb-0 p-mb-0 dp-font-weight-400 dp-font-size-14 p-d-flex p-ai-start p-jc-start''>
+						<LogColumn log-class=''white-space-nowrap''>
+							<FieldTemplate dp-if=''{Shipment.TransportModeId}===[O]'' field-code=''Shipment.Master''>
+							</FieldTemplate>
+							<FieldTemplate dp-if=''{Shipment.TransportModeId}===[I]'' field-code=''Shipment.Master''>
+							</FieldTemplate>
+						</LogColumn>
+					</LogRow>
+					<LogRow
+						log-class=''display-lg-flex-none p-mt-2 p-pb-0 dp-font-weight-400 dp-font-size-14 p-ai-start p-jc-start''>
+						<LogColumn log-class=''white-space-nowrap''>
+							<FieldTemplate field-code=''Shipment.CustomerName''></FieldTemplate>
+						</LogColumn>
+
+					</LogRow>
+					<LogRow log-class=''p-pb-0 p-mb-0 p-mt-2 display-lg-block dp-font-weight-400 dp-font-size-14''>
+						<LogColumn log-class=''white-space-nowrap''>
+							<FieldTemplate field-code=''Shipment.StatusDate'' disable-copy=''true'' is-date-time=''true''>
+							</FieldTemplate>
+						</LogColumn>
+					</LogRow>
+					<LogRow
+						dp-if=''{Shipment.NotesSharedWithCustomer}!== undefined && {Shipment.NotesSharedWithCustomer}!== null''
+						log-class=''p-mt-2 p-pb-1 p-mb-0 dp-font-weight-400 dp-font-size-14 p-d-flex p-ai-start p-jc-start''>
+						<LogColumn log-class=''white-space-nowrap''>
+							<FieldTemplate tooltip=''true'' field-code=''Shipment.NotesSharedWithCustomer''></FieldTemplate>
+						</LogColumn>
+					</LogRow>
+				</LogTable>
+			</LogColumn>
+			<LogColumn log-class=''list-item-timeline-container''>
+				<ShipmentStatusInfoForTablet></ShipmentStatusInfoForTablet>
+				<HorizontalTimeline></HorizontalTimeline>
+			</LogColumn>
+			<LogColumn log-class=''list-item-third-col p-d-flex p-flex-column p-jc-end p-ai-end''>
+				<ShipmentStatusInfo></ShipmentStatusInfo>
+				<div class=''dp-font-weight-400 dp-font-size-14 p-mb-0 p-d-flex p-ai-start p-jc-end''>
+					<FieldTemplate container-classes=''p-mr-0'' field-code=''Shipment.StatusDate'' disable-copy=''true''
+						is-date-time=''true''></FieldTemplate>
+				</div>
+			</LogColumn>
+		</LogRow>
+		<LogRow
+			log-class=''p-p-0 p-m-0 list-item-second-row p-d-flex p-ai-center p-jc-between p-flex-wrap p-mt-2 dp-font-weight-400 dp-font-size-14''>
+			<LogColumn
+				log-class=''white-space-nowrap w--100 display-lg-block dp-font-weight-400 dp-font-size-14 p-mb-2 display-flex p-ai-start p-jc-start''>
+				<div class=''p-mt-2 dp-font-weight-400 dp-font-size-14 p-mb-0 p-d-flex p-ai-start p-jc-start''>
+					<FieldTemplate field-code=''Shipment.CustomerName''></FieldTemplate>
+				</div>
+			</LogColumn>
+			<LogColumn log-class=''description-of-goods p-d-inline-flex p-ai-center p-jc-start''>
+				<LogContainer
+					class=''dp-position-relative text-cut p-mt-1 dp-font-weight-400 dp-font-size-14 dp-color-gray-3 p-d-flex p-ai-start p-jc-start''>
+					<LogLabel tooltip=''true'' field-code=''Shipment.DescriptionOfGoods''></LogLabel>: <LogField tooltip=''true''
+						field-code=''Shipment.DescriptionOfGoods''></LogField>
+				</LogContainer>
+			</LogColumn>
+			<LogColumn log-class=''consignee-shipper-info p-d-inline-flex p-ai-center p-jc-start''>
+				<div class=''text-cut p-mt-1 dp-font-weight-400 dp-font-size-14 p-d-flex p-ai-center p-jc-start''>
+					<FieldTemplate dp-if=''{Shipment.DirectionId}!==[I]'' tooltip=''true'' field-code=''Shipment.ConsigneeName''
+						flag-field=''ConsigneeCountryCode''></FieldTemplate>
+					<FieldTemplate dp-if=''{Shipment.DirectionId}===[I]'' tooltip=''true'' field-code=''Shipment.ShipperName''
+						flag-field=''ShipperCountryCode''></FieldTemplate>
+				</div>
+			</LogColumn>
+		</LogRow>
+	</LogTable>'
 	 ,'<LogTable>
 		<LogRow log-class=''list-item-first-row''>
 			<LogColumn log-class=''p-d-flex list-item-first-col''>
@@ -403,9 +662,8 @@
 				</div>
 			</LogColumn>
 		</LogRow>
-	</LogTable>
-	'
-	 ,'<LogTable>
+	</LogTable>',
+	'<LogTable>
 		<LogRow log-class=''list-item-first-row''>
 			<LogColumn log-class=''p-d-flex list-item-first-col''>
 				<LogTable>
@@ -623,9 +881,187 @@
 					<RequiredDocumentsMessage></RequiredDocumentsMessage>
 				</LogColumn>
 			</LogRow>
+			</LogTable>',
+			'<LogTable>
+			<LogRow log-class=''dp-font-weight-600 dp-font-size-16 dp-color-black-3''>
+				<LogColumn>
+					<LogLabel field-code=''Shipment.GeneralInformation''></LogLabel>
+				</LogColumn>
+			</LogRow>
+			<LogRow log-class=''dp-border-bottom-1-gray-1 dp-display-flex dp-align-items-center dp-justify-content-between''>
+				<LogColumn log-class=''w--32 references dp-display-flex dp-align-items-center dp-justify-content-start dp-font-weight-400 dp-font-size-14 dp-color-black-3''>
+					<LogContainer>
+						<FieldTemplate tooltip=''true'' field-code=''Shipment.CustomerReference1,Shipment.CustomerReference2''>
+						</FieldTemplate>
+					</LogContainer>
+				</LogColumn>
+				<LogColumn
+					log-class=''w--32 shipment-level dp-display-flex dp-align-items-center dp-justify-content-start dp-font-weight-400 dp-font-size-14 dp-color-black-3''>
+					<FieldTemplate disable-copy=''true'' field-code=''Shipment.ShipmentLevelName''></FieldTemplate>
+				</LogColumn>
+				<LogColumn
+					log-class=''w--26 master-number dp-display-flex dp-align-items-center dp-justify-content-start dp-font-weight-400 dp-font-size-14 dp-color-black-3''>
+					<FieldTemplate disable-copy=''true'' field-code=''Shipment.House''></FieldTemplate>
+				</LogColumn>
+				<LogColumn
+					log-class=''dp-font-weight-400 dp-font-size-14 dp-color-gray-3 w--10 invoiced dp-display-flex dp-align-items-center dp-justify-content-start''>
+					<LogLabel field-code=''Shipment.IsFullInvoiced''></LogLabel>: <LogIcon icon-class=''w-14-h-14-px dp-margin-left-1''
+						dp-if=''{Shipment.IsFullInvoiced}===[true]'' icon=''Checked''>
+					</LogIcon>
+					<LogIcon icon-class=''w-11-h-11 dp-margin-top-1 dp-margin-left-1'' dp-if=''{Shipment.IsFullInvoiced}===[false]'' icon=''Union''>
+					</LogIcon>
+				</LogColumn>
+			</LogRow>
+			<LogRow log-class=''dp-border-bottom-1-gray-1 dp-display-flex dp-align-items-center dp-justify-content-start''>
+				<LogColumn
+					log-class=''incoterm dp-display-flex dp-align-items-center dp-justify-content-start dp-font-weight-400 dp-font-size-14 dp-color-black-3''>
+					<FieldTemplate is-field-with-code=''true'' disable-copy=''true''
+					field-code=''Shipment.IncotermName,Shipment.IncotermCode''></FieldTemplate>
+				</LogColumn>
+				<LogColumn
+					log-class=''dp-display-flex dp-align-items-center dp-justify-content-start shipment-customer dp-font-weight-400 dp-font-size-14 dp-color-black-3''>
+					<FieldTemplate disable-copy=''true'' tooltip=''true'' field-code=''Shipment.CustomerName''></FieldTemplate>
+				</LogColumn>
+				<LogColumn
+					log-class=''consignee-shipper-name dp-display-flex dp-align-items-center dp-justify-content-start dp-font-size-14''>
+					<FieldTemplate disable-copy=''true'' dp-if=''{Shipment.DirectionId}!==[I]'' tooltip=''true''
+					field-code=''Shipment.ConsigneeName'' flag-field=''ConsigneeAddressCountryCode''></FieldTemplate>
+				<FieldTemplate disable-copy=''true'' dp-if=''{Shipment.DirectionId}===[I]'' tooltip=''true''
+					field-code=''Shipment.ShipperName'' flag-field=''ShipperAddressCountryCode''></FieldTemplate>
+				</LogColumn>
+			</LogRow>
+    			<LogRow log-class=''dp-border-bottom-1-gray-1 dp-display-flex dp-align-items-center dp-justify-content-start''>
+				<LogColumn
+					log-class=''dp-display-flex dp-align-items-center dp-justify-content-start salesman dp-font-weight-400 dp-font-size-14 dp-color-black-3''>
+						<FieldTemplate tooltip=''true'' disable-copy=''true'' field-code=''Shipment.SalesmanUserName''
+					email-field=''SalesmanEmail'' email-related-field=''ShipmentNumber''></FieldTemplate>
+				<LogEmail dp-if=''{Shipment.SalesmanEmail} !== null'' field-code=''Shipment.SalesmanUserName'' email-field=''SalesmanEmail''
+					email-body-info-field=''ShipmentNumber''>
+				</LogEmail>
+				</LogColumn>
+				<LogColumn
+					log-class=''dp-display-flex dp-align-items-center dp-justify-content-start account-manager dp-font-weight-400 dp-font-size-14 dp-color-black-3''>
+					<FieldTemplate tooltip=''true'' disable-copy=''true'' field-code=''Shipment.AccountManagerUserName''
+					email-field=''AccountManagerUserEmail'' email-related-field=''ShipmentNumber''></FieldTemplate>
+
+				<LogEmail dp-if=''{Shipment.AccountManagerUserEmail} !== null'' field-code=''Shipment.AccountManagerUserName'' email-field=''AccountManagerUserEmail''
+					email-body-info-field=''ShipmentNumber''>
+				</LogEmail>
+				</LogColumn>
+			</LogRow>
+			<LogRow log-class=''p-pb-0 p-mb-0''>
+				<LogColumn
+					log-class=''single-shipment-description-of-goods dp-display-flex dp-align-items-center dp-justify-content-start dp-font-weight-400 dp-font-size-14 dp-color-black-3''>
+					<FieldTemplate tooltip=''true'' disable-copy=''true'' field-code=''Shipment.DescriptionOfGoods''></FieldTemplate>
+				</LogColumn>
+			</LogRow>
+			<LogRow dp-if=''{Shipment.NotesSharedWithCustomer}!== undefined && {Shipment.NotesSharedWithCustomer}!== null'' log-class=''dp-padding-bottom-0 dp-margin-bottom-0 p-mt-2 dp-border-top-1-gray-1 dp-display-flex dp-align-items-center dp-justify-content-between''>
+				<LogColumn
+					log-class=''p-mt-2 blue-box-single dp-display-flex bg-dp-secondary-color dp-display-flex dp-align-items-center dp-justify-content-start dp-font-weight-400 dp-font-size-14 dp-color-black-3''>
+					<FieldTemplate label-classes=''white-space-normal dp-margin-left-1'' disable-copy=''true''
+						field-code=''Shipment.NotesSharedWithCustomer''>
+					</FieldTemplate>
+				</LogColumn>
+			</LogRow>
+			<LogRow dp-if=''{Shipment.RequestedDocumentsCount} > 0'' log-class=''dp-padding-bottom-0 dp-margin-bottom-0 dp-display-flex dp-align-items-center dp-justify-content-between''>
+				<LogColumn log-class=''w--100''>
+					<RequiredDocumentsMessage></RequiredDocumentsMessage>
+				</LogColumn>
+			</LogRow>
 			</LogTable>
-					',
-					'<LogTable>
+		');
+		
+		EXECUTE usp_GetNextTableIdValue @EntityId OUTPUT,'DigitalPortalScreen'
+		INSERT INTO DigitalPortalScreens (Id, Tenant, ObjectTableId, CreateDate, UpdateDate, [Name], ScreenCode,ProfileId, Content, DraftContent) 
+	    values (@EntityId, 0, @shipmentObjectId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'Single Shipment card item', 'SSHGI', @commonProfileId, 
+ 			'<LogTable>
+			<LogRow log-class=''dp-font-weight-600 dp-font-size-16 dp-color-black-3''>
+				<LogColumn>
+					<LogLabel field-code=''Shipment.GeneralInformation''></LogLabel>
+				</LogColumn>
+			</LogRow>
+			<LogRow log-class=''dp-border-bottom-1-gray-1 dp-display-flex dp-align-items-center dp-justify-content-between''>
+				<LogColumn log-class=''w--32 references dp-display-flex dp-align-items-center dp-justify-content-start dp-font-weight-400 dp-font-size-14 dp-color-black-3''>
+					<LogContainer>
+						<FieldTemplate tooltip=''true'' field-code=''Shipment.CustomerReference1,Shipment.CustomerReference2''>
+						</FieldTemplate>
+					</LogContainer>
+				</LogColumn>
+				<LogColumn
+					log-class=''w--32 shipment-level dp-display-flex dp-align-items-center dp-justify-content-start dp-font-weight-400 dp-font-size-14 dp-color-black-3''>
+					<FieldTemplate disable-copy=''true'' field-code=''Shipment.ShipmentLevelName''></FieldTemplate>
+				</LogColumn>
+				<LogColumn
+					log-class=''w--26 master-number dp-display-flex dp-align-items-center dp-justify-content-start dp-font-weight-400 dp-font-size-14 dp-color-black-3''>
+					<FieldTemplate disable-copy=''true'' field-code=''Shipment.House''></FieldTemplate>
+				</LogColumn>
+				<LogColumn
+					log-class=''dp-font-weight-400 dp-font-size-14 dp-color-gray-3 w--10 invoiced dp-display-flex dp-align-items-center dp-justify-content-start''>
+					<LogLabel field-code=''Shipment.IsFullInvoiced''></LogLabel>: <LogIcon icon-class=''w-14-h-14-px dp-margin-left-1''
+						dp-if=''{Shipment.IsFullInvoiced}===[true]'' icon=''Checked''>
+					</LogIcon>
+					<LogIcon icon-class=''w-11-h-11 dp-margin-top-1 dp-margin-left-1'' dp-if=''{Shipment.IsFullInvoiced}===[false]'' icon=''Union''>
+					</LogIcon>
+				</LogColumn>
+			</LogRow>
+			<LogRow log-class=''dp-border-bottom-1-gray-1 dp-display-flex dp-align-items-center dp-justify-content-start''>
+				<LogColumn
+					log-class=''incoterm dp-display-flex dp-align-items-center dp-justify-content-start dp-font-weight-400 dp-font-size-14 dp-color-black-3''>
+					<FieldTemplate is-field-with-code=''true'' disable-copy=''true''
+					field-code=''Shipment.IncotermName,Shipment.IncotermCode''></FieldTemplate>
+				</LogColumn>
+				<LogColumn
+					log-class=''dp-display-flex dp-align-items-center dp-justify-content-start shipment-customer dp-font-weight-400 dp-font-size-14 dp-color-black-3''>
+					<FieldTemplate disable-copy=''true'' tooltip=''true'' field-code=''Shipment.CustomerName''></FieldTemplate>
+				</LogColumn>
+				<LogColumn
+					log-class=''consignee-shipper-name dp-display-flex dp-align-items-center dp-justify-content-start dp-font-size-14''>
+					<FieldTemplate disable-copy=''true'' dp-if=''{Shipment.DirectionId}!==[I]'' tooltip=''true''
+					field-code=''Shipment.ConsigneeName'' flag-field=''ConsigneeAddressCountryCode''></FieldTemplate>
+				<FieldTemplate disable-copy=''true'' dp-if=''{Shipment.DirectionId}===[I]'' tooltip=''true''
+					field-code=''Shipment.ShipperName'' flag-field=''ShipperAddressCountryCode''></FieldTemplate>
+				</LogColumn>
+			</LogRow>
+    			<LogRow log-class=''dp-border-bottom-1-gray-1 dp-display-flex dp-align-items-center dp-justify-content-start''>
+				<LogColumn
+					log-class=''dp-display-flex dp-align-items-center dp-justify-content-start salesman dp-font-weight-400 dp-font-size-14 dp-color-black-3''>
+						<FieldTemplate tooltip=''true'' disable-copy=''true'' field-code=''Shipment.SalesmanUserName''
+					email-field=''SalesmanEmail'' email-related-field=''ShipmentNumber''></FieldTemplate>
+				<LogEmail dp-if=''{Shipment.SalesmanEmail} !== null'' field-code=''Shipment.SalesmanUserName'' email-field=''SalesmanEmail''
+					email-body-info-field=''ShipmentNumber''>
+				</LogEmail>
+				</LogColumn>
+				<LogColumn
+					log-class=''dp-display-flex dp-align-items-center dp-justify-content-start account-manager dp-font-weight-400 dp-font-size-14 dp-color-black-3''>
+					<FieldTemplate tooltip=''true'' disable-copy=''true'' field-code=''Shipment.AccountManagerUserName''
+					email-field=''AccountManagerUserEmail'' email-related-field=''ShipmentNumber''></FieldTemplate>
+
+				<LogEmail dp-if=''{Shipment.AccountManagerUserEmail} !== null'' field-code=''Shipment.AccountManagerUserName'' email-field=''AccountManagerUserEmail''
+					email-body-info-field=''ShipmentNumber''>
+				</LogEmail>
+				</LogColumn>
+			</LogRow>
+			<LogRow log-class=''p-pb-0 p-mb-0''>
+				<LogColumn
+					log-class=''single-shipment-description-of-goods dp-display-flex dp-align-items-center dp-justify-content-start dp-font-weight-400 dp-font-size-14 dp-color-black-3''>
+					<FieldTemplate tooltip=''true'' disable-copy=''true'' field-code=''Shipment.DescriptionOfGoods''></FieldTemplate>
+				</LogColumn>
+			</LogRow>
+			<LogRow dp-if=''{Shipment.NotesSharedWithCustomer}!== undefined && {Shipment.NotesSharedWithCustomer}!== null'' log-class=''dp-padding-bottom-0 dp-margin-bottom-0 p-mt-2 dp-border-top-1-gray-1 dp-display-flex dp-align-items-center dp-justify-content-between''>
+				<LogColumn
+					log-class=''p-mt-2 blue-box-single dp-display-flex bg-dp-secondary-color dp-display-flex dp-align-items-center dp-justify-content-start dp-font-weight-400 dp-font-size-14 dp-color-black-3''>
+					<FieldTemplate label-classes=''white-space-normal dp-margin-left-1'' disable-copy=''true''
+						field-code=''Shipment.NotesSharedWithCustomer''>
+					</FieldTemplate>
+				</LogColumn>
+			</LogRow>
+			<LogRow dp-if=''{Shipment.RequestedDocumentsCount} > 0'' log-class=''dp-padding-bottom-0 dp-margin-bottom-0 dp-display-flex dp-align-items-center dp-justify-content-between''>
+				<LogColumn log-class=''w--100''>
+					<RequiredDocumentsMessage></RequiredDocumentsMessage>
+				</LogColumn>
+			</LogRow>
+			</LogTable>',
+			'<LogTable>
 			<LogRow log-class=''dp-font-weight-600 dp-font-size-16 dp-color-black-3''>
 				<LogColumn>
 					<LogLabel field-code=''Shipment.GeneralInformation''></LogLabel>
@@ -891,9 +1327,7 @@
 					<RequiredDocumentsMessage></RequiredDocumentsMessage>
 				</LogColumn>
 			</LogRow>
-			</LogTable>
-		');
-
+			</LogTable>');
 	  ]]>
   </Sql>
 </Script>
