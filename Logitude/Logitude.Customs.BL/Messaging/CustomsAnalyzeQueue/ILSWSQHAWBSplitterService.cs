@@ -2,6 +2,7 @@
 using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.Messaging.ILSWS;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -90,6 +91,8 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                   .SaveMessageToAnalyzeQueue(this._AnalyzeQueue.FileName, Encoding.UTF8.GetBytes(currSTBMessage), this._CommunicationLog.Tenant, "", defInterfaceName_ILSWSQHAWB, res);
 
             });
+
+           
 
 
             return res;
