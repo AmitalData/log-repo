@@ -80,6 +80,10 @@ export class ExportOrImportDeclarationDataComponent
             if (this.ResponseData.InvoiceList) {
                 this.InvoiceList.InsertCollection(this.ResponseData.InvoiceList);
                 this.InvoiceList.Collection.sort((a, b) => { return (a.SequenceNumber > b.SequenceNumber) ? 1 : -1 })
+                if(this.InvoiceList.Length > 0){
+                    this.OnRowSelected( this.InvoiceList.Collection[0])
+                    
+                }
             }
 
             if (this.ResponseData.RequestList) {
@@ -226,7 +230,7 @@ export class ExportOrImportDeclarationDataComponent
         currRequestParams.ShowData=true;
         CustomMessageProgressComponent
             .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
-            "שליחת שאילתא לתצוגת הצהרה", true)
+            "שליחת שםילתם לתצוגת הצהרה", true)
             .then((res) => {
                 this.ResponseData = res.exportDeclarationDataResponseData;
                 this.OnMassageDisplayMethod();

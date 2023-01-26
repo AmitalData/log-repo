@@ -5509,6 +5509,7 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
+
       Code="&quot;Customs.ExportClosindData.O.NoFindTrufaToPreferenceDocument&quot;"
       DefaultText="&quot;No Find Trufa To Preference Document&quot;"
       LocalDefaultText="&quot;לא אותרה צרופה מתאימה למסמך העדפה שצויין בחשבון&quot;"
@@ -5544,6 +5545,7 @@
       LocalDefaultText="&quot;נתוני הצהרת יצוא/יבוא&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

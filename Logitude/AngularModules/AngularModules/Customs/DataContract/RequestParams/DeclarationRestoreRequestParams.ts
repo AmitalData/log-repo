@@ -8,4 +8,5 @@ export class DeclarationRestoreRequestParams extends GenericRequestParams {
     public IsUpdateDB:boolean;
     public ShowData:boolean;
 
+
 }

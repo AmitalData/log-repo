@@ -47,6 +47,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (string.IsNullOrEmpty(requestParams.DeclarationId)|| !string.IsNullOrEmpty(requestParams.DeclarationId) && requestParams.IsUpdateDB) { //declaration not exits in db
 
+
                 var declarationqueryService = new DeclarationQueryService(requestParams.Tenant);
                 var decId = declarationqueryService.GetIdByDeclarationNumber(requestParams.DeclarationNumber, requestParams.Tenant);
                 if (customResponse.Response != null && customResponse.Response.Declaration != null && (string.IsNullOrEmpty(decId)|| requestParams.IsUpdateDB)) 
@@ -332,6 +333,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 //Vehicle
                                 requestResult.VehicleList = new List<Vehicle>();
                                 if (governmentAgencyGoodsItem.DMExtensions.Vehicle != null)
+
                                 {
                                     foreach (var vehicleItem in governmentAgencyGoodsItem.DMExtensions.Vehicle)
                                     {
