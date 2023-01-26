@@ -53,5 +53,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool IsSendingByBillOfLading { get; set; }
         public string RegimenFiscalCode { get; set; }
         public string SATReceptorName { get; set; }
+        public bool IsSupportsContainerTracking { get; set; }
+        public bool IsAutomaticRequestsSent { get; set; }
     }
 }

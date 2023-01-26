@@ -8,6 +8,8 @@ import { AppTool } from '../../../../Infrastructure/Tools';
 import { ContainerSettingPMService } from 'Infrastructure/Services/StandardPMs/ContainerSettingPMService';
 import { ContainerSettingPM } from 'Infrastructure/EntityPMs/ContainerSettingPM';
 import { ContainerSettingExtendedService } from 'Infrastructure/Services/ExtendedPMs/ContainerSettingExtendedService';
+import { ShippingLineExtendedPMService } from 'Common/Services/ExtendedPMs/ShippingLineExtendedPMService';
+import { ShippingLinePM } from 'Common/EntityPMs/ShippingLinePM';
 
 @Component({
     templateUrl: './ContainerSettingsComponent.html',
@@ -24,15 +26,20 @@ export class ContainerSettingsComponent extends BaseComponent implements OnInit 
     public SelectedTabCode: string = "G";
     public ContainerSettingPMService: ContainerSettingPMService;
     public ContainerSettingExtendedService: ContainerSettingExtendedService;
+    private ShippingLineExtendedPMService: ShippingLineExtendedPMService;
     public EntityPM: ContainerSettingPM = new ContainerSettingPM();
     public DataContext: ContainerSettingsComponent = this;
     private IsNew: boolean = false;
     public Loaded: boolean = false;
+    private TenantZeroShippingLines: ShippingLinePM[] = [];
+    private UserTenantShippingLines: ShippingLinePM[] = [];
+    public ShippingLines: ShippingLineItem[];
 
     constructor() {
         super();
         this.ContainerSettingPMService = new ContainerSettingPMService();
         this.ContainerSettingExtendedService = new ContainerSettingExtendedService();
+        this.ShippingLineExtendedPMService = new ShippingLineExtendedPMService();
     }
 
     ngOnInit() {
@@ -49,18 +56,74 @@ export class ContainerSettingsComponent extends BaseComponent implements OnInit 
     private GetSettings() {
         this.CurrentSession.StartBusyIndicatorLoading();
         this.ContainerSettingExtendedService.GetSingleSetting().subscribe((response: ServiceResponse) => {
-            if (!response || response.HasError) return;
+            if (!response || response.HasError) return this.StopIndicator();
             if (!response.Result) this.IsNew = true;
             else this.EntityPM = response.Result;
             this.SetDefaultATADateItem();
-            this.CurrentSession.StopBusyIndicator();
-            this.Loaded = true;
+            this.LoadTenantZeroShippingLines();
         });
     }
 
     private SetDefaultATADateItem() {
         if (!AppTool.IsNullOrEmpty(this.DataContext.ShipmentATADateIndicator)) this.SelectedShipmentATADateItem = this.ShipmentATADateComboList.filter(d => d.Code == this.DataContext.ShipmentATADateIndicator)[0];
         else this.SelectedShipmentATADateItem = this.ShipmentATADateComboList.filter(d => d.Code == "Vessel")[0];
+    }
+
+    private LoadTenantZeroShippingLines() {
+        this.TenantZeroShippingLines = [];
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.ShippingLineExtendedPMService.GetShippingLinesForTenant(0).subscribe((response: ServiceResponse) => {
+            if (response.HasError) return this.StopIndicator();
+            this.TenantZeroShippingLines = response.Result;
+            if (SessionLocator.Tenant == 0) {
+                this.BuildShippingLines();
+                return this.StopIndicator();
+            }
+            this.LoadCurrenctTenantShippingLines();
+        });
+    }
+
+    private LoadCurrenctTenantShippingLines() {
+        this.UserTenantShippingLines = [];
+        this.ShippingLineExtendedPMService.GetShippingLinesForTenant(SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                this.UserTenantShippingLines = response.Result;
+                this.BuildShippingLines();
+            }
+            this.StopIndicator();
+        });
+    }
+
+    BuildShippingLines() {
+        this.ShippingLines = [];
+        let itemSource: ShippingLinePM[] = SessionLocator.Tenant == 0 ? this.TenantZeroShippingLines : this.UserTenantShippingLines;
+        itemSource = this.SortItemSource(itemSource);
+        itemSource.forEach((item) => {
+            var shippingLineItem = this.BuildShippingLineItem(item);
+            if (shippingLineItem) this.ShippingLines.push(shippingLineItem);
+        });
+    }
+
+    private BuildShippingLineItem(item: ShippingLinePM): ShippingLineItem {
+        var tenantZeroItem = this.TenantZeroShippingLines.filter(t => t.SCACCode == item.SCACCode)[0];
+        if (tenantZeroItem != null) return new ShippingLineItem(tenantZeroItem, item);
+        else if (item.AddedManually) return new ShippingLineItem(null, item);
+        return null;
+    }
+
+    private SortItemSource(items: ShippingLinePM[]) {
+        items.sort((a, b) => {
+            if (a.EnglishName.toLowerCase() < b.EnglishName.toLowerCase()) return -1;
+            if (a.EnglishName.toLowerCase() > b.EnglishName.toLowerCase()) return 1;
+            else return 0;
+
+        });
+        return items;
+    }
+
+    private StopIndicator() {
+        this.CurrentSession.StopBusyIndicator();
+        this.Loaded = true;
     }
 
     CancelButtonClicked() {
@@ -85,17 +148,17 @@ export class ContainerSettingsComponent extends BaseComponent implements OnInit 
 
     private InsertEntity() {
         this.ContainerSettingPMService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-            this.HandleResponse(myResponse);
+            this.HandleSaveResponse(myResponse);
         });
     }
 
     private UpdateEntity() {
         this.ContainerSettingPMService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-            this.HandleResponse(myResponse);
+            this.HandleSaveResponse(myResponse);
         });
     }
 
-    private HandleResponse(myResponse: ServiceResponse) {
+    private HandleSaveResponse(myResponse: ServiceResponse) {
         if (!myResponse) return;
         if (!myResponse.HasError) this.CurrentSession.CloseCurrentWindowEmit("ok");
         else {
@@ -160,5 +223,67 @@ export class ContainerSettingsComponent extends BaseComponent implements OnInit 
         if (this.EntityPM.IsDrop != value) {
             this.EntityPM.IsDrop = value;
         }
+    }
+}
+
+export class ShippingLineItem extends BaseComponent {
+    public EntityZero: ShippingLinePM;
+    public Entity: ShippingLinePM;
+    public DataContext: ShippingLineItem = this;
+
+    constructor(zeroEntity: ShippingLinePM, currentEntity: ShippingLinePM) {
+        super();
+        this.EntityZero = zeroEntity;
+        this.Entity = currentEntity;
+    }
+
+    public get Code(): string {
+        if (SessionLocator.Tenant == 0) return this.EntityZero.Code;
+        return this.Entity.Code;
+    }
+
+    public get SCACCode(): string {
+        if (SessionLocator.Tenant == 0) return this.EntityZero.SCACCode;
+        return this.Entity.SCACCode;
+    }
+
+    public get Name(): string {
+        if (SessionLocator.Tenant == 0) return this.EntityZero.EnglishName;
+        return this.Entity.EnglishName;
+    }
+
+    public set IsSupportsContainerTracking(value: boolean) { if (this.Entity != null) this.Entity.IsSupportsContainerTracking = value; }
+    public get IsSupportsContainerTracking() {
+        if (this.Entity) return this.Entity.IsSupportsContainerTracking;
+        else return false;
+    }
+
+    public set IsAutomaticRequestsSent(value: boolean) { if (this.Entity != null) this.Entity.IsAutomaticRequestsSent = value; }
+    public get IsAutomaticRequestsSent() {
+        if (this.Entity) return this.Entity.IsAutomaticRequestsSent;
+        else return false;
+    }
+
+
+    public set IsSupportsContainerTrackingZero(value: boolean) { if (this.EntityZero != null) this.EntityZero.IsSupportsContainerTracking = value; }
+    public get IsSupportsContainerTrackingZero() {
+        if (this.EntityZero) return this.EntityZero.IsSupportsContainerTracking;
+        else return false;
+    }
+
+    public set IsAutomaticRequestsSentZero(value: boolean) { if (this.EntityZero != null) this.EntityZero.IsAutomaticRequestsSent = value; }
+    public get IsAutomaticRequestsSentZero() {
+        if (this.EntityZero) return this.EntityZero.IsAutomaticRequestsSent;
+        else return false;
+    }
+
+    public get IsSupportsContainerTrackingEnabled() {
+        if (this.EntityZero != null) return this.EntityZero.IsSupportsContainerTracking;
+        else return false;
+    }
+
+    public get IsAutomaticRequestsSentEnabled() {
+        if (this.EntityZero != null) return this.EntityZero.IsAutomaticRequestsSent;
+        else return false;
     }
 }
