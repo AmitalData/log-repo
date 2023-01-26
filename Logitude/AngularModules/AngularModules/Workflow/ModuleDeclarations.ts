@@ -28,6 +28,7 @@ import { IsNoObjectFieldVariablePipe } from "./Pipes/IsNoObjectFieldVariablePipe
 import { IsFieldOperatorPipe } from "./Pipes/IsFieldOperatorPipe";
 import { IsNoValueOperatorPipe } from "./Pipes/IsNoValueOperatorPipe";
 import { ShowFlowVariablesTreeItemPipe } from "./Pipes/ShowFlowVariablesTreeItemPipe";
+import { ShowFlowVariablesTypeTreeItemPipe } from "./Pipes/ShowFlowVariablesTypeTreeItemPipe";
 import { ShowEntitiesTreeItemPipe } from "./Pipes/ShowEntitiesTreeItemPipe";
 import { ShowExpressionTreeItemPipe } from "./Pipes/ShowExpressionTreeItemPipe";
 import { EntityLabelPipe } from "./Pipes/EntityLabelPipe";
@@ -95,6 +96,7 @@ export const Pipes = [
     ShowEntitiesTreeItemPipe,
     ShowExpressionTreeItemPipe,
     ShowFlowVariablesTreeItemPipe,
+    ShowFlowVariablesTypeTreeItemPipe,
     EntityLabelPipe,
     ConditionDisabledPipe,
     ShowEditableVariablesTreeItemPipe,
