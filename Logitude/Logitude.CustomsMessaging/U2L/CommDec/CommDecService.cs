@@ -646,11 +646,8 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     
                     string defValue = GetDefault("ISRAEL", "CGO_CUST_CAS", "NON", "NON",_tenant);
 
-                        if (string.IsNullOrEmpty(defValue))
-                        {
-                            return;
-                        }
-                        if(_MyDeclarationPM.CustomerCode != defValue)
+                       
+                        if(!string.IsNullOrEmpty(defValue) && _MyDeclarationPM.CustomerCode != defValue)
                         {
                             UpdateDeclarationPending("906");
                         }
