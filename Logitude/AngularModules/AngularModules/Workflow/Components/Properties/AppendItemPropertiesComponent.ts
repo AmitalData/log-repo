@@ -9,6 +9,9 @@ import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 import { SetValue } from "Workflow/Models/SetValue";
 import { DeclaredRecordsTreeList } from "Workflow/Models/DeclaredRecordsTreeList";
 import { SetRecordFieldsTypes } from "Workflow/Constants/SetRecordFieldsTypes";
+import { FlowVariablesTreeList } from "Workflow/Models/FlowVariablesTreeList";
+import { IsObjectTypePipe } from "Workflow/Pipes/IsObjectTypePipe";
+import { EntityLabelPipe } from "Workflow/Pipes/EntityLabelPipe";
 
 @Component({
     templateUrl: "./AppendItemPropertiesComponent.html"
@@ -22,14 +25,19 @@ export class AppendItemPropertiesComponent extends BaseComponent {
     public FlowObjectFields: ObjectFieldList[];
     public SingleEditableEntitiesTreeItems: TreeSelectItem[];
     public DeclaredRecordsTreeItems: TreeSelectItem[];
+    public DeclaredCollectionVariablesTreeList: FlowVariablesTreeList;
+    public FlowVariablesTreeList: FlowVariablesTreeList;
+    public FlowVariablesTreeItems: TreeSelectItem[];
     public Data: any;
     public IsNew: boolean;
     public Name: string = null;
     public Entity: string = null;
     public EntityId: string = null;
+    public DeclareType: string = null;
     public Collection: string;
     public SetValues: SetValue[];
-    public Record: string;
+    public Value: string;
+    public Variable: string;
     public SetRecordFieldsType: string;
     public IsValidSetValues: boolean = true;
     public ValidationErrorsList: string[];
@@ -37,6 +45,9 @@ export class AppendItemPropertiesComponent extends BaseComponent {
     public ExcludedEntities: string[] = ["Container"];
     public SetRecordFieldsTypes = SetRecordFieldsTypes;
     public CurrentSession = SessionLocator.SelectedSession;
+    public UseRecordRadioButtonText: string = null;
+    public SetValuesRadioButtonText: string = null;
+    public SetValuesTitleText: string = null;
 
     SetWindowArgs(args: any) {
         this.Data = args.Data ? args.Data : {};
@@ -69,12 +80,18 @@ export class AppendItemPropertiesComponent extends BaseComponent {
         this.Entity = this.Data["entity"] || null;
         this.SetValues = this.Data["setValues"] || [];
         this.SetRecordFieldsType = this.Data["setRecordFieldsType"] || SetRecordFieldsTypes.UseRecord;
-        this.Record = this.Data["record"] || null;
+        this.Variable = this.Data["variable"] || this.Data["record"] || null;
+        this.Value = this.Data["value"] || null;
 
         this.Data["setRecordFieldsType"] = this.SetRecordFieldsType;
 
         this.initializeSetValues();
-        this.EntityId = ObjectTables.getIdByName(this.Entity);
+
+        if (this.isEntityCollection(this.Entity)) {
+            this.setEntity()
+        } else {
+            this.setDeclareType()
+        }
 
         this.setUIProperties();
     }
@@ -93,10 +110,39 @@ export class AppendItemPropertiesComponent extends BaseComponent {
     initializeTreeLists() {
         this.SingleEditableEntitiesTreeItems = new SingleEditableEntitiesTreeList(this.FlowObject, this.CurrentNodeId).Items;
         this.DeclaredRecordsTreeItems = new DeclaredRecordsTreeList(this.FlowObject, this.CurrentNodeId).Items;
+        this.initializeDeclaredCollectionVariables();
+        this.initializeFlowVariablesTree();
+    }
+
+    initializeDeclaredCollectionVariables() {
+        let props = {
+            ShowRecordsVariables: false,
+            ShowDeclaredVariables: false,
+            ShowRecordsCollectionVariables: false,
+            ShowDeclaredCollectionVariables: true,
+            OnlyCurrentLoopItemVariables: false,
+            IsObjectVariableSelectable: false
+        };
+        this.DeclaredCollectionVariablesTreeList = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId, props);
+        var DeclaredCollectionVariablesItems = this.DeclaredCollectionVariablesTreeList.Items;
+        this.SingleEditableEntitiesTreeItems = this.SingleEditableEntitiesTreeItems.concat(DeclaredCollectionVariablesItems);
+    }
+
+    initializeFlowVariablesTree() {
+        let props = {
+            ShowRecordsVariables: true,
+            ShowDeclaredVariables: true,
+            ShowRecordsCollectionVariables: false,
+            ShowDeclaredCollectionVariables: true,
+            OnlyCurrentLoopItemVariables: false,
+            IsObjectVariableSelectable: true
+        };
+        this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId, props);
+        this.FlowVariablesTreeItems = this.FlowVariablesTreeList.Items;
     }
 
     updateName(name: string) {
-        if(this.IsNew){
+        if (this.IsNew) {
             this.Data["name"] = name;
         }
 
@@ -108,17 +154,24 @@ export class AppendItemPropertiesComponent extends BaseComponent {
 
     updateCollection(collectionItem: TreeSelectItem) {
         let collectionName = collectionItem ? collectionItem.key : null;
-        let collectionEntity = collectionItem ? collectionItem.data["entity"] : null;
+        let collectionEntity = this.getCollectionEntity(collectionItem);
+
         let isCollectionChanged = this.Data["collection"] !== collectionName;
 
         this.Collection = collectionName;
         this.Entity = collectionEntity;
-        this.EntityId = ObjectTables.getIdByName(collectionEntity);
+
+        if (this.isEntityCollection(this.Entity)) {
+            this.setEntity()
+        } else {
+            this.setDeclareType()
+        }
 
         this.Data["collection"] = collectionName;
         this.Data["entity"] = collectionEntity;
 
         if (isCollectionChanged) {
+            this.resetFields();
             this.updateSetRecordFieldsType(SetRecordFieldsTypes.UseRecord);
             this.CollectionChanged = !this.CollectionChanged;
         }
@@ -126,20 +179,49 @@ export class AppendItemPropertiesComponent extends BaseComponent {
         this.setUIProperties();
     }
 
+    getCollectionEntity(collectionItem: TreeSelectItem) {
+        let isDeclared = collectionItem ? collectionItem.data["isDeclaredCollectionVariable"] : false;
+        let collectionEntity = null;
+        if (isDeclared) {
+            var type = collectionItem ? collectionItem.data["type"] : null;
+            var typeArray = type?.replace('[]', '').split('.')
+            collectionEntity = typeArray.length > 1 ? typeArray[1] : typeArray[0]
+        } else {
+            collectionEntity = collectionItem ? collectionItem.data["entity"] : null;
+        }
+        return collectionEntity;
+    }
+
+    resetFields() {
+        this.Variable = null
+        this.Data["variable"] = null;
+        this.Value = null
+        this.Data["value"] = null;
+        this.SetValues = []
+    }
+
     updateSetRecordFieldsType(setRecordFieldsType: string) {
         this.Data["setRecordFieldsType"] = setRecordFieldsType;
         this.SetRecordFieldsType = setRecordFieldsType;
 
         this.initializeSetValues(true);
-        this.updateRecord(null);
+        this.updateVariable(null);
         this.setIsValidSetValues(setRecordFieldsType === SetRecordFieldsTypes.UseRecord);
 
         this.setUIProperties();
     }
 
-    updateRecord(record: string) {
-        this.Data["record"] = record;
-        this.Record = record;
+    updateVariable(variable: string) {
+        this.Data["variable"] = variable;
+        this.Variable = variable;
+
+        this.setUIProperties();
+    }
+
+    updateValue(value: string) {
+        this.Data["value"] = value;
+        this.Value = value;
+        this.SetValues = [];
 
         this.setUIProperties();
     }
@@ -151,7 +233,13 @@ export class AppendItemPropertiesComponent extends BaseComponent {
     setUIProperties() {
         this.UIProperties.SetRequired("Name", null, AppTool.IsNullOrEmpty(this.Name));
         this.UIProperties.SetRequired("Collection", null, AppTool.IsNullOrEmpty(this.Collection));
-        this.UIProperties.SetRequired("Record", null, (this.SetRecordFieldsType === SetRecordFieldsTypes.UseRecord && AppTool.IsNullOrEmpty(this.Record)));
+        this.UIProperties.SetRequired("Variable", null, (this.SetRecordFieldsType === SetRecordFieldsTypes.UseRecord && AppTool.IsNullOrEmpty(this.Variable)));
+        if (this.Entity && !this.isEntityCollection(this.Entity)) {
+            this.IsValidSetValues = true;
+            this.UIProperties.SetRequired("Value", null, (this.SetRecordFieldsType === SetRecordFieldsTypes.SetValues && AppTool.IsNullOrEmpty(this.Value)));
+        } else if (this.Entity && this.isEntityCollection(this.Entity)) {
+            this.UIProperties.SetRequired("Value", null, false);
+        }
     }
 
     cancelButtonClicked() {
@@ -177,5 +265,29 @@ export class AppendItemPropertiesComponent extends BaseComponent {
 
     setSetValuesData() {
         this.Data["setValues"] = this.SetValues;
+    }
+
+    setEntity() {
+        this.EntityId = ObjectTables.getIdByName(this.Entity);
+        this.DeclareType = null;
+        this.UseRecordRadioButtonText = "Use all fields values from a record"
+        this.SetValuesRadioButtonText = "Set fields values"
+        this.SetValuesTitleText = "Set Fields Values of " + this.getEntityLabel()
+    }
+
+    setDeclareType() {
+        this.DeclareType = this.Entity
+        this.EntityId = null;
+        this.UseRecordRadioButtonText = "Use value from variable"
+        this.SetValuesRadioButtonText = "Set value"
+        this.SetValuesTitleText = "Set value to append"
+    }
+
+    isEntityCollection(type: string) {
+        return new IsObjectTypePipe().transform(type);
+    }
+
+    getEntityLabel() {
+        return new EntityLabelPipe().transform(this.Entity);
     }
 }
