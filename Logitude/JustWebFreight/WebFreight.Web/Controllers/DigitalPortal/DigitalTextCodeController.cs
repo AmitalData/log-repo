@@ -52,15 +52,33 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     var textCodes = textCodeQuery.GetDigitalTextCodesTenant0();
                     foreach (var item in textCodes)
                     {
-                        textCodeQuery.UpdateDigitalTextCodes(new DigitalTextCodeList
+                        if (item.ObjectTableName.Equals("general", StringComparison.InvariantCultureIgnoreCase))
                         {
-                            Tenant = tenant,
-                            Labels = item.Labels,
-                            ObjectTableId = item.ObjectTableId,
-                            ProfileId = tenantDigitalProfiles.Where(a=>a.Code == item.ProfileCode).Select(a=>a.Id).FirstOrDefault(),
-                            CreateDate = DateTime.UtcNow,
-                            UpdateDate = DateTime.UtcNow
-                        });
+                            textCodeQuery.UpdateDigitalTextCodes(new DigitalTextCodeList
+                            {
+                                Tenant = tenant,
+                                Labels = item.Labels,
+                                ObjectTableId = item.ObjectTableId,
+                                ProfileId = tenantDigitalProfiles.Where(a => a.Code == item.ProfileCode).Select(a => a.Id).FirstOrDefault(),
+                                CreateDate = DateTime.UtcNow,
+                                UpdateDate = DateTime.UtcNow
+                            });
+                        }
+                        else
+                        {
+                            textCodeQuery.UpdateDigitalTextCodes(new DigitalTextCodeList
+                            {
+                                Tenant = tenant,
+                                Labels = item.Labels,
+                                ObjectTableId = item.ObjectTableId,
+                                ProfileId = tenantDigitalProfiles.Where(a => a.Code == item.ProfileCode 
+                                                                             && !a.Code.Equals("CM"))
+                                                                 .Select(a => a.Id)
+                                                                 .FirstOrDefault(),
+                                CreateDate = DateTime.UtcNow,
+                                UpdateDate = DateTime.UtcNow
+                            });
+                        }
                     }
 
                     var filedsQuery = new DigitalFieldSecurityQueryService(tenant);
@@ -72,7 +90,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                             Tenant = tenant,
                             DefaultSettings = item.DefaultSettings,
                             ObjectTableId = item.ObjectTableId,
-                            ProfileId = tenantDigitalProfiles.Where(a => a.Code == item.ProfileCode).Select(a => a.Id).FirstOrDefault(),
+                            ProfileId = tenantDigitalProfiles.Where(a => a.Code == item.ProfileCode
+                                                                         && !a.Code.Equals("CM"))
+                                                             .Select(a => a.Id)
+                                                             .FirstOrDefault(),
                             CreateDate = DateTime.UtcNow,
                             UpdateDate = DateTime.UtcNow
                         });
@@ -91,7 +112,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                             Content = item.Content,
                             DraftContent = item.DraftContent,
                             ObjectTableId = item.ObjectTableId,
-                            ProfileId = tenantDigitalProfiles.Where(a => a.Code == item.ProfileCode).Select(a => a.Id).FirstOrDefault(),
+                            ProfileId = tenantDigitalProfiles.Where(a => a.Code == item.ProfileCode
+                                                                         && !a.Code.Equals("CM"))
+                                                             .Select(a => a.Id)
+                                                             .FirstOrDefault(),
                             CreateDate = DateTime.UtcNow,
                             UpdateDate = DateTime.UtcNow
                         });
@@ -124,10 +148,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 email = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
-
                 var helper = new DigitalFieldSecuritesHelper();
                 var defaultDigitalFieldSecurity = helper.GitDigitalSecuritesFeilds(objectTableId, profileCode, tenant);
-
                 return Request.CreateResponse(HttpStatusCode.OK, defaultDigitalFieldSecurity);
             }
             catch (AutenticationException ex)
@@ -225,6 +247,11 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 var defaultTextCode = textCodeQuery.GetDigitalTextCodesQuery(0, objectTableId, profileCode);
 
+                if (defaultTextCode == null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, new List<DigitalTextCodeObject>());
+                }
+
                 var defaultCodesObject = JsonConvert.DeserializeObject<List<DigitalTextCodeObject>>(defaultTextCode.Labels);
 
                 var customCodesObject = new List<DigitalTextCodeObject>();
@@ -236,6 +263,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     if (customTextCodes != null)
                     {
                         customCodesObject = JsonConvert.DeserializeObject<List<DigitalTextCodeObject>>(customTextCodes.Labels);
+                    }
+                    else
+                    {
+                        return Request.CreateResponse(HttpStatusCode.OK, new List<DigitalTextCodeObject>());
                     }
                 }
 

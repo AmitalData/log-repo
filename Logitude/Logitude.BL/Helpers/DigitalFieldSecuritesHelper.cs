@@ -1,5 +1,4 @@
-﻿using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
-using Logitude.Infrastructure.Data.EntityLists;
+﻿using Logitude.Infrastructure.Data.EntityLists;
 using Logitude.Infrastructure.Data.Repsitories;
 using Newtonsoft.Json;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -15,6 +14,12 @@ namespace Logitude.BL.Helpers
         public List<DigitalFeildSecurityObject> GitDigitalSecuritesFeilds(string objectTableId, string profileCode, int tenant, bool singleApi = true)
         {
             var digitalFieldSecurity = GetDigitalFieldSecurityQuery(0, objectTableId, profileCode);
+
+            if (digitalFieldSecurity == null)
+            {
+                return new List<DigitalFeildSecurityObject>();
+            }
+
             var defaultDigitalFieldSecurity = JsonConvert.DeserializeObject<List<DigitalFeildSecurityObject>>(digitalFieldSecurity.DefaultSettings);
             var customDigitalFeildSecurityObject = new List<DigitalFeildSecurityObject>();
             var objectTableName = ObjectTableRepository.GetNameById(objectTableId, tenant);
@@ -41,6 +46,10 @@ namespace Logitude.BL.Helpers
                             defaultDigitalFieldSecurity.Add(item);
                         }
                     }
+                }
+                else
+                {
+                    return new List<DigitalFeildSecurityObject>();
                 }
             }
 
