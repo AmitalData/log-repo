@@ -27,6 +27,8 @@ using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Data.Common;
 using Logitude.BL.DataContracts;
 using System.Data;
+using System.IdentityModel.Metadata;
+using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web.Helpers
 {
@@ -249,24 +251,26 @@ namespace WebFreight.Web.Helpers
         {
             try
             {
-                ContactActivityLogRepository contactActivityLogRepository = new ContactActivityLogRepository();
-                ContactActivityLog log = new ContactActivityLog()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    ContactId = contactId,
-                    Module = module,
-                    Activity = activity,
-                    LogDateTime = TenantServerConfigration.GetCurrentDateTime(tenant),
-                    GMTLogDateTime = DateTime.Now,
-                    Tenant = tenant,
-                    IsSharedLogisticsContact = isSharedLogisticsContact,
-                    CardId = cardId,
-                    PartnerTypeId = partnerTypeId,
-                    Via = via,
-                };
+                TotangoActivityLogger.AddContactActivityLog(cardId, partnerTypeId, contactId, module, activity, tenant, isSharedLogisticsContact,via);
+               
+                //ContactActivityLogRepository contactActivityLogRepository = new ContactActivityLogRepository();
+                //ContactActivityLog log = new ContactActivityLog()
+                //{
+                //    Id = Guid.NewGuid().ToString(),
+                //    ContactId = contactId,
+                //    Module = module,
+                //    Activity = activity,
+                //    LogDateTime = TenantServerConfigration.GetCurrentDateTime(tenant),
+                //    GMTLogDateTime = DateTime.Now,
+                //    Tenant = tenant,
+                //    IsSharedLogisticsContact = isSharedLogisticsContact,
+                //    CardId = cardId,
+                //    PartnerTypeId = partnerTypeId,
+                //    Via = via,
+                //};
 
-                contactActivityLogRepository.Add(log);
-                contactActivityLogRepository.SubmitChanges();
+                //contactActivityLogRepository.Add(log);
+                //contactActivityLogRepository.SubmitChanges();
             }
             catch (Exception ex)
             {

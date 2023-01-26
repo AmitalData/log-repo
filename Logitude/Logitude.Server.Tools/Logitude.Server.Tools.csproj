@@ -249,6 +249,7 @@
     <Compile Include="CToolWorkflows\WorkflowEntityChanges.cs" />
     <Compile Include="EntityChanges\AutomationResult\AutomationOnUpdateDocumentService.cs" />
     <Compile Include="EntityChanges\AutomationResult\AutomationEventCreationService.cs" />
+    <Compile Include="Helpers\ErrorsLogger.cs" />
     <Compile Include="Helpers\UpdatePortSearchFieldService.cs" />
     <Compile Include="Interfaces\IAddManualTraceEventsHelper.cs" />
     <Compile Include="IQueryableExtensions.cs" />
