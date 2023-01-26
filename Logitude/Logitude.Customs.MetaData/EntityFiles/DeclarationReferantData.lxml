@@ -15750,10 +15750,10 @@
         IndexOrder="0" />
       <QueryFilter
         QueryCode="&quot;FilesInProcess&quot;"
-        PredefinedValue="&quot;1&quot;"
+        PredefinedValue="&quot;0&quot;"
         ObjectFieldName="&quot;IsClosedForFollowUp&quot;"
         IsPredefined="true"
-        Operator="&quot;NotEqual&quot;"
+        Operator="&quot;Equal&quot;"
         IndexOrder="0" />
     </QueryFilters>
   </Query>
@@ -15904,10 +15904,10 @@
         IndexOrder="0" />
       <QueryFilter
         QueryCode="&quot;TrackingCases&quot;"
-        PredefinedValue="&quot;1&quot;"
+        PredefinedValue="&quot;0&quot;"
         ObjectFieldName="&quot;IsClosedForFollowUp&quot;"
         IsPredefined="true"
-        Operator="&quot;NotEqual&quot;"
+        Operator="&quot;Equal&quot;"
         IndexOrder="0" />
     </QueryFilters>
   </Query>
@@ -16059,10 +16059,10 @@
         IndexOrder="0" />
       <QueryFilter
         QueryCode="&quot;FilesInOCR&quot;"
-        PredefinedValue="&quot;1&quot;"
+        PredefinedValue="&quot;0&quot;"
         ObjectFieldName="&quot;IsClosedForFollowUp&quot;"
         IsPredefined="true"
-        Operator="&quot;NotEqual&quot;"
+        Operator="&quot;Equal&quot;"
         IndexOrder="0" />
     </QueryFilters>
   </Query>
@@ -16214,10 +16214,10 @@
         IndexOrder="0" />
       <QueryFilter
         QueryCode="&quot;FilesInSivug&quot;"
-        PredefinedValue="&quot;1&quot;"
+        PredefinedValue="&quot;0&quot;"
         ObjectFieldName="&quot;IsClosedForFollowUp&quot;"
         IsPredefined="true"
-        Operator="&quot;NotEqual&quot;"
+        Operator="&quot;Equal&quot;"
         IndexOrder="0" />
     </QueryFilters>
   </Query>
@@ -16369,10 +16369,10 @@
         IndexOrder="0" />
       <QueryFilter
         QueryCode="&quot;FilesInReview&quot;"
-        PredefinedValue="&quot;1&quot;"
+        PredefinedValue="&quot;0&quot;"
         ObjectFieldName="&quot;IsClosedForFollowUp&quot;"
         IsPredefined="true"
-        Operator="&quot;NotEqual&quot;"
+        Operator="&quot;Equal&quot;"
         IndexOrder="0" />
     </QueryFilters>
   </Query>
@@ -16524,10 +16524,10 @@
         IndexOrder="0" />
       <QueryFilter
         QueryCode="&quot;FilesInCreditControl&quot;"
-        PredefinedValue="&quot;1&quot;"
+        PredefinedValue="&quot;0&quot;"
         ObjectFieldName="&quot;IsClosedForFollowUp&quot;"
         IsPredefined="true"
-        Operator="&quot;NotEqual&quot;"
+        Operator="&quot;Equal&quot;"
         IndexOrder="0" />
     </QueryFilters>
   </Query>
@@ -16672,10 +16672,10 @@
         IndexOrder="0" />
       <QueryFilter
         QueryCode="&quot;FilesToPay&quot;"
-        PredefinedValue="&quot;1&quot;"
+        PredefinedValue="&quot;0&quot;"
         ObjectFieldName="&quot;IsClosedForFollowUp&quot;"
         IsPredefined="true"
-        Operator="&quot;NotEqual&quot;"
+        Operator="&quot;Equal&quot;"
         IndexOrder="0" />
       <QueryFilter
         QueryCode="&quot;FilesToPay&quot;"
@@ -16876,10 +16876,10 @@
         IndexOrder="0" />
       <QueryFilter
         QueryCode="&quot;FilesAvailableFreeOfCharge&quot;"
-        PredefinedValue="&quot;1&quot;"
+        PredefinedValue="&quot;0&quot;"
         ObjectFieldName="&quot;IsClosedForFollowUp&quot;"
         IsPredefined="true"
-        Operator="&quot;NotEqual&quot;"
+        Operator="&quot;Equal&quot;"
         IndexOrder="0" />
     </QueryFilters>
   </Query>
@@ -16980,10 +16980,10 @@
         IndexOrder="0" />
       <QueryFilter
         QueryCode="&quot;FilesWithoutRelease&quot;"
-        PredefinedValue="&quot;1&quot;"
+        PredefinedValue="&quot;0&quot;"
         ObjectFieldName="&quot;IsClosedForFollowUp&quot;"
         IsPredefined="true"
-        Operator="&quot;NotEqual&quot;"
+        Operator="&quot;Equal&quot;"
         IndexOrder="0" />
       <QueryFilter
         QueryCode="&quot;FilesWithoutRelease&quot;"
@@ -17217,10 +17217,10 @@
         IndexOrder="2" />
       <QueryFilter
         QueryCode="&quot;FilesRejectedByController&quot;"
-        PredefinedValue="&quot;1&quot;"
+        PredefinedValue="&quot;0&quot;"
         ObjectFieldName="&quot;IsClosedForFollowUp&quot;"
         IsPredefined="true"
-        Operator="&quot;NotEqual&quot;"
+        Operator="&quot;Equal&quot;"
         IndexOrder="0" />
     </QueryFilters>
   </Query>
@@ -17372,10 +17372,10 @@
         IndexOrder="0" />
       <QueryFilter
         QueryCode="&quot;FilesRejectedByClassification&quot;"
-        PredefinedValue="&quot;1&quot;"
+        PredefinedValue="&quot;0&quot;"
         ObjectFieldName="&quot;IsClosedForFollowUp&quot;"
         IsPredefined="true"
-        Operator="&quot;NotEqual&quot;"
+        Operator="&quot;Equal&quot;"
         IndexOrder="0" />
     </QueryFilters>
   </Query>
