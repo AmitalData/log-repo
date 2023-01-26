@@ -1,8 +1,7 @@
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
-            <ValidationSummary 
-            [ItemsSource]="ValidationErrorsList" >
+            <ValidationSummary [ItemsSource]="ValidationErrorsList">
 
             </ValidationSummary>
         </td>
@@ -14,24 +13,24 @@
                 <tr>
                     <td>
                         <div class="MediaFill">
-
-                            <LogTextBox [ObjectFieldName]="'Notes'" 
-                            [InputType]="'ntext'" [ObjectTableName]="ObjectTableName" [RowsCount]="13"
-                                [DataContext]="DataContext" [IsMultiline]="true" [HideColumns]="true">
+                            <LogTextBox [ObjectFieldName]="'Notes'" [InputType]="'ntext'"
+                                [ObjectTableName]="ObjectTableName" [RowsCount]="13" [DataContext]="DataContext"
+                                [IsMultiline]="true" [HideColumns]="true" [Text]="Notes">
                             </LogTextBox>
-
 
                             <div *ngIf="EntityPM" class="footer" style="margin-top: 10px;">
                                 <div float-start style="padding: 0px 10px; width:100%;">
-                                    <div float-start  style="color: dimgray;font-size:11px; width: fit-content;">{{'AccountingNote.F.UpdatedByUserName' | TextCodeTranslationPipe}} </div>
-                                    <div float-start style="font-size:12px;width: 230px;padding: 0 10px;" class="TextTrimming">
-                                        <span float-start>{{ EntityPM.UpdatedByUserId }}</span> <span float-start style="font-size:10px; line-height: 17px;padding: 0 5px;">({{ EntityPM.UpdateDateTime | DateTimePipe:'DT' }})</span>
+                                    <div float-start style="color: dimgray;font-size:11px; width: fit-content;">
+                                        {{'AccountingNote.F.UpdatedByUserName' | TextCodeTranslationPipe}}
+                                    </div>
+                                    <div float-start style="font-size:12px;width: 230px;padding: 0 10px;"
+                                        class="TextTrimming">
+                                        <span float-start>{{ EntityPM.UpdatedByUserId }}</span>
+                                        <span float-start style="font-size:10px; line-height: 17px;padding: 0 5px;">
+                                            ({{EntityPM.UpdateDateTime | DateTimePipe:'DT' }})
+                                        </span>
                                     </div>
                                 </div>
-                                <!-- <div float-start style="padding: 0px 10px; width:100%;" >
-                                    <div float-start  style="color: dimgray;font-size:11px; width: 80px;">Updated Date: </div>
-                                    <div float-start style="font-size:12px;">{{ entityPM.UpdateDate | DateTimePipe:'DT' }}</div>
-                                </div> -->
                             </div>
 
                         </div>
@@ -55,7 +54,8 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel'|TextCodeTranslationPipe}}</button>
+                        <button class="Button"
+                            (click)="CancelButtonClicked()">{{'General.B.Cancel'|TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -63,7 +63,8 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok'|TextCodeTranslationPipe}}</button>
+                        <button class="RedButton"
+                            (click)="OkButtonClicked()">{{'General.B.Ok'|TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

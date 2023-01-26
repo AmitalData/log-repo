@@ -152,47 +152,52 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         }
 
-        public InterestTransaction MapInterestTransactionNotes(InterestTransactionPM interestTransaction)
+        public InterestTransaction MapInterestTransactionNotes(InterestTransactionPM interestTransactionPM)
         {
-            InterestTransactionRepository interestTransactionRepository = new InterestTransactionRepository(interestTransaction.Tenant);
-           var r= new InterestTransaction()
-            {
+            InterestTransactionRepository interestTransactionRepository = new InterestTransactionRepository(interestTransactionPM.Tenant);
+            var interestTransaction =interestTransactionRepository.GetSingle(interestTransactionPM.Id, interestTransactionPM.Tenant);
+            interestTransaction.Notes = interestTransactionPM.Notes;
+            interestTransaction.CreatedByUserId = interestTransactionPM.CreatedByUserId;
+            interestTransaction.UpdatedByUserId = interestTransactionPM.UpdatedByUserId;
 
-                Id = interestTransaction.Id,
-                Tenant = interestTransaction.Tenant,
-                CreateDateTime = interestTransaction.CreateDateTime,
-                UpdateDateTime = interestTransaction.UpdateDateTime,
-                SearchFields = interestTransaction.SearchFields,
-                GLAccountId = interestTransaction.GLAccountId,
-                InterestEntityTypeCode = interestTransaction.InterestEntityTypeCode,
-                EntityId = interestTransaction.EntityId,
-                OriginalEntityLineNumber = interestTransaction.OriginalEntityLineNumber,
-                LocalAmount = interestTransaction.LocalAmount,
-                ForeignAmount = interestTransaction.ForeignAmount,
-                CurrencyId = interestTransaction.CurrencyId,
-                InterestValueDate = interestTransaction.InterestValueDate,
-                InterestReportId = interestTransaction.InterestReportId,
-                IsClosed = interestTransaction.IsClosed,
-                IsCancelled = interestTransaction.IsCancelled,
-                //InterestReportNumber = report?.ReportNumber,
-                //JournalId = journal?.Id,
-                //JournalNumber = journal?.JournalNumber,
-                //AccountingDate = journal?.AccountingDate ?? DateTime.MinValue,
-                //Source = journal?.AccountingEntityReference,
-                //SourceType = journal?.AccountingEntity == null ? null : journal.AccountingEntity.EnglishName,
-                //SourceTypeCode = journal?.AccountingEntityCode,
-                //SourceId = journal?.AccountingEntityId,
-                AccountingEntityCode= interestTransaction.AccountingEntityCode,
-                Notes = interestTransaction.Notes,
-                CreatedByUserId = interestTransaction.CreatedByUserId,
-                UpdatedByUserId = interestTransaction.UpdatedByUserId,
+            //var r= new InterestTransaction()
+            //{
 
-            };
-            interestTransactionRepository.Update(r);
+            //    Id = interestTransaction.Id,
+            //    Tenant = interestTransaction.Tenant,
+            //    CreateDateTime = interestTransaction.CreateDateTime,
+            //    UpdateDateTime = interestTransaction.UpdateDateTime,
+            //    SearchFields = interestTransaction.SearchFields,
+            //    GLAccountId = interestTransaction.GLAccountId,
+            //    InterestEntityTypeCode = interestTransaction.InterestEntityTypeCode,
+            //    EntityId = interestTransaction.EntityId,
+            //    OriginalEntityLineNumber = interestTransaction.OriginalEntityLineNumber,
+            //    LocalAmount = interestTransaction.LocalAmount,
+            //    ForeignAmount = interestTransaction.ForeignAmount,
+            //    CurrencyId = interestTransaction.CurrencyId,
+            //    InterestValueDate = interestTransaction.InterestValueDate,
+            //    InterestReportId = interestTransaction.InterestReportId,
+            //    IsClosed = interestTransaction.IsClosed,
+            //    IsCancelled = interestTransaction.IsCancelled,
+            //    //InterestReportNumber = report?.ReportNumber,
+            //    //JournalId = journal?.Id,
+            //    //JournalNumber = journal?.JournalNumber,
+            //    //AccountingDate = journal?.AccountingDate ?? DateTime.MinValue,
+            //    //Source = journal?.AccountingEntityReference,
+            //    //SourceType = journal?.AccountingEntity == null ? null : journal.AccountingEntity.EnglishName,
+            //    //SourceTypeCode = journal?.AccountingEntityCode,
+            //    //SourceId = journal?.AccountingEntityId,
+            //    AccountingEntityCode= interestTransaction.AccountingEntityCode,
+            //    Notes = interestTransaction.Notes,
+            //    CreatedByUserId = interestTransaction.CreatedByUserId,
+            //    UpdatedByUserId = interestTransaction.UpdatedByUserId,
+
+            //};
+            interestTransactionRepository.Update(interestTransaction);
             interestTransactionRepository.SubmitChanges();
 
 
-            return r;
+            return interestTransaction;
         }
 
 

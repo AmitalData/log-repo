@@ -1,14 +1,25 @@
+<style>
+      .LogitudeCellTooltip {
+          position:fixed;
+          display:inline-block;
+          padding-left: 10 !important;
+          z-index:99999 !important;
+          font-size: larger;        
+       }
+</style>
 
+     <div style="width: 45px; height: 12px;" class="CenterCenter,MediaFill">
+          <img *ngIf="!rowData.Notes" src="./Images/Notes_notexists.png" style="vertical-align: middle; display: block;" />
+                    <CellTooltip class="LogitudeCellTooltip" *ngIf="rowData.Notes" [IconPath]="'./Images/Notes_exists.png'"
+                    [Head]="'APInvoiceLine.F.Notes' | TextCodeTranslationPipe" [Body]="rowData.Notes" [Height] = "735" [Width] ="100">
+                    </CellTooltip>
 
-<IconButton  [IsSmall]="true" [style.float]="isRTL ? 'left' : 'right'" [Name]="'Edit'"
-(click)="OpenInterestTransactionNote(rowData)"></IconButton> 
-          <img *ngIf="rowData.Id"
-          style="padding-left: 1px;"
-          src="./Images/Notes_notexists.png" />
+          <IconButton [IsSmall]="true" [style.float]="isRTL ? 'left' : 'right'" [Name]="'Edit'"
+               (click)="OpenInterestTransactionNote(rowData)">
+          </IconButton>
           
-          <CellTooltip *ngIf="!rowData.Id"
-               [IconPath]="'./Images/Notes_exists.png'" 
-               [Head]="'APInvoiceLine.F.Notes' | TextCodeTranslationPipe" 
-               [Body]=""
-               >
-          </CellTooltip> 
+                    
+          
+     </div>
+
+<!-- [Height] = "700" [Width] ="700"  -->

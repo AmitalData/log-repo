@@ -480,6 +480,8 @@ namespace Logitude.Accounting.BL.InterestService
                                                                             where a.Tenant == Tenant  &&a.InterestReportId == ReportId && a.InterestTransaction.GLAccountId !=null && a.InterestTransaction.GLAccount.ActiveForInterest ==true   && a.InterestTransaction.IsCancelled == false
                                                                             select new InterestTransactionList()
                                                                             {
+                                                                                Id=a.InterestTransactionId,
+
                                                                                 Tenant = a.Tenant,
 
                                                                                 CurrencyId = a.InterestTransaction.CurrencyId,

@@ -1,15 +1,16 @@
-import {SessionLocator} from './../../../Infrastructure/Utilities/SessionLocator';
-import {Component, ChangeDetectorRef} from '@angular/core';
-import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
-import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
-import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
-import {InterestTransactionExtendedListService} from '../../Services/ExtendedLists/InterestTransactionExtendedListService';
-import {ObservableCollection} from '../../../Infrastructure/Utilities/ObservableCollection';
-import {JournalExtendedListService} from '../../Services/ExtendedLists/JournalExtendedListService';
-import {ARPaymentExtendedListService} from '../../../Invoice/Services/ExtendedLists/ARPaymentExtendedListService';
-import {OnInit, Output, EventEmitter, ComponentRef, QueryList} from '@angular/core';
-import {InterestTransactionPM} from '../../EntityPMs/InterestTransactionPM';
+import { SessionLocator } from './../../../Infrastructure/Utilities/SessionLocator';
+import { Component, ChangeDetectorRef } from '@angular/core';
+import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
+import { InterestTransactionExtendedListService } from '../../Services/ExtendedLists/InterestTransactionExtendedListService';
+import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
+import { JournalExtendedListService } from '../../Services/ExtendedLists/JournalExtendedListService';
+import { ARPaymentExtendedListService } from '../../../Invoice/Services/ExtendedLists/ARPaymentExtendedListService';
+import { OnInit, Output, EventEmitter, ComponentRef, QueryList } from '@angular/core';
+import { InterestTransactionPM } from '../../EntityPMs/InterestTransactionPM';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
 
@@ -41,7 +42,7 @@ export class GlAccountInterestTransactionsNotesTemplate {
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
 
         this.TenantCurrencySign = SessionLocator.TenantPM.CurrencySign;
-        if (ObjectsLocator.GlobalSetting){
+        if (ObjectsLocator.GlobalSetting) {
             this.isRTL = ObjectsLocator.GlobalSetting.LayoutDirection == "rtl";
         }
         this.InterestTransaction = new ObservableCollection([]);
@@ -61,29 +62,14 @@ export class GlAccountInterestTransactionsNotesTemplate {
         var logWindow = new LogitudeWindow();
         logWindow.Width = 450;
         logWindow.Height = 350;
-        logWindow.Title = TextCodeTranslator.Translate("InterestTransaction Note");
-        logWindow.WindowArgs = {interestTransaction: line};
+        logWindow.Title = TextCodeTranslator.Translate("InterestTransactionNote");
+        logWindow.WindowArgs = { interestTransaction: line };
         logWindow.Show('./Accounting/Components/Others/InterestTransactionNotesComponent');
         logWindow.WindowClosed.subscribe(($event: any) => {
-           // this.GetInterestTransactionNotes();
+            this.CD.detectChanges();
+            this.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         });
 
     }
-
-    // GetInterestTransactionNotes() {
-    //      if(this.EntityPM.Id){
-    //         this.myService.GetNotesByCard(this.EntityPM)
-    //             .subscribe((res:ServiceResponse) =>
-    //             {
-    //                     this.isNotesLoading = false;
-
-
-                 
-    //                      var notesList = res.Result;
-    //                     this.accountingNotesList = notesList;
-    //                 }
-    //              });
-    //      }
-    // }
-
 }

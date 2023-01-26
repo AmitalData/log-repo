@@ -11,6 +11,7 @@ import { PerformanceLogger } from '../../../Infrastructure/Utilities/Performance
 import { CustomFieldClass } from '../../../Infrastructure/DataContracts/CustomFieldClass';
 import { InterestReportLinesByDatePM } from '../../EntityPMs/InterestReportLinesByDatePM';
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
+
  
 
 @Injectable()
@@ -106,6 +107,17 @@ export class InterestTransactionExtendedListService {
         }
 
         return entityPM;
+    }
+
+    GetSingle(id: string) {
+        var serviceResponse: ServiceResponse = new ServiceResponse();
+        return this.httpClient.get(this._apiUrl + '/GetSingle?id=' + id  ,  ServiceHelper.GetHttpHeaders()).pipe(
+            map(res => {
+                serviceResponse.Result = res;
+                return serviceResponse;
+             }),
+            catchError(ServiceHelper.HandleServiceError));
+    
     }
 
     GetCheckRecentReports(interestDate: Date,  customerId: string  ) {

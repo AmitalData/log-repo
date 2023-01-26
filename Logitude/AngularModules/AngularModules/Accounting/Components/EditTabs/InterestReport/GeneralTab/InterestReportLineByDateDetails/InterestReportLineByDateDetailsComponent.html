@@ -176,6 +176,22 @@
                         </ng-template>
                     </log-column>
 
+                    <!--Notes-->
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'" [header]="InterestTransactionNotes">
+                        <ng-template let-item>
+                        <log-cell-template   #logcelltemplate>
+                                <img *ngIf="!item.Notes" src="./Images/Notes_notexists.png" style="vertical-align: middle; display: block;" />
+                                <CellTooltip class="LogitudeCellTooltip" *ngIf="item.Notes" [IconPath]="'./Images/Notes_exists.png'"
+                                [Head]="'APInvoiceLine.F.Notes' | TextCodeTranslationPipe" [Body]="item.Notes" [Height] = "735" [Width] ="100">
+                                </CellTooltip>
+            
+                                <IconButton [IsSmall]="true" [style.float]="isRTL ? 'left' : 'right'" [Name]="'Edit'"
+                                    (click)="OpenInterestTransactionNote(item)">
+                                </IconButton>
+                        </log-cell-template>
+                        </ng-template>
+                    </log-column>
+
                 </logitude-edit-grid>
 
                 <label *ngIf="!ReportIsLoading && InterestTransactions && InterestTransactions.Collection && InterestTransactions.Collection.length==0" class="CenterCenter" style="text-align:center;font-size:18px;color:gray">

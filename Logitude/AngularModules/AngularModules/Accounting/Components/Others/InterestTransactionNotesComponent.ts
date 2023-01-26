@@ -7,7 +7,6 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { InterestTransactionExtendedListService } from '../../Services/ExtendedLists/InterestTransactionExtendedListService';
 
-
 @Component({
     selector: 'InterestTransactionNotesComponent',
     moduleId: './Accounting/Components/Others/',
@@ -30,7 +29,7 @@ export class InterestTransactionNotesComponent extends BaseComponent {
     public interestTransactionPM: InterestTransactionPM;
 
 
-    constructor(private entityResourceService: EntityResourceService) {
+    constructor(private entityResourceService: EntityResourceService,private CD: ChangeDetectorRef) {
         super();
         if (ObjectsLocator.GlobalSetting) {
             this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -43,6 +42,7 @@ export class InterestTransactionNotesComponent extends BaseComponent {
         var loggedContact = SessionLocator.LoggedUserPM;
         this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((res: any) => {
             this.EntityPM = args['interestTransaction'];
+            this.Notes=this.EntityPM.Notes;
             this.EntityPM.CreateDateTime = new Date();
             this.EntityPM.UpdateDateTime = new Date();
             this.EntityPM.CreatedByUserId = loggedContact.Id;
@@ -68,22 +68,11 @@ export class InterestTransactionNotesComponent extends BaseComponent {
                 this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                 this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
             }
+            this.CD.detectChanges();
             this.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = false;
+            
         });
-
-        // this.CurrentSession.CurrentEditComponent.SaveChanges();
-
-        // const SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-        //     SaveCompletedEvent.unsubscribe();
-        //     if (isSaveSuccess) {
-
-        //         this.CurrentSession.StopBusyIndicator();
-
-        //     }
-        // });
-
-        // this.CurrentSession.CloseCurrentWindow();
-
     }
 
     private SetInterestTransactionNotes() {
