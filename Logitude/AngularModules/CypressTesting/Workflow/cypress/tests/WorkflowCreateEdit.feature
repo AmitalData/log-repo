@@ -13,6 +13,9 @@ Feature: Workflow Create and Edit
         Then the flow should create successfully
 
     Scenario: update a flow
+        Given edit start configration with following details
+            | Object           | Shipment            |
+            | ConfigureTrigger | A record is updated |
         Given edit workflow general inforamtion with following details
             | Name        | random        |
             | Description | test workflow |
