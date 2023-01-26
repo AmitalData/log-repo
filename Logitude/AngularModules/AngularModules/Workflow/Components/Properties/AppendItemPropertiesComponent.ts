@@ -45,8 +45,6 @@ export class AppendItemPropertiesComponent extends BaseComponent {
     public ExcludedEntities: string[] = ["Container"];
     public SetRecordFieldsTypes = SetRecordFieldsTypes;
     public CurrentSession = SessionLocator.SelectedSession;
-    public UseRecordRadioButtonText: string = null;
-    public SetValuesRadioButtonText: string = null;
     public SetValuesTitleText: string = null;
 
     SetWindowArgs(args: any) {
@@ -170,6 +168,8 @@ export class AppendItemPropertiesComponent extends BaseComponent {
         this.Data["collection"] = collectionName;
         this.Data["entity"] = collectionEntity;
 
+        this.Data["collectionUsedFrom"] = collectionItem && collectionItem.data && collectionItem.data["nodeId"] ? collectionItem.data["nodeId"] : null;
+
         if (isCollectionChanged) {
             this.resetFields();
             this.updateSetRecordFieldsType(SetRecordFieldsTypes.UseRecord);
@@ -211,9 +211,12 @@ export class AppendItemPropertiesComponent extends BaseComponent {
         this.setUIProperties();
     }
 
-    updateVariable(variable: string) {
+    updateVariable(recordItem: TreeSelectItem) {
+        let variable = recordItem ? recordItem.key : null;
         this.Data["variable"] = variable;
         this.Variable = variable;
+
+        this.Data["variableUsedFrom"] = recordItem && recordItem.data && recordItem.data["nodeId"] ? recordItem.data["nodeId"] : null;
 
         this.setUIProperties();
     }
@@ -270,16 +273,12 @@ export class AppendItemPropertiesComponent extends BaseComponent {
     setEntity() {
         this.EntityId = ObjectTables.getIdByName(this.Entity);
         this.DeclareType = null;
-        this.UseRecordRadioButtonText = "Use all fields values from a record"
-        this.SetValuesRadioButtonText = "Set fields values"
         this.SetValuesTitleText = "Set Fields Values of " + this.getEntityLabel()
     }
 
     setDeclareType() {
         this.DeclareType = this.Entity
         this.EntityId = null;
-        this.UseRecordRadioButtonText = "Use value from variable"
-        this.SetValuesRadioButtonText = "Set value"
         this.SetValuesTitleText = "Set value to append"
     }
 

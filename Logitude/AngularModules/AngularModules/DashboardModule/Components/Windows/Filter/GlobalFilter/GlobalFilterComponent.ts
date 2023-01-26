@@ -11,7 +11,7 @@ import { GlobalFilterItem } from './GlobalFilterItem';
     styleUrls: ['./GlobalFilter.scss']
 })
 
-export class GlobalFilterComponent implements OnInit, AfterViewInit {
+export class GlobalFilterComponent implements OnInit {
     @Input() public Dashboard: DashboardPM;
     @Output() ApplyFilters = new EventEmitter<any[]>();
     @Output() ApplyFiltersCountChange = new EventEmitter<number>();
@@ -23,19 +23,17 @@ export class GlobalFilterComponent implements OnInit, AfterViewInit {
     private FilterValueExistItems: string[] = [];
     private LastApplied: string[] = [];
     public FilterHasChanges: boolean = false;
-    public HasKpiChart: boolean = false;
 
     constructor() {
         this.DashboardGlobalPresetFilterListService = new DashboardGlobalPresetFilterListService();
     }
 
     ngOnInit() {
-        this.GetPresetFitlers();        
+        this.GetPresetFitlers();
     }
 
-    ngAfterViewInit() {
-        if(this.Dashboard)
-            this.HasKpiChart = this.Dashboard.Widgets?.find(x => x.TypeCode == "kpi") != null;
+    public get HasKpiChart(): boolean {
+        return this.Dashboard?.Widgets?.find(x => x.TypeCode == "kpi") != null;
     }
 
     GetPresetFitlers() {
@@ -103,7 +101,7 @@ export class GlobalFilterComponent implements OnInit, AfterViewInit {
         filters.forEach(element => {
             this.SetPresetFilterOperator(element);
             if (this.FilterValueEmpty(element)) return;
-            filterItems.push( Object.assign({}, element));
+            filterItems.push(Object.assign({}, element));
         });
         return filterItems;
     }

@@ -288,26 +288,21 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     }
 
     validateDeleteNode(deletedNode: any) {
-        let deletedNodeCode = this.getNodeCode(deletedNode);
-        if (deletedNodeCode === null) {
-            return [];
-        }
         if (deletedNode) {
             let flowObject = this.getCurrentFlowObject();
             if (flowObject) {
                 let usedInNodes = [];
                 FlowReader.getNodes(flowObject).filter((n: any) => n.id !== deletedNode.id).forEach((node: any) => {
-                    let clonedNode = JSON.parse(JSON.stringify(node)) || {};
-                    let clonedNodeData = clonedNode.data || {};
-                    clonedNodeData["name"] = null;
-                    clonedNodeData["label"] = null;
-                    let clonedNodeDataJson = JSON.stringify(clonedNodeData) || "";
-                    let dataStringValues = clonedNodeDataJson.match(/\:"(.*?)\"/g);
-                    if (dataStringValues && dataStringValues.length > 0) {
-                        let values = dataStringValues.map(v => v ? v.replace(":\"", "").replace("\"", "") : null).filter(v => v !== null);
-                        if (values.some(value => value.toString().includes(deletedNodeCode)) || (deletedNodeCode.toString().startsWith("declaredrecordvariables_") && clonedNodeDataJson.toString().includes("\"record\":\"" + deletedNodeCode.split("_")[1] + "\""))) {
-                            let usedNode = this.getNodeDisplayName(node);
-                            usedInNodes.push(usedNode);
+                    if (node && node.data) {
+                        let clonedNodeData = JSON.parse(JSON.stringify(node.data));
+                        let clonedNodeDataJson = JSON.stringify(clonedNodeData);
+                        let usedFromDataValues = clonedNodeDataJson.match(/UsedFrom\":\"(.*?)\"/g);
+                        if (usedFromDataValues && usedFromDataValues.length > 0) {
+                            let usedFromElements = usedFromDataValues.map(v => v ? v.replace("UsedFrom\":\"", "").replace("\"", "") : null).filter(v => v !== null);
+                            if (usedFromElements.some(elementId => elementId === deletedNode.id)) {
+                                let usedNode = this.getNodeDisplayName(node);
+                                usedInNodes.push(usedNode);
+                            }
                         }
                     }
                 });

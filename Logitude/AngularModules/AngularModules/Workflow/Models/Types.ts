@@ -29,7 +29,8 @@ export type FlowVariablesTreeListProperties = {
 
 export type ExpressionVariable = {
     code: string,
-    type: string
+    type: string,
+    variableUsedFrom: string | null
 };
 
 export type ExpressionValue = {

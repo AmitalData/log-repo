@@ -106,6 +106,12 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
                     let objectField = this.getObjectField(field);
                     this.updateSetValueFieldByObjectField(objectField, setValueIndex, field);
                 }
+
+                if (fieldItem && fieldItem.data && fieldItem.data["nodeId"]) {
+                    this.SetValues[setValueIndex].fieldUsedFrom = fieldItem.data["nodeId"];
+                } else {
+                    this.SetValues[setValueIndex].fieldUsedFrom = null;
+                }
             } else {
                 this.resetSetValueField(setValueIndex);
             }
@@ -144,6 +150,8 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
         this.SetValues[setValueIndex].operator = SetValueOperators.Equals;
         this.SetValues[setValueIndex].value = null;
         this.SetValues[setValueIndex].fieldChangedToggle = !this.SetValues[setValueIndex].fieldChangedToggle;
+        this.SetValues[setValueIndex].fieldUsedFrom = null;
+        this.SetValues[setValueIndex].valueUsedFrom = null;
     }
 
     updateSetValueOperator(operatorCode: string, setValueIndex: number) {
@@ -156,9 +164,12 @@ export class SetValuesComponent extends BaseComponent implements OnInit, OnChang
         }
     }
 
-    updateSetValue(value: string, setValueIndex: number) {
+    updateSetValue(value: string, setValueIndex: number, nodeId: string | null = null) {
         if (value !== this.SetValues[setValueIndex]?.value) {
             this.SetValues[setValueIndex].value = value;
+
+            this.SetValues[setValueIndex].valueUsedFrom = nodeId;
+
             this.setValuesChanged();
         }
     }

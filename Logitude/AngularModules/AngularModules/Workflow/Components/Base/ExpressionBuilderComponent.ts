@@ -392,7 +392,8 @@ export class ExpressionBuilderComponent extends BaseComponent {
                             this.ExpressionValue.variables.push(
                                 {
                                     code: variableCode,
-                                    type: ((variableItem.data && variableItem.data.type) ? variableItem.data.type : null)
+                                    type: ((variableItem.data && variableItem.data.type) ? variableItem.data.type : null),
+                                    variableUsedFrom: ((variableItem.data && variableItem.data.nodeId) ? variableItem.data.nodeId : null)
                                 }
                             );
                         }
