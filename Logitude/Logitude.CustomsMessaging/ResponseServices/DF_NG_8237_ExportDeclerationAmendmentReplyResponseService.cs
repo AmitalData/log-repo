@@ -337,8 +337,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                         _MyDeclarationPM.IsClose = true;
                                                         SendDeclarationPrint(requestParams);
                                                     }
+                                                    MyResponseData.IsExportCloseApprove = true;
                                                 }
-                                            else if (_MyDeclarationPM.IsExportClosed == true)
+                                                else if (_MyDeclarationPM.IsExportClosed == true)
                                                 {
                                                     SendDeclarationPrint(requestParams);
                                                 }
@@ -664,7 +665,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                     myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
                 }
-                if (customResponse.Response.Declaration != null  && (_MyDeclarationPM.AmendmentStatus == "1" || _MyDeclarationPM.AmendmentStatus == "2"))
+                if (customResponse.Response.Declaration != null  && 
+                    (((_MyDeclarationPM.AmendmentStatus == "1" || _MyDeclarationPM.AmendmentStatus == "2") && !isExportClose) 
+                    || MyResponseData.IsExportCloseApprove))
                 {
                     DF_NG_2757_MSG10004_ExportDeclarationResponseService dF_NG_2757_MSG10004_ExportDeclarationResponseService = new DF_NG_2757_MSG10004_ExportDeclarationResponseService();
 
