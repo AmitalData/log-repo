@@ -103,7 +103,7 @@ namespace CommunicationWorkerRole
             isDocumentDeleted = bool.Parse(queueResponse.MessageValues["IsDocumentDeleted"].ToString());
             recivedDate = DateTime.Parse(queueResponse.MessageValues["RecivedDate"].ToString());
             isApprovalRequired = queueResponse.MessageValues != null && queueResponse.MessageValues.Keys.Contains("IsApprovalRequired") ? bool.Parse(queueResponse.MessageValues["IsApprovalRequired"].ToString()) : false;
-            isUploadShipmentDocs = queueResponse.MessageValues != null && queueResponse.MessageValues.Keys.Contains("IsUploadShipmentDocs") ? bool.Parse(queueResponse.MessageValues["IsUploadShipmentDocs"].ToString()) : false;
+            isUploadShipmentDocs = queueResponse.MessageValues != null && queueResponse.MessageValues.Keys.Contains("IsUploadShipmentDocs") ? bool.Parse(queueResponse.MessageValues["IsUploadShipmentDocs"].ToString()) : true;
         }
 
         private void InitializeServices()
