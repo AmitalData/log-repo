@@ -94,37 +94,37 @@
 			"DisplayText": ""
 		},
 		{
-			"TextCode": "Tab.G.GeneralSearch",
+			"TextCode": "Menu.G.GeneralSearch",
 			"DefaultText": "Search by Invoice No/ Shipment No",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
 		{
-			"TextCode": "Tab.G.Reports",
+			"TextCode": "Menu.G.Reports",
 			"DefaultText": "Reports",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
 		{
-			"TextCode": "Tab.G.Quotes",
+			"TextCode": "Menu.G.Quotes",
 			"DefaultText": "Quotes",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
 		{
-			"TextCode": "Tab.G.Shipment",
+			"TextCode": "Menu.G.Shipment",
 			"DefaultText": "Shipments",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
 		{
-			"TextCode": "Tab.G.Invoice",
+			"TextCode": "Menu.G.Invoice",
 			"DefaultText": "Invoicing",
 			"FieldCode": "",
 			"DisplayText": ""
 		},
 		{
-			"TextCode": "Tab.G.Dashboard",
+			"TextCode": "Menu.G.Dashboard",
 			"DefaultText": "Dashboard",
 			"FieldCode": "",
 			"DisplayText": ""
@@ -136,7 +136,7 @@
 			"DisplayText": ""
 		},
 		{
-			"TextCode": "Tab.G.HelpCenter",
+			"TextCode": "Menu.G.HelpCenter",
 			"DefaultText": "Help center",
 			"FieldCode": "",
 			"DisplayText": ""
