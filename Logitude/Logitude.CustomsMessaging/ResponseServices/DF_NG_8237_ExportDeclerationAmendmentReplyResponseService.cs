@@ -565,6 +565,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     _MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status?[0]?.NameCode?.Value;
                     _MyDeclarationPM.PaymentDate = _MyDeclarationPMOrg.PaymentDate;
+                    _MyDeclarationPM.IsSubmitDeclaration = _MyDeclarationPMOrg.IsSubmitDeclaration;
                     _MyDeclarationPM.HatraDate = _MyDeclarationPMOrg.HatraDate;
                     if (fromMehes)
                     {

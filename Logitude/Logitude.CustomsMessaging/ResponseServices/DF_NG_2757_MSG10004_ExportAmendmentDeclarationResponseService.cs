@@ -136,7 +136,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         DeclarationTypeCode = GetValueCodeType(declaration.TypeCode),
                         Consignments = GetConsignments(declaration, tenant, null, context, declarationOrg?.Consignments),
                     };
-                    declarationPM.IsSubmitDeclaration = declarationOrg.IsSubmitDeclaration;
+                   // declarationPM.IsSubmitDeclaration = declarationOrg.IsSubmitDeclaration;
                     declarationPM.IsExportClosed = declarationOrg.IsExportClosed;
                     declarationPM.ExportDeclarationOfficeCode = GetValueIDType(declaration.ExportDeclarationOfficeID);
                     declarationPM.ExportFile = declarationOrg.ExportFile;
@@ -1053,9 +1053,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     supplierInvoiceItemPM.ChangeSetOp = ChangeSetOperation.Insert;
                     supplierInvoiceItemPM.DeclarationId = declarationId;
                     supplierInvoiceItemPM.SequenceNumeric = (int)governmentAgencyGoodsItem.SequenceNumeric;
-                    supplierInvoiceItemPM.OriginCountryCode = GetValueCodeType(governmentAgencyGoodsItem.Origin.CountryCode);
+                    
+                    if(governmentAgencyGoodsItem.Origin != null)
+                        supplierInvoiceItemPM.OriginCountryCode = GetValueCodeType(governmentAgencyGoodsItem.Origin.CountryCode);
+                    
                     supplierInvoiceItemPM.ClaimReasonCode = GetValueCodeType(governmentAgencyGoodsItem.DMExtensions.ClaimReasonCode);
                     supplierInvoiceItemPM.Tenant = tenant;
+                    
                     if (governmentAgencyGoodsItem.Commodity.Classification != null || governmentAgencyGoodsItem.Commodity.Classification.Count() > 0)
                     {
                         var classification = governmentAgencyGoodsItem.Commodity.Classification.FirstOrDefault(x => x != null && GetValueCodeType(x.IdentificationTypeCode) == "SSO");
