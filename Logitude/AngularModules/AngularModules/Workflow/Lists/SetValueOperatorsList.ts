@@ -1,6 +1,6 @@
 import { FieldTypes } from "Workflow/Constants/FieldTypes";
 import { SetValueOperators } from "Workflow/Constants/SetValueOperators";
-import { ListItem } from "./ListItem";
+import { ListItem } from "Workflow/Models/ListItem";
 
 export class SetValueOperatorsList {
     private SetValueType: string;

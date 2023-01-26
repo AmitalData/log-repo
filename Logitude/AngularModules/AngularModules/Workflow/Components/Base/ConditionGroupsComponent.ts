@@ -6,14 +6,14 @@ import { BooleanValues } from "Workflow/Constants/BooleanValues";
 import { ConditionOperators } from "Workflow/Constants/ConditionOperators";
 import { DateTimeValueExpressions } from "Workflow/Constants/DateTimeValueExpressions";
 import { FieldTypes } from "Workflow/Constants/FieldTypes";
-import { BooleanValuesList } from "Workflow/Models/BooleanValuesList";
+import { BooleanValuesList } from "Workflow/Lists/BooleanValuesList";
 import { Condition } from "Workflow/Models/Condition";
-import { ConditionOperationsList } from "Workflow/Models/ConditionOperationsList";
-import { ConditionOperatorsListsDictionary } from "Workflow/Models/ConditionOperatorsListsDictionary";
-import { DateTimeValueExpressionsList } from "Workflow/Models/DateTimeValueExpressionsList";
-import { FlowVariablesTreeList } from "Workflow/Models/FlowVariablesTreeList";
+import { ConditionOperationsList } from "Workflow/Lists/ConditionOperationsList";
+import { ConditionOperatorsListsDictionary } from "Workflow/Lists/ConditionOperatorsListsDictionary";
+import { DateTimeValueExpressionsList } from "Workflow/Lists/DateTimeValueExpressionsList";
+import { FlowVariablesTreeList } from "Workflow/TreeLists/FlowVariablesTreeList";
 import { ListItem } from "Workflow/Models/ListItem";
-import { ObjectTables } from "Workflow/Models/ObjectTables";
+import { ObjectTables } from "Workflow/Utilities/ObjectTables";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 import { ConditionDisabledPipe } from "Workflow/Pipes/ConditionDisabledPipe";
 import { GetObjectFieldPipe } from "Workflow/Pipes/GetObjectFieldPipe";
@@ -39,7 +39,6 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
     @Input() IsEntityField: boolean = false;
     @Input() IsEntityFieldValue: boolean = false;
     @Input() FlowObject: any;
-    @Input() FlowObjectFields: ObjectFieldList[];
     @Input() CurrentNodeId: string;
     @Input() EnableAdd: boolean = true;
     @Input() IsOneLevelConditions: boolean = false;
@@ -79,7 +78,7 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
                 OnlyCurrentLoopItemVariables: false,
                 IsObjectVariableSelectable: false
             };
-            this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId, props);
+            this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props);
             this.FlowVariablesTreeItems = this.FlowVariablesTreeList.Items;
         }
     }
@@ -268,7 +267,7 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
     }
 
     isNoObjectFieldVariable(field: string) {
-        return new IsNoObjectFieldVariablePipe().transform(field, this.FlowObjectFields);
+        return new IsNoObjectFieldVariablePipe().transform(field);
     }
 
     isFieldCompareOperator(operatorCode: string) {
@@ -284,6 +283,6 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
     }
 
     getObjectField(field: string) {
-        return new GetObjectFieldPipe().transform(field, this.FlowObjectFields);
+        return new GetObjectFieldPipe().transform(field);
     }
 }

@@ -1,13 +1,12 @@
 import { Component } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
-import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
-import { SingleEditableEntitiesTreeList } from "Workflow/Models/SingleEditableEntitiesTreeList";
-import { ObjectTables } from "Workflow/Models/ObjectTables";
+import { SingleEditableEntitiesTreeList } from "Workflow/TreeLists/SingleEditableEntitiesTreeList";
+import { ObjectTables } from "Workflow/Utilities/ObjectTables";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 import { SetValue } from "Workflow/Models/SetValue";
-import { DeclaredRecordsTreeList } from "Workflow/Models/DeclaredRecordsTreeList";
+import { DeclaredRecordsTreeList } from "Workflow/TreeLists/DeclaredRecordsTreeList";
 import { SetRecordFieldsTypes } from "Workflow/Constants/SetRecordFieldsTypes";
 
 @Component({
@@ -19,7 +18,6 @@ export class AppendItemPropertiesComponent extends BaseComponent {
     public DataContext: any = this;
     public FlowObject: any;
     public CurrentNodeId: string;
-    public FlowObjectFields: ObjectFieldList[];
     public SingleEditableEntitiesTreeItems: TreeSelectItem[];
     public DeclaredRecordsTreeItems: TreeSelectItem[];
     public Data: any;
@@ -42,7 +40,6 @@ export class AppendItemPropertiesComponent extends BaseComponent {
         this.Data = args.Data ? args.Data : {};
         this.FlowObject = args.FlowObject ? args.FlowObject : null;
         this.CurrentNodeId = args.CurrentNodeId ? args.CurrentNodeId : null;
-        this.FlowObjectFields = args.FlowObjectFields ? args.FlowObjectFields : [];
     }
 
     ngOnInit() {

@@ -1,4 +1,4 @@
-import { NodeType } from "./Types";
+import { NodeType } from "Workflow/Types";
 
 export class FlowReader {
 

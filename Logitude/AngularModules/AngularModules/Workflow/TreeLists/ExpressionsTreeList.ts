@@ -1,5 +1,5 @@
 import { ExpressionList } from "Workflow/EntityLists/ExpressionList";
-import { TreeSelectItem } from "./TreeSelectItem";
+import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 
 export class ExpressionsTreeList {
     private Expressions: ExpressionList[];

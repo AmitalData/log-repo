@@ -1,7 +1,7 @@
 import { GetRecordTypes } from "Workflow/Constants/GetRecordTypes";
-import { FlowReader } from "./FlowReader";
-import { Formatter } from "./Formatter";
-import { TreeSelectItem } from "./TreeSelectItem";
+import { FlowReader } from "Workflow/Utilities/FlowReader";
+import { Formatter } from "Workflow/Utilities/Formatter";
+import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 
 export class EditableRecordsTreeList {
     public Items: TreeSelectItem[] = [];

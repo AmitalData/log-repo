@@ -1,5 +1,5 @@
 import { SortDirections } from "Workflow/Constants/SortDirections";
-import { ListItem } from "./ListItem";
+import { ListItem } from "Workflow/Models/ListItem";
 
 export class SortDirectionList {
     public Items: ListItem[] = [];

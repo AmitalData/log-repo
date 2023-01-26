@@ -1,4 +1,4 @@
-import { ExpressionValue } from "./Types";
+import { ExpressionValue } from "Workflow/Types";
 
 export class SetValue {
     public field: string;

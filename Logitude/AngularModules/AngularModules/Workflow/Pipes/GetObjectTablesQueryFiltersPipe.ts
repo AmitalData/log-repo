@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import { ApiQueryFiltersBuilder } from "Workflow/Models/ApiQueryFiltersBuilder";
+import { ApiQueryFiltersBuilder } from "Workflow/Utilities/ApiQueryFiltersBuilder";
 
 @Pipe({
     name: "GetObjectTablesQueryFiltersPipe"

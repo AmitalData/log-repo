@@ -156,7 +156,7 @@
                     </div>
                 </div>
                 <div>
-                    <textarea class="expression-editor" [ngModel]="ExpressionValue.expression | ExpressionPipe : FlowObjectFields"
+                    <textarea class="expression-editor" [ngModel]="ExpressionValue.expression | ExpressionPipe"
                         (click)="updateCursorPointer($event?.target?.selectionStart, $event?.target?.selectionEnd)"
                         (input)="updateExpressionValue($event.target.value)"
                         (keyup)="updateCursorPointerFromEvent($event)" autocorrect="off" autocapitalize="off"

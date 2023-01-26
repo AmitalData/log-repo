@@ -1,5 +1,5 @@
 import { DateTimeValueExpressions } from "Workflow/Constants/DateTimeValueExpressions";
-import { ListItem } from "./ListItem";
+import { ListItem } from "Workflow/Models/ListItem";
 
 export class DateTimeValueExpressionsList {
     public Items: ListItem[] = [];

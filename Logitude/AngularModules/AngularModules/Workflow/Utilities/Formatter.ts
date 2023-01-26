@@ -11,17 +11,6 @@ export class Formatter {
         return null;
     }
 
-    static getEntity(entity: string) {
-        if (entity) {
-            if (entity.indexOf(".") !== -1) {
-                let entities = entity.split(".");
-                return entities[entities.length - 1];
-            }
-            return entity;
-        }
-        return null;
-    }
-
     static getCodeFromName(name: string, splitter: string = "_") {
         if (name) {
             return name.replace(/\ /gi, "").replace(new RegExp(splitter, "gi"), "").toLowerCase();

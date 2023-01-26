@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
 import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
-import { ObjectTablePM } from "Infrastructure/EntityPMs/ObjectTablePM";
+import { ObjectTableList } from "Infrastructure/EntityLists/ObjectTableList";
 import { FieldTypes } from "Workflow/Constants/FieldTypes";
-import { BooleanValuesList } from "Workflow/Models/BooleanValuesList";
+import { BooleanValuesList } from "Workflow/Lists/BooleanValuesList";
 import { ListItem } from "Workflow/Models/ListItem";
-import { ObjectTables } from "Workflow/Models/ObjectTables";
+import { ObjectTables } from "Workflow/Utilities/ObjectTables";
 
 @Component({
     selector: "FieldValue",
@@ -24,8 +24,8 @@ export class FieldValueComponent extends BaseComponent implements OnInit {
     @Output() ValueChanged = new EventEmitter<string>();
 
     public DataContext: any = this;
-    public LookupTable: ObjectTablePM;
-    public PickListTable: ObjectTablePM;
+    public LookupTable: ObjectTableList;
+    public PickListTable: ObjectTableList;
     public DateTimeCurrentValue: Date;
 
     public BooleanValuesItems: ListItem[] = new BooleanValuesList().Items;

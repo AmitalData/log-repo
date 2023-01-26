@@ -2,17 +2,21 @@ import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
 
 export class ApiQueryFiltersBuilder {
 
-    static getObjectTablesApiQueryFilters(name: string | null, getAll: boolean = false) {
+    static getObjectTablesApiQueryFilters(name: string | null, getAll: boolean = false, isCustom: boolean | null = null) {
         let apiQueryFilters = new ApiQueryFilters(getAll);
 
         if (name) {
             apiQueryFilters.addAdditionalFilter("Name", name, null, null, this.getOperator(name), false, false, false, "Text");
         }
 
+        if (isCustom !== null) {
+            apiQueryFilters.addAdditionalFilter("IsCustom", isCustom, null, null, "Equals", false, false, false, "Boolean");
+        }
+
         return apiQueryFilters;
     }
 
-    static getObjectFieldsApiQueryFilters(objectTableId: string | null, dataTypeCode: string | null, lookupTableId: string | null, getAll: boolean = false) {
+    static getObjectFieldsApiQueryFilters(objectTableId: string | null, dataTypeCode: string | null, lookupTableId: string | null, getAll: boolean = false, isCustom: boolean | null = null) {
         let apiQueryFilters = new ApiQueryFilters(getAll);
 
         if (objectTableId) {
@@ -25,6 +29,10 @@ export class ApiQueryFiltersBuilder {
 
         if (lookupTableId) {
             apiQueryFilters.addAdditionalFilter("LookUpTableId", lookupTableId, null, null, this.getOperator(lookupTableId), false, false, false, "Text");
+        }
+
+        if (isCustom !== null) {
+            apiQueryFilters.addAdditionalFilter("IsCustom", isCustom, null, null, "Equals", false, false, false, "Boolean");
         }
 
         apiQueryFilters.addAdditionalFilter("IncludeMetaDataFields", true, null, null, "Equals", true, false, false, "Boolean");
@@ -46,7 +54,7 @@ export class ApiQueryFiltersBuilder {
         return apiQueryFilters;
     }
 
-    
+
     static getWorkflowInstancesByVersionApiQueryFilters(idsList: string[], businessKey: string | null, getAll: boolean = false) {
         let apiQueryFilters = new ApiQueryFilters(getAll);
 

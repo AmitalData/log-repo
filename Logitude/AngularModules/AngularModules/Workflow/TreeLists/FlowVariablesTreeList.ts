@@ -1,15 +1,15 @@
 import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { FieldTypes } from "Workflow/Constants/FieldTypes";
 import { GetRecordTypes } from "Workflow/Constants/GetRecordTypes";
-import { FlowReader } from "./FlowReader";
-import { Formatter } from "./Formatter";
-import { ObjectTables } from "./ObjectTables";
-import { ReturnedField } from "./ReturnedField";
-import { TreeSelectItem } from "./TreeSelectItem";
-import { FlowVariablesTreeListProperties } from "./Types";
+import { FlowReader } from "Workflow/Utilities/FlowReader";
+import { Formatter } from "Workflow/Utilities/Formatter";
+import { ObjectFields } from "Workflow/Utilities/ObjectFields";
+import { ObjectTables } from "Workflow/Utilities/ObjectTables";
+import { ReturnedField } from "Workflow/Models/ReturnedField";
+import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
+import { FlowVariablesTreeListProperties } from "Workflow/Types";
 
 export class FlowVariablesTreeList {
-    private FlowObjectFields: ObjectFieldList[];
     private FlowObject: any;
     private CurrentNodeId: string;
     private FlowVariablesTreeListProperties: FlowVariablesTreeListProperties;
@@ -23,8 +23,8 @@ export class FlowVariablesTreeList {
     public Items: TreeSelectItem[] = [];
     public ItemsList: TreeSelectItem[] = [];
 
-    constructor(flowObjectFields: ObjectFieldList[], flowObject: any, currentNodeId: string, flowVariablesTreeListProperties: FlowVariablesTreeListProperties) {
-        this.initialize(flowObjectFields, flowObject, currentNodeId, flowVariablesTreeListProperties);
+    constructor(flowObject: any, currentNodeId: string, flowVariablesTreeListProperties: FlowVariablesTreeListProperties) {
+        this.initialize(flowObject, currentNodeId, flowVariablesTreeListProperties);
         this.initializeTreeItems();
     }
 
@@ -130,16 +130,15 @@ export class FlowVariablesTreeList {
 
     private compareItemDefaultType(item: TreeSelectItem, compareWithType: string) {
         let fieldItemType = item.data["type"];
-        let fieldItemTypeToCompare = Formatter.getEntity(fieldItemType);
-        let compareWithTypeToCompare = Formatter.getEntity(compareWithType);
+        let fieldItemTypeToCompare = fieldItemType;//Formatter.getEntity(fieldItemType);
+        let compareWithTypeToCompare = compareWithType;//Formatter.getEntity(compareWithType);
         if (fieldItemType !== undefined && (fieldItemType === null || fieldItemTypeToCompare !== compareWithTypeToCompare)) {
             return false;
         }
         return true;
     }
 
-    private initialize(flowObjectFields: ObjectFieldList[], flowObject: any, currentNodeId: string, flowVariablesTreeListProperties: FlowVariablesTreeListProperties) {
-        this.FlowObjectFields = flowObjectFields ? flowObjectFields : [];
+    private initialize(flowObject: any, currentNodeId: string, flowVariablesTreeListProperties: FlowVariablesTreeListProperties) {
         this.FlowObject = flowObject;
         this.CurrentNodeId = currentNodeId;
         this.FlowVariablesTreeListProperties = flowVariablesTreeListProperties || this.getDefaultFlowVariablesTreeListProperties();
@@ -468,7 +467,7 @@ export class FlowVariablesTreeList {
 
     private getObjectFields(entity: string, returnedFieldsCodes: string[] | null) {
         let entityId = ObjectTables.getIdByName(entity);
-        let objectFields = this.FlowObjectFields.filter(o => o.ObjectTableId === entityId);
+        let objectFields = ObjectFields.getByObjectTableId(entityId);
         if (returnedFieldsCodes) {
             objectFields = objectFields.filter(o => returnedFieldsCodes.indexOf(o.FieldCode) !== -1);
         }
