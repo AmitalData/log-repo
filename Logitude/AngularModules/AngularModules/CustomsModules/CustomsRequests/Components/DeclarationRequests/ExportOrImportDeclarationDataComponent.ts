@@ -80,6 +80,10 @@ export class ExportOrImportDeclarationDataComponent
             if (this.ResponseData.InvoiceList) {
                 this.InvoiceList.InsertCollection(this.ResponseData.InvoiceList);
                 this.InvoiceList.Collection.sort((a, b) => { return (a.SequenceNumber > b.SequenceNumber) ? 1 : -1 })
+                if(this.InvoiceList.Length > 0){
+                    this.OnRowSelected( this.InvoiceList.Collection[0])
+                    
+                }
             }
 
             if (this.ResponseData.RequestList) {
