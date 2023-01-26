@@ -361,7 +361,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
         {
             if (String.IsNullOrWhiteSpace(functionalReferenceID)) return null;
 
-            var declaration = repository.GetDeclarationByFunctionalReferenceIDagentFileReferenceID(functionalReferenceID, agentFileReferenceID, tenant);
+            var declaration = repository.GetDeclarationByFunctionalReferenceIDagentFileReferenceID(functionalReferenceID, agentFileReferenceID, tenant, isExportClose);
             DeclarationPM declarationPM = new DeclarationPM();
             DeclarationDataMapping mapping = new DeclarationDataMapping();
             if (declaration == null)

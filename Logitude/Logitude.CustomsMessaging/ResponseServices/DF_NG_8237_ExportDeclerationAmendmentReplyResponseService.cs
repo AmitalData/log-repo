@@ -81,9 +81,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 functionalReferenceID = customResponse.Response.FunctionalReferenceID.Value;
             else
                 functionalReferenceID = "";
+            string agentFileReferenceID = "";
+            if (customResponse.Response?.Declaration?.DMExtensions?.AgentFileReferenceID != null)
+                agentFileReferenceID = customResponse.Response.Declaration.DMExtensions.AgentFileReferenceID.Value.ToString();
+            else
+                agentFileReferenceID = "";
+
             if (!isExportClose)
             {
-                isExportCloseFromMehes = myDeclarationQueryService.GetDeclarationByfunctionalReferenceID(functionalReferenceID, requestParams.Tenant, true) != null;
+                isExportCloseFromMehes = myDeclarationQueryService.GetDeclarationByfunctionalReferenceID(functionalReferenceID, agentFileReferenceID, requestParams.Tenant, true) != null;
                 var status = customResponse.Response.AdditionalInformation.FirstOrDefault(x => x.Content != null && x.StatementTypeCode.Value == "32").Content.Value;
                 if (isExportCloseFromMehes && status == "4")
                     isExportClose = true;
@@ -91,14 +97,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (!isExportClose)
             {
-
-                string agentFileReferenceID = "";
-                if (customResponse.Response?.Declaration?.DMExtensions?.AgentFileReferenceID != null)
-                    agentFileReferenceID = customResponse.Response.Declaration.DMExtensions.AgentFileReferenceID.Value.ToString();
-                else
-                    agentFileReferenceID = "";
-
-
                 var declaration = myDeclarationQueryService.GetDeclarationByfunctionalReferenceID(functionalReferenceID, agentFileReferenceID, requestParams.Tenant);
 
                 _MyDeclarationPM = declaration;
@@ -139,16 +137,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             else
             {
-                string functionalReferenceID = "";
-                if (customResponse.Response.FunctionalReferenceID != null)
-                    functionalReferenceID = customResponse.Response.FunctionalReferenceID.Value;
-                else
-                    functionalReferenceID = "";
-                string agentFileReferenceID = "";
-                if (customResponse.Response?.Declaration?.DMExtensions?.AgentFileReferenceID != null)
-                    agentFileReferenceID = customResponse.Response.Declaration.DMExtensions.AgentFileReferenceID.Value.ToString();
-                else
-                    agentFileReferenceID = "";
+                
+                
 
                 var declaration = myDeclarationQueryService.GetDeclarationByfunctionalReferenceID(functionalReferenceID, agentFileReferenceID,requestParams.Tenant, true);
 
