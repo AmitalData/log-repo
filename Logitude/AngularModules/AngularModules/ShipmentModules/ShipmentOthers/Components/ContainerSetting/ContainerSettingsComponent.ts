@@ -135,13 +135,13 @@ export class ContainerSettingsComponent extends BaseComponent implements OnInit 
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
-            this.SaveTenant();
+            this.SubmitSave();
         }
     }
 
-    SaveTenant() {
+    SubmitSave() {
         this.EntityPM.Tenant = SessionLocator.Tenant;
-        this.CurrentSession.StartBusyIndicatorSaving;
+        this.CurrentSession.StartBusyIndicatorSaving();
         if (this.IsNew) this.InsertEntity();
         else this.UpdateEntity()
     }
@@ -160,11 +160,41 @@ export class ContainerSettingsComponent extends BaseComponent implements OnInit 
 
     private HandleSaveResponse(myResponse: ServiceResponse) {
         if (!myResponse) return;
-        if (!myResponse.HasError) this.CurrentSession.CloseCurrentWindowEmit("ok");
-        else {
-            this.ValidationErrorsList = myResponse.ErrorsArray;
+        if (!myResponse.HasError) return this.SaveShippingLines();
+        this.ValidationErrorsList = myResponse.ErrorsArray;
+        this.CurrentSession.StopBusyIndicator();
+    }
+
+    SaveShippingLines() {
+        var changedShippingLines: ShippingLinePM[] = [];
+        this.BuildChangedShippingLines(changedShippingLines);
+
+        if (changedShippingLines.length == 0) {
             this.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.CloseCurrentWindow();
+            return;
         }
+
+        this.ShippingLineExtendedPMService.Update(changedShippingLines).subscribe((response: ServiceResponse) => {
+            this.CurrentSession.StopBusyIndicator();
+            if (response.HasError) this.ValidationErrorsList = response.ErrorsArray;
+            else this.CurrentSession.CloseCurrentWindow();
+        });
+    }
+
+    private BuildChangedShippingLines(savedList: ShippingLinePM[]) {
+        this.ShippingLines.forEach((item) => {
+            if (SessionLocator.Tenant == 0) {
+                if (item.EntityZero.IsDirty) {
+                    savedList.push(item.EntityZero);
+                }
+            }
+            else {
+                if (item.Entity.IsDirty) {
+                    savedList.push(item.Entity);
+                }
+            }
+        });
     }
 
     private selectedShipmentATADateItem: CodeNameClass;

@@ -57,7 +57,7 @@
                 <tr style="height: 1px;">
                     <td>
                         <table>
-                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ShippingLines">
+                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ItemSource">
                                 <td>
                                     <table>
                                         <tr style="height:25px;">
@@ -70,7 +70,9 @@
                                                 {{item.SCACCode}}
                                             </td>
 
-                                            <td class="GridViewCell rmcll" [ngStyle]="!IsVisibleForTenantZero && {'width': '260px','min-width': '260px','max-width': '260px'}">
+                                            <td class="GridViewCell"
+                                                style="width: 100%; min-width: 100%;max-width: 100%;"
+                                                [ngStyle]="!IsVisibleForTenantZero && {'width': '260px','min-width': '260px','max-width': '260px'}">
                                                 {{item.Name}}
                                             </td>
 
@@ -91,7 +93,8 @@
                                                 <div class="CenterCenter" style="width: 16px;">
                                                     <CheckBox [IsEnabled]="item.IsSupportsContainerTrackingEnabled"
                                                         [IsChecked]="item.IsSupportsContainerTracking"
-                                                        (Checked)="item.IsSupportsContainerTracking = $event"></CheckBox>
+                                                        (Checked)="item.IsSupportsContainerTracking = $event">
+                                                    </CheckBox>
                                                 </div>
                                             </td>
 
