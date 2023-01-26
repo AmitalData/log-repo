@@ -176,6 +176,7 @@
     <Compile Include="EntityQueryServices\TeamQueryService.cs" />
     <Compile Include="EntityUpdateServices\BatchTaskExecutionUpdateService.cs" />
     <Compile Include="EntityUpdateServices\BIReportFolderUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\ContainerSettingUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\AuditLogUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\BIFoldersPermissionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ContainerSettingUpdateService.Generated.cs" />
