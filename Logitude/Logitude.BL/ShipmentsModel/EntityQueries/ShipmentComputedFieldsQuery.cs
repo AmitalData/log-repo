@@ -87,6 +87,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         T1Received = a.T1Received,
                         AccountingClosedByUserId = a.AccountingClosedByUserId,
                         PackagesQuantityAndType = a.PackagesQuantityAndType,
+                        IsDocumentsNeedApprove = a.IsDocumentsNeedApprove,
                     }).FirstOrDefault();
         }
 
@@ -155,6 +156,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                                  MainCarriageETA = a.MainCarriageETA,
                                                                  MainCarriageATD = a.MainCarriageATD,
                                                                  PackagesQuantityAndType = a.PackagesQuantityAndType,
+                                                                 IsDocumentsNeedApprove = a.IsDocumentsNeedApprove,
                                                              });
             return result;
         }

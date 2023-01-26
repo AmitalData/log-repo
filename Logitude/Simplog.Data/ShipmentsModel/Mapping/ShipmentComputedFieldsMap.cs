@@ -96,7 +96,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ExpectedArrivalNoticeSent).HasColumnName("ExpectedArrivalNoticeSent");
             this.Property(t => t.ArrivalNoticeSent).HasColumnName("ArrivalNoticeSent");
             this.Property(t => t.T1Received).HasColumnName("T1Received");
-
+            this.Property(t => t.IsDocumentsNeedApprove).HasColumnName("IsDocumentsNeedApprove");
 
 
 
