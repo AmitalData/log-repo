@@ -117,6 +117,19 @@ namespace Logitude.Accounting.BL.Validators
           JournalPM myJournalPM,
           System.ComponentModel.DataAnnotations.ValidationContext accountingValidationContextServiceProvider)
         {
+#if true
+
+
+            if (myJournalPM.ChangeSetOp== Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+            {
+                if (myJournalPM.ExternalSystem=="AMITAL"  && !String.IsNullOrWhiteSpace(myJournalPM.ExternalNo))
+                {
+                    return ValidationResult.Success;
+                }
+    
+            }
+#endif
+
             decimal creditTotal = 0;
             decimal debitTotal = 0;
 
