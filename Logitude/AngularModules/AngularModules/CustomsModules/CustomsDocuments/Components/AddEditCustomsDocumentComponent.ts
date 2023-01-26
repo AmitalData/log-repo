@@ -27,8 +27,8 @@ import { ConnectedToItem } from './ConnectedToItem';
 import { ICustomsDocumentsController } from './ICustomsDocumentsController';
 import { CustomDocumentNewVersionService } from '../services/CustomDocumentNewVersion.service';
 
-@Component({ 
-    
+@Component({
+
     templateUrl: './AddEditCustomsDocumentComponent.html',
 })
 
@@ -49,7 +49,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
 
     }
     set DocumentTypeCode(value: string) {
-         if (value != this.documentTypeCode) {
+        if (value != this.documentTypeCode) {
             this.documentTypeCode = value;
             //if (value != null) {
             if (this.CustomsDocument) {
@@ -173,7 +173,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     private _CustomDocumentViewerService: CustomDocumentViewerService = new CustomDocumentViewerService();
     private customsSettingListService: CustomsSettingListService = new CustomsSettingListService;
     IsActionButtonsEnabled: boolean;
-    ClosingData:any;
+    ClosingData: any;
     WindowArgs: any;
     private readonly customDocumentNewVersionService: CustomDocumentNewVersionService = new CustomDocumentNewVersionService();
 
@@ -183,7 +183,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     }
 
     SetWindowArgs(windowArgs) {
-         this.WindowArgs = windowArgs;
+        this.WindowArgs = windowArgs;
 
         this.CustomsDocumentsTicket = windowArgs.CustomsDocumentsTicket;
 
@@ -210,7 +210,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
         this.iCustomsDocumentsController = windowArgs.iCustomsDocumentsController;
         this.IsCustomsDocumentInRequest = windowArgs.IsCustomsDocumentInRequest;
         this.EntityPM = windowArgs.EntityPM;
-        this.ClosingData=windowArgs.ClosingData;
+        this.ClosingData = windowArgs.ClosingData;
         this.CheckEditEnabled(this.IsCustomsDocumentInRequest, !this.IsDisplayOnly);
         this.SelectedIndex = 0;
         this.FillConnectedToItems();
@@ -562,20 +562,17 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                     this.IsActionButtonsEnabled = true;
                 }
                 else {
-                    if (this.CustomsDocument.DocumentStatusCode == '7')
-                    {
+                    if (this.CustomsDocument.DocumentStatusCode == '7') {
                         let objecttable: any = window.ObjectTables.filter(d => d.Name == "Customs.CustomsDocument")[0];
                         var ser = new CustomsRequestSheetExtendedPMService();
                         ser.GetGeneralRequestInProgress("2715", objecttable.Id, this.CustomsDocument.DocumentsFilingId, SessionLocator.Tenant)
                             .subscribe((rsp: any) => {
                                 var myCustomsRequestsSheet = rsp.Result;
                                 this.CurrentSession.StopBusyIndicator();
-                                if (myCustomsRequestsSheet == null || myCustomsRequestsSheet.length == 0)
-                                {
+                                if (myCustomsRequestsSheet == null || myCustomsRequestsSheet.length == 0) {
                                     this.IsActionButtonsEnabled = true;
                                 }
-                                else
-                                {
+                                else {
                                     this.IsActionButtonsEnabled = false;
                                 }
                             });
@@ -594,7 +591,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
 
     updateCustomsDocument: boolean = false;
     OkButtonClicked() {
-         this.OkMethod(false);
+        this.OkMethod(false);
     }
 
     SendButtonClicked() {
@@ -602,7 +599,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     }
 
     OkMethod(isSendToQueue: boolean) {
-            var errors = [];
+        var errors = [];
         if (this.CustomsDocument) {
             Validator.TryValidateObject(this.CustomsDocument, "Customs.CustomsDocument", errors);
             if (errors.length > 0) {
@@ -622,13 +619,13 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
             this.connectTo = this.SelectedIndex;
 
         var err = this.iCustomsDocumentsController.ValidationBeforeSave(this.CustomsDocumentsTicket, this.connectTo.toString());
-        if (!AppTool.IsNullOrEmpty( err)) {
-                 this.ValidationErrorsList = [];
+        if (!AppTool.IsNullOrEmpty(err)) {
+            this.ValidationErrorsList = [];
 
             this.ValidationErrorsList.push(err);
-                return;
-            }
-        
+            return;
+        }
+
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));
         if (this.ViewDisableMessageVisibility) {
             this.CancelButtonClicked();
@@ -692,7 +689,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                     newPointer.Child1EntityCode = null;
                     newPointer.Child2EntityCode = null;
                     newPointer.Child3EntityCode = null;
-                    newPointer.Child1EntityId =   null;
+                    newPointer.Child1EntityId = null;
                     newPointer.Child2EntityId = null;
                     newPointer.Child3EntityId = null;
                     newPointer.DocumentTypeCode = this.CustomsDocumentsTicket.DocumentTypeCode;
@@ -777,7 +774,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
         }
         else {
             this.CurrentSession.CloseCurrentWindowEmit("cancel");
-        } 
+        }
     }
 
     InsertNewTicket() {
@@ -843,7 +840,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     }
 
 
-    connectTo: number;  
+    connectTo: number;
 
     ConnectedItemSelectionChanged(index: number) {
         if (index != 0) {
@@ -857,7 +854,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
 
         }
 
-         
+
     }
 
     //if(index != 0) {
@@ -890,12 +887,12 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
 
     //}
 
-    ShowSelectionComponent(selectInvoicesOnly: boolean = false ) {
+    ShowSelectionComponent(selectInvoicesOnly: boolean = false) {
         if (!AppTool.IsNullOrEmpty(this.CustomsDocumentsTicket)) {
             this.iCustomsDocumentsController.SelectionCompleted.subscribe(s => {
                 this.SelectionCompleted(s);
             });
-            this.iCustomsDocumentsController.ShowSelectionComponent(this.CustomsDocumentsTicket, this.EntityPM, selectInvoicesOnly, this.IsEntityDisplayOnly );
+            this.iCustomsDocumentsController.ShowSelectionComponent(this.CustomsDocumentsTicket, this.EntityPM, selectInvoicesOnly, this.IsEntityDisplayOnly);
 
         }
 
@@ -956,7 +953,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
 
     private _SendCustomsDocumentAfter = false;//IT SEEMS THAT ITS OK IN THE DIST =- SOO REVERT MY CODE 
     PerformSubmitChanges() {
-        if (!this._SendCustomsDocumentAfter &&  this.CustomsDocument) {
+        if (!this._SendCustomsDocumentAfter && this.CustomsDocument) {
             this.SendCustomsDocumentMethod();
         }
         else {
@@ -974,7 +971,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                     } else {
                         this.CurrentSession.CloseCurrentWindowEmit("ok");
                     }
-                    
+
 
                 }
                 else {
@@ -1000,7 +997,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     }
 
     SubmitTicketChanges() {
-        
+
         if (this.CustomsDocumentsTicket) {
             if (this.CustomsDocumentsTicket.IsDirty) {
                 var customsDocumentsTicketPMService: CustomsDocumentsTicketPMService = new CustomsDocumentsTicketPMService();
@@ -1054,16 +1051,16 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
             customsClosedTableListService.getAll().subscribe((resp: ServiceResponse) => {
                 this.customsClosedTableList = resp.Result;
                 customDocumentTypeListService.getSingle(this.CustomsDocument.DocumentTypeCode).subscribe((docTypeRes: ServiceResponse) => {
-                     if (this.previousValueList != null) {
+                    if (this.previousValueList != null) {
                         this.customDocumentTypeMetaDataList.forEach((metaData) => {
-                            if (!AppTool.IsNullOrEmpty(this.customDocumentMetaDataValueList) && this.customDocumentMetaDataValueList.length >0) {
-                                var value: CustomsDocumentMetaDataValuePM = this.customDocumentMetaDataValueList.filter(d => d!= null &&  d.MetaDataTypeCode == metaData.MetaDataTypeCode)[0];
+                            if (!AppTool.IsNullOrEmpty(this.customDocumentMetaDataValueList) && this.customDocumentMetaDataValueList.length > 0) {
+                                var value: CustomsDocumentMetaDataValuePM = this.customDocumentMetaDataValueList.filter(d => d != null && d.MetaDataTypeCode == metaData.MetaDataTypeCode)[0];
                                 if (value == null) {
 
 
                                     _DocumentTypeMetaDataExtendedService.GetDocumentsFilingMetaDataValueByFilingIdAndCode(this.CustomsDocument.DocumentsFilingId, metaData.MetaDataTypeCode)
                                         .subscribe(myDocFilingResult => {
-                                         
+
                                             value = new CustomsDocumentMetaDataValuePM(this.CustomsDocument);
                                             value.MetaDataTypeCode = metaData.MetaDataTypeCode;
                                             value.Tenant = SessionLocator.Tenant;
@@ -1076,7 +1073,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                                                     }
                                                 }
                                             }
-                                            if (myDocFilingResult.Result && myDocFilingResult.Result.length >0) {
+                                            if (myDocFilingResult.Result && myDocFilingResult.Result.length > 0) {
                                                 if (AppTool.IsNullOrEmpty(value.MetaDataValue) && !AppTool.IsNullOrEmpty(myDocFilingResult.Result.MetaDataValue)) {
                                                     value.MetaDataValue = myDocFilingResult.Result.MetaDataValue;
                                                 }
@@ -1087,8 +1084,8 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                                         });
 
 
-                                    if (value!= null)
-                                    this.customDocumentMetaDataValueList.push(value);
+                                    if (value != null)
+                                        this.customDocumentMetaDataValueList.push(value);
                                 }
                             }
                         });
@@ -1125,15 +1122,15 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
             this.MetaDataViewModels.push(metaDataViewModel);
 
         });
-        
-        if(this.EntityPM.Direction=="E" && (this.EntityPM.transportModeId=="O"||  this.EntityPM.transportModeId=="A")&& (docType.Code=="707" || docType.Code=="419")){
-            var FinalCargoTypeCode= this.MetaDataViewModels.find(x=>x.MetaDataType.MetaDataTypeCode=="99")   
-            var FinalManifestNumber= this.MetaDataViewModels.find(x=>x.MetaDataType.MetaDataTypeCode=="100") 
-            if(AppTool.IsNullOrEmpty(FinalCargoTypeCode.MetaDataValue.MetaDataValue))FinalCargoTypeCode.MetaDataValue.MetaDataValue=this.ClosingData.FinalCargoTypeCode;
-            if(AppTool.IsNullOrEmpty(FinalManifestNumber.MetaDataValue.MetaDataValue))FinalManifestNumber.MetaDataValue.MetaDataValue=this.ClosingData.FinalManifestNumber;
+
+        if (this.EntityPM.Direction == "E" && (this.EntityPM.transportModeId == "O" || this.EntityPM.transportModeId == "A") && (docType.Code == "707" || docType.Code == "419")) {
+            var FinalCargoTypeCode = this.MetaDataViewModels.find(x => x.MetaDataType.MetaDataTypeCode == "99")
+            var FinalManifestNumber = this.MetaDataViewModels.find(x => x.MetaDataType.MetaDataTypeCode == "100")
+            if (AppTool.IsNullOrEmpty(FinalCargoTypeCode.MetaDataValue.MetaDataValue)) FinalCargoTypeCode.MetaDataValue.MetaDataValue = this.ClosingData.FinalCargoTypeCode;
+            if (AppTool.IsNullOrEmpty(FinalManifestNumber.MetaDataValue.MetaDataValue)) FinalManifestNumber.MetaDataValue.MetaDataValue = this.ClosingData.FinalManifestNumber;
 
         }
-        
+
     }
 
     GetRequiredFieldsErrors() {
@@ -1156,10 +1153,10 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
 
     ClearAllMetaDataValues() {
         this.previousValueList = [];
-        if(this.customDocumentMetaDataValueList! = null)
-        this.customDocumentMetaDataValueList.forEach((value) => {
-            this.previousValueList.push(value);
-        });
+        if (this.customDocumentMetaDataValueList! = null)
+            this.customDocumentMetaDataValueList.forEach((value) => {
+                this.previousValueList.push(value);
+            });
         this.previousValueList.forEach((value) => {
             var exists = this.CustomsDocument.CustomsDocumentMetaDataValues.filter(d => d.MetaDataTypeCode == value.MetaDataTypeCode)[0];
             if (exists) {
@@ -1248,11 +1245,14 @@ export class MetaDataViewModel extends BaseComponent {
         if (MetaDataType.ValuesTable) {
             debugger;
             var currentClosedTable: CustomsClosedTableList = this.closedTables.filter(d => d.Id == MetaDataType.ValuesTable)[0];
-            if(currentClosedTable)
-            {
-            var lookUpTable = window.ObjectTables.filter(d => d.Id === currentClosedTable.ObjectTableId)[0];
-            this.ValuesTableName = lookUpTable.Name;}
-        }
+            if (currentClosedTable) {
+                var lookUpTable = window.ObjectTables.filter(d => d.Id === currentClosedTable.ObjectTableId)[0];
+                this.ValuesTableName = lookUpTable.Name;
+            }
+            else {
+                this.MetaDataType.ValuesTable = null;
+            }
+        } 
 
 
         switch (MetaDataType.Format.toLocaleLowerCase()) {
