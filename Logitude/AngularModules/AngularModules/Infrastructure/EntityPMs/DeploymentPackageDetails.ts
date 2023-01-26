@@ -21,7 +21,6 @@ export class CustomFields {
     public ObjectTableName: string;
     public LookUpTableName: string;
     public HelpText: string;
-    public SearchFields: string;
     public CustomPickListCode: string;
     public NumberOfDigits: number;
     public DigitsAfterPoint: number;
@@ -40,7 +39,6 @@ export class CustomFields {
         this.ObjectTableName = objectField.ObjectTableName;
         this.LookUpTableName = objectField.ObjectTable_LookUpTableName;
         this.HelpText = objectField.HelpTextCodeDefaultText;
-        this.SearchFields = objectField.SearchFields;
         this.CustomPickListCode = objectField.CustomPickListCode;
 
         this.NumberOfDigits = objectField.NumberOfDigits;
