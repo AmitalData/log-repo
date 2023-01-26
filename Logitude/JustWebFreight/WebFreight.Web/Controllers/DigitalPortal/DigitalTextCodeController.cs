@@ -148,10 +148,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 email = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, cardId);
-
                 var helper = new DigitalFieldSecuritesHelper();
                 var defaultDigitalFieldSecurity = helper.GitDigitalSecuritesFeilds(objectTableId, profileCode, tenant);
-
                 return Request.CreateResponse(HttpStatusCode.OK, defaultDigitalFieldSecurity);
             }
             catch (AutenticationException ex)
@@ -249,6 +247,11 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 var defaultTextCode = textCodeQuery.GetDigitalTextCodesQuery(0, objectTableId, profileCode);
 
+                if (defaultTextCode == null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, new List<DigitalTextCodeObject>());
+                }
+
                 var defaultCodesObject = JsonConvert.DeserializeObject<List<DigitalTextCodeObject>>(defaultTextCode.Labels);
 
                 var customCodesObject = new List<DigitalTextCodeObject>();
@@ -260,6 +263,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     if (customTextCodes != null)
                     {
                         customCodesObject = JsonConvert.DeserializeObject<List<DigitalTextCodeObject>>(customTextCodes.Labels);
+                    }
+                    else
+                    {
+                        return Request.CreateResponse(HttpStatusCode.OK, new List<DigitalTextCodeObject>());
                     }
                 }
 
