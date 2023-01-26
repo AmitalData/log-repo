@@ -41,7 +41,7 @@ namespace WebFreight.Web.TopicQueues
 
                             foreach(string iKey in iKeys)
                             {
-                                CacheMaager.CacheWrapper.Remove(iKey);
+                                CacheManager.CacheWrapper.Remove(iKey);
                             }
                         }
 
