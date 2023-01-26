@@ -10,6 +10,13 @@ export class ContainerSettingList {
    
 	Id: string;
 	Tenant: number;
+	EmptyReturnClosingDays: number;
+	ShipmentATAClosingDays: number;
+	ShipmentATADateIndicator: string;
+	IsExport: boolean;
+	IsDomestic: boolean;
+	IsImport: boolean;
+	IsDrop: boolean;
 	
 }
  

@@ -24,12 +24,12 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
 		IQueryable<ContainerSettingList> query = (from a in iQueryable
                                             select new ContainerSettingList()
 											{
-                     
-					                          Id = a.Id,
-					
-					                          Tenant = a.Tenant,
-					
-		                    	            });
+
+												Id = a.Id,
+
+												Tenant = a.Tenant,
+
+											});
             return query;
 		}
 

@@ -1,4 +1,4 @@
-<table *ngIf="IsVisible">
+<table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
             <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
@@ -27,7 +27,8 @@
                                 <p style="font-size: 14px; color: #1B90CB;">{{SelectedTabCode ==
                                     'G'?'General Settings' : 'Automatic Requests'}} </p>
                                 <HelpIcon *ngIf="SelectedTabCode == 'R'" [HideHeader]="true"
-                                    [Text]="'The definitions in this section will determine which containers to automatically send requests for.'"></HelpIcon>
+                                    [Text]="'The definitions in this section will determine which containers to automatically send requests for.'">
+                                </HelpIcon>
                             </div>
 
                             <table [hidden]="SelectedTabCode != 'G'">
@@ -132,7 +133,8 @@
                                 </tr>
 
                             </table>
-                            <ContainerSettingsRequest [hidden]="SelectedTabCode != 'R'"></ContainerSettingsRequest>
+                            <ContainerSettingsRequest *ngIf="Loaded" [DataContext]="DataContext" [hidden]="SelectedTabCode != 'R'">
+                            </ContainerSettingsRequest>
                         </div>
 
                     </div>

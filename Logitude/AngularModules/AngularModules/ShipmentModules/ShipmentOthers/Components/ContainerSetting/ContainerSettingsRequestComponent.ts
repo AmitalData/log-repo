@@ -1,5 +1,5 @@
-import { Component } from "@angular/core";
-import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
+import { Component, Input } from "@angular/core";
+import { ContainerSettingsComponent } from "./ContainerSettingsComponent";
 
 @Component({
     templateUrl: './ContainerSettingsRequestComponent.html',
@@ -7,9 +7,9 @@ import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/Base
     styleUrls: ['./ContainerSettingsComponent.scss']
 })
 
-export class ContainerSettingsRequestComponent extends BaseComponent {
-    public DataContext: ContainerSettingsRequestComponent = this;
-
+export class ContainerSettingsRequestComponent {
+    @Input() DataContext!: ContainerSettingsComponent;
+    public ObjectTableName = this.DataContext?.ObjectTableName;
 
     OnSearchTextChangeEvent(searchText: string) {
         if (!searchText) searchText = "";

@@ -18,6 +18,20 @@ namespace Logitude.Infrastructure.Data.EntityLists
        public string Id  { get; set; }
        [DataMember]
        public int Tenant  { get; set; }
+       [DataMember]
+       public int? EmptyReturnClosingDays  { get; set; }
+       [DataMember]
+       public int? ShipmentATAClosingDays  { get; set; }
+       [DataMember]
+       public string ShipmentATADateIndicator  { get; set; }
+       [DataMember]
+       public bool IsExport  { get; set; }
+       [DataMember]
+       public bool IsDomestic  { get; set; }
+       [DataMember]
+       public bool IsImport  { get; set; }
+       [DataMember]
+       public bool IsDrop  { get; set; }
    }
 
 }

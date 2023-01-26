@@ -140,6 +140,7 @@
     <Compile Include="EntityQueryServices\BIFoldersPermissionQueryService.cs" />
     <Compile Include="EntityQueryServices\BIReportQueryService.cs" />
     <Compile Include="EntityQueryServices\BIReportsExecutionLogQueryService.cs" />
+    <Compile Include="EntityQueryServices\ContainerSettingQueryService.cs" />
     <Compile Include="EntityQueryServices\DigitalFieldSecurityQueryService.cs" />
     <Compile Include="EntityQueryServices\DigitalPortalScreenQueryService.cs" />
     <Compile Include="EntityQueryServices\DigitalPreDefinedComponentQueryService.cs" />

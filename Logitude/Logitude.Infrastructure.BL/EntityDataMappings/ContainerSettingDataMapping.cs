@@ -19,7 +19,7 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 
         public void CustomPMToPOCO(ContainerSettingPM entityPM, ContainerSetting entityPOCO)
         {
-            //throw new NotImplementedException();
+            entityPOCO.Id = entityPM.Id;
         }
 
         public void CustomPOCOToPM(ContainerSettingPM entityPM, ContainerSetting entityPOCO)
