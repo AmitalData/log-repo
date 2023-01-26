@@ -146,8 +146,7 @@ namespace Logitude.Customs.BL.BL
                 var updateDeclarationPending903InvalidPhoneNumberService = new UpdateDeclarationPending903InvalidPhoneNumberService(declarationPM);
                 updateDeclarationPending903InvalidPhoneNumberService.Calc(myDeclarationCourierStatusPM);
 
-                var updateDeclarationPending904ExceededGrossMassMeasureService = new UpdateDeclarationPending904ExceededGrossMassMeasureService(declarationPM);
-                updateDeclarationPending904ExceededGrossMassMeasureService.Calc(myDeclarationCourierStatusPM);
+               
 
                 return myDeclarationCourierStatusPM;
 
