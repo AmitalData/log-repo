@@ -436,6 +436,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string ExportLoadingPortCode  { get; set; }
        [DataMember]
        public string PhysicalCheckName  { get; set; }
+       [DataMember]
+       public string IntegratorName  { get; set; }
    }
 
 }
