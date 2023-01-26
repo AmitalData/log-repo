@@ -265,8 +265,10 @@ namespace Logitude.Customs.BL.CloseTables
                 TypeCode = TypeCode_In,
                 Partner = PartnerCode_ILSWS,
                 ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
-                AnalyzeQueueService= AnalyzeQueueServiceEnum.SwissPortQHAWBSpliterService,
                 Subject="ש.מ.ב  מסוויספורט",
+                AnalyzeQueueService= AnalyzeQueueServiceEnum.SwissPortQHAWBService,
+                ServerInternalDef= true,
+
 
             },
               new InterfaceDetails() // real
@@ -276,9 +278,8 @@ namespace Logitude.Customs.BL.CloseTables
                 TypeCode = TypeCode_In,
                 Partner = PartnerCode_ILSWS,
                 ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
-                AnalyzeQueueService= AnalyzeQueueServiceEnum.SwissPortQHAWBService,
+                AnalyzeQueueService= AnalyzeQueueServiceEnum.SwissPortQHAWBSpliterService,
                 Subject="ש.מ.ב מסוויספורט",
-                ServerInternalDef= true,
 
             },
              new InterfaceDetails()

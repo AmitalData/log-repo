@@ -125,7 +125,6 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
         private static CourierSWSHAWBResponse GetSWSHAWBResponse(string communicationsData)
         {
 
-            var listSWSHAWBMessage = new CourierSWSHAWBResponse();
             var myXElementSWSHAWBResponse = XElement.Parse(communicationsData);
             var mySWSHAWBResponse = new CourierSWSHAWBResponse();
             mySWSHAWBResponse.CourierCompanyVat = (string)GetXElement(myXElementSWSHAWBResponse, "CourierCompanyVat");
@@ -134,7 +133,7 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
             mySWSHAWBResponse.ErrorCode = (string)GetXElement(myXElementSWSHAWBResponse, "ErrorCode");
             mySWSHAWBResponse.ErrorDescription = (string)GetXElement(myXElementSWSHAWBResponse, "ErrorDescription");
 
-            return listSWSHAWBMessage;
+            return mySWSHAWBResponse;
         }
         //public void AnalyzeResponse(CourierWEBAPICommSettings settings, string webAPIResultString)
         //{
