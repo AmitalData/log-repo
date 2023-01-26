@@ -221,6 +221,7 @@ export class DeclarationList {
 	PhysicalCheckName: string;
 	CasualImporterCountry: string;
 	IntegratorName: string;
+
 	
 }
  

@@ -645,7 +645,18 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     myDeclarationUpsertService.UpdateTrucker();
                     var updateDeclarationPending904ExceededGrossMassMeasureService = new UpdateDeclarationPending904ExceededGrossMassMeasureService(_MyDeclarationPM);
                     updateDeclarationPending904ExceededGrossMassMeasureService.Calc(currentDeclarationCourierStatusPM);
-                    if (this.IsAutonomy)
+ 
+
+                    
+                    string defValue = GetDefault("ISRAEL", "CGO_CUST_CAS", "NON", "NON",_tenant);
+
+                       
+                        if(!string.IsNullOrEmpty(defValue) && _MyDeclarationPM.CustomerCode != defValue)
+                        {
+                            UpdateDeclarationPending("906");
+                        }
+
+                        if (this.IsAutonomy)
                     {
                         UpdateDeclarationPending("901");
                     }

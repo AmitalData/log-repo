@@ -102,6 +102,8 @@
     <None Include="DBOthers\Procedures\ReconnectObjectMetaDataProcedure.dxml" />
     <None Include="DBOthers\Views\DocumentsFilingsView.dxml" />
     <None Include="DBScripts\Post\20230125_AddCourierPendingReasons905.sxml" />
+    <None Include="DBScripts\Post\202208151232_AddCOURIERPENDINGREASONS906.sxml" />
+
     <None Include="DBScripts\Post\202208281500_UpdateLoadingOfDeclaration.sxml" />
     <None Include="DBScripts\Post\202005210123_DeleteMetadataBadRecords.sxml" />
     <None Include="DBScripts\Post\202005210124_InsertFieldDataTypes.sxml" />

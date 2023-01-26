@@ -20062,6 +20062,7 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+
   <Query
     Code="&quot;OpenCourierMaster&quot;"
     TextCode="&quot;Courier Master Open&quot;"
