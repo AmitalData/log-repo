@@ -409,7 +409,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             
             FieldChange.Add(entityPoco.IsCancelled, entityPM.IsCancelled, nameof(entityPM.IsCancelled), fieldChanges);
             entityPoco.IsCancelled = entityPM.IsCancelled;
-            
+
             FieldChange.Add(entityPoco.IsOperationalClosed, entityPM.IsOperationalClosed, nameof(entityPM.IsOperationalClosed), fieldChanges);
             entityPoco.IsOperationalClosed = entityPM.IsOperationalClosed;
             
@@ -4068,6 +4068,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             AddFieldChangedProperties(changeTrackingPM, "MainCarriageFinalDestinationATA", changeTrackingPM.MainCarriageFinalDestinationATA, pm.MainCarriageFinalDestinationATA, "DateTime?", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "CutoffDate", changeTrackingPM.CutoffDate, pm.CutoffDate, "DateTime?", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "IsCancelled", changeTrackingPM.IsCancelled, pm.IsCancelled, "bool", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "WaitingDocumentsApproved", changeTrackingPM.IsDocumentsNeedApprove, pm.IsDocumentsNeedApprove, "bool", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "FirstARInvoiceApprovalDate", changeTrackingPM.FirstARInvoiceApprovalDate, pm.FirstARInvoiceApprovalDate, "DateTime?", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "ActualFinalArrivalDate", changeTrackingPM.ActualFinalArrivalDate, pm.ActualFinalArrivalDate, "DateTime?", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "EstimatedFinalArrivalDate", changeTrackingPM.EstimatedFinalArrivalDate, pm.EstimatedFinalArrivalDate, "DateTime?", notifyPropertyChangeValuesList);
@@ -4267,6 +4268,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             shipmentPM.CustomerContactId = houseShipment.CustomerContactId;
             shipmentPM.AgentContactId = houseShipment.AgentContactId;
             shipmentPM.IsCancelled = houseShipment.IsCancelled;
+            shipmentPM.IsDocumentsNeedApprove = houseShipment.IsDocumentsNeedApprove;
             shipmentPM.FirstARInvoiceApprovalDate = houseShipment.FirstARInvoiceApprovalDate;
             shipmentPM.ActualFinalArrivalDate = houseShipment.ActualFinalArrivalDate;
             shipmentPM.EstimatedFinalArrivalDate = houseShipment.EstimatedFinalArrivalDate;

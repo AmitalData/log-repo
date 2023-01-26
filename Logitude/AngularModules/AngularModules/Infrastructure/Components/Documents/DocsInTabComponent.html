@@ -21,7 +21,18 @@
                             <div></div>
                         </td>
 
-                        <td style="width:1px">
+                        <td style="width:1px" *ngIf ="IsApprovePendingDocumentsEnabled">
+                            <table style="margin-right: 10px;">
+                                <tr class="FormFieldRow">
+                                    <td style="vertical-align:middle; text-align:center">
+                                        <CheckBox style="display: inline-block; vertical-align: middle;" [IsChecked]="ApprovePendingDocuments" (Checked)="ApprovePendingDocuments = $event"></CheckBox>
+                                        <label style="color: rgb(110, 113, 114);"> Approve Pending Documents </label>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td style="width:5px">
                             <button *ngIf="DownloadAllVisibile" class="Button" (click)="DownloadAllClick()"
                                     [disabled]="!HasDocuments">
                                 <div style="display:inline">

@@ -420,6 +420,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsDocumentsNeedApprove"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="Shipments"

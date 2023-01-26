@@ -284,6 +284,7 @@ SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumb
              HandlerUserContact.EnglishName as HandlerUserName,
              DestinationWarehouseCard.EnglishName as DestinationWarehouseName,
 						 ShipmentComputedFields.IsMissingDocuments as IsMissingDocument,
+                         ShipmentComputedFields.IsDocumentsNeedApprove as IsDocumentsNeedApprove,
 						 ShipmentComputedFields.DocumentsSearchFields as DocumentsSearchFields,
 						 dbo.Shipments.ForwarderShipmentNumber as ForwarderShipmentNumber,
 						 dbo.Shipments.CustomerShipmentNumber as CustomerShipmentNumber,
