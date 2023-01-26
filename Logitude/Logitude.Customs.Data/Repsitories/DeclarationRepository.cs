@@ -568,19 +568,29 @@ namespace Logitude.Customs.Data.Repsitories
 
 
 
-        public Declaration GetDeclarationByFunctionalReferenceIDagentFileReferenceID(string functionalReferenceID, string agentFileReferenceID, int tenant)
+        public Declaration GetDeclarationByFunctionalReferenceIDagentFileReferenceID(string functionalReferenceID, string agentFileReferenceID, int tenant, bool isExportClose = false)
         {
             //Declaration declarationParent = (from a in context.Declarations
             //                           where declarationNumber == a.DeclarationNumber
             //                           select a).FirstOrDefault();
 
+            if (isExportClose)
+            {
+                var declaration = (from a in context.Declarations
+                                   where functionalReferenceID == a.ExportCloseAmendRequestNumber && a.Tenant == tenant && a.CustomFileNo == agentFileReferenceID
+                                   select a).FirstOrDefault();
+                return declaration;
 
-            Declaration declaration = (from a in context.Declarations
-                                       where functionalReferenceID == a.AmendmentRequestNumber && a.Tenant == tenant && a.CustomFileNo == agentFileReferenceID
+            }
+            else
+            {
+                Declaration declaration = (from a in context.Declarations
+                                           where functionalReferenceID == a.AmendmentRequestNumber && a.Tenant == tenant && a.CustomFileNo == agentFileReferenceID
 
 
-                                       select a).FirstOrDefault();
-            return declaration;
+                                           select a).FirstOrDefault();
+                return declaration;
+            }
 
         }
         public List<Declaration> GetDeclarationByFunctionalReferenceID(string functionalReferenceID, int tenant, bool isExportClose = true)
