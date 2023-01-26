@@ -145,12 +145,10 @@ namespace CommunicationWorkerRole
 
         private void MarkShipmentAsApprovalRequired()
         {
-            //shipmentPM = GetShipment(documentsFilingPM.EntityId , documentsFilingPM.Tenant);
-            //if (shipmentPM == null || shipmentPM.IsRequestedDocuments) return;   // IsDocumentNeedAppove
-            //shipmentPM.IsRequestedDocuments = true; // IsDocumentNeedAppove
-            //isShipmentChange = true;
-
-
+            shipmentPM = GetShipment(documentsFilingPM.EntityId , documentsFilingPM.Tenant);
+            if (shipmentPM == null || shipmentPM.IsDocumentsNeedApprove) return;   
+            shipmentPM.IsDocumentsNeedApprove = true;
+            isShipmentChange = true;
         }
 
         private DocumentsFilingPM GetDocumentsFilingPM(string documentsFilingId, int tenant)
