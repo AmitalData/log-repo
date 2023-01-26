@@ -26,6 +26,7 @@ namespace WebFreight.Web.TopicQueues
 
         public void HandleTopicMessages()
         {
+            return;
             while (true)
             {
                 try
