@@ -4,24 +4,21 @@
                <td float-start>
                     <span class="CellSeparator"></span>
                </td>
+
+               <td style="width:20px;height:16px;padding-left:1px;">
+                    <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3"
+                         (click)="OpenInterestTransactionNote(rowData)"></IconButton>
+               </td>
+               
+               <td style="width:10px;">
+                    <div></div>
+               </td>
                <td style="width:16px;">
                     <img *ngIf="!rowData.Notes" style="vertical-align: middle; display: block;"
                          src="./Images/Notes_notexists.png" />
                     <CellTooltip *ngIf="rowData.Notes" [IconPath]="'./Images/Notes_exists.png'"
                          [Head]="'APInvoiceLine.F.Notes' | TextCodeTranslationPipe" [Body]="rowData.Notes"
-                         [Height]="750" [Width]="100"></CellTooltip>
-               </td>
-               <td style="width:5px;">
-                    <div></div>
-               </td>
-
-               <td style="width:20px;height:20px;padding-left:1px;">
-                    <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3"
-                         (click)="OpenInterestTransactionNote(rowData)"></IconButton>
-               </td>
-
-               <td>
-                    <div></div>
+                          [IsToRight]="true" [Width]="200" [Height]="425"></CellTooltip>
                </td>
           </tr>
      </table>
