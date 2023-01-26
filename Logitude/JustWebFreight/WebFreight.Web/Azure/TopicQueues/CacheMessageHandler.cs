@@ -26,7 +26,6 @@ namespace WebFreight.Web.TopicQueues
 
         public void HandleTopicMessages()
         {
-            return;
             while (true)
             {
                 try
@@ -42,7 +41,7 @@ namespace WebFreight.Web.TopicQueues
 
                             foreach(string iKey in iKeys)
                             {
-                                CacheManager.CacheWrapper.Remove(iKey);
+                                CacheMaager.CacheWrapper.Remove(iKey);
                             }
                         }
 
