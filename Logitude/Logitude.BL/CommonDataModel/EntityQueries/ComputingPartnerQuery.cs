@@ -90,9 +90,17 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return entityPM;
         }
 
-
-
         public ComputingPartnerPM GetSinglePMByCode(string code, int tenant)
+        {
+            if (string.IsNullOrWhiteSpace(code)) return new ComputingPartnerPM();
+            string key = $"GetSinglePMByCode({code},{tenant})";
+            return CacheManager.GetOrInsertNewObject<ComputingPartnerPM>(key, () =>
+            {
+                return GetSinglePMByCodeSlow(code, tenant);
+            });
+        }
+
+        ComputingPartnerPM GetSinglePMByCodeSlow(string code, int tenant)
         {
             ComputingPartnerPM entityPM =
                 (from a in repository.Context.ComputingPartners

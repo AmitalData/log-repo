@@ -152,7 +152,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         private void UpdateLedgerTransactionWithNewValuesFromJournalLines(JournalPM entityPM)
         {
-            foreach (JournalLinePM JournalLine in entityPM.JournalLines)
+            foreach (JournalLinePM JournalLine in entityPM.JournalLines
+                .Where(r=>r.ChangeSetOp != ChangeSetOperation.Insert).ToList())
             {
                 UpdateRelatedLedgerTransactionIfJournalLineUpdated(entityPM, JournalLine);
             }
