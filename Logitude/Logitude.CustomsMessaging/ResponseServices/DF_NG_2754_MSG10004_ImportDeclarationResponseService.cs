@@ -35,6 +35,7 @@ using Logitude.Customs.BL.Messaging.L2U.CustomFile;
 using Logitude.Customs.BL.Messaging.Customs;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Threading.Tasks;
+using Unifreight.BL.EntityPMs.UGenerated;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -919,6 +920,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         var myGDFDATAQueryService = new GDFDATAQueryService(AmitalContext.GetContext(requestParams.Tenant));
                         var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_ACT_COLLECT", "NON", courierMaster.IntegratorNumber, false, true);
+                        string defValue = GetDefault("ISRAEL", "CGO_CUST_CAS", "NON", "NON", _MyDeclarationPM.Tenant);
+
                         bool isCollectActive = def.DEFDATA == "Y";
 
                         
@@ -992,7 +995,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
 
                             LogMessagingUtil.Instance.AppendLine("תהליך גביה- במידה ומופעל בדיקה האם להגדיר גבייה = 900");
-                            if (_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP" && _MyDeclarationPM.TotalTax > 0 && _MyDeclarationPM.DeclarationStatusTypeCode == "13")
+                            if (_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP" && _MyDeclarationPM.TotalTax > 0 && _MyDeclarationPM.DeclarationStatusTypeCode == "13" && ( !string.IsNullOrEmpty(defValue) &&  _MyDeclarationPM.CustomerCode == defValue))
                             {
                                 if (declarationPendingPM_900 == null)
                                 {
@@ -2587,5 +2590,25 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 throw;
             }
         }
+
+
+        private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
+        {
+            AmitalContext amitalContext = AmitalContext.GetContext(tenant);
+            var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
+
+            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
+            {
+                return ("");
+            }
+
+            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
+            if (myGDFDATAPM == null)
+            {
+                return ("");
+            }
+            return (myGDFDATAPM.DEFDATA);
+        }
+
     }
 }
