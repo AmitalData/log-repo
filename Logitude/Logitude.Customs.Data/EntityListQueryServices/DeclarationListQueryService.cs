@@ -205,6 +205,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                     CourierPendingReasonList = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.CourierPendingReasonList : null,
                     MAWB = rec.CourierMaster != null ? rec.CourierMaster.MAWB : null,
                     IntegratorCode = rec.CourierMaster != null ? rec.CourierMaster.IntegratorCode : null,
+                    IntegratorName = rec.CourierMaster != null ? rec.CourierMaster.Card.LocalName : null,
                     IsCourierMissingClassification = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.IsCourierMissingClassification : false,
                     IsPendingNotNull = rec.myDeclarationCourierStatuses != null ? (rec.myDeclarationCourierStatuses.CourierPendingReasonList != null && rec.myDeclarationCourierStatuses.CourierPendingReasonList.Length > 0 ? true : false) : false,
                 }
@@ -282,6 +283,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                IsCourierMissingClassification = true,
                                IsPendingNotNull = true,
                                IntegratorCode = "",
+                               IntegratorName = "",
                            });
                 //qMyJoin = Enumerable.Empty<MyDecJoin>().AsQueryable();
                 q1stConsignments = context.Consignments.Where(r => r.DeclarationId == "-1");
@@ -462,6 +464,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      /*CourierPendingReasonList = mypr != null ? mypr.CourierPendingReasonName : null,*/
                                                      //CourierPendingReasonName = a.CourierPendingReasonName,
                                                      IntegratorCode = myJoin != null ? myJoin.IntegratorCode : null,
+                                                     IntegratorName = myJoin != null ? myJoin.IntegratorName : null,
 
                                                      MAWB = myJoin != null ? myJoin.MAWB : null,
                                                      IsCourierMissingClassification = myJoin != null ? myJoin.IsCourierMissingClassification : false,
@@ -836,5 +839,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         public bool IsPendingNotNull { get; set; }
 
         public string IntegratorCode { get; set; }
+
+        public string IntegratorName { get; set; }
+
     }
 }
