@@ -64,7 +64,6 @@ export class InterestTransactionNotesComponent extends BaseComponent {
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
                 this.EntityPM = mm.Result;
-                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                 this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
             }
             this.CD.detectChanges();

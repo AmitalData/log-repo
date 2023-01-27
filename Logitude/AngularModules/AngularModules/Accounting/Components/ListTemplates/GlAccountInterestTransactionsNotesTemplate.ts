@@ -68,7 +68,6 @@ export class GlAccountInterestTransactionsNotesTemplate {
         logWindow.WindowClosed.subscribe(($event: any) => {
             this.CD.detectChanges();
             this.CurrentSession.StopBusyIndicator();
-            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         });
 
     }

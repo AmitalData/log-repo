@@ -5,7 +5,7 @@ import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
     selector: 'CellTooltip',
 
     templateUrl: './CellTooltip.html',
-    inputs: ['IconWidth', 'IconHeight', 'IconPath', 'Width', 'Height', 'Head', 'Body', 'MaxHeight', 'IsOnClick', 'IsOpened','IsToRight'],
+    inputs: ['IconWidth', 'IconHeight', 'IconPath', 'Width', 'Height', 'Head', 'Body', 'MaxHeight', 'IsOnClick', 'IsOpened','IsToRight','PaddingLeft'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
@@ -82,6 +82,14 @@ export class CellTooltip implements OnInit, AfterViewInit {
         }
     }
 
+    private paddingLeft: number = 0;
+    get PaddingLeft() { return this.paddingLeft; }
+    set PaddingLeft(value: number) {
+        if (this.paddingLeft != value) {
+            this.paddingLeft = value;
+        }
+    }
+
     mouseover() {
         this.IsMouseOver = true;
         if (!this.IsOnClick) {
@@ -92,6 +100,9 @@ export class CellTooltip implements OnInit, AfterViewInit {
                 document.getElementById(this.TooltipContentId).style.top = (itemRect.top - this.Height + 5) + 'px';
                 document.getElementById(this.TooltipContentId).style.backgroundImage = "url('./_Resources/Images/Icons/Tooltips/Tootip.png')";
                 document.getElementById(this.TooltipContentId).style.left = (itemRect.left + 5) + 'px';
+                if(this.PaddingLeft){
+                    document.getElementById(this.TooltipContentId).style.left = (itemRect.left - this.PaddingLeft) + 'px';
+                }      
             }
             else {
                 document.getElementById(this.TooltipContentId).style.top = (itemRect.top - (this.Height / 2) + 7) + 'px';
