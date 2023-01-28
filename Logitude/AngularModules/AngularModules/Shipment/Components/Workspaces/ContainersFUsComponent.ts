@@ -65,10 +65,10 @@ export class ContainersFUsComponent implements OnInit {
         this.IsContainersToggleFeatureUp = false;
         this.IsContainersFeatureActivated = false;
 
-        var isOceanInsightsContainersFeatureToggleUp: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0];
-        if (isOceanInsightsContainersFeatureToggleUp && (this.IsQueryVisible_AllContainers || this.IsQueryVisible_ClosedContainers || this.IsQueryVisible_Containers || this.IsQueryVisible_CancelledContainers)) {
-            this.IsContainersToggleFeatureUp = true;
-        }
+        //var isOceanInsightsContainersFeatureToggleUp: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0];
+        // if (isOceanInsightsContainersFeatureToggleUp && (this.IsQueryVisible_AllContainers || this.IsQueryVisible_ClosedContainers || this.IsQueryVisible_Containers || this.IsQueryVisible_CancelledContainers)) {
+        //     this.IsContainersToggleFeatureUp = true;
+        // }
 
         if (FeatureLocator.HasFeaturePermession("Container", "ContainersActivated")) {
             this.IsContainersFeatureActivated = true;
@@ -78,34 +78,34 @@ export class ContainersFUsComponent implements OnInit {
     public IsQueryVisible_InTransit: boolean = false;
     public IsQueryVisible_ArrivedNotDelivered: boolean = false;
     public IsQueryVisible_DeliveredNotReturned: boolean = false;
-    public IsQueryVisible_MyViewsGroup: boolean = false;
-    public IsQueryVisible_AllContainers: boolean = false;
-    public IsQueryVisible_ClosedContainers: boolean = false;
-    public IsQueryVisible_Containers: boolean = false;
-    public IsQueryVisible_CancelledContainers: boolean = false;
-    public IsQueryVisible_PendingPOLDepartureView: boolean = false;
-    public IsQueryVisible_InTransitNewView: boolean = false;
-    public IsQueryVisible_InTransitTransshipmentsView: boolean = false;
-    public IsQueryVisible_PendingGateOutView: boolean = false;
-    public IsQueryVisible_PendingEmptyReturnView: boolean = false;
-    public IsQueryVisible_ExceptionsView: boolean = false;
+    // public IsQueryVisible_MyViewsGroup: boolean = false;
+    // public IsQueryVisible_AllContainers: boolean = false;
+    // public IsQueryVisible_ClosedContainers: boolean = false;
+    // public IsQueryVisible_Containers: boolean = false;
+    // public IsQueryVisible_CancelledContainers: boolean = false;
+    // public IsQueryVisible_PendingPOLDepartureView: boolean = false;
+    // public IsQueryVisible_InTransitNewView: boolean = false;
+    // public IsQueryVisible_InTransitTransshipmentsView: boolean = false;
+    // public IsQueryVisible_PendingGateOutView: boolean = false;
+    // public IsQueryVisible_PendingEmptyReturnView: boolean = false;
+    // public IsQueryVisible_ExceptionsView: boolean = false;
     private SetQueriesVisibility() {
         this.IsQueryVisible_InTransit = FeatureLocator.HasFeaturePermession("ContainerFollowUp", "InTransit") ? true : false;
         this.IsQueryVisible_ArrivedNotDelivered = FeatureLocator.HasFeaturePermession("ContainerFollowUp", "ArrivedNotDelivered") ? true : false;
         this.IsQueryVisible_DeliveredNotReturned = FeatureLocator.HasFeaturePermession("ContainerFollowUp", "DeliveredNotReturned") ? true : false;
-        this.IsQueryVisible_MyViewsGroup = FeatureLocator.HasFeaturePermession("General", "BUILDQUERIES") ? true : false;
-        this.IsQueryVisible_AllContainers = FeatureLocator.HasFeaturePermession("Container", "Container.Q.AllContainers") ? true : false;
-        this.IsQueryVisible_ClosedContainers = FeatureLocator.HasFeaturePermession("Container", "Container.Q.ClosedContainers") ? true : false;
-        this.IsQueryVisible_Containers = FeatureLocator.HasFeaturePermession("Container", "Container.Q.Containers") ? true : false;
-        this.IsQueryVisible_CancelledContainers = FeatureLocator.HasFeaturePermession("Container", "Container.Q.CancelledContainers") ? true : false;
+        // this.IsQueryVisible_MyViewsGroup = FeatureLocator.HasFeaturePermession("General", "BUILDQUERIES") ? true : false;
+        // this.IsQueryVisible_AllContainers = FeatureLocator.HasFeaturePermession("Container", "Container.Q.AllContainers") ? true : false;
+        // this.IsQueryVisible_ClosedContainers = FeatureLocator.HasFeaturePermession("Container", "Container.Q.ClosedContainers") ? true : false;
+        // this.IsQueryVisible_Containers = FeatureLocator.HasFeaturePermession("Container", "Container.Q.Containers") ? true : false;
+        // this.IsQueryVisible_CancelledContainers = FeatureLocator.HasFeaturePermession("Container", "Container.Q.CancelledContainers") ? true : false;
 
-        this.IsQueryVisible_PendingPOLDepartureView = FeatureLocator.HasFeaturePermession("Container", "Container.Q.PendingPOLDeparture") ? true : false;
-        this.IsQueryVisible_InTransitNewView = FeatureLocator.HasFeaturePermession("Container", "Container.Q.InTransitNew") ? true : false;
-        this.IsQueryVisible_InTransitTransshipmentsView = FeatureLocator.HasFeaturePermession("Container", "Container.Q.InTransitTransshipments") ? true : false;
+        // this.IsQueryVisible_PendingPOLDepartureView = FeatureLocator.HasFeaturePermession("Container", "Container.Q.PendingPOLDeparture") ? true : false;
+        // this.IsQueryVisible_InTransitNewView = FeatureLocator.HasFeaturePermession("Container", "Container.Q.InTransitNew") ? true : false;
+        // this.IsQueryVisible_InTransitTransshipmentsView = FeatureLocator.HasFeaturePermession("Container", "Container.Q.InTransitTransshipments") ? true : false;
 
-        this.IsQueryVisible_PendingGateOutView = FeatureLocator.HasFeaturePermession("Container", "Container.Q.PendingGateOut") ? true : false;
-        this.IsQueryVisible_PendingEmptyReturnView = FeatureLocator.HasFeaturePermession("Container", "Container.Q.PendingEmptyReturn") ? true : false;
-        this.IsQueryVisible_ExceptionsView = FeatureLocator.HasFeaturePermession("Container", "Container.Q.Exceptions") ? true : false;
+        // this.IsQueryVisible_PendingGateOutView = FeatureLocator.HasFeaturePermession("Container", "Container.Q.PendingGateOut") ? true : false;
+        // this.IsQueryVisible_PendingEmptyReturnView = FeatureLocator.HasFeaturePermession("Container", "Container.Q.PendingEmptyReturn") ? true : false;
+        // this.IsQueryVisible_ExceptionsView = FeatureLocator.HasFeaturePermession("Container", "Container.Q.Exceptions") ? true : false;
 
 
     }
@@ -113,7 +113,7 @@ export class ContainersFUsComponent implements OnInit {
     public InTransit: string;
     public ArrivedNotDelivered: string;
     public DeliveredNotReturned: string;
-    public ContainersCount: string;
+   // public ContainersCount: string;
     LoadQueriesCounts() {
         this.myDomainService.GetQueriesCounts().subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
@@ -124,7 +124,7 @@ export class ContainersFUsComponent implements OnInit {
                         this.InTransit = myResult.InTransit > 1000 ? "1000+" : myResult.InTransit.toString();
                         this.ArrivedNotDelivered = myResult.ArrivedNotDelivered > 1000 ? "1000+" : myResult.ArrivedNotDelivered.toString();
                         this.DeliveredNotReturned = myResult.DeliveredNotReturned > 1000 ? "1000+" : myResult.DeliveredNotReturned.toString();
-                        this.ContainersCount = myResult.ContainersCount > 10000 ? "10000+" : myResult.ContainersCount.toString();
+                       // this.ContainersCount = myResult.ContainersCount > 10000 ? "10000+" : myResult.ContainersCount.toString();
                     }
                 }
             }
@@ -149,62 +149,62 @@ export class ContainersFUsComponent implements OnInit {
                     ServiceLocator.SendTotangoUserActivity("Container F/U", "In Transit View");
                     break;
                 }
-                case "All Containers": {
-                    ServiceLocator.SendTotangoUserActivity("Container", "All Containers");
-                    objectTableName = "Container";
-                    break;
-                }
-                case "Containers": {
-                    ServiceLocator.SendTotangoUserActivity("Container", "Containers");
-                    objectTableName = "Container";
-                    break;
-                }
-                case "Cancelled Containers": {
-                    ServiceLocator.SendTotangoUserActivity("Container", "Cancelled Containers");
-                    objectTableName = "Container";
-                    break;
-                }
-                case "Closed Containers": {
-                    ServiceLocator.SendTotangoUserActivity("Container", "Closed Containers");
-                    objectTableName = "Container";
-                    break;
-                }
+                // case "All Containers": {
+                //     ServiceLocator.SendTotangoUserActivity("Container", "All Containers");
+                //     objectTableName = "Container";
+                //     break;
+                // }
+                // case "Containers": {
+                //     ServiceLocator.SendTotangoUserActivity("Container", "Containers");
+                //     objectTableName = "Container";
+                //     break;
+                // }
+                // case "Cancelled Containers": {
+                //     ServiceLocator.SendTotangoUserActivity("Container", "Cancelled Containers");
+                //     objectTableName = "Container";
+                //     break;
+                // }
+                // case "Closed Containers": {
+                //     ServiceLocator.SendTotangoUserActivity("Container", "Closed Containers");
+                //     objectTableName = "Container";
+                //     break;
+                // }
 
-                case "PendingPOLDeparture": {
-                    ServiceLocator.SendTotangoUserActivity("Container", "PendingPOLDeparture");
-                    objectTableName = "Container";
-                    break;
-                }
+                // case "PendingPOLDeparture": {
+                //     ServiceLocator.SendTotangoUserActivity("Container", "PendingPOLDeparture");
+                //     objectTableName = "Container";
+                //     break;
+                // }
 
-                case "InTransitNew": {
-                    ServiceLocator.SendTotangoUserActivity("Container", "InTransitNew");
-                    objectTableName = "Container";
-                    break;
-                }
+                // case "InTransitNew": {
+                //     ServiceLocator.SendTotangoUserActivity("Container", "InTransitNew");
+                //     objectTableName = "Container";
+                //     break;
+                // }
 
-                case "InTransitTransshipments": {
-                    ServiceLocator.SendTotangoUserActivity("Container", "InTransitTransshipments");
-                    objectTableName = "Container";
-                    break;
-                }
+                // case "InTransitTransshipments": {
+                //     ServiceLocator.SendTotangoUserActivity("Container", "InTransitTransshipments");
+                //     objectTableName = "Container";
+                //     break;
+                // }
 
-                case "PendingGateOut": {
-                    ServiceLocator.SendTotangoUserActivity("Container", "PendingGateOut");
-                    objectTableName = "Container";
-                    break;
-                }
+                // case "PendingGateOut": {
+                //     ServiceLocator.SendTotangoUserActivity("Container", "PendingGateOut");
+                //     objectTableName = "Container";
+                //     break;
+                // }
 
-                case "PendingEmptyReturn": {
-                    ServiceLocator.SendTotangoUserActivity("Container", "PendingEmptyReturn");
-                    objectTableName = "Container";
-                    break;
-                }
+                // case "PendingEmptyReturn": {
+                //     ServiceLocator.SendTotangoUserActivity("Container", "PendingEmptyReturn");
+                //     objectTableName = "Container";
+                //     break;
+                // }
 
-                case "Exceptions": {
-                    ServiceLocator.SendTotangoUserActivity("Container", "Exceptions");
-                    objectTableName = "Container";
-                    break;
-                }
+                // case "Exceptions": {
+                //     ServiceLocator.SendTotangoUserActivity("Container", "Exceptions");
+                //     objectTableName = "Container";
+                //     break;
+                // }
 
 
             }
