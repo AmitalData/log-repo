@@ -41,19 +41,26 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                     }
                     if (item.FieldName == "PendingPOLDepartureFilter")
                     {
-                        queryableData = queryableData.Where(d => d.ActualPODDeparture == null && d.EstimatedPOLVesselDeparture != null && d.ActualPODVesselArrival == null);
+                       
+                        DateTime today = DateTime.Now;
+
+                        //int numberOfDays = today.Subtract()
+                        queryableData = queryableData.Where(d => d.ActualPOLVesselDeparture == null && d.EstimatedPOLVesselDeparture != null);
+                       // queryableData = queryableData.Where(d => d.ActualPODDeparture == null && d.EstimatedPOLVesselDeparture != null && d.ActualPODVesselArrival == null);
                     }
                     if (item.FieldName == "InTransitFilter")
                     {
-                        queryableData = queryableData.Where(d => d.ActualPOLVesselDeparture != null && (d.TransshipmentCount == 0 || d.TransshipmentCount == null) && d.ActualPODVesselArrival == null);
+                        queryableData = queryableData.Where(d => d.ActualPOLVesselDeparture != null && d.TransshipmentCount == 0 && d.ActualPODVesselArrival == null && d.EstimatedPODVesselArrival != DateTime.Now);
+                        //queryableData = queryableData.Where(d => d.ActualPOLVesselDeparture != null && (d.TransshipmentCount == 0 || d.TransshipmentCount == null) && d.ActualPODVesselArrival == null);
                     }
                     if (item.FieldName == "InTransitwithTransshipmentsFilter")
                     {
-                        queryableData = queryableData.Where(d => d.ActualPOLVesselDeparture != null && (d.TransshipmentCount > 0 ) && d.ActualPODVesselArrival == null);
+                       // queryableData = queryableData.Where(d => d.)
+                        queryableData = queryableData.Where(d => d.ActualPOLVesselDeparture != null && (d.TransshipmentCount > 0 ) && d.ActualPODVesselArrival == null && d.EstimatedPODVesselArrival == DateTime.Now);
                     }
                     if (item.FieldName == "PendingGateOutFilter")
                     {
-                        queryableData = queryableData.Where(d => d.ActualPODVesselArrival != null &&  d.GateOut == null);
+                        queryableData = queryableData.Where(d => d.ActualPODVesselArrival != null &&  d.GateOut == null && d.ActualPODDischarge != null);
                     }
                     if (item.FieldName == "PendingEmptyReturnFilter")
                     {
