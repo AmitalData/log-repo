@@ -74,5 +74,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             deploymentPackageVersionPM.VersionNumber = deploymentPackagesVersion.VersionNumber;
             return deploymentPackageVersionPM;
         }
+    
+        public string GetDeploymentPackageVersionNameById(string id, int tenant)
+        {
+            return repository.context.DeploymentPackagesVersions.Where(v => v.Id == id && v.Tenant == tenant).Select(d=>d.VersionName).FirstOrDefault();
+        }
     }
 }
