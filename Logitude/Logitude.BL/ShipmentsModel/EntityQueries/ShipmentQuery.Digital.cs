@@ -39,7 +39,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                          .Shipments
                                          .Include("EntityStatus")
                                          .Include("ShipmentLevel")
-                                         .Include("Incoterm")
                                          .FirstOrDefault(a => a.Id == id
                                                               && a.Tenant == tenant);
                 if (shipment != null)
