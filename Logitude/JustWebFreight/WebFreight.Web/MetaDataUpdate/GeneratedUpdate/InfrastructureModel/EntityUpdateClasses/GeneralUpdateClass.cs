@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "589c39d2f837803da184c5a1dfe585d6";
+		public const string HashString = "747f209e6ab42a480069c8e7f06cc56c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -127,7 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "f4ad",
+			      				    Code =  "d85a",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -697,6 +697,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 		   Feature GeneralFeature_QueriesCustomization = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QueriesCustomization", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.QueriesCustomization", NameTextCodeDefaultText = @"Views" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
 		   Feature GeneralFeature_PORTGROUPS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PORTGROUPS", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.PORTGROUPS", NameTextCodeDefaultText = @"Port Groups" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
+
+		   Feature GeneralFeature_CONTAINERS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTAINERS", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.CONTAINERS", NameTextCodeDefaultText = @"Containers" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
 
    
@@ -2721,6 +2723,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  		   TextCode GeneralTextCode_GeneralMCCustomObjectsCustomObjects = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.CustomObjects.CustomObjects", DefaultText = "Custom Objects",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMCCustomizationDeploymentPackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Customization.DeploymentPackage", DefaultText = "Deployment Package",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralMHContainers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Containers", DefaultText = "Containers",LocalDefaultText = @"Containers", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
 
    
