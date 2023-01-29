@@ -21,9 +21,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
         [HttpPost]
 
         public HttpResponseMessage SendCustomsMessage8413([FromBody] CD_NG_8314_Web01_CustomsItemDetailsRequestParams requestParams)
-
-        public HttpResponseMessage SendCustomsMessage8413([FromBody] GenericRequestParams requestParams)
-
         {
             try
             {
