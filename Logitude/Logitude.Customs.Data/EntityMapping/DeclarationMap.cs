@@ -328,6 +328,10 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.ReleaseStatusTypeCode).HasColumnName("ReleaseStatusTypeCode").HasMaxLength(2).IsUnicode(false);
 
             this.Property(t => t.ClosingXml).HasColumnName("ClosingXml").IsMaxLength().IsUnicode(true);
+
+            this.Property(t => t.ExportCloseAmendRequestNumber).HasColumnName("ExportCloseAmendRequestNumber").HasMaxLength(9).IsUnicode(false);
+
+            this.Property(t => t.ExportCloseAmendmentStatus).HasColumnName("ExportCloseAmendmentStatus").HasMaxLength(2).IsUnicode(false);
         }
     }
 }

@@ -449,7 +449,6 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string ExportCloseAmendmentStatus  { get; set; }
        [DataMember]
-
        public string IntegratorName  { get; set; }
    }
 
