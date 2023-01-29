@@ -69,6 +69,7 @@ export class MultiUpdateDecComponent extends BaseComponent {
     }
 
     declarationsDisplayOnly: string[];
+    declarationsDisplayOnlyPromise: Promise<any>;
     customsItemTextValue: string;
     procedureCurrentCode: string;
     taxExemptCode: string;
@@ -119,8 +120,8 @@ export class MultiUpdateDecComponent extends BaseComponent {
     }
 
     async checkDeclarationsInDisplayOnly() {        
-        this.declarationsDisplayOnly = await new DeclarationsBulkFeedWebService()
-            .checkDeclarationsInDisplayOnly(this.declarationIdsList, this.allWithoutdeclarationIdsList, this.checkboxAll, this.filter);
+        this.declarationsDisplayOnlyPromise = new DeclarationsBulkFeedWebService().checkDeclarationsInDisplayOnly(this.declarationIdsList, this.allWithoutdeclarationIdsList, this.checkboxAll, this.filter);
+        this.declarationsDisplayOnly = await this.declarationsDisplayOnlyPromise;
     }    
     
     CustomsItemTextChanged(text: string) {
@@ -381,7 +382,6 @@ export class MultiUpdateDecComponent extends BaseComponent {
             confirm.Show("שינוי יבצע עדכון גורף של קוד תהליך בהצהרות,\n ועדכון קוד הנחה פטור לכל שורות פרטי המכס");
             confirm.WindowClosed.subscribe((event: any) => {
                 if (confirm.Yes) {
-                    this.showMassageExistDeclarationsDisplayOnly();
                     this.SendMultiUpdate();
                 }
                 confirm.Close();
@@ -389,7 +389,8 @@ export class MultiUpdateDecComponent extends BaseComponent {
         }
     }
 
-    showMassageExistDeclarationsDisplayOnly() {
+    async showMassageExistDeclarationsDisplayOnly() {
+        await this.declarationsDisplayOnlyPromise;
         if(!this.declarationsDisplayOnly?.length) return;
 
         new MessageWindow().Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.DisplayOnly"));
@@ -430,6 +431,8 @@ export class MultiUpdateDecComponent extends BaseComponent {
         //            this.CancelButtonClicked();
         //        });
         //    });
+
+        await this.showMassageExistDeclarationsDisplayOnly();
 
         this.pendingWebService.PostSendMultiUpdate(currRequestParams, this.filter)
             .subscribe((res: any) => {
