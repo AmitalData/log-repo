@@ -5,7 +5,7 @@ import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
     selector: 'CellTooltip',
 
     templateUrl: './CellTooltip.html',
-    inputs: ['IconWidth', 'IconHeight', 'IconPath', 'Width', 'Height', 'Head', 'Body', 'MaxHeight', 'IsOnClick', 'IsOpened','IsToRight','Left'],
+    inputs: ['IconWidth', 'IconHeight', 'IconPath', 'Width', 'Height', 'Head', 'Body', 'MaxHeight', 'IsOnClick', 'IsOpened','IsToRight','Left','MinHeight'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
@@ -18,7 +18,7 @@ export class CellTooltip implements OnInit, AfterViewInit {
     public IconPath: string = "./Images/Help.png";
     public IconBackground: string = null;
     public Width: number = 296;
-    public MinHeight: number = 130;
+    //public MinHeight: number = 130;
     public MaxHeight: number = 130;
     public IsOnClick: boolean = false;
     public Head: string = null;
@@ -48,13 +48,20 @@ export class CellTooltip implements OnInit, AfterViewInit {
         }
     }
 
+    private minHeight: number = 130;
+    get MinHeight() { return this.minHeight; }
+    set MinHeight(value: number) {
+        if (this.minHeight != value) {
+                this.minHeight = value;
+        }
+    }
+
     private height: number = 130;
     get Height() { return this.height; }
     set Height(value: number) {
         if (this.height != value) {
             if (value > this.MinHeight) {
                 this.height = value;
-
                 this.SetTooltipSize();
             }
         }
@@ -89,6 +96,7 @@ export class CellTooltip implements OnInit, AfterViewInit {
             this.left = value;
         }
     }
+    
 
     mouseover() {
         this.IsMouseOver = true;
@@ -106,9 +114,7 @@ export class CellTooltip implements OnInit, AfterViewInit {
                 document.getElementById(this.TooltipContentId).style.position = "fixed";
                 document.getElementById(this.TooltipContentId).style.left = (itemRect.left - this.Left) + 'px';
                 document.getElementById(this.TooltipContentId).style.top = (itemRect.top - 320) + 'px'; 
-                this.MinHeight=10;
-                document.getElementById(this.TooltipContentId).style.height="39px";
-              
+                document.getElementById(this.TooltipContentId).style.height=(this.MinHeight)+ 'px';
             }   
             else {
                 document.getElementById(this.TooltipContentId).style.top = (itemRect.top - (this.Height / 2) + 7) + 'px';
