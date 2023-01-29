@@ -228,7 +228,7 @@ export class FlowVariablesTreeList {
         this.getLoopNodes().forEach((loopNode: any) => {
             let collectionVariable: string = loopNode.data["collectionVariable"] || null;
             let isCollectionFilterVariable: boolean = loopNode.data["isCollectionFilterVariable"] || false;
-            let isTriggeringRecordChildEntity = collectionVariable?.startsWith(this.TriggeringRecordPrefix);
+            let isEditableEntity : boolean = loopNode.data["isEditableEntity"] || false;
 
             let collectionNode: any;
 
@@ -238,7 +238,7 @@ export class FlowVariablesTreeList {
                 collectionNode = this.getGetRecordNodes("AllRecords").find(n => Formatter.getCodeFromName(n.data["name"]) === collectionVariable);
             }
 
-            if (!collectionNode && isTriggeringRecordChildEntity) {
+            if (!collectionNode && isEditableEntity) {
                 let onlyCurrentLoopItem = this.FlowVariablesTreeListProperties.OnlyCurrentLoopItemVariables;
                 let entity = collectionVariable?.split("_")[1];
                 let treeSelectItemName = loopNode.data["name"];

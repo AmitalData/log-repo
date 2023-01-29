@@ -63,7 +63,7 @@ export class LoopPropertiesComponent extends BaseComponent {
             IsObjectVariableSelectable: false
         };
         this.FlowVariablesTreeItems = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId, props).Items;
-        this.SingleEditableEntitiesTreeItems = new SingleEditableEntitiesTreeList(this.FlowObject, this.CurrentNodeId, true).Items;
+        this.SingleEditableEntitiesTreeItems = new SingleEditableEntitiesTreeList(this.FlowObject, this.CurrentNodeId).Items;
         this.FlowVariablesTreeItems = this.SingleEditableEntitiesTreeItems.concat(this.FlowVariablesTreeItems);
     }
 
@@ -97,8 +97,10 @@ export class LoopPropertiesComponent extends BaseComponent {
 
     updateCollectionVariable(collectionVariableItem: TreeSelectItem) {
         let collectionVariable = collectionVariableItem ? collectionVariableItem.key : null;
+        let isEditableEntity = collectionVariableItem ? (collectionVariableItem.data["isEditableEntity"] || false) : null;
         let isCollectionFilterVariable = collectionVariableItem ? (collectionVariableItem.data["isCollectionFilterVariable"] || false) : null;
         let isDeclaredCollectionVariable = collectionVariableItem ? (collectionVariableItem.data["isDeclaredCollectionVariable"] || false) : null;
+        this.Data["isEditableEntity"] = isEditableEntity;
         this.Data["collectionVariable"] = collectionVariable;
         this.Data["isCollectionFilterVariable"] = isCollectionFilterVariable;
         this.Data["isDeclaredCollectionVariable"] = isDeclaredCollectionVariable;
