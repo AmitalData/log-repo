@@ -570,7 +570,6 @@ namespace Logitude.Customs.Data.Repsitories
 
         public Declaration GetDeclarationByFunctionalReferenceIDagentFileReferenceID(string functionalReferenceID, string agentFileReferenceID, int tenant, bool isExportClose = false)
 
-        public Declaration GetDeclarationByFunctionalReferenceID(string functionalReferenceID, int tenant)
         {
             //Declaration declarationParent = (from a in context.Declarations
             //                           where declarationNumber == a.DeclarationNumber
