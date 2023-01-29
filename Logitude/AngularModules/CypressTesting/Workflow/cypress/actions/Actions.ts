@@ -67,8 +67,9 @@ export function AssertOpenFlowBuilder() {
 }
 
 export function FillEditFlowStartNodeDetails(startNodeDetails: StartNodeDetails) {
-    //OpenEditStartNode();
-    cy.SelectDropDownListItem2(WorkflowSelectors.WorkflowStartNodeObject, startNodeDetails.Object)
+    cy.get(WorkflowSelectors.WorkflowStartNodeObject).find(BaseSelectors.input).click().type(startNodeDetails.Object).then(() => {
+        cy.get(WorkflowSelectors.WorkflowfieldsListTitle).contains(startNodeDetails.Object).eq(0).click()
+    });
     cy.ClickRadio(WorkflowSelectors.FlowTriggerRadioButton(startNodeDetails.ConfigureTrigger))
 }
 
