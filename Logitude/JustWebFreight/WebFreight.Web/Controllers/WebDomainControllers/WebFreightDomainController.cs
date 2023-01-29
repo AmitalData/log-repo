@@ -345,9 +345,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 throw new Exception("Invalid domain name");
             }
 
-            if (IsSubDomainIOfTenantManagementUsed(customerURL, tenant))
+            var isSubDomainIOfTenantManagementUsed = IsSubDomainIOfTenantManagementUsed(customerURL, tenant);
+           
+            if (isSubDomainIOfTenantManagementUsed.Item1)
             {
-                throw new Exception("The domain already defined");
+                throw new Exception("The domain already defined for tenant No. " + isSubDomainIOfTenantManagementUsed.Item2);
             }
 
             var tenantId =  "a46b1446-9af4-4079-87ad-3304ee9ed758";
@@ -415,13 +417,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             return false;
         }
 
-        private static bool IsSubDomainIOfTenantManagementUsed(string subDomain, int tenant)
+        private static Tuple<bool, int?> IsSubDomainIOfTenantManagementUsed(string subDomain, int tenant)
         {
             var fullDomain = $"{subDomain}.logitudeworld.com";
 
             TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
-            bool isExist = tenantManagementRepository.CheckSubDomainTenantManagement(fullDomain, tenant);
-            return isExist;
+            var tenantManagement = tenantManagementRepository.CheckSubDomainTenantManagement(fullDomain, tenant);
+            return tenantManagement;
         }
 
         #region SendBlockToServer
