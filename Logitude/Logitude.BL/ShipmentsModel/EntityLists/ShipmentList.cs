@@ -22,7 +22,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public double? OpenPayablesInProfitCurrency { get; set; }
         public double? AccountedPayablesInProfitCurrency { get; set; }
         #endregion
-        
+
         public string LocalCustomsTransmissionsStatusCode { get; set; }
         public string LocalCustomsTransmissionsStatusName { get; set; }
         public string LocalCustomsTransmissionsStatusError { get; set; }
@@ -692,6 +692,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public bool IsCustomerArchived { get; set; }
         public string NotesSharedWithCustomer { get; set; }
         public double? Volume { get; set; }
+        public bool IsDocumentsNeedApprove { get; set; }
 
     }
 

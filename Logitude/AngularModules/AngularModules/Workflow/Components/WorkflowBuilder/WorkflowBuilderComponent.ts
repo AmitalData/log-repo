@@ -8,17 +8,19 @@ import { WorkFlowPM } from "Workflow/EntityPMs/WorkFlowPM";
 import { WorkFlowPMService } from "Workflow/Services/StandardPMs/WorkFlowPMService";
 import { ServiceResponse } from "Infrastructure/DataContracts/ServiceResponse";
 import { ObjectFieldListService } from "Infrastructure/Services/StandardLists/ObjectFieldListService";
-import { ApiQueryFiltersBuilder } from "Workflow/Models/ApiQueryFiltersBuilder";
-import { FlowReader } from "Workflow/Models/FlowReader";
-import { ObjectFields } from "Workflow/Models/ObjectFields";
+import { ApiQueryFiltersBuilder } from "Workflow/Utilities/ApiQueryFiltersBuilder";
+import { FlowReader } from "Workflow/Utilities/FlowReader";
+import { ObjectFields } from "Workflow/Utilities/ObjectFields";
 import { MessageWindow } from "Controls/Windows/MessageWindow";
-import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
-import { Formatter } from "Workflow/Models/Formatter";
+import { Formatter } from "Workflow/Utilities/Formatter";
 import { EntityArgs } from "Infrastructure/DataContracts/EntityArgs";
 import { AppTool } from "Infrastructure/Tools";
 import { WorkFlowVersionPM } from "Workflow/EntityPMs/WorkFlowVersionPM";
 import { ConfirmWindow } from "Controls/Windows/ConfirmWindow";
 import { FieldTypes } from "Workflow/Constants/FieldTypes";
+import { ObjectTables } from "Workflow/Utilities/ObjectTables";
+import { ObjectTableListService } from "Infrastructure/Services/StandardLists/ObjectTableListService";
+import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 
 @Component({
     templateUrl: "./WorkflowBuilderComponent.html"
@@ -41,7 +43,6 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
     public ShowBusyIndicator: boolean = false;
     public BusyIndicatorWidth: number = 200;
     public ValidationErrorsList: string[] = [];
-    public FlowObjectFields: ObjectFieldList[] = [];
     public ReturnPropertiesDataEventKey: string = "returnPropertiesDataEventKey_" + (Date.now())?.toString();
     public returnDeleteNodeConfirmationEventKey: string = "returnDeleteNodeConfirmationEventKey_" + (Date.now())?.toString();
     public HasChanges = false;
@@ -145,7 +146,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         this.WorkflowName = this.EntityPM.Name;
         this.WorkflowEntity = this.ValidVersion.Entity;
         this.renderReactFlowModeler();
-        this.loadObjectFields();
+        this.loadObjectTablesAndFields();
         this.entityArgs.SendMessage("RefreshWorkflowShortTitle");
         this.entityArgs.SendMessage("RefreshWorkflowButtons");
     }
@@ -183,25 +184,44 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
                 }
             };
 
-            ReactDOM.render(React.createElement(ReactFlowModeler, props), this.containerRef.nativeElement);
+            //ReactDOM.render(React.createElement(ReactFlowModeler, props), this.containerRef.nativeElement);
         }
     }
 
-    loadObjectFields() {
-        if (ObjectFields.isLoaded()) {
-            this.FlowObjectFields = ObjectFields.getAll();
-            this.stopLoading();
-        } else {
-            let objectFieldListService = new ObjectFieldListService();
-            let apiQueryFilters = ApiQueryFiltersBuilder.getObjectFieldsApiQueryFilters(null, null, null, true);
-            objectFieldListService.getByFilters(apiQueryFilters).subscribe((serviceResponse: ServiceResponse) => {
-                if (!serviceResponse.HasError) {
-                    ObjectFields.set(serviceResponse.Result);
-                    this.FlowObjectFields = ObjectFields.getAll();
+    loadObjectTablesAndFields() {
+        let isLoadedBefore = ObjectTables.isLoaded();
+        let objectTableListService = new ObjectTableListService();
+        let apiQueryFilters = ApiQueryFiltersBuilder.getObjectTablesApiQueryFilters(null, true, (isLoadedBefore ? true : null));
+        objectTableListService.getByFilters(apiQueryFilters).subscribe((serviceResponse: ServiceResponse) => {
+            if (!serviceResponse.HasError) {
+                let objectTables = serviceResponse.Result.filter((o: any) => o.Tenant === 0 || o.Tenant === (SessionLocator.Tenant || 0));
+                if (isLoadedBefore) {
+                    ObjectTables.resetCustom(objectTables);
+                } else {
+                    ObjectTables.set(objectTables);
                 }
-                this.stopLoading();
-            });
-        }
+                ObjectTables.setLoaded();
+            }
+            this.loadObjectFields();
+        });
+    }
+
+    loadObjectFields() {
+        let isLoadedBefore = ObjectFields.isLoaded();
+        let objectFieldListService = new ObjectFieldListService();
+        let apiQueryFilters = ApiQueryFiltersBuilder.getObjectFieldsApiQueryFilters(null, null, null, true, (isLoadedBefore ? true : null));
+        objectFieldListService.getByFilters(apiQueryFilters).subscribe((serviceResponse: ServiceResponse) => {
+            if (!serviceResponse.HasError) {
+                let objectFields = serviceResponse.Result.filter((o: any) => o.Tenant === 0 || o.Tenant === (SessionLocator.Tenant || 0));
+                if (isLoadedBefore) {
+                    ObjectFields.resetCustom(objectFields);
+                } else {
+                    ObjectFields.set(objectFields);
+                }
+                ObjectFields.setLoaded();
+            }
+            this.stopLoading();
+        });
     }
 
     flowChangedEvent(event: any) {
@@ -399,8 +419,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
             Data: JSON.parse(JSON.stringify(openPropertiesEventObject.nodeData)),
             WorkflowEntity: this.WorkflowEntity,
             FlowObject: this.getCurrentFlowObject(),
-            CurrentNodeId: openPropertiesEventObject.nodeId,
-            FlowObjectFields: this.FlowObjectFields
+            CurrentNodeId: openPropertiesEventObject.nodeId
         };
         propertiesWindow.Height = openPropertiesEventObject.nodeType == "declareVariableNode" ? 320 : 850;
         propertiesWindow.Width = 985;

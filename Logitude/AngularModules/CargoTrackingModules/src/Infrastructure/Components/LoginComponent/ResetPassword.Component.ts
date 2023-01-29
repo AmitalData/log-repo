@@ -29,6 +29,7 @@ export class ResetPasswordComponent implements OnInit {
     public SecondaryColor: string = null;
     public CustomerURL: string = "";
     public ContactEmail: string = "mailto:support@amital.co.il";
+    public BackGroundImg: string;
 
     constructor(private router: Router,
         private route: ActivatedRoute,
@@ -57,6 +58,7 @@ export class ResetPasswordComponent implements OnInit {
                 this.MainColor = response.Result.MainColor;
                 this.SecondaryColor = response.Result.SecondaryColor;
                 this.SetContactEmail(response.Result.ContactEmail);
+                this.BackGroundImg = CargoTrackingBrandingData.BackgroundURL;
             }
             else{
                 this.GoToError401();

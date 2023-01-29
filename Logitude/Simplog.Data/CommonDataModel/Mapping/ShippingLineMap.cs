@@ -37,6 +37,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.INTTRAUpdatesShipment).HasColumnName("INTTRAUpdatesShipment");
             this.Property(t => t.IsSendingByContainer).HasColumnName("IsSendingByContainer");
             this.Property(t => t.IsSendingByBillOfLading).HasColumnName("IsSendingByBillOfLading");
+            this.Property(t => t.IsAutomaticRequestsSent).HasColumnName("IsAutomaticRequestsSent");
+            this.Property(t => t.IsSupportsContainerTracking).HasColumnName("IsSupportsContainerTracking");
 
             this.HasRequired(t => t.Card).WithOptional(t => t.ShippingLine);
             this.HasOptional(t => t.ShippingAgent).WithMany(t => t.ShippingLines).HasForeignKey(d => d.ShippingAgentId);

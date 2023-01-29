@@ -55,7 +55,7 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
         this.iGlobalDomainService = new GlobalDomainService();
         this.InitializeImageIds();
         this.SetColorsFromEntity();
-        this.SetBrandingTabName();
+        this.CheckDigtialPortalAddsOnPackage();
         this.Listen();
     }
 
@@ -84,6 +84,7 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
+       
     }
 
     private SetColorsFromEntity() {
@@ -107,13 +108,27 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     SetBrandingTabName() {
         this.BrandingTabName = "Cargo Tracking Branding";
         this.IsLogitudeEnvironment = false;
-        var digitalPortalBrandingToggleFeatureForTenantZero = SessionLocator.TenantZeroFeatureToggles.filter(d => d.ToggleCode == "DPB")[0];
-        var digitalPortalBrandingToggleFeatureForCurrentTenant = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "DPB" && d.TenantNumber == +this.EntityPM.Id)[0];
-        if (FeatureLocator.HasFeaturePermession("General", "SHLOGDIGITALPORTAL") && (digitalPortalBrandingToggleFeatureForTenantZero || digitalPortalBrandingToggleFeatureForCurrentTenant)) {
+
+        if (FeatureLocator.HasFeaturePermession("General", "SHLOGDIGITALPORTAL")) {
             this.BrandingTabName = TextCodeTranslator.Translate("TenantManagement.TH.LogitudeDigitalBranding");
             this.IsLogitudeEnvironment = true;
         }
     }
+
+    CheckDigtialPortalAddsOnPackage() {
+        this.BrandingTabName = "Cargo Tracking Branding";
+        this.IsLogitudeEnvironment = false;
+
+        this.iGlobalDomainService.CheckDigitalPortalAddsOn(this.EntityPM.Id).subscribe((result: any) => {
+            var addOnPackage = result.Result;
+            if (addOnPackage != null) {
+                this.BrandingTabName = TextCodeTranslator.Translate("TenantManagement.TH.LogitudeDigitalBranding");
+                this.IsLogitudeEnvironment = true;
+                this.SetCustomerURLProperties(this.EntityPM.EnableBranding);
+            }
+        });
+    }
+
     private InitializeImageIds() {
         this.BackgroundId = this.EntityPM.BackgroundId;
         this.ComapnylogoId = this.EntityPM.ComapnylogoId;

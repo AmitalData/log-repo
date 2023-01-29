@@ -55,6 +55,9 @@ export class ShipmentPM {
     public get IsMultiUpdate() { return this.ismultiUpdate; }
     public set IsMultiUpdate(newValue: boolean) { if (this.ismultiUpdate != newValue) { this.ismultiUpdate = newValue; this.MarkAsDirty("IsMultiUpdate"); } }
 
+    private isDocumentsNeedApprove: boolean;
+    public get IsDocumentsNeedApprove() { return this.isDocumentsNeedApprove; }
+    public set IsDocumentsNeedApprove(newValue: boolean) { if (this.isDocumentsNeedApprove != newValue) { this.isDocumentsNeedApprove = newValue; this.MarkAsDirty("IsDocumentsNeedApprove"); } }
 
     private baseShipmentNumber: string;
     public get BaseShipmentNumber() { return this.baseShipmentNumber; }

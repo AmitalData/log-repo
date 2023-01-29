@@ -6,7 +6,7 @@ import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
 import { WorkFlowInstanceActivityList } from 'Workflow/EntityLists/WorkFlowInstanceActivityList';
-import { ApiQueryFiltersBuilder } from 'Workflow/Models/ApiQueryFiltersBuilder';
+import { ApiQueryFiltersBuilder } from 'Workflow/Utilities/ApiQueryFiltersBuilder';
 import { WorkFlowInstanceActivityListService } from 'Workflow/Services/StandardLists/WorkFlowInstanceActivityListService';
 import { WorkFlowInstanceVariableListService } from 'Workflow/Services/StandardLists/WorkFlowInstanceVariableListService';
 

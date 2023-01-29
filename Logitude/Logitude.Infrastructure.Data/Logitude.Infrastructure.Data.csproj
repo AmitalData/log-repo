@@ -88,6 +88,7 @@
     <Compile Include="EntityKeys\BIReportsTypeKeys.cs" />
     <Compile Include="EntityKeys\BusinessProcessQueueKeys.cs" />
     <Compile Include="EntityKeys\BusinessRoleKeys.cs" />
+    <Compile Include="EntityKeys\ContainerSettingKeys.cs" />
     <Compile Include="EntityKeys\DigitalFieldSecurityKeys.cs" />
     <Compile Include="EntityKeys\DigitalPortalScreenKeys.cs" />
     <Compile Include="EntityKeys\DigitalPreDefinedComponentKeys.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="EntityListQueryServices\BIReportsTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\BusinessProcessQueueListQueryService.cs" />
     <Compile Include="EntityListQueryServices\BusinessRoleListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ContainerSettingListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DigitalFieldSecurityListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DigitalPortalScreenListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DigitalPreDefinedComponentListQueryService.cs" />
@@ -127,6 +129,7 @@
     <Compile Include="EntityListQueryServices\Generated\BIReportsTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BusinessProcessQueueListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BusinessRoleListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ContainerSettingListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DigitalFieldSecurityListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DigitalPortalScreenListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DigitalPreDefinedComponentListQueryService.Generated.cs" />
@@ -157,6 +160,7 @@
     <Compile Include="EntityLists\Generated\BIReportsTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\BusinessProcessQueueList.Generated.cs" />
     <Compile Include="EntityLists\Generated\BusinessRoleList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ContainerSettingList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DigitalFieldSecurityList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DigitalPortalScreenList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DigitalPreDefinedComponentList.Generated.cs" />
@@ -171,6 +175,7 @@
     <Compile Include="EntityLists\Generated\TeamMemberBusinessRoleList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ToggleList.Generated.cs" />
     <Compile Include="EntityMapping\AuditLogMap.cs" />
+    <Compile Include="EntityMapping\ContainerSettingMap.cs" />
     <Compile Include="EntityMapping\DigitalFieldSecurityMap.cs" />
     <Compile Include="EntityMapping\DigitalPortalScreenMap.cs" />
     <Compile Include="EntityMapping\DigitalPreDefinedComponentMap.cs" />
@@ -203,6 +208,7 @@
     <Compile Include="EntityPOCOs\BIReportsType.cs" />
     <Compile Include="EntityPOCOs\BusinessProcessQueue.cs" />
     <Compile Include="EntityPOCOs\BusinessRole.cs" />
+    <Compile Include="EntityPOCOs\ContainerSetting.cs" />
     <Compile Include="EntityPOCOs\DigitalFieldSecurity.cs" />
     <Compile Include="EntityPOCOs\DigitalPortalScreen.cs" />
     <Compile Include="EntityPOCOs\DigitalPreDefinedComponent.cs" />
@@ -232,6 +238,7 @@
     <Compile Include="Repsitories\BIReportsExecutionLogRepository.cs" />
     <Compile Include="Repsitories\BIReportsTypeRepository.cs" />
     <Compile Include="Repsitories\BusinessProcessQueueRepository.cs" />
+    <Compile Include="Repsitories\ContainerSettingRepository.cs" />
     <Compile Include="Repsitories\DigitalFieldSecurityRepository.cs" />
     <Compile Include="Repsitories\DigitalPortalScreenRepository.cs" />
     <Compile Include="Repsitories\DigitalPreDefinedComponentRepository.cs" />
@@ -249,6 +256,7 @@
     <Compile Include="Repsitories\Generated\BIReportsTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\BusinessProcessQueueRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\BusinessRoleRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\ContainerSettingRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DigitalFieldSecurityRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DigitalPortalScreenRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DigitalPreDefinedComponentRepository.Generated.cs" />

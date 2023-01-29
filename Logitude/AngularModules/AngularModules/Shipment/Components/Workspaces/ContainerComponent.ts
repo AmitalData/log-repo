@@ -1,0 +1,195 @@
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
+import { ContainersFUDomainService, ContainersFUSummary } from '../../Services/ContainersFUDomainService';
+import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ListComponentArgs } from '../../../Infrastructure/Args';
+import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
+import { FeatureToggleList } from '../../../Infrastructure/EntityLists/FeatureToggleList';
+
+
+@Component({
+
+    templateUrl: './ContainerComponent.html',
+})
+
+export class ContainerComponent implements OnInit {
+
+    onUserQueriesBackComplete(arg: any) { }
+
+    private myDomainService: ContainersFUDomainService;
+    @Output() ReloadUserQueries = new EventEmitter();
+    public IsResourcesReady: boolean = false;
+    public BackButtonTitle: string;
+    private CurrentSession = SessionLocator.SelectedSession;
+
+    constructor(private _entityResourceService: EntityResourceService) {
+        this.myDomainService = new ContainersFUDomainService();
+        this.BackButtonTitle = TextCodeTranslator.Translate("General.MH.Containers");
+    }
+
+    ngOnInit() {
+        this._entityResourceService.getEntityResourceByTableName("Container", 0).subscribe((response: any) => {
+            this._entityResourceService.getEntityResourceByTableName("Container", 0).subscribe((response: any) => {
+                this.IsResourcesReady = true;
+                this.LoadAllScreenData();
+                this.SetQueriesVisibility();
+                this.SetContainersQueriesVisibility();
+            });
+        });
+    }
+
+    EditShipment(entity: any) {
+
+    }
+
+    RefreshButtonClicked() {
+        this.LoadAllScreenData();
+    }
+
+    LoadAllScreenData() {
+        this.LoadQueriesCounts();
+        this.ReloadUsersQuery();
+    }
+
+    ReloadUsersQuery() {
+        this.ReloadUserQueries.emit();
+    }
+
+    public IsContainersToggleFeatureUp: boolean = false;
+    public IsContainersFeatureActivated: boolean = false;
+    private SetContainersQueriesVisibility() {
+        this.IsContainersToggleFeatureUp = false;
+        this.IsContainersFeatureActivated = false;
+
+        var isOceanInsightsContainersFeatureToggleUp: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0];
+        if (isOceanInsightsContainersFeatureToggleUp && (this.IsQueryVisible_AllContainers || this.IsQueryVisible_ClosedContainers || this.IsQueryVisible_Containers || this.IsQueryVisible_CancelledContainers)) {
+            this.IsContainersToggleFeatureUp = true;
+        }
+
+        if (FeatureLocator.HasFeaturePermession("Container", "ContainersActivated")) {
+            this.IsContainersFeatureActivated = true;
+        }
+    }
+
+    public IsQueryVisible_MyViewsGroup: boolean = false;
+    public IsQueryVisible_AllContainers: boolean = false;
+    public IsQueryVisible_ClosedContainers: boolean = false;
+    public IsQueryVisible_Containers: boolean = false;
+    public IsQueryVisible_CancelledContainers: boolean = false;
+    public IsQueryVisible_PendingPOLDepartureView: boolean = false;
+    public IsQueryVisible_InTransitNewView: boolean = false;
+    public IsQueryVisible_InTransitTransshipmentsView: boolean = false;
+    public IsQueryVisible_PendingGateOutView: boolean = false;
+    public IsQueryVisible_PendingEmptyReturnView: boolean = false;
+    public IsQueryVisible_ExceptionsView: boolean = false;
+    private SetQueriesVisibility() {
+        this.IsQueryVisible_MyViewsGroup = FeatureLocator.HasFeaturePermession("General", "BUILDQUERIES") ? true : false;
+        this.IsQueryVisible_AllContainers = FeatureLocator.HasFeaturePermession("Container", "Container.Q.AllContainers") ? true : false;
+        this.IsQueryVisible_ClosedContainers = FeatureLocator.HasFeaturePermession("Container", "Container.Q.ClosedContainers") ? true : false;
+        this.IsQueryVisible_Containers = FeatureLocator.HasFeaturePermession("Container", "Container.Q.Containers") ? true : false;
+        this.IsQueryVisible_CancelledContainers = FeatureLocator.HasFeaturePermession("Container", "Container.Q.CancelledContainers") ? true : false;
+
+        this.IsQueryVisible_PendingPOLDepartureView = FeatureLocator.HasFeaturePermession("Container", "Container.Q.PendingPOLDeparture") ? true : false;
+        this.IsQueryVisible_InTransitNewView = FeatureLocator.HasFeaturePermession("Container", "Container.Q.InTransitNew") ? true : false;
+        this.IsQueryVisible_InTransitTransshipmentsView = FeatureLocator.HasFeaturePermession("Container", "Container.Q.InTransitTransshipments") ? true : false;
+
+        this.IsQueryVisible_PendingGateOutView = FeatureLocator.HasFeaturePermession("Container", "Container.Q.PendingGateOut") ? true : false;
+        this.IsQueryVisible_PendingEmptyReturnView = FeatureLocator.HasFeaturePermession("Container", "Container.Q.PendingEmptyReturn") ? true : false;
+        this.IsQueryVisible_ExceptionsView = FeatureLocator.HasFeaturePermession("Container", "Container.Q.Exceptions") ? true : false;
+
+
+    }
+    public ContainersCount: string;
+    LoadQueriesCounts() {
+        this.myDomainService.GetQueriesCounts().subscribe((myResponse: ServiceResponse) => {
+            if (myResponse != null) {
+                if (!myResponse.HasError) {
+                    var myResult: ContainersFUSummary = myResponse.Result;
+
+                    if (myResult != null) {
+                        this.ContainersCount = myResult.ContainersCount > 10000 ? "10000+" : myResult.ContainersCount.toString();
+                    }
+                }
+            }
+        });
+    }
+
+
+    ViewQuery(myQueryCode: string) {
+        if (myQueryCode != null) {
+            var queryCode = myQueryCode;
+            var objectTableName = "Container";
+            switch (myQueryCode) {
+                case "All Containers": {
+                    ServiceLocator.SendTotangoUserActivity("Container", "All Containers");
+                    break;
+                }
+                case "Containers": {
+                    ServiceLocator.SendTotangoUserActivity("Container", "Containers");
+                    break;
+                }
+                case "Cancelled Containers": {
+                    ServiceLocator.SendTotangoUserActivity("Container", "Cancelled Containers");
+                    break;
+                }
+                case "Closed Containers": {
+                    ServiceLocator.SendTotangoUserActivity("Container", "Closed Containers");
+                    break;
+                }
+
+                case "PendingPOLDeparture": {
+                    ServiceLocator.SendTotangoUserActivity("Container", "PendingPOLDeparture");
+                    break;
+                }
+
+                case "InTransitNew": {
+                    ServiceLocator.SendTotangoUserActivity("Container", "InTransitNew");
+                    break;
+                }
+
+                case "InTransitTransshipments": {
+                    ServiceLocator.SendTotangoUserActivity("Container", "InTransitTransshipments");
+                    break;
+                }
+
+                case "PendingGateOut": {
+                    ServiceLocator.SendTotangoUserActivity("Container", "PendingGateOut");
+                    break;
+                }
+
+                case "PendingEmptyReturn": {
+                    ServiceLocator.SendTotangoUserActivity("Container", "PendingEmptyReturn");
+                    break;
+                }
+
+                case "Exceptions": {
+                    ServiceLocator.SendTotangoUserActivity("Container", "Exceptions");
+                    break;
+                }
+
+
+            }
+
+            var listArgs = new ListComponentArgs();
+            listArgs.QueryCode = myQueryCode;
+            listArgs.ObjectTableName = objectTableName;
+            listArgs.BackButtonTitle = this.BackButtonTitle;
+
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                .then(cmpRef => {
+
+                    cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                        this.LoadAllScreenData()
+                    });
+
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run(listArgs);
+                    this.CurrentSession.AddMenuReference(cmpRef);
+                });
+        }
+    }
+}

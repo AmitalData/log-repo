@@ -222,6 +222,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string ShipmentReceivableStatusName { get; set; }
         public string ShipmentPayableStatusName { get; set; }
         public bool IsCancelled { get; set; }
+        public bool IsDocumentsNeedApprove { get; set; }
         public DateTime? CancelledDate { get; set; }
         public bool IsAccountingClosed { get; set; }
         public DateTime AccessDate { get; set; }

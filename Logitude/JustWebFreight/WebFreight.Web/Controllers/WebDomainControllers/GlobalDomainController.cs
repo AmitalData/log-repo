@@ -38,6 +38,22 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 {
     public class GlobalDomainController : ApiController
     {
+        public HttpResponseMessage GetCheckDigitalPortalAddsOn(int tenant)
+        {
+            try
+            {
+                TenantAddOnRepository tenantAddOnRepository = new TenantAddOnRepository(tenant);
+                var digitalPortalPackageCode = "DGP";
+                var addOn = tenantAddOnRepository.GetSingleTenantAddOnByPackageCode(digitalPortalPackageCode, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, addOn);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetCheckInttraAddsOn()
         {
             try

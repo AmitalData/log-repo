@@ -38,7 +38,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;58b3&quot;"
+  Code="&quot;d85a&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5641,6 +5641,12 @@
       DefaultText="&quot;Deployment Package&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MH.Containers&quot;"
+      DefaultText="&quot;Containers&quot;"
+      LocalDefaultText="&quot;Containers&quot;"
+      TextCodeTypeCode="&quot;MH&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -7944,6 +7950,15 @@
       FeatureTypeCode="&quot;MENU&quot;"
       FeatureTextCodeCode="&quot;General.Features.PORTGROUPS&quot;"
       FeatureDefaultText="&quot;Port Groups&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;CONTAINERS&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.CONTAINERS&quot;"
+      FeatureDefaultText="&quot;Containers&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

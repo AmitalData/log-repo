@@ -8,7 +8,6 @@ import { FieldsTranslations, GeneralDomainService } from '../../../../Infrastruc
 import { AppTool } from '../../../../Infrastructure/Tools';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
-import { ObjectTables } from '../../../../Workflow/Models/ObjectTables';
 import { CustomizationObjectTableService } from '../../ExternalService/CustomizationObjectTableService';
 import { CustomizationEditComponent } from './CustomizationEditComponent';
 

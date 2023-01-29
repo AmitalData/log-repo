@@ -1,4 +1,5 @@
-﻿using Simplog.Data.ShipmentsModel.EntityPOCOs;
+﻿using Simplog.Data.Helpers;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
@@ -41,19 +42,31 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                     }
                     if (item.FieldName == "PendingPOLDepartureFilter")
                     {
-                        queryableData = queryableData.Where(d => d.ActualPODDeparture == null && d.EstimatedPOLVesselDeparture != null && d.ActualPODVesselArrival == null);
+                       
+                        DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(Tenant).Date;
+                        DateTime twoDaysAgoDate = todayDate.AddDays(-2);
+
+                        queryableData = from d in queryableData
+                                        where d.ActualPOLVesselDeparture == null 
+                                        && d.EstimatedPOLVesselDeparture != null
+                                        && (d.EstimatedPOLVesselDeparture <= twoDaysAgoDate)
+                                        select d;
+                       // queryableData = queryableData.Where(d => d.ActualPODDeparture == null && d.EstimatedPOLVesselDeparture != null && d.ActualPODVesselArrival == null);
                     }
                     if (item.FieldName == "InTransitFilter")
                     {
-                        queryableData = queryableData.Where(d => d.ActualPOLVesselDeparture != null && (d.TransshipmentCount == 0 || d.TransshipmentCount == null) && d.ActualPODVesselArrival == null);
+                        DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(Tenant).Date;
+                        queryableData = queryableData.Where(d => d.ActualPOLVesselDeparture != null && d.TransshipmentCount == 0 && d.ActualPODVesselArrival == null && d.EstimatedPODVesselArrival != todayDate);
+                        //queryableData = queryableData.Where(d => d.ActualPOLVesselDeparture != null && (d.TransshipmentCount == 0 || d.TransshipmentCount == null) && d.ActualPODVesselArrival == null);
                     }
                     if (item.FieldName == "InTransitwithTransshipmentsFilter")
                     {
-                        queryableData = queryableData.Where(d => d.ActualPOLVesselDeparture != null && (d.TransshipmentCount > 0 ) && d.ActualPODVesselArrival == null);
+                        DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(Tenant).Date;
+                        queryableData = queryableData.Where(d => d.ActualPOLVesselDeparture != null && (d.TransshipmentCount > 0 ) && d.ActualPODVesselArrival == null && d.EstimatedPODVesselArrival == todayDate);
                     }
                     if (item.FieldName == "PendingGateOutFilter")
                     {
-                        queryableData = queryableData.Where(d => d.ActualPODVesselArrival != null &&  d.GateOut == null);
+                        queryableData = queryableData.Where(d => d.ActualPODVesselArrival != null &&  d.GateOut == null && d.ActualPODDischarge != null);
                     }
                     if (item.FieldName == "PendingEmptyReturnFilter")
                     {

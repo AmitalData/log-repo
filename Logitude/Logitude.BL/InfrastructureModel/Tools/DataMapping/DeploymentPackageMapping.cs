@@ -35,7 +35,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             entityPOCO.Description = entityPM.Description;
             entityPOCO.DirectionId = entityPM.DirectionId;
             entityPOCO.VersionId = entityPM.VersionId;
-            MapDeploymentPackageDetails(entityPM);
             BuildSearchFields(entityPM, entityPOCO);
         }
 
@@ -46,14 +45,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Name);
             entityPM.SearchFields = mySearchFields;
             entityPOCO.SearchFields = mySearchFields;
-        }
-        public static void MapDeploymentPackageDetails(DeploymentPackagePM entityPM)
-        {
-            
-            entityPM.DeploymentPackageDetails.Name = entityPM.Name;
-            entityPM.DeploymentPackageDetails.Code = entityPM.Code;
-            entityPM.DeploymentPackageDetails.Description = entityPM.Description;
-
         }
 
     }

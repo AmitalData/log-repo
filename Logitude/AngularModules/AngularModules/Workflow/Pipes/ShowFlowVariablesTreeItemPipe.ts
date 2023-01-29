@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from "@angular/core";
 import { FieldTypes } from "Workflow/Constants/FieldTypes";
 import { SetValueOperators } from "Workflow/Constants/SetValueOperators";
 import { Condition } from "Workflow/Models/Condition";
-import { FlowVariablesTreeList } from "Workflow/Models/FlowVariablesTreeList";
+import { FlowVariablesTreeList } from "Workflow/TreeLists/FlowVariablesTreeList";
 import { SetValue } from "Workflow/Models/SetValue";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 

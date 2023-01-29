@@ -8,31 +8,35 @@ using Simplog.Server.Infrastructure;
 
 namespace Simplog.Data.InfrastructureModel.Repositories
 {
-    public class EntityLastActivityRepository:IRepository<EntityLastActivity>
+    public class EntityLastActivityRepository : IRepository<EntityLastActivity>
     {
 
         IWebFreightContext webFreightContext;
+        IWebFreightContext webFreightSecondContext;
         public EntityLastActivityRepository()
         {
             webFreightContext = new WebFreightContext();
 
+            webFreightSecondContext = new WebFreightContext();
         }
 
         public EntityLastActivityRepository(IWebFreightContext context)
         {
             webFreightContext = context;
+            webFreightSecondContext = context;
         }
         public EntityLastActivityRepository(int tenant)
         {
             webFreightContext = WebFreightContext.GetContext(tenant);
+            webFreightSecondContext = WebFreightContext.GetSecondaryContext(tenant);
         }
 
         public IQueryable<EntityLastActivity> GetEntityLastActivitiesForUser(string userId, int tenant)
         {
             DateTime present = DateTime.Now.Date;
             IQueryable<EntityLastActivity> entityLastAccesses = from a in context.EntityLastActivities
-                                                              where a.UserId == userId && a.Tenant == tenant && a.ActivityDate < present
-                                                              select a;
+                                                                where a.UserId == userId && a.Tenant == tenant && a.ActivityDate < present
+                                                                select a;
             return entityLastAccesses;
         }
 
@@ -55,13 +59,13 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             IQueryable<EntityLastActivity> lastActivitiesQuery = null;
             if (tenant != 65)
             {
-                lastActivitiesQuery = (from a in context.EntityLastActivities.Include("ActivityType").Include("User.Contact")
+                lastActivitiesQuery = (from a in secondContext.EntityLastActivities.Include("ActivityType").Include("User.Contact")
                                        where a.Tenant == tenant && a.UserId == userId && a.ObjectTableId == objectTableId
                                        select a).OrderByDescending(d => d.ActivityDate);
             }
             else
             {
-                lastActivitiesQuery = (from a in context.EntityLastActivities.Include("ActivityType").Include("User.Contact")
+                lastActivitiesQuery = (from a in secondContext.EntityLastActivities.Include("ActivityType").Include("User.Contact")
                                        where a.Tenant == tenant && a.ObjectTableId == objectTableId
                                        select a).OrderByDescending(d => d.ActivityDate);
             }
@@ -130,6 +134,10 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         public IWebFreightContext context
         {
             get { return webFreightContext; }
+        }
+        public IWebFreightContext secondContext
+        {
+            get { return webFreightSecondContext; }
         }
 
         public void SubmitChanges()

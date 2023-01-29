@@ -138,7 +138,7 @@
                           <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">{{'Journal.F.DocumentDate' | TextCodeTranslationPipe}}</td>
 
                           <td style="width: 180px;">
-                            <LogDatePicker [ObjectFieldName]="'DocumentDate'" [ObjectTableName]="ObjectTableName"
+                            <LogDatePicker [ObjectFieldName]="'DocumentDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="DocumentDate"
                                            [DataContext]="DataContext" [HideColumns]="true" [ForceFocus]="forceFocus"></LogDatePicker>
                           </td>
                           <td>
@@ -150,7 +150,7 @@
                           <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">{{'Journal.F.DueDate' | TextCodeTranslationPipe}}</td>
 
                           <td style="width: 180px;">
-                            <LogDatePicker [ObjectFieldName]="'DueDate'" [ObjectTableName]="ObjectTableName"
+                            <LogDatePicker [ObjectFieldName]="'DueDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="DueDate"
                                            [DataContext]="DataContext" [HideColumns]="true" [ForceFocus]="forceFocus"></LogDatePicker>
                           </td>
                           <td>

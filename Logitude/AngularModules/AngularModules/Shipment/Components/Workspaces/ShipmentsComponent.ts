@@ -80,6 +80,7 @@ export class ShipmentsComponent {
     public IsQueryVisible_MyFollowUps: boolean = false;
     public IsQueryVisible_AllShipments: boolean = false;
     public IsQueryVisible_AllMasters: boolean = false;
+    public IsQueryVisible_PendingApprovalDocuments: boolean = false;
     public IsQueryVisible_CanceledShipments: boolean = false;
     public IsQueryVisible_CreditLimitBlocked: boolean = false;
     public IsQueryVisible_FSRGroup: boolean = false;
@@ -116,8 +117,10 @@ export class ShipmentsComponent {
         this.IsQueryVisible_MyFollowUps = FeatureLocator.HasFeaturePermession("Shipment", "MYFOLLOWUPS") ? true : false;
         this.IsQueryVisible_AllShipments = FeatureLocator.HasFeaturePermession("Shipment", "ALLSHIPMENTS") ? true : false;
         this.IsQueryVisible_AllMasters = FeatureLocator.HasFeaturePermession("Shipment", "ALLMASTERS") ? true : false;
+        this.IsQueryVisible_PendingApprovalDocuments = FeatureLocator.HasFeaturePermession("Shipment", "Shipment.Q.PendingApprovalDocuments") ? true : false;
+
         this.IsQueryVisible_CanceledShipments = FeatureLocator.HasFeaturePermession("Shipment", "CANCELLEDSHIPMENTS") ? true : false;
-        if (this.IsQueryVisible_AllFollowUps || this.IsQueryVisible_MyFollowUps || this.IsQueryVisible_AllShipments || this.IsQueryVisible_AllMasters || this.IsQueryVisible_CanceledShipments) {
+        if (this.IsQueryVisible_AllFollowUps || this.IsQueryVisible_MyFollowUps || this.IsQueryVisible_AllShipments || this.IsQueryVisible_AllMasters || this.IsQueryVisible_CanceledShipments || this.IsQueryVisible_PendingApprovalDocuments) {
             this.IsQueryVisible_OthersGroup = true;
         }
 
@@ -176,6 +179,7 @@ export class ShipmentsComponent {
     public ShippingInstructionsLast7DaysCount: string;
     public ContainerStatusLast7DaysCount: string;
     public EBookingInProgressCount: string;
+    public PendingApprovalDocumentsCount: string;
 
     LoadQueriesCounts() {
         if (this.IsCloudDeployment == false) {
@@ -200,6 +204,7 @@ export class ShipmentsComponent {
                             this.ShippingInstructionsLast7DaysCount = myResult.ShippingInstructionsLast7DaysCount > 1000 ? "1000+" : myResult.ShippingInstructionsLast7DaysCount.toString();
                             this.ContainerStatusLast7DaysCount = myResult.ContainerStatusLast7DaysCount > 1000 ? "1000+" : myResult.ContainerStatusLast7DaysCount.toString();
                             this.EBookingInProgressCount = myResult.EBookingInProgressCount > 1000 ? "1000+" : myResult.EBookingInProgressCount.toString();
+                            this.PendingApprovalDocumentsCount = myResult.PendingApprovalDocumentsCount > 1000 ? "1000+" : myResult.PendingApprovalDocumentsCount.toString();
                         }
                     }
                 }
@@ -556,6 +561,11 @@ export class ShipmentsComponent {
                     {
                         displayTitle = TextCodeTranslator.Translate("Shipment.Q.ExpectedDeparturesNotTransmitted");
                         this.SetDirectionTransportFilter();
+                        break;
+                    }
+                case "Pending Approval Documents":
+                    {
+                        displayTitle = "Pending Approval Documents";
                         break;
                     }
 

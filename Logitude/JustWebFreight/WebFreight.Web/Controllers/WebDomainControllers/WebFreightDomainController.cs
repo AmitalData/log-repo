@@ -39,6 +39,7 @@ using Microsoft.Azure.Management.ResourceManager;
 using Simplog.Server.Infrastructure;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
+using Simplog.Global.Data.GlobalModel.Repositories;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -322,12 +323,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         }
 
         [HttpGet]
-        public async Task<HttpResponseMessage> GetGenerateDigitalPortalDomainAsync(string customerURL)
+        public async Task<HttpResponseMessage> GetGenerateDigitalPortalDomainAsync(string customerURL, int tenant)
         {
             try
             {
                 customerURL = JsonConvert.DeserializeObject<string>(customerURL);
-                await RunAddingDNSRecordAsync(customerURL);
+                await RunAddingDNSRecordAsync(customerURL, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, "Success");
             }
             catch (Exception ex)
@@ -336,33 +337,19 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        private static bool IsValidDomain(string subDomain)
-        {
-            if (string.IsNullOrWhiteSpace(subDomain))
-            {
-                return false;
-            }
-
-            var fullDomain = $"{subDomain}.logitudeworld.com";
-
-            // Regex to check valid domain name.
-            var pattern = "^(?!-)[A-Za-z0-9-]+([\\-\\.]{1}[a-z0-9]+)*\\.[A-Za-z]{2,6}$";
-
-            var regex = new Regex(pattern);
-
-            if (regex.Match(fullDomain).Success)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        private static async Task RunAddingDNSRecordAsync(string customerURL)
+       
+        private static async Task RunAddingDNSRecordAsync(string customerURL, int tenant)
         {
             if (!IsValidDomain(customerURL))
             {
                 throw new Exception("Invalid domain name");
+            }
+
+            var isSubDomainIOfTenantManagementUsed = IsSubDomainIOfTenantManagementUsed(customerURL, tenant);
+           
+            if (isSubDomainIOfTenantManagementUsed.Item1)
+            {
+                throw new Exception("The domain already defined for tenant No. " + isSubDomainIOfTenantManagementUsed.Item2);
             }
 
             var tenantId =  "a46b1446-9af4-4079-87ad-3304ee9ed758";
@@ -401,6 +388,42 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 throw e;
             }
+        }
+
+        private static bool IsValidDomain(string subDomain)
+        {
+            if (string.IsNullOrWhiteSpace(subDomain))
+            {
+                return false;
+            }
+
+            if (subDomain.Contains("."))
+            {
+                return false;
+            }
+
+            var fullDomain = $"{subDomain}.logitudeworld.com";
+
+            // Regex to check valid domain name.
+            var pattern = "^(?!-)[A-Za-z0-9-]+([\\-\\.]{1}[a-z0-9]+)*\\.[A-Za-z]{2,6}$";
+
+            var regex = new Regex(pattern);
+
+            if (regex.Match(fullDomain).Success)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private static Tuple<bool, int?> IsSubDomainIOfTenantManagementUsed(string subDomain, int tenant)
+        {
+            var fullDomain = $"{subDomain}.logitudeworld.com";
+
+            TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
+            var tenantManagement = tenantManagementRepository.CheckSubDomainTenantManagement(fullDomain, tenant);
+            return tenantManagement;
         }
 
         #region SendBlockToServer

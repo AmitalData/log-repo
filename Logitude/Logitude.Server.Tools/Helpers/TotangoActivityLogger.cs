@@ -13,6 +13,13 @@ using Simplog.Server.Infrastructure.Helpers;
 
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System.Data.SqlClient;
+using System.Data;
+using Simplog.Data.InfrastructureModel;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using System.Data.Common;
+using System.Transactions;
 
 namespace Logitude.Server.Tools.Helpers
 {
@@ -98,31 +105,88 @@ namespace Logitude.Server.Tools.Helpers
             // return wc.DownloadString(new Uri(sRequest));
         }
 
-
-        private static void AddContactActivityLog(string cardId, string partnerTypeId, string contactId, string module, string activity, int tenant, bool isSharedLogisticsContact)
+        private static DbConnection GetLogsDBConnection()
+        {
+            var ConfigConnectionString = ConfigurationManager.ConnectionStrings["SystemLogsStr"].ConnectionString;
+            return DatabaseInitializer.GetConnection(ConfigConnectionString);
+        }
+        public static void AddContactActivityLog(string cardId, string partnerTypeId, string contactId, string module, string activity, int tenant, bool isSharedLogisticsContact,string via = "")
         {
             ContactRepository contactRepository = new ContactRepository(tenant);
             Contact contact = contactRepository.GetSingleContact(contactId, tenant);
 
             try
             {
-                ContactActivityLogRepository contactActivityLogRepository = new ContactActivityLogRepository();
-                ContactActivityLog log = new ContactActivityLog()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    ContactId = contactId,
-                    Module = module,
-                    Activity = activity,
-                    LogDateTime = TenantServerConfigration.GetCurrentDateTime(tenant),
-                    GMTLogDateTime = DateTime.Now,
-                    Tenant = tenant,
-                    IsSharedLogisticsContact = isSharedLogisticsContact,
-                    CardId = cardId,
-                    PartnerTypeId = partnerTypeId,
-                };
+                string strConnString = GetLogsDBConnection().ConnectionString;
+                string query = "INSERT INTO ContactActivityLogs " +
+                    "(Id, ContactId, Module, Activity, LogDateTime, GMTLogDateTime,Tenant,IsSharedLogisticsContact,CardId,PartnerTypeId,Via) " +
+                 "VALUES (@Id, @ContactId, @Module, @Activity, @LogDateTime, @GMTLogDateTime, @Tenant, @IsSharedLogisticsContact, @CardId, @PartnerTypeId, @Via) ";
 
-                contactActivityLogRepository.Add(log);
-                contactActivityLogRepository.SubmitChanges();
+                using (SqlConnection cn = new SqlConnection(strConnString))
+                {
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.Add("@Id", SqlDbType.VarChar, 50).Value = Guid.NewGuid().ToString();
+                    if (contactId != null)
+                    {
+                        cmd.Parameters.Add("@ContactId", SqlDbType.VarChar, 50).Value = contactId;
+                    }
+                    else
+                    {
+                        cmd.Parameters.Add("@ContactId", SqlDbType.VarChar, 50).Value = DBNull.Value;
+                    }
+                    cmd.Parameters.Add("@Module", SqlDbType.VarChar, 50).Value = module;
+                    cmd.Parameters.Add("@Activity", SqlDbType.VarChar, 50).Value = activity;
+                    cmd.Parameters.Add("@LogDateTime", SqlDbType.DateTime).Value = TenantServerConfigration.GetCurrentDateTime(tenant);
+                    cmd.Parameters.Add("@GMTLogDateTime", SqlDbType.DateTime).Value = DateTime.Now;
+                    cmd.Parameters.Add("@Tenant", SqlDbType.Int).Value = tenant;
+                    cmd.Parameters.Add("@IsSharedLogisticsContact", SqlDbType.Bit).Value = isSharedLogisticsContact;
+                    if (cardId != null)
+                    {
+                        cmd.Parameters.Add("@CardId", SqlDbType.VarChar, 50).Value = cardId;
+                    }
+                    else
+                    {
+                        cmd.Parameters.Add("@CardId", SqlDbType.VarChar, 50).Value = DBNull.Value;
+                    }
+                    if (partnerTypeId != null)
+                    {
+                        cmd.Parameters.Add("@PartnerTypeId", SqlDbType.VarChar, 50).Value = partnerTypeId;
+                    }
+                    else
+                    {
+                        cmd.Parameters.Add("@PartnerTypeId", SqlDbType.VarChar, 50).Value = DBNull.Value;
+                    }
+                    if (via != null)
+                    {
+                        cmd.Parameters.Add("@Via", SqlDbType.VarChar, 50).Value = via;
+                    }
+                    else
+                    {
+                        cmd.Parameters.Add("@Via", SqlDbType.VarChar, 50).Value = DBNull.Value;
+                    }
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandTimeout = 5;
+                    cn.Open();
+                    var output = cmd.ExecuteNonQuery();
+                    cn.Close();
+                }
+                //ContactActivityLogRepository contactActivityLogRepository = new ContactActivityLogRepository();
+                //ContactActivityLog log = new ContactActivityLog()
+                //{
+                //    Id = Guid.NewGuid().ToString(),
+                //    ContactId = contactId,
+                //    Module = module,
+                //    Activity = activity,
+                //    LogDateTime = TenantServerConfigration.GetCurrentDateTime(tenant),
+                //    GMTLogDateTime = DateTime.Now,
+                //    Tenant = tenant,
+                //    IsSharedLogisticsContact = isSharedLogisticsContact,
+                //    CardId = cardId,
+                //    PartnerTypeId = partnerTypeId,
+                //};
+
+                //contactActivityLogRepository.Add(log);
+                //contactActivityLogRepository.SubmitChanges();
             }
             catch (Exception ex)
             {
