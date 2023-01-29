@@ -71,6 +71,8 @@ namespace WebFreight.Web.Helpers.ImporterShipmentOrders
                 ShipmentPM shipment = shipmentQuery.GetSingleShipmentPMByNumber(shipmentOrder.CustomerShipmentNumber, tenant);
                 if (shipment == null)
                     throw new Exception("Shipment number does not exist");
+                if (!shipment.IsShipmentOrder)
+                    throw new Exception("The shipment order is already merged into Shipment. For update it, please update the shipment instead of the shipment order.");
                 isNew = string.IsNullOrEmpty(shipment.ForwarderShipmentNumber);
                 shipment = shipmentOrderAmMap.Map(shipmentOrder, shipment);
                 SubmitShipmentUpdate(shipment);
