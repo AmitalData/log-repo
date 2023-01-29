@@ -3452,7 +3452,7 @@ export class PaymentMethodModel extends BaseComponent {
                     !AppTool.IsNullOrEmpty(this.parent.MyGoldPaymentDefaults.CompanyDefaultaboveamountagentCash_CGG_ABOVE_AGT_C)
                     &&
                     //וסכום המיסים קטן מסכום שהוגדר בדיפולט "הגדרת סכום שמעל יבוצע תשלום בקופה סוכן"
-                    aboveAmountAgentCash < this.parent.DeclarationPM.TotalTax 
+                    this.parent.DeclarationPM.TotalTax < aboveAmountAgentCash
                 )
                 )
         ) {
@@ -3470,7 +3470,7 @@ export class PaymentMethodModel extends BaseComponent {
             AppTool.IsNullOrEmpty(this.parent.MyGoldPaymentDefaults.CustomerDefaultGoldPay_CIM_GOLD_PAY) &&
             !AppTool.IsNullOrEmpty(this.parent.MyGoldPaymentDefaults.CompanyDefaultaboveamountagentCash_CGG_ABOVE_AGT_C) &&
             aboveAmountAgentCash>0 && 
-            aboveAmountAgentCash >= this.parent.DeclarationPM.TotalTax 
+            this.parent.DeclarationPM.TotalTax >= aboveAmountAgentCash
 
             ) {
             console.log("7");
