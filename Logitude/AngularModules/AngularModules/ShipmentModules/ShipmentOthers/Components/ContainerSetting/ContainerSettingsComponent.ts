@@ -260,11 +260,13 @@ export class ShippingLineItem extends BaseComponent {
     public EntityZero: ShippingLinePM;
     public Entity: ShippingLinePM;
     public DataContext: ShippingLineItem = this;
+    public Tenant: number = 0;
 
     constructor(zeroEntity: ShippingLinePM, currentEntity: ShippingLinePM) {
         super();
         this.EntityZero = zeroEntity;
         this.Entity = currentEntity;
+        this.Tenant = SessionLocator.Tenant;
     }
 
     public get Code(): string {
@@ -282,38 +284,24 @@ export class ShippingLineItem extends BaseComponent {
         return this.Entity.EnglishName;
     }
 
-    public set IsSupportsContainerTracking(value: boolean) { if (this.Entity != null) this.Entity.IsSupportsContainerTracking = value; }
+    public set IsSupportsContainerTracking(value: boolean) {
+        if (this.Tenant == 0 && this.Entity) {
+            this.Entity.IsSupportsContainerTracking = value;
+            if (!value) this.IsAutomaticRequestsSent = false;
+        }
+    }
     public get IsSupportsContainerTracking() {
-        if (this.Entity) return this.Entity.IsSupportsContainerTracking;
-        else return false;
+        if (this.Tenant == 0) return this.Entity?.IsSupportsContainerTracking ?? false;
+        else return this.EntityZero?.IsSupportsContainerTracking ?? false;
     }
 
-    public set IsAutomaticRequestsSent(value: boolean) { if (this.Entity != null) this.Entity.IsAutomaticRequestsSent = value; }
+    public set IsAutomaticRequestsSent(value: boolean) { if (this.Entity) this.Entity.IsAutomaticRequestsSent = value; }
     public get IsAutomaticRequestsSent() {
         if (this.Entity) return this.Entity.IsAutomaticRequestsSent;
         else return false;
     }
 
-
-    public set IsSupportsContainerTrackingZero(value: boolean) { if (this.EntityZero != null) this.EntityZero.IsSupportsContainerTracking = value; }
-    public get IsSupportsContainerTrackingZero() {
-        if (this.EntityZero) return this.EntityZero.IsSupportsContainerTracking;
-        else return false;
-    }
-
-    public set IsAutomaticRequestsSentZero(value: boolean) { if (this.EntityZero != null) this.EntityZero.IsAutomaticRequestsSent = value; }
-    public get IsAutomaticRequestsSentZero() {
-        if (this.EntityZero) return this.EntityZero.IsAutomaticRequestsSent;
-        else return false;
-    }
-
-    public get IsSupportsContainerTrackingEnabled() {
-        if (this.EntityZero != null) return this.EntityZero.IsSupportsContainerTracking;
-        else return false;
-    }
-
     public get IsAutomaticRequestsSentEnabled() {
-        if (this.EntityZero != null) return this.EntityZero.IsAutomaticRequestsSent;
-        else return false;
+        return this.EntityZero?.IsSupportsContainerTracking;
     }
 }

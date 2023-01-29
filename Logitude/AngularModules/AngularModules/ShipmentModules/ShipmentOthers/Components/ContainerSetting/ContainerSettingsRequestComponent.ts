@@ -8,15 +8,16 @@ import { ContainerSettingsComponent, ShippingLineItem } from "./ContainerSetting
     styleUrls: ['./ContainerSettingsComponent.scss']
 })
 
-export class ContainerSettingsRequestComponent implements OnInit{
+export class ContainerSettingsRequestComponent implements OnInit {
     @Input() DataContext!: ContainerSettingsComponent;
     @Input() ShippingLines: ShippingLineItem[] = [];
     public ObjectTableName = this.DataContext?.ObjectTableName;
     public IsVisibleForTenantZero: boolean = false;
     public ItemSource: ShippingLineItem[] = [];
+    public Tenant: number = 0;
 
     constructor() {
-        if (SessionLocator.Tenant == 0) this.IsVisibleForTenantZero = true;     
+        this.Tenant = SessionLocator.Tenant;
     }
 
     ngOnInit(): void {

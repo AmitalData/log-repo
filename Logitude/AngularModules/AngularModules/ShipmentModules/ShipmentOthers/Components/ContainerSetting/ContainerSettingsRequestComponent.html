@@ -42,11 +42,7 @@
                     <td style="width:100px; min-width:100px;max-width:100px;">Code</td>
                     <td style="width:100px; min-width:100px;max-width:100px;">SCAC Code</td>
                     <td style="width:100%; min-width:100%;max-width:100%">Name</td>
-                    <td style="width:207px; min-width:207px; max-width:207px;" *ngIf="!IsVisibleForTenantZero">Allowed
-                        Supports Container Tracking</td>
                     <td style="width:163px; min-width:163px; max-width:163px;">Supports Container Tracking</td>
-                    <td style="width:187px; min-width:187px; max-width:187px;" *ngIf="!IsVisibleForTenantZero">Allowed
-                        Automatic Requests Sent</td>
                     <td style="width:143px; min-width:143px; max-width:143px;">Automatic Requests Sent</td>
                 </tr>
             </table>
@@ -71,27 +67,14 @@
                                             </td>
 
                                             <td class="GridViewCell"
-                                                style="width: 100%; min-width: 100%;max-width: 100%;"
-                                                [ngStyle]="!IsVisibleForTenantZero && {'width': '260px','min-width': '260px','max-width': '260px'}">
+                                                style="width: 100%; min-width: 100%;max-width: 100%;">
                                                 {{item.Name}}
                                             </td>
 
                                             <td class="GridViewCell"
-                                                style="width:207px; min-width:207px; max-width:207px; padding:0;"
-                                                [ngStyle]="IsVisibleForTenantZero && {'width': '163px','min-width': '163px','max-width': '163px'}">
+                                                style="width:163px; min-width:163px; max-width:163px; padding:0;">
                                                 <div class="CenterCenter" style="width: 16px;">
-                                                    <CheckBox [IsEnabled]="IsVisibleForTenantZero"
-                                                        [IsChecked]="item.IsSupportsContainerTrackingZero"
-                                                        (Checked)="item.IsSupportsContainerTrackingZero = $event">
-                                                    </CheckBox>
-                                                </div>
-                                            </td>
-
-                                            <td class="GridViewCell"
-                                                style="width:163px; min-width:163px; max-width:163px; padding:0;"
-                                                *ngIf="!IsVisibleForTenantZero">
-                                                <div class="CenterCenter" style="width: 16px;">
-                                                    <CheckBox [IsEnabled]="item.IsSupportsContainerTrackingEnabled"
+                                                    <CheckBox [IsEnabled]="Tenant == 0"
                                                         [IsChecked]="item.IsSupportsContainerTracking"
                                                         (Checked)="item.IsSupportsContainerTracking = $event">
                                                     </CheckBox>
@@ -99,19 +82,7 @@
                                             </td>
 
                                             <td class="GridViewCell"
-                                                style="width:187px; min-width:187px; max-width:187px; padding:0;"
-                                                [ngStyle]="IsVisibleForTenantZero && {'width': '143px','min-width': '143px','max-width': '143px'}">
-                                                <div class="CenterCenter" style="width: 16px;">
-                                                    <CheckBox [IsEnabled]="IsVisibleForTenantZero"
-                                                        [IsChecked]="item.IsAutomaticRequestsSentZero"
-                                                        (Checked)="item.IsAutomaticRequestsSentZero = $event">
-                                                    </CheckBox>
-                                                </div>
-                                            </td>
-
-                                            <td class="GridViewCell"
-                                                style="width:143px; min-width:143px; max-width:143px; padding:0;"
-                                                *ngIf="!IsVisibleForTenantZero">
+                                                style="width:143px; min-width:143px; max-width:143px; padding:0;">
                                                 <div class="CenterCenter" style="width: 16px;">
                                                     <CheckBox [IsEnabled]="item.IsAutomaticRequestsSentEnabled"
                                                         [IsChecked]="item.IsAutomaticRequestsSent"
