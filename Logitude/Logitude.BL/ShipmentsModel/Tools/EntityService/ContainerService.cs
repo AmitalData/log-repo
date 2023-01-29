@@ -40,12 +40,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private ContainerRepository entityRepository;        
         private Container containerPoco { get; set; }
 
-        private List<FieldChange> FieldChanges = new List<FieldChange>();
         private AuditLogRepository AuditLogRepository;
 
         public ContainerService(IShipmentsContext shipmentsContext, int tenant)
         {
-            FieldChanges = new List<FieldChange>();
             AuditLogRepository = new AuditLogRepository(tenant);
 
             this.tenant = tenant;
@@ -55,6 +53,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         public void Create(ContainerPM entityPM)
         {
+            List<FieldChange> FieldChanges = new List<FieldChange>();
+
             this.isNewEntity = true;
             this.containerPm = entityPM;
             this.containerPm.Id = IdCounter.GetNumber("Container", tenant).ToString();
@@ -81,7 +81,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             AuditLog auditLog = null;
             if (entityPM != null && FeatureToggleHelper.HasFeatureToggle("ADL", entityPM.Tenant))
             {
-                auditLog = AddContainerAuditLogChanges(containerPoco);
+                auditLog = AddContainerAuditLogChanges(containerPoco, FieldChanges);
                 AuditLogRepository.Add(auditLog);
                 AuditLogRepository.SubmitChanges();
             }
@@ -101,6 +101,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
         public void Update(ContainerPM entityPM, ContainersExternal containersExternal = null)
         {
+            List<FieldChange> FieldChanges = new List<FieldChange>();
+
             this.isNewEntity = false;
             this.containerPm = entityPM;
 
@@ -145,7 +147,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             AuditLog auditLog = null;
             if (entityPM != null && FeatureToggleHelper.HasFeatureToggle("ADL", entityPM.Tenant))
             {
-                auditLog = AddContainerAuditLogChanges(containerPoco);
+                auditLog = AddContainerAuditLogChanges(containerPoco, FieldChanges);
                 AuditLogRepository.Add(auditLog);
                 AuditLogRepository.SubmitChanges();
             }
@@ -163,7 +165,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             MapShipmentConcurrencyFields();
 
         }
-        private AuditLog AddContainerAuditLogChanges(Container entityPoco)
+        private AuditLog AddContainerAuditLogChanges(Container entityPoco, List<FieldChange> FieldChanges)
         {
             ObjectTableRepository objecttableRepository = new ObjectTableRepository(entityPoco.Tenant);
             ObjectTable objecttable = objecttableRepository.GetObjectTableByName("Container", 0, true);
