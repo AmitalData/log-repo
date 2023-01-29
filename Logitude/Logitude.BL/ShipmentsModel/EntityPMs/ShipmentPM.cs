@@ -1405,6 +1405,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string MoveTypeName { get; set; }
 
         public bool IsCreatedFromAgentSharedManifest { get; set; }
+        public bool IsDocumentsNeedApprove { get; set; }
 
         public string AMSBL { get; set; }
         public string CustomFileId { get; set; }

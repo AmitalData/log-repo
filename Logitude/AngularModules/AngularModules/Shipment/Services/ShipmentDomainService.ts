@@ -1090,7 +1090,8 @@ export class ShipmentsSummary {
     public ExpectedDeparturesNotTransmittedCount: number;
     public ShippingInstructionsLast7DaysCount: number;
     public ContainerStatusLast7DaysCount: number;
-    public EBookingInProgressCount: number; 
+    public EBookingInProgressCount: number;
+    public PendingApprovalDocumentsCount: number;
 }
 export class FlightSummary {
     public Id: string;

@@ -904,7 +904,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void OpenKPIDocumentUploderQueue(DocumentsFilingPM documentFiling)
         {
-            if (IsStartingUploadShipmentDocs(documentFiling))
+            bool isStartingUploadShipmentDocs = IsStartingUploadShipmentDocs(documentFiling);
+            bool isDocumentApprovalRequired = IsDocumentApprovalRequired(documentFiling);
+
+            if (isStartingUploadShipmentDocs || isDocumentApprovalRequired)
             {
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("ShipmentDocsInUploaderQueue", documentFiling.Tenant);
@@ -914,10 +917,31 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     { "DocumentCode",  documentFiling.DocumentTypeCode },
                     { "IsDocumentUploaded", true.ToString() },
                     { "IsDocumentDeleted", false.ToString() },
-                    { "RecivedDate", documentFiling.ReceivedDate.ToString() } },
+                    { "RecivedDate", documentFiling.ReceivedDate.ToString() },
+                    { "IsApprovalRequired", isDocumentApprovalRequired.ToString() },
+                    { "IsUploadShipmentDocs", isStartingUploadShipmentDocs.ToString() },
+                },
                     documentFiling.Tenant, null, null, null, null);
             }
         }
+
+
+
+
+        private bool IsDocumentApprovalRequired(DocumentsFilingPM documentFiling)
+        {
+
+            if (IsLogboxEnvironment()) return false;
+            var shipmentObjectTable = ObjectTableRepository.GetSingleObjectTable(documentFiling.ObjectTableId, tenant, false);
+            if (shipmentObjectTable?.Name != "Shipment" || !documentFiling.IsApprovalRequired)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+
         private bool IsStartingUploadShipmentDocs(DocumentsFilingPM documentFiling)
         {
             if (IsLogboxEnvironment()) return false;

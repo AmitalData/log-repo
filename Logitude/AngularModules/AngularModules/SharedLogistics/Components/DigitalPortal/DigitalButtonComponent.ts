@@ -74,6 +74,7 @@ export class DigitalButtonComponent {
         newField.DefaultText = this.rowData.FullNameTextCodeDefaultText;
         newField.DisplayText = this.rowData.FullNameTextCodeDefaultText;
         newField.CreatedBy = SessionLocator.LoggedUserPM.EnglishName;
+        newField.ModifiedBy = SessionLocator.LoggedUserPM.EnglishName;
 
         this.digitalCustomizationService.AddCustomField(newField).subscribe((myResult) => {
             this.RefreshDateUpdated();

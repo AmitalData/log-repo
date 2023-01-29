@@ -187,5 +187,6 @@ export class AddCustomFieldRequest {
     public DefaultText: string;
     public TextCode: string;
     public CreatedBy: string;
+    public ModifiedBy: string;
     public DisplayText: string;
 }

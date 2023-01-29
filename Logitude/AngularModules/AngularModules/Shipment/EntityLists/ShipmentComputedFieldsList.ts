@@ -69,5 +69,6 @@ export class ShipmentComputedFieldsList {
 		MainCarriageATA: Date;
 		MainCarriageATD: Date;
 		PackagesQuantityAndType: string;
+		IsDocumentsNeedApprove: boolean;
 	
 }
