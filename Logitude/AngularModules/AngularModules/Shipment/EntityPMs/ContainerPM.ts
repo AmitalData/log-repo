@@ -21,7 +21,7 @@ export class ContainerPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+		            this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -1589,6 +1589,16 @@ export class ContainerPM {
     private mainCarriageToCountryCode: string;
     public get MainCarriageToCountryCode() { return this.mainCarriageToCountryCode; }
     public set MainCarriageToCountryCode(newValue: string) { if (this.mainCarriageToCountryCode != newValue) { this.mainCarriageToCountryCode = newValue; this.MarkAsDirty("MainCarriageToCountryCode"); } }
+       
+	 
+    private onCarriageETA: Date;
+    public get OnCarriageETA() { return this.onCarriageETA; }
+    public set OnCarriageETA(newValue: Date) { if (this.onCarriageETA != newValue) { this.onCarriageETA = newValue; this.MarkAsDirty("OnCarriageETA"); } }
+       
+	 
+    private onCarriageATA: Date;
+    public get OnCarriageATA() { return this.onCarriageATA; }
+    public set OnCarriageATA(newValue: Date) { if (this.onCarriageATA != newValue) { this.onCarriageATA = newValue; this.MarkAsDirty("OnCarriageATA"); } }
        
 	 
 

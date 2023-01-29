@@ -140,8 +140,8 @@ namespace WebFreight.Web.ContainerTracking
             string portId = this.GetPortId(containerUpdatedFields.LIFLocation);
             if (portId != containerPM.OnCarriageLocationPortId) return;
 
-            containerPM.EstimatedLIFArrival = containerUpdatedFields.EstimatedLIFArrival;
-            containerPM.ActualLIFArrival = containerUpdatedFields.ActualLIFArrival;
+            containerPM.OnCarriageETA = containerUpdatedFields.OnCarriageETA;
+            containerPM.OnCarriageATA = containerUpdatedFields.OnCarriageATA;
         }
 
         private Port GetPortForVizion(Location portLocation)
