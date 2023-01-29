@@ -932,12 +932,17 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
 
             if (IsLogboxEnvironment()) return false;
+            documentFiling.DocumentTypeCode = string.IsNullOrEmpty(documentFiling.DocumentTypeCode) ? this.GetDocumentTypeCodeById(documentFiling.DocumentTypeId) : documentFiling.DocumentTypeCode;
             var shipmentObjectTable = ObjectTableRepository.GetSingleObjectTable(documentFiling.ObjectTableId, tenant, false);
             if (shipmentObjectTable?.Name != "Shipment" || !documentFiling.IsApprovalRequired)
             {
                 return false;
             }
 
+            if (!(documentFiling.HasFile && documentFiling.Received))
+            {
+                return false;
+            }
             return true;
         }
 
