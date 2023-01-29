@@ -184,7 +184,7 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
                 }
             };
 
-            //ReactDOM.render(React.createElement(ReactFlowModeler, props), this.containerRef.nativeElement);
+            ReactDOM.render(React.createElement(ReactFlowModeler, props), this.containerRef.nativeElement);
         }
     }
 
