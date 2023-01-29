@@ -13,22 +13,19 @@ export class SingleEditableEntitiesTreeList {
 
     public Items: TreeSelectItem[] = [];
 
-    constructor(flowObject: any, currentNodeId: string, onlyTriggeringRecord: boolean = false) {
-        this.initialize(flowObject, currentNodeId, onlyTriggeringRecord);
+    constructor(flowObject: any, currentNodeId: string) {
+        this.initialize(flowObject, currentNodeId);
         this.initializeTreeItems();
     }
 
-    private initialize(flowObject: any, currentNodeId: string, onlyTriggeringRecord: boolean) {
+    private initialize(flowObject: any, currentNodeId: string) {
         this.FlowObject = flowObject;
         this.CurrentNodeId = currentNodeId;
-        this.OnlyTriggeringRecord = onlyTriggeringRecord;
     }
 
     private initializeTreeItems() {
         this.initializeTriggerRecordTreeSelectItem();
-        if (!this.OnlyTriggeringRecord) {
-            this.initializeGetRecordTreeSelectItems();
-        }
+        this.initializeGetRecordTreeSelectItems();
     }
 
     private initializeTriggerRecordTreeSelectItem() {
@@ -55,7 +52,7 @@ export class SingleEditableEntitiesTreeList {
         let getRecordTreeSelectItemChildren = [];
         Entities.getChildren().filter(c => c.Code !== "ARInvoice" && c.Code !== "APInvoice").filter(c => c.ParentEntityCode === entity)
             .forEach(childEntity => {
-                let itemData = { entity: childEntity.Code, nodeId: nodeId };
+                let itemData = { entity: childEntity.Code, nodeId: nodeId, isEditableEntity: true };
                 let treeSelectItemKey = treeItemPrefix + this.ItemKeySplitter + childEntity.Code;
                 let treeSelectItem = new TreeSelectItem(treeSelectItemKey, childEntity.Name, true, true, false, false, [], itemData);
                 getRecordTreeSelectItemChildren.push(treeSelectItem);
