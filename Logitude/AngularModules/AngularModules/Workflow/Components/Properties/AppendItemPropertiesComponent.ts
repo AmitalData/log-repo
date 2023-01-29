@@ -8,7 +8,7 @@ import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 import { SetValue } from "Workflow/Models/SetValue";
 import { DeclaredRecordsTreeList } from "Workflow/TreeLists/DeclaredRecordsTreeList";
 import { SetRecordFieldsTypes } from "Workflow/Constants/SetRecordFieldsTypes";
-import { FlowVariablesTreeList } from "Workflow/Models/FlowVariablesTreeList";
+import { FlowVariablesTreeList } from "Workflow/TreeLists/FlowVariablesTreeList";
 import { IsObjectTypePipe } from "Workflow/Pipes/IsObjectTypePipe";
 import { EntityLabelPipe } from "Workflow/Pipes/EntityLabelPipe";
 
@@ -118,7 +118,7 @@ export class AppendItemPropertiesComponent extends BaseComponent {
             OnlyCurrentLoopItemVariables: false,
             IsObjectVariableSelectable: false
         };
-        this.DeclaredCollectionVariablesTreeList = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId, props);
+        this.DeclaredCollectionVariablesTreeList = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props);
         var DeclaredCollectionVariablesItems = this.DeclaredCollectionVariablesTreeList.Items;
         this.SingleEditableEntitiesTreeItems = this.SingleEditableEntitiesTreeItems.concat(DeclaredCollectionVariablesItems);
     }
@@ -132,7 +132,7 @@ export class AppendItemPropertiesComponent extends BaseComponent {
             OnlyCurrentLoopItemVariables: false,
             IsObjectVariableSelectable: true
         };
-        this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId, props);
+        this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props);
         this.FlowVariablesTreeItems = this.FlowVariablesTreeList.Items;
     }
 
