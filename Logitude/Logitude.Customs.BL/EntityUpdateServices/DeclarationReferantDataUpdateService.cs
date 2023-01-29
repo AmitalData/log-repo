@@ -16,6 +16,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void OnCreating(DeclarationReferantDataPM entityPM, EntityPM entityParentPM)
         {
+            if(!string.IsNullOrEmpty(entityPM.DeclarationId)) entityPM.DeclarationIdToDisplay = entityPM.DeclarationId;
             base.OnCreating(entityPM, entityParentPM);
         }
 

@@ -21,7 +21,14 @@ namespace Logitude.Customs.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-   }
+
+        public DeclarationReferantData GetDeclarationReferandDateByDeclarationIdToDisplay(string declarationId, int tenant)
+        {
+            return (from a in context.DeclarationReferantDatas
+                    where (a.DeclarationId == declarationId || a.DeclarationIdToDisplay == declarationId) && a.Tenant == tenant
+                    select a).FirstOrDefault();
+        }
+    }
 
 }
    
