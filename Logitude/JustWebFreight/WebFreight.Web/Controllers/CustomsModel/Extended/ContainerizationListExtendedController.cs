@@ -216,7 +216,13 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 {
                     containerizationID = filter1.FieldValue.ToString();
                 }
-                List<DeclarationList> entityLists = declarationListQueryService.GetListForContainerization(queryOperations, tenant, containerizationID);
+                var filter2 = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "ContainerizationCargoID");
+                var containerizationCargoID = "";
+                if (filter2 != null)
+                {
+                    containerizationCargoID = filter2.FieldValue.ToString();
+                }
+                List<DeclarationList> entityLists = declarationListQueryService.GetListForContainerization(queryOperations, tenant, containerizationID, containerizationCargoID);
        
                ServiceResponse response = new ServiceResponse();
                if (filters.GetCount)

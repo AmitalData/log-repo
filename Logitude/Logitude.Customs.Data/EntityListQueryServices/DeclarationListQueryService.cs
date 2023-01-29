@@ -623,9 +623,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             }
             return fastIndividualProcessCode;
         }
-        private IQueryable<DeclarationList> GetIqueryableListForContainerization(IQueryable<Declaration> iQueryable,string containerID)
+        private IQueryable<DeclarationList> GetIqueryableListForContainerization(IQueryable<Declaration> iQueryable,string containerID,string ContainerizationCargoID)
         {
-
+     
             var qConsignmentNumber = (from a in context.Consignments
                                       where string.IsNullOrEmpty(containerID) || a.ExportContainerizationID==containerID
                                       group a by a.DeclarationId into gConsignments
@@ -633,7 +633,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                       new
                                       {
                                           DeclarationId = gConsignments.Key,
-                                          ConsignmentNumber = gConsignments.Min(r => r.ConsignmentNumber)
+                                          ConsignmentNumber = !string.IsNullOrEmpty(ContainerizationCargoID)?
+                                          gConsignments.Where(r=>r.CargoTypeCode+r.ManifestNumber+r.SecondCargoID+r.ThirdCargoID== ContainerizationCargoID).Select(a=>a.ConsignmentNumber).FirstOrDefault():
+                                          gConsignments.Min(r => r.ConsignmentNumber)
                                       });
 
             var q1stConsignments =
@@ -697,7 +699,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             return query;
         }
-        public List<DeclarationList> GetListForContainerization(QueryOperations queryOperations, int tenant,string containerID)
+        public List<DeclarationList> GetListForContainerization(QueryOperations queryOperations, int tenant,string containerID,string ContainerizationCargoID)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
@@ -717,7 +719,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             int skippedPorts = queryOperations.PageIndex;
 
-            IQueryable<DeclarationList> query2 = GetIqueryableListForContainerization(iQueryable, containerID);
+            IQueryable<DeclarationList> query2 = GetIqueryableListForContainerization(iQueryable, containerID, ContainerizationCargoID);
 
             query2 = filter.GetFilteredQuery<DeclarationList>(listQueryOperation, query2);
 
