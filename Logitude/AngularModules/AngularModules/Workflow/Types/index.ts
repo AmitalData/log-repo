@@ -46,8 +46,7 @@ export type Entity = {
 export type ChildEntity = {
     Code: string,
     Name: string,
-    ParentEntityCode: string,
-    ChildField: string
+    ParentEntityCode: string
 };
 
 export type EntitiesType = "all" | "parent" | "child";

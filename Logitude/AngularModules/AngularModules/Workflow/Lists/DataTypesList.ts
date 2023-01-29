@@ -1,10 +1,14 @@
 import { FieldTypes } from "Workflow/Constants/FieldTypes";
-import { ListItem } from "./ListItem";
+import { ListItem } from "Workflow/Models/ListItem";
 
-export class PrimitiveDataTypes {
+export class DataTypesList {
+
+    private IsPrimitive: boolean;
+
     public Items: ListItem[] = [];
 
-    constructor() {
+    constructor(isPrimitive: boolean = false) {
+        this.IsPrimitive = isPrimitive;
         this.setDataTypes();
     }
 
@@ -15,5 +19,9 @@ export class PrimitiveDataTypes {
             new ListItem(FieldTypes.Decimal, "Number"),
             new ListItem(FieldTypes.Boolean)
         ];
+
+        if (!this.IsPrimitive) {
+            this.Items.push(new ListItem(FieldTypes.Record));
+        }
     }
 }

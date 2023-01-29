@@ -1,6 +1,6 @@
 import { OperatorCategoryList } from "Workflow/EntityLists/OperatorCategoryList";
 import { OperatorList } from "Workflow/EntityLists/OperatorList";
-import { TreeSelectItem } from "./TreeSelectItem";
+import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 
 export class OperatorsTreeList {
     private OperatorCategories: OperatorCategoryList[];

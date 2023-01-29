@@ -2,17 +2,16 @@ import { Component } from "@angular/core";
 import { MentionConfig } from "angular-mentions";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
 import { ServiceResponse } from "Infrastructure/DataContracts/ServiceResponse";
-import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { ExpressionList } from "Workflow/EntityLists/ExpressionList";
 import { OperatorCategoryList } from "Workflow/EntityLists/OperatorCategoryList";
 import { OperatorList } from "Workflow/EntityLists/OperatorList";
-import { ExpressionsTreeList } from "Workflow/Models/ExpressionsTreeList";
-import { FlowVariablesTreeList } from "Workflow/Models/FlowVariablesTreeList";
+import { ExpressionsTreeList } from "Workflow/TreeLists/ExpressionsTreeList";
+import { FlowVariablesTreeList } from "Workflow/TreeLists/FlowVariablesTreeList";
 import { ListItem } from "Workflow/Models/ListItem";
-import { OperatorsTreeList } from "Workflow/Models/OperatorsTreeList";
+import { OperatorsTreeList } from "Workflow/TreeLists/OperatorsTreeList";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
-import { ExpressionValue } from "Workflow/Models/Types";
+import { ExpressionValue } from "Workflow/Types";
 import { ExpressionCategoryListService } from "Workflow/Services/StandardLists/ExpressionCategoryListService";
 import { ExpressionListService } from "Workflow/Services/StandardLists/ExpressionListService";
 import { OperatorCategoryListService } from "Workflow/Services/StandardLists/OperatorCategoryListService";
@@ -30,7 +29,6 @@ export class ExpressionBuilderComponent extends BaseComponent {
 
     public FlowObject: any;
     public CurrentNodeId: string;
-    public FlowObjectFields: ObjectFieldList[];
     public ExpressionValue: ExpressionValue;
 
     public CursorStartPoint: number = 0;
@@ -65,7 +63,6 @@ export class ExpressionBuilderComponent extends BaseComponent {
     SetWindowArgs(args: any) {
         this.FlowObject = args.FlowObject ? args.FlowObject : null;
         this.CurrentNodeId = args.CurrentNodeId ? args.CurrentNodeId : null;
-        this.FlowObjectFields = args.FlowObjectFields ? args.FlowObjectFields : [];
         let defaultExpressionValue: ExpressionValue = {
             expression: null,
             variables: []
@@ -192,7 +189,7 @@ export class ExpressionBuilderComponent extends BaseComponent {
             OnlyCurrentLoopItemVariables: false,
             IsObjectVariableSelectable: true
         };
-        this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId, props);
+        this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props);
         this.FlowVariablesTreeItems = this.FlowVariablesTreeList.Items;
         this.addFlowVariablesToSuggestionsConfig(this.FlowVariablesTreeList.ItemsList);
     }

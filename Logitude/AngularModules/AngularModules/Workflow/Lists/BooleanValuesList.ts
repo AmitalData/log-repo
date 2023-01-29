@@ -1,6 +1,6 @@
 
 import { BooleanValues } from "Workflow/Constants/BooleanValues";
-import { ListItem } from "./ListItem";
+import { ListItem } from "Workflow/Models/ListItem";
 
 export class BooleanValuesList {
     public Items: ListItem[] = [];

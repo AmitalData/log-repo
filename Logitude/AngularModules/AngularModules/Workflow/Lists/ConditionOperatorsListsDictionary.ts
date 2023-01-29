@@ -1,6 +1,6 @@
 import { FieldTypes } from "Workflow/Constants/FieldTypes";
 import { ConditionOperatorsList } from "./ConditionOperatorsList";
-import { ListItem } from "./ListItem";
+import { ListItem } from "Workflow/Models/ListItem";
 
 export class ConditionOperatorsListsDictionary {
     public ItemsDictionary: { [key: string]: ListItem[] } = {};

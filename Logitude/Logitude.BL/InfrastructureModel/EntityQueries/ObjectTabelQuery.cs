@@ -859,7 +859,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      ParentObjectTableId = a.ParentObjectTableId,
                                                      IsCustom = a.IsCustom,
                                                      SupportSubEntity = a.SupportSubEntity,
-                                                     ApplyGenericCustomFields = a.ApplyGenericCustomFields
+                                                     ApplyGenericCustomFields = a.ApplyGenericCustomFields,
+                                                     LookUp1 = a.LookUp1,
+                                                     LookUp2 = a.LookUp2
                                                  };
             return result;
         }  

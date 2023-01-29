@@ -1,6 +1,6 @@
-import { Entities } from "./Entities";
-import { TreeSelectItem } from "./TreeSelectItem";
-import { EntitiesType } from "./Types";
+import { Entities } from "Workflow/Utilities/Entities";
+import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
+import { EntitiesType } from "Workflow/Types";
 
 export class EntitiesTreeList {
     public Items: TreeSelectItem[] = [];
@@ -21,14 +21,14 @@ export class EntitiesTreeList {
     }
 
     private setChildEntitiesTreeItems() {
-        Entities.Children.forEach(childEntity => {
-            let entityItem = new TreeSelectItem(childEntity.ParentEntityCode + "." + childEntity.Code, childEntity.Name, true, true, false, false, []);
+        Entities.getChildren().forEach(childEntity => {
+            let entityItem = new TreeSelectItem(childEntity.Code, childEntity.Name, true, true, false, false, []);
             this.Items.push(entityItem);
         });
     }
 
     private setParentEntitiesTreeItems() {
-        Entities.Parents.forEach(entity => {
+        Entities.getParents().forEach(entity => {
             let onlyParentEntities = this.EntitiesType === "parent";
             let childrenItems = onlyParentEntities ? [] : this.getChildrenItems(entity.Code);
             let entityItem = new TreeSelectItem(entity.Code, entity.Name, onlyParentEntities, true, !onlyParentEntities, false, childrenItems);
@@ -38,9 +38,9 @@ export class EntitiesTreeList {
 
     private getChildrenItems(parentEntityCode: string) {
         let childrenItems = [];
-        let childEntities = Entities.Children.filter(e => e.ParentEntityCode === parentEntityCode);
+        let childEntities = Entities.getChildren().filter(e => e.ParentEntityCode === parentEntityCode);
         childEntities.forEach(childEntity => {
-            let childrenItem = new TreeSelectItem(childEntity.ParentEntityCode + "." + childEntity.Code, childEntity.Name, true, true, false, false, []);
+            let childrenItem = new TreeSelectItem(childEntity.Code, childEntity.Name, true, true, false, false, []);
             childrenItems.push(childrenItem);
         });
         return childrenItems;

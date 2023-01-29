@@ -4,18 +4,14 @@ import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
-import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
-import { ObjectFieldPM } from 'Infrastructure/EntityPMs/ObjectFieldPM';
 import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
 import { ObjectFieldPMExtendedService } from 'Infrastructure/Services/ExtendedPMs/ObjectFieldPMExtendedService';
 import { AppTool } from 'Infrastructure/Tools';
 import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { WorkFlowPM } from 'Workflow/EntityPMs/WorkFlowPM';
-import { ApiQueryFiltersBuilder } from 'Workflow/Models/ApiQueryFiltersBuilder';
-import { ObjectFields } from 'Workflow/Models/ObjectFields';
+import { ApiQueryFiltersBuilder } from 'Workflow/Utilities/ApiQueryFiltersBuilder';
 import { WorkFlowInstanceListService } from 'Workflow/Services/StandardLists/WorkFlowInstanceListService';
-import { WorkFlowVersionService } from 'Workflow/Services/WorkFlowVersionService';
 
 const SearchBoxDelayTime = 700;
 

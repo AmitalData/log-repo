@@ -1,9 +1,9 @@
 import { GetRecordLimits } from "Workflow/Constants/GetRecordLimits";
 import { GetRecordTypes } from "Workflow/Constants/GetRecordTypes";
-import { Entities } from "./Entities";
-import { FlowReader } from "./FlowReader";
-import { Formatter } from "./Formatter";
-import { TreeSelectItem } from "./TreeSelectItem";
+import { Entities } from "Workflow/Utilities/Entities";
+import { FlowReader } from "Workflow/Utilities/FlowReader";
+import { Formatter } from "Workflow/Utilities/Formatter";
+import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 
 export class SingleEditableEntitiesTreeList {
     private FlowObject: any;
@@ -53,7 +53,7 @@ export class SingleEditableEntitiesTreeList {
 
     private getGetRecordTreeSelectItemChildren(treeItemPrefix: string, entity: string, nodeId: string | null) {
         let getRecordTreeSelectItemChildren = [];
-        Entities.Children.filter(c => c.Code !== "ARInvoice" && c.Code !== "APInvoice").filter(c => c.ParentEntityCode === entity)
+        Entities.getChildren().filter(c => c.Code !== "ARInvoice" && c.Code !== "APInvoice").filter(c => c.ParentEntityCode === entity)
             .forEach(childEntity => {
                 let itemData = { entity: childEntity.Code, nodeId: nodeId };
                 let treeSelectItemKey = treeItemPrefix + this.ItemKeySplitter + childEntity.Code;
@@ -66,8 +66,7 @@ export class SingleEditableEntitiesTreeList {
     private getSingleEditableGetRecordNodes() {
         if (this.FlowObject) {
             let getRecordNodes = FlowReader.getAllPreviousNodes(this.FlowObject, this.CurrentNodeId, "getRecordNode")
-                .filter((n: any) => n.data["recordsLimit"] === GetRecordLimits.FirstRecord && n.data["recordsType"] === GetRecordTypes.Editable
-                    && n.data["entity"] && n.data["entity"].indexOf(".") === -1);
+                .filter((n: any) => n.data["recordsLimit"] === GetRecordLimits.FirstRecord && n.data["recordsType"] === GetRecordTypes.Editable && n.data["entity"]);
 
             return getRecordNodes;
         }

@@ -1,7 +1,7 @@
 import { FieldTypes } from "Workflow/Constants/FieldTypes";
-import { FlowReader } from "./FlowReader";
-import { Formatter } from "./Formatter";
-import { TreeSelectItem } from "./TreeSelectItem";
+import { FlowReader } from "Workflow/Utilities/FlowReader";
+import { Formatter } from "Workflow/Utilities/Formatter";
+import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 
 export class DeclaredRecordsTreeList {
     public Items: TreeSelectItem[] = [];
@@ -29,7 +29,7 @@ export class DeclaredRecordsTreeList {
             let treeSelectItemTitle = recordDeclareVariableNode.data["label"] || null;
             let treeSelectItemName = variableName;
             let treeSelectItemKey = Formatter.getCodeFromName(treeSelectItemName);
-            let treeSelectItemData = { type: Formatter.getEntity(recordType), nodeId: recordDeclareVariableNode.id };
+            let treeSelectItemData = { type: recordType, nodeId: recordDeclareVariableNode.id };
             let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemTitle || treeSelectItemName, false, true, false, false, [], treeSelectItemData);
             this.Items.push(treeSelectItem);
         });

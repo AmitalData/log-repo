@@ -1,5 +1,5 @@
 import { ConditionOperations } from "Workflow/Constants/ConditionOperations";
-import { ListItem } from "./ListItem";
+import { ListItem } from "Workflow/Models/ListItem";
 
 export class ConditionOperationsList {
     public Items: ListItem[] = [];
