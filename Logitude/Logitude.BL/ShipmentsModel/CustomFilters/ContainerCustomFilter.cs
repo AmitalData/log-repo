@@ -77,6 +77,19 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                     {
                         queryableData = queryableData.Where(d => d.IsClosed);
                     }
+                    if(item.FieldName == "PendingArrivalFilter")
+                    {
+                        DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(Tenant).Date;
+                        queryableData = queryableData.Where(d => d.ActualPOLVesselDeparture != null && d.ActualPODVesselArrival == null && d.EstimatedPODVesselArrival == todayDate);
+                    }
+                    if(item.FieldName == "PendingDischargeFilter")
+                    {
+                        queryableData = queryableData.Where(d => d.ActualPODDischarge == null && d.ActualPODVesselArrival != null);
+                    }
+                    if(item.FieldName == "PendingDeliveryFilter")
+                    {
+                        queryableData = queryableData.Where(d => d.ShipmentDeliveryATD != null && d.ShipmentDeliveryATA == null);
+                    }
 
 
                 }
