@@ -286,6 +286,9 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
 
                     inputReportLine.LineTypeCode = "R";
+                    inputReportLine.Reference = "000000000";
+                    inputReportLine.ReferecneGroup = "0000";
+                    inputReportLine.VatNumber = aPInvoice.InvoiceNumber;
 
                 }
                 else if (card != null && card.IsAutonomy)
