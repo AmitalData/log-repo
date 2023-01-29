@@ -266,7 +266,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     }
                     else
                     {
-                        return Request.CreateResponse(HttpStatusCode.OK, new List<DigitalTextCodeObject>());
+                        return Request.CreateResponse(HttpStatusCode.OK, defaultCodesObject);
                     }
                 }
 
@@ -378,6 +378,12 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             {
                 var textCodeQuery = new DigitalTextCodeQueryService(tenant);
                 var defaultTextCodes = textCodeQuery.GetDigitalTextCodesQuery(0, objectTableId, profileCode);
+
+                if (defaultTextCodes == null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, new List<DigitalTextCodeObject>());
+                }
+
                 var defaultCodesObject = JsonConvert.DeserializeObject<List<DigitalTextCodeObject>>(defaultTextCodes.Labels);
                 var customCodesObject = new List<DigitalTextCodeObject>();
 
@@ -388,6 +394,10 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     if (customTextCodes != null)
                     {
                         customCodesObject = JsonConvert.DeserializeObject<List<DigitalTextCodeObject>>(customTextCodes.Labels);
+                    }
+                    else
+                    {
+                        return Request.CreateResponse(HttpStatusCode.OK, defaultCodesObject);
                     }
 
                     foreach (var item in customCodesObject)

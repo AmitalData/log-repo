@@ -20,7 +20,7 @@ namespace Logitude.BL.Helpers
                 return new List<DigitalFeildSecurityObject>();
             }
 
-            var defaultDigitalFieldSecurity = JsonConvert.DeserializeObject<List<DigitalFeildSecurityObject>>(digitalFieldSecurity.DefaultSettings);
+            var defaultDigitalFieldSecurity = JsonConvert.DeserializeObject<List<DigitalFeildSecurityObject>>(digitalFieldSecurity?.DefaultSettings);
             var customDigitalFeildSecurityObject = new List<DigitalFeildSecurityObject>();
             var objectTableName = ObjectTableRepository.GetNameById(objectTableId, tenant);
 
@@ -30,7 +30,7 @@ namespace Logitude.BL.Helpers
 
                 if (customDigitalFieldSecurityList != null)
                 {
-                    customDigitalFeildSecurityObject = JsonConvert.DeserializeObject<List<DigitalFeildSecurityObject>>(customDigitalFieldSecurityList.DefaultSettings);
+                    customDigitalFeildSecurityObject = JsonConvert.DeserializeObject<List<DigitalFeildSecurityObject>>(customDigitalFieldSecurityList?.DefaultSettings);
 
                     foreach (var item in customDigitalFeildSecurityObject)
                     {
@@ -53,7 +53,7 @@ namespace Logitude.BL.Helpers
                 }
                 else
                 {
-                    return new List<DigitalFeildSecurityObject>();
+                    return defaultDigitalFieldSecurity;
                 }
             }
 
