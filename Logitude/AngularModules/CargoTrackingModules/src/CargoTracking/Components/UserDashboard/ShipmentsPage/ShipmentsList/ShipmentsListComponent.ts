@@ -99,7 +99,6 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     ShipmentSearchInput: CargoTrackingShipmentSearchInput = new CargoTrackingShipmentSearchInput();
     MilestonesStatus: any[] = [];
     MilestonesStatusDictionary: {} = {};
-
     InvitedCustomers: any[] = [];
     MoreFilterMobileValue: MoreFilter = new MoreFilter();
 
@@ -141,7 +140,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.buildFilterArgs();
         this.QueryColumns = [];
         this.buildQueryColumns();
-        this.logitudeGridExportToExcelService.ExportToExcelExcute("CargoTrackingShipment", this.filterAgrs, this.QueryColumns);
+        this.logitudeGridExportToExcelService.ExportToExcelExcute('CargoTrackingShipment', this.filterAgrs, this.QueryColumns);
     }
 
     private buildFilterArgs() {
@@ -339,7 +338,15 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
     UnselectCustomer(customerId) {
         RootContext.ShipmentsScrollPosition = 0;
-        this.ShipmentSearchInput.Customers = this.ShipmentSearchInput.Customers.filter(e => e != customerId);
+
+        const index = this.InvitedCustomers.findIndex(obj => {
+            return obj.CustomerId === customerId;
+        });
+        this.InvitedCustomers[index].IsSelected = false;
+
+        this.ShipmentSearchInput.Customers = this.InvitedCustomers.filter(e => e.IsSelected)
+            .map(d => ({CustomerId: d.Id, CustomerName: d.Name} as Customer));
+
         this.LoadScreenData();
     }
 
@@ -887,26 +894,26 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
     ShipmentsLoadingError: string;
 
-    FocusOnSearchInput() {
-        this.searchInput.nativeElement.focus();
-    }
-
-
     OpenAdvancedFiltersSidebar() {
         this.sharedService.updateValue(true);
-        this.InvitedCustomers = this.ShipmentsDataSource.cachedCustomers
-            .map(customer => (
-                {
-                    IsSelected: false,
-                    Id: customer.CustomerId,
-                    Name: customer.CustomerName,
-                    ...customer
-                }
-            ));
+        if (this.InvitedCustomers.length === 0) {
+            this.InvitedCustomers = this.ShipmentsDataSource.cachedCustomers
+                .map(customer => (
+                    {
+                        IsSelected: false,
+                        Id: customer.CustomerId,
+                        Name: customer.CustomerName,
+                        ...customer
+                    }
+                ));
+        }
     }
 
     OnCustomerValueChanged(value, customer) {
-        customer.IsSelected = value;
+        const index = this.InvitedCustomers.findIndex(obj => {
+            return obj.CustomerId === customer.CustomerId;
+        });
+        this.InvitedCustomers[index].IsSelected = value;
     }
 
 
