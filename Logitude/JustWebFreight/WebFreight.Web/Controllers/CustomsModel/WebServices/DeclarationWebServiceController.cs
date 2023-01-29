@@ -1626,6 +1626,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
         {
             string CustomerDefaultGoldPay_CIM_GOLD_PAY = null;
             string CompanyDefaultMaxPayMASAV_CGG_MAX_AGT_PAY = null;
+            string CompanyDefaultaboveamountagentCash_CGG_ABOVE_AGT_C = null;
+            
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
@@ -1642,9 +1644,14 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 }
                 ///דיפולט ברמת חברה "סכום מיסים מקסימלי לתשלום במס"ב סוכן
                 CompanyDefaultMaxPayMASAV_CGG_MAX_AGT_PAY = declarationQS.GetDefault("ISRAEL", "CGG_MAX_AGT_PAY", "NON", "NON", tenant);
+
+                //סכום שמעל יבוצע תשלום בקופה סוכן"
+                CompanyDefaultaboveamountagentCash_CGG_ABOVE_AGT_C = declarationQS.GetDefault("ISRAEL", "CGG_ABOVE_AGT_C", "NON", "NON", tenant);
+
                 return Request.CreateResponse(HttpStatusCode.OK, new {
                     CustomerDefaultGoldPay_CIM_GOLD_PAY = CustomerDefaultGoldPay_CIM_GOLD_PAY,
-                    CompanyDefaultMaxPayMASAV_CGG_MAX_AGT_PAY= CompanyDefaultMaxPayMASAV_CGG_MAX_AGT_PAY
+                    CompanyDefaultMaxPayMASAV_CGG_MAX_AGT_PAY= CompanyDefaultMaxPayMASAV_CGG_MAX_AGT_PAY,
+                    CompanyDefaultaboveamountagentCash_CGG_ABOVE_AGT_C= CompanyDefaultaboveamountagentCash_CGG_ABOVE_AGT_C
                 });
             }
             catch (Exception ex)

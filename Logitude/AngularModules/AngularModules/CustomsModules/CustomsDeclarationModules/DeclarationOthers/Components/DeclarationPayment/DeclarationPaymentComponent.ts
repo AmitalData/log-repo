@@ -3391,12 +3391,16 @@ export class PaymentMethodModel extends BaseComponent {
         }
         console.log("DefaultPaymentMethod-->");
         let maxTaxAgentPayDefault: number = +this.parent.MyGoldPaymentDefaults.CompanyDefaultMaxPayMASAV_CGG_MAX_AGT_PAY;
+        let aboveAmountAgentCash: number = + this.parent.MyGoldPaymentDefaults.CompanyDefaultaboveamountagentCash_CGG_ABOVE_AGT_C;
         if (maxTaxAgentPayDefault <= 0) {
             console.log("DefaultPaymentMethod-->maxTaxAgentPayDefault <= 0");
             return;
         }
 
-        console.log("DefaultPaymentMethod-->CompanyDefaultMaxPayMASAV_CGG_MAX_AGT_PAY:" + maxTaxAgentPayDefault + ";CustomerDefaultGoldPay_CIM_GOLD_PAY=" + this.parent.MyGoldPaymentDefaults.CustomerDefaultGoldPay_CIM_GOLD_PAY);
+        console.log("DefaultPaymentMethod-->CompanyDefaultMaxPayMASAV_CGG_MAX_AGT_PAY:" + maxTaxAgentPayDefault +
+            ";CustomerDefaultGoldPay_CIM_GOLD_PAY=" + this.parent.MyGoldPaymentDefaults.CustomerDefaultGoldPay_CIM_GOLD_PAY +
+            ";CompanyDefaultaboveamountagentCash_CGG_ABOVE_AGT_C=" + this.parent.MyGoldPaymentDefaults.CompanyDefaultaboveamountagentCash_CGG_ABOVE_AGT_C
+        );
         //3.1
         if (this.parent.MyGoldPaymentDefaults.CustomerDefaultGoldPay_CIM_GOLD_PAY == "ALL") {
             ///console.log("אם ללקוח מוגדר הדיפולט החדש 'תשלום בניצול העברת זהב לקוח' כל סכום3.1");
@@ -3434,21 +3438,55 @@ export class PaymentMethodModel extends BaseComponent {
             );
 
         }
-        //4
+        //6
         else if (
             AppTool.IsNullOrEmpty(this.parent.MyGoldPaymentDefaults.CustomerDefaultGoldPay_CIM_GOLD_PAY) &&
-            this.parent.DeclarationPM.TotalTax > maxTaxAgentPayDefault) {
-            console.log("אם הדיפולט 'תשלום בניצול העברת זהב לקוח' לא הוגדר וסכום המיסים גדול מהסכום שהוזן  בדיפולט החדש -סכום מיסים לתשלום בניצול העברת זהב4 ");
+            this.parent.DeclarationPM.TotalTax > maxTaxAgentPayDefault
+            &&
+            (
+                //(דיפולט "הגדרת סכום שמעל יבוצע תשלום בקופה סוכן" =NULL (לא הוגדר)
+                AppTool.IsNullOrEmpty(this.parent.MyGoldPaymentDefaults.CompanyDefaultaboveamountagentCash_CGG_ABOVE_AGT_C)
+                ||
+                (
+
+                    !AppTool.IsNullOrEmpty(this.parent.MyGoldPaymentDefaults.CompanyDefaultaboveamountagentCash_CGG_ABOVE_AGT_C)
+                    &&
+                    //וסכום המיסים קטן מסכום שהוגדר בדיפולט "הגדרת סכום שמעל יבוצע תשלום בקופה סוכן"
+                    this.parent.DeclarationPM.TotalTax < aboveAmountAgentCash
+                )
+                )
+        ) {
+
+            console.log("6");
+            console.log("אם הדיפולט -תשלום בניצול העברת זהב לקוח- לא הוגדר,  וסכום המיסים גדול מהסכום שהוזן  בדיפולט החדש -סכום מיסים מקסימלי לתשלום במס-ב סוכן-  וגם (דיפולט -הגדרת סכום שמעל יבוצע תשלום בקופה סוכן- =NULL (לא הוגדר) או (הוגדר סכום בדיפולט -הגדרת סכום שמעל יבוצע תשלום בקופה סוכן- וסכום המיסים קטן מסכום שהוגדר בדיפולט -הגדרת סכום שמעל יבוצע תשלום בקופה סוכן-  - )) יבוצע תשלום באמצעות ניצול העברת זהב סוכן ")
             console.log("DefaultPaymentMethod-->ניצול העברת זהב -סוכן");
             this.updateDefaultPaymentMethod(
                 "79",/*ניצול העברת זהב*/
                 "3" //סוכן מכס
             );
         }
-        //5
+            //7 
+        else if (
+            AppTool.IsNullOrEmpty(this.parent.MyGoldPaymentDefaults.CustomerDefaultGoldPay_CIM_GOLD_PAY) &&
+            !AppTool.IsNullOrEmpty(this.parent.MyGoldPaymentDefaults.CompanyDefaultaboveamountagentCash_CGG_ABOVE_AGT_C) &&
+            aboveAmountAgentCash>0 && 
+            this.parent.DeclarationPM.TotalTax >= aboveAmountAgentCash
+
+            ) {
+            console.log("7");
+            console.log("אם הדיפולט -תשלום בניצול העברת זהב לקוח- לא הוגדר,  וסכום המיסים גדול מהסכום שהוזן  בדיפולט החדש -סכום מיסים מקסימלי לתשלום במס-ב סוכן- וגם בדיפולט -הגדרת סכום שמעל יבוצע תשלום בקופה סוכן- <> NULL וגם סכום המיסים גדול שווה לסכום שהוגדר בדיפולט -הגדרת סכום שמעל יבוצע תשלום בקופה סוכן-  - יבוצע תשלום באמצעות קופה סוכן");
+
+            console.log("DefaultPaymentMethod-aboveAmountAgentCash->קופה -סוכן");
+            this.updateDefaultPaymentMethod(
+                "2",/*קופה*/
+                "3" //סוכן מכס
+            );
+
+        }
+        //8
         else if (
             this.parent.DeclarationPM.TotalTax <= maxTaxAgentPayDefault) {
-            console.log("אחרת סכום המיסים קטן שווה מהסכום שהוזן בדיפולט החדש -סכום מיסים לתשלום בניצול העברת זהב  5");
+            console.log("אחרת סכום המיסים קטן שווה מהסכום שהוזן בדיפולט החדש -סכום מיסים לתשלום בניצול העברת זהב  8");
             console.log("DefaultPaymentMethod-->מסב הכנסה -סוכן");
             this.updateDefaultPaymentMethod(
                 "1",//מס"ב הכנסה
