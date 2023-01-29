@@ -187,7 +187,8 @@
                                     </td>
                                     <td style="width:16px;">
                                         <img *ngIf="!item.Notes" style="vertical-align: middle; display: block;" src="./Images/Notes_notexists.png" />
-                                        <CellTooltip *ngIf="item.Notes" [IconPath]="'./Images/Notes_exists.png'" [Head]="'APInvoiceLine.F.Notes' | TextCodeTranslationPipe" [Body]="item.Notes"></CellTooltip>
+                                        <CellTooltip *ngIf="item.Notes" [IconPath]="'./Images/Notes_exists.png'"
+                                         [Body]="item.Notes"></CellTooltip>
                                     </td>
                                     <td style="width:5px;">
                                         <div></div>
