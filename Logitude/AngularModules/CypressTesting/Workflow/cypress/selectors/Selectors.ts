@@ -6,7 +6,7 @@ export class WorkflowSelectors {
     public static readonly FlowBuilderEditButton = '#Edit';
     public static readonly WorkflowStartNode = "div[data-selector^='start-node-1']";
     public static readonly WorkflowEditNodeButton = "button[class^='edit-button']";
-    public static readonly WorkflowStartNodeObject = "input[data-cy^='start-entity']";
+    public static readonly WorkflowStartNodeObject = ".ant-select-single";
     public static FlowTriggerRadioButton(trigger: string): string {
         return "input[id^='" + trigger.replace(/\s/g, '') + "_TriggerRadio']";
     }

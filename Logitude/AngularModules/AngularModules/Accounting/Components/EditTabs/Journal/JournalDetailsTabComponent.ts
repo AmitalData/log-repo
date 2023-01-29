@@ -210,6 +210,10 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
             this.UIProperties.SetVisibility("Reference3", "Journal", false);
             this.UIProperties.SetVisibility("Notes", "Journal", false);
         }
+        else{
+            this.DueDate=new Date();
+            this.DocumentDate=new Date();
+        }
 
         this.CheckIfJournalEditableAfterApproval();
     }

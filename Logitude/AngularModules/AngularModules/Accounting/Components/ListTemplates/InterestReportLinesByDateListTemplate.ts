@@ -51,7 +51,7 @@ export class InterestReportLinesByDateListTemplate {
         var logWindow = new LogitudeWindow();
         logWindow.Title = TextCodeTranslator.Translate("InterestReportLinesByDate.O.InterestDetails");
         var myPath = "./Accounting/Components/Packages/EditTabs/InterestReport/GeneralTab/InterestReportLineByDateDetails/InterestReportLineByDateDetailsComponent";
-        logWindow.Width = 850;
+        logWindow.Width = 950;
         logWindow.Height = 600;
         logWindow.DataContext = this.rowData ;
         logWindow.Show(myPath);

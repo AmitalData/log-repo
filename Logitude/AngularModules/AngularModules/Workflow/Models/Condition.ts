@@ -1,6 +1,6 @@
 import { ConditionOperations } from "Workflow/Constants/ConditionOperations";
 import { ConditionOperators } from "Workflow/Constants/ConditionOperators";
-import { ConditionDisabled } from "./Types";
+import { ConditionDisabled } from "Workflow/Types";
 
 export class Condition {
     public id: number;

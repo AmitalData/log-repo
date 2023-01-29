@@ -21,6 +21,8 @@ export class ConfirmWindow {
     public CancelButtonText: string;
     public IsOverAll: boolean = false;
     public ShowWarningImage: boolean = false;
+    public MultipleMessages: string[] = null;
+    public IsMultipleMessages: boolean = false;
     LayoutDirection: string = 'ltr';
     @Output() WindowClosed = new EventEmitter();
     public IsChecked: boolean = false;
@@ -39,6 +41,9 @@ export class ConfirmWindow {
     private InstanceComponent: ConfirmWindowTemplateComponent = null;
     public Show(message: string) {
         this.Message = message;
+        if (this.IsMultipleMessages) {
+            this.MultipleMessages = this.Message.split('<br>');
+        }
 
         var viewContainerRefLocation: ViewContainerRef = this.CurrentSession.SessionLocation.viewContainerRef;
 
@@ -109,6 +114,8 @@ export class ConfirmWindowTemplateComponent implements AfterViewInit {
     public CancelButtonText: string = "Cancel";
     public IsOverAll: boolean = false;
     public ShowWarningImage: boolean = false;
+    public MultipleMessages: string[] = null;
+    public IsMultipleMessages: boolean = false;
     LayoutDirection: string = 'ltr';
     public ShowCheckBox: boolean = false;
     public IsYesEnabled: boolean = true;
@@ -143,6 +150,8 @@ export class ConfirmWindowTemplateComponent implements AfterViewInit {
         this.YesButtonText = myWindow.YesButtonText;
         this.IsOverAll = myWindow.IsOverAll;
         this.ShowWarningImage = myWindow.ShowWarningImage;
+        this.MultipleMessages = myWindow.MultipleMessages;
+        this.IsMultipleMessages = myWindow.IsMultipleMessages;
         this.ShowCheckBox = myWindow.ShowCheckBox;
         this.IsYesEnabled = myWindow.IsYesEnabled;
         this.StringColor = myWindow.StringColor;

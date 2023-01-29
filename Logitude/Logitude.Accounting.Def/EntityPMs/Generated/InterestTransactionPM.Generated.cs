@@ -574,6 +574,53 @@ namespace Logitude.Accounting.Def.EntityPMs
 
 			}
 		}
+		private string notes;
+
+
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public string Notes
+		{
+
+			get
+			{
+				return notes;
+			}
+			set
+			{
+				if (notes != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "Notes", OldValue = notes, NewValue = value, PropertyType = "string" };
+					NotifyPropertyChanged(values);
+					notes = value;
+				}
+
+			}
+		}
+		private string updatedByUserName;
+
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public string UpdatedByUserName
+		{
+
+			get
+			{
+				return updatedByUserName;
+			}
+			set
+			{
+				if (updatedByUserName != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "UpdatedByUserName", OldValue = updatedByUserName, NewValue = value, PropertyType = "string" };
+					NotifyPropertyChanged(values);
+					updatedByUserName = value;
+				}
+
+			}
+		}
+
+
 	}
 
 }

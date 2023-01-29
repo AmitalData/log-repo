@@ -327,7 +327,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                         if (string.IsNullOrWhiteSpace(item.DisplayText))
                         {
-                            customCodesMappedObject.RemoveAll(a => a.TextCode == item.TextCode);
+                            existingKey.DisplayText = item.DefaultText;
                         }
                         else
                         {

@@ -5,11 +5,13 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { catchError, map } from 'rxjs/operators';
 import { InterestReportPM } from '../../EntityPMs/InterestReportPM';
+import { InterestTransactionPM } from '../../EntityPMs/InterestTransactionPM';
 import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
 import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
 import { CustomFieldClass } from '../../../Infrastructure/DataContracts/CustomFieldClass';
 import { InterestReportLinesByDatePM } from '../../EntityPMs/InterestReportLinesByDatePM';
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
+
  
 
 @Injectable()
@@ -60,6 +62,64 @@ export class InterestTransactionExtendedListService {
                 catchError(ServiceHelper.HandleServiceError));
         }
     }
+
+    PutInterestTransactionNotes(entityPM: InterestTransactionPM,Notes: string){
+        var serviceResponse: ServiceResponse = new ServiceResponse();
+        var url = this._apiUrl + "/PutInterestTransactionNotes";
+        var validator: ClassLevelValidator;
+        validator = new ClassLevelValidator();
+        var errorsArray = validator.Validate("InterestTransaction", entityPM);
+        var serviceResponse: ServiceResponse;
+        serviceResponse = new ServiceResponse();
+        if (errorsArray.length == 0) {
+            var mappedEntity: InterestTransactionPM;
+            mappedEntity = this.MapPM(entityPM, false);
+
+            return this.httpClient.put(url, JSON.stringify(mappedEntity),ServiceHelper.GetHttpHeaders()).pipe(
+                map(response => {
+                    var pm = response;
+                    if (pm) {
+                        var mappedResult: InterestTransactionPM;
+                        mappedResult = this.MapPM(pm, true, entityPM);
+                        serviceResponse.Result = mappedResult;
+                    }
+                    serviceResponse.Result = response;
+                    return serviceResponse;
+                }),
+                catchError(ServiceHelper.HandleServiceError));
+        }
+
+    }
+
+    MapPM(jsonPM: any, getCallMap: boolean = true, entityPM: InterestTransactionPM = null) {
+        if (!entityPM) {
+            entityPM = new InterestTransactionPM();
+        }
+        var jsonPMKeys = Object.keys(jsonPM);
+
+        for (var key in jsonPMKeys) {
+            if (jsonPMKeys[key] === "UIProperties") {
+
+                continue;
+            }
+            var property = jsonPMKeys[key];
+            entityPM[property] = jsonPM[property];
+        }
+
+        return entityPM;
+    }
+
+    GetSingle(id: string) {
+        var serviceResponse: ServiceResponse = new ServiceResponse();
+        return this.httpClient.get(this._apiUrl + '/GetSingle?id=' + id  ,  ServiceHelper.GetHttpHeaders()).pipe(
+            map(res => {
+                serviceResponse.Result = res;
+                return serviceResponse;
+             }),
+            catchError(ServiceHelper.HandleServiceError));
+    
+    }
+
     GetCheckRecentReports(interestDate: Date,  customerId: string  ) {
         
         var serviceResponse: ServiceResponse = new ServiceResponse();

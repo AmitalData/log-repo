@@ -8,13 +8,13 @@ import { GetRecordLimits } from "Workflow/Constants/GetRecordLimits";
 import { GetRecordTypes } from "Workflow/Constants/GetRecordTypes";
 import { SortDirections } from "Workflow/Constants/SortDirections";
 import { Condition } from "Workflow/Models/Condition";
-import { SortDirectionList } from "Workflow/Models/SortDirectionList";
+import { SortDirectionList } from "Workflow/Lists/SortDirectionList";
 import { ReturnedField } from "Workflow/Models/ReturnedField";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
-import { EntitiesTreeList } from "Workflow/Models/EntitiesTreeList";
-import { ObjectTables } from "Workflow/Models/ObjectTables";
+import { EntitiesTreeList } from "Workflow/TreeLists/EntitiesTreeList";
+import { ObjectTables } from "Workflow/Utilities/ObjectTables";
 import { ConditionOperators } from "Workflow/Constants/ConditionOperators";
-import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
+import { ObjectFields } from "Workflow/Utilities/ObjectFields";
 
 @Component({
     templateUrl: "./GetRecordPropertiesComponent.html"
@@ -42,7 +42,6 @@ export class GetRecordPropertiesComponent extends BaseComponent {
 
     public FlowObject: any;
     public CurrentNodeId: string;
-    public FlowObjectFields: ObjectFieldList[];
 
     public CurrentSession = SessionLocator.SelectedSession;
     public SortDirectionListItems = new SortDirectionList().Items;
@@ -63,7 +62,6 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         this.Data = args.Data ? args.Data : {};
         this.FlowObject = args.FlowObject ? args.FlowObject : null;
         this.CurrentNodeId = args.CurrentNodeId ? args.CurrentNodeId : null;
-        this.FlowObjectFields = args.FlowObjectFields ? args.FlowObjectFields : [];
     }
 
     ngOnInit() {
@@ -134,7 +132,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
             if (this.EntityId && this.Conditions.length === 0) {
                 let condition = new Condition();
                 let entityKeyPropertyPath = ObjectTables.getKeyPropertyPathByName(this.Entity);
-                let primaryObjectField = this.FlowObjectFields.find(o => o.ObjectTableId === this.EntityId && o.FieldName === entityKeyPropertyPath);
+                let primaryObjectField = ObjectFields.getByObjectTableId(this.EntityId).find(o => o.FieldName === entityKeyPropertyPath);
                 condition.field = primaryObjectField ? primaryObjectField.FieldName : null;
                 condition.fieldCode = primaryObjectField ? primaryObjectField.FieldCode : null;
                 condition.type = primaryObjectField ? primaryObjectField.DataTypeCode : null;
@@ -153,7 +151,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
             }
             if (this.EntityId && this.ReturnedFields.length === 0) {
                 let entityKeyPropertyPath = ObjectTables.getKeyPropertyPathByName(this.Entity);
-                let primaryObjectField = this.FlowObjectFields.find(o => o.ObjectTableId === this.EntityId && o.FieldName === entityKeyPropertyPath);
+                let primaryObjectField = ObjectFields.getByObjectTableId(this.EntityId).find(o => o.FieldName === entityKeyPropertyPath);
                 if (primaryObjectField) {
                     let field = new ReturnedField();
                     field.fieldCode = primaryObjectField.FieldCode;
@@ -170,7 +168,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     }
 
     updateName(name: string) {
-        if(this.IsNew){
+        if (this.IsNew) {
             this.Data["name"] = name;
         }
 
@@ -214,8 +212,8 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         this.RecordsTypeChanged = !this.RecordsTypeChanged;
     }
 
-    handleRecordsType(recordsType: string){
-        if(recordsType === GetRecordTypes.ReadOnly){
+    handleRecordsType(recordsType: string) {
+        if (recordsType === GetRecordTypes.ReadOnly) {
             this.EnableAddConditions = true;
             this.ShowConditionsOperation = true;
             this.ExcludedEntities = ["Opportunity"];
@@ -223,7 +221,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         else if (recordsType === GetRecordTypes.Editable) {
             this.EnableAddConditions = false;
             this.ShowConditionsOperation = false;
-            this.ExcludedEntities = ["Customer", "Container", "User", "Opportunity", "ShipmentStoragePricing"];
+            this.ExcludedEntities = ["Customer", "User", "Opportunity", "ShipmentStoragePricing"];
         }
     }
 

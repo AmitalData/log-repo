@@ -789,6 +789,8 @@
     <Compile Include="InvoiceModel\Tools\DataMapping\ARPaymentMapping.Concurrency.cs" />
     <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\Payment\Complemento.PagosPago.DoctoRelacionados.CreditNotes.cs" />
     <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\Payment\Complemento.PagosPago.DoctoRelacionados.PagosPagoDoctoRelacionado.cs" />
+    <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\SATInvoiceDifferenceVATCalculationService.cs" />
+    <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\SATInvoiceSenderService.cs" />
     <Compile Include="QuoteModel\CustomFilters\DigitalPortalCustomFilter.cs" />
     <Compile Include="QuoteModel\EntityPMs\QuoteSalesAmountWithVATDetailsPM.cs" />
     <Compile Include="QuoteModel\EntityQueries\QuoteQuery.Digital.cs" />
