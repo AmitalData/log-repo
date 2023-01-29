@@ -274,9 +274,6 @@ export class ProfileFieldsItem extends BaseComponent {
         this.hasPermission = item.HasPermission;
         this.fieldCode = item.FieldCode;
         var selelectField = father.loadedFieldsResults.filter(a => a['FieldCode'] == this.fieldCode)[0];
-        if (selelectField == null) {
-            var tt = "ccc";
-        }
         this.textCode = selelectField['TextCode'];
         this.defaultText = selelectField['DefaultText'];
         this.displayText = selelectField['DisplayText'];
