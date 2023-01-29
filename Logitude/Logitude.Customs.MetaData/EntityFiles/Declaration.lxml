@@ -26375,6 +26375,18 @@
       LocalDefaultText="&quot;תהליך פתיחת תוספת ביטוח אוטומטי נכשל&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.ImporterIsTooShort&quot;"
+      DefaultText="&quot;ImporterId is too short&quot;"
+      LocalDefaultText="&quot;מספר יבואן קצר מידי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.ExporterIsTooShort&quot;"
+      DefaultText="&quot;ExporterId is too short&quot;"
+      LocalDefaultText="&quot;מספר יצואן קצר מידי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

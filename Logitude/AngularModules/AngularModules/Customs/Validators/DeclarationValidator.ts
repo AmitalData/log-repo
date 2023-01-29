@@ -645,7 +645,11 @@ export class DeclarationValidator {
 
 
             if (this._DeclarationPM.ImporterCode.length < 9) {
-                this.ValidationErrorMessageCodes.push("מספר יבוםן קצר מידיי");
+                if(this._DeclarationPM.Direction != "E")
+                    this.ValidationErrorMessageCodes.push(TextCodeTranslator.Translate("Customs.Declaration.O.ImporterIsTooShort"));
+                else
+                    this.ValidationErrorMessageCodes.push(TextCodeTranslator.Translate("Customs.Declaration.O.ExporterIsTooShort"));
+    
             }
             else if (this._DeclarationPM.ImporterCode.length > 9) {
                 this.ValidationErrorMessageCodes.push(TextCodeTranslator.Translate("Customs.Declaration.O.TooLongCode"));

@@ -908,7 +908,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
             this.ImporterCode = item;
             if (item.length < 9) {
                 valid = false;
-                errorMessage = "מספר יבואן קצר מידיי";
+                errorMessage = this.EntityPM.Direction !='E' ? TextCodeTranslator.Translate("Customs.Declaration.O.ImporterIsTooShort") : TextCodeTranslator.Translate("Customs.Declaration.O.ExporterIsTooShort");
                 //this.UIProperties.SetValidity("ImporterCode", "Customs.Declaration", false, TextCodeTranslator.Translate("Customs.Declaration.O.CodeShort"));
             }
             else if (item.length > 9) {
