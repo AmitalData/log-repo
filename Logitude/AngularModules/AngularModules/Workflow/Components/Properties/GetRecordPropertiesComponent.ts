@@ -168,7 +168,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
     }
 
     updateName(name: string) {
-        if(this.IsNew){
+        if (this.IsNew) {
             this.Data["name"] = name;
         }
 
@@ -212,8 +212,8 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         this.RecordsTypeChanged = !this.RecordsTypeChanged;
     }
 
-    handleRecordsType(recordsType: string){
-        if(recordsType === GetRecordTypes.ReadOnly){
+    handleRecordsType(recordsType: string) {
+        if (recordsType === GetRecordTypes.ReadOnly) {
             this.EnableAddConditions = true;
             this.ShowConditionsOperation = true;
             this.ExcludedEntities = ["Opportunity"];
@@ -221,7 +221,7 @@ export class GetRecordPropertiesComponent extends BaseComponent {
         else if (recordsType === GetRecordTypes.Editable) {
             this.EnableAddConditions = false;
             this.ShowConditionsOperation = false;
-            this.ExcludedEntities = ["Customer", "Container", "User", "Opportunity", "ShipmentStoragePricing"];
+            this.ExcludedEntities = ["Customer", "User", "Opportunity", "ShipmentStoragePricing"];
         }
     }
 

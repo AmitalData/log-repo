@@ -4,7 +4,7 @@ import { Entity, ChildEntity } from "Workflow/Types";
 
 export class Entities {
 
-    private static readonly FlowEntities: string[] = [
+    private static DefaultParents: string[] = [
         "Shipment",
         "Container",
         "Customer",
@@ -13,7 +13,7 @@ export class Entities {
         "ShipmentStoragePricing"
     ];
 
-    private static readonly FlowChildEntities: string[] = [
+    private static DefaultChildren: string[] = [
         "ShipmentPackage",
         "ARInvoice",
         "APInvoice",
@@ -21,19 +21,28 @@ export class Entities {
         "ShipmentPayable"
     ];
 
-    public static parents(): Entity[] {
+    public static getParents(): Entity[] {
         return ObjectTables.getAll()
-            .filter(o => this.FlowEntities.includes(o.Name)).map(objectTable => {
-                return { Code: objectTable.Name, Name: this.getEntityDisplayName(objectTable) };
+            .filter(o => this.DefaultParents.includes(o.Name))
+            .sort((a, b) => this.getEntityOrder(a) - this.getEntityOrder(b))
+            .map(objectTable => {
+                return {
+                    Code: objectTable.Name,
+                    Name: this.getEntityDisplayName(objectTable)
+                };
             });
     }
 
-    public static children(): ChildEntity[] {
+    public static getChildren(): ChildEntity[] {
         return ObjectTables.getAll()
-            .filter(o => this.FlowChildEntities.includes(o.Name) || o.IsCustom)
-            .sort((a, b) => Number(a.IsCustom) - Number(b.IsCustom))
+            .filter(o => this.DefaultChildren.includes(o.Name) || (o.IsCustom && o.ParentObjectTableId))
+            .sort((a, b) => this.getEntityOrder(a, true) - this.getEntityOrder(b, true))
             .map(objectTable => {
-                return { Code: objectTable.Name, Name: this.getEntityDisplayName(objectTable), ParentEntityCode: this.getParentEntityCode(objectTable) };
+                return {
+                    Code: objectTable.Name,
+                    Name: this.getEntityDisplayName(objectTable),
+                    ParentEntityCode: this.getParentEntityCode(objectTable)
+                };
             });
     }
 
@@ -82,6 +91,16 @@ export class Entities {
             default:
                 return ObjectTables.getNameById(objectTable ? objectTable.ParentObjectTableId : null);
         }
+    }
+
+    private static getEntityOrder(objectTable: ObjectTableList, isChildren: boolean = false): number {
+        let lastOrder = (isChildren ? this.DefaultChildren.length : this.DefaultParents.length) + 1;
+        let objectTableName = objectTable ? objectTable.Name : null;
+        if (objectTableName) {
+            let entityIndex = (isChildren ? this.DefaultChildren : this.DefaultParents).indexOf(objectTableName);
+            return entityIndex === -1 ? lastOrder : entityIndex;
+        }
+        return lastOrder;
     }
 
 }

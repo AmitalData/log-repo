@@ -53,7 +53,7 @@ export class SingleEditableEntitiesTreeList {
 
     private getGetRecordTreeSelectItemChildren(treeItemPrefix: string, entity: string, nodeId: string | null) {
         let getRecordTreeSelectItemChildren = [];
-        Entities.children().filter(c => c.Code !== "ARInvoice" && c.Code !== "APInvoice").filter(c => c.ParentEntityCode === entity)
+        Entities.getChildren().filter(c => c.Code !== "ARInvoice" && c.Code !== "APInvoice").filter(c => c.ParentEntityCode === entity)
             .forEach(childEntity => {
                 let itemData = { entity: childEntity.Code, nodeId: nodeId };
                 let treeSelectItemKey = treeItemPrefix + this.ItemKeySplitter + childEntity.Code;
