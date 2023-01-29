@@ -22,9 +22,11 @@ import { MorningMessageComponent } from './Components/MorningMessageComponent';
 import { CopyDeclarationComponent } from './Components/CopyDeclarationComponent';
 import { PhysicalCheckComponent } from './Components/PhysicalCheckComponent';
 import { EndPhysicalCheckComponent } from './Components/EndPhysicalCheckComponent';
+import { CustomsItemDetailsQueryComponent } from './Components/CustomsItemDetailsQueryComponent';
  
 export const Components =
     [
+        CustomsItemDetailsQueryComponent,
         CourierBOLQueryComponent,
         ExchangeRatesQueryComponent,
         MasterBOLQueryComponent,
@@ -60,6 +62,7 @@ export class ModuleDeclarations {
 
             case "CourierBOLQueryComponent": { myResult = CourierBOLQueryComponent; break; }
             case "ExchangeRatesQueryComponent": { myResult = ExchangeRatesQueryComponent; break; }
+            case "CustomsItemDetailsQueryComponent": { myResult = CustomsItemDetailsQueryComponent; break; }
             case "MasterBOLQueryComponent": { myResult = MasterBOLQueryComponent; break; }
             case "CustomItemLegalDemandsQueryComponent": { myResult = CustomItemLegalDemandsQueryComponent; break; }
             case "CreditLimitQueryComponent": { myResult = CreditLimitQueryComponent; break; }

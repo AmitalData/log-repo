@@ -21,6 +21,8 @@ import { UpdateDeleteVehicleRequestParams } from '../../DataContract/RequestPara
 import { CH_NG_191_MSG2_ChangingTimeRequestParams } from '../../DataContract/RequestParams/CH_NG_191_MSG2_ChangingTimeRequestParams';
 import { CargoQueryRequestParams } from '../../DataContract/RequestParams/CargoQueryRequestParams';
 import { LazyLoadEvent } from 'primeng/api';
+import { RequestParamsBase } from 'Customs/DataContract/RequestParams/RequestParamsBase';
+import { CustomsItemDetailsQueryRequestParams } from 'Customs/DataContract/RequestParams/CustomsItemDetailsQueryRequestParams';
 
 
 @Injectable()
@@ -234,6 +236,35 @@ export class IIGGeneralMessagesService {
 
             return this._http.post(
                 this._apiUrl + '/PostExchangeRatesQuery/',
+                JSON.stringify(entity),
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+
+                    serviceResponse.Result = res;
+
+                    return serviceResponse;
+
+                }),catchError(ServiceHelper.HandleServiceError));
+
+        }
+
+        );
+    }
+    PostCustomsItemDetailsQuery(entity: CustomsItemDetailsQueryRequestParams) {
+
+
+        return defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            return this._http.post(
+                this._apiUrl + '/PostCustomsItemDetailsQuery/',
                 JSON.stringify(entity),
                 ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
 

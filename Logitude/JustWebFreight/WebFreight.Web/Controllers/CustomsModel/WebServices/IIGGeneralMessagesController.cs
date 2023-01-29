@@ -275,6 +275,28 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
+
+        public HttpResponseMessage PostCustomsItemDetailsQuery(CD_NG_8314_Web01_CustomsItemDetailsRequestParams requestParams)
+        {
+            try
+            {
+
+
+
+                // use messageing service
+
+                var service = new DCAInCB_MSG_8314_8888_CustomItemDetailsHeaderMessagingService();
+                var responseData = service.Send(requestParams);
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, responseData);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
         public HttpResponseMessage PostCustomItemLegalDemandsQuery(CustomItemLegalDemandsRequestParams requestParams)
         {
             try
