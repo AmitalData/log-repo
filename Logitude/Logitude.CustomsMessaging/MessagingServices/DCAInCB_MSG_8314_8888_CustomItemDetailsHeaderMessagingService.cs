@@ -19,7 +19,7 @@ using RequestHeader = UnifreightIIG.Common.CustomItemDetailsServiceReference;
 namespace Logitude.CustomsMessaging.MessagingServices
 {
     public  class DCAInCB_MSG_8314_8888_CustomItemDetailsHeaderMessagingService: MessagingServiceBase<
-        GenericRequestParams,
+        CD_NG_8314_Web01_CustomsItemDetailsRequestParams,
         INF_MSG_GenericResponseData,
          CB_NG_8314_CustomItemDetailsHeaderIn,
          CB_NG_8888_CustomsItemOut,
@@ -29,21 +29,33 @@ namespace Logitude.CustomsMessaging.MessagingServices
         >
     {
 
-        protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(CB_NG_8888_CustomsItemOut customsResponse)
+        protected override CD_NG_8314_Web01_CustomsItemDetailsRequestParams CreateDefaultRequestParamsFromCustomsResponse(CB_NG_8888_CustomsItemOut customsResponse)
         {
             
 
-            var myGenericRequestParams = new GenericRequestParams()
+            var myGenericRequestParams = new CD_NG_8314_Web01_CustomsItemDetailsRequestParams()
             {
                 LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CustomsItem"),
                 //LoggingEntityId = customsResponse.DebtNotificationMessag.debtNotificationID.ToString()
             };
             return myGenericRequestParams;
         }
-        protected override CB_NG_8888_CustomsItemOut CallWS(CB_NG_8314_CustomItemDetailsHeaderIn customRequest, GenericRequestParams requestParams, out string exceptionMessage)
+        protected override CB_NG_8888_CustomsItemOut CallWS(CB_NG_8314_CustomItemDetailsHeaderIn customRequest, CD_NG_8314_Web01_CustomsItemDetailsRequestParams requestParams, out string exceptionMessage)
         {
             exceptionMessage = null;  
-            return new CB_NG_8888_CustomsItemOut(); 
+           var response = new CB_NG_8888_CustomsItemOut();
+
+            using (var uifreightSdkGateway = new UnifreightSdkGateway(base.CustomsSetting.IIGServiceAddress))
+            {
+                _ResponseHeader = uifreightSdkGateway.GetChannel<ICustomItemDetailsOperation>()
+                    .CustomItemDetails(
+                    this.RequestsSheetExternalId,
+                    base.CustomsSetting.CustomsAgentId,
+                    customRequest,
+                    ref this._IIGGatewayMoreParams,
+                    out response);
+            }
+            return response;
         }
 
         public override string MainInterfaceCode

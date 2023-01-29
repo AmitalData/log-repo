@@ -810,8 +810,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  		   TextCode GeneralTextCode_GeneralMCantUpdateRecord = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.CantUpdateRecord", DefaultText = "Sorry you can't update this record right now it's being updated by another user",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMFieldIsRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.FieldIsRequired", DefaultText = "%FieldName Field is Required",LocalDefaultText = @"%FieldName שדה חובה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+       
 
- 		   TextCode GeneralTextCode_GeneralMMinMax = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.MinMax", DefaultText = "%FieldName Field must be less than %Maxlength and more than %Minlength",LocalDefaultText = @"%FieldName השדה חייב להיות קטן מ- %Maxlength וגדול מ- %Minlength", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+            TextCode GeneralTextCode_GeneralMMinMax = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.MinMax", DefaultText = "%FieldName Field must be less than %Maxlength and more than %Minlength",LocalDefaultText = @"%FieldName השדה חייב להיות קטן מ- %Maxlength וגדול מ- %Minlength", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMSubmitFaild = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.SubmitFaild", DefaultText = "Submit failed",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 

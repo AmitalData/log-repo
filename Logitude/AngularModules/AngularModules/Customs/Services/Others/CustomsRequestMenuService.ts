@@ -54,9 +54,10 @@ export class CustomsRequestMenuService {
         my8347.CanExportExcel = true;
         this._CustomsRequestMenuItems.push(my8347);
 
-
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CustomItemLegalDemandsQuery"), "CustomItemLegalDemandsQuery", './CustomsModules/CustomsGeneralRequests/Components/CustomItemLegalDemandsQueryComponent', 950, 630, "8316"));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.DeclarationPrintQuery"), "DeclarationPrintQuery", './CustomsModules/CustomsRequests/Components/DeclarationRequests/PrintRequestComponent', 500, 490, "8302"));
+        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CustomsItemDetailsQuery"), "CustomsItemsDetailsQuery", './CustomsModules/CustomsGeneralRequests/Components/CustomsItemDetailsQueryComponent', 650, 590, "8314"));
+
 
         // Vendors
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.Vendor.O.Vendors"), "Vendors", '', 850, 500, "", "", null, "Customs.CustomsVendor"));
