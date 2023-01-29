@@ -1046,7 +1046,7 @@
   <Column
     Name="ClosingXml"
     Type="nvarchar"
-    Size="1000">
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
