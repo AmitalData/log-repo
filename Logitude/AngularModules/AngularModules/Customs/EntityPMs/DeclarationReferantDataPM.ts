@@ -254,6 +254,11 @@ export class DeclarationReferantDataPM {
     public set ImporterApproval(newValue: boolean) { if (this.importerApproval != newValue) { this.importerApproval = newValue; this.MarkAsDirty("ImporterApproval"); } }
        
 	 
+    private declarationIdToDisplay: string;
+    public get DeclarationIdToDisplay() { return this.declarationIdToDisplay; }
+    public set DeclarationIdToDisplay(newValue: string) { if (this.declarationIdToDisplay != newValue) { this.declarationIdToDisplay = newValue; this.MarkAsDirty("DeclarationIdToDisplay"); } }
+       
+	 
 
     public OldEntityPM: DeclarationReferantDataPM;
 		

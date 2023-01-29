@@ -42,6 +42,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Customs.BL.Messaging.Maman;
 using Logitude.Customs.BL.Messaging.Customs;
 using Unifreight.BL.EntityPMs.UGenerated;
+using Logitude.Customs.Data.EntityPOCOs;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -415,6 +416,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
                                             case "2":
+
                                                 _MyDeclarationPM.AmendmentStatus = "6";
                                                 _MyDeclarationPM.AmendmentDontDisplayInList = false;
 
@@ -503,7 +505,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                                     }
 
-
+                                    
                                     break;
                                 }
                         }
@@ -607,6 +609,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                     if (_MyDeclarationPM.AmendmentStatus == "3" || _MyDeclarationPM.AmendmentStatus == "6")
                     {
+                        var myDeclarationReferantData = new DeclarationReferantDataUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
+
+                        var DeclarationReferantDataQueryService = new DeclarationReferantDataQueryService(context);
+                        DeclarationReferantDataPM declarationReferantData = DeclarationReferantDataQueryService.GetDeclarationReferandDateByDeclarationIdToDisplay(_MyDeclarationPMOrg.Id, _MyDeclarationPMOrg.Tenant);
+
+                        declarationReferantData.DeclarationIdToDisplay = _MyDeclarationPM.Id;
+                        declarationReferantData.ChangeSetOp = ChangeSetOperation.Update;
+                        myDeclarationReferantData.Update(declarationReferantData,true);
+
                         _MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status.NameCode.Value;
                         _MyDeclarationPM.PaymentDate = _MyDeclarationPMOrg.PaymentDate;
                         if (fromMehes)
