@@ -40,6 +40,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
         
         public override void Update(MN_MSG2791_ExportDeliveryAnswerMessage customResponse, GenericRequestParams requestParams)
         {
+            var setting = CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant);
+
+            if (setting.IsConnectedToUniFreight == true)
+            {
+                this.MyResponseData = new INF_MSG_GenericResponseData();
+                this.MyResponseData.Succeeded = true;
+                this.MyResponseData.HasException = false;
+                this.MyResponseData.UserMessage =  "לא נותח - סביבת יבוא";
+                return;
+            }
+
+
             if (customResponse.ResponseContentHeader.Exception != null)
             {
                 LogMessagingUtil.Instance.AppendLine(customResponse.ResponseContentHeader.Exception.FirstOrDefault().ExeptionDescription);

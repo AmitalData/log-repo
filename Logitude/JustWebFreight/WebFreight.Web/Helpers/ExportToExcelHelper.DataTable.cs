@@ -59,7 +59,7 @@ namespace WebFreight.Web.Helpers
 
             TenantRepository tenantRepoitory = new TenantRepository(tenant);
             var CurTenant = tenantRepoitory.GetSingleByTenant(tenant);
-            var rows = dataTable.Rows.Count - 40000;
+            var rows = dataTable.Rows.Count;
             if (rows > 0)
             {
                 
