@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Infrastructure" Env="Logitude,local,test">
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[
 	   DECLARE @Tenant as int
 	   DECLARE @ShipmentATAClosingDays as int
@@ -30,14 +30,18 @@
 					  if not exists (select * from ContainerSettings where Tenant = @Tenant)
              				  BEGIN
                     				 EXECUTE usp_GetNextTableIdValue @NewId OUTPUT,'ContainerSetting'
-                    				 insert into ContainerSettings(Id, Tenant, ShipmentATAClosingDays, EmptyReturnClosingDays, ShipmentATADateIndicator)
+                    				 insert into ContainerSettings(Id, Tenant, ShipmentATAClosingDays, EmptyReturnClosingDays, ShipmentATADateIndicator, IsDomestic, IsDrop, IsExport, IsImport)
                     				 values
                     				 (
                     				 @NewId,
                     				 @Tenant,
                     				 @ShipmentATAClosingDays,
                     				 @EmptyReturnClosingDays,
-                    				 @ShipmentATADateIndicator
+                    				 @ShipmentATADateIndicator,
+                    				 1,
+                    				 1,
+                    				 1,
+                    				 1
                     				 )
              				  END
       		   FETCH NEXT FROM DataCursor INTO

@@ -63,7 +63,16 @@ export class ContainerSettingsComponent extends BaseComponent implements OnInit 
             this.ShowDefaults = SessionLocator.Tenant != 0 && (this.IsNew || !this.EntityPM?.AddedManually);
             this.SetDefaultATADateItem();
             this.LoadTenantZeroShippingLines();
+            this.SetDefaultData();
         });
+    }
+
+    SetDefaultData() {
+        if (!this.ShowDefaults) return;
+        this.IsExport = true;
+        this.IsImport = true;
+        this.IsDrop = true;
+        this.IsDomestic = true;
     }
 
     private SetDefaultATADateItem() {
