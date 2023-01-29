@@ -1,5 +1,5 @@
 <div style="height: 100%;width: 100%;display: flex;flex-direction: column;">
-    <div style="margin-left: 10px;">
+    <div style="margin-left: 10px;" *ngIf="Tenant != 0">
         <div class="container-setting-directions-container">
             <div class="container-setting-directions-single-container">
                 <LogCheckBox style="width:20px; height: 30px;" [HideColumns]="true" [ObjectFieldName]="'IsExport'"
