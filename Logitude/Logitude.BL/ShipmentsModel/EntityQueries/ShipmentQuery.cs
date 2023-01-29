@@ -2740,8 +2740,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 return;
             }
 
-            shipmentPM.IsCustomerArchived = repository.context.ShipmentDigitalFields.Where(a => a.Id == shipmentPM.Id && a.Tenant == shipmentPM.Tenant)
-                                                                                    .Select(a => a.IsCustomerArchived).FirstOrDefault();
+            shipmentPM.IsCustomerArchived = repository.context
+                                                      .ShipmentDigitalFields
+                                                      .Where(a => a.Id == shipmentPM.Id
+                                                                  && a.Tenant == shipmentPM.Tenant)
+                                                      .Select(a => a.IsCustomerArchived)
+                                                      .FirstOrDefault();
 
             shipmentPM.IsFullInvoiced = false;
             if (shipmentPM.ShipmentReceivables == null || shipmentPM.ShipmentReceivables?.Count == 0)
@@ -2750,8 +2754,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
 
             ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(shipmentPM.Tenant);
-            List<ARInvoice> invoices = aRInvoiceRepository.GetDigitalInvoicesByShipmentId(shipmentPM.Id, cardId, shipmentPM.Tenant);
-            shipmentPM.IsFullInvoiced = invoices?.Count() > 0 ? true : false;
+            shipmentPM.IsFullInvoiced = aRInvoiceRepository.GetDigitalInvoicesByShipmentId(shipmentPM.Id, cardId, shipmentPM.Tenant).Any() ? true : false;
         }
 
         public static void MapFieldsBeforeTrackingChangedForAutomation(ShipmentPM shipmentPM, ShipmentServiceInitializer initializer)

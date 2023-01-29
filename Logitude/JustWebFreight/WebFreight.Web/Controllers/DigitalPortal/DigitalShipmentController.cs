@@ -1,5 +1,4 @@
-﻿using Logitude.BL.ShipmentsModel.EntityLists;
-using Logitude.BL.ShipmentsModel.EntityQueries;
+﻿using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -26,7 +25,6 @@ using Newtonsoft.Json.Linq;
 using System.Linq.Dynamic.Core;
 using Logitude.BL.Helpers;
 using Logitude.Infrastructure.BL.EntityQueryServices;
-using Logitude.BL.ShipmentsModel.EntityPMs;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -34,7 +32,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
     {
         [HttpGet]
         [Route("DigitalShipment/GetSingle")]
-        public HttpResponseMessage GetSingle(string id, string cardId, string objectTableId, string profileCode = "CS")
+        public HttpResponseMessage GetSingle(string id, string cardId, string objectTableId, string profileCode)
         {
             int tenant = 0;
             string email = "";
@@ -53,7 +51,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 email = shipmentIdAndTenant.Item3;
 
                 var shipmentQuery = new ShipmentQuery(tenant);
-                var shipmentPM = shipmentQuery.GetSinglePM(id, tenant, cardId);
+                var shipmentPM = shipmentQuery.GetSingleDigitalPM(id, tenant, cardId);
 
                 if (string.IsNullOrWhiteSpace(cardId) || cards.Contains(shipmentPM.CustomerId) || cards.Contains(shipmentPM.AgentId))
                 {
