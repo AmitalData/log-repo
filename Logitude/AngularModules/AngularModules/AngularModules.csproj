@@ -507,6 +507,7 @@
     <TypeScriptCompile Include="Common\EntityLists\ReportExecutionLogList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\UnassignedEntityList.ts" />
     <TypeScriptCompile Include="Common\EntityPMInitServices\PortGroupPMInitService.ts" />
+    <TypeScriptCompile Include="Common\EntityPMInitServices\PortPMInitService.ts" />
     <TypeScriptCompile Include="Common\EntityPMInitServices\PortTimeZonePMInitService.ts" />
     <TypeScriptCompile Include="Common\EntityPMInitServices\ReportExecutionLogPMInitService.ts" />
     <TypeScriptCompile Include="Common\EntityPMInitServices\ShippingLinePMInitService.ts" />
@@ -5006,7 +5007,6 @@
     <TypeScriptCompile Include="Common\EntityLists\UsoCFDIList.ts" />
     <TypeScriptCompile Include="Common\EntityPMCustomCode\PackageTypePMCustomCode.ts" />
     <TypeScriptCompile Include="Common\EntityPMInitServices\CustomerSizePMInitService.ts" />
-    <TypeScriptCompile Include="Common\EntityPMInitServices\PortPMCustomCode.ts" />
     <TypeScriptCompile Include="Common\EntityPMInitServices\ProductTypePMInitService.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\AgentSharedDocumentPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\AirlineMessagingRulePM.ts" />

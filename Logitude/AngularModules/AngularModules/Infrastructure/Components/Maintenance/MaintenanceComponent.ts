@@ -176,13 +176,13 @@ export class MaintenanceComponent {
                 }
 
                 else {
-                    if (item.Code != "MTHT") {
+                    if (item.Code != "MTHT" && item.Code != "POGP") {
                         this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
                     }
                 }
             }
 
-            if (item.Code == "MTHT") {
+            if (item.Code == "MTHT" || item.Code == "POGP") {
                 if (SessionLocator.Tenant == 0) {
                     this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
                 }
