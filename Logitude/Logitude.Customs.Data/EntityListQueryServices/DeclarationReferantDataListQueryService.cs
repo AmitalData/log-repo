@@ -34,17 +34,17 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                              .Include("DeclarationStatusType")
                                                              .Include("Importer")
                                                              .Include("PackageType")
-                                                             on a.DeclarationId equals d.Id
+                                                             on a.DeclarationIdToDisplay equals d.Id
 
                                                              join declarationStatus in context.DeclarationStatuses
-                                                             on a.DeclarationId equals declarationStatus.DeclarationId into qjoinDeclarationStatuses
+                                                             on a.DeclarationIdToDisplay equals declarationStatus.DeclarationId into qjoinDeclarationStatuses
                                                              from s in qjoinDeclarationStatuses.DefaultIfEmpty()
 
                                                              select new DeclarationReferantDataList()
                                                              {
                                                                  Tenant = a.Tenant,
 
-                                                                 DeclarationId = a.DeclarationId,
+                                                                 DeclarationId = a.DeclarationIdToDisplay,
 
                                                                  OrderNumber = a.OrderNumber,
 
@@ -300,7 +300,7 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
             DeclarationReferantDataSummary declarationReferantDataSummary = new DeclarationReferantDataSummary();
             IQueryable<DeclarationReferantDataList> declarationReferantDatas = (from a in context.DeclarationReferantDatas
                                                                                 join d in context.Declarations
-                                                                                on a.DeclarationId equals d.Id
+                                                                                on a.DeclarationIdToDisplay equals d.Id
                                                                                 where a.Tenant == tenant && d.IsCancelled == false
                                                                                 select new DeclarationReferantDataList()
                                                                                 {

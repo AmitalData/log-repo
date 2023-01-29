@@ -128,6 +128,21 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return advancedFilters;
         }
 
+        public DeclarationReferantDataPM GetDeclarationReferandDateByDeclarationIdToDisplay(string declarationId,int tenant)
+        {
+            if (String.IsNullOrWhiteSpace(declarationId)) return null;
+            DeclarationReferantDataRepository declarationReferantDataRepository = new DeclarationReferantDataRepository(context);
+
+            DeclarationReferantData declarationReferantData= declarationReferantDataRepository.GetDeclarationReferandDateByDeclarationIdToDisplay(declarationId, tenant);
+            if(declarationReferantData == null) return null;
+            DeclarationReferantDataPM declarationReferantDataPM = new DeclarationReferantDataPM();
+            DeclarationReferantDataDataMapping declarationReferantDataDataMapping = new DeclarationReferantDataDataMapping();
+            declarationReferantDataDataMapping.CustomPOCOToPM(declarationReferantDataPM, declarationReferantData);
+            declarationReferantDataDataMapping.POCOToPM(declarationReferantDataPM,declarationReferantData);
+            return declarationReferantDataPM;
+
+        }
+
 
     }
 

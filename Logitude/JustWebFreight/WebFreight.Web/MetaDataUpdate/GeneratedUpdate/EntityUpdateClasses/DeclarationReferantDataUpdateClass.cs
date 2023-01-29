@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationReferantDataUpdateClass
    {  		
-		public const string HashString = "70d92f02a7b0e2468d3b10a8d8a4be28";
+		public const string HashString = "c2a60cd47dfae5d9ff89fc8ed1801db4";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -12999,6 +12999,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "DeclarationIdToDisplay",
 					  						ListPropertyPath =  "DeclarationIdToDisplay",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -13017,10 +13018,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeclarationIdToDisplay",
 					  						DefaultText =  "Declaration Id To Display",
-					  						FullLocalDefaultText =  "מספר תיק מכס להצגה",
+					  						FullLocalDefaultText =  "הצהרה לשליפה",
 					  						ListFieldLable =  "DeclarationIdToDisplayListLable",
 					  						ListLableDefaultText =  "Declaration Id To Display",
-					  						ListLocalDefaultText =  "מספר תיק מכס להצגה",
+					  						ListLocalDefaultText =  "הצהרה לשליפה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
