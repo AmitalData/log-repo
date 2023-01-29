@@ -34,6 +34,10 @@ namespace Logitude.BL.Helpers
                         if (temp != null)
                         {
                             temp.HasPermission = item.HasPermission;
+                            temp.CreatedBy = item.CreatedBy;
+                            temp.CreatedOn = item.CreatedOn;
+                            temp.ModifiedOn = item.ModifiedOn;
+                            temp.ModifiedBy = item.ModifiedBy;
                             continue;
                         }
                         else
