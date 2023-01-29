@@ -69,6 +69,11 @@ export class ContainerSettingPM {
     public set IsDrop(newValue: boolean) { if (this.isDrop != newValue) { this.isDrop = newValue; this.MarkAsDirty("IsDrop"); } }
        
 	 
+    private addedManually: boolean;
+    public get AddedManually() { return this.addedManually; }
+    public set AddedManually(newValue: boolean) { if (this.addedManually != newValue) { this.addedManually = newValue; this.MarkAsDirty("AddedManually"); } }
+       
+	 
 
     public OldEntityPM: ContainerSettingPM;
 		

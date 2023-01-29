@@ -34,6 +34,7 @@ export class ContainerSettingsComponent extends BaseComponent implements OnInit 
     private TenantZeroShippingLines: ShippingLinePM[] = [];
     private UserTenantShippingLines: ShippingLinePM[] = [];
     public ShippingLines: ShippingLineItem[];
+    private ShowDefaults: boolean;
 
     constructor() {
         super();
@@ -59,6 +60,7 @@ export class ContainerSettingsComponent extends BaseComponent implements OnInit 
             if (!response || response.HasError) return this.StopIndicator();
             if (!response.Result) this.IsNew = true;
             else this.EntityPM = response.Result;
+            this.ShowDefaults = SessionLocator.Tenant != 0 && (this.IsNew || !this.EntityPM?.AddedManually);
             this.SetDefaultATADateItem();
             this.LoadTenantZeroShippingLines();
         });
@@ -104,11 +106,18 @@ export class ContainerSettingsComponent extends BaseComponent implements OnInit 
         });
     }
 
-    private BuildShippingLineItem(item: ShippingLinePM): ShippingLineItem {
-        var tenantZeroItem = this.TenantZeroShippingLines.filter(t => t.SCACCode == item.SCACCode)[0];
-        if (tenantZeroItem != null) return new ShippingLineItem(tenantZeroItem, item);
-        else if (item.AddedManually) return new ShippingLineItem(null, item);
+    private BuildShippingLineItem(shippingLine: ShippingLinePM): ShippingLineItem {
+        var tenantZeroItem = this.TenantZeroShippingLines.filter(t => t.SCACCode == shippingLine.SCACCode)[0];
+        if (tenantZeroItem != null) {
+            if (this.ShowDefaults) this.SetShippingLineDefaultVaues(shippingLine, tenantZeroItem);
+            return new ShippingLineItem(tenantZeroItem, shippingLine);
+        }
+        else if (shippingLine.AddedManually) return new ShippingLineItem(null, shippingLine);
         return null;
+    }
+
+    private SetShippingLineDefaultVaues(shippingLine: ShippingLinePM, tenantZeroItem: ShippingLinePM) {
+        shippingLine.IsAutomaticRequestsSent = tenantZeroItem.IsAutomaticRequestsSent;
     }
 
     private SortItemSource(items: ShippingLinePM[]) {
@@ -141,6 +150,7 @@ export class ContainerSettingsComponent extends BaseComponent implements OnInit 
 
     SubmitSave() {
         this.EntityPM.Tenant = SessionLocator.Tenant;
+        this.EntityPM.AddedManually = true;
         this.CurrentSession.StartBusyIndicatorSaving();
         if (this.IsNew) this.InsertEntity();
         else this.UpdateEntity()

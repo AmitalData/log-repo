@@ -32,6 +32,8 @@ namespace Logitude.Infrastructure.Data.EntityLists
        public bool IsImport  { get; set; }
        [DataMember]
        public bool IsDrop  { get; set; }
+       [DataMember]
+       public bool AddedManually  { get; set; }
    }
 
 }

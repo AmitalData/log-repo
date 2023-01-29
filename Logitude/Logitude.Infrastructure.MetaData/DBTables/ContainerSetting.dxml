@@ -61,4 +61,10 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="AddedManually"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
 </Table>

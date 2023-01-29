@@ -40,6 +40,8 @@ namespace Logitude.Infrastructure.Data.EntityMapping
             this.Property(t => t.IsImport).HasColumnName("IsImport");
 
             this.Property(t => t.IsDrop).HasColumnName("IsDrop");
+
+            this.Property(t => t.AddedManually).HasColumnName("AddedManually");
         }
     }
 }

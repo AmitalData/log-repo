@@ -227,6 +227,29 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
+	  private bool addedManually ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool AddedManually  
+	   {
+	    
+	     get
+		{
+		   return addedManually;
+		 }
+		 set
+		 {
+		   if(addedManually != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AddedManually",OldValue=addedManually,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   addedManually=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

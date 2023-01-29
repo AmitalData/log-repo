@@ -37,6 +37,8 @@ namespace Logitude.Infrastructure.Data.EntityPOCOs
 	    public bool IsImport { get; set; }
         [Column("IsDrop")]
 	    public bool IsDrop { get; set; }
+        [Column("AddedManually")]
+	    public bool AddedManually { get; set; }
     }
 }
 	 

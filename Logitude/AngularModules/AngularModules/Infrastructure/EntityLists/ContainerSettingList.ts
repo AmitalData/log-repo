@@ -17,6 +17,7 @@ export class ContainerSettingList {
 	IsDomestic: boolean;
 	IsImport: boolean;
 	IsDrop: boolean;
+	AddedManually: boolean;
 	
 }
  
