@@ -636,6 +636,8 @@ namespace WebFreight.Web.ContainerTracking
         public string ShipmentPackageId;
         public DateTime? EventDate;
         public string TrackingSource;
+        public DateTime? OnCarriageETA;
+        public DateTime? OnCarriageATA;
 
         public MilestoneData LoadedTransshipment; 
         public MilestoneData VesselArrived;

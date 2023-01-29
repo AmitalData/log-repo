@@ -396,5 +396,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string Field38 { get; set; }
         public string Field39 { get; set; }
         public string Field40 { get; set; }
+
+        public DateTime? OnCarriageETA { get; set; }
+        public DateTime? OnCarriageATA { get; set; }
     }
 }

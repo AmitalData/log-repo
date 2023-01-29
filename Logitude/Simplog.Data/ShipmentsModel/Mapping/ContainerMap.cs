@@ -262,6 +262,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.VesselName).HasColumnName("VesselName");
             this.Property(t => t.ConcurrencyGUID).HasColumnName("ConcurrencyGUID");
             this.Property(t => t.UpdatedByPartner).HasColumnName("UpdatedByPartner");
+            this.Property(t => t.OnCarriageETA).HasColumnName("OnCarriageETA");
+            this.Property(t => t.OnCarriageATA).HasColumnName("OnCarriageATA");
 
             this.HasOptional(t => t.CarrierCard).WithMany().HasForeignKey(d => d.MainCarriageCarrierId).WillCascadeOnDelete(false); 
             this.HasOptional(t => t.ShipmentPackage).WithMany().HasForeignKey(d => d.ShipmentPackagesId).WillCascadeOnDelete(false);

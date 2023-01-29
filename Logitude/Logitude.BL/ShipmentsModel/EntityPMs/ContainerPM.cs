@@ -462,5 +462,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string MainCarriageToCountryName { get; set; }
         public string MainCarriageFromCountryCode { get; set; }
         public string MainCarriageToCountryCode { get; set; }
+        public DateTime? OnCarriageETA { get; set; }
+        public DateTime? OnCarriageATA { get; set; }
     }
 }

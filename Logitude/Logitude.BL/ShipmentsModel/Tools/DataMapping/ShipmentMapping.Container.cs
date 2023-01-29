@@ -577,6 +577,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
             FieldChange.Add(container.Field40, containerPM.Field40 != null ? containerPM.Field40.Value : null, nameof(containerPM.Field40), fieldChanges);
             container.Field40 = containerPM.Field40 != null ? containerPM.Field40.Value : null;
+
+            FieldChange.Add(container.OnCarriageETA, containerPM.OnCarriageETA, nameof(containerPM.OnCarriageETA), fieldChanges);
+            container.OnCarriageETA = containerPM.OnCarriageETA;
+
+            FieldChange.Add(container.OnCarriageATA, containerPM.OnCarriageATA, nameof(containerPM.OnCarriageATA), fieldChanges);
+            container.OnCarriageATA = containerPM.OnCarriageATA;
         }
 
         private static string SetUpdatedByPartner(ContainerPM entityPM)
