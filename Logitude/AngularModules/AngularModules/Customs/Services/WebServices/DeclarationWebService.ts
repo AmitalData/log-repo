@@ -2115,4 +2115,5 @@ export interface ExportStorageConnectToDeclaration {
 export interface GoldPaymentDefaults {
     CustomerDefaultGoldPay_CIM_GOLD_PAY: string
     CompanyDefaultMaxPayMASAV_CGG_MAX_AGT_PAY: string
+    CompanyDefaultaboveamountagentCash_CGG_ABOVE_AGT_C: string//סכום שמעל יבוצע תשלום בקופה סוכן"
 }
