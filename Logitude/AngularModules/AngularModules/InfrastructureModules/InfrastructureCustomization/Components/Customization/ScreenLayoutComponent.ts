@@ -917,7 +917,10 @@ export class ScreenLayoutComponent extends BaseComponent implements OnInit {
         });
     }
     Save() {
-
+        if (this.IsGridScreen && this.GridScreenSelectedFields.length == 0) {
+            this.ShowMessageWindow("You have to add at least one field to the grid");
+            return;
+        }
         if (this.customizationEditComponent.IsDirty) {
             this.OkClicked(false);
         }
