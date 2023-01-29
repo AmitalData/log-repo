@@ -44,12 +44,12 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                     {
                        
                         DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(Tenant).Date;
-                        DateTime twoDayDate = todayDate.AddDays(-2);
+                        DateTime twoDaysAgoDate = todayDate.AddDays(-2);
 
                         queryableData = from d in queryableData
                                         where d.ActualPOLVesselDeparture == null 
                                         && d.EstimatedPOLVesselDeparture != null
-                                        && (d.EstimatedPOLVesselDeparture <= twoDayDate)
+                                        && (d.EstimatedPOLVesselDeparture <= twoDaysAgoDate)
                                         select d;
                        // queryableData = queryableData.Where(d => d.ActualPODDeparture == null && d.EstimatedPOLVesselDeparture != null && d.ActualPODVesselArrival == null);
                     }
