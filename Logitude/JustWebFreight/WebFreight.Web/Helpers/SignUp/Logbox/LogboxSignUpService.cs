@@ -34,7 +34,7 @@ namespace WebFreight.Web.Helpers.SignUp
         {
             if (signUpInfoClass.PackageCode != "IMPO") return;
 
-            LogboxSignUpCustomerService.CreateNewFromCloud(signUpInfoClass, tenant);
+            string connectedCustomerId = LogboxSignUpCustomerService.CreateNewFromCloud(signUpInfoClass, tenant);
 
             if (signUpInfoClass.IsCreateLogboxTenantFromCloud)
             {
@@ -42,13 +42,13 @@ namespace WebFreight.Web.Helpers.SignUp
             }
             else
             {
-                LogboxSignUpCustomerService.CreateStandardNew(signUpInfoClass, commonContext, tenant);
+                connectedCustomerId = LogboxSignUpCustomerService.CreateStandardNew(signUpInfoClass, commonContext, tenant);
             }
 
             AddressPM tenantAddress = LogboxSignUpAddressService.GetNewTenantAddress(signUpInfoClass, commonContext, tenant);
             LogboxSignUpCurrencyService logboxSignUpCurrencyService = new LogboxSignUpCurrencyService(commonContext, tenant);
             logboxSignUpCurrencyService.AddLocalAndProfitCurrency();
-            logboxSignUpCurrencyService.UpdateNewTenant(signUpInfoClass, tenantAddress, tenant);
+            logboxSignUpCurrencyService.UpdateNewTenant(signUpInfoClass, tenantAddress, connectedCustomerId);
             UpdateGlobalTenants();
         }
 
