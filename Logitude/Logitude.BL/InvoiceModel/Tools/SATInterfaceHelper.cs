@@ -376,7 +376,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                 return;
 
             SATInvoiceProfact40Service sATInvoiceProfact40Service = new SATInvoiceProfact40Service(arInvoicePM, arInvoice, satSetting);
-            sATInvoiceProfact40Service.SendProfactoXML();
+            sATInvoiceProfact40Service.BuildProfactoXML(new InvoiceComprobanteBuilderArgs { });
         }
         private void SendProfactoXML33(ARInvoicePM entityPM, ARInvoice entityPoco, SATInterfaceSetting satSetting)
         {

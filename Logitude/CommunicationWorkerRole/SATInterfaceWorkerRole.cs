@@ -51,7 +51,6 @@ namespace CommunicationWorkerRole
 				{
 					try
 					{
-						int tenant = 0;
 						queueservice = new DbQueueService();
 						queueservice.InitializeQueue("SATInterface", 0);
 

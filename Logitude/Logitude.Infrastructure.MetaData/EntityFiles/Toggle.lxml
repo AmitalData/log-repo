@@ -42,7 +42,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;063f&quot;"
+  Code="&quot;58dd&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -920,11 +920,16 @@
       Name="&quot;Invoice Concurrency&quot;"
       SearchFields="&quot;INU, Invoice Concurrency&quot;"
       Description="&quot;&quot;" />
-	<Record
-	 Code="&quot;SKP&quot;"
-	 Name="&quot;Use synch kafka producer&quot;"
-	 SearchFields="&quot;SKP,Use synch kafka producer&quot;"
-	 Description="&quot;Use synch kafka producer&quot;" />
+    <Record
+      Code="&quot;SKP&quot;"
+      Name="&quot;Use synch kafka producer&quot;"
+      SearchFields="&quot;SKP,Use synch kafka producer&quot;"
+      Description="&quot;Use synch kafka producer&quot;" />
+    <Record
+      Code="&quot;AVC&quot;"
+      Name="&quot;AR Invoice VATs Calculation per line&quot;"
+      SearchFields="&quot;AVC,AR Invoice VATs Calculation per line&quot;"
+      Description="&quot;AR Invoice VATs Calculation per line&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

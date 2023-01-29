@@ -860,6 +860,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "SKP,Use synch kafka producer", 
                 Description = "Use synch kafka producer", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "AVC", 
+                Name = "AR Invoice VATs Calculation per line", 
+                SearchFields = "AVC,AR Invoice VATs Calculation per line", 
+                Description = "AR Invoice VATs Calculation per line", 
+			});
 			
             return all;
        }

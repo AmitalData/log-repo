@@ -841,13 +841,113 @@ export class ARInvoiceMenuButtonsHandler {
             myConfirmWindow.Show(Text);
             myConfirmWindow.WindowClosed.subscribe(s => {
                 if (myConfirmWindow.Yes) {
-                    this.ProceedToApprove(TextCodeTranslator.Translate("ARInvoice.M.CreatingAutoCredit"));
+                    this.ValidateApprovalSendToSAT(TextCodeTranslator.Translate("ARInvoice.M.CreatingAutoCredit"));
                 }
             });
 
         }
         else
-            this.ProceedToApprove("Approving...");
+            this.ValidateApprovalSendToSAT("Approving...");
+    }
+
+    ValidateApprovalSendToSAT(ProceedToApproveMessage) {
+        if (!SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "AVC")[0]) {
+            this.ProceedToApprove(ProceedToApproveMessage);
+            return;
+        }
+        this.CurrentSession.StartBusyIndicatorLoading();
+        let invoiceDomainService = new InvoiceDomainService();
+        invoiceDomainService.ValidateApprovalSendToSAT(this.EntityPM).subscribe((serviceResponse: ServiceResponse) => {
+            this.CurrentSession.StopBusyIndicator();
+            if (serviceResponse.HasError) {
+                this.ProceedToApprove(ProceedToApproveMessage);
+                return;
+            }
+
+            if (!this.HasApprovalSendToSATValidateError(serviceResponse.Result)) {
+                this.ProceedToApprove(ProceedToApproveMessage);
+                return;
+            }
+            this.OpenValidateApprovalSendToSATErrorWindow(serviceResponse.Result, ProceedToApproveMessage);
+        });
+    }
+
+    private HasApprovalSendToSATValidateError(result) {
+        if (result.IsValidToSendToSAT) return false;
+        if (result.CorrectedARInvoiceTrasladoLines.length > 0) return true;
+        if (result.CorrectedARInvoiceRetencionLines.length > 0) return true;
+        if (result.CorrectedARInvoiceRetencionDRLines.length > 0) return true;
+
+        return false;
+    }
+
+    private OpenValidateApprovalSendToSATErrorWindow(result, ProceedToApproveMessage) {
+        const confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 420;
+        confirmWindow.ShowCancelButton = true;
+        confirmWindow.CancelButtonText = "Cancel";
+        confirmWindow.ShowNoButton = false;
+        confirmWindow.IsMultipleMessages = true;
+        confirmWindow.YesButtonText = "Continue";
+        confirmWindow.Title = "Error in VAT Amounts";
+
+        confirmWindow.Show(this.GetConfirmVatAmountAdjusments(result));
+
+        confirmWindow.WindowClosed.subscribe(event => {
+            if (confirmWindow.Yes) {
+                this.UpdateARInvoiceVatAmounts(result);
+                this.ProceedToApprove(ProceedToApproveMessage);
+            }
+            else if (confirmWindow.Cancel) {
+                this.StopFlags();
+            }
+        });
+    }
+
+    GetConfirmVatAmountAdjusments(result) {
+        let message = "Due to the SAT Invoice Transmission we calculate the VAT amount per line. There is a difference between the lines VAT sum and the total VAT at the invoice level.<br> ";
+
+        result.CorrectedARInvoiceTrasladoLines.forEach(line => {
+            let originalLine = this.GetOriginalInvoiceLineToBeCorrected(line);
+            if (originalLine) message += "<br>line with amount (" + originalLine.InvoiceCurrencyAmount + ") will be adjusted to (" + line.InvoiceCurrencyAmount + ")";
+        });
+
+        result.CorrectedARInvoiceRetencionLines.forEach(line => {
+            let originalLine = this.GetOriginalInvoiceLineToBeCorrected(line);
+            if (originalLine) message += "<br>line with amount (" + originalLine.InvoiceCurrencyAmount + ") will be adjusted to (" + line.InvoiceCurrencyAmount + ")";
+        });
+
+        result.CorrectedARInvoiceRetencionDRLines.forEach(line => {
+            let originalLine = this.GetOriginalInvoiceLineToBeCorrected(line);
+            if (originalLine) message += "<br>line with amount (" + originalLine.InvoiceCurrencyAmount + ") will be adjusted to (" + line.InvoiceCurrencyAmount + ")";
+        });
+        return message;
+    }
+
+    UpdateARInvoiceVatAmounts(result: any) {
+        result.CorrectedARInvoiceTrasladoLines.forEach(line => {
+            this.UpdateARInvoiceLineVatAmount(line);
+        });
+
+        result.CorrectedARInvoiceRetencionLines.forEach(line => {
+            this.UpdateARInvoiceLineVatAmount(line);
+        });
+
+        result.CorrectedARInvoiceRetencionDRLines.forEach(line => {
+            this.UpdateARInvoiceLineVatAmount(line);
+        });
+    }
+
+    private UpdateARInvoiceLineVatAmount(line: any) {
+        let originalLine = this.GetOriginalInvoiceLineToBeCorrected(line);
+        if (originalLine.ForiegnCurrencyAmount == originalLine.InvoiceCurrencyAmount) {
+            originalLine.ForiegnCurrencyAmount = line.InvoiceCurrencyAmount;
+        }
+        originalLine.InvoiceCurrencyAmount = line.InvoiceCurrencyAmount;
+    }
+
+    GetOriginalInvoiceLineToBeCorrected(line: any) {
+        return this.EntityPM.InvoiceLines.filter(Invoiceline => Invoiceline.ProfitCurrencyAmount == line.ProfitCurrencyAmount && Invoiceline.VatPercentage == line.VatPercentage && Invoiceline.InvoiceCurrencyAmount != line.InvoiceCurrencyAmount)[0];
     }
 
     ProceedToApprove(msg: string) {
