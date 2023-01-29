@@ -18,10 +18,10 @@ namespace Logitude.Customs.Data.Repsitories
 		public List<ClientsPoa> GetMulti(EntityKeyFields entityKeys)
         {
 
-            ClientsPoaKeys clientKeys = entityKeys as ClientsPoaKeys;
+            ClientKeys clientKeys = entityKeys as ClientKeys;
 
             return (from a in context.ClientsPoas
-                    where a.ClientId == clientKeys.ClientId 
+                    where a.ClientId == clientKeys.Id
                     select a).ToList();
         }
 
