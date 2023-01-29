@@ -5,6 +5,7 @@ import {SentToCustomLinkComponent} from './Components/SentToCustomComponent/Sent
 import { ContainersStatusesSimulatorComponent } from './Components/ShipmentContainersStatuses/ContainersStatusesSimulatorComponent';
 import { ContainerSettingsComponent } from './Components/ContainerSetting/ContainerSettingsComponent';
 import { GeneralContainersStatusesSimulatorComponent } from './Components/GeneralContainersStatusesSimulator/GeneralContainersStatusesSimulator';
+import { ContainerSettingsRequestComponent } from './Components/ContainerSetting/ContainerSettingsRequestComponent';
 
 export const Components =
     [
@@ -15,6 +16,7 @@ export const Components =
         ContainersStatusesSimulatorComponent,
         GeneralContainersStatusesSimulatorComponent,
         ContainerSettingsComponent,
+        ContainerSettingsRequestComponent,
     ];
 
 
@@ -31,6 +33,7 @@ export class ModuleDeclarations {
             case "ContainersStatusesSimulatorComponent": { myResult = ContainersStatusesSimulatorComponent; break; }
             case "GeneralContainersStatusesSimulatorComponent": { myResult = GeneralContainersStatusesSimulatorComponent; break; }
             case "ContainerSettingsComponent": { myResult = ContainerSettingsComponent; break; }
+            case "ContainerSettingsRequestComponent": { myResult = ContainerSettingsRequestComponent; break; }
         }
 
         return myResult;

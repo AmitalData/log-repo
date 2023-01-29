@@ -747,6 +747,7 @@
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\PortGroupController.Generated.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalActivityController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalCustomizationController.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Extended\ContainerSettingsController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\DeploymentPackageExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\AuditLogViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\CustomFieldsMainObjectsViewsController.Generated.cs" />
@@ -758,6 +759,7 @@
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\AuditLogController.Generated.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalTextCodeController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\DigitalTextCodeViewsController.Generated.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\ContainerSettingController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\CustomFieldsMainObjectsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\DeploymentPackageController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\DigitalFieldSecurityController.Generated.cs" />
@@ -3437,6 +3439,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ClientDrivingLicenseTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ClientDrivingLicenseUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ConsignmentPackDangerUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ContainerSettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ContinuousRequestTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CourierCustomStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CourierDeclarationStatusUpdateClass.cs" />

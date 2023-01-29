@@ -87,6 +87,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     ImageDetailId = a.Card.ImageDetailId,
                                     IsSendingByContainer = a.IsSendingByContainer,
                                     IsSendingByBillOfLading = a.IsSendingByBillOfLading,
+                                    IsSupportsContainerTracking = a.IsSupportsContainerTracking,
+                                    IsAutomaticRequestsSent = a.IsAutomaticRequestsSent,
                                     RegimenFiscalCode = a.Card.RegimenFiscalCode,
                                     SATReceptorName = a.Card.SATCustomerName,
                                     Card = new CardPM()
@@ -179,6 +181,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     ImageDetailId = a.Card.ImageDetailId,
                                     IsSendingByContainer = a.IsSendingByContainer,
                                     IsSendingByBillOfLading = a.IsSendingByBillOfLading,
+                                    IsSupportsContainerTracking = a.IsSupportsContainerTracking,
+                                    IsAutomaticRequestsSent = a.IsAutomaticRequestsSent,
                                     RegimenFiscalCode = a.Card.RegimenFiscalCode,
                                     SATReceptorName = a.Card.SATCustomerName,
                                     Card = new CardPM()
@@ -258,6 +262,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     ImageDetailId = a.Card.ImageDetailId,
                                     IsSendingByContainer = a.IsSendingByContainer,
                                     IsSendingByBillOfLading = a.IsSendingByBillOfLading,
+                                    IsSupportsContainerTracking = a.IsSupportsContainerTracking,
+                                    IsAutomaticRequestsSent = a.IsAutomaticRequestsSent,
                                     RegimenFiscalCode = a.Card.RegimenFiscalCode,
                                     SATReceptorName = a.Card.SATCustomerName,
                                     Card = new CardPM()
@@ -326,6 +332,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                            BillToId = a.Card.BillToId,
                                                            IsSendingByContainer = a.IsSendingByContainer,
                                                            IsSendingByBillOfLading = a.IsSendingByBillOfLading,
+                                                           IsSupportsContainerTracking = a.IsSupportsContainerTracking,
+                                                           IsAutomaticRequestsSent = a.IsAutomaticRequestsSent,
                                                            RegimenFiscalCode = a.Card.RegimenFiscalCode,
                                                            SATReceptorName = a.Card.SATCustomerName,
                                                        };
@@ -391,6 +399,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              BillToId = a.Card.BillToId,
                              IsSendingByContainer = a.IsSendingByContainer,
                              IsSendingByBillOfLading = a.IsSendingByBillOfLading,
+                             IsSupportsContainerTracking = a.IsSupportsContainerTracking,
+                             IsAutomaticRequestsSent = a.IsAutomaticRequestsSent,
                              RegimenFiscalCode = a.Card.RegimenFiscalCode,
                              SATReceptorName = a.Card.SATCustomerName,
                          }).AsQueryable();
@@ -470,6 +480,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        GLAccountNumber = a.Card.GLAccountDisplayNumber,
                                                        IsSendingByContainer = a.IsSendingByContainer,
                                                        IsSendingByBillOfLading = a.IsSendingByBillOfLading,
+                                                       IsSupportsContainerTracking = a.IsSupportsContainerTracking,
+                                                       IsAutomaticRequestsSent = a.IsAutomaticRequestsSent,
                                                        RegimenFiscalCode = a.Card.RegimenFiscalCode,
                                                        SATReceptorName = a.Card.SATCustomerName,
                                                        PaymentTermEnglishName = a.Card.PaymentTerm != null ? a.Card.PaymentTerm.EnglishName : null,

@@ -70,6 +70,9 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityCard.ImageDetailId = entityPM.ImageDetailId;
             entityPOCO.IsSendingByContainer = entityPM.IsSendingByContainer;
             entityPOCO.IsSendingByBillOfLading = entityPM.IsSendingByBillOfLading;
+            entityPOCO.IsAutomaticRequestsSent = entityPM.IsAutomaticRequestsSent;
+            entityPOCO.IsSupportsContainerTracking = entityPM.IsSupportsContainerTracking;
+
             entityCard.RegimenFiscalCode = entityPM.RegimenFiscalCode;
             entityCard.SATCustomerName = entityPM.SATReceptorName;
             entityCard.ExportLocalCustomerGroupId = entityPM.ExportLocalCustomerGroupId;
