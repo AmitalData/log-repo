@@ -103,7 +103,6 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
 
     getRows()//skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
     {
-        var ContainerizationCargoID=this.EntityPM.CargoTypeCode+this.EntityPM.ManifestNumber+this.EntityPM.SecondCargoID+this.EntityPM.ThirdCargoID;
         let filters = new ApiQueryFilters();
 
 
@@ -118,7 +117,9 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
         
         filters.addAdditionalFilter("Direction", 'E', null, null, "Equals", false, false, false, "string", false);
         filters.addAdditionalFilter("IsConsOfDecEquelsCont", this.EntityPM.Id, null, null, "Contains", true, false, false, "string");
-        filters.addAdditionalFilter("ContainerizationCargoID", ContainerizationCargoID, null, null, "Contains", true, false, false, "string");
+        filters.addAdditionalFilter("KeyCargo1", this.EntityPM.CargoTypeCode,this.EntityPM.ManifestNumber , null, "Contains", true, false, false, "string");
+        filters.addAdditionalFilter("KeyCargo2", this.EntityPM.SecondCargoID, this.EntityPM.ThirdCargoID,null, "Contains", true, false, false, "string");
+
 
         return this.containerizationExtendedListService.getByFilters(filters)
             .subscribe(r => {
@@ -139,14 +140,14 @@ export class ContainerizationGeneralComponent extends BaseComponent implements A
     }
 
     getRowsWithNewAddedDeclarations() {
-        var ContainerizationCargoID=this.EntityPM.CargoTypeCode+this.EntityPM.ManifestNumber+this.EntityPM.SecondCargoID+this.EntityPM.ThirdCargoID;
         let filters = new ApiQueryFilters();
         filters.PageSize = 200;
         filters.PageIndex = 0;
         filters.GetAll = false;
         filters.GetCount = true;
         filters.addAdditionalFilter("Id", this.EntityPM.ConnectedDeclarations, null, null, "InListExact", false, false, false, "string", this.EntityPM.ConnectedDeclarations.length == 0);
-        filters.addAdditionalFilter("ContainerizationCargoID", ContainerizationCargoID, null, null, "Contains", true, false, false, "string");
+        filters.addAdditionalFilter("KeyCargo1", this.EntityPM.CargoTypeCode,this.EntityPM.ManifestNumber , null, "Contains", true, false, false, "string");
+        filters.addAdditionalFilter("KeyCargo2", this.EntityPM.SecondCargoID, this.EntityPM.ThirdCargoID,null, "Contains", true, false, false, "string");
 
         return this.containerizationExtendedListService.getByFilters(filters)
             .subscribe(r => {

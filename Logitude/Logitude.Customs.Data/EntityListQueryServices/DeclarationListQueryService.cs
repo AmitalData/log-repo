@@ -626,7 +626,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             }
             return fastIndividualProcessCode;
         }
-        private IQueryable<DeclarationList> GetIqueryableListForContainerization(IQueryable<Declaration> iQueryable,string containerID,string ContainerizationCargoID)
+        private IQueryable<DeclarationList> GetIqueryableListForContainerization(IQueryable<Declaration> iQueryable,int tenant,string containerID, string CargoTypeCode, string ManifestNumber, string SecondCargoID, string ThirdCargoID)
         {
      
             var qConsignmentNumber = (from a in context.Consignments
@@ -636,9 +636,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                       new
                                       {
                                           DeclarationId = gConsignments.Key,
-                                          ConsignmentNumber = !string.IsNullOrEmpty(ContainerizationCargoID)?
-                                          gConsignments.Where(r=>r.CargoTypeCode+r.ManifestNumber+r.SecondCargoID+r.ThirdCargoID== ContainerizationCargoID).Select(a=>a.ConsignmentNumber).FirstOrDefault():
-                                          gConsignments.Min(r => r.ConsignmentNumber)
+                                          ConsignmentNumber = 
+                                          gConsignments.Where(r=>r.Tenant== tenant && r.CargoTypeCode== CargoTypeCode&&r.ManifestNumber == ManifestNumber && r.SecondCargoID == SecondCargoID && r.ThirdCargoID == ThirdCargoID).Select(a=>a.ConsignmentNumber).FirstOrDefault()
                                       });
 
             var q1stConsignments =
@@ -649,20 +648,20 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                  );
 
 
-            int tenant = 1;
-            try
-            {
+            //int tenant = 1;
+            //try
+            //{
 
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                tenant = authToken.Tenant;
-            }
-            catch (Exception)
-            {
+            //    string token = HttpContext.Current.Request.Headers["Token"];
+            //    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            //    tenant = authToken.Tenant;
+            //}
+            //catch (Exception)
+            //{
 
-                // throw;
-            }
-            //  q1stConsignments = context.Consignments.Where(r => r.DeclarationId == "-1");
+            //    // throw;
+            //}
+            ////  q1stConsignments = context.Consignments.Where(r => r.DeclarationId == "-1");
 
 
             IQueryable<DeclarationList> query = (from a in iQueryable.Include("ProcedureCurrent").Include("Importer")
@@ -702,7 +701,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             return query;
         }
-        public List<DeclarationList> GetListForContainerization(QueryOperations queryOperations, int tenant,string containerID,string ContainerizationCargoID)
+        public List<DeclarationList> GetListForContainerization(QueryOperations queryOperations, int tenant,string containerID, string CargoTypeCode, string ManifestNumber, string SecondCargoID, string ThirdCargoID)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
@@ -722,7 +721,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             int skippedPorts = queryOperations.PageIndex;
 
-            IQueryable<DeclarationList> query2 = GetIqueryableListForContainerization(iQueryable, containerID, ContainerizationCargoID);
+            IQueryable<DeclarationList> query2 = GetIqueryableListForContainerization(iQueryable,tenant, containerID , CargoTypeCode, ManifestNumber, SecondCargoID, ThirdCargoID);
 
             query2 = filter.GetFilteredQuery<DeclarationList>(listQueryOperation, query2);
 
