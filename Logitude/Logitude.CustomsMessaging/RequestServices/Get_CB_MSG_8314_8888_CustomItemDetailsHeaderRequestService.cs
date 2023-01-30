@@ -22,7 +22,7 @@ namespace Logitude.CustomsMessaging.RequestServices
     {
         public override CB_NG_8314_CustomItemDetailsHeaderIn GetRequest(CD_NG_8314_Web01_CustomsItemDetailsRequestParams requestParams)
         {
-           var myMsg=new CB_NG_8314_CustomItemDetailsHeaderIn();
+            var myMsg = new CB_NG_8314_CustomItemDetailsHeaderIn();
             myMsg.RequestContentHeader = new RequestContentHeader() { Convertor = "1", RecieverID = new int[] { 1 } };
 
             myMsg.CIDetailsHeaderIn = new CustomsBookItemHeaderIn();
@@ -32,11 +32,11 @@ namespace Logitude.CustomsMessaging.RequestServices
             myMsg.CIDetailsHeaderIn.customsBookTypeSpecified = true;
             this.MyRequestSheetParam = new RequestSheetParam();
             this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.CustomsItem");
-
             this.MyRequestSheetParam.EntityId1 = requestParams.LoggingEntityId2;
+            //this.MyRequestSheetParam.CustomFileNo= requestParams.c
             this.MyRequestSheetParam.RequestDescription = "נתוני פרט מכס";
             return myMsg;
-           
+
         }
     }
 }
