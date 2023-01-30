@@ -1,5 +1,5 @@
 import {CollectionViewer, DataSource} from '@angular/cdk/collections';
-import {AfterViewInit, ChangeDetectorRef} from '@angular/core';
+import {ChangeDetectorRef} from '@angular/core';
 import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {CargoTrackingSearchService} from 'src/CargoTracking/Services/Others/CargoTrackingSearchService';
 import {ShipmentsListComponent} from '../Components/UserDashboard/ShipmentsPage/ShipmentsList/ShipmentsListComponent';
@@ -94,7 +94,7 @@ export class ShipmentDataSource extends DataSource<any | undefined> {
 
         this.ShipmentSearchService.GetUserShipments(this.ShipmentsFilters)
             .subscribe((shipmentsResponse: any) => {
-                this.parent.ShipmentsLoadingError = "";
+                this.parent.ShipmentsLoadingError = '';
                 this.HandleShipmentsResponse(page, shipmentsResponse);
             }, error => {
                 this.parent.ShipmentsLoadingError = error.statusText;
@@ -110,32 +110,24 @@ export class ShipmentDataSource extends DataSource<any | undefined> {
         }
 
         this.CacheShipments(page, shipmentsResponse.Shipments);
-        this.cachedCustomers = shipmentsResponse.Shipments.map(shipment => ({
-            CustomerId: shipment.CustomerId,
-            CustomerName: shipment.CustomerEnglishName
-        } as Customer ));
-
-        this.cachedCustomers = this.cachedCustomers
-            .filter((elem, index, self) => index === self.indexOf(elem));
-
-        this.cachedCustomers = this.cachedCustomers.filter((value, index, self) =>
-            index === self.findIndex((t) => (
-                t.CustomerId === value.CustomerId
-            )));
-
         this.ChangeDetector.detectChanges();
         this.dataStream.next(this.cachedShipments);
     }
 
     private ResetDataSourceVariablesForFirstPage(shipmentsResponse: any) {
-        if (this.parent.ShipmentsCount != shipmentsResponse.ShipmentsCount) {
+        if (this.parent.ShipmentsCount !== shipmentsResponse.ShipmentsCount) {
             this.parent.ShipmentsCount = shipmentsResponse.ShipmentsCount;
         }
 
-        if (shipmentsResponse.ShipmentsCount != this.ShipmentsCount) {
+        if (shipmentsResponse.ShipmentsCount !== this.ShipmentsCount) {
             this.SetShipmentsCount(shipmentsResponse.ShipmentsCount);
             this.ResetCachedShipmentsArray(shipmentsResponse.ShipmentsCount);
         }
+
+        this.cachedCustomers = shipmentsResponse.Customers.map(customer => ({
+            CustomerId: customer.Id,
+            CustomerName: customer.Name
+        } as Customer));
 
         this.SetNoResultToggle();
     }
@@ -150,7 +142,7 @@ export class ShipmentDataSource extends DataSource<any | undefined> {
     }
 
     private SetNoResultToggle() {
-        this.parent.noResult = (this.ShipmentsCount == 0);
+        this.parent.noResult = (this.ShipmentsCount === 0);
     }
 
     private CacheShipments(pageNumber: number, shipments: any) {
@@ -161,8 +153,7 @@ export class ShipmentDataSource extends DataSource<any | undefined> {
     }
 }
 
-export interface Customer
-{
+export interface Customer {
     CustomerId: string;
     CustomerName: string;
 }
