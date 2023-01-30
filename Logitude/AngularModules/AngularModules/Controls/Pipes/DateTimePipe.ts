@@ -43,16 +43,6 @@ export class DateTimePipe {
                         break;
                     }
 
-                    case "SDT": {
-                        // Today:Yesterday:Tomorrow || ShortDate + hh:mm
-                        if (myFormats.DateString == "Today" || myFormats.DateString == "Yesterday" || myFormats.DateString == "Tomorrow") {
-                            myResult = myFormats.DateString
-                        } else {
-                            myResult = myFormats.DateString + " " + myFormats.ShortTimeString;
-                        }
-                        break;
-                    }
-
                     case "DTL12": {
                         // Today:Yesterday:Tomorrow:ShortDate + hh:mm:ss (AM/PM)
                         myResult = myFormats.DateString + " " + myFormats.LongTimeString12;
