@@ -20244,6 +20244,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ExportDecWithoutRelease&quot;"
     ListPropertyPath="&quot;ExportDecWithoutRelease&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -23853,10 +23854,17 @@
         IsPackagable="true"
         TextCodeCode="&quot;Customs.Declaration.B.DeclarationClosure&quot;" />
       <MenuItem
+        EventCode="&quot;OperationalClosure&quot;"
+        DefaultText="&quot;Operational Closure&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="12"
+        LocalDefaultText="&quot;סגירה תפעולית&quot;"
+        IsPackagable="true" />
+      <MenuItem
         EventCode="&quot;Cancel Declaration Closure&quot;"
         DefaultText="&quot;Cancel Declaration Closure&quot;"
         MenuButtonType="&quot;menuitem&quot;"
-        IndexOrder="12"
+        IndexOrder="13"
         LocalDefaultText="&quot;ביטול סגירת הצהרה&quot;"
         IsPackagable="true"
         TextCodeCode="&quot;Customs.Declaration.B.CancelDeclarationClosure&quot;" />
@@ -23864,7 +23872,7 @@
         EventCode="&quot;Declaration Customs Requests&quot;"
         DefaultText="&quot;Declaration Customs Requests&quot;"
         MenuButtonType="&quot;menuitem&quot;"
-        IndexOrder="13"
+        IndexOrder="14"
         LocalDefaultText="&quot;בקשות מכס&quot;"
         FeatureCode="&quot;DeclarationCustomsRequests&quot;"
         IsPackagable="true"
@@ -23875,7 +23883,7 @@
         EventCode="&quot;DeclarationCancellation&quot;"
         DefaultText="&quot;Declaration Cancellation&quot;"
         MenuButtonType="&quot;menuitem&quot;"
-        IndexOrder="14"
+        IndexOrder="15"
         LocalDefaultText="&quot;ביטול הצהרה&quot;"
         IsPackagable="true"
         HtmlComponentPath="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationCancellation/DeclarationCancellationComponent&quot;" />
@@ -23883,21 +23891,21 @@
         EventCode="&quot;ExportStorageDecleration&quot;"
         DefaultText="&quot;Export Storage Decleration&quot;"
         MenuButtonType="&quot;menuitem&quot;"
-        IndexOrder="15"
+        IndexOrder="16"
         LocalDefaultText="&quot;קישור אחסנות להצהרה&quot;"
         IsPackagable="true" />
       <MenuItem
         EventCode="&quot;Sending Initiated Message&quot;"
         DefaultText="&quot;SendingInitiatedMessage&quot;"
         MenuButtonType="&quot;menuitem&quot;"
-        IndexOrder="16"
+        IndexOrder="15"
         LocalDefaultText="&quot;שליחת הודעה יזומה&quot;"
         IsPackagable="true" />
       <MenuItem
         EventCode="&quot;LoadExcelSupplierInvoices&quot;"
         DefaultText="&quot;Load Excel SupplierInvoices&quot;"
         MenuButtonType="&quot;menuitem&quot;"
-        IndexOrder="15"
+        IndexOrder="17"
         LocalDefaultText="&quot;הטענת חשבון ספק&quot;"
         IsPackagable="true"
         HtmlComponentPath="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/LoadExcelSupplierInvoice/LoadExcelSupplierInvoicesComponent&quot;" />

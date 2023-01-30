@@ -440,14 +440,37 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         }
                     }
 
-                    if (button.EventCode == "Declaration Closure") {
-                        if (this.EntityPM.IsClose) {
-                            button.IsHidden = true;
+                    if (button.EventCode == "Declaration Closure" ) {
+                        if(this.EntityPM.Direction!="E"){
+                            if (this.EntityPM.IsClose ) {
+                                button.IsHidden = true;
+                            }
+                            else {
+                                button.IsHidden = false;
+                            }
                         }
-                        else {
-                            button.IsHidden = false;
+                        else{
+                            button.IsDisabled=true;
+                            button.IsHidden=true;
                         }
+                      
                     }
+                    if(button.EventCode == "OperationalClosure"){
+                        if(this.EntityPM.Direction=="E"){
+                            if (this.EntityPM.IsClose ) {
+                                button.IsHidden = true;
+                            }
+                            else {
+                                button.IsHidden = false;
+                            }
+                        }
+                        else{
+                            button.IsDisabled=true;
+                        }
+                       
+
+                    }
+
 
                     if (button.EventCode == "Cancel Declaration Closure") {
                         if (!this.EntityPM.IsClose) {
@@ -1403,6 +1426,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         var res = this.declarationWebService.GetWaitingDeclarationAmendment(this.EntityPM.CustomFileNo)
             .subscribe((response: ServiceResponse) => {
                 if (!response.HasError) {
+                    debugger
                     
                     if (response.Result == null) {
                         //no waiting amendnent
