@@ -244,14 +244,14 @@ namespace Logitude.CustomsMessaging.MessagingServices
             }
 
         }
-        public object ReQueue(int tenant, string customsRequestsSheetId)
+        public object ReQueue(int tenant, string customsRequestsSheetId,string parentId=null)
         {
 
             using (var scope = TransactionFactory.GetTransaction())
             {
 
                 this.MyOverrideControllerModel = new OverrideControllerModel();
-                CreateCustomsRequestsSheetService(tenant, customsRequestsSheetId);
+                CreateCustomsRequestsSheetService(tenant, customsRequestsSheetId,parentId);
                 switch (_CustomsRequestsSheetService.MyCustomsRequestsSheetPM.RequestStatusEnum)
                 {
                     case SheetStatusEnum.Received:
@@ -337,9 +337,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
             }
         }
 
-        private void CreateCustomsRequestsSheetService(int tenant, string customsRequestsSheetId)
+        private void CreateCustomsRequestsSheetService(int tenant, string customsRequestsSheetId, string parentId = null)
         {
-            CustomsRequestsSheetDomainModelService<TRequestParams>.Seed(customsRequestsSheetId, tenant, null, out _CustomsRequestsSheetService, this.MyOverrideControllerModel);
+            CustomsRequestsSheetDomainModelService<TRequestParams>.Seed(customsRequestsSheetId, tenant, null, out _CustomsRequestsSheetService, this.MyOverrideControllerModel,false,null, parentId);
         }
 
         private TResponseData SendSheet()
