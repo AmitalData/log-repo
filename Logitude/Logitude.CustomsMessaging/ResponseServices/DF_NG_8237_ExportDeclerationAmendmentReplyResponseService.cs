@@ -204,7 +204,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
             EventContextTagModel myUpdateEventContextTagModel = null;
             string key = ProcessLockTableUtil.Instance.GetKey4Declaration(_MyDeclarationPM.Id, requestParams.Tenant);
 
-            
+            if ((isExportCloseFromMehes || isExportClose) && customResponse.Response.Amendment != null && customResponse.Response.Amendment.Length > 0)
+            {
+                var customResponseResponseXml = XmlGenericUtil<Response>.SerializeObject(customResponse.Response);
+                var importDeclarationServiceReferenceResponse = XmlGenericUtil<Response>.DeSerializeObject(customResponseResponseXml);
+                List<error> systemMessagesList = new List<error>();
+                this._MyDeclarationPM.ClosingXml = myDeclarationCorrectionsPointerService.AnalyzeCorrectionsPointerExport(this._MyDeclarationPM.CorrectionsXml, importDeclarationServiceReferenceResponse, systemMessagesList, requestParams.Tenant, customResponse.ReferencesListMsg);
+
+            }
 
             using (var disposableToken = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "8237ResponseService.Update"))
             {
@@ -396,13 +403,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                 var importDeclarationServiceReferenceResponse = XmlGenericUtil<Response>.DeSerializeObject(customResponseResponseXml);
                                                 List<error> systemMessagesList = new List<error>();
                                                 this._MyDeclarationPM.CorrectionsXml = myDeclarationCorrectionsPointerService.AnalyzeCorrectionsPointerExport(this._MyDeclarationPM.CorrectionsXml, importDeclarationServiceReferenceResponse, systemMessagesList, requestParams.Tenant, customResponse.ReferencesListMsg);
-                                            }
-                                            else
-                                            {
-                                                var customResponseResponseXml = XmlGenericUtil<Response>.SerializeObject(customResponse.Response);
-                                                var importDeclarationServiceReferenceResponse = XmlGenericUtil<Response>.DeSerializeObject(customResponseResponseXml);
-                                                List<error> systemMessagesList = new List<error>();
-                                                this._MyDeclarationPM.ClosingXml = myDeclarationCorrectionsPointerService.AnalyzeCorrectionsPointerExport(this._MyDeclarationPM.ClosingXml, importDeclarationServiceReferenceResponse, systemMessagesList, requestParams.Tenant, customResponse.ReferencesListMsg);
                                             }
                                             break;
                                         case "2":
@@ -600,7 +600,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             FUStatusRemarks = "בוצע תיקון הצהרה" + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber),
                         };
                     }
-
+                  
                     if (!isExportClose)
                     {
                         List<string> currentXmlVersionId = myDeclarationCorrectionsPointerService.GetVersionIdFromCorrectionXML(this._MyDeclarationPM.CorrectionsXml);
