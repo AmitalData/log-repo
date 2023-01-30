@@ -107,6 +107,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 {
                     entityPM.AmendmentStatusName = amendmentStatus.LocalName;
                 }
+                var exportCloseAmendmentStatus = amendmentStatusRepository.GetSingle(entityPOCO.ExportCloseAmendmentStatus, false, true);
+                if (exportCloseAmendmentStatus != null)
+                {
+                    entityPM.ExportCloseAmendStatusName = exportCloseAmendmentStatus.LocalName;
+                }
             }
             else
             {
@@ -183,17 +188,17 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             else if (entityPOCO.IsAmendment != true)
             {
-                /*if (!string.IsNullOrEmpty(entityPOCO.ExportClosedErrorXML) && !entityPOCO.IsExportClosed)
+                if (new string[] { "6", "7", "8", "10", "11" }.Contains(entityPOCO.ExportCloseAmendmentStatus))
                 {
-                    entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.General.O.ClosingProcessStatus", entityPOCO.Tenant, true) + ' ' + entityPM.AmendmentStatusName;
+                    entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.General.O.ClosingProcessStatus", entityPOCO.Tenant, true) + ' ' + entityPM.ExportCloseAmendStatusName;
                     entityPM.IsAmendmentDisplayOnly = true;
                 }
                 else
-                {*/
-                var declarations = declarationQuery//.GetDeclarationAmendmentsById_Cache/*Cache*/(entityPOCO.Tenant, entityPOCO.Id);
-                .GetAllDeclarationPOCOs(entityPOCO.Tenant, entityPOCO.CustomFileNo) ?? new List<Data.EntityLists.DeclarationList>();
+                {
+                    var declarations = declarationQuery//.GetDeclarationAmendmentsById_Cache/*Cache*/(entityPOCO.Tenant, entityPOCO.Id);
+                    .GetAllDeclarationPOCOs(entityPOCO.Tenant, entityPOCO.CustomFileNo) ?? new List<Data.EntityLists.DeclarationList>();
 
-                var declaration = declarations.FirstOrDefault(x => new string[] { "1", "3", "6" }.Contains(x.AmendmentStatus));
+                    var declaration = declarations.FirstOrDefault(x => new string[] { "1", "3", "6" }.Contains(x.AmendmentStatus));
                     if (declaration != null)
                     {
                         if (declaration.AmedmentType == "2")
@@ -201,7 +206,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                             //closeDeclaration
                             entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.Declaration.O.ExistsClosingAmendments", entityPOCO.Tenant, true) + ' ' + declaration.AmendmentStatusName;
                         }
-                        else 
+                        else
                         {
                             entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.Declaration.O.ExistsAmendments", entityPOCO.Tenant, true) + ' ' + declaration.AmendmentStatusName;
                         }
@@ -228,7 +233,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                     //{
                     //    entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.Declaration.O.ExistsAmendments", entityPOCO.Tenant , true);
                     //}
-                //}
+                }
             }
 
 
