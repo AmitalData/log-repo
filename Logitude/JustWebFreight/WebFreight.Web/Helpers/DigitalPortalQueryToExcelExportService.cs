@@ -530,7 +530,8 @@ namespace WebFreight.Web.Helpers
                         "TruckContainerNumber",
                         "ContainersNumbersandTypesArray", 
                         "MainCarriageToPortName",
-                        "MainCarriageFromPortName","DirectionId",
+                        "MainCarriageFromPortName",
+                        "DirectionName",
                         "TransportModeName", 
                         "MainCarriageATA", 
                         "TruckNumber" 
