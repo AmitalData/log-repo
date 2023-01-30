@@ -23869,10 +23869,17 @@
         IsPackagable="true"
         TextCodeCode="&quot;Customs.Declaration.B.CancelDeclarationClosure&quot;" />
       <MenuItem
+        EventCode="&quot;CancelOperationalClosure&quot;"
+        DefaultText="&quot;Cancel Operational Closure&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="14"
+        LocalDefaultText="&quot;ביטול סגירה תפעולית&quot;"
+        IsPackagable="true" />
+      <MenuItem
         EventCode="&quot;Declaration Customs Requests&quot;"
         DefaultText="&quot;Declaration Customs Requests&quot;"
         MenuButtonType="&quot;menuitem&quot;"
-        IndexOrder="14"
+        IndexOrder="15"
         LocalDefaultText="&quot;בקשות מכס&quot;"
         FeatureCode="&quot;DeclarationCustomsRequests&quot;"
         IsPackagable="true"
@@ -23883,7 +23890,7 @@
         EventCode="&quot;DeclarationCancellation&quot;"
         DefaultText="&quot;Declaration Cancellation&quot;"
         MenuButtonType="&quot;menuitem&quot;"
-        IndexOrder="15"
+        IndexOrder="16"
         LocalDefaultText="&quot;ביטול הצהרה&quot;"
         IsPackagable="true"
         HtmlComponentPath="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationCancellation/DeclarationCancellationComponent&quot;" />
@@ -23891,21 +23898,21 @@
         EventCode="&quot;ExportStorageDecleration&quot;"
         DefaultText="&quot;Export Storage Decleration&quot;"
         MenuButtonType="&quot;menuitem&quot;"
-        IndexOrder="16"
+        IndexOrder="15"
         LocalDefaultText="&quot;קישור אחסנות להצהרה&quot;"
         IsPackagable="true" />
       <MenuItem
         EventCode="&quot;Sending Initiated Message&quot;"
         DefaultText="&quot;SendingInitiatedMessage&quot;"
         MenuButtonType="&quot;menuitem&quot;"
-        IndexOrder="15"
+        IndexOrder="17"
         LocalDefaultText="&quot;שליחת הודעה יזומה&quot;"
         IsPackagable="true" />
       <MenuItem
         EventCode="&quot;LoadExcelSupplierInvoices&quot;"
         DefaultText="&quot;Load Excel SupplierInvoices&quot;"
         MenuButtonType="&quot;menuitem&quot;"
-        IndexOrder="17"
+        IndexOrder="18"
         LocalDefaultText="&quot;הטענת חשבון ספק&quot;"
         IsPackagable="true"
         HtmlComponentPath="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/LoadExcelSupplierInvoice/LoadExcelSupplierInvoicesComponent&quot;" />

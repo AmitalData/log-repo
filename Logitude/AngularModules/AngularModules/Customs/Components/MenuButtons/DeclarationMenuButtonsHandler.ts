@@ -68,10 +68,10 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
     IsDisplayOnlyCheckDone: boolean;
     MenuButtonsStateChangedEvent: any;
     private EntityResourceService: EntityResourceService;
-    IsShowMenuBTN:boolean=false;
-    containerizationIdList:string;
+    IsShowMenuBTN: boolean = false;
+    containerizationIdList: string;
     //------------------------------------------------------//
-   
+
     public CurrentEditComponentId: string;
     //Services
     private declarationPMService: DeclarationPMService = new DeclarationPMService();
@@ -125,21 +125,21 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
                 })
             );
-           
-     
-              this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+
+
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
 
                 this.CurrentSession.CurrentEditComponent.TabChanged.subscribe((tabCode: string) => {
-                        if (tabCode =="DCNT"&&this.EntityPM.Direction == "E"){                         
-                            this.IsShowMenuBTN=true;                           
-                        }
-                        else{
-                            this.IsShowMenuBTN=false;
-                        }
-                        this.ApplyCheckMenuButtonsState(this.MenuButtons);
+                    if (tabCode == "DCNT" && this.EntityPM.Direction == "E") {
+                        this.IsShowMenuBTN = true;
+                    }
+                    else {
+                        this.IsShowMenuBTN = false;
+                    }
+                    this.ApplyCheckMenuButtonsState(this.MenuButtons);
                 })
-               );
-            
+            );
+
             //this._SubSaveCompleted =
             this.CurrentSession.SubscriptionAdd(
                 this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
@@ -238,25 +238,25 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         }
                     }
                     if (button.EventCode == "OpenNewContainerization") {
-                        this.containerizationIdList="";
-             
+                        this.containerizationIdList = "";
+
                         button.Width = 100;
                         button.DisplayText = "המכלה";
                         if (this.EntityPM.Direction == "E" && this.EntityPM.ProcedureCurrentCode && this.EntityPM.ProcedureCurrentName && this.EntityPM.ProcedureCurrentName.includes("המכלה לפני התרה")) {
                             button.IsHidden = false;
-                            this.EntityPM?.Consignments.forEach(c=>{
-                                this.containerizationIdList+=(!AppTool.IsNullOrEmpty(c.ExportContainerizationID)?(c.ExportContainerizationID +","):"")
-                                
+                            this.EntityPM?.Consignments.forEach(c => {
+                                this.containerizationIdList += (!AppTool.IsNullOrEmpty(c.ExportContainerizationID) ? (c.ExportContainerizationID + ",") : "")
+
                             });
-                            if(this.containerizationIdList!=""){
-                                button.DisplayText  = "הומכל";
-                                button.LabelTextCodeCode="" 
+                            if (this.containerizationIdList != "") {
+                                button.DisplayText = "הומכל";
+                                button.LabelTextCodeCode = ""
                             }
                         }
                         else {
                             button.IsHidden = true;
                         }
-                        
+
 
 
                     }
@@ -294,7 +294,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                                 if (this.EntityPM.IsAmendment == true && !AppTool.IsNullOrEmpty(this.EntityPM.AmendmentStatus)) {
                                     button.IsDisabled = true;
                                 }
-                                if (this.EntityPM.IsAmendment!= true && !((this.EntityPM.CourierPaymentStatusCode != 'P' || this.EntityPM.CourierPaymentStatusCode == null) &&
+                                if (this.EntityPM.IsAmendment != true && !((this.EntityPM.CourierPaymentStatusCode != 'P' || this.EntityPM.CourierPaymentStatusCode == null) &&
                                     (this.EntityPM.CourierManifestStatusCode == 'V' || this.EntityPM.CourierManifestStatusCode == 'R' || this.EntityPM.CourierManifestStatusCode == 'X' || this.EntityPM.CourierManifestStatusCode == 'M')
                                 )) {
 
@@ -321,10 +321,10 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         if (this.EntityPM.Direction == "E") {
                             button.DisplayText = TextCodeTranslator.Translate("Customs.Declaration.TH.PaymentsExport");
                             button.LabelTextCodeCode = "";
-                            if(this.EntityPM.DeclarationStatusTypeCode == "11"){
+                            if (this.EntityPM.DeclarationStatusTypeCode == "11") {
                                 button.IsDisabled = true;
                             }
-                        
+
                         }
                     }
                     if (button.EventCode == "Forms") {
@@ -440,9 +440,57 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         }
                     }
 
-                    if (button.EventCode == "Declaration Closure" ) {
+                    if (button.EventCode == "Declaration Closure") {
+                        if (this.EntityPM.Direction != "E") {
+                            if (this.EntityPM.IsClose) {
+                                button.IsHidden = true;
+                            }
+                            else {
+                                button.IsHidden = false;
+                            }
+                        }
+                        else {
+                            button.IsDisabled = true;
+                            button.IsHidden = true;
+                        }
+
+                    }
+                    if (button.EventCode == "OperationalClosure") {
+                        if (this.EntityPM.Direction == "E") {
+                            if (this.EntityPM.IsClose) {
+                                button.IsHidden = true;
+                            }
+                            else {
+                                button.IsHidden = false;
+                            }
+                        }
+                        else {
+                            button.IsDisabled = true;
+                            button.IsHidden = true;
+                        }
+
+
+                    }
+
+
+                    if (button.EventCode == "Cancel Declaration Closure") {
                         if(this.EntityPM.Direction!="E"){
-                            if (this.EntityPM.IsClose ) {
+                            if (!this.EntityPM.IsClose) {
+                                button.IsHidden = true;
+                            }
+                            else {
+                                button.IsHidden = false;
+                            }
+                        }
+                        else{
+                            button.IsHidden=true;
+                            button.IsDisabled=true;
+                        }
+                       
+                    }
+                    if (button.EventCode == "CancelOperationalClosure") {
+                        if(this.EntityPM.Direction=="E"){
+                            if (!this.EntityPM.IsClose) {
                                 button.IsHidden = true;
                             }
                             else {
@@ -453,32 +501,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                             button.IsDisabled=true;
                             button.IsHidden=true;
                         }
-                      
-                    }
-                    if(button.EventCode == "OperationalClosure"){
-                        if(this.EntityPM.Direction=="E"){
-                            if (this.EntityPM.IsClose ) {
-                                button.IsHidden = true;
-                            }
-                            else {
-                                button.IsHidden = false;
-                            }
-                        }
-                        else{
-                            button.IsDisabled=true;
-                        }
-                       
-
-                    }
-
-
-                    if (button.EventCode == "Cancel Declaration Closure") {
-                        if (!this.EntityPM.IsClose) {
-                            button.IsHidden = true;
-                        }
-                        else {
-                            button.IsHidden = false;
-                        }
+                        
                     }
                     if (button.EventCode == "Declaration Customs Requests") {
                         if (this.EntityPM.AmendmentDontDisplayInList == false && this.EntityPM.IsAmendment == true) {
@@ -500,34 +523,34 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                             button.IsDisabled = true;
                     }
                     if (button.EventCode == "ExportStorageDecleration") {
-                        
+
                         if (this.EntityPM.TransportModeId == "O" && this.EntityPM.Direction == "E") {
                             if (this.IsDisplayOnly) {
                                 button.IsDisabled = true;
                             }
-                            else{
-                               
-                                button.IsHidden=false;
+                            else {
+
+                                button.IsHidden = false;
                             }
-                           
+
                         }
                         else {
                             button.IsDisabled = true;
-                            button.IsHidden=true;
+                            button.IsHidden = true;
                         }
                     }
                     if (button.EventCode == "Sending Initiated Message") {
 
 
 
-                                    if (this.IsShowMenuBTN){
-                                        button.IsHidden=false;
-                                    }
-                                    else{
-                                        button.IsHidden=true;
+                        if (this.IsShowMenuBTN) {
+                            button.IsHidden = false;
+                        }
+                        else {
+                            button.IsHidden = true;
 
-                                    }
-                    
+                        }
+
                     }
                 }
                 this.IsDisplayOnlyCheckDone = true;
@@ -703,6 +726,11 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         this.DeclarationClosureMethod();
                         break;
                     }
+                case "OperationalClosure":
+                    {
+                        this.DeclarationClosureMethod();
+                        break;
+                    }
                 case "Cancel Declaration Closure":
                     {
                         this.CancelDeclarationClosureMethod();
@@ -724,20 +752,20 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         this.OpenExportStorageDeclarationMethod()
                         break;
                     }
-                    case "Sending Initiated Message":
+                case "Sending Initiated Message":
                     {
 
                         this.AddNotifications()
                         break;
                     }
             }
-                    
+
         }
     }
 
     OpenDeclarationLoadExcelSupplierInvoiceWindow() {
         var args: any = {
-            DeclarationId : this.EntityPM.Id,
+            DeclarationId: this.EntityPM.Id,
         };
         var logWindow = new LogitudeWindow();
         logWindow.Width = 600;
@@ -1399,7 +1427,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         ///Yuval Chalup 29.07.2015 TASK-14849 --->
 
     }
-    
+
     private CloseDeclarationMethod() {
 
 
@@ -1409,25 +1437,25 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         }
 
 
-   
-        if (this.EntityPM.IsAmendmentDisplayOnly && this.EntityPM.AmendmentMessage == 'קיים תיקון הצהרה בסטטוס ממתינה לטיפול' ){
+
+        if (this.EntityPM.IsAmendmentDisplayOnly && this.EntityPM.AmendmentMessage == 'קיים תיקון הצהרה בסטטוס ממתינה לטיפול') {
             var txtMsg = this.EntityPM.AmendmentMessage + ". לא ניתן לסגור הצהרה.";
 
             var msg = new MessageWindow();
             msg.Width = 400;
             msg.RTL = true;
-            msg.ShowWarningIcon = true; 
-            msg.IsMessageMultiLine;          
+            msg.ShowWarningIcon = true;
+            msg.IsMessageMultiLine;
             msg.Show(txtMsg);
             return;
         }
-        
+
 
         var res = this.declarationWebService.GetWaitingDeclarationAmendment(this.EntityPM.CustomFileNo)
             .subscribe((response: ServiceResponse) => {
                 if (!response.HasError) {
                     debugger
-                    
+
                     if (response.Result == null) {
                         //no waiting amendnent
                         this.ShowCloseDeclationWindow();
@@ -1440,8 +1468,9 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
                         msg.Show("קיים תיקון הצהרה בטיפול. לא ניתן לסגור הצהרה.");
                     }
-                }});
- 
+                }
+            });
+
     }
 
     private ShowCloseDeclationWindow() {
@@ -1460,11 +1489,11 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         });
     }
 
-  
+
 
     private OpenNewContainerizationMethod() {
 
-        if(this.containerizationIdList=="") {
+        if (this.containerizationIdList == "") {
             var args: any = {
                 EntityPM: this.EntityPM,
                 EntityIsDeclarationPM: "true",
@@ -1478,58 +1507,58 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
             logWindow.Show('./CustomsModules/CustomsContainerization/Components/NewEntity/NewContainerizationComponent');
             logWindow.WindowClosed.subscribe(($event: any) => {
 
-                if($event!="0" && $event!="cancel"&&$event!=null) {
-                   this.OpenScreenContainerizationByFilter($event);
+                if ($event != "0" && $event != "cancel" && $event != null) {
+                    this.OpenScreenContainerizationByFilter($event);
                 }
             });
 
         }
         else {
-            
-          var contIdList=  this.containerizationIdList.split(',')
-          if(contIdList.length-1==1){
 
-               SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
-               .then(cmpRef => {
-                   cmpRef.instance.ComponentRef = cmpRef;
-                   cmpRef.instance.Run({
-                       EntityId: contIdList[0],
-                       ObjectTableName: "Customs.Containerization"
-                   });
-               });       
-          }
-          else {
-             
-            this.OpenScreenContainerizationByFilter(this.containerizationIdList);
-          }
-            
-        }
-    }
-  
-    private OpenScreenContainerizationByFilter(Ids) {
-        this.CurrentSession.CloseCurrentEditComponent();        
-        var mySelectedItem: MainMenuItem =  this.CurrentSession.MainMenuComponent.MainMenuItems.filter(m => m.TextCode == "General.MH.Containerization")[0];
-        this.CurrentSession.MainMenuComponent.ChangeMenu( mySelectedItem);
-       
-       
-            var filters = new ApiQueryFilters();
-            filters.addAdditionalFilter("Id",Ids , null, null, "InListExact", false, false, false, "string",false,true);
-        
-            var listArgs = new ListComponentArgs();
-            listArgs.QueryCode = "Customs.Containerization.OpenContainerization";
-            listArgs.Filters = filters;
-            listArgs.ObjectTableName = "Customs.Containerization";
-            listArgs.HideBackButton=true;
-           
-                this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+            var contIdList = this.containerizationIdList.split(',')
+            if (contIdList.length - 1 == 1) {
+
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
-                        cmpRef.instance.Run(listArgs);
-    
-                        this.CurrentSession.AddMenuReference(cmpRef);                    
+                        cmpRef.instance.Run({
+                            EntityId: contIdList[0],
+                            ObjectTableName: "Customs.Containerization"
+                        });
                     });
-               });
+            }
+            else {
+
+                this.OpenScreenContainerizationByFilter(this.containerizationIdList);
+            }
+
+        }
+    }
+
+    private OpenScreenContainerizationByFilter(Ids) {
+        this.CurrentSession.CloseCurrentEditComponent();
+        var mySelectedItem: MainMenuItem = this.CurrentSession.MainMenuComponent.MainMenuItems.filter(m => m.TextCode == "General.MH.Containerization")[0];
+        this.CurrentSession.MainMenuComponent.ChangeMenu(mySelectedItem);
+
+
+        var filters = new ApiQueryFilters();
+        filters.addAdditionalFilter("Id", Ids, null, null, "InListExact", false, false, false, "string", false, true);
+
+        var listArgs = new ListComponentArgs();
+        listArgs.QueryCode = "Customs.Containerization.OpenContainerization";
+        listArgs.Filters = filters;
+        listArgs.ObjectTableName = "Customs.Containerization";
+        listArgs.HideBackButton = true;
+
+        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run(listArgs);
+
+                    this.CurrentSession.AddMenuReference(cmpRef);
+                });
+        });
     }
 
     ///new shoshana
@@ -1553,48 +1582,48 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         });
 
     }
-   
-   private AddNotifications(){
-           SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-         this.NotificationPM=new NotificationPM
-   
-        this.NotificationPM.Tenant=SessionLocator.Tenant;
-        this.NotificationPM.NotificationDefinitionCode="5101N";
-        this.NotificationPM.CreateDate=new Date();
-        this.NotificationPM.AssigneToId=null;
-        this.NotificationPM.AssigneToNotificationTypeCode="I";
-        this.NotificationPM.DeclarationOfficeCode=this.EntityPM.DeclarationOfficeCode;
-        this.NotificationPM.IsHandledByCustomOffice=true;
-        this.NotificationPM.EntityId=this.EntityPM.Id;
-        this.NotificationPM.ObjectTableId="1-343";
-        this.NotificationPM.Reference1Number=this.EntityPM.CustomFileNo ;
-        this.NotificationPM.Reference2Number=this.EntityPM.CustomFileNo;;
-        this.NotificationPM.DepartmentId=null;
-        this.NotificationPM.ClosedByAssignee=null;
-        this.NotificationPM.ClosedByCustomOfficeUserId=null;
-        this.NotificationPM.IsClosedBCustomOffice=false;
-        this.NotificationPM.IsClosedByAssignee=false;
-        this.NotificationPM.DueDate=new Date();
-        this.NotificationPM.IsSeenByAssignee=false;
-        this.NotificationPM.ResponseNotes=null;
-        this.NotificationPM.CreatedByRequestID=null;
-        this.NotificationPM.Description="הודעה יזומה למכס בגין הצהרה מספר " +this.EntityPM.DeclarationNumber +" כללי";
-        this.NotificationPM.ResponseToMessage=this.EntityPM.DeclarationNumber;
-        this.NotificationPM.CustomerId=this.EntityPM.CustomerId; 
-        this.NotificationPM.SearchFields=this.NotificationPM.Reference1Number,this.NotificationPM.Reference2Number,this.NotificationPM.CustomerId,this.NotificationPM.Description,this.NotificationPM.NotificationDefinitionCode
-        this.NotificationPM.BadjCount=null;
+
+    private AddNotifications() {
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+        this.NotificationPM = new NotificationPM
+
+        this.NotificationPM.Tenant = SessionLocator.Tenant;
+        this.NotificationPM.NotificationDefinitionCode = "5101N";
+        this.NotificationPM.CreateDate = new Date();
+        this.NotificationPM.AssigneToId = null;
+        this.NotificationPM.AssigneToNotificationTypeCode = "I";
+        this.NotificationPM.DeclarationOfficeCode = this.EntityPM.DeclarationOfficeCode;
+        this.NotificationPM.IsHandledByCustomOffice = true;
+        this.NotificationPM.EntityId = this.EntityPM.Id;
+        this.NotificationPM.ObjectTableId = "1-343";
+        this.NotificationPM.Reference1Number = this.EntityPM.CustomFileNo;
+        this.NotificationPM.Reference2Number = this.EntityPM.CustomFileNo;;
+        this.NotificationPM.DepartmentId = null;
+        this.NotificationPM.ClosedByAssignee = null;
+        this.NotificationPM.ClosedByCustomOfficeUserId = null;
+        this.NotificationPM.IsClosedBCustomOffice = false;
+        this.NotificationPM.IsClosedByAssignee = false;
+        this.NotificationPM.DueDate = new Date();
+        this.NotificationPM.IsSeenByAssignee = false;
+        this.NotificationPM.ResponseNotes = null;
+        this.NotificationPM.CreatedByRequestID = null;
+        this.NotificationPM.Description = "הודעה יזומה למכס בגין הצהרה מספר " + this.EntityPM.DeclarationNumber + " כללי";
+        this.NotificationPM.ResponseToMessage = this.EntityPM.DeclarationNumber;
+        this.NotificationPM.CustomerId = this.EntityPM.CustomerId;
+        this.NotificationPM.SearchFields = this.NotificationPM.Reference1Number, this.NotificationPM.Reference2Number, this.NotificationPM.CustomerId, this.NotificationPM.Description, this.NotificationPM.NotificationDefinitionCode
+        this.NotificationPM.BadjCount = null;
 
 
 
-        this.notificationPMService.insert(this.NotificationPM).subscribe((myResult:any) => {
+        this.notificationPMService.insert(this.NotificationPM).subscribe((myResult: any) => {
 
 
             this.CurrentSession.CurrentEditComponent.LoadCompleted.emit(null);
             SessionLocator.SelectedSession.StopBusyIndicator();
-         
+
         });
 
-   }
+    }
     private PrintReleaseMethod() // moran 29.2.16 - Task 19807
     {
 
