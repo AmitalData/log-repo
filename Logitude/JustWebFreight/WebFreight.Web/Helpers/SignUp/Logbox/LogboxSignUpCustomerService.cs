@@ -14,9 +14,9 @@ namespace WebFreight.Web.Helpers.SignUp.Logbox
 {
     public class LogboxSignUpCustomerService
     {
-        public static void CreateNewFromCloud(SignUpInfoClass signUpInfoClass, int tenant)
+        public static string CreateNewFromCloud(SignUpInfoClass signUpInfoClass, int tenant)
         {
-            if (!signUpInfoClass.IsCreateLogboxTenantFromCloud) return;
+            if (!signUpInfoClass.IsCreateLogboxTenantFromCloud) return signUpInfoClass.CustomerId;
 
             CustomerPM customerPM = new CustomerPM
             {
@@ -43,6 +43,8 @@ namespace WebFreight.Web.Helpers.SignUp.Logbox
             CustomerService customerService = new CustomerService(commonContext, customerPM);
             customerService.Create();
             signUpInfoClass.CustomerId = customerPM.Id;
+
+            return customerPM.Id;
         }
 
         private static ContactPM GetContactPM(SignUpInfoClass signUpInfoClass, int tenant)
@@ -122,7 +124,7 @@ namespace WebFreight.Web.Helpers.SignUp.Logbox
             CustomerService.Update();
         }
 
-        public static void CreateStandardNew(SignUpInfoClass signUpInfoClass, ICommonDataContext commonContext, int tenant)
+        public static string CreateStandardNew(SignUpInfoClass signUpInfoClass, ICommonDataContext commonContext, int tenant)
         {
             ContactRepository contactRepository = new ContactRepository(tenant);
             ContactQuery contactQuery = new ContactQuery(contactRepository);
@@ -154,7 +156,8 @@ namespace WebFreight.Web.Helpers.SignUp.Logbox
 
             CustomerService CustomerService = new CustomerService(commonContext, customerPM, contactPM.Id);
             CustomerService.Create();
-            signUpInfoClass.CustomerId = customerPM.Id;
+
+            return customerPM.Id;
         }
     }
 }

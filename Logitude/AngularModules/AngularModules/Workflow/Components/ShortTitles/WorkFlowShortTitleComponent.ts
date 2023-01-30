@@ -46,8 +46,20 @@ export class WorkFlowShortTitleComponent {
 
     setWarningErrorMessage() {
         var warnings: string[] = [];
+        var IsActiveDisabled: boolean = this.entityArgs.EditComponentArgument?.IsActiveDisabled ? true : false
+        var IsNewVersionDisabled: boolean = this.entityArgs.EditComponentArgument?.IsNewVersionDisabled ? true : false
+
         if (this.ValidVersion.StatusCode != "DRFT") {
             this.WarningErrorTitle = "This version is currently active or was activated at least once. To make changes create a new version."
+            warnings.push(this.WarningErrorTitle);
+        }
+        if(this.ValidVersion.StatusCode == "DRFT" && IsActiveDisabled && IsNewVersionDisabled  ){
+            this.WarningErrorTitle = "The start element is not configured, you need to select the object whose records trigger the flow."
+            warnings.push(this.WarningErrorTitle);
+        }
+
+        if(this.ValidVersion.StatusCode == "DRFT" && IsActiveDisabled && !IsNewVersionDisabled  ){
+            this.WarningErrorTitle = "To activate the version, connect at least one element to the start element."
             warnings.push(this.WarningErrorTitle);
         }
 

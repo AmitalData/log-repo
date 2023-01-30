@@ -4,6 +4,7 @@ using Logitude.Infrastructure.Data.EntityLists;
 using Logitude.SystemLogs;
 using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure.DataContracts.Models;
 using System;
 using System.Collections.Generic;
@@ -177,6 +178,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckDigitalUserAuthentication(authToken.Tenant, digitalFeildSecurityObjectModel.CardId);
 
+                DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+
                 var textCodeQuery = new DigitalTextCodeQueryService(0);
                 var generalObjectTableId = textCodeQuery.GetDigitalTextCodesObjetTables(0)
                                                    .Where(a => a.ObjectTableName.Equals("General"))
@@ -194,7 +197,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 if (customDigitalFieldSecurity != null)
                 {
                     customDigitalFieldSecurity.DefaultSettings = JsonConvert.SerializeObject(digitalFeildSecurityObjectModel.DefaultSettings);
-                    customDigitalFieldSecurity.UpdateDate = DateTime.UtcNow;
+                    customDigitalFieldSecurity.UpdateDate = todayDate;
                 }
                 else
                 {
@@ -203,8 +206,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                         ObjectTableId = digitalFeildSecurityObjectModel.ObjectTableId,
                         Tenant = digitalFeildSecurityObjectModel.Tenant,
                         DefaultSettings = JsonConvert.SerializeObject(digitalFeildSecurityObjectModel.DefaultSettings),
-                        CreateDate = DateTime.UtcNow,
-                        UpdateDate = DateTime.UtcNow,
+                        CreateDate = todayDate,
+                        UpdateDate = todayDate,
                         ProfileId = digitalFeildSecurityObjectModel.ProfileId
                     };
                 }
@@ -324,7 +327,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                         if (string.IsNullOrWhiteSpace(item.DisplayText))
                         {
-                            customCodesMappedObject.RemoveAll(a => a.TextCode == item.TextCode);
+                            existingKey.DisplayText = item.DefaultText;
                         }
                         else
                         {

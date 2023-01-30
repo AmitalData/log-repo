@@ -6,7 +6,6 @@ import { SingleEditableEntitiesTreeList } from "Workflow/TreeLists/SingleEditabl
 import { ObjectTables } from "Workflow/Utilities/ObjectTables";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 import { SetValue } from "Workflow/Models/SetValue";
-import { DeclaredRecordsTreeList } from "Workflow/TreeLists/DeclaredRecordsTreeList";
 import { SetRecordFieldsTypes } from "Workflow/Constants/SetRecordFieldsTypes";
 import { FlowVariablesTreeList } from "Workflow/TreeLists/FlowVariablesTreeList";
 import { IsObjectTypePipe } from "Workflow/Pipes/IsObjectTypePipe";
@@ -22,8 +21,7 @@ export class AppendItemPropertiesComponent extends BaseComponent {
     public FlowObject: any;
     public CurrentNodeId: string;
     public SingleEditableEntitiesTreeItems: TreeSelectItem[];
-    public DeclaredRecordsTreeItems: TreeSelectItem[];
-    public DeclaredCollectionVariablesTreeList: FlowVariablesTreeList;
+    public VariablesTreeItems: TreeSelectItem[];
     public FlowVariablesTreeList: FlowVariablesTreeList;
     public FlowVariablesTreeItems: TreeSelectItem[];
     public Data: any;
@@ -104,9 +102,23 @@ export class AppendItemPropertiesComponent extends BaseComponent {
 
     initializeTreeLists() {
         this.SingleEditableEntitiesTreeItems = new SingleEditableEntitiesTreeList(this.FlowObject, this.CurrentNodeId).Items;
-        this.DeclaredRecordsTreeItems = new DeclaredRecordsTreeList(this.FlowObject, this.CurrentNodeId).Items;
+        this.initializeVariablesToAppeandTree();
         this.initializeDeclaredCollectionVariables();
         this.initializeFlowVariablesTree();
+    }
+
+
+    initializeVariablesToAppeandTree() {
+        let props = {
+            ShowRecordsVariables: true,
+            ShowDeclaredVariables: true,
+            ShowRecordsCollectionVariables: false,
+            ShowDeclaredCollectionVariables: false,
+            OnlyCurrentLoopItemVariables: false,
+            IsObjectVariableSelectable: false,
+            IsNoChildrenObjectVariables: true
+        };
+        this.VariablesTreeItems = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props).Items;
     }
 
     initializeDeclaredCollectionVariables() {
@@ -116,11 +128,11 @@ export class AppendItemPropertiesComponent extends BaseComponent {
             ShowRecordsCollectionVariables: false,
             ShowDeclaredCollectionVariables: true,
             OnlyCurrentLoopItemVariables: false,
-            IsObjectVariableSelectable: false
+            IsObjectVariableSelectable: false,
+            IsNoChildrenObjectVariables: false
         };
-        this.DeclaredCollectionVariablesTreeList = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props);
-        var DeclaredCollectionVariablesItems = this.DeclaredCollectionVariablesTreeList.Items;
-        this.SingleEditableEntitiesTreeItems = this.SingleEditableEntitiesTreeItems.concat(DeclaredCollectionVariablesItems);
+        let flowVariablesTreeItems = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props).Items;
+        this.SingleEditableEntitiesTreeItems = this.SingleEditableEntitiesTreeItems.concat(flowVariablesTreeItems);
     }
 
     initializeFlowVariablesTree() {
@@ -130,7 +142,8 @@ export class AppendItemPropertiesComponent extends BaseComponent {
             ShowRecordsCollectionVariables: false,
             ShowDeclaredCollectionVariables: true,
             OnlyCurrentLoopItemVariables: false,
-            IsObjectVariableSelectable: true
+            IsObjectVariableSelectable: true,
+            IsNoChildrenObjectVariables: false
         };
         this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props);
         this.FlowVariablesTreeItems = this.FlowVariablesTreeList.Items;

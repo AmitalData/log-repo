@@ -75,25 +75,51 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40
             sATCommunicationLogBuilder = new SATCommunicationLogBuilder(arInvoicePM.Tenant);
         }
 
-        public void SendProfactoXML()
+        public InvoiceComprobanteBuilderResultArgs BuildProfactoXML(InvoiceComprobanteBuilderArgs invoiceComprobanteBuilderArgs)
         {
-            List<ChargesType> allChargesTypes = chargesTypeRepository.GetChargesTypes(arInvoicePM.Tenant).ToList();
-            
             Tenant currentTenant = tenantRepository.GetSingleTenant(arInvoicePM.Tenant);
 
-            SATInvoiceComprobanteValidator sATInvoiceComprobanteValidator = new SATInvoiceComprobanteValidator(arInvoicePM, currentTenant);
-            sATInvoiceComprobanteValidator.Validate(allChargesTypes);
+            if (!invoiceComprobanteBuilderArgs.DontValidateComprobante)
+            {
+                List<ChargesType> allChargesTypes = chargesTypeRepository.GetChargesTypes(arInvoicePM.Tenant).ToList();
+                new SATInvoiceComprobanteValidator(arInvoicePM, currentTenant).Validate(allChargesTypes);
+            }
 
             SATInvoiceComprobante sATInvoiceComprobante = new SATInvoiceComprobante(arInvoicePM, currentTenant, satSetting);
-            Comprobante comprobante = sATInvoiceComprobante.BuildNewInvoiceComprobante();
+            InvoiceComprobanteBuilderResultArgs invoiceComprobanteBuilderResultArgs = sATInvoiceComprobante.BuildNewInvoiceComprobante(invoiceComprobanteBuilderArgs);
 
-            sATCommunicationLogBuilder.Build(new SATCommunicationLogArgs { Comprobante = comprobante, ARInvoicePM = arInvoicePM });
-            SetSATTransferStatus(SATData.InTransferingSATTransferStatusCode);
+            if (!invoiceComprobanteBuilderArgs.DontBuildCommunicationLog)
+            {
+                sATCommunicationLogBuilder.Build(new SATCommunicationLogArgs { Comprobante = invoiceComprobanteBuilderResultArgs.Comprobante, ARInvoicePM = arInvoicePM });
+            }
+            if (!invoiceComprobanteBuilderArgs.DontValidateComprobante)
+            {
+                SetSATTransferStatus(SATData.InTransferingSATTransferStatusCode);
+            }
+
+            return invoiceComprobanteBuilderResultArgs;
         }
 
         private void SetSATTransferStatus(string satTransferStatusCode)
         {
             arInvoice.SATTransferStatusCode = arInvoicePM.SATTransferStatusCode = satTransferStatusCode;
         }
+    }
+
+    public class InvoiceComprobanteBuilderArgs
+    {
+        public bool DontBuildCommunicationLog { get; set; }
+        public bool DontValidateComprobante { get; set; }
+        public bool CorrectARInvoiceLinesVatAmount { get; set; }
+    }
+
+    public class InvoiceComprobanteBuilderResultArgs
+    {
+        public Comprobante Comprobante { get; set; }
+        public List<ARInvoiceLinePM> CorrectedARInvoiceTrasladoLines { get; set; }
+        public List<ARInvoiceLinePM> CorrectedARInvoiceRetencionLines { get; set; }
+        public List<ARInvoiceLinePM> CorrectedARInvoiceRetencionDRLines { get; set; }
+        public bool IsValidToSendToSAT { get; set; }
+        public string ValidationMessage { get; set; }
     }
 }

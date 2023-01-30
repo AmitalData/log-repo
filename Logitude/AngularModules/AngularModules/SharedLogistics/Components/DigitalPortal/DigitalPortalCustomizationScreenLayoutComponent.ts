@@ -53,8 +53,8 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
         this.DigitalProfileFilterList = [];
         this.digitalTextService.GetDigitalProfileName(SessionLocator.Tenant).subscribe((myResult) => {
             if (!myResult.HasError) {
-                var objectTables = myResult.Result;
-                objectTables.forEach(item => {
+                var profiles = myResult.Result.filter(a => a.Code != "CM");
+                profiles.forEach(item => {
                     this.DigitalProfileFilterList.push(new CodeNameClass(item.Id, item.Name, item.Code));
                 });
 

@@ -151,7 +151,8 @@ export class FlowVariablesTreeList {
             ShowRecordsCollectionVariables: false,
             ShowDeclaredCollectionVariables: false,
             OnlyCurrentLoopItemVariables: false,
-            IsObjectVariableSelectable: false
+            IsObjectVariableSelectable: false,
+            IsNoChildrenObjectVariables: false
         };
     }
 
@@ -218,7 +219,8 @@ export class FlowVariablesTreeList {
                 let treeSelectItemKey = Formatter.getCodeFromName(treeSelectItemName);
                 let treeSelectItemChildren = this.getObjectFieldsItems(treeSelectItemKey, entity, returnedFieldsCodes, getRecordNode.id, isReadOnly);
                 let itemData = { isReadOnlyVariable: isReadOnly, nodeId: getRecordNode.id };
-                let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemTitle || treeSelectItemName, false, false, false, false, treeSelectItemChildren, itemData);
+                let selectable = this.FlowVariablesTreeListProperties.IsNoChildrenObjectVariables;
+                let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemTitle || treeSelectItemName, false, selectable, false, false, treeSelectItemChildren, itemData);
                 recordsVariablesItemChildren.push(treeSelectItem);
                 this.ItemsList.push(treeSelectItem);
             });
@@ -247,7 +249,7 @@ export class FlowVariablesTreeList {
                 let loopNodeLabel = loopNode.data["label"] || null;
                 let treeSelectItemTitle = loopNodeLabel ? (this.LoopCurrentItemPrefix + loopNodeLabel) : null;
                 let treeSelectItemLoopName = this.LoopCurrentItemPrefix + treeSelectItemName;
-                let treeSelectItemSelectable = this.FlowVariablesTreeListProperties.IsObjectVariableSelectable;
+                let treeSelectItemSelectable = this.FlowVariablesTreeListProperties.IsObjectVariableSelectable || this.FlowVariablesTreeListProperties.IsNoChildrenObjectVariables;
                 let treeSelectItemData = { isReadOnlyVariable: isReadOnly, type: (entity || null), nodeId: loopNode.id };
                 let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemTitle || treeSelectItemLoopName, onlyCurrentLoopItem, onlyCurrentLoopItem || treeSelectItemSelectable, false, false, treeSelectItemChildren, treeSelectItemData);
                 recordsVariablesItemChildren.push(treeSelectItem);
@@ -267,7 +269,7 @@ export class FlowVariablesTreeList {
                 let loopNodeLabel = loopNode.data["label"] || null;
                 let treeSelectItemTitle = loopNodeLabel ? (this.LoopCurrentItemPrefix + loopNodeLabel) : null;
                 let treeSelectItemLoopName = this.LoopCurrentItemPrefix + treeSelectItemName;
-                let treeSelectItemSelectable = isPrimitiveType || this.FlowVariablesTreeListProperties.IsObjectVariableSelectable;
+                let treeSelectItemSelectable = isPrimitiveType || this.FlowVariablesTreeListProperties.IsObjectVariableSelectable || this.FlowVariablesTreeListProperties.IsNoChildrenObjectVariables;
                 let treeSelectItemData = { isReadOnlyVariable: isReadOnly, type: (isPrimitiveType ? type : entity), nodeId: loopNode.id };
                 let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemTitle || treeSelectItemLoopName, isPrimitiveType, treeSelectItemSelectable, false, false, treeSelectItemChildren, treeSelectItemData);
                 recordsVariablesItemChildren.push(treeSelectItem);
@@ -339,7 +341,7 @@ export class FlowVariablesTreeList {
                 let declaredVariableType = this.formatDeclaredVariableType(variableType, recordType);
                 let treeSelectItemChildren = isRecordVariableType ? this.getObjectFieldsItems(treeSelectItemKey, recordType, null, declareVariableNode.id) : [];
                 let treeSelectItemData = { type: declaredVariableType, nodeId: declareVariableNode.id };
-                let treeSelectItemSelectable = !isRecordVariableType || this.FlowVariablesTreeListProperties.IsObjectVariableSelectable;
+                let treeSelectItemSelectable = !isRecordVariableType || this.FlowVariablesTreeListProperties.IsObjectVariableSelectable || this.FlowVariablesTreeListProperties.IsNoChildrenObjectVariables;
                 let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemTitle || treeSelectItemName, !isRecordVariableType, treeSelectItemSelectable, false, false, treeSelectItemChildren, treeSelectItemData);
                 declaredVariablesItemChildren.push(treeSelectItem);
                 this.ItemsList.push(treeSelectItem);
@@ -365,7 +367,7 @@ export class FlowVariablesTreeList {
                 let declaredVariableType = this.formatDeclaredVariableType(variableType, recordType);
                 let treeSelectItemChildren = isRecordVariableType ? this.getObjectFieldsItems(treeSelectItemKey, recordType, null, loopNode.id) : [];
                 let treeSelectItemData = { type: (declaredVariableType ? declaredVariableType.replace("[]", "") : null), nodeId: loopNode.id };
-                let treeSelectItemSelectable = !isRecordVariableType || this.FlowVariablesTreeListProperties.IsObjectVariableSelectable;
+                let treeSelectItemSelectable = !isRecordVariableType || this.FlowVariablesTreeListProperties.IsObjectVariableSelectable || this.FlowVariablesTreeListProperties.IsNoChildrenObjectVariables;
                 let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemTitle || treeSelectItemName, !isRecordVariableType, treeSelectItemSelectable, false, false, treeSelectItemChildren, treeSelectItemData);
                 declaredVariablesItemChildren.push(treeSelectItem);
                 this.ItemsList.push(treeSelectItem);
@@ -445,7 +447,7 @@ export class FlowVariablesTreeList {
     private getObjectFieldsItems(itemsKeyPrefix: string, entity: string, returnedFieldsCodes: string[] | null, nodeId: string | null, isReadOnlyFields: boolean = false) {
         let objectFieldsItems: TreeSelectItem[] = [];
 
-        if (returnedFieldsCodes && returnedFieldsCodes.length === 0) {
+        if ((returnedFieldsCodes && returnedFieldsCodes.length === 0) || this.FlowVariablesTreeListProperties.IsNoChildrenObjectVariables) {
             return objectFieldsItems;
         }
 
