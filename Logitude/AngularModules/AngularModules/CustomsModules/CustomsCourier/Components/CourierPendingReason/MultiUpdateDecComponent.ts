@@ -395,7 +395,7 @@ export class MultiUpdateDecComponent extends BaseComponent {
         await this.declarationsDisplayOnlyPromise;
         if(!this.declarationsDisplayOnly?.length) return;
 
-        new MessageWindow().Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.DisplayOnly"));
+        await this.showMessageDisplayOnly();
 
         if(this.checkboxAll)
             this.allWithoutdeclarationIdsList = this.allWithoutdeclarationIdsList.concat(this.declarationsDisplayOnly)
@@ -403,9 +403,17 @@ export class MultiUpdateDecComponent extends BaseComponent {
             this.declarationIdsList = this.declarationIdsList.filter(x => !this.declarationsDisplayOnly.includes(x));
     }
 
+    private async showMessageDisplayOnly() {
+        await new Promise<void>((resolve) => {
+            const msg: MessageWindow = new MessageWindow();
+            msg.Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.DisplayOnly"));
+            msg.WindowClosed.subscribe(() => resolve());
+        });
+    }
+
     async SendMultiUpdate() {
         await this.showMassageExistDeclarationsDisplayOnly();
-        
+
         var currRequestParams = new SendMultiUpdateRequestParams();
         currRequestParams.LoggingEnabled = true;
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
