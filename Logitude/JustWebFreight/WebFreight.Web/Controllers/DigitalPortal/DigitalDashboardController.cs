@@ -157,7 +157,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var shipmentQuery = new ShipmentQuery(authToken.Tenant);
                 DateTime? currentDateTime = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
                 var afterOneYearDate = currentDateTime.Value.AddDays(-365);
-                var afterNinetyDaysDate = currentDateTime.Value.AddDays(90);
+                var afterNinetyDaysDate = currentDateTime.Value.AddDays(-90);
 
                 var shipments = shipmentQuery.GetByFilters(newFilters)
                                              .Where(r => !string.IsNullOrEmpty(r.StatusCode)
@@ -199,7 +199,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 DateTime? currentDateTime = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
                 var afterOneYearDate = currentDateTime.Value.AddDays(-365);
-                var afterNinetyDaysDate = currentDateTime.Value.AddDays(90);
+                var afterNinetyDaysDate = currentDateTime.Value.AddDays(-90);
 
                 var tttt = shipmentQuery.GetByFilters(newFilters)
                                   .Where(r => !string.IsNullOrEmpty(r.StatusCode)
@@ -343,7 +343,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 DateTime? currentDateTime = TenantServerConfigration.GetCurrentDateTime(newFilters.Tenant).Date;
                 var afterOneYearDate = currentDateTime.Value.AddDays(-365);
-                var afterNinetyDaysDate = currentDateTime.Value.AddDays(90);
+                var afterNinetyDaysDate = currentDateTime.Value.AddDays(-90);
 
                 var resultList = shipmentQuery.GetByFilters(newFilters)
                                             .Where(r => r.MainCarriageFinalDestinationETA.Value.Year == currentDateTime.Value.Year

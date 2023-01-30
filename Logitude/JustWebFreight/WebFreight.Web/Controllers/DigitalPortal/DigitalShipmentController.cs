@@ -159,7 +159,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 {
                     DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
                     var afterOneYearDate = currentDateTime.AddDays(-365);
-                    var afterNinetyDaysDate = currentDateTime.AddDays(90);
+                    var afterNinetyDaysDate = currentDateTime.AddDays(-90);
                     shipments.Where(a => (a.MainCarriageFinalDestinationATA > afterNinetyDaysDate)
                                        || a.CreateDateTime > afterOneYearDate)
                             .ToList()
