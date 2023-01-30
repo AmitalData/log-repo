@@ -1045,6 +1045,7 @@
   </Column>
   <Column
     Name="ExportCloseAmendRequestNumber"
+    OldNames="ExportCloseAmendmentRequestNumber"
     Type="varchar"
     Size="9">
     <Constraints

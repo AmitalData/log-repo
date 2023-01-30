@@ -224,6 +224,7 @@ export class DeclarationList {
 	DeclarationOfficeNameForExport: string;
 	ExportCloseAmendRequestNumber: string;
 	ExportCloseAmendmentStatus: string;
+	ExportCloseAmendStatusName: string;
 	
 }
  

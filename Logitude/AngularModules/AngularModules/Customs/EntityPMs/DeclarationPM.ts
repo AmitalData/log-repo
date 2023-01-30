@@ -1469,8 +1469,6 @@ export class DeclarationPM {
     public set ReferentUserName(newValue: string) { if (this.referentUserName != newValue) { this.referentUserName = newValue; this.MarkAsDirty("ReferentUserName"); } }
        
 	 
- 
-	 
     private exportCloseAmendRequestNumber: string;
     public get ExportCloseAmendRequestNumber() { return this.exportCloseAmendRequestNumber; }
     public set ExportCloseAmendRequestNumber(newValue: string) { if (this.exportCloseAmendRequestNumber != newValue) { this.exportCloseAmendRequestNumber = newValue; this.MarkAsDirty("ExportCloseAmendRequestNumber"); } }
@@ -1479,6 +1477,11 @@ export class DeclarationPM {
     private exportCloseAmendmentStatus: string;
     public get ExportCloseAmendmentStatus() { return this.exportCloseAmendmentStatus; }
     public set ExportCloseAmendmentStatus(newValue: string) { if (this.exportCloseAmendmentStatus != newValue) { this.exportCloseAmendmentStatus = newValue; this.MarkAsDirty("ExportCloseAmendmentStatus"); } }
+       
+	 
+    private exportCloseAmendStatusName: string;
+    public get ExportCloseAmendStatusName() { return this.exportCloseAmendStatusName; }
+    public set ExportCloseAmendStatusName(newValue: string) { if (this.exportCloseAmendStatusName != newValue) { this.exportCloseAmendStatusName = newValue; this.MarkAsDirty("ExportCloseAmendStatusName"); } }
        
 	 
 

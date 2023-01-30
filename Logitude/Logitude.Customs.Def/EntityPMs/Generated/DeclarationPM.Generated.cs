@@ -5803,7 +5803,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  
 	  private string exportCloseAmendRequestNumber ;
 	  	  
        
@@ -5846,6 +5845,29 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportCloseAmendmentStatus",OldValue=exportCloseAmendmentStatus,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   exportCloseAmendmentStatus=value;
+		   }
+			
+		 }
+	   }
+	  private string exportCloseAmendStatusName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExportCloseAmendStatusName  
+	   {
+	    
+	     get
+		{
+		   return exportCloseAmendStatusName;
+		 }
+		 set
+		 {
+		   if(exportCloseAmendStatusName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportCloseAmendStatusName",OldValue=exportCloseAmendStatusName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   exportCloseAmendStatusName=value;
 		   }
 			
 		 }
