@@ -11319,7 +11319,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "CreditUsed",
 					  						ListFieldLable =  "CreditUsedListLable",
 					  						ListLableDefaultText =  "CreditUsed",
-					  						ListLocalDefaultText =  "מסגרת אשראי",
+					  						ListLocalDefaultText =  "מצב אשראי",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
