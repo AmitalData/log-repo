@@ -146,8 +146,8 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
         this.WorkflowEntity = this.ValidVersion.Entity;
         this.renderReactFlowModeler();
         this.loadObjectFields();
-        this.entityArgs.SendMessage("RefreshWorkflowShortTitle");
-        this.entityArgs.SendMessage("RefreshWorkflowButtons");
+        // this.entityArgs.SendMessage("RefreshWorkflowShortTitle");
+        // this.entityArgs.SendMessage("RefreshWorkflowButtons");
     }
 
     setCurrentDisplayedVersion(workflowVersion: WorkFlowVersionPM) {
@@ -235,6 +235,8 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
                 version.Entity = startNode ? (startNode.data["entity"] || null) : null;
                 version.Trigger = startNode ? (startNode.data["trigger"] || null) : null;
                 version.FlowJson = JSON.stringify(flowObject);
+
+                this.checkIfFlowActionsAreValid(flowObject, version.Entity,version.Trigger);
             }
         }
     }
@@ -340,6 +342,24 @@ export class WorkflowBuilderComponent extends BaseComponent implements OnInit, O
 
     setReactFlowInstance(reactFlowInstance: any) {
         this.ReactFlowInstance = reactFlowInstance;
+        this.checkIfFlowActionsAreValid(this.getCurrentFlowObject(), this.ValidVersion.Entity,this.ValidVersion.Trigger);
+    }
+
+    checkIfFlowActionsAreValid(flowObject: any, entity: any, trigger: any) {
+        var addedNode = flowObject.nodes.filter(e => e.type != "startNode" && e.type != "connectorNode" && e.type != "endNode")
+        if (entity && trigger && addedNode.length > 0) {
+            this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, IsActiveDisabled: false }
+            this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, IsNewVersionDisabled: false }
+        } else if (entity && trigger && addedNode.length == 0) {
+            this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, IsActiveDisabled: true }
+            this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, IsNewVersionDisabled: false }
+        } else {
+            this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, IsActiveDisabled: true }
+            this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, IsNewVersionDisabled: true }
+        }
+
+        this.entityArgs.SendMessage("RefreshWorkflowButtons");
+        this.entityArgs.SendMessage("RefreshWorkflowShortTitle");
     }
 
     openStartConfiguration() {
