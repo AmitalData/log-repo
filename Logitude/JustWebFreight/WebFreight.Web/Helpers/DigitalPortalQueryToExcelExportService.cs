@@ -515,13 +515,26 @@ namespace WebFreight.Web.Helpers
 
                     var shipmentData = shipmentQuery.GetByFilters(args.QueryFilters);
 
-                   
                     var allowedShipmentsFieldSecurites = helper.GitDigitalSecuritesFeilds(args.QueryFilters.ObjectTableId, args.QueryFilters.ProfileCode, tenant, false)
                                                       .Where(a => a.HasPermission)
                                                       .Select(a => a.FieldCode.Replace("Shipment.", ""))
                                                       .ToList();
 
-                    allowedShipmentsFieldSecurites.AddRange(new List<String>() { "GrossWeightInKG", "VolumeInCBM", "ChargeableWeightInKG", "Master", "ValueOfGoods", "TruckContainerNumber", "ContainersNumbersandTypesArray", "MainCarriageToPortName","MainCarriageFromPortName","DirectionName","TransportModeName", "MainCarriageATA",  "TruckNumber" });
+                    allowedShipmentsFieldSecurites.AddRange(new List<String>() 
+                    {   
+                        "GrossWeightInKG", 
+                        "VolumeInCBM",
+                        "ChargeableWeightInKG",
+                        "Master",
+                        "ValueOfGoods",
+                        "TruckContainerNumber",
+                        "ContainersNumbersandTypesArray", 
+                        "MainCarriageToPortName",
+                        "MainCarriageFromPortName","DirectionId",
+                        "TransportModeName", 
+                        "MainCarriageATA", 
+                        "TruckNumber" 
+                    });
 
                     var shipmentsFields = string.Join(",", allowedShipmentsFieldSecurites);
                     var shipmentsDynamicData = shipmentData.Select("new { " + shipmentsFields + " }").ToDynamicList();
