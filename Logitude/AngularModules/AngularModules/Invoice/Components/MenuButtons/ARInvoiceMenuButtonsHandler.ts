@@ -874,9 +874,9 @@ export class ARInvoiceMenuButtonsHandler {
 
     private HasApprovalSendToSATValidateError(result) {
         if (result.IsValidToSendToSAT) return false;
-        if (result.CorrectedARInvoiceTrasladoLines.length > 0) return true;
-        if (result.CorrectedARInvoiceRetencionLines.length > 0) return true;
-        if (result.CorrectedARInvoiceRetencionDRLines.length > 0) return true;
+        if (result.CorrectedARInvoiceTrasladoLines?.length > 0) return true;
+        if (result.CorrectedARInvoiceRetencionLines?.length > 0) return true;
+        if (result.CorrectedARInvoiceRetencionDRLines?.length > 0) return true;
 
         return false;
     }
