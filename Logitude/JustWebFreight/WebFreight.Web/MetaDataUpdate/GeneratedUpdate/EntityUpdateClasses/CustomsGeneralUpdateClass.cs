@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "36044c1669b282dc274776133910fd70";
+		public const string HashString = "ee0afac530838bb594914792f6fb35b7";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "5510",
+			      				    Code =  "d942",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2129,6 +2129,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsExportClosindDataONoFindTrufaToPreferenceDocument = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExportClosindData.O.NoFindTrufaToPreferenceDocument", DefaultText = "No Find Trufa To Preference Document",LocalDefaultText = @"לא אותרה צרופה מתאימה למסמך העדפה שצויין בחשבון", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsExpOrImpDeclarationDataQueryFDeclarationData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExpOrImpDeclarationDataQuery.F.DeclarationData", DefaultText = "Declaration Data",LocalDefaultText = @"נתוני הצהרת יצוא/יבוא", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsDeclarationOOperationallyClosed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.OperationallyClosed", DefaultText = "Display Only - Declaration was operationally closed",LocalDefaultText = @"הנתונים לתצוגה בלבד - ההצהרה סגורה תפעולית", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
