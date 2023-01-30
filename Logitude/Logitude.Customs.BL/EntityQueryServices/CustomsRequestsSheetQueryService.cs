@@ -290,7 +290,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
             requestInProgressParams.InterfaceTypeCode = requestInProgressParams.InterfaceTypeCode.Trim();// angular send " 2750" why  ??
             var intrefaceTypeList =
-                new string[]
+                new List<string>()
                 {
 "2715",//CustomsDocument Request
 "2750",// - מסר הצהרה יוצא
@@ -345,6 +345,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCADPE", // add multi pending
 "8235T", // תיקון שטעון
             };
+
+            var settingPm = CustomsSettingQueryService.GetSettingByTenant(requestInProgressParams.Tenant);
+            if (settingPm.IsConnectedToUniFreight && 
+                settingPm.CompanyType == "C")//elisheva +itzik 
+            {
+                intrefaceTypeList.Add("8302");//בקשה לטופס הצהרה
+            }
+
 
             string[] intrefaceTypeListDisplayOnly = GetintrefaceTypeListDisplayOnly();
             if (!requestInProgressParams.DisplayOnlyMode && !intrefaceTypeList.Contains(requestInProgressParams.InterfaceTypeCode) && !(requestInProgressParams.InterfaceTypeCode == "UCUDO"))
