@@ -63,6 +63,7 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public bool IsCustom { get; set; }
         public bool SupportSubEntity { get; set; }
         public bool ApplyGenericCustomFields { get; set; }
-
+        public string LookUp1 { get; set; }
+        public string LookUp2 { get; set; }
     }
 }

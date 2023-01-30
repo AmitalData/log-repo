@@ -21,6 +21,9 @@ export class WorkFlowMenuButtonsHandler {
 
     public CheckButtonState(menuButtons: MenuButtonPM[]) {
         this.MenuButtons = menuButtons;
+        this.MenuButtons.forEach(btn => {
+            btn.IsDisabled = true;
+        });
 
         if (this.EntityPM != null) {
             if (this.entityArgs.EditComponent != null) {
@@ -42,6 +45,8 @@ export class WorkFlowMenuButtonsHandler {
 
     public SetButtonStates(menuButtons) {
         var HasChanges: boolean = this.entityArgs.EditComponentArgument?.HasChanges ? true : false
+        var IsActiveDisabled: boolean = this.entityArgs.EditComponentArgument?.IsActiveDisabled ? true : false
+        var IsNewVersionDisabled: boolean = this.entityArgs.EditComponentArgument?.IsNewVersionDisabled ? true : false
         var CurrentDisplayedVersionId = this.entityArgs.EditComponentArgument?.CurrentDisplayedVersionId
         var version = this.EntityPM.WorkFlowVersions.find(v => v.Id == CurrentDisplayedVersionId);
 
@@ -51,12 +56,12 @@ export class WorkFlowMenuButtonsHandler {
             switch (button.EventCode) {
                 case "NewVersion":
                     {
-                        button.IsDisabled = false;
+                        button.IsDisabled = IsNewVersionDisabled;
                         break;
                     }
                 case "Activate":
                     {
-                        if (!HasChanges) {
+                        if (!HasChanges && !IsActiveDisabled) {
                             if (this.isActiveVersion(version.StatusCode)) {
                                 button.IsDisabled = false;
                                 button.DisplayText = "Deactivate";

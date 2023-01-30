@@ -176,13 +176,13 @@ export class MaintenanceComponent {
                 }
 
                 else {
-                    if (item.Code != "MTHT") {
+                    if (item.Code != "MTHT" && item.Code != "POGP") {
                         this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
                     }
                 }
             }
 
-            if (item.Code == "MTHT") {
+            if (item.Code == "MTHT" || item.Code == "POGP") {
                 if (SessionLocator.Tenant == 0) {
                     this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
                 }
@@ -1617,7 +1617,9 @@ export class MaintenanceComponent {
 
                 case "ContainerSettings": {
                     var logitudeWindow = new LogitudeWindow();
-                    logitudeWindow.Height = 400;
+                    logitudeWindow.ShowCloseButton = true;
+                    logitudeWindow.Width = 1200;
+                    logitudeWindow.Height = 600;
                     logitudeWindow.Title = "Container Settings";
                     logitudeWindow.Show('./ShipmentModules/ShipmentOthers/Components/ContainerSetting/ContainerSettingsComponent');
                     break;

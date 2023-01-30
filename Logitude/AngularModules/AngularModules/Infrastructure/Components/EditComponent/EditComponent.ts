@@ -340,16 +340,22 @@ export class EditComponent implements OnDestroy {
     }
 
     CheckDigtialPortalAddsOnPackage() {
-        this.IsDigitalAddsOn = false;
-        var globalDomainService = new GlobalDomainService();
-        globalDomainService.CheckDigitalPortalAddsOn(this.EntityPM.Id).subscribe((result: any) => {
-            var addOnPackage = result.Result;
-            if (addOnPackage != null) {
-                this.IsDigitalAddsOn = true;
-            }
+        if (this.ObjectTableName == "TenantManagement") {
+            this.IsDigitalAddsOn = false;
+            var globalDomainService = new GlobalDomainService();
+            globalDomainService.CheckDigitalPortalAddsOn(this.EntityPM.Id).subscribe((result: any) => {
+                var addOnPackage = result.Result;
+                if (addOnPackage != null) {
+                    this.IsDigitalAddsOn = true;
+                }
 
+                this.ContinueBuildComponent();
+
+            });
+        }
+        else {
             this.ContinueBuildComponent();
-        });
+        }
     }
 
     private ContinueBuildComponent() {

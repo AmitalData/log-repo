@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import { SetValueOperatorsList } from "Workflow/Models/SetValueOperatorsList";
+import { SetValueOperatorsList } from "Workflow/Lists/SetValueOperatorsList";
 
 @Pipe({
     name: "SetValuesOperatorsItemsPipe"

@@ -37,7 +37,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         InterestValueDate, 
 	         InterestReportId, 
 	         IsClosed, 
-	         IsCancelled,
+	         IsCancelled, 
+	         Notes,
 	      }
 
 
@@ -66,7 +67,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         InterestEntityIconCode, 
 	         JournalId, 
 	         AccountEntityCode, 
-	         IsCancelled,
+	         IsCancelled,  
+	         Notes, 
+	         UpdatedByUserName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -148,6 +151,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCancelled))
             {
 				entityPOCO.IsCancelled = entityPM.IsCancelled;
+			}
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Notes))
+            {
+				entityPOCO.Notes = entityPM.Notes;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -235,6 +242,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
 					entityPM.IsCancelled = entityPOCO.IsCancelled;
             }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Notes))
+            {
+					entityPM.Notes = entityPOCO.Notes;
+            }
 
 		}
 
@@ -316,6 +327,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 oldEntityPM.IsCancelled = entityPM.IsCancelled;
             }
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Notes))
+            {
+                oldEntityPM.Notes = entityPM.Notes;
+            }
 			
 		}
 
@@ -329,6 +344,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
             {
                 entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.Notes)) //T4 find type == nText 
+            {
+                entityPM.Notes = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Notes));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

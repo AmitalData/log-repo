@@ -473,5 +473,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string Transshipment3LocationName { get; set; }
         public string Transshipment4LocationName { get; set; }
         public string EmptyReturnLocationName { get; set; }
+        public DateTime? OnCarriageETA { get; set; }
+        public DateTime? OnCarriageATA { get; set; }
     }
 }

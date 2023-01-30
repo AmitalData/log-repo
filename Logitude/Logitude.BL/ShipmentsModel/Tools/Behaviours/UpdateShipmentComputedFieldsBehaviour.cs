@@ -175,6 +175,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             
             FieldChange.Add(entity.CreatedFromDigital, shipmentPM.CreatedFromDigital, nameof(shipmentPM.CreatedFromDigital), fieldChanges);
             entity.CreatedFromDigital = shipmentPM.CreatedFromDigital;
+
+            FieldChange.Add(entity.IsDocumentsNeedApprove, shipmentPM.IsDocumentsNeedApprove, nameof(entity.IsDocumentsNeedApprove), fieldChanges);
+            entity.IsDocumentsNeedApprove = shipmentPM.IsDocumentsNeedApprove;
         }
 
         private void MapContainersNumbersAndTypesArray(List<FieldChange> fieldChanges)
@@ -566,6 +569,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 
                 FieldChange.Add(entity.ImporterDepositionRequestDetails, shipmentPM.ImporterDepositionRequestDetails, nameof(entity.ImporterDepositionRequestDetails), fieldChanges);
                 entity.ImporterDepositionRequestDetails = shipmentPM.ImporterDepositionRequestDetails;
+
             }
         }
 

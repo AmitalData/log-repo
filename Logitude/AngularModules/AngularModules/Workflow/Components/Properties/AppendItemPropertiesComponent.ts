@@ -1,15 +1,14 @@
 import { Component } from "@angular/core";
 import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/BaseComponent";
-import { ObjectFieldList } from "Infrastructure/EntityLists/ObjectFieldList";
 import { AppTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
-import { SingleEditableEntitiesTreeList } from "Workflow/Models/SingleEditableEntitiesTreeList";
-import { ObjectTables } from "Workflow/Models/ObjectTables";
+import { SingleEditableEntitiesTreeList } from "Workflow/TreeLists/SingleEditableEntitiesTreeList";
+import { ObjectTables } from "Workflow/Utilities/ObjectTables";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 import { SetValue } from "Workflow/Models/SetValue";
-import { DeclaredRecordsTreeList } from "Workflow/Models/DeclaredRecordsTreeList";
+import { DeclaredRecordsTreeList } from "Workflow/TreeLists/DeclaredRecordsTreeList";
 import { SetRecordFieldsTypes } from "Workflow/Constants/SetRecordFieldsTypes";
-import { FlowVariablesTreeList } from "Workflow/Models/FlowVariablesTreeList";
+import { FlowVariablesTreeList } from "Workflow/TreeLists/FlowVariablesTreeList";
 import { IsObjectTypePipe } from "Workflow/Pipes/IsObjectTypePipe";
 import { EntityLabelPipe } from "Workflow/Pipes/EntityLabelPipe";
 
@@ -22,7 +21,6 @@ export class AppendItemPropertiesComponent extends BaseComponent {
     public DataContext: any = this;
     public FlowObject: any;
     public CurrentNodeId: string;
-    public FlowObjectFields: ObjectFieldList[];
     public SingleEditableEntitiesTreeItems: TreeSelectItem[];
     public DeclaredRecordsTreeItems: TreeSelectItem[];
     public DeclaredCollectionVariablesTreeList: FlowVariablesTreeList;
@@ -51,7 +49,6 @@ export class AppendItemPropertiesComponent extends BaseComponent {
         this.Data = args.Data ? args.Data : {};
         this.FlowObject = args.FlowObject ? args.FlowObject : null;
         this.CurrentNodeId = args.CurrentNodeId ? args.CurrentNodeId : null;
-        this.FlowObjectFields = args.FlowObjectFields ? args.FlowObjectFields : [];
     }
 
     ngOnInit() {
@@ -121,7 +118,7 @@ export class AppendItemPropertiesComponent extends BaseComponent {
             OnlyCurrentLoopItemVariables: false,
             IsObjectVariableSelectable: false
         };
-        this.DeclaredCollectionVariablesTreeList = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId, props);
+        this.DeclaredCollectionVariablesTreeList = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props);
         var DeclaredCollectionVariablesItems = this.DeclaredCollectionVariablesTreeList.Items;
         this.SingleEditableEntitiesTreeItems = this.SingleEditableEntitiesTreeItems.concat(DeclaredCollectionVariablesItems);
     }
@@ -135,7 +132,7 @@ export class AppendItemPropertiesComponent extends BaseComponent {
             OnlyCurrentLoopItemVariables: false,
             IsObjectVariableSelectable: true
         };
-        this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObjectFields, this.FlowObject, this.CurrentNodeId, props);
+        this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props);
         this.FlowVariablesTreeItems = this.FlowVariablesTreeList.Items;
     }
 

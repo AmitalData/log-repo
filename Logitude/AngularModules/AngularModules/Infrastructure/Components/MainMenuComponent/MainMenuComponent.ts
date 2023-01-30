@@ -300,6 +300,10 @@ export class MainMenuComponent {
                         myComponentPath = "./Shipment/Components/Workspaces/ContainersFUsComponent";
                         break;
                     }
+                    case "General.MH.Containers": {
+                        myComponentPath = "./Shipment/Components/Workspaces/ContainerComponent";
+                        break;
+                    }
 
                     case "General.MH.TimeManagement": {
                         myComponentPath = "./TimeManagement/Components/Workspaces/TimeManagementWorkspaceComponent"; 

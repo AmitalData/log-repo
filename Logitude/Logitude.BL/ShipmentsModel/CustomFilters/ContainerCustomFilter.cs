@@ -1,4 +1,5 @@
-﻿using Simplog.Data.ShipmentsModel.EntityPOCOs;
+﻿using Simplog.Data.Helpers;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
         public IQueryable<Container> GetFilteredQuery(QueryOperations operations, IQueryable<Container> queryableData)
         {
             List<QueryFilterItem> queryFilters = operations.QueryFilterItems;
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(Tenant).Date;
             //bool showIsClosed = false;
             bool showIsCancelled = false;
             foreach (QueryFilterItem item in queryFilters)
@@ -41,19 +43,26 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                     }
                     if (item.FieldName == "PendingPOLDepartureFilter")
                     {
-                        queryableData = queryableData.Where(d => d.ActualPODDeparture == null && d.EstimatedPOLVesselDeparture != null && d.ActualPODVesselArrival == null);
+                       
+                        DateTime twoDaysAgoDate = todayDate.AddDays(-2);
+
+                        queryableData = from d in queryableData
+                                        where d.ActualPOLVesselDeparture == null 
+                                        && d.EstimatedPOLVesselDeparture != null
+                                        && (d.EstimatedPOLVesselDeparture <= twoDaysAgoDate)
+                                        select d;
                     }
                     if (item.FieldName == "InTransitFilter")
                     {
-                        queryableData = queryableData.Where(d => d.ActualPOLVesselDeparture != null && (d.TransshipmentCount == 0 || d.TransshipmentCount == null) && d.ActualPODVesselArrival == null);
+                        queryableData = queryableData.Where(d => d.ActualPOLVesselDeparture != null && (d.TransshipmentCount == 0 || d.TransshipmentCount == null)&& d.ActualPODVesselArrival == null && d.EstimatedPODVesselArrival != todayDate);
                     }
                     if (item.FieldName == "InTransitwithTransshipmentsFilter")
-                    {
-                        queryableData = queryableData.Where(d => d.ActualPOLVesselDeparture != null && (d.TransshipmentCount > 0 ) && d.ActualPODVesselArrival == null);
+                    { 
+                        queryableData = queryableData.Where(d => d.ActualPOLVesselDeparture != null && (d.TransshipmentCount != null && d.TransshipmentCount > 0 ) && d.ActualPODVesselArrival == null && d.EstimatedPODVesselArrival != todayDate);
                     }
                     if (item.FieldName == "PendingGateOutFilter")
                     {
-                        queryableData = queryableData.Where(d => d.ActualPODVesselArrival != null &&  d.GateOut == null);
+                        queryableData = queryableData.Where(d => d.ActualPODVesselArrival != null &&  d.GateOut == null && d.ActualPODDischarge != null);
                     }
                     if (item.FieldName == "PendingEmptyReturnFilter")
                     {
@@ -64,8 +73,18 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                     {
                         queryableData = queryableData.Where(d => d.IsClosed);
                     }
-
-
+                    if(item.FieldName == "PendingArrivalFilter")
+                    {
+                        queryableData = queryableData.Where(d => d.ActualPOLVesselDeparture != null && d.ActualPODVesselArrival == null && d.EstimatedPODVesselArrival == todayDate);
+                    }
+                    if(item.FieldName == "PendingDischargeFilter")
+                    {
+                        queryableData = queryableData.Where(d => d.ActualPODDischarge == null && d.ActualPODVesselArrival != null);
+                    }
+                    if(item.FieldName == "PendingDeliveryFilter")
+                    {
+                        queryableData = queryableData.Where(d => d.ShipmentDeliveryATD != null && d.ShipmentDeliveryATA == null);
+                    }
                 }
 
                 if (item.FieldName == "IsCancelled")

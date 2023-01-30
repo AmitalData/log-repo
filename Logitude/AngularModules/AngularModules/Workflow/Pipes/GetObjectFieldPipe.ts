@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import { Formatter } from "Workflow/Models/Formatter";
+import { Formatter } from "Workflow/Utilities/Formatter";
+import { ObjectFields } from "Workflow/Utilities/ObjectFields";
 
 @Pipe({
     name: "GetObjectFieldPipe"
@@ -7,10 +8,10 @@ import { Formatter } from "Workflow/Models/Formatter";
 
 export class GetObjectFieldPipe implements PipeTransform {
 
-    transform(field: string, objectFields: any) {
-        if (field && objectFields) {
+    transform(field: string) {
+        if (field) {
             let fieldCode = Formatter.getFieldCode(field);
-            return fieldCode ? objectFields.find((o: any) => o.FieldCode === fieldCode) : null;
+            return ObjectFields.getByCode(fieldCode);
         }
         return null;
     }

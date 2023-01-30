@@ -78,6 +78,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\JustWebFreight\WebFreight.Web\bin\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
       <Private>True</Private>
@@ -250,6 +253,7 @@
     <Compile Include="Helpers\SystemEnvironmentService.cs" />
     <Compile Include="Helpers\TransactionFactory.cs" />
     <Compile Include="Helpers\XLSUtil.cs" />
+    <Compile Include="Helpers\ZipFileService.cs" />
     <Compile Include="IContext.cs" />
     <Compile Include="Interfaces\IDateTimeUtil.cs" />
     <Compile Include="Interfaces\FieldShortNameGetter.cs" />

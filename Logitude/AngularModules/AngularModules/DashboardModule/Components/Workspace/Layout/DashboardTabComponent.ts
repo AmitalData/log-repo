@@ -503,7 +503,7 @@ export class DashboardTabComponent implements OnInit {
             dateFromHere.setMonth(dateFromHere.getMonth() - numberPeriod);
         }
         if(compareItem.dateGroupCode == 'Quarter'){
-            dateFromHere.setMonth(dateFromHere.getDate() - (30 * 3 * numberPeriod));
+            dateFromHere.setMonth(dateFromHere.getMonth() - (3 * numberPeriod));
         }
         if(compareItem.dateGroupCode == 'Year'){
             dateFromHere.setFullYear(dateFromHere.getFullYear() - numberPeriod);

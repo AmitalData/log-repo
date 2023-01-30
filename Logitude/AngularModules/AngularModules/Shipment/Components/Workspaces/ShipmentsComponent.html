@@ -212,9 +212,9 @@
                                             <p class="QueryLink" (click)="ViewShipmentQuery('All Follow Ups')" *ngIf="IsQueryVisible_AllFollowUps">{{'Shipment.Q.AllFollowUps' | TextCodeTranslationPipe}}</p>
                                             <p class="QueryLink" (click)="ViewShipmentQuery('My Follow Ups')" *ngIf="IsQueryVisible_MyFollowUps">{{'Shipment.Q.MyFollowUps' | TextCodeTranslationPipe}}</p>
                                             <p class="QueryLink" (click)="ViewShipmentQuery('All Shipments')" *ngIf="IsQueryVisible_AllShipments">{{'Shipment.Q.AllShipments' | TextCodeTranslationPipe}}</p>
-                                            <p class="QueryLink" (click)="ViewShipmentQuery('All Masters')" *ngIf="IsQueryVisible_AllMasters">{{'Shipment.Q.AllMasters' | TextCodeTranslationPipe}}</p>                                            
+                                            <p class="QueryLink" (click)="ViewShipmentQuery('All Masters')" *ngIf="IsQueryVisible_AllMasters">{{'Shipment.Q.AllMasters' | TextCodeTranslationPipe}}</p>
                                             <p class="QueryLink" (click)="ViewShipmentQuery('CreditLimitBlockedShipments')" *ngIf="IsQueryVisible_CreditLimitBlocked">{{'Shipment.Q.CreditLimitBlockedShipments' | TextCodeTranslationPipe}}</p>
-                                            <p class="QueryLink" (click)="ViewShipmentQuery('Cancelled Shipments')" *ngIf="IsQueryVisible_CanceledShipments">{{'Shipment.Q.CancelledShipments' | TextCodeTranslationPipe}}</p>                          
+                                            <p class="QueryLink" (click)="ViewShipmentQuery('Cancelled Shipments')" *ngIf="IsQueryVisible_CanceledShipments">{{'Shipment.Q.CancelledShipments' | TextCodeTranslationPipe}}</p>
                                         </div>
                                         <div *ngIf="IsCloudDeployment == false" >
                                             <p class="QueryLink" (click)="ViewShipmentQuery('All Follow Ups')" *ngIf="IsQueryVisible_AllFollowUps">{{'Shipment.Q.AllFollowUps' | TextCodeTranslationPipe}} ({{AllFollowUpsCount}})</p>
@@ -223,6 +223,7 @@
                                             <p class="QueryLink" (click)="ViewShipmentQuery('All Masters')" *ngIf="IsQueryVisible_AllMasters">{{'Shipment.Q.AllMasters' | TextCodeTranslationPipe}}</p>
                                             <p class="QueryLink" (click)="ViewShipmentQuery('CreditLimitBlockedShipments')" *ngIf="IsQueryVisible_CreditLimitBlocked">{{'Shipment.Q.CreditLimitBlockedShipments' | TextCodeTranslationPipe}} ({{CreditLimitBlockedCount}})</p>
                                             <p class="QueryLink" (click)="ViewShipmentQuery('Cancelled Shipments')" *ngIf="IsQueryVisible_CanceledShipments">{{'Shipment.Q.CancelledShipments' | TextCodeTranslationPipe}}</p>
+                                            <p class="QueryLink" (click)="ViewShipmentQuery('Pending Approval Documents')" *ngIf="IsQueryVisible_PendingApprovalDocuments">{{'Shipment.Q.PendingApprovalDocuments' | TextCodeTranslationPipe}} ({{PendingApprovalDocumentsCount}})</p>
                                         </div>
                                     </div>
 

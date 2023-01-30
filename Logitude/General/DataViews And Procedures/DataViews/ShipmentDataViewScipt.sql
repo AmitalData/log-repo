@@ -240,6 +240,7 @@ SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumb
 						 CreatedByUserContact.EnglishName as CreatedByUserName,
 						 LastSentByUserContact.EnglishName as LastSentByUserName,						 
 						 ShipmentComputedFields.IsMissingDocuments as IsMissingDocument,
+                         ShipmentComputedFields.IsDocumentsNeedApprove as IsDocumentsNeedApprove,
 						 ShipmentComputedFields.DocumentsSearchFields as DocumentsSearchFields,
 						 dbo.Shipments.ForwarderShipmentNumber as ForwarderShipmentNumber,
 						 dbo.Shipments.CustomerShipmentNumber as CustomerShipmentNumber,

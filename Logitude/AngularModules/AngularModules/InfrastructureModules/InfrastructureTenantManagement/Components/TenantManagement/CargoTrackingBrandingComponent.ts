@@ -124,6 +124,7 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
             if (addOnPackage != null) {
                 this.BrandingTabName = TextCodeTranslator.Translate("TenantManagement.TH.LogitudeDigitalBranding");
                 this.IsLogitudeEnvironment = true;
+                this.SetCustomerURLProperties(this.EntityPM.EnableBranding);
             }
         });
     }

@@ -84,5 +84,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? MainCarriageATD { get; set; }
         public string PackagesQuantityAndType { get; set; }
         public string Transshipments { get; set; }
+        public bool IsDocumentsNeedApprove { get; set; }
+
     }
 }

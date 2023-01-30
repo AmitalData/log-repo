@@ -3,9 +3,9 @@ import { BaseComponent } from "Infrastructure/Components/LogitudeComponents/Base
 import { AppTool, FormatTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { FieldTypes } from "Workflow/Constants/FieldTypes";
-import { DataTypesList } from "Workflow/Models/DataTypesList";
-import { EntitiesTreeList } from "Workflow/Models/EntitiesTreeList";
-import { Formatter } from "Workflow/Models/Formatter";
+import { DataTypesList } from "Workflow/Lists/DataTypesList";
+import { EntitiesTreeList } from "Workflow/TreeLists/EntitiesTreeList";
+import { Formatter } from "Workflow/Utilities/Formatter";
 import { ListItem } from "Workflow/Models/ListItem";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 
@@ -27,7 +27,7 @@ export class DeclareVariablePropertiesComponent extends BaseComponent {
     public VariableTypeChangedToggle: boolean = false;
     public DataTypesItems: ListItem[] = new DataTypesList().Items;
     public EntitiesTreeItems: TreeSelectItem[];
-    public ExcludedEntities: string[] = ["Shipment.Container", "Shipment.ARInvoice", "Shipment.APInvoice"];
+    public ExcludedEntities: string[] = ["Container", "ARInvoice", "APInvoice"];
     public FieldTypes = FieldTypes;
     public CurrentSession = SessionLocator.SelectedSession;
 

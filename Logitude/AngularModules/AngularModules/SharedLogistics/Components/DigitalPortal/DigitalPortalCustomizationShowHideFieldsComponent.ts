@@ -92,8 +92,8 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
         this.DigitalProfileFilterList = [];
         this.digitalTextService.GetDigitalProfileName(SessionLocator.Tenant).subscribe((myResult) => {
             if (!myResult.HasError) {
-                var objectTables = myResult.Result;
-                objectTables.forEach(item => {
+                var profiles = myResult.Result.filter(a=>a.Code != "CM");
+                profiles.forEach(item => {
                     this.DigitalProfileFilterList.push(new CodeNameClass(item.Id, item.Name, item.Code));
                 });
 
@@ -185,10 +185,11 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
             hasHasPermissionList.forEach(item => {
                 var newLabel = new DigitalFeildSecurityUpdateModel();
                 newLabel.FieldCode = item.FieldCode;
-                newLabel.CreatedBy = SessionLocator.LoggedUserPM.EnglishName;
-                newLabel.CreatedOn = DateTool.GetCurrentDateAsUtc();
-                newLabel.ModifiedBy = SessionLocator.LoggedUserPM.EnglishName;
+                newLabel.CreatedBy = item.CreatedBy;
+                newLabel.CreatedOn = item.CreatedOn;
                 newLabel.HasPermission = item.HasPermission;
+                newLabel.ModifiedBy = item.ModifiedBy;
+                newLabel.ModifiedOn = item.ModifiedOn;
                 this.ModifiedLables.DefaultSettings.push(newLabel);
             });
 
@@ -267,7 +268,7 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
 export class ProfileFieldsItem extends BaseComponent {
 
     public DataContext: ProfileFieldsItem = this;
-
+    public Background = "transparent";
     constructor(public father: DigitalPortalCustomizationShowHideFieldsComponent, item) {
         super();
         this.hasPermission = item.HasPermission;
@@ -276,6 +277,16 @@ export class ProfileFieldsItem extends BaseComponent {
         this.textCode = selelectField['TextCode'];
         this.defaultText = selelectField['DefaultText'];
         this.displayText = selelectField['DisplayText'];
+        this.createdBy = item.CreatedBy;
+        this.modifiedBy = item.ModifiedBy;
+        this.modifiedOn = item.ModifiedOn;
+        this.SetBackgroundColor();
+    }
+
+    SetBackgroundColor() {
+        if (this.CreatedBy?.toLowerCase() != "system") {
+            this.Background = "rgba(255, 171, 3, 0.6)";
+        }
     }
 
     private fieldCode: string = "";
@@ -299,6 +310,8 @@ export class ProfileFieldsItem extends BaseComponent {
 
     public UpdatePermission(newValue) {
         this.father.IsModifiedLables = true;
+        this.ModifiedBy = SessionLocator.LoggedUserPM.EnglishName;
+        this.ModifiedOn = DateTool.GetCurrentDateTimeAsUtc();
         this.father.customizationEditComponent.IsDirty = true;
     }
 
@@ -319,6 +332,7 @@ export class ProfileFieldsItem extends BaseComponent {
     set DisplayText(value) {
         if (value != this.displayText) {
             this.displayText = value;
+            this.UpdateModifiedLables(value);
         }
     }
 
@@ -333,6 +347,30 @@ export class ProfileFieldsItem extends BaseComponent {
         }
     }
 
+    private createdBy = "";
+    get CreatedBy() { return this.createdBy; }
+    set CreatedBy(value) {
+        if (value != this.createdBy) {
+            this.createdBy = value;
+        }
+    }
+
+    private modifiedBy = "";
+    get ModifiedBy() { return this.modifiedBy; }
+    set ModifiedBy(value) {
+        if (value != this.modifiedBy) {
+            this.modifiedBy = value;
+        }
+    }
+
+    private modifiedOn = null;
+    get ModifiedOn() { return this.modifiedOn; }
+    set ModifiedOn(value: Date) {
+        if (value != this.modifiedOn) {
+            this.modifiedOn = value;
+        }
+    }
+
     public UpdateModifiedLables(newValue) {
 
         if (this.father.ModifiedFields.Lables == null) {
@@ -340,6 +378,7 @@ export class ProfileFieldsItem extends BaseComponent {
         }
 
         this.father.IsModifiedFields = true;
+        this.father.IsModifiedLables = true;
         this.father.customizationEditComponent.IsDirty = true;
         var label = this.father.ModifiedFields?.Lables?.filter(d => d.FieldCode == this.fieldCode)[0];
         var index = this.father.ModifiedFields?.Lables?.indexOf(label);
@@ -352,6 +391,8 @@ export class ProfileFieldsItem extends BaseComponent {
         newLabel.FieldCode = this.fieldCode;
         newLabel.DefaultText = newValue;
         newLabel.DisplayText = this.displayText;
+        this.ModifiedBy = SessionLocator.LoggedUserPM.EnglishName;
+        this.ModifiedOn = DateTool.GetCurrentDateTimeAsUtc();
         this.father.ModifiedFields.Lables.push(newLabel);
     }
 

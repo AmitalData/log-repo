@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class CounterDefinitionUpdateClass
    {  		
-		public const string HashString = "91a980b9e16a6eb6c7ab5a3fc00383bf";
+		public const string HashString = "10f1188254e767895dcae55d1230b85d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

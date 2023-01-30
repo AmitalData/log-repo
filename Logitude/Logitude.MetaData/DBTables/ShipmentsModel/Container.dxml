@@ -1785,6 +1785,18 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="OnCarriageATA"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="OnCarriageETA"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

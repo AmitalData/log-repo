@@ -76,5 +76,6 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime? MainCarriageATA { get; set; }
         public DateTime? MainCarriageATD { get; set; }
         public string PackagesQuantityAndType { get; set; }
+        public bool IsDocumentsNeedApprove { get; set; }
     }
 }

@@ -2740,8 +2740,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 return;
             }
 
-            shipmentPM.IsCustomerArchived = repository.context.ShipmentDigitalFields.Where(a => a.Id == shipmentPM.Id && a.Tenant == shipmentPM.Tenant)
-                                                                                    .Select(a => a.IsCustomerArchived).FirstOrDefault();
+            shipmentPM.IsCustomerArchived = repository.context
+                                                      .ShipmentDigitalFields
+                                                      .Where(a => a.Id == shipmentPM.Id
+                                                                  && a.Tenant == shipmentPM.Tenant)
+                                                      .Select(a => a.IsCustomerArchived)
+                                                      .FirstOrDefault();
 
             shipmentPM.IsFullInvoiced = false;
             if (shipmentPM.ShipmentReceivables == null || shipmentPM.ShipmentReceivables?.Count == 0)
@@ -2750,8 +2754,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
 
             ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(shipmentPM.Tenant);
-            List<ARInvoice> invoices = aRInvoiceRepository.GetDigitalInvoicesByShipmentId(shipmentPM.Id, cardId, shipmentPM.Tenant);
-            shipmentPM.IsFullInvoiced = invoices?.Count() > 0 ? true : false;
+            shipmentPM.IsFullInvoiced = aRInvoiceRepository.GetDigitalInvoicesByShipmentId(shipmentPM.Id, cardId, shipmentPM.Tenant).Any() ? true : false;
         }
 
         public static void MapFieldsBeforeTrackingChangedForAutomation(ShipmentPM shipmentPM, ShipmentServiceInitializer initializer)
@@ -4305,7 +4308,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.T1ReceivedDate = entityComputedFields.T1Received;
                 shipmentPM.FirstPickupATD = entityComputedFields.FirstPickupATD;
                 shipmentPM.AccountingClosedByUserId = entityComputedFields.AccountingClosedByUserId;
-
+                shipmentPM.IsDocumentsNeedApprove = entityComputedFields.IsDocumentsNeedApprove;
                 MapMainCarriageDateFields(shipmentPM, entityComputedFields, shipmentMasterData);
             }
         }
@@ -11200,7 +11203,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         }
         #endregion
 
-        public ShipmentsSummary GetShipmentsDashBoardSummary(int tenant, string directionId, string transportModeId, string loggedContactId, bool hasETDFeature, bool hasFollowupsFeature, bool hasExpDepNotTransmittedFeature, bool hasShippingInstructionsLast7DaysFeature, bool hasContainerStatusLast7DaysFeature, bool hasEBookingInProgress)
+        public ShipmentsSummary GetShipmentsDashBoardSummary(int tenant, string directionId, string transportModeId, string loggedContactId, bool hasETDFeature, bool hasFollowupsFeature, bool hasExpDepNotTransmittedFeature, bool hasShippingInstructionsLast7DaysFeature, bool hasContainerStatusLast7DaysFeature, bool hasEBookingInProgress,bool hasPendingApprovalDocumentsFeature)
         {
             ShipmentsSummary myResult = new ShipmentsSummary() { Id = 1 };
 
@@ -11291,6 +11294,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                 myResult.AllFollowUpsCount = GetAllFollowUpsCount(tenant, allFollowups);
                 myResult.MyFollowUpsCount = GetMyFollowUpsCount(tenant, loggedContactId, allFollowups);
+            }
+
+            if (hasPendingApprovalDocumentsFeature)
+            {
+                myResult.PendingApprovalDocumentsCount = GetAllPendingApprovalDocumentsCount(tenant, directionId, transportModeId);
             }
 
             return myResult;
@@ -11609,6 +11617,47 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
             return count;
         }
+        private int GetAllPendingApprovalDocumentsCount(int tenant, string directionId, string transportModeId)
+        {
+            IQueryable<ShipmentDataView> allShipments = GetAllShipments(tenant, directionId, transportModeId);
+
+            int count = 0;
+            var AllPendingApprovalDocumentsCount = "AllPendingApprovalDocumentsCount" + tenant;
+
+            var iQueryableData = allShipments.Where(d => d.IsDocumentsNeedApprove == true).Take(1001);
+
+            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(AllPendingApprovalDocumentsCount) != null)
+            {
+                return (int)CacheManager.CacheWrapper.Get(AllPendingApprovalDocumentsCount);
+            }
+            count = iQueryableData.Count();
+            if (count > 1000)
+            {
+                CacheManager.CacheWrapper.Insert(AllPendingApprovalDocumentsCount, count, null, System.DateTime.UtcNow.AddHours(8), TimeSpan.Zero);
+            }
+            return count;
+        }
+
+        private IQueryable<ShipmentDataView> GetAllShipments(int tenant, string directionId, string transportModeId)
+        {
+            IQueryable<ShipmentDataView> allShipments = repository.GetShipmentViewsByTenant(tenant).Where(d => d.IsCancelled == false && d.IsStandalonePickupDelivery == false);
+
+            allShipments = BranchPermitionsFilter.AddUserBranchRestrictionFilters<ShipmentDataView>(new QueryOperations(), allShipments, tenant);
+            allShipments = ProductPermitionsFilter.AddUserProductRestrictionFilters<ShipmentDataView>(new QueryOperations(), allShipments, tenant);
+
+            if (!string.IsNullOrEmpty(directionId))
+            {
+                allShipments = allShipments.Where(d => d.DirectionId == directionId);
+            }
+
+            if (!string.IsNullOrEmpty(transportModeId))
+            {
+                allShipments = allShipments.Where(d => d.TransportModeId == transportModeId);
+            }
+
+            return allShipments;
+        }
+
         private int GetAllFollowUpsCount(int tenant, IQueryable<ShipmentFollowUpDataView> allFollowups)
         {
             int count = 0;
@@ -13465,7 +13514,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                InlandDomesticFromStateName = f.InlandDomesticFromStateName,
                                InlandDomesticFromStateId = f.InlandDomesticFromStateId,
                                NumberOfTransshipments = f.NumberOfTransshipments,
-                               Transshipments = f.Transshipments
+                               Transshipments = f.Transshipments,
+                               IsDocumentsNeedApprove = f.IsDocumentsNeedApprove
+
                            };
             return myResult;
         }

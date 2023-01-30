@@ -20,7 +20,7 @@ export class ShipmentComputedFieldsPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+		            this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -313,6 +313,11 @@ export class ShipmentComputedFieldsPM {
     private packagesQuantityAndType: string;
     public get PackagesQuantityAndType() { return this.packagesQuantityAndType; }
     public set PackagesQuantityAndType(newValue: string) { if (this.packagesQuantityAndType != newValue) { this.packagesQuantityAndType = newValue; this.MarkAsDirty("PackagesQuantityAndType"); } }
+       
+	 
+    private isDocumentsNeedApprove: boolean;
+    public get IsDocumentsNeedApprove() { return this.isDocumentsNeedApprove; }
+    public set IsDocumentsNeedApprove(newValue: boolean) { if (this.isDocumentsNeedApprove != newValue) { this.isDocumentsNeedApprove = newValue; this.MarkAsDirty("IsDocumentsNeedApprove"); } }
        
 	 
 

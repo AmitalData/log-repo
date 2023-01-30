@@ -466,8 +466,8 @@ namespace WebFreight.Web.Controllers.DigitalPortal
             }
 
             var allowedStatusCode = allStatuses.Select(a => a.Code).ToList();
-            var departedCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SDEP").StatusWeight;
-            var arrivedAtDestinationCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SARR").StatusWeight;
+            var departedCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SDEP")?.StatusWeight;
+            var arrivedAtDestinationCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SARR")?.StatusWeight;
 
             var result = shipments.Where(r => allowedStatusCode.Contains(r.StatusCode))
                        .Select(a => new

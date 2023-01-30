@@ -56,6 +56,7 @@ import { OpenFormatReportListService } from './Services/StandardLists/OpenFormat
 //import { OpenFormatDateTypeListService } from './Services/StandardLists/OpenFormatDateTypeListService';
 import { TaxDeductionReportStatusListService } from './Services/StandardLists/TaxDeductionReportStatusListService';
 import { TaxReportPMService } from './Services/StandardPMs/TaxReportPMService';
+import { InterestTransactionPMService } from './Services/StandardPMs/InterestTransactionPMService';
 import { AccountingPeriodPMService } from './Services/StandardPMs/AccountingPeriodPMService';
 import { AutomaticReconcileMethodPMService } from './Services/StandardPMs/AutomaticReconcileMethodPMService';
 import { Category1PMService } from './Services/StandardPMs/Category1PMService';
@@ -246,6 +247,7 @@ export class ModuleProviders {
             case "WithholdingTaxDeductionTypePMService": { myResult = new WithholdingTaxDeductionTypePMService(); break; }
             case "ExternalReconciliationPMService": { myResult = new ExternalReconciliationPMService(); break; }
             case "TaxReportPMService": { myResult = new TaxReportPMService(); break; }
+            case "InterestTransactionPMService": { myResult = new InterestTransactionPMService(); break; }
             case "TaxReportLineTransmitStatusListService": { myResult = new TaxReportLineTransmitStatusListService(); break; }
             case "GLAccountMoreDataPMService": { myResult = new GLAccountMoreDataPMService(); break; }
             case "InterestReportStatuseListService": { myResult = new InterestReportStatuseListService(); break; }

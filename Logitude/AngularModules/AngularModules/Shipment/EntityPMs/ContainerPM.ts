@@ -1641,6 +1641,16 @@ export class ContainerPM {
     public set EmptyReturnLocationName(newValue: string) { if (this.emptyReturnLocationName != newValue) { this.emptyReturnLocationName = newValue; this.MarkAsDirty("EmptyReturnLocationName"); } }
        
 	 
+    private onCarriageETA: Date;
+    public get OnCarriageETA() { return this.onCarriageETA; }
+    public set OnCarriageETA(newValue: Date) { if (this.onCarriageETA != newValue) { this.onCarriageETA = newValue; this.MarkAsDirty("OnCarriageETA"); } }
+       
+	 
+    private onCarriageATA: Date;
+    public get OnCarriageATA() { return this.onCarriageATA; }
+    public set OnCarriageATA(newValue: Date) { if (this.onCarriageATA != newValue) { this.onCarriageATA = newValue; this.MarkAsDirty("OnCarriageATA"); } }
+       
+	 
 
     public OldEntityPM: ContainerPM;
 		

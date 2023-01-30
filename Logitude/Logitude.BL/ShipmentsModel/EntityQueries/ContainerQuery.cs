@@ -305,6 +305,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     MainCarriageToCountryName = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryName: "",
                     MainCarriageFromCountryCode = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CountryCode: "",
                     MainCarriageToCountryCode = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryCode: "",
+                    OnCarriageETA = container.OnCarriageETA,
+                    OnCarriageATA = container.OnCarriageATA,
                 };
 
                 if (container.EntityStatus != null)
@@ -627,7 +629,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         OnCarriageGateOut = container.OnCarriageGateOut,
                         PreCarriageGateIn = container.PreCarriageGateIn,
                         UpdatedByPartner = container.UpdatedByPartner,
-                        
+                        OnCarriageETA = container.OnCarriageETA,
+                        OnCarriageATA = container.OnCarriageATA,
+
                         MainCarriageFromCountryId = container.ShipmentMainCarriageFromPort == null ? null : container.ShipmentMainCarriageFromPort.CountryId,
                         MainCarriageToCountryId = container.ShipmentMainCarriageToPort == null ? null : container.ShipmentMainCarriageToPort.CountryId,
                         MainCarriageFromCountryName = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CountryName : "",
@@ -943,6 +947,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    MainCarriageToCountryName = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryName : "",
                                                    MainCarriageFromCountryCode = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CountryCode : "",
                                                    MainCarriageToCountryCode = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryCode : "",
+                                                   OnCarriageETA = container.OnCarriageETA,
+                                                   OnCarriageATA = container.OnCarriageATA,
 
                                                };
             return result;
@@ -1206,6 +1212,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     MainCarriageToCountryName = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryName : "",
                     MainCarriageFromCountryCode = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CountryCode : "",
                     MainCarriageToCountryCode = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryCode : "",
+                    OnCarriageETA = container.OnCarriageETA,
+                    OnCarriageATA = container.OnCarriageATA,
                 };
                 MapCustomFields(containerPM, container);
             }
@@ -1482,6 +1490,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     MainCarriageToCountryName = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryName : "",
                     MainCarriageFromCountryCode = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CountryCode : "",
                     MainCarriageToCountryCode = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryCode : "",
+                    OnCarriageETA = container.OnCarriageETA,
+                    OnCarriageATA = container.OnCarriageATA,
                 };
             }
 
@@ -2022,6 +2032,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     MainCarriageToCountryName = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryName : "",
                     MainCarriageFromCountryCode = container.ShipmentMainCarriageFromPort != null ? container.ShipmentMainCarriageFromPort.CountryCode : "",
                     MainCarriageToCountryCode = container.ShipmentMainCarriageToPort != null ? container.ShipmentMainCarriageToPort.CountryCode : "",
+                    OnCarriageETA = container.OnCarriageETA,
+                    OnCarriageATA = container.OnCarriageATA,
                 };
             }
 
@@ -2308,7 +2320,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             containerPM.AdditionalReference3 = container.AdditionalReference3;
             containerPM.AdditionalReference4 = container.AdditionalReference4;
             containerPM.HasTransshipments = container.HasTransshipments;
-
+            containerPM.OnCarriageETA = container.OnCarriageETA;
+            containerPM.OnCarriageATA = container.OnCarriageATA;
             if (container.EntityStatus != null)
             {
                 containerPM.StatusName = container.EntityStatus.Name;

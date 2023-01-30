@@ -58,7 +58,6 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
         public List<DigitalPortalScreenList> GetDigitalPortalScreenNamesTenant0()
         {
             var digitalPortalScreenRepository = new DigitalPortalScreenRepository(0);
-
             var digitalPortalScreens = digitalPortalScreenRepository.GetDigitalPortalScreenNamesTenant0()
                                                                     .Select(x => new DigitalPortalScreenList
                                                                     {
@@ -72,7 +71,7 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                                                                         ProfileId = x.ProfileId,
                                                                         Content = x.Content,
                                                                         DraftContent = x.DraftContent,
-                                                                        ProfileCode = x.DigitalProfile.Code
+                                                                        ProfileCode = x.DigitalProfile.Code,
                                                                     })
                                                                     .ToList();
             return digitalPortalScreens;

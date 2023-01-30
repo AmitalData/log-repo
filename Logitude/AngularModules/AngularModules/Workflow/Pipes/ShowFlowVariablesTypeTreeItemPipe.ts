@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import { FlowVariablesTreeList } from "Workflow/Models/FlowVariablesTreeList";
+import { FlowVariablesTreeList } from "Workflow/TreeLists/FlowVariablesTreeList";
 import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 
 @Pipe({

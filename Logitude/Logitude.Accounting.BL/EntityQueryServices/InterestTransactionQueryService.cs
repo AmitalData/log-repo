@@ -152,6 +152,18 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         }
 
+        public InterestTransaction MapInterestTransactionNotes(InterestTransactionPM interestTransactionPM)
+        {
+            InterestTransactionRepository interestTransactionRepository = new InterestTransactionRepository(interestTransactionPM.Tenant);
+            var interestTransaction =interestTransactionRepository.GetSingle(interestTransactionPM.Id, interestTransactionPM.Tenant);
+            interestTransaction.Notes = interestTransactionPM.Notes;
+            interestTransactionRepository.Update(interestTransaction);
+            interestTransactionRepository.SubmitChanges();
+
+
+            return interestTransaction;
+        }
+
 
     }
 }
