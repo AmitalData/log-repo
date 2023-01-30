@@ -5,6 +5,7 @@ using Logitude.CargoTracking.Data.EntityLists;
 using Logitude.CargoTracking.Def.DataContracts;
 using System.Collections.Generic;
 using System.Linq;
+using Logitude.CargoTracking.Data.Model;
 
 namespace Logitude.CargoTracking.BL.CoreBL
 {
@@ -14,15 +15,22 @@ namespace Logitude.CargoTracking.BL.CoreBL
         {
             return new CargoTrackingShipmentsResponse
             {
-                Shipments = GetUserShipments( shipmentSearchInput),
-                ShipmentsCount = GetAllShipmentsCountForFirstPageOnly(shipmentSearchInput)
-            };
+                Shipments = GetUserShipments(shipmentSearchInput),
+                ShipmentsCount = GetAllShipmentsCountForFirstPageOnly(shipmentSearchInput),
+                Customers = GetShipmentsCustomers(shipmentSearchInput)
+        };
+        }
+
+        public List<Customer> GetShipmentsCustomers(CargoTrackingShipmentSearchInput shipmentSearchInput)
+        {
+            CargoTrackingShipmentSearchListQueryService shipmentSearchQuery = GetCargoTrackingShipmentSearchQuery(shipmentSearchInput);
+            return shipmentSearchQuery.GetShipmentsCustomers(shipmentSearchInput);
         }
 
         public List<CargoTrackingShipmentList> GetUserShipments( CargoTrackingShipmentSearchInput shipmentSearchInput)
         {
             CargoTrackingShipmentSearchListQueryService shipmentSearchQuery = GetCargoTrackingShipmentSearchQuery(shipmentSearchInput);
-            var shipments = shipmentSearchQuery.GetFilteredShipments( shipmentSearchInput);
+            var shipments = shipmentSearchQuery.GetFilteredShipments(shipmentSearchInput);
             CargoTrackingShipmentQueryService cargoTrackingShipmentQueryService = new CargoTrackingShipmentQueryService(shipmentSearchInput.Tenant);
             cargoTrackingShipmentQueryService.SetFutureMilstone(shipments);
             return shipments;
@@ -70,6 +78,7 @@ namespace Logitude.CargoTracking.BL.CoreBL
     {
         public List<CargoTrackingShipmentList> Shipments { get; set; }
         public int ShipmentsCount { get; set; }
+        public List<Customer> Customers { get; set; }
     }
     public class CargoTrackingShipmentsCounter
     {
