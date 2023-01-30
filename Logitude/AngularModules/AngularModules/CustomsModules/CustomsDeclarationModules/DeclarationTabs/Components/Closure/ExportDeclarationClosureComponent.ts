@@ -82,8 +82,8 @@ export class ExportDeclarationClosureComponent extends BaseComponent {
 
     }
 
-    public get AmendmentRequestNumber() { return this.EntityPM ? this.EntityPM.AmendmentRequestNumber : null; }
-    public set AmendmentRequestNumber(newValue: string) { this.EntityPM.AmendmentRequestNumber = newValue; }
+    public get ExportCloseAmendRequestNumber() { return this.EntityPM ? this.EntityPM.ExportCloseAmendRequestNumber : null; }
+    public set ExportCloseAmendRequestNumber(newValue: string) { this.EntityPM.ExportCloseAmendRequestNumber = newValue; }
 
     public get AmendmentDeficitInitiated() { return this.EntityPM ? this.EntityPM.AmendmentDeficitInitiated : null; }
     public set AmendmentDeficitInitiated(newValue: boolean) { this.EntityPM.AmendmentDeficitInitiated = newValue; }
@@ -123,7 +123,7 @@ export class ExportDeclarationClosureComponent extends BaseComponent {
                         this.ReloadDeclarationCorrection();
 
                         this.UIProperties.SetEnabled("AmendmentRemarks", this.ObjectTableName, false);
-                        this.UIProperties.SetEnabled("AmendmentRequestNumber", this.ObjectTableName, false);
+                        this.UIProperties.SetEnabled("ExportCloseAmendRequestNumber", this.ObjectTableName, false);
                         this.UIProperties.SetEnabled("AmendmentissueDate", this.ObjectTableName, false);
                         this.UIProperties.SetEnabled("VersionId", this.ObjectTableName, false);
                         this.UIProperties.SetEnabled("AmendmentRejectionReasonName", this.ObjectTableName, false);
@@ -237,8 +237,8 @@ export class ExportDeclarationClosureComponent extends BaseComponent {
                 // select amendment for the first version
                 var general = this.GeneralData[0];
                 this.AmendmentViewsList = new ObservableCollection([]);
-                this.AdditionalInformationlist.InsertCollection(general.AdditionalInformation);
-                general.AmendmentViews.forEach(el => {
+                //this.AdditionalInformationlist.InsertCollection(general.AdditionalInformation);
+                  general.AmendmentViews.forEach(el => {
                     amendmentViewsList.push(el);
                 });
 
@@ -297,7 +297,7 @@ export class ExportDeclarationClosureComponent extends BaseComponent {
         var selectedGeneral = this.GeneralData[selectedIndex]; // new selected version
 
         this.AmendmentViewsList = new ObservableCollection([]);
-        this.AdditionalInformationlist.InsertCollection(selectedGeneral.AdditionalInformation);
+        //this.AdditionalInformationlist.InsertCollection(selectedGeneral.AdditionalInformation);
         selectedGeneral.AmendmentViews.forEach(el => {
             this.AmendmentViewsList.Insert(el);
         });

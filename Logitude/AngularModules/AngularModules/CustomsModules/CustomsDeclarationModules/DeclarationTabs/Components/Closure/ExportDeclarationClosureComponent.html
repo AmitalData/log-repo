@@ -343,22 +343,14 @@
                                                 | TextCodeTranslationPipe}}</td>
                                         </tr>
 
-                                        <!-- Version DDL -->
-                                        <tr style="height: 40px;" *ngIf="!EntityPM.IsAmendment">
-                                            <td style="width: 250px;">
-                                                <ComboBox [ItemsSource]="VersionsList" [SelectedItem]="SelectedVersion"
-                                                    (SelectedItemChanged)="FilterItemClicked($event)"></ComboBox>
-                                            </td>
-                                            <td colspan="2"></td>
-                                        </tr>
-                                        <!--{{'Customs.Declaration.F.AmendmentRequestNumber' | TextCodeTranslationPipe}} :-->
+                                        
 
 
 
                                         <tr style="height: 28px;">
 
                                             <td colspan="1">
-                                                <table style="width:950px;height: 35px;" *ngIf="EntityPM.IsAmendment">
+                                                <table style="width:950px;height: 35px;">
                                                     <tr *ngIf="EntityPM.Direction != 'E'" style="height: 25px;">
 
                                                         <td style="width:83px">
@@ -448,12 +440,11 @@
                                                 </table>
                                                 <div style="height: 20px;"></div>
                                                 <div style="border: 1px solid #3BB3E2;padding: 1rem;">
-                                                    <table style="width:800px;height: 25px;"
-                                                        *ngIf="EntityPM.IsAmendment">
+                                                    <table style="width:800px;height: 25px;">
 
                                                         <tr style="height: 25px;">
                                                             <td style="width:40px">
-                                                                <LogLabel [ObjectFieldName]="'AmendmentRequestNumber'"
+                                                                <LogLabel [ObjectFieldName]="'ExportCloseAmendRequestNumber'"
                                                                     [ObjectTableName]="ObjectTableName"
                                                                     [DataContext]="DataContext"></LogLabel>
 
@@ -461,9 +452,9 @@
 
 
                                                             <td style="width:60px">
-                                                                <LogTextBox [ObjectFieldName]="'AmendmentRequestNumber'"
+                                                                <LogTextBox [ObjectFieldName]="'ExportCloseAmendRequestNumber'"
                                                                     [ObjectTableName]="ObjectTableName"
-                                                                    [Text]="AmendmentRequestNumber" [HideColumns]="true"
+                                                                    [Text]="ExportCloseAmendRequestNumber" [HideColumns]="true"
                                                                     [DataContext]="DataContext" [InputType]="'ntext'">
                                                                 </LogTextBox>
 
@@ -507,8 +498,7 @@
                                                         <tr style="height: 10px;"></tr>
 
                                                     </table>
-                                                    <table style="width:950px;height: 40px;"
-                                                        *ngIf="EntityPM.IsAmendment">
+                                                    <table style="width:950px;height: 40px;">
 
                                                         <tr style="height: 25px;">
 

@@ -2233,7 +2233,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                     AmendmentOriginalDeclartation = item.AmendmentOriginalDeclartation,
                     AmendmentissueDate = item.AmendmentissueDate,
                     IsAmendment=item.IsAmendment,
-                    AmedmentType = item.AmedmentType
+                    AmedmentType = item.AmedmentType,
+                    ExportCloseAmendRequestNumber = item.ExportCloseAmendRequestNumber,
                 };
                 if (item.AmendmentCorrectedByUserId != null) declarationList.AmendmentCorrectedByUserName = users.FirstOrDefault(x => x.Id == item.AmendmentCorrectedByUserId).Code;
                 if (item.Direction == "E")
