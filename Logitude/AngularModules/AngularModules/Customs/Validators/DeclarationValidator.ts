@@ -532,8 +532,14 @@ export class DeclarationValidator {
         var errorMessage: string = "";
 
         if (this._DeclarationPM != null) {
-            if (this._DeclarationPM.IsClose) {
+            if (this._DeclarationPM.IsClose && this._DeclarationPM.Direction!="E") {
                 errorMessage = "Customs.Declaration.O.Closed";
+                if (!AppTool.IsNullOrEmpty(errorMessage)) {
+                    this.ValidationErrorMessageCodes.push(errorMessage);
+                }
+            }
+            if (this._DeclarationPM.IsClose && this._DeclarationPM.Direction=="E") {
+                errorMessage = "Customs.Declaration.O.OperationallyClosed";
                 if (!AppTool.IsNullOrEmpty(errorMessage)) {
                     this.ValidationErrorMessageCodes.push(errorMessage);
                 }
