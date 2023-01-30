@@ -51,18 +51,16 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                                         && d.EstimatedPOLVesselDeparture != null
                                         && (d.EstimatedPOLVesselDeparture <= twoDaysAgoDate)
                                         select d;
-                       // queryableData = queryableData.Where(d => d.ActualPODDeparture == null && d.EstimatedPOLVesselDeparture != null && d.ActualPODVesselArrival == null);
                     }
                     if (item.FieldName == "InTransitFilter")
                     {
                         DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(Tenant).Date;
-                        queryableData = queryableData.Where(d => d.ActualPOLVesselDeparture != null && d.TransshipmentCount == 0 && d.ActualPODVesselArrival == null && d.EstimatedPODVesselArrival != todayDate);
-                        //queryableData = queryableData.Where(d => d.ActualPOLVesselDeparture != null && (d.TransshipmentCount == 0 || d.TransshipmentCount == null) && d.ActualPODVesselArrival == null);
+                        queryableData = queryableData.Where(d => d.ActualPOLVesselDeparture != null && (d.TransshipmentCount == 0 || d.TransshipmentCount == null)&& d.ActualPODVesselArrival == null && d.EstimatedPODVesselArrival != todayDate);
                     }
                     if (item.FieldName == "InTransitwithTransshipmentsFilter")
                     {
                         DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(Tenant).Date;
-                        queryableData = queryableData.Where(d => d.ActualPOLVesselDeparture != null && (d.TransshipmentCount > 0 ) && d.ActualPODVesselArrival == null && d.EstimatedPODVesselArrival == todayDate);
+                        queryableData = queryableData.Where(d => d.ActualPOLVesselDeparture != null && (d.TransshipmentCount != null && d.TransshipmentCount > 0 ) && d.ActualPODVesselArrival == null && d.EstimatedPODVesselArrival != todayDate);
                     }
                     if (item.FieldName == "PendingGateOutFilter")
                     {
