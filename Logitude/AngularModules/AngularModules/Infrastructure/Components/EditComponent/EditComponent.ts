@@ -1137,13 +1137,20 @@ export class EditComponent implements OnDestroy {
             if (this.TabsItemsSource != null) {
                 var selected: any = null;
 
-                if (this.PreSelectedTabCode != null) {
-                    selected = this.TabsItemsSource.filter(d => d.Code == this.PreSelectedTabCode)[0];
+                if (this.ObjectTableName == "Container" && FeatureLocator.IsFeatureGrantedByUniqeCode("Container.Container.Tab.Routings")) {
+                    selected = this.TabsItemsSource.filter(d => d.Code == "CORO")[0];
+                }
+
+                else {
+                    if (this.PreSelectedTabCode != null) {
+                        selected = this.TabsItemsSource.filter(d => d.Code == this.PreSelectedTabCode)[0];
+                    }
                 }
 
                 if (selected == null) {
                     selected = this.TabsItemsSource[0];
                 }
+
                 this.SelectionChanged(selected);
             }
         }
