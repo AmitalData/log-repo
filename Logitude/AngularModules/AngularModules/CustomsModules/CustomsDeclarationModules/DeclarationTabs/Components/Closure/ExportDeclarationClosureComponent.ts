@@ -67,27 +67,42 @@ export class ExportDeclarationClosureComponent extends BaseComponent {
     TabsSource: any[] = [];
     SelectedTab: string = "";
 
-    public get AmendmentRequestNumber() { return this.EntityPM ? this.EntityPM.AmendmentRequestNumber : null; }
-    public set AmendmentRequestNumber(newValue: string) { this.EntityPM.AmendmentRequestNumber = newValue; }
+    
 
     public get AmendmentissueDate() {
 
-        if (this.EntityPM != null) {
+        /*if (this.EntityPM != null) {
             if (this.EntityPM.AmendmentissueDate != null) {
                 var myFormats = DateTool.GetDateFormats(this.EntityPM.AmendmentissueDate);
                 return myFormats.DateString + " " + myFormats.ShortTimeString;
             }
-        }
+        }*/
         return null;
 
 
     }
 
+    public get AmendmentRequestNumber() { return this.EntityPM ? this.EntityPM.AmendmentRequestNumber : null; }
+    public set AmendmentRequestNumber(newValue: string) { this.EntityPM.AmendmentRequestNumber = newValue; }
+
+    public get AmendmentDeficitInitiated() { return this.EntityPM ? this.EntityPM.AmendmentDeficitInitiated : null; }
+    public set AmendmentDeficitInitiated(newValue: boolean) { this.EntityPM.AmendmentDeficitInitiated = newValue; }
+
+
+    public get AmendmentRejectionReasonName() { return this.EntityPM ? this.EntityPM.AmendmentRejectionReasonName : null; }
+    public set AmendmentRejectionReasonName(newValue: string) { this.EntityPM.AmendmentRejectionReasonName = newValue; }
+
+
     public get VersionId() { return this.EntityPM ? this.EntityPM.VersionId : null; }
     public set VersionId(newValue: string) { this.EntityPM.VersionId = newValue; }
 
 
-   
+    public get AmendDeficitInitiatedReasTo() { return this.EntityPM ? this.EntityPM.AmendDeficitInitiatedReasTo : null; }
+    public set AmendDeficitInitiatedReasTo(newValue: string) { this.EntityPM.AmendDeficitInitiatedReasTo = newValue; }
+
+    public get AmendmentRemarks() { return this.EntityPM ? this.EntityPM.AmendmentRemarks : null; }
+    public set AmendmentRemarks(newValue: string) { this.EntityPM.AmendmentRemarks = newValue; }
+
 
     LayoutDirection: string = 'ltr';
 
@@ -107,7 +122,7 @@ export class ExportDeclarationClosureComponent extends BaseComponent {
 
                         this.ReloadDeclarationCorrection();
 
-
+                        this.UIProperties.SetEnabled("AmendmentRemarks", this.ObjectTableName, false);
                         this.UIProperties.SetEnabled("AmendmentRequestNumber", this.ObjectTableName, false);
                         this.UIProperties.SetEnabled("AmendmentissueDate", this.ObjectTableName, false);
                         this.UIProperties.SetEnabled("VersionId", this.ObjectTableName, false);
