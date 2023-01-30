@@ -21,8 +21,14 @@ namespace Logitude.Customs.Data.Repsitories
             
 			throw new NotImplementedException();
         }
-
-   }
+        public LogisticPermit GetSingleByIdentifierKeys(int CargoIdentifierType, string CargoIdentifierKey1, string CargoIdentifierKey2, string CargoIdentifierKey3, int tenant)
+        {
+            return (from a in context.LogisticPermits
+             where a.CargoIdentifierType == CargoIdentifierType.ToString() && a.CargoIdentifierKey1 == CargoIdentifierKey1 && a.CargoIdentifierKey2 == CargoIdentifierKey2 && a.CargoIdentifierKey3 == CargoIdentifierKey3 && a.Tenant == tenant
+             select a).FirstOrDefault();
+        }
+        
+    }
 
 }
    
