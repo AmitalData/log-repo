@@ -53,13 +53,31 @@ namespace Logitude.BL.Helpers
                 }
                 else
                 {
+                    if (!singleApi)
+                    {
+                        DiscardUnfoundFeildsFromList(defaultDigitalFieldSecurity);
+                    }
+
                     return defaultDigitalFieldSecurity;
                 }
             }
 
             if (!singleApi && objectTableName.Equals("Shipment", StringComparison.InvariantCultureIgnoreCase))
             {
-                var unfoundFeilds = new List<string>
+                DiscardUnfoundFeildsFromList(defaultDigitalFieldSecurity);
+            }
+
+            if (!customDigitalFeildSecurityObject.Any())
+            {
+                return defaultDigitalFieldSecurity;
+            }
+
+            return defaultDigitalFieldSecurity;
+        }
+
+        private void DiscardUnfoundFeildsFromList(List<DigitalFeildSecurityObject> defaultDigitalFieldSecurity)
+        {
+            var unfoundFeilds = new List<string>
                 {
                     "Shipment.IsFullInvoiced",
                     "Shipment.ContainerNumber",
@@ -138,15 +156,7 @@ namespace Logitude.BL.Helpers
                     "Shipment.OnCarriageVesselName",
                 };
 
-                defaultDigitalFieldSecurity = defaultDigitalFieldSecurity.Where(a => !unfoundFeilds.Contains(a.FieldCode)).ToList();
-            }
-
-            if (!customDigitalFeildSecurityObject.Any())
-            {
-                return defaultDigitalFieldSecurity;
-            }
-
-            return defaultDigitalFieldSecurity;
+            defaultDigitalFieldSecurity = defaultDigitalFieldSecurity.Where(a => !unfoundFeilds.Contains(a.FieldCode)).ToList();
         }
 
         public DigitalFieldSecurityList GetDigitalFieldSecurityQuery(int tenant, string objectTableId, string profileCode)
