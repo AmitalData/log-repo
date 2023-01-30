@@ -226,6 +226,7 @@ export class DeclarationList {
 	ExportCloseAmendRequestNumber: string;
 	ExportCloseAmendmentStatus: string;
 	IntegratorName: string;
+	ExportCloseAmendStatusName: string;
 	
 }
  

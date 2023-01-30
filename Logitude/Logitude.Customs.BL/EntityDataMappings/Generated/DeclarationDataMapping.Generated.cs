@@ -425,6 +425,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ExportCloseAmendRequestNumber, 
 	         ExportCloseAmendmentStatus, 
 	         ExportDecWithoutRelease,
+	         ExportCloseAmendStatusName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

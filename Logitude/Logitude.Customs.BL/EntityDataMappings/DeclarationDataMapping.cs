@@ -107,6 +107,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 {
                     entityPM.AmendmentStatusName = amendmentStatus.LocalName;
                 }
+                var exportCloseAmendmentStatus = amendmentStatusRepository.GetSingle(entityPOCO.ExportCloseAmendmentStatus, false, true);
+                if (exportCloseAmendmentStatus != null)
+                {
+                    entityPM.ExportCloseAmendStatusName = exportCloseAmendmentStatus.LocalName;
+                }
             }
             else
             {
@@ -185,7 +190,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 if (new string[] { "6", "7", "8", "10", "11" }.Contains(entityPOCO.ExportCloseAmendmentStatus))
                 {
-                    entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.General.O.ClosingProcessStatus", entityPOCO.Tenant, true) + ' ' + entityPM.AmendmentStatusName;
+                    entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.General.O.ClosingProcessStatus", entityPOCO.Tenant, true) + ' ' + entityPM.ExportCloseAmendStatusName;
                     entityPM.IsAmendmentDisplayOnly = true;
                 }
                 else
