@@ -28,6 +28,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             myMsg.CIDetailsHeaderIn.classification = requestParams.Classification;
             myMsg.CIDetailsHeaderIn.customsBookType = requestParams.CustomsBookType;
             myMsg.CIDetailsHeaderIn.validToDate = requestParams.ValidToDate;
+            myMsg.CIDetailsHeaderIn.customsBookTypeSpecified = true;
             this.MyRequestSheetParam = new RequestSheetParam();
             this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.CustomsItem");
             this.MyRequestSheetParam.EntityId1 = requestParams.LoggingEntityId2;
