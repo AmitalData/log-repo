@@ -129,6 +129,7 @@ export class InterestReportLineByDateDetailsComponent {
         logWindow.WindowClosed.subscribe(($event: any) => {
         });
 
+        
     }
 }
 

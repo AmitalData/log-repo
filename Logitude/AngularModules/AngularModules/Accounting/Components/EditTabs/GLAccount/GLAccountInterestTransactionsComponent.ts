@@ -327,6 +327,7 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
         });
         this.QueryColumns.push(this.excelService.GetQueryColumn("Notes", 'string', TextCodeTranslator.Translate("InterestTransaction.F.Notes")));
 
+        
 
 
     }
