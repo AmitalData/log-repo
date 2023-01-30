@@ -620,8 +620,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                     loggeduser = query.GetSingleUserPMByEmail(useremail, tenant, false);
                 }
             }
-
-            loggeduser.DisableCachedData = FeatureToggleHelper.HasFeatureToggle("DCS", tenant);
+            if (loggeduser != null)
+            {
+                loggeduser.DisableCachedData = FeatureToggleHelper.HasFeatureToggle("DCS", tenant);
+            }
             return loggeduser;
         }
 
