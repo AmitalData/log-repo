@@ -37,6 +37,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 var shipment = repository.context
                                          .Shipments
+                                         .Include("EntityStatus")
+                                         .Include("ShipmentLevel")
                                          .FirstOrDefault(a => a.Id == id
                                                               && a.Tenant == tenant);
                 if (shipment != null)
