@@ -42,6 +42,8 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
     @Input() CurrentNodeId: string;
     @Input() EnableAdd: boolean = true;
     @Input() IsOneLevelConditions: boolean = false;
+    @Input() IsDummyField: boolean = false;
+    @Input() GetFieldFromFirstCondition: boolean = false;
 
     @Output() ConditionsChangedEvent = new EventEmitter();
 
@@ -233,6 +235,17 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
 
         if (this.IsValidConditions && this.EnableAdd) {
             let condition = new Condition(isGroup);
+
+            if (this.GetFieldFromFirstCondition && this.Conditions && this.Conditions.length > 0) {
+                let firstCondition = this.Conditions[0];
+                condition.field = firstCondition.field;
+                condition.fieldCode = firstCondition.fieldCode;
+                condition.type = firstCondition.type;
+                condition.lookupType = firstCondition.lookupType;
+                condition.picklistType = firstCondition.picklistType;
+                condition.valueExpression = new IsDateTimeTypePipe().transform(firstCondition.type) ? DateTimeValueExpressions.Date : null;
+            }
+
             condition.id = this.ConditionsCounter;
             if (conditionIndex === null) {
                 this.Conditions.push(condition);

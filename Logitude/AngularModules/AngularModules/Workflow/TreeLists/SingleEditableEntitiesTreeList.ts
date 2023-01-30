@@ -8,7 +8,6 @@ import { TreeSelectItem } from "Workflow/Models/TreeSelectItem";
 export class SingleEditableEntitiesTreeList {
     private FlowObject: any;
     private CurrentNodeId: string;
-    private OnlyTriggeringRecord: boolean;
     private ItemKeySplitter: string = "_";
 
     public Items: TreeSelectItem[] = [];

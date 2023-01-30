@@ -130,8 +130,8 @@ export class FlowVariablesTreeList {
 
     private compareItemDefaultType(item: TreeSelectItem, compareWithType: string) {
         let fieldItemType = item.data["type"];
-        let fieldItemTypeToCompare = fieldItemType;//Formatter.getEntity(fieldItemType);
-        let compareWithTypeToCompare = compareWithType;//Formatter.getEntity(compareWithType);
+        let fieldItemTypeToCompare = fieldItemType;
+        let compareWithTypeToCompare = compareWithType;
         if (fieldItemType !== undefined && (fieldItemType === null || fieldItemTypeToCompare !== compareWithTypeToCompare)) {
             return false;
         }
@@ -255,32 +255,36 @@ export class FlowVariablesTreeList {
             }
 
             if (collectionNode && !this.FlowVariablesTreeListProperties.OnlyCurrentLoopItemVariables) {
-                let entity = collectionNode.data["entity"];
+                let isPrimitiveType = collectionNode.data["isPrimitiveType"] || false;
+                let entity = collectionNode.data["entity"] || null;
+                let type = collectionNode.data["type"] || null;
                 let returnedFields = collectionNode.data["returnedFields"];
                 let returnedFieldsCodes = returnedFields ? returnedFields.map((returnedField: ReturnedField) => { return returnedField.fieldCode }) : null;
                 let treeSelectItemName = loopNode.data["name"];
                 let isReadOnly = isCollectionFilterVariable ? false : (collectionNode.data["recordsType"] === GetRecordTypes.ReadOnly);
                 let treeSelectItemKey = Formatter.getCodeFromName(treeSelectItemName);
-                let treeSelectItemChildren = this.getObjectFieldsItems(treeSelectItemKey, entity, returnedFieldsCodes, loopNode.id, isReadOnly);
+                let treeSelectItemChildren = isPrimitiveType ? [] : this.getObjectFieldsItems(treeSelectItemKey, entity, returnedFieldsCodes, loopNode.id, isReadOnly);
                 let loopNodeLabel = loopNode.data["label"] || null;
                 let treeSelectItemTitle = loopNodeLabel ? (this.LoopCurrentItemPrefix + loopNodeLabel) : null;
                 let treeSelectItemLoopName = this.LoopCurrentItemPrefix + treeSelectItemName;
-                let treeSelectItemSelectable = this.FlowVariablesTreeListProperties.IsObjectVariableSelectable;
-                let treeSelectItemData = { isReadOnlyVariable: isReadOnly, type: (entity || null), nodeId: loopNode.id };
-                let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemTitle || treeSelectItemLoopName, false, treeSelectItemSelectable, false, false, treeSelectItemChildren, treeSelectItemData);
+                let treeSelectItemSelectable = isPrimitiveType || this.FlowVariablesTreeListProperties.IsObjectVariableSelectable;
+                let treeSelectItemData = { isReadOnlyVariable: isReadOnly, type: (isPrimitiveType ? type : entity), nodeId: loopNode.id };
+                let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemTitle || treeSelectItemLoopName, isPrimitiveType, treeSelectItemSelectable, false, false, treeSelectItemChildren, treeSelectItemData);
                 recordsVariablesItemChildren.push(treeSelectItem);
                 this.ItemsList.push(treeSelectItem);
             }
 
             if (collectionNode && this.FlowVariablesTreeListProperties.OnlyCurrentLoopItemVariables) {
-                let entity = collectionNode.data["entity"];
+                let isPrimitiveType = collectionNode.data["isPrimitiveType"] || false;
+                let entity = collectionNode.data["entity"] || null;
+                let type = collectionNode.data["type"] || null;
                 let treeSelectItemName = loopNode.data["name"];
                 let isReadOnly = isCollectionFilterVariable ? false : (collectionNode.data["recordsType"] === GetRecordTypes.ReadOnly);
                 let treeSelectItemKey = Formatter.getCodeFromName(treeSelectItemName);
                 let loopNodeLabel = loopNode.data["label"] || null;
                 let treeSelectItemTitle = loopNodeLabel ? (this.LoopCurrentItemPrefix + loopNodeLabel) : null;
                 let treeSelectItemLoopName = this.LoopCurrentItemPrefix + treeSelectItemName;
-                let treeSelectItemData = { isReadOnlyVariable: isReadOnly, type: (entity || null), nodeId: loopNode.id };
+                let treeSelectItemData = { isReadOnlyVariable: isReadOnly, type: (isPrimitiveType ? type : entity), nodeId: loopNode.id };
                 let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemTitle || treeSelectItemLoopName, true, true, false, false, [], treeSelectItemData);
                 recordsVariablesItemChildren.push(treeSelectItem);
                 this.ItemsList.push(treeSelectItem);
