@@ -151,8 +151,7 @@ export class FlowVariablesTreeList {
             ShowRecordsCollectionVariables: false,
             ShowDeclaredCollectionVariables: false,
             OnlyCurrentLoopItemVariables: false,
-            IsObjectVariableSelectable: false,
-            HideCurrentLoopItemChildren:false
+            IsObjectVariableSelectable: false
         };
     }
 
@@ -361,7 +360,6 @@ export class FlowVariablesTreeList {
                 let treeSelectItemKey = Formatter.getCodeFromName(loopName);
                 let declaredVariableType = this.formatDeclaredVariableType(variableType, recordType);
                 let treeSelectItemChildren = isRecordVariableType ? this.getObjectFieldsItems(treeSelectItemKey, recordType, null, loopNode.id) : [];
-                treeSelectItemChildren = this.FlowVariablesTreeListProperties.HideCurrentLoopItemChildren ? [] : treeSelectItemChildren
                 let treeSelectItemData = { type: (declaredVariableType ? declaredVariableType.replace("[]", "") : null), nodeId: loopNode.id };
                 let treeSelectItemSelectable = !isRecordVariableType || this.FlowVariablesTreeListProperties.IsObjectVariableSelectable;
                 let treeSelectItem = new TreeSelectItem(treeSelectItemKey, treeSelectItemTitle || treeSelectItemName, !isRecordVariableType, treeSelectItemSelectable, false, false, treeSelectItemChildren, treeSelectItemData);

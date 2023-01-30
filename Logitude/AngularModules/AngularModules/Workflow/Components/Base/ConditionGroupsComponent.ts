@@ -76,8 +76,7 @@ export class ConditionGroupsComponent extends BaseComponent implements OnInit, O
                 ShowRecordsCollectionVariables: false,
                 ShowDeclaredCollectionVariables: false,
                 OnlyCurrentLoopItemVariables: false,
-                IsObjectVariableSelectable: false,
-                HideCurrentLoopItemChildren:false
+                IsObjectVariableSelectable: false
             };
             this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props);
             this.FlowVariablesTreeItems = this.FlowVariablesTreeList.Items;

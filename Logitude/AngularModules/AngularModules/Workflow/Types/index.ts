@@ -25,7 +25,6 @@ export type FlowVariablesTreeListProperties = {
     ShowDeclaredCollectionVariables: boolean,
     OnlyCurrentLoopItemVariables: boolean,
     IsObjectVariableSelectable: boolean
-    HideCurrentLoopItemChildren: boolean
 };
 
 export type ExpressionVariable = {

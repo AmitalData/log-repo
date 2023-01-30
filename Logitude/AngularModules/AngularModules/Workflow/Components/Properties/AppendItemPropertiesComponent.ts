@@ -120,8 +120,7 @@ export class AppendItemPropertiesComponent extends BaseComponent {
             ShowRecordsCollectionVariables: false,
             ShowDeclaredCollectionVariables: false,
             OnlyCurrentLoopItemVariables: true,
-            IsObjectVariableSelectable: true,
-            HideCurrentLoopItemChildren:true
+            IsObjectVariableSelectable: true
         };
         this.VariablesToAppeandTreeList = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props);
         this.DeclaredRecordsTreeItems = this.VariablesToAppeandTreeList.Items;
@@ -136,8 +135,7 @@ export class AppendItemPropertiesComponent extends BaseComponent {
             ShowRecordsCollectionVariables: false,
             ShowDeclaredCollectionVariables: true,
             OnlyCurrentLoopItemVariables: false,
-            IsObjectVariableSelectable: false,
-            HideCurrentLoopItemChildren:false
+            IsObjectVariableSelectable: false
         };
         this.DeclaredCollectionVariablesTreeList = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props);
         var DeclaredCollectionVariablesItems = this.DeclaredCollectionVariablesTreeList.Items;
@@ -151,8 +149,7 @@ export class AppendItemPropertiesComponent extends BaseComponent {
             ShowRecordsCollectionVariables: false,
             ShowDeclaredCollectionVariables: true,
             OnlyCurrentLoopItemVariables: false,
-            IsObjectVariableSelectable: true,
-            HideCurrentLoopItemChildren:false
+            IsObjectVariableSelectable: true
         };
         this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props);
         this.FlowVariablesTreeItems = this.FlowVariablesTreeList.Items;
