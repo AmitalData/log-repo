@@ -24516,7 +24516,7 @@
     IsReadOnly="true"
     IsHeaderScreen="true"
     NumberOfColumns="4"
-    NumberOfRows="2">
+    NumberOfRows="3">
     <ScreenFields>
       <ScreenField
         Column="0"
@@ -24526,27 +24526,57 @@
       <ScreenField
         Column="0"
         Row="1"
-        ObjectFieldName="&quot;Master&quot;"
+        ObjectFieldName="&quot;CarrierName&quot;"
+        ScreenName="ContainerHeaderScreen" />
+      <ScreenField
+        Column="0"
+        Row="2"
+        ObjectFieldName="&quot;CreateDate&quot;"
         ScreenName="ContainerHeaderScreen" />
       <ScreenField
         Column="1"
         Row="0"
-        ObjectFieldName="&quot;CarrierName&quot;"
+        ObjectFieldName="&quot;ShipmentId&quot;"
         ScreenName="ContainerHeaderScreen" />
       <ScreenField
         Column="1"
         Row="1"
-        ObjectFieldName="&quot;ShipmentId&quot;"
+        ObjectFieldName="&quot;ShipmentStatusId&quot;"
+        ScreenName="ContainerHeaderScreen" />
+      <ScreenField
+        Column="1"
+        Row="2"
+        ObjectFieldName="&quot;StatusName&quot;"
         ScreenName="ContainerHeaderScreen" />
       <ScreenField
         Column="2"
         Row="0"
+        ObjectFieldName="&quot;Master&quot;"
+        ScreenName="ContainerHeaderScreen" />
+      <ScreenField
+        Column="2"
+        Row="1"
         ObjectFieldName="&quot;MainCarriageCarrierNumber&quot;"
+        ScreenName="ContainerHeaderScreen" />
+      <ScreenField
+        Column="2"
+        Row="2"
+        ObjectFieldName="&quot;VesselName&quot;"
         ScreenName="ContainerHeaderScreen" />
       <ScreenField
         Column="3"
         Row="0"
-        ObjectFieldName="&quot;VesselName&quot;"
+        ObjectFieldName="&quot;ShipmentMainCarriageFrom&quot;"
+        ScreenName="ContainerHeaderScreen" />
+      <ScreenField
+        Column="3"
+        Row="1"
+        ObjectFieldName="&quot;ShipmentMainCarriageTo&quot;"
+        ScreenName="ContainerHeaderScreen" />
+      <ScreenField
+        Column="3"
+        Row="2"
+        ObjectFieldName="&quot;IsClosed&quot;"
         ScreenName="ContainerHeaderScreen" />
     </ScreenFields>
   </Screen>
