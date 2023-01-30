@@ -25,6 +25,7 @@ using Newtonsoft.Json.Linq;
 using System.Linq.Dynamic.Core;
 using Logitude.BL.Helpers;
 using Logitude.Infrastructure.BL.EntityQueryServices;
+using Simplog.Data.Helpers;
 
 namespace WebFreight.Web.Controllers.DigitalPortal
 {
@@ -156,7 +157,13 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 var isAllShipmentsQuery = newFilters.AdditionalFilters.Where(a => a.FieldName == "AllShipments").Any();
                 if (isAllShipmentsQuery)
                 {
-                    shipments.ForEach(i => i.IsCustomerArchived = true);
+                    DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+                    var afterOneYearDate = currentDateTime.AddDays(-365);
+                    var afterNinetyDaysDate = currentDateTime.AddDays(90);
+                    shipments.Where(a => (a.MainCarriageFinalDestinationATA > afterNinetyDaysDate)
+                                       || a.CreateDateTime > afterOneYearDate)
+                            .ToList()
+                            .ForEach(i => i.IsCustomerArchived = true);
                 }
 
                 CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
