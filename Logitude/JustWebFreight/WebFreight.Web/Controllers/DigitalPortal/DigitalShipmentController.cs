@@ -153,6 +153,12 @@ namespace WebFreight.Web.Controllers.DigitalPortal
 
                 var shipments = entityLists.Select("new { " + fields + " }").ToDynamicList();
 
+                var isAllShipmentsQuery = newFilters.AdditionalFilters.Where(a => a.FieldName == "AllShipments").Any();
+                if (isAllShipmentsQuery)
+                {
+                    shipments.ForEach(i => i.IsCustomerArchived = true);
+                }
+
                 CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
                 customFieldResolver.SetCustomFieldsValues("Shipment", tenant, shipments.Cast<object>().ToList());
 
