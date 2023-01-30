@@ -515,7 +515,10 @@
                                               [QueryFilterItems]="item.CreditAccountFilterItems"
                                               [HideColumns]="true"
                                               [RunToggleMode]="true"
-                                              [FocusOnMe]="true">
+                                              [FocusOnMe]="'true'"
+                                              [DefaultPageSize]="100"
+                                              [LocalFilterFields]="['LocalName', 'DisplayNumber']"
+                                              >
                                       </LogLov>
 
                                   </div>
@@ -546,7 +549,10 @@
                                               [QueryFilterItems]="item.DebitAccountFilterItems"
                                               [RunToggleMode]="true"
                                               [HideColumns]="true"
-                                              [FocusOnMe]="true">
+                                              [FocusOnMe]="'true'"
+                                              [DefaultPageSize]="100"
+                                              [LocalFilterFields]="['LocalName', 'DisplayNumber']"
+                                              >
                                       </LogLov>
 
                                   </div>

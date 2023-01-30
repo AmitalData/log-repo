@@ -62,7 +62,7 @@ export class GlAccountInterestTransactionsNotesTemplate {
         var logWindow = new LogitudeWindow();
         logWindow.Width = 450;
         logWindow.Height = 350;
-        logWindow.Title = TextCodeTranslator.Translate("InterestTransactionNote");
+        logWindow.Title = TextCodeTranslator.Translate("ARInvoice.F.InternalNotes");
         logWindow.WindowArgs = { interestTransaction: line };
         logWindow.Show('./Accounting/Components/Others/InterestTransactionNotesComponent');
         logWindow.WindowClosed.subscribe(($event: any) => {

@@ -61,7 +61,8 @@ export class DeleteItemPropertiesComponent extends BaseComponent {
             ShowRecordsCollectionVariables: false,
             ShowDeclaredCollectionVariables: false,
             OnlyCurrentLoopItemVariables: true,
-            IsObjectVariableSelectable: true
+            IsObjectVariableSelectable: true,
+            IsNoChildrenObjectVariables: false
         };
         this.FlowVariablesTreeItems = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props).Items;
     }
