@@ -90,8 +90,6 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                     {
                         queryableData = queryableData.Where(d => d.ShipmentDeliveryATD != null && d.ShipmentDeliveryATA == null);
                     }
-
-
                 }
 
                 if (item.FieldName == "IsCancelled")

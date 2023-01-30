@@ -24251,7 +24251,7 @@
     </QueryFilters>
   </Query>
   <Query
-    Code="&quot;Pending Arrival&quot;"
+    Code="&quot;PendingArrival&quot;"
     TextCode="&quot;Pending Arrival&quot;"
     LocalTextCode="&quot;Pending Arrival&quot;"
     QueryGroupCode="&quot;38cb&quot;"
@@ -24266,69 +24266,69 @@
     IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
-        QueryCode="&quot;Pending Arrival&quot;"
+        QueryCode="&quot;PendingArrival&quot;"
         IndexOrder="0"
         ObjectFieldName="&quot;ContainerNumber&quot;"
         ColumnWidth="109" />
       <QueryColumn
-        QueryCode="&quot;Pending Arrival&quot;"
+        QueryCode="&quot;PendingArrival&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;CreateDate&quot;"
         ColumnWidth="94" />
       <QueryColumn
-        QueryCode="&quot;Pending Arrival&quot;"
+        QueryCode="&quot;PendingArrival&quot;"
         IndexOrder="2"
         ObjectFieldName="&quot;ContainerTypeName&quot;"
         ColumnWidth="128" />
       <QueryColumn
-        QueryCode="&quot;Pending Arrival&quot;"
+        QueryCode="&quot;PendingArrival&quot;"
         IndexOrder="3"
         ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="120" />
       <QueryColumn
-        QueryCode="&quot;Pending Arrival&quot;"
+        QueryCode="&quot;PendingArrival&quot;"
         IndexOrder="4"
         ObjectFieldName="&quot;ShipmentNumber&quot;"
         ColumnWidth="120" />
       <QueryColumn
-        QueryCode="&quot;Pending Arrival&quot;"
+        QueryCode="&quot;PendingArrival&quot;"
         IndexOrder="5"
         ObjectFieldName="&quot;ShipmentStatusName&quot;"
         ColumnWidth="140" />
       <QueryColumn
-        QueryCode="&quot;Pending Arrival&quot;"
+        QueryCode="&quot;PendingArrival&quot;"
         IndexOrder="6"
         ObjectFieldName="&quot;CarrierName&quot;"
         ColumnWidth="120" />
       <QueryColumn
-        QueryCode="&quot;Pending Arrival&quot;"
+        QueryCode="&quot;PendingArrival&quot;"
         IndexOrder="7"
         ObjectFieldName="&quot;MainCarriageCarrierNumber&quot;"
         ColumnWidth="158" />
       <QueryColumn
-        QueryCode="&quot;Pending Arrival&quot;"
+        QueryCode="&quot;PendingArrival&quot;"
         IndexOrder="8"
         ObjectFieldName="&quot;Master&quot;"
         ColumnWidth="120" />
       <QueryColumn
-        QueryCode="&quot;Pending Arrival&quot;"
+        QueryCode="&quot;PendingArrival&quot;"
         IndexOrder="9"
         ObjectFieldName="&quot;VesselName&quot;"
         ColumnWidth="120" />
       <QueryColumn
-        QueryCode="&quot;Pending Arrival&quot;"
+        QueryCode="&quot;PendingArrival&quot;"
         IndexOrder="10"
         ObjectFieldName="&quot;PODLocation&quot;"
         ColumnWidth="120" />
       <QueryColumn
-        QueryCode="&quot;Pending Arrival&quot;"
+        QueryCode="&quot;PendingArrival&quot;"
         IndexOrder="11"
         ObjectFieldName="&quot;EstimatedPODVesselArrival&quot;"
         ColumnWidth="155" />
     </QueryColumns>
     <QueryFilters>
       <QueryFilter
-        QueryCode="&quot;Pending Arrival&quot;"
+        QueryCode="&quot;PendingArrival&quot;"
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;PendingArrivalFilter&quot;"
         IsPredefined="true"
@@ -24337,7 +24337,7 @@
     </QueryFilters>
   </Query>
   <Query
-    Code="&quot;Pending Discharge&quot;"
+    Code="&quot;PendingDischarge&quot;"
     TextCode="&quot;Pending Discharge&quot;"
     LocalTextCode="&quot;Pending Discharge&quot;"
     QueryGroupCode="&quot;38cb&quot;"
@@ -24352,74 +24352,74 @@
     IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
-        QueryCode="&quot;Pending Discharge&quot;"
+        QueryCode="&quot;PendingDischarge&quot;"
         IndexOrder="0"
         ObjectFieldName="&quot;ContainerNumber&quot;"
         ColumnWidth="109" />
       <QueryColumn
-        QueryCode="&quot;Pending Discharge&quot;"
+        QueryCode="&quot;PendingDischarge&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;CreateDate&quot;"
         ColumnWidth="94" />
       <QueryColumn
-        QueryCode="&quot;Pending Discharge&quot;"
+        QueryCode="&quot;PendingDischarge&quot;"
         IndexOrder="2"
         ObjectFieldName="&quot;ContainerTypeName&quot;"
         ColumnWidth="128" />
       <QueryColumn
-        QueryCode="&quot;Pending Discharge&quot;"
+        QueryCode="&quot;PendingDischarge&quot;"
         IndexOrder="3"
         ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="120" />
       <QueryColumn
-        QueryCode="&quot;Pending Discharge&quot;"
+        QueryCode="&quot;PendingDischarge&quot;"
         IndexOrder="4"
         ObjectFieldName="&quot;ShipmentNumber&quot;"
         ColumnWidth="120" />
       <QueryColumn
-        QueryCode="&quot;Pending Discharge&quot;"
+        QueryCode="&quot;PendingDischarge&quot;"
         IndexOrder="5"
         ObjectFieldName="&quot;ShipmentStatusName&quot;"
         ColumnWidth="140" />
       <QueryColumn
-        QueryCode="&quot;Pending Discharge&quot;"
+        QueryCode="&quot;PendingDischarge&quot;"
         IndexOrder="6"
         ObjectFieldName="&quot;CarrierName&quot;"
         ColumnWidth="120" />
       <QueryColumn
-        QueryCode="&quot;Pending Discharge&quot;"
+        QueryCode="&quot;PendingDischarge&quot;"
         IndexOrder="7"
         ObjectFieldName="&quot;MainCarriageCarrierNumber&quot;"
         ColumnWidth="158" />
       <QueryColumn
-        QueryCode="&quot;Pending Discharge&quot;"
+        QueryCode="&quot;PendingDischarge&quot;"
         IndexOrder="8"
         ObjectFieldName="&quot;Master&quot;"
         ColumnWidth="120" />
       <QueryColumn
-        QueryCode="&quot;Pending Discharge&quot;"
+        QueryCode="&quot;PendingDischarge&quot;"
         IndexOrder="9"
         ObjectFieldName="&quot;VesselName&quot;"
         ColumnWidth="120" />
       <QueryColumn
-        QueryCode="&quot;Pending Discharge&quot;"
+        QueryCode="&quot;PendingDischarge&quot;"
         IndexOrder="10"
         ObjectFieldName="&quot;PODLocation&quot;"
         ColumnWidth="128" />
       <QueryColumn
-        QueryCode="&quot;Pending Discharge&quot;"
+        QueryCode="&quot;PendingDischarge&quot;"
         IndexOrder="11"
         ObjectFieldName="&quot;ActualPODVesselArrival&quot;"
         ColumnWidth="154" />
       <QueryColumn
-        QueryCode="&quot;Pending Discharge&quot;"
+        QueryCode="&quot;PendingDischarge&quot;"
         IndexOrder="12"
         ObjectFieldName="&quot;EstimatedPODDischarge&quot;"
         ColumnWidth="120" />
     </QueryColumns>
     <QueryFilters>
       <QueryFilter
-        QueryCode="&quot;Pending Discharge&quot;"
+        QueryCode="&quot;PendingDischarge&quot;"
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;PendingDischargeFilter&quot;"
         IsPredefined="true"
@@ -24504,7 +24504,7 @@
     </QueryFilters>
   </Query>
   <Query
-    Code="&quot;Pending Delivery&quot;"
+    Code="&quot;PendingDelivery&quot;"
     TextCode="&quot;Pending Delivery&quot;"
     LocalTextCode="&quot;Pending Delivery&quot;"
     QueryGroupCode="&quot;38cb&quot;"
@@ -24519,79 +24519,79 @@
     IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
-        QueryCode="&quot;Pending Delivery&quot;"
+        QueryCode="&quot;PendingDelivery&quot;"
         IndexOrder="0"
         ObjectFieldName="&quot;ContainerNumber&quot;"
         ColumnWidth="109" />
       <QueryColumn
-        QueryCode="&quot;Pending Delivery&quot;"
+        QueryCode="&quot;PendingDelivery&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;CreateDate&quot;"
         ColumnWidth="94" />
       <QueryColumn
-        QueryCode="&quot;Pending Delivery&quot;"
+        QueryCode="&quot;PendingDelivery&quot;"
         IndexOrder="2"
         ObjectFieldName="&quot;ContainerTypeName&quot;"
         ColumnWidth="128" />
       <QueryColumn
-        QueryCode="&quot;Pending Delivery&quot;"
+        QueryCode="&quot;PendingDelivery&quot;"
         IndexOrder="3"
         ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="120" />
       <QueryColumn
-        QueryCode="&quot;Pending Delivery&quot;"
+        QueryCode="&quot;PendingDelivery&quot;"
         IndexOrder="4"
         ObjectFieldName="&quot;ShipmentNumber&quot;"
         ColumnWidth="120" />
       <QueryColumn
-        QueryCode="&quot;Pending Delivery&quot;"
+        QueryCode="&quot;PendingDelivery&quot;"
         IndexOrder="5"
         ObjectFieldName="&quot;ShipmentStatusName&quot;"
         ColumnWidth="140" />
       <QueryColumn
-        QueryCode="&quot;Pending Delivery&quot;"
+        QueryCode="&quot;PendingDelivery&quot;"
         IndexOrder="6"
         ObjectFieldName="&quot;CarrierName&quot;"
         ColumnWidth="120" />
       <QueryColumn
-        QueryCode="&quot;Pending Delivery&quot;"
+        QueryCode="&quot;PendingDelivery&quot;"
         IndexOrder="7"
         ObjectFieldName="&quot;MainCarriageCarrierNumber&quot;"
         ColumnWidth="158" />
       <QueryColumn
-        QueryCode="&quot;Pending Delivery&quot;"
+        QueryCode="&quot;PendingDelivery&quot;"
         IndexOrder="8"
         ObjectFieldName="&quot;Master&quot;"
         ColumnWidth="120" />
       <QueryColumn
-        QueryCode="&quot;Pending Delivery&quot;"
+        QueryCode="&quot;PendingDelivery&quot;"
         IndexOrder="9"
         ObjectFieldName="&quot;VesselName&quot;"
         ColumnWidth="120" />
       <QueryColumn
-        QueryCode="&quot;Pending Delivery&quot;"
+        QueryCode="&quot;PendingDelivery&quot;"
         IndexOrder="10"
         ObjectFieldName="&quot;PODLocation&quot;"
         ColumnWidth="128" />
       <QueryColumn
-        QueryCode="&quot;Pending Delivery&quot;"
+        QueryCode="&quot;PendingDelivery&quot;"
         IndexOrder="11"
         ObjectFieldName="&quot;ShipmentDeliveryFrom&quot;"
         ColumnWidth="120" />
       <QueryColumn
-        QueryCode="&quot;Pending Delivery&quot;"
+        QueryCode="&quot;PendingDelivery&quot;"
         IndexOrder="12"
         ObjectFieldName="&quot;ShipmentDeliveryTo&quot;"
         ColumnWidth="120" />
       <QueryColumn
-        QueryCode="&quot;Pending Delivery&quot;"
+        QueryCode="&quot;PendingDelivery&quot;"
         IndexOrder="13"
         ObjectFieldName="&quot;ShipmentDeliveryETA&quot;"
         ColumnWidth="130" />
     </QueryColumns>
     <QueryFilters>
       <QueryFilter
-        QueryCode="&quot;Pending Delivery&quot;"
+        QueryCode="&quot;PendingDelivery&quot;"
         PredefinedValue="&quot;true&quot;"
         ObjectFieldName="&quot;PendingDeliveryFilter&quot;"
         IsPredefined="true"
