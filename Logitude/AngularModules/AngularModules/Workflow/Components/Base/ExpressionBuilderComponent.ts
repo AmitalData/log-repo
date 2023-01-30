@@ -187,7 +187,8 @@ export class ExpressionBuilderComponent extends BaseComponent {
             ShowRecordsCollectionVariables: true,
             ShowDeclaredCollectionVariables: true,
             OnlyCurrentLoopItemVariables: false,
-            IsObjectVariableSelectable: true
+            IsObjectVariableSelectable: true,
+            IsNoChildrenObjectVariables: false
         };
         this.FlowVariablesTreeList = new FlowVariablesTreeList(this.FlowObject, this.CurrentNodeId, props);
         this.FlowVariablesTreeItems = this.FlowVariablesTreeList.Items;

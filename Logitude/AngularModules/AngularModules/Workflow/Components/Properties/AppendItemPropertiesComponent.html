@@ -173,12 +173,12 @@
             </div>
 
             <div class="table-row-cell-block">
-                <TreeSelect *ngIf="CollectionChanged" [Items]="DeclaredRecordsTreeItems" [Width]="'300px'"
+                <TreeSelect *ngIf="CollectionChanged" [Items]="VariablesTreeItems" [Width]="'300px'"
                     [Value]="Variable" [ShowExpand]="false" [ShowItem]="Entity | ShowTreeItemPipe : 'type'"
                     [IsReturnedTreeSelectItem]="true" (ValueChanged)="updateVariable($event)">
                 </TreeSelect>
 
-                <TreeSelect *ngIf="!CollectionChanged" [Items]="DeclaredRecordsTreeItems" [Width]="'300px'"
+                <TreeSelect *ngIf="!CollectionChanged" [Items]="VariablesTreeItems" [Width]="'300px'"
                     [Value]="Variable" [ShowExpand]="false" [ShowItem]="Entity | ShowTreeItemPipe : 'type'"
                     [IsReturnedTreeSelectItem]="true" (ValueChanged)="updateVariable($event)">
                 </TreeSelect>
