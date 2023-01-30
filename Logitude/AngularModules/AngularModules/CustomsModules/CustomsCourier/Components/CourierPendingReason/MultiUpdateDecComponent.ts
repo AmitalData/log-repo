@@ -404,6 +404,8 @@ export class MultiUpdateDecComponent extends BaseComponent {
     }
 
     async SendMultiUpdate() {
+        await this.showMassageExistDeclarationsDisplayOnly();
+        
         var currRequestParams = new SendMultiUpdateRequestParams();
         currRequestParams.LoggingEnabled = true;
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
@@ -434,7 +436,6 @@ export class MultiUpdateDecComponent extends BaseComponent {
         //        });
         //    });
 
-        await this.showMassageExistDeclarationsDisplayOnly();
 
         this.pendingWebService.PostSendMultiUpdate(currRequestParams, this.filter)
             .subscribe((res: any) => {
