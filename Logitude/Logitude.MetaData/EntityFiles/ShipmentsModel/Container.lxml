@@ -24705,17 +24705,17 @@
       <ScreenField
         Column="3"
         Row="0"
-        ObjectFieldName="&quot;IsClosed&quot;"
-        ScreenName="ContainerHeaderScreen" />
-      <ScreenField
-        Column="3"
-        Row="1"
         ObjectFieldName="&quot;ShipmentMainCarriageFrom&quot;"
         ScreenName="ContainerHeaderScreen" />
       <ScreenField
         Column="3"
-        Row="2"
+        Row="1"
         ObjectFieldName="&quot;ShipmentMainCarriageTo&quot;"
+        ScreenName="ContainerHeaderScreen" />
+      <ScreenField
+        Column="3"
+        Row="2"
+        ObjectFieldName="&quot;IsClosed&quot;"
         ScreenName="ContainerHeaderScreen" />
     </ScreenFields>
   </Screen>
