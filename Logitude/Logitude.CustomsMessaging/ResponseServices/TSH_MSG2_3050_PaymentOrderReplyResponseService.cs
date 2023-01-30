@@ -30,6 +30,8 @@ using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System.Data.Entity.Validation;
+using System.Configuration;
+using System.Globalization;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -315,6 +317,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     var myDeclarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
                     _DeclarationPM.PaymentStatusCode = _PaymentOrderPM.PaymentStatusCode;
                     _DeclarationPM.PaymentOrderNumber = _PaymentOrderPM.PaymentNumber;
+
+                    LogPayment();
+
                     _DeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                     LogMessagingUtil.Instance.AppendLine("Before DeclarationUpdateService: _DeclarationPM.PaymentStatusCode= " + _DeclarationPM.PaymentStatusCode + " _DeclarationPM.PaymentOrderNumber= " + _DeclarationPM.PaymentOrderNumber);
                     try
@@ -383,6 +388,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 this.MyRequestSheetParam.ObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                 this.MyRequestSheetParam.EntityId2 = _DeclarationPM.Id;
             }
+        }
+
+        private void LogPayment()
+        {
+            DateTime stopLogAt = DateTime.MinValue;
+            string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20230601T000000.LogUntilDateyyyyMMdd"];
+            if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+                stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None);
+
+            LogitudeSettings.HandleLogMe("TSH_MSG2_3050_PaymentOrderReplyResponseService.Update = _PaymentOrderPM.Id: " + _PaymentOrderPM.Id + ", _PaymentOrderPM.PaymentNumber: " + _PaymentOrderPM.PaymentNumber, false, "CreateUD2LTService", stopLogAt);
         }
 
         private void BuildPaymentOrderReply(int tenant, TSH_MSG2_PaymentOrderReply customResponse)

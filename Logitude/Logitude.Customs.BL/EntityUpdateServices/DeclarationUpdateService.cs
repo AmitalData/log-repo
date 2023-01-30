@@ -48,7 +48,8 @@ using System.Diagnostics;
 using Logitude.Customs.BL.CloseTables;
 using System.Text.RegularExpressions;
 using Logitude.Customs.BL.BL;
-
+using System.Configuration;
+using System.Globalization;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -289,11 +290,21 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             base.UpdateComposition(entityPM);
         }
 
+        private void LogPayment(DeclarationPM declarationPM)
+        {
+            DateTime stopLogAt = DateTime.MinValue;
+            string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20230601T000000.LogUntilDateyyyyMMdd"];
+            if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+                stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None);
+
+            LogitudeSettings.HandleLogMe("DeclarationUpdateService.OnUpdating = declarationPM.Id: " + declarationPM.Id + ", PaymentOrderPM.PaymentNumber: " + declarationPM.PaymentOrderNumber, false, "CreateUD2LTService", stopLogAt);
+        }
 
         protected override void OnUpdating(DeclarationPM entityPM)
         {
             try
             {
+                LogPayment(entityPM);
 
                 //<--- Yuval Chalup 30.12.2015 TASK-18507
                 if (HttpContextUtil.IsCustomDomainService())
