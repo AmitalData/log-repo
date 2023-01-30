@@ -43,7 +43,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 foreach (var item in customResponse.ServerSplitDocumentList)
                 {
                     mess.AppendLine($"ResolveAndReQueue "+ item);
-                    MessagingServiceFactoryHelper.ResolveAndReQueue("2715", requestParams.Tenant, item);
+                    MessagingServiceFactoryHelper.ResolveAndReQueue("2715", requestParams.Tenant, item,null, requestParams.CustomsRequestsSheetId);
                 }
             }
             else

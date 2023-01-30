@@ -717,7 +717,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         public static void ResolveAndReQueue(string mainInterfaceCode, int tenant, string correlationId,
             //CustomsCommandEnum myCustomsCommandEnum, 
-            OverrideControllerModel debugModel = null)
+            OverrideControllerModel debugModel = null,string parentId=null)
         {
             MessagingServiceFactoryHelper.InitContainer();
 
@@ -746,7 +746,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             }
 
 
-            var resDat = anaO.ReQueue(tenant, correlationId);
+            var resDat = anaO.ReQueue(tenant, correlationId,parentId);
             var responseDataBase = resDat as Logitude.CustomsMessaging.Common.ResponseData.ResponseDataBase;
             if (responseDataBase != null && responseDataBase.HasException)
             {
