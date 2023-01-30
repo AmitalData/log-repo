@@ -107,13 +107,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="StatusCode"
-    Type="varchar"
-    Size="4">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="TotalPieces"
     Type="int">
     <Constraints
@@ -385,11 +378,6 @@
     ForeignKeyColumn="WarehouseId"
     ReferencedTable="Warehouses"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="StatusCode"
-    ReferencedTable="WarehouseReleaseStatuses"
-    ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="ShipmentTypeId"

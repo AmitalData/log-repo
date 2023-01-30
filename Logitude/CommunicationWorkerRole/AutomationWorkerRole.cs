@@ -27,6 +27,9 @@ using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
 using Logitude.SystemLogs;
+using Logitude.WarehouseLib.BL.EntityPMs;
+using Logitude.WarehouseLib.BL.EntityUpdateServices;
+using Logitude.WarehouseLib.Data;
 using Microsoft.Practices.Unity;
 using Microsoft.ServiceBus.Messaging;
 using Newtonsoft.Json;
@@ -918,6 +921,11 @@ namespace CommunicationWorkerRole
             {
                 UpdateContainer(theEntity);
             }
+
+            else if (tableName == "WarehouseRelease")
+            {
+                UpdateWarehouseRelease(theEntity);
+            }
         }
 
         private static void UpdateContainer(object theEntity)
@@ -927,6 +935,14 @@ namespace CommunicationWorkerRole
             ContainerService service = new ContainerService(shipmentsContext, containerPM.Tenant);
             containerPM.IsUpdateByAutomation = true;
             service.Update(containerPM);
+        }
+        private static void UpdateWarehouseRelease(object theEntity)
+        {
+            WarehouseReleasePM warehouseReleasePM = (WarehouseReleasePM)theEntity;
+            IWarehouseContext warehouseContext = WarehouseContext.GetContext(0);
+            WarehouseReleaseUpdateService service = new WarehouseReleaseUpdateService(warehouseContext, new Dictionary<string, IContext>(), warehouseReleasePM.Tenant);
+            warehouseReleasePM.IsUpdateByAutomation = true;
+            service.Update(warehouseReleasePM, true);
         }
 
         public void SubmitChanges()

@@ -17,11 +17,11 @@ import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldCl
 import { CustomChildEntity } from '../../Infrastructure/EntityPMs/CustomChildEntity';
 
 export class WarehouseReleasePM {
-
+      
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+                    this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -100,12 +100,12 @@ export class WarehouseReleasePM {
     public get SpecialInstruction() { return this.specialInstruction; }
     public set SpecialInstruction(newValue: string) { if (this.specialInstruction != newValue) { this.specialInstruction = newValue; this.MarkAsDirty("SpecialInstruction"); } }
        
-	 
+
     private statusCode: string;
     public get StatusCode() { return this.statusCode; }
     public set StatusCode(newValue: string) { if (this.statusCode != newValue) { this.statusCode = newValue; this.MarkAsDirty("StatusCode"); } }
-       
-	 
+
+
     private totalPieces: number;
     public get TotalPieces() { return this.totalPieces; }
     public set TotalPieces(newValue: number) { if (this.totalPieces != newValue) { this.totalPieces = newValue; this.MarkAsDirty("TotalPieces"); } }
@@ -348,6 +348,11 @@ export class WarehouseReleasePM {
     private masterShipmentNumber: string;
     public get MasterShipmentNumber() { return this.masterShipmentNumber; }
     public set MasterShipmentNumber(newValue: string) { if (this.masterShipmentNumber != newValue) { this.masterShipmentNumber = newValue; this.MarkAsDirty("MasterShipmentNumber"); } }
+       
+	 
+    private isUpdateByAutomation: boolean;
+    public get IsUpdateByAutomation() { return this.isUpdateByAutomation; }
+    public set IsUpdateByAutomation(newValue: boolean) { if (this.isUpdateByAutomation != newValue) { this.isUpdateByAutomation = newValue; this.MarkAsDirty("IsUpdateByAutomation"); } }
        
 	 
     private customChildEntities: CustomChildEntity[];
