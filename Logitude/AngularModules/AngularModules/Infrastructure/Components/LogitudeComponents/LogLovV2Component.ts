@@ -49,7 +49,7 @@ import { ObjectFieldListService } from "Infrastructure/Services/StandardLists/Ob
         'PlaceHolder', 'DependencyFilter1Value', 'DependencyFilter2Value', 'DependencyFilter3Value', "HideColumns", "HideLastColumn", "DependencyFilter1IsList",
         "DependencyFilter2IsList", "DependencyFilter3IsList", "DependencyFilter1IsListExact", "DependencyFilter2IsListExact", "DependencyFilter3IsListExact",
         "AutoFocus", "IsTenantZeroSearch", "ShowInActive", "FocusOnMe", "IsFreeText", "AlwaysEnabled", "IgnoreCustomFieldCheck", "IsDecendingSort", "CustomizedWidth",
-        "ShowInActivePopUpWindow", "IgnoreFeatureCheck", "DataCy", "ForceDisabled", "ObjectFieldCode"],
+        "ShowInActivePopUpWindow", "IgnoreFeatureCheck", "DataCy", "ForceDisabled", "ObjectFieldCode", "DefaultPageSize", "LocalFilterFields"],
 })
 
 export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
@@ -71,6 +71,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     CopyValueSubs: any;
     public ForceShowValidation: boolean = false;
     public ShowHelp: boolean = false;
+    public DefaultPageSize: number = null;
+    public LocalFilterFields: string[] = null;
     public ObjectField: ObjectFieldPM;
     public ObjectFieldName: string = null;
     public ObjectFieldHelp: string = null;
@@ -1752,6 +1754,13 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             return;
         }
 
+        if (this.LocalFilterFields && this.LocalFilterFields.length > 0 && searchText && searchText.length >= 4 && this.bufferData && this.bufferData.length > 0) {
+            this.ItemsSource = this.bufferData.filter( x => this.LocalFilterFields.some(fl => x[fl].toLowerCase().startsWith(searchText.toLowerCase())));
+                
+            if(this.ItemsSource && this.ItemsSource.length > 0) {
+                return;
+            }
+        }
 
         //reset counters
         this.bufferData = [];
@@ -3246,7 +3255,11 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     CallDataFromServer(searchText: string, filters: ApiQueryFilters) {
 
         if (!this.LookUpTable.AutoCompleteSearchWindow) {
-            filters.PageSize = 50;
+            if(this.DefaultPageSize) {
+                filters.PageSize = this.DefaultPageSize;
+            } else {
+                filters.PageSize = 50;
+            }
         }
         else {
             if (!this.IsAllDataVisible) {
