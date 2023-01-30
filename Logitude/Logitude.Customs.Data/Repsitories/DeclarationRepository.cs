@@ -108,7 +108,7 @@ namespace Logitude.Customs.Data.Repsitories
                     {
                         throw new Exception($"CustomFileNo is missing (Declaration  id ={id})");
                     }
-                    var qAllCustomFileNo = context.Declarations.Where(r => r.CustomFileNo == customFileNo);
+                    var qAllCustomFileNo = context.Declarations.Where(r => r.Tenant == tenant && r.CustomFileNo == customFileNo);
                     allDecSameFile = qAllCustomFileNo.ToList();
                 }
                 else
