@@ -20,6 +20,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
         public IQueryable<Container> GetFilteredQuery(QueryOperations operations, IQueryable<Container> queryableData)
         {
             List<QueryFilterItem> queryFilters = operations.QueryFilterItems;
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(Tenant).Date;
             //bool showIsClosed = false;
             bool showIsCancelled = false;
             foreach (QueryFilterItem item in queryFilters)
@@ -43,7 +44,6 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                     if (item.FieldName == "PendingPOLDepartureFilter")
                     {
                        
-                        DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(Tenant).Date;
                         DateTime twoDaysAgoDate = todayDate.AddDays(-2);
 
                         queryableData = from d in queryableData
@@ -54,12 +54,10 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                     }
                     if (item.FieldName == "InTransitFilter")
                     {
-                        DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(Tenant).Date;
                         queryableData = queryableData.Where(d => d.ActualPOLVesselDeparture != null && (d.TransshipmentCount == 0 || d.TransshipmentCount == null)&& d.ActualPODVesselArrival == null && d.EstimatedPODVesselArrival != todayDate);
                     }
                     if (item.FieldName == "InTransitwithTransshipmentsFilter")
-                    {
-                        DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(Tenant).Date;
+                    { 
                         queryableData = queryableData.Where(d => d.ActualPOLVesselDeparture != null && (d.TransshipmentCount != null && d.TransshipmentCount > 0 ) && d.ActualPODVesselArrival == null && d.EstimatedPODVesselArrival != todayDate);
                     }
                     if (item.FieldName == "PendingGateOutFilter")
@@ -77,7 +75,6 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                     }
                     if(item.FieldName == "PendingArrivalFilter")
                     {
-                        DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(Tenant).Date;
                         queryableData = queryableData.Where(d => d.ActualPOLVesselDeparture != null && d.ActualPODVesselArrival == null && d.EstimatedPODVesselArrival == todayDate);
                     }
                     if(item.FieldName == "PendingDischargeFilter")
