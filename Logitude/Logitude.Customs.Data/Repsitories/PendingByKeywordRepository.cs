@@ -47,7 +47,7 @@ namespace Logitude.Customs.Data.Repsitories
                 {
                     if (r.SearchType == "2")
                     {
-                        if (keyWord.Contains(r.KeywordsList))
+                        if (keyWord.Contains(r.KeywordsList.ToLower()))
                         {
                             pendingByKeyword.Add(r);
                         }
