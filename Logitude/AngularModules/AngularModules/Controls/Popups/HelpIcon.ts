@@ -5,7 +5,7 @@ import { ObjectsLocator } from '../../Infrastructure/Locators/ObjectsLocator';
 @Component({
 
     selector: "HelpIcon",
-    inputs: ['Header', 'Text', 'HideHeader', 'IconSize', 'IconPath', 'V2Grid', 'Position'],
+    inputs: ['Header', 'Text', 'HideHeader', 'IconSize', 'IconPath', 'V2Grid', 'Position', 'Height'],
     templateUrl: './HelpIcon.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })

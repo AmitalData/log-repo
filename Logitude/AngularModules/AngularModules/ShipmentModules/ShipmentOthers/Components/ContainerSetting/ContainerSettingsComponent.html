@@ -25,7 +25,7 @@
                             <div class="container-setting-tab-header-container">
                                 <p style="font-size: 14px; color: #1B90CB;">{{SelectedTabCode ==
                                     'G'?'General Settings' : 'Automatic Requests'}} </p>
-                                <HelpIcon *ngIf="SelectedTabCode == 'R'" [HideHeader]="true"
+                                <HelpIcon *ngIf="SelectedTabCode == 'R'" [Header]="'Automatic Requests'" [Height]="90"
                                     [Text]="'The definitions in this section will determine which containers to automatically send requests for.'">
                                 </HelpIcon>
                             </div>
@@ -132,8 +132,9 @@
                                 </tr>
 
                             </table>
-                            <ContainerSettingsRequest style="flex: 1 1 auto;margin-bottom: 10px;" *ngIf="Loaded" [DataContext]="DataContext"
-                                [hidden]="SelectedTabCode != 'R'" [ShippingLines]="ShippingLines">
+                            <ContainerSettingsRequest style="flex: 1 1 auto;margin-bottom: 10px;" *ngIf="Loaded"
+                                [DataContext]="DataContext" [hidden]="SelectedTabCode != 'R'"
+                                [ShippingLines]="ShippingLines">
                             </ContainerSettingsRequest>
                         </div>
 
