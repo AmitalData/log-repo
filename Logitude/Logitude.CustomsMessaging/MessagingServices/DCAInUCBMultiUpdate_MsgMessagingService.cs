@@ -140,6 +140,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 ProcessTypeCode = multiUpdateRequestParams.ProcessTypeCode,
                 TaxExemptCode = multiUpdateRequestParams.TaxExemptCode,
                 ClassificationCode = multiUpdateRequestParams.ClassificationCode,
+                InvoiceAmount = multiUpdateRequestParams.InvoiceAmount,
+                InvoiceQuantity = multiUpdateRequestParams.InvoiceQuantity,
+                InvoiceCurrencyTypeCode = multiUpdateRequestParams.InvoiceCurrencyTypeCode,
+                InvoiceQuantityType = multiUpdateRequestParams.InvoiceQuantityType,
+                GrossMassMeasure = multiUpdateRequestParams.GrossMassMeasure,
                 tenant = tenant,
                 MyMoreParams = "",
                 ResponseContentHeader = new DefaultResponseContentHeader()
@@ -224,5 +229,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         public List<string> ServerSplitDeclarationsList { get; set; }
+        public decimal? InvoiceAmount { get; set; }
+        public decimal? InvoiceQuantity { get; set; }
+        public string InvoiceCurrencyTypeCode { get; set; }
+        public string InvoiceQuantityType { get; set; }
+        public decimal? GrossMassMeasure { get; set; }
+
     }
 }

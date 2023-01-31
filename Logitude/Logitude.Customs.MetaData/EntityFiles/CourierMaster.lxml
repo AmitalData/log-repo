@@ -5673,6 +5673,12 @@
       LocalDefaultText="&quot;ללא התרה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CourierMaster.O.DisplayOnly&quot;"
+      DefaultText="&quot;Declarations in state 'readonly' not update&quot;"
+      LocalDefaultText="&quot;הצהרות במצב 'תצוגה בלבד' לא יעודכנו&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

@@ -18,6 +18,8 @@ using Simplog.Data.CommonDataModel;
 using System.Data.SqlClient;
 using System.Data;
 using Simplog.Data.Helpers;
+using Simplog.Server.Infrastructure.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -1279,6 +1281,31 @@ namespace Logitude.Customs.Data.Repsitories
 
     }
 
+
+        public List<string> GetDisplayOnly(string[] declarationsId, int tenant, string[] sheetStatusInProcessId)
+        {
+            var q = from d in context.Declarations
+                    join c in context.CustomsRequestsSheets on d.CustomFileNo equals c.CustomFileNo into cJoin
+                    from cd in cJoin.DefaultIfEmpty()
+
+                    where d.Tenant == tenant &&                        
+                        declarationsId.Contains(d.Id) &&
+                        cd.Tenant == tenant &&
+                    (
+                        d.PaymentDate.HasValue == true
+                        || d.IsConvertedDeclaration == true
+                        || new string[] { "10", "11" }.Contains(d.DeclarationStatusTypeCode)
+                        || 
+                        (
+                            sheetStatusInProcessId.Contains(cd.RequestStatusCode)
+                            && new string[] { "2750", "2754", "2755", "8211", "8212", "8214", "8215", "8216", "8227", "US2L01" }.Contains(cd.InterfaceTypeCode)
+                        )
+                    )
+                    select d.Id;
+
+            return q.Distinct().ToList();
+        }
+
 }
 public class ExportReport1
     {
@@ -1307,6 +1334,8 @@ public class ContainerizationKey
         public string TransportModeId { get; set; }
 
     }
+
+    
     public class DeclarationId
     {
         public string Id { get; set; }

@@ -13,6 +13,8 @@ import { MessageWindow } from "../../../../Controls/Windows/MessageWindow";
 import { PendingWebService } from "../../../../Customs/Services/WebServices/PendingWebService";
 import { ApiQueryFilters } from "../../../../Infrastructure/DataContracts/ApiQueryFilters";
 import { customsItemsService } from "QuoteOPM/Utilities/customsItems.service";
+import { combineLatest, forkJoin } from "rxjs";
+import { DeclarationsBulkFeedWebService } from "Customs/Services/WebServices/DeclarationsBulkFeedWebService";
 
 @Component({
 
@@ -38,23 +40,25 @@ export class MultiUpdateDecComponent extends BaseComponent {
     
     constructor(private EntityResourceService: EntityResourceService, private cd: ChangeDetectorRef, private pendingWebService: PendingWebService) {
         super();
-        this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemProcesType").subscribe((response: any) => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe((response: any) => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsItem").subscribe((response: any) => {
-                    this.IsReady = true;
 
-                });
-            });
-        });
-
+        combineLatest([
+            this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemProcesType"),
+            this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem"),
+            this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoice"),
+            this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsItem"),
+            this.EntityResourceService.getEntityResourceByTableName("Customs.CurrencyType"),
+            this.EntityResourceService.getEntityResourceByTableName("Customs.MeasurmentUnit"),
+            this.EntityResourceService.getEntityResourceByTableName("Customs.CourierMaster"),
+        ]).subscribe((response: any) => this.IsReady = true);
+     
         this.SetUIProperties();
     }
+
     SetUIProperties() {
         //this.UIProperties.SetEnabled("ClassificationCode", "Customs.SupplierInvoiceItem", false);
     }
 
-    SetWindowArgs(args: any) {
-
+    async SetWindowArgs(args: any) {
         this.notUpdateSelf = args.notUpdateSelf;
         this.declarationIdsList = args.declarationIdsList;
         this.allWithoutdeclarationIdsList = args.allWithoutdeclarationIdsList;
@@ -62,13 +66,52 @@ export class MultiUpdateDecComponent extends BaseComponent {
         this.filter = args.filter;
         this.courierMasterId = args.courierMasterId;
         this.IsDisplayOnly = args.IsDisplayOnly;
+        
+        this.checkDeclarationsInDisplayOnly();
     }
 
+    declarationsDisplayOnly: string[];
+    declarationsDisplayOnlyPromise: Promise<any>;
+    customsItemTextValue: string;
+    procedureCurrentCode: string;
+    taxExemptCode: string;
+    classificationCode: string;
     customsItem: string;
+    invoiceAmount: string;
+    invoiceCurrencyTypeCode: string;
+    invoiceQuantity: string;
+    invoiceQuantityType: string;
+    grossMassMeasure: string;
+
+    get CustomsItemTextValue() { return this.customsItemTextValue; }
+    set CustomsItemTextValue(value: string) { this.customsItemTextValue = value;}
+
+    get ProcedureCurrentCode() { return this.procedureCurrentCode; }
+    set ProcedureCurrentCode(value: string) { this.procedureCurrentCode = value; }
+
+    get TaxExemptCode() { return this.taxExemptCode; }
+    set TaxExemptCode(value: string) { this.taxExemptCode = value; }
+
+    get ClassificationCode() { return this.classificationCode }
+    set ClassificationCode(value: string) { this.classificationCode = value; }
+    
     get CustomsItem() { return this.customsItem; }
-    set CustomsItem(value: string) {
-        this.customsItem = value;
-    }
+    set CustomsItem(value: string) { this.customsItem = value; }
+    
+    get InvoiceAmount() { return this.invoiceAmount; }
+    set InvoiceAmount(newValue: string) { this.invoiceAmount = newValue; }
+    
+    get InvoiceCurrencyTypeCode() { return this.invoiceCurrencyTypeCode; }
+    set InvoiceCurrencyTypeCode(newValue: string) { this.invoiceCurrencyTypeCode = newValue; }
+    
+    get InvoiceQuantity() { return this.invoiceQuantity; }
+    set InvoiceQuantity(newValue: string) { this.invoiceQuantity = newValue; }
+    
+    get InvoiceQuantityType() { return this.invoiceQuantityType; }
+    set InvoiceQuantityType(newValue: string) { this.invoiceQuantityType = newValue; }
+    
+    get GrossMassMeasure() { return this.grossMassMeasure; }
+    set GrossMassMeasure(newValue: string) { this.grossMassMeasure = newValue; }
 
     CustomsItemClicked(item: CustomsItemPM) {
         if (item) {
@@ -78,11 +121,11 @@ export class MultiUpdateDecComponent extends BaseComponent {
         }
     }
 
-    customsItemTextValue: string;
-    get CustomsItemTextValue() { return this.customsItemTextValue; }
-    set CustomsItemTextValue(value: string) {
-        this.customsItemTextValue = value;
-    }
+    async checkDeclarationsInDisplayOnly() {        
+        this.declarationsDisplayOnlyPromise = new DeclarationsBulkFeedWebService().checkDeclarationsInDisplayOnly(this.declarationIdsList, this.allWithoutdeclarationIdsList, this.checkboxAll, this.filter);
+        this.declarationsDisplayOnly = await this.declarationsDisplayOnlyPromise;
+    }    
+    
     CustomsItemTextChanged(text: string) {
         this.CustomsItemTextValue = text;
     }
@@ -264,11 +307,69 @@ export class MultiUpdateDecComponent extends BaseComponent {
         classificationTextBox.TextValue = newValue;
     }
 
+    OnInvoiceNumberLostFocus(invoiceNumberTextBox: any) {
+
+        // if (this.declarationPM != null && this.declarationPM.SupplierInvoices.length >= 0) {
+        //     if (this.EntityPM.InvoiceNumber) {
+
+        //         //client method
+        //         var invoices: SupplierInvoicePM[] = [];
+        //         invoices = this.declarationPM.SupplierInvoices;
+        //         invoices = invoices.concat(this.Parent.NewInvoices);
+        //         var exist = invoices.find(d => d.InvoiceNumber == this.EntityPM.InvoiceNumber);
+        //         if (exist) {
+        //             //show confirm window
+        //             var newValue = this.InvoiceNumber;
+        //             var confirm = new ConfirmWindow();
+        //             confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
+        //             confirm.ShowNoButton = true;
+        //             confirm.Show(" קיים כבר חשבון ספק עם מספר חשבון זהה - שורה" + exist.SequenceNumeric + "- הםם להמשיך ?");
+        //             confirm.WindowClosed.subscribe((event: any) => {
+        //                 confirm.Close();
+        //                 this.InvoiceNumber = newValue;
+        //                 if (confirm.Yes) {
+        //                     SessionLocator.SustainFocusOnCell = false;
+        //                 }
+        //                 else {
+        //                     SessionLocator.SustainFocusOnCell = true;
+        //                     console.log(invoiceNumberTextBox.InputId);
+        //                     var element = document.getElementById(invoiceNumberTextBox.InputId);
+        //                     if (element) {
+        //                         element.focus();
+        //                     }
+        //                 }
+        //             });
+        //         }
+        //     }
+        // }
+    }
+
+    InvoiceAmountBlur(text) {
+        // if (this.old_amount != this.EntityPM.InvoiceAmount ||
+        //     this.old_currency != this.EntityPM.InvoiceCurrencyTypeCode ||
+        //     this.old_vendor != this.EntityPM.VendorId)
+        //     this.Parent.CalculateCommissionPercentage();
+
+        // this.old_amount = this.EntityPM.InvoiceAmount;
+        // this.old_currency = this.EntityPM.InvoiceCurrencyTypeCode;
+        // this.old_vendor = this.EntityPM.VendorId;
+    }
+
     OkButtonClicked() {
         this.ValidationErrorsList = [];
         var errors = [];
-        if (this.ProcedureCurrentCode == null && this.TaxExemptCode == null && this.classificationCode == null) {
-            errors.push("חובה להזין אחד מהשדות לעדכון");
+        if ([
+            this.ProcedureCurrentCode,
+            this.TaxExemptCode,
+            this.classificationCode,
+            this.invoiceAmount,
+            this.invoiceCurrencyTypeCode,
+            this.invoiceQuantity,
+            this.invoiceQuantityType,
+            this.grossMassMeasure,
+        ].every(x => x == null)
+        ) {
+            errors.push("חובה להזין םחד מהשדות לעדכון");
         }
        
         this.ValidationErrorsList = errors;
@@ -289,7 +390,30 @@ export class MultiUpdateDecComponent extends BaseComponent {
             });
         }
     }
+
+    async showMassageExistDeclarationsDisplayOnly() {
+        await this.declarationsDisplayOnlyPromise;
+        if(!this.declarationsDisplayOnly?.length) return;
+
+        await this.showMessageDisplayOnly();
+
+        if(this.checkboxAll)
+            this.allWithoutdeclarationIdsList = this.allWithoutdeclarationIdsList.concat(this.declarationsDisplayOnly)
+        else
+            this.declarationIdsList = this.declarationIdsList.filter(x => !this.declarationsDisplayOnly.includes(x));
+    }
+
+    private async showMessageDisplayOnly() {
+        await new Promise<void>((resolve) => {
+            const msg: MessageWindow = new MessageWindow();
+            msg.Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.DisplayOnly"));
+            msg.WindowClosed.subscribe(() => resolve());
+        });
+    }
+
     async SendMultiUpdate() {
+        await this.showMassageExistDeclarationsDisplayOnly();
+
         var currRequestParams = new SendMultiUpdateRequestParams();
         currRequestParams.LoggingEnabled = true;
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
@@ -302,6 +426,12 @@ export class MultiUpdateDecComponent extends BaseComponent {
         currRequestParams.CourierMasterId = this.courierMasterId;
         currRequestParams.checkboxAll = this.checkboxAll;
         currRequestParams.allWithoutdeclarationIdsList = this.allWithoutdeclarationIdsList;
+        currRequestParams.InvoiceAmount = this.invoiceAmount;
+        currRequestParams.InvoiceCurrencyTypeCode = this.InvoiceCurrencyTypeCode;
+        currRequestParams.InvoiceQuantity = this.InvoiceQuantity;
+        currRequestParams.InvoiceQuantityType = this.InvoiceQuantityType;
+        currRequestParams.GrossMassMeasure = this.GrossMassMeasure;
+
         SessionLocator.SelectedSession.StartBusyIndicator("");
         //this._SupplierInvoiceService.PostSendMultiUpdate(currRequestParams)
         //    .subscribe((res: any) => {
@@ -313,6 +443,7 @@ export class MultiUpdateDecComponent extends BaseComponent {
         //            this.CancelButtonClicked();
         //        });
         //    });
+
 
         this.pendingWebService.PostSendMultiUpdate(currRequestParams, this.filter)
             .subscribe((res: any) => {
@@ -337,21 +468,4 @@ export class MultiUpdateDecComponent extends BaseComponent {
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindowEmit("");
     }
-
-    procedureCurrentCode: string;
-    get ProcedureCurrentCode() { return this.procedureCurrentCode; }
-    set ProcedureCurrentCode(value: string) {
-        debugger;
-        this.procedureCurrentCode = value;
-    }
-
-    taxExemptCode: string;
-    get TaxExemptCode() { return this.taxExemptCode; }
-    set TaxExemptCode(value: string) {
-        this.taxExemptCode = value;
-    }
-
-    classificationCode: string;
-    get ClassificationCode() { return this.classificationCode }
-    set ClassificationCode(value: string) { this.classificationCode = value; }
 }

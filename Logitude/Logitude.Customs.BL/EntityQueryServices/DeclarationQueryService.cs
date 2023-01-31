@@ -35,6 +35,8 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.Customs.Def.Messaging.LogitudeClient.DeclarationErrorPointer;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.CustomsMessaging.Common.ResponseData;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -2305,5 +2307,19 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return "";
         }
 
+        public List<string> CheckDeclarationsInDisplayOnly(string[] declarationIdsList, string[] allWithoutdeclarationIdsList, bool checkboxAll, QueryOperations filter, int tenant)
+        {
+            if (checkboxAll)
+                declarationIdsList = new DeclarationCourierStatusListQueryService(context).GetDeclarationCourierStatusListPendingBulk(filter, tenant).Select(x => x.DeclarationId).ToArray();
+
+            if (checkboxAll && allWithoutdeclarationIdsList != null)
+                declarationIdsList = declarationIdsList.Where(x => !allWithoutdeclarationIdsList.Contains(x)).ToArray();
+
+            string[] sheetStatusInProcessId = Enum.GetNames(typeof(SheetStatusInProcessEnum));
+
+            List<string> res = repository.GetDisplayOnly(declarationIdsList, tenant, sheetStatusInProcessId);
+
+            return res;
+        }
     }
 }

@@ -257,7 +257,9 @@ export class BulkFeedPendingComponent extends BaseComponent {
   }
 
   RefreshButtonClicked() {
-    this._CourierWorksheetSharedDataService._SelectedItems.Clear();
+    // this._CourierWorksheetSharedDataService._SelectedItems.Clear();
+    // this._CourierWorksheetSharedDataService.connectedSelectAll = false;
+
     this.RefreshList();
     this.GetPending();
   }
@@ -284,6 +286,8 @@ export class BulkFeedPendingComponent extends BaseComponent {
     //logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.MultiUpdate");
     logWindow.WindowArgs = windowArgs;
     logWindow.ShowCloseButton = true;
+    logWindow.Width = 500;
+    logWindow.Height = 550;
     logWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/MultiUpdateDecComponent');
     logWindow.WindowClosed.subscribe(($event: any) => {
       //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
@@ -418,8 +422,8 @@ export class BulkFeedPendingComponent extends BaseComponent {
   }
 
   search() {
-    this.declarationIdsList = []
-    this._CourierWorksheetSharedDataService._SelectedItems.Clear();
+    // this.declarationIdsList = []
+    // this._CourierWorksheetSharedDataService._SelectedItems.Clear();
     this.RefreshList();
   }
 
@@ -625,8 +629,9 @@ export class BulkFeedPendingComponent extends BaseComponent {
     this.IsSelectedNot = true;
 
     this._CourierWorksheetSharedDataService.connectedSelectAll = true;
-    this._CourierWorksheetSharedDataService._SelectedItems.Clear()
-      ;
+    this._CourierWorksheetSharedDataService._SelectedItems.Clear();
+    this._CourierWorksheetSharedDataService._UnSelectedItems.Clear();
+
 
     this.RefreshList();
     //this._CourierMasterService.disconnectedSelectAll = true;
@@ -640,6 +645,8 @@ export class BulkFeedPendingComponent extends BaseComponent {
 
     this._CourierWorksheetSharedDataService.connectedSelectAll = false;
     this._CourierWorksheetSharedDataService._UnSelectedItems.Clear();
+    this._CourierWorksheetSharedDataService._SelectedItems.Clear();
+
     this.RefreshList();
 
     this.IsSelectedNot = false;
