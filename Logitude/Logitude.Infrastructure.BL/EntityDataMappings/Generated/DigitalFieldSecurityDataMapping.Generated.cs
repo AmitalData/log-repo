@@ -28,7 +28,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         UpdateDate, 
 	         ObjectTableId, 
 	         DefaultSettings, 
-	         ProfileId,
+	         ProfileId, 
+	         ParentObjectTableId,
 	      }
 
 
@@ -44,7 +45,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         ProfileId, 
 	         ProfileName, 
 	         ObjectTableName, 
-	         ProfileCode,
+	         ProfileCode, 
+	         ParentObjectTableId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -81,6 +83,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ProfileId))
             {
 				entityPOCO.ProfileId = entityPM.ProfileId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ParentObjectTableId))
+            {
+				entityPOCO.ParentObjectTableId = entityPM.ParentObjectTableId;
 			}
 			}
 
@@ -122,6 +129,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 					entityPM.ProfileId = entityPOCO.ProfileId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ParentObjectTableId))
+            {
+					entityPM.ParentObjectTableId = entityPOCO.ParentObjectTableId;
+            }
+
 		}
 
 		public void PMToOldPM(DigitalFieldSecurityPM entityPM, DigitalFieldSecurityPM oldEntityPM)
@@ -156,6 +168,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ProfileId))
             {
                 oldEntityPM.ProfileId = entityPM.ProfileId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ParentObjectTableId))
+            {
+                oldEntityPM.ParentObjectTableId = entityPM.ParentObjectTableId;
             }
 			
 		}

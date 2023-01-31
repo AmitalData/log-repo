@@ -479,5 +479,27 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        [HttpGet]
+        [Route("DigitalTextCode/GetDigitalSubObjectsProfilesObjetTables")]
+        public HttpResponseMessage GetDigitalSubObjectsProfilesObjetTables(string objectTableId)
+        {
+            string email = "";
+            try
+            {
+                var digitalFieldSecurityQuery = new DigitalFieldSecurityQueryService(0);
+                var objectTables = digitalFieldSecurityQuery.GetDigitalSubObjectsProfilesObjetTables(objectTableId, 0);
+                return Request.CreateResponse(HttpStatusCode.OK, objectTables);
+            }
+            catch (AutenticationException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, email, $"Digital portal {0}", "", null);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }
