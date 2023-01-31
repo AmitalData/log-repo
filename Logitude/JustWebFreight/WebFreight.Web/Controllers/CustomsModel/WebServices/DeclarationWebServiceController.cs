@@ -1879,7 +1879,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
 
 
-        public HttpResponseMessage GetDeclarationCorrection(string declarationId)
+        public HttpResponseMessage GetDeclarationCorrection(string declarationId,bool isExportClose = false)
         {
             try
             {
@@ -1889,7 +1889,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
                 ICustomContext customContext = CustomContext.GetContext(tenant);
                 DeclarationQueryService query = new DeclarationQueryService(customContext);
-                DeclarationCorrectionView correction = query.GetDeclarationCorrection(declarationId, tenant);
+                DeclarationCorrectionView correction = query.GetDeclarationCorrection(declarationId, tenant,isExportClose);
 
                 return Request.CreateResponse(HttpStatusCode.OK, correction);
             }

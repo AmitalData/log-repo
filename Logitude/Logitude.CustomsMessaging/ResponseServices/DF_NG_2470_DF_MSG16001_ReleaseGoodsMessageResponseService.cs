@@ -42,7 +42,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
         : ResponseServiceBase<ReleaseGoodsResponseData, DF_NG_2470_DF_MSG16001_ReleaseGoodsMessage, GenericRequestParams>
     {
         private bool _LockResponseService2470Feature;
-        private DeclarationPrintResponseData _SendDeclarationPrintResponse;
 
 
         public override ReleaseGoodsResponseData GetResponse(DF_NG_2470_DF_MSG16001_ReleaseGoodsMessage customResponse, GenericRequestParams requestParams)
@@ -248,7 +247,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             SendDeclarationStatusRequest(declarationPM);
                         }
 
-                        SendDeclarationPrintExport(declarationPM, requestParams);
                         
                     }
                     requestParams.LoggingEntityId = declarationPM.Id;
@@ -466,47 +464,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
-        public bool SendDeclarationPrintExport(DeclarationPM myDeclarationPM, GenericRequestParams requestParams)
-        {
-            LogMessagingUtil.Instance.AppendLine("SendDeclarationPrint");
-            string decNum = myDeclarationPM.DeclarationNumber;
-            var decNumList = new List<string>();
-            decNumList.Add(decNum);
-
-            string LoggingUserId = requestParams.LoggingUserId;
-            ICommonDataContext commonDbContext = CommonDataContext.GetContext(requestParams.Tenant);
-            UserRepository userRepository = new UserRepository(commonDbContext);
-            var user = userRepository.GetSingleUserByCode("MEHES", requestParams.Tenant, true);
-            if (user != null)
-            {
-                LoggingUserId= user.Id;
-            }
-            DF_NG_8302_Web03_DeclarationPrintRequestParams searchParams = new DF_NG_8302_Web03_DeclarationPrintRequestParams()
-            {
-                LoggingEnabled = true,
-                CustomFileNo = myDeclarationPM.CustomFileNo,
-                DeclarationNumber = decNumList, //declarationPM.DeclarationNumber,
-                Tenant = myDeclarationPM.Tenant,
-                RequestName = "Declaration Print(2470)",
-                ResponseName = "Declaration Print(2470)",
-                LoggingEntityId = myDeclarationPM.Id,
-                RequestVIA = SendRequestVIA.WebServiceBatch,
-
-
-                LoggingUserId = LoggingUserId//requestParams.LoggingUserId,
-            };
-
-            var myRequestMessagingService = new DF_NG_8302_Web03_DeclarationPrintMessagingService();
-            var resData = myRequestMessagingService.Send(searchParams);
-            _SendDeclarationPrintResponse = resData;
-            if (!resData.Succeeded)
-            {
-                LogMessagingUtil.Instance.AppendLine("Declaration Print Request Failed " + resData.CustomsRequestsSheetId + ", Message: " + resData.UserMessage);
-                return false;
-            }
-            LogMessagingUtil.Instance.AppendLine("Declaration Print Request Succeeded " + resData.CustomsRequestsSheetId);
-            return true;
-        }
+       
 
         void SendDeclarationStatusRequest(DeclarationPM myDeclarationPM)
         {

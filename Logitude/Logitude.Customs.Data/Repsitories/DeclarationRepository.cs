@@ -532,7 +532,7 @@ namespace Logitude.Customs.Data.Repsitories
         {
             var query = (from b in context.Consignments
                          where b.ExportContainerizationID == exportContainerizationID && b.Tenant == tenant
-                        select b).Select(c=>c.DeclarationId).ToList();
+                         select b).Select(c=>c.DeclarationId).ToList();
 
             return (from a in context.Declarations
                     where query.Contains(a.Id) && a.Tenant == tenant && a.AmendmentDontDisplayInList != true
@@ -541,18 +541,27 @@ namespace Logitude.Customs.Data.Repsitories
         
 
 
-        public Declaration GetDeclarationByFunctionalReferenceID(string functionalReferenceID, int tenant)
+        public Declaration GetDeclarationByFunctionalReferenceID(string functionalReferenceID, int tenant, bool isExportClose)
         {
             //Declaration declarationParent = (from a in context.Declarations
             //                           where declarationNumber == a.DeclarationNumber
             //                           select a).FirstOrDefault();
 
+            if (isExportClose)
+            {
+                Declaration declaration = (from a in context.Declarations
+                                           where functionalReferenceID == a.ExportCloseAmendRequestNumber && a.Tenant == tenant
+                                           select a).FirstOrDefault();
+                return declaration;
+            }
+            else
+            {
+                Declaration declaration = (from a in context.Declarations
+                                           where functionalReferenceID == a.AmendmentRequestNumber && a.Tenant == tenant
+                                           select a).FirstOrDefault();
 
-            Declaration declaration = (from a in context.Declarations
-                                       where functionalReferenceID == a.AmendmentRequestNumber && a.Tenant == tenant 
-                                       select a).FirstOrDefault();
-
-            return declaration;
+                return declaration;
+            }
 
         }
 

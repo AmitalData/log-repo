@@ -41,7 +41,7 @@ import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator'
 export class ExportDeclarationClosingDataComponent extends BaseComponent {
     public DataContext: any = this;
     public DecPM: DeclarationPM;
-    public DeclarationIsClosed: boolean = false;
+    public IsReadOnly: boolean = false;
     public ObjectTableName: string = "Customs.ExportDeclarationClosingData";
     public IsReady: boolean = false;
     ValidationErrors: string[] = [];
@@ -91,8 +91,14 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
 
             this.SetUIProperty();
             if (this.DecPM.IsExportClosed) {
-                this.DeclarationIsClosed = true
+                this.IsReadOnly = true
                 this.setInputsReadOnly();
+            }
+            else {
+                if (['6', '7', '8', '10', '11'].includes(this.DecPM.ExportCloseAmendmentStatus)) {
+                    this.IsReadOnly = true
+                    this.setInputsReadOnly();
+                }
             }
 
             if (this.DecPM.Direction === 'E') {

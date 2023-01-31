@@ -355,11 +355,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return repository.GetMinDeclarationByDeclarationNumber(declarationNumber, tenant);
         }
 
-        public DeclarationPM GetDeclarationByfunctionalReferenceID(string functionalReferenceID, int tenant)
+        public DeclarationPM GetDeclarationByfunctionalReferenceID( string functionalReferenceID,  int tenant, bool isExportClose = false)
         {
             if (String.IsNullOrWhiteSpace(functionalReferenceID)) return null;
 
-            var declaration = repository.GetDeclarationByFunctionalReferenceID(functionalReferenceID, tenant);
+            var declaration = repository.GetDeclarationByFunctionalReferenceID(functionalReferenceID, tenant, isExportClose);
             DeclarationPM declarationPM = new DeclarationPM();
             DeclarationDataMapping mapping = new DeclarationDataMapping();
             if (declaration == null) return null;
@@ -1280,12 +1280,19 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return pmList;
         }
 
-        public DeclarationCorrectionView GetDeclarationCorrection(string declarationId, int tenant)
+        public DeclarationCorrectionView GetDeclarationCorrection(string declarationId, int tenant,bool isExportClose)
         {
             ICustomContext context = MainContext as CustomContext;
             Declaration declaration = Repository.GetSingle(new DeclarationKeys() { Id = declarationId });
-            string CorrectionXML = declaration.CorrectionsXml;
-
+            string CorrectionXML;
+            if (isExportClose)
+            {
+                 CorrectionXML = declaration.ClosingXml;
+            }
+            else
+            {
+                 CorrectionXML = declaration.CorrectionsXml;
+            }
 
             List<DeclarationStatementTypeList> statementTypes = new List<DeclarationStatementTypeList>();
             DeclarationStatementTypeListQueryService declarationStatementTypeQueryService = new DeclarationStatementTypeListQueryService(context);
@@ -2251,8 +2258,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
                     AmendmentStatus = item.AmendmentStatus,
                     AmendmentOriginalDeclartation = item.AmendmentOriginalDeclartation,
                     AmendmentissueDate = item.AmendmentissueDate,
-                    IsAmendment = item.IsAmendment,
-                    AmedmentType = item.AmedmentType
+                   
+                    IsAmendment=item.IsAmendment,
+                    AmedmentType = item.AmedmentType,
+                    ExportCloseAmendRequestNumber = item.ExportCloseAmendRequestNumber,
                 };
                 if (item.AmendmentCorrectedByUserId != null) declarationList.AmendmentCorrectedByUserName = users.FirstOrDefault(x => x.Id == item.AmendmentCorrectedByUserId).Code;
                 if (item.Direction == "E")

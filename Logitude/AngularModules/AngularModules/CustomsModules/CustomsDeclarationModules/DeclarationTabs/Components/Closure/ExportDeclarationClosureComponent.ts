@@ -67,27 +67,42 @@ export class ExportDeclarationClosureComponent extends BaseComponent {
     TabsSource: any[] = [];
     SelectedTab: string = "";
 
-    public get AmendmentRequestNumber() { return this.EntityPM ? this.EntityPM.AmendmentRequestNumber : null; }
-    public set AmendmentRequestNumber(newValue: string) { this.EntityPM.AmendmentRequestNumber = newValue; }
+    
 
     public get AmendmentissueDate() {
 
-        if (this.EntityPM != null) {
+        /*if (this.EntityPM != null) {
             if (this.EntityPM.AmendmentissueDate != null) {
                 var myFormats = DateTool.GetDateFormats(this.EntityPM.AmendmentissueDate);
                 return myFormats.DateString + " " + myFormats.ShortTimeString;
             }
-        }
+        }*/
         return null;
 
 
     }
 
+    public get ExportCloseAmendRequestNumber() { return this.EntityPM ? this.EntityPM.ExportCloseAmendRequestNumber : null; }
+    public set ExportCloseAmendRequestNumber(newValue: string) { this.EntityPM.ExportCloseAmendRequestNumber = newValue; }
+
+    public get AmendmentDeficitInitiated() { return this.EntityPM ? this.EntityPM.AmendmentDeficitInitiated : null; }
+    public set AmendmentDeficitInitiated(newValue: boolean) { this.EntityPM.AmendmentDeficitInitiated = newValue; }
+
+
+    public get AmendmentRejectionReasonName() { return this.EntityPM ? this.EntityPM.AmendmentRejectionReasonName : null; }
+    public set AmendmentRejectionReasonName(newValue: string) { this.EntityPM.AmendmentRejectionReasonName = newValue; }
+
+
     public get VersionId() { return this.EntityPM ? this.EntityPM.VersionId : null; }
     public set VersionId(newValue: string) { this.EntityPM.VersionId = newValue; }
 
 
-   
+    public get AmendDeficitInitiatedReasTo() { return this.EntityPM ? this.EntityPM.AmendDeficitInitiatedReasTo : null; }
+    public set AmendDeficitInitiatedReasTo(newValue: string) { this.EntityPM.AmendDeficitInitiatedReasTo = newValue; }
+
+    public get AmendmentRemarks() { return this.EntityPM ? this.EntityPM.AmendmentRemarks : null; }
+    public set AmendmentRemarks(newValue: string) { this.EntityPM.AmendmentRemarks = newValue; }
+
 
     LayoutDirection: string = 'ltr';
 
@@ -107,8 +122,8 @@ export class ExportDeclarationClosureComponent extends BaseComponent {
 
                         this.ReloadDeclarationCorrection();
 
-
-                        this.UIProperties.SetEnabled("AmendmentRequestNumber", this.ObjectTableName, false);
+                        this.UIProperties.SetEnabled("AmendmentRemarks", this.ObjectTableName, false);
+                        this.UIProperties.SetEnabled("ExportCloseAmendRequestNumber", this.ObjectTableName, false);
                         this.UIProperties.SetEnabled("AmendmentissueDate", this.ObjectTableName, false);
                         this.UIProperties.SetEnabled("VersionId", this.ObjectTableName, false);
                         this.UIProperties.SetEnabled("AmendmentRejectionReasonName", this.ObjectTableName, false);
@@ -138,6 +153,7 @@ export class ExportDeclarationClosureComponent extends BaseComponent {
     }
     BuildTabs() {
         this.SelectedTab = "Errors";
+        this.TabsSource.push({ Name: "Details", isSelected: false, Header: TextCodeTranslator.Translate("Customs.Declaration.O.CorrectionStatement") });
         this.TabsSource.push({ Name: "References", isSelected: false, Header: TextCodeTranslator.Translate("Customs.Declaration.O.References") });
         this.TabsSource.push({ Name: "Errors", isSelected: false, Header: TextCodeTranslator.Translate("Customs.Declaration.O.Errors") });
     }
@@ -173,7 +189,7 @@ export class ExportDeclarationClosureComponent extends BaseComponent {
             this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
                 this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
                     if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
-                        if (tabCode == "DCCR") {
+                        if (tabCode == "CloD") {
                             //this.DisplayOnlyCheck();
                             this.ReloadDeclarationCorrection();
                         }
@@ -202,10 +218,10 @@ export class ExportDeclarationClosureComponent extends BaseComponent {
         this.CurrentSession.StartBusyIndicatorLoading();
 
         //[1] GetDeclarationCorrections();
-        this.declarationWebService.GetDeclarationCorrection(this.EntityPM.Id).subscribe((myServiceResponse: ServiceResponse) => {
+        this.declarationWebService.GetDeclarationCorrection(this.EntityPM.Id,true).subscribe((myServiceResponse: ServiceResponse) => {
             console.log("[Response] GetDeclarationConstraints : ", myServiceResponse.Result);
             var res: DeclarationCorrectionView = myServiceResponse.Result;
-
+            debugger;
             if (!AppTool.IsNullOrEmpty(res)) {
 
                 this.GeneralData = [];
@@ -221,8 +237,8 @@ export class ExportDeclarationClosureComponent extends BaseComponent {
                 // select amendment for the first version
                 var general = this.GeneralData[0];
                 this.AmendmentViewsList = new ObservableCollection([]);
-                this.AdditionalInformationlist.InsertCollection(general.AdditionalInformation);
-                general.AmendmentViews.forEach(el => {
+                //this.AdditionalInformationlist.InsertCollection(general.AdditionalInformation);
+                  general.AmendmentViews.forEach(el => {
                     amendmentViewsList.push(el);
                 });
 
@@ -281,7 +297,7 @@ export class ExportDeclarationClosureComponent extends BaseComponent {
         var selectedGeneral = this.GeneralData[selectedIndex]; // new selected version
 
         this.AmendmentViewsList = new ObservableCollection([]);
-        this.AdditionalInformationlist.InsertCollection(selectedGeneral.AdditionalInformation);
+        //this.AdditionalInformationlist.InsertCollection(selectedGeneral.AdditionalInformation);
         selectedGeneral.AmendmentViews.forEach(el => {
             this.AmendmentViewsList.Insert(el);
         });

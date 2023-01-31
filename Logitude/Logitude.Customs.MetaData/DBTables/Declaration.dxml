@@ -1043,6 +1043,28 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ClosingXml"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ExportCloseAmendRequestNumber"
+    OldNames="ExportCloseAmendmentRequestNumber"
+    Type="varchar"
+    Size="9">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ExportCloseAmendmentStatus"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Cards"
@@ -1266,6 +1288,11 @@
   <Relation
     ForeignKeyColumn="ReleaseStatusTypeCode"
     ReferencedTable="ReleaseMessageTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ExportCloseAmendmentStatus"
+    ReferencedTable="AmendmentRequestStatuses"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
   <Index

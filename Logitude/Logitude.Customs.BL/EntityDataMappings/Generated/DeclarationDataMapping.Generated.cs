@@ -173,7 +173,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsExportClosed, 
 	         ExportClosedErrorXML, 
 	         ExportLoadingPortCode, 
-	         ReleaseStatusTypeCode,
+	         ReleaseStatusTypeCode, 
+	         ClosingXml, 
+	         ExportCloseAmendRequestNumber, 
+	         ExportCloseAmendmentStatus,
 	      }
 
 
@@ -419,6 +422,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ReleaseStatusTypeCode, 
 	         ReferentUserName, 
 	         ExportDecWithoutRelease,
+	         ClosingXml, 
+	         ExportCloseAmendRequestNumber, 
+	         ExportCloseAmendmentStatus, 
+	         ExportCloseAmendStatusName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -1180,6 +1187,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReleaseStatusTypeCode))
             {
 				entityPOCO.ReleaseStatusTypeCode = entityPM.ReleaseStatusTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClosingXml))
+            {
+				entityPOCO.ClosingXml = entityPM.ClosingXml;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportCloseAmendRequestNumber))
+            {
+				entityPOCO.ExportCloseAmendRequestNumber = entityPM.ExportCloseAmendRequestNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportCloseAmendmentStatus))
+            {
+				entityPOCO.ExportCloseAmendmentStatus = entityPM.ExportCloseAmendmentStatus;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1948,6 +1970,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ReleaseStatusTypeCode = entityPOCO.ReleaseStatusTypeCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ClosingXml))
+            {
+					entityPM.ClosingXml = entityPOCO.ClosingXml;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportCloseAmendRequestNumber))
+            {
+					entityPM.ExportCloseAmendRequestNumber = entityPOCO.ExportCloseAmendRequestNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportCloseAmendmentStatus))
+            {
+					entityPM.ExportCloseAmendmentStatus = entityPOCO.ExportCloseAmendmentStatus;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationPM entityPM, DeclarationPM oldEntityPM)
@@ -2709,6 +2746,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.ReleaseStatusTypeCode = entityPM.ReleaseStatusTypeCode;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClosingXml))
+            {
+                oldEntityPM.ClosingXml = entityPM.ClosingXml;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportCloseAmendRequestNumber))
+            {
+                oldEntityPM.ExportCloseAmendRequestNumber = entityPM.ExportCloseAmendRequestNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportCloseAmendmentStatus))
+            {
+                oldEntityPM.ExportCloseAmendmentStatus = entityPM.ExportCloseAmendmentStatus;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(DeclarationPM entityPM)
@@ -2825,6 +2877,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.ExportClosedErrorXML)) //T4 find type == nText 
             {
                 entityPM.ExportClosedErrorXML = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ExportClosedErrorXML));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ClosingXml)) //T4 find type == nText 
+            {
+                entityPM.ClosingXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ClosingXml));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

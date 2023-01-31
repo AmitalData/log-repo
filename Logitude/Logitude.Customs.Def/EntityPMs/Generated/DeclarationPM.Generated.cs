@@ -5826,6 +5826,98 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string closingXml ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ClosingXml  
+	   {
+	    
+	     get
+		{
+		   return closingXml;
+		 }
+		 set
+		 {
+		   if(closingXml != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClosingXml",OldValue=closingXml,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   closingXml=value;
+		   }
+			
+		 }
+	   }
+	  private string exportCloseAmendRequestNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExportCloseAmendRequestNumber  
+	   {
+	    
+	     get
+		{
+		   return exportCloseAmendRequestNumber;
+		 }
+		 set
+		 {
+		   if(exportCloseAmendRequestNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportCloseAmendRequestNumber",OldValue=exportCloseAmendRequestNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   exportCloseAmendRequestNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string exportCloseAmendmentStatus ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExportCloseAmendmentStatus  
+	   {
+	    
+	     get
+		{
+		   return exportCloseAmendmentStatus;
+		 }
+		 set
+		 {
+		   if(exportCloseAmendmentStatus != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportCloseAmendmentStatus",OldValue=exportCloseAmendmentStatus,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   exportCloseAmendmentStatus=value;
+		   }
+			
+		 }
+	   }
+	  private string exportCloseAmendStatusName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExportCloseAmendStatusName  
+	   {
+	    
+	     get
+		{
+		   return exportCloseAmendStatusName;
+		 }
+		 set
+		 {
+		   if(exportCloseAmendStatusName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExportCloseAmendStatusName",OldValue=exportCloseAmendStatusName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   exportCloseAmendStatusName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

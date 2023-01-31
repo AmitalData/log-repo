@@ -1472,6 +1472,25 @@ export class DeclarationPM {
     private exportDecWithoutRelease: string;
     public get ExportDecWithoutRelease() { return this.exportDecWithoutRelease; }
     public set ExportDecWithoutRelease(newValue: string) { if (this.exportDecWithoutRelease != newValue) { this.exportDecWithoutRelease = newValue; this.MarkAsDirty("ExportDecWithoutRelease"); } }
+
+    private closingXml: string;
+    public get ClosingXml() { return this.closingXml; }
+    public set ClosingXml(newValue: string) { if (this.closingXml != newValue) { this.closingXml = newValue; this.MarkAsDirty("ClosingXml"); } }
+       
+	 
+    private exportCloseAmendRequestNumber: string;
+    public get ExportCloseAmendRequestNumber() { return this.exportCloseAmendRequestNumber; }
+    public set ExportCloseAmendRequestNumber(newValue: string) { if (this.exportCloseAmendRequestNumber != newValue) { this.exportCloseAmendRequestNumber = newValue; this.MarkAsDirty("ExportCloseAmendRequestNumber"); } }
+       
+	 
+    private exportCloseAmendmentStatus: string;
+    public get ExportCloseAmendmentStatus() { return this.exportCloseAmendmentStatus; }
+    public set ExportCloseAmendmentStatus(newValue: string) { if (this.exportCloseAmendmentStatus != newValue) { this.exportCloseAmendmentStatus = newValue; this.MarkAsDirty("ExportCloseAmendmentStatus"); } }
+       
+	 
+    private exportCloseAmendStatusName: string;
+    public get ExportCloseAmendStatusName() { return this.exportCloseAmendStatusName; }
+    public set ExportCloseAmendStatusName(newValue: string) { if (this.exportCloseAmendStatusName != newValue) { this.exportCloseAmendStatusName = newValue; this.MarkAsDirty("ExportCloseAmendStatusName"); } }
        
 	 
 
@@ -1502,4 +1521,4 @@ export class DeclarationPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

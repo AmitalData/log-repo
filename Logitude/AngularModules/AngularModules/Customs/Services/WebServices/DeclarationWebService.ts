@@ -1131,7 +1131,7 @@ export class DeclarationWebService {
     }
 
     // Amendments
-    GetDeclarationCorrection(declarationId: string) {
+    GetDeclarationCorrection(declarationId: string, isExportClose: boolean = false) {
 
         return defer(() => {
 
@@ -1144,7 +1144,7 @@ export class DeclarationWebService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            return this._http.get(this._apiUrl + "/GetDeclarationCorrection/?declarationId=" + declarationId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + "/GetDeclarationCorrection/?declarationId=" + declarationId+ "&isExportClose=" + isExportClose, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                     var mappedEntity;
                     var allLists = response;
