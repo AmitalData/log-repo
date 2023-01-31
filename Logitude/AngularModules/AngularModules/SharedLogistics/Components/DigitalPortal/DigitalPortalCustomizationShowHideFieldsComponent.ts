@@ -28,6 +28,7 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
     public ProfileId: string;
     public IsWindowMode = false;
     public IsDirty = false; 
+    public ParentObjectTableId: string;
 
     @Output() LostFocus: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -50,6 +51,7 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
             this.ObjectTableId = args.ObjectTableId;
             this.ProfileCode = args.ProfileCode;
             this.ProfileId = args.ProfileId;
+            this.ParentObjectTableId = args.ParentObjectTableId;
             this.BuildItemsSource();
         }
     }
@@ -148,6 +150,7 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
             this.ModifiedLables.ObjectTableId = this.ObjectTableId;
             this.ModifiedLables.ProfileId = this.ProfileId;
             this.ModifiedLables.ProfileCode = this.ProfileCode;
+            this.ModifiedLables.ParentObjectTableId = this.ParentObjectTableId;
             var hasHasPermissionList = this.FieldsItemsSource.Collection;
 
             hasHasPermissionList.forEach(item => {
