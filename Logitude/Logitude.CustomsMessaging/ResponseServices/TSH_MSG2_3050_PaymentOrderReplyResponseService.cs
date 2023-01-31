@@ -86,6 +86,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var id = paymentOrderQueryService.GetIdByPaymentNumber(customResponse.PaymentOrderReply.PaymentDetails.paymentID.ToString(), requestParams.Tenant); // requestParams.PaymentNumber
             if (!String.IsNullOrWhiteSpace(id))
             {
+                LogPayment("1");
                 this._PaymentOrderPM = paymentOrderQueryService.GetSingle(id, true, false); //Retrieval of existing payment data
                 if (_PaymentOrderPM.IsClosed)
                 {
@@ -121,6 +122,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     return; // If the payment is close dont update
                 }
 
+                LogPayment("2");
                 if (customResponse.PaymentOrderReply.paymentStatus == 5)
                 {
                     _PaymentOrderPM.ChangeSetOp = ChangeSetOperation.Update;
@@ -149,6 +151,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     _PaymentOrderPM.CurrentContextTag = myInsertEventContextTagModel;
                     _ReturnMessage = "עודכנה הוראה " + customResponse.PaymentOrderReply.PaymentDetails.paymentID;
                 }
+                LogPayment("3");
             }
 
             if (_PaymentOrderPM == null)
@@ -170,6 +173,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 };
                 _PaymentOrderPM.CurrentContextTag = myInsertEventContextTagModel;
                 _ReturnMessage = "נוצרה הוראה " + customResponse.PaymentOrderReply.PaymentDetails.paymentID;
+                LogPayment("4");
             }
 
             // Delete old Payment Order Lines
@@ -191,6 +195,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 var importerId = clientQueryService.GetIdByCode(externalID, requestParams.Tenant, true);
                 _PaymentOrderPM.ImporterId = importerId;
             }
+            LogPayment("5");
             _PaymentOrderPM.CustomerActivityTypeCode = customResponse.PaymentOrderReply.PaymentDetails.CustomerActivityType.ToString();
             _PaymentOrderPM.PaymentOrderTypeCode = customResponse.PaymentOrderReply.paymentOrderType.ToString();
             _PaymentOrderPM.PaymentProcessCode = customResponse.PaymentOrderReply.paymentProcess.ToString();
@@ -247,6 +252,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             }
 
+            LogPayment("6");
             //Connect payment to declaration
             if (declarationIdList != null && declarationIdList.Count > 0)
             {
@@ -299,6 +305,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                 }
             }
+
+            LogPayment("7");
             //<--- Yuval Chalup 28.09.2016 TASK-23005 (If NO Declaration is connected - do not send status)
             if (_DeclarationPM == null)
             {
@@ -318,7 +326,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     _DeclarationPM.PaymentStatusCode = _PaymentOrderPM.PaymentStatusCode;
                     _DeclarationPM.PaymentOrderNumber = _PaymentOrderPM.PaymentNumber;
 
-                    LogPayment();
+                    LogPayment("8");
 
                     _DeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                     LogMessagingUtil.Instance.AppendLine("Before DeclarationUpdateService: _DeclarationPM.PaymentStatusCode= " + _DeclarationPM.PaymentStatusCode + " _DeclarationPM.PaymentOrderNumber= " + _DeclarationPM.PaymentOrderNumber);
@@ -331,14 +339,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         var FormatedException = ExceptionFormatUtil.GetFormated(ex);
                         LogMessagingUtil.Instance.AppendLine("Declaration Update Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(2000));
                         LogMessagingUtil.Instance.AppendLine("Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
+                        LogPayment("9");
                         return;
                     }
                     catch (System.Exception e)
                     {
                         LogMessagingUtil.Instance.AppendLine("Declaration Update Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(2000));
                         LogMessagingUtil.Instance.AppendLine("Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
+                        LogPayment("10");
                         return;
                     }
+
+                    LogPayment("11");
 
 
                 }
@@ -349,6 +361,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             _PaymentOrderPM.CustomsRequestsSheetId = requestParams.CustomsRequestsSheetId;
             paymentOrderUpdateService.Update(_PaymentOrderPM, true);
+
+            LogPayment("12");
 
             bool useTheAnalyzePaymentDocumentManager = false;//due not tested 4 now 
             if (useTheAnalyzePaymentDocumentManager)
@@ -374,6 +388,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 BuildPaymentOrderReply(requestParams.Tenant, customResponse);
             }
 
+            LogPayment("13");
+
             this.MyRequestSheetParam = new RequestSheetParam();
             this.MyRequestSheetParam.RequestDescription = "הוראת תשלום " + _PaymentOrderPM.PaymentNumber + DeclarationConvertionText;
             if (requestParams.RequestParamsVersion == 0)
@@ -388,16 +404,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 this.MyRequestSheetParam.ObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                 this.MyRequestSheetParam.EntityId2 = _DeclarationPM.Id;
             }
+
+            LogPayment("14");
         }
 
-        private void LogPayment()
+        private void LogPayment(string msg)
         {
             DateTime stopLogAt = DateTime.MinValue;
             string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20230601T000000.LogUntilDateyyyyMMdd"];
             if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
                 stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None);
 
-            LogitudeSettings.HandleLogMe("TSH_MSG2_3050_PaymentOrderReplyResponseService.Update = _PaymentOrderPM.Id: " + _PaymentOrderPM.Id + ", _PaymentOrderPM.PaymentNumber: " + _PaymentOrderPM.PaymentNumber, false, "CreateUD2LTService", stopLogAt);
+            msg += $" TSH_MSG2_3050_PaymentOrderReplyResponseService.Update = _PaymentOrderPM.Id: {_PaymentOrderPM.Id}, _PaymentOrderPM.PaymentNumber: {_PaymentOrderPM.PaymentNumber} IsClosed: {_PaymentOrderPM.IsClosed}, PaymentOrderLeftAmount: {_PaymentOrderPM.PaymentOrderLeftAmount}, TotalSumToPay: {_PaymentOrderPM.TotalSumToPay}";
+            LogitudeSettings.HandleLogMe(msg, false, "CreateUD2LTService", stopLogAt);
         }
 
         private void BuildPaymentOrderReply(int tenant, TSH_MSG2_PaymentOrderReply customResponse)
