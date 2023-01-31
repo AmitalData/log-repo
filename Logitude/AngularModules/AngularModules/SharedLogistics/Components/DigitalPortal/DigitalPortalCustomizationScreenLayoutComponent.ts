@@ -150,7 +150,7 @@ export class DigitalPortalCustomizationScreenLayoutComponent {
                     var isAddingComponent = s.IsAddingComponent;
                     var htmlField = "";
                     if (isAddingComponent) {
-                        htmlField = "<LogFieldContainer >\n<LogLabel field-code='" + $event + "' ></LogLabel>\n:\n<LogField field-code='" + $event + "'></LogField> \n</LogFieldContainer >";
+                        htmlField = "<LogFieldContainer >\n<LogLabel field-code='" + $event + "' ></LogLabel>\n\n<LogField field-code='" + $event + "'></LogField> \n</LogFieldContainer >";
                     }
                     else {
                         htmlField = $event;
