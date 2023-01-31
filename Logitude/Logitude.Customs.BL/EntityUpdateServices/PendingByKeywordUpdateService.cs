@@ -24,10 +24,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void OnUpdating(PendingByKeywordPM entityPM)
         {
-            if (!String.IsNullOrWhiteSpace(entityPM.KeywordsList))
-            {
-                entityPM.KeywordsList = NormalyzekeyWordsList(entityPM.KeywordsList);
-            }
+            //if (!String.IsNullOrWhiteSpace(entityPM.KeywordsList))
+            //{
+            //    entityPM.KeywordsList = NormalyzekeyWordsList(entityPM.KeywordsList);
+            //}
         }
 
         public string NormalyzekeyWordsList(string keyWordsList)
