@@ -31,7 +31,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                     {
                         DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(_tenant).Date;
                         var afterOneYearDate = currentDateTime.AddDays(-365);
-                        var afterNinetyDaysDate = currentDateTime.AddDays(90);
+                        var afterNinetyDaysDate = currentDateTime.AddDays(-90);
 
                         queryableData = queryableData.Where(a => a.IsOperationalClosed == false 
                                                             && a.IsAccountingClosed == false 
@@ -44,7 +44,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                     {
                         DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(_tenant).Date;
                         var afterOneYearDate = currentDateTime.AddDays(-365);
-                        var afterNinetyDaysDate = currentDateTime.AddDays(90);
+                        var afterNinetyDaysDate = currentDateTime.AddDays(-90);
                         var allStatuses = GetAllDigitalAllowedStatus(_tenant);
                         var allowedStatusCode = allStatuses.Select(a => a.Code).ToList();
                         var departedCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SDEP")?.StatusWeight;
@@ -61,7 +61,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                     {
                         DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(_tenant).Date;
                         var afterOneYearDate = currentDateTime.AddDays(-365);
-                        var afterNinetyDaysDate = currentDateTime.AddDays(90);
+                        var afterNinetyDaysDate = currentDateTime.AddDays(-90);
                         var allStatuses = GetAllDigitalAllowedStatus(_tenant);
                         var allowedStatusCode = allStatuses.Select(a => a.Code).ToList();
                         var departedCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SDEP")?.StatusWeight;
@@ -80,7 +80,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                     {
                         DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(_tenant).Date;
                         var afterOneYearDate = currentDateTime.AddDays(-365);
-                        var afterNinetyDaysDate = currentDateTime.AddDays(90);
+                        var afterNinetyDaysDate = currentDateTime.AddDays(-90);
                         var allStatuses = GetAllDigitalAllowedStatus(_tenant);
                         var allowedStatusCode = allStatuses.Select(a => a.Code).ToList();
                         var arrivedAtDestinationCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SARR")?.StatusWeight;
@@ -106,7 +106,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                     {
                         DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(_tenant).Date;
                         var afterOneYearDate = currentDateTime.AddDays(-365);
-                        var afterNinetyDaysDate = currentDateTime.AddDays(90);
+                        var afterNinetyDaysDate = currentDateTime.AddDays(-90);
                         isAllShipments = true;
                         queryableData = queryableData.Where(a => a.ShipmentLevelCode != "C"
                                                             && a.IsCancelled == false);
@@ -303,7 +303,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                     {
                         DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(_tenant).Date;
                         var afterOneYearDate = currentDateTime.AddDays(-365);
-                        var afterNinetyDaysDate = currentDateTime.AddDays(90);
+                        var afterNinetyDaysDate = currentDateTime.AddDays(-90);
 
                         queryableData = queryableData.Where(a => a.IsOperationalClosed == false 
                                                             && a.IsAccountingClosed == false
@@ -316,7 +316,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                     {
                         DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(_tenant).Date;
                         var afterOneYearDate = currentDateTime.AddDays(-365);
-                        var afterNinetyDaysDate = currentDateTime.AddDays(90);
+                        var afterNinetyDaysDate = currentDateTime.AddDays(-90);
                         var allStatuses = GetAllDigitalAllowedStatus(_tenant);
                         var allowedStatusCode = allStatuses.Select(a => a.Code).ToList();
                         var departedCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SDEP")?.StatusWeight;
@@ -332,7 +332,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                     {
                         DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(_tenant).Date;
                         var afterOneYearDate = currentDateTime.AddDays(-365);
-                        var afterNinetyDaysDate = currentDateTime.AddDays(90);
+                        var afterNinetyDaysDate = currentDateTime.AddDays(-90);
                         var allStatuses = GetAllDigitalAllowedStatus(_tenant);
                         var allowedStatusCode = allStatuses.Select(a => a.Code).ToList();
                         var departedCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SDEP")?.StatusWeight;
@@ -351,7 +351,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                     {
                         DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(_tenant).Date;
                         var afterOneYearDate = currentDateTime.AddDays(-365);
-                        var afterNinetyDaysDate = currentDateTime.AddDays(90);
+                        var afterNinetyDaysDate = currentDateTime.AddDays(-90);
                         var allStatuses = GetAllDigitalAllowedStatus(_tenant);
                         var allowedStatusCode = allStatuses.Select(a => a.Code).ToList();
                         var arrivedAtDestinationCodeWeight = allStatuses.FirstOrDefault(a => a.Code == "SARR")?.StatusWeight;
@@ -377,7 +377,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                     {
                         DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(_tenant).Date;
                         var afterOneYearDate = currentDateTime.AddDays(-365);
-                        var afterNinetyDaysDate = currentDateTime.AddDays(90);
+                        var afterNinetyDaysDate = currentDateTime.AddDays(-90);
                         isAllShipments = true;
                         queryableData = queryableData.Where(a => a.ShipmentLevelCode != "C" 
                                                             && a.IsCancelled == false);
