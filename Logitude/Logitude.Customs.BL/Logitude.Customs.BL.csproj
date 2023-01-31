@@ -2228,6 +2228,7 @@
     <Compile Include="Messaging\Customs\SignQueueBL\HSMActiveSignCardService.cs" />
     <Compile Include="Messaging\Customs\SignQueueBL\HSMSignFileService.cs" />
     <Compile Include="Messaging\Customs\SignQueueBL\CreateSignQueueHSMDBService.cs" />
+    <Compile Include="Messaging\Customs\SignQueueBL\HSMSignStationCheckService.cs" />
     <Compile Include="Messaging\Customs\SignQueueBL\SignQueueHybridDbService.cs" />
     <Compile Include="Messaging\Customs\DocumentExt.cs" />
     <Compile Include="Messaging\Customs\SignQueueBL\SignQueueHSMService.cs" />

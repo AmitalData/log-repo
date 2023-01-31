@@ -207,12 +207,12 @@ where not exists(select *
                         string customsRequestsSheetId = null;
                         string interfaceTypeCode = null;
                         string signByPersonalId = null;
-                        string signQueueByCompanyOrPersonal = null;
+                        //string signQueueByCompanyOrPersonal = null;
 
                         customsRequestsSheetId = _CustomDBQueueMessage.Properties["CorrelationId"].ToString();
                         interfaceTypeCode = _CustomDBQueueMessage.Properties["InterfaceTypeCode"].ToString();
                         signByPersonalId = _CustomDBQueueMessage.Properties["SignByPersonalId"].ToString();
-                        signQueueByCompanyOrPersonal = _CustomDBQueueMessage.Properties["SignQueueByCompanyOrPersonal"].ToString();
+                        ///signQueueByCompanyOrPersonal = _CustomDBQueueMessage.Properties["SignQueueByCompanyOrPersonal"].ToString();
 
                         ProccessHSMSign(
                             customsRequestsSheetId,

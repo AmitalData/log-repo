@@ -561,6 +561,14 @@ namespace Logitude.Customs.BL.Messaging.Customs
             {
                 return;
             }
+            if (RequestParams.SignMethodByQueue == SignMethodByQueueEnum.HSMSignQueue.ToString()
+                &&
+                !string.IsNullOrWhiteSpace(RequestParams.SignByPersonalId)
+                )
+            {
+                return;//already checked !
+            }
+
             string personId = ""; string noAvailableSignServerErrorText = "";
             SignQueueByType signatureBy = SignQueueByType.None;
 

@@ -71,6 +71,24 @@ namespace Logitude.CustomsMessaging.MessagingServices
             return null;
         }
 
+        protected override MN_MSG4_SendManifestFeedBack_Message CallWSSigned(byte[] customRequestSignedByteArry, MANIFESTRequestRequestParams requestParams, out string exceptionMessage)
+        {
+            exceptionMessage = null;
+            var response = new MN_MSG4_SendManifestFeedBack_Message();
+
+            using (var uifreightSdkGateway = new UnifreightSdkGateway(base.CustomsSetting.IIGServiceAddress))
+            {
+                _ResponseHeader = uifreightSdkGateway.GetChannel<IMANIFESTRequestOperation>()
+                    .MANIFESTRequestOperationSign(
+                    this.RequestsSheetExternalId,
+                    base.CustomsSetting.CustomsAgentId,
+                    new ESBRequestSigned() { SignedByteArry = customRequestSignedByteArry },
+                    ref this._IIGGatewayMoreParams,
+                    out response);
+            }
+
+            return response;
+        }
 
         protected override MN_MSG4_SendManifestFeedBack_Message CallWS(MN_MSG1_MANIFEST customRequest, MANIFESTRequestRequestParams requestParams, out string exceptionMessage)
         {
