@@ -749,6 +749,11 @@ export class ARInvoiceMenuButtonsHandler {
             return;
         }
 
+        if (!SessionLocator.SATInterfaceSettings.TransferExpenseCharges) {
+            this.CheckExchageRateLastUpdate();
+            return;
+        }
+
         if (!this.EntityPM.InvoiceLines.some(item => item.IsExpense)) {
             this.CheckExchageRateLastUpdate();
             return;

@@ -19,5 +19,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool IsARInvoiceTransferEnabled { get; set; }
         public bool IsCartaPorteTransferEnabled { get; set; }
         public string SATCompanyName { get; set; }
+        public bool TransferExpenseCharges { get; set; }
     }
 }
