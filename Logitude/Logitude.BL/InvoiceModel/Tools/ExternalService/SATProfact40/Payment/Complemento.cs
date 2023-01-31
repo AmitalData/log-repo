@@ -46,10 +46,21 @@ namespace Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40.Payment
         private static Pagos GetNewPagos()
         {
             const string profact4PagosVersion = "2.0";
+            PagosTotales pagosTotales = new PagosTotales
+            {
+                TotalTrasladosBaseIVA16 = 0.0M,
+                TotalTrasladosImpuestoIVA16 = 0.0M,
+                TotalTrasladosBaseIVA8 = 0.0M,
+                TotalTrasladosImpuestoIVA8 = 0.0M,
+                TotalTrasladosBaseIVAExento = 0.0M,
+                TotalTrasladosBaseIVA0 = 0.0M,
+                TotalTrasladosImpuestoIVA0 = 0.0M
+            };
+
             return new Pagos
             {
                 Version = profact4PagosVersion,
-                Totales = new PagosTotales(),
+                Totales = pagosTotales,
             };
         }
 
