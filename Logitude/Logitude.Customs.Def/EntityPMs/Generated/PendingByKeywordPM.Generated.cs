@@ -250,6 +250,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string exceptKeywords ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExceptKeywords  
+	   {
+	    
+	     get
+		{
+		   return exceptKeywords;
+		 }
+		 set
+		 {
+		   if(exceptKeywords != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExceptKeywords",OldValue=exceptKeywords,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   exceptKeywords=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

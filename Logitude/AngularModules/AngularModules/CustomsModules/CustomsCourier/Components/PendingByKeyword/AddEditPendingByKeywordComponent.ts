@@ -136,6 +136,10 @@ export class AddEditPendingByKeywordComponent
         
         this.EntityPM.KeywordsList = newValue;
     }
+    public get ExceptKeywords() { return this.EntityPM.ExceptKeywords; }
+    public set ExceptKeywords(newValue: string) {
+        this.EntityPM.ExceptKeywords = newValue;
+    }
 
     //#endregion\
 

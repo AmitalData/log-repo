@@ -74,6 +74,11 @@ export class PendingByKeywordPM {
     public set SearchTypesName(newValue: string) { if (this.searchTypesName != newValue) { this.searchTypesName = newValue; this.MarkAsDirty("SearchTypesName"); } }
        
 	 
+    private exceptKeywords: string;
+    public get ExceptKeywords() { return this.exceptKeywords; }
+    public set ExceptKeywords(newValue: string) { if (this.exceptKeywords != newValue) { this.exceptKeywords = newValue; this.MarkAsDirty("ExceptKeywords"); } }
+       
+	 
 
     public OldEntityPM: PendingByKeywordPM;
 		

@@ -10,6 +10,7 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
 using System.Text.RegularExpressions;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -49,7 +50,21 @@ namespace Logitude.Customs.Data.Repsitories
                     {
                         if (keyWord.Contains(r.KeywordsList.ToLower()))
                         {
-                            pendingByKeyword.Add(r);
+                            if (r.ExceptKeywords != null)
+                            {
+                                var ExceptKeywordspunctuation = r.KeywordsList.Where(Char.IsPunctuation).Distinct().ToArray();
+                                var ExceptKeywordslist = r.KeywordsList.Split().Select(x => x.Trim(ExceptKeywordspunctuation));
+
+                                var keyWordspunctuation = keyWord.Where(Char.IsPunctuation).Distinct().ToArray();
+                                var keyWordlist = keyWord.Split().Select(x => x.Trim(keyWordspunctuation));
+
+
+
+                            }
+                            else
+                            {
+                                pendingByKeyword.Add(r);
+                            }
                         }
                     }
                     else
