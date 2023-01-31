@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output} from '@angular/core';
+import { Component, EventEmitter, Output, OnInit} from '@angular/core';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { DigitalPortalCustomizationMainComponent } from './DigitalPortalCustomizationMainComponent';
 import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
@@ -13,7 +13,7 @@ import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
     templateUrl: './DigitalPortalCustomizationShowHideFieldsComponent.html',
 })
 
-export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseComponent {
+export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseComponent implements OnInit {
 
     private digitalTextService: DigitalTextService;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -23,7 +23,8 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
     public ModifiedLables: DigitalFeildSecurityObjectModel;
     public IsModifiedLables = false
     public ModifiedFields: DigitalTextCodeUpdateModel;
-    public IsModifiedFields = false;
+    public IsModifiedFields = false; 
+    public IsChange: boolean = false;
 
     @Output() LostFocus: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -43,6 +44,15 @@ export class DigitalPortalCustomizationShowHideFieldsComponent extends BaseCompo
     SetWindowArgs(args: any) {
         this.FillDigitalProfileFiltersList();
     }
+
+    ngOnInit() {
+        this.CurrentSession.SessionEvent.subscribe(($event: any) => {
+            if ($event.Name == "ReloadDigitalPortalPermissions") {
+                this.IsChange = true;
+            }
+        });
+    }
+
 
     public ObjectTablesFilterList: CodeNameClass[];
     private selectedObjectTableItem: CodeNameClass;

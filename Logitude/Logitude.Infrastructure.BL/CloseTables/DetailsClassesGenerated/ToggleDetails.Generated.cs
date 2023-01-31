@@ -703,14 +703,6 @@ namespace Logitude.Infrastructure.BL
 			 
             all.Add(new ToggleDetails()
             {    
-                Code = "DPB", 
-                Name = "Digital Portal Branding", 
-                Description = "Digital Portal Branding Tab", 
-                SearchFields = "DPB,Digital Portal Branding", 
-			});
-			 
-            all.Add(new ToggleDetails()
-            {    
                 Code = "ARS", 
                 Name = "ARInvoice Sent Icon", 
                 SearchFields = "ARS,ARInvoice Sent Icon", 
