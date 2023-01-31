@@ -2,6 +2,7 @@
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.EntityChanges;
 using Logitude.Server.Tools.Helpers;
 using Logitude.WarehouseLib.BL.EntityPMs;
 using Logitude.WarehouseLib.BL.Helpers;
@@ -36,6 +37,16 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
                 this.BuildActivityLog("N", entityPM);
 
             }
+            new MainEntityChangeService(new EntityChangeArgs()
+            {
+                EntityPM = entityPM,
+                ProcessType = "OnCreate",
+                ObjectTableName = "WarehouseEntry",
+                EntityId = entityPM.Id,
+                Tenant = entityPM.Tenant,
+                StartDate = DateTime.Now,
+                EntityReference = entityPM.EntryNumber
+            }).AddEntityChange();
         }
 
         private void UpdateShipment(WarehouseEntryPM entityPM)
@@ -139,6 +150,22 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
             }
 
             base.OnUpdating(entityPM, entityPOCO);
+
+
+            if (!entityPM.IsUpdateByAutomation)
+            {
+                new MainEntityChangeService(new EntityChangeArgs()
+                {
+                    EntityPM = entityPM,
+                    OldEntityPM = this.OldEntityPM,
+                    ProcessType = "OnUpdate",
+                    EntityChangeFieldXml = this.EntityChangeFieldXml,
+                    ObjectTableName = "WarehouseEntry",
+                    EntityId = entityPM.Id,
+                    Tenant = entityPM.Tenant,
+                    EntityReference = entityPM.EntryNumber
+                }).AddEntityChange();
+            }
         }
 
         private void AddTraceEvents(WarehouseEntryPM entityPM, WarehouseEntry entityPOCO)

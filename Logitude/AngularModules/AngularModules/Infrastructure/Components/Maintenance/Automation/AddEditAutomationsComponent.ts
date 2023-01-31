@@ -1063,6 +1063,11 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 this.ResultCodeList.push(new ResultCode("Set Fields Value", "FIELDSET"));
             }
 
+            //WarehouseEntry
+            if (this.ObjectTableName == "WarehouseEntry") {
+                this.ResultCodeList.push(new ResultCode("Set Fields Value", "FIELDSET"));
+            }
+            
             //WarehouseRelease
             if (this.ObjectTableName == "WarehouseRelease") {
                 this.ResultCodeList.push(new ResultCode("Set Fields Value", "FIELDSET"));
