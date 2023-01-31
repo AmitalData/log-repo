@@ -87,6 +87,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string TransferStatusName { get; set; }
         public bool ReadyForTransfer { get; set; }
         public string ExternalAccountingEntityId { get; set; }
+        public bool IsTransferStatusSetManually { get; set; }
         public string InvoiceNumber { get; set; }
         public string ShipmentNumber { get; set; }
         public string TransmissionError { get; set; }
