@@ -89,6 +89,9 @@ export class ContainersFUsComponent implements OnInit {
     public IsQueryVisible_PendingGateOutView: boolean = false;
     public IsQueryVisible_PendingEmptyReturnView: boolean = false;
     public IsQueryVisible_ExceptionsView: boolean = false;
+    public IsQueryVisible_PendingArrivalView: boolean = false;
+    public IsQueryVisible_PendingDischargeView: boolean = false;
+    public IsQueryVisible_PendingDeliveryView: boolean = false;
     private SetQueriesVisibility() {
         this.IsQueryVisible_InTransit = FeatureLocator.HasFeaturePermession("ContainerFollowUp", "InTransit") ? true : false;
         this.IsQueryVisible_ArrivedNotDelivered = FeatureLocator.HasFeaturePermession("ContainerFollowUp", "ArrivedNotDelivered") ? true : false;
@@ -106,6 +109,9 @@ export class ContainersFUsComponent implements OnInit {
         this.IsQueryVisible_PendingGateOutView = FeatureLocator.HasFeaturePermession("Container", "Container.Q.PendingGateOut") ? true : false;
         this.IsQueryVisible_PendingEmptyReturnView = FeatureLocator.HasFeaturePermession("Container", "Container.Q.PendingEmptyReturn") ? true : false;
         this.IsQueryVisible_ExceptionsView = FeatureLocator.HasFeaturePermession("Container", "Container.Q.Exceptions") ? true : false;
+        this.IsQueryVisible_PendingArrivalView = FeatureLocator.HasFeaturePermession("Container", "Container.Q.PendingArrival") ? true : false;
+        this.IsQueryVisible_PendingDischargeView = FeatureLocator.HasFeaturePermession("Container", "Container.Q.PendingDischarge") ? true : false;
+        this.IsQueryVisible_PendingDeliveryView = FeatureLocator.HasFeaturePermession("Container", "Container.Q.PendingDelivery") ? true : false;
 
 
     }
@@ -202,6 +208,24 @@ export class ContainersFUsComponent implements OnInit {
 
                 case "Exceptions": {
                     ServiceLocator.SendTotangoUserActivity("Container", "Exceptions");
+                    objectTableName = "Container";
+                    break;
+                }
+
+                case "PendingArrival": {
+                    ServiceLocator.SendTotangoUserActivity("Container", "PendingArrival");
+                    objectTableName = "Container";
+                    break;
+                }
+
+                case "PendingDischarge": {
+                    ServiceLocator.SendTotangoUserActivity("Container", "PendingDischarge");
+                    objectTableName = "Container";
+                    break;
+                }
+
+                case "PendingDelivery": {
+                    ServiceLocator.SendTotangoUserActivity("Container", "PendingDelivery");
                     objectTableName = "Container";
                     break;
                 }

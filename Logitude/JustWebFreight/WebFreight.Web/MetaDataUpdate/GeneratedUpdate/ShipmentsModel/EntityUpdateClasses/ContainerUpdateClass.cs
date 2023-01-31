@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ContainerUpdateClass
    {  		
-		public const string HashString = "26a2a73a0a7e548c80ac2f0b06a9b490";
+		public const string HashString = "026ed4d4aae8658b22b26e8e65203d09";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -17673,6 +17673,189 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "PendingArrivalFilter",
+					  						ObjectTableName =  "Container",
+					  						FieldsDataType =  "Constant",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  true,
+					  						IsListFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "PendingArrivalFilter",
+					  						ListPropertyPath =  "PendingArrivalFilter",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Container",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "PendingArrivalFilter",
+					  						DefaultText =  "Pending Arrival Filter",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "PendingDischargeFilter",
+					  						ObjectTableName =  "Container",
+					  						FieldsDataType =  "Constant",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  true,
+					  						IsListFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "PendingDischargeFilter",
+					  						ListPropertyPath =  "PendingDischargeFilter",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Container",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "PendingDischargeFilter",
+					  						DefaultText =  "Pending Discharge Filter",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "PendingDeliveryFilter",
+					  						ObjectTableName =  "Container",
+					  						FieldsDataType =  "Constant",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  true,
+					  						IsListFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "PendingDeliveryFilter",
+					  						ListPropertyPath =  "PendingDeliveryFilter",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Container",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "PendingDeliveryFilter",
+					  						DefaultText =  "Pending Delivery Filter",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -17714,28 +17897,40 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   Feature ContainerFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Q.InTransitTransshipments", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.InTransitTransshipments", NameTextCodeDefaultText = "InTransitTransshipments", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode ContainerTextCode_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.Q.PendingGateOut", DefaultText = @"Pending Gate Out",LocalDefaultText = "Pending Gate Out", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature ContainerFeature_4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Q.PendingGateOut", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.PendingGateOut", NameTextCodeDefaultText = "PendingGateOut", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerObjectTable, addedFeatures, addedTextCodes);
+			   TextCode ContainerTextCode_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.Q.PendingArrival", DefaultText = @"Pending Arrival",LocalDefaultText = "Pending Arrival", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ContainerFeature_4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Q.PendingArrival", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.PendingArrival", NameTextCodeDefaultText = "PendingArrival", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode ContainerTextCode_5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.Q.PendingEmptyReturn", DefaultText = @"Pending Empty Return",LocalDefaultText = "Pending Empty Return", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature ContainerFeature_5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Q.PendingEmptyReturn", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.PendingEmptyReturn", NameTextCodeDefaultText = "PendingEmptyReturn", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerObjectTable, addedFeatures, addedTextCodes);
+			   TextCode ContainerTextCode_5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.Q.PendingDischarge", DefaultText = @"Pending Discharge",LocalDefaultText = "Pending Discharge", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ContainerFeature_5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Q.PendingDischarge", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.PendingDischarge", NameTextCodeDefaultText = "PendingDischarge", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode ContainerTextCode_6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.Q.AllContainers", DefaultText = @"All Containers",LocalDefaultText = "All Containers", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature ContainerFeature_6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Q.AllContainers", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.AllContainers", NameTextCodeDefaultText = "All Containers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerObjectTable, addedFeatures, addedTextCodes);
+			   TextCode ContainerTextCode_6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.Q.PendingGateOut", DefaultText = @"Pending Gate Out",LocalDefaultText = "Pending Gate Out", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ContainerFeature_6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Q.PendingGateOut", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.PendingGateOut", NameTextCodeDefaultText = "PendingGateOut", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode ContainerTextCode_7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.Q.ClosedContainers", DefaultText = @"Closed Containers",LocalDefaultText = null, ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature ContainerFeature_7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Q.ClosedContainers", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.ClosedContainers", NameTextCodeDefaultText = "Closed Containers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerObjectTable, addedFeatures, addedTextCodes);
+			   TextCode ContainerTextCode_7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.Q.PendingDelivery", DefaultText = @"Pending Delivery",LocalDefaultText = "Pending Delivery", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ContainerFeature_7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Q.PendingDelivery", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.PendingDelivery", NameTextCodeDefaultText = "PendingDelivery", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode ContainerTextCode_8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.Q.Exceptions", DefaultText = @"Exceptions",LocalDefaultText = "Exceptions", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature ContainerFeature_8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Q.Exceptions", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.Exceptions", NameTextCodeDefaultText = "Exceptions", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerObjectTable, addedFeatures, addedTextCodes);
+			   TextCode ContainerTextCode_8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.Q.PendingEmptyReturn", DefaultText = @"Pending Empty Return",LocalDefaultText = "Pending Empty Return", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ContainerFeature_8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Q.PendingEmptyReturn", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.PendingEmptyReturn", NameTextCodeDefaultText = "PendingEmptyReturn", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode ContainerTextCode_9 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.Q.CancelledContainers", DefaultText = @"Cancelled Containers",LocalDefaultText = null, ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature ContainerFeature_9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Q.CancelledContainers", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.CancelledContainers", NameTextCodeDefaultText = "Cancelled Containers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerObjectTable, addedFeatures, addedTextCodes);
+			   TextCode ContainerTextCode_9 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.Q.AllContainers", DefaultText = @"All Containers",LocalDefaultText = "All Containers", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ContainerFeature_9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Q.AllContainers", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.AllContainers", NameTextCodeDefaultText = "All Containers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode ContainerTextCode_10 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.Q.ClosedContainers", DefaultText = @"Closed Containers",LocalDefaultText = null, ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ContainerFeature_10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Q.ClosedContainers", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.ClosedContainers", NameTextCodeDefaultText = "Closed Containers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode ContainerTextCode_11 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.Q.Exceptions", DefaultText = @"Exceptions",LocalDefaultText = "Exceptions", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ContainerFeature_11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Q.Exceptions", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.Exceptions", NameTextCodeDefaultText = "Exceptions", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode ContainerTextCode_12 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Container.Q.CancelledContainers", DefaultText = @"Cancelled Containers",LocalDefaultText = null, ObjectTableId = ContainerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ContainerFeature_12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Container.Q.CancelledContainers", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "ContainerFeatures.CancelledContainers", NameTextCodeDefaultText = "Cancelled Containers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ContainerObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
@@ -17887,7 +18082,71 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query PendingGateOutQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_4.Id, NameTextCodeCode = ContainerTextCode_4.Code, ObjectTableName = "Container", Code = "PendingGateOut",  QueryGroupCode = "38cb", IndexOrder = 4, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFeature_4.Id,FeatureUniqeCode= ContainerFeature_4.FeatureUniqeCode, DefaultSortName = "ActualPODVesselArrival", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query PendingArrivalQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_4.Id, NameTextCodeCode = ContainerTextCode_4.Code, ObjectTableName = "Container", Code = "PendingArrival",  QueryGroupCode = "38cb", IndexOrder = 4, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFeature_4.Id,FeatureUniqeCode= ContainerFeature_4.FeatureUniqeCode, DefaultSortName = "EstimatedPODVesselArrival", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+	
+			 QueryColumn PendingArrivalQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingArrivalQuery.Id,QueryCode = PendingArrivalQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Container.ContainerNumber" , ColumnWidth = 109 }, addedQueryColumns);
+
+			 QueryColumn PendingArrivalQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingArrivalQuery.Id,QueryCode = PendingArrivalQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Container.CreateDate" , ColumnWidth = 94 }, addedQueryColumns);
+
+			 QueryColumn PendingArrivalQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingArrivalQuery.Id,QueryCode = PendingArrivalQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Container.ContainerTypeName" , ColumnWidth = 128 }, addedQueryColumns);
+
+			 QueryColumn PendingArrivalQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingArrivalQuery.Id,QueryCode = PendingArrivalQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Container.StatusName" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn PendingArrivalQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingArrivalQuery.Id,QueryCode = PendingArrivalQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Container.ShipmentNumber" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn PendingArrivalQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingArrivalQuery.Id,QueryCode = PendingArrivalQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Container.ShipmentStatusName" , ColumnWidth = 140 }, addedQueryColumns);
+
+			 QueryColumn PendingArrivalQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingArrivalQuery.Id,QueryCode = PendingArrivalQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Container.CarrierName" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn PendingArrivalQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingArrivalQuery.Id,QueryCode = PendingArrivalQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Container.MainCarriageCarrierNumber" , ColumnWidth = 158 }, addedQueryColumns);
+
+			 QueryColumn PendingArrivalQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingArrivalQuery.Id,QueryCode = PendingArrivalQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Container.Master" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn PendingArrivalQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingArrivalQuery.Id,QueryCode = PendingArrivalQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Container.VesselName" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn PendingArrivalQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingArrivalQuery.Id,QueryCode = PendingArrivalQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Container.PODLocation" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn PendingArrivalQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingArrivalQuery.Id,QueryCode = PendingArrivalQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Container.EstimatedPODVesselArrival" , ColumnWidth = 155 }, addedQueryColumns);
+
+             AdvancedQueryFilter PendingArrivalQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Container.PendingArrivalFilter", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = PendingArrivalQuery.Id,QueryCode = PendingArrivalQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
+  
+	      
+
+			  Query PendingDischargeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_5.Id, NameTextCodeCode = ContainerTextCode_5.Code, ObjectTableName = "Container", Code = "PendingDischarge",  QueryGroupCode = "38cb", IndexOrder = 5, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFeature_5.Id,FeatureUniqeCode= ContainerFeature_5.FeatureUniqeCode, DefaultSortName = "EstimatedPODDischarge", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+	
+			 QueryColumn PendingDischargeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDischargeQuery.Id,QueryCode = PendingDischargeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Container.ContainerNumber" , ColumnWidth = 109 }, addedQueryColumns);
+
+			 QueryColumn PendingDischargeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDischargeQuery.Id,QueryCode = PendingDischargeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Container.CreateDate" , ColumnWidth = 94 }, addedQueryColumns);
+
+			 QueryColumn PendingDischargeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDischargeQuery.Id,QueryCode = PendingDischargeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Container.ContainerTypeName" , ColumnWidth = 128 }, addedQueryColumns);
+
+			 QueryColumn PendingDischargeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDischargeQuery.Id,QueryCode = PendingDischargeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Container.StatusName" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn PendingDischargeQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDischargeQuery.Id,QueryCode = PendingDischargeQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Container.ShipmentNumber" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn PendingDischargeQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDischargeQuery.Id,QueryCode = PendingDischargeQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Container.ShipmentStatusName" , ColumnWidth = 140 }, addedQueryColumns);
+
+			 QueryColumn PendingDischargeQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDischargeQuery.Id,QueryCode = PendingDischargeQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Container.CarrierName" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn PendingDischargeQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDischargeQuery.Id,QueryCode = PendingDischargeQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Container.MainCarriageCarrierNumber" , ColumnWidth = 158 }, addedQueryColumns);
+
+			 QueryColumn PendingDischargeQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDischargeQuery.Id,QueryCode = PendingDischargeQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Container.Master" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn PendingDischargeQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDischargeQuery.Id,QueryCode = PendingDischargeQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Container.VesselName" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn PendingDischargeQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDischargeQuery.Id,QueryCode = PendingDischargeQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Container.PODLocation" , ColumnWidth = 128 }, addedQueryColumns);
+
+			 QueryColumn PendingDischargeQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDischargeQuery.Id,QueryCode = PendingDischargeQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Container.ActualPODVesselArrival" , ColumnWidth = 154 }, addedQueryColumns);
+
+			 QueryColumn PendingDischargeQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDischargeQuery.Id,QueryCode = PendingDischargeQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Container.EstimatedPODDischarge" , ColumnWidth = 120 }, addedQueryColumns);
+
+             AdvancedQueryFilter PendingDischargeQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Container.PendingDischargeFilter", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = PendingDischargeQuery.Id,QueryCode = PendingDischargeQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
+  
+	      
+
+			  Query PendingGateOutQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_6.Id, NameTextCodeCode = ContainerTextCode_6.Code, ObjectTableName = "Container", Code = "PendingGateOut",  QueryGroupCode = "38cb", IndexOrder = 6, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFeature_6.Id,FeatureUniqeCode= ContainerFeature_6.FeatureUniqeCode, DefaultSortName = "ActualPODVesselArrival", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
 			 QueryColumn PendingGateOutQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingGateOutQuery.Id,QueryCode = PendingGateOutQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Container.ContainerNumber" , ColumnWidth = 109 }, addedQueryColumns);
 
@@ -17914,7 +18173,42 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query PendingEmptyReturnQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_5.Id, NameTextCodeCode = ContainerTextCode_5.Code, ObjectTableName = "Container", Code = "PendingEmptyReturn",  QueryGroupCode = "38cb", IndexOrder = 5, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFeature_5.Id,FeatureUniqeCode= ContainerFeature_5.FeatureUniqeCode, DefaultSortName = "EstimatedEmptyReturn", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+			  Query PendingDeliveryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_7.Id, NameTextCodeCode = ContainerTextCode_7.Code, ObjectTableName = "Container", Code = "PendingDelivery",  QueryGroupCode = "38cb", IndexOrder = 7, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFeature_7.Id,FeatureUniqeCode= ContainerFeature_7.FeatureUniqeCode, DefaultSortName = "ShipmentDeliveryETA", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+	
+			 QueryColumn PendingDeliveryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDeliveryQuery.Id,QueryCode = PendingDeliveryQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Container.ContainerNumber" , ColumnWidth = 109 }, addedQueryColumns);
+
+			 QueryColumn PendingDeliveryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDeliveryQuery.Id,QueryCode = PendingDeliveryQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Container.CreateDate" , ColumnWidth = 94 }, addedQueryColumns);
+
+			 QueryColumn PendingDeliveryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDeliveryQuery.Id,QueryCode = PendingDeliveryQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Container.ContainerTypeName" , ColumnWidth = 128 }, addedQueryColumns);
+
+			 QueryColumn PendingDeliveryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDeliveryQuery.Id,QueryCode = PendingDeliveryQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Container.StatusName" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn PendingDeliveryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDeliveryQuery.Id,QueryCode = PendingDeliveryQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Container.ShipmentNumber" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn PendingDeliveryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDeliveryQuery.Id,QueryCode = PendingDeliveryQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Container.ShipmentStatusName" , ColumnWidth = 140 }, addedQueryColumns);
+
+			 QueryColumn PendingDeliveryQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDeliveryQuery.Id,QueryCode = PendingDeliveryQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Container.CarrierName" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn PendingDeliveryQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDeliveryQuery.Id,QueryCode = PendingDeliveryQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Container.MainCarriageCarrierNumber" , ColumnWidth = 158 }, addedQueryColumns);
+
+			 QueryColumn PendingDeliveryQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDeliveryQuery.Id,QueryCode = PendingDeliveryQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Container.Master" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn PendingDeliveryQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDeliveryQuery.Id,QueryCode = PendingDeliveryQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Container.VesselName" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn PendingDeliveryQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDeliveryQuery.Id,QueryCode = PendingDeliveryQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "Container.PODLocation" , ColumnWidth = 128 }, addedQueryColumns);
+
+			 QueryColumn PendingDeliveryQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDeliveryQuery.Id,QueryCode = PendingDeliveryQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "Container.ShipmentDeliveryFrom" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn PendingDeliveryQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDeliveryQuery.Id,QueryCode = PendingDeliveryQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "Container.ShipmentDeliveryTo" , ColumnWidth = 120 }, addedQueryColumns);
+
+			 QueryColumn PendingDeliveryQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingDeliveryQuery.Id,QueryCode = PendingDeliveryQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "Container.ShipmentDeliveryETA" , ColumnWidth = 130 }, addedQueryColumns);
+
+             AdvancedQueryFilter PendingDeliveryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Container.PendingDeliveryFilter", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = PendingDeliveryQuery.Id,QueryCode = PendingDeliveryQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
+  
+	      
+
+			  Query PendingEmptyReturnQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_8.Id, NameTextCodeCode = ContainerTextCode_8.Code, ObjectTableName = "Container", Code = "PendingEmptyReturn",  QueryGroupCode = "38cb", IndexOrder = 8, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFeature_8.Id,FeatureUniqeCode= ContainerFeature_8.FeatureUniqeCode, DefaultSortName = "EstimatedEmptyReturn", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
 	
 			 QueryColumn PendingEmptyReturnQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PendingEmptyReturnQuery.Id,QueryCode = PendingEmptyReturnQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Container.ContainerNumber" , ColumnWidth = 109 }, addedQueryColumns);
 
@@ -17943,7 +18237,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query AllContainersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_6.Id, NameTextCodeCode = ContainerTextCode_6.Code, ObjectTableName = "Container", Code = "All Containers",  QueryGroupCode = "38cb", IndexOrder = 6, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFeature_6.Id,FeatureUniqeCode= ContainerFeature_6.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = null, Perspective = null }, addedQueries);
+			  Query AllContainersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_9.Id, NameTextCodeCode = ContainerTextCode_9.Code, ObjectTableName = "Container", Code = "All Containers",  QueryGroupCode = "38cb", IndexOrder = 9, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFeature_9.Id,FeatureUniqeCode= ContainerFeature_9.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
 			 QueryColumn AllContainersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllContainersQuery.Id,QueryCode = AllContainersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Container.ContainerNumber" , ColumnWidth = 109 }, addedQueryColumns);
 
@@ -17981,7 +18275,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query ClosedContainersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_7.Id, NameTextCodeCode = ContainerTextCode_7.Code, ObjectTableName = "Container", Code = "Closed Containers",  QueryGroupCode = "38cb", IndexOrder = 7, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFeature_7.Id,FeatureUniqeCode= ContainerFeature_7.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query ClosedContainersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_10.Id, NameTextCodeCode = ContainerTextCode_10.Code, ObjectTableName = "Container", Code = "Closed Containers",  QueryGroupCode = "38cb", IndexOrder = 10, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFeature_10.Id,FeatureUniqeCode= ContainerFeature_10.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
 			 QueryColumn ClosedContainersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedContainersQuery.Id,QueryCode = ClosedContainersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Container.ContainerNumber" , ColumnWidth = 109 }, addedQueryColumns);
 
@@ -18006,7 +18300,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query ExceptionsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_8.Id, NameTextCodeCode = ContainerTextCode_8.Code, ObjectTableName = "Container", Code = "Exceptions",  QueryGroupCode = "38cb", IndexOrder = 8, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFeature_8.Id,FeatureUniqeCode= ContainerFeature_8.FeatureUniqeCode, DefaultSortName = "ExceptionDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query ExceptionsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_11.Id, NameTextCodeCode = ContainerTextCode_11.Code, ObjectTableName = "Container", Code = "Exceptions",  QueryGroupCode = "38cb", IndexOrder = 11, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFeature_11.Id,FeatureUniqeCode= ContainerFeature_11.FeatureUniqeCode, DefaultSortName = "ExceptionDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
 			 QueryColumn ExceptionsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExceptionsQuery.Id,QueryCode = ExceptionsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Container.ContainerNumber" , ColumnWidth = 109 }, addedQueryColumns);
 
@@ -18033,7 +18327,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query CancelledContainersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_9.Id, NameTextCodeCode = ContainerTextCode_9.Code, ObjectTableName = "Container", Code = "Cancelled Containers",  QueryGroupCode = "38cb", IndexOrder = 9, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFeature_9.Id,FeatureUniqeCode= ContainerFeature_9.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query CancelledContainersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ContainerTextCode_12.Id, NameTextCodeCode = ContainerTextCode_12.Code, ObjectTableName = "Container", Code = "Cancelled Containers",  QueryGroupCode = "38cb", IndexOrder = 12, Tenant = 0, ObjectTableId = ContainerObjectTable.Id, QuerySection = "Container", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ContainerFeature_12.Id,FeatureUniqeCode= ContainerFeature_12.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
 			 QueryColumn CancelledContainersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledContainersQuery.Id,QueryCode = CancelledContainersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Container.ContainerNumber" , ColumnWidth = 120 }, addedQueryColumns);
 
