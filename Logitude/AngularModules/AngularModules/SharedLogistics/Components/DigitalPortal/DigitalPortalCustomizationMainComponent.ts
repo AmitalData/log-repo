@@ -8,6 +8,8 @@ import { LocationDirective } from '../../../Infrastructure/Utilities/LocationDir
 import { ViewChild } from '@angular/core';
 import { ViewContainerRef } from '@angular/core';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
+import { DigitalTextService } from '../../../Infrastructure/Services/WebServices/DigitalTextService'
 
 @Component({
 
@@ -28,17 +30,18 @@ export class DigitalPortalCustomizationMainComponent {
     public MainMenuItems: Array<CustomizationMainMenuItem>;
     public MainMenuWidth: number = 145;
     LayoutDirection: string = 'ltr';
-
+    private digitalTextService: DigitalTextService;
     public IsDirty: boolean = false;
     public NewSelectedMenu: CustomizationMainMenuItem;
+    public IsObjectTablesFilterVisible: boolean = false;
 
     constructor() {
+        this.digitalTextService = new DigitalTextService();
         this.RunComponent();
         this.LayoutDirection = ObjectsLocator.GlobalSetting.LayoutDirection == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
         this.BuildCustomizationMainMenuItems();
     }
 
-    
     BuildCustomizationMainMenuItems() {
         this.MainMenuItems = this.GetCustomizationMainMenuItems();
         if (this.MainMenuItems && this.MainMenuItems.length > 0) {
@@ -71,6 +74,12 @@ export class DigitalPortalCustomizationMainComponent {
         args.TextCode = "Screen Layout";
         args.Code = "ScreenLayout";
         args.ComponentPath = "./SharedLogistics/Components/DigitalPortal/DigitalPortalCustomizationScreenLayoutComponent";
+        myResult.push(args);
+
+        args = new CustomizationMainMenuItem();
+        args.TextCode = "Sub Objects";
+        args.Code = "SubObjects";
+        args.ComponentPath = "./SharedLogistics/Components/DigitalPortal/DigitalPortalCustomizationSubObjectsComponent";
         myResult.push(args);
 
         return myResult;
@@ -131,10 +140,14 @@ export class DigitalPortalCustomizationMainComponent {
 
         if (this.SelectedMenu.Code == "ScreenLayout") {
             this.IsSaveButtonVisible = false;
+            this.IsObjectTablesFilterVisible = false;
         }
         else {
             this.IsSaveButtonVisible = true;
+            this.IsObjectTablesFilterVisible = true;
         }
+       
+        this.FillDigitalProfileFiltersList();
 
         if (!this.SelectedMenu || !this.isLoaderReady) return;
 
@@ -142,6 +155,7 @@ export class DigitalPortalCustomizationMainComponent {
 
         this.ShowCustomizationMenuItemComponent();
     }
+
     private ShowCustomizationMenuItemComponent() {
         let myLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == this.SelectedMenu.Code)[0];
 
@@ -195,6 +209,82 @@ export class DigitalPortalCustomizationMainComponent {
         this.NewSelectedMenu = null;
         this.IsSaveAndClose = true;
         this.SelectedMenu.Page.Save();
+    }
+
+    public ObjectTablesFilterList: CodeNameClass[];
+    private selectedObjectTableItem: CodeNameClass;
+    get SelectedObjectTableItem() { return this.selectedObjectTableItem; }
+    set SelectedObjectTableItem(value: CodeNameClass) {
+        if (this.selectedObjectTableItem != value) {
+            this.selectedObjectTableItem = value;
+            this.SelectedMenu.Page.ObjectTableId = value.Name;
+            this.SelectedMenu.Page.BuildItemsSource();
+        }
+    }
+
+    private FillObjectTablesFiltersList() {
+        this.ObjectTablesFilterList = [];
+        this.digitalTextService.GetDigitalProfilesObjetTables().subscribe((myResult) => {
+            if (!myResult.HasError) {
+                var objectTables = myResult.Result;
+                objectTables.forEach(item => {
+                    this.ObjectTablesFilterList.push(new CodeNameClass(item.ObjectTableName, item.ObjectTableId));
+                });
+
+                this.selectedObjectTableItem = this.ObjectTablesFilterList[0];
+                if (this.SelectedMenu.Page) {
+                    this.SelectedMenu.Page.ObjectTableId = this.selectedObjectTableItem.Name;
+                    this.SelectedMenu.Page.BuildItemsSource();
+                }
+            }
+        });
+    }
+
+    public DigitalProfileFilterList: CodeNameClass[];
+    private selectedProfileItem: CodeNameClass;
+    get SelectedProfileItem() { return this.selectedProfileItem; }
+    set SelectedProfileItem(value: CodeNameClass) {
+        if (this.selectedProfileItem != value) {
+            this.selectedProfileItem = value;
+            this.SelectedMenu.Page.ProfileId = value.Code;
+            this.SelectedMenu.Page.ProfileCode = value.LocalName;
+
+            if (this.SelectedMenu.Code == "ScreenLayout") {
+                this.SelectedMenu.Page.GetDefaultScreens();
+            }
+            else {
+                this.SelectedMenu.Page.BuildItemsSource();
+            }
+        }
+    }
+
+    private FillDigitalProfileFiltersList() {
+        this.DigitalProfileFilterList = [];
+        this.digitalTextService.GetDigitalProfileName(SessionLocator.Tenant).subscribe((myResult) => {
+            if (!myResult.HasError) {
+                var profiles = myResult.Result;
+                if (this.SelectedMenu.Code != "ChageLabels") {
+                    profiles = profiles.filter(a => a.Code != "CM");
+                }
+         
+                profiles.forEach(item => {
+                    this.DigitalProfileFilterList.push(new CodeNameClass(item.Id, item.Name, item.Code));
+                });
+
+                this.selectedProfileItem = this.DigitalProfileFilterList[0];
+                if (this.SelectedMenu.Page) {
+                    this.SelectedMenu.Page.ProfileId = this.selectedProfileItem.Code;
+                    this.SelectedMenu.Page.ProfileCode = this.selectedProfileItem.LocalName;
+                }
+               
+                if (this.SelectedMenu.Code == "ScreenLayout" && this.SelectedMenu.Page) {
+                        this.SelectedMenu.Page.GetDefaultScreens();
+                }
+                else {
+                    this.FillObjectTablesFiltersList();
+                }
+            }
+        });
     }
 }
 

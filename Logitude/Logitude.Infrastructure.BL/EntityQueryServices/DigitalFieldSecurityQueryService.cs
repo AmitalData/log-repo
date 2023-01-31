@@ -93,7 +93,7 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
         {
             var objetTables = context.DigitalFieldSecurities
                                      .Include("ObjectTable")
-                                     .Where(a => a.Tenant == tenant 
+                                     .Where(a => a.Tenant == tenant && a.ParentObjectTableId == null
                                                  && !a.ObjectTable.Name.Equals("General",StringComparison.InvariantCultureIgnoreCase))
                                      .GroupBy(a => a.ObjectTable)
                                      .Select(a => new DigitalFieldSecurityList
@@ -102,6 +102,22 @@ namespace Logitude.Infrastructure.BL.EntityQueryServices
                                          ObjectTableName = a.Key.Name,
                                      }).ToList();
                                     
+            return objetTables;
+        }
+
+        public List<DigitalFieldSecurityList> GetDigitalSubObjectsProfilesObjetTables(string objectTbaleId, int tenant)
+        {
+            var objetTables = context.DigitalFieldSecurities
+                                     .Include("ObjectTable")
+                                     .Where(a => a.Tenant == tenant && a.ParentObjectTableId == objectTbaleId
+                                                 && !a.ObjectTable.Name.Equals("General", StringComparison.InvariantCultureIgnoreCase))
+                                     .GroupBy(a => a.ObjectTable)
+                                     .Select(a => new DigitalFieldSecurityList
+                                     {
+                                         ObjectTableId = a.Key.Id,
+                                         ObjectTableName = a.Key.Name,
+                                     }).ToList();
+
             return objetTables;
         }
 

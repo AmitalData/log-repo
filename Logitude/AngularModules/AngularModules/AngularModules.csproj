@@ -417,6 +417,7 @@
     <Content Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationMainComponent.html" />
     <Content Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationScreenLayoutComponent.html" />
     <Content Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationShowHideFieldsComponent.html" />
+    <Content Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationSubObjectsComponent.html" />
     <Content Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationTranslateLabelsComponent.html" />
     <Content Include="SharedLogistics\Components\SharedLogisticsDigitalPortalComponent.html" />
     <Content Include="ShipmentModules\ShipmentAWB\Components\AWBWizard\Packages\AWBAddEditCommodityComponent.html" />
@@ -4923,6 +4924,7 @@
     <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationMainComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationScreenLayoutComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationShowHideFieldsComponent.ts" />
+    <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationSubObjectsComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\DigitalPortal\DigitalPortalCustomizationTranslateLabelsComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\SharedLogisticsDigitalPortalComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\SharedLogisticsMoneyPermissiosComponent.ts" />
