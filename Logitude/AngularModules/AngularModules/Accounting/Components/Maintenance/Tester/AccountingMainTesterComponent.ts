@@ -527,6 +527,129 @@ Line3
         this.StrandartOp(opr, paramDefault, () => { });
     }
 
+
+    ButtonReconcileStageABatch_Click() {
+        let defaultParam: any = {};
+        defaultParam.Tenant = 1;
+        defaultParam.FromExtNum = "1";
+        defaultParam.ToExtNum = "99";
+
+        if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this._TextBoxParam = JSON.stringify(defaultParam);
+            return;
+        }
+        let objToCheck1 = JSON.parse(this._TextBoxParam);
+        let _ReconciliationStageAUrl = ServiceHelper.GetLogitudeURL() + '/api/ReconciliationAfterConversion';
+
+        var myUrl;
+        if (objToCheck1.FromExtNum == "" && objToCheck1.ToExtNum == "") {
+            myUrl = _ReconciliationStageAUrl + "?tenant=" + objToCheck1.Tenant;
+        }
+        else {
+            myUrl = _ReconciliationStageAUrl + "?tenant=" + objToCheck1.Tenant + "&fromExtNum=" + objToCheck1.FromExtNum + "&toExtNum=" + objToCheck1.ToExtNum;
+        }
+        this.CurrentSession.StartBusyIndicatorCreating();
+        let _http = ServiceHelper.HttpClient;
+        _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
+            .subscribe(
+                r => { this._LabelLog = JSON.stringify(r); },
+                e => { this._LabelLog = JSON.stringify(e); },
+                () => { this.CurrentSession.StopBusyIndicator(); }
+            );
+    }
+
+
+    ButtonReconcileStageANoBatch_Click() {
+        let defaultParam: any = {};
+        defaultParam.Tenant = 1;
+        defaultParam.FromExtNum = "1";
+        defaultParam.ToExtNum = "99";
+
+        if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this._TextBoxParam = JSON.stringify(defaultParam);
+            return;
+        }
+        let objToCheck1 = JSON.parse(this._TextBoxParam);
+        let _ReconciliationStageAUrl = ServiceHelper.GetLogitudeURL() + '/api/ReconciliationAfterConversion';
+
+        var myUrl;
+        if (objToCheck1.FromExtNum == "" && objToCheck1.ToExtNum == "") {
+            myUrl = _ReconciliationStageAUrl + "?tenant=" + objToCheck1.Tenant + "&noBatch=1";
+        }
+        else {
+            myUrl = _ReconciliationStageAUrl + "?tenant=" + objToCheck1.Tenant + "&fromExtNum=" + objToCheck1.FromExtNum + "&toExtNum=" + objToCheck1.ToExtNum + "&noBatch=1";
+        }
+
+        this.CurrentSession.StartBusyIndicatorCreating();
+        let _http = ServiceHelper.HttpClient;
+        _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
+            .subscribe(
+                r => { this._LabelLog = JSON.stringify(r); },
+                e => { this._LabelLog = JSON.stringify(e); },
+                () => { this.CurrentSession.StopBusyIndicator(); }
+            );
+
+    }
+
+
+    ButtonReconcileStageBBatch_Click() {
+        let defaultParam: any = {};
+        defaultParam.Tenant = 1;
+
+        if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this._TextBoxParam = JSON.stringify(defaultParam);
+            return;
+        }
+        let objToCheck1 = JSON.parse(this._TextBoxParam);
+        let _ReconciliationStageBUrl = ServiceHelper.GetLogitudeURL() + '/api/ReconciliationStageB';
+
+        let myUrl = _ReconciliationStageBUrl + "?tenant=" + objToCheck1.Tenant;
+
+        this.CurrentSession.StartBusyIndicatorCreating();
+        let _http = ServiceHelper.HttpClient;
+        _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
+            .subscribe(
+                r => { this._LabelLog = JSON.stringify(r); },
+                e => { this._LabelLog = JSON.stringify(e); },
+                () => { this.CurrentSession.StopBusyIndicator(); }
+            );
+    }
+
+
+    ButtonReconcileStageBNoBatch_Click() {
+        let defaultParam: any = {};
+        defaultParam.Tenant = 1;
+
+        if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this._TextBoxParam = JSON.stringify(defaultParam);
+            return;
+        }
+        let objToCheck1 = JSON.parse(this._TextBoxParam);
+        let _ReconciliationStageBUrl = ServiceHelper.GetLogitudeURL() + '/api/ReconciliationStageB';
+
+        var myUrl;
+        if (objToCheck1.GLAccountId == "") {
+            myUrl = _ReconciliationStageBUrl + "?tenant=" + objToCheck1.Tenant + "&noBatch=1";
+        }
+        else {
+            myUrl = _ReconciliationStageBUrl + "?tenant=" + objToCheck1.Tenant + "&gLAccountId=" + objToCheck1.GLAccountId + "&noBatch=1";
+        }
+
+        this.CurrentSession.StartBusyIndicatorCreating();
+        let _http = ServiceHelper.HttpClient;
+        _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
+            .subscribe(
+                r => { this._LabelLog = JSON.stringify(r); },
+                e => { this._LabelLog = JSON.stringify(e); },
+                () => { this.CurrentSession.StopBusyIndicator(); }
+            );
+
+    }
+
+
+
+
+
     ButtonReconcileStageCBatch_Click() {
         let defaultParam: any = {};
         defaultParam.Tenant = 1;
