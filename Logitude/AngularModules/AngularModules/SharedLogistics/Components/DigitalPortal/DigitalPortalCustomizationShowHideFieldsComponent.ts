@@ -240,6 +240,7 @@ export class ProfileFieldsItem extends BaseComponent {
 
     public DataContext: ProfileFieldsItem = this;
     public Background = "transparent";
+    public DefaultTextBackground = "rgba(230, 231, 232, 0.5)";
     constructor(public father: DigitalPortalCustomizationShowHideFieldsComponent, item) {
         super();
         this.hasPermission = item.HasPermission;
@@ -257,6 +258,7 @@ export class ProfileFieldsItem extends BaseComponent {
     SetBackgroundColor() {
         if (this.CreatedBy?.toLowerCase() != "system") {
             this.Background = "rgba(255, 171, 3, 0.6)";
+            this.DefaultTextBackground = "rgba(255, 171, 3, 0.6)";
         }
     }
 
