@@ -36,6 +36,8 @@ export class DigitalPortalCustomizationMainComponent {
     public IsObjectTablesFilterVisible: boolean = false;
 
     constructor() {
+        this.DigitalProfileFilterList = [];
+        this.ObjectTablesFilterList = [];
         this.digitalTextService = new DigitalTextService();
         this.RunComponent();
         this.LayoutDirection = ObjectsLocator.GlobalSetting.LayoutDirection == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
@@ -146,6 +148,7 @@ export class DigitalPortalCustomizationMainComponent {
             this.IsSaveButtonVisible = true;
             this.IsObjectTablesFilterVisible = true;
         }
+
        
         this.FillDigitalProfileFiltersList();
 
@@ -223,10 +226,38 @@ export class DigitalPortalCustomizationMainComponent {
     }
 
     private FillObjectTablesFiltersList() {
-        this.ObjectTablesFilterList = [];
+        if (this.SelectedMenu.Code == "ChageLabels") {
+            this.GetDigitalTextCodesObjetTables();
+        } else {
+            this.GetDigitalProfilesObjetTables();
+        }
+    }
+
+    GetDigitalTextCodesObjetTables() {
+        this.digitalTextService.GetDigitalTextCodesObjetTables().subscribe((myResult) => {
+            if (!myResult.HasError) {
+                this.ObjectTablesFilterList = [];
+                var objectTables = myResult.Result;
+
+                objectTables.forEach(item => {
+                    this.ObjectTablesFilterList.push(new CodeNameClass(item.ObjectTableName, item.ObjectTableId));
+                });
+
+                this.selectedObjectTableItem = this.ObjectTablesFilterList[0];
+                if (this.SelectedMenu.Page) {
+                    this.SelectedMenu.Page.ObjectTableId = this.selectedObjectTableItem.Name;
+                    this.SelectedMenu.Page.BuildItemsSource();
+                }
+            }
+        });
+    }
+
+    GetDigitalProfilesObjetTables() {
         this.digitalTextService.GetDigitalProfilesObjetTables().subscribe((myResult) => {
             if (!myResult.HasError) {
+                this.ObjectTablesFilterList = [];
                 var objectTables = myResult.Result;
+
                 objectTables.forEach(item => {
                     this.ObjectTablesFilterList.push(new CodeNameClass(item.ObjectTableName, item.ObjectTableId));
                 });
@@ -259,9 +290,9 @@ export class DigitalPortalCustomizationMainComponent {
     }
 
     private FillDigitalProfileFiltersList() {
-        this.DigitalProfileFilterList = [];
         this.digitalTextService.GetDigitalProfileName(SessionLocator.Tenant).subscribe((myResult) => {
             if (!myResult.HasError) {
+                this.DigitalProfileFilterList = [];
                 var profiles = myResult.Result;
                 if (this.SelectedMenu.Code != "ChageLabels") {
                     profiles = profiles.filter(a => a.Code != "CM");
