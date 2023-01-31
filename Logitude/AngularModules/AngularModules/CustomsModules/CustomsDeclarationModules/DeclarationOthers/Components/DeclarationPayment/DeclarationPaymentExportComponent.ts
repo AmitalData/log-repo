@@ -1018,45 +1018,15 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
     instructionCancelled: boolean = false;
 
     PaymentDateTimeOnBlur(event) {
-        this.IsPaymentDateValid();
+        //this.IsPaymentDateValid();
     }
-    IsPaymentDateValid() {
-
-        if (this.PaymentDate) {
-
-            //var newDate = new Date();
-            var newDate = DateTool.GetCurrentDateTimeAsUtc();
-            var currentDate = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate(), 0, 0, 0); // last of today
-
-            if (this.PaymentDate < currentDate) {
-                this.UIProperties.SetValidity("PaymentDate", "Customs.DeclarationPayment", false, "לא ניתן להזין תאריך בעבר");
-                return false;
-            } else {
-                this.UIProperties.SetValidity("PaymentDate", "Customs.DeclarationPayment", true, "");
-                return true;
-            }
-
-        }
-        else // no date entered
-        {
-            this.UIProperties.SetValidity("PaymentDate", "Customs.DeclarationPayment", true, "");
-            return true;
-        }
-    }
+    
 
     OkButtonClicked() {
-
-        var isPaymentDateValid = this.IsPaymentDateValid();
-        var isBlockTime = false;
-        if (!isPaymentDateValid) {
-
-            this.ValidationErrorsList = [];
-
-            if (!isPaymentDateValid)
-                this.ValidationErrorsList.push("לא ניתן להזין תאריך בעבר");
-
+        if(this.DeclarationPM.IsSubmitDeclaration !=true)
+        {
+            this.PaymentDate = DateTool.GetCurrentDateTimeAsUtc();
         }
-        else {
             /*this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAY_BLK_RNG", "NON", "NON", SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
                 let obj = response.Result;
                if (obj) {
@@ -1097,9 +1067,10 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
                     });
                 }
             });*/
+            
             this.ValidationErrorsList = [];
             this.ActivateUnifreightInstructionOK();
-        }
+        
 
     }
 
@@ -1156,6 +1127,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
         }
     }
     SubmitChanges() {
+
         //ActualOk
         if (this.entityCreated) {
             this.declarationPaymentPMService.insert(this.paymentPM).subscribe((response: ServiceResponse) => {
@@ -1211,6 +1183,12 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
     Option: string;
     // Before send
     SendButtonClicked(event) {
+
+        if(this.DeclarationPM.IsSubmitDeclaration !=true)
+        {
+            this.PaymentDate = DateTool.GetCurrentDateTimeAsUtc();
+        }
+        
         if (event.TestCase) {
 
             let windowArgs = { "SincroScreen": "SincroSendDeclarationPayment" };
@@ -1257,17 +1235,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
 
         if (this.ValidationErrorsList.length > 0) return;
 
-        var isPaymentDateValid = this.IsPaymentDateValid();
-        if (isPaymentDateValid) {
-            this.ValidationErrorsList = [];
-        }
-        else {
-            this.ValidationErrorsList = [];
-            if (!isPaymentDateValid)
-                this.ValidationErrorsList.push("לא ניתן להזין תאריך בעבר");
-        }
-
-        if (this.ValidationErrorsList.length > 0) return;
+        
 
         var isBlockTime = false;
 
