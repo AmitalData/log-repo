@@ -42,6 +42,22 @@ export class DigitalTextService {
         });
     }
 
+    public GetDigitalSubObjectsProfilesObjetTables(objectTableId) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetDigitalSubObjectsProfilesObjetTables?objectTableId=' + objectTableId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myResult;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    
+
     public GetDigitalTextCodesObjetTables() {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -130,6 +146,7 @@ export class DigitalFeildSecurityObjectModel {
     public CardId: string;
     public ProfileId: string;
     public ProfileCode: string;
+    public ParentObjectTableId: string;
     public DefaultSettings: DigitalFeildSecurityUpdateModel[];
 }
 

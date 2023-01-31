@@ -37,9 +37,9 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         ExpectedReleaseDate, 
 	         ActualReleaseDate, 
 	         ReleaseBy, 
-	         SpecialInstruction, 
-	         StatusCode, 
-	         TotalPieces, 
+	         SpecialInstruction,
+			StatusCode,
+			TotalPieces, 
 	         TotalGrossWeight, 
 	         GrossWeightUnitCode, 
 	         TotalVolume, 
@@ -94,9 +94,9 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         ExpectedReleaseDate, 
 	         ActualReleaseDate, 
 	         ReleaseBy, 
-	         SpecialInstruction, 
-	         StatusCode, 
-	         TotalPieces, 
+	         SpecialInstruction,
+			StatusCode,
+			TotalPieces, 
 	         TotalGrossWeight, 
 	         GrossWeightUnitCode, 
 	         TotalVolume, 
@@ -137,7 +137,8 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         TruckerId, 
 	         TruckerReference, 
 	         ChildEntityReference, 
-	         MasterShipmentNumber,
+	         MasterShipmentNumber, 
+	         IsUpdateByAutomation,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -215,12 +216,12 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
             {
 				entityPOCO.SpecialInstruction = entityPM.SpecialInstruction;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusCode))
-            {
+			{
 				entityPOCO.StatusCode = entityPM.StatusCode;
 			}
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TotalPieces))
             {
 				entityPOCO.TotalPieces = entityPM.TotalPieces;
@@ -480,9 +481,9 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StatusCode))
-            {
-					entityPM.StatusCode = entityPOCO.StatusCode;
-            }
+			{
+				entityPM.StatusCode = entityPOCO.StatusCode;
+			}
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TotalPieces))
             {
@@ -736,12 +737,12 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
             {
                 oldEntityPM.SpecialInstruction = entityPM.SpecialInstruction;
             }
-			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusCode))
-            {
-                oldEntityPM.StatusCode = entityPM.StatusCode;
-            }
-			
+			{
+				oldEntityPM.StatusCode = entityPM.StatusCode;
+			}
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TotalPieces))
             {
                 oldEntityPM.TotalPieces = entityPM.TotalPieces;

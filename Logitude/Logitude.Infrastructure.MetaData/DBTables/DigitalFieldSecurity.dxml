@@ -51,6 +51,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ParentObjectTableId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ObjectTableId"
     ReferencedTable="ObjectTables"
@@ -59,6 +66,11 @@
   <Relation
     ForeignKeyColumn="ProfileId"
     ReferencedTable="DigitalProfiles"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ParentObjectTableId"
+    ReferencedTable="ObjectTables"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

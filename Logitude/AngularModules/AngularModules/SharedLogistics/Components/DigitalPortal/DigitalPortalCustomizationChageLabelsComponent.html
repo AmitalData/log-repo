@@ -8,15 +8,6 @@
                     <td>
                         <table>
                             <tr>
-                                <td style="width: 180px;">
-                                    <ComboBox style="width:250px;float:left;" [WaterMark]="'Select Profile'" (SelectedItemChanged)="SelectedProfileItem = $event" [ItemsSource]="DigitalProfileFilterList" [SelectedItem]="SelectedProfileItem" [Binding]="'Name'"></ComboBox>
-                                </td>
-                                <td style="width: 5px;">
-                                    <div></div>
-                                </td>
-                                <td style="width: 150px;">
-                                    <ComboBox style="width:250px;float:left;" [WaterMark]="'Select entity to show fields'" (SelectedItemChanged)="SelectedObjectTableItem = $event" [ItemsSource]="ObjectTablesFilterList" [SelectedItem]="SelectedObjectTableItem" [Binding]="'Code'"></ComboBox>
-                                </td>
                                 <td><div></div></td>
                                 <td style="width: 400px;">
                                     <SearchBox (TextChanged)="SearchText = $event"></SearchBox>

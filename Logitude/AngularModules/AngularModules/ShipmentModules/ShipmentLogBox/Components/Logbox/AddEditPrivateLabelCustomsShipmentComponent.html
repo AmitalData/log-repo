@@ -201,7 +201,7 @@
                                                     <li (click)="transportItemClicked('O')" (mouseover)="transportItemMouseOver('O')" (mouseleave)="transportItemMouseLeave('O')" [class.SelectedFilter]="TransportModeId === 'O'" title="Ocean">
                                                         <img [attr.id]="FilterId_O" class="CenterCenter" src="./_Resources/Images/Icons/TransportModes/Filters/O_g.png" style="top: 1px;" />
                                                     </li>
-                                                    <li *ngIf="IsDSVTenant" (click)="transportItemClicked('I')" (mouseover)="transportItemMouseOver('I')" (mouseleave)="transportItemMouseLeave('I')" [class.SelectedFilter]="TransportModeId === 'I'" title="Inland">
+                                                    <li (click)="transportItemClicked('I')" (mouseover)="transportItemMouseOver('I')" (mouseleave)="transportItemMouseLeave('I')" [class.SelectedFilter]="TransportModeId === 'I'" title="Inland">
                                                         <img [attr.id]="FilterId_I" class="CenterCenter" src="./_Resources/Images/Icons/TransportModes/Filters/I_g.png" style="top: 1px;" />
                                                     </li>
                                                 </ul>

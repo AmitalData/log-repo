@@ -1434,6 +1434,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 isInitializing = true;
             }
 
+            else if (paymentPM.IsTransferStatusSetManually)
+            {
+                isInitializing = false;
+            }
+
             else if (paymentPoco.TransferStatusCode == "TR")
             {
                 isInitializing = false;

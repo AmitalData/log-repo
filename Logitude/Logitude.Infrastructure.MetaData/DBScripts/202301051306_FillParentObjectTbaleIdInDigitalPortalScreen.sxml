@@ -1,0 +1,20 @@
+﻿<Script DBType="Main" Module="Infrastructure">
+  <Sql Version="1">
+    <![CDATA[
+    
+    declare @shipmentObjectId as varchar(15)
+    set @shipmentObjectId = (select Id from ObjectTables where [Name] = 'Shipment' and Tenant = 0 )
+    declare @truckerObjectTableId as varchar(15)
+    set @truckerObjectTableId = (select Id from ObjectTables where [Name] = 'Trucker' and Tenant = 0)
+    declare @shipmentPackageObjectTableId as varchar(15)
+    set @shipmentPackageObjectTableId = (select Id from ObjectTables where [Name] = 'ShipmentPackage' and Tenant = 0)
+    declare @shipmentPickUpDeliveryObjectTableId as varchar(15)
+    set @shipmentPickUpDeliveryObjectTableId = (select Id from ObjectTables where [Name] = 'ShipmentPickUpDelivery' and Tenant = 0)
+
+    update  DigitalFieldSecurities
+    set ParentObjectTableId = @shipmentObjectId
+    where ObjectTableId in (@truckerObjectTableId,@shipmentPackageObjectTableId, @shipmentPickUpDeliveryObjectTableId)         
+    
+    ]]>
+  </Sql>
+</Script>

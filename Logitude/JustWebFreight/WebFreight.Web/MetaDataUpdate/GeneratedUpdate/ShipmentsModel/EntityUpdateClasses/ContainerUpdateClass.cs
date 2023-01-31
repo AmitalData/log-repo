@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ContainerUpdateClass
    {  		
-		public const string HashString = "026ed4d4aae8658b22b26e8e65203d09";
+		public const string HashString = "ed6583b6f98441a17122f75e7b5127ee";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -17699,6 +17699,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "OnCarriageATA",
 					  						ListPropertyPath =  "OnCarriageATA",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -17757,6 +17758,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "OnCarriageETA",
 					  						ListPropertyPath =  "OnCarriageETA",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -19222,7 +19224,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 		   ObjectTable ContainerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Container" && d.Tenant == 0).FirstOrDefault(); 			   Feature ContainerFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CloseContainer", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Container.Features.Close", NameTextCodeDefaultText = "Close", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContainerObjectTable);
              			   Feature ContainerFeature_MB01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ReopenContainer", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Container.Features.Re-open", NameTextCodeDefaultText = "Re-open", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContainerObjectTable);
              			   Feature ContainerFeature_MB02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CExceptionResolved", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Container.Features.ExceptionResolved", NameTextCodeDefaultText = "Exception Resolved ", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContainerObjectTable);
-             			   Feature ContainerFeature_MB03 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ViziionUnsubscribe", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Container.Features.ViziionUnsubscribe", NameTextCodeDefaultText = "Viziion Unsubscribe", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContainerObjectTable);
+             			   Feature ContainerFeature_MB03 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ViziionUnsubscribe", ObjectTableId = ContainerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Container.Features.ContainerTrackingUnsubscribe", NameTextCodeDefaultText = "Container Tracking Unsubscribe", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ContainerObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -19319,8 +19321,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						EventCode = "ViziionUnsubscribe",
 						Index = 3, 
 						IsActive = true,
-						LabelTextCodeCode = "Container.B.ViziionUnsubscribe",
-						LabelTextCodeDefaultText = "Viziion Unsubscribe",
+						LabelTextCodeCode = "Container.B.ContainerTrackingUnsubscribe",
+						LabelTextCodeDefaultText = "Container Tracking Unsubscribe",
 						Tenant = 0,
 						MenuButtonGroupId = ContainerMenuButtonGroup.Id,
 						ParentMenuButtonId = ContainerMenuButton0.Id,
@@ -19328,7 +19330,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						MenuButtonType = "menuitem",
 						FeatureId=  ContainerFeature_MB03.Id,
 						Style = null,
-						LocalDefaultText = "Viziion Unsubscribe",
+						LocalDefaultText = "Container Tracking Unsubscribe",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  ContainerFeature_MB03.FeatureUniqeCode,

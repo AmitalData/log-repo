@@ -64,7 +64,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                                                                                                         addCustomFieldRequest.ObjectTableId,
                                                                                                         addCustomFieldRequest.ProfileCode);
 
-                DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+                DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
                 var items = new List<DigitalFeildSecurityObject>();
                 if (customDigitalFieldSecurity == null)
