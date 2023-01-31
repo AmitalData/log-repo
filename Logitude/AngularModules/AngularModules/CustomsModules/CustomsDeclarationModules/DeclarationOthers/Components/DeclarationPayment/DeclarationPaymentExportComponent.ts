@@ -894,7 +894,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
         }
         else if (this.DeclarationPM.StorageStatusCode && !this.ErrorMessage) {
             this.ShowStorageStatusMessage = true;
-            this.ErrorMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
+            this.ErrorMessage = "בקשת םחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
             this.IsDisplayOnly = false;
 
 
@@ -931,7 +931,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
 
             else if (declarationDisplayOnly2) {
 
-                // if(displayOnlyCheckResult.DisplayOnlyMessage=="אילוץ אושר")
+                // if(displayOnlyCheckResult.DisplayOnlyMessage=="םילוץ םושר")
                 // {
                 //     this.IsDisplayOnly = false;
                 //     this.ErrorMessage = "לתצוגה בלבד - " + displayOnlyCheckResult.DisplayOnlyMessage;
@@ -953,7 +953,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
             }
             else if (this.DeclarationPM.StorageStatusCode && !this.ErrorMessage) {
                 this.ShowStorageStatusMessage = true;
-                this.ErrorMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
+                this.ErrorMessage = "בקשת םחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.DeclarationPM.StorageStatusName;
                 this.IsDisplayOnly = false;
             }
 
@@ -1019,49 +1019,16 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
     instructionCancelled: boolean = false;
 
     PaymentDateTimeOnBlur(event) {
-        this.IsPaymentDateValid();
+        //this.IsPaymentDateValid();
     }
-    IsPaymentDateValid() {
+    
 
-        if (this.PaymentDate) {
-
-            //var newDate = new Date();
-            var newDate = DateTool.GetCurrentDateTimeAsUtc();
-            var currentDate = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate(), 0, 0, 0); // last of today
-
-            if (this.PaymentDate < currentDate) {
-                this.UIProperties.SetValidity("PaymentDate", "Customs.DeclarationPayment", false, "לא ניתן להזין תאריך בעבר");
-                return false;
-            } else {
-                this.UIProperties.SetValidity("PaymentDate", "Customs.DeclarationPayment", true, "");
-                return true;
-            }
-
-        }
-        else // no date entered
-        {
-            this.UIProperties.SetValidity("PaymentDate", "Customs.DeclarationPayment", true, "");
-            return true;
-        }
-    }
-    StopMyBusyIndicator() {
-
-        this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
-
-    }
     OkButtonClicked() {
+        if(this.DeclarationPM.IsSubmitDeclaration !=true)
+        {
 
-        var isPaymentDateValid = this.IsPaymentDateValid();
-        var isBlockTime = false;
-        if (!isPaymentDateValid) {
-
-            this.ValidationErrorsList = [];
-
-            if (!isPaymentDateValid)
-                this.ValidationErrorsList.push("לא ניתן להזין תאריך בעבר");
-
+            this.PaymentDate = DateTool.GetCurrentDateTimeAsUtc();
         }
-        else {
             /*this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAY_BLK_RNG", "NON", "NON", SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
                 let obj = response.Result;
                if (obj) {
@@ -1079,14 +1046,14 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
                                         if (!AppTool.IsNullOrEmpty(timeCompany)) {
 
                                             if (this.CheckIdDateBetween2Times(timeCompany, this.PaymentDate)) {
-                                                this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
+                                                this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
                                                 isBlockTime = true;
                                             }
                                         }
                                         if (!AppTool.IsNullOrEmpty(timeCustomer)) {
 
                                             if (this.CheckIdDateBetween2Times(timeCustomer, this.PaymentDate)) {
-                                                this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
+                                                this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
                                                 isBlockTime = true;
                                             }
                                         }
@@ -1102,9 +1069,16 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
                     });
                 }
             });*/
+            
             this.ValidationErrorsList = [];
             this.ActivateUnifreightInstructionOK();
-        }
+        
+
+    }
+
+  StopMyBusyIndicator() {
+
+        this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
 
     }
 
@@ -1160,6 +1134,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
         }
     }
     SubmitChanges() {
+
         //ActualOk
         if (this.entityCreated) {
             this.declarationPaymentPMService.insert(this.paymentPM).subscribe((response: ServiceResponse) => {
@@ -1216,6 +1191,11 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
     // Before send
 
     SendButtonClicked(event) {
+
+        if(this.DeclarationPM.IsSubmitDeclaration !=true)
+        {
+            this.PaymentDate = DateTool.GetCurrentDateTimeAsUtc();
+        }
         
         if (event.TestCase) {
 
@@ -1263,17 +1243,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
 
         if (this.ValidationErrorsList.length > 0) return;
 
-        var isPaymentDateValid = this.IsPaymentDateValid();
-        if (isPaymentDateValid) {
-            this.ValidationErrorsList = [];
-        }
-        else {
-            this.ValidationErrorsList = [];
-            if (!isPaymentDateValid)
-                this.ValidationErrorsList.push("לא ניתן להזין תאריך בעבר");
-        }
-
-        if (this.ValidationErrorsList.length > 0) return;
+        
 
         var isBlockTime = false;
 
@@ -1295,14 +1265,14 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
                              if (!AppTool.IsNullOrEmpty(timeCompany)) {
  
                                  if (this.CheckIdDateBetween2Times(timeCompany, this.PaymentDate)) {
-                                     this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
+                                     this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת חברה");
                                      isBlockTime = true;
                                  }
                              }
                              if (!AppTool.IsNullOrEmpty(timeCustomer)) {
  
                                  if (this.CheckIdDateBetween2Times(timeCustomer, this.PaymentDate)) {
-                                     this.ValidationErrorsList.push("לא ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
+                                     this.ValidationErrorsList.push("לם ניתן להגיש תשלום בשעות שהוזנו , לפי הגדרה ברמת לקוח");
                                      isBlockTime = true;
                                  }
                              }
@@ -1745,7 +1715,7 @@ export class DeclarationPaymentExportComponent extends BaseComponent implements 
                 confirmWindow.Show(mess);
                 confirmWindow.WindowClosed.subscribe((event: any) => {
 
-                    if (mess.toLowerCase().includes("succeeded") || mess.toLowerCase().includes("בהצלחה") || mess.toLowerCase().includes("נפתחה רשומה בתיקים לאישור") || this._IsCloseScreen == true) // Mirit 20/07/15 Task-14344 - add successfully (Hebrew) // Mirit 24/11/15 Task 18440- add IsCloseScreen
+                    if (mess.toLowerCase().includes("succeeded") || mess.toLowerCase().includes("בהצלחה") || mess.toLowerCase().includes("נפתחה רשומה בתיקים לםישור") || this._IsCloseScreen == true) // Mirit 20/07/15 Task-14344 - add successfully (Hebrew) // Mirit 24/11/15 Task 18440- add IsCloseScreen
                     {
                         this.RefreshDeclaration();
                         if (SessionLocator.SelectedSession.CurrentWindow != null) {
