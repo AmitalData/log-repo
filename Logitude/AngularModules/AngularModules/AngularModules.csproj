@@ -447,6 +447,7 @@
     <Content Include="TasksApp\Components\TasksAppComponent.html" />
     <Content Include="TasksApp\Scripts\tasks-app.js" />
     <Content Include="Warehouse\Components\ChooseWarehouseEntryComponent.html" />
+    <Content Include="Warehouse\Components\EditTabs\Audit\WarehouseReleaseAuditTabComponent.html" />
     <Content Include="Warehouse\Components\SelectionAddChooseWarehouseEntryComponent.html" />
     <Content Include="Workflow\Components\WorkflowBuilder\WorkflowBuilderComponent.html" />
     <Content Include="Workflow\Components\Properties\ConditionPropertiesComponent.html" />
@@ -8115,6 +8116,7 @@
     <TypeScriptCompile Include="SharedLogistics\DataContracts\CustomerTenantAccessRequestStatusCount.ts" />
     <TypeScriptCompile Include="Warehouse\Components\ChoosePackagesFromWarehousePackageReleasesComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\CopyFromReleasesPackagesComponent.ts" />
+    <TypeScriptCompile Include="Warehouse\Components\EditTabs\Audit\WarehouseReleaseAuditTabComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\EditTabs\ConnectionsTab\WarehouseConnectionsTabComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\EditTabs\DocsIn\WarehouseDocsInTabComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\EditTabs\DocsOut\WarehouseDocsOutTabComponent.ts" />
