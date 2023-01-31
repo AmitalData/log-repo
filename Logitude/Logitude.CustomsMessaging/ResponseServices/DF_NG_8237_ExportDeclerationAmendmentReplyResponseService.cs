@@ -209,7 +209,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 var customResponseResponseXml = XmlGenericUtil<Response>.SerializeObject(customResponse.Response);
                 var importDeclarationServiceReferenceResponse = XmlGenericUtil<Response>.DeSerializeObject(customResponseResponseXml);
                 List<error> systemMessagesList = new List<error>();
-                this._MyDeclarationPM.ClosingXml = myDeclarationCorrectionsPointerService.AnalyzeCorrectionsPointerExport(this._MyDeclarationPM.CorrectionsXml, importDeclarationServiceReferenceResponse, systemMessagesList, requestParams.Tenant, customResponse.ReferencesListMsg);
+                this._MyDeclarationPM.ClosingXml = myDeclarationCorrectionsPointerService.AnalyzeCorrectionsPointerExport(this._MyDeclarationPM.ClosingXml, importDeclarationServiceReferenceResponse, systemMessagesList, requestParams.Tenant, customResponse.ReferencesListMsg);
 
             }
 
@@ -811,7 +811,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 _MyDeclarationPM.DeclarationNumber = declarationParent.DeclarationNumber;
                 declarationParent.AmendmentDontDisplayInList = true;
                 declarationParent.DeclarationNumber = null;
-
+                declarationParent.ExportCloseAmendmentStatus = null;
 
                 declarationParent.ChangeSetOp = ChangeSetOperation.Update;
                 myDeclarationUpdateService.Update(declarationParent, true);
