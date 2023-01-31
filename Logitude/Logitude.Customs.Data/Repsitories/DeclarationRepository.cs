@@ -1341,7 +1341,6 @@ namespace Logitude.Customs.Data.Repsitories
             return ExportReports2;
 
         }    
-    
 
         public List<string> GetDisplayOnly(string[] declarationsId, int tenant, string[] sheetStatusInProcessId)
         {
@@ -1368,6 +1367,7 @@ namespace Logitude.Customs.Data.Repsitories
         }
     }
 
+
     public class ExportReport1
     {
         public string company { get; set; }
@@ -1376,6 +1376,7 @@ namespace Logitude.Customs.Data.Repsitories
 
         public int closed { get; set; }
         public int notSubmit { get; set; }
+
 
     }
 
@@ -1397,6 +1398,7 @@ namespace Logitude.Customs.Data.Repsitories
 
     }
 
+    
     public class DeclarationId
     {
         public string Id { get; set; }
