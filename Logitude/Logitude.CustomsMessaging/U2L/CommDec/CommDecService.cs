@@ -642,6 +642,8 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     CalcProcedureCurrentCode();
                     CalcInternalTransitionSite();
                     myDeclarationUpsertService.UpdateTrucker();
+                    var updateDeclarationPending904ExceededGrossMassMeasureService = new UpdateDeclarationPending904ExceededGrossMassMeasureService(_MyDeclarationPM);
+                    updateDeclarationPending904ExceededGrossMassMeasureService.Calc(currentDeclarationCourierStatusPM);
                     if (this.IsAutonomy)
                     {
                         UpdateDeclarationPending("901");
