@@ -33,28 +33,6 @@
                     <td></td>
                 </tr>
 
-                <!-- WarningMessage -->
-                <tr class="FormFieldRow" style="width: 100% ;" *ngIf="WarningMessage != null">
-                    <td colspan="3">
-                        <table>
-                            <tr class="FormFieldRow">
-                                <td style="width: 10px; "><div></div></td>
-                                <!-- [SingleLine]="false" [IsMultiline]="true" [IsDisabled]="true" white-space:pre-wrap; word-wrap:break-word-->
-
-                                <td style="width: 500px; ">
-
-                                    <div style="width: 100%; height:22px; text-align:right; ">
-                                        <div class="DisbleBox">
-                                            {{WarningMessage}}
-                                        </div>
-                                    </div>
-                                </td>
-
-                                <td><div></div></td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
 
                 <tr class="FormFieldRow"> </tr>
 
@@ -113,7 +91,17 @@
                     </td>
                     <td></td>
                 </tr>
-
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'ExceptKeywords'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'ExceptKeywords'" [ObjectTableName]="ObjectTableName" [Text]="ExceptKeywords"
+                                    [DataContext]="DataContext" [HideColumns]="true" [InputType]="'nText'"></LogTextBox>
+                    </td>
+                    <td></td>
+                </tr>
                 <tr>
                     <td></td>
                 </tr>

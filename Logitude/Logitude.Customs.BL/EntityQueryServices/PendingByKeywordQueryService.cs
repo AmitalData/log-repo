@@ -33,7 +33,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 entityPM.ChangeSetOp = ChangeSetOperation.Delete;
 
                 new PendingByKeywordUpdateService(context, new Dictionary<string, IContext>(), Tenant)
-                    .Update(entityPM, true);                
+                    .Update(entityPM, true);
 
                 scope.Complete();
             }
