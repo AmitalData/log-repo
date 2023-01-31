@@ -226,38 +226,14 @@ export class DigitalPortalCustomizationMainComponent {
     }
 
     private FillObjectTablesFiltersList() {
-        if (this.SelectedMenu.Code == "ChageLabels") {
-            this.GetDigitalTextCodesObjetTables();
-        } else {
-            this.GetDigitalProfilesObjetTables();
-        }
-    }
-
-    GetDigitalTextCodesObjetTables() {
-        this.digitalTextService.GetDigitalTextCodesObjetTables().subscribe((myResult) => {
-            if (!myResult.HasError) {
-                this.ObjectTablesFilterList = [];
-                var objectTables = myResult.Result;
-
-                objectTables.forEach(item => {
-                    this.ObjectTablesFilterList.push(new CodeNameClass(item.ObjectTableName, item.ObjectTableId));
-                });
-
-                this.selectedObjectTableItem = this.ObjectTablesFilterList[0];
-                if (this.SelectedMenu.Page) {
-                    this.SelectedMenu.Page.ObjectTableId = this.selectedObjectTableItem.Name;
-                    this.SelectedMenu.Page.BuildItemsSource();
-                }
-            }
-        });
-    }
-
-    GetDigitalProfilesObjetTables() {
+        this.digitalTextService.GetDigitalTextCodesObjetTables
         this.digitalTextService.GetDigitalProfilesObjetTables().subscribe((myResult) => {
             if (!myResult.HasError) {
                 this.ObjectTablesFilterList = [];
                 var objectTables = myResult.Result;
-
+                if (this.SelectedMenu.Code != "ChageLabels") {
+                    objectTables = objectTables.filter(a => a.ObjectTableName != "General");
+                }
                 objectTables.forEach(item => {
                     this.ObjectTablesFilterList.push(new CodeNameClass(item.ObjectTableName, item.ObjectTableId));
                 });
