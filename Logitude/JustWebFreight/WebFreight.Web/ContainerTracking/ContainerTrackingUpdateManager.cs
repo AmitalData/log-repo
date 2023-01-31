@@ -120,7 +120,7 @@ namespace WebFreight.Web.ContainerTracking
             containerPM.PreCarriageATD = containerUpdatedFields.ActualOriginPickup;
 
             shipmentPM.PreCarriageETD = containerPM.PreCarriageETD;
-            shipmentPM.PreCarriageATD = containerPM.PreCarriageATD;
+            shipmentPM.PreCarriageATD = shipmentPM.PreCarriageATD ?? containerPM.PreCarriageATD;
         }
 
         private void MapVizionOnCarriage()
@@ -140,7 +140,7 @@ namespace WebFreight.Web.ContainerTracking
         }
         private void MapVizionOnCarriageDates()
         {
-            if (containerPM.OnCarriageLocationPortId != shipmentPM.OnCarriageToPortId) return;
+            if (!containerTrackingHelper.IsSameLocationUsingId(containerPM.OnCarriageLocationPortId, shipmentPM.OnCarriageToPortId)) return;
             if (containerUpdatedFields.LIFLocation == null) return;
 
             string portId = this.GetPortId(containerUpdatedFields.LIFLocation);
@@ -148,6 +148,9 @@ namespace WebFreight.Web.ContainerTracking
 
             containerPM.OnCarriageETA = containerUpdatedFields.OnCarriageETA;
             containerPM.OnCarriageATA = containerUpdatedFields.OnCarriageATA;
+
+            shipmentPM.OnCarriageETA = containerPM.OnCarriageETA;
+            shipmentPM.OnCarriageATA = shipmentPM.OnCarriageATA ?? containerPM.OnCarriageATA;
         }
 
         private Port GetPortForVizion(Location portLocation)
@@ -377,12 +380,12 @@ namespace WebFreight.Web.ContainerTracking
             if (key == "VesselArrived")
             {
                 this.FillFieldsNewValues("Transshipment" + transshipmentLegIndex + "ETA", updatedFields.EstimatedDate, shipmentPM);
-                this.FillFieldsNewValues("Transshipment" + transshipmentLegIndex + "ETA", updatedFields.ActualDate, shipmentPM);
+                if (GetPropValue(shipmentPM, "Transshipment" + transshipmentLegIndex + "ATA") == null) this.FillFieldsNewValues("Transshipment" + transshipmentLegIndex + "ATA", updatedFields.ActualDate, shipmentPM);
             }
             else if (key == "VesselDeparted")
             {
                 this.FillFieldsNewValues("Transshipment" + transshipmentLegIndex + "ETD", updatedFields.EstimatedDate, shipmentPM);
-                this.FillFieldsNewValues("Transshipment" + transshipmentLegIndex + "ETD", updatedFields.ActualDate, shipmentPM);
+                if (GetPropValue(shipmentPM, "Transshipment" + transshipmentLegIndex + "ATD") == null) this.FillFieldsNewValues("Transshipment" + transshipmentLegIndex + "ATD", updatedFields.ActualDate, shipmentPM);
             }
         }
         private void SetTransshipmentLegDates(int? transshipmentLegIndex, MilestoneDataUpdatedFields updatedFields, string key)
